@@ -10,7 +10,7 @@
 
 namespace blink {
 
-struct MediaValuesTestCase {
+struct TestCase {
   double value;
   CSSPrimitiveValue::UnitType type;
   unsigned font_size;
@@ -21,7 +21,7 @@ struct MediaValuesTestCase {
 };
 
 TEST(MediaValuesTest, Basic) {
-  MediaValuesTestCase test_cases[] = {
+  TestCase test_cases[] = {
       {40.0, CSSPrimitiveValue::UnitType::kPixels, 16, 300, 300, true, 40},
       {40.0, CSSPrimitiveValue::UnitType::kEms, 16, 300, 300, true, 640},
       {40.0, CSSPrimitiveValue::UnitType::kRems, 16, 300, 300, true, 640},

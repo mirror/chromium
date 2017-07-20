@@ -17,7 +17,6 @@
 #include "base/sequenced_task_runner.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
-#include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/time/time.h"
 #include "base/trace_event/trace_event.h"
@@ -34,6 +33,8 @@
 #include "content/public/browser/indexed_db_info.h"
 #include "content/public/common/content_switches.h"
 #include "storage/browser/database/database_util.h"
+#include "storage/browser/quota/quota_manager_proxy.h"
+#include "storage/browser/quota/special_storage_policy.h"
 #include "storage/common/database/database_identifier.h"
 #include "ui/base/text/bytes_formatting.h"
 #include "url/origin.h"
@@ -107,15 +108,13 @@ void ClearSessionOnlyOrigins(
 
 IndexedDBContextImpl::IndexedDBContextImpl(
     const base::FilePath& data_path,
-    scoped_refptr<storage::SpecialStoragePolicy> special_storage_policy,
-    scoped_refptr<storage::QuotaManagerProxy> quota_manager_proxy)
+    storage::SpecialStoragePolicy* special_storage_policy,
+    storage::QuotaManagerProxy* quota_manager_proxy,
+    scoped_refptr<base::SequencedTaskRunner> task_runner)
     : force_keep_session_state_(false),
       special_storage_policy_(special_storage_policy),
       quota_manager_proxy_(quota_manager_proxy),
-      task_runner_(base::CreateSequencedTaskRunnerWithTraits(
-          {base::MayBlock(), base::WithBaseSyncPrimitives(),
-           base::TaskPriority::USER_VISIBLE,
-           base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN})) {
+      task_runner_(std::move(task_runner)) {
   IDB_TRACE("init");
   if (!data_path.empty())
     data_path_ = data_path.Append(kIndexedDBDirectory);
@@ -427,13 +426,9 @@ base::FilePath IndexedDBContextImpl::GetFilePathForTesting(
 }
 
 void IndexedDBContextImpl::SetTaskRunnerForTesting(
-    scoped_refptr<base::SequencedTaskRunner> task_runner) {
-  task_runner_ = std::move(task_runner);
-}
-
-void IndexedDBContextImpl::ResetCachesForTesting() {
-  origin_set_.reset();
-  origin_size_map_.clear();
+    base::SequencedTaskRunner* task_runner) {
+  DCHECK(!task_runner_.get());
+  task_runner_ = task_runner;
 }
 
 void IndexedDBContextImpl::ConnectionOpened(const Origin& origin,
@@ -564,8 +559,12 @@ std::set<Origin>* IndexedDBContextImpl::GetOriginSet() {
   return origin_set_.get();
 }
 
+void IndexedDBContextImpl::ResetCaches() {
+  origin_set_.reset();
+  origin_size_map_.clear();
+}
+
 base::SequencedTaskRunner* IndexedDBContextImpl::TaskRunner() const {
-  DCHECK(task_runner_.get());
   return task_runner_.get();
 }
 

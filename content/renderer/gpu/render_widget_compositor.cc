@@ -259,7 +259,8 @@ std::unique_ptr<RenderWidgetCompositor> RenderWidgetCompositor::Create(
 RenderWidgetCompositor::RenderWidgetCompositor(
     RenderWidgetCompositorDelegate* delegate,
     CompositorDependencies* compositor_deps)
-    : delegate_(delegate),
+    : num_failed_recreate_attempts_(0),
+      delegate_(delegate),
       compositor_deps_(compositor_deps),
       threaded_(!!compositor_deps_->GetCompositorImplThreadTaskRunner()),
       never_visible_(false),
@@ -534,7 +535,7 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
     settings.max_staging_buffer_usage_in_bytes /= 4;
 
   cc::ManagedMemoryPolicy defaults = settings.gpu_memory_policy;
-  settings.gpu_memory_policy = GetGpuMemoryPolicy(defaults, screen_info);
+  settings.gpu_memory_policy = GetGpuMemoryPolicy(defaults);
   settings.software_memory_policy.num_resources_limit =
       base::SharedMemory::GetHandleLimit() / 3;
 
@@ -546,8 +547,7 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
 
 // static
 cc::ManagedMemoryPolicy RenderWidgetCompositor::GetGpuMemoryPolicy(
-    const cc::ManagedMemoryPolicy& default_policy,
-    const ScreenInfo& screen_info) {
+    const cc::ManagedMemoryPolicy& default_policy) {
   cc::ManagedMemoryPolicy actual = default_policy;
   actual.bytes_limit_when_visible = 0;
 
@@ -572,18 +572,10 @@ cc::ManagedMemoryPolicy RenderWidgetCompositor::GetGpuMemoryPolicy(
   size_t dalvik_mb = base::SysInfo::DalvikHeapSizeMB();
   size_t physical_mb = base::SysInfo::AmountOfPhysicalMemoryMB();
   size_t physical_memory_mb = 0;
-  if (base::SysInfo::IsLowEndDevice()) {
-    // TODO(crbug.com/742534): The code below appears to no longer work.
-    // |dalvik_mb| no longer follows the expected heuristic pattern, causing us
-    // to over-estimate memory on low-end devices. This entire section probably
-    // needs to be re-written, but for now we can address the low-end Android
-    // issues by ignoring |dalvik_mb|.
-    physical_memory_mb = physical_mb;
-  } else if (dalvik_mb >= 256) {
+  if (dalvik_mb >= 256)
     physical_memory_mb = dalvik_mb * 4;
-  } else {
+  else
     physical_memory_mb = std::max(dalvik_mb * 4, (physical_mb * 4) / 3);
-  }
 
   // Now we take a default of 1/8th of memory on high-memory devices,
   // and gradually scale that back for low-memory devices (to be nicer
@@ -629,16 +621,6 @@ cc::ManagedMemoryPolicy RenderWidgetCompositor::GetGpuMemoryPolicy(
   actual.bytes_limit_when_visible = 512 * 1024 * 1024;
   actual.priority_cutoff_when_visible =
       gpu::MemoryAllocation::CUTOFF_ALLOW_NICE_TO_HAVE;
-
-  // For large monitors (4k), double the tile memory to avoid frequent out of
-  // memory problems. 4k could mean a screen width of anywhere from 3840 to 4096
-  // (see https://en.wikipedia.org/wiki/4K_resolution). We use 3500 as a proxy
-  // for "large enough".
-  static const int kLargeDisplayThreshold = 3500;
-  int display_width =
-      std::round(screen_info.rect.width() * screen_info.device_scale_factor);
-  if (display_width >= kLargeDisplayThreshold)
-    actual.bytes_limit_when_visible *= 2;
 #endif
   return actual;
 }
@@ -1013,7 +995,7 @@ void RenderWidgetCompositor::CompositeAndReadbackAsync(
   scoped_refptr<base::SingleThreadTaskRunner> main_thread_task_runner =
       layer_tree_host_->GetTaskRunnerProvider()->MainThreadTaskRunner();
   std::unique_ptr<cc::CopyOutputRequest> request =
-      cc::CopyOutputRequest::CreateBitmapRequest(base::BindOnce(
+      cc::CopyOutputRequest::CreateBitmapRequest(base::Bind(
           [](blink::WebCompositeAndReadbackAsyncCallback* callback,
              scoped_refptr<base::SingleThreadTaskRunner> task_runner,
              std::unique_ptr<cc::CopyOutputResult> result) {
@@ -1172,26 +1154,30 @@ void RenderWidgetCompositor::RequestNewLayerTreeFrameSink() {
   if (delegate_->IsClosing())
     return;
 
+  bool fallback = num_failed_recreate_attempts_ >=
+                  LAYER_TREE_FRAME_SINK_RETRIES_BEFORE_FALLBACK;
+
 #ifdef OS_ANDROID
-  LOG_IF(FATAL, attempt_software_fallback_)
-      << "Android does not support fallback frame sinks.";
+  LOG_IF(FATAL, fallback) << "Android does not support fallback frame sinks.";
 #endif
 
   delegate_->RequestNewLayerTreeFrameSink(
-      attempt_software_fallback_,
-      base::Bind(&RenderWidgetCompositor::SetLayerTreeFrameSink,
-                 weak_factory_.GetWeakPtr()));
+      fallback, base::Bind(&RenderWidgetCompositor::SetLayerTreeFrameSink,
+                           weak_factory_.GetWeakPtr()));
 }
 
 void RenderWidgetCompositor::DidInitializeLayerTreeFrameSink() {
-  attempt_software_fallback_ = false;
+  num_failed_recreate_attempts_ = 0;
 }
 
 void RenderWidgetCompositor::DidFailToInitializeLayerTreeFrameSink() {
-  LOG_IF(FATAL, attempt_software_fallback_)
+  ++num_failed_recreate_attempts_;
+  // Tolerate a certain number of recreation failures to work around races
+  // in the output-surface-lost machinery.
+  LOG_IF(FATAL,
+         (num_failed_recreate_attempts_ >= MAX_LAYER_TREE_FRAME_SINK_RETRIES))
       << "Failed to create a fallback LayerTreeFrameSink.";
 
-  attempt_software_fallback_ = true;
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
       base::Bind(&RenderWidgetCompositor::RequestNewLayerTreeFrameSink,

@@ -12,7 +12,6 @@
 #include "base/scoped_observer.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
-#include "build/build_config.h"
 #include "components/network_session_configurator/common/network_switches.h"
 #include "content/browser/browsing_data/browsing_data_filter_builder_impl.h"
 #include "content/browser/service_worker/service_worker_context_core_observer.h"
@@ -409,15 +408,7 @@ class ClearSiteDataThrottleBrowserTest : public ContentBrowserTest {
 // Tests that the header is recognized on the beginning, in the middle, and on
 // the end of a navigation redirect chain. Each of the three parts of the chain
 // may or may not send the header, so there are 8 configurations to test.
-
-// Crashes on Win only. https://crbug.com/741189
-#if defined(OS_WIN)
-#define MAYBE_RedirectNavigation DISABLED_RedirectNavigation
-#else
-#define MAYBE_RedirectNavigation RedirectNavigation
-#endif
-IN_PROC_BROWSER_TEST_F(ClearSiteDataThrottleBrowserTest,
-                       MAYBE_RedirectNavigation) {
+IN_PROC_BROWSER_TEST_F(ClearSiteDataThrottleBrowserTest, RedirectNavigation) {
   GURL page_urls[3] = {
       https_server()->GetURL("origin1.com", "/"),
       https_server()->GetURL("origin2.com", "/foo/bar"),
@@ -456,15 +447,7 @@ IN_PROC_BROWSER_TEST_F(ClearSiteDataThrottleBrowserTest,
 // Tests that the header is recognized on the beginning, in the middle, and on
 // the end of a resource load redirect chain. Each of the three parts of the
 // chain may or may not send the header, so there are 8 configurations to test.
-
-// Crashes on Win only. https://crbug.com/741189
-#if defined(OS_WIN)
-#define MAYBE_RedirectResourceLoad DISABLED_RedirectResourceLoad
-#else
-#define MAYBE_RedirectResourceLoad RedirectResourceLoad
-#endif
-IN_PROC_BROWSER_TEST_F(ClearSiteDataThrottleBrowserTest,
-                       MAYBE_RedirectResourceLoad) {
+IN_PROC_BROWSER_TEST_F(ClearSiteDataThrottleBrowserTest, RedirectResourceLoad) {
   GURL resource_urls[3] = {
       https_server()->GetURL("origin1.com", "/redirect-start"),
       https_server()->GetURL("origin2.com", "/redirect-middle"),
@@ -636,14 +619,7 @@ IN_PROC_BROWSER_TEST_F(ClearSiteDataThrottleBrowserTest, ServiceWorker) {
 
 // Tests that Clear-Site-Data is only executed on a resource fetch
 // if credentials are allowed in that fetch.
-
-// Crashes on Win only. https://crbug.com/741189
-#if defined(OS_WIN)
-#define MAYBE_Credentials DISABLED_Credentials
-#else
-#define MAYBE_Credentials Credentials
-#endif
-IN_PROC_BROWSER_TEST_F(ClearSiteDataThrottleBrowserTest, MAYBE_Credentials) {
+IN_PROC_BROWSER_TEST_F(ClearSiteDataThrottleBrowserTest, Credentials) {
   GURL page_template = https_server()->GetURL("origin1.com", "/");
   GURL same_origin_resource =
       https_server()->GetURL("origin1.com", "/resource");

@@ -8,9 +8,9 @@
 
 #include "ash/accelerators/accelerator_controller.h"
 #include "ash/shell.h"
-#include "ash/shell_test_api.h"
 #include "ash/system/tray/system_tray_delegate.h"
 #include "ash/test/ash_test_base.h"
+#include "ash/test/shell_test_api.h"
 #include "ash/wm/window_positioning_utils.h"
 #include "ash/wm/window_state.h"
 #include "base/time/time.h"
@@ -36,6 +36,7 @@
 #include "ui/views/window/window_button_order_provider.h"
 
 namespace ash {
+namespace test {
 
 namespace {
 
@@ -122,7 +123,7 @@ class SystemGestureEventFilterTest : public AshTestBase {
     views::WindowButtonOrderProvider::GetInstance()->SetWindowButtonOrder(
         leading, trailing);
 
-    AshTestBase::SetUp();
+    test::AshTestBase::SetUp();
     // Enable brightness key.
     display::test::DisplayManagerTestApi(Shell::Get()->display_manager())
         .SetFirstDisplayAsInternalDisplay();
@@ -478,4 +479,5 @@ TEST_F(SystemGestureEventFilterTest,
   aura::Env::GetInstance()->RemovePreTargetHandler(&event_handler);
 }
 
+}  // namespace test
 }  // namespace ash

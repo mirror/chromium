@@ -213,9 +213,6 @@ TransformDirective ParseRequestTransform(
   } else if (base::LowerCaseEqualsASCII(accept_transform_value,
                                         compressed_video_directive())) {
     return TRANSFORM_COMPRESSED_VIDEO;
-  } else if (base::LowerCaseEqualsASCII(accept_transform_value,
-                                        kIdentityDirective)) {
-    return TRANSFORM_IDENTITY;
   } else {
     return TRANSFORM_NONE;
   }
@@ -240,7 +237,8 @@ TransformDirective ParseResponseTransform(
     return TRANSFORM_EMPTY_IMAGE;
   } else if (base::LowerCaseEqualsASCII(content_transform_value,
                                         kIdentityDirective)) {
-    return TRANSFORM_IDENTITY;
+    // Open Original Image - not really a transform.
+    return TRANSFORM_NONE;
   } else {
     NOTREACHED() << "Unexpected content transform header: "
                  << content_transform_value;

@@ -6,8 +6,6 @@
 
 #include "base/i18n/rtl.h"
 #include "base/logging.h"
-#import "ios/chrome/browser/ui/commands/application_commands.h"
-#import "ios/chrome/browser/ui/commands/browser_commands.h"
 #import "ios/third_party/material_components_ios/src/components/Typography/src/MaterialTypography.h"
 #include "ui/base/l10n/l10n_util.h"
 
@@ -52,7 +50,8 @@ static NSString* const kMenuItemCellID = @"MenuItemCellID";
                          selector:(SEL)selector
                           command:(int)commandID {
   // Only commandIDs < 0 should have associated selectors.
-  DCHECK(selector == nullptr || commandID < 0);
+  DCHECK((commandID >= 0 && selector == nullptr) ||
+         (commandID < 0 && selector != nullptr));
   ToolsMenuViewItem* menuItem = [[self alloc] init];
   [menuItem setAccessibilityLabel:title];
   [menuItem setAccessibilityIdentifier:accessibilityIdentifier];
@@ -63,15 +62,9 @@ static NSString* const kMenuItemCellID = @"MenuItemCellID";
   return menuItem;
 }
 
-- (void)executeCommandWithDispatcher:
-    (id<ApplicationCommands, BrowserCommands>)dispatcher {
-  DCHECK(self.selector);
-  DCHECK([dispatcher respondsToSelector:self.selector]);
-// TODO(crbug.com/738881): Find a better way to call these methods.
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-  [dispatcher performSelector:self.selector];
-#pragma clang diagnostic pop
+- (id)command {
+  // Default is to return |self|.
+  return self;
 }
 
 @end

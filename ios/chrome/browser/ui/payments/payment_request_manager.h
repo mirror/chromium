@@ -40,8 +40,7 @@ class WebState;
 
 - (instancetype)init NS_UNAVAILABLE;
 
-// Stops tracking instances of payments::PaymentRequest for |webState|. This is
-// called before the tab |webState| is associated with is removed.
+// Stops tracking instances of payments::PaymentRequest for |webState|.
 - (void)stopTrackingWebState:(web::WebState*)webState;
 
 // Enables or disables the Payment Request API for the active webState. If
@@ -50,9 +49,7 @@ class WebState;
 // asynchronously.
 - (void)enablePaymentRequest:(BOOL)enabled;
 
-// If there is a pending request, cancels it and dismisses the UI. This must be
-// called if the pending request has to be terminated, e.g., when the active
-// webState changes.
+// Cancels the pending request and dismiss the UI.
 - (void)cancelRequest;
 
 // Destroys the receiver. Any following call is not supported.

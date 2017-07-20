@@ -91,9 +91,8 @@
                     { "name": "name", "type": "string", "optional": true, "description": "Frame's name as specified in the tag." },
                     { "name": "url", "type": "string", "description": "Frame document's URL." },
                     { "name": "securityOrigin", "type": "string", "description": "Frame document's security origin." },
-                    { "name": "mimeType", "type": "string", "description": "Frame document's mimeType as determined by the browser." },
-                    { "name": "unreachableUrl", "type": "string", "optional": "true", "experimental": "true", "description": "If the frame failed to load, this contains the URL that could not be loaded." }
-               ]
+                    { "name": "mimeType", "type": "string", "description": "Frame document's mimeType as determined by the browser." }
+                ]
             },
             {
                 "id": "FrameResource",
@@ -489,8 +488,7 @@
                     {"name": "marginBottom", "type": "number", "optional": true, "description": "Bottom margin in inches. Defaults to 1cm (~0.4 inches)."},
                     {"name": "marginLeft", "type": "number", "optional": true, "description": "Left margin in inches. Defaults to 1cm (~0.4 inches)."},
                     {"name": "marginRight", "type": "number", "optional": true, "description": "Right margin in inches. Defaults to 1cm (~0.4 inches)."},
-                    {"name": "pageRanges", "type": "string", "optional": true, "description": "Paper ranges to print, e.g., '1-5, 8, 11-13'. Defaults to the empty string, which means print all pages."},
-                    {"name": "ignoreInvalidPageRanges", "type": "boolean", "optional": true, "description": "Whether to silently ignore invalid but successfully parsed page ranges, such as '3-2'. Defaults to false."}
+                    {"name": "pageRanges", "type": "string", "optional": true, "description": "Paper ranges to print, e.g., '1-5, 8, 11-13'. Defaults to the empty string, which means print all pages."}
                 ],
                 "returns": [
                     { "name": "data", "type": "string", "description": "Base64-encoded pdf data." }
@@ -3383,10 +3381,6 @@
                     { "name": "nodeType", "type": "integer", "description": "<code>Node</code>'s nodeType." },
                     { "name": "nodeName", "type": "string", "description": "<code>Node</code>'s nodeName." },
                     { "name": "nodeValue", "type": "string", "description": "<code>Node</code>'s nodeValue." },
-                    { "name": "textValue", "type": "string", "optional": true, "description": "Only set for textarea elements, contains the text value." },
-                    { "name": "inputValue", "type": "string", "optional": true, "description": "Only set for input elements, contains the input's associated text value." },
-                    { "name": "inputChecked", "type": "boolean", "optional": true, "description": "Only set for radio and checkbox input elements, indicates if the element has been checked" },
-                    { "name": "optionSelected", "type": "boolean", "optional": true, "description": "Only set for option elements, indicates if the element has been selected" },
                     { "name": "backendNodeId", "$ref": "DOM.BackendNodeId", "description": "<code>Node</code>'s id, corresponds to DOM.Node.backendNodeId." },
                     { "name": "childNodeIndexes", "type": "array", "items": { "type": "integer" }, "optional": true, "description": "The indexes of the node's child nodes in the <code>domNodes</code> array returned by <code>getSnapshot</code>, if any." },
                     { "name": "attributes", "type": "array", "items": { "$ref": "NameValue" }, "optional": true, "description": "Attributes of an <code>Element</code> node." },

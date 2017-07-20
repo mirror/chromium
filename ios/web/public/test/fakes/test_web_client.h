@@ -6,7 +6,6 @@
 #define IOS_WEB_PUBLIC_TEST_FAKES_TEST_WEB_CLIENT_H_
 
 #import <Foundation/Foundation.h>
-#include <vector>
 
 #include "base/compiler_specific.h"
 #import "ios/web/public/web_client.h"
@@ -24,8 +23,8 @@ class TestWebClient : public web::WebClient {
   ~TestWebClient() override;
 
   // WebClient implementation.
-  void AddAdditionalSchemes(Schemes* schemes) const override;
-  // Returns true for kTestWebUIScheme and kTestNativeContentScheme URL schemes.
+  void AddAdditionalSchemes(std::vector<url::SchemeWithType>*) const override;
+  // Returns true for kTestWebUIScheme URL scheme.
   bool IsAppSpecificURL(const GURL& url) const override;
   base::RefCountedMemory* GetDataResourceBytes(int id) const override;
   NSString* GetEarlyPageScript(BrowserState* browser_state) const override;
@@ -41,7 +40,7 @@ class TestWebClient : public web::WebClient {
   void SetEarlyPageScript(NSString* page_script);
 
   // Accessors for last arguments passed to AllowCertificateError.
-  int last_cert_error_code() const { return last_cert_error_code_; }
+  int last_cert_error_code() const { return last_cert_error_code_; };
   const net::SSLInfo& last_cert_error_ssl_info() const {
     return last_cert_error_ssl_info_;
   }

@@ -19,8 +19,6 @@
 #include "platform/scheduler/base/work_queue_sets.h"
 #include "platform/wtf/PtrUtil.h"
 
-static const double kLongTaskTraceEventThreshold = 0.05;
-
 namespace blink {
 namespace scheduler {
 
@@ -537,14 +535,13 @@ TaskQueueManager::ProcessTaskResult TaskQueueManager::ProcessTaskFromWorkQueue(
 
   currently_executing_task_queue_ = prev_executing_task_queue;
 
-  double task_end_time = 0;
+
   if (queue->GetShouldNotifyObservers()) {
     if (task_start_time) {
       *time_after_task = real_time_domain()->Now();
-      task_end_time = MonotonicTimeInSeconds(*time_after_task);
+      double task_end_time = MonotonicTimeInSeconds(*time_after_task);
 
       queue->OnTaskCompleted(
-          pending_task,
           base::TimeTicks() + base::TimeDelta::FromSecondsD(task_start_time),
           base::TimeTicks() + base::TimeDelta::FromSecondsD(task_end_time));
 
@@ -555,12 +552,6 @@ TaskQueueManager::ProcessTaskResult TaskQueueManager::ProcessTaskFromWorkQueue(
     for (auto& observer : task_observers_)
       observer.DidProcessTask(pending_task);
     queue->NotifyDidProcessTask(pending_task);
-  }
-
-  if (task_start_time && task_end_time &&
-      task_end_time - task_start_time > kLongTaskTraceEventThreshold) {
-    TRACE_EVENT_INSTANT1("blink", "LongTask", TRACE_EVENT_SCOPE_THREAD,
-                         "duration", task_end_time - task_start_time);
   }
 
   return ProcessTaskResult::EXECUTED;

@@ -8,8 +8,6 @@
 #include <string>
 
 #include "base/macros.h"
-#include "ui/app_list/app_list_constants.h"
-#include "ui/app_list/app_list_model.h"
 #include "ui/app_list/search_box_model_observer.h"
 #include "ui/app_list/speech_ui_model_observer.h"
 #include "ui/gfx/shadow_value.h"
@@ -30,10 +28,10 @@ enum SearchBoxFocus {
   FOCUS_BACK_BUTTON,    // Back button, only responds to ENTER
   FOCUS_SEARCH_BOX,     // Nothing else has partial focus
   FOCUS_MIC_BUTTON,     // Mic button, only responds to ENTER
-  FOCUS_CLOSE_BUTTON,   // Close button, only responds to ENTER
   FOCUS_CONTENTS_VIEW,  // Something outside the SearchBox is selected
 };
 
+class AppListModel;
 class AppListView;
 class AppListViewDelegate;
 class SearchBoxModel;
@@ -69,7 +67,6 @@ class APP_LIST_EXPORT SearchBoxView : public views::View,
 
   views::ImageButton* back_button();
   views::Textfield* search_box() { return search_box_; }
-  bool IsCloseButtonVisible() const;
 
   void set_contents_view(views::View* contents_view) {
     contents_view_ = contents_view;
@@ -110,38 +107,12 @@ class APP_LIST_EXPORT SearchBoxView : public views::View,
   void OnGestureEvent(ui::GestureEvent* event) override;
   void OnMouseEvent(ui::MouseEvent* event) override;
 
-  // Returns background border corner radius in the given state.
-  static int GetSearchBoxBorderCornerRadiusForState(AppListModel::State state);
-
-  // Returns background color for the given state.
-  SkColor GetBackgroundColorForState(AppListModel::State state) const;
-
-  // Updates the search box's background corner radius and color.
-  void UpdateBackground(double progress,
-                        AppListModel::State current_state,
-                        AppListModel::State target_state);
-
-  // Used only in the tests to get the current search icon.
-  views::ImageView* get_search_icon_for_test() { return search_icon_; }
-
  private:
   // Updates model text and selection model with current Textfield info.
   void UpdateModel();
 
   // Fires query change notification.
   void NotifyQueryChanged();
-
-  // Updates the search icon.
-  void UpdateSearchIcon();
-
-  // Gets the wallpaper prominent colors, returning empty if there aren't any.
-  const std::vector<SkColor>& GetWallpaperProminentColors() const;
-
-  // Sets the background color.
-  void SetBackgroundColor(SkColor light_vibrant);
-
-  // Sets the search box color.
-  void SetSearchBoxColor(SkColor color);
 
   // Overridden from views::TextfieldController:
   void ContentsChanged(views::Textfield* sender,
@@ -150,7 +121,6 @@ class APP_LIST_EXPORT SearchBoxView : public views::View,
                       const ui::KeyEvent& key_event) override;
   bool HandleMouseEvent(views::Textfield* sender,
                         const ui::MouseEvent& mouse_event) override;
-
   bool HandleGestureEvent(views::Textfield* sender,
                           const ui::GestureEvent& gesture_event) override;
 
@@ -170,17 +140,15 @@ class APP_LIST_EXPORT SearchBoxView : public views::View,
 
   SearchBoxViewDelegate* delegate_;     // Not owned.
   AppListViewDelegate* view_delegate_;  // Not owned.
-  AppListModel* model_ = nullptr;       // Owned by the profile-keyed service.
+  AppListModel* model_;                 // Owned by the profile-keyed service.
 
-  // Owned by views hierarchy.
-  views::View* content_container_;
-  views::ImageView* search_icon_ = nullptr;
-  SearchBoxImageButton* back_button_ = nullptr;
-  SearchBoxImageButton* speech_button_ = nullptr;
-  SearchBoxImageButton* close_button_ = nullptr;
-  views::Textfield* search_box_;
-  views::View* contents_view_ = nullptr;
-  app_list::AppListView* app_list_view_;
+  views::View* content_container_;        // Owned by views hierarchy.
+  views::ImageView* google_icon_;         // Owned by views hierarchy.
+  SearchBoxImageButton* back_button_;     // Owned by views hierarchy.
+  SearchBoxImageButton* speech_button_;   // Owned by views hierarchy.
+  views::Textfield* search_box_;          // Owned by views hierarchy.
+  views::View* contents_view_;            // Owned by views hierarchy.
+  app_list::AppListView* app_list_view_;  // Owned by views hierarchy.
 
   SearchBoxFocus focused_view_;  // Which element has TAB'd focus.
 
@@ -188,10 +156,6 @@ class APP_LIST_EXPORT SearchBoxView : public views::View,
   const bool is_fullscreen_app_list_enabled_;
   // Whether the search box is active.
   bool is_search_box_active_ = false;
-  // The current background color.
-  SkColor background_color_ = kSearchBoxBackgroundDefault;
-  // The current search box color.
-  SkColor search_box_color_ = kDefaultSearchboxColor;
 
   DISALLOW_COPY_AND_ASSIGN(SearchBoxView);
 };

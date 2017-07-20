@@ -34,19 +34,19 @@ bool BlockingTaskRunner::BelongsToCurrentThread() {
 }
 
 bool BlockingTaskRunner::PostTask(const tracked_objects::Location& from_here,
-                                  base::OnceClosure task) {
+                                  const base::Closure& task) {
   base::AutoLock lock(lock_);
   DCHECK(task_runner_.get() || capture_);
   if (!capture_)
-    return task_runner_->PostTask(from_here, std::move(task));
-  captured_tasks_.push_back(std::move(task));
+    return task_runner_->PostTask(from_here, task);
+  captured_tasks_.push_back(task);
   return true;
 }
 
 void BlockingTaskRunner::SetCapture(bool capture) {
   DCHECK(BelongsToCurrentThread());
 
-  std::vector<base::OnceClosure> tasks;
+  std::vector<base::Closure> tasks;
 
   {
     base::AutoLock lock(lock_);
@@ -60,7 +60,7 @@ void BlockingTaskRunner::SetCapture(bool capture) {
     tasks.swap(captured_tasks_);
   }
   for (size_t i = 0; i < tasks.size(); ++i)
-    std::move(tasks[i]).Run();
+    tasks[i].Run();
 }
 
 BlockingTaskRunner::CapturePostTasks::CapturePostTasks(

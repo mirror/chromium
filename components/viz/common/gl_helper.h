@@ -10,7 +10,6 @@
 #include "base/atomicops.h"
 #include "base/callback.h"
 #include "base/macros.h"
-#include "components/viz/common/viz_common_export.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "gpu/command_buffer/common/mailbox_holder.h"
 #include "third_party/skia/include/core/SkBitmap.h"
@@ -134,7 +133,7 @@ class GLHelperReadbackSupport;
 
 // Provides higher level operations on top of the gpu::gles2::GLES2Interface
 // interfaces.
-class VIZ_COMMON_EXPORT GLHelper {
+class GLHelper {
  public:
   GLHelper(gpu::gles2::GLES2Interface* gl,
            gpu::ContextSupport* context_support);

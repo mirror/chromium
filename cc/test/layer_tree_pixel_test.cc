@@ -42,8 +42,8 @@ std::unique_ptr<viz::TestLayerTreeFrameSink>
 LayerTreePixelTest::CreateLayerTreeFrameSink(
     const RendererSettings& renderer_settings,
     double refresh_rate,
-    scoped_refptr<viz::ContextProvider>,
-    scoped_refptr<viz::ContextProvider>) {
+    scoped_refptr<ContextProvider>,
+    scoped_refptr<ContextProvider>) {
   scoped_refptr<TestInProcessContextProvider> compositor_context_provider;
   scoped_refptr<TestInProcessContextProvider> worker_context_provider;
   if (test_type_ == PIXEL_TEST_GL) {
@@ -68,7 +68,7 @@ LayerTreePixelTest::CreateLayerTreeFrameSink(
 
 std::unique_ptr<OutputSurface>
 LayerTreePixelTest::CreateDisplayOutputSurfaceOnThread(
-    scoped_refptr<viz::ContextProvider> compositor_context_provider) {
+    scoped_refptr<ContextProvider> compositor_context_provider) {
   std::unique_ptr<PixelTestOutputSurface> display_output_surface;
   if (test_type_ == PIXEL_TEST_GL) {
     // Pixel tests use a separate context for the Display to more closely
@@ -90,8 +90,8 @@ LayerTreePixelTest::CreateDisplayOutputSurfaceOnThread(
 
 std::unique_ptr<CopyOutputRequest>
 LayerTreePixelTest::CreateCopyOutputRequest() {
-  return CopyOutputRequest::CreateBitmapRequest(base::BindOnce(
-      &LayerTreePixelTest::ReadbackResult, base::Unretained(this)));
+  return CopyOutputRequest::CreateBitmapRequest(
+      base::Bind(&LayerTreePixelTest::ReadbackResult, base::Unretained(this)));
 }
 
 void LayerTreePixelTest::ReadbackResult(

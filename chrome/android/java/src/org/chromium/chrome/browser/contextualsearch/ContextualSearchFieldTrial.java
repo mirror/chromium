@@ -34,10 +34,7 @@ public class ContextualSearchFieldTrial {
     private static final String DISABLE_SEARCH_TERM_RESOLUTION = "disable_search_term_resolution";
     private static final String WAIT_AFTER_TAP_DELAY_MS = "wait_after_tap_delay_ms";
 
-    // ------------
-    // Translation.
-    // ------------
-    // All these members are private, except for usage by testing.
+    // Translation.  All these members are private, except for usage by testing.
     // Master switch, needed to disable all translate code for Contextual Search in case of an
     // emergency.
     @VisibleForTesting
@@ -47,9 +44,6 @@ public class ContextualSearchFieldTrial {
     static final String ENABLE_ENGLISH_TARGET_TRANSLATION =
             "enable_english_target_translation";
 
-    // ---------------------------------------------
-    // Features for suppression or machine learning.
-    // ---------------------------------------------
     // TODO(donnd): remove all supporting code once short-lived data collection is done.
     private static final String SCREEN_TOP_SUPPRESSION_DPS = "screen_top_suppression_dps";
     private static final String ENABLE_BAR_OVERLAP_COLLECTION = "enable_bar_overlap_collection";
@@ -60,27 +54,20 @@ public class ContextualSearchFieldTrial {
             "enable_not_long_word_suppression";
     @VisibleForTesting
     static final String NOT_AN_ENTITY_SUPPRESSION_ENABLED = "enable_not_an_entity_suppression";
-    // The threshold for tap suppression based on duration.
-    private static final String TAP_DURATION_THRESHOLD_MS = "tap_duration_threshold_ms";
-    // The threshold for tap suppression based on a recent scroll.
-    private static final String RECENT_SCROLL_DURATION_MS = "recent_scroll_duration_ms";
 
     private static final String MINIMUM_SELECTION_LENGTH = "minimum_selection_length";
 
-    // -----------------
-    // Disable switches.
-    // -----------------
     // Safety switch for disabling online-detection.  Also used to disable detection when running
     // tests.
     @VisibleForTesting
     static final String ONLINE_DETECTION_DISABLED = "disable_online_detection";
+
     private static final String DISABLE_AMP_AS_SEPARATE_TAB = "disable_amp_as_separate_tab";
-    // Disable logging for Machine Learning
+
+    // Machine Learning
     private static final String DISABLE_RANKER_LOGGING = "disable_ranker_logging";
 
-    // ----------------------
-    // Privacy-related flags.
-    // ----------------------
+    // Privacy-related flags
     private static final String DISABLE_SEND_HOME_COUNTRY = "disable_send_home_country";
     private static final String DISABLE_PAGE_CONTENT_NOTIFICATION =
             "disable_page_content_notification";
@@ -111,8 +98,6 @@ public class ContextualSearchFieldTrial {
     private static Boolean sContextualSearchUrlActionsEnabled;
     private static Boolean sIsRankerLoggingDisabled;
     private static Integer sWaitAfterTapDelayMs;
-    private static Integer sTapDurationThresholdMs;
-    private static Integer sRecentScrollDurationMs;
 
     /**
      * Don't instantiate.
@@ -388,30 +373,6 @@ public class ContextualSearchFieldTrial {
             sWaitAfterTapDelayMs = getIntParamValueOrDefault(WAIT_AFTER_TAP_DELAY_MS, 0);
         }
         return sWaitAfterTapDelayMs.intValue();
-    }
-
-    /**
-     * Gets a threshold for the duration of a tap gesture for categorization as brief or lengthy.
-     * @return The maximum amount of time in milliseconds for a tap gesture that's still considered
-     *         a very brief duration tap.
-     */
-    static int getTapDurationThresholdMs() {
-        if (sTapDurationThresholdMs == null) {
-            sTapDurationThresholdMs = getIntParamValueOrDefault(TAP_DURATION_THRESHOLD_MS, 0);
-        }
-        return sTapDurationThresholdMs.intValue();
-    }
-
-    /**
-     * Gets the duration to use for suppressing Taps after a recent scroll, or {@code 0} if no
-     * suppression is configured.
-     * @return The period of time after a scroll when tap triggering is suppressed.
-     */
-    static int getRecentScrollDurationMs() {
-        if (sRecentScrollDurationMs == null) {
-            sRecentScrollDurationMs = getIntParamValueOrDefault(RECENT_SCROLL_DURATION_MS, 0);
-        }
-        return sRecentScrollDurationMs.intValue();
     }
 
     // ---------------------------

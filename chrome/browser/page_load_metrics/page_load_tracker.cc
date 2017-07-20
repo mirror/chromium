@@ -639,10 +639,4 @@ void PageLoadTracker::OnSubframeMetadataChanged() {
   }
 }
 
-void PageLoadTracker::BroadcastEventToObservers(const void* const event_key) {
-  for (const auto& observer : observers_) {
-    observer->OnEventOccurred(event_key);
-  }
-}
-
 }  // namespace page_load_metrics

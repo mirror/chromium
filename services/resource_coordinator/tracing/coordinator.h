@@ -17,6 +17,7 @@
 #include "services/resource_coordinator/public/interfaces/tracing/tracing.mojom.h"
 #include "services/resource_coordinator/tracing/agent_registry.h"
 #include "services/resource_coordinator/tracing/recorder.h"
+#include "services/service_manager/public/cpp/bind_source_info.h"
 
 namespace tracing {
 
@@ -34,7 +35,9 @@ class Coordinator : public mojom::Coordinator {
 
   Coordinator();
 
-  void BindCoordinatorRequest(mojom::CoordinatorRequest request);
+  void BindCoordinatorRequest(
+      const service_manager::BindSourceInfo& source_info,
+      mojom::CoordinatorRequest request);
 
  private:
   friend std::default_delete<Coordinator>;

@@ -26,6 +26,7 @@
 #include "cc/raster/task_graph_runner.h"
 #include "cc/scheduler/begin_frame_source.h"
 #include "cc/scheduler/delay_based_time_source.h"
+#include "cc/surfaces/frame_sink_manager.h"
 #include "components/viz/common/gl_helper.h"
 #include "components/viz/host/host_frame_sink_manager.h"
 #include "components/viz/service/display/display.h"
@@ -33,7 +34,6 @@
 #include "components/viz/service/display_embedder/compositor_overlay_candidate_validator.h"
 #include "components/viz/service/display_embedder/server_shared_bitmap_manager.h"
 #include "components/viz/service/frame_sinks/direct_layer_tree_frame_sink.h"
-#include "components/viz/service/frame_sinks/frame_sink_manager.h"
 #include "content/browser/browser_main_loop.h"
 #include "content/browser/compositor/browser_compositor_output_surface.h"
 #include "content/browser/compositor/gpu_browser_compositor_output_surface.h"
@@ -104,7 +104,7 @@
 #include "content/browser/compositor/vulkan_browser_compositor_output_surface.h"
 #endif
 
-using viz::ContextProvider;
+using cc::ContextProvider;
 using gpu::gles2::GLES2Interface;
 
 namespace {
@@ -619,13 +619,13 @@ void GpuProcessTransportFactory::EstablishedGpuChannel(
   auto layer_tree_frame_sink =
       vulkan_context_provider
           ? base::MakeUnique<viz::DirectLayerTreeFrameSink>(
-                compositor->frame_sink_id(), GetHostFrameSinkManager(),
-                GetFrameSinkManager(), data->display.get(),
+                compositor->frame_sink_id(), GetFrameSinkManager(),
+                data->display.get(),
                 static_cast<scoped_refptr<cc::VulkanContextProvider>>(
                     vulkan_context_provider))
           : base::MakeUnique<viz::DirectLayerTreeFrameSink>(
-                compositor->frame_sink_id(), GetHostFrameSinkManager(),
-                GetFrameSinkManager(), data->display.get(), context_provider,
+                compositor->frame_sink_id(), GetFrameSinkManager(),
+                data->display.get(), context_provider,
                 shared_worker_context_provider_, GetGpuMemoryBufferManager(),
                 viz::ServerSharedBitmapManager::current());
   data->display->Resize(compositor->size());
@@ -824,13 +824,14 @@ void GpuProcessTransportFactory::RemoveObserver(
   observer_list_.RemoveObserver(observer);
 }
 
-viz::FrameSinkManager* GpuProcessTransportFactory::GetFrameSinkManager() {
+cc::FrameSinkManager* GpuProcessTransportFactory::GetFrameSinkManager() {
   return BrowserMainLoop::GetInstance()->GetFrameSinkManager();
 }
 
 viz::GLHelper* GpuProcessTransportFactory::GetGLHelper() {
   if (!gl_helper_ && !per_compositor_data_.empty()) {
-    scoped_refptr<ContextProvider> provider = SharedMainThreadContextProvider();
+    scoped_refptr<cc::ContextProvider> provider =
+        SharedMainThreadContextProvider();
     if (provider.get())
       gl_helper_.reset(
           new viz::GLHelper(provider->ContextGL(), provider->ContextSupport()));
@@ -858,7 +859,7 @@ void GpuProcessTransportFactory::SetCompositorSuspendedForRecycle(
 }
 #endif
 
-scoped_refptr<ContextProvider>
+scoped_refptr<cc::ContextProvider>
 GpuProcessTransportFactory::SharedMainThreadContextProvider() {
   if (shared_main_thread_contexts_)
     return shared_main_thread_contexts_;
@@ -933,7 +934,7 @@ void GpuProcessTransportFactory::OnLostMainThreadSharedContext() {
   // new resources are created if needed.
   // Kill shared contexts for both threads in tandem so they are always in
   // the same share group.
-  scoped_refptr<ContextProvider> lost_shared_main_thread_contexts =
+  scoped_refptr<cc::ContextProvider> lost_shared_main_thread_contexts =
       shared_main_thread_contexts_;
   shared_main_thread_contexts_  = NULL;
 

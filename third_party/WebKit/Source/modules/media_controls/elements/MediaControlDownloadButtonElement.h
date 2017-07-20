@@ -23,13 +23,11 @@ class MediaControlDownloadButtonElement final
 
   // MediaControlInputElement overrides.
   // TODO(mlamouri): add WillRespondToMouseClickEvents
-  WebLocalizedString::Name GetOverflowStringName() const final;
-  bool HasOverflowButton() const final;
+  WebLocalizedString::Name GetOverflowStringName() const override;
+  bool HasOverflowButton() const override;
+  void SetIsWanted(bool) override;
 
   DECLARE_VIRTUAL_TRACE();
-
- protected:
-  const char* GetNameForHistograms() const final;
 
  private:
   // This is used for UMA histogram (Media.Controls.Download). New values should
@@ -40,10 +38,17 @@ class MediaControlDownloadButtonElement final
     kCount  // Keep last.
   };
 
-  void DefaultEventHandler(Event*) final;
+  void DefaultEventHandler(Event*) override;
+
+  void RecordMetrics(DownloadActionMetrics);
 
   // Points to an anchor element that contains the URL of the media file.
   Member<HTMLAnchorElement> anchor_;
+
+  // UMA related boolean. They are used to prevent counting something twice
+  // for the same media element.
+  bool click_use_counted_ = false;
+  bool show_use_counted_ = false;
 };
 
 }  // namespace blink

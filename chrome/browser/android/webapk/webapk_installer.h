@@ -98,6 +98,9 @@ class WebApkInstaller : public net::URLFetcherDelegate {
       const base::Callback<void(std::unique_ptr<std::vector<uint8_t>>)>&
           callback);
 
+  // Registers JNI hooks.
+  static bool Register(JNIEnv* env);
+
  protected:
   explicit WebApkInstaller(content::BrowserContext* browser_context);
 

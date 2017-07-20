@@ -7,15 +7,16 @@
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/ipc/gfx_param_traits.h"
 #include "ui/gfx/ipc/skia/gfx_skia_param_traits.h"
-#include "ui/ozone/public/overlay_surface_candidate.h"
 
 namespace ui {
 
-DisplayMode_Params::DisplayMode_Params() {}
+DisplayMode_Params::DisplayMode_Params() {
+}
 
 DisplayMode_Params::~DisplayMode_Params() {}
 
-DisplaySnapshot_Params::DisplaySnapshot_Params() {}
+DisplaySnapshot_Params::DisplaySnapshot_Params() {
+}
 
 DisplaySnapshot_Params::DisplaySnapshot_Params(
     const DisplaySnapshot_Params& other) = default;
@@ -25,7 +26,7 @@ DisplaySnapshot_Params::~DisplaySnapshot_Params() {}
 OverlayCheck_Params::OverlayCheck_Params() {}
 
 OverlayCheck_Params::OverlayCheck_Params(
-    const ui::OverlaySurfaceCandidate& candidate)
+    const OverlayCandidatesOzone::OverlaySurfaceCandidate& candidate)
     : buffer_size(candidate.buffer_size),
       transform(candidate.transform),
       format(candidate.format),
@@ -36,7 +37,8 @@ OverlayCheck_Params::OverlayCheck_Params(
 OverlayCheck_Params::OverlayCheck_Params(const OverlayCheck_Params& other) =
     default;
 
-OverlayCheck_Params::~OverlayCheck_Params() {}
+OverlayCheck_Params::~OverlayCheck_Params() {
+}
 
 bool OverlayCheck_Params::operator<(const OverlayCheck_Params& param) const {
   int lwidth = buffer_size.width();

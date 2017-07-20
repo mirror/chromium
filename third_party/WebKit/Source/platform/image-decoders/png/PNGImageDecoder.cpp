@@ -468,16 +468,17 @@ void PNGImageDecoder::FrameComplete() {
   buffer.SetStatus(ImageFrame::kFrameComplete);
 }
 
-bool PNGImageDecoder::FrameIsReceivedAtIndex(size_t index) const {
+bool PNGImageDecoder::FrameIsCompleteAtIndex(size_t index) const {
   if (!IsDecodedSizeAvailable())
     return false;
 
   DCHECK(!Failed() && reader_);
 
-  // For non-animated images, return ImageDecoder::FrameIsReceivedAtIndex.
+  // For non-animated images, return whether the status of the frame is
+  // ImageFrame::FrameComplete with ImageDecoder::FrameIsCompleteAtIndex.
   // This matches the behavior of WEBPImageDecoder.
   if (reader_->ParseCompleted() && reader_->FrameCount() == 1)
-    return ImageDecoder::FrameIsReceivedAtIndex(index);
+    return ImageDecoder::FrameIsCompleteAtIndex(index);
 
   return reader_->FrameIsReceivedAtIndex(index);
 }

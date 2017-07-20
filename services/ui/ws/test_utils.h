@@ -14,7 +14,6 @@
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/single_thread_task_runner.h"
-#include "services/service_manager/public/cpp/bind_source_info.h"
 #include "services/ui/display/screen_manager.h"
 #include "services/ui/display/viewport_metrics.h"
 #include "services/ui/public/interfaces/display_manager.mojom.h"
@@ -67,9 +66,7 @@ class TestScreenManager : public display::ScreenManager {
   void RemoveDisplay(int64_t id);
 
   // display::ScreenManager:
-  void AddInterfaces(
-      service_manager::BinderRegistryWithArgs<
-          const service_manager::BindSourceInfo&>* registry) override {}
+  void AddInterfaces(service_manager::BinderRegistry* registry) override {}
   void Init(display::ScreenManagerDelegate* delegate) override;
   void RequestCloseDisplay(int64_t display_id) override {}
   display::ScreenBase* GetScreen() override;
@@ -610,7 +607,6 @@ class TestWindowServerDelegate : public WindowServerDelegate {
   bool IsTestConfig() const override;
   void OnWillCreateTreeForWindowManager(
       bool automatically_create_display_roots) override;
-  ThreadedImageCursorsFactory* GetThreadedImageCursorsFactory() override;
 
  private:
   WindowServer* window_server_ = nullptr;
@@ -618,7 +614,6 @@ class TestWindowServerDelegate : public WindowServerDelegate {
   // All TestWindowTreeBinding objects created via CreateWindowTreeBinding.
   // These are owned by the corresponding WindowTree.
   std::vector<TestWindowTreeBinding*> bindings_;
-  std::unique_ptr<ThreadedImageCursorsFactory> threaded_image_cursors_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(TestWindowServerDelegate);
 };
@@ -727,47 +722,6 @@ class TestDisplayManagerObserver : public mojom::DisplayManagerObserver {
   std::string observer_calls_;
 
   DISALLOW_COPY_AND_ASSIGN(TestDisplayManagerObserver);
-};
-
-// -----------------------------------------------------------------------------
-// Empty implementation of PlatformDisplay.
-class TestPlatformDisplay : public PlatformDisplay {
- public:
-  TestPlatformDisplay(const display::ViewportMetrics& metrics,
-                      ui::CursorData* cursor_storage);
-  ~TestPlatformDisplay() override;
-
-  display::Display::Rotation cursor_rotation() const {
-    return cursor_rotation_;
-  }
-  float cursor_scale() const { return cursor_scale_; }
-
-  // PlatformDisplay:
-  void Init(PlatformDisplayDelegate* delegate) override;
-  void SetViewportSize(const gfx::Size& size) override;
-  void SetTitle(const base::string16& title) override;
-  void SetCapture() override;
-  void ReleaseCapture() override;
-  void SetCursor(const ui::CursorData& cursor) override;
-  void SetCursorSize(const ui::CursorSize& cursor_size) override;
-  void MoveCursorTo(const gfx::Point& window_pixel_location) override;
-  void UpdateTextInputState(const ui::TextInputState& state) override;
-  void SetImeVisibility(bool visible) override;
-  void UpdateViewportMetrics(const display::ViewportMetrics& metrics) override;
-  gfx::AcceleratedWidget GetAcceleratedWidget() const override;
-  FrameGenerator* GetFrameGenerator() override;
-  EventSink* GetEventSink() override;
-  void SetCursorConfig(display::Display::Rotation rotation,
-                       float scale) override;
-
- private:
-  display::ViewportMetrics metrics_;
-  ui::CursorData* cursor_storage_;
-  display::Display::Rotation cursor_rotation_ =
-      display::Display::Rotation::ROTATE_0;
-  float cursor_scale_ = 1.0f;
-
-  DISALLOW_COPY_AND_ASSIGN(TestPlatformDisplay);
 };
 
 // -----------------------------------------------------------------------------

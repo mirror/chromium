@@ -14,11 +14,16 @@ enum class DomCode;
 }
 
 namespace exo {
+class Keyboard;
 class Surface;
 
 // Handles events on keyboards in context-specific ways.
 class KeyboardDelegate {
  public:
+  // Called at the top of the keyboard's destructor, to give observers a
+  // chance to remove themselves.
+  virtual void OnKeyboardDestroying(Keyboard* keyboard) = 0;
+
   // This should return true if |surface| is a valid target for this keyboard.
   // E.g. the surface is owned by the same client as the keyboard.
   virtual bool CanAcceptKeyboardEventsForSurface(Surface* surface) const = 0;

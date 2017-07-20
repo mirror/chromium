@@ -277,10 +277,6 @@ void TransformOperations::AppendIdentity() {
   operations_.push_back(TransformOperation());
 }
 
-void TransformOperations::Append(const TransformOperation& operation) {
-  operations_.push_back(operation);
-}
-
 bool TransformOperations::IsIdentity() const {
   for (size_t i = 0; i < operations_.size(); ++i) {
     if (!operations_[i].IsIdentity())
@@ -289,18 +285,8 @@ bool TransformOperations::IsIdentity() const {
   return true;
 }
 
-bool TransformOperations::operator==(const TransformOperations& other) const {
-  if (size() != other.size())
-    return false;
-  for (size_t i = 0; i < operations_.size(); ++i) {
-    if (operations_[i] != other.operations_[i])
-      return false;
-  }
-  return true;
-}
-
-bool TransformOperations::operator!=(const TransformOperations& other) const {
-  return !(*this == other);
+void TransformOperations::Append(const TransformOperation& operation) {
+  operations_.push_back(operation);
 }
 
 bool TransformOperations::BlendInternal(const TransformOperations& from,

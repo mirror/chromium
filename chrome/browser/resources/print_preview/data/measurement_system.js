@@ -91,11 +91,12 @@ cr.define('print_preview', function() {
     get unitSymbol() {
       if (this.unitType_ == print_preview.MeasurementSystemUnitType.METRIC) {
         return 'mm';
-      }
-      if (this.unitType_ == print_preview.MeasurementSystemUnitType.IMPERIAL) {
+      } else if (
+          this.unitType_ == print_preview.MeasurementSystemUnitType.IMPERIAL) {
         return '"';
+      } else {
+        throw Error('Unit type not supported: ' + this.unitType_);
       }
-      throw Error('Unit type not supported: ' + this.unitType_);
     },
 
     /**
@@ -140,8 +141,9 @@ cr.define('print_preview', function() {
     convertFromPoints: function(pts) {
       if (this.unitType_ == print_preview.MeasurementSystemUnitType.METRIC) {
         return pts / MeasurementSystem.PTS_PER_MM_;
+      } else {
+        return pts / MeasurementSystem.PTS_PER_INCH_;
       }
-      return pts / MeasurementSystem.PTS_PER_INCH_;
     },
 
     /**
@@ -151,8 +153,9 @@ cr.define('print_preview', function() {
     convertToPoints: function(localUnits) {
       if (this.unitType_ == print_preview.MeasurementSystemUnitType.METRIC) {
         return localUnits * MeasurementSystem.PTS_PER_MM_;
+      } else {
+        return localUnits * MeasurementSystem.PTS_PER_INCH_;
       }
-      return localUnits * MeasurementSystem.PTS_PER_INCH_;
     }
   };
 

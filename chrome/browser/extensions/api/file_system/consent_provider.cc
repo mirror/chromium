@@ -17,12 +17,12 @@
 #include "chrome/browser/extensions/api/file_system/request_file_system_notification.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/views/extensions/request_file_system_dialog_view.h"
+#include "chrome/common/extensions/api/file_system.h"
 #include "components/user_manager/user_manager.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
 #include "extensions/browser/app_window/app_window.h"
 #include "extensions/browser/app_window/app_window_registry.h"
-#include "extensions/common/api/file_system.h"
 #include "extensions/common/manifest_handlers/kiosk_mode_info.h"
 
 namespace extensions {
@@ -85,7 +85,6 @@ ConsentProvider::~ConsentProvider() {
 
 void ConsentProvider::RequestConsent(
     const Extension& extension,
-    content::RenderFrameHost* host,
     const base::WeakPtr<file_manager::Volume>& volume,
     bool writable,
     const ConsentCallback& callback) {
@@ -112,7 +111,7 @@ void ConsentProvider::RequestConsent(
   // the confirmation dialog.
   if (KioskModeInfo::IsKioskOnly(&extension) &&
       user_manager::UserManager::Get()->IsLoggedInAsKioskApp()) {
-    delegate_->ShowDialog(extension, host, volume, writable,
+    delegate_->ShowDialog(extension, volume, writable,
                           base::Bind(&DialogResultToConsent, callback));
     return;
   }
@@ -131,8 +130,9 @@ bool ConsentProvider::IsGrantable(const Extension& extension) {
   return is_whitelisted_component || is_running_in_kiosk_session;
 }
 
-ConsentProviderDelegate::ConsentProviderDelegate(Profile* profile)
-    : profile_(profile) {
+ConsentProviderDelegate::ConsentProviderDelegate(Profile* profile,
+                                                 content::RenderFrameHost* host)
+    : profile_(profile), host_(host) {
   DCHECK(profile_);
 }
 
@@ -147,16 +147,15 @@ void ConsentProviderDelegate::SetAutoDialogButtonForTest(
 
 void ConsentProviderDelegate::ShowDialog(
     const Extension& extension,
-    content::RenderFrameHost* host,
     const base::WeakPtr<file_manager::Volume>& volume,
     bool writable,
     const file_system_api::ConsentProvider::ShowDialogCallback& callback) {
-  DCHECK(host);
+  DCHECK(host_);
   content::WebContents* web_contents = nullptr;
 
   // Find an app window to host the dialog.
   content::WebContents* const foreground_contents =
-      content::WebContents::FromRenderFrameHost(host);
+      content::WebContents::FromRenderFrameHost(host_);
   if (AppWindowRegistry::Get(profile_)->GetAppWindowForWebContents(
           foreground_contents)) {
     web_contents = foreground_contents;

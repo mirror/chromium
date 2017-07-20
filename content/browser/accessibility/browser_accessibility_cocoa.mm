@@ -13,7 +13,6 @@
 #include <memory>
 #include <utility>
 
-#include "base/mac/availability.h"
 #include "base/mac/foundation_util.h"
 #include "base/mac/scoped_cftyperef.h"
 #include "base/strings/string16.h"
@@ -518,20 +517,13 @@ bool InitializeAccessibilityTreeSearch(
 
 }  // namespace
 
-#if defined(MAC_OS_X_VERSION_10_12) && \
-    (MAC_OS_X_VERSION_MIN_REQUIRED >= MAC_OS_X_VERSION_10_12)
-#warning NSAccessibilityRequiredAttributeChrome \
-  should be removed since the deployment target is >= 10.12
-#endif
-
-// The following private WebKit accessibility attribute became public in 10.12,
-// but it can't be used on all OS because it has availability of 10.12. Instead,
-// define a similarly named constant with the "Chrome" suffix, and the same
-// string. This is used as the key to a dictionary, so string-comparison will
-// work.
+// The following private WebKit accessibility attribute became public in 10.12.
+#if !defined(MAC_OS_X_VERSION_10_12) || \
+    MAC_OS_X_VERSION_MIN_REQUIRED < MAC_OS_X_VERSION_10_12
 extern "C" {
-NSString* const NSAccessibilityRequiredAttributeChrome = @"AXRequired";
+NSString* const NSAccessibilityRequiredAttribute = @"AXRequired";
 }
+#endif  // MAC_OS_X_VERSION_10_12
 
 @implementation BrowserAccessibilityCocoa
 
@@ -584,7 +576,7 @@ NSString* const NSAccessibilityRequiredAttributeChrome = @"AXRequired";
       {NSAccessibilityParentAttribute, @"parent"},
       {NSAccessibilityPlaceholderValueAttribute, @"placeholderValue"},
       {NSAccessibilityPositionAttribute, @"position"},
-      {NSAccessibilityRequiredAttributeChrome, @"required"},
+      {NSAccessibilityRequiredAttribute, @"required"},
       {NSAccessibilityRoleAttribute, @"role"},
       {NSAccessibilityRoleDescriptionAttribute, @"roleDescription"},
       {NSAccessibilityRowHeaderUIElementsAttribute, @"rowHeaders"},
@@ -971,9 +963,8 @@ NSString* const NSAccessibilityRequiredAttributeChrome = @"AXRequired";
 - (NSNumber*)enabled {
   if (![self instanceActive])
     return nil;
-  return [NSNumber numberWithBool:browserAccessibility_->GetIntAttribute(
-                                      ui::AX_ATTR_RESTRICTION) !=
-                                  ui::AX_RESTRICTION_DISABLED];
+  return [NSNumber numberWithBool:
+      !GetState(browserAccessibility_, ui::AX_STATE_DISABLED)];
 }
 
 // Returns a text marker that points to the last character in the document that

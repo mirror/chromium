@@ -22,8 +22,7 @@ void WhitelistCheckerClient::StartCheckCsdWhitelist(
   // Make a client for each request. The caller could have several in
   // flight at once.
   std::unique_ptr<WhitelistCheckerClient> client =
-      base::MakeUnique<WhitelistCheckerClient>(callback_for_result,
-                                               database_manager);
+      base::MakeUnique<WhitelistCheckerClient>(callback_for_result);
   AsyncMatch match = database_manager->CheckCsdWhitelistUrl(url, client.get());
 
   switch (match) {
@@ -42,16 +41,13 @@ void WhitelistCheckerClient::StartCheckCsdWhitelist(
 }
 
 WhitelistCheckerClient::WhitelistCheckerClient(
-    base::Callback<void(bool)> callback_for_result,
-    scoped_refptr<SafeBrowsingDatabaseManager> database_manager)
-    : callback_for_result_(callback_for_result),
-      database_manager_(database_manager),
-      weak_factory_(this) {
+    base::Callback<void(bool)> callback_for_result)
+    : callback_for_result_(callback_for_result), weak_factory_(this) {
   // Set a timer to fail open, i.e. call it "whitelisted", if the full
   // check takes too long.
   auto timeout_callback =
-      base::Bind(&WhitelistCheckerClient::OnCheckWhitelistUrlTimeout,
-                 weak_factory_.GetWeakPtr());
+      base::Bind(&WhitelistCheckerClient::OnCheckWhitelistUrlResult,
+                 weak_factory_.GetWeakPtr(), true /* is_whitelisted */);
   timer_.Start(FROM_HERE, base::TimeDelta::FromMilliseconds(kTimeoutMsec),
                timeout_callback);
 }
@@ -60,15 +56,9 @@ WhitelistCheckerClient::~WhitelistCheckerClient() {}
 
 // SafeBrowsingDatabaseMananger::Client impl
 void WhitelistCheckerClient::OnCheckWhitelistUrlResult(bool is_whitelisted) {
-  timer_.Stop();
-  callback_for_result_.Run(is_whitelisted);
   // This method is invoked only if we're already self-owned.
+  callback_for_result_.Run(is_whitelisted);
   delete this;
-}
-
-void WhitelistCheckerClient::OnCheckWhitelistUrlTimeout() {
-  database_manager_->CancelCheck(this);
-  this->OnCheckWhitelistUrlResult(true /* is_whitelisted */);
 }
 
 }  // namespace safe_browsing

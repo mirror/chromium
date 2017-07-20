@@ -20,11 +20,15 @@ class Browser;
 
 class PermissionBubbleCocoa : public PermissionPrompt {
  public:
-  PermissionBubbleCocoa(Browser* browser, Delegate* delegate);
+  explicit PermissionBubbleCocoa(Browser* browser);
   ~PermissionBubbleCocoa() override;
 
   // PermissionPrompt:
+  void Show() override;
+  void Hide() override;
+  void SetDelegate(Delegate* delegate) override;
   bool CanAcceptRequestUpdate() override;
+  bool HidesAutomatically() override;
   void UpdateAnchorPosition() override;
   gfx::NativeWindow GetNativeWindow() override;
 

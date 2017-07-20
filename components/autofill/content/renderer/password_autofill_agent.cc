@@ -700,6 +700,7 @@ PasswordAutofillAgent::~PasswordAutofillAgent() {
 }
 
 void PasswordAutofillAgent::BindRequest(
+    const service_manager::BindSourceInfo& source_info,
     mojom::PasswordAutofillAgentRequest request) {
   binding_.Bind(std::move(request));
 }

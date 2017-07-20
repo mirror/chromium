@@ -53,7 +53,7 @@ namespace blink {
 
 namespace {
 
-class MockChromeClientForImpl : public EmptyChromeClient {
+class MockChromeClient : public EmptyChromeClient {
  public:
   // EmptyChromeClient overrides:
   WebScreenInfo GetScreenInfo() const override {
@@ -63,7 +63,7 @@ class MockChromeClientForImpl : public EmptyChromeClient {
   }
 };
 
-class MockWebMediaPlayerForImpl : public EmptyWebMediaPlayer {
+class MockVideoWebMediaPlayer : public EmptyWebMediaPlayer {
  public:
   // WebMediaPlayer overrides:
   WebTimeRanges Seekable() const override { return seekable_; }
@@ -83,17 +83,15 @@ class MockLayoutObject : public LayoutObject {
   }
 };
 
-class StubLocalFrameClientForImpl : public EmptyLocalFrameClient {
+class StubLocalFrameClient : public EmptyLocalFrameClient {
  public:
-  static StubLocalFrameClientForImpl* Create() {
-    return new StubLocalFrameClientForImpl;
-  }
+  static StubLocalFrameClient* Create() { return new StubLocalFrameClient; }
 
   std::unique_ptr<WebMediaPlayer> CreateWebMediaPlayer(
       HTMLMediaElement&,
       const WebMediaPlayerSource&,
       WebMediaPlayerClient*) override {
-    return WTF::WrapUnique(new MockWebMediaPlayerForImpl);
+    return WTF::WrapUnique(new MockVideoWebMediaPlayer);
   }
 
   WebRemotePlaybackClient* CreateWebRemotePlaybackClient(
@@ -155,9 +153,9 @@ class MediaControlsImplTest : public ::testing::Test {
   void InitializePage() {
     Page::PageClients clients;
     FillWithEmptyClients(clients);
-    clients.chrome_client = new MockChromeClientForImpl();
-    page_holder_ = DummyPageHolder::Create(
-        IntSize(800, 600), &clients, StubLocalFrameClientForImpl::Create());
+    clients.chrome_client = new MockChromeClient();
+    page_holder_ = DummyPageHolder::Create(IntSize(800, 600), &clients,
+                                           StubLocalFrameClient::Create());
 
     GetDocument().write("<video>");
     HTMLVideoElement& video =
@@ -196,8 +194,8 @@ class MediaControlsImplTest : public ::testing::Test {
   MediaControlCurrentTimeDisplayElement* GetCurrentTimeDisplayElement() const {
     return media_controls_->current_time_display_;
   }
-  MockWebMediaPlayerForImpl* WebMediaPlayer() {
-    return static_cast<MockWebMediaPlayerForImpl*>(
+  MockVideoWebMediaPlayer* WebMediaPlayer() {
+    return static_cast<MockVideoWebMediaPlayer*>(
         MediaControls().MediaElement().GetWebMediaPlayer());
   }
   Document& GetDocument() { return page_holder_->GetDocument(); }
@@ -480,6 +478,66 @@ TEST_F(MediaControlsImplTest, DownloadButtonNotDisplayedEmptyUrl) {
   testing::RunPendingTasks();
   SimulateLoadedMetadata();
   EXPECT_FALSE(IsElementVisible(*download_button));
+}
+
+TEST_F(MediaControlsImplTest, DownloadButtonDisplayedHiddenAndDisplayed) {
+  EnsureSizing();
+
+  Element* download_button = GetElementByShadowPseudoId(
+      MediaControls(), "-internal-media-controls-download-button");
+  ASSERT_NE(nullptr, download_button);
+
+  // Initially show button.
+  MediaControls().MediaElement().SetSrc("https://example.com/foo.mp4");
+  testing::RunPendingTasks();
+  SimulateLoadedMetadata();
+  EXPECT_TRUE(IsElementVisible(*download_button));
+  GetHistogramTester().ExpectBucketCount("Media.Controls.Download",
+                                         DownloadActionMetrics::kShown, 1);
+
+  // Hide button.
+  MediaControls().MediaElement().SetSrc("");
+  testing::RunPendingTasks();
+  EXPECT_FALSE(IsElementVisible(*download_button));
+  GetHistogramTester().ExpectBucketCount("Media.Controls.Download",
+                                         DownloadActionMetrics::kShown, 1);
+
+  // Showing button again should not increment Shown count.
+  MediaControls().MediaElement().SetSrc("https://example.com/foo.mp4");
+  testing::RunPendingTasks();
+  EXPECT_TRUE(IsElementVisible(*download_button));
+  GetHistogramTester().ExpectBucketCount("Media.Controls.Download",
+                                         DownloadActionMetrics::kShown, 1);
+}
+
+TEST_F(MediaControlsImplTest, DownloadButtonRecordsClickOnlyOnce) {
+  EnsureSizing();
+
+  MediaControlDownloadButtonElement* download_button =
+      static_cast<MediaControlDownloadButtonElement*>(
+          GetElementByShadowPseudoId(
+              MediaControls(), "-internal-media-controls-download-button"));
+  ASSERT_NE(nullptr, download_button);
+
+  // Initially show button.
+  MediaControls().MediaElement().SetSrc("https://example.com/foo.mp4");
+  testing::RunPendingTasks();
+  SimulateLoadedMetadata();
+  EXPECT_TRUE(IsElementVisible(*download_button));
+  GetHistogramTester().ExpectBucketCount("Media.Controls.Download",
+                                         DownloadActionMetrics::kShown, 1);
+
+  // Click button once.
+  download_button->DispatchSimulatedClick(
+      Event::CreateBubble(EventTypeNames::click), kSendNoEvents);
+  GetHistogramTester().ExpectBucketCount("Media.Controls.Download",
+                                         DownloadActionMetrics::kClicked, 1);
+
+  // Clicking button again should not increment Clicked count.
+  download_button->DispatchSimulatedClick(
+      Event::CreateBubble(EventTypeNames::click), kSendNoEvents);
+  GetHistogramTester().ExpectBucketCount("Media.Controls.Download",
+                                         DownloadActionMetrics::kClicked, 1);
 }
 
 TEST_F(MediaControlsImplTest, DownloadButtonNotDisplayedInfiniteDuration) {

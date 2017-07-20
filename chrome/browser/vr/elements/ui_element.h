@@ -10,15 +10,11 @@
 #include <vector>
 
 #include "base/macros.h"
-#include "cc/animation/animation_target.h"
-#include "cc/animation/transform_operations.h"
-#include "chrome/browser/vr/animation_player.h"
 #include "chrome/browser/vr/color_scheme.h"
 #include "chrome/browser/vr/elements/ui_element_debug_id.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/gfx/geometry/point3_f.h"
 #include "ui/gfx/geometry/quaternion.h"
-#include "ui/gfx/geometry/size_f.h"
 #include "ui/gfx/geometry/vector3d_f.h"
 #include "ui/gfx/transform.h"
 
@@ -58,10 +54,39 @@ enum Fill {
   SELF = 4,
 };
 
-class UiElement : public cc::AnimationTarget {
+class WorldRectangle {
+ public:
+  const gfx::Transform& transform() const { return transform_; }
+  void set_transform(const gfx::Transform& transform) {
+    transform_ = transform;
+  }
+
+  gfx::Point3F GetCenter() const;
+  gfx::Vector3dF GetNormal() const;
+
+  // Computes the distance from |ray_origin| to this rectangles's plane, along
+  // |ray_vector|. Returns true and populates |distance| if the calculation is
+  // possible, and false if the ray is parallel to the plane.
+  bool GetRayDistance(const gfx::Point3F& ray_origin,
+                      const gfx::Vector3dF& ray_vector,
+                      float* distance) const;
+
+  // Projects a 3D world point onto the X and Y axes of the transformed
+  // rectangle, returning 2D coordinates relative to the un-transformed unit
+  // rectangle. This allows beam intersection points to be mapped to sprite
+  // pixel coordinates. Points that fall onto the rectangle will generate X and
+  // Y values on the interval [-0.5, 0.5].
+  gfx::PointF GetUnitRectangleCoordinates(
+      const gfx::Point3F& world_point) const;
+
+ private:
+  gfx::Transform transform_;
+};
+
+class UiElement : public WorldRectangle {
  public:
   UiElement();
-  ~UiElement() override;
+  virtual ~UiElement();
 
   virtual void PrepareToDraw();
 
@@ -125,30 +150,27 @@ class UiElement : public cc::AnimationTarget {
   }
 
   // The size of the object.  This does not affect children.
-  gfx::SizeF size() const { return size_; }
-  void SetSize(float width, float hight);
+  gfx::Vector3dF size() const { return size_; }
+  void set_size(const gfx::Vector3dF& size) { size_ = size; }
 
-  // This is the local transform. It is inherited by descendants.
-  const cc::TransformOperations& transform_operations() const {
-    return transform_operations_;
+  // The scale of the object, and its children.
+  gfx::Vector3dF scale() const { return scale_; }
+  void set_scale(const gfx::Vector3dF& scale) { scale_ = scale; }
+
+  // The rotation of the object, and its children.
+  gfx::Quaternion rotation() const { return rotation_; }
+  void set_rotation(const gfx::Quaternion& rotation) { rotation_ = rotation; }
+
+  // The translation of the object, and its children.  Translation is applied
+  // after rotation and scaling.
+  gfx::Vector3dF translation() const { return translation_; }
+  void set_translation(const gfx::Vector3dF& translation) {
+    translation_ = translation;
   }
-  // It is assumed that operations is of size 3 with a component for
-  // translation, rotation and scale, in that order (see constructor and the
-  // DCHECKs in the implementation of this function).
-  void SetTransformOperations(const cc::TransformOperations& operations);
-
-  // These are convenience functions for setting the transform operations. They
-  // will animate if you've set a transition. If you need to animate more than
-  // one operation simultaneously, please use |SetTransformOperations| below.
-  void SetTranslate(float x, float y, float z);
-  void SetRotate(float x, float y, float z, float radians);
-  void SetScale(float x, float y, float z);
-
-  AnimationPlayer& animation_player() { return animation_player_; }
 
   // The opacity of the object (between 0.0 and 1.0).
   float opacity() const { return opacity_; }
-  void SetOpacity(float opacity);
+  void set_opacity(float opacity) { opacity_ = opacity; }
 
   // The corner radius of the object. Analogous to CSS's border-radius. This is
   // in meters (same units as |size|).
@@ -171,6 +193,12 @@ class UiElement : public cc::AnimationTarget {
 
   YAnchoring y_anchoring() const { return y_anchoring_; }
   void set_y_anchoring(YAnchoring y_anchoring) { y_anchoring_ = y_anchoring; }
+
+  // Animations that affect the properties of the object over time.
+  std::vector<std::unique_ptr<Animation>>& animations() { return animations_; }
+  const std::vector<std::unique_ptr<Animation>>& animations() const {
+    return animations_;
+  }
 
   Fill fill() const { return fill_; }
   void set_fill(Fill fill) { fill_ = fill; }
@@ -217,40 +245,6 @@ class UiElement : public cc::AnimationTarget {
   void SetMode(ColorScheme::Mode mode);
   ColorScheme::Mode mode() const { return mode_; }
 
-  const gfx::Transform& screen_space_transform() const {
-    return screen_space_transform_;
-  }
-  void set_screen_space_transform(const gfx::Transform& transform) {
-    screen_space_transform_ = transform;
-  }
-
-  gfx::Point3F GetCenter() const;
-  gfx::Vector3dF GetNormal() const;
-
-  // Computes the distance from |ray_origin| to this rectangles's plane, along
-  // |ray_vector|. Returns true and populates |distance| if the calculation is
-  // possible, and false if the ray is parallel to the plane.
-  bool GetRayDistance(const gfx::Point3F& ray_origin,
-                      const gfx::Vector3dF& ray_vector,
-                      float* distance) const;
-
-  // Projects a 3D world point onto the X and Y axes of the transformed
-  // rectangle, returning 2D coordinates relative to the un-transformed unit
-  // rectangle. This allows beam intersection points to be mapped to sprite
-  // pixel coordinates. Points that fall onto the rectangle will generate X and
-  // Y values on the interval [-0.5, 0.5].
-  gfx::PointF GetUnitRectangleCoordinates(
-      const gfx::Point3F& world_point) const;
-
-  // cc::AnimationTarget
-  void NotifyClientOpacityAnimated(float opacity,
-                                   cc::Animation* animation) override;
-  void NotifyClientTransformOperationsAnimated(
-      const cc::TransformOperations& operations,
-      cc::Animation* animation) override;
-  void NotifyClientBoundsAnimated(const gfx::SizeF& size,
-                                  cc::Animation* animation) override;
-
  protected:
   virtual void OnSetMode();
 
@@ -280,7 +274,17 @@ class UiElement : public cc::AnimationTarget {
   bool is_overlay_ = false;
 
   // The size of the object.  This does not affect children.
-  gfx::SizeF size_ = {1.0f, 1.0f};
+  gfx::Vector3dF size_ = {1.0f, 1.0f, 1.0f};
+
+  // The scale of the object, and its children.
+  gfx::Vector3dF scale_ = {1.0f, 1.0f, 1.0f};
+
+  // The rotation of the object, and its children.
+  gfx::Quaternion rotation_;
+
+  // The translation of the object, and its children.  Translation is applied
+  // after rotation and scaling.
+  gfx::Vector3dF translation_ = {0.0f, 0.0f, 0.0f};
 
   // The opacity of the object (between 0.0 and 1.0).
   float opacity_ = 1.0f;
@@ -296,7 +300,8 @@ class UiElement : public cc::AnimationTarget {
   XAnchoring x_anchoring_ = XAnchoring::XNONE;
   YAnchoring y_anchoring_ = YAnchoring::YNONE;
 
-  AnimationPlayer animation_player_;
+  // Animations that affect the properties of the object over time.
+  std::vector<std::unique_ptr<Animation>> animations_;
 
   Fill fill_ = Fill::NONE;
 
@@ -308,10 +313,6 @@ class UiElement : public cc::AnimationTarget {
 
   int draw_phase_ = 1;
 
-  // This is the time as of the last call to |Animate|. It is needed when
-  // reversing transitions.
-  base::TimeTicks last_frame_time_;
-
   // This transform can be used by children to derive position of its parent.
   gfx::Transform inheritable_transform_;
 
@@ -321,15 +322,7 @@ class UiElement : public cc::AnimationTarget {
   // An identifier used for testing and debugging, in lieu of a string.
   UiElementDebugId debug_id_ = UiElementDebugId::kNone;
 
-  // This local transform operations. They are inherited by descendants and are
-  // stored as a list of operations rather than a baked transform to make
-  // transitions easier to implement (you may, for example, want to animate just
-  // the translation, but leave the rotation and scale in tact).
-  cc::TransformOperations transform_operations_;
-
-  // This is the combined, local to screen transform. It includes
-  // |inheritable_transform_|, |transform_|, and anchoring adjustments.
-  gfx::Transform screen_space_transform_;
+  gfx::Transform transform_;
 
   ColorScheme::Mode mode_ = ColorScheme::kModeNormal;
 

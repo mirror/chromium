@@ -172,6 +172,15 @@ class WindowTreeHostManager;
 enum class Config;
 enum class LoginStatus;
 
+namespace shell {
+class WindowWatcher;
+}
+
+namespace test {
+class ShellTestApi;
+class SmsObserverTest;
+}
+
 // Shell is a singleton object that presents the Shell API and implements the
 // RootWindow's delegate interface.
 //
@@ -618,8 +627,9 @@ class ASH_EXPORT Shell : public SessionObserver,
   friend class AcceleratorControllerTest;
   friend class RootWindowController;
   friend class ScopedRootWindowForNewWindows;
-  friend class ShellTestApi;
   friend class SmsObserverTest;
+  friend class test::ShellTestApi;
+  friend class shell::WindowWatcher;
 
   Shell(std::unique_ptr<ShellDelegate> shell_delegate,
         std::unique_ptr<ShellPort> shell_port);

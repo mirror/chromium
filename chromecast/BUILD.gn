@@ -30,7 +30,6 @@ cast_test_group("cast_tests") {
   filters = []
   tests = [
     "//base:base_unittests",
-    "//cc:cc_unittests",
     "//chromecast/base:cast_base_unittests",
     "//chromecast/base/component:cast_component_unittests",
     "//chromecast/crypto:cast_crypto_unittests",
@@ -265,17 +264,6 @@ cast_test_group("cast_tests") {
     }
   }
   filters += [ media_unittests_filter ]
-
-  midi_unittests_filter = {
-    test_name = "midi_unittests"
-    if (!is_cast_desktop_build && !is_cast_audio_only) {
-      # Disable MidiTaskServiceTest.RunBoundTasks. This is failing on v1
-      # devices. Temporarily disable to get dashboards green again while the
-      # failure is investigated. (crbug/744777)
-      gtest_excludes = [ "MidiTaskServiceTest.RunBoundTasks" ]
-    }
-  }
-  filters += [ midi_unittests_filter ]
 
   net_unittests_filter = {
     test_name = "net_unittests"
@@ -526,7 +514,5 @@ if (is_android) {
       "//chromecast/android:libcast_shell_android",
       "//chromecast/browser/android:cast_shell_java",
     ]
-
-    command_line_flags_file = "castshell-command-line"
   }
 }

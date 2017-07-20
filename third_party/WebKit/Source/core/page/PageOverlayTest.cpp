@@ -109,9 +109,9 @@ class RuntimeFeatureChange {
   bool old_value_;
 };
 
-class MockPageOverlayCanvas : public SkCanvas {
+class MockCanvas : public SkCanvas {
  public:
-  MockPageOverlayCanvas(int width, int height) : SkCanvas(width, height) {}
+  MockCanvas(int width, int height) : SkCanvas(width, height) {}
   MOCK_METHOD2(onDrawRect, void(const SkRect&, const SkPaint&));
 };
 
@@ -128,7 +128,7 @@ TEST_F(PageOverlayTest, PageOverlay_AcceleratedCompositing) {
   // page overlay actually winds up getting drawn on top of the rest.
   // For now, we just check that the GraphicsLayer will draw the right thing.
 
-  MockPageOverlayCanvas canvas(kViewportWidth, kViewportHeight);
+  MockCanvas canvas(kViewportWidth, kViewportHeight);
   EXPECT_CALL(canvas, onDrawRect(_, _)).Times(AtLeast(0));
   EXPECT_CALL(canvas,
               onDrawRect(SkRect::MakeWH(kViewportWidth, kViewportHeight),

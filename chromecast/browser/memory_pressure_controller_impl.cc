@@ -17,6 +17,7 @@ MemoryPressureControllerImpl::MemoryPressureControllerImpl() {
 MemoryPressureControllerImpl::~MemoryPressureControllerImpl() = default;
 
 void MemoryPressureControllerImpl::AddBinding(
+    const service_manager::BindSourceInfo& source_info,
     mojom::MemoryPressureControllerRequest request) {
   bindings_.AddBinding(this, std::move(request));
 }

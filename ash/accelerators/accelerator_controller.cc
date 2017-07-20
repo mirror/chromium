@@ -380,16 +380,16 @@ void HandleShowMessageCenterBubble() {
     WebNotificationTray* notification_tray =
         status_area_widget->web_notification_tray();
     if (notification_tray->visible())
-      notification_tray->ShowBubble();
+      notification_tray->ShowMessageCenterBubble();
   }
 }
 
-void HandleToggleSystemTrayBubble() {
-  base::RecordAction(UserMetricsAction("Accel_Toggle_System_Tray_Bubble"));
+void HandleShowSystemTrayBubble() {
+  base::RecordAction(UserMetricsAction("Accel_Show_System_Tray_Bubble"));
   aura::Window* target_root = Shell::GetRootWindowForNewWindows();
   SystemTray* tray =
       RootWindowController::ForWindow(target_root)->GetSystemTray();
-  if (!tray->CloseSystemBubble()) {
+  if (!tray->HasSystemBubble()) {
     tray->ShowDefaultView(BUBBLE_CREATE_NEW);
     tray->ActivateBubble();
   }
@@ -512,8 +512,8 @@ void HandleShowImeMenuBubble() {
   if (status_area_widget) {
     ImeMenuTray* ime_menu_tray = status_area_widget->ime_menu_tray();
     if (ime_menu_tray && ime_menu_tray->visible() &&
-        !ime_menu_tray->GetBubbleView()) {
-      ime_menu_tray->ShowBubble();
+        !ime_menu_tray->IsImeMenuBubbleShown()) {
+      ime_menu_tray->ShowImeMenuBubble();
     }
   }
 }
@@ -572,7 +572,7 @@ void HandleShowStylusTools() {
   Shelf::ForWindow(Shell::GetRootWindowForNewWindows())
       ->GetStatusAreaWidget()
       ->palette_tray()
-      ->ShowBubble();
+      ->ShowPalette();
 }
 
 bool CanHandleShowStylusTools() {
@@ -590,9 +590,6 @@ void HandleStartVoiceInteraction(const ui::Accelerator& accelerator) {
   } else if (accelerator.IsCmdDown() && accelerator.key_code() == ui::VKEY_A) {
     base::RecordAction(
         base::UserMetricsAction("VoiceInteraction.Started.Search_A"));
-  } else if (accelerator.key_code() == ui::VKEY_ASSISTANT) {
-    base::RecordAction(
-        base::UserMetricsAction("VoiceInteraction.Started.Assistant"));
   }
   Shell::Get()->app_list()->StartVoiceInteractionSession();
 }
@@ -1056,6 +1053,7 @@ bool AcceleratorController::CanPerformAction(
     case ROTATE_WINDOW:
     case SHOW_IME_MENU_BUBBLE:
     case SHOW_KEYBOARD_OVERLAY:
+    case SHOW_SYSTEM_TRAY_BUBBLE:
     case SHOW_TASK_MANAGER:
     case SUSPEND:
     case TOGGLE_FULLSCREEN:
@@ -1063,7 +1061,6 @@ bool AcceleratorController::CanPerformAction(
     case TOGGLE_MAXIMIZED:
     case TOGGLE_OVERVIEW:
     case TOGGLE_SPOKEN_FEEDBACK:
-    case TOGGLE_SYSTEM_TRAY_BUBBLE:
     case TOGGLE_WIFI:
     case VOLUME_DOWN:
     case VOLUME_MUTE:
@@ -1255,6 +1252,9 @@ void AcceleratorController::PerformAction(AcceleratorAction action,
     case SHOW_STYLUS_TOOLS:
       HandleShowStylusTools();
       break;
+    case SHOW_SYSTEM_TRAY_BUBBLE:
+      HandleShowSystemTrayBubble();
+      break;
     case SHOW_TASK_MANAGER:
       HandleShowTaskManager();
       break;
@@ -1299,9 +1299,6 @@ void AcceleratorController::PerformAction(AcceleratorAction action,
       break;
     case TOGGLE_SPOKEN_FEEDBACK:
       HandleToggleSpokenFeedback();
-      break;
-    case TOGGLE_SYSTEM_TRAY_BUBBLE:
-      HandleToggleSystemTrayBubble();
       break;
     case TOGGLE_WIFI:
       Shell::Get()->system_tray_notifier()->NotifyRequestToggleWifi();

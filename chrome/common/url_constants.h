@@ -62,8 +62,6 @@ extern const char kChromeUIInstantURL[];
 extern const char kChromeUIInterstitialURL[];
 extern const char kChromeUIInvalidationsURL[];
 extern const char kChromeUIMdPolicyURL[];
-extern const char kChromeUIMdSettingsURL[];
-extern const char kChromeUIMediaEngagementHost[];
 extern const char kChromeUINaClURL[];
 extern const char kChromeUINetInternalsURL[];
 extern const char kChromeUINewProfileURL[];
@@ -76,6 +74,7 @@ extern const char kChromeUIMdUserManagerUrl[];
 extern const char kChromeUIPrintURL[];
 extern const char kChromeUIQuitURL[];
 extern const char kChromeUIRestartURL[];
+extern const char kChromeUIMdSettingsURL[];
 extern const char kChromeUISettingsURL[];
 extern const char kChromeUIContentSettingsURL[];
 // TODO(dbeam): remove settings-frame.
@@ -128,7 +127,6 @@ extern const char kChromeUISystemInfoURL[];
 extern const char kChromeUITermsOemURL[];
 extern const char kChromeUIUserImageURL[];
 extern const char kChromeUIMdCupsSettingsURL[];
-extern const char kCupsPrintLearnMoreURL[];
 #endif  // defined(OS_CHROMEOS)
 
 #if defined(OS_WIN)
@@ -518,11 +516,8 @@ extern const char kNaturalScrollHelpURL[];
 // The URL for the Learn More page about enterprise enrolled devices.
 extern const char kLearnMoreEnterpriseURL[];
 
-// The URL for the "learn more" link for Google Play Store (ARC) settings.
+// The URL fo the "learn more" link for Google Play Store (ARC) settings.
 extern const char kAndroidAppsLearnMoreURL[];
-
-// The URL for the "learn more" link for Instant Tethering.
-extern const char kInstantTetheringLearnMoreURL[];
 #endif
 
 // The URL for the Learn More link of the non-CWS bubble.

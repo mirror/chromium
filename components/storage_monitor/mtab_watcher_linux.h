@@ -2,6 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+// MtabWatcherLinux listens for mount point changes from a mtab file and
+// notifies a StorageMonitorLinux about them.
+// MtabWatcherLinux lives on the FILE thread.
+
 #ifndef COMPONENTS_STORAGE_MONITOR_MTAB_WATCHER_LINUX_H_
 #define COMPONENTS_STORAGE_MONITOR_MTAB_WATCHER_LINUX_H_
 
@@ -15,28 +19,27 @@
 #include "base/files/file_path_watcher.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "base/sequence_checker.h"
 #include "build/build_config.h"
 
 namespace storage_monitor {
 
-// MtabWatcherLinux listens for mount point changes from a mtab file and
-// notifies a StorageMonitorLinux about them. This class should be created and
-// destroyed on a single sequence suitable for file IO.
 class MtabWatcherLinux {
  public:
   // (mount point, mount device)
   // A mapping from mount point to mount device, as extracted from the mtab
   // file.
-  using MountPointDeviceMap = std::map<base::FilePath, base::FilePath>;
+  typedef std::map<base::FilePath, base::FilePath> MountPointDeviceMap;
 
-  using UpdateMtabCallback =
-      base::Callback<void(const MountPointDeviceMap& new_mtab)>;
+  class Delegate {
+   public:
+    virtual ~Delegate() {}
 
-  // |callback| is called on the same sequence as the rest of the class.
-  // Caller is responsible for bouncing to the correct sequence.
+    // Parses |new_mtab| and find all changes. Called on the UI thread.
+    virtual void UpdateMtab(const MountPointDeviceMap& new_mtab) = 0;
+  };
+
   MtabWatcherLinux(const base::FilePath& mtab_path,
-                   const UpdateMtabCallback& callback);
+                   base::WeakPtr<Delegate> delegate);
   ~MtabWatcherLinux();
 
  private:
@@ -52,9 +55,7 @@ class MtabWatcherLinux {
   // Watcher for |mtab_path_|.
   base::FilePathWatcher file_watcher_;
 
-  UpdateMtabCallback callback_;
-
-  SEQUENCE_CHECKER(sequence_checker_);
+  base::WeakPtr<Delegate> delegate_;
 
   base::WeakPtrFactory<MtabWatcherLinux> weak_ptr_factory_;
 

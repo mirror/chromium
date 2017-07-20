@@ -31,12 +31,12 @@
 #include "bindings/core/v8/Nullable.h"
 #include "bindings/core/v8/ScriptValue.h"
 #include "core/CoreExport.h"
+#include "core/dom/ArrayBufferViewHelpers.h"
+#include "core/dom/DOMTypedArray.h"
+#include "core/dom/TypedFlexibleArrayBufferView.h"
 #include "core/html/canvas/CanvasContextCreationAttributes.h"
 #include "core/html/canvas/CanvasRenderingContext.h"
 #include "core/layout/ContentChangeType.h"
-#include "core/typed_arrays/ArrayBufferViewHelpers.h"
-#include "core/typed_arrays/DOMTypedArray.h"
-#include "core/typed_arrays/TypedFlexibleArrayBufferView.h"
 #include "modules/webgl/WebGLContextAttributes.h"
 #include "modules/webgl/WebGLExtensionName.h"
 #include "modules/webgl/WebGLTexture.h"
@@ -642,12 +642,11 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
   bool DrawingBufferClientIsBoundForDraw() override;
   void DrawingBufferClientRestoreScissorTest() override;
   void DrawingBufferClientRestoreMaskAndClearValues() override;
-  void DrawingBufferClientRestorePixelPackParameters() override;
+  void DrawingBufferClientRestorePixelPackAlignment() override;
   void DrawingBufferClientRestoreTexture2DBinding() override;
   void DrawingBufferClientRestoreRenderbufferBinding() override;
   void DrawingBufferClientRestoreFramebufferBinding() override;
   void DrawingBufferClientRestorePixelUnpackBufferBinding() override;
-  void DrawingBufferClientRestorePixelPackBufferBinding() override;
 
   virtual void DestroyContext();
   void MarkContextChanged(ContentChangeType);

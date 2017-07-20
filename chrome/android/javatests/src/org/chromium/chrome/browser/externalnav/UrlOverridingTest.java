@@ -361,7 +361,6 @@ public class UrlOverridingTest {
     @Test
     @SmallTest
     @Restriction(ChromeRestriction.RESTRICTION_TYPE_TABLET)
-    @RetryOnFailure
     public void testOpenWindowFromUserGesture() throws InterruptedException {
         loadUrlAndWaitForIntentUrl(mTestServer.getURL(OPEN_WINDOW_FROM_USER_GESTURE_PAGE),
                 true, 1, true, null, true);

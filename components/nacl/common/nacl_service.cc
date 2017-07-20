@@ -15,6 +15,7 @@
 #include "mojo/edk/embedder/incoming_broker_client_invitation.h"
 #include "mojo/edk/embedder/scoped_ipc_support.h"
 #include "mojo/edk/embedder/scoped_platform_handle.h"
+#include "services/service_manager/public/cpp/bind_source_info.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/cpp/service.h"
 #include "services/service_manager/public/cpp/service_context.h"
@@ -57,6 +58,7 @@ service_manager::mojom::ServiceRequest ConnectToServiceManager(
 }
 
 void ConnectBootstrapChannel(IPC::mojom::ChannelBootstrapPtrInfo ptr,
+                             const service_manager::BindSourceInfo& source_info,
                              IPC::mojom::ChannelBootstrapRequest request) {
   mojo::FuseInterface(std::move(request), std::move(ptr));
 }
@@ -97,7 +99,8 @@ void NaClService::OnBindInterface(
   if (source_info.identity.name() == content::mojom::kBrowserServiceName &&
       !connected_) {
     connected_ = true;
-    registry_.BindInterface(interface_name, std::move(interface_pipe));
+    registry_.BindInterface(source_info, interface_name,
+                            std::move(interface_pipe));
   }
 }
 

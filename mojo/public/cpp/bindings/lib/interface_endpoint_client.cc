@@ -16,7 +16,6 @@
 #include "mojo/public/cpp/bindings/associated_group.h"
 #include "mojo/public/cpp/bindings/associated_group_controller.h"
 #include "mojo/public/cpp/bindings/interface_endpoint_controller.h"
-#include "mojo/public/cpp/bindings/lib/task_runner_helper.h"
 #include "mojo/public/cpp/bindings/lib/validation_util.h"
 #include "mojo/public/cpp/bindings/sync_call_restrictions.h"
 
@@ -168,14 +167,11 @@ InterfaceEndpointClient::InterfaceEndpointClient(
 InterfaceEndpointClient::~InterfaceEndpointClient() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
-  // TODO(crbug.com/741047): Remove these checks.
-  CheckObjectIsValid();
+  // TODO(crbug.com/741047): Remove this.
   CHECK(task_runner_->RunsTasksInCurrentSequence());
 
-  if (controller_) {
-    CHECK(handle_.group_controller());
+  if (controller_)
     handle_.group_controller()->DetachEndpointClient(handle_);
-  }
 }
 
 AssociatedGroup* InterfaceEndpointClient::associated_group() {

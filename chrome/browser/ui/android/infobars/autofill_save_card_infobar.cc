@@ -43,6 +43,11 @@ void AutofillSaveCardInfoBar::OnLegalMessageLinkClicked(JNIEnv* env,
       GURL(base::android::ConvertJavaStringToUTF16(env, url)));
 }
 
+// static
+bool AutofillSaveCardInfoBar::Register(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
 base::android::ScopedJavaLocalRef<jobject>
 AutofillSaveCardInfoBar::CreateRenderInfoBar(JNIEnv* env) {
   autofill::AutofillSaveCardInfoBarDelegateMobile* delegate =

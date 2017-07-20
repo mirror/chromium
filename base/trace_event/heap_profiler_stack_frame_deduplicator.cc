@@ -7,34 +7,17 @@
 #include <inttypes.h>
 #include <stddef.h>
 
-#include <algorithm>
 #include <string>
 #include <utility>
 
-#include "base/hash.h"
 #include "base/strings/stringprintf.h"
 #include "base/trace_event/heap_profiler_string_deduplicator.h"
 #include "base/trace_event/memory_usage_estimator.h"
-#include "base/trace_event/trace_event.h"
 #include "base/trace_event/trace_event_argument.h"
 #include "base/trace_event/trace_event_memory_overhead.h"
 
 namespace base {
 namespace trace_event {
-
-namespace {
-
-// Dumb hash function that nevertheless works surprisingly well and
-// produces ~0 collisions on real backtraces.
-size_t HashBacktrace(const StackFrame* begin, const StackFrame* end) {
-  size_t hash = 0;
-  for (; begin != end; begin++) {
-    hash += reinterpret_cast<uintptr_t>(begin->value);
-  }
-  return hash;
-}
-
-}  // namespace
 
 StackFrameDeduplicator::FrameNode::FrameNode(StackFrame frame,
                                              int parent_frame_index)
@@ -55,55 +38,18 @@ StackFrameDeduplicator::StackFrameDeduplicator(
 }
 StackFrameDeduplicator::~StackFrameDeduplicator() {}
 
-bool StackFrameDeduplicator::Match(int frame_index,
-                                   const StackFrame* begin_frame,
-                                   const StackFrame* end_frame) const {
-  // |frame_index| identifies the bottom frame, i.e. we need to walk
-  // backtrace backwards.
-  const StackFrame* current_frame = end_frame - 1;
-  for (; current_frame >= begin_frame; --current_frame) {
-    const FrameNode& node = frames_[frame_index];
-    if (node.frame != *current_frame) {
-      break;
-    }
-
-    frame_index = node.parent_frame_index;
-    if (frame_index == FrameNode::kInvalidFrameIndex) {
-      if (current_frame == begin_frame) {
-        // We're at the top node and we matched all backtrace frames,
-        // i.e. we successfully matched the backtrace.
-        return true;
-      }
-      break;
-    }
-  }
-
-  return false;
-}
-
-int StackFrameDeduplicator::Insert(const StackFrame* begin_frame,
-                                   const StackFrame* end_frame) {
-  if (begin_frame == end_frame) {
+int StackFrameDeduplicator::Insert(const StackFrame* beginFrame,
+                                   const StackFrame* endFrame) {
+  if (beginFrame == endFrame) {
     // Empty backtraces are mapped to id 0.
     return 0;
   }
 
-  size_t backtrace_hash = HashBacktrace(begin_frame, end_frame);
-
-  // Check if we know about this backtrace.
-  auto backtrace_it = backtrace_lookup_table_.find(backtrace_hash);
-  if (backtrace_it != backtrace_lookup_table_.end()) {
-    int backtrace_index = backtrace_it->second;
-    if (Match(backtrace_index, begin_frame, end_frame)) {
-      return backtrace_index;
-    }
-  }
-
   int frame_index = FrameNode::kInvalidFrameIndex;
-  base::flat_map<StackFrame, int>* nodes = &roots_;
+  std::map<StackFrame, int>* nodes = &roots_;
 
   // Loop through the frames, early out when a frame is null.
-  for (const StackFrame* it = begin_frame; it != end_frame; it++) {
+  for (const StackFrame* it = beginFrame; it != endFrame; it++) {
     StackFrame frame = *it;
 
     auto node = nodes->find(frame);
@@ -130,15 +76,10 @@ int StackFrameDeduplicator::Insert(const StackFrame* begin_frame,
     nodes = &frames_[frame_index].children;
   }
 
-  // Remember the backtrace.
-  backtrace_lookup_table_[backtrace_hash] = frame_index;
-
   return frame_index;
 }
 
 void StackFrameDeduplicator::SerializeIncrementally(TracedValue* traced_value) {
-  TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("memory-infra"),
-               "StackFrameDeduplicator::SerializeIncrementally");
   std::string stringify_buffer;
 
   for (; last_exported_index_ < frames_.size(); ++last_exported_index_) {
@@ -179,9 +120,8 @@ void StackFrameDeduplicator::SerializeIncrementally(TracedValue* traced_value) {
 
 void StackFrameDeduplicator::EstimateTraceMemoryOverhead(
     TraceEventMemoryOverhead* overhead) {
-  size_t memory_usage = EstimateMemoryUsage(frames_) +
-                        EstimateMemoryUsage(roots_) +
-                        EstimateMemoryUsage(backtrace_lookup_table_);
+  size_t memory_usage =
+      EstimateMemoryUsage(frames_) + EstimateMemoryUsage(roots_);
   overhead->Add(TraceEventMemoryOverhead::kHeapProfilerStackFrameDeduplicator,
                 sizeof(StackFrameDeduplicator) + memory_usage);
 }

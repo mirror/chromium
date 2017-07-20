@@ -48,7 +48,8 @@ QuicPacketCreator::QuicPacketCreator(QuicConnectionId connection_id,
       latched_flag_no_stop_waiting_frames_(
           FLAGS_quic_reloadable_flag_quic_no_stop_waiting_frames),
       pending_padding_bytes_(0),
-      needs_full_padding_(false) {
+      needs_full_padding_(false),
+      delegate_saves_data_(false) {
   SetMaxPacketLength(kDefaultMaxPacketSize);
 }
 
@@ -207,11 +208,11 @@ void QuicPacketCreator::CreateStreamFrame(QuicStreamId id,
       std::min<size_t>(BytesFree() - min_frame_size, data_size);
 
   bool set_fin = fin && bytes_consumed == data_size;  // Last frame.
-  if (framer_->HasDataProducer()) {
+  if (delegate_saves_data_) {
     *frame =
         QuicFrame(new QuicStreamFrame(id, set_fin, offset, bytes_consumed));
     if (bytes_consumed > 0) {
-      framer_->SaveStreamData(id, iov, iov_offset, offset, bytes_consumed);
+      delegate_->SaveStreamData(id, iov, iov_offset, offset, bytes_consumed);
     }
     return;
   }
@@ -337,12 +338,12 @@ void QuicPacketCreator::CreateAndSerializeStreamFrame(
 
   const bool set_fin = fin && (bytes_consumed == remaining_data_size);
   std::unique_ptr<QuicStreamFrame> frame;
-  if (framer_->HasDataProducer()) {
+  if (delegate_saves_data_) {
     frame = QuicMakeUnique<QuicStreamFrame>(id, set_fin, stream_offset,
                                             bytes_consumed);
     if (bytes_consumed > 0) {
-      framer_->SaveStreamData(id, iov, iov_offset, stream_offset,
-                              bytes_consumed);
+      delegate_->SaveStreamData(id, iov, iov_offset, stream_offset,
+                                bytes_consumed);
     }
   } else {
     UniqueStreamBuffer stream_buffer =
@@ -362,7 +363,8 @@ void QuicPacketCreator::CreateAndSerializeStreamFrame(
     return;
   }
   if (!framer_->AppendStreamFrame(*frame, /* no stream frame length */ true,
-                                  &writer)) {
+                                  &writer,
+                                  delegate_saves_data_ ? delegate_ : nullptr)) {
     QUIC_BUG << "AppendStreamFrame failed";
     return;
   }
@@ -453,8 +455,9 @@ void QuicPacketCreator::SerializePacket(char* encrypted_buffer,
   DCHECK_GE(max_plaintext_size_, packet_size_);
   // Use the packet_size_ instead of the buffer size to ensure smaller
   // packet sizes are properly used.
-  size_t length = framer_->BuildDataPacket(header, queued_frames_,
-                                           encrypted_buffer, packet_size_);
+  size_t length = framer_->BuildDataPacket(
+      header, queued_frames_, encrypted_buffer, packet_size_,
+      delegate_saves_data_ ? delegate_ : nullptr);
   if (length == 0) {
     QUIC_BUG << "Failed to serialize " << queued_frames_.size() << " frames.";
     return;
@@ -628,7 +631,7 @@ bool QuicPacketCreator::StreamFrameStartsWithChlo(
     QuicIOVector iov,
     size_t iov_offset,
     const QuicStreamFrame& frame) const {
-  if (!framer_->HasDataProducer()) {
+  if (!delegate_saves_data_) {
     return frame.stream_id == kCryptoStreamId &&
            frame.data_length >= sizeof(kCHLO) &&
            strncmp(frame.data_buffer, reinterpret_cast<const char*>(&kCHLO),

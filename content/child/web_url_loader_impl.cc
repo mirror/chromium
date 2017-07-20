@@ -596,8 +596,6 @@ void WebURLLoaderImpl::Context::Start(const WebURLRequest& request,
       GetFetchCredentialsModeForWebURLRequest(request);
   resource_request->fetch_redirect_mode =
       GetFetchRedirectModeForWebURLRequest(request);
-  resource_request->fetch_integrity =
-      GetFetchIntegrityForWebURLRequest(request);
   resource_request->fetch_request_context_type =
       GetRequestContextTypeForWebURLRequest(request);
   resource_request->fetch_mixed_content_context_type =
@@ -894,9 +892,9 @@ void WebURLLoaderImpl::Context::OnCompletedRequest(
         this, TRACE_EVENT_FLAG_FLOW_IN);
 
     if (error_code != net::OK) {
-      WebURLError error(request_.Url(), stale_copy_in_cache, error_code);
-      error.was_ignored_by_handler = was_ignored_by_handler;
-      client_->DidFail(error, total_transfer_size, encoded_body_size,
+      client_->DidFail(CreateWebURLError(request_.Url(), stale_copy_in_cache,
+                                         error_code, was_ignored_by_handler),
+                       total_transfer_size, encoded_body_size,
                        decoded_body_size);
     } else {
       // PlzNavigate: compute the accurate transfer size for navigations.
@@ -932,7 +930,7 @@ void WebURLLoaderImpl::Context::CancelBodyStreaming() {
   }
   if (client_) {
     // TODO(yhirano): Set |stale_copy_in_cache| appropriately if possible.
-    client_->DidFail(WebURLError(request_.Url(), false, net::ERR_ABORTED),
+    client_->DidFail(CreateWebURLError(request_.Url(), false, net::ERR_ABORTED),
                      WebURLLoaderClient::kUnknownEncodedDataLength, 0, 0);
   }
 

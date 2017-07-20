@@ -133,6 +133,8 @@ class TabListSceneLayer : public SceneLayer {
   DISALLOW_COPY_AND_ASSIGN(TabListSceneLayer);
 };
 
+bool RegisterTabListSceneLayer(JNIEnv* env);
+
 }  // namespace android
 
 #endif  // CHROME_BROWSER_ANDROID_COMPOSITOR_SCENE_LAYER_TAB_LIST_SCENE_LAYER_H_

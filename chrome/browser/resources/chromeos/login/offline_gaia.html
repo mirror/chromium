@@ -4,6 +4,7 @@
 
 <link rel="import" href="chrome://resources/cr_elements/shared_style_css.html">
 <link rel="import" href="chrome://resources/cr_elements/cr_dialog/cr_dialog.html">
+<link rel="import" href="chrome://resources/polymer/v1_0/iron-flex-layout/classes/iron-flex-layout.html">
 <link rel="import" href="chrome://resources/polymer/v1_0/neon-animation/animations/slide-from-left-animation.html">
 <link rel="import" href="chrome://resources/polymer/v1_0/neon-animation/animations/slide-from-right-animation.html">
 <link rel="import" href="chrome://resources/polymer/v1_0/neon-animation/animations/slide-left-animation.html">
@@ -48,7 +49,6 @@
 
   <template>
     <style include="cr-shared-style"></style>
-    <link rel="stylesheet" href="oobe_flex_layout.css">
     <link rel="stylesheet" href="oobe_dialog_host.css">
     <link rel="stylesheet" href="oobe_dialog_parameters.css">
     <template is="dom-if" if="[[glifMode]]" restamp>
@@ -172,9 +172,8 @@
 
     <dialog is="cr-dialog" id="forgotPasswordDlg"
         on-close="onDialogOverlayClosed_">
-      <div class="body" slot="body"
-          i18n-content="offlineLoginForgotPasswordDlg"></div>
-      <div class="button-container" slot="button-container">
+      <div class="body" i18n-content="offlineLoginForgotPasswordDlg"></div>
+      <div class="button-container">
         <paper-button autofocus on-tap="onForgotPasswordCloseTap_"
             i18n-content="offlineLoginCloseBtn" class="action-button">
         </paper-button>

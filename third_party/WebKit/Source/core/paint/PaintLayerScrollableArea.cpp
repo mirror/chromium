@@ -797,6 +797,8 @@ void PaintLayerScrollableArea::SetScrollOffsetUnconditionally(
 }
 
 void PaintLayerScrollableArea::UpdateAfterLayout() {
+  DCHECK(Box().HasOverflowClip());
+
   bool relayout_is_prevented = PreventRelayoutScope::RelayoutIsPrevented();
   bool scrollbars_are_frozen =
       in_overflow_relayout_ || FreezeScrollbarsScope::ScrollbarsAreFrozen();
@@ -907,7 +909,8 @@ void PaintLayerScrollableArea::UpdateAfterLayout() {
   ClampScrollOffsetAfterOverflowChange();
 
   if (!scrollbars_are_frozen) {
-    UpdateScrollableAreaSet();
+    UpdateScrollableAreaSet(HasScrollableHorizontalOverflow() ||
+                            HasScrollableVerticalOverflow());
   }
 
   DisableCompositingQueryAsserts disabler;
@@ -1008,6 +1011,14 @@ bool PaintLayerScrollableArea::HasVerticalOverflow() const {
   return PixelSnappedScrollHeight() > PixelSnappedClientSize().Height();
 }
 
+bool PaintLayerScrollableArea::HasScrollableHorizontalOverflow() const {
+  return HasHorizontalOverflow() && Box().ScrollsOverflowX();
+}
+
+bool PaintLayerScrollableArea::HasScrollableVerticalOverflow() const {
+  return HasVerticalOverflow() && Box().ScrollsOverflowY();
+}
+
 // This function returns true if the given box requires overflow scrollbars (as
 // opposed to the 'viewport' scrollbars managed by the PaintLayerCompositor).
 // FIXME: we should use the same scrolling machinery for both the viewport and
@@ -1023,7 +1034,8 @@ void PaintLayerScrollableArea::UpdateAfterStyleChange(
     const ComputedStyle* old_style) {
   // Don't do this on first style recalc, before layout has ever happened.
   if (!OverflowRect().Size().IsZero()) {
-    UpdateScrollableAreaSet();
+    UpdateScrollableAreaSet(HasScrollableHorizontalOverflow() ||
+                            HasScrollableVerticalOverflow());
   }
 
   // Whenever background changes on the scrollable element, the scroll bar
@@ -1770,8 +1782,7 @@ LayoutRect PaintLayerScrollableArea::ScrollLocalRectIntoView(
     const ScrollAlignment& align_x,
     const ScrollAlignment& align_y,
     bool is_smooth,
-    ScrollType scroll_type,
-    bool is_for_scroll_sequence) {
+    ScrollType scroll_type) {
   LayoutRect local_expose_rect(rect);
   local_expose_rect.Move(-Box().BorderLeft(), -Box().BorderTop());
   LayoutRect visible_rect(LayoutPoint(), ClientSize());
@@ -1781,12 +1792,9 @@ LayoutRect PaintLayerScrollableArea::ScrollLocalRectIntoView(
   ScrollOffset old_scroll_offset = GetScrollOffset();
   ScrollOffset new_scroll_offset(ClampScrollOffset(RoundedIntSize(
       ToScrollOffset(FloatPoint(r.Location()) + old_scroll_offset))));
-  if (is_for_scroll_sequence) {
-    DCHECK(scroll_type == kProgrammaticScroll || scroll_type == kUserScroll);
-    ScrollBehavior behavior =
-        is_smooth ? kScrollBehaviorSmooth : kScrollBehaviorInstant;
-    GetSmoothScrollSequencer()->QueueAnimation(this, new_scroll_offset,
-                                               behavior);
+  if (is_smooth) {
+    DCHECK(scroll_type == kProgrammaticScroll);
+    GetSmoothScrollSequencer()->QueueAnimation(this, new_scroll_offset);
   } else {
     SetScrollOffset(new_scroll_offset, scroll_type, kScrollBehaviorInstant);
   }
@@ -1801,15 +1809,13 @@ LayoutRect PaintLayerScrollableArea::ScrollIntoView(
     const ScrollAlignment& align_x,
     const ScrollAlignment& align_y,
     bool is_smooth,
-    ScrollType scroll_type,
-    bool is_for_scroll_sequence) {
+    ScrollType scroll_type) {
   LayoutRect local_expose_rect(
       Box()
           .AbsoluteToLocalQuad(FloatQuad(FloatRect(rect)), kUseTransforms)
           .BoundingBox());
-  local_expose_rect =
-      ScrollLocalRectIntoView(local_expose_rect, align_x, align_y, is_smooth,
-                              scroll_type, is_for_scroll_sequence);
+  local_expose_rect = ScrollLocalRectIntoView(local_expose_rect, align_x,
+                                              align_y, is_smooth, scroll_type);
   LayoutRect visible_rect(LayoutPoint(), ClientSize());
   LayoutRect intersect =
       LocalToAbsolute(Box(), Intersection(visible_rect, local_expose_rect));
@@ -1820,7 +1826,7 @@ LayoutRect PaintLayerScrollableArea::ScrollIntoView(
   return intersect;
 }
 
-void PaintLayerScrollableArea::UpdateScrollableAreaSet() {
+void PaintLayerScrollableArea::UpdateScrollableAreaSet(bool has_overflow) {
   LocalFrame* frame = Box().GetFrame();
   if (!frame)
     return;
@@ -1828,10 +1834,6 @@ void PaintLayerScrollableArea::UpdateScrollableAreaSet() {
   LocalFrameView* frame_view = frame->View();
   if (!frame_view)
     return;
-
-  bool has_overflow = !Box().Size().IsZero() &&
-                      ((HasHorizontalOverflow() && Box().ScrollsOverflowX()) ||
-                       (HasVerticalOverflow() && Box().ScrollsOverflowY()));
 
   bool is_visible_to_hit_test = Box().Style()->VisibleToHitTesting();
   bool did_scroll_overflow = scrolls_overflow_;

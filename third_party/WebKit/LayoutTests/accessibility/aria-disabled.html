@@ -27,34 +27,34 @@
     if (window.accessibilityController) {
 
           var textField = accessibilityController.accessibleElementById("text1");
-          shouldBeEqualToString("textField.restriction", "disabled");
+          shouldBe("textField.isEnabled", "false");
 
           textField = accessibilityController.accessibleElementById("text2");
-          shouldBeEqualToString("textField.restriction", "none");
+          shouldBe("textField.isEnabled", "true");
 
           var group = accessibilityController.accessibleElementById("group1");
-          shouldBeEqualToString("group.restriction", "disabled");
+          shouldBe("group.isEnabled", "false");
 
           var link = accessibilityController.accessibleElementById("link1");
-          shouldBeEqualToString("link.restriction", "disabled");
+          shouldBe("link.isEnabled", "false");
 
           var button = accessibilityController.accessibleElementById("button1");
-          shouldBeEqualToString("button.restriction", "none");
+          shouldBe("button.isEnabled", "true");
 
           var treeitem = accessibilityController.accessibleElementById("treeitem1");
-          shouldBeEqualToString("treeitem.restriction", "disabled");
+          shouldBe("treeitem.isEnabled", "false");
 
           var option = accessibilityController.accessibleElementById("option1");
-          shouldBeEqualToString("option.restriction", "disabled");
+          shouldBe("option.isEnabled", "false");
 
           var tab = accessibilityController.accessibleElementById("tab1");
-          shouldBeEqualToString("tab.restriction", "disabled");
+          shouldBe("tab.isEnabled", "false");
 
           var gridcell = accessibilityController.accessibleElementById("gridcell1");
-          shouldBeEqualToString("gridcell.restriction", "disabled");
+          shouldBe("gridcell.isEnabled", "false");
 
           var checkbox = accessibilityController.accessibleElementById("checkbox1");
-          shouldBeEqualToString("checkbox.restriction", "disabled");
+          shouldBe("checkbox.isEnabled", "false");
 
       }
 </script>

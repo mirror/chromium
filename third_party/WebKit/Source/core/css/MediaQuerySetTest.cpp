@@ -13,10 +13,9 @@ namespace blink {
 typedef struct {
   const char* input;
   const char* output;
-} MediaQuerySetTestCase;
+} TestCase;
 
-static void TestMediaQuery(MediaQuerySetTestCase test,
-                           MediaQuerySet& query_set) {
+static void TestMediaQuery(TestCase test, MediaQuerySet& query_set) {
   StringBuilder output;
   size_t j = 0;
   while (j < query_set.QueryVector().size()) {
@@ -37,7 +36,7 @@ TEST(MediaQuerySetTest, Basic) {
   // The first string represents the input string.
   // The second string represents the output string, if present.
   // Otherwise, the output string is identical to the first string.
-  MediaQuerySetTestCase test_cases[] = {
+  TestCase test_cases[] = {
       {"", nullptr},
       {" ", ""},
       {"screen", nullptr},

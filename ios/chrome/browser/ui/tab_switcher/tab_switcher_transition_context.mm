@@ -35,7 +35,7 @@
   transitionContextContent.initialTabID = bvc.tabModel.currentTab.tabId;
 
   if (![bvc isViewLoaded]) {
-    [bvc loadViewIfNeeded];
+    [bvc ensureViewCreated];
     [bvc.view setFrame:[[UIScreen mainScreen] bounds]];
   }
 

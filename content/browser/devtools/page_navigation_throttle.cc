@@ -52,29 +52,27 @@ void PageNavigationThrottle::AlwaysProceed() {
   // Makes WillStartRequest and WillRedirectRequest always return
   // ThrottleCheckResult::PROCEED.
   page_handler_.reset();
-  Resume();
+
+  if (navigation_deferred_)
+    Resume();
 }
 
-// Resumes a deferred navigation request. Does nothing if a response isn't
-// expected.
 void PageNavigationThrottle::Resume() {
   if (!navigation_deferred_)
     return;
   navigation_deferred_ = false;
-  content::NavigationThrottle::Resume();
+  navigation_handle()->Resume();
 
   // Do not add code after this as the PageNavigationThrottle may be deleted by
   // the line above.
 }
 
-// Cancels a deferred navigation request. Does nothing if a response isn't
-// expected.
 void PageNavigationThrottle::CancelDeferredNavigation(
     NavigationThrottle::ThrottleCheckResult result) {
   if (!navigation_deferred_)
     return;
   navigation_deferred_ = false;
-  content::NavigationThrottle::CancelDeferredNavigation(result);
+  navigation_handle()->CancelDeferredNavigation(result);
 
   // Do not add code after this as the PageNavigationThrottle may be deleted by
   // the line above.

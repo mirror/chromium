@@ -195,6 +195,7 @@ function continueTesting(opt_asyncTestFailure) {
     endTests(cleanTestRun);
   }
   if (!done) {
+    domAutomationController.setAutomationId(1);
     domAutomationController.send('PENDING');
   }
 }
@@ -207,6 +208,7 @@ exports.runTests = runTests;
  * @param {boolean} success Indicates if the test completed successfully.
  */
 function endTests(success) {
+  domAutomationController.setAutomationId(1);
   domAutomationController.send(success ? 'SUCCESS' : 'FAILURE');
 }
 

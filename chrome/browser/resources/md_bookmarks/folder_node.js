@@ -6,6 +6,7 @@ Polymer({
   is: 'bookmarks-folder-node',
 
   behaviors: [
+    bookmarks.MouseFocusBehavior,
     bookmarks.StoreClient,
   ],
 
@@ -258,6 +259,14 @@ Polymer({
     return children.pop().getLastVisibleDescendant_();
   },
 
+  /**
+   * @private
+   * @return {string}
+   */
+  getFolderIcon_: function() {
+    return this.isSelectedFolder_ ? 'bookmarks:folder-open' : 'cr:folder';
+  },
+
   /** @private */
   selectFolder_: function() {
     if (!this.isSelectedFolder_) {
@@ -274,7 +283,7 @@ Polymer({
     e.preventDefault();
     this.selectFolder_();
     bookmarks.CommandManager.getInstance().openCommandMenuAtPosition(
-        e.clientX, e.clientY, MenuSource.TREE, new Set([this.itemId]));
+        e.clientX, e.clientY, new Set([this.itemId]));
   },
 
   /**

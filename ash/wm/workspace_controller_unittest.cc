@@ -13,9 +13,9 @@
 #include "ash/shelf/shelf_layout_manager.h"
 #include "ash/shelf/shelf_widget.h"
 #include "ash/shell.h"
-#include "ash/shell_test_api.h"
 #include "ash/system/status_area_widget.h"
 #include "ash/test/ash_test_base.h"
+#include "ash/test/shell_test_api.h"
 #include "ash/wm/panels/panel_layout_manager.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
@@ -75,7 +75,7 @@ std::string GetLayerNames(const aura::Window* window) {
   return result;
 }
 
-class WorkspaceControllerTest : public AshTestBase {
+class WorkspaceControllerTest : public test::AshTestBase {
  public:
   WorkspaceControllerTest() {}
   ~WorkspaceControllerTest() override {}

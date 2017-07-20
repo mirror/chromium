@@ -25,8 +25,7 @@ LayerImplTestProperties::LayerImplTestProperties(LayerImpl* owning_layer)
       scroll_parent(nullptr),
       clip_parent(nullptr),
       mask_layer(nullptr),
-      parent(nullptr),
-      scroll_boundary_behavior(ScrollBoundaryBehavior()) {}
+      parent(nullptr) {}
 
 LayerImplTestProperties::~LayerImplTestProperties() {}
 

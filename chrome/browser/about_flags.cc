@@ -763,16 +763,12 @@ const FeatureEntry::Choice kEnableWebFontsInterventionV2Choices[] = {
      switches::kEnableWebFontsInterventionV2SwitchValueDisabled},
 };
 
-const FeatureEntry::Choice kTLS13VariantChoices[] = {
+const FeatureEntry::Choice kSSLVersionMaxChoices[] = {
     {flags_ui::kGenericExperimentChoiceDefault, "", ""},
-    {flag_descriptions::kTLS13VariantDisabled, switches::kTLS13Variant,
-     switches::kTLS13VariantDisabled},
-    {flag_descriptions::kTLS13VariantDraft, switches::kTLS13Variant,
-     switches::kTLS13VariantDraft},
-    {flag_descriptions::kTLS13VariantExperiment, switches::kTLS13Variant,
-     switches::kTLS13VariantExperiment},
-    {flag_descriptions::kTLS13VariantRecordTypeExperiment,
-     switches::kTLS13Variant, switches::kTLS13VariantRecordTypeExperiment},
+    {flag_descriptions::kSslVersionMaxTls12, switches::kSSLVersionMax,
+     "tls1.2"},
+    {flag_descriptions::kSslVersionMaxTls13, switches::kSSLVersionMax,
+     "tls1.3"},
 };
 
 #if !defined(OS_ANDROID)
@@ -1146,11 +1142,10 @@ const FeatureEntry kFeatureEntries[] = {
     {"composited-layer-borders", flag_descriptions::kCompositedLayerBordersName,
      flag_descriptions::kCompositedLayerBordersDescription, kOsAll,
      SINGLE_VALUE_TYPE(cc::switches::kShowCompositedLayerBorders)},
-    {"gl-composited-overlay-candidate-quad-borders",
-     flag_descriptions::kGlCompositedOverlayCandidateQuadBordersName,
-     flag_descriptions::kGlCompositedOverlayCandidateQuadBordersDescription,
-     kOsAll,
-     SINGLE_VALUE_TYPE(cc::switches::kGlCompositedOverlayCandidateQuadBorder)},
+    {"gl-composited-texture-quad-borders",
+     flag_descriptions::kGlCompositedTextureQuadBordersName,
+     flag_descriptions::kGlCompositedTextureQuadBordersDescription, kOsAll,
+     SINGLE_VALUE_TYPE(cc::switches::kGlCompositedTextureQuadBorder)},
     {"show-overdraw-feedback", flag_descriptions::kShowOverdrawFeedbackName,
      flag_descriptions::kShowOverdrawFeedbackDescription, kOsAll,
      SINGLE_VALUE_TYPE(cc::switches::kShowOverdrawFeedback)},
@@ -1533,11 +1528,6 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kPasswordGenerationDescription, kOsAll,
      ENABLE_DISABLE_VALUE_TYPE(autofill::switches::kEnablePasswordGeneration,
                                autofill::switches::kDisablePasswordGeneration)},
-    {"enable-username-correction",
-     flag_descriptions::kEnableUsernameCorrectionName,
-     flag_descriptions::kEnableUsernameCorrectionDescription,
-     kOsWin | kOsLinux | kOsCrOS,
-     FEATURE_VALUE_TYPE(password_manager::features::kEnableUsernameCorrection)},
     {"enable-password-force-saving",
      flag_descriptions::kPasswordForceSavingName,
      flag_descriptions::kPasswordForceSavingDescription, kOsAll,
@@ -2352,9 +2342,9 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEnableWebfontsInterventionTriggerName,
      flag_descriptions::kEnableWebfontsInterventionTriggerDescription, kOsAll,
      SINGLE_VALUE_TYPE(switches::kEnableWebFontsInterventionTrigger)},
-    {"tls13-variant", flag_descriptions::kTLS13VariantName,
-     flag_descriptions::kTLS13VariantDescription, kOsAll,
-     MULTI_VALUE_TYPE(kTLS13VariantChoices)},
+    {"ssl-version-max", flag_descriptions::kSslVersionMaxName,
+     flag_descriptions::kSslVersionMaxDescription, kOsAll,
+     MULTI_VALUE_TYPE(kSSLVersionMaxChoices)},
     {"enable-token-binding", flag_descriptions::kEnableTokenBindingName,
      flag_descriptions::kEnableTokenBindingDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kTokenBinding)},
@@ -3189,24 +3179,12 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kDelayReloadStopButtonChangeName,
      flag_descriptions::kDelayReloadStopButtonChangeDescription,
      kOsCrOS | kOsWin | kOsLinux,
-     SINGLE_VALUE_TYPE(switches::kDelayReloadStopButtonChange)},
+     SINGLE_DISABLE_VALUE_TYPE(switches::kDelayReloadStopButtonChange)},
 #endif  // TOOLKIT_VIEWS
 
     {"enable-async-image-decoding", flag_descriptions::kAsyncImageDecodingName,
      flag_descriptions::kAsyncImageDecodingDescription, kOsAll,
      MULTI_VALUE_TYPE(kAsyncImageDecodingChoices)},
-
-    {"capture-thumbnail-on-navigating-away",
-     flag_descriptions::kCaptureThumbnailOnNavigatingAwayName,
-     flag_descriptions::kCaptureThumbnailOnNavigatingAwayDescription,
-     kOsDesktop,
-     FEATURE_VALUE_TYPE(features::kCaptureThumbnailOnNavigatingAway)},
-
-#if defined(OS_CHROMEOS)
-    {"use-cros-midi-service", flag_descriptions::kUseCrosMidiServiceName,
-     flag_descriptions::kUseCrosMidiServiceNameDescription, kOsCrOS,
-     FEATURE_VALUE_TYPE(midi::features::kMidiManagerCros)},
-#endif  // defined(OS_CHROMEOS)
 
     // NOTE: Adding new command-line switches requires adding corresponding
     // entries to enum "LoginCustomFlags" in histograms/enums.xml. See note in

@@ -91,6 +91,7 @@
 #include "chromeos/settings/timezone_settings.h"
 #include "chromeos/timezone/timezone_provider.h"
 #include "components/arc/arc_bridge_service.h"
+#include "components/arc/arc_service_manager.h"
 #include "components/crash/content/app/breakpad_linux.h"
 #include "components/pairing/bluetooth_controller_pairing_controller.h"
 #include "components/pairing/bluetooth_host_pairing_controller.h"
@@ -1607,9 +1608,9 @@ bool WizardController::ShouldShowVoiceInteractionValueProp() const {
 }
 
 void WizardController::StartVoiceInteractionSetupWizard() {
-  auto* service =
-      arc::ArcVoiceInteractionFrameworkService::GetForBrowserContext(
-          ProfileManager::GetActiveUserProfile());
+  arc::ArcVoiceInteractionFrameworkService* service =
+      arc::ArcServiceManager::Get()
+          ->GetService<arc::ArcVoiceInteractionFrameworkService>();
   if (service)
     service->StartVoiceInteractionSetupWizard();
 }

@@ -44,8 +44,8 @@
 #include "core/inspector/WorkerThreadDebugger.h"
 #include "core/loader/ThreadableLoader.h"
 #include "core/origin_trials/OriginTrialContext.h"
-#include "core/workers/GlobalScopeCreationParams.h"
 #include "core/workers/WorkerClients.h"
+#include "core/workers/WorkerThreadStartupData.h"
 #include "modules/EventTargetModules.h"
 #include "modules/fetch/GlobalFetch.h"
 #include "modules/serviceworkers/RespondWithObserver.h"
@@ -71,22 +71,24 @@ namespace blink {
 
 ServiceWorkerGlobalScope* ServiceWorkerGlobalScope::Create(
     ServiceWorkerThread* thread,
-    std::unique_ptr<GlobalScopeCreationParams> creation_params,
-    double time_origin) {
+    std::unique_ptr<WorkerThreadStartupData> startup_data) {
+  // Note: startupData is finalized on return. After the relevant parts has been
+  // passed along to the created 'context'.
   ServiceWorkerGlobalScope* context = new ServiceWorkerGlobalScope(
-      creation_params->script_url, creation_params->user_agent, thread,
-      time_origin, std::move(creation_params->starter_origin_privilege_data),
-      creation_params->worker_clients);
+      startup_data->script_url_, startup_data->user_agent_, thread,
+      MonotonicallyIncreasingTime(),
+      std::move(startup_data->starter_origin_privilege_data_),
+      startup_data->worker_clients_);
 
-  context->SetV8CacheOptions(creation_params->v8_cache_options);
+  context->SetV8CacheOptions(
+      startup_data->worker_v8_settings_.v8_cache_options_);
   context->ApplyContentSecurityPolicyFromVector(
-      *creation_params->content_security_policy_headers);
-  context->SetWorkerSettings(std::move(creation_params->worker_settings));
-  if (!creation_params->referrer_policy.IsNull())
-    context->ParseAndSetReferrerPolicy(creation_params->referrer_policy);
-  context->SetAddressSpace(creation_params->address_space);
+      *startup_data->content_security_policy_headers_);
+  if (!startup_data->referrer_policy_.IsNull())
+    context->ParseAndSetReferrerPolicy(startup_data->referrer_policy_);
+  context->SetAddressSpace(startup_data->address_space_);
   OriginTrialContext::AddTokens(context,
-                                creation_params->origin_trial_tokens.get());
+                                startup_data->origin_trial_tokens_.get());
 
   return context;
 }

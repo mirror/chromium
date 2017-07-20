@@ -45,7 +45,6 @@
 #include "core/events/Event.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/SubresourceIntegrity.h"
-#include "core/frame/UseCounter.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/html/imports/HTMLImport.h"
 #include "core/html/parser/HTMLParserIdioms.h"
@@ -116,7 +115,6 @@ DEFINE_TRACE(ScriptLoader) {
   visitor->Trace(resource_);
   visitor->Trace(pending_script_);
   visitor->Trace(module_tree_client_);
-  visitor->Trace(original_document_);
   PendingScriptClient::Trace(visitor);
 }
 
@@ -303,7 +301,6 @@ bool ScriptLoader::PrepareScript(const TextPosition& script_start_position,
   // document.
   Document& element_document = element_->GetDocument();
   Document* context_document = element_document.ContextDocument();
-  original_document_ = context_document;
   if (!element_document.ExecutingFrame())
     return false;
   if (!context_document || !context_document->ExecutingFrame())
@@ -359,9 +356,6 @@ bool ScriptLoader::PrepareScript(const TextPosition& script_start_position,
   //      and "not parser-inserted" otherwise."
   ParserDisposition parser_state =
       IsParserInserted() ? kParserInserted : kNotParserInserted;
-
-  if (GetScriptType() == ScriptType::kModule)
-    UseCounter::Count(*context_document, WebFeature::kPrepareModuleScript);
 
   // 21. "If the element has a src content attribute, run these substeps:"
   if (element_->HasSourceAttribute()) {
@@ -734,10 +728,6 @@ bool ScriptLoader::FetchClassicScript(
   // "... integrity metadata, ..."
   params.SetIntegrityMetadata(integrity_metadata);
 
-  // "... integrity value, ..."
-  params.MutableResourceRequest().SetFetchIntegrity(
-      element_->IntegrityAttributeValue());
-
   // "... parser state, ..."
   params.SetParserDisposition(parser_state);
 
@@ -832,14 +822,17 @@ ScriptLoader::ExecuteScriptResult ScriptLoader::DoExecuteScript(
     return ExecuteScriptResult::kShouldFireNone;
 
   if (!is_external_script_) {
+    const ContentSecurityPolicy* csp =
+        element_document->GetContentSecurityPolicy();
     bool should_bypass_main_world_csp =
-        (frame->GetScriptController().ShouldBypassMainWorldCSP());
+        (frame->GetScriptController().ShouldBypassMainWorldCSP()) ||
+        csp->AllowScriptWithHash(script->InlineSourceTextForCSP(),
+                                 ContentSecurityPolicy::InlineType::kBlock);
 
     AtomicString nonce = element_->GetNonceForElement();
     if (!should_bypass_main_world_csp &&
-        !element_->AllowInlineScriptForCSP(
-            nonce, start_line_number_, script->InlineSourceTextForCSP(),
-            ContentSecurityPolicy::InlineType::kBlock)) {
+        !element_->AllowInlineScriptForCSP(nonce, start_line_number_,
+                                           script->InlineSourceTextForCSP())) {
       return ExecuteScriptResult::kShouldFireErrorEvent;
     }
   }
@@ -921,14 +914,6 @@ bool ScriptLoader::ExecuteScriptBlock(PendingScript* pending_script,
   const bool was_canceled = pending_script->WasCanceled();
   const bool is_external = pending_script->IsExternal();
   pending_script->Dispose();
-
-  // Do not execute module scripts if they are moved between documents.
-  // TODO(hiroshige): Also do not execute classic scripts. crbug.com/721914
-  Document* element_document = &(element_->GetDocument());
-  Document* context_document = element_document->ContextDocument();
-  if (original_document_ != context_document &&
-      script->GetScriptType() == ScriptType::kModule)
-    return false;
 
   // 2. "If the script's script is null, fire an event named error at the
   //     element, and abort these steps."

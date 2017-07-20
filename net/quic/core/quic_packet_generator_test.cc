@@ -70,7 +70,23 @@ class MockDelegate : public QuicPacketGenerator::DelegateInterface {
         .WillRepeatedly(Return(true));
   }
 
+  void SaveStreamData(QuicStreamId id,
+                      QuicIOVector iov,
+                      size_t iov_offset,
+                      QuicStreamOffset offset,
+                      QuicByteCount data_length) override {
+    producer_.SaveStreamData(id, iov, iov_offset, offset, data_length);
+  }
+  bool WriteStreamData(QuicStreamId id,
+                       QuicStreamOffset offset,
+                       QuicByteCount data_length,
+                       QuicDataWriter* writer) override {
+    return producer_.WriteStreamData(id, offset, data_length, writer);
+  }
+
  private:
+  SimpleDataProducer producer_;
+
   DISALLOW_COPY_AND_ASSIGN(MockDelegate);
 };
 
@@ -117,9 +133,8 @@ class QuicPacketGeneratorTest : public QuicTest {
     creator_->SetEncrypter(ENCRYPTION_FORWARD_SECURE,
                            new NullEncrypter(Perspective::IS_CLIENT));
     creator_->set_encryption_level(ENCRYPTION_FORWARD_SECURE);
-    if (FLAGS_quic_reloadable_flag_quic_stream_owns_data) {
-      framer_.set_data_producer(&producer_);
-    }
+    generator_.SetDelegateSavesData(
+        FLAGS_quic_reloadable_flag_quic_stream_owns_data);
   }
 
   ~QuicPacketGeneratorTest() override {

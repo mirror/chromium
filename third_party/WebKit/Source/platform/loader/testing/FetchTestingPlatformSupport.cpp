@@ -33,6 +33,12 @@ MockFetchContext* FetchTestingPlatformSupport::Context() {
   return context_;
 }
 
+WebURLError FetchTestingPlatformSupport::CancelledError(
+    const WebURL& url) const {
+  return ResourceError(kErrorDomainBlinkInternal, -1, url.GetString(),
+                       "cancelledError for testing");
+}
+
 WebURLLoaderMockFactory*
 FetchTestingPlatformSupport::GetURLLoaderMockFactory() {
   return url_loader_mock_factory_.get();

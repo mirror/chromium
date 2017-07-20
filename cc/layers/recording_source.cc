@@ -24,10 +24,6 @@ const bool kDefaultClearCanvasSetting = false;
 const bool kDefaultClearCanvasSetting = true;
 #endif
 
-// We don't perform per-layer solid color analysis when there are too many skia
-// operations.
-const int kMaxOpsToAnalyzeForLayer = 10;
-
 }  // namespace
 
 namespace cc {
@@ -145,13 +141,14 @@ void RecordingSource::DetermineIfSolidColor() {
   is_solid_color_ = false;
   solid_color_ = SK_ColorTRANSPARENT;
 
-  if (display_list_->op_count() > kMaxOpsToAnalyzeForLayer)
+  // TODO(vmpstr): We can probably remove this check.
+  if (!display_list_->ShouldBeAnalyzedForSolidColor())
     return;
 
   TRACE_EVENT1("cc", "RecordingSource::DetermineIfSolidColor", "opcount",
                display_list_->op_count());
-  is_solid_color_ = display_list_->GetColorIfSolidInRect(
-      gfx::Rect(GetSize()), &solid_color_, kMaxOpsToAnalyzeForLayer);
+  is_solid_color_ =
+      display_list_->GetColorIfSolidInRect(gfx::Rect(GetSize()), &solid_color_);
 }
 
 }  // namespace cc

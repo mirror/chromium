@@ -68,12 +68,6 @@ public class ThumbnailProviderImpl implements ThumbnailProvider {
         mNativeThumbnailProvider = 0;
     }
 
-    /**
-     * The returned bitmap will have at least one of its dimensions smaller than or equal to the
-     * size specified in the request.
-     *
-     * @param request Parameters that describe the thumbnail being retrieved.
-     */
     @Override
     public void getThumbnail(ThumbnailRequest request) {
         String filePath = request.getFilePath();
@@ -135,16 +129,8 @@ public class ThumbnailProviderImpl implements ThumbnailProvider {
     @CalledByNative
     private void onThumbnailRetrieved(String filePath, @Nullable Bitmap bitmap) {
         if (bitmap != null) {
-            // The bitmap returned here is retrieved from the native side. The image decoder there
-            // scales down the image (if it is too big) so that one of its sides is smaller than or
-            // equal to the required size. We check here that the returned image satisfies this
-            // criteria.
-            assert Math.min(bitmap.getWidth(), bitmap.getHeight()) <= mCurrentRequest.getIconSize();
-            assert TextUtils.equals(mCurrentRequest.getFilePath(), filePath);
-
-            // We set the key pair to contain the required size instead of the minimal dimension so
-            // that future fetches of this thumbnail can recognise the key in the cache.
-            getBitmapCache().put(Pair.create(filePath, mCurrentRequest.getIconSize()),
+            assert mCurrentRequest.getIconSize() == bitmap.getHeight();
+            getBitmapCache().put(Pair.create(filePath, bitmap.getHeight()),
                     Pair.create(bitmap, bitmap.getByteCount()));
             mCurrentRequest.onThumbnailRetrieved(filePath, bitmap);
         }
@@ -174,13 +160,6 @@ public class ThumbnailProviderImpl implements ThumbnailProvider {
         };
         sBitmapCache = new WeakReference<>(cache);
         return cache;
-    }
-
-    /**
-     * Evicts all cached thumbnails from previous fetches.
-     */
-    public static void clearCache() {
-        getBitmapCache().evictAll();
     }
 
     private native long nativeInit();

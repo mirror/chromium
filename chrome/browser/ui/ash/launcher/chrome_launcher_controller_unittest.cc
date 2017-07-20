@@ -24,9 +24,9 @@
 #include "ash/shelf/shelf_constants.h"
 #include "ash/shelf/shelf_controller.h"
 #include "ash/shell.h"
-#include "ash/shell_test_api.h"
 #include "ash/test/ash_test_helper.h"
-#include "ash/test_shell_delegate.h"
+#include "ash/test/shell_test_api.h"
+#include "ash/test/test_shell_delegate.h"
 #include "ash/wm/maximize_mode/maximize_mode_controller.h"
 #include "ash/wm/window_util.h"
 #include "base/command_line.h"
@@ -382,7 +382,7 @@ class TestChromeLauncherController : public ChromeLauncherController {
 // A shell delegate that owns a ChromeLauncherController, like production.
 // TODO(msw): Refine ChromeLauncherController lifetime management.
 // TODO(msw): Avoid relying on TestShellDelegate's ShelfInitializer.
-class ChromeLauncherTestShellDelegate : public ash::TestShellDelegate {
+class ChromeLauncherTestShellDelegate : public ash::test::TestShellDelegate {
  public:
   explicit ChromeLauncherTestShellDelegate(ash::ShelfModel* shelf_model)
       : shelf_model_(shelf_model) {}
@@ -394,7 +394,7 @@ class ChromeLauncherTestShellDelegate : public ash::TestShellDelegate {
     return launcher_controller_.get();
   }
 
-  // ash::TestShellDelegate:
+  // ash::test::TestShellDelegate:
   void ShelfShutdown() override { launcher_controller_.reset(); }
 
  private:

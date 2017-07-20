@@ -10,7 +10,7 @@
 #include "ash/system/tray/system_tray.h"
 #include "ash/test/ash_test_base.h"
 #include "ash/test/ash_test_helper.h"
-#include "ash/test_shell_delegate.h"
+#include "ash/test/test_shell_delegate.h"
 #include "base/macros.h"
 #include "components/prefs/testing_pref_service.h"
 
@@ -20,14 +20,14 @@ namespace {
 
 constexpr char kFakeUserEmail[] = "fake_user@nightlight";
 
-class TrayNightLightTest : public AshTestBase {
+class TrayNightLightTest : public test::AshTestBase {
  public:
   TrayNightLightTest() = default;
   ~TrayNightLightTest() override = default;
 
-  // AshTestBase:
+  // ash::test::AshTestBase:
   void SetUp() override {
-    AshTestBase::SetUp();
+    test::AshTestBase::SetUp();
     GetSessionControllerClient()->Reset();
     GetSessionControllerClient()->AddUserSession(kFakeUserEmail);
     Shell::RegisterPrefs(pref_service_.registry());

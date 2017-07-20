@@ -114,9 +114,6 @@ class MediaRouterFileDialog : public ui::SelectFileDialog::Listener {
   // Reports the format of a file to the UMA stats.
   void ReportFileFormat(const base::FilePath& filename);
 
-  // Reports the size of a file to the UMA stats.
-  void ReportFileSize(const base::FilePath& filename);
-
   // Overridden from SelectFileDialog::Listener:
   void FileSelected(const base::FilePath& path,
                     int index,

@@ -9,9 +9,6 @@
 
 #include "base/guid.h"
 #include "base/memory/ptr_util.h"
-#include "base/test/test_simple_task_runner.h"
-#include "base/threading/thread_task_runner_handle.h"
-#include "components/download/content/public/all_download_item_notifier.h"
 #include "content/public/test/fake_download_item.h"
 #include "content/public/test/mock_download_manager.h"
 #include "net/http/http_response_headers.h"
@@ -47,7 +44,6 @@ MATCHER_P(DriverEntryEqual, entry, "") {
 class MockDriverClient : public DownloadDriver::Client {
  public:
   MOCK_METHOD1(OnDriverReady, void(bool));
-  MOCK_METHOD1(OnDriverHardRecoverComplete, void(bool));
   MOCK_METHOD1(OnDownloadCreated, void(const DriverEntry&));
   MOCK_METHOD2(OnDownloadFailed, void(const DriverEntry&, FailureType));
   MOCK_METHOD1(OnDownloadSucceeded, void(const DriverEntry&));
@@ -56,9 +52,7 @@ class MockDriverClient : public DownloadDriver::Client {
 
 class DownloadDriverImplTest : public testing::Test {
  public:
-  DownloadDriverImplTest()
-      : task_runner_(new base::TestSimpleTaskRunner), handle_(task_runner_) {}
-
+  DownloadDriverImplTest() = default;
   ~DownloadDriverImplTest() override = default;
 
   void SetUp() override {
@@ -69,10 +63,6 @@ class DownloadDriverImplTest : public testing::Test {
   NiceMock<content::MockDownloadManager> mock_manager_;
   MockDriverClient mock_client_;
   std::unique_ptr<DownloadDriverImpl> driver_;
-
- protected:
-  scoped_refptr<base::TestSimpleTaskRunner> task_runner_;
-  base::ThreadTaskRunnerHandle handle_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(DownloadDriverImplTest);
@@ -86,19 +76,8 @@ TEST_F(DownloadDriverImplTest, ManagerLateInitialization) {
   driver_->Initialize(&mock_client_);
 
   EXPECT_CALL(mock_client_, OnDriverReady(true));
-  static_cast<AllDownloadItemNotifier::Observer*>(driver_.get())
-      ->OnManagerInitialized(&mock_manager_);
-}
-
-TEST_F(DownloadDriverImplTest, TestHardRecover) {
-  EXPECT_CALL(mock_manager_, IsManagerInitialized())
-      .Times(1)
-      .WillOnce(Return(false));
-  driver_->Initialize(&mock_client_);
-
-  EXPECT_CALL(mock_client_, OnDriverHardRecoverComplete(true)).Times(1);
-  driver_->HardRecover();
-  task_runner_->RunUntilIdle();
+  static_cast<content::DownloadManager::Observer*>(driver_.get())
+      ->OnManagerInitialized();
 }
 
 // Ensures download updates from download items are propagated correctly.
@@ -122,13 +101,13 @@ TEST_F(DownloadDriverImplTest, DownloadItemUpdateEvents) {
   EXPECT_CALL(mock_client_, OnDownloadUpdated(DriverEntryEqual(entry)))
       .Times(1)
       .RetiresOnSaturation();
-  static_cast<AllDownloadItemNotifier::Observer*>(driver_.get())
-      ->OnDownloadUpdated(&mock_manager_, &fake_item);
+  static_cast<content::DownloadItem::Observer*>(driver_.get())
+      ->OnDownloadUpdated(&fake_item);
 
   // Nothing happens for cancelled state.
   fake_item.SetState(DownloadState::CANCELLED);
-  static_cast<AllDownloadItemNotifier::Observer*>(driver_.get())
-      ->OnDownloadUpdated(&mock_manager_, &fake_item);
+  static_cast<content::DownloadItem::Observer*>(driver_.get())
+      ->OnDownloadUpdated(&fake_item);
 
   fake_item.SetReceivedBytes(1024);
   fake_item.SetState(DownloadState::COMPLETE);
@@ -136,8 +115,8 @@ TEST_F(DownloadDriverImplTest, DownloadItemUpdateEvents) {
   EXPECT_CALL(mock_client_, OnDownloadSucceeded(DriverEntryEqual(entry)))
       .Times(1)
       .RetiresOnSaturation();
-  static_cast<AllDownloadItemNotifier::Observer*>(driver_.get())
-      ->OnDownloadUpdated(&mock_manager_, &fake_item);
+  static_cast<content::DownloadItem::Observer*>(driver_.get())
+      ->OnDownloadUpdated(&fake_item);
 
   fake_item.SetState(DownloadState::INTERRUPTED);
   fake_item.SetLastReason(
@@ -147,8 +126,8 @@ TEST_F(DownloadDriverImplTest, DownloadItemUpdateEvents) {
                                              FailureType::RECOVERABLE))
       .Times(1)
       .RetiresOnSaturation();
-  static_cast<AllDownloadItemNotifier::Observer*>(driver_.get())
-      ->OnDownloadUpdated(&mock_manager_, &fake_item);
+  static_cast<content::DownloadItem::Observer*>(driver_.get())
+      ->OnDownloadUpdated(&fake_item);
 }
 
 TEST_F(DownloadDriverImplTest, TestGetActiveDownloadsCall) {

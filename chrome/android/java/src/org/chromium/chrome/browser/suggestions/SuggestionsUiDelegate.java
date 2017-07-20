@@ -39,9 +39,7 @@ public interface SuggestionsUiDelegate {
     // Feature/State checks
 
     /**
-     * Registers a {@link DestructionObserver}, notified when the delegate's host goes away. It is
-     * guaranteed that the observer will be called before the {@link SuggestionsSource} is
-     * destroyed, but there is no destruction order guarantee otherwise.
+     * Registers a {@link DestructionObserver}, notified when the New Tab Page goes away.
      */
     void addDestructionObserver(DestructionObserver destructionObserver);
 

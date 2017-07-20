@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "chrome/browser/android/ntp/suggestions_event_reporter_bridge.h"
+
 #include <jni.h>
 #include <vector>
 
@@ -186,4 +188,8 @@ static void OnActivityWarmResumed(JNIEnv* env,
     return;
   }
   scheduler->OnBrowserForegrounded();
+}
+
+bool RegisterSuggestionsEventReporterBridge(JNIEnv* env) {
+  return RegisterNativesImpl(env);
 }

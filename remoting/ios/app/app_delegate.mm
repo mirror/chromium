@@ -8,25 +8,26 @@
 
 #import "remoting/ios/app/app_delegate.h"
 
+#import <WebKit/WebKit.h>
+
 #include "base/logging.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 
 #import "remoting/ios/app/app_view_controller.h"
-#import "remoting/ios/app/first_launch_view_presenter.h"
 #import "remoting/ios/app/help_and_feedback.h"
-#import "remoting/ios/app/help_view_controller.h"
 #import "remoting/ios/app/remoting_view_controller.h"
 #import "remoting/ios/app/user_status_presenter.h"
-#import "remoting/ios/app/web_view_controller.h"
 #import "remoting/ios/facade/remoting_oauth_authentication.h"
 
-@interface AppDelegate ()<FirstLaunchViewControllerDelegate> {
+@interface AppDelegate () {
   AppViewController* _appViewController;
-  FirstLaunchViewPresenter* _firstLaunchViewPresenter;
 }
 @end
 
+// TODO(nicholss): These urls should come from a global config.
+static NSString* const kHelpCenterUrl =
+    @"https://support.google.com/chrome/answer/1649523?co=GENIE.Platform%3DiOS";
 // TODO(nicholss): There is no FAQ page at the moment.
 static NSString* const kFAQsUrl =
     @"https://support.google.com/chrome/answer/1649523?co=GENIE.Platform%3DiOS";
@@ -45,7 +46,7 @@ static NSString* const kFAQsUrl =
 
 - (BOOL)application:(UIApplication*)application
     didFinishLaunchingWithOptions:(NSDictionary*)launchOptions {
-  [self launchRootViewController];
+  [self launchRemotingViewController];
   return YES;
 }
 
@@ -68,7 +69,7 @@ static NSString* const kFAQsUrl =
   [(RemotingOAuthAuthentication*)RemotingService.instance.authentication
       authenticateWithAuthorizationCode:authorizationCode];
 
-  [self launchRootViewController];
+  [self launchRemotingViewController];
   return YES;
 }
 #endif  // ifndef NDEBUG
@@ -84,6 +85,11 @@ static NSString* const kFAQsUrl =
   [_appViewController hideMenuAnimated:animated];
 }
 
+- (void)presentSignInFlow {
+  DCHECK(_appViewController != nil);
+  [_appViewController presentSignInFlow];
+}
+
 #pragma mark - Properties
 
 + (AppDelegate*)instance {
@@ -94,19 +100,13 @@ static NSString* const kFAQsUrl =
 
 #pragma mark - Private
 
-- (void)launchRootViewController {
+- (void)launchRemotingViewController {
   RemotingViewController* vc = [[RemotingViewController alloc] init];
   UINavigationController* navController =
       [[UINavigationController alloc] initWithRootViewController:vc];
   navController.navigationBarHidden = true;
   _appViewController =
       [[AppViewController alloc] initWithMainViewController:navController];
-  _firstLaunchViewPresenter =
-      [[FirstLaunchViewPresenter alloc] initWithNavController:navController
-                                       viewControllerDelegate:self];
-  if (![RemotingService.instance.authentication.user isAuthenticated]) {
-    [_firstLaunchViewPresenter presentView];
-  }
   self.window.rootViewController = _appViewController;
   [self.window makeKeyAndVisible];
   [UserStatusPresenter.instance start];
@@ -115,50 +115,41 @@ static NSString* const kFAQsUrl =
 #pragma mark - AppDelegate
 
 - (void)navigateToFAQs:(UINavigationController*)navigationController {
-  WebViewController* viewController =
-      [[WebViewController alloc] initWithUrl:kFAQsUrl title:@"FAQs"];
-  [navigationController pushViewController:viewController animated:YES];
+  [self navigateToUrl:kFAQsUrl
+                     title:@"FAQs"
+      navigationController:navigationController];
 }
 
 - (void)navigateToHelpCenter:(UINavigationController*)navigationController {
-  [navigationController pushViewController:[[HelpViewController alloc] init]
-                                  animated:YES];
-}
-
-- (void)presentHelpCenter {
-  UINavigationController* navController = [[UINavigationController alloc]
-      initWithRootViewController:[[HelpViewController alloc] init]];
-  [AppDelegate.topPresentingVC presentViewController:navController
-                                            animated:YES
-                                          completion:nil];
+  [self navigateToUrl:kHelpCenterUrl
+                     title:@"Help Center"
+      navigationController:navigationController];
 }
 
 - (void)presentFeedbackFlowWithContext:(NSString*)context {
   [HelpAndFeedback.instance presentFeedbackFlowWithContext:context];
 }
 
-- (void)emailSetupInstructions {
-  NSLog(@"TODO: emailSetupInstructions");
-}
-
-#pragma mark - FirstLaunchViewPresenterDelegate
-
-- (void)presentSignInFlow {
-  DCHECK(_appViewController);
-  [_appViewController presentSignInFlow];
-}
-
 #pragma mark - Private
 
-+ (UIViewController*)topPresentingVC {
-  UIViewController* topController =
-      UIApplication.sharedApplication.keyWindow.rootViewController;
+- (void)navigateToUrl:(NSString*)url
+                   title:(NSString*)title
+    navigationController:(UINavigationController*)navigationController {
+  UIViewController* viewController = [[UIViewController alloc] init];
+  viewController.title = title;
 
-  while (topController.presentedViewController) {
-    topController = topController.presentedViewController;
-  }
+  NSURLRequest* request =
+      [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
+  WKWebView* webView =
+      [[WKWebView alloc] initWithFrame:viewController.view.frame
+                         configuration:[[WKWebViewConfiguration alloc] init]];
+  [viewController.view addSubview:webView];
+  [navigationController pushViewController:viewController animated:YES];
+  [webView loadRequest:request];
+}
 
-  return topController;
+- (void)emailSetupInstructions {
+  NSLog(@"TODO: emailSetupInstructions");
 }
 
 @end

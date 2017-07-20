@@ -159,12 +159,12 @@ IPC_MESSAGE_CONTROL2(BrowserPluginHostMsg_UpdateGeometry,
 
 IPC_MESSAGE_ROUTED2(BrowserPluginHostMsg_SatisfySequence,
                     int /* browser_plugin_instance_id */,
-                    viz::SurfaceSequence /* sequence */)
+                    cc::SurfaceSequence /* sequence */)
 
 IPC_MESSAGE_ROUTED3(BrowserPluginHostMsg_RequireSequence,
                     int /* browser_plugin_instance_id */,
                     viz::SurfaceId /* surface_id */,
-                    viz::SurfaceSequence /* sequence */)
+                    cc::SurfaceSequence /* sequence */)
 
 // -----------------------------------------------------------------------------
 // These messages are from the browser process to the embedder.
@@ -197,7 +197,7 @@ IPC_MESSAGE_CONTROL2(BrowserPluginMsg_SetCursor,
 IPC_MESSAGE_CONTROL3(BrowserPluginMsg_SetChildFrameSurface,
                      int /* browser_plugin_instance_id */,
                      viz::SurfaceInfo /* surface_info */,
-                     viz::SurfaceSequence /* sequence */)
+                     cc::SurfaceSequence /* sequence */)
 
 // Forwards a PointerLock Unlock request to the BrowserPlugin.
 IPC_MESSAGE_CONTROL2(BrowserPluginMsg_SetMouseLock,

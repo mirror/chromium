@@ -60,18 +60,20 @@ void BreakingNewsGCMAppHandler::StopListening() {
   DCHECK_EQ(gcm_driver_->GetAppHandler(kBreakingNewsGCMAppID), this);
   gcm_driver_->RemoveAppHandler(kBreakingNewsGCMAppID);
   on_new_content_callback_ = OnNewContentCallback();
-  subscription_manager_->Unsubscribe();
+  // TODO(mamir): Check which token should be used for unsubscription when
+  // handling change in the token.
+  std::string token = pref_service_->GetString(
+      ntp_snippets::prefs::kBreakingNewsGCMSubscriptionTokenCache);
+  subscription_manager_->Unsubscribe(token);
 }
 
 void BreakingNewsGCMAppHandler::Subscribe() {
-  // TODO(mamir): This logic should be moved to the SubscriptionManager.
-  std::string token =
-      pref_service_->GetString(prefs::kBreakingNewsGCMSubscriptionTokenCache);
+  std::string token = pref_service_->GetString(
+      ntp_snippets::prefs::kBreakingNewsGCMSubscriptionTokenCache);
   // If a token has been already obtained, subscribe directly at the content
-  // suggestions server. Otherwise, obtain a GCM token first.
+  // suggestions server.
   if (!token.empty()) {
-    if (!subscription_manager_->IsSubscribed() ||
-        subscription_manager_->NeedsToResubscribe()) {
+    if (!subscription_manager_->IsSubscribed()) {
       subscription_manager_->Subscribe(token);
     }
     return;
@@ -79,19 +81,19 @@ void BreakingNewsGCMAppHandler::Subscribe() {
 
   instance_id_driver_->GetInstanceID(kBreakingNewsGCMAppID)
       ->GetToken(kBreakingNewsGCMSenderId, kGCMScope,
-                 /*options=*/std::map<std::string, std::string>(),
+                 std::map<std::string, std::string>() /* options */,
                  base::Bind(&BreakingNewsGCMAppHandler::DidSubscribe,
                             weak_ptr_factory_.GetWeakPtr()));
 }
 
-void BreakingNewsGCMAppHandler::DidSubscribe(
-    const std::string& subscription_token,
-    InstanceID::Result result) {
+void BreakingNewsGCMAppHandler::DidSubscribe(const std::string& subscription_id,
+                                             InstanceID::Result result) {
   switch (result) {
     case InstanceID::SUCCESS:
-      pref_service_->SetString(prefs::kBreakingNewsGCMSubscriptionTokenCache,
-                               subscription_token);
-      subscription_manager_->Subscribe(subscription_token);
+      pref_service_->SetString(
+          ntp_snippets::prefs::kBreakingNewsGCMSubscriptionTokenCache,
+          subscription_id);
+      subscription_manager_->Subscribe(subscription_id);
       return;
     case InstanceID::INVALID_PARAMETER:
     case InstanceID::DISABLED:
@@ -110,7 +112,8 @@ void BreakingNewsGCMAppHandler::DidSubscribe(
 void BreakingNewsGCMAppHandler::ShutdownHandler() {}
 
 void BreakingNewsGCMAppHandler::OnStoreReset() {
-  pref_service_->ClearPref(prefs::kBreakingNewsGCMSubscriptionTokenCache);
+  pref_service_->ClearPref(
+      ntp_snippets::prefs::kBreakingNewsGCMSubscriptionTokenCache);
 }
 
 void BreakingNewsGCMAppHandler::OnMessage(const std::string& app_id,

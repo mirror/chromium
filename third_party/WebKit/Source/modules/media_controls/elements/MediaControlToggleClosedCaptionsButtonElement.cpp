@@ -42,23 +42,20 @@ bool MediaControlToggleClosedCaptionsButtonElement::HasOverflowButton() const {
   return true;
 }
 
-const char*
-MediaControlToggleClosedCaptionsButtonElement::GetNameForHistograms() const {
-  return IsOverflowElement() ? "ClosedCaptionOverflowButton"
-                             : "ClosedCaptionsButton";
-}
-
 void MediaControlToggleClosedCaptionsButtonElement::DefaultEventHandler(
     Event* event) {
   if (event->type() == EventTypeNames::click) {
     if (MediaElement().textTracks()->length() == 1) {
       // If only one track exists, toggle it on/off
-      if (MediaElement().textTracks()->HasShowingTracks())
-        GetMediaControls().DisableShowingTextTracks();
-      else
-        GetMediaControls().ShowTextTrackAtIndex(0);
+      if (MediaElement().textTracks()->HasShowingTracks()) {
+        static_cast<MediaControlsImpl&>(GetMediaControls())
+            .DisableShowingTextTracks();
+      } else {
+        static_cast<MediaControlsImpl&>(GetMediaControls())
+            .ShowTextTrackAtIndex(0);
+      }
     } else {
-      GetMediaControls().ToggleTextTrackList();
+      static_cast<MediaControlsImpl&>(GetMediaControls()).ToggleTextTrackList();
     }
 
     UpdateDisplayType();

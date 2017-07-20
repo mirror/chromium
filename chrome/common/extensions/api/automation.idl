@@ -203,6 +203,7 @@
     busy,
     collapsed,
     default,
+    disabled,
     editable,
     expanded,
     focusable,
@@ -216,6 +217,7 @@
     multiselectable,
     offscreen,
     protected,
+    readOnly,
     required,
     richlyEditable,
     selectable,
@@ -270,12 +272,6 @@
     placeholder,
     relatedElement,
     value
-  };
-
-  // The input restriction for a object -- even non-controls can be disabled.
-  enum Restriction {
-    disabled,
-    readOnly
   };
 
   dictionary Rect {
@@ -655,6 +651,9 @@
     // The value of the aria-invalid attribute, indicating the error type.
     DOMString? ariaInvalidValue;
 
+    // The value of the aria-readonly attribute, if applicable.
+    boolean? ariaReadonly;
+
     // The CSS display attribute for this node, if applicable.
     DOMString? display;
 
@@ -663,12 +662,6 @@
 
     // The language code for this subtree.
     DOMString? language;
-
-    // Input restriction, if any, such as readonly or disabled:
-    // undefined - enabled control or other object that is not disabled 
-    // Restriction.DISABLED - disallows input in itself + any descendants
-    // Restriction.READONLY - allow focus/selection but not input
-    DOMString? restriction;
 
     // Tri-state describing checkbox or radio button:
     // 'false' | 'true' | 'mixed'

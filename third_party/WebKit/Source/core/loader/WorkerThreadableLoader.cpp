@@ -391,6 +391,17 @@ void WorkerThreadableLoader::DidFail(const ResourceError& error) {
   client->DidFail(error);
 }
 
+void WorkerThreadableLoader::DidFailAccessControlCheck(
+    const ResourceError& error) {
+  DCHECK(!IsMainThread());
+  if (!client_)
+    return;
+  auto* client = client_;
+  client_ = nullptr;
+  main_thread_loader_holder_ = nullptr;
+  client->DidFailAccessControlCheck(error);
+}
+
 void WorkerThreadableLoader::DidFailRedirectCheck() {
   DCHECK(!IsMainThread());
   if (!client_)
@@ -591,6 +602,20 @@ void WorkerThreadableLoader::MainThreadLoaderHolder::DidFail(
   forwarder_->ForwardTaskWithDoneSignal(
       BLINK_FROM_HERE,
       CrossThreadBind(&WorkerThreadableLoader::DidFail, worker_loader, error));
+  forwarder_ = nullptr;
+}
+
+void WorkerThreadableLoader::MainThreadLoaderHolder::DidFailAccessControlCheck(
+    const ResourceError& error) {
+  DCHECK(IsMainThread());
+  CrossThreadPersistent<WorkerThreadableLoader> worker_loader =
+      worker_loader_.Release();
+  if (!worker_loader || !forwarder_)
+    return;
+  forwarder_->ForwardTaskWithDoneSignal(
+      BLINK_FROM_HERE,
+      CrossThreadBind(&WorkerThreadableLoader::DidFailAccessControlCheck,
+                      worker_loader, error));
   forwarder_ = nullptr;
 }
 

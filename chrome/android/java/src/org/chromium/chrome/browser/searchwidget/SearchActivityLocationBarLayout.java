@@ -31,13 +31,12 @@ public class SearchActivityLocationBarLayout extends LocationBarLayout {
     }
 
     private Delegate mDelegate;
-    private boolean mPendingSearchPromoDecision;
-    private boolean mPendingBeginQuery;
+    private boolean mShowSuggestions;
 
     public SearchActivityLocationBarLayout(Context context, AttributeSet attrs) {
         super(context, attrs, R.layout.location_bar_base);
         setUrlBarFocusable(true);
-        mPendingSearchPromoDecision = LocaleManager.getInstance().needToCheckForSearchEnginePromo();
+        mShowSuggestions = !LocaleManager.getInstance().needToCheckForSearchEnginePromo();
     }
 
     /** Set the {@link Delegate}. */
@@ -70,15 +69,14 @@ public class SearchActivityLocationBarLayout extends LocationBarLayout {
     public void onNativeLibraryReady() {
         super.onNativeLibraryReady();
         setAutocompleteProfile(Profile.getLastUsedProfile().getOriginalProfile());
-
-        mPendingSearchPromoDecision = LocaleManager.getInstance().needToCheckForSearchEnginePromo();
         setShowCachedZeroSuggestResults(true);
+        mShowSuggestions = !LocaleManager.getInstance().needToCheckForSearchEnginePromo();
     }
 
     @Override
     public void onSuggestionsReceived(
             List<OmniboxSuggestion> newSuggestions, String inlineAutocompleteText) {
-        if (mPendingSearchPromoDecision) return;
+        if (!mShowSuggestions) return;
         super.onSuggestionsReceived(newSuggestions, inlineAutocompleteText);
     }
 
@@ -87,39 +85,11 @@ public class SearchActivityLocationBarLayout extends LocationBarLayout {
         SearchWidgetProvider.updateCachedVoiceSearchAvailability(isVoiceSearchEnabled());
         if (isVoiceSearchIntent && mUrlBar.isFocused()) onUrlFocusChange(true);
         if (!TextUtils.isEmpty(mUrlBar.getText())) onTextChangedForAutocomplete();
-
-        assert !LocaleManager.getInstance().needToCheckForSearchEnginePromo();
-        mPendingSearchPromoDecision = false;
-
-        if (mPendingBeginQuery) {
-            beginQueryInternal(isVoiceSearchIntent);
-            mPendingBeginQuery = false;
-        }
+        mShowSuggestions = true;
     }
 
     /** Begins a new query. */
     void beginQuery(boolean isVoiceSearchIntent) {
-        // Clear the text regardless of the promo decision.  This allows the user to enter text
-        // before native has been initialized and have it not be cleared one the delayed beginQuery
-        // logic is performed.
-        mUrlBar.setIgnoreTextChangesForAutocomplete(true);
-        mUrlBar.setUrl("", null);
-        mUrlBar.setIgnoreTextChangesForAutocomplete(false);
-
-        mUrlBar.setCursorVisible(true);
-        mUrlBar.setSelection(0, mUrlBar.getText().length());
-
-        if (mPendingSearchPromoDecision) {
-            mPendingBeginQuery = true;
-            return;
-        }
-
-        beginQueryInternal(isVoiceSearchIntent);
-    }
-
-    private void beginQueryInternal(boolean isVoiceSearchIntent) {
-        assert !mPendingSearchPromoDecision;
-
         if (isVoiceSearchEnabled() && isVoiceSearchIntent) {
             startVoiceRecognition();
         } else {
@@ -135,8 +105,14 @@ public class SearchActivityLocationBarLayout extends LocationBarLayout {
     }
 
     private void focusTextBox() {
-        if (!mUrlBar.hasFocus()) mUrlBar.requestFocus();
+        if (mNativeInitialized) onUrlFocusChange(true);
 
+        mUrlBar.setIgnoreTextChangesForAutocomplete(true);
+        mUrlBar.setUrl("", null);
+        mUrlBar.setIgnoreTextChangesForAutocomplete(false);
+
+        mUrlBar.setCursorVisible(true);
+        mUrlBar.setSelection(0, mUrlBar.getText().length());
         new Handler().post(new Runnable() {
             @Override
             public void run() {

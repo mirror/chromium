@@ -17,7 +17,9 @@
 
 namespace blink {
 class WebHTTPBody;
+class WebURL;
 class WebURLRequest;
+struct WebURLError;
 }
 
 namespace content {
@@ -51,8 +53,6 @@ FetchCredentialsMode GetFetchCredentialsModeForWebURLRequest(
     const blink::WebURLRequest& request);
 FetchRedirectMode GetFetchRedirectModeForWebURLRequest(
     const blink::WebURLRequest& request);
-std::string GetFetchIntegrityForWebURLRequest(
-    const blink::WebURLRequest& request);
 RequestContextFrameType GetRequestContextFrameTypeForWebURLRequest(
     const blink::WebURLRequest& request);
 RequestContextType GetRequestContextTypeForWebURLRequest(
@@ -61,6 +61,17 @@ blink::WebMixedContentContextType GetMixedContentContextTypeForWebURLRequest(
     const blink::WebURLRequest& request);
 ServiceWorkerMode GetServiceWorkerModeForWebURLRequest(
     const blink::WebURLRequest& request);
+
+// Generates a WebURLError based on |reason|.
+blink::WebURLError CreateWebURLError(const blink::WebURL& unreachable_url,
+                                     bool stale_copy_in_cache,
+                                     int reason);
+
+// Generates a WebURLError based on |reason|.
+blink::WebURLError CreateWebURLError(const blink::WebURL& unreachable_url,
+                                     bool stale_copy_in_cache,
+                                     int reason,
+                                     bool was_ignored_by_handler);
 
 }  // namespace content
 

@@ -7,6 +7,7 @@
 #include "cc/quads/render_pass.h"
 #include "cc/quads/solid_color_draw_quad.h"
 #include "cc/quads/surface_draw_quad.h"
+#include "cc/surfaces/frame_sink_manager.h"
 #include "cc/surfaces/surface.h"
 #include "cc/surfaces/surface_manager.h"
 #include "cc/test/compositor_frame_helpers.h"
@@ -15,7 +16,6 @@
 #include "components/viz/common/surfaces/local_surface_id_allocator.h"
 #include "components/viz/service/display/surface_aggregator.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
-#include "components/viz/service/frame_sinks/frame_sink_manager.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 #if !defined(OS_ANDROID)
@@ -46,7 +46,7 @@ class SurfaceAggregatorPixelTest
   ~SurfaceAggregatorPixelTest() override { support_->EvictCurrentSurface(); }
 
  protected:
-  FrameSinkManager manager_;
+  cc::FrameSinkManager manager_;
   LocalSurfaceIdAllocator allocator_;
   std::unique_ptr<CompositorFrameSinkSupport> support_;
 };

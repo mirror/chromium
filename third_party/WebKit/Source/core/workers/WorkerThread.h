@@ -33,7 +33,6 @@
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/loader/ThreadableLoadingContext.h"
 #include "core/workers/ParentFrameTaskRunners.h"
-#include "core/workers/WorkerBackingThreadStartupData.h"
 #include "core/workers/WorkerThreadLifecycleContext.h"
 #include "core/workers/WorkerThreadLifecycleObserver.h"
 #include "platform/WaitableEvent.h"
@@ -41,7 +40,6 @@
 #include "platform/scheduler/child/worker_global_scope_scheduler.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/Functional.h"
-#include "platform/wtf/Optional.h"
 #include "platform/wtf/PassRefPtr.h"
 #include "public/platform/WebThread.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
@@ -56,7 +54,7 @@ class WorkerBackingThread;
 class WorkerInspectorController;
 class WorkerOrWorkletGlobalScope;
 class WorkerReportingProxy;
-struct GlobalScopeCreationParams;
+class WorkerThreadStartupData;
 
 enum WorkerThreadStartMode {
   kDontPauseWorkerGlobalScopeOnStart,
@@ -65,8 +63,8 @@ enum WorkerThreadStartMode {
 
 // WorkerThread is a kind of WorkerBackingThread client. Each worker mechanism
 // can access the lower thread infrastructure via an implementation of this
-// abstract class. Multiple WorkerThreads may share one WorkerBackingThread for
-// worklets.
+// abstract class. Multiple WorkerThreads can share one WorkerBackingThread.
+// See WorkerBackingThread.h for more details.
 //
 // WorkerThread start and termination must be initiated on the main thread and
 // an actual task is executed on the worker thread.
@@ -90,20 +88,8 @@ class CORE_EXPORT WorkerThread : public WebThread::TaskObserver {
 
   virtual ~WorkerThread();
 
-  // Starts the underlying thread and creates the global scope. Called on the
-  // main thread.
-  // Startup data for WorkerBackingThread must be WTF::nullopt if |this| doesn't
-  // own the underlying WorkerBackingThread.
-  // TODO(nhiroki): We could separate WorkerBackingThread initialization from
-  // GlobalScope initialization sequence, that is, InitializeOnWorkerThread().
-  // After that, we could remove this startup data for WorkerBackingThread.
-  // (https://crbug.com/710364)
-  void Start(std::unique_ptr<GlobalScopeCreationParams>,
-             const WTF::Optional<WorkerBackingThreadStartupData>&,
-             ParentFrameTaskRunners*);
-
-  // Closes the global scope and terminates the underlying thread. Called on the
-  // main thread.
+  // Called on the main thread.
+  void Start(std::unique_ptr<WorkerThreadStartupData>, ParentFrameTaskRunners*);
   void Terminate();
 
   // Called on the main thread for the leak detector. Forcibly terminates the
@@ -187,7 +173,7 @@ class CORE_EXPORT WorkerThread : public WebThread::TaskObserver {
   // Factory method for creating a new worker context for the thread.
   // Called on the worker thread.
   virtual WorkerOrWorkletGlobalScope* CreateWorkerGlobalScope(
-      std::unique_ptr<GlobalScopeCreationParams>) = 0;
+      std::unique_ptr<WorkerThreadStartupData>) = 0;
 
   // Returns true when this WorkerThread owns the associated
   // WorkerBackingThread exclusively. If this function returns true, the
@@ -196,13 +182,10 @@ class CORE_EXPORT WorkerThread : public WebThread::TaskObserver {
   // out of this class.
   virtual bool IsOwningBackingThread() const { return true; }
 
-  // Official moment of creation of worker: when the worker thread is created.
-  // (https://w3c.github.io/hr-time/#time-origin)
-  const double time_origin_;
-
  private:
   friend class WorkerThreadTest;
-  FRIEND_TEST_ALL_PREFIXES(WorkerThreadTest, ShouldTerminateScriptExecution);
+  FRIEND_TEST_ALL_PREFIXES(WorkerThreadTest,
+                           ShouldScheduleToTerminateExecution);
   FRIEND_TEST_ALL_PREFIXES(
       WorkerThreadTest,
       Terminate_WhileDebuggerTaskIsRunningOnInitialization);
@@ -220,14 +203,11 @@ class CORE_EXPORT WorkerThread : public WebThread::TaskObserver {
     kReadyToShutdown,
   };
 
-  // Posts a delayed task to forcibly terminate script execution in case the
-  // normal shutdown sequence does not start within a certain time period.
-  void ScheduleToTerminateScriptExecution();
-
-  // Returns true if we should synchronously terminate the script execution so
-  // that a shutdown task can be handled by the thread event loop. This must be
-  // called with |m_threadStateMutex| acquired.
-  bool ShouldTerminateScriptExecution(const MutexLocker&);
+  // Returns true if we should synchronously terminate or schedule to
+  // terminate the worker execution so that a shutdown task can be handled by
+  // the thread event loop. This must be called with |m_threadStateMutex|
+  // acquired.
+  bool ShouldScheduleToTerminateExecution(const MutexLocker&);
 
   // Terminates worker script execution if the worker thread is running and not
   // already shutting down. Does not terminate if a debugger task is running,
@@ -237,9 +217,7 @@ class CORE_EXPORT WorkerThread : public WebThread::TaskObserver {
   void EnsureScriptExecutionTerminates(ExitCode);
 
   void InitializeSchedulerOnWorkerThread(WaitableEvent*);
-  void InitializeOnWorkerThread(
-      std::unique_ptr<GlobalScopeCreationParams>,
-      const WTF::Optional<WorkerBackingThreadStartupData>&);
+  void InitializeOnWorkerThread(std::unique_ptr<WorkerThreadStartupData>);
   void PrepareForShutdownOnWorkerThread();
   void PerformShutdownOnWorkerThread();
   template <WTF::FunctionThreadAffinity threadAffinity>

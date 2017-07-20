@@ -16,7 +16,8 @@ function resetInputDevice(port) {
     // Reset event handlers so that close() does not cause check failures.
     port.onstatechange = null;
     access.onstatechange = null;
-    return port.close();
+    port.close();
+    return Promise.resolve();
 }
 
 function successAccessCallback(a) {

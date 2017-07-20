@@ -588,7 +588,7 @@ def UpdateClang(args):
 
   # Build PDBs for archival on Windows.  Don't use RelWithDebInfo since it
   # has different optimization defaults than Release.
-  if sys.platform == 'win32':
+  if sys.platform == 'win32' and args.bootstrap:
     cflags += ['/Zi']
     cxxflags += ['/Zi']
     ldflags += ['/DEBUG', '/OPT:REF', '/OPT:ICF']
@@ -850,11 +850,6 @@ def main():
   if (use_head_revision or args.llvm_force_head_revision or
       args.force_local_build):
     AddSvnToPathOnWin()
-
-  if use_head_revision:
-    # TODO(hans): Trunk was updated; remove after the next roll.
-    global VERSION
-    VERSION = '6.0.0'
 
   global CLANG_REVISION, PACKAGE_VERSION
   if args.print_revision:

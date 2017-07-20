@@ -45,10 +45,9 @@ namespace blink {
 
 namespace {
 
-class MediaStreamSourceExtraDataContainer
-    : public MediaStreamSource::ExtraData {
+class ExtraDataContainer : public MediaStreamSource::ExtraData {
  public:
-  MediaStreamSourceExtraDataContainer(
+  ExtraDataContainer(
       std::unique_ptr<WebMediaStreamSource::ExtraData> extra_data)
       : extra_data_(std::move(extra_data)) {}
 
@@ -142,8 +141,7 @@ WebMediaStreamSource::ExtraData* WebMediaStreamSource::GetExtraData() const {
   MediaStreamSource::ExtraData* data = private_->GetExtraData();
   if (!data)
     return 0;
-  return static_cast<MediaStreamSourceExtraDataContainer*>(data)
-      ->GetExtraData();
+  return static_cast<ExtraDataContainer*>(data)->GetExtraData();
 }
 
 void WebMediaStreamSource::SetExtraData(ExtraData* extra_data) {
@@ -152,8 +150,8 @@ void WebMediaStreamSource::SetExtraData(ExtraData* extra_data) {
   if (extra_data)
     extra_data->SetOwner(private_.Get());
 
-  private_->SetExtraData(WTF::WrapUnique(
-      new MediaStreamSourceExtraDataContainer(WTF::WrapUnique(extra_data))));
+  private_->SetExtraData(
+      WTF::WrapUnique(new ExtraDataContainer(WTF::WrapUnique(extra_data))));
 }
 
 void WebMediaStreamSource::SetEchoCancellation(bool echo_cancellation) {

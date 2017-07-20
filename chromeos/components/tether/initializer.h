@@ -37,19 +37,16 @@ namespace tether {
 class ActiveHost;
 class ActiveHostNetworkStateUpdater;
 class BleConnectionManager;
-class CrashRecoveryManager;
 class NetworkConnectionHandlerTetherDelegate;
 class DeviceIdTetherNetworkGuidMap;
+class HostScanCache;
 class HostScanner;
 class HostScanScheduler;
 class HostScanDevicePrioritizerImpl;
 class KeepAliveScheduler;
 class HostConnectionMetricsLogger;
-class MasterHostScanCache;
 class NetworkConfigurationRemover;
-class NetworkHostScanCache;
 class NotificationPresenter;
-class PersistentHostScanCache;
 class TetherConnector;
 class TetherDisconnector;
 class TetherHostFetcher;
@@ -104,7 +101,6 @@ class Initializer : public OAuth2TokenService::Observer {
       scoped_refptr<device::BluetoothAdapter> adapter);
   void OnBluetoothAdapterAdvertisingIntervalError(
       device::BluetoothAdvertisement::ErrorCode status);
-  void OnPreCrashStateRestored();
 
   cryptauth::CryptAuthService* cryptauth_service_;
   std::unique_ptr<NotificationPresenter> notification_presenter_;
@@ -132,9 +128,7 @@ class Initializer : public OAuth2TokenService::Observer {
       active_host_network_state_updater_;
   std::unique_ptr<DeviceIdTetherNetworkGuidMap>
       device_id_tether_network_guid_map_;
-  std::unique_ptr<PersistentHostScanCache> persistent_host_scan_cache_;
-  std::unique_ptr<NetworkHostScanCache> network_host_scan_cache_;
-  std::unique_ptr<MasterHostScanCache> master_host_scan_cache_;
+  std::unique_ptr<HostScanCache> host_scan_cache_;
   std::unique_ptr<KeepAliveScheduler> keep_alive_scheduler_;
   std::unique_ptr<base::DefaultClock> clock_;
   std::unique_ptr<HostScanner> host_scanner_;
@@ -147,7 +141,6 @@ class Initializer : public OAuth2TokenService::Observer {
       network_connection_handler_tether_delegate_;
   std::unique_ptr<TetherNetworkDisconnectionHandler>
       tether_network_disconnection_handler_;
-  std::unique_ptr<CrashRecoveryManager> crash_recovery_manager_;
 
   base::WeakPtrFactory<Initializer> weak_ptr_factory_;
 

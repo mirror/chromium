@@ -19,11 +19,8 @@ namespace gpu {
 struct SyncToken;
 }
 
-namespace viz {
-class ContextProvider;
-}
-
 namespace cc {
+class ContextProvider;
 class SingleReleaseCallback;
 
 class CC_EXPORT TextureMailboxDeleter {
@@ -40,9 +37,9 @@ class CC_EXPORT TextureMailboxDeleter {
   // run, on the impl thread. If the TextureMailboxDeleter is destroyed
   // due to the compositor shutting down, then the ReleaseCallback will
   // become a no-op and the texture will be deleted immediately on the
-  // impl thread, along with dropping the reference to the viz::ContextProvider.
+  // impl thread, along with dropping the reference to the ContextProvider.
   std::unique_ptr<SingleReleaseCallback> GetReleaseCallback(
-      scoped_refptr<viz::ContextProvider> context_provider,
+      scoped_refptr<ContextProvider> context_provider,
       unsigned texture_id);
 
  private:

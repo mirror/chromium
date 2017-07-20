@@ -8,5 +8,5 @@ include_rules = [
   "+net",
   "+ui/base",
   "+ui/gfx",
-  "+components/vector_icons",
+  "+ui/vector_icons",
 ]

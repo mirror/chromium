@@ -55,9 +55,9 @@ const char* CancellingNavigationThrottle::GetNameForLogging() {
 
 void CancellingNavigationThrottle::MaybeCancel(bool cancel) {
   if (cancel)
-    CancelDeferredNavigation(NavigationThrottle::CANCEL);
+    navigation_handle()->CancelDeferredNavigation(NavigationThrottle::CANCEL);
   else
-    Resume();
+    navigation_handle()->Resume();
 }
 
 }  // namespace content

@@ -9,8 +9,6 @@
 
 #import "ios/chrome/browser/ui/tab_switcher/tab_switcher.h"
 
-@protocol ApplicationCommands;
-
 namespace ios {
 class ChromeBrowserState;
 }
@@ -20,8 +18,7 @@ class ChromeBrowserState;
 - (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState
                         mainTabModel:(TabModel*)mainTabModel
                          otrTabModel:(TabModel*)otrTabModel
-                      activeTabModel:(TabModel*)activeTabModel
-          applicationCommandEndpoint:(id<ApplicationCommands>)endpoint;
+                      activeTabModel:(TabModel*)activeTabModel;
 
 @end
 

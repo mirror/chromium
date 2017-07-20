@@ -14,7 +14,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
 import android.os.StrictMode;
 import android.provider.Browser;
 import android.support.annotation.IntDef;
@@ -286,12 +285,9 @@ public class DownloadUtils {
      * Creates an Intent to open the file in another app by firing an Intent to Android.
      * @param fileUri  Uri pointing to the file.
      * @param mimeType MIME type for the file.
-     * @param originalUrl The original url of the downloaded file.
-     * @param referrer Referrer of the downloaded file.
      * @return Intent that can be used to start an Activity for the file.
      */
-    public static Intent createViewIntentForDownloadItem(Uri fileUri, String mimeType,
-            String originalUrl, String referrer) {
+    public static Intent createViewIntentForDownloadItem(Uri fileUri, String mimeType) {
         Intent fileIntent = new Intent(Intent.ACTION_VIEW);
         String normalizedMimeType = Intent.normalizeMimeType(mimeType);
         if (TextUtils.isEmpty(normalizedMimeType)) {
@@ -301,21 +297,7 @@ public class DownloadUtils {
         }
         fileIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         fileIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        setOriginalUrlAndReferralExtraToIntent(fileIntent, originalUrl, referrer);
         return fileIntent;
-    }
-
-    /**
-     * Adds the originating Uri and referrer extras to an intent if they are not null.
-     * @param intent      Intent for adding extras.
-     * @param originalUrl The original url of the downloaded file.
-     * @param referrer    Referrer of the downloaded file.
-     */
-    public static void setOriginalUrlAndReferralExtraToIntent(
-            Intent intent, String originalUrl, String referrer) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) return;
-        if (originalUrl != null) intent.putExtra(Intent.EXTRA_ORIGINATING_URI, originalUrl);
-        if (referrer != null) intent.putExtra(Intent.EXTRA_REFERRER, referrer);
     }
 
     /**
@@ -445,7 +427,7 @@ public class DownloadUtils {
     public static Intent getMediaViewerIntentForDownloadItem(
             Uri fileUri, Uri contentUri, String mimeType) {
         Context context = ContextUtils.getApplicationContext();
-        Intent viewIntent = createViewIntentForDownloadItem(contentUri, mimeType, null, null);
+        Intent viewIntent = createViewIntentForDownloadItem(contentUri, mimeType);
 
         Bitmap closeIcon = BitmapFactory.decodeResource(
                 context.getResources(), R.drawable.ic_arrow_back_white_24dp);
@@ -487,8 +469,7 @@ public class DownloadUtils {
         Intent intent = builder.build().intent;
         intent.setPackage(context.getPackageName());
         intent.setData(contentUri);
-        intent.putExtra(CustomTabIntentDataProvider.EXTRA_UI_TYPE,
-                CustomTabIntentDataProvider.CUSTOM_TABS_UI_TYPE_MEDIA_VIEWER);
+        intent.putExtra(CustomTabIntentDataProvider.EXTRA_IS_MEDIA_VIEWER, true);
         intent.putExtra(CustomTabIntentDataProvider.EXTRA_MEDIA_VIEWER_URL, fileUri.toString());
         intent.putExtra(CustomTabIntentDataProvider.EXTRA_ENABLE_EMBEDDED_MEDIA_EXPERIENCE, true);
         intent.putExtra(
@@ -529,13 +510,10 @@ public class DownloadUtils {
      * @param mimeType mime type of the file.
      * @param downloadGuid The associated download GUID.
      * @param isOffTheRecord whether we are in an off the record context.
-     * @param originalUrl The original url of the downloaded file.
-     * @param referrer Referrer of the downloaded file.
      * @return whether the file could successfully be opened.
      */
     public static boolean openFile(
-            File file, String mimeType, String downloadGuid, boolean isOffTheRecord,
-            String originalUrl, String referrer) {
+            File file, String mimeType, String downloadGuid, boolean isOffTheRecord) {
         Context context = ContextUtils.getApplicationContext();
         DownloadManagerService service = DownloadManagerService.getDownloadManagerService();
 
@@ -560,8 +538,7 @@ public class DownloadUtils {
             StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskReads();
             Uri uri = ApiCompatibilityUtils.getUriForDownloadedFile(file);
             StrictMode.setThreadPolicy(oldPolicy);
-            Intent viewIntent = createViewIntentForDownloadItem(
-                    uri, mimeType, originalUrl, referrer);
+            Intent viewIntent = createViewIntentForDownloadItem(uri, mimeType);
             context.startActivity(viewIntent);
             service.updateLastAccessTime(downloadGuid, isOffTheRecord);
             return true;

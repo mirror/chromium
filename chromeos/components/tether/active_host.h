@@ -140,8 +140,6 @@ class ActiveHost {
       const std::string& new_wifi_network_guid);
 
  private:
-  friend class CrashRecoveryManager;
-
   void SetActiveHost(ActiveHostStatus active_host_status,
                      const std::string& active_host_device_id,
                      const std::string& tether_network_guid,

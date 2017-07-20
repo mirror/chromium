@@ -54,25 +54,24 @@ DEFINE_WEB_CONTENTS_USER_DATA_KEY(ThumbnailTabHelper);
 
 // Overview
 // --------
-// This class provides a service for updating thumbnails to be used in the
-// "Most visited" section of the New Tab page. The process is started by
-// UpdateThumbnailIfNecessary(), which updates the thumbnail for the current
-// tab if needed. The heuristics to judge whether to update the thumbnail are
-// implemented in ThumbnailService::ShouldAcquirePageThumbnail().
-// There are several triggers that can start the process:
-// - When a renderer is about to be hidden (this usually occurs when the current
-//   tab is closed or another tab is clicked).
-// - If features::kCaptureThumbnailOnLoadFinished is enabled: When a page load
-//   finishes.
-// - If features::kCaptureThumbnailOnNavigatingAway is enabled: Just before
-//   navigating away from the current page.
+// This class provides a service for updating thumbnails to be used in
+// "Most visited" section of the new tab page. The service can be started
+// by UpdateThumbnailIfNecessary(). The current algorithm of the service is as
+// simple as follows:
+//
+//    When a renderer is about to be hidden (this usually occurs when the
+//    current tab is closed or another tab is clicked), update the
+//    thumbnail for the tab rendered by the renderer, if needed. The
+//    heuristics to judge whether or not to update the thumbnail is
+//    implemented in ThumbnailService::ShouldAcquirePageThumbnail().
+//    If features::kCaptureThumbnailOnLoadFinished is enabled, then a thumbnail
+//    may also be captured when a page load finishes (subject to the same
+//    heuristics).
 
 ThumbnailTabHelper::ThumbnailTabHelper(content::WebContents* contents)
     : content::WebContentsObserver(contents),
       capture_on_load_finished_(base::FeatureList::IsEnabled(
           features::kCaptureThumbnailOnLoadFinished)),
-      capture_on_navigating_away_(base::FeatureList::IsEnabled(
-          features::kCaptureThumbnailOnNavigatingAway)),
       page_transition_(ui::PAGE_TRANSITION_LINK),
       load_interrupted_(false),
       weak_factory_(this) {
@@ -126,12 +125,6 @@ void ThumbnailTabHelper::DidStartNavigation(
       navigation_handle->IsSameDocument()) {
     return;
   }
-  if (capture_on_navigating_away_) {
-    // At this point, the new navigation has just been started, but the
-    // WebContents still shows the previous page. Grab a thumbnail before it
-    // goes away.
-    UpdateThumbnailIfNecessary();
-  }
   // Reset the page transition to some uninteresting type, since the actual
   // type isn't available at this point. We'll get it in DidFinishNavigation
   // (if that happens, which isn't guaranteed).
@@ -149,8 +142,6 @@ void ThumbnailTabHelper::DidFinishNavigation(
 }
 
 void ThumbnailTabHelper::DidStartLoading() {
-  // TODO(treib): We should probably track whether the load *finished* - as it
-  // is, an in-progress load will count as not interrupted.
   load_interrupted_ = false;
 }
 
@@ -179,14 +170,12 @@ void ThumbnailTabHelper::UpdateThumbnailIfNecessary() {
   if (!web_contents() || web_contents()->IsBeingDestroyed()) {
     return;
   }
-
-  // Note: Do *not* use GetLastVisibleURL - it might already have been updated
-  // for a new pending navigation. The committed URL is the one corresponding
-  // to the currently visible content.
-  const GURL& url = web_contents()->GetLastCommittedURL();
-  if (!url.is_valid()) {
+  // Skip if a pending entry exists. WidgetHidden can be called while navigating
+  // pages and this is not a time when thumbnails should be generated.
+  if (web_contents()->GetController().GetPendingEntry()) {
     return;
   }
+  const GURL& url = web_contents()->GetURL();
   Profile* profile =
       Profile::FromBrowserContext(web_contents()->GetBrowserContext());
 
@@ -194,7 +183,7 @@ void ThumbnailTabHelper::UpdateThumbnailIfNecessary() {
       ThumbnailServiceFactory::GetForProfile(profile);
 
   // Skip if we don't need to update the thumbnail.
-  if (!thumbnail_service ||
+  if (!thumbnail_service.get() ||
       !thumbnail_service->ShouldAcquirePageThumbnail(url, page_transition_)) {
     return;
   }
@@ -305,10 +294,5 @@ void ThumbnailTabHelper::RenderViewHostCreated(
 }
 
 void ThumbnailTabHelper::WidgetHidden(content::RenderWidgetHost* widget) {
-  // Skip if a pending entry exists. WidgetHidden can be called while navigating
-  // pages and this is not a time when thumbnails should be generated.
-  if (!web_contents() || web_contents()->GetController().GetPendingEntry()) {
-    return;
-  }
   UpdateThumbnailIfNecessary();
 }

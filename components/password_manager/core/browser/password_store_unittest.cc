@@ -24,7 +24,6 @@
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
-#include "components/os_crypt/os_crypt_mocker.h"
 #include "components/password_manager/core/browser/android_affiliation/affiliated_match_helper.h"
 #include "components/password_manager/core/browser/android_affiliation/affiliation_service.h"
 #include "components/password_manager/core/browser/android_affiliation/mock_affiliated_match_helper.h"
@@ -38,6 +37,10 @@
 #include "components/prefs/testing_pref_service.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
+
+#if defined(OS_MACOSX)
+#include "components/os_crypt/os_crypt_mocker.h"
+#endif
 
 using autofill::PasswordForm;
 using base::WaitableEvent;
@@ -117,14 +120,18 @@ class PasswordStoreTest : public testing::Test {
 
   void SetUp() override {
     ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
-    // Mock OSCrypt. There is a call to OSCrypt on initializling
+#if defined(OS_MACOSX)
+    // Mock Keychain. There is a call to Keychain on initializling
     // PasswordReuseDetector, so it should be mocked.
     OSCryptMocker::SetUpWithSingleton();
+#endif
   }
 
   void TearDown() override {
     ASSERT_TRUE(temp_dir_.Delete());
+#if defined(OS_MACOSX)
     OSCryptMocker::TearDown();
+#endif
   }
 
   base::FilePath test_login_db_file_path() const {

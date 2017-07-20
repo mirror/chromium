@@ -7,7 +7,6 @@
 #include "base/strings/string_number_conversions.h"
 #include "content/browser/appcache/appcache_histograms.h"
 #include "content/browser/appcache/appcache_subresource_url_factory.h"
-#include "content/browser/appcache/appcache_url_loader_request.h"
 #include "content/browser/url_loader_factory_getter.h"
 #include "content/common/net_adapters.h"
 #include "content/public/common/resource_type.h"
@@ -77,16 +76,13 @@ void AppCacheURLLoaderJob::DeliverNetworkResponse() {
     // request. The loader callback is valid only for navigation requests.
     std::move(main_resource_loader_callback_).Run(StartLoaderCallback());
   } else {
-    mojom::URLLoaderClientPtr client_ptr;
-    network_loader_client_binding_.Bind(mojo::MakeRequest(&client_ptr));
-
     default_url_loader_factory_getter_->GetNetworkFactory()
         ->get()
         ->CreateLoaderAndStart(
-            mojo::MakeRequest(&network_loader_),
+            mojo::MakeRequest(&network_loader_request_),
             subresource_load_info_->routing_id,
             subresource_load_info_->request_id, subresource_load_info_->options,
-            subresource_load_info_->request, std::move(client_ptr),
+            subresource_load_info_->request, std::move(client_info_),
             subresource_load_info_->traffic_annotation);
   }
 }
@@ -95,7 +91,7 @@ void AppCacheURLLoaderJob::DeliverErrorResponse() {
   delivery_type_ = ERROR_DELIVERY;
 
   // We expect the URLLoaderClient pointer to be valid at this point.
-  DCHECK(client_);
+  DCHECK(client_info_);
 
   // AppCacheURLRequestJob uses ERR_FAILED as the error code here. That seems
   // to map to HTTP_INTERNAL_SERVER_ERROR.
@@ -107,7 +103,7 @@ void AppCacheURLLoaderJob::DeliverErrorResponse() {
 
   ResourceResponseHead response;
   response.headers = new net::HttpResponseHeaders(status);
-  client_->OnReceiveResponse(response, base::nullopt, nullptr);
+  client_info_->OnReceiveResponse(response, base::nullopt, nullptr);
 
   NotifyCompleted(net::ERR_FAILED);
 
@@ -124,90 +120,14 @@ AppCacheURLLoaderJob* AppCacheURLLoaderJob::AsURLLoaderJob() {
 }
 
 void AppCacheURLLoaderJob::FollowRedirect() {
-  if (network_loader_)
-    network_loader_->FollowRedirect();
+  if (network_loader_request_)
+    network_loader_request_->FollowRedirect();
 }
 
 void AppCacheURLLoaderJob::SetPriority(net::RequestPriority priority,
                                        int32_t intra_priority_value) {
-  if (network_loader_)
-    network_loader_->SetPriority(priority, intra_priority_value);
-}
-
-void AppCacheURLLoaderJob::OnReceiveResponse(
-    const ResourceResponseHead& response_head,
-    const base::Optional<net::SSLInfo>& ssl_info,
-    mojom::DownloadedTempFilePtr downloaded_file) {
-  appcache_request_->set_response(response_head);
-  // The MaybeLoadFallbackForResponse() call below can pass a fallback
-  // response to us. Reset the delivery_type_ to ensure that we can
-  // receive it
-  delivery_type_ = AWAITING_DELIVERY_ORDERS;
-  if (!sub_resource_handler_->MaybeLoadFallbackForResponse(nullptr)) {
-    client_->OnReceiveResponse(response_head, ssl_info,
-                               std::move(downloaded_file));
-  } else {
-    // Disconnect from the network loader as we are delivering a fallback
-    // response to the client.
-    DisconnectFromNetworkLoader();
-  }
-}
-
-void AppCacheURLLoaderJob::OnReceiveRedirect(
-    const net::RedirectInfo& redirect_info,
-    const ResourceResponseHead& response_head) {
-  appcache_request_->set_response(response_head);
-  // The MaybeLoadFallbackForRedirect() call below can pass a fallback
-  // response to us. Reset the delivery_type_ to ensure that we can
-  // receive it
-  delivery_type_ = AWAITING_DELIVERY_ORDERS;
-  if (!sub_resource_handler_->MaybeLoadFallbackForRedirect(
-          nullptr, redirect_info.new_url)) {
-    client_->OnReceiveRedirect(redirect_info, response_head);
-  } else {
-    // Disconnect from the network loader as we are delivering a fallback
-    // response to the client.
-    DisconnectFromNetworkLoader();
-  }
-}
-
-void AppCacheURLLoaderJob::OnDataDownloaded(int64_t data_len,
-                                            int64_t encoded_data_len) {
-  client_->OnDataDownloaded(data_len, encoded_data_len);
-}
-
-void AppCacheURLLoaderJob::OnUploadProgress(
-    int64_t current_position,
-    int64_t total_size,
-    OnUploadProgressCallback ack_callback) {
-  client_->OnUploadProgress(current_position, total_size,
-                            std::move(ack_callback));
-}
-
-void AppCacheURLLoaderJob::OnReceiveCachedMetadata(
-    const std::vector<uint8_t>& data) {
-  client_->OnReceiveCachedMetadata(data);
-}
-
-void AppCacheURLLoaderJob::OnTransferSizeUpdated(int32_t transfer_size_diff) {
-  client_->OnTransferSizeUpdated(transfer_size_diff);
-}
-
-void AppCacheURLLoaderJob::OnStartLoadingResponseBody(
-    mojo::ScopedDataPipeConsumerHandle body) {
-  client_->OnStartLoadingResponseBody(std::move(body));
-}
-
-void AppCacheURLLoaderJob::OnComplete(
-    const ResourceRequestCompletionStatus& status) {
-  delivery_type_ = AWAITING_DELIVERY_ORDERS;
-  if (!sub_resource_handler_->MaybeLoadFallbackForResponse(nullptr)) {
-    client_->OnComplete(status);
-  } else {
-    // Disconnect from the network loader as we are delivering a fallback
-    // response to the client.
-    DisconnectFromNetworkLoader();
-  }
+  if (network_loader_request_)
+    network_loader_request_->SetPriority(priority, intra_priority_value);
 }
 
 void AppCacheURLLoaderJob::SetSubresourceLoadInfo(
@@ -220,7 +140,7 @@ void AppCacheURLLoaderJob::SetSubresourceLoadInfo(
   associated_binding_->set_connection_error_handler(base::Bind(
       &AppCacheURLLoaderJob::OnConnectionError, StaticAsWeakPtr(this)));
 
-  client_ = std::move(subresource_load_info_->client);
+  client_info_ = std::move(subresource_load_info_->client);
   default_url_loader_factory_getter_ = default_url_loader;
 }
 
@@ -232,17 +152,15 @@ void AppCacheURLLoaderJob::Start(mojom::URLLoaderRequest request,
   binding_.set_connection_error_handler(base::Bind(
       &AppCacheURLLoaderJob::OnConnectionError, StaticAsWeakPtr(this)));
 
-  client_ = std::move(client);
+  client_info_ = std::move(client);
 
   // Send the cached AppCacheResponse if any.
   if (info_.get())
     SendResponseInfo();
 }
 
-AppCacheURLLoaderJob::AppCacheURLLoaderJob(
-    const ResourceRequest& request,
-    AppCacheURLLoaderRequest* appcache_request,
-    AppCacheStorage* storage)
+AppCacheURLLoaderJob::AppCacheURLLoaderJob(const ResourceRequest& request,
+                                           AppCacheStorage* storage)
     : request_(request),
       storage_(storage->GetWeakPtr()),
       start_time_tick_(base::TimeTicks::Now()),
@@ -250,9 +168,7 @@ AppCacheURLLoaderJob::AppCacheURLLoaderJob(
       is_fallback_(false),
       binding_(this),
       writable_handle_watcher_(FROM_HERE,
-                               mojo::SimpleWatcher::ArmingPolicy::MANUAL),
-      network_loader_client_binding_(this),
-      appcache_request_(appcache_request) {}
+                               mojo::SimpleWatcher::ArmingPolicy::MANUAL) {}
 
 void AppCacheURLLoaderJob::OnResponseInfoLoaded(
     AppCacheResponseInfo* response_info,
@@ -290,7 +206,7 @@ void AppCacheURLLoaderJob::OnResponseInfoLoaded(
         base::Bind(&AppCacheURLLoaderJob::OnResponseBodyStreamReady,
                    StaticAsWeakPtr(this)));
 
-    if (client_)
+    if (client_info_)
       SendResponseInfo();
 
     ReadMore();
@@ -344,7 +260,7 @@ void AppCacheURLLoaderJob::OnConnectionError() {
 }
 
 void AppCacheURLLoaderJob::SendResponseInfo() {
-  DCHECK(client_);
+  DCHECK(client_info_);
   // If this is null it means the response information was sent to the client.
   if (!data_pipe_.consumer_handle.is_valid())
     return;
@@ -377,12 +293,11 @@ void AppCacheURLLoaderJob::SendResponseInfo() {
 
   response_head.load_timing = load_timing_info_;
 
-  appcache_request_->set_response(response_head);
+  client_info_->OnReceiveResponse(response_head, http_info->ssl_info,
+                                  mojom::DownloadedTempFilePtr());
 
-  client_->OnReceiveResponse(response_head, http_info->ssl_info,
-                             mojom::DownloadedTempFilePtr());
-
-  client_->OnStartLoadingResponseBody(std::move(data_pipe_.consumer_handle));
+  client_info_->OnStartLoadingResponseBody(
+      std::move(data_pipe_.consumer_handle));
 }
 
 void AppCacheURLLoaderJob::ReadMore() {
@@ -448,14 +363,7 @@ void AppCacheURLLoaderJob::NotifyCompleted(int error_code) {
     request_complete_data.decoded_body_length =
         request_complete_data.encoded_body_length;
   }
-  client_->OnComplete(request_complete_data);
-}
-
-void AppCacheURLLoaderJob::DisconnectFromNetworkLoader() {
-  // Close the pipe to the network loader as we are delivering a fallback
-  // response to the client.
-  network_loader_client_binding_.Close();
-  network_loader_ = nullptr;
+  client_info_->OnComplete(request_complete_data);
 }
 
 }  // namespace content

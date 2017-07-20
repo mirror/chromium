@@ -15,10 +15,10 @@
 #include "components/autofill/core/common/password_form.h"
 #include "components/google/core/browser/google_util.h"
 #include "components/keyed_service/core/service_access_type.h"
+#include "components/password_manager/core/browser/android_affiliation/affiliation_utils.h"
 #include "components/password_manager/core/browser/password_manager_constants.h"
 #include "components/password_manager/core/browser/password_store.h"
 #include "components/password_manager/core/browser/password_store_consumer.h"
-#include "components/password_manager/core/browser/password_ui_utils.h"
 #include "components/password_manager/core/common/password_manager_pref_names.h"
 #include "components/prefs/pref_member.h"
 #include "components/prefs/pref_service.h"
@@ -161,8 +161,6 @@ void SavePasswordsConsumer::OnGetPasswordStoreResults(
     reauthenticationModule_ = [[ReauthenticationModule alloc]
         initWithSuccessfulReauthTimeAccessor:self];
     self.title = l10n_util::GetNSString(IDS_IOS_SAVE_PASSWORDS);
-    self.collectionViewAccessibilityIdentifier =
-        @"SavePasswordsCollectionViewController";
     self.shouldHideDoneButton = YES;
     passwordStore_ = IOSChromePasswordStoreFactory::GetForBrowserState(
         browserState_, ServiceAccessType::EXPLICIT_ACCESS);
@@ -262,8 +260,8 @@ void SavePasswordsConsumer::OnGetPasswordStoreResults(
 - (SavedFormContentItem*)savedFormItemWithForm:(autofill::PasswordForm*)form {
   SavedFormContentItem* passwordItem =
       [[SavedFormContentItem alloc] initWithType:ItemTypeSavedPassword];
-  passwordItem.text = base::SysUTF8ToNSString(
-      password_manager::GetShownOriginAndLinkUrl(*form).first);
+  passwordItem.text =
+      base::SysUTF8ToNSString(password_manager::GetHumanReadableOrigin(*form));
   passwordItem.detailText = base::SysUTF16ToNSString(form->username_value);
   if (experimental_flags::IsViewCopyPasswordsEnabled()) {
     passwordItem.accessibilityTraits |= UIAccessibilityTraitButton;
@@ -277,8 +275,8 @@ void SavePasswordsConsumer::OnGetPasswordStoreResults(
     (autofill::PasswordForm*)form {
   BlacklistedFormContentItem* passwordItem =
       [[BlacklistedFormContentItem alloc] initWithType:ItemTypeBlacklisted];
-  passwordItem.text = base::SysUTF8ToNSString(
-      password_manager::GetShownOriginAndLinkUrl(*form).first);
+  passwordItem.text =
+      base::SysUTF8ToNSString(password_manager::GetHumanReadableOrigin(*form));
   if (experimental_flags::IsViewCopyPasswordsEnabled()) {
     passwordItem.accessibilityTraits |= UIAccessibilityTraitButton;
     passwordItem.accessoryType =

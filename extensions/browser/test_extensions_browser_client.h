@@ -5,7 +5,6 @@
 #ifndef EXTENSIONS_BROWSER_TEST_EXTENSIONS_BROWSER_CLIENT_H_
 #define EXTENSIONS_BROWSER_TEST_EXTENSIONS_BROWSER_CLIENT_H_
 
-#include <memory>
 #include <string>
 #include <utility>
 #include <vector>
@@ -39,10 +38,6 @@ class TestExtensionsBrowserClient : public ExtensionsBrowserClient {
   }
   void set_extension_cache(std::unique_ptr<ExtensionCache> extension_cache) {
     extension_cache_ = std::move(extension_cache);
-  }
-
-  void set_lock_screen_context(content::BrowserContext* context) {
-    lock_screen_context_ = context;
   }
 
   // Sets a factory to respond to calls of the CreateUpdateClient method.
@@ -125,17 +120,13 @@ class TestExtensionsBrowserClient : public ExtensionsBrowserClient {
   }
 
  private:
-  // Not owned.
-  content::BrowserContext* main_context_;
-  // Not owned, defaults to nullptr.
-  content::BrowserContext* incognito_context_;
-  // Not owned, defaults to nullptr.
-  content::BrowserContext* lock_screen_context_;
+  content::BrowserContext* main_context_;       // Not owned.
+  content::BrowserContext* incognito_context_;  // Not owned, defaults to NULL.
 
-  // Not owned, defaults to nullptr.
+  // Not owned, defaults to NULL.
   ProcessManagerDelegate* process_manager_delegate_;
 
-  // Not owned, defaults to nullptr.
+  // Not owned, defaults to NULL.
   ExtensionSystemProvider* extension_system_factory_;
 
   std::unique_ptr<ExtensionCache> extension_cache_;

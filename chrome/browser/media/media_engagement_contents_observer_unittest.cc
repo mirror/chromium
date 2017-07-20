@@ -4,8 +4,6 @@
 
 #include "chrome/browser/media/media_engagement_contents_observer.h"
 
-#include "base/optional.h"
-#include "base/test/histogram_tester.h"
 #include "base/test/scoped_feature_list.h"
 #include "base/timer/mock_timer.h"
 #include "build/build_config.h"
@@ -14,8 +12,6 @@
 #include "chrome/browser/media/media_engagement_service_factory.h"
 #include "chrome/test/base/chrome_render_view_host_test_harness.h"
 #include "chrome/test/base/testing_profile.h"
-#include "components/ukm/test_ukm_recorder.h"
-#include "components/ukm/ukm_source.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/web_contents_tester.h"
@@ -56,9 +52,9 @@ class MediaEngagementContentsObserverTest
     return contents_observer_->player_states_.size();
   }
 
-  void SimulatePlaybackStarted(int id, bool has_audio) {
-    content::WebContentsObserver::MediaPlayerInfo player_info(true, has_audio);
-    SimulatePlaybackStarted(player_info, id, false);
+  void SimulatePlaybackStarted(int id) {
+    content::WebContentsObserver::MediaPlayerInfo player_info(true, true);
+    SimulatePlaybackStarted(player_info, id);
   }
 
   void SimulateResizeEvent(int id, gfx::Size size) {
@@ -67,20 +63,17 @@ class MediaEngagementContentsObserverTest
     contents_observer_->MediaResized(size, player_id);
   }
 
-  void SimulatePlaybackStarted(int id) { SimulatePlaybackStarted(id, true); }
-
   void SimulateResizeEventSignificantSize(int id) {
     SimulateResizeEvent(id, MediaEngagementContentsObserver::kSignificantSize);
   }
 
   void SimulatePlaybackStarted(
       content::WebContentsObserver::MediaPlayerInfo player_info,
-      int id,
-      bool muted_state) {
+      int id) {
     content::WebContentsObserver::MediaPlayerId player_id =
         std::make_pair(nullptr /* RenderFrameHost */, id);
     contents_observer_->MediaStartedPlaying(player_info, player_id);
-    SimulateMutedStateChange(id, muted_state);
+    SimulateMutedStateChange(id, false);
   }
 
   void SimulatePlaybackStopped(int id) {
@@ -123,18 +116,11 @@ class MediaEngagementContentsObserverTest
     EXPECT_EQ(contents_observer_->service_->GetScoreMapForTesting()[url],
               expected_score);
 
-    MediaEngagementScore score =
+    MediaEngagementScore* score =
         contents_observer_->service_->CreateEngagementScore(url);
-    EXPECT_EQ(expected_visits, score.visits());
-    EXPECT_EQ(expected_media_playbacks, score.media_playbacks());
-  }
-
-  void SetScores(GURL url, int visits, int media_playbacks) {
-    MediaEngagementScore score =
-        contents_observer_->service_->CreateEngagementScore(url);
-    score.SetVisits(visits);
-    score.SetMediaPlaybacks(media_playbacks);
-    score.Commit();
+    EXPECT_EQ(score->visits(), expected_visits);
+    EXPECT_EQ(score->media_playbacks(), expected_media_playbacks);
+    delete score;
   }
 
   void Navigate(GURL url) {
@@ -159,49 +145,6 @@ class MediaEngagementContentsObserverTest
         ->SetWasRecentlyAudible(false);
   }
 
-  void ExpectUkmEntry(GURL url,
-                      int playbacks_total,
-                      int visits_total,
-                      int score,
-                      int playbacks_delta) {
-    std::vector<std::pair<const char*, int64_t>> metrics = {
-        {MediaEngagementContentsObserver::kUkmMetricPlaybacksTotalName,
-         playbacks_total},
-        {MediaEngagementContentsObserver::kUkmMetricVisitsTotalName,
-         visits_total},
-        {MediaEngagementContentsObserver::kUkmMetricEngagementScoreName, score},
-        {MediaEngagementContentsObserver::kUkmMetricPlaybacksDeltaName,
-         playbacks_delta},
-    };
-
-    const ukm::UkmSource* source =
-        test_ukm_recorder_.GetSourceForUrl(url.spec().c_str());
-    EXPECT_EQ(url, source->url());
-    EXPECT_EQ(1, test_ukm_recorder_.CountEntries(
-                     *source, MediaEngagementContentsObserver::kUkmEntryName));
-    test_ukm_recorder_.ExpectMetric(
-        *source, MediaEngagementContentsObserver::kUkmEntryName,
-        MediaEngagementContentsObserver::kUkmMetricVisitsTotalName,
-        visits_total);
-    test_ukm_recorder_.ExpectMetric(
-        *source, MediaEngagementContentsObserver::kUkmEntryName,
-        MediaEngagementContentsObserver::kUkmMetricPlaybacksTotalName,
-        playbacks_total);
-    test_ukm_recorder_.ExpectMetric(
-        *source, MediaEngagementContentsObserver::kUkmEntryName,
-        MediaEngagementContentsObserver::kUkmMetricEngagementScoreName, score);
-    test_ukm_recorder_.ExpectMetric(
-        *source, MediaEngagementContentsObserver::kUkmEntryName,
-        MediaEngagementContentsObserver::kUkmMetricPlaybacksDeltaName,
-        playbacks_delta);
-    test_ukm_recorder_.ExpectEntry(
-        *source, MediaEngagementContentsObserver::kUkmEntryName, metrics);
-  }
-
-  void ExpectNoUkmEntry() { EXPECT_FALSE(test_ukm_recorder_.sources_count()); }
-
-  void SimulateDestroy() { contents_observer_->WebContentsDestroyed(); }
-
   void SimulateSignificantPlayer(int id) {
     SimulatePlaybackStarted(id);
     SimulateIsVisible();
@@ -212,32 +155,6 @@ class MediaEngagementContentsObserverTest
 
   void ForceUpdateTimer() { contents_observer_->UpdateTimer(); }
 
-  void ExpectNotAddedFirstTimeBucketCount(
-      MediaEngagementContentsObserver::InsignificantPlaybackReason reason,
-      int count) {
-    histogram_tester_.ExpectBucketCount(
-        MediaEngagementContentsObserver::
-            kHistogramSignificantNotAddedFirstTimeName,
-        static_cast<int>(reason), count);
-  }
-
-  void ExpectNotAddedAfterFirstTimeBucketCount(
-      MediaEngagementContentsObserver::InsignificantPlaybackReason reason,
-      int count) {
-    histogram_tester_.ExpectBucketCount(
-        MediaEngagementContentsObserver::
-            kHistogramSignificantNotAddedAfterFirstTimeName,
-        static_cast<int>(reason), count);
-  }
-
-  void ExpectRemovedBucketCount(
-      MediaEngagementContentsObserver::InsignificantPlaybackReason reason,
-      int count) {
-    histogram_tester_.ExpectBucketCount(
-        MediaEngagementContentsObserver::kHistogramSignificantRemovedName,
-        static_cast<int>(reason), count);
-  }
-
  private:
   // contents_observer_ auto-destroys when WebContents is destroyed.
   MediaEngagementContentsObserver* contents_observer_;
@@ -245,10 +162,6 @@ class MediaEngagementContentsObserverTest
   base::test::ScopedFeatureList scoped_feature_list_;
 
   base::MockTimer* playback_timer_;
-
-  ukm::TestUkmRecorder test_ukm_recorder_;
-
-  base::HistogramTester histogram_tester_;
 };
 
 // TODO(mlamouri): test that visits are not recorded multiple times when a
@@ -321,119 +234,6 @@ TEST_F(MediaEngagementContentsObserverTest, AreConditionsMet) {
 
   SimulateSignificantPlayer(1);
   EXPECT_TRUE(AreConditionsMet());
-}
-
-TEST_F(MediaEngagementContentsObserverTest, RecordInsignificantReason) {
-  // Play the media.
-  SimulatePlaybackStarted(0);
-  SimulateResizeEvent(0, gfx::Size(1, 1));
-  ExpectNotAddedFirstTimeBucketCount(
-      MediaEngagementContentsObserver::InsignificantPlaybackReason::
-          kFrameSizeTooSmall,
-      1);
-  ExpectNotAddedFirstTimeBucketCount(
-      MediaEngagementContentsObserver::InsignificantPlaybackReason::kCount, 1);
-
-  // Resize the frame to full size.
-  SimulateResizeEventSignificantSize(0);
-
-  // Resize the frame size.
-  SimulateResizeEvent(0, gfx::Size(1, 1));
-  SimulateResizeEventSignificantSize(0);
-  ExpectRemovedBucketCount(MediaEngagementContentsObserver::
-                               InsignificantPlaybackReason::kFrameSizeTooSmall,
-                           1);
-  ExpectRemovedBucketCount(
-      MediaEngagementContentsObserver::InsignificantPlaybackReason::kCount, 1);
-
-  // Pause the player.
-  ExpectRemovedBucketCount(MediaEngagementContentsObserver::
-                               InsignificantPlaybackReason::kMediaPaused,
-                           0);
-  SimulatePlaybackStopped(0);
-  ExpectRemovedBucketCount(MediaEngagementContentsObserver::
-                               InsignificantPlaybackReason::kMediaPaused,
-                           1);
-  ExpectRemovedBucketCount(
-      MediaEngagementContentsObserver::InsignificantPlaybackReason::kCount, 2);
-  SimulatePlaybackStarted(0);
-
-  // Mute the player.
-  ExpectRemovedBucketCount(
-      MediaEngagementContentsObserver::InsignificantPlaybackReason::kAudioMuted,
-      0);
-  SimulateMutedStateChange(0, true);
-  ExpectRemovedBucketCount(
-      MediaEngagementContentsObserver::InsignificantPlaybackReason::kAudioMuted,
-      1);
-  ExpectRemovedBucketCount(
-      MediaEngagementContentsObserver::InsignificantPlaybackReason::kCount, 3);
-
-  // Start a video only player.
-  ExpectNotAddedFirstTimeBucketCount(
-      MediaEngagementContentsObserver::InsignificantPlaybackReason::
-          kNoAudioTrack,
-      0);
-  SimulatePlaybackStarted(2, false);
-  SimulateResizeEventSignificantSize(2);
-  ExpectNotAddedFirstTimeBucketCount(
-      MediaEngagementContentsObserver::InsignificantPlaybackReason::
-          kNoAudioTrack,
-      1);
-  ExpectNotAddedFirstTimeBucketCount(
-      MediaEngagementContentsObserver::InsignificantPlaybackReason::kCount, 2);
-
-  // Make sure we only record not added when we have the full state.
-  SimulatePlaybackStarted(3);
-  ExpectNotAddedFirstTimeBucketCount(
-      MediaEngagementContentsObserver::InsignificantPlaybackReason::kCount, 2);
-  SimulateResizeEvent(3, gfx::Size(1, 1));
-  ExpectNotAddedFirstTimeBucketCount(
-      MediaEngagementContentsObserver::InsignificantPlaybackReason::kCount, 3);
-
-  // Make sure we only record removed when we have the full state.
-  SimulatePlaybackStarted(4);
-  SimulateMutedStateChange(4, true);
-  ExpectRemovedBucketCount(
-      MediaEngagementContentsObserver::InsignificantPlaybackReason::kCount, 3);
-  SimulateResizeEventSignificantSize(4);
-  SimulateMutedStateChange(4, false);
-  SimulateMutedStateChange(4, true);
-  ExpectRemovedBucketCount(
-      MediaEngagementContentsObserver::InsignificantPlaybackReason::kCount, 4);
-}
-
-TEST_F(MediaEngagementContentsObserverTest,
-       RecordInsignificantReason_NotAdded_AfterFirstTime) {
-  SimulatePlaybackStarted(0, false);
-  SimulateMutedStateChange(0, true);
-  SimulateResizeEventSignificantSize(0);
-
-  ExpectNotAddedFirstTimeBucketCount(
-      MediaEngagementContentsObserver::InsignificantPlaybackReason::
-          kNoAudioTrack,
-      1);
-  ExpectNotAddedFirstTimeBucketCount(
-      MediaEngagementContentsObserver::InsignificantPlaybackReason::kAudioMuted,
-      1);
-  ExpectNotAddedFirstTimeBucketCount(
-      MediaEngagementContentsObserver::InsignificantPlaybackReason::kCount, 1);
-
-  SimulateMutedStateChange(0, false);
-
-  ExpectNotAddedAfterFirstTimeBucketCount(
-      MediaEngagementContentsObserver::InsignificantPlaybackReason::
-          kNoAudioTrack,
-      1);
-  ExpectNotAddedAfterFirstTimeBucketCount(
-      MediaEngagementContentsObserver::InsignificantPlaybackReason::kCount, 1);
-
-  ExpectNotAddedFirstTimeBucketCount(
-      MediaEngagementContentsObserver::InsignificantPlaybackReason::
-          kNoAudioTrack,
-      1);
-  ExpectNotAddedFirstTimeBucketCount(
-      MediaEngagementContentsObserver::InsignificantPlaybackReason::kCount, 1);
 }
 
 TEST_F(MediaEngagementContentsObserverTest, EnsureCleanupAfterNavigation) {
@@ -529,7 +329,7 @@ TEST_F(MediaEngagementContentsObserverTest, DoNotRecordAudiolessTrack) {
   EXPECT_EQ(0u, GetSignificantActivePlayersCount());
 
   content::WebContentsObserver::MediaPlayerInfo player_info(true, false);
-  SimulatePlaybackStarted(player_info, 0, false);
+  SimulatePlaybackStarted(player_info, 0);
   EXPECT_EQ(0u, GetSignificantActivePlayersCount());
 }
 
@@ -544,153 +344,4 @@ TEST_F(MediaEngagementContentsObserverTest,
   EXPECT_FALSE(GetSignificantActivePlayersCount());
   EXPECT_FALSE(GetStoredPlayerStatesCount());
   EXPECT_FALSE(IsTimerRunning());
-}
-
-TEST_F(MediaEngagementContentsObserverTest, RecordScoreOnPlayback) {
-  GURL url1("https://www.google.com");
-  GURL url2("https://www.google.co.uk");
-  GURL url3("https://www.example.com");
-
-  SetScores(url1, 5, 5);
-  SetScores(url2, 5, 3);
-  SetScores(url3, 1, 1);
-  base::HistogramTester tester;
-  tester.ExpectTotalCount(
-      MediaEngagementContentsObserver::kHistogramScoreAtPlaybackName, 0);
-
-  Navigate(url1);
-  SimulatePlaybackStarted(0);
-  tester.ExpectBucketCount(
-      MediaEngagementContentsObserver::kHistogramScoreAtPlaybackName, 83, 1);
-
-  Navigate(url2);
-  SimulatePlaybackStarted(0);
-  SimulatePlaybackStarted(1);
-  SimulateMutedStateChange(0, false);
-  tester.ExpectBucketCount(
-      MediaEngagementContentsObserver::kHistogramScoreAtPlaybackName, 50, 2);
-
-  Navigate(url3);
-  SimulatePlaybackStarted(0);
-  tester.ExpectBucketCount(
-      MediaEngagementContentsObserver::kHistogramScoreAtPlaybackName, 0, 1);
-  tester.ExpectTotalCount(
-      MediaEngagementContentsObserver::kHistogramScoreAtPlaybackName, 4);
-
-  SimulateMutedStateChange(1, false);
-  tester.ExpectTotalCount(
-      MediaEngagementContentsObserver::kHistogramScoreAtPlaybackName, 4);
-
-  SimulatePlaybackStarted(1);
-  tester.ExpectTotalCount(
-      MediaEngagementContentsObserver::kHistogramScoreAtPlaybackName, 5);
-}
-
-TEST_F(MediaEngagementContentsObserverTest, DoNotRecordScoreOnPlayback_Muted) {
-  GURL url("https://www.google.com");
-  SetScores(url, 5, 5);
-
-  base::HistogramTester tester;
-  Navigate(url);
-  content::WebContentsObserver::MediaPlayerInfo player_info(true, true);
-  SimulatePlaybackStarted(player_info, 0, true);
-  tester.ExpectTotalCount(
-      MediaEngagementContentsObserver::kHistogramScoreAtPlaybackName, 0);
-
-  SimulateMutedStateChange(0, false);
-  tester.ExpectBucketCount(
-      MediaEngagementContentsObserver::kHistogramScoreAtPlaybackName, 83, 1);
-}
-
-TEST_F(MediaEngagementContentsObserverTest,
-       DoNotRecordScoreOnPlayback_NoAudioTrack) {
-  GURL url("https://www.google.com");
-  SetScores(url, 5, 5);
-
-  base::HistogramTester tester;
-  Navigate(url);
-  content::WebContentsObserver::MediaPlayerInfo player_info(true, false);
-  SimulatePlaybackStarted(player_info, 0, false);
-  tester.ExpectTotalCount(
-      MediaEngagementContentsObserver::kHistogramScoreAtPlaybackName, 0);
-}
-
-TEST_F(MediaEngagementContentsObserverTest,
-       DoNotRecordScoreOnPlayback_InternalUrl) {
-  GURL url("chrome://about");
-  SetScores(url, 5, 5);
-
-  base::HistogramTester tester;
-  Navigate(url);
-  SimulatePlaybackStarted(0);
-  tester.ExpectTotalCount(
-      MediaEngagementContentsObserver::kHistogramScoreAtPlaybackName, 0);
-}
-
-TEST_F(MediaEngagementContentsObserverTest, RecordUkmMetricsOnDestroy) {
-  GURL url("https://www.google.com");
-  SetScores(url, 6, 5);
-  Navigate(url);
-
-  EXPECT_FALSE(WasSignificantPlaybackRecorded());
-  SimulateSignificantPlayer(0);
-  SimulateSignificantPlaybackTime();
-  ExpectScores(url, 6.0 / 7.0, 7, 6);
-  EXPECT_TRUE(WasSignificantPlaybackRecorded());
-
-  SimulateDestroy();
-  ExpectUkmEntry(url, 6, 7, 86, 1);
-}
-
-TEST_F(MediaEngagementContentsObserverTest,
-       RecordUkmMetricsOnDestroy_NoPlaybacks) {
-  GURL url("https://www.google.com");
-  SetScores(url, 6, 5);
-  Navigate(url);
-
-  EXPECT_FALSE(WasSignificantPlaybackRecorded());
-  ExpectScores(url, 5.0 / 7.0, 7, 5);
-
-  SimulateDestroy();
-  ExpectUkmEntry(url, 5, 7, 71, 0);
-}
-
-TEST_F(MediaEngagementContentsObserverTest, RecordUkmMetricsOnNavigate) {
-  GURL url("https://www.google.com");
-  SetScores(url, 6, 5);
-  Navigate(url);
-
-  EXPECT_FALSE(WasSignificantPlaybackRecorded());
-  SimulateSignificantPlayer(0);
-  SimulateSignificantPlaybackTime();
-  ExpectScores(url, 6.0 / 7.0, 7, 6);
-  EXPECT_TRUE(WasSignificantPlaybackRecorded());
-
-  Navigate(GURL("https://www.example.org"));
-  ExpectUkmEntry(url, 6, 7, 86, 1);
-}
-
-TEST_F(MediaEngagementContentsObserverTest,
-       RecordUkmMetricsOnNavigate_NoPlaybacks) {
-  GURL url("https://www.google.com");
-  SetScores(url, 6, 5);
-  Navigate(url);
-
-  EXPECT_FALSE(WasSignificantPlaybackRecorded());
-  ExpectScores(url, 5.0 / 7.0, 7, 5);
-
-  Navigate(GURL("https://www.example.org"));
-  ExpectUkmEntry(url, 5, 7, 71, 0);
-}
-
-TEST_F(MediaEngagementContentsObserverTest, DoNotRecordMetricsOnInternalUrl) {
-  Navigate(GURL("chrome://about"));
-
-  EXPECT_FALSE(WasSignificantPlaybackRecorded());
-  SimulateSignificantPlayer(0);
-  SimulateSignificantPlaybackTime();
-  EXPECT_TRUE(WasSignificantPlaybackRecorded());
-
-  SimulateDestroy();
-  ExpectNoUkmEntry();
 }

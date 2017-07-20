@@ -18,7 +18,6 @@
 #include "net/url_request/url_request_job_factory.h"
 
 namespace net {
-class CertVerifier;
 class HostResolver;
 class NetworkDelegate;
 class NetLog;
@@ -52,7 +51,6 @@ class ShellURLRequestContextGetter : public net::URLRequestContextGetter {
   // Used by subclasses to create their own implementation of NetworkDelegate
   // and net::ProxyService.
   virtual std::unique_ptr<net::NetworkDelegate> CreateNetworkDelegate();
-  virtual std::unique_ptr<net::CertVerifier> GetCertVerifier();
   virtual std::unique_ptr<net::ProxyConfigService> GetProxyConfigService();
   virtual std::unique_ptr<net::ProxyService> GetProxyService();
 

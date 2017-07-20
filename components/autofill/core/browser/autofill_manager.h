@@ -190,8 +190,7 @@ class AutofillManager : public AutofillHandler,
                      const std::vector<base::string16>& labels) override;
   void Reset() override;
 
-  // Returns true if the value of the AutofillEnabled pref is true and the
-  // client supports Autofill.
+  // Returns the value of the AutofillEnabled pref.
   virtual bool IsAutofillEnabled() const;
 
   // Returns true if all the conditions for enabling the upload of credit card

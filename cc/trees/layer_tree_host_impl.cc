@@ -1837,9 +1837,9 @@ bool LayerTreeHostImpl::CanUseGpuRasterization() {
         layer_tree_frame_sink_->worker_context_provider()))
     return false;
 
-  viz::ContextProvider* context_provider =
+  ContextProvider* context_provider =
       layer_tree_frame_sink_->worker_context_provider();
-  viz::ContextProvider::ScopedContextLock scoped_context(context_provider);
+  ContextProvider::ScopedContextLock scoped_context(context_provider);
   if (!context_provider->GrContext())
     return false;
 
@@ -1856,7 +1856,7 @@ bool LayerTreeHostImpl::UpdateGpuRasterizationStatus() {
 
   int requested_msaa_samples = RequestedMSAASampleCount();
   int max_msaa_samples = 0;
-  viz::ContextProvider* compositor_context_provider =
+  ContextProvider* compositor_context_provider =
       layer_tree_frame_sink_->context_provider();
   bool gpu_rasterization_enabled = false;
   bool supports_disable_msaa = false;
@@ -2022,7 +2022,7 @@ void LayerTreeHostImpl::SynchronouslyInitializeAllTiles() {
 
 void LayerTreeHostImpl::DidLoseLayerTreeFrameSink() {
   if (resource_provider_)
-    resource_provider_->DidLoseVulkanContextProvider();
+    resource_provider_->DidLoseContextProvider();
   has_valid_layer_tree_frame_sink_ = false;
   client_->DidLoseLayerTreeFrameSinkOnImplThread();
 }
@@ -2341,7 +2341,7 @@ void LayerTreeHostImpl::CreateResourceAndRasterBufferProvider(
   // resolved.
   CHECK(resource_provider_);
 
-  viz::ContextProvider* compositor_context_provider =
+  ContextProvider* compositor_context_provider =
       layer_tree_frame_sink_->context_provider();
   if (!compositor_context_provider) {
     *resource_pool =
@@ -2355,7 +2355,7 @@ void LayerTreeHostImpl::CreateResourceAndRasterBufferProvider(
     return;
   }
 
-  viz::ContextProvider* worker_context_provider =
+  ContextProvider* worker_context_provider =
       layer_tree_frame_sink_->worker_context_provider();
   if (use_gpu_rasterization_) {
     DCHECK(worker_context_provider);
@@ -2483,7 +2483,7 @@ void LayerTreeHostImpl::CleanUpTileManagerAndUIResources() {
       compositor_context->ContextGL()->ShallowFlushCHROMIUM();
     if (auto* worker_context =
             layer_tree_frame_sink_->worker_context_provider()) {
-      viz::ContextProvider::ScopedContextLock hold(worker_context);
+      ContextProvider::ScopedContextLock hold(worker_context);
       worker_context->ContextGL()->ShallowFlushCHROMIUM();
     }
   }
@@ -3057,22 +3057,6 @@ bool LayerTreeHostImpl::ScrollAnimationCreate(ScrollNode* scroll_node,
   return true;
 }
 
-static bool CanPropagate(ScrollNode* scroll_node, float x, float y) {
-  // ScrollBoundaryBehavior may have different values on x-axis and y-axis.
-  // We need to find out the dominant axis of user's intended scroll to decide
-  // which node's ScrollBoundaryBehavior should be applied, i.e. which the
-  // scroll should be propagated from this node given its relevant*
-  // ScrollBoundaryBehavior value. * relevant here depends on the dominant
-  // axis of scroll gesture.
-  bool x_dominant = std::abs(x) > std::abs(y);
-  return (x_dominant &&
-          scroll_node->scroll_boundary_behavior.x ==
-              ScrollBoundaryBehavior::kScrollBoundaryBehaviorTypeAuto) ||
-         (!x_dominant &&
-          scroll_node->scroll_boundary_behavior.y ==
-              ScrollBoundaryBehavior::kScrollBoundaryBehaviorTypeAuto);
-}
-
 InputHandler::ScrollStatus LayerTreeHostImpl::ScrollAnimated(
     const gfx::Point& viewport_point,
     const gfx::Vector2dF& scroll_delta,
@@ -3161,9 +3145,6 @@ InputHandler::ScrollStatus LayerTreeHostImpl::ScrollAnimated(
       }
 
       pending_delta -= scroll_delta;
-
-      if (!CanPropagate(scroll_node, pending_delta.x(), pending_delta.y()))
-        break;
     }
   }
   scroll_state.set_is_ending(true);
@@ -3418,16 +3399,6 @@ void LayerTreeHostImpl::DistributeScrollDelta(ScrollState* scroll_state) {
 
       if (CanConsumeDelta(scroll_node, *scroll_state))
         current_scroll_chain.push_front(scroll_node);
-
-      float delta_x = scroll_state->is_beginning()
-                          ? scroll_state->delta_x_hint()
-                          : scroll_state->delta_x();
-      float delta_y = scroll_state->is_beginning()
-                          ? scroll_state->delta_y_hint()
-                          : scroll_state->delta_y();
-
-      if (!CanPropagate(scroll_node, delta_x, delta_y))
-        break;
     }
   }
   active_tree_->SetCurrentlyScrollingNode(
@@ -4418,7 +4389,7 @@ void LayerTreeHostImpl::SetContextVisibility(bool is_visible) {
   // before we get a chance to go invisible in NotifyAllTileTasksComplete.
   auto* worker_context = layer_tree_frame_sink_->worker_context_provider();
   if (worker_context && is_visible != !!worker_context_visibility_) {
-    viz::ContextProvider::ScopedContextLock hold(worker_context);
+    ContextProvider::ScopedContextLock hold(worker_context);
     if (is_visible) {
       worker_context_visibility_ =
           worker_context->CacheController()->ClientBecameVisible();

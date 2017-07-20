@@ -5,6 +5,8 @@
 #ifndef CHROME_BROWSER_ANDROID_DEVTOOLS_SERVER_H_
 #define CHROME_BROWSER_ANDROID_DEVTOOLS_SERVER_H_
 
+#include <jni.h>
+
 #include <memory>
 #include <string>
 
@@ -30,5 +32,7 @@ class DevToolsServer {
 
   DISALLOW_COPY_AND_ASSIGN(DevToolsServer);
 };
+
+bool RegisterDevToolsServer(JNIEnv* env);
 
 #endif  // CHROME_BROWSER_ANDROID_DEVTOOLS_SERVER_H_

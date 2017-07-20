@@ -107,20 +107,20 @@ void PlatformSensor::UpdateSensorReading(const SensorReading& reading,
 
 void PlatformSensor::NotifySensorReadingChanged() {
   for (auto& client : clients_) {
-    if (!client.IsSuspended())
+    if (!client.IsNotificationSuspended())
       client.OnSensorReadingChanged();
   }
 }
 
 void PlatformSensor::NotifySensorError() {
-  for (auto& client : clients_)
-    client.OnSensorError();
+  for (auto& observer : clients_)
+    observer.OnSensorError();
 }
 
 bool PlatformSensor::UpdateSensorInternal(const ConfigMap& configurations) {
   const PlatformSensorConfiguration* optimal_configuration = nullptr;
   for (const auto& pair : configurations) {
-    if (pair.first->IsSuspended())
+    if (pair.first->IsNotificationSuspended())
       continue;
 
     const auto& conf_list = pair.second;

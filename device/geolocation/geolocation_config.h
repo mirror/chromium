@@ -24,8 +24,8 @@ class DEVICE_GEOLOCATION_EXPORT GeolocationConfig
   GeolocationConfig();
   ~GeolocationConfig() override;
 
-  static void Create(mojom::GeolocationConfigRequest request,
-                     const service_manager::BindSourceInfo& source_info);
+  static void Create(const service_manager::BindSourceInfo& source_info,
+                     mojom::GeolocationConfigRequest request);
 
   void IsHighAccuracyLocationBeingCaptured(
       IsHighAccuracyLocationBeingCapturedCallback callback) override;

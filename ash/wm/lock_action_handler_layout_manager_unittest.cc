@@ -10,11 +10,11 @@
 #include "ash/public/interfaces/tray_action.mojom.h"
 #include "ash/root_window_controller.h"
 #include "ash/screen_util.h"
-#include "ash/session/test_session_controller_client.h"
 #include "ash/shelf/shelf_constants.h"
 #include "ash/shelf/shelf_layout_manager.h"
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
+#include "ash/test/test_session_controller_client.h"
 #include "ash/tray_action/tray_action.h"
 #include "ash/wm/window_state.h"
 #include "base/command_line.h"
@@ -24,7 +24,6 @@
 #include "ui/aura/window.h"
 #include "ui/keyboard/keyboard_controller.h"
 #include "ui/keyboard/keyboard_switches.h"
-#include "ui/keyboard/keyboard_test_util.h"
 #include "ui/keyboard/keyboard_ui.h"
 #include "ui/keyboard/keyboard_util.h"
 #include "ui/views/widget/widget.h"
@@ -85,7 +84,7 @@ class TestTrayActionClient : public mojom::TrayActionClient {
 
 }  // namespace
 
-class LockActionHandlerLayoutManagerTest : public AshTestBase {
+class LockActionHandlerLayoutManagerTest : public test::AshTestBase {
  public:
   LockActionHandlerLayoutManagerTest() = default;
   ~LockActionHandlerLayoutManagerTest() override = default;

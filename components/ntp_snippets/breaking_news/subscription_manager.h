@@ -5,10 +5,13 @@
 #ifndef COMPONENTS_NTP_SNIPPETS_BREAKING_NEWS_SUBSCRIPTION_MANAGER_H_
 #define COMPONENTS_NTP_SNIPPETS_BREAKING_NEWS_SUBSCRIPTION_MANAGER_H_
 
-#include <string>
-
+#include "components/ntp_snippets/breaking_news/subscription_json_request.h"
+#include "components/prefs/pref_registry_simple.h"
 #include "components/version_info/version_info.h"
+#include "net/url_request/url_request_context_getter.h"
 #include "url/gurl.h"
+
+class PrefRegistrySimple;
 
 namespace ntp_snippets {
 
@@ -20,23 +23,49 @@ GURL GetPushUpdatesSubscriptionEndpoint(version_info::Channel channel);
 // consideration of the channel and field trial parameters.
 GURL GetPushUpdatesUnsubscriptionEndpoint(version_info::Channel channel);
 
-// Handles subscription to content suggestions server for push updates (e.g. via
-// GCM).
+// Class that wraps around the functionality of SubscriptionJsonRequest. It uses
+// the SubscriptionJsonRequest to send subscription and unsubscription requests
+// to the content suggestions server and does the bookkeeping for the data used
+// for subscription. Bookkeeping is required to detect any change (e.g. the
+// token render invalid), and resubscribe accordingly.
 class SubscriptionManager {
  public:
-  virtual ~SubscriptionManager() = default;
+  SubscriptionManager(
+      scoped_refptr<net::URLRequestContextGetter> url_request_context_getter,
+      PrefService* pref_service,
+      const GURL& subscribe_url,
+      const GURL& unsubscribe_url);
 
-  virtual void Subscribe(const std::string& token) = 0;
-  virtual void Unsubscribe() = 0;
-  virtual bool IsSubscribed() = 0;
+  ~SubscriptionManager();
 
-  virtual void Resubscribe(const std::string& new_token) = 0;
+  void Subscribe(const std::string& token);
+  bool CanSubscribeNow();
+  void Unsubscribe(const std::string& token);
+  bool CanUnsubscribeNow();
+  bool IsSubscribed();
 
-  // Checks if some data that has been used when subscribing has changed. For
-  // example, the user has signed in.
-  virtual bool NeedsToResubscribe() = 0;
+  static void RegisterProfilePrefs(PrefRegistrySimple* registry);
+
+ private:
+  std::string subscription_token_;
+  std::string unsubscription_token_;
+
+  // Holds the URL request context.
+  scoped_refptr<net::URLRequestContextGetter> url_request_context_getter_;
+
+  std::unique_ptr<internal::SubscriptionJsonRequest> subscription_request_;
+  std::unique_ptr<internal::SubscriptionJsonRequest> unsubscription_request_;
+
+  PrefService* pref_service_;
+
+  // API endpoint for subscribing and unsubscribing.
+  const GURL subscribe_url_;
+  const GURL unsubscribe_url_;
+
+  void DidSubscribe(const ntp_snippets::Status& status);
+  void DidUnsubscribe(const ntp_snippets::Status& status);
+
+  DISALLOW_COPY_AND_ASSIGN(SubscriptionManager);
 };
-
-}  // namespace ntp_snippets
-
+}
 #endif  // COMPONENTS_NTP_SNIPPETS_BREAKING_NEWS_SUBSCRIPTION_MANAGER_H_

@@ -12,7 +12,6 @@
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/task_scheduler/post_task.h"
-#include "base/task_scheduler/task_traits.h"
 #include "base/threading/thread_restrictions.h"
 #include "build/build_config.h"
 #include "chrome/browser/policy/policy_path_parser.h"
@@ -181,18 +180,9 @@ DefaultWebClientWorker::GetTaskRunner() {
   // singleton.
   static scoped_refptr<base::SequencedTaskRunner>* task_runner = nullptr;
 
-  constexpr base::TaskTraits traits = {base::MayBlock()};
-
   if (!task_runner) {
-#if defined(OS_WIN)
-    // Shell integration calls like shell_integration::GetDefaultBrowser require
-    // the thread to have COM initialized.
     task_runner = new scoped_refptr<base::SequencedTaskRunner>(
-        base::CreateCOMSTATaskRunnerWithTraits(traits));
-#else
-    task_runner = new scoped_refptr<base::SequencedTaskRunner>(
-        base::CreateSequencedTaskRunnerWithTraits(traits));
-#endif
+        base::CreateSequencedTaskRunnerWithTraits({base::MayBlock()}));
   }
 
   return *task_runner;

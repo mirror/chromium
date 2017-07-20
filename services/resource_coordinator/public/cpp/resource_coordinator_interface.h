@@ -39,11 +39,8 @@ class SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT
   const mojom::CoordinationUnitPtr& service() const { return service_; }
 
   void SendEvent(const mojom::EventType& event_type);
-  void SetProperty(mojom::PropertyType property_type,
-                   std::unique_ptr<base::Value> value);
   void AddChild(const ResourceCoordinatorInterface& child);
   void RemoveChild(const ResourceCoordinatorInterface& child);
-  CoordinationUnitID id() const { return cu_id_; }
 
  private:
   void ConnectToService(service_manager::Connector* connector,
@@ -52,7 +49,6 @@ class SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT
   void RemoveChildByID(const CoordinationUnitID& child_id);
 
   mojom::CoordinationUnitPtr service_;
-  CoordinationUnitID cu_id_;
 
   base::ThreadChecker thread_checker_;
 

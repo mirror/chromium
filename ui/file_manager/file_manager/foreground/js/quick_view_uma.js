@@ -32,7 +32,6 @@ function QuickViewUma(volumeManager, dialogType) {
 QuickViewUma.WayToOpen = {
   CONTEXT_MENU: 'contextMenu',
   SPACE_KEY: 'spaceKey',
-  SELECTION_MENU: 'selectionMenu',
 };
 
 /**
@@ -44,7 +43,6 @@ QuickViewUma.WayToOpen = {
 QuickViewUma.WayToOpenValues_ = [
   QuickViewUma.WayToOpen.CONTEXT_MENU,
   QuickViewUma.WayToOpen.SPACE_KEY,
-  QuickViewUma.WayToOpen.SELECTION_MENU,
 ];
 
 /**

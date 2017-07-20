@@ -205,20 +205,12 @@ SpdyFramer::SpdyState SpdyFramer::state() const {
   return state_;
 }
 
-size_t SpdyFramer::GetFrameHeaderSize() const {
-  return size_utils::GetFrameHeaderSize();
-}
-
 size_t SpdyFramer::GetDataFrameMinimumSize() const {
   return size_utils::GetDataFrameMinimumSize();
 }
 
-size_t SpdyFramer::GetHeadersMinimumSize() const {
-  return size_utils::GetHeadersMinimumSize();
-}
-
-size_t SpdyFramer::GetPrioritySize() const {
-  return size_utils::GetPrioritySize();
+size_t SpdyFramer::GetFrameHeaderSize() const {
+  return size_utils::GetFrameHeaderSize();
 }
 
 size_t SpdyFramer::GetRstStreamSize() const {
@@ -229,10 +221,6 @@ size_t SpdyFramer::GetSettingsMinimumSize() const {
   return size_utils::GetSettingsMinimumSize();
 }
 
-size_t SpdyFramer::GetPushPromiseMinimumSize() const {
-  return size_utils::GetPushPromiseMinimumSize();
-}
-
 size_t SpdyFramer::GetPingSize() const {
   return size_utils::GetPingSize();
 }
@@ -241,8 +229,16 @@ size_t SpdyFramer::GetGoAwayMinimumSize() const {
   return size_utils::GetGoAwayMinimumSize();
 }
 
+size_t SpdyFramer::GetHeadersMinimumSize() const {
+  return size_utils::GetFrameHeaderSize();
+}
+
 size_t SpdyFramer::GetWindowUpdateSize() const {
   return size_utils::GetWindowUpdateSize();
+}
+
+size_t SpdyFramer::GetPushPromiseMinimumSize() const {
+  return size_utils::GetPushPromiseMinimumSize();
 }
 
 size_t SpdyFramer::GetContinuationMinimumSize() const {
@@ -253,8 +249,8 @@ size_t SpdyFramer::GetAltSvcMinimumSize() const {
   return size_utils::GetAltSvcMinimumSize();
 }
 
-size_t SpdyFramer::GetMinimumSizeOfFrame(SpdyFrameType frame_type) const {
-  return size_utils::GetMinimumSizeOfFrame(frame_type);
+size_t SpdyFramer::GetPrioritySize() const {
+  return size_utils::GetPrioritySize();
 }
 
 size_t SpdyFramer::GetFrameMinimumSize() const {
@@ -936,14 +932,13 @@ size_t SpdyFramer::UpdateCurrentFrameBuffer(const char** data,
   return bytes_to_read;
 }
 
-size_t SpdyFramer::GetUncompressedSerializedLength(
-    const SpdyHeaderBlock& headers) {
+size_t SpdyFramer::GetSerializedLength(const SpdyHeaderBlock* headers) {
   const size_t num_name_value_pairs_size = sizeof(uint32_t);
   const size_t length_of_name_size = num_name_value_pairs_size;
   const size_t length_of_value_size = num_name_value_pairs_size;
 
   size_t total_length = num_name_value_pairs_size;
-  for (const auto& header : headers) {
+  for (const auto& header : *headers) {
     // We add space for the length of the name and the length of the value as
     // well as the length of the name and the length of the value.
     total_length += length_of_name_size + header.first.size() +
@@ -1130,7 +1125,7 @@ size_t SpdyFramer::ProcessControlFrameHeaderBlock(const char* data,
       size_t compressed_len = 0;
       if (GetHpackDecoder()->HandleControlFrameHeadersComplete(
               &compressed_len)) {
-        visitor_->OnHeaderFrameEnd(current_frame_stream_id_);
+        visitor_->OnHeaderFrameEnd(current_frame_stream_id_, true);
         if (state_ == SPDY_ERROR) {
           return data_len;
         }
@@ -1546,34 +1541,48 @@ size_t SpdyFramer::ProcessIgnoredControlFramePayload(/*const char* data,*/
 }
 
 SpdyFramer::SpdyFrameIterator::SpdyFrameIterator(SpdyFramer* framer)
-    : framer_(framer), is_first_frame_(true), has_next_frame_(true) {}
+    : framer_(framer),
+      is_first_frame_(true),
+      has_next_frame_(true),
+      debug_total_size_(0) {}
 
 SpdyFramer::SpdyFrameIterator::~SpdyFrameIterator() {}
 
 size_t SpdyFramer::SpdyFrameIterator::NextFrame(ZeroCopyOutputBuffer* output) {
-  const SpdyFrameIR& frame_ir = GetIR();
+  const SpdyFrameIR* frame_ir = GetIR();
+  if (frame_ir == nullptr) {
+    LOG(WARNING) << "frame_ir doesn't exist.";
+    return false;
+  }
   if (!has_next_frame_) {
     SPDY_BUG << "SpdyFramer::SpdyFrameIterator::NextFrame called without "
              << "a next frame.";
     return false;
   }
 
-  const size_t size_without_block = is_first_frame_
-                                        ? GetFrameSizeSansBlock()
-                                        : framer_->GetContinuationMinimumSize();
+  size_t size_without_block = is_first_frame_
+                                  ? GetFrameSizeSansBlock()
+                                  : framer_->GetContinuationMinimumSize();
   auto encoding = SpdyMakeUnique<SpdyString>();
   encoder_->Next(kMaxControlFrameSize - size_without_block, encoding.get());
   has_next_frame_ = encoder_->HasNext();
 
   if (framer_->debug_visitor_ != nullptr) {
-    const auto& header_block_frame_ir =
-        static_cast<const SpdyFrameWithHeaderBlockIR&>(frame_ir);
-    const size_t header_list_size = framer_->GetUncompressedSerializedLength(
-        header_block_frame_ir.header_block());
-    framer_->debug_visitor_->OnSendCompressedFrame(
-        frame_ir.stream_id(),
-        is_first_frame_ ? frame_ir.frame_type() : SpdyFrameType::CONTINUATION,
-        header_list_size, size_without_block + encoding->size());
+    debug_total_size_ += size_without_block;
+    debug_total_size_ += encoding->size();
+    if (!has_next_frame_) {
+      // TODO(birenroy) are these (here and below) still necessary?
+      // HTTP2 uses HPACK for header compression. However, continue to
+      // use GetSerializedLength() for an apples-to-apples comparision of
+      // compression performance between HPACK and SPDY w/ deflate.
+      auto* header_block_frame_ir =
+          static_cast<const SpdyFrameWithHeaderBlockIR*>(frame_ir);
+      size_t debug_payload_len =
+          framer_->GetSerializedLength(&header_block_frame_ir->header_block());
+      framer_->debug_visitor_->OnSendCompressedFrame(
+          frame_ir->stream_id(), frame_ir->frame_type(), debug_payload_len,
+          debug_total_size_);
+    }
   }
 
   framer_->SetIsLastFrame(!has_next_frame_);
@@ -1583,7 +1592,7 @@ size_t SpdyFramer::SpdyFrameIterator::NextFrame(ZeroCopyOutputBuffer* output) {
     is_first_frame_ = false;
     ok = SerializeGivenEncoding(*encoding, output);
   } else {
-    SpdyContinuationIR continuation_ir(frame_ir.stream_id());
+    SpdyContinuationIR continuation_ir(frame_ir->stream_id());
     continuation_ir.take_encoding(std::move(encoding));
     ok = framer_->SerializeContinuation(continuation_ir, output);
   }
@@ -1604,8 +1613,8 @@ SpdyFramer::SpdyHeaderFrameIterator::SpdyHeaderFrameIterator(
 
 SpdyFramer::SpdyHeaderFrameIterator::~SpdyHeaderFrameIterator() {}
 
-const SpdyFrameIR& SpdyFramer::SpdyHeaderFrameIterator::GetIR() const {
-  return *(headers_ir_.get());
+const SpdyFrameIR* SpdyFramer::SpdyHeaderFrameIterator::GetIR() const {
+  return headers_ir_.get();
 }
 
 size_t SpdyFramer::SpdyHeaderFrameIterator::GetFrameSizeSansBlock() const {
@@ -1629,8 +1638,8 @@ SpdyFramer::SpdyPushPromiseFrameIterator::SpdyPushPromiseFrameIterator(
 
 SpdyFramer::SpdyPushPromiseFrameIterator::~SpdyPushPromiseFrameIterator() {}
 
-const SpdyFrameIR& SpdyFramer::SpdyPushPromiseFrameIterator::GetIR() const {
-  return *(push_promise_ir_.get());
+const SpdyFrameIR* SpdyFramer::SpdyPushPromiseFrameIterator::GetIR() const {
+  return push_promise_ir_.get();
 }
 
 size_t SpdyFramer::SpdyPushPromiseFrameIterator::GetFrameSizeSansBlock() const {
@@ -1662,8 +1671,8 @@ bool SpdyFramer::SpdyControlFrameIterator::HasNextFrame() const {
   return has_next_frame_;
 }
 
-const SpdyFrameIR& SpdyFramer::SpdyControlFrameIterator::GetIR() const {
-  return *(frame_ir_.get());
+const SpdyFrameIR* SpdyFramer::SpdyControlFrameIterator::GetIR() const {
+  return frame_ir_.get();
 }
 
 // TODO(yasong): remove all the static_casts.
@@ -1948,11 +1957,13 @@ SpdySerializedFrame SpdyFramer::SerializeHeaders(const SpdyHeadersIR& headers) {
                                SpdyFrameType::HEADERS, padding_payload_len);
 
   if (debug_visitor_) {
-    const size_t header_list_size =
-        GetUncompressedSerializedLength(headers.header_block());
+    // HTTP2 uses HPACK for header compression. However, continue to
+    // use GetSerializedLength() for an apples-to-apples comparision of
+    // compression performance between HPACK and SPDY w/ deflate.
+    const size_t payload_len = GetSerializedLength(&(headers.header_block()));
     debug_visitor_->OnSendCompressedFrame(headers.stream_id(),
-                                          SpdyFrameType::HEADERS,
-                                          header_list_size, builder.length());
+                                          SpdyFrameType::HEADERS, payload_len,
+                                          builder.length());
   }
 
   return builder.take();
@@ -2025,11 +2036,14 @@ SpdySerializedFrame SpdyFramer::SerializePushPromise(
       SpdyFrameType::PUSH_PROMISE, padding_payload_len);
 
   if (debug_visitor_) {
-    const size_t header_list_size =
-        GetUncompressedSerializedLength(push_promise.header_block());
+    // HTTP2 uses HPACK for header compression. However, continue to
+    // use GetSerializedLength() for an apples-to-apples comparision of
+    // compression performance between HPACK and SPDY w/ deflate.
+    const size_t payload_len =
+        GetSerializedLength(&(push_promise.header_block()));
     debug_visitor_->OnSendCompressedFrame(push_promise.stream_id(),
                                           SpdyFrameType::PUSH_PROMISE,
-                                          header_list_size, builder.length());
+                                          payload_len, builder.length());
   }
 
   return builder.take();
@@ -2446,11 +2460,13 @@ bool SpdyFramer::SerializeHeaders(const SpdyHeadersIR& headers,
                  SpdyFrameType::HEADERS, padding_payload_len);
 
   if (debug_visitor_) {
-    const size_t header_list_size =
-        GetUncompressedSerializedLength(headers.header_block());
+    // HTTP2 uses HPACK for header compression. However, continue to
+    // use GetSerializedLength() for an apples-to-apples comparision of
+    // compression performance between HPACK and SPDY w/ deflate.
+    const size_t payload_len = GetSerializedLength(&(headers.header_block()));
     debug_visitor_->OnSendCompressedFrame(headers.stream_id(),
-                                          SpdyFrameType::HEADERS,
-                                          header_list_size, builder.length());
+                                          SpdyFrameType::HEADERS, payload_len,
+                                          builder.length());
   }
 
   return ok;
@@ -2498,11 +2514,14 @@ bool SpdyFramer::SerializePushPromise(const SpdyPushPromiseIR& push_promise,
                  SpdyFrameType::PUSH_PROMISE, padding_payload_len);
 
   if (debug_visitor_) {
-    const size_t header_list_size =
-        GetUncompressedSerializedLength(push_promise.header_block());
+    // HTTP2 uses HPACK for header compression. However, continue to
+    // use GetSerializedLength() for an apples-to-apples comparision of
+    // compression performance between HPACK and SPDY w/ deflate.
+    const size_t payload_len =
+        GetSerializedLength(&(push_promise.header_block()));
     debug_visitor_->OnSendCompressedFrame(push_promise.stream_id(),
                                           SpdyFrameType::PUSH_PROMISE,
-                                          header_list_size, builder.length());
+                                          payload_len, builder.length());
   }
 
   return ok;

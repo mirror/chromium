@@ -56,7 +56,6 @@
 #include "components/toolbar/vector_icons.h"
 #include "components/translate/core/browser/language_state.h"
 #include "components/variations/variations_associated_data.h"
-#include "components/vector_icons/vector_icons.h"
 #include "components/zoom/zoom_controller.h"
 #include "components/zoom/zoom_event_manager.h"
 #include "content/public/browser/web_contents.h"
@@ -70,6 +69,7 @@
 #include "ui/gfx/image/image.h"
 #include "ui/gfx/image/image_skia_util_mac.h"
 #include "ui/gfx/paint_vector_icon.h"
+#include "ui/vector_icons/vector_icons.h"
 
 using content::WebContents;
 
@@ -599,8 +599,7 @@ NSImage* LocationBarViewMac::GetKeywordImage(const base::string16& keyword) {
   SkColor icon_color =
       IsLocationBarDark() ? kMaterialDarkVectorIconColor : gfx::kGoogleBlue700;
   return NSImageFromImageSkiaWithColorSpace(
-      gfx::CreateVectorIcon(vector_icons::kSearchIcon, kDefaultIconSize,
-                            icon_color),
+      gfx::CreateVectorIcon(ui::kSearchIcon, kDefaultIconSize, icon_color),
       base::mac::GetSRGBColorSpace());
 }
 

@@ -121,7 +121,8 @@ void WindowServerTestBase::OnBindInterface(
     const service_manager::BindSourceInfo& source_info,
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle interface_pipe) {
-  registry_.BindInterface(interface_name, std::move(interface_pipe));
+  registry_.BindInterface(source_info, interface_name,
+                          std::move(interface_pipe));
 }
 
 void WindowServerTestBase::OnEmbed(
@@ -281,6 +282,7 @@ void WindowServerTestBase::OnWmDeactivateWindow(aura::Window* window) {
 }
 
 void WindowServerTestBase::BindWindowTreeClientRequest(
+    const service_manager::BindSourceInfo& source_info,
     mojom::WindowTreeClientRequest request) {
   const bool create_discardable_memory = false;
   window_tree_clients_.push_back(base::MakeUnique<aura::WindowTreeClient>(

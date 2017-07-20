@@ -29,12 +29,10 @@ struct NGBaselineRequest {
   FontBaseline baseline_type;
 };
 
-bool operator==(const NGBaselineRequest&, const NGBaselineRequest&);
-bool operator!=(const NGBaselineRequest&, const NGBaselineRequest&);
-
 // Represents a computed baseline position.
 struct NGBaseline {
-  NGBaselineRequest request;
+  NGBaselineAlgorithmType algorithm_type;
+  FontBaseline baseline_type;
   LayoutUnit offset;
 
   // @return if the node needs to propagate baseline requests/results.

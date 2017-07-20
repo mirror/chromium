@@ -4,8 +4,6 @@
 
 #include "content/public/browser/navigation_throttle.h"
 
-#include "content/browser/frame_host/navigation_handle_impl.h"
-
 namespace content {
 
 NavigationThrottle::NavigationThrottle(NavigationHandle* navigation_handle)
@@ -25,16 +23,6 @@ NavigationThrottle::WillRedirectRequest() {
 NavigationThrottle::ThrottleCheckResult
 NavigationThrottle::WillProcessResponse() {
   return NavigationThrottle::PROCEED;
-}
-
-void NavigationThrottle::Resume() {
-  static_cast<NavigationHandleImpl*>(navigation_handle_)->Resume(this);
-}
-
-void NavigationThrottle::CancelDeferredNavigation(
-    NavigationThrottle::ThrottleCheckResult result) {
-  static_cast<NavigationHandleImpl*>(navigation_handle_)
-      ->CancelDeferredNavigation(this, result);
 }
 
 }  // namespace content

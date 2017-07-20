@@ -184,3 +184,8 @@ base::Optional<ContentSetting> PageInfoPopupAndroid::GetSettingToDisplay(
   }
   return base::Optional<ContentSetting>();
 }
+
+// static
+bool PageInfoPopupAndroid::RegisterPageInfoPopupAndroid(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}

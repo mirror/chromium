@@ -503,7 +503,7 @@ std::string MediaStreamManager::MakeMediaAccessRequest(
     int page_request_id,
     const StreamControls& controls,
     const url::Origin& security_origin,
-    MediaRequestResponseCallback callback) {
+    const MediaRequestResponseCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   // TODO(perkj): The argument list with NULL parameters to DeviceRequest
@@ -516,7 +516,7 @@ std::string MediaStreamManager::MakeMediaAccessRequest(
 
   const std::string& label = AddRequest(request);
 
-  request->callback = std::move(callback);
+  request->callback = callback;
   // Post a task and handle the request asynchronously. The reason is that the
   // requester won't have a label for the request until this function returns
   // and thus can not handle a response. Using base::Unretained is safe since
@@ -1219,8 +1219,7 @@ void MediaStreamManager::FinalizeRequestFailed(
 
   if (request->request_type == MEDIA_DEVICE_ACCESS &&
       !request->callback.is_null()) {
-    std::move(request->callback)
-        .Run(MediaStreamDevices(), std::move(request->ui_proxy));
+    request->callback.Run(MediaStreamDevices(), std::move(request->ui_proxy));
   }
 
   DeleteRequest(label);
@@ -1239,7 +1238,7 @@ void MediaStreamManager::FinalizeMediaAccessRequest(
     DeviceRequest* request,
     const MediaStreamDevices& devices) {
   if (!request->callback.is_null())
-    std::move(request->callback).Run(devices, std::move(request->ui_proxy));
+    request->callback.Run(devices, std::move(request->ui_proxy));
 
   // Delete the request since it is done.
   DeleteRequest(label);

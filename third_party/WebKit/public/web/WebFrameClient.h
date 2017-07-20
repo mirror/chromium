@@ -68,7 +68,6 @@
 #include "public/platform/WebSourceLocation.h"
 #include "public/platform/WebStorageQuotaCallbacks.h"
 #include "public/platform/WebStorageQuotaType.h"
-#include "public/platform/WebSuddenTerminationDisablerType.h"
 #include "public/platform/WebURLError.h"
 #include "public/platform/WebURLLoader.h"
 #include "public/platform/WebURLRequest.h"
@@ -312,15 +311,10 @@ class BLINK_EXPORT WebFrameClient {
 
   // Load commands -------------------------------------------------------
 
-  // The client should handle the request as a download.
-  virtual void DownloadURL(const WebURLRequest&,
-                           const WebString& download_name) {}
-
-  // The client should handle the navigation externally. Should not be used for
-  // processing the request as a download (See WebFrameClient::DownloadURL).
+  // The client should handle the navigation externally.
   virtual void LoadURLExternally(const WebURLRequest&,
                                  WebNavigationPolicy,
-                                 WebTriggeringEventInfo triggering_event_info,
+                                 const WebString& download_name,
                                  bool should_replace_current_entry) {}
 
   // The client should load an error page in the current frame.
@@ -770,9 +764,13 @@ class BLINK_EXPORT WebFrameClient {
   // Called when elements preventing the sudden termination of the frame
   // become present or stop being present. |type| is the type of element
   // (BeforeUnload handler, Unload handler).
-  virtual void SuddenTerminationDisablerChanged(
-      bool present,
-      WebSuddenTerminationDisablerType) {}
+  enum SuddenTerminationDisablerType {
+    kBeforeUnloadHandler,
+    kUnloadHandler,
+  };
+  virtual void SuddenTerminationDisablerChanged(bool present,
+                                                SuddenTerminationDisablerType) {
+  }
 
   // Navigator Content Utils  --------------------------------------------
 

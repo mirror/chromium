@@ -274,6 +274,11 @@ void WebApkInstaller::BuildProto(
       callback);
 }
 
+// static
+bool WebApkInstaller::Register(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
 void WebApkInstaller::InstallOrUpdateWebApk(const std::string& package_name,
                                             int version,
                                             const std::string& token) {

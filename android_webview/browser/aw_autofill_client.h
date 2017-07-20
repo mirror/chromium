@@ -107,7 +107,6 @@ class AwAutofillClient : public autofill::AutofillClient,
   bool ShouldShowSigninPromo() override;
   void StartSigninFlow() override;
   void ShowHttpNotSecureExplanation() override;
-  bool IsAutofillSupported() override;
 
   void Dismissed(JNIEnv* env, const base::android::JavaParamRef<jobject>& obj);
   void SuggestionSelected(JNIEnv* env,

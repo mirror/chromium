@@ -7,7 +7,7 @@
 
 #include "core/css/CSSValue.h"
 #include "platform/graphics/Color.h"
-#include "platform/wtf/text/WTFString.h"
+#include "platform/wtf/PassRefPtr.h"
 
 namespace blink {
 

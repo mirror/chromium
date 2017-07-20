@@ -47,6 +47,7 @@
         "network_log"
     ],
     "scripts": [
+        "DataSaverInfobar.js",
         "DOMBreakpointsSidebarPane.js",
         "DOMPresentationUtils.js",
         "DockController.js",

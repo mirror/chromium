@@ -11,6 +11,7 @@
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "services/metrics/public/interfaces/ukm_interface.mojom.h"
 #include "services/resource_coordinator/public/interfaces/service_callbacks.mojom.h"
+#include "services/service_manager/public/cpp/bind_source_info.h"
 
 namespace service_manager {
 class ServiceContextRefFactory;
@@ -31,6 +32,7 @@ class ServiceCallbacksImpl : public mojom::ServiceCallbacks {
   static void Create(
       service_manager::ServiceContextRefFactory* service_ref_factory,
       ResourceCoordinatorService* resource_coordinator_service,
+      const service_manager::BindSourceInfo& source_info,
       resource_coordinator::mojom::ServiceCallbacksRequest request);
 
   void IsUkmRecorderInterfaceInitialized(

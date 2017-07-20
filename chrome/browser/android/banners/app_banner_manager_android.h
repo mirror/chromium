@@ -69,6 +69,9 @@ class AppBannerManagerAndroid
   // AppBannerManager overrides.
   void RequestAppBanner(const GURL& validated_url, bool is_debug_mode) override;
 
+  // Registers native methods.
+  static bool Register(JNIEnv* env);
+
  protected:
   // Return the ideal badge icon size.
   int GetIdealBadgeIconSizeInPx();
@@ -86,7 +89,7 @@ class AppBannerManagerAndroid
   void OnDidPerformInstallableCheck(const InstallableData& result) override;
   void OnAppIconFetched(const SkBitmap& bitmap) override;
   void ResetCurrentPageData() override;
-  void ShowBannerUi() override;
+  void ShowBanner() override;
 
  private:
   friend class content::WebContentsUserData<AppBannerManagerAndroid>;

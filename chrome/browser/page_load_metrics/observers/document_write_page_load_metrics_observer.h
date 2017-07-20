@@ -16,11 +16,6 @@ extern const char kHistogramDocWriteBlockParseStartToFirstContentfulPaint[];
 extern const char kHistogramDocWriteBlockCount[];
 extern const char kHistogramDocWriteBlockReloadCount[];
 
-extern const char kUkmDocWriteBlockName[];
-extern const char kUkmDocWriteBlockReload[];
-extern const char kUkmParseBlockedOnScriptLoadDocumentWrite[];
-extern const char kUkmParseBlockedOnScriptExecutionDocumentWrite[];
-
 }  // namespace internal
 
 class DocumentWritePageLoadMetricsObserver
@@ -52,9 +47,6 @@ class DocumentWritePageLoadMetricsObserver
   };
 
  private:
-  static void LogLoadingBehaviorMetrics(DocumentWriteLoadingBehavior behavior,
-                                        ukm::SourceId source_id);
-
   void LogDocumentWriteEvaluatorFirstContentfulPaint(
       const page_load_metrics::mojom::PageLoadTiming& timing,
       const page_load_metrics::PageLoadExtraInfo& info);

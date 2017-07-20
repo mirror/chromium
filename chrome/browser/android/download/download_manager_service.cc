@@ -46,10 +46,10 @@ bool ShouldShowDownloadItem(content::DownloadItem* item) {
 void UpdateNotifier(
     DownloadManagerService* service,
     content::DownloadManager* manager,
-    std::unique_ptr<download::AllDownloadItemNotifier>& notifier) {
+    std::unique_ptr<content::AllDownloadItemNotifier>& notifier) {
   if (manager) {
     if (!notifier || notifier->GetManager() != manager)
-      notifier.reset(new download::AllDownloadItemNotifier(manager, service));
+      notifier.reset(new content::AllDownloadItemNotifier(manager, service));
   } else {
     notifier.reset(nullptr);
   }
@@ -64,6 +64,11 @@ ScopedJavaLocalRef<jobject> CreateJavaDownloadItem(
 }
 
 }  // namespace
+
+// static
+bool DownloadManagerService::RegisterDownloadManagerService(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
 
 // static
 void DownloadManagerService::OnDownloadCanceled(

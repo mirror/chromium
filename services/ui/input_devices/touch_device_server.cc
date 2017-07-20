@@ -7,6 +7,7 @@
 #include <utility>
 #include <vector>
 
+#include "services/service_manager/public/cpp/bind_source_info.h"
 #include "ui/display/manager/chromeos/default_touch_transform_setter.h"
 #include "ui/events/devices/input_device.h"
 #include "ui/events/devices/touchscreen_device.h"
@@ -20,8 +21,7 @@ TouchDeviceServer::TouchDeviceServer()
 TouchDeviceServer::~TouchDeviceServer() {}
 
 void TouchDeviceServer::AddInterface(
-    service_manager::BinderRegistryWithArgs<
-        const service_manager::BindSourceInfo&>* registry) {
+    service_manager::BinderRegistry* registry) {
   registry->AddInterface<mojom::TouchDeviceServer>(
       base::Bind(&TouchDeviceServer::BindTouchDeviceServerRequest,
                  base::Unretained(this)));
@@ -36,8 +36,8 @@ void TouchDeviceServer::ConfigureTouchDevices(
 }
 
 void TouchDeviceServer::BindTouchDeviceServerRequest(
-    mojom::TouchDeviceServerRequest request,
-    const service_manager::BindSourceInfo& source_info) {
+    const service_manager::BindSourceInfo& source_info,
+    mojom::TouchDeviceServerRequest request) {
   bindings_.AddBinding(this, std::move(request));
 }
 

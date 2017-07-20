@@ -50,6 +50,11 @@ void PasswordGenerationPopupViewAndroid::PasswordSelected(
     controller_->PasswordAccepted();
 }
 
+// static
+bool PasswordGenerationPopupViewAndroid::Register(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
 PasswordGenerationPopupViewAndroid::~PasswordGenerationPopupViewAndroid() {}
 
 void PasswordGenerationPopupViewAndroid::Show() {

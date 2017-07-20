@@ -12,7 +12,7 @@
 
 namespace ash {
 
-using PointerWatcherAdapterTest = AshTestBase;
+using PointerWatcherAdapterTest = test::AshTestBase;
 
 enum TestPointerCaptureEvents {
   NONE = 0x01,
@@ -49,7 +49,7 @@ class TestPointerWatcher : public views::PointerWatcher {
   // views::PointerWatcher:
   void OnPointerEventObserved(const ui::PointerEvent& event,
                               const gfx::Point& location_in_screen,
-                              gfx::NativeView target) override {
+                              views::Widget* target) override {
     if (event.type() == ui::ET_POINTER_WHEEL_CHANGED) {
       mouse_wheel_event_count_++;
     } else if (event.type() == ui::ET_POINTER_CAPTURE_CHANGED) {

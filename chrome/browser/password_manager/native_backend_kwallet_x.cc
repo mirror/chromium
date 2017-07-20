@@ -20,11 +20,11 @@
 #include "base/stl_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/synchronization/waitable_event.h"
-#include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_restrictions.h"
 #include "chrome/grit/chromium_strings.h"
 #include "components/autofill/core/common/password_form.h"
 #include "components/password_manager/core/browser/password_manager_util.h"
+#include "content/public/browser/browser_thread.h"
 #include "dbus/bus.h"
 #include "dbus/message.h"
 #include "dbus/object_path.h"
@@ -32,6 +32,7 @@
 #include "url/origin.h"
 
 using autofill::PasswordForm;
+using content::BrowserThread;
 
 namespace {
 
@@ -289,14 +290,10 @@ void UMALogDeserializationStatus(bool success) {
 
 }  // namespace
 
-// Using USER_VISIBLE priority, because the passwords obtained through tasks on
-// the background runner influence what the user sees.
 NativeBackendKWallet::NativeBackendKWallet(
     LocalProfileId id,
     base::nix::DesktopEnvironment desktop_env)
-    : background_task_runner_(base::CreateSequencedTaskRunnerWithTraits(
-          {base::MayBlock(), base::TaskPriority::USER_VISIBLE})),
-      profile_id_(id),
+    : profile_id_(id),
       kwallet_dbus_(desktop_env),
       app_name_(l10n_util::GetStringUTF8(IDS_PRODUCT_NAME)) {
   folder_name_ = GetProfileSpecificFolderName();
@@ -305,15 +302,14 @@ NativeBackendKWallet::NativeBackendKWallet(
 NativeBackendKWallet::~NativeBackendKWallet() {
   // This destructor is called on the thread that is destroying the Profile
   // containing the PasswordStore that owns this NativeBackend. Generally that
-  // won't be run by the background task runner; it will be on the main one. So
-  // we post a message to shut it down on the background task runner, and it
-  // will be destroyed afterward when the scoped_refptr<dbus::Bus> goes out of
-  // scope. The NativeBackend will be destroyed before that occurs, but that's
-  // OK.
+  // won't be the DB thread; it will be the UI thread. So we post a message to
+  // shut it down on the DB thread, and it will be destructed afterward when the
+  // scoped_refptr<dbus::Bus> goes out of scope. The NativeBackend will be
+  // destroyed before that occurs, but that's OK.
   if (kwallet_dbus_.GetSessionBus()) {
-    background_task_runner_->PostTask(
-        FROM_HERE, base::BindOnce(&dbus::Bus::ShutdownAndBlock,
-                                  kwallet_dbus_.GetSessionBus()));
+    BrowserThread::PostTask(BrowserThread::DB, FROM_HERE,
+                            base::BindOnce(&dbus::Bus::ShutdownAndBlock,
+                                           kwallet_dbus_.GetSessionBus()));
   }
 }
 
@@ -324,32 +320,28 @@ bool NativeBackendKWallet::Init() {
 
 bool NativeBackendKWallet::InitWithBus(scoped_refptr<dbus::Bus> optional_bus) {
   // We must synchronously do a few DBus calls to figure out if initialization
-  // succeeds, but later, we'll want to do most of the work on the background
-  // task runner. So we have to do the initialization on the background task
-  // runner here too, and wait for it.
+  // succeeds, but later, we'll want to do most work on the DB thread. So we
+  // have to do the initialization on the DB thread here too, and wait for it.
   bool success = false;
   base::WaitableEvent event(base::WaitableEvent::ResetPolicy::AUTOMATIC,
                             base::WaitableEvent::InitialState::NOT_SIGNALED);
   // NativeBackendKWallet isn't reference counted, but we wait for InitWithBus
   // to finish, so we can safely use base::Unretained here.
-  background_task_runner_->PostTask(
-      FROM_HERE,
-      base::BindOnce(&NativeBackendKWallet::InitOnBackgroundTaskRunner,
+  BrowserThread::PostTask(
+      BrowserThread::DB, FROM_HERE,
+      base::BindOnce(&NativeBackendKWallet::InitOnDBThread,
                      base::Unretained(this), optional_bus, &event, &success));
 
-  // This ScopedAllowWait should not be here. However, the whole backend is so
-  // close to deprecation that it does not make sense to refactor it. More info
-  // on https://crbug.com/739897.
+  // This ScopedAllowWait should not be here. http://crbug.com/125331
   base::ThreadRestrictions::ScopedAllowWait allow_wait;
   event.Wait();
   return success;
 }
 
-void NativeBackendKWallet::InitOnBackgroundTaskRunner(
-    scoped_refptr<dbus::Bus> optional_bus,
-    base::WaitableEvent* event,
-    bool* success) {
-  DCHECK(background_task_runner_->RunsTasksInCurrentSequence());
+void NativeBackendKWallet::InitOnDBThread(scoped_refptr<dbus::Bus> optional_bus,
+                                          base::WaitableEvent* event,
+                                          bool* success) {
+  DCHECK_CURRENTLY_ON(BrowserThread::DB);
   DCHECK(!kwallet_dbus_.GetSessionBus());
   if (optional_bus.get()) {
     // The optional_bus parameter is given when this method is called in tests.
@@ -371,7 +363,7 @@ void NativeBackendKWallet::InitOnBackgroundTaskRunner(
 }
 
 NativeBackendKWallet::InitResult NativeBackendKWallet::InitWallet() {
-  DCHECK(background_task_runner_->RunsTasksInCurrentSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::DB);
 
   // Check that KWallet is enabled.
   bool enabled = false;
@@ -560,11 +552,6 @@ bool NativeBackendKWallet::GetAllLogins(
   if (wallet_handle == kInvalidKWalletHandle)
     return false;
   return GetAllLoginsInternal(wallet_handle, forms);
-}
-
-scoped_refptr<base::SequencedTaskRunner>
-NativeBackendKWallet::GetBackgroundTaskRunner() {
-  return background_task_runner_;
 }
 
 bool NativeBackendKWallet::GetLoginsList(
@@ -813,7 +800,7 @@ NativeBackendKWallet::DeserializeValue(const std::string& signon_realm,
 }
 
 int NativeBackendKWallet::WalletHandle() {
-  DCHECK(background_task_runner_->RunsTasksInCurrentSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::DB);
 
   // Open the wallet.
   // TODO(mdm): Are we leaking these handles? Find out.

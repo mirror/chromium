@@ -28,17 +28,15 @@ namespace cast_channel {
 
 int CastSocketService::last_channel_id_ = 0;
 
-CastSocketService::CastSocketService() : logger_(new Logger()) {
+CastSocketService::CastSocketService()
+    : RefcountedKeyedService(
+          BrowserThread::GetTaskRunnerForThread(BrowserThread::IO)),
+      logger_(new Logger()) {
   DETACH_FROM_THREAD(thread_checker_);
 }
 
-// This is a leaky singleton and the dtor won't be called.
-CastSocketService::~CastSocketService() = default;
-
-// static
-CastSocketService* CastSocketService::GetInstance() {
-  return base::Singleton<CastSocketService,
-                         base::LeakySingletonTraits<CastSocketService>>::get();
+CastSocketService::~CastSocketService() {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
 }
 
 scoped_refptr<Logger> CastSocketService::GetLogger() {
@@ -94,7 +92,7 @@ int CastSocketService::OpenSocket(const net::IPEndPoint& ip_endpoint,
                                   const base::TimeDelta& liveness_timeout,
                                   const base::TimeDelta& ping_interval,
                                   uint64_t device_capabilities,
-                                  CastSocket::OnOpenCallback open_cb,
+                                  const CastSocket::OnOpenCallback& open_cb,
                                   CastSocket::Observer* observer) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK(observer);
@@ -113,31 +111,41 @@ int CastSocketService::OpenSocket(const net::IPEndPoint& ip_endpoint,
   }
 
   socket->AddObserver(observer);
-  socket->Connect(std::move(open_cb));
+  socket->Connect(open_cb);
   return socket->id();
 }
 
 int CastSocketService::OpenSocket(const net::IPEndPoint& ip_endpoint,
                                   net::NetLog* net_log,
-                                  CastSocket::OnOpenCallback open_cb,
+                                  const CastSocket::OnOpenCallback& open_cb,
                                   CastSocket::Observer* observer) {
   auto connect_timeout = base::TimeDelta::FromSeconds(kConnectTimeoutSecs);
   auto ping_interval = base::TimeDelta::FromSeconds(kPingIntervalInSecs);
   auto liveness_timeout =
       base::TimeDelta::FromSeconds(kConnectLivenessTimeoutSecs);
   return OpenSocket(ip_endpoint, net_log, connect_timeout, liveness_timeout,
-                    ping_interval, CastDeviceCapability::NONE,
-                    std::move(open_cb), observer);
+                    ping_interval, CastDeviceCapability::NONE, open_cb,
+                    observer);
 }
 
-void CastSocketService::RemoveObserver(CastSocket::Observer* observer) {
-  for (auto& socket_it : sockets_)
-    socket_it.second->RemoveObserver(observer);
+CastSocket::Observer* CastSocketService::GetObserver(const std::string& id) {
+  auto it = socket_observer_map_.find(id);
+  return it == socket_observer_map_.end() ? nullptr : it->second.get();
+}
+
+CastSocket::Observer* CastSocketService::AddObserver(
+    const std::string& id,
+    std::unique_ptr<CastSocket::Observer> observer) {
+  CastSocket::Observer* observer_ptr = observer.get();
+  socket_observer_map_.insert(std::make_pair(id, std::move(observer)));
+  return observer_ptr;
 }
 
 void CastSocketService::SetSocketForTest(
     std::unique_ptr<cast_channel::CastSocket> socket_for_test) {
   socket_for_test_ = std::move(socket_for_test);
 }
+
+void CastSocketService::ShutdownOnUIThread() {}
 
 }  // namespace cast_channel

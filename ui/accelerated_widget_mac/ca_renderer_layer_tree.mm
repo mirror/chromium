@@ -15,7 +15,6 @@
 #include "base/mac/sdk_forward_declarations.h"
 #include "base/trace_event/trace_event.h"
 #include "third_party/skia/include/core/SkColor.h"
-#include "ui/accelerated_widget_mac/availability_macros.h"
 #include "ui/base/cocoa/animation_utils.h"
 #include "ui/base/ui_base_switches.h"
 #include "ui/gfx/geometry/dip_util.h"
@@ -56,7 +55,7 @@ namespace {
 // This will enqueue |io_surface| to be drawn by |av_layer|. This will
 // retain |cv_pixel_buffer| until it is no longer being displayed.
 bool AVSampleBufferDisplayLayerEnqueueCVPixelBuffer(
-    AVSampleBufferDisplayLayer109* av_layer,
+    AVSampleBufferDisplayLayer* av_layer,
     CVPixelBufferRef cv_pixel_buffer) {
   OSStatus os_status = noErr;
 
@@ -114,7 +113,7 @@ bool AVSampleBufferDisplayLayerEnqueueCVPixelBuffer(
 // |io_surface| in a CVPixelBuffer. This will increase the in-use count
 // of and retain |io_surface| until it is no longer being displayed.
 bool AVSampleBufferDisplayLayerEnqueueIOSurface(
-    AVSampleBufferDisplayLayer109* av_layer,
+    AVSampleBufferDisplayLayer* av_layer,
     IOSurfaceRef io_surface) {
   CVReturn cv_return = kCVReturnSuccess;
 
@@ -246,7 +245,7 @@ void CARendererLayerTree::CommitScheduledCALayers(
 }
 
 bool CARendererLayerTree::CommitFullscreenLowPowerLayer(
-    AVSampleBufferDisplayLayer109* fullscreen_low_power_layer) {
+    AVSampleBufferDisplayLayer* fullscreen_low_power_layer) {
   DCHECK(has_committed_);
   const ContentLayer* video_layer = nullptr;
   gfx::RectF video_layer_frame_dip;
@@ -673,7 +672,7 @@ void CARendererLayerTree::ContentLayer::CommitToCA(CALayer* superlayer,
     update_ca_filter = old_layer->ca_filter != ca_filter;
   } else {
     if (use_av_layer) {
-      av_layer.reset([[AVSampleBufferDisplayLayer109 alloc] init]);
+      av_layer.reset([[AVSampleBufferDisplayLayer alloc] init]);
       ca_layer.reset([av_layer retain]);
       [av_layer setVideoGravity:AVLayerVideoGravityResize];
     } else {

@@ -13,6 +13,7 @@
 #include <windows.h>
 #include <shellapi.h>
 #include "base/win/win_util.h"
+#include "base/win/windows_version.h"
 #include "ui/display/win/dpi.h"
 #include "ui/gfx/icon_util.h"
 #endif
@@ -25,7 +26,8 @@ namespace {
 std::unique_ptr<SkBitmap> GetElevationIcon() {
   std::unique_ptr<SkBitmap> icon;
 #if defined(OS_WIN)
-  if (!base::win::UserAccountControlIsEnabled())
+  if ((base::win::GetVersion() < base::win::VERSION_VISTA) ||
+      !base::win::UserAccountControlIsEnabled())
     return icon;
 
   SHSTOCKICONINFO icon_info = { sizeof(SHSTOCKICONINFO) };

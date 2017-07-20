@@ -6,20 +6,18 @@
 
 <dom-module id="cr-camera">
   <template>
-    <!-- Note: Do not include cr-shared-style, we use different
-         paper-icon-button-light styling -->
-    <style>
+    <style include="cr-shared-style">
       #perspectiveBox {
-        height: var(--cr-camera-image-size, 228px);
+        height: 228px;
         perspective: 600px;
-        width: var(--cr-camera-image-size, 228px);
+        width: 228px;
       }
 
       #userImageStreamCrop {
-        height: var(--cr-camera-image-size, 228px);
+        height: 228px;
         overflow: hidden;
         position: relative;
-        width: var(--cr-camera-image-size, 228px);
+        width: 228px;
       }
 
       #userImageStreamCrop.flip-x {
@@ -36,31 +34,22 @@
       }
 
       #cameraVideo {
-        height: var(--cr-camera-image-size, 228px);
+        height: 228px;
         /* Center image for 4:3 aspect ratio. */
         left: -16.6%;
         position: absolute;
       }
 
       #cameraControls {
-        align-items: center;
-        background-color: var(--google-blue-500);
+        background-color: var(--paper-grey-800);
         border-bottom-left-radius: 2px;
         border-bottom-right-radius: 2px;
-        display: flex;
-        height: 32px;
-        justify-content: space-between;
-        width: var(--cr-camera-image-size, 228px);
-      }
-
-      #cameraControls > div {
-        margin: 0 4px;
-        width: 32px;
+        padding: 8px;
       }
 
       #flipPhoto {
-        -webkit-margin-end: 8px;
         background-image: url(camera_flip_icon.svg);
+        float: right;
       }
 
       :host-context([dir=rtl]) #flipPhoto {
@@ -68,9 +57,11 @@
       }
 
       #takePhoto {
+        background-color: var(--paper-green-500);
         background-image: url(camera_alt_icon.svg);
         border-radius: 50%;
         display: block;
+        margin: 0 auto 0 auto;
       }
     </style>
     <div id="perspectiveBox">
@@ -80,21 +71,14 @@
       </div>
     </div>
     <div id="cameraControls">
-      <div>
-        <!-- Empty div for even 'space-between' justification -->
-      </div>
-      <div>
-        <button is="paper-icon-button-light" id="takePhoto" tabindex="1"
-            title="[[takePhotoLabel]]" on-tap="takePhoto"
-            disabled="[[!cameraOnline_]]">
-        </button>
-      </div>
-      <div>
-        <button is="paper-icon-button-light" id="flipPhoto" tabindex="2"
-            title="[[flipPhotoLabel]]" on-tap="onTapFlipPhoto_"
-            disabled="[[!cameraOnline_]]">
-        </button>
-      </div>
+      <button is="paper-icon-button-light" id="flipPhoto" tabindex="2"
+          title="[[flipPhotoLabel]]" on-tap="onTapFlipPhoto_"
+          disabled="[[!cameraOnline_]]">
+      </button>
+      <button is="paper-icon-button-light" id="takePhoto" tabindex="1"
+          title="[[takePhotoLabel]]" on-tap="takePhoto"
+          disabled="[[!cameraOnline_]]">
+      </button>
     </div>
   </template>
   <script src="cr_camera.js"></script>

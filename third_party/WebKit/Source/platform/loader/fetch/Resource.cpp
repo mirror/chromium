@@ -262,10 +262,12 @@ void Resource::ServiceWorkerResponseCachedMetadataHandler::SendToPlatform() {
 Resource::Resource(const ResourceRequest& request,
                    Type type,
                    const ResourceLoaderOptions& options)
-    : type_(type),
+    : preload_result_(kPreloadNotReferenced),
+      type_(type),
       status_(ResourceStatus::kNotStarted),
       load_finish_time_(0),
       identifier_(0),
+      preload_count_(0),
       preload_discovery_time_(0.0),
       encoded_size_(0),
       encoded_size_memory_usage_(0),
@@ -400,7 +402,7 @@ void Resource::FinishAsError(const ResourceError& error) {
   error_ = error;
   is_revalidating_ = false;
 
-  if ((error_.IsCancellation() || !is_unused_preload_) && IsMainThread())
+  if ((error_.IsCancellation() || !IsPreloaded()) && IsMainThread())
     GetMemoryCache()->Remove(this);
 
   if (!ErrorOccurred())
@@ -524,7 +526,6 @@ const ResourceRequest& Resource::LastResourceRequest() const {
 
 void Resource::SetRevalidatingRequest(const ResourceRequest& request) {
   SECURITY_CHECK(redirect_chain_.IsEmpty());
-  SECURITY_CHECK(!is_unused_preload_);
   DCHECK(!request.IsNull());
   CHECK(!is_revalidation_start_forbidden_);
   is_revalidating_ = true;
@@ -604,6 +605,13 @@ String Resource::ReasonNotDeletable() const {
       builder.Append(' ');
     builder.Append("loader_");
   }
+  if (preload_count_) {
+    if (!builder.IsEmpty())
+      builder.Append(' ');
+    builder.Append("preload_count_(");
+    builder.AppendNumber(preload_count_);
+    builder.Append(')');
+  }
   if (IsMainThread() && GetMemoryCache()->Contains(this)) {
     if (!builder.IsEmpty())
       builder.Append(' ');
@@ -640,16 +648,28 @@ static bool TypeNeedsSynchronousCacheHit(Resource::Type type) {
   return false;
 }
 
-void Resource::WillAddClientOrObserver() {
+void Resource::WillAddClientOrObserver(PreloadReferencePolicy policy) {
+  if (policy == kMarkAsReferenced && preload_result_ == kPreloadNotReferenced) {
+    preload_result_ = kPreloadReferenced;
+
+    if (preload_discovery_time_) {
+      int time_since_discovery = static_cast<int>(
+          1000 * (MonotonicallyIncreasingTime() - preload_discovery_time_));
+      DEFINE_STATIC_LOCAL(CustomCountHistogram, preload_discovery_histogram,
+                          ("PreloadScanner.ReferenceTime", 0, 10000, 50));
+      preload_discovery_histogram.Count(time_since_discovery);
+    }
+  }
   if (!HasClientsOrObservers()) {
     is_alive_ = true;
   }
 }
 
-void Resource::AddClient(ResourceClient* client) {
+void Resource::AddClient(ResourceClient* client,
+                         PreloadReferencePolicy policy) {
   CHECK(!is_add_remove_client_prohibited_);
 
-  WillAddClientOrObserver();
+  WillAddClientOrObserver(policy);
 
   if (is_revalidating_) {
     clients_.insert(client);
@@ -701,11 +721,12 @@ void Resource::RemoveClient(ResourceClient* client) {
   DidRemoveClientOrObserver();
 }
 
-void Resource::AddFinishObserver(ResourceFinishObserver* client) {
+void Resource::AddFinishObserver(ResourceFinishObserver* client,
+                                 PreloadReferencePolicy policy) {
   CHECK(!is_add_remove_client_prohibited_);
   DCHECK(!finish_observers_.Contains(client));
 
-  WillAddClientOrObserver();
+  WillAddClientOrObserver(policy);
   finish_observers_.insert(client);
   if (IsLoaded())
     TriggerNotificationForFinishObservers();
@@ -836,18 +857,7 @@ bool Resource::CanReuse(const FetchParameters& params) const {
   //
   // request_initiator_context is benign (indicates document vs. worker).
 
-  // Reuse only if both the existing Resource and the new request are
-  // asynchronous. Particularly,
-  // 1. Sync and async Resource/requests shouldn't be mixed (crbug.com/652172),
-  // 2. Sync existing Resources shouldn't be revalidated, and
-  // 3. Sync new requests shouldn't revalidate existing Resources.
-  //
-  // 2. and 3. are because SyncResourceHandler handles redirects without
-  // calling WillFollowRedirect, and causes response URL mismatch
-  // (crbug.com/618967) and bypassing redirect restriction around revalidation
-  // (crbug.com/613971 for 2. and crbug.com/614989 for 3.).
-  if (new_options.synchronous_policy == kRequestSynchronously ||
-      options_.synchronous_policy == kRequestSynchronously)
+  if (new_options.synchronous_policy != options_.synchronous_policy)
     return false;
 
   if (resource_request_.GetKeepalive() || new_request.GetKeepalive()) {
@@ -883,9 +893,7 @@ bool Resource::CanReuse(const FetchParameters& params) const {
   if (existing_was_with_fetcher_cors_suppressed)
     return new_mode != WebURLRequest::kFetchRequestModeCORS;
 
-  return existing_mode == new_mode &&
-         new_request.GetFetchCredentialsMode() ==
-             resource_request_.GetFetchCredentialsMode();
+  return existing_mode == new_mode;
 }
 
 void Resource::Prune() {
@@ -1013,24 +1021,6 @@ void Resource::RevalidationFailed() {
   cache_handler_.Clear();
   DestroyDecodedDataForFailedRevalidation();
   is_revalidating_ = false;
-}
-
-void Resource::MarkAsPreload() {
-  DCHECK(!is_unused_preload_);
-  is_unused_preload_ = true;
-}
-
-void Resource::MatchPreload() {
-  DCHECK(is_unused_preload_);
-  is_unused_preload_ = false;
-
-  if (preload_discovery_time_) {
-    int time_since_discovery = static_cast<int>(
-        1000 * (MonotonicallyIncreasingTime() - preload_discovery_time_));
-    DEFINE_STATIC_LOCAL(CustomCountHistogram, preload_discovery_histogram,
-                        ("PreloadScanner.ReferenceTime", 0, 10000, 50));
-    preload_discovery_histogram.Count(time_since_discovery);
-  }
 }
 
 bool Resource::CanReuseRedirectChain() const {

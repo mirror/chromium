@@ -9,9 +9,9 @@
 #include "ash/public/cpp/config.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/session/session_controller.h"
-#include "ash/session/test_session_controller_client.h"
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
+#include "ash/test/test_session_controller_client.h"
 #include "ash/wm/system_modal_container_layout_manager.h"
 #include "ash/wm/window_properties.h"
 #include "ash/wm/window_state.h"
@@ -37,7 +37,6 @@
 #include "ui/events/test/test_event_handler.h"
 #include "ui/keyboard/keyboard_controller.h"
 #include "ui/keyboard/keyboard_switches.h"
-#include "ui/keyboard/keyboard_test_util.h"
 #include "ui/keyboard/keyboard_ui.h"
 #include "ui/keyboard/keyboard_util.h"
 #include "ui/views/controls/menu/menu_controller.h"
@@ -99,6 +98,8 @@ aura::LayoutManager* GetLayoutManager(RootWindowController* controller,
 }
 
 }  // namespace
+
+namespace test {
 
 class RootWindowControllerTest : public AshTestBase {
  public:
@@ -683,14 +684,14 @@ class VirtualKeyboardRootWindowControllerTest
   void SetUp() override {
     base::CommandLine::ForCurrentProcess()->AppendSwitch(
         keyboard::switches::kEnableVirtualKeyboard);
-    AshTestBase::SetUp();
+    test::AshTestBase::SetUp();
     keyboard::SetTouchKeyboardEnabled(true);
     Shell::Get()->CreateKeyboard();
   }
 
   void TearDown() override {
     keyboard::SetTouchKeyboardEnabled(false);
-    AshTestBase::TearDown();
+    test::AshTestBase::TearDown();
   }
 
  private:
@@ -973,7 +974,7 @@ TEST_F(VirtualKeyboardRootWindowControllerTest, RestoreWorkspaceAfterLogin) {
       display::Screen::GetScreen()->GetPrimaryDisplay().work_area();
 
   // Notify keyboard bounds changing.
-  controller->NotifyContentsBoundsChanging(keyboard_container->bounds());
+  controller->NotifyKeyboardBoundsChanging(keyboard_container->bounds());
 
   if (!keyboard::IsKeyboardOverscrollEnabled()) {
     gfx::Rect after =
@@ -1224,4 +1225,5 @@ TEST_F(VirtualKeyboardRootWindowControllerTest, DisplayRotation) {
   EXPECT_EQ("0,600 600x200", keyboard_container->bounds().ToString());
 }
 
+}  // namespace test
 }  // namespace ash

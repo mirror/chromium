@@ -24,12 +24,12 @@ class HashPasswordManagerTest : public testing::Test {
     prefs_.registry()->RegisterStringPref(prefs::kSyncPasswordLengthAndHashSalt,
                                           std::string(),
                                           PrefRegistry::NO_REGISTRATION_FLAGS);
-    // Mock OSCrypt. There is a call to OSCrypt on initializling
+#if defined(OS_MACOSX)
+    // Mock Keychain. There is a call to Keychain on initializling
     // PasswordReuseDetector, so it should be mocked.
     OSCryptMocker::SetUpWithSingleton();
+#endif
   }
-
-  ~HashPasswordManagerTest() override { OSCryptMocker::TearDown(); }
 
  protected:
   TestingPrefServiceSimple prefs_;

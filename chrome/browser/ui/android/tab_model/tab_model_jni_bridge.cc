@@ -210,6 +210,10 @@ TabModelJniBridge::~TabModelJniBridge() {
   TabModelList::RemoveTabModel(this);
 }
 
+bool TabModelJniBridge::Register(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
 static jlong Init(JNIEnv* env,
                   const JavaParamRef<jobject>& obj,
                   jboolean is_incognito,

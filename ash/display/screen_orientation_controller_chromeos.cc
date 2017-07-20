@@ -315,19 +315,20 @@ void ScreenOrientationController::OnDisplayConfigurationChanged() {
 }
 
 void ScreenOrientationController::OnMaximizeModeStarted() {
-  Shell* shell = Shell::Get();
   // Do not exit early, as the internal display can be determined after Maximize
   // Mode has started. (chrome-os-partner:38796)
   // Always start observing.
   if (display::Display::HasInternalDisplay()) {
     current_rotation_ = user_rotation_ =
-        shell->display_configuration_controller()->GetTargetRotation(
-            display::Display::InternalDisplayId());
+        Shell::Get()
+            ->display_manager()
+            ->GetDisplayInfo(display::Display::InternalDisplayId())
+            .GetActiveRotation();
   }
   if (!rotation_locked_)
     LoadDisplayRotationProperties();
   chromeos::AccelerometerReader::GetInstance()->AddObserver(this);
-  shell->window_tree_host_manager()->AddObserver(this);
+  Shell::Get()->window_tree_host_manager()->AddObserver(this);
 
   if (!display::Display::HasInternalDisplay())
     return;

@@ -551,19 +551,6 @@ FYI_WATERFALL = {
       'swarming': False,
       'os_type': 'linux',
     },
-    'Linux Release (Intel HD 630)': {
-      'swarming_dimensions': [
-        {
-          'gpu': '8086:5912',
-          'os': 'Ubuntu'
-        },
-      ],
-      'build_config': 'Release',
-      # This bot is a one-off and doesn't have similar slaves in the
-      # swarming pool.
-      'swarming': False,
-      'os_type': 'linux',
-    },
     'Linux Debug (Intel HD 530)': {
       'swarming_dimensions': [
         {
@@ -720,6 +707,18 @@ FYI_WATERFALL = {
       'os_type': 'win',
       'type': Types.OPTIONAL,
     },
+    'Optional Win7 Release (AMD)': {
+      'swarming_dimensions': [
+        {
+          'gpu': '1002:6613',
+          'os': 'Windows-2008ServerR2-SP1'
+        },
+      ],
+      'build_config': 'Release',
+      'swarming': True,
+      'os_type': 'win',
+      'type': Types.OPTIONAL,
+    },
     'Optional Mac Release (Intel)': {
       'swarming_dimensions': [
         {
@@ -758,6 +757,46 @@ FYI_WATERFALL = {
       'os_type': 'mac',
       'type': Types.OPTIONAL,
     },
+    # BEGIN obsolete Mac bots -- remove after waterfall restarted successfully.
+    'Optional Mac 10.10 Release (Intel)': {
+      'swarming_dimensions': [
+        {
+          'gpu': '8086:0a2e',
+          'os': 'Mac-10.12'
+        },
+      ],
+      'build_config': 'Release',
+      'swarming': True,
+      'os_type': 'mac',
+      'type': Types.OPTIONAL,
+    },
+    'Optional Mac Retina Release': {
+      'swarming_dimensions': [
+        {
+          'gpu': '10de:0fe9',
+          'hidpi': '1',
+          'os': 'Mac'
+        },
+      ],
+      'build_config': 'Release',
+      'swarming': True,
+      'os_type': 'mac',
+      'type': Types.OPTIONAL,
+    },
+    'Optional Mac 10.10 Retina Release (AMD)': {
+      'swarming_dimensions': [
+        {
+          'gpu': '1002:6821',
+          'hidpi': '1',
+          'os': 'Mac'
+        },
+      ],
+      'build_config': 'Release',
+      'swarming': True,
+      'os_type': 'mac',
+      'type': Types.OPTIONAL,
+    },
+    # END obsolete Mac bots -- remove after waterfall restarted successfully.
     'Optional Linux Release (NVIDIA)': {
       'swarming_dimensions': [
         {
@@ -1843,6 +1882,28 @@ TELEMETRY_GPU_INTEGRATION_TESTS = {
     ],
     'asan_args': ['--is-asan'],
   },
+  'webgl_conformance_angle_tests': {
+    'tester_configs': [
+      {
+        # Run this on the FYI waterfall and optional tryservers.
+        'predicate': Predicates.FYI_AND_OPTIONAL,
+        'os_types': ['linux'],
+        'disabled_instrumentation_types': ['tsan'],
+      }
+    ],
+    'disabled_tester_configs': [
+      {
+        'names': [
+          'Linux ChromiumOS Ozone (Intel)',
+        ],
+      },
+    ],
+    'target_name': 'webgl_conformance',
+    'extra_browser_args': [
+      '--use-gl=angle',
+    ],
+    'asan_args': ['--is-asan'],
+  },
   'webgl_conformance_d3d11_passthrough': {
     'tester_configs': [
       {
@@ -1930,7 +1991,7 @@ TELEMETRY_GPU_INTEGRATION_TESTS = {
       'shards': 15,
     },
   },
-  'webgl2_conformance_gl_passthrough_tests': {
+  'webgl2_conformance_angle_tests': {
     'tester_configs': [
       {
          # The WebGL 2.0 conformance tests take over an hour to run on
@@ -1965,8 +2026,6 @@ TELEMETRY_GPU_INTEGRATION_TESTS = {
     'target_name': 'webgl_conformance',
     'extra_browser_args': [
       '--use-gl=angle',
-      '--use-angle=gl',
-      '--use-passthrough-cmd-decoder',
     ],
     'args': [
       '--webgl-conformance-version=2.0.1',

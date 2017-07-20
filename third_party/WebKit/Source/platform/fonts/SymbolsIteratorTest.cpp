@@ -9,36 +9,35 @@
 
 namespace blink {
 
-struct FallbackTestRun {
+struct TestRun {
   std::string text;
   FontFallbackPriority font_fallback_priority;
 };
 
-struct FallbackExpectedRun {
+struct ExpectedRun {
   unsigned limit;
   FontFallbackPriority font_fallback_priority;
 
-  FallbackExpectedRun(unsigned the_limit,
-                      FontFallbackPriority the_font_fallback_priority)
+  ExpectedRun(unsigned the_limit,
+              FontFallbackPriority the_font_fallback_priority)
       : limit(the_limit), font_fallback_priority(the_font_fallback_priority) {}
 };
 
 class SymbolsIteratorTest : public ::testing::Test {
  protected:
-  void CheckRuns(const Vector<FallbackTestRun>& runs) {
+  void CheckRuns(const Vector<TestRun>& runs) {
     String text(g_empty_string16_bit);
-    Vector<FallbackExpectedRun> expect;
+    Vector<ExpectedRun> expect;
     for (auto& run : runs) {
       text.append(String::FromUTF8(run.text.c_str()));
-      expect.push_back(
-          FallbackExpectedRun(text.length(), run.font_fallback_priority));
+      expect.push_back(ExpectedRun(text.length(), run.font_fallback_priority));
     }
     SymbolsIterator symbols_iterator(text.Characters16(), text.length());
     VerifyRuns(&symbols_iterator, expect);
   }
 
   void VerifyRuns(SymbolsIterator* symbols_iterator,
-                  const Vector<FallbackExpectedRun>& expect) {
+                  const Vector<ExpectedRun>& expect) {
     unsigned limit;
     FontFallbackPriority font_fallback_priority;
     unsigned long run_count = 0;
@@ -54,13 +53,13 @@ class SymbolsIteratorTest : public ::testing::Test {
 };
 
 // Some of our compilers cannot initialize a vector from an array yet.
-#define DECLARE_FALLBACK_RUNSVECTOR(...)                   \
-  static const FallbackTestRun kRunsArray[] = __VA_ARGS__; \
-  Vector<FallbackTestRun> runs;                            \
+#define DECLARE_RUNSVECTOR(...)                    \
+  static const TestRun kRunsArray[] = __VA_ARGS__; \
+  Vector<TestRun> runs;                            \
   runs.Append(kRunsArray, sizeof(kRunsArray) / sizeof(*kRunsArray));
 
-#define CHECK_RUNS(...)                     \
-  DECLARE_FALLBACK_RUNSVECTOR(__VA_ARGS__); \
+#define CHECK_RUNS(...)            \
+  DECLARE_RUNSVECTOR(__VA_ARGS__); \
   CheckRuns(runs);
 
 TEST_F(SymbolsIteratorTest, Empty) {

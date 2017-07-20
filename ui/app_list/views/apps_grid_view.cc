@@ -22,6 +22,7 @@
 #include "ui/app_list/views/app_list_folder_view.h"
 #include "ui/app_list/views/app_list_item_view.h"
 #include "ui/app_list/views/app_list_main_view.h"
+#include "ui/app_list/views/apps_grid_view_delegate.h"
 #include "ui/app_list/views/contents_view.h"
 #include "ui/app_list/views/indicator_chip_view.h"
 #include "ui/app_list/views/page_switcher_horizontal.h"
@@ -693,26 +694,24 @@ void AppsGridView::Layout() {
     bounds_animator_.Cancel();
 
   gfx::Rect rect(GetContentsBounds());
+  const gfx::Vector2d page_zero_offset = CalculateTransitionOffset(0);
 
-  if (!folder_delegate_) {
-    gfx::Rect indicator_rect(rect);
-    LayoutSuggestedAppsIndicator(&indicator_rect);
-    if (suggestions_container_) {
-      gfx::Rect suggestions_rect(indicator_rect);
-      suggestions_rect.set_height(
-          suggestions_container_->GetHeightForWidth(suggestions_rect.width()));
-      suggestions_rect.Offset((suggestions_rect.width() - kGridTileWidth) / 2 -
-                                  (kGridTileWidth + kGridTileSpacing) * 2,
-                              0);
-      suggestions_rect.Offset(CalculateTransitionOffset(0));
-      suggestions_container_->SetBoundsRect(suggestions_rect);
-      indicator_rect.Inset(0,
-                           suggestions_container_->GetPreferredSize().height() +
-                               kSuggestionsAllAppsIndicatorPadding,
-                           0, 0);
-    }
-    LayoutAllAppsIndicator(&indicator_rect);
+  LayoutSuggestedAppsIndicator(&rect);
+  if (suggestions_container_) {
+    gfx::Rect suggestions_rect(rect);
+    suggestions_rect.set_height(
+        suggestions_container_->GetHeightForWidth(suggestions_rect.width()));
+    suggestions_rect.Offset((suggestions_rect.width() - kGridTileWidth) / 2 -
+                                (kGridTileWidth + kGridTileSpacing) * 2,
+                            0);
+    suggestions_rect.Offset(page_zero_offset.x(), page_zero_offset.y());
+    suggestions_container_->SetBoundsRect(suggestions_rect);
+    rect.Inset(0,
+               suggestions_container_->GetPreferredSize().height() +
+                   kSuggestionsAllAppsIndicatorPadding,
+               0, 0);
   }
+  LayoutAllAppsIndicator(&rect);
 
   CalculateIdealBounds();
   for (int i = 0; i < view_model_.view_size(); ++i) {
@@ -1343,10 +1342,13 @@ void AppsGridView::ExtractDragLocation(const ui::LocatedEvent& event,
   // could have integer round error and causes jitter.
   *drag_point = event.root_location();
 
-  DCHECK(GetWidget());
-  aura::Window::ConvertPointToTarget(
-      GetWidget()->GetNativeWindow()->GetRootWindow(),
-      GetWidget()->GetNativeWindow(), drag_point);
+  // GetWidget() could be NULL for tests.
+  if (GetWidget()) {
+    aura::Window::ConvertPointToTarget(
+        GetWidget()->GetNativeWindow()->GetRootWindow(),
+        GetWidget()->GetNativeWindow(), drag_point);
+  }
+
   views::View::ConvertPointFromWidget(this, drag_point);
 }
 
@@ -2099,19 +2101,11 @@ bool AppsGridView::EnableFolderDragDropUI() {
 AppsGridView::Index AppsGridView::GetNearestTileIndexForPoint(
     const gfx::Point& point) const {
   gfx::Rect bounds = GetContentsBounds();
-  bounds.Inset(0, GetHeightOnTopOfAllAppsTiles(), 0, 0);
   const gfx::Size total_tile_size = GetTotalTileSize();
   int col = ClampToRange((point.x() - bounds.x()) / total_tile_size.width(), 0,
                          cols_ - 1);
-  int row = rows_per_page_;
-  if (is_fullscreen_app_list_enabled_ &&
-      pagination_model_.selected_page() == 0) {
-    row = ClampToRange((point.y() - bounds.y()) / total_tile_size.height(), 0,
-                       rows_per_page_ - 2);
-  } else {
-    row = ClampToRange((point.y() - bounds.y()) / total_tile_size.height(), 0,
-                       rows_per_page_ - 1);
-  }
+  int row = ClampToRange((point.y() - bounds.y()) / total_tile_size.height(), 0,
+                         rows_per_page_ - 1);
   return Index(pagination_model_.selected_page(), row * cols_ + col);
 }
 
@@ -2127,7 +2121,7 @@ gfx::Size AppsGridView::GetTileGridSize() const {
 }
 
 int AppsGridView::GetHeightOnTopOfAllAppsTiles() const {
-  if (!is_fullscreen_app_list_enabled_ || folder_delegate_)
+  if (!is_fullscreen_app_list_enabled_)
     return 0;
 
   if (pagination_model_.selected_page() == 0) {

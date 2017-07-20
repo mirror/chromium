@@ -10,11 +10,11 @@
 #include "cc/output/layer_tree_frame_sink.h"
 #include "cc/output/renderer_settings.h"
 #include "cc/scheduler/begin_frame_source.h"
+#include "cc/surfaces/frame_sink_manager.h"
 #include "components/viz/common/surfaces/local_surface_id_allocator.h"
 #include "components/viz/service/display/display.h"
 #include "components/viz/service/display/display_client.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support_client.h"
-#include "components/viz/service/frame_sinks/frame_sink_manager.h"
 
 namespace base {
 class SingleThreadTaskRunner;
@@ -35,7 +35,7 @@ class TestLayerTreeFrameSinkClient {
   // This passes the ContextProvider being used by LayerTreeHostImpl which
   // can be used for the OutputSurface optionally.
   virtual std::unique_ptr<cc::OutputSurface> CreateDisplayOutputSurface(
-      scoped_refptr<ContextProvider> compositor_context_provider) = 0;
+      scoped_refptr<cc::ContextProvider> compositor_context_provider) = 0;
 
   virtual void DisplayReceivedLocalSurfaceId(
       const LocalSurfaceId& local_surface_id) = 0;
@@ -56,8 +56,8 @@ class TestLayerTreeFrameSink : public cc::LayerTreeFrameSink,
   // Pass true for |force_disable_reclaim_resources| to act like the Display
   // is out-of-process and can't return resources synchronously.
   TestLayerTreeFrameSink(
-      scoped_refptr<ContextProvider> compositor_context_provider,
-      scoped_refptr<ContextProvider> worker_context_provider,
+      scoped_refptr<cc::ContextProvider> compositor_context_provider,
+      scoped_refptr<cc::ContextProvider> worker_context_provider,
       SharedBitmapManager* shared_bitmap_manager,
       gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
       const cc::RendererSettings& renderer_settings,
@@ -118,7 +118,7 @@ class TestLayerTreeFrameSink : public cc::LayerTreeFrameSink,
   FrameSinkId frame_sink_id_;
   // TODO(danakj): These don't need to be stored in unique_ptrs when
   // LayerTreeFrameSink is owned/destroyed on the compositor thread.
-  std::unique_ptr<FrameSinkManager> frame_sink_manager_;
+  std::unique_ptr<cc::FrameSinkManager> frame_sink_manager_;
   std::unique_ptr<LocalSurfaceIdAllocator> local_surface_id_allocator_;
   LocalSurfaceId local_surface_id_;
   gfx::Size display_size_;

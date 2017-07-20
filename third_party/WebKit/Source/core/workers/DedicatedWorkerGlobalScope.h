@@ -42,7 +42,7 @@ namespace blink {
 class DedicatedWorkerThread;
 class InProcessWorkerObjectProxy;
 class ScriptState;
-struct GlobalScopeCreationParams;
+class WorkerThreadStartupData;
 
 class CORE_EXPORT DedicatedWorkerGlobalScope final : public WorkerGlobalScope {
   DEFINE_WRAPPERTYPEINFO();
@@ -50,7 +50,7 @@ class CORE_EXPORT DedicatedWorkerGlobalScope final : public WorkerGlobalScope {
  public:
   static DedicatedWorkerGlobalScope* Create(
       DedicatedWorkerThread*,
-      std::unique_ptr<GlobalScopeCreationParams>,
+      std::unique_ptr<WorkerThreadStartupData>,
       double time_origin);
   ~DedicatedWorkerGlobalScope() override;
 

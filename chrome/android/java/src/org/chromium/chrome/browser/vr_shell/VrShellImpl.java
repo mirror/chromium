@@ -480,7 +480,7 @@ public class VrShellImpl
         int surfaceHeight = (int) Math.ceil(height * dpr);
 
         Point size = new Point(surfaceWidth, surfaceHeight);
-        mContentVirtualDisplay.update(size, dpr, null, null, null, null, null);
+        mContentVirtualDisplay.update(size, dpr, null, null, null);
         if (mTab != null && mTab.getContentViewCore() != null) {
             mTab.getContentViewCore().onSizeChanged(surfaceWidth, surfaceHeight, 0, 0);
             nativeOnPhysicalBackingSizeChanged(mNativeVrShell,
@@ -589,11 +589,6 @@ public class VrShellImpl
     @Override
     public boolean getWebVrModeEnabled() {
         return nativeGetWebVrMode(mNativeVrShell);
-    }
-
-    @Override
-    public boolean isDisplayingUrlForTesting() {
-        return nativeIsDisplayingUrlForTesting(mNativeVrShell);
     }
 
     @Override
@@ -759,7 +754,6 @@ public class VrShellImpl
             int height, float dpr);
     private native void nativeSetWebVrMode(long nativeVrShell, boolean enabled, boolean showToast);
     private native boolean nativeGetWebVrMode(long nativeVrShell);
-    private native boolean nativeIsDisplayingUrlForTesting(long nativeVrShell);
     private native void nativeOnTabListCreated(long nativeVrShell, Tab[] mainTabs,
             Tab[] incognitoTabs);
     private native void nativeOnTabUpdated(long nativeVrShell, boolean incognito, int id,

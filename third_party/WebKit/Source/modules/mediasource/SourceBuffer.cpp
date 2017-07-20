@@ -35,6 +35,8 @@
 #include <sstream>
 #include "bindings/core/v8/ExceptionMessages.h"
 #include "bindings/core/v8/ExceptionState.h"
+#include "core/dom/DOMArrayBuffer.h"
+#include "core/dom/DOMArrayBufferView.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/events/Event.h"
@@ -47,8 +49,6 @@
 #include "core/html/track/AudioTrackList.h"
 #include "core/html/track/VideoTrack.h"
 #include "core/html/track/VideoTrackList.h"
-#include "core/typed_arrays/DOMArrayBuffer.h"
-#include "core/typed_arrays/DOMArrayBufferView.h"
 #include "modules/mediasource/MediaSource.h"
 #include "modules/mediasource/SourceBufferTrackBaseSupplement.h"
 #include "platform/RuntimeEnabledFeatures.h"
@@ -1041,30 +1041,6 @@ bool SourceBuffer::InitializationSegmentReceived(
   return true;
 }
 
-void SourceBuffer::NotifyParseWarning(const ParseWarning warning) {
-  switch (warning) {
-    case WebSourceBufferClient::kKeyframeTimeGreaterThanDependant:
-      // Report this problematic GOP structure to help inform follow-up work.
-      // Media engine also records RAPPOR for these, up to once per track, at
-      // Media.OriginUrl.MSE.KeyframeTimeGreaterThanDependant.
-      // TODO(wolenetz): Use the data to scope additional work. See
-      // https://crbug.com/739931.
-      UseCounter::Count(
-          source_->MediaElement()->GetDocument(),
-          WebFeature::kMediaSourceKeyframeTimeGreaterThanDependant);
-      break;
-    case WebSourceBufferClient::kMuxedSequenceMode:
-      // Report this problematic API usage to help inform follow-up work.
-      // Media engine also records RAPPOR for these, up to once per
-      // SourceBuffer, at Media.OriginUrl.MSE.MuxedSequenceModeSourceBuffer.
-      // TODO(wolenetz): Use the data to scope additional work. See
-      // https://crbug.com/737757.
-      UseCounter::Count(source_->MediaElement()->GetDocument(),
-                        WebFeature::kMediaSourceMuxedSequenceMode);
-      break;
-  }
-}
-
 bool SourceBuffer::HasPendingActivity() const {
   return source_;
 }
@@ -1102,7 +1078,7 @@ void SourceBuffer::ScheduleEvent(const AtomicString& event_name) {
   Event* event = Event::Create(event_name);
   event->SetTarget(this);
 
-  async_event_queue_->EnqueueEvent(BLINK_FROM_HERE, event);
+  async_event_queue_->EnqueueEvent(event);
 }
 
 bool SourceBuffer::PrepareAppend(double media_time,

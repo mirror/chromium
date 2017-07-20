@@ -111,19 +111,8 @@ bool BlobDataBuilder::PopulateFutureData(size_t index,
                                          const char* data,
                                          size_t offset,
                                          size_t length) {
-  DCHECK(data);
-
-  char* target = GetFutureDataPointerToPopulate(index, offset, length);
-  if (!target)
-    return false;
-  std::memcpy(target, data, length);
-  return true;
-}
-
-char* BlobDataBuilder::GetFutureDataPointerToPopulate(size_t index,
-                                                      size_t offset,
-                                                      size_t length) {
   DCHECK_LT(index, items_.size());
+  DCHECK(data);
   DataElement* element = items_[index]->data_element_ptr();
 
   // We lazily allocate our data buffer by waiting until the first
@@ -139,15 +128,16 @@ char* BlobDataBuilder::GetFutureDataPointerToPopulate(size_t index,
   }
   if (element->type() != DataElement::TYPE_BYTES) {
     DVLOG(1) << "Invalid item type.";
-    return nullptr;
+    return false;
   }
   base::CheckedNumeric<size_t> checked_end = offset;
   checked_end += length;
   if (!checked_end.IsValid() || checked_end.ValueOrDie() > element->length()) {
     DVLOG(1) << "Invalid offset or length.";
-    return nullptr;
+    return false;
   }
-  return element->mutable_bytes() + offset;
+  std::memcpy(element->mutable_bytes() + offset, data, length);
+  return true;
 }
 
 size_t BlobDataBuilder::AppendFutureFile(uint64_t offset,

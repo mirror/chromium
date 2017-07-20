@@ -23,6 +23,7 @@
 #include "extensions/browser/extension_system.h"
 #include "extensions/browser/updater/update_service.h"
 #include "extensions/common/constants.h"
+#include "extensions/common/switches.h"
 #include "extensions/shell/browser/shell_browser_context.h"
 #include "extensions/shell/browser/shell_browser_context_keyed_service_factories.h"
 #include "extensions/shell/browser/shell_browser_main_delegate.h"

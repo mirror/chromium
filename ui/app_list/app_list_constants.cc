@@ -127,9 +127,6 @@ const int kSearchBoxPadding = 16;
 const int kSearchBoxTopPadding = 24;
 const int kSearchBoxBottomPadding = 21;
 
-// The background border corner radius of the search box in fullscreen mode.
-const int kSearchBoxBorderCornerRadiusFullscreen = 24;
-
 // Max items allowed in a folder.
 size_t kMaxFolderItems = 16;
 
@@ -161,15 +158,7 @@ const char kSearchResultDistanceFromOrigin[] =
     "Apps.AppListSearchResultDistanceFromOrigin";
 
 // The height of tiles in search result.
-const int kSearchTileHeight = 90;
-
-// The size of the search icon in the search box.
-const int kSearchIconSize = 24;
-
-// Default color used when wallpaper customized color is not available for
-// searchbox, #000 at 87% opacity.
-const SkColor kDefaultSearchboxColor =
-    SkColorSetARGBMacro(0xDE, 0x00, 0x00, 0x00);
+const int kSearchTileHeight = 92;
 
 gfx::ShadowValue GetShadowForZHeight(int z_height) {
   if (z_height <= 0)

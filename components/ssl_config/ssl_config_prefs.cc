@@ -16,7 +16,6 @@ const char kCertEnableCommonNameFallbackLocalAnchors[] =
     "ssl.common_name_fallback_enabled_for_local_anchors";
 const char kSSLVersionMin[] = "ssl.version_min";
 const char kSSLVersionMax[] = "ssl.version_max";
-const char kTLS13Variant[] = "ssl.tls13_variant";
 const char kCipherSuiteBlacklist[] = "ssl.cipher_suites.blacklist";
 
 }  // namespace prefs

@@ -3,13 +3,13 @@
 // found in the LICENSE file.
 
 #include "ash/shell.h"
-#include "ash/shell_test_api.h"
 #include "ash/system/palette/mock_palette_tool_delegate.h"
 #include "ash/system/palette/palette_ids.h"
 #include "ash/system/palette/palette_tool.h"
-#include "ash/system/palette/test_palette_delegate.h"
 #include "ash/system/palette/tools/create_note_action.h"
 #include "ash/test/ash_test_base.h"
+#include "ash/test/shell_test_api.h"
+#include "ash/test/test_palette_delegate.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "ui/views/view.h"
@@ -19,15 +19,16 @@ namespace ash {
 namespace {
 
 // Base class for all create note ash tests.
-class CreateNoteTest : public AshTestBase {
+class CreateNoteTest : public test::AshTestBase {
  public:
   CreateNoteTest() {}
   ~CreateNoteTest() override {}
 
   void SetUp() override {
-    AshTestBase::SetUp();
+    test::AshTestBase::SetUp();
 
-    ShellTestApi().SetPaletteDelegate(base::MakeUnique<TestPaletteDelegate>());
+    test::ShellTestApi().SetPaletteDelegate(
+        base::MakeUnique<TestPaletteDelegate>());
 
     palette_tool_delegate_ = base::MakeUnique<MockPaletteToolDelegate>();
     tool_ = base::MakeUnique<CreateNoteAction>(palette_tool_delegate_.get());

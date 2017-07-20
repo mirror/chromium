@@ -8,6 +8,7 @@ namespace shape_detection {
 
 // static
 void TextDetectionImpl::Create(
+    const service_manager::BindSourceInfo& source_info,
     mojom::TextDetectionRequest request) {
   DLOG(ERROR) << "Platform not supported for Text Detection Service.";
 }

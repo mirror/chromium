@@ -16,6 +16,10 @@
 #error "Spellcheck panel should be enabled."
 #endif
 
+namespace service_manager {
+struct BindSourceInfo;
+}
+
 class SpellCheckPanel : public content::RenderFrameObserver,
                         public blink::WebSpellCheckPanelHostClient,
                         public spellcheck::mojom::SpellCheckPanel {
@@ -35,6 +39,7 @@ class SpellCheckPanel : public content::RenderFrameObserver,
 
   // Binds browser requests for the frame SpellCheckPanel interface.
   void SpellCheckPanelRequest(
+      const service_manager::BindSourceInfo& source_info,
       spellcheck::mojom::SpellCheckPanelRequest request);
 
   // spellcheck::mojom::SpellCheckPanel:

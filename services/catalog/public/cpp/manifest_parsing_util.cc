@@ -5,7 +5,6 @@
 #include "services/catalog/public/cpp/manifest_parsing_util.h"
 
 #include "base/values.h"
-#include "build/build_config.h"
 #include "services/catalog/store.h"
 
 namespace catalog {
@@ -16,8 +15,7 @@ bool IsValidPlatformName(const std::string& name) {
   return name == Store::kRequiredFilesKey_PlatformValue_Windows ||
          name == Store::kRequiredFilesKey_PlatformValue_Linux ||
          name == Store::kRequiredFilesKey_PlatformValue_MacOSX ||
-         name == Store::kRequiredFilesKey_PlatformValue_Android ||
-         name == Store::kRequiredFilesKey_PlatformValue_Fuchsia;
+         name == Store::kRequiredFilesKey_PlatformValue_Android;
 }
 
 bool IsCurrentPlatform(const std::string& name) {
@@ -29,8 +27,6 @@ bool IsCurrentPlatform(const std::string& name) {
   return name == Store::kRequiredFilesKey_PlatformValue_MacOSX;
 #elif defined(OS_ANDROID)
   return name == Store::kRequiredFilesKey_PlatformValue_Android;
-#elif defined(OS_FUCHSIA)
-  return name == Store::kRequiredFilesKey_PlatformValue_Fuchsia;
 #else
 #error This architecture is not supported.
 #endif

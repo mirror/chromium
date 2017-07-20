@@ -217,6 +217,7 @@ chrome.automation.StateType = {
   BUSY: 'busy',
   COLLAPSED: 'collapsed',
   DEFAULT: 'default',
+  DISABLED: 'disabled',
   EDITABLE: 'editable',
   EXPANDED: 'expanded',
   FOCUSABLE: 'focusable',
@@ -230,6 +231,7 @@ chrome.automation.StateType = {
   MULTISELECTABLE: 'multiselectable',
   OFFSCREEN: 'offscreen',
   PROTECTED: 'protected',
+  READ_ONLY: 'readOnly',
   REQUIRED: 'required',
   RICHLY_EDITABLE: 'richlyEditable',
   SELECTABLE: 'selectable',
@@ -262,15 +264,6 @@ chrome.automation.NameFromType = {
   PLACEHOLDER: 'placeholder',
   RELATED_ELEMENT: 'relatedElement',
   VALUE: 'value',
-};
-
-/**
- * @enum {string}
- * @see https://developer.chrome.com/extensions/automation#type-Restriction
- */
-chrome.automation.Restriction = {
-  DISABLED: 'disabled',
-  READ_ONLY: 'readOnly',
 };
 
 /**
@@ -921,6 +914,13 @@ chrome.automation.AutomationNode.prototype.accessKey;
 chrome.automation.AutomationNode.prototype.ariaInvalidValue;
 
 /**
+ * The value of the aria-readonly attribute, if applicable.
+ * @type {(boolean|undefined)}
+ * @see https://developer.chrome.com/extensions/automation#type-ariaReadonly
+ */
+chrome.automation.AutomationNode.prototype.ariaReadonly;
+
+/**
  * The CSS display attribute for this node, if applicable.
  * @type {(string|undefined)}
  * @see https://developer.chrome.com/extensions/automation#type-display
@@ -940,13 +940,6 @@ chrome.automation.AutomationNode.prototype.imageDataUrl;
  * @see https://developer.chrome.com/extensions/automation#type-language
  */
 chrome.automation.AutomationNode.prototype.language;
-
-/**
- * State describing input restriction associated with an object: undefined - enabled control or other object that is not disabled  'disabled' - a control or group of controls that does not take input 'readOnly' - an edit field that allows focus and selection but not input
- * @type {(string|undefined)}
- * @see https://developer.chrome.com/extensions/automation#type-restriction
- */
-chrome.automation.AutomationNode.prototype.restriction;
 
 /**
  * Tri-state describing checkbox or radio button: 'false' | 'true' | 'mixed'

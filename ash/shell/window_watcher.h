@@ -11,10 +11,11 @@
 #include <memory>
 
 #include "ash/public/cpp/shelf_types.h"
-#include "ash/shell_observer.h"
+#include "base/compiler_specific.h"
 #include "base/logging.h"
 #include "base/macros.h"
 #include "ui/aura/window_observer.h"
+#include "ui/display/display_observer.h"
 
 namespace aura {
 class Window;
@@ -23,9 +24,12 @@ class Window;
 namespace ash {
 namespace shell {
 
+// TODO(sky): fix this class, its a bit broke with workspace2.
+
 // WindowWatcher is responsible for listening for newly created windows and
 // creating items on the Shelf for them.
-class WindowWatcher : public aura::WindowObserver, public ShellObserver {
+class WindowWatcher : public aura::WindowObserver,
+                      public display::DisplayObserver {
  public:
   WindowWatcher();
   ~WindowWatcher() override;
@@ -36,8 +40,11 @@ class WindowWatcher : public aura::WindowObserver, public ShellObserver {
   void OnWindowAdded(aura::Window* new_window) override;
   void OnWillRemoveWindow(aura::Window* window) override;
 
-  // ShellObserver:
-  void OnRootWindowAdded(aura::Window* root_window) override;
+  // display::DisplayObserver overrides:
+  void OnDisplayAdded(const display::Display& new_display) override;
+  void OnDisplayRemoved(const display::Display& old_display) override;
+  void OnDisplayMetricsChanged(const display::Display& display,
+                               uint32_t metrics) override;
 
  private:
   class WorkspaceWindowWatcher;

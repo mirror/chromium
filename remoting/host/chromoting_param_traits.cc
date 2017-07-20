@@ -7,7 +7,6 @@
 #include <stdint.h>
 
 #include "base/strings/stringprintf.h"
-#include "ipc/ipc_message_protobuf_utils.h"
 #include "ipc/ipc_message_utils.h"
 #include "third_party/webrtc/modules/desktop_capture/desktop_frame.h"
 
@@ -282,41 +281,32 @@ void ParamTraits<remoting::DesktopEnvironmentOptions>::Log(
 }
 
 // static
-void ParamTraits<remoting::protocol::ProcessResourceUsage>::GetSize(
-    base::PickleSizer* s, const param_type& p) {
-  GetParamSize(s, p.process_name());
-  GetParamSize(s, p.processor_usage());
-  GetParamSize(s, p.working_set_size());
-  GetParamSize(s, p.pagefile_size());
-}
-
-// static
-void ParamTraits<remoting::protocol::ProcessResourceUsage>::Write(
+void ParamTraits<remoting::protocol::AggregatedProcessResourceUsage>::Write(
     base::Pickle* m,
-    const param_type& p) {
-  m->WriteString(p.process_name());
+    const remoting::protocol::AggregatedProcessResourceUsage& p) {
+  m->WriteString(p.name());
   m->WriteDouble(p.processor_usage());
   m->WriteUInt64(p.working_set_size());
   m->WriteUInt64(p.pagefile_size());
 }
 
 // static
-bool ParamTraits<remoting::protocol::ProcessResourceUsage>::Read(
+bool ParamTraits<remoting::protocol::AggregatedProcessResourceUsage>::Read(
     const base::Pickle* m,
     base::PickleIterator* iter,
-    param_type* p) {
-  std::string process_name;
+    remoting::protocol::AggregatedProcessResourceUsage* p) {
+  std::string name;
   double processor_usage;
   uint64_t working_set_size;
   uint64_t pagefile_size;
-  if (!iter->ReadString(&process_name) ||
+  if (!iter->ReadString(&name) ||
       !iter->ReadDouble(&processor_usage) ||
       !iter->ReadUInt64(&working_set_size) ||
       !iter->ReadUInt64(&pagefile_size)) {
     return false;
   }
 
-  p->set_process_name(process_name);
+  p->set_name(name);
   p->set_processor_usage(processor_usage);
   p->set_working_set_size(working_set_size);
   p->set_pagefile_size(pagefile_size);
@@ -324,40 +314,10 @@ bool ParamTraits<remoting::protocol::ProcessResourceUsage>::Read(
 }
 
 // static
-void ParamTraits<remoting::protocol::ProcessResourceUsage>::Log(
-    const param_type& p,
-    std::string* l) {
-  l->append("ProcessResourceUsage(").append(p.process_name()).append(")");
-}
-
-// static
-void ParamTraits<remoting::protocol::AggregatedProcessResourceUsage>::GetSize(
-    base::PickleSizer* s, const param_type& p) {
-  GetParamSize(s, p.usages());
-}
-
-// static
-void ParamTraits<remoting::protocol::AggregatedProcessResourceUsage>::Write(
-    base::Pickle* m,
-    const param_type& p) {
-  WriteParam(m, p.usages());
-}
-
-// static
-bool ParamTraits<remoting::protocol::AggregatedProcessResourceUsage>::Read(
-    const base::Pickle* m,
-    base::PickleIterator* iter,
-    param_type* p) {
-  return ReadParam(m, iter, p->mutable_usages());
-}
-
-// static
 void ParamTraits<remoting::protocol::AggregatedProcessResourceUsage>::Log(
-    const param_type& p,
+    const remoting::protocol::AggregatedProcessResourceUsage& p,
     std::string* l) {
-  l->append("AggregatedProcessResourceUsage(");
-  LogParam(p.usages(), l);
-  l->append(")");
+  l->append("AggregatedProcessResourceUsage()");
 }
 
 }  // namespace IPC

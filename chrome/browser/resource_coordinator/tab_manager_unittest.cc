@@ -14,13 +14,13 @@
 #include "base/memory/ptr_util.h"
 #include "base/metrics/field_trial.h"
 #include "base/strings/string16.h"
+#include "base/test/histogram_tester.h"
 #include "base/test/mock_entropy_provider.h"
 #include "base/test/simple_test_tick_clock.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/profiles/profile.h"
-#include "chrome/browser/resource_coordinator/background_tab_navigation_throttle.h"
 #include "chrome/browser/resource_coordinator/tab_manager_web_contents_data.h"
 #include "chrome/browser/resource_coordinator/tab_stats.h"
 #include "chrome/browser/sessions/tab_loader.h"
@@ -48,19 +48,6 @@ namespace resource_coordinator {
 namespace {
 
 const char kTestUrl[] = "http://www.example.com";
-
-class NonResumingBackgroundTabNavigationThrottle
-    : public BackgroundTabNavigationThrottle {
- public:
-  explicit NonResumingBackgroundTabNavigationThrottle(
-      content::NavigationHandle* handle)
-      : BackgroundTabNavigationThrottle(handle) {}
-
-  void ResumeNavigation() override {}
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(NonResumingBackgroundTabNavigationThrottle);
-};
 
 class TabStripDummyDelegate : public TestTabStripModelDelegate {
  public:
@@ -148,19 +135,12 @@ class TabManagerTest : public ChromeRenderViewHostTestHarness {
     contents2_ = nav_handle2_->GetWebContents();
     contents3_ = nav_handle3_->GetWebContents();
 
-    throttle1_ = base::MakeUnique<NonResumingBackgroundTabNavigationThrottle>(
-        nav_handle1_.get());
-    throttle2_ = base::MakeUnique<NonResumingBackgroundTabNavigationThrottle>(
-        nav_handle2_.get());
-    throttle3_ = base::MakeUnique<NonResumingBackgroundTabNavigationThrottle>(
-        nav_handle3_.get());
-
     NavigationThrottle::ThrottleCheckResult result1 =
-        tab_manager->MaybeThrottleNavigation(throttle1_.get());
+        tab_manager->MaybeThrottleNavigation(nav_handle1_.get());
     NavigationThrottle::ThrottleCheckResult result2 =
-        tab_manager->MaybeThrottleNavigation(throttle2_.get());
+        tab_manager->MaybeThrottleNavigation(nav_handle2_.get());
     NavigationThrottle::ThrottleCheckResult result3 =
-        tab_manager->MaybeThrottleNavigation(throttle3_.get());
+        tab_manager->MaybeThrottleNavigation(nav_handle3_.get());
 
     // First tab starts navigation right away because there is no tab loading.
     EXPECT_EQ(content::NavigationThrottle::PROCEED, result1);
@@ -171,9 +151,6 @@ class TabManagerTest : public ChromeRenderViewHostTestHarness {
   }
 
  protected:
-  std::unique_ptr<BackgroundTabNavigationThrottle> throttle1_;
-  std::unique_ptr<BackgroundTabNavigationThrottle> throttle2_;
-  std::unique_ptr<BackgroundTabNavigationThrottle> throttle3_;
   std::unique_ptr<NavigationHandle> nav_handle1_;
   std::unique_ptr<NavigationHandle> nav_handle2_;
   std::unique_ptr<NavigationHandle> nav_handle3_;
@@ -683,6 +660,79 @@ TEST_F(TabManagerTest, DiscardTabWithNonVisibleTabs) {
   // Tabs with a committed URL must be closed explicitly to avoid DCHECK errors.
   tab_strip1.CloseAllTabs();
   tab_strip2.CloseAllTabs();
+}
+
+TEST_F(TabManagerTest, OnSessionRestoreStartedAndFinishedLoadingTabs) {
+  std::unique_ptr<content::WebContents> test_contents(
+      WebContentsTester::CreateTestWebContents(browser_context(), nullptr));
+
+  std::vector<SessionRestoreDelegate::RestoredTab> restored_tabs{
+      SessionRestoreDelegate::RestoredTab(test_contents.get(), false, false,
+                                          false)};
+
+  TabManager* tab_manager = g_browser_process->GetTabManager();
+  EXPECT_FALSE(tab_manager->IsSessionRestoreLoadingTabs());
+
+  TabLoader::RestoreTabs(restored_tabs, base::TimeTicks());
+  EXPECT_TRUE(tab_manager->IsSessionRestoreLoadingTabs());
+
+  WebContentsTester::For(test_contents.get())
+      ->NavigateAndCommit(GURL("about:blank"));
+  WebContentsTester::For(test_contents.get())->TestSetIsLoading(false);
+  EXPECT_FALSE(tab_manager->IsSessionRestoreLoadingTabs());
+}
+
+TEST_F(TabManagerTest, HistogramsSessionRestoreSwitchToTab) {
+  const char kHistogramName[] = "TabManager.SessionRestore.SwitchToTab";
+
+  TabManager tab_manager;
+  TabStripDummyDelegate delegate;
+  TabStripModel tab_strip(&delegate, profile());
+  WebContents* tab = CreateWebContents();
+  tab_strip.AppendWebContents(tab, true);
+
+  auto* data = tab_manager.GetWebContentsData(tab);
+
+  base::HistogramTester histograms;
+  histograms.ExpectTotalCount(kHistogramName, 0);
+
+  data->SetTabLoadingState(TAB_IS_LOADING);
+  tab_manager.RecordSwitchToTab(tab);
+  tab_manager.RecordSwitchToTab(tab);
+
+  // Nothing should happen until we're in a session restore
+  histograms.ExpectTotalCount(kHistogramName, 0);
+
+  tab_manager.OnSessionRestoreStartedLoadingTabs();
+
+  data->SetTabLoadingState(TAB_IS_NOT_LOADING);
+  tab_manager.RecordSwitchToTab(tab);
+  tab_manager.RecordSwitchToTab(tab);
+  histograms.ExpectTotalCount(kHistogramName, 2);
+  histograms.ExpectBucketCount(kHistogramName, TAB_IS_NOT_LOADING, 2);
+
+  data->SetTabLoadingState(TAB_IS_LOADING);
+  tab_manager.RecordSwitchToTab(tab);
+  tab_manager.RecordSwitchToTab(tab);
+  tab_manager.RecordSwitchToTab(tab);
+
+  histograms.ExpectTotalCount(kHistogramName, 5);
+  histograms.ExpectBucketCount(kHistogramName, TAB_IS_NOT_LOADING, 2);
+  histograms.ExpectBucketCount(kHistogramName, TAB_IS_LOADING, 3);
+
+  data->SetTabLoadingState(TAB_IS_LOADED);
+  tab_manager.RecordSwitchToTab(tab);
+  tab_manager.RecordSwitchToTab(tab);
+  tab_manager.RecordSwitchToTab(tab);
+  tab_manager.RecordSwitchToTab(tab);
+
+  histograms.ExpectTotalCount(kHistogramName, 9);
+  histograms.ExpectBucketCount(kHistogramName, TAB_IS_NOT_LOADING, 2);
+  histograms.ExpectBucketCount(kHistogramName, TAB_IS_LOADING, 3);
+  histograms.ExpectBucketCount(kHistogramName, TAB_IS_LOADED, 4);
+
+  // Tabs with a committed URL must be closed explicitly to avoid DCHECK errors.
+  tab_strip.CloseAllTabs();
 }
 
 TEST_F(TabManagerTest, MaybeThrottleNavigation) {

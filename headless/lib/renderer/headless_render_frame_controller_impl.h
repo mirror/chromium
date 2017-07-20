@@ -22,6 +22,7 @@ class HeadlessRenderFrameControllerImpl : public HeadlessRenderFrameController,
   ~HeadlessRenderFrameControllerImpl() override;
 
   void OnRenderFrameControllerRequest(
+      const service_manager::BindSourceInfo& source_info,
       headless::HeadlessRenderFrameControllerRequest request);
 
   // HeadlessRenderFrameController implementation:

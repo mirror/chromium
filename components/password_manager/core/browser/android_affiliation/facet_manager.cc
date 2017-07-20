@@ -7,10 +7,10 @@
 //
 // On-demand fetching strategy
 //
-// A GetAffiliationsAndBranding() request concerning facet X will be served from
-// the cache as long as the cache contains fresh affiliation information for
-// facet X, that is, if there is an equivalence class in the cache that contains
-// X and has been fetched less than |kCacheHardExpiryInHours| hours ago.
+// A GetAffiliations() request concerning facet X will be served from the cache
+// as long as the cache contains fresh affiliation information for facet X, that
+// is, if there is an equivalence class in the cache that contains X and has
+// been fetched less than |kCacheHardExpiryInHours| hours ago.
 //
 // Otherwise, a network request is issued against the Affiliation API as soon as
 // possible, that is, immediately if there is no fetch in flight, or right after
@@ -87,7 +87,7 @@ static_assert(
         FacetManager::kCacheHardExpiryInHours,
     "Soft expiry period must be longer than half of the hard expiry period.");
 
-// Encapsulates the details of a pending GetAffiliationsAndBranding() request.
+// Encapsulates the details of a pending GetAffiliations() request.
 struct FacetManager::RequestInfo {
   AffiliationService::ResultCallback callback;
   scoped_refptr<base::TaskRunner> callback_task_runner;
@@ -98,8 +98,7 @@ FacetManager::FacetManager(const FacetURI& facet_uri,
                            base::Clock* clock)
     : facet_uri_(facet_uri), backend_(backend), clock_(clock) {
   AffiliatedFacetsWithUpdateTime affiliations;
-  if (backend_->ReadAffiliationsAndBrandingFromDatabase(facet_uri_,
-                                                        &affiliations))
+  if (backend_->ReadAffiliationsFromDatabase(facet_uri_, &affiliations))
     last_update_time_ = affiliations.last_update_time;
 }
 
@@ -110,7 +109,7 @@ FacetManager::~FacetManager() {
     ServeRequestWithFailure(request_info);
 }
 
-void FacetManager::GetAffiliationsAndBranding(
+void FacetManager::GetAffiliations(
     StrategyOnCacheMiss cache_miss_strategy,
     const AffiliationService::ResultCallback& callback,
     const scoped_refptr<base::TaskRunner>& callback_task_runner) {
@@ -119,8 +118,7 @@ void FacetManager::GetAffiliationsAndBranding(
   request_info.callback_task_runner = callback_task_runner;
   if (IsCachedDataFresh()) {
     AffiliatedFacetsWithUpdateTime affiliation;
-    if (!backend_->ReadAffiliationsAndBrandingFromDatabase(facet_uri_,
-                                                           &affiliation)) {
+    if (!backend_->ReadAffiliationsFromDatabase(facet_uri_, &affiliation)) {
       ServeRequestWithFailure(request_info);
       return;
     }

@@ -6,11 +6,11 @@
 
 #include <memory>
 
-#include "ash/session/test_session_controller_client.h"
 #include "ash/shell.h"
 #include "ash/shell_init_params.h"
 #include "ash/test/ash_test_helper.h"
-#include "ash/test_shell_delegate.h"
+#include "ash/test/test_session_controller_client.h"
+#include "ash/test/test_shell_delegate.h"
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "chromeos/audio/cras_audio_handler.h"
@@ -59,7 +59,8 @@ ViewEventTestPlatformPartChromeOS::ViewEventTestPlatformPartChromeOS(
   chromeos::NetworkHandler::Initialize();
 
   env_ = aura::Env::CreateInstance();
-  ash::TestShellDelegate* shell_delegate = new ash::TestShellDelegate();
+  ash::test::TestShellDelegate* shell_delegate =
+      new ash::test::TestShellDelegate();
   ash::ShellInitParams init_params;
   init_params.delegate = shell_delegate;
   init_params.context_factory = context_factory;
@@ -67,7 +68,7 @@ ViewEventTestPlatformPartChromeOS::ViewEventTestPlatformPartChromeOS(
   base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
       switches::kHostWindowBounds, "0+0-1280x800");
   ash::Shell::CreateInstance(init_params);
-  ash::TestSessionControllerClient session_controller_client(
+  ash::test::TestSessionControllerClient session_controller_client(
       ash::Shell::Get()->session_controller());
   session_controller_client.CreatePredefinedUserSessions(1);
   GetContext()->GetHost()->Show();

@@ -144,6 +144,9 @@ class ChromeBrowserProvider {
   // Returns an instance of the branded image provider.
   virtual BrandedImageProvider* GetBrandedImageProvider() const;
 
+  // Returns the NativeAppWhitelistManager implementation.
+  virtual id<NativeAppWhitelistManager> GetNativeAppWhitelistManager() const;
+
   // Hides immediately the modals related to this provider.
   virtual void HideModalViewStack() const;
 
@@ -153,9 +156,6 @@ class ChromeBrowserProvider {
 
   // Returns an instance of the spotlight provider.
   virtual SpotlightProvider* GetSpotlightProvider() const;
-
-  // Checks for native iOS apps that are installed.
-  virtual void CheckForFirstPartyApps() const;
 
   // Adds and removes observers.
   void AddObserver(Observer* observer);

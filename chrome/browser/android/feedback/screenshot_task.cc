@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "chrome/browser/android/feedback/screenshot_task.h"
+
 #include <stddef.h>
 
 #include "base/android/scoped_java_ref.h"
@@ -22,6 +24,10 @@ using ui::WindowAndroid;
 
 namespace chrome {
 namespace android {
+
+bool RegisterScreenshotTask(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
 
 void SnapshotCallback(JNIEnv* env,
                       const JavaRef<jobject>& callback,

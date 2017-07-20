@@ -15,11 +15,12 @@
 namespace blink {
 namespace {
 
-static WebPaymentCurrencyAmount CreateWebPaymentCurrencyAmountForTest() {
-  WebPaymentCurrencyAmount web_currency_amount;
-  web_currency_amount.currency = WebString::FromUTF8("USD");
-  web_currency_amount.value = WebString::FromUTF8("9.99");
-  return web_currency_amount;
+static WebPaymentItem CreateWebPaymentItemForTest() {
+  WebPaymentItem web_item;
+  web_item.label = WebString::FromUTF8("Label");
+  web_item.amount.currency = WebString::FromUTF8("USD");
+  web_item.amount.value = WebString::FromUTF8("9.99");
+  return web_item;
 }
 
 static WebPaymentMethodData CreateWebPaymentMethodDataForTest() {
@@ -48,7 +49,7 @@ static WebPaymentRequestEventData CreateWebPaymentRequestEventDataForTest() {
   Vector<WebPaymentMethodData> method_data;
   method_data.push_back(CreateWebPaymentMethodDataForTest());
   web_data.method_data = WebVector<WebPaymentMethodData>(method_data);
-  web_data.total = CreateWebPaymentCurrencyAmountForTest();
+  web_data.total = CreateWebPaymentItemForTest();
   web_data.instrument_key = WebString::FromUTF8("payment-instrument-key");
   return web_data;
 }
@@ -116,10 +117,13 @@ TEST(PaymentEventDataConversionTest, ToPaymentRequestEventData) {
   EXPECT_EQ("{\"merchantId\":\"12345\"}", stringified_data);
 
   ASSERT_TRUE(data.hasTotal());
-  ASSERT_TRUE(data.total().hasCurrency());
-  EXPECT_EQ("USD", data.total().currency());
-  ASSERT_TRUE(data.total().hasValue());
-  EXPECT_EQ("9.99", data.total().value());
+  ASSERT_TRUE(data.total().hasLabel());
+  EXPECT_EQ("Label", data.total().label());
+  ASSERT_TRUE(data.total().hasAmount());
+  ASSERT_TRUE(data.total().amount().hasCurrency());
+  EXPECT_EQ("USD", data.total().amount().currency());
+  ASSERT_TRUE(data.total().amount().hasValue());
+  EXPECT_EQ("9.99", data.total().amount().value());
 
   ASSERT_TRUE(data.hasInstrumentKey());
   EXPECT_EQ("payment-instrument-key", data.instrumentKey());

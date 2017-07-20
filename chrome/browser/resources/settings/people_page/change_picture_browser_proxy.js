@@ -61,9 +61,6 @@ cr.define('settings', function() {
      * expected.
      */
     chooseFile() {}
-
-    /** Requests the currently selected image. */
-    requestSelectedImage() {}
   }
 
   /**
@@ -98,11 +95,6 @@ cr.define('settings', function() {
     /** @override */
     chooseFile() {
       chrome.send('chooseFile');
-    }
-
-    /** @override */
-    requestSelectedImage() {
-      chrome.send('requestSelectedImage');
     }
   }
 

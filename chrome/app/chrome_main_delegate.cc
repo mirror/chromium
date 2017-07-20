@@ -138,7 +138,6 @@
 
 #if defined(OS_POSIX) && !defined(OS_MACOSX)
 #include "components/crash/content/app/breakpad_linux.h"
-#include "v8/include/v8.h"
 #endif
 
 #if defined(OS_LINUX)
@@ -571,9 +570,6 @@ bool ChromeMainDelegate::BasicStartupComplete(int* exit_code) {
 #if defined(OS_WIN) && !defined(CHROME_MULTIPLE_DLL_BROWSER)
   v8_breakpad_support::SetUp();
 #endif
-#if defined(OS_LINUX) && !defined(OS_ANDROID)
-  breakpad::SetFirstChanceExceptionHandler(v8::V8::TryHandleSignal);
-#endif
 
 #if defined(OS_POSIX)
   if (HandleVersionSwitches(command_line)) {
@@ -880,16 +876,6 @@ void ChromeMainDelegate::PreSandboxStartup() {
         global_descriptors->GetRegion(kAndroidLocalePakDescriptor);
     ResourceBundle::InitSharedInstanceWithPakFileRegion(base::File(pak_fd),
                                                         pak_region);
-
-    // Load secondary locale .pak file if it exists.
-    pak_fd = global_descriptors->MaybeGet(kAndroidSecondaryLocalePakDescriptor);
-    if (pak_fd != -1) {
-      pak_region = global_descriptors->GetRegion(
-          kAndroidSecondaryLocalePakDescriptor);
-      ResourceBundle::GetSharedInstance().
-          LoadSecondaryLocaleDataWithPakFileRegion(
-              base::File(pak_fd), pak_region);
-    }
 
     int extra_pak_keys[] = {
       kAndroidChrome100PercentPakDescriptor,

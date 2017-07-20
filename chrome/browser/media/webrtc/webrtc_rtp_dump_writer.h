@@ -14,8 +14,7 @@
 #include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "base/sequence_checker.h"
-#include "base/sequenced_task_runner.h"
+#include "base/threading/thread_checker.h"
 #include "base/time/time.h"
 #include "chrome/browser/media/webrtc/rtp_dump_type.h"
 
@@ -66,11 +65,6 @@ class WebRtcRtpDumpWriter {
 
   size_t max_dump_size() const;
 
-  const scoped_refptr<base::SequencedTaskRunner>& background_task_runner()
-      const {
-    return background_task_runner_;
-  }
-
  private:
   enum FlushResult {
     // Flushing has succeeded and the dump size is under the max limit.
@@ -81,7 +75,7 @@ class WebRtcRtpDumpWriter {
     FLUSH_RESULT_FAILURE
   };
 
-  class FileWorker;
+  class FileThreadWorker;
 
   typedef base::Callback<void(bool)> FlushDoneCallback;
 
@@ -133,12 +127,11 @@ class WebRtcRtpDumpWriter {
   // The total on-disk size of the compressed incoming and outgoing dumps.
   size_t total_dump_size_on_disk_;
 
-  // File workers must be called and deleted on the backround task runner.
-  scoped_refptr<base::SequencedTaskRunner> background_task_runner_;
-  std::unique_ptr<FileWorker> incoming_file_thread_worker_;
-  std::unique_ptr<FileWorker> outgoing_file_thread_worker_;
+  // File thread workers must be called and deleted on the FILE thread.
+  std::unique_ptr<FileThreadWorker> incoming_file_thread_worker_;
+  std::unique_ptr<FileThreadWorker> outgoing_file_thread_worker_;
 
-  SEQUENCE_CHECKER(sequence_checker_);
+  base::ThreadChecker thread_checker_;
 
   base::WeakPtrFactory<WebRtcRtpDumpWriter> weak_ptr_factory_;
 

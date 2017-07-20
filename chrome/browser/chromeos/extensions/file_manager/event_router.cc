@@ -28,7 +28,7 @@
 #include "chrome/browser/chromeos/file_manager/volume_manager.h"
 #include "chrome/browser/chromeos/login/lock/screen_locker.h"
 #include "chrome/browser/chromeos/login/ui/login_display_host.h"
-#include "chrome/browser/extensions/api/file_system/chrome_file_system_delegate.h"
+#include "chrome/browser/extensions/api/file_system/file_system_api.h"
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/extensions/extension_util.h"
 #include "chrome/browser/profiles/profile.h"
@@ -414,7 +414,7 @@ void EventRouter::Shutdown() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   auto* intent_helper =
-      arc::ArcIntentHelperBridge::GetForBrowserContext(profile_);
+      arc::ArcServiceManager::GetGlobalService<arc::ArcIntentHelperBridge>();
   if (intent_helper)
     intent_helper->RemoveObserver(this);
 
@@ -509,10 +509,12 @@ void EventRouter::ObserveEvents() {
 
   chromeos::system::TimezoneSettings::GetInstance()->AddObserver(this);
 
-  auto* intent_helper =
-      arc::ArcIntentHelperBridge::GetForBrowserContext(profile_);
-  if (intent_helper)
-    intent_helper->AddObserver(this);
+  if (arc::IsArcAllowedForProfile(profile_)) {
+    auto* intent_helper =
+        arc::ArcServiceManager::GetGlobalService<arc::ArcIntentHelperBridge>();
+    if (intent_helper)
+      intent_helper->AddObserver(this);
+  }
 }
 
 // File watch setup routines.

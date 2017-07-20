@@ -109,6 +109,9 @@ class GbmPixmap : public gfx::NativePixmap {
   GbmPixmap(GbmSurfaceFactory* surface_manager,
             const scoped_refptr<GbmBuffer>& buffer);
 
+  void SetProcessingCallback(
+      const ProcessingCallback& processing_callback) override;
+
   // NativePixmap:
   void* GetEGLClientBuffer() const override;
   bool AreDmaBufFdsValid() const override;
@@ -135,6 +138,11 @@ class GbmPixmap : public gfx::NativePixmap {
 
   GbmSurfaceFactory* surface_manager_;
   scoped_refptr<GbmBuffer> buffer_;
+
+  // OverlayValidator can request scaling or format conversions as needed for
+  // this Pixmap. This holds the processed buffer.
+  scoped_refptr<GbmPixmap> processed_pixmap_;
+  ProcessingCallback processing_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(GbmPixmap);
 };

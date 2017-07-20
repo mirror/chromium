@@ -14,11 +14,11 @@
 #include "ash/shell.h"
 #include "ash/system/screen_layout_observer.h"
 #include "ash/system/status_area_widget.h"
-#include "ash/system/status_area_widget_test_helper.h"
 #include "ash/system/tray/system_tray.h"
 #include "ash/system/tray/system_tray_item.h"
 #include "ash/system/web_notification/ash_popup_alignment_delegate.h"
 #include "ash/test/ash_test_base.h"
+#include "ash/test/status_area_widget_test_helper.h"
 #include "ash/wm/window_state.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
@@ -83,7 +83,7 @@ class TestItem : public SystemTrayItem {
 
 }  // namespace
 
-class WebNotificationTrayTest : public AshTestBase {
+class WebNotificationTrayTest : public test::AshTestBase {
  public:
   WebNotificationTrayTest() {}
   ~WebNotificationTrayTest() override {}
@@ -91,7 +91,7 @@ class WebNotificationTrayTest : public AshTestBase {
   void TearDown() override {
     GetMessageCenter()->RemoveAllNotifications(
         false /* by_user */, message_center::MessageCenter::RemoveType::ALL);
-    AshTestBase::TearDown();
+    test::AshTestBase::TearDown();
   }
 
  protected:

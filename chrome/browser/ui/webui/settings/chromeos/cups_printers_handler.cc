@@ -21,7 +21,7 @@
 #include "chrome/browser/chromeos/printing/ppd_provider_factory.h"
 #include "chrome/browser/chromeos/printing/printer_configurer.h"
 #include "chrome/browser/chromeos/printing/printer_info.h"
-#include "chrome/browser/chromeos/printing/synced_printers_manager_factory.h"
+#include "chrome/browser/chromeos/printing/printers_manager_factory.h"
 #include "chrome/browser/chromeos/printing/usb_printer_detector.h"
 #include "chrome/browser/chromeos/printing/usb_printer_detector_factory.h"
 #include "chrome/browser/download/download_prefs.h"
@@ -131,7 +131,7 @@ CupsPrintersHandler::CupsPrintersHandler(content::WebUI* webui)
     : printer_detector_(nullptr),
       profile_(Profile::FromWebUI(webui)),
       weak_factory_(this) {
-  ppd_provider_ = CreatePpdProvider(profile_);
+  ppd_provider_ = printing::CreateProvider(profile_);
   printer_configurer_ = PrinterConfigurer::Create(profile_);
 }
 
@@ -186,8 +186,7 @@ void CupsPrintersHandler::HandleGetCupsPrintersList(
   CHECK(args->GetString(0, &callback_id));
 
   std::vector<std::unique_ptr<Printer>> printers =
-      SyncedPrintersManagerFactory::GetForBrowserContext(profile_)
-          ->GetPrinters();
+      PrintersManagerFactory::GetForBrowserContext(profile_)->GetPrinters();
 
   auto printers_list = base::MakeUnique<base::ListValue>();
   for (const std::unique_ptr<Printer>& printer : printers) {
@@ -209,7 +208,7 @@ void CupsPrintersHandler::HandleUpdateCupsPrinter(const base::ListValue* args) {
 
   std::unique_ptr<Printer> printer = base::MakeUnique<Printer>(printer_id);
   printer->set_display_name(printer_name);
-  SyncedPrintersManagerFactory::GetForBrowserContext(profile_)->RegisterPrinter(
+  PrintersManagerFactory::GetForBrowserContext(profile_)->RegisterPrinter(
       std::move(printer));
 }
 
@@ -218,8 +217,8 @@ void CupsPrintersHandler::HandleRemoveCupsPrinter(const base::ListValue* args) {
   std::string printer_name;
   CHECK(args->GetString(0, &printer_id));
   CHECK(args->GetString(1, &printer_name));
-  SyncedPrintersManager* prefs =
-      SyncedPrintersManagerFactory::GetForBrowserContext(profile_);
+  PrintersManager* prefs =
+      PrintersManagerFactory::GetForBrowserContext(profile_);
   auto printer = prefs->GetPrinter(printer_id);
   if (!printer)
     return;
@@ -420,8 +419,7 @@ void CupsPrintersHandler::OnAddedPrinter(std::unique_ptr<Printer> printer,
     case PrinterSetupResult::kSuccess: {
       UMA_HISTOGRAM_ENUMERATION("Printing.CUPS.PrinterAdded",
                                 printer->GetProtocol(), Printer::kProtocolMax);
-      auto* manager =
-          SyncedPrintersManagerFactory::GetForBrowserContext(profile_);
+      auto* manager = PrintersManagerFactory::GetForBrowserContext(profile_);
       manager->PrinterInstalled(*printer);
       manager->RegisterPrinter(std::move(printer));
       break;
@@ -516,28 +514,28 @@ void CupsPrintersHandler::HandleSelectPPDFile(const base::ListValue* args) {
 
 void CupsPrintersHandler::ResolveManufacturersDone(
     const std::string& js_callback,
-    PpdProvider::CallbackResultCode result_code,
+    printing::PpdProvider::CallbackResultCode result_code,
     const std::vector<std::string>& manufacturers) {
   auto manufacturers_value = base::MakeUnique<base::ListValue>();
-  if (result_code == PpdProvider::SUCCESS) {
+  if (result_code == printing::PpdProvider::SUCCESS) {
     manufacturers_value->AppendStrings(manufacturers);
   }
   base::DictionaryValue response;
-  response.SetBoolean("success", result_code == PpdProvider::SUCCESS);
+  response.SetBoolean("success", result_code == printing::PpdProvider::SUCCESS);
   response.Set("manufacturers", std::move(manufacturers_value));
   ResolveJavascriptCallback(base::Value(js_callback), response);
 }
 
 void CupsPrintersHandler::ResolvePrintersDone(
     const std::string& js_callback,
-    PpdProvider::CallbackResultCode result_code,
+    printing::PpdProvider::CallbackResultCode result_code,
     const std::vector<std::string>& printers) {
   auto printers_value = base::MakeUnique<base::ListValue>();
-  if (result_code == PpdProvider::SUCCESS) {
+  if (result_code == printing::PpdProvider::SUCCESS) {
     printers_value->AppendStrings(printers);
   }
   base::DictionaryValue response;
-  response.SetBoolean("success", result_code == PpdProvider::SUCCESS);
+  response.SetBoolean("success", result_code == printing::PpdProvider::SUCCESS);
   response.Set("models", std::move(printers_value));
   ResolveJavascriptCallback(base::Value(js_callback), response);
 }
@@ -573,8 +571,8 @@ void CupsPrintersHandler::OnPrintersFound(
   std::unique_ptr<base::ListValue> printers_list =
       base::MakeUnique<base::ListValue>();
   // Filter out already-configured printers as we go.
-  SyncedPrintersManager* printers_manager =
-      SyncedPrintersManagerFactory::GetForBrowserContext(profile_);
+  PrintersManager* printers_manager =
+      PrintersManagerFactory::GetForBrowserContext(profile_);
   if (printers_manager != nullptr) {
     for (const auto& printer : printers) {
       if (printers_manager->GetPrinter(printer.id()).get() == nullptr) {
@@ -583,7 +581,7 @@ void CupsPrintersHandler::OnPrintersFound(
     }
   } else {
     LOG(WARNING) << "Failing to get available printers because no "
-                    "SyncedPrintersManager exists.";
+                    "PrintersManager exists.";
   }
   FireWebUIListener("on-printer-discovered", *printers_list);
 }

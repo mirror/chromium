@@ -195,9 +195,7 @@ void GLSurface::WaitForSnapshotRendering() {
 }
 
 void GLSurface::SetRelyOnImplicitSync() {
-  // Some GLSurface derived classes might not implement this workaround while
-  // still being allocated on devices where the workaround is enabled.
-  // It is fine to ignore this call in those cases.
+  NOTIMPLEMENTED();
 }
 
 GLSurface* GLSurface::GetCurrent() {

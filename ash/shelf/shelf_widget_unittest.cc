@@ -9,12 +9,12 @@
 #include "ash/shelf/shelf_constants.h"
 #include "ash/shelf/shelf_layout_manager.h"
 #include "ash/shelf/shelf_view.h"
-#include "ash/shelf/shelf_view_test_api.h"
 #include "ash/shell.h"
 #include "ash/system/status_area_widget.h"
 #include "ash/test/ash_test_base.h"
 #include "ash/test/ash_test_helper.h"
-#include "ash/test_shell_delegate.h"
+#include "ash/test/shelf_view_test_api.h"
+#include "ash/test/test_shell_delegate.h"
 #include "ash/wm/window_util.h"
 #include "ui/aura/window_event_dispatcher.h"
 #include "ui/display/display.h"
@@ -26,7 +26,7 @@ namespace ash {
 namespace {
 
 ShelfWidget* GetShelfWidget() {
-  return AshTestBase::GetPrimaryShelf()->shelf_widget();
+  return test::AshTestBase::GetPrimaryShelf()->shelf_widget();
 }
 
 ShelfLayoutManager* GetShelfLayoutManager() {
@@ -43,7 +43,7 @@ void TestLauncherAlignment(aura::Window* root,
                                      .ToString());
 }
 
-using ShelfWidgetTest = AshTestBase;
+using ShelfWidgetTest = test::AshTestBase;
 
 TEST_F(ShelfWidgetTest, TestAlignment) {
   UpdateDisplay("400x400");
@@ -320,7 +320,7 @@ TEST_F(ShelfWidgetTest, HiddenShelfHitTestTouch) {
   }
 }
 
-class ShelfWidgetAfterLoginTest : public AshTestBase {
+class ShelfWidgetAfterLoginTest : public test::AshTestBase {
  public:
   ShelfWidgetAfterLoginTest() { set_start_session(false); }
   ~ShelfWidgetAfterLoginTest() override = default;

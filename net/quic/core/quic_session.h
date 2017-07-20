@@ -20,7 +20,6 @@
 #include "net/quic/core/quic_packet_creator.h"
 #include "net/quic/core/quic_packets.h"
 #include "net/quic/core/quic_stream.h"
-#include "net/quic/core/quic_stream_frame_data_producer.h"
 #include "net/quic/core/quic_write_blocked_list.h"
 #include "net/quic/core/stream_notifier_interface.h"
 #include "net/quic/platform/api/quic_containers.h"
@@ -38,8 +37,7 @@ class QuicSessionPeer;
 }  // namespace test
 
 class QUIC_EXPORT_PRIVATE QuicSession : public QuicConnectionVisitorInterface,
-                                        public StreamNotifierInterface,
-                                        public QuicStreamFrameDataProducer {
+                                        public StreamNotifierInterface {
  public:
   // An interface from the session to the entity owning the session.
   // This lets the session notify its owner (the Dispatcher) when the connection
@@ -109,8 +107,6 @@ class QUIC_EXPORT_PRIVATE QuicSession : public QuicConnectionVisitorInterface,
   bool HasPendingHandshake() const override;
   bool HasOpenDynamicStreams() const override;
   void OnPathDegrading() override;
-
-  // QuicStreamFrameDataProducer methods:
   void SaveStreamData(QuicStreamId id,
                       QuicIOVector iov,
                       size_t iov_offset,

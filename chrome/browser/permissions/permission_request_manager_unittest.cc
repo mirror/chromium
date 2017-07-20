@@ -9,7 +9,6 @@
 #include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/histogram_tester.h"
-#include "build/build_config.h"
 #include "chrome/browser/permissions/mock_permission_request.h"
 #include "chrome/browser/permissions/permission_request.h"
 #include "chrome/browser/permissions/permission_request_manager.h"
@@ -194,31 +193,18 @@ TEST_F(PermissionRequestManagerTest, TwoRequestsTabSwitch) {
   EXPECT_TRUE(request_camera_.granted());
 }
 
-TEST_F(PermissionRequestManagerTest, CancelAfterTabSwitch) {
-  manager_->AddRequest(&request1_);
-  manager_->DisplayPendingRequests();
-  WaitForBubbleToBeShown();
-  EXPECT_TRUE(prompt_factory_->is_visible());
-  MockTabSwitchAway();
-  EXPECT_FALSE(prompt_factory_->is_visible());
-  manager_->CancelRequest(&request1_);
-  EXPECT_TRUE(request1_.finished());
-}
-
 TEST_F(PermissionRequestManagerTest, NoRequests) {
   manager_->DisplayPendingRequests();
   WaitForBubbleToBeShown();
   EXPECT_FALSE(prompt_factory_->is_visible());
 }
 
-#if !defined(OS_ANDROID)
-TEST_F(PermissionRequestManagerTest, PermissionRequestWhileTabSwitchedAway) {
+TEST_F(PermissionRequestManagerTest, NoView) {
   manager_->AddRequest(&request1_);
-  // Don't mark the tab as active.
+  // Don't display the pending requests.
   WaitForBubbleToBeShown();
   EXPECT_FALSE(prompt_factory_->is_visible());
 }
-#endif
 
 TEST_F(PermissionRequestManagerTest, TwoRequestsDoNotCoalesce) {
   manager_->DisplayPendingRequests();

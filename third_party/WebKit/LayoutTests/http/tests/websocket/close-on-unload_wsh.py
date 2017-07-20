@@ -31,6 +31,7 @@ import cgi
 import json
 from mod_pywebsocket import msgutil
 
+
 connections = {}
 
 

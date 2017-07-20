@@ -67,10 +67,10 @@ TaskQueueImpl::~TaskQueueImpl() {
 }
 
 TaskQueueImpl::Task::Task()
-    : TaskQueue::Task(tracked_objects::Location(),
-                      base::Closure(),
-                      base::TimeTicks(),
-                      true),
+    : PendingTask(tracked_objects::Location(),
+                  base::Closure(),
+                  base::TimeTicks(),
+                  true),
 #ifndef NDEBUG
       enqueue_order_set_(false),
 #endif
@@ -83,7 +83,7 @@ TaskQueueImpl::Task::Task(const tracked_objects::Location& posted_from,
                           base::TimeTicks desired_run_time,
                           EnqueueOrder sequence_number,
                           bool nestable)
-    : TaskQueue::Task(posted_from, std::move(task), desired_run_time, nestable),
+    : PendingTask(posted_from, std::move(task), desired_run_time, nestable),
 #ifndef NDEBUG
       enqueue_order_set_(false),
 #endif
@@ -97,7 +97,7 @@ TaskQueueImpl::Task::Task(const tracked_objects::Location& posted_from,
                           EnqueueOrder sequence_number,
                           bool nestable,
                           EnqueueOrder enqueue_order)
-    : TaskQueue::Task(posted_from, std::move(task), desired_run_time, nestable),
+    : PendingTask(posted_from, std::move(task), desired_run_time, nestable),
 #ifndef NDEBUG
       enqueue_order_set_(true),
 #endif
@@ -906,11 +906,10 @@ void TaskQueueImpl::SetOnTaskCompletedHandler(
   main_thread_only().on_task_completed_handler = std::move(handler);
 }
 
-void TaskQueueImpl::OnTaskCompleted(const TaskQueue::Task& task,
-                                    base::TimeTicks start,
+void TaskQueueImpl::OnTaskCompleted(base::TimeTicks start,
                                     base::TimeTicks end) {
   if (!main_thread_only().on_task_completed_handler.is_null())
-    main_thread_only().on_task_completed_handler.Run(task, start, end);
+    main_thread_only().on_task_completed_handler.Run(start, end);
 }
 
 void TaskQueueImpl::SetQueueEnabledForTest(bool enabled) {

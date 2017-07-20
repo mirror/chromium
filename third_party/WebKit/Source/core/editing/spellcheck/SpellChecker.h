@@ -27,6 +27,7 @@
 #define SpellChecker_h
 
 #include "core/CoreExport.h"
+#include "core/editing/FrameSelection.h"
 #include "core/editing/VisibleSelection.h"
 #include "core/editing/markers/DocumentMarker.h"
 #include "platform/heap/Handle.h"
@@ -46,7 +47,6 @@ class TextCheckerClient;
 class TextCheckingParagraph;
 struct TextCheckingResult;
 class TypingCommand;
-enum class TypingContinuation;
 class WebSpellCheckPanelHostClient;
 
 class CORE_EXPORT SpellChecker final : public GarbageCollected<SpellChecker> {
@@ -74,7 +74,7 @@ class CORE_EXPORT SpellChecker final : public GarbageCollected<SpellChecker> {
   void MarkMisspellingsForMovingParagraphs(const VisibleSelection&);
   void RespondToChangedContents();
   void RespondToChangedSelection(const Position& old_selection_start,
-                                 TypingContinuation);
+                                 FrameSelection::SetSelectionOptions);
   Optional<std::pair<Node*, SpellCheckMarker*>>
   GetSpellCheckMarkerTouchingSelection();
   void ReplaceMisspelledRange(const String&);

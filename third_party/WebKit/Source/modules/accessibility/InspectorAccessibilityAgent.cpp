@@ -72,7 +72,7 @@ void FillLiveRegionProperties(AXObject& ax_object,
 
 void FillGlobalStates(AXObject& ax_object,
                       protocol::Array<AXProperty>& properties) {
-  if (ax_object.Restriction() == kDisabled)
+  if (!ax_object.IsEnabled())
     properties.addItem(
         CreateProperty(AXGlobalStatesEnum::Disabled, CreateBooleanValue(true)));
 
@@ -165,8 +165,8 @@ void FillWidgetProperties(AXObject& ax_object,
         CreateProperty(AXWidgetAttributesEnum::Autocomplete,
                        CreateValue(autocomplete, AXValueTypeEnum::Token)));
 
-  bool has_popup = ax_object.AriaHasPopup();
-  if (has_popup || ax_object.HasAttribute(HTMLNames::aria_haspopupAttr)) {
+  if (ax_object.HasAttribute(HTMLNames::aria_haspopupAttr)) {
+    bool has_popup = ax_object.AriaHasPopup();
     properties.addItem(CreateProperty(AXWidgetAttributesEnum::Haspopup,
                                       CreateBooleanValue(has_popup)));
   }
@@ -214,9 +214,9 @@ void FillWidgetProperties(AXObject& ax_object,
   }
 
   if (RoleAllowsReadonly(role)) {
-    properties.addItem(CreateProperty(
-        AXWidgetAttributesEnum::Readonly,
-        CreateBooleanValue(ax_object.Restriction() == kReadOnly)));
+    properties.addItem(
+        CreateProperty(AXWidgetAttributesEnum::Readonly,
+                       CreateBooleanValue(ax_object.IsReadOnly())));
   }
 
   if (RoleAllowsRequired(role)) {

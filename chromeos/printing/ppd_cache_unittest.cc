@@ -21,6 +21,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace chromeos {
+namespace printing {
 namespace {
 
 // This fixture just points the cache at a temporary directory for the life of
@@ -113,4 +114,5 @@ TEST_F(PpdCacheTest, MissThenHit) {
 }
 
 }  // namespace
+}  // namespace printing
 }  // namespace chromeos

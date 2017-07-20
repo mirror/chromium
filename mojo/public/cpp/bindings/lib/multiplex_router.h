@@ -25,7 +25,6 @@
 #include "mojo/public/cpp/bindings/connector.h"
 #include "mojo/public/cpp/bindings/filter_chain.h"
 #include "mojo/public/cpp/bindings/interface_id.h"
-#include "mojo/public/cpp/bindings/lib/debug_util.h"
 #include "mojo/public/cpp/bindings/lib/deque.h"
 #include "mojo/public/cpp/bindings/message_header_validator.h"
 #include "mojo/public/cpp/bindings/pipe_control_message_handler.h"
@@ -44,20 +43,19 @@ namespace internal {
 // MultiplexRouter supports routing messages for multiple interfaces over a
 // single message pipe.
 //
-// It is created on the sequence where the master interface of the message pipe
+// It is created on the thread where the master interface of the message pipe
 // lives. Although it is ref-counted, it is guarateed to be destructed on the
-// same sequence.
-// Some public methods are only allowed to be called on the creating sequence;
-// while the others are safe to call from any sequence. Please see the method
+// same thread.
+// Some public methods are only allowed to be called on the creating thread;
+// while the others are safe to call from any threads. Please see the method
 // comments for more details.
 //
 // NOTE: CloseMessagePipe() or PassMessagePipe() MUST be called on |runner|'s
-// sequence before this object is destroyed.
+// thread before this object is destroyed.
 class MOJO_CPP_BINDINGS_EXPORT MultiplexRouter
     : NON_EXPORTED_BASE(public MessageReceiver),
       public AssociatedGroupController,
-      NON_EXPORTED_BASE(public PipeControlMessageHandlerDelegate),
-      NON_EXPORTED_BASE(private LifeTimeTrackerForDebugging) {
+      NON_EXPORTED_BASE(public PipeControlMessageHandlerDelegate) {
  public:
   enum Config {
     // There is only the master interface running on this router. Please note
@@ -86,7 +84,7 @@ class MOJO_CPP_BINDINGS_EXPORT MultiplexRouter
   void SetMasterInterfaceName(const char* name);
 
   // ---------------------------------------------------------------------------
-  // The following public methods are safe to call from any sequence.
+  // The following public methods are safe to call from any threads.
 
   // AssociatedGroupController implementation:
   InterfaceId AssociateInterface(
@@ -106,7 +104,7 @@ class MOJO_CPP_BINDINGS_EXPORT MultiplexRouter
   bool PrefersSerializedMessages() override;
 
   // ---------------------------------------------------------------------------
-  // The following public methods are called on the creating sequence.
+  // The following public methods are called on the creating thread.
 
   // Please note that this method shouldn't be called unless it results from an
   // explicit request of the user of bindings (e.g., the user sets an
@@ -120,8 +118,7 @@ class MOJO_CPP_BINDINGS_EXPORT MultiplexRouter
     return connector_.PassMessagePipe();
   }
 
-  // Blocks the current sequence until the first incoming message, or
-  // |deadline|.
+  // Blocks the current thread until the first incoming message, or |deadline|.
   bool WaitForIncomingMessage(MojoDeadline deadline) {
     DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
     return connector_.WaitForIncomingMessage(deadline);
@@ -173,7 +170,7 @@ class MOJO_CPP_BINDINGS_EXPORT MultiplexRouter
   void OnPipeConnectionError();
 
   // Specifies whether we are allowed to directly call into
-  // InterfaceEndpointClient (given that we are already on the same sequence as
+  // InterfaceEndpointClient (given that we are already on the same thread as
   // the client).
   enum ClientCallBehavior {
     // Don't call any InterfaceEndpointClient methods directly.

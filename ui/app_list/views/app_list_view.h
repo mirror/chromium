@@ -136,9 +136,6 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
   // Called when maximize mode starts and ends.
   void OnMaximizeModeChanged(bool started);
 
-  // Changes |app_list_state_| from |PEEKING| to |FULLSCREEN_ALL_APPS|.
-  bool HandleScroll(const ui::Event* event);
-
  private:
   friend class test::AppListViewTestApi;
 
@@ -178,7 +175,6 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
   void GetWidgetHitTestMask(gfx::Path* mask) const override;
 
   // Overridden from ui::EventHandler:
-  void OnScrollEvent(ui::ScrollEvent* event) override;
   void OnMouseEvent(ui::MouseEvent* event) override;
   void OnGestureEvent(ui::GestureEvent* event) override;
 

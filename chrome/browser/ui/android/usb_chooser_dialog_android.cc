@@ -241,3 +241,8 @@ bool UsbChooserDialogAndroid::DisplayDevice(
 
   return true;
 }
+
+// static
+bool UsbChooserDialogAndroid::Register(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}

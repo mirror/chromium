@@ -107,7 +107,12 @@ class StructTraitsTest : public testing::Test, public mojom::TraitsTestService {
     std::move(callback).Run(s);
   }
 
-  void EchoSurfaceSequence(const viz::SurfaceSequence& s,
+  void EchoSurfaceReference(const SurfaceReference& s,
+                            EchoSurfaceReferenceCallback callback) override {
+    std::move(callback).Run(s);
+  }
+
+  void EchoSurfaceSequence(const SurfaceSequence& s,
                            EchoSurfaceSequenceCallback callback) override {
     std::move(callback).Run(s);
   }
@@ -442,9 +447,11 @@ TEST_F(StructTraitsTest, CopyOutputRequest_BitmapRequest) {
   auto bitmap = base::MakeUnique<SkBitmap>();
   bitmap->allocN32Pixels(size.width(), size.height());
   base::RunLoop run_loop;
-  std::unique_ptr<CopyOutputRequest> input =
-      CopyOutputRequest::CreateBitmapRequest(base::BindOnce(
-          CopyOutputRequestCallback, run_loop.QuitClosure(), size));
+  auto callback =
+      base::Bind(CopyOutputRequestCallback, run_loop.QuitClosure(), size);
+
+  std::unique_ptr<CopyOutputRequest> input;
+  input = CopyOutputRequest::CreateBitmapRequest(callback);
   input->set_area(area);
   input->set_source(source);
   mojom::TraitsTestServicePtr proxy = GetTraitsTestProxy();
@@ -470,9 +477,10 @@ TEST_F(StructTraitsTest, CopyOutputRequest_TextureRequest) {
   mailbox.SetName(mailbox_name);
   viz::TextureMailbox texture_mailbox(mailbox, gpu::SyncToken(), target);
   base::RunLoop run_loop;
-  std::unique_ptr<CopyOutputRequest> input =
-      CopyOutputRequest::CreateRequest(base::BindOnce(
-          CopyOutputRequestCallback, run_loop.QuitClosure(), gfx::Size()));
+  auto callback = base::Bind(CopyOutputRequestCallback, run_loop.QuitClosure(),
+                             gfx::Size());
+
+  auto input = CopyOutputRequest::CreateRequest(callback);
   input->SetTextureMailbox(texture_mailbox);
 
   mojom::TraitsTestServicePtr proxy = GetTraitsTestProxy();
@@ -493,7 +501,7 @@ TEST_F(StructTraitsTest, CopyOutputRequest_TextureRequest) {
 TEST_F(StructTraitsTest, CopyOutputRequest_CallbackRunsOnce) {
   int n_called = 0;
   auto request = CopyOutputRequest::CreateRequest(
-      base::BindOnce(CopyOutputRequestCallbackRunsOnceCallback, &n_called));
+      base::Bind(CopyOutputRequestCallbackRunsOnceCallback, &n_called));
   auto result_sender = mojo::StructTraits<
       mojom::CopyOutputRequestDataView,
       std::unique_ptr<CopyOutputRequest>>::result_sender(request);
@@ -506,7 +514,7 @@ TEST_F(StructTraitsTest, CopyOutputRequest_CallbackRunsOnce) {
 
 TEST_F(StructTraitsTest, CopyOutputRequest_MessagePipeBroken) {
   base::RunLoop run_loop;
-  auto request = CopyOutputRequest::CreateRequest(base::BindOnce(
+  auto request = CopyOutputRequest::CreateRequest(base::Bind(
       CopyOutputRequestMessagePipeBrokenCallback, run_loop.QuitClosure()));
   auto result_sender = mojo::StructTraits<
       mojom::CopyOutputRequestDataView,
@@ -1025,12 +1033,30 @@ TEST_F(StructTraitsTest, SurfaceId) {
   EXPECT_EQ(local_surface_id, output.local_surface_id());
 }
 
+TEST_F(StructTraitsTest, SurfaceReference) {
+  const viz::SurfaceId parent_id(
+      viz::FrameSinkId(2016, 1234),
+      viz::LocalSurfaceId(0xfbadbeef,
+                          base::UnguessableToken::Deserialize(123, 456)));
+  const viz::SurfaceId child_id(
+      viz::FrameSinkId(1111, 9999),
+      viz::LocalSurfaceId(0xabcdabcd,
+                          base::UnguessableToken::Deserialize(333, 333)));
+  const SurfaceReference input(parent_id, child_id);
+
+  mojom::TraitsTestServicePtr proxy = GetTraitsTestProxy();
+  SurfaceReference output;
+  proxy->EchoSurfaceReference(input, &output);
+  EXPECT_EQ(parent_id, output.parent_id());
+  EXPECT_EQ(child_id, output.child_id());
+}
+
 TEST_F(StructTraitsTest, SurfaceSequence) {
   const viz::FrameSinkId frame_sink_id(2016, 1234);
   const uint32_t sequence = 0xfbadbeef;
-  viz::SurfaceSequence input(frame_sink_id, sequence);
+  SurfaceSequence input(frame_sink_id, sequence);
   mojom::TraitsTestServicePtr proxy = GetTraitsTestProxy();
-  viz::SurfaceSequence output;
+  SurfaceSequence output;
   proxy->EchoSurfaceSequence(input, &output);
   EXPECT_EQ(frame_sink_id, output.frame_sink_id);
   EXPECT_EQ(sequence, output.sequence);
@@ -1132,7 +1158,6 @@ TEST_F(StructTraitsTest, TransferableResource) {
   const uint32_t texture_target = 1337;
   const bool read_lock_fences_enabled = true;
   const bool is_software = false;
-  const uint32_t shared_bitmap_sequence_number = 123456;
   const bool is_overlay_candidate = true;
 
   gpu::MailboxHolder mailbox_holder;
@@ -1149,7 +1174,6 @@ TEST_F(StructTraitsTest, TransferableResource) {
   input.mailbox_holder = mailbox_holder;
   input.read_lock_fences_enabled = read_lock_fences_enabled;
   input.is_software = is_software;
-  input.shared_bitmap_sequence_number = shared_bitmap_sequence_number;
   input.is_overlay_candidate = is_overlay_candidate;
   mojom::TraitsTestServicePtr proxy = GetTraitsTestProxy();
   TransferableResource output;
@@ -1164,8 +1188,6 @@ TEST_F(StructTraitsTest, TransferableResource) {
             output.mailbox_holder.texture_target);
   EXPECT_EQ(read_lock_fences_enabled, output.read_lock_fences_enabled);
   EXPECT_EQ(is_software, output.is_software);
-  EXPECT_EQ(shared_bitmap_sequence_number,
-            output.shared_bitmap_sequence_number);
   EXPECT_EQ(is_overlay_candidate, output.is_overlay_candidate);
 }
 

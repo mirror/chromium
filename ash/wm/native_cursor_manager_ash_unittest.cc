@@ -7,7 +7,7 @@
 #include "ash/display/display_util.h"
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
-#include "ash/wm/cursor_manager_test_api.h"
+#include "ash/test/cursor_manager_test_api.h"
 #include "ui/aura/test/aura_test_utils.h"
 #include "ui/aura/test/test_window_delegate.h"
 #include "ui/aura/test/test_windows.h"
@@ -24,6 +24,7 @@
 #endif
 
 namespace ash {
+namespace test {
 
 namespace {
 
@@ -52,7 +53,7 @@ class MouseEventLocationDelegate : public aura::test::TestWindowDelegate {
 
 }  // namespace
 
-using NativeCursorManagerAshTest = AshTestBase;
+using NativeCursorManagerAshTest = test::AshTestBase;
 
 TEST_F(NativeCursorManagerAshTest, LockCursor) {
   ::wm::CursorManager* cursor_manager = Shell::Get()->cursor_manager();
@@ -199,4 +200,5 @@ TEST_F(NativeCursorManagerAshTest, CursorLoaderX11Test) {
 }
 #endif
 
+}  // namespace test
 }  // namespace ash

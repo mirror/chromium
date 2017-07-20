@@ -81,8 +81,7 @@ DEFINE_TRACE(DOMWindowEventQueue) {
   EventQueue::Trace(visitor);
 }
 
-bool DOMWindowEventQueue::EnqueueEvent(const WebTraceLocation& from_here,
-                                       Event* event) {
+bool DOMWindowEventQueue::EnqueueEvent(Event* event) {
   if (is_closed_)
     return false;
 
@@ -94,7 +93,7 @@ bool DOMWindowEventQueue::EnqueueEvent(const WebTraceLocation& from_here,
   DCHECK(was_added);  // It should not have already been in the list.
 
   if (!pending_event_timer_->IsActive())
-    pending_event_timer_->StartOneShot(0, from_here);
+    pending_event_timer_->StartOneShot(0, BLINK_FROM_HERE);
 
   return true;
 }

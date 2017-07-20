@@ -229,8 +229,7 @@ class BrowserViewControllerTest : public BlockCleanupTest {
     id factory = [OCMockObject
         mockForClass:[BrowserViewControllerDependencyFactory class]];
     [[[factory stub] andReturn:nil]
-        newTabStripControllerWithTabModel:[OCMArg any]
-                               dispatcher:[OCMArg any]];
+        newTabStripControllerWithTabModel:[OCMArg any]];
     [[[factory stub] andReturn:nil] newPreloadController];
     [[[factory stub] andReturnValue:OCMOCK_VALUE(toolbarModelIOS_)]
         newToolbarModelIOSWithDelegate:static_cast<ToolbarModelDelegateIOS*>(

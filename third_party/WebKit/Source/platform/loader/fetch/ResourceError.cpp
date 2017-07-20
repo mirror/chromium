@@ -26,27 +26,19 @@
 
 #include "platform/loader/fetch/ResourceError.h"
 
-#include "net/base/net_errors.h"
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/weborigin/KURL.h"
 #include "public/platform/Platform.h"
-#include "public/platform/WebString.h"
 #include "public/platform/WebURL.h"
 #include "public/platform/WebURLError.h"
 
 namespace blink {
 
-namespace {
-constexpr char kThrottledErrorDescription[] =
-    "Request throttled. Visit http://dev.chromium.org/throttling for more "
-    "information.";
-}  // namespace
-
 const char kErrorDomainBlinkInternal[] = "BlinkInternal";
 
 ResourceError ResourceError::CancelledError(const String& failing_url) {
-  return WebURLError(KURL(kParsedURLString, failing_url), false,
-                     net::ERR_ABORTED);
+  return Platform::Current()->CancelledError(
+      KURL(kParsedURLString, failing_url));
 }
 
 ResourceError ResourceError::CancelledDueToAccessCheckError(
@@ -59,19 +51,10 @@ ResourceError ResourceError::CancelledDueToAccessCheckError(
   return error;
 }
 
-ResourceError ResourceError::CancelledDueToAccessCheckError(
-    const String& failing_url,
-    ResourceRequestBlockedReason blocked_reason,
-    const String& localized_description) {
-  ResourceError error =
-      CancelledDueToAccessCheckError(failing_url, blocked_reason);
-  error.localized_description_ = localized_description;
-  return error;
-}
-
 ResourceError ResourceError::CacheMissError(const String& failing_url) {
-  return WebURLError(KURL(kParsedURLString, failing_url), false,
-                     net::ERR_CACHE_MISS);
+  ResourceError error(kErrorDomainBlinkInternal, 0, failing_url, String());
+  error.SetIsCacheMiss(true);
+  return error;
 }
 
 ResourceError ResourceError::Copy() const {
@@ -84,7 +67,9 @@ ResourceError ResourceError::Copy() const {
   error_copy.is_cancellation_ = is_cancellation_;
   error_copy.is_access_check_ = is_access_check_;
   error_copy.is_timeout_ = is_timeout_;
+  error_copy.stale_copy_in_cache_ = stale_copy_in_cache_;
   error_copy.was_ignored_by_handler_ = was_ignored_by_handler_;
+  error_copy.is_cache_miss_ = is_cache_miss_;
   return error_copy;
 }
 
@@ -122,31 +107,10 @@ bool ResourceError::Compare(const ResourceError& a, const ResourceError& b) {
   if (a.WasIgnoredByHandler() != b.WasIgnoredByHandler())
     return false;
 
+  if (a.IsCacheMiss() != b.IsCacheMiss())
+    return false;
+
   return true;
-}
-
-void ResourceError::InitializeWebURLError(WebURLError* error,
-                                          const WebURL& url,
-                                          bool stale_copy_in_cache,
-                                          int reason) {
-  error->domain = WebString::FromASCII(net::kErrorDomain);
-  error->reason = reason;
-  error->stale_copy_in_cache = stale_copy_in_cache;
-  error->unreachable_url = url;
-  if (reason == net::ERR_ABORTED) {
-    error->is_cancellation = true;
-  } else if (reason == net::ERR_TEMPORARILY_THROTTLED) {
-    error->localized_description =
-        WebString::FromASCII(kThrottledErrorDescription);
-  } else {
-    error->localized_description =
-        WebString::FromASCII(net::ErrorToString(reason));
-  }
-}
-
-bool ResourceError::IsCacheMiss() const {
-  return domain_ == String(net::kErrorDomain) &&
-         error_code_ == net::ERR_CACHE_MISS;
 }
 
 }  // namespace blink

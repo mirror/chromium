@@ -12,12 +12,15 @@
 #include "ash/utility/screenshot_controller.h"
 #include "base/memory/ptr_util.h"
 #include "chrome/browser/chrome_notification_types.h"
+#include "chrome/browser/chromeos/arc/arc_util.h"
 #include "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.h"
 #include "chrome/browser/chromeos/note_taking_helper.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/common/pref_names.h"
+#include "components/arc/arc_bridge_service.h"
+#include "components/arc/arc_service_manager.h"
 #include "components/prefs/pref_change_registrar.h"
 #include "components/prefs/pref_service.h"
 #include "components/user_manager/user_manager.h"
@@ -28,9 +31,8 @@ namespace chromeos {
 
 class VoiceInteractionScreenshotDelegate : public ash::ScreenshotDelegate {
  public:
-  explicit VoiceInteractionScreenshotDelegate(Profile* profile)
-      : profile_(profile) {}
-  ~VoiceInteractionScreenshotDelegate() override = default;
+  VoiceInteractionScreenshotDelegate() {}
+  ~VoiceInteractionScreenshotDelegate() override {}
 
  private:
   void HandleTakeScreenshotForAllRootWindows() override { NOTIMPLEMENTED(); }
@@ -38,8 +40,8 @@ class VoiceInteractionScreenshotDelegate : public ash::ScreenshotDelegate {
   void HandleTakePartialScreenshot(aura::Window* window,
                                    const gfx::Rect& rect) override {
     auto* framework =
-        arc::ArcVoiceInteractionFrameworkService::GetForBrowserContext(
-            profile_);
+        arc::ArcServiceManager::Get()
+            ->GetService<arc::ArcVoiceInteractionFrameworkService>();
     if (!framework)
       return;
     double device_scale_factor = window->layer()->device_scale_factor();
@@ -52,8 +54,6 @@ class VoiceInteractionScreenshotDelegate : public ash::ScreenshotDelegate {
   }
 
   bool CanTakeScreenshot() override { return true; }
-
-  Profile* const profile_;  // Owned by ProfileManager.
 
   DISALLOW_COPY_AND_ASSIGN(VoiceInteractionScreenshotDelegate);
 };
@@ -181,7 +181,7 @@ void PaletteDelegateChromeOS::TakePartialScreenshot(const base::Closure& done) {
     // into a separate tool next to "Capture region".
     if (!voice_interaction_screenshot_delegate_) {
       voice_interaction_screenshot_delegate_ =
-          base::MakeUnique<VoiceInteractionScreenshotDelegate>(profile_);
+          base::MakeUnique<VoiceInteractionScreenshotDelegate>();
     }
     screenshot_delegate = voice_interaction_screenshot_delegate_.get();
   } else {
@@ -203,14 +203,19 @@ void PaletteDelegateChromeOS::CancelPartialScreenshot() {
 }
 
 bool PaletteDelegateChromeOS::IsMetalayerSupported() {
-  auto* service =
-      arc::ArcVoiceInteractionFrameworkService::GetForBrowserContext(profile_);
+  if (!arc::IsArcAllowedForProfile(profile_))
+    return false;
+
+  arc::ArcVoiceInteractionFrameworkService* service =
+      arc::ArcServiceManager::Get()
+          ->GetService<arc::ArcVoiceInteractionFrameworkService>();
   return service && service->IsMetalayerSupported();
 }
 
 void PaletteDelegateChromeOS::ShowMetalayer(const base::Closure& closed) {
-  auto* service =
-      arc::ArcVoiceInteractionFrameworkService::GetForBrowserContext(profile_);
+  arc::ArcVoiceInteractionFrameworkService* service =
+      arc::ArcServiceManager::Get()
+          ->GetService<arc::ArcVoiceInteractionFrameworkService>();
   if (!service) {
     if (!closed.is_null())
       closed.Run();
@@ -220,8 +225,9 @@ void PaletteDelegateChromeOS::ShowMetalayer(const base::Closure& closed) {
 }
 
 void PaletteDelegateChromeOS::HideMetalayer() {
-  auto* service =
-      arc::ArcVoiceInteractionFrameworkService::GetForBrowserContext(profile_);
+  arc::ArcVoiceInteractionFrameworkService* service =
+      arc::ArcServiceManager::Get()
+          ->GetService<arc::ArcVoiceInteractionFrameworkService>();
   if (!service)
     return;
   service->HideMetalayer();

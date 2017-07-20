@@ -63,12 +63,11 @@ class MultiThreadedTest : public ::testing::Test {
       WebTaskRunner* task_runner =
           threads[i]->PlatformThread().GetWebTaskRunner();
 
-      task_runner->PostTask(FROM_HERE,
-                            CrossThreadBind(
-                                [](WebThreadSupportingGC* thread) {
-                                  thread->InitializeOnThread();
-                                },
-                                CrossThreadUnretained(threads[i].get())));
+      task_runner->PostTask(
+          FROM_HERE,
+          CrossThreadBind(
+              [](WebThreadSupportingGC* thread) { thread->Initialize(); },
+              CrossThreadUnretained(threads[i].get())));
 
       for (int j = 0; j < callbacks_per_thread_; ++j) {
         task_runner->PostTask(FROM_HERE,
@@ -78,7 +77,7 @@ class MultiThreadedTest : public ::testing::Test {
       task_runner->PostTask(
           FROM_HERE, CrossThreadBind(
                          [](WebThreadSupportingGC* thread, WaitableEvent* w) {
-                           thread->ShutdownOnThread();
+                           thread->Shutdown();
                            w->Signal();
                          },
                          CrossThreadUnretained(threads[i].get()),

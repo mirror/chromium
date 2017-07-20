@@ -359,12 +359,12 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
+              "android_devices": "6",
               "device_os": "KTU84P",
               "device_type": "hammerhead"
             }
           ],
-          "hard_timeout": 960,
+          "hard_timeout": 1800,
           "output_links": [
             {
               "link": [
@@ -374,8 +374,7 @@
               ],
               "name": "shard #${SHARD_INDEX} logcats"
             }
-          ],
-          "shards": 12
+          ]
         },
         "test": "chrome_public_test_apk"
       },
@@ -1589,7 +1588,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
+              "android_devices": "6",
               "device_os": "KTU84P",
               "device_type": "hammerhead"
             }
@@ -1604,8 +1603,7 @@
               ],
               "name": "shard #${SHARD_INDEX} logcats"
             }
-          ],
-          "shards": 8
+          ]
         },
         "test": "webview_instrumentation_test_apk"
       }
@@ -2000,12 +1998,12 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
+              "android_devices": "6",
               "device_os": "KTU84P",
               "device_type": "hammerhead"
             }
           ],
-          "hard_timeout": 960,
+          "hard_timeout": 2400,
           "output_links": [
             {
               "link": [
@@ -2015,8 +2013,7 @@
               ],
               "name": "shard #${SHARD_INDEX} logcats"
             }
-          ],
-          "shards": 20
+          ]
         },
         "test": "chrome_public_test_apk"
       },
@@ -3231,7 +3228,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
+              "android_devices": "6",
               "device_os": "KTU84P",
               "device_type": "hammerhead"
             }
@@ -3246,8 +3243,7 @@
               ],
               "name": "shard #${SHARD_INDEX} logcats"
             }
-          ],
-          "shards": 8
+          ]
         },
         "test": "webview_instrumentation_test_apk"
       }

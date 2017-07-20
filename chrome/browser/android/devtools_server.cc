@@ -170,6 +170,10 @@ bool DevToolsServer::IsStarted() const {
   return is_started_;
 }
 
+bool RegisterDevToolsServer(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
 static jlong InitRemoteDebugging(
     JNIEnv* env,
     const JavaParamRef<jobject>& obj,

@@ -9,12 +9,11 @@
 #include "base/command_line.h"
 #include "base/gtest_prod_util.h"
 #include "base/json/json_writer.h"
-#include "base/memory/singleton.h"
 #include "base/values.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chromeos/arc/arc_session_manager.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
-#include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/common/pref_names.h"
 #include "chromeos/chromeos_switches.h"
 #include "chromeos/network/network_handler.h"
@@ -26,7 +25,6 @@
 #include "chromeos/settings/cros_settings_names.h"
 #include "chromeos/settings/timezone_settings.h"
 #include "components/arc/arc_bridge_service.h"
-#include "components/arc/arc_browser_context_keyed_service_factory_base.h"
 #include "components/arc/intent_helper/font_size_util.h"
 #include "components/onc/onc_pref_names.h"
 #include "components/prefs/pref_change_registrar.h"
@@ -69,31 +67,20 @@ bool GetHttpProxyServer(const ProxyConfigDictionary* proxy_config_dict,
   return !host->empty() && *port;
 }
 
+PrefService* GetPrefs() {
+  return ProfileManager::GetActiveUserProfile()->GetPrefs();
+}
+
+// Returns whether kProxy pref proxy config is applied.
+bool IsPrefProxyConfigApplied() {
+  net::ProxyConfig config;
+  return PrefProxyConfigTrackerImpl::PrefPrecedes(
+      PrefProxyConfigTrackerImpl::ReadPrefConfig(GetPrefs(), &config));
+}
+
 }  // namespace
 
 namespace arc {
-namespace {
-
-// Singleton factory for ArcSettingsService.
-class ArcSettingsServiceFactory
-    : public internal::ArcBrowserContextKeyedServiceFactoryBase<
-          ArcSettingsService,
-          ArcSettingsServiceFactory> {
- public:
-  // Factory name used by ArcBrowserContextKeyedServiceFactoryBase.
-  static constexpr const char* kName = "ArcSettingsServiceFactory";
-
-  static ArcSettingsServiceFactory* GetInstance() {
-    return base::Singleton<ArcSettingsServiceFactory>::get();
-  }
-
- private:
-  friend base::DefaultSingletonTraits<ArcSettingsServiceFactory>;
-  ArcSettingsServiceFactory() = default;
-  ~ArcSettingsServiceFactory() override = default;
-};
-
-}  // namespace
 
 // Listens to changes for select Chrome settings (prefs) that Android cares
 // about and sends the new values to Android to keep the state in sync.
@@ -103,8 +90,7 @@ class ArcSettingsServiceImpl
       public ArcSessionManager::Observer,
       public chromeos::NetworkStateHandlerObserver {
  public:
-  ArcSettingsServiceImpl(content::BrowserContext* context,
-                         ArcBridgeService* arc_bridge_service);
+  explicit ArcSettingsServiceImpl(ArcBridgeService* arc_bridge_service);
   ~ArcSettingsServiceImpl() override;
 
   // Called when a Chrome pref we have registered an observer for has changed.
@@ -125,13 +111,6 @@ class ArcSettingsServiceImpl
   void DefaultNetworkChanged(const chromeos::NetworkState* network) override;
 
  private:
-  PrefService* GetPrefs() const {
-    return Profile::FromBrowserContext(context_)->GetPrefs();
-  }
-
-  // Returns whether kProxy pref proxy config is applied.
-  bool IsPrefProxyConfigApplied() const;
-
   // Registers to observe changes for Chrome settings we care about.
   void StartObservingSettingsChanges();
 
@@ -189,14 +168,12 @@ class ArcSettingsServiceImpl
   void SendSettingsBroadcast(const std::string& action,
                              const base::DictionaryValue& extras) const;
 
-  content::BrowserContext* const context_;
-  ArcBridgeService* const arc_bridge_service_;  // Owned by ArcServiceManager.
-
   // Manages pref observation registration.
   PrefChangeRegistrar registrar_;
 
   std::unique_ptr<chromeos::CrosSettings::ObserverSubscription>
       reporting_consent_subscription_;
+  ArcBridgeService* const arc_bridge_service_;
 
   scoped_refptr<device::BluetoothAdapter> bluetooth_adapter_;
 
@@ -207,11 +184,8 @@ class ArcSettingsServiceImpl
 };
 
 ArcSettingsServiceImpl::ArcSettingsServiceImpl(
-    content::BrowserContext* context,
     ArcBridgeService* arc_bridge_service)
-    : context_(context),
-      arc_bridge_service_(arc_bridge_service),
-      weak_factory_(this) {
+    : arc_bridge_service_(arc_bridge_service), weak_factory_(this) {
   StartObservingSettingsChanges();
   SyncRuntimeSettings();
   DCHECK(ArcSessionManager::Get());
@@ -294,12 +268,6 @@ void ArcSettingsServiceImpl::DefaultNetworkChanged(
   // settings, it should be translated here.
   if (network && !IsPrefProxyConfigApplied())
     SyncProxySettings();
-}
-
-bool ArcSettingsServiceImpl::IsPrefProxyConfigApplied() const {
-  net::ProxyConfig config;
-  return PrefProxyConfigTrackerImpl::PrefPrecedes(
-      PrefProxyConfigTrackerImpl::ReadPrefConfig(GetPrefs(), &config));
 }
 
 void ArcSettingsServiceImpl::StartObservingSettingsChanges() {
@@ -641,30 +609,17 @@ void ArcSettingsServiceImpl::SendSettingsBroadcast(
                           extras_json);
 }
 
-// static
-ArcSettingsService* ArcSettingsService::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcSettingsServiceFactory::GetForBrowserContext(context);
-}
-
-ArcSettingsService::ArcSettingsService(content::BrowserContext* context,
-                                       ArcBridgeService* bridge_service)
-    : context_(context), arc_bridge_service_(bridge_service) {
-  arc_bridge_service_->intent_helper()->AddObserver(this);
+ArcSettingsService::ArcSettingsService(ArcBridgeService* bridge_service)
+    : ArcService(bridge_service) {
+  arc_bridge_service()->intent_helper()->AddObserver(this);
 }
 
 ArcSettingsService::~ArcSettingsService() {
-  // TODO(hidehiko): Currently, the lifetime of ArcBridgeService and
-  // BrowserContextKeyedService is not nested.
-  // If ArcServiceManager::Get() returns nullptr, it is already destructed,
-  // so do not touch it.
-  if (ArcServiceManager::Get())
-    arc_bridge_service_->intent_helper()->RemoveObserver(this);
+  arc_bridge_service()->intent_helper()->RemoveObserver(this);
 }
 
 void ArcSettingsService::OnInstanceReady() {
-  impl_ =
-      base::MakeUnique<ArcSettingsServiceImpl>(context_, arc_bridge_service_);
+  impl_.reset(new ArcSettingsServiceImpl(arc_bridge_service()));
 }
 
 void ArcSettingsService::OnInstanceClosed() {

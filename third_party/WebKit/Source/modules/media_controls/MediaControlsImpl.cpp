@@ -452,18 +452,18 @@ void MediaControlsImpl::InitializeControls() {
   // relative to each other.  The first item appended appears at the top of the
   // overflow menu.
   overflow_list_->AppendChild(play_button_->CreateOverflowElement(
-      new MediaControlPlayButtonElement(*this)));
+      *this, new MediaControlPlayButtonElement(*this)));
   overflow_list_->AppendChild(fullscreen_button_->CreateOverflowElement(
-      new MediaControlFullscreenButtonElement(*this)));
+      *this, new MediaControlFullscreenButtonElement(*this)));
   overflow_list_->AppendChild(download_button_->CreateOverflowElement(
-      new MediaControlDownloadButtonElement(*this)));
+      *this, new MediaControlDownloadButtonElement(*this)));
   overflow_list_->AppendChild(mute_button_->CreateOverflowElement(
-      new MediaControlMuteButtonElement(*this)));
+      *this, new MediaControlMuteButtonElement(*this)));
   overflow_list_->AppendChild(cast_button_->CreateOverflowElement(
-      new MediaControlCastButtonElement(*this, false)));
+      *this, new MediaControlCastButtonElement(*this, false)));
   overflow_list_->AppendChild(
       toggle_closed_captions_button_->CreateOverflowElement(
-          new MediaControlToggleClosedCaptionsButtonElement(*this)));
+          *this, new MediaControlToggleClosedCaptionsButtonElement(*this)));
 }
 
 Node::InsertionNotificationRequest MediaControlsImpl::InsertedInto(
@@ -1170,16 +1170,6 @@ void MediaControlsImpl::ComputeWhichControlsFit() {
     bool does_fit = size_.Width() >= kMinWidthForOverlayPlayButton &&
                     size_.Height() >= kMinHeightForOverlayPlayButton;
     overlay_play_button_->SetDoesFit(does_fit);
-  }
-
-  // Record the display state when needed. It is only recorded when the media
-  // element is in a state that allows it in order to reduce noise in the
-  // metrics.
-  if (MediaControlInputElement::ShouldRecordDisplayStates(MediaElement())) {
-    // Record which controls are used.
-    for (const auto& element : elements)
-      element->MaybeRecordDisplayed();
-    overflow_menu_->MaybeRecordDisplayed();
   }
 }
 

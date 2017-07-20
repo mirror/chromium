@@ -11,6 +11,7 @@
 #include <iterator>
 #include <utility>
 
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
@@ -32,6 +33,179 @@
 #include "ui/base/win/accessibility_misc_utils.h"
 #include "ui/base/win/atl_module.h"
 
+namespace {
+
+// IMPORTANT!
+// These values are written to logs.  Do not renumber or delete
+// existing items; add new entries to the end of the list.
+enum {
+  UMA_API_ACC_DO_DEFAULT_ACTION = 0,
+  UMA_API_ACC_HIT_TEST = 1,
+  UMA_API_ACC_LOCATION = 2,
+  UMA_API_ACC_NAVIGATE = 3,
+  UMA_API_ACC_SELECT = 4,
+  UMA_API_ADD_SELECTION = 5,
+  UMA_API_CONVERT_RETURNED_ELEMENT = 6,
+  UMA_API_DO_ACTION = 7,
+  UMA_API_GET_ACCESSIBLE_AT = 8,
+  UMA_API_GET_ACC_CHILD = 9,
+  UMA_API_GET_ACC_CHILD_COUNT = 10,
+  UMA_API_GET_ACC_DEFAULT_ACTION = 11,
+  UMA_API_GET_ACC_DESCRIPTION = 12,
+  UMA_API_GET_ACC_FOCUS = 13,
+  UMA_API_GET_ACC_HELP = 14,
+  UMA_API_GET_ACC_HELP_TOPIC = 15,
+  UMA_API_GET_ACC_KEYBOARD_SHORTCUT = 16,
+  UMA_API_GET_ACC_NAME = 17,
+  UMA_API_GET_ACC_PARENT = 18,
+  UMA_API_GET_ACC_ROLE = 19,
+  UMA_API_GET_ACC_SELECTION = 20,
+  UMA_API_GET_ACC_STATE = 21,
+  UMA_API_GET_ACC_VALUE = 22,
+  UMA_API_GET_ANCHOR = 23,
+  UMA_API_GET_ANCHOR_TARGET = 24,
+  UMA_API_GET_APP_NAME = 25,
+  UMA_API_GET_APP_VERSION = 26,
+  UMA_API_GET_ATTRIBUTES_FOR_NAMES = 27,
+  UMA_API_GET_CAPTION = 28,
+  UMA_API_GET_CARET_OFFSET = 29,
+  UMA_API_GET_CELL_AT = 30,
+  UMA_API_GET_CHARACTER_EXTENTS = 31,
+  UMA_API_GET_CHILD_AT = 32,
+  UMA_API_GET_CHILD_INDEX = 33,
+  UMA_API_GET_CLIPPED_SUBSTRING_BOUNDS = 34,
+  UMA_API_GET_COLUMN_DESCRIPTION = 35,
+  UMA_API_GET_COLUMN_EXTENT = 36,
+  UMA_API_GET_COLUMN_EXTENT_AT = 37,
+  UMA_API_GET_COLUMN_HEADER = 38,
+  UMA_API_GET_COLUMN_HEADER_CELLS = 39,
+  UMA_API_GET_COLUMN_INDEX = 40,
+  UMA_API_GET_COMPUTED_STYLE = 41,
+  UMA_API_GET_COMPUTED_STYLE_FOR_PROPERTIES = 42,
+  UMA_API_GET_CURRENT_VALUE = 43,
+  UMA_API_GET_DESCRIPTION = 44,
+  UMA_API_GET_DOC_TYPE = 45,
+  UMA_API_GET_DOM_TEXT = 46,
+  UMA_API_GET_END_INDEX = 47,
+  UMA_API_GET_EXTENDED_ROLE = 48,
+  UMA_API_GET_EXTENDED_STATES = 49,
+  UMA_API_GET_FIRST_CHILD = 50,
+  UMA_API_GET_FONT_FAMILY = 51,
+  UMA_API_GET_GROUP_POSITION = 52,
+  UMA_API_GET_HOST_RAW_ELEMENT_PROVIDER = 53,
+  UMA_API_GET_HYPERLINK = 54,
+  UMA_API_GET_HYPERLINK_INDEX = 55,
+  UMA_API_GET_IACCESSIBLE_PAIR = 56,
+  UMA_API_GET_IMAGE_POSITION = 57,
+  UMA_API_GET_IMAGE_SIZE = 58,
+  UMA_API_GET_INDEX_IN_PARENT = 59,
+  UMA_API_GET_INNER_HTML = 60,
+  UMA_API_GET_IS_COLUMN_SELECTED = 61,
+  UMA_API_GET_IS_ROW_SELECTED = 62,
+  UMA_API_GET_IS_SELECTED = 63,
+  UMA_API_GET_KEY_BINDING = 64,
+  UMA_API_GET_LANGUAGE = 65,
+  UMA_API_GET_LAST_CHILD = 66,
+  UMA_API_GET_LOCALE = 67,
+  UMA_API_GET_LOCALIZED_EXTENDED_ROLE = 68,
+  UMA_API_GET_LOCALIZED_EXTENDED_STATES = 69,
+  UMA_API_GET_LOCALIZED_NAME = 70,
+  UMA_API_GET_LOCAL_INTERFACE = 71,
+  UMA_API_GET_MAXIMUM_VALUE = 72,
+  UMA_API_GET_MIME_TYPE = 73,
+  UMA_API_GET_MINIMUM_VALUE = 74,
+  UMA_API_GET_NAME = 75,
+  UMA_API_GET_NAMESPACE_URI_FOR_ID = 76,
+  UMA_API_GET_NEW_TEXT = 77,
+  UMA_API_GET_NEXT_SIBLING = 78,
+  UMA_API_GET_NODE_INFO = 79,
+  UMA_API_GET_N_CHARACTERS = 80,
+  UMA_API_GET_N_COLUMNS = 81,
+  UMA_API_GET_N_EXTENDED_STATES = 82,
+  UMA_API_GET_N_HYPERLINKS = 83,
+  UMA_API_GET_N_RELATIONS = 84,
+  UMA_API_GET_N_ROWS = 85,
+  UMA_API_GET_N_SELECTED_CELLS = 86,
+  UMA_API_GET_N_SELECTED_CHILDREN = 87,
+  UMA_API_GET_N_SELECTED_COLUMNS = 88,
+  UMA_API_GET_N_SELECTED_ROWS = 89,
+  UMA_API_GET_N_SELECTIONS = 90,
+  UMA_API_GET_OBJECT_FOR_CHILD = 91,
+  UMA_API_GET_OFFSET_AT_POINT = 92,
+  UMA_API_GET_OLD_TEXT = 93,
+  UMA_API_GET_PARENT_NODE = 94,
+  UMA_API_GET_PATTERN_PROVIDER = 95,
+  UMA_API_GET_PREVIOUS_SIBLING = 96,
+  UMA_API_GET_PROPERTY_VALUE = 97,
+  UMA_API_GET_PROVIDER_OPTIONS = 98,
+  UMA_API_GET_RELATION = 99,
+  UMA_API_GET_RELATIONS = 100,
+  UMA_API_GET_ROW_COLUMN_EXTENTS = 101,
+  UMA_API_GET_ROW_COLUMN_EXTENTS_AT_INDEX = 102,
+  UMA_API_GET_ROW_DESCRIPTION = 103,
+  UMA_API_GET_ROW_EXTENT = 104,
+  UMA_API_GET_ROW_EXTENT_AT = 105,
+  UMA_API_GET_ROW_HEADER = 106,
+  UMA_API_GET_ROW_HEADER_CELLS = 107,
+  UMA_API_GET_ROW_INDEX = 108,
+  UMA_API_GET_RUNTIME_ID = 109,
+  UMA_API_GET_SELECTED_CELLS = 110,
+  UMA_API_GET_SELECTED_CHILDREN = 111,
+  UMA_API_GET_SELECTED_COLUMNS = 112,
+  UMA_API_GET_SELECTED_ROWS = 113,
+  UMA_API_GET_SELECTION = 114,
+  UMA_API_GET_START_INDEX = 115,
+  UMA_API_GET_STATES = 116,
+  UMA_API_GET_SUMMARY = 117,
+  UMA_API_GET_TABLE = 118,
+  UMA_API_GET_TEXT = 119,
+  UMA_API_GET_TEXT_AFTER_OFFSET = 120,
+  UMA_API_GET_TEXT_AT_OFFSET = 121,
+  UMA_API_GET_TEXT_BEFORE_OFFSET = 122,
+  UMA_API_GET_TITLE = 123,
+  UMA_API_GET_TOOLKIT_NAME = 124,
+  UMA_API_GET_TOOLKIT_VERSION = 125,
+  UMA_API_GET_UNCLIPPED_SUBSTRING_BOUNDS = 126,
+  UMA_API_GET_UNIQUE_ID = 127,
+  UMA_API_GET_URL = 128,
+  UMA_API_GET_VALID = 129,
+  UMA_API_GET_WINDOW_HANDLE = 130,
+  UMA_API_IA2_GET_ATTRIBUTES = 131,
+  UMA_API_IA2_SCROLL_TO = 132,
+  UMA_API_IAACTION_GET_DESCRIPTION = 133,
+  UMA_API_IATEXT_GET_ATTRIBUTES = 134,
+  UMA_API_ISIMPLEDOMNODE_GET_ATTRIBUTES = 135,
+  UMA_API_ISIMPLEDOMNODE_SCROLL_TO = 136,
+  UMA_API_N_ACTIONS = 137,
+  UMA_API_PUT_ALTERNATE_VIEW_MEDIA_TYPES = 138,
+  UMA_API_QUERY_SERVICE = 139,
+  UMA_API_REMOVE_SELECTION = 140,
+  UMA_API_ROLE = 141,
+  UMA_API_SCROLL_SUBSTRING_TO = 142,
+  UMA_API_SCROLL_SUBSTRING_TO_POINT = 143,
+  UMA_API_SCROLL_TO_POINT = 144,
+  UMA_API_SCROLL_TO_SUBSTRING = 145,
+  UMA_API_SELECT_COLUMN = 146,
+  UMA_API_SELECT_ROW = 147,
+  UMA_API_SET_CARET_OFFSET = 148,
+  UMA_API_SET_CURRENT_VALUE = 149,
+  UMA_API_SET_SELECTION = 150,
+  UMA_API_TABLE2_GET_SELECTED_COLUMNS = 151,
+  UMA_API_TABLE2_GET_SELECTED_ROWS = 152,
+  UMA_API_TABLECELL_GET_COLUMN_INDEX = 153,
+  UMA_API_TABLECELL_GET_IS_SELECTED = 154,
+  UMA_API_TABLECELL_GET_ROW_INDEX = 155,
+  UMA_API_UNSELECT_COLUMN = 156,
+  UMA_API_UNSELECT_ROW = 157,
+
+  // This must always be the last enum. It's okay for its value to
+  // increase, but none of the other enum values may change.
+  UMA_API_MAX
+};
+
+#define WIN_ACCESSIBILITY_API_HISTOGRAM(enum_value) \
+  UMA_HISTOGRAM_ENUMERATION("Accessibility.WinAPIs", enum_value, UMA_API_MAX)
+
 // There is no easy way to decouple |kScreenReader| and |kHTML| accessibility
 // modes when Windows screen readers are used. For example, certain roles use
 // the HTML tag name. Input fields require their type attribute to be exposed.
@@ -42,6 +216,8 @@ const uint32_t kScreenReaderAndHTMLAccessibilityModes =
 const WCHAR* const IA2_RELATION_DETAILS = L"details";
 const WCHAR* const IA2_RELATION_DETAILS_FOR = L"detailsFor";
 const WCHAR* const IA2_RELATION_ERROR_MESSAGE = L"errorMessage";
+
+}  // namespace
 
 namespace content {
 
@@ -239,19 +415,231 @@ BrowserAccessibilityComWin::~BrowserAccessibilityComWin() {
 }
 
 //
-// IAccessible overrides:
+// IAccessible methods.
 //
+// Conventions:
+// * Always test for owner() first and return E_FAIL if it's false.
+// * Always check for invalid arguments first, even if they're unused.
+// * Return S_FALSE if the only output is a string argument and it's empty.
+// * There are some methods that don't touch any state such as get_toolkitName.
+//   For these rare cases, you may not need to call owner().
+//
+
+HRESULT BrowserAccessibilityComWin::accDoDefaultAction(VARIANT var_id) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_ACC_DO_DEFAULT_ACTION);
+
+  if (!owner())
+    return E_FAIL;
+
+  return AXPlatformNodeWin::accDoDefaultAction(var_id);
+}
+
+STDMETHODIMP BrowserAccessibilityComWin::accHitTest(LONG x_left,
+                                                    LONG y_top,
+                                                    VARIANT* child) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_ACC_HIT_TEST);
+
+  if (!owner())
+    return E_FAIL;
+
+  return AXPlatformNodeWin::accHitTest(x_left, y_top, child);
+}
+
+STDMETHODIMP BrowserAccessibilityComWin::accLocation(LONG* x_left,
+                                                     LONG* y_top,
+                                                     LONG* width,
+                                                     LONG* height,
+                                                     VARIANT var_id) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_ACC_LOCATION);
+  if (!owner())
+    return E_FAIL;
+
+  return AXPlatformNodeWin::accLocation(x_left, y_top, width, height, var_id);
+}
+
+STDMETHODIMP BrowserAccessibilityComWin::accNavigate(LONG nav_dir,
+                                                     VARIANT start,
+                                                     VARIANT* end) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_ACC_NAVIGATE);
+  if (!owner())
+    return E_FAIL;
+
+  return AXPlatformNodeWin::accNavigate(nav_dir, start, end);
+}
+
+STDMETHODIMP BrowserAccessibilityComWin::get_accChild(VARIANT var_child,
+                                                      IDispatch** disp_child) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ACC_CHILD);
+  if (!owner())
+    return E_FAIL;
+
+  return AXPlatformNodeWin::get_accChild(var_child, disp_child);
+}
+
+STDMETHODIMP BrowserAccessibilityComWin::get_accChildCount(LONG* child_count) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ACC_CHILD_COUNT);
+  if (!owner())
+    return E_FAIL;
+
+  return AXPlatformNodeWin::get_accChildCount(child_count);
+}
 
 STDMETHODIMP BrowserAccessibilityComWin::get_accDefaultAction(
     VARIANT var_id,
     BSTR* def_action) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ACC_DEFAULT_ACTION);
+  if (!owner())
+    return E_FAIL;
+
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
   return AXPlatformNodeWin::get_accDefaultAction(var_id, def_action);
 }
 
+STDMETHODIMP BrowserAccessibilityComWin::get_accDescription(VARIANT var_id,
+                                                            BSTR* desc) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ACC_DESCRIPTION);
+  if (!owner())
+    return E_FAIL;
+
+  return AXPlatformNodeWin::get_accDescription(var_id, desc);
+}
+
+STDMETHODIMP BrowserAccessibilityComWin::get_accFocus(VARIANT* focus_child) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ACC_FOCUS);
+  if (!owner())
+    return E_FAIL;
+
+  return AXPlatformNodeWin::get_accFocus(focus_child);
+}
+
+STDMETHODIMP BrowserAccessibilityComWin::get_accHelp(VARIANT var_id,
+                                                     BSTR* help) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ACC_HELP);
+  if (!owner())
+    return E_FAIL;
+
+  return AXPlatformNodeWin::get_accHelp(var_id, help);
+}
+
+STDMETHODIMP BrowserAccessibilityComWin::get_accKeyboardShortcut(
+    VARIANT var_id,
+    BSTR* acc_key) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ACC_KEYBOARD_SHORTCUT);
+  if (!owner())
+    return E_FAIL;
+
+  return AXPlatformNodeWin::get_accKeyboardShortcut(var_id, acc_key);
+}
+
+STDMETHODIMP BrowserAccessibilityComWin::get_accName(VARIANT var_id,
+                                                     BSTR* name) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ACC_NAME);
+  if (!owner())
+    return E_FAIL;
+
+  return AXPlatformNodeWin::get_accName(var_id, name);
+}
+
+STDMETHODIMP BrowserAccessibilityComWin::get_accParent(
+    IDispatch** disp_parent) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ACC_PARENT);
+  if (!owner())
+    return E_FAIL;
+
+  return AXPlatformNodeWin::get_accParent(disp_parent);
+}
+
+STDMETHODIMP BrowserAccessibilityComWin::get_accRole(VARIANT var_id,
+                                                     VARIANT* role) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ACC_ROLE);
+  if (!owner())
+    return E_FAIL;
+
+  return AXPlatformNodeWin::get_accRole(var_id, role);
+}
+
+STDMETHODIMP BrowserAccessibilityComWin::get_accState(VARIANT var_id,
+                                                      VARIANT* state) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ACC_STATE);
+  if (!owner())
+    return E_FAIL;
+
+  return AXPlatformNodeWin::get_accState(var_id, state);
+}
+
+bool BrowserAccessibilityComWin::IsRangeValueSupported() {
+  switch (MSAARole()) {
+    case ROLE_SYSTEM_PROGRESSBAR:
+    case ROLE_SYSTEM_SLIDER:
+    case ROLE_SYSTEM_SPINBUTTON:
+    case ROLE_SYSTEM_SCROLLBAR:
+      return true;
+    case ROLE_SYSTEM_SEPARATOR:
+      return owner()->HasState(ui::AX_STATE_FOCUSABLE);
+    default:
+      return false;
+  }
+}
+
+STDMETHODIMP BrowserAccessibilityComWin::get_accValue(VARIANT var_id,
+                                                      BSTR* value) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ACC_VALUE);
+  if (!owner())
+    return E_FAIL;
+
+  return AXPlatformNodeWin::get_accValue(var_id, value);
+}
+
+STDMETHODIMP BrowserAccessibilityComWin::get_accHelpTopic(BSTR* help_file,
+                                                          VARIANT var_id,
+                                                          LONG* topic_id) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ACC_HELP_TOPIC);
+  return AXPlatformNodeWin::get_accHelpTopic(help_file, var_id, topic_id);
+}
+
+STDMETHODIMP BrowserAccessibilityComWin::get_accSelection(VARIANT* selected) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ACC_SELECTION);
+  if (!owner())
+    return E_FAIL;
+
+  return AXPlatformNodeWin::get_accSelection(selected);
+}
+
+STDMETHODIMP BrowserAccessibilityComWin::accSelect(LONG flags_sel,
+                                                   VARIANT var_id) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_ACC_SELECT);
+  if (!owner())
+    return E_FAIL;
+
+  return AXPlatformNodeWin::accSelect(flags_sel, var_id);
+}
+
+STDMETHODIMP
+BrowserAccessibilityComWin::put_accName(VARIANT var_id, BSTR put_name) {
+  if (!owner())
+    return E_FAIL;
+
+  return AXPlatformNodeWin::put_accName(var_id, put_name);
+}
+STDMETHODIMP
+BrowserAccessibilityComWin::put_accValue(VARIANT var_id, BSTR put_val) {
+  if (!owner())
+    return E_FAIL;
+
+  return AXPlatformNodeWin::put_accValue(var_id, put_val);
+}
+
 //
-// IAccessible2 overrides:
+// IAccessible2 methods.
 //
+
+STDMETHODIMP BrowserAccessibilityComWin::role(LONG* role) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_ROLE);
+  if (!owner())
+    return E_FAIL;
+
+  return AXPlatformNodeWin::role(role);
+}
 
 STDMETHODIMP BrowserAccessibilityComWin::get_attributes(BSTR* attributes) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_IA2_GET_ATTRIBUTES);
@@ -278,7 +666,11 @@ STDMETHODIMP BrowserAccessibilityComWin::get_attributes(BSTR* attributes) {
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_states(AccessibleStates* states) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_STATES);
+  if (!owner())
+    return E_FAIL;
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+
   return AXPlatformNodeWin::get_states(states);
 }
 
@@ -493,6 +885,44 @@ BrowserAccessibilityComWin::get_localizedExtendedRole(
 }
 
 //
+// IAccessible2 methods not implemented.
+//
+
+STDMETHODIMP BrowserAccessibilityComWin::get_extendedRole(BSTR* extended_role) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_EXTENDED_ROLE);
+  AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  return E_NOTIMPL;
+}
+STDMETHODIMP
+BrowserAccessibilityComWin::get_nExtendedStates(LONG* n_extended_states) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_N_EXTENDED_STATES);
+  AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  return E_NOTIMPL;
+}
+STDMETHODIMP
+BrowserAccessibilityComWin::get_extendedStates(LONG max_extended_states,
+                                               BSTR** extended_states,
+                                               LONG* n_extended_states) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_EXTENDED_STATES);
+  AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  return E_NOTIMPL;
+}
+STDMETHODIMP
+BrowserAccessibilityComWin::get_localizedExtendedStates(
+    LONG max_localized_extended_states,
+    BSTR** localized_extended_states,
+    LONG* n_localized_extended_states) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_LOCALIZED_EXTENDED_STATES);
+  AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  return E_NOTIMPL;
+}
+STDMETHODIMP BrowserAccessibilityComWin::get_locale(IA2Locale* locale) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_LOCALE);
+  AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  return E_NOTIMPL;
+}
+
+//
 // IAccessibleApplication methods.
 //
 
@@ -633,26 +1063,42 @@ STDMETHODIMP BrowserAccessibilityComWin::get_accessibleAt(
     long row,
     long column,
     IUnknown** accessible) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ACCESSIBLE_AT);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_accessibleAt(row, column, accessible);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_caption(IUnknown** accessible) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_CAPTION);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_caption(accessible);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_childIndex(long row,
                                                         long column,
                                                         long* cell_index) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_CHILD_INDEX);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_childIndex(row, column, cell_index);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_columnDescription(
     long column,
     BSTR* description) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_COLUMN_DESCRIPTION);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_columnDescription(column, description);
 }
 
@@ -660,75 +1106,124 @@ STDMETHODIMP BrowserAccessibilityComWin::get_columnExtentAt(
     long row,
     long column,
     long* n_columns_spanned) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_COLUMN_EXTENT_AT);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_columnExtentAt(row, column, n_columns_spanned);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_columnHeader(
     IAccessibleTable** accessible_table,
     long* starting_row_index) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_COLUMN_HEADER);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_columnHeader(accessible_table,
                                              starting_row_index);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_columnIndex(long cell_index,
                                                          long* column_index) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_COLUMN_INDEX);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_columnIndex(cell_index, column_index);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_nColumns(long* column_count) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_N_COLUMNS);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_nColumns(column_count);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_nRows(long* row_count) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_N_ROWS);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_nRows(row_count);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_nSelectedChildren(
     long* cell_count) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_N_SELECTED_CHILDREN);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_nSelectedChildren(cell_count);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_nSelectedColumns(
     long* column_count) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_N_SELECTED_COLUMNS);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_nSelectedColumns(column_count);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_nSelectedRows(long* row_count) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_N_SELECTED_ROWS);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_nSelectedRows(row_count);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_rowDescription(long row,
                                                             BSTR* description) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ROW_DESCRIPTION);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_rowDescription(row, description);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_rowExtentAt(long row,
                                                          long column,
                                                          long* n_rows_spanned) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ROW_EXTENT_AT);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_rowExtentAt(row, column, n_rows_spanned);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_rowHeader(
     IAccessibleTable** accessible_table,
     long* starting_column_index) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ROW_HEADER);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_rowHeader(accessible_table,
                                           starting_column_index);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_rowIndex(long cell_index,
                                                       long* row_index) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ROW_INDEX);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_rowIndex(cell_index, row_index);
 }
 
@@ -736,7 +1231,11 @@ STDMETHODIMP BrowserAccessibilityComWin::get_selectedChildren(
     long max_children,
     long** children,
     long* n_children) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_SELECTED_CHILDREN);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_selectedChildren(max_children, children,
                                                  n_children);
 }
@@ -744,7 +1243,11 @@ STDMETHODIMP BrowserAccessibilityComWin::get_selectedChildren(
 STDMETHODIMP BrowserAccessibilityComWin::get_selectedColumns(long max_columns,
                                                              long** columns,
                                                              long* n_columns) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_SELECTED_COLUMNS);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_selectedColumns(max_columns, columns,
                                                 n_columns);
 }
@@ -752,33 +1255,53 @@ STDMETHODIMP BrowserAccessibilityComWin::get_selectedColumns(long max_columns,
 STDMETHODIMP BrowserAccessibilityComWin::get_selectedRows(long max_rows,
                                                           long** rows,
                                                           long* n_rows) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_SELECTED_ROWS);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_selectedRows(max_rows, rows, n_rows);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_summary(IUnknown** accessible) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_SUMMARY);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_summary(accessible);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_isColumnSelected(
     long column,
     boolean* is_selected) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_IS_COLUMN_SELECTED);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_isColumnSelected(column, is_selected);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_isRowSelected(
     long row,
     boolean* is_selected) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_IS_ROW_SELECTED);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_isRowSelected(row, is_selected);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_isSelected(long row,
                                                         long column,
                                                         boolean* is_selected) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_IS_SELECTED);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_isSelected(row, column, is_selected);
 }
 
@@ -789,33 +1312,56 @@ STDMETHODIMP BrowserAccessibilityComWin::get_rowColumnExtentsAtIndex(
     long* row_extents,
     long* column_extents,
     boolean* is_selected) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ROW_COLUMN_EXTENTS_AT_INDEX);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_rowColumnExtentsAtIndex(
       index, row, column, row_extents, column_extents, is_selected);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::selectRow(long row) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_SELECT_ROW);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::selectRow(row);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::selectColumn(long column) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_SELECT_COLUMN);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::selectColumn(column);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::unselectRow(long row) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_UNSELECT_ROW);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::unselectRow(row);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::unselectColumn(long column) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_UNSELECT_COLUMN);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::unselectColumn(column);
 }
 
 STDMETHODIMP
 BrowserAccessibilityComWin::get_modelChange(IA2TableModelChange* model_change) {
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_modelChange(model_change);
 }
 
@@ -826,31 +1372,51 @@ BrowserAccessibilityComWin::get_modelChange(IA2TableModelChange* model_change) {
 STDMETHODIMP BrowserAccessibilityComWin::get_cellAt(long row,
                                                     long column,
                                                     IUnknown** cell) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_CELL_AT);
   AddAccessibilityModeFlags(AccessibilityMode::kScreenReader);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_cellAt(row, column, cell);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_nSelectedCells(long* cell_count) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_N_SELECTED_CELLS);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_nSelectedCells(cell_count);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_selectedCells(
     IUnknown*** cells,
     long* n_selected_cells) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_SELECTED_CELLS);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_selectedCells(cells, n_selected_cells);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_selectedColumns(long** columns,
                                                              long* n_columns) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_TABLE2_GET_SELECTED_COLUMNS);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_selectedColumns(columns, n_columns);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_selectedRows(long** rows,
                                                           long* n_rows) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_TABLE2_GET_SELECTED_ROWS);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_selectedRows(rows, n_rows);
 }
 
@@ -860,43 +1426,71 @@ STDMETHODIMP BrowserAccessibilityComWin::get_selectedRows(long** rows,
 
 STDMETHODIMP BrowserAccessibilityComWin::get_columnExtent(
     long* n_columns_spanned) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_COLUMN_EXTENT);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_columnExtent(n_columns_spanned);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_columnHeaderCells(
     IUnknown*** cell_accessibles,
     long* n_column_header_cells) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_COLUMN_HEADER_CELLS);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_columnHeaderCells(cell_accessibles,
                                                   n_column_header_cells);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_columnIndex(long* column_index) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_TABLECELL_GET_COLUMN_INDEX);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_columnIndex(column_index);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_rowExtent(long* n_rows_spanned) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ROW_EXTENT);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_rowExtent(n_rows_spanned);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_rowHeaderCells(
     IUnknown*** cell_accessibles,
     long* n_row_header_cells) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ROW_HEADER_CELLS);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_rowHeaderCells(cell_accessibles,
                                                n_row_header_cells);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_rowIndex(long* row_index) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_TABLECELL_GET_ROW_INDEX);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_rowIndex(row_index);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_isSelected(boolean* is_selected) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_TABLECELL_GET_IS_SELECTED);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_isSelected(is_selected);
 }
 
@@ -906,13 +1500,21 @@ STDMETHODIMP BrowserAccessibilityComWin::get_rowColumnExtents(
     long* row_extents,
     long* column_extents,
     boolean* is_selected) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ROW_COLUMN_EXTENTS);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_rowColumnExtents(
       row_index, column_index, row_extents, column_extents, is_selected);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_table(IUnknown** table) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_TABLE);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_table(table);
 }
 
@@ -2609,34 +3211,168 @@ void BrowserAccessibilityComWin::UpdateStep1ComputeWinAttributes() {
   win_attributes_->ia_state = MSAAState();
   win_attributes_->role_name = base::UTF8ToUTF16(StringOverrideForMSAARole());
 
-  win_attributes_->ia2_role = ComputeIA2Role();
+  win_attributes_->ia2_role = IA2Role();
   // If we didn't explicitly set the IAccessible2 role, make it the same
   // as the MSAA role.
   if (!win_attributes_->ia2_role)
     win_attributes_->ia2_role = win_attributes_->ia_role;
 
-  win_attributes_->ia2_state = ComputeIA2State();
-  win_attributes_->ia2_attributes = ComputeIA2Attributes();
+  win_attributes_->ia2_state = IA2State();
+
+  win_attributes_->ia2_attributes.clear();
+
+  // Expose some HTLM and ARIA attributes in the IAccessible2 attributes string.
+  // "display", "tag", and "xml-roles" have somewhat unusual names for
+  // historical reasons. Aside from that virtually every ARIA attribute
+  // is exposed in a really straightforward way, i.e. "aria-foo" is exposed
+  // as "foo".
+  StringAttributeToIA2(ui::AX_ATTR_DISPLAY, "display");
+  StringAttributeToIA2(ui::AX_ATTR_HTML_TAG, "tag");
+  StringAttributeToIA2(ui::AX_ATTR_ROLE, "xml-roles");
+
+  StringAttributeToIA2(ui::AX_ATTR_AUTO_COMPLETE, "autocomplete");
+  StringAttributeToIA2(ui::AX_ATTR_ROLE_DESCRIPTION, "roledescription");
+  StringAttributeToIA2(ui::AX_ATTR_KEY_SHORTCUTS, "keyshortcuts");
+
+  IntAttributeToIA2(ui::AX_ATTR_HIERARCHICAL_LEVEL, "level");
+  IntAttributeToIA2(ui::AX_ATTR_SET_SIZE, "setsize");
+  IntAttributeToIA2(ui::AX_ATTR_POS_IN_SET, "posinset");
+
+  if (owner()->HasIntAttribute(ui::AX_ATTR_CHECKED_STATE))
+    win_attributes_->ia2_attributes.push_back(L"checkable:true");
+
+  // Expose live region attributes.
+  StringAttributeToIA2(ui::AX_ATTR_LIVE_STATUS, "live");
+  StringAttributeToIA2(ui::AX_ATTR_LIVE_RELEVANT, "relevant");
+  BoolAttributeToIA2(ui::AX_ATTR_LIVE_ATOMIC, "atomic");
+  BoolAttributeToIA2(ui::AX_ATTR_LIVE_BUSY, "busy");
+
+  // Expose container live region attributes.
+  StringAttributeToIA2(ui::AX_ATTR_CONTAINER_LIVE_STATUS, "container-live");
+  StringAttributeToIA2(ui::AX_ATTR_CONTAINER_LIVE_RELEVANT,
+                       "container-relevant");
+  BoolAttributeToIA2(ui::AX_ATTR_CONTAINER_LIVE_ATOMIC, "container-atomic");
+  BoolAttributeToIA2(ui::AX_ATTR_CONTAINER_LIVE_BUSY, "container-busy");
+
+  // Expose the non-standard explicit-name IA2 attribute.
+  int name_from;
+  if (owner()->GetIntAttribute(ui::AX_ATTR_NAME_FROM, &name_from) &&
+      name_from != ui::AX_NAME_FROM_CONTENTS) {
+    win_attributes_->ia2_attributes.push_back(L"explicit-name:true");
+  }
+
+  // Expose the aria-current attribute.
+  int32_t aria_current_state;
+  if (owner()->GetIntAttribute(ui::AX_ATTR_ARIA_CURRENT_STATE,
+                               &aria_current_state)) {
+    switch (static_cast<ui::AXAriaCurrentState>(aria_current_state)) {
+      case ui::AX_ARIA_CURRENT_STATE_NONE:
+        break;
+      case ui::AX_ARIA_CURRENT_STATE_FALSE:
+        win_attributes_->ia2_attributes.push_back(L"current:false");
+        break;
+      case ui::AX_ARIA_CURRENT_STATE_TRUE:
+        win_attributes_->ia2_attributes.push_back(L"current:true");
+        break;
+      case ui::AX_ARIA_CURRENT_STATE_PAGE:
+        win_attributes_->ia2_attributes.push_back(L"current:page");
+        break;
+      case ui::AX_ARIA_CURRENT_STATE_STEP:
+        win_attributes_->ia2_attributes.push_back(L"current:step");
+        break;
+      case ui::AX_ARIA_CURRENT_STATE_LOCATION:
+        win_attributes_->ia2_attributes.push_back(L"current:location");
+        break;
+      case ui::AX_ARIA_CURRENT_STATE_DATE:
+        win_attributes_->ia2_attributes.push_back(L"current:date");
+        break;
+      case ui::AX_ARIA_CURRENT_STATE_TIME:
+        win_attributes_->ia2_attributes.push_back(L"current:time");
+        break;
+    }
+  }
+
+  // Expose table cell index.
+  if (ui::IsCellOrTableHeaderRole(owner()->GetRole())) {
+    BrowserAccessibilityWin* win_parent =
+        static_cast<BrowserAccessibilityWin*>(owner()->PlatformGetParent());
+    AXPlatformNodeBase* table = win_parent->GetCOM();
+
+    while (table && !ui::IsTableLikeRole(table->GetData().role))
+      table = FromNativeViewAccessible(table->GetParent());
+
+    if (table) {
+      const std::vector<int32_t>& unique_cell_ids =
+          table->GetIntListAttribute(ui::AX_ATTR_UNIQUE_CELL_IDS);
+      for (size_t i = 0; i < unique_cell_ids.size(); ++i) {
+        if (unique_cell_ids[i] == owner()->GetId()) {
+          win_attributes_->ia2_attributes.push_back(
+              base::string16(L"table-cell-index:") + base::IntToString16(i));
+        }
+      }
+    }
+  }
+
+  // Expose aria-colcount and aria-rowcount in a table, grid or treegrid.
+  if (ui::IsTableLikeRole(owner()->GetRole())) {
+    IntAttributeToIA2(ui::AX_ATTR_ARIA_COLUMN_COUNT, "colcount");
+    IntAttributeToIA2(ui::AX_ATTR_ARIA_ROW_COUNT, "rowcount");
+  }
+
+  // Expose aria-colindex and aria-rowindex in a cell or row.
+  if (ui::IsCellOrTableHeaderRole(owner()->GetRole()) ||
+      owner()->GetRole() == ui::AX_ROLE_ROW) {
+    if (owner()->GetRole() != ui::AX_ROLE_ROW)
+      IntAttributeToIA2(ui::AX_ATTR_ARIA_CELL_COLUMN_INDEX, "colindex");
+    IntAttributeToIA2(ui::AX_ATTR_ARIA_CELL_ROW_INDEX, "rowindex");
+  }
+
+  // Expose row or column header sort direction.
+  int32_t sort_direction;
+  if ((MSAARole() == ROLE_SYSTEM_COLUMNHEADER ||
+       MSAARole() == ROLE_SYSTEM_ROWHEADER) &&
+      owner()->GetIntAttribute(ui::AX_ATTR_SORT_DIRECTION, &sort_direction)) {
+    switch (static_cast<ui::AXSortDirection>(sort_direction)) {
+      case ui::AX_SORT_DIRECTION_NONE:
+        break;
+      case ui::AX_SORT_DIRECTION_UNSORTED:
+        win_attributes_->ia2_attributes.push_back(L"sort:none");
+        break;
+      case ui::AX_SORT_DIRECTION_ASCENDING:
+        win_attributes_->ia2_attributes.push_back(L"sort:ascending");
+        break;
+      case ui::AX_SORT_DIRECTION_DESCENDING:
+        win_attributes_->ia2_attributes.push_back(L"sort:descending");
+        break;
+      case ui::AX_SORT_DIRECTION_OTHER:
+        win_attributes_->ia2_attributes.push_back(L"sort:other");
+        break;
+    }
+  }
 
   win_attributes_->name = owner()->GetString16Attribute(ui::AX_ATTR_NAME);
-
   win_attributes_->description =
       owner()->GetString16Attribute(ui::AX_ATTR_DESCRIPTION);
+  StringAttributeToIA2(ui::AX_ATTR_PLACEHOLDER, "placeholder");
 
   base::string16 value = owner()->GetValue();
 
   // Expose slider value.
   if (IsRangeValueSupported()) {
     value = GetRangeValueText();
-  } else if (owner()->IsDocument()) {
+    SanitizeStringAttributeForIA2(value, &value);
+    win_attributes_->ia2_attributes.push_back(L"valuetext:" + value);
+  } else {
     // On Windows, the value of a document should be its url.
-    value = base::UTF8ToUTF16(Manager()->GetTreeData().url);
+    if (owner()->IsDocument()) {
+      value = base::UTF8ToUTF16(Manager()->GetTreeData().url);
+    }
+    // If this doesn't have a value and is linked then set its value to the url
+    // attribute. This allows screen readers to read an empty link's
+    // destination.
+    if (value.empty() && (MSAAState() & STATE_SYSTEM_LINKED))
+      value = owner()->GetString16Attribute(ui::AX_ATTR_URL);
   }
-  // If this doesn't have a value and is linked then set its value to the url
-  // attribute. This allows screen readers to read an empty link's
-  // destination.
-  if (value.empty() && (MSAAState() & STATE_SYSTEM_LINKED))
-    value = owner()->GetString16Attribute(ui::AX_ATTR_URL);
 
   win_attributes_->value = value;
 
@@ -2667,6 +3403,8 @@ void BrowserAccessibilityComWin::UpdateStep1ComputeWinAttributes() {
   int error_message_id;
   if (owner()->GetIntAttribute(ui::AX_ATTR_ERRORMESSAGE_ID, &error_message_id))
     AddRelation(IA2_RELATION_ERROR_MESSAGE, error_message_id);
+
+  UpdateRequiredAttributes();
 }
 
 void BrowserAccessibilityComWin::UpdateStep2ComputeHypertext() {
@@ -3117,6 +3855,36 @@ void BrowserAccessibilityComWin::SetIA2HypertextSelection(LONG start_offset,
                                           end_position->AsTextPosition()));
 }
 
+void BrowserAccessibilityComWin::StringAttributeToIA2(
+    ui::AXStringAttribute attribute,
+    const char* ia2_attr) {
+  base::string16 value;
+  if (owner()->GetString16Attribute(attribute, &value)) {
+    SanitizeStringAttributeForIA2(value, &value);
+    win_attributes_->ia2_attributes.push_back(base::ASCIIToUTF16(ia2_attr) +
+                                              L":" + value);
+  }
+}
+
+void BrowserAccessibilityComWin::BoolAttributeToIA2(
+    ui::AXBoolAttribute attribute,
+    const char* ia2_attr) {
+  bool value;
+  if (owner()->GetBoolAttribute(attribute, &value)) {
+    win_attributes_->ia2_attributes.push_back(
+        (base::ASCIIToUTF16(ia2_attr) + L":") + (value ? L"true" : L"false"));
+  }
+}
+
+void BrowserAccessibilityComWin::IntAttributeToIA2(ui::AXIntAttribute attribute,
+                                                   const char* ia2_attr) {
+  int value;
+  if (owner()->GetIntAttribute(attribute, &value)) {
+    win_attributes_->ia2_attributes.push_back(
+        base::ASCIIToUTF16(ia2_attr) + L":" + base::IntToString16(value));
+  }
+}
+
 bool BrowserAccessibilityComWin::IsHyperlink() const {
   int32_t hyperlink_index = -1;
   auto* parent = owner()->PlatformGetParent();
@@ -3364,6 +4132,16 @@ void BrowserAccessibilityComWin::GetSelectionOffsets(int* selection_start,
   DCHECK(SUCCEEDED(hr));
   if (n_selections > 0)
     ++(*largest_offset);
+}
+
+base::string16 BrowserAccessibilityComWin::GetRangeValueText() {
+  float fval;
+  base::string16 result = owner()->GetValue();
+
+  if (result.empty() && GetFloatAttribute(ui::AX_ATTR_VALUE_FOR_RANGE, &fval)) {
+    result = base::UTF8ToUTF16(base::DoubleToString(fval));
+  }
+  return result;
 }
 
 bool BrowserAccessibilityComWin::IsSameHypertextCharacter(
@@ -3724,6 +4502,76 @@ void BrowserAccessibilityComWin::RemoveTargetFromRelation(
     } else {
       ++iter;
     }
+  }
+}
+
+void BrowserAccessibilityComWin::UpdateRequiredAttributes() {
+  if (ui::IsCellOrTableHeaderRole(owner()->GetRole())) {
+    // Expose colspan attribute.
+    base::string16 colspan;
+    if (owner()->GetHtmlAttribute("aria-colspan", &colspan)) {
+      SanitizeStringAttributeForIA2(colspan, &colspan);
+      win_attributes_->ia2_attributes.push_back(L"colspan:" + colspan);
+    }
+    // Expose rowspan attribute.
+    base::string16 rowspan;
+    if (owner()->GetHtmlAttribute("aria-rowspan", &rowspan)) {
+      SanitizeStringAttributeForIA2(rowspan, &rowspan);
+      win_attributes_->ia2_attributes.push_back(L"rowspan:" + rowspan);
+    }
+  }
+
+  // Expose dropeffect attribute.
+  base::string16 drop_effect;
+  if (owner()->GetHtmlAttribute("aria-dropeffect", &drop_effect)) {
+    SanitizeStringAttributeForIA2(drop_effect, &drop_effect);
+    win_attributes_->ia2_attributes.push_back(L"dropeffect:" + drop_effect);
+  }
+
+  // Expose grabbed attribute.
+  base::string16 grabbed;
+  if (owner()->GetHtmlAttribute("aria-grabbed", &grabbed)) {
+    SanitizeStringAttributeForIA2(grabbed, &grabbed);
+    win_attributes_->ia2_attributes.push_back(L"grabbed:" + grabbed);
+  }
+
+  // Expose class attribute.
+  base::string16 class_attr;
+  if (owner()->GetHtmlAttribute("class", &class_attr)) {
+    SanitizeStringAttributeForIA2(class_attr, &class_attr);
+    win_attributes_->ia2_attributes.push_back(L"class:" + class_attr);
+  }
+
+  // Expose datetime attribute.
+  base::string16 datetime;
+  if (owner()->GetRole() == ui::AX_ROLE_TIME &&
+      owner()->GetHtmlAttribute("datetime", &datetime)) {
+    SanitizeStringAttributeForIA2(datetime, &datetime);
+    win_attributes_->ia2_attributes.push_back(L"datetime:" + datetime);
+  }
+
+  // Expose id attribute.
+  base::string16 id;
+  if (owner()->GetHtmlAttribute("id", &id)) {
+    SanitizeStringAttributeForIA2(id, &id);
+    win_attributes_->ia2_attributes.push_back(L"id:" + id);
+  }
+
+  // Expose src attribute.
+  base::string16 src;
+  if (owner()->GetRole() == ui::AX_ROLE_IMAGE &&
+      owner()->GetHtmlAttribute("src", &src)) {
+    SanitizeStringAttributeForIA2(src, &src);
+    win_attributes_->ia2_attributes.push_back(L"src:" + src);
+  }
+
+  // Expose input-text type attribute.
+  base::string16 type;
+  base::string16 html_tag = owner()->GetString16Attribute(ui::AX_ATTR_HTML_TAG);
+  if (owner()->IsSimpleTextControl() && html_tag == L"input" &&
+      owner()->GetHtmlAttribute("type", &type)) {
+    SanitizeStringAttributeForIA2(type, &type);
+    win_attributes_->ia2_attributes.push_back(L"text-input-type:" + type);
   }
 }
 

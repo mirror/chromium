@@ -4,9 +4,6 @@
 
 #include "core/paint/PaintTiming.h"
 
-#include <memory>
-#include <utility>
-
 #include "core/dom/Document.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
@@ -102,7 +99,6 @@ void PaintTiming::SetFirstMeaningfulPaintCandidate(double timestamp) {
 
 void PaintTiming::SetFirstMeaningfulPaint(
     double stamp,
-    double swap_stamp,
     FirstMeaningfulPaintDetector::HadUserInput had_input) {
   DCHECK_EQ(first_meaningful_paint_, 0.0);
   TRACE_EVENT_MARK_WITH_TIMESTAMP2("loading,rail,devtools.timeline",
@@ -114,8 +110,8 @@ void PaintTiming::SetFirstMeaningfulPaint(
   // changes caused by user interactions wouldn't be considered as FMP.
   if (had_input == FirstMeaningfulPaintDetector::kNoUserInput) {
     first_meaningful_paint_ = stamp;
-    first_meaningful_paint_swap_ = swap_stamp;
     NotifyPaintTimingChanged();
+    RegisterNotifySwapTime(PaintEvent::kFirstMeaningfulPaint);
   }
 
   ReportUserInputHistogram(had_input);
@@ -183,14 +179,6 @@ void PaintTiming::SetFirstContentfulPaint(double stamp) {
 }
 
 void PaintTiming::RegisterNotifySwapTime(PaintEvent event) {
-  RegisterNotifySwapTime(event,
-                         WTF::Bind(&PaintTiming::ReportSwapTime,
-                                   WrapCrossThreadWeakPersistent(this), event));
-}
-
-void PaintTiming::RegisterNotifySwapTime(
-    PaintEvent event,
-    std::unique_ptr<WTF::Function<void(bool, double)>> callback) {
   // ReportSwapTime on layerTreeView will queue a swap-promise, the callback is
   // called when the swap for current render frame completes or fails to happen.
   if (!GetFrame() || !GetFrame()->GetPage())
@@ -198,7 +186,9 @@ void PaintTiming::RegisterNotifySwapTime(
   if (WebLayerTreeView* layerTreeView =
           GetFrame()->GetPage()->GetChromeClient().GetWebLayerTreeView(
               GetFrame())) {
-    layerTreeView->NotifySwapTime(ConvertToBaseCallback(std::move(callback)));
+    layerTreeView->NotifySwapTime(ConvertToBaseCallback(
+        WTF::Bind(&PaintTiming::ReportSwapTime,
+                  WrapCrossThreadWeakPersistent(this), event)));
   }
 }
 
@@ -219,9 +209,11 @@ void PaintTiming::ReportSwapTime(PaintEvent event,
       if (performance)
         performance->AddFirstContentfulPaintTiming(first_contentful_paint_);
       return;
-    default:
-      NOTREACHED();
+    case PaintEvent::kFirstMeaningfulPaint:
+      first_meaningful_paint_swap_ = timestamp;
+      return;
   }
+  NOTREACHED();
 }
 
 }  // namespace blink

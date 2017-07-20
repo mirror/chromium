@@ -145,8 +145,4 @@ void TestAutofillClient::StartSigninFlow() {}
 
 void TestAutofillClient::ShowHttpNotSecureExplanation() {}
 
-bool TestAutofillClient::IsAutofillSupported() {
-  return true;
-}
-
 }  // namespace autofill

@@ -16,6 +16,7 @@ class Time;
 }
 
 namespace chromeos {
+namespace printing {
 
 CHROMEOS_EXPORT extern const char kPrinterId[];
 
@@ -25,6 +26,7 @@ CHROMEOS_EXPORT std::unique_ptr<Printer> RecommendedPrinterToPrinter(
     const base::DictionaryValue& pref,
     const base::Time& timestamp);
 
+}  // namespace printing
 }  // namespace chromeos
 
 #endif  // CHROMEOS_PRINTING_PRINTER_TRANSLATOR_H_

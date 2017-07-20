@@ -61,13 +61,15 @@ class ListChangesTaskTest : public testing::Test {
 
     sync_task_manager_.reset(new SyncTaskManager(
         base::WeakPtr<SyncTaskManager::Client>(),
-        10 /* maximum_background_task */, base::ThreadTaskRunnerHandle::Get()));
+        10 /* maximum_background_task */,
+        base::ThreadTaskRunnerHandle::Get(),
+        nullptr /* worker_pool */));
     sync_task_manager_->Initialize(SYNC_STATUS_OK);
 
     context_.reset(new SyncEngineContext(
         std::move(fake_drive_service), std::move(drive_uploader),
         nullptr /* task_logger */, base::ThreadTaskRunnerHandle::Get(),
-        base::ThreadTaskRunnerHandle::Get()));
+        base::ThreadTaskRunnerHandle::Get(), nullptr /* worker_pool */));
 
     SetUpRemoteFolders();
 

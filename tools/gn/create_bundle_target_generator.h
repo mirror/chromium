@@ -27,10 +27,7 @@ class CreateBundleTargetGenerator : public TargetGenerator {
                      const base::StringPiece& name,
                      SourceDir* bundle_dir);
 
-  bool FillXcodeExtraAttributes();
-
   bool FillProductType();
-  bool FillXcodeTestApplicationName();
 
   bool FillCodeSigningScript();
   bool FillCodeSigningSources();

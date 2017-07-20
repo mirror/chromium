@@ -4,9 +4,7 @@
 
 #include "chrome/renderer/plugins/pdf_plugin_placeholder.h"
 
-#include "chrome/common/render_messages.h"
 #include "chrome/grit/renderer_resources.h"
-#include "content/public/renderer/render_thread.h"
 #include "gin/object_template_builder.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/base/webui/jstemplate_builder.h"
@@ -27,7 +25,6 @@ PDFPluginPlaceholder* PDFPluginPlaceholder::CreatePDFPlaceholder(
       ResourceBundle::GetSharedInstance().GetRawDataResource(
           IDR_PDF_PLUGIN_HTML));
   base::DictionaryValue values;
-  values.SetString("fileName", GURL(params.url).ExtractFileName());
   std::string html_data = webui::GetI18nTemplateHtml(template_html, &values);
   return new PDFPluginPlaceholder(render_frame, params, html_data);
 }
@@ -40,10 +37,9 @@ gin::ObjectTemplateBuilder PDFPluginPlaceholder::GetObjectTemplateBuilder(
     v8::Isolate* isolate) {
   return gin::Wrappable<PDFPluginPlaceholder>::GetObjectTemplateBuilder(isolate)
       .SetMethod<void (PDFPluginPlaceholder::*)()>(
-          "openPDF", &PDFPluginPlaceholder::OpenPDFCallback);
+          "downloadPDF", &PDFPluginPlaceholder::DownloadPDFCallback);
 }
 
-void PDFPluginPlaceholder::OpenPDFCallback() {
-  content::RenderThread::Get()->Send(
-      new ChromeViewHostMsg_OpenPDF(routing_id(), GetPluginParams().url));
+void PDFPluginPlaceholder::DownloadPDFCallback() {
+  // TODO(amberwon): Implement starting PDF download.
 }

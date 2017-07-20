@@ -7,6 +7,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "content/browser/loader/resource_dispatcher_host_impl.h"
+#include "content/public/browser/resource_context.h"
 #include "content/public/browser/resource_hints.h"
 #include "net/base/address_list.h"
 #include "net/base/load_flags.h"
@@ -18,7 +19,6 @@
 #include "net/log/net_log_with_source.h"
 #include "net/url_request/http_user_agent_settings.h"
 #include "net/url_request/url_request_context.h"
-#include "net/url_request/url_request_context_getter.h"
 
 namespace content {
 
@@ -45,7 +45,7 @@ void OnResolveComplete(std::unique_ptr<RequestHolder> request_holder,
 
 }  // namespace
 
-void PreconnectUrl(net::URLRequestContextGetter* getter,
+void PreconnectUrl(content::ResourceContext* resource_context,
                    const GURL& url,
                    const GURL& first_party_for_cookies,
                    int count,
@@ -54,19 +54,15 @@ void PreconnectUrl(net::URLRequestContextGetter* getter,
   DCHECK(ResourceDispatcherHostImpl::Get()
              ->io_thread_task_runner()
              ->BelongsToCurrentThread());
-  DCHECK(getter);
+  DCHECK(resource_context);
 
-  net::URLRequestContext* request_context = getter->GetURLRequestContext();
-  if (!request_context)
-    return;
-
-  net::HttpTransactionFactory* factory =
-      request_context->http_transaction_factory();
+  net::URLRequestContext* context = resource_context->GetRequestContext();
+  net::HttpTransactionFactory* factory = context->http_transaction_factory();
   net::HttpNetworkSession* session = factory->GetSession();
 
   std::string user_agent;
-  if (request_context->http_user_agent_settings())
-    user_agent = request_context->http_user_agent_settings()->GetUserAgent();
+  if (context->http_user_agent_settings())
+    user_agent = context->http_user_agent_settings()->GetUserAgent();
   net::HttpRequestInfo request_info;
   request_info.url = url;
   request_info.method = "GET";
@@ -74,7 +70,7 @@ void PreconnectUrl(net::URLRequestContextGetter* getter,
                                        user_agent);
   request_info.motivation = motivation;
 
-  net::NetworkDelegate* delegate = request_context->network_delegate();
+  net::NetworkDelegate* delegate = context->network_delegate();
   if (delegate->CanEnablePrivacyMode(url, first_party_for_cookies))
     request_info.privacy_mode = net::PRIVACY_MODE_ENABLED;
 
@@ -92,17 +88,13 @@ void PreconnectUrl(net::URLRequestContextGetter* getter,
   http_stream_factory->PreconnectStreams(count, request_info);
 }
 
-int PreresolveUrl(net::URLRequestContextGetter* getter,
+int PreresolveUrl(content::ResourceContext* resource_context,
                   const GURL& url,
                   const net::CompletionCallback& callback) {
   DCHECK(ResourceDispatcherHostImpl::Get()
              ->io_thread_task_runner()
              ->BelongsToCurrentThread());
-  DCHECK(getter);
-
-  net::URLRequestContext* request_context = getter->GetURLRequestContext();
-  if (!request_context)
-    return net::ERR_CONTEXT_SHUT_DOWN;
+  DCHECK(resource_context);
 
   auto request_holder = base::MakeUnique<RequestHolder>();
   auto addresses = base::MakeUnique<net::AddressList>();
@@ -112,7 +104,7 @@ int PreresolveUrl(net::URLRequestContextGetter* getter,
   std::unique_ptr<net::HostResolver::Request>* out_request =
       request_holder->GetRequest();
 
-  net::HostResolver* resolver = request_context->host_resolver();
+  net::HostResolver* resolver = resource_context->GetHostResolver();
   net::HostResolver::RequestInfo resolve_info(net::HostPortPair::FromURL(url));
   resolve_info.set_is_speculative(true);
   return resolver->Resolve(

@@ -12,6 +12,7 @@
 
 - (void)showMenuAnimated:(BOOL)animated;
 - (void)hideMenuAnimated:(BOOL)animated;
+- (void)presentSignInFlow;
 
 @property(strong, nonatomic) UIWindow* window;
 @property(class, strong, nonatomic, readonly) AppDelegate* instance;
@@ -22,9 +23,6 @@
 // This will push the Help Center view controller onto the provided nav
 // controller.
 - (void)navigateToHelpCenter:(UINavigationController*)navigationController;
-
-// Presents the help center modally onto the topmost view controller.
-- (void)presentHelpCenter;
 
 // This will present the Send Feedback view controller onto the topmost view
 // controller.

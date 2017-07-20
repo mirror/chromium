@@ -300,13 +300,14 @@ Polymer({
     },
 
     /**
-     * The selected cast mode menu item. The item with this index is bolded in
-     * the cast mode menu.
-     * @private {number|undefined}
+     * Whether the search input should be padded as if it were at the bottom of
+     * the dialog.
+     * @type {boolean}
      */
-    selectedCastModeMenuItem_: {
-      type: Number,
-      observer: 'updateSelectedCastModeMenuItem_',
+    searchUseBottomPadding: {
+      type: Boolean,
+      reflectToAttribute: true,
+      value: true,
     },
 
     /**
@@ -526,19 +527,6 @@ Polymer({
 
   get header() {
     return this.$['container-header'];
-  },
-
-  /**
-   * Calls all the functions to set the UI to a given cast mode.
-   * @param {!media_router.CastMode} castMode The cast mode to set things to.
-   * @private
-   */
-  castModeSelected_(castMode) {
-    this.selectCastMode(castMode.type);
-    this.fire('cast-mode-selected', {castModeType: castMode.type});
-    this.showSinkList_();
-    this.maybeReportUserFirstAction(
-        media_router.MediaRouterUserAction.CHANGE_MODE);
   },
 
   /**
@@ -1216,7 +1204,6 @@ Polymer({
    * @param {number} castModeType Type of cast mode to look for.
    * @return {media_router.CastMode|undefined} CastMode object with the given
    *     type in castModeList, or undefined if not found.
-   * @private
    */
   findCastModeByType_: function(castModeType) {
     return this.castModeList.find(function(element, index, array) {
@@ -1225,28 +1212,10 @@ Polymer({
   },
 
   /**
-   * Helper function to locate the position in the |castModeList| of the
-   * CastMode object with the given type.
-   *
-   * @param {number} castModeType Type of cast mode to look for.
-   * @return {number} index of the given type, or -1 if not found.
-   * @private
-   */
-  findCastModeIndexByType_: function(castModeType) {
-    return this.castModeList
-        .map(function(element) {
-          return element.type;
-        })
-        .indexOf(castModeType);
-  },
-
-
-  /**
    * Helper function to return a forced CastMode, if any.
    *
    * @return {media_router.CastMode|undefined} CastMode object with
    *     isForced = true, or undefined if not found.
-   * @private
    */
   findForcedCastMode_: function() {
     return this.castModeList &&
@@ -1461,6 +1430,7 @@ Polymer({
         this.getElementVerticalPadding_(search);
     var searchPadding = searchInitialPaddingBottom + searchInitialPaddingTop;
     var searchHeight = search.offsetHeight - searchPadding;
+    this.searchUseBottomPadding = true;
     var searchFinalPaddingBottom, searchFinalPaddingTop;
     [searchFinalPaddingBottom, searchFinalPaddingTop] =
         this.getElementVerticalPadding_(search);
@@ -1579,9 +1549,6 @@ Polymer({
     var search = this.$$('#sink-search');
     var view = this.$['sink-list-view'];
 
-    // Set the max height for the results list before it's shown.
-    results.style.maxHeight = this.sinkListMaxHeight_ + 'px';
-
     // Saves current search container |offsetHeight| which includes bottom
     // padding.
     var searchInitialOffsetHeight = search.offsetHeight;
@@ -1595,6 +1562,8 @@ Polymer({
         this.getElementVerticalPadding_(search);
     var searchPadding = searchInitialPaddingBottom + searchInitialPaddingTop;
     var searchHeight = search.offsetHeight - searchPadding;
+    this.searchUseBottomPadding =
+        this.shouldSearchUseBottomPadding_(deviceMissing);
     var searchFinalPaddingBottom, searchFinalPaddingTop;
     [searchFinalPaddingBottom, searchFinalPaddingTop] =
         this.getElementVerticalPadding_(search);
@@ -1810,26 +1779,6 @@ Polymer({
   },
 
   /**
-   * Sets up the LOCAL_FILE cast mode for display after a specific file has been
-   * selected.
-   *
-   * @param {string} fileName The name of the file that has been selected.
-   */
-  onFileDialogSuccess(fileName) {
-    /** @const */ var mode =
-        this.findCastModeByType_(media_router.CastModeType.LOCAL_FILE);
-
-    if (!mode)
-      return;
-
-    this.castModeSelected_(mode);
-    this.headerText =
-        loadTimeData.getStringF('castLocalMediaSelectedFileTitle', fileName);
-
-    this.updateSelectedCastModeMenuItem_();
-  },
-
-  /**
    * Called when a focus event is triggered.
    *
    * @param {!Event} event The event object.
@@ -1961,6 +1910,7 @@ Polymer({
     var list = this.$$('#sink-list');
     var resultsContainer = this.$$('#search-results-container');
     var view = this.$['sink-list-view'];
+    this.searchUseBottomPadding = true;
     search.style['top'] = '';
     if (resultsContainer) {
       resultsContainer.style['position'] = '';
@@ -1974,9 +1924,7 @@ Polymer({
       view.style['padding-bottom'] = search.offsetHeight + 'px';
       list.style['opacity'] = '';
     } else {
-      var bottomMargin = 12;
-      deviceMissing.style['margin-bottom'] =
-          (search.offsetHeight + bottomMargin) + 'px';
+      deviceMissing.style['margin-bottom'] = search.offsetHeight + 'px';
       search.style['margin-top'] = '';
       view.style['padding-bottom'] = '';
     }
@@ -2006,12 +1954,11 @@ Polymer({
     var search = this.$$('#sink-search');
     var view = this.$['sink-list-view'];
 
-    // Set the max height for the results list before it's shown.
-    results.style.maxHeight = this.sinkListMaxHeight_ + 'px';
-
     // If there is a height mismatch between where the animation calculated the
     // height should be and where it is now because the search results changed
     // during the animation, correct it with... another animation.
+    this.searchUseBottomPadding =
+        this.shouldSearchUseBottomPadding_(deviceMissing);
     var resultsPadding = this.computeElementVerticalPadding_(results);
     var finalHeight = this.computeTotalSearchHeight_(
         deviceMissing, noMatches, results, search.offsetHeight,
@@ -2103,6 +2050,47 @@ Polymer({
     this.animationPromise_ = new Promise(function(resolve) {
       oldPromise.then(that.putSearchAtTop_.bind(that, resolve));
     });
+  },
+
+  /**
+   * Sets up the LOCAL_FILE cast mode for display after a specific file has been
+   * selected.
+   *
+   * @param {string} fileName The name of the file that has been selected.
+   */
+  onFileDialogSuccess(fileName) {
+    /** @const */ var mode =
+        this.findCastModeByType_(media_router.CastModeType.LOCAL_FILE);
+
+    if (!mode) {
+      return;
+    }
+
+    this.castModeSelected_(mode);
+    this.headerText =
+        loadTimeData.getStringF('castLocalMediaSelectedFileTitle', fileName);
+  },
+
+  /**
+   * Calls all the functions to set the UI to a given cast mode.
+   * @param {media_router.CastMode} castMode The cast mode to set things to.
+   * @private
+   */
+  castModeSelected_(castMode) {
+    this.selectCastMode(castMode.type);
+    this.fire('cast-mode-selected', {castModeType: castMode.type});
+    this.showSinkList_();
+    this.maybeReportUserFirstAction(
+        media_router.MediaRouterUserAction.CHANGE_MODE);
+  },
+
+  /**
+   * Fires the command to open a file dialog.
+   *
+   * @private
+   */
+  selectLocalMediaFile_() {
+    this.fire('select-local-media-file');
   },
 
   /**
@@ -2262,7 +2250,6 @@ Polymer({
    * indicating whether or not route creation was successful.
    * Clearing |currentLaunchingSinkId_| hides the spinner indicating there is
    * a route creation in progress and show the device icon instead.
-   * @param {boolean} creationSuccess Whether route creation succeeded.
    *
    * @private
    */
@@ -2270,12 +2257,6 @@ Polymer({
     this.pseudoSinkSearchState_ = null;
     this.currentLaunchingSinkId_ = '';
     this.pendingCreatedRouteId_ = '';
-    // If it was a search that failed we need to refresh the filtered sinks now
-    // that |pseudoSinkSearchState_| is null.
-    if (!creationSuccess &&
-        this.currentView_ == media_router.MediaRouterView.FILTER) {
-      this.filterSinks_(this.searchInputText_);
-    }
 
     this.fire('report-route-creation', {success: creationSuccess});
   },
@@ -2335,15 +2316,6 @@ Polymer({
   },
 
   /**
-   * Fires the command to open a file dialog.
-   *
-   * @private
-   */
-  selectLocalMediaFile_() {
-    this.fire('select-local-media-file');
-  },
-
-  /**
    * Sets various focus and blur event handlers to handle showing search results
    * when the search input is focused.
    * @private
@@ -2389,6 +2361,16 @@ Polymer({
     this.headerTextTooltip = castMode.host || '';
     if (castMode.type == media_router.CastModeType.AUTO)
       this.userHasSelectedCastMode_ = false;
+  },
+
+  /**
+   * @param {?Element} deviceMissing Device missing message element.
+   * @return {boolean} Whether the search input should use vertical padding as
+   *     if it were the lowest (at the very bottom) item in the dialog.
+   * @private
+   */
+  shouldSearchUseBottomPadding_: function(deviceMissing) {
+    return !deviceMissing.hasAttribute('hidden');
   },
 
   /**
@@ -2556,20 +2538,23 @@ Polymer({
           firstRunFlowHeight + headerHeight + 'px';
 
       var sinkList = this.$$('#sink-list');
+      if (hasSearch && sinkList) {
+        // This would need to be reset to '' if search could be disabled again,
+        // but once it's enabled it can't be disabled again.
+        this.$$('#sink-list-paper-menu').style.paddingBottom = '0';
+      }
       var sinkListPadding =
           sinkList ? this.computeElementVerticalPadding_(sinkList) : 0;
 
       this.sinkListMaxHeight_ = this.dialogHeight_ - headerHeight -
           firstRunFlowHeight - issueHeight - searchHeight + searchPadding -
           sinkListPadding;
-
-      // Limit the height of the dialog to five items, including search.
-      var sinkItemHeight = 41;
-      var maxSinkItems = hasSearch ? 4 : 5;
-      this.sinkListMaxHeight_ =
-          Math.min(sinkItemHeight * maxSinkItems, this.sinkListMaxHeight_);
-      if (sinkList)
+      if (sinkList) {
         sinkList.style.maxHeight = this.sinkListMaxHeight_ + 'px';
+        var searchResults = this.$$('#search-results');
+        if (searchResults)
+          searchResults.style.maxHeight = this.sinkListMaxHeight_ + 'px';
+      }
     });
   },
 
@@ -2581,17 +2566,5 @@ Polymer({
   updateMaxDialogHeight: function(height) {
     this.dialogHeight_ = height;
     this.updateElementPositioning_();
-  },
-
-  /**
-   * Sets the selected cast mode menu item to be in sync with the current cast
-   * mode.
-   * @private
-   */
-  updateSelectedCastModeMenuItem_: function() {
-    /** @const */ var curIndex =
-        this.findCastModeIndexByType_(this.shownCastModeValue_);
-    if (this.selectedCastModeMenuItem_ != curIndex)
-      this.selectedCastModeMenuItem_ = curIndex;
   },
 });

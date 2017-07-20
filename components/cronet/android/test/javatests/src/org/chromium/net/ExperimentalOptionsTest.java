@@ -156,8 +156,7 @@ public class ExperimentalOptionsTest extends CronetTestBase {
         String testHost = "host-cache-test-host";
         String testUrl = new URL("http", testHost, realPort, javaUrl.getPath()).toString();
 
-        mBuilder.setStoragePath(getTestStorage(getContext()))
-                .enableHttpCache(CronetEngine.Builder.HTTP_CACHE_DISK, 0);
+        mBuilder.setStoragePath(getTestStorage(getContext()));
 
         // Set a short delay so the pref gets written quickly.
         JSONObject staleDns = new JSONObject()
@@ -183,7 +182,9 @@ public class ExperimentalOptionsTest extends CronetTestBase {
         assertNull(callback.mError);
         assertEquals(200, callback.mResponseInfo.getHttpStatusCode());
 
-        // Shut down the context, persisting contents to disk, and build a new one.
+        // First wait a little longer for the write to prefs to go through. Then shut down the
+        // context, persisting contents to disk, and build a new one.
+        Thread.sleep(100);
         context.shutdown();
         context = (CronetUrlRequestContext) mBuilder.build();
 

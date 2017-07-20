@@ -275,7 +275,7 @@ void IOSChromeMainParts::SetupFieldTrials() {
 
 void IOSChromeMainParts::SetupMetrics() {
   metrics::MetricsService* metrics = application_context_->GetMetricsService();
-  metrics->synthetic_trial_registry()->AddSyntheticTrialObserver(
+  metrics->AddSyntheticTrialObserver(
       variations::VariationsHttpHeaderProvider::GetInstance());
   // Now that field trials have been created, initializes metrics recording.
   metrics->InitializeMetricsRecordingState();

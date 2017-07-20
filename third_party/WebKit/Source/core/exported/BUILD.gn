@@ -23,8 +23,6 @@ blink_core_sources("exported") {
     "WebDataSourceImpl.cpp",
     "WebDataSourceImpl.h",
     "WebDateTimeSuggestion.cpp",
-    "WebDevToolsAgentImpl.cpp",
-    "WebDevToolsAgentImpl.h",
     "WebDevToolsFrontendImpl.cpp",
     "WebDevToolsFrontendImpl.h",
     "WebDocument.cpp",
@@ -61,6 +59,8 @@ blink_core_sources("exported") {
     "WebPagePopupImpl.cpp",
     "WebPagePopupImpl.h",
     "WebPerformance.cpp",
+    "WebPluginContainerBase.cpp",
+    "WebPluginContainerBase.h",
     "WebPluginContainerImpl.cpp",
     "WebPluginContainerImpl.h",
     "WebPluginDocument.cpp",
@@ -89,7 +89,6 @@ blink_core_sources("exported") {
     "WebTextCheckingResult.cpp",
     "WebUserGestureIndicator.cpp",
     "WebUserGestureToken.cpp",
-    "WebViewBase.cpp",
     "WebViewBase.h",
   ]
 

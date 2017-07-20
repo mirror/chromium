@@ -48,10 +48,6 @@ void FakeHostScanCache::ClearCacheExceptForActiveHost() {
   }
 }
 
-bool FakeHostScanCache::ExistsInCache(const std::string& tether_network_guid) {
-  return GetCacheEntry(tether_network_guid) != nullptr;
-}
-
 bool FakeHostScanCache::DoesHostRequireSetup(
     const std::string& tether_network_guid) {
   auto it = cache_.find(tether_network_guid);

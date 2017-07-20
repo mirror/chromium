@@ -119,7 +119,8 @@ class ConnectTest : public test::ServiceTest,
         const BindSourceInfo& source_info,
         const std::string& interface_name,
         mojo::ScopedMessagePipeHandle interface_pipe) override {
-      registry_.BindInterface(interface_name, std::move(interface_pipe));
+      registry_.BindInterface(source_info, interface_name,
+                              std::move(interface_pipe));
     }
 
     ConnectTest* connect_test_;
@@ -147,7 +148,8 @@ class ConnectTest : public test::ServiceTest,
     return base::MakeUnique<TestService>(this);
   }
 
-  void Create(test::mojom::ExposedInterfaceRequest request) {
+  void Create(const BindSourceInfo& source_info,
+              test::mojom::ExposedInterfaceRequest request) {
     bindings_.AddBinding(this, std::move(request));
   }
 

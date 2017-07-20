@@ -1495,8 +1495,7 @@ DrawTextBlobOp::DrawTextBlobOp(sk_sp<SkTextBlob> blob,
 
 DrawTextBlobOp::~DrawTextBlobOp() = default;
 
-PaintOpBuffer::PaintOpBuffer()
-    : has_non_aa_paint_(false), has_discardable_images_(false) {}
+PaintOpBuffer::PaintOpBuffer() = default;
 
 PaintOpBuffer::PaintOpBuffer(PaintOpBuffer&& other) {
   *this = std::move(other);

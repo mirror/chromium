@@ -7,14 +7,11 @@
 #include <string>
 
 #include "base/macros.h"
-#include "base/strings/stringprintf.h"
 #include "base/test/histogram_tester.h"
 #include "chrome/browser/page_load_metrics/metrics_web_contents_observer.h"
 #include "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.h"
 #include "chrome/browser/page_load_metrics/page_load_metrics_observer.h"
 #include "chrome/browser/page_load_metrics/page_load_tracker.h"
-#include "components/subresource_filter/content/browser/subresource_filter_observer_manager.h"
-#include "components/subresource_filter/core/common/load_policy.h"
 #include "content/public/browser/global_request_id.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/navigation_throttle.h"
@@ -39,14 +36,10 @@ struct ExpectedFrameBytes {
   size_t uncached_kb;
 };
 
-enum class AdType { GOOGLE = 0, SUBRESOURCE_FILTER = 1, ALL = 2 };
 enum class ResourceCached { NOT_CACHED, CACHED };
 enum class FrameType { AD = 0, NON_AD };
 
 const char kAdUrl[] = "https://tpc.googlesyndication.com/safeframe/1";
-const char kSubresourceFilterWouldDisallowAdUrl[] = "https://ad.example.com/";
-const char kSubresourceFilterDisallowAdUrl[] =
-    "https://ad.example.com/disallow";
 const char kNonAdUrl[] = "https://foo.com/";
 const char kNonAdUrl2[] = "https://bar.com/";
 
@@ -72,7 +65,9 @@ class DelayWillProcessResponseThrottle : public content::NavigationThrottle {
     return "DelayWillProcessResponseThrottle";
   }
 
-  void Cancel() { CancelDeferredNavigation(NavigationThrottle::CANCEL); }
+  void CancelDeferredNavigation() {
+    navigation_handle()->CancelDeferredNavigation(NavigationThrottle::CANCEL);
+  }
 
  private:
   DISALLOW_COPY_AND_ASSIGN(DelayWillProcessResponseThrottle);
@@ -112,7 +107,7 @@ class DelayWillProcessResponseObserver : public content::WebContentsObserver {
         nullptr /* data_reduction_proxy */, 10 * 1024 /* raw_body_bytes */,
         0 /* original_network_content_length */, base::TimeTicks::Now(), 0);
 
-    throttle_->Cancel();
+    throttle_->CancelDeferredNavigation();
   }
 
  private:
@@ -122,32 +117,13 @@ class DelayWillProcessResponseObserver : public content::WebContentsObserver {
   DISALLOW_COPY_AND_ASSIGN(DelayWillProcessResponseObserver);
 };
 
-std::string AdTypeToString(AdType ad_type) {
-  switch (ad_type) {
-    case AdType::GOOGLE:
-      return "Google";
-    case AdType::SUBRESOURCE_FILTER:
-      return "SubresourceFilter";
-    case AdType::ALL:
-      return "All";
-  }
-  ADD_FAILURE();
-  return "";
-}
-
-std::string TypedHistogram(const std::string& suffix, AdType ad_type) {
-  return base::StringPrintf("PageLoad.Clients.Ads.%s.%s",
-                            AdTypeToString(ad_type).c_str(), suffix.c_str());
-}
-
 // Verifies that the histograms match what is expected given |google_ad_frames|
 // ad frame byte counts and non-ad counts (|other_cached_kb| and
 // |other_uncached_kb|).
 void TestHistograms(const base::HistogramTester& histograms,
                     const std::vector<ExpectedFrameBytes>& google_ad_frames,
                     size_t non_ad_cached_kb,
-                    size_t non_ad_uncached_kb,
-                    AdType ad_type) {
+                    size_t non_ad_uncached_kb) {
   size_t total_ad_cached_kb = 0;
   size_t total_ad_uncached_kb = 0;
   size_t total_ad_kb = 0;
@@ -179,7 +155,7 @@ void TestHistograms(const base::HistogramTester& histograms,
 
   // Test the histograms.
   histograms.ExpectUniqueSample(
-      TypedHistogram("FrameCounts.AnyParentFrame.AdFrames", ad_type),
+      "PageLoad.Clients.Ads.Google.FrameCounts.AnyParentFrame.AdFrames",
       ad_frame_count, 1);
 
   if (ad_frame_count == 0)
@@ -187,46 +163,46 @@ void TestHistograms(const base::HistogramTester& histograms,
 
   for (const auto& total_bytes_and_count : frames_with_total_byte_count) {
     histograms.ExpectBucketCount(
-        TypedHistogram("Bytes.AdFrames.PerFrame.Total", ad_type),
+        "PageLoad.Clients.Ads.Google.Bytes.AdFrames.PerFrame.Total",
         total_bytes_and_count.first, total_bytes_and_count.second);
   }
   for (const auto& network_bytes_and_count : frames_with_network_byte_count) {
     histograms.ExpectBucketCount(
-        TypedHistogram("Bytes.AdFrames.PerFrame.Network", ad_type),
+        "PageLoad.Clients.Ads.Google.Bytes.AdFrames.PerFrame.Network",
         network_bytes_and_count.first, network_bytes_and_count.second);
   }
   for (const auto& percent_network_and_count :
        frames_with_percent_network_count) {
     histograms.ExpectBucketCount(
-        TypedHistogram("Bytes.AdFrames.PerFrame.PercentNetwork", ad_type),
+        "PageLoad.Clients.Ads.Google.Bytes.AdFrames.PerFrame.PercentNetwork",
         percent_network_and_count.first, percent_network_and_count.second);
   }
 
   histograms.ExpectUniqueSample(
-      TypedHistogram("Bytes.AdFrames.Aggregate.Total", ad_type), total_ad_kb,
+      "PageLoad.Clients.Ads.Google.Bytes.AdFrames.Aggregate.Total", total_ad_kb,
       1);
   histograms.ExpectUniqueSample(
-      TypedHistogram("Bytes.AdFrames.Aggregate.Network", ad_type),
+      "PageLoad.Clients.Ads.Google.Bytes.AdFrames.Aggregate.Network",
       total_ad_uncached_kb, 1);
   histograms.ExpectUniqueSample(
-      TypedHistogram("Bytes.FullPage.Total", ad_type),
+      "PageLoad.Clients.Ads.Google.Bytes.FullPage.Total",
       non_ad_cached_kb + non_ad_uncached_kb + total_ad_kb, 1);
   histograms.ExpectUniqueSample(
-      TypedHistogram("Bytes.FullPage.Network", ad_type),
+      "PageLoad.Clients.Ads.Google.Bytes.FullPage.Network",
       non_ad_uncached_kb + total_ad_uncached_kb, 1);
   histograms.ExpectUniqueSample(
-      TypedHistogram("Bytes.NonAdFrames.Aggregate.Total", ad_type),
+      "PageLoad.Clients.Ads.Google.Bytes.NonAdFrames.Aggregate.Total",
       non_ad_cached_kb + non_ad_uncached_kb, 1);
   histograms.ExpectUniqueSample(
-      TypedHistogram("Bytes.FullPage.Total.PercentAds", ad_type),
+      "PageLoad.Clients.Ads.Google.Bytes.FullPage.Total.PercentAds",
       (total_ad_kb * 100) /
           (total_ad_kb + non_ad_cached_kb + non_ad_uncached_kb),
       1);
   histograms.ExpectUniqueSample(
-      TypedHistogram("Bytes.AdFrames.Aggregate.PercentNetwork", ad_type),
+      "PageLoad.Clients.Ads.Google.Bytes.AdFrames.Aggregate.PercentNetwork",
       ((total_ad_uncached_kb * 100) / total_ad_kb), 1);
   histograms.ExpectUniqueSample(
-      TypedHistogram("Bytes.FullPage.Network.PercentAds", ad_type),
+      "PageLoad.Clients.Ads.Google.Bytes.FullPage.Network.PercentAds",
       (total_ad_uncached_kb * 100) /
           (total_ad_uncached_kb + non_ad_uncached_kb),
       1);
@@ -238,15 +214,6 @@ class AdsPageLoadMetricsObserverTest
     : public page_load_metrics::PageLoadMetricsObserverTestHarness {
  public:
   AdsPageLoadMetricsObserverTest() {}
-
-  void SetUp() override {
-    page_load_metrics::PageLoadMetricsObserverTestHarness::SetUp();
-    subresource_filter::SubresourceFilterObserverManager::CreateForWebContents(
-        web_contents());
-    subresource_observer_manager_ =
-        subresource_filter::SubresourceFilterObserverManager::FromWebContents(
-            web_contents());
-  }
 
   // Returns the final RenderFrameHost after navigation commits.
   RenderFrameHost* NavigateFrame(const std::string& url,
@@ -270,22 +237,6 @@ class AdsPageLoadMetricsObserverTest
         RenderFrameHostTester::For(parent)->AppendChild(frame_name);
     auto navigation_simulator =
         NavigationSimulator::CreateRendererInitiated(GURL(url), subframe);
-    navigation_simulator->Start();
-
-    // Simulate subresource filter evaluation.
-    content::NavigationHandle* handle =
-        navigation_simulator->GetNavigationHandle();
-    if (url == kSubresourceFilterWouldDisallowAdUrl) {
-      subresource_observer_manager_->NotifySubframeNavigationEvaluated(
-          handle, subresource_filter::LoadPolicy::WOULD_DISALLOW);
-    } else if (url == kSubresourceFilterDisallowAdUrl) {
-      subresource_observer_manager_->NotifySubframeNavigationEvaluated(
-          handle, subresource_filter::LoadPolicy::DISALLOW);
-    } else {
-      subresource_observer_manager_->NotifySubframeNavigationEvaluated(
-          handle, subresource_filter::LoadPolicy::ALLOW);
-    }
-
     navigation_simulator->Commit();
     return navigation_simulator->GetFinalRenderFrameHost();
   }
@@ -301,11 +252,11 @@ class AdsPageLoadMetricsObserverTest
 
     if (frame_type == FrameType::AD) {
       tester.ExpectUniqueSample(
-          "PageLoad.Clients.Ads.All.Navigations.AdFrameRenavigatedToAd", bucket,
-          1);
+          "PageLoad.Clients.Ads.Google.Navigations.AdFrameRenavigatedToAd",
+          bucket, 1);
     } else {
       tester.ExpectUniqueSample(
-          "PageLoad.Clients.Ads.All.Navigations.NonAdFrameRenavigatedToAd",
+          "PageLoad.Clients.Ads.Google.Navigations.NonAdFrameRenavigatedToAd",
           bucket, 1);
     }
 
@@ -330,8 +281,6 @@ class AdsPageLoadMetricsObserverTest
   }
 
  private:
-  subresource_filter::SubresourceFilterObserverManager*
-      subresource_observer_manager_ = nullptr;
   DISALLOW_COPY_AND_ASSIGN(AdsPageLoadMetricsObserverTest);
 };
 
@@ -349,8 +298,7 @@ TEST_F(AdsPageLoadMetricsObserverTest, PageWithNoAds) {
   NavigateFrame(kNonAdUrl, main_frame);
 
   TestHistograms(histogram_tester(), std::vector<ExpectedFrameBytes>(),
-                 0 /* non_ad_cached_kb */, 30 /* non_ad_uncached_kb */,
-                 AdType::GOOGLE);
+                 0 /* non_ad_cached_kb */, 30 /* non_ad_uncached_kb */);
 
   // Verify that other UMA wasn't written.
   histogram_tester().ExpectTotalCount(
@@ -379,10 +327,10 @@ TEST_F(AdsPageLoadMetricsObserverTest, ResourceBeforeAdFrameCommits) {
   NavigateFrame(kNonAdUrl, main_frame);
 
   TestHistograms(histogram_tester(), {{0, 10}}, 0 /* non_ad_cached_kb */,
-                 10 /*non_ad_uncached_kb*/, AdType::GOOGLE);
+                 10 /*non_ad_uncached_kb*/);
 }
 
-TEST_F(AdsPageLoadMetricsObserverTest, AllAdTypesInPage) {
+TEST_F(AdsPageLoadMetricsObserverTest, PageWithAdFrames) {
   RenderFrameHost* main_frame = NavigateMainFrame(kNonAdUrl);
   RenderFrameHost* non_ad_frame =
       CreateAndNavigateSubFrame(kNonAdUrl, kNonAdName, main_frame);
@@ -391,54 +339,40 @@ TEST_F(AdsPageLoadMetricsObserverTest, AllAdTypesInPage) {
   // nested ad frame doesn't get counted separately (but that its bytes are
   // still counted). Also verify that the various ad signals (urls and names)
   // are properly detected.
-  RenderFrameHost* google_frame1 =
+  RenderFrameHost* ad_frame1 =
       CreateAndNavigateSubFrame(kNonAdUrl, "google_ads_iframe_1", main_frame);
-  RenderFrameHost* google_frame2 =
-      CreateAndNavigateSubFrame(kAdUrl, kNonAdName, main_frame);
-  RenderFrameHost* srf_frame1 = CreateAndNavigateSubFrame(
-      kSubresourceFilterWouldDisallowAdUrl, kNonAdName, main_frame);
-  RenderFrameHost* srf_frame2 = CreateAndNavigateSubFrame(
-      kSubresourceFilterWouldDisallowAdUrl, kNonAdName, main_frame);
-  RenderFrameHost* nested_srf_frame3 = CreateAndNavigateSubFrame(
-      kSubresourceFilterWouldDisallowAdUrl, kNonAdName, srf_frame2);
-
-  // This frame should return DISALLOW by the SubresourceFilter so it won't
-  // count as an ad.
-  RenderFrameHost* disallowed_srf_frame = CreateAndNavigateSubFrame(
-      kSubresourceFilterDisallowAdUrl, kNonAdName, main_frame);
+  RenderFrameHost* ad_frame2 =
+      CreateAndNavigateSubFrame(kNonAdUrl, "google_ads_frame_2", main_frame);
+  RenderFrameHost* ad_frame3 = CreateAndNavigateSubFrame(
+      "https://tpc.googlesyndication.com/safeframe/", "", main_frame);
+  RenderFrameHost* ad_frame4 = CreateAndNavigateSubFrame(
+      "https://tpc.googlesyndication.com/safeframe/1", "", main_frame);
+  RenderFrameHost* nested_ad_frame4 = CreateAndNavigateSubFrame(
+      "https://tpc.googlesyndication.com/safeframe/2", "", ad_frame4);
 
   // Create an addditional ad frame without content. It shouldn't be counted
   // as an ad frame.
-  CreateAndNavigateSubFrame(kSubresourceFilterWouldDisallowAdUrl, kNonAdName,
-                            main_frame);
+  CreateAndNavigateSubFrame(kAdUrl, kNonAdName, main_frame);
 
   // 70KB total in page, 50 from ads, 40 from network, and 30 of those
   // are from ads.
   LoadResource(main_frame, ResourceCached::NOT_CACHED, 10);
   LoadResource(non_ad_frame, ResourceCached::CACHED, 10);
-  LoadResource(google_frame1, ResourceCached::CACHED, 10);
-  LoadResource(google_frame2, ResourceCached::NOT_CACHED, 10);
-  LoadResource(srf_frame1, ResourceCached::NOT_CACHED, 10);
-  LoadResource(srf_frame2, ResourceCached::NOT_CACHED, 10);
-  LoadResource(nested_srf_frame3, ResourceCached::CACHED, 10);
-  LoadResource(disallowed_srf_frame, ResourceCached::CACHED, 10);
+  LoadResource(ad_frame1, ResourceCached::CACHED, 10);
+  LoadResource(ad_frame2, ResourceCached::NOT_CACHED, 10);
+  LoadResource(ad_frame3, ResourceCached::NOT_CACHED, 10);
+  LoadResource(ad_frame4, ResourceCached::NOT_CACHED, 10);
+  LoadResource(nested_ad_frame4, ResourceCached::CACHED, 10);
 
   // Navigate again to trigger histograms.
   NavigateFrame(kNonAdUrl, main_frame);
 
-  TestHistograms(histogram_tester(), {{10, 0}, {0, 10}},
-                 30 /* non_ad_cached_kb */, 30 /* non_ad_uncached_kb */,
-                 AdType::GOOGLE);
-  TestHistograms(histogram_tester(), {{0, 10}, {10, 10}},
-                 30 /* non_ad_cached_kb */, 20 /* non_ad_uncached_kb */,
-                 AdType::SUBRESOURCE_FILTER);
   TestHistograms(histogram_tester(), {{10, 0}, {0, 10}, {0, 10}, {10, 10}},
-                 20 /* non_ad_cached_kb */, 10 /* non_ad_uncached_kb */,
-                 AdType::ALL);
+                 10 /* non_ad_cached_kb */, 10 /* non_ad_uncached_kb */);
   histogram_tester().ExpectBucketCount(
-      "PageLoad.Clients.Ads.All.ParentExistsForSubFrame", 0, 0);
+      "PageLoad.Clients.Ads.Google.ParentExistsForSubFrame", 0, 0);
   histogram_tester().ExpectTotalCount(
-      "PageLoad.Clients.Ads.All.ResourceTypeWhenNoFrameFound", 0);
+      "PageLoad.Clients.Ads.Google.ResourceTypeWhenNoFrameFound", 0);
 }
 
 TEST_F(AdsPageLoadMetricsObserverTest, PageLoadSubFrameRenavigationMetrics) {
@@ -476,7 +410,7 @@ TEST_F(AdsPageLoadMetricsObserverTest, PageLoadSubFrameRenavigationMetrics) {
   base::HistogramTester tester;
   ad_sub_sub_frame = NavigateFrame(kNonAdUrl2, ad_sub_sub_frame);
   tester.ExpectTotalCount(
-      "PageLoad.Clients.Ads.All.Navigations.AdFrameRenavigatedToAd", 0);
+      "PageLoad.Clients.Ads.Google.Navigations.AdFrameRenavigatedToAd", 0);
 }
 
 TEST_F(AdsPageLoadMetricsObserverTest, PageWithAdFrameThatRenavigates) {
@@ -497,11 +431,11 @@ TEST_F(AdsPageLoadMetricsObserverTest, PageWithAdFrameThatRenavigates) {
   NavigateFrame(kNonAdUrl, main_frame);
 
   TestHistograms(histogram_tester(), {{0, 20}}, 0 /* non_ad_cached_kb */,
-                 10 /* non_ad_uncached_kb */, AdType::GOOGLE);
+                 10 /* non_ad_uncached_kb */);
   histogram_tester().ExpectBucketCount(
-      "PageLoad.Clients.Ads.All.ParentExistsForSubFrame", 0, 0);
+      "PageLoad.Clients.Ads.Google.ParentExistsForSubFrame", 0, 0);
   histogram_tester().ExpectTotalCount(
-      "PageLoad.Clients.Ads.All.ResourceTypeWhenNoFrameFound", 0);
+      "PageLoad.Clients.Ads.Google.ResourceTypeWhenNoFrameFound", 0);
 }
 
 TEST_F(AdsPageLoadMetricsObserverTest, PageWithNonAdFrameThatRenavigatesToAd) {
@@ -532,12 +466,11 @@ TEST_F(AdsPageLoadMetricsObserverTest, PageWithNonAdFrameThatRenavigatesToAd) {
   NavigateFrame(kNonAdUrl, main_frame);
 
   TestHistograms(histogram_tester(), {{0, 10}, {0, 10}},
-                 0 /* non_ad_cached_kb */, 20 /* non_ad_uncached_kb */,
-                 AdType::GOOGLE);
+                 0 /* non_ad_cached_kb */, 20 /* non_ad_uncached_kb */);
   histogram_tester().ExpectBucketCount(
-      "PageLoad.Clients.Ads.All.ParentExistsForSubFrame", 0, 0);
+      "PageLoad.Clients.Ads.Google.ParentExistsForSubFrame", 0, 0);
   histogram_tester().ExpectTotalCount(
-      "PageLoad.Clients.Ads.All.ResourceTypeWhenNoFrameFound", 0);
+      "PageLoad.Clients.Ads.Google.ResourceTypeWhenNoFrameFound", 0);
 }
 
 TEST_F(AdsPageLoadMetricsObserverTest, CountAbortedNavigation) {
@@ -564,7 +497,7 @@ TEST_F(AdsPageLoadMetricsObserverTest, CountAbortedNavigation) {
   NavigateFrame(kNonAdUrl, main_frame);
 
   TestHistograms(histogram_tester(), {{0, 20}}, 0 /* non_ad_cached_kb */,
-                 10 /* non_ad_uncached_kb */, AdType::GOOGLE);
+                 10 /* non_ad_uncached_kb */);
 }
 
 TEST_F(AdsPageLoadMetricsObserverTest, CountAbortedSecondNavigationForFrame) {
@@ -593,7 +526,7 @@ TEST_F(AdsPageLoadMetricsObserverTest, CountAbortedSecondNavigationForFrame) {
   NavigateFrame(kNonAdUrl, main_frame);
 
   TestHistograms(histogram_tester(), {{0, 20}}, 0 /* non_ad_cached_kb */,
-                 20 /* non_ad_uncached_kb */, AdType::GOOGLE);
+                 20 /* non_ad_uncached_kb */);
 }
 
 TEST_F(AdsPageLoadMetricsObserverTest, TwoResourceLoadsBeforeCommit) {
@@ -628,11 +561,12 @@ TEST_F(AdsPageLoadMetricsObserverTest, TwoResourceLoadsBeforeCommit) {
   NavigateFrame(kNonAdUrl, main_frame);
 
   TestHistograms(histogram_tester(), {{0, 20}}, 0 /* non_ad_cached_kb */,
-                 10 /* non_ad_uncached_kb */, AdType::GOOGLE);
+                 10 /* non_ad_uncached_kb */);
+
   histogram_tester().ExpectBucketCount(
-      "PageLoad.Clients.Ads.All.ParentExistsForSubFrame", 0, 0);
+      "PageLoad.Clients.Ads.Google.ParentExistsForSubFrame", 0, 0);
   histogram_tester().ExpectUniqueSample(
-      "PageLoad.Clients.Ads.All.ResourceTypeWhenNoFrameFound",
+      "PageLoad.Clients.Ads.Google.ResourceTypeWhenNoFrameFound",
       content::RESOURCE_TYPE_SUB_FRAME, 1);
 }
 
@@ -646,7 +580,7 @@ TEST_F(AdsPageLoadMetricsObserverTest, FrameWithNoParent) {
       CreateAndNavigateSubFrame(kNonAdUrl, kNonAdName, main_frame);
 
   histogram_tester().ExpectBucketCount(
-      "PageLoad.Clients.Ads.All.ParentExistsForSubFrame", 0, 0);
+      "PageLoad.Clients.Ads.Google.ParentExistsForSubFrame", 0, 0);
 
   // Renavigate the child, but, while navigating, the main frame renavigates.
   RenderFrameHost* child_of_subframe =
@@ -662,15 +596,15 @@ TEST_F(AdsPageLoadMetricsObserverTest, FrameWithNoParent) {
   navigation_simulator->Commit();
   child_of_subframe = navigation_simulator->GetFinalRenderFrameHost();
   histogram_tester().ExpectBucketCount(
-      "PageLoad.Clients.Ads.All.ParentExistsForSubFrame", 0, 1);
+      "PageLoad.Clients.Ads.Google.ParentExistsForSubFrame", 0, 1);
 
   // Test that a resource loaded into an unknown frame doesn't cause any
   // issues.
   histogram_tester().ExpectTotalCount(
-      "PageLoad.Clients.Ads.All.ResourceTypeWhenNoFrameFound", 0);
+      "PageLoad.Clients.Ads.Google.ResourceTypeWhenNoFrameFound", 0);
   LoadResource(child_of_subframe, ResourceCached::NOT_CACHED, 10);
   histogram_tester().ExpectBucketCount(
-      "PageLoad.Clients.Ads.All.ResourceTypeWhenNoFrameFound",
+      "PageLoad.Clients.Ads.Google.ResourceTypeWhenNoFrameFound",
       content::RESOURCE_TYPE_SUB_FRAME, 1);
 }
 
@@ -734,6 +668,6 @@ TEST_F(AdsPageLoadMetricsObserverTest, NoHistogramWithoutCommit) {
 
   // There shouldn't be any histograms for an aborted main frame.
   EXPECT_EQ(0u, histogram_tester()
-                    .GetTotalCountsForPrefix("PageLoad.Clients.Ads.Google.")
+                    .GetTotalCountsForPrefix("PageLoad.Clients.Ads.")
                     .size());
 }

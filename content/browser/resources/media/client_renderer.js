@@ -525,7 +525,6 @@ var ClientRenderer = (function() {
       if (this.selectedPlayer) {
         removeChildren(this.logTable);
         this.selectedPlayerLogIndex = 0;
-        this.drawLog_();
       }
     },
   };

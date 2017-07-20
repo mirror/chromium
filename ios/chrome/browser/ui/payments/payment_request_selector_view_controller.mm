@@ -115,8 +115,6 @@ typedef NS_ENUM(NSInteger, ItemType) {
   [super loadModel];
   CollectionViewModel* model = self.collectionViewModel;
 
-  self.title = [_dataSource title];
-
   // Set up trailing (edit or done) button.
   if (self.dataSource.state == PaymentRequestSelectorStateNormal &&
       [self.dataSource allowsEditMode]) {

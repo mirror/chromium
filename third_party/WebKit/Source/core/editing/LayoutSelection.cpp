@@ -42,9 +42,6 @@ SelectionPaintRange::SelectionPaintRange(LayoutObject* start_layout_object,
       end_offset_(end_offset) {
   DCHECK(start_layout_object_);
   DCHECK(end_layout_object_);
-  traverse_stop_ = end_layout_object_->ChildAt(end_offset);
-  if (!traverse_stop_)
-    traverse_stop_ = end_layout_object_->NextInPreOrderAfterChildren();
   if (start_layout_object_ != end_layout_object_)
     return;
   DCHECK_LT(start_offset_, end_offset_);
@@ -82,8 +79,12 @@ SelectionPaintRange::Iterator::Iterator(const SelectionPaintRange* range) {
     current_ = nullptr;
     return;
   }
-  range_ = range;
   current_ = range->StartLayoutObject();
+  included_end_ = range->EndLayoutObject();
+  stop_ = range->EndLayoutObject()->ChildAt(range->EndOffset());
+  if (stop_)
+    return;
+  stop_ = range->EndLayoutObject()->NextInPreOrderAfterChildren();
 }
 
 LayoutObject* SelectionPaintRange::Iterator::operator*() const {
@@ -93,10 +94,9 @@ LayoutObject* SelectionPaintRange::Iterator::operator*() const {
 
 SelectionPaintRange::Iterator& SelectionPaintRange::Iterator::operator++() {
   DCHECK(current_);
-  for (current_ = current_->NextInPreOrder();
-       current_ && current_ != range_->traverse_stop_;
+  for (current_ = current_->NextInPreOrder(); current_ && current_ != stop_;
        current_ = current_->NextInPreOrder()) {
-    if (current_->CanBeSelectionLeaf())
+    if (current_ == included_end_ || current_->CanBeSelectionLeaf())
       return *this;
   }
 
@@ -129,17 +129,6 @@ static SelectionMode ComputeSelectionMode(
   return SelectionMode::kBlockCursor;
 }
 
-static PositionInFlatTree FindFirstVisiblePosition(
-    const PositionInFlatTree& start) {
-  return MostForwardCaretPosition(
-      CreateVisiblePosition(start).DeepEquivalent());
-}
-
-static PositionInFlatTree FindLastVisiblePosition(
-    const PositionInFlatTree& end) {
-  return MostBackwardCaretPosition(CreateVisiblePosition(end).DeepEquivalent());
-}
-
 static EphemeralRangeInFlatTree CalcSelection(
     const FrameSelection& frame_selection) {
   const SelectionInDOMTree& selection_in_dom =
@@ -149,23 +138,17 @@ static EphemeralRangeInFlatTree CalcSelection(
       return {};
     case SelectionMode::kRange: {
       const PositionInFlatTree& base =
-          ToPositionInFlatTree(selection_in_dom.Base());
+          CreateVisiblePosition(ToPositionInFlatTree(selection_in_dom.Base()))
+              .DeepEquivalent();
       const PositionInFlatTree& extent =
-          ToPositionInFlatTree(selection_in_dom.Extent());
+          CreateVisiblePosition(ToPositionInFlatTree(selection_in_dom.Extent()))
+              .DeepEquivalent();
       if (base.IsNull() || extent.IsNull() || base == extent)
         return {};
       const bool base_is_first = base.CompareTo(extent) <= 0;
       const PositionInFlatTree& start = base_is_first ? base : extent;
       const PositionInFlatTree& end = base_is_first ? extent : base;
-      const PositionInFlatTree& visible_start = FindFirstVisiblePosition(start);
-      const PositionInFlatTree& visible_end = FindLastVisiblePosition(end);
-      if (visible_start.IsNull() || visible_end.IsNull())
-        return {};
-      // This case happens if we have
-      // <div>foo<div style="visibility:hidden">^bar|</div>baz</div>.
-      if (visible_start >= visible_end)
-        return {};
-      return {visible_start, visible_end};
+      return {MostForwardCaretPosition(start), MostBackwardCaretPosition(end)};
     }
     case SelectionMode::kBlockCursor: {
       const PositionInFlatTree& base =
@@ -173,9 +156,11 @@ static EphemeralRangeInFlatTree CalcSelection(
               .DeepEquivalent();
       const PositionInFlatTree end_position =
           NextPositionOf(base, PositionMoveType::kGraphemeCluster);
-      return base <= end_position
-                 ? EphemeralRangeInFlatTree(base, end_position)
-                 : EphemeralRangeInFlatTree(end_position, base);
+      const VisibleSelectionInFlatTree& block_cursor =
+          CreateVisibleSelection(SelectionInFlatTree::Builder()
+                                     .SetBaseAndExtent(base, end_position)
+                                     .Build());
+      return {block_cursor.Start(), block_cursor.End()};
     }
   }
   NOTREACHED();
@@ -312,20 +297,6 @@ std::pair<int, int> LayoutSelection::SelectionStartEnd() {
   if (paint_range_.IsNull())
     return std::make_pair(-1, -1);
   return std::make_pair(paint_range_.StartOffset(), paint_range_.EndOffset());
-}
-
-base::Optional<int> LayoutSelection::SelectionStart() const {
-  DCHECK(!HasPendingSelection());
-  if (paint_range_.IsNull())
-    return {};
-  return paint_range_.StartOffset();
-}
-
-base::Optional<int> LayoutSelection::SelectionEnd() const {
-  DCHECK(!HasPendingSelection());
-  if (paint_range_.IsNull())
-    return {};
-  return paint_range_.EndOffset();
 }
 
 void LayoutSelection::ClearSelection() {

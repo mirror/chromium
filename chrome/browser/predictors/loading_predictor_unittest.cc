@@ -47,7 +47,10 @@ class LoadingPredictorTest : public testing::Test {
 LoadingPredictorTest::LoadingPredictorTest()
     : profile_(base::MakeUnique<TestingProfile>()) {}
 
-LoadingPredictorTest::~LoadingPredictorTest() = default;
+LoadingPredictorTest::~LoadingPredictorTest() {
+  profile_ = nullptr;
+  base::RunLoop().RunUntilIdle();
+}
 
 void LoadingPredictorTest::SetUp() {
   LoadingPredictorConfig config;
@@ -56,6 +59,7 @@ void LoadingPredictorTest::SetUp() {
 
   auto mock = base::MakeUnique<StrictMock<MockResourcePrefetchPredictor>>(
       config, profile_.get());
+  EXPECT_CALL(*mock, StartInitialization());
   EXPECT_CALL(*mock, GetPrefetchData(GURL(kUrl), _))
       .WillRepeatedly(Return(true));
   EXPECT_CALL(*mock, GetPrefetchData(GURL(kUrl2), _))
@@ -69,7 +73,7 @@ void LoadingPredictorTest::SetUp() {
 }
 
 void LoadingPredictorTest::TearDown() {
-  predictor_->Shutdown();
+  predictor_ = nullptr;
   profile_->DestroyHistoryService();
 }
 

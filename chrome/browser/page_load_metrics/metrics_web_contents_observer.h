@@ -65,9 +65,11 @@ class MetricsWebContentsObserver
   // Note that the returned metrics is owned by the web contents.
   static MetricsWebContentsObserver* CreateForWebContents(
       content::WebContents* web_contents,
+      const base::Optional<content::WebContents::CreateParams>& create_params,
       std::unique_ptr<PageLoadMetricsEmbedderInterface> embedder_interface);
   MetricsWebContentsObserver(
       content::WebContents* web_contents,
+      const base::Optional<content::WebContents::CreateParams>& create_params,
       std::unique_ptr<PageLoadMetricsEmbedderInterface> embedder_interface);
   ~MetricsWebContentsObserver() override;
 
@@ -135,12 +137,6 @@ class MetricsWebContentsObserver
   void OnTimingUpdated(content::RenderFrameHost* render_frame_host,
                        const mojom::PageLoadTiming& timing,
                        const mojom::PageLoadMetadata& metadata);
-
-  // Informs the observers of the currently committed load that the event
-  // corresponding to |event_key| has occurred. This should not be called within
-  // WebContentsObserver::DidFinishNavigation methods.
-  // This method is subject to change and may be removed in the future.
-  void BroadcastEventToObservers(const void* const event_key);
 
  private:
   friend class content::WebContentsUserData<MetricsWebContentsObserver>;

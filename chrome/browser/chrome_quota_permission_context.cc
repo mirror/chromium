@@ -16,7 +16,6 @@
 #include "chrome/browser/permissions/permission_request_manager.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/tab_contents/tab_util.h"
-#include "chrome/browser/vr/vr_tab_helper.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/url_formatter/elide_url.h"
 #include "content/public/browser/browser_thread.h"
@@ -32,7 +31,7 @@
 #include "components/infobars/core/confirm_infobar_delegate.h"
 #include "components/infobars/core/infobar.h"
 #else
-#include "components/vector_icons/vector_icons.h"
+#include "ui/vector_icons/vector_icons.h"
 #endif
 
 namespace {
@@ -95,7 +94,7 @@ PermissionRequest::IconId QuotaPermissionRequest::GetIconId() const {
 #if defined(OS_ANDROID)
   return IDR_ANDROID_INFOBAR_WARNING;
 #else
-  return vector_icons::kWarningIcon;
+  return ui::kWarningIcon;
 #endif
 }
 
@@ -279,14 +278,6 @@ void ChromeQuotaPermissionContext::RequestQuotaPermission(
     // The tab may have gone away or the request may not be from a tab.
     LOG(WARNING) << "Attempt to request quota tabless renderer: "
                  << render_process_id << "," << params.render_frame_id;
-    DispatchCallbackOnIOThread(callback, QUOTA_PERMISSION_RESPONSE_CANCELLED);
-    return;
-  }
-
-  if (vr::VrTabHelper::IsInVr(web_contents)) {
-    // Permission request UI cannot currently be rendered binocularly in VR
-    // mode, so we suppress the UI and return cancelled to inform the caller
-    // that the request will not progress. crbug.com/736568
     DispatchCallbackOnIOThread(callback, QUOTA_PERMISSION_RESPONSE_CANCELLED);
     return;
   }

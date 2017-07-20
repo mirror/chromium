@@ -203,6 +203,10 @@ WebData TestingPlatformSupport::GetDataResource(const char* name) {
   return old_platform_ ? old_platform_->GetDataResource(name) : WebData();
 }
 
+WebURLError TestingPlatformSupport::CancelledError(const WebURL& url) const {
+  return old_platform_ ? old_platform_->CancelledError(url) : WebURLError();
+}
+
 InterfaceProvider* TestingPlatformSupport::GetInterfaceProvider() {
   return interface_provider_.get();
 }

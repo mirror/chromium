@@ -59,5 +59,21 @@ TEST_F(UtilsUnittest, SuperClass) {
   RunTest("testSuperClass");
 }
 
+TEST_F(UtilsUnittest, PromiseNoResult) {
+  RunTestWithPromises("testPromiseNoResult");
+}
+
+TEST_F(UtilsUnittest, PromiseOneResult) {
+  RunTestWithPromises("testPromiseOneResult");
+}
+
+TEST_F(UtilsUnittest, PromiseTwoResults) {
+  RunTestWithPromises("testPromiseTwoResults");
+}
+
+TEST_F(UtilsUnittest, PromiseError) {
+  RunTestWithPromises("testPromiseError");
+}
+
 }  // namespace
 }  // namespace extensions

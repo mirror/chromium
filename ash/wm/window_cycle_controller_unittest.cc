@@ -7,19 +7,19 @@
 #include <algorithm>
 #include <memory>
 
-#include "ash/app_list/test_app_list_view_presenter_impl.h"
 #include "ash/focus_cycler.h"
 #include "ash/public/cpp/config.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/scoped_root_window_for_new_windows.h"
 #include "ash/session/session_controller.h"
-#include "ash/session/test_session_controller_client.h"
 #include "ash/shelf/shelf.h"
-#include "ash/shelf/shelf_view_test_api.h"
 #include "ash/shelf/shelf_widget.h"
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
-#include "ash/test_shell_delegate.h"
+#include "ash/test/shelf_view_test_api.h"
+#include "ash/test/test_app_list_view_presenter_impl.h"
+#include "ash/test/test_session_controller_client.h"
+#include "ash/test/test_shell_delegate.h"
 #include "ash/wm/window_cycle_list.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
@@ -80,18 +80,18 @@ using aura::test::CreateTestWindowWithId;
 using aura::test::TestWindowDelegate;
 using aura::Window;
 
-class WindowCycleControllerTest : public AshTestBase {
+class WindowCycleControllerTest : public test::AshTestBase {
  public:
   WindowCycleControllerTest() {}
   ~WindowCycleControllerTest() override {}
 
   void SetUp() override {
-    AshTestBase::SetUp();
+    test::AshTestBase::SetUp();
 
     WindowCycleList::DisableInitialDelayForTesting();
 
-    shelf_view_test_.reset(
-        new ShelfViewTestAPI(GetPrimaryShelf()->GetShelfViewForTesting()));
+    shelf_view_test_.reset(new test::ShelfViewTestAPI(
+        GetPrimaryShelf()->GetShelfViewForTesting()));
     shelf_view_test_->SetAnimationDuration(1);
   }
 
@@ -115,7 +115,7 @@ class WindowCycleControllerTest : public AshTestBase {
   }
 
  private:
-  std::unique_ptr<ShelfViewTestAPI> shelf_view_test_;
+  std::unique_ptr<test::ShelfViewTestAPI> shelf_view_test_;
 
   DISALLOW_COPY_AND_ASSIGN(WindowCycleControllerTest);
 };
@@ -481,7 +481,7 @@ TEST_F(WindowCycleControllerTest, SelectingHidesAppList) {
     return;
 
   // The tested behavior relies on the app list presenter implementation.
-  TestAppListViewPresenterImpl app_list_presenter_impl;
+  test::TestAppListViewPresenterImpl app_list_presenter_impl;
 
   WindowCycleController* controller = Shell::Get()->window_cycle_controller();
 

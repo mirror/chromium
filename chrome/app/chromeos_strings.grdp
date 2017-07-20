@@ -130,9 +130,6 @@ Press any key to continue exploring.
   <message name="IDS_FILE_BROWSER_MEDIA_VIEW_AUDIO_ROOT_LABEL" desc="A label for the 'Audio' root of media views.">
     Audio
   </message>
-  <message name="IDS_FILE_BROWSER_RECENT_ROOT_LABEL" desc="A label for the 'Recent' root.">
-    Recent
-  </message>
   <message name="IDS_FILE_BROWSER_DOWNLOADS_DIRECTORY_WARNING" desc="Warning displayed to user when viewing downloads folder.">
     <ph name="BEGIN_BOLD">&lt;strong&gt;</ph>Caution:<ph name="END_BOLD">&lt;/strong&gt;</ph>  These files are temporary and may be automatically deleted to free up disk space.  <ph name="BEGIN_LINK">&lt;a href="javascript://"&gt;</ph>Learn More<ph name="END_LINK">&lt;/a&gt;<ex>&lt;/a&gt;</ex></ph>
   </message>
@@ -2156,10 +2153,7 @@ Press any key to continue exploring.
     Type the characters you see in the picture below.
   </message>
   <message name="IDS_LOGIN_NEEDS_DIRCRYPTO_MIGRATION_BANNER" desc="Banner text for users that need to migrate their data to use dircrypto.">
-    You've got a new OS update. Sign in to get started.
-  </message>
-  <message name="IDS_LOGIN_NEW_LOCK_SCREEN_NOTE_BUTTON_TITLE" desc="Title for the button on the Chrome OS lock screen that launches an app for taking notes (the action of creating a new note is delegated to the app). The string is primarily intended to be spoken out by accessibility tools - the button is represented by an icon in the lock screen UI.">
-    Create new note
+    You've got a new critical update. Sign in to get started.
   </message>
   <message name="IDS_OPTIONS_SETTINGS_SECONDARY_USER_BANNER" desc="Banner displayed in settings page when the user is secondary in a multi-profile session.">
     Some settings belonging to <ph name="PRIMARY_EMAIL">$1<ex>john@google.com</ex></ph> are being shared with you. These settings only affect your account when using multiple sign-in.
@@ -3115,10 +3109,10 @@ Press any key to continue exploring.
     Google Profile photo (loading)
   </message>
   <message name="IDS_IMAGE_SCREEN_PROFILE_PHOTO" desc="The title of the Google profile photo of the user on image selection screen. Please keep in sync with IDS_OPTIONS_CHANGE_PICTURE_PROFILE_PHOTO.">
-    Google Profile photo
+    * Google Profile photo
   </message>
   <message name="IDS_IMAGE_SCREEN_PROFILE_LOADING_PHOTO" desc="The title of the loading stub for Google profile image on image selection screen. Please keep in sync with IDS_OPTIONS_CHANGE_PICTURE_PROFILE_LOADING_PHOTO.">
-    Google Profile photo (loading)
+    * Google Profile photo (loading)
   </message>
   <message name="IDS_IMAGE_SCREEN_SYNCING_PREFERENCES" desc="The message displayed on the image screen of the GAIA flow while user preferences are syncing.">
     Syncing your preferences...
@@ -5061,14 +5055,14 @@ Battery full
   </message>
 
   <!-- Encryption migration dialog -->
-  <message name="IDS_ENCRYPTION_MIGRATION_READY_TITLE" desc="Title shown in encryption migration screen, which asks the user to install an OS update.">
-    Install OS update
+  <message name="IDS_ENCRYPTION_MIGRATION_READY_TITLE" desc="Title shown in encryption migration screen, which asks the user to install a critical update.">
+    Install critical update
   </message>
-  <message name="IDS_ENCRYPTION_MIGRATION_READY_DESCRIPTION" desc="Description shown in encryption migration screen, which asks the user to install an OS update.">
+  <message name="IDS_ENCRYPTION_MIGRATION_READY_DESCRIPTION" desc="Description shown in encryption migration screen, which asks the user to install a critical update.">
     To download and use Android apps, first you need to install an update. While your device is updating, you can’t use it. Your <ph name="DEVICE_TYPE">$1<ex>Chromebook</ex></ph> will restart after installation completes.
   </message>
   <message name="IDS_ENCRYPTION_MIGRATION_MIGRATING_TITLE" desc="Title shown in encryption migration screen when the migration is ongoing.">
-    Installing OS update
+    Installing critical update
   </message>
   <message name="IDS_ENCRYPTION_MIGRATION_MIGRATING_DESCRIPTION" desc="Description shown in encryption migration screen when the migration is ongoing.">
     Don’t turn off or close your <ph name="DEVICE_TYPE">$1<ex>Chromebook</ex></ph> until the update finishes. Your <ph name="DEVICE_TYPE">$1<ex>Chromebook</ex></ph> will restart after installation completes.
@@ -6097,7 +6091,7 @@ All users must sign out to continue.
     Done
   </message>
   <message name="IDS_ARC_MIGRATE_ENCRYPTION_NOTIFICATION_TITLE" desc="Title of the notification to navigate the user to first update the device encryption before running Android apps.">
-    Install OS update
+    Install critical update
   </message>
   <message name="IDS_ARC_MIGRATE_ENCRYPTION_NOTIFICATION_MESSAGE" desc="Main message of the notification to navigate the user to first update the device encryption before running Android apps.">
     To use Android apps, sign in again and update.

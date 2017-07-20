@@ -4,8 +4,6 @@
 
 #include "components/password_manager/core/browser/android_affiliation/affiliation_service.h"
 
-#include <memory>
-
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/files/file_path.h"
@@ -50,7 +48,7 @@ void AffiliationService::Initialize(
                             base::Unretained(backend_), db_path));
 }
 
-void AffiliationService::GetAffiliationsAndBranding(
+void AffiliationService::GetAffiliations(
     const FacetURI& facet_uri,
     StrategyOnCacheMiss cache_miss_strategy,
     const ResultCallback& result_callback) {
@@ -58,7 +56,7 @@ void AffiliationService::GetAffiliationsAndBranding(
   DCHECK(backend_);
   backend_task_runner_->PostTask(
       FROM_HERE,
-      base::Bind(&AffiliationBackend::GetAffiliationsAndBranding,
+      base::Bind(&AffiliationBackend::GetAffiliations,
                  base::Unretained(backend_), facet_uri, cache_miss_strategy,
                  result_callback, base::SequencedTaskRunnerHandle::Get()));
 }

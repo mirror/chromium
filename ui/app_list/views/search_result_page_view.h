@@ -39,7 +39,6 @@ class APP_LIST_EXPORT SearchResultPageView
   // Overridden from views::View:
   bool OnKeyPressed(const ui::KeyEvent& event) override;
   const char* GetClassName() const override;
-  gfx::Size CalculatePreferredSize() const override;
 
   // AppListPage overrides:
   gfx::Rect GetPageBoundsForState(AppListModel::State state) const override;
@@ -48,7 +47,6 @@ class APP_LIST_EXPORT SearchResultPageView
                           AppListModel::State to_state) override;
   int GetSearchBoxZHeight() const override;
   void OnHidden() override;
-  gfx::Rect GetSearchBoxBounds() const override;
 
   void ClearSelectedIndex();
 
@@ -58,9 +56,6 @@ class APP_LIST_EXPORT SearchResultPageView
   views::View* contents_view() { return contents_view_; }
 
  private:
-  // Separator between SearchResultContainerView.
-  class HorizontalSeparator;
-
   // |directional_movement| is true if the navigation was caused by directional
   // controls (eg, arrow keys), as opposed to linear controls (eg, Tab).
   void SetSelectedIndex(int index, bool directional_movement);
@@ -70,12 +65,11 @@ class APP_LIST_EXPORT SearchResultPageView
   // the views hierarchy.
   std::vector<SearchResultContainerView*> result_container_views_;
 
-  std::vector<HorizontalSeparator*> separators_;
-
   // -1 indicates no selection.
   int selected_index_;
 
-  const bool is_fullscreen_app_list_enabled_;
+  // Whether to use new UX design for search results.
+  bool const is_new_design_;
 
   // View containing SearchCardView instances. Owned by view hierarchy.
   views::View* const contents_view_;

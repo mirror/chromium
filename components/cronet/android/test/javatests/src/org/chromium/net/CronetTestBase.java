@@ -77,14 +77,11 @@ public class CronetTestBase extends AndroidTestCase {
         PathUtils.setPrivateDataDirectorySuffix(PRIVATE_DATA_DIRECTORY_SUFFIX);
         prepareTestStorage(getContext());
         mOldVmPolicy = StrictMode.getVmPolicy();
-        // Only enable StrictMode testing after leaks were fixed in crrev.com/475945
-        if (getMaximumAvailableApiLevel() >= 7) {
-            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-                                           .detectLeakedClosableObjects()
-                                           .penaltyLog()
-                                           .penaltyDeath()
-                                           .build());
-        }
+        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                                       .detectLeakedClosableObjects()
+                                       .penaltyLog()
+                                       .penaltyDeath()
+                                       .build());
     }
 
     @SuppressFBWarnings("DM_GC") // Used to trigger strictmode detecting leaked closeables

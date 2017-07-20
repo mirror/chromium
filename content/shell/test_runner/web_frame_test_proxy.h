@@ -85,20 +85,13 @@ class WebFrameTestProxy : public Base, public WebFrameTestProxyBase {
     return mime_type.Utf8().find(suffix) != std::string::npos;
   }
 
-  void DownloadURL(const blink::WebURLRequest& request,
-                   const blink::WebString& suggested_name) override {
-    test_client()->DownloadURL(request, suggested_name);
-    Base::DownloadURL(request, suggested_name);
-  }
-
   void LoadURLExternally(const blink::WebURLRequest& request,
                          blink::WebNavigationPolicy policy,
-                         blink::WebTriggeringEventInfo triggering_event_info,
+                         const blink::WebString& suggested_name,
                          bool replaces_current_history_item) override {
-    DCHECK_NE(policy, blink::kWebNavigationPolicyDownload);
-    test_client()->LoadURLExternally(request, policy, triggering_event_info,
+    test_client()->LoadURLExternally(request, policy, suggested_name,
                                      replaces_current_history_item);
-    Base::LoadURLExternally(request, policy, triggering_event_info,
+    Base::LoadURLExternally(request, policy, suggested_name,
                             replaces_current_history_item);
   }
 

@@ -144,3 +144,8 @@ int SpecialLocaleHandler::GetDesignatedSearchEngine() {
 }
 
 SpecialLocaleHandler::~SpecialLocaleHandler() {}
+
+// static
+bool RegisterSpecialLocaleHandler(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}

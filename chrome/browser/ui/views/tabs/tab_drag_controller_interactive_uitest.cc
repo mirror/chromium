@@ -63,9 +63,9 @@
 
 #if defined(USE_ASH)
 #include "ash/ash_switches.h"
-#include "ash/public/cpp/immersive/immersive_fullscreen_controller_test_api.h"
 #include "ash/shell.h"
-#include "ash/wm/cursor_manager_test_api.h"
+#include "ash/test/cursor_manager_test_api.h"
+#include "ash/test/immersive_fullscreen_controller_test_api.h"
 #include "ash/wm/root_window_finder.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
@@ -2144,7 +2144,7 @@ class DifferentDeviceScaleFactorDisplayTabDragControllerTest
   }
 
   float GetCursorDeviceScaleFactor() const {
-    ash::CursorManagerTestApi cursor_test_api(
+    ash::test::CursorManagerTestApi cursor_test_api(
         ash::Shell::Get()->cursor_manager());
     return cursor_test_api.GetCurrentCursor().device_scale_factor();
   }

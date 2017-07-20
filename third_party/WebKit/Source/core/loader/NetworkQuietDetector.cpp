@@ -69,16 +69,12 @@ void NetworkQuietDetector::NetworkQuietTimerFired(TimerBase*) {
       ActiveConnections() > kNetworkQuietMaximumConnections)
     return;
   network_quiet_reached_ = true;
-  if (FrameResourceCoordinator::IsEnabled()) {
-    auto frame_resource_coordinator =
-        GetSupplementable()->GetFrame()->GetFrameResourceCoordinator();
-    if (frame_resource_coordinator) {
-      frame_resource_coordinator->SetProperty(
-          resource_coordinator::mojom::PropertyType::kNetworkIdle, true);
-    }
+  auto frame_resource_coordinator =
+      GetSupplementable()->GetFrame()->GetFrameResourceCoordinator();
+  if (frame_resource_coordinator) {
+    frame_resource_coordinator->SendEvent(
+        resource_coordinator::mojom::EventType::kOnLocalFrameNetworkIdle);
   }
-
-  GetSupplementable()->Fetcher()->OnNetworkQuiet();
 }
 
 DEFINE_TRACE(NetworkQuietDetector) {

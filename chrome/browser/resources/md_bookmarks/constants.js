@@ -22,7 +22,6 @@ var DropPosition = {
 var Command = {
   EDIT: 'edit',
   COPY_URL: 'copy-url',
-  SHOW_IN_FOLDER: 'show-in-folder',
   DELETE: 'delete',
   OPEN_NEW_TAB: 'open-new-tab',
   OPEN_NEW_WINDOW: 'open-new-window',
@@ -36,16 +35,6 @@ var Command = {
   COPY: 'copy',
   CUT: 'cut',
   PASTE: 'paste',
-};
-
-/**
- * @enum {number}
- * @const
- */
-var MenuSource = {
-  NONE: 0,
-  LIST: 1,
-  TREE: 2,
 };
 
 /**

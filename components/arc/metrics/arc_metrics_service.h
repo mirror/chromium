@@ -11,15 +11,11 @@
 #include "base/memory/weak_ptr.h"
 #include "base/threading/thread_checker.h"
 #include "base/timer/timer.h"
+#include "components/arc/arc_service.h"
 #include "components/arc/common/metrics.mojom.h"
 #include "components/arc/common/process.mojom.h"
 #include "components/arc/instance_holder.h"
-#include "components/keyed_service/core/keyed_service.h"
 #include "mojo/public/cpp/bindings/binding.h"
-
-namespace content {
-class BrowserContext;
-}  // namespace content
 
 namespace arc {
 
@@ -27,17 +23,11 @@ class ArcBridgeService;
 
 // Collects information from other ArcServices and send UMA metrics.
 class ArcMetricsService
-    : public KeyedService,
+    : public ArcService,
       public InstanceHolder<mojom::MetricsInstance>::Observer,
       public mojom::MetricsHost {
  public:
-  // Returns singleton instance for the given BrowserContext,
-  // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcMetricsService* GetForBrowserContext(
-      content::BrowserContext* context);
-
-  ArcMetricsService(content::BrowserContext* context,
-                    ArcBridgeService* bridge_service);
+  explicit ArcMetricsService(ArcBridgeService* bridge_service);
   ~ArcMetricsService() override;
 
   // InstanceHolder<mojom::MetricsInstance>::Observer overrides.
@@ -77,8 +67,6 @@ class ArcMetricsService
   void OnArcStartTimeRetrieved(bool success, base::TimeTicks arc_start_time);
 
   THREAD_CHECKER(thread_checker_);
-
-  ArcBridgeService* const arc_bridge_service_;  // Owned by ArcServiceManager.
 
   mojo::Binding<mojom::MetricsHost> binding_;
 

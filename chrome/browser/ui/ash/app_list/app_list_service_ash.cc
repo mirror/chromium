@@ -111,8 +111,7 @@ void AppListServiceAsh::Init(Profile* initial_profile) {
   // The AppListPresenterService ctor calls AppListServiceAsh::GetInstance(),
   // which isn't available in the AppListServiceAsh constructor, so init here.
   // This establishes the mojo connections between the app list and presenter.
-  app_list_presenter_service_ =
-      base::MakeUnique<AppListPresenterService>(initial_profile);
+  app_list_presenter_service_ = base::MakeUnique<AppListPresenterService>();
 
   // Ensure the StartPageService is created here. This early initialization is
   // necessary to allow the WebContents to load before the app list is shown.

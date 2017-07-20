@@ -50,6 +50,8 @@ class BluetoothChooserAndroid : public content::BluetoothChooser {
       JNIEnv* env,
       const base::android::JavaParamRef<jobject>& obj);
 
+  static bool Register(JNIEnv* env);
+
  private:
   void OpenURL(const char* url);
   base::android::ScopedJavaGlobalRef<jobject> java_dialog_;

@@ -8,6 +8,10 @@
 <dom-module id="cr-shared-style">
   <template>
     <style include="cr-hidden-style cr-icons">
+      :host-context([dir=rtl]) button[is='paper-icon-button-light'] {
+        transform: scaleX(-1);  /* Flip on the X axis (aka mirror). */
+      }
+
       /* Chrome spinners should be blue. */
       paper-spinner {
         --paper-spinner-layer-1-color: var(--google-blue-500);
@@ -32,8 +36,6 @@
         --paper-button-flat-keyboard-focus: {
           background: rgba(0, 0, 0, .12);
         };
-        -webkit-margin-end: 8px;
-        color: var(--paper-grey-600);
       }
 
       .action-button,
@@ -45,6 +47,16 @@
 
       [actionable] {
         @apply(--cr-actionable);
+      }
+
+      button[is='paper-icon-button-light'] {
+        @apply(--cr-paper-icon-button-margin);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: var(--cr-icon-size);
+        flex-shrink: 0;
+        height: var(--cr-icon-ripple-size);
+        width: var(--cr-icon-ripple-size);
       }
 
       .subpage-arrow,

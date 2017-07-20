@@ -6,9 +6,7 @@
 
 #include <stddef.h>
 
-#include <memory>
 #include <string>
-#include <utility>
 
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
@@ -50,9 +48,6 @@
 #include "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_win.h"
 #include "chrome/browser/safe_browsing/chrome_cleaner/srt_field_trial_win.h"
 #include "chrome/browser/ui/webui/settings/chrome_cleanup_handler.h"
-#if defined(GOOGLE_CHROME_BUILD)
-#include "chrome/grit/chrome_unscaled_resources.h"
-#endif
 #endif  // defined(OS_WIN)
 
 #if defined(OS_WIN) || defined(OS_CHROMEOS)
@@ -113,10 +108,6 @@ void MdSettingsUI::RegisterProfilePrefs(
 MdSettingsUI::MdSettingsUI(content::WebUI* web_ui, const GURL& url)
     : content::WebUIController(web_ui),
       WebContentsObserver(web_ui->GetWebContents()) {
-#if BUILDFLAG(USE_VULCANIZE)
-  std::unordered_set<std::string> exclude_from_gzip;
-#endif
-
   Profile* profile = Profile::FromWebUI(web_ui);
   AddSettingsPageUIHandler(base::MakeUnique<AppearanceHandler>(web_ui));
 
@@ -143,7 +134,7 @@ MdSettingsUI::MdSettingsUI(content::WebUI* web_ui, const GURL& url)
 #if defined(GOOGLE_CHROME_BUILD) && !defined(OS_CHROMEOS)
   AddSettingsPageUIHandler(base::MakeUnique<MetricsReportingHandler>());
 #endif
-  AddSettingsPageUIHandler(base::MakeUnique<OnStartupHandler>(profile));
+  AddSettingsPageUIHandler(base::MakeUnique<OnStartupHandler>());
   AddSettingsPageUIHandler(base::MakeUnique<PeopleHandler>(profile));
   AddSettingsPageUIHandler(base::MakeUnique<ProfileInfoHandler>(profile));
   AddSettingsPageUIHandler(base::MakeUnique<ProtocolHandlersHandler>());
@@ -165,7 +156,7 @@ MdSettingsUI::MdSettingsUI(content::WebUI* web_ui, const GURL& url)
   AddSettingsPageUIHandler(
       base::MakeUnique<chromeos::settings::FingerprintHandler>(profile));
   AddSettingsPageUIHandler(
-      base::MakeUnique<chromeos::settings::KeyboardHandler>());
+      base::MakeUnique<chromeos::settings::KeyboardHandler>(web_ui));
   AddSettingsPageUIHandler(
       base::MakeUnique<chromeos::settings::PointerHandler>());
   AddSettingsPageUIHandler(
@@ -192,21 +183,8 @@ MdSettingsUI::MdSettingsUI(content::WebUI* web_ui, const GURL& url)
   if (base::FeatureList::IsEnabled(safe_browsing::kInBrowserCleanerUIFeature)) {
     AddSettingsPageUIHandler(base::MakeUnique<ChromeCleanupHandler>(profile));
 
-    safe_browsing::ChromeCleanerController* cleaner_controller =
-        safe_browsing::ChromeCleanerController::GetInstance();
-    if (cleaner_controller->ShouldShowCleanupInSettingsUI())
+    if (safe_browsing::ChromeCleanerController::ShouldShowCleanupInSettingsUI())
       html_source->AddBoolean("chromeCleanupEnabled", true);
-
-#if defined(GOOGLE_CHROME_BUILD)
-    if (cleaner_controller->IsPoweredByPartner())
-      html_source->AddBoolean("cleanupPoweredByPartner", true);
-
-    html_source->AddResourcePath("partner-logo.svg",
-                                 IDR_CHROME_CLEANUP_PARTNER);
-#if BUILDFLAG(USE_VULCANIZE)
-    exclude_from_gzip.insert("partner-logo.svg");
-#endif
-#endif  // defined(GOOGLE_CHROME_BUILD)
   }
 #endif  // defined(OS_WIN)
 
@@ -264,7 +242,7 @@ MdSettingsUI::MdSettingsUI(content::WebUI* web_ui, const GURL& url)
   html_source->AddResourcePath("lazy_load.html",
                                IDR_MD_SETTINGS_LAZY_LOAD_VULCANIZED_HTML);
   html_source->SetDefaultResource(IDR_MD_SETTINGS_VULCANIZED_HTML);
-  html_source->UseGzip(exclude_from_gzip);
+  html_source->UseGzip(std::unordered_set<std::string>());
 #else
   // Add all settings resources.
   for (size_t i = 0; i < kSettingsResourcesSize; ++i) {
@@ -278,16 +256,6 @@ MdSettingsUI::MdSettingsUI(content::WebUI* web_ui, const GURL& url)
 
   content::WebUIDataSource::Add(web_ui->GetWebContents()->GetBrowserContext(),
                                 html_source);
-
-#if defined(OS_WIN)
-  // This needs to be below content::WebUIDataSource::Add to make sure there
-  // is a WebUIDataSource to update if the observer is immediately notified.
-  if (base::FeatureList::IsEnabled(safe_browsing::kInBrowserCleanerUIFeature)) {
-    cleanup_observer_.reset(
-        new safe_browsing::ChromeCleanerStateChangeObserver(base::Bind(
-            &MdSettingsUI::UpdateCleanupDataSource, base::Unretained(this))));
-  }
-#endif  // defined(OS_WIN)
 }
 
 MdSettingsUI::~MdSettingsUI() {
@@ -318,20 +286,5 @@ void MdSettingsUI::DocumentOnLoadCompletedInMainFrame() {
   UMA_HISTOGRAM_TIMES("Settings.LoadCompletedTime.MD",
                       base::Time::Now() - load_start_time_);
 }
-
-#if defined(OS_WIN)
-void MdSettingsUI::UpdateCleanupDataSource(bool cleanupEnabled,
-                                           bool partnerPowered) {
-  DCHECK(web_ui());
-  Profile* profile = Profile::FromWebUI(web_ui());
-
-  std::unique_ptr<base::DictionaryValue> update(new base::DictionaryValue);
-  update->SetBoolean("chromeCleanupEnabled", cleanupEnabled);
-  update->SetBoolean("cleanupPoweredByPartner", partnerPowered);
-
-  content::WebUIDataSource::Update(profile, chrome::kChromeUISettingsHost,
-                                   std::move(update));
-}
-#endif  // defined(OS_WIN)
 
 }  // namespace settings

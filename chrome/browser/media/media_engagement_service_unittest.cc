@@ -7,7 +7,6 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
-#include "base/test/histogram_tester.h"
 #include "base/test/scoped_feature_list.h"
 #include "base/test/simple_test_clock.h"
 #include "base/values.h"
@@ -115,10 +114,6 @@ class MediaEngagementServiceTest : public ChromeRenderViewHostTestHarness {
         new MediaEngagementService(profile(), base::WrapUnique(test_clock_)));
   }
 
-  void StartNewMediaEngagementService() {
-    MediaEngagementService::Get(profile());
-  }
-
   void RecordVisitAndPlaybackAndAdvanceClock(GURL url) {
     RecordVisit(url);
     AdvanceClock();
@@ -148,11 +143,12 @@ class MediaEngagementServiceTest : public ChromeRenderViewHostTestHarness {
     EXPECT_EQ(service->GetEngagementScore(url), expected_score);
     EXPECT_EQ(service->GetScoreMapForTesting()[url], expected_score);
 
-    MediaEngagementScore score = service->CreateEngagementScore(url);
-    EXPECT_EQ(expected_visits, score.visits());
-    EXPECT_EQ(expected_media_playbacks, score.media_playbacks());
-    EXPECT_EQ(expected_last_media_playback_time,
-              score.last_media_playback_time());
+    MediaEngagementScore* score = service->CreateEngagementScore(url);
+    EXPECT_EQ(score->visits(), expected_visits);
+    EXPECT_EQ(score->media_playbacks(), expected_media_playbacks);
+    EXPECT_EQ(score->last_media_playback_time(),
+              expected_last_media_playback_time);
+    delete score;
   }
 
   void ExpectScores(GURL url,
@@ -165,21 +161,26 @@ class MediaEngagementServiceTest : public ChromeRenderViewHostTestHarness {
   }
 
   void SetScores(GURL url, int visits, int media_playbacks) {
-    MediaEngagementScore score = service_->CreateEngagementScore(url);
-    score.SetVisits(visits);
-    score.SetMediaPlaybacks(media_playbacks);
-    score.Commit();
+    MediaEngagementScore* score = service_->CreateEngagementScore(url);
+    score->SetVisits(visits);
+    score->SetMediaPlaybacks(media_playbacks);
+    score->Commit();
+    delete score;
   }
 
   void SetLastMediaPlaybackTime(const GURL& url,
                                 base::Time last_media_playback_time) {
-    MediaEngagementScore score = service_->CreateEngagementScore(url);
-    score.last_media_playback_time_ = last_media_playback_time;
-    score.Commit();
+    MediaEngagementScore* score = service_->CreateEngagementScore(url);
+    score->last_media_playback_time_ = last_media_playback_time;
+    score->Commit();
+    delete score;
   }
 
   double GetTotalScore(GURL url) {
-    return service_->CreateEngagementScore(url).GetTotalScore();
+    MediaEngagementScore* score = service_->CreateEngagementScore(url);
+    double total_score = score->GetTotalScore();
+    delete score;
+    return total_score;
   }
 
   std::map<GURL, double> GetScoreMapForTesting() const {
@@ -196,7 +197,7 @@ class MediaEngagementServiceTest : public ChromeRenderViewHostTestHarness {
 
   void SetNow(base::Time now) { test_clock_->SetNow(now); }
 
-  std::vector<media::mojom::MediaEngagementScoreDetailsPtr> GetAllScoreDetails()
+  std::vector<media::mojom::MediaEngagementScoreDetails> GetAllScoreDetails()
       const {
     return service_->GetAllScoreDetails();
   }
@@ -460,29 +461,4 @@ TEST_F(MediaEngagementServiceTest, CleanupDataOnSiteDataCleanup_NoTimeSet) {
   ClearDataBetweenTime(today - base::TimeDelta::FromDays(2),
                        today - base::TimeDelta::FromDays(1));
   ExpectScores(origin, 0.0, 1, 0, TimeNotSet());
-}
-
-TEST_F(MediaEngagementServiceTest, LogScoresOnStartupToHistogram) {
-  GURL url1("https://www.google.com");
-  GURL url2("https://www.google.co.uk");
-  GURL url3("https://www.example.com");
-
-  SetScores(url1, 6, 5);
-  SetScores(url2, 6, 3);
-  RecordVisitAndPlaybackAndAdvanceClock(url3);
-  ExpectScores(url1, 5.0 / 6.0, 6, 5, TimeNotSet());
-  ExpectScores(url2, 0.5, 6, 3, TimeNotSet());
-  ExpectScores(url3, 0.0, 1, 1, Now());
-
-  base::HistogramTester histogram_tester;
-  StartNewMediaEngagementService();
-
-  histogram_tester.ExpectTotalCount(
-      MediaEngagementService::kHistogramScoreAtStartupName, 3);
-  histogram_tester.ExpectBucketCount(
-      MediaEngagementService::kHistogramScoreAtStartupName, 0, 1);
-  histogram_tester.ExpectBucketCount(
-      MediaEngagementService::kHistogramScoreAtStartupName, 50, 1);
-  histogram_tester.ExpectBucketCount(
-      MediaEngagementService::kHistogramScoreAtStartupName, 83, 1);
 }

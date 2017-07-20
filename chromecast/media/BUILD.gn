@@ -3,7 +3,6 @@
 # found in the LICENSE file.
 
 import("//chromecast/chromecast.gni")
-import("//media/media_options.gni")
 import("//testing/test.gni")
 
 group("media") {
@@ -24,10 +23,6 @@ test("cast_media_unittests") {
     "base/supported_codec_profile_levels_memo_unittest.cc",
     "test/run_all_unittests.cc",
   ]
-
-  if (use_alsa && !is_cast_desktop_build) {
-    sources += [ "audio/cast_audio_manager_alsa_unittest.cc" ]
-  }
 
   deps = [
     ":media",

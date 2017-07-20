@@ -35,35 +35,34 @@ class MockAffiliationService : public testing::StrictMock<AffiliationService> {
 
   ~MockAffiliationService() override {}
 
-  MOCK_METHOD2(OnGetAffiliationsAndBrandingCalled,
+  MOCK_METHOD2(OnGetAffiliationsCalled,
                AffiliatedFacets(const FacetURI&, StrategyOnCacheMiss));
   MOCK_METHOD2(Prefetch, void(const FacetURI&, const base::Time&));
   MOCK_METHOD2(CancelPrefetch, void(const FacetURI&, const base::Time&));
   MOCK_METHOD1(TrimCacheForFacetURI, void(const FacetURI&));
 
-  void GetAffiliationsAndBranding(
-      const FacetURI& facet_uri,
-      StrategyOnCacheMiss cache_miss_strategy,
-      const ResultCallback& result_callback) override {
+  void GetAffiliations(const FacetURI& facet_uri,
+                       StrategyOnCacheMiss cache_miss_strategy,
+                       const ResultCallback& result_callback) override {
     AffiliatedFacets affiliation =
-        OnGetAffiliationsAndBrandingCalled(facet_uri, cache_miss_strategy);
+        OnGetAffiliationsCalled(facet_uri, cache_miss_strategy);
     result_callback.Run(affiliation, !affiliation.empty());
   }
 
-  void ExpectCallToGetAffiliationsAndBrandingAndSucceedWithResult(
+  void ExpectCallToGetAffiliationsAndSucceedWithResult(
       const FacetURI& expected_facet_uri,
       StrategyOnCacheMiss expected_cache_miss_strategy,
       const AffiliatedFacets& affiliations_to_return) {
-    EXPECT_CALL(*this, OnGetAffiliationsAndBrandingCalled(
-                           expected_facet_uri, expected_cache_miss_strategy))
+    EXPECT_CALL(*this, OnGetAffiliationsCalled(expected_facet_uri,
+                                               expected_cache_miss_strategy))
         .WillOnce(testing::Return(affiliations_to_return));
   }
 
-  void ExpectCallToGetAffiliationsAndBrandingAndEmulateFailure(
+  void ExpectCallToGetAffiliationsAndEmulateFailure(
       const FacetURI& expected_facet_uri,
       StrategyOnCacheMiss expected_cache_miss_strategy) {
-    EXPECT_CALL(*this, OnGetAffiliationsAndBrandingCalled(
-                           expected_facet_uri, expected_cache_miss_strategy))
+    EXPECT_CALL(*this, OnGetAffiliationsCalled(expected_facet_uri,
+                                               expected_cache_miss_strategy))
         .WillOnce(testing::Return(AffiliatedFacets()));
   }
 
@@ -361,10 +360,9 @@ class AffiliatedMatchHelperTest : public testing::Test {
 // applications, and only if the observed form is a secure HTML login form.
 
 TEST_F(AffiliatedMatchHelperTest, GetAffiliatedAndroidRealmsYieldsResults) {
-  mock_affiliation_service()
-      ->ExpectCallToGetAffiliationsAndBrandingAndSucceedWithResult(
-          FacetURI::FromCanonicalSpec(kTestWebFacetURIBeta1),
-          StrategyOnCacheMiss::FAIL, GetTestEquivalenceClassBeta());
+  mock_affiliation_service()->ExpectCallToGetAffiliationsAndSucceedWithResult(
+      FacetURI::FromCanonicalSpec(kTestWebFacetURIBeta1),
+      StrategyOnCacheMiss::FAIL, GetTestEquivalenceClassBeta());
   EXPECT_THAT(GetAffiliatedAndroidRealms(
                   GetTestObservedWebForm(kTestWebRealmBeta1, nullptr)),
               testing::UnorderedElementsAre(kTestAndroidRealmBeta2,
@@ -373,10 +371,9 @@ TEST_F(AffiliatedMatchHelperTest, GetAffiliatedAndroidRealmsYieldsResults) {
 
 TEST_F(AffiliatedMatchHelperTest,
        GetAffiliatedAndroidRealmsYieldsOnlyAndroidApps) {
-  mock_affiliation_service()
-      ->ExpectCallToGetAffiliationsAndBrandingAndSucceedWithResult(
-          FacetURI::FromCanonicalSpec(kTestWebFacetURIAlpha1),
-          StrategyOnCacheMiss::FAIL, GetTestEquivalenceClassAlpha());
+  mock_affiliation_service()->ExpectCallToGetAffiliationsAndSucceedWithResult(
+      FacetURI::FromCanonicalSpec(kTestWebFacetURIAlpha1),
+      StrategyOnCacheMiss::FAIL, GetTestEquivalenceClassAlpha());
   // This verifies that |kTestWebRealmAlpha2| is not returned.
   EXPECT_THAT(GetAffiliatedAndroidRealms(
                   GetTestObservedWebForm(kTestWebRealmAlpha1, nullptr)),
@@ -411,10 +408,9 @@ TEST_F(AffiliatedMatchHelperTest,
 
 TEST_F(AffiliatedMatchHelperTest,
        GetAffiliatedAndroidRealmsYieldsEmptyResultsWhenNoPrefetch) {
-  mock_affiliation_service()
-      ->ExpectCallToGetAffiliationsAndBrandingAndEmulateFailure(
-          FacetURI::FromCanonicalSpec(kTestWebFacetURIAlpha1),
-          StrategyOnCacheMiss::FAIL);
+  mock_affiliation_service()->ExpectCallToGetAffiliationsAndEmulateFailure(
+      FacetURI::FromCanonicalSpec(kTestWebFacetURIAlpha1),
+      StrategyOnCacheMiss::FAIL);
   EXPECT_THAT(GetAffiliatedAndroidRealms(
                   GetTestObservedWebForm(kTestWebRealmAlpha1, nullptr)),
               testing::IsEmpty());
@@ -425,11 +421,9 @@ TEST_F(AffiliatedMatchHelperTest,
 // only web sites, and only if an Android application is queried.
 
 TEST_F(AffiliatedMatchHelperTest, GetAffiliatedWebRealmsYieldsResults) {
-  mock_affiliation_service()
-      ->ExpectCallToGetAffiliationsAndBrandingAndSucceedWithResult(
-          FacetURI::FromCanonicalSpec(kTestAndroidFacetURIAlpha3),
-          StrategyOnCacheMiss::FETCH_OVER_NETWORK,
-          GetTestEquivalenceClassAlpha());
+  mock_affiliation_service()->ExpectCallToGetAffiliationsAndSucceedWithResult(
+      FacetURI::FromCanonicalSpec(kTestAndroidFacetURIAlpha3),
+      StrategyOnCacheMiss::FETCH_OVER_NETWORK, GetTestEquivalenceClassAlpha());
   PasswordStore::FormDigest android_form(
       GetTestAndroidCredentials(kTestAndroidRealmAlpha3));
   EXPECT_THAT(
@@ -438,11 +432,9 @@ TEST_F(AffiliatedMatchHelperTest, GetAffiliatedWebRealmsYieldsResults) {
 }
 
 TEST_F(AffiliatedMatchHelperTest, GetAffiliatedWebRealmsYieldsOnlyWebsites) {
-  mock_affiliation_service()
-      ->ExpectCallToGetAffiliationsAndBrandingAndSucceedWithResult(
-          FacetURI::FromCanonicalSpec(kTestAndroidFacetURIBeta2),
-          StrategyOnCacheMiss::FETCH_OVER_NETWORK,
-          GetTestEquivalenceClassBeta());
+  mock_affiliation_service()->ExpectCallToGetAffiliationsAndSucceedWithResult(
+      FacetURI::FromCanonicalSpec(kTestAndroidFacetURIBeta2),
+      StrategyOnCacheMiss::FETCH_OVER_NETWORK, GetTestEquivalenceClassBeta());
   PasswordStore::FormDigest android_form(
       GetTestAndroidCredentials(kTestAndroidRealmBeta2));
   // This verifies that |kTestAndroidRealmBeta3| is not returned.
@@ -466,31 +458,27 @@ TEST_F(AffiliatedMatchHelperTest, InjectAffiliationAndBrandingInformation) {
 
   forms.push_back(base::MakeUnique<autofill::PasswordForm>(
       GetTestAndroidCredentials(kTestAndroidRealmAlpha3)));
-  mock_affiliation_service()
-      ->ExpectCallToGetAffiliationsAndBrandingAndSucceedWithResult(
-          FacetURI::FromCanonicalSpec(kTestAndroidFacetURIAlpha3),
-          StrategyOnCacheMiss::FAIL, GetTestEquivalenceClassAlpha());
+  mock_affiliation_service()->ExpectCallToGetAffiliationsAndSucceedWithResult(
+      FacetURI::FromCanonicalSpec(kTestAndroidFacetURIAlpha3),
+      StrategyOnCacheMiss::FAIL, GetTestEquivalenceClassAlpha());
 
   forms.push_back(base::MakeUnique<autofill::PasswordForm>(
       GetTestAndroidCredentials(kTestAndroidRealmBeta2)));
-  mock_affiliation_service()
-      ->ExpectCallToGetAffiliationsAndBrandingAndSucceedWithResult(
-          FacetURI::FromCanonicalSpec(kTestAndroidFacetURIBeta2),
-          StrategyOnCacheMiss::FAIL, GetTestEquivalenceClassBeta());
+  mock_affiliation_service()->ExpectCallToGetAffiliationsAndSucceedWithResult(
+      FacetURI::FromCanonicalSpec(kTestAndroidFacetURIBeta2),
+      StrategyOnCacheMiss::FAIL, GetTestEquivalenceClassBeta());
 
   forms.push_back(base::MakeUnique<autofill::PasswordForm>(
       GetTestAndroidCredentials(kTestAndroidRealmBeta3)));
-  mock_affiliation_service()
-      ->ExpectCallToGetAffiliationsAndBrandingAndSucceedWithResult(
-          FacetURI::FromCanonicalSpec(kTestAndroidFacetURIBeta3),
-          StrategyOnCacheMiss::FAIL, GetTestEquivalenceClassBeta());
+  mock_affiliation_service()->ExpectCallToGetAffiliationsAndSucceedWithResult(
+      FacetURI::FromCanonicalSpec(kTestAndroidFacetURIBeta3),
+      StrategyOnCacheMiss::FAIL, GetTestEquivalenceClassBeta());
 
   forms.push_back(base::MakeUnique<autofill::PasswordForm>(
       GetTestAndroidCredentials(kTestAndroidRealmGamma)));
-  mock_affiliation_service()
-      ->ExpectCallToGetAffiliationsAndBrandingAndEmulateFailure(
-          FacetURI::FromCanonicalSpec(kTestAndroidFacetURIGamma),
-          StrategyOnCacheMiss::FAIL);
+  mock_affiliation_service()->ExpectCallToGetAffiliationsAndEmulateFailure(
+      FacetURI::FromCanonicalSpec(kTestAndroidFacetURIGamma),
+      StrategyOnCacheMiss::FAIL);
 
   PasswordStore::FormDigest digest =
       GetTestObservedWebForm(kTestWebRealmBeta1, nullptr);
@@ -536,9 +524,8 @@ TEST_F(AffiliatedMatchHelperTest, IsValidAndroidCredential) {
 
 // Verifies that affiliations for Android applications with pre-existing
 // credentials on start-up are prefetched.
-TEST_F(
-    AffiliatedMatchHelperTest,
-    PrefetchAffiliationsAndBrandingForPreexistingAndroidCredentialsOnStartup) {
+TEST_F(AffiliatedMatchHelperTest,
+       PrefetchAffiliationsForPreexistingAndroidCredentialsOnStartup) {
   AddAndroidAndNonAndroidTestLogins();
 
   match_helper()->Initialize();
@@ -574,7 +561,7 @@ TEST_F(AffiliatedMatchHelperTest,
 }
 
 TEST_F(AffiliatedMatchHelperTest,
-       CancelPrefetchingAffiliationsAndBrandingForRemovedAndroidCredentials) {
+       CancelPrefetchingAffiliationsForRemovedAndroidCredentials) {
   AddAndroidAndNonAndroidTestLogins();
   match_helper()->Initialize();
   ExpectPrefetchForAndroidTestLogins();

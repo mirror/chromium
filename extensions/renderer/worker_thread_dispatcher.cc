@@ -15,7 +15,6 @@
 #include "extensions/common/feature_switch.h"
 #include "extensions/renderer/dispatcher.h"
 #include "extensions/renderer/extension_bindings_system.h"
-#include "extensions/renderer/ipc_message_sender.h"
 #include "extensions/renderer/js_extension_bindings_system.h"
 #include "extensions/renderer/native_extension_bindings_system.h"
 #include "extensions/renderer/service_worker_data.h"
@@ -33,6 +32,24 @@ ServiceWorkerData* GetServiceWorkerData() {
   ServiceWorkerData* data = g_data_tls.Pointer()->Get();
   DCHECK(data);
   return data;
+}
+
+// Handler for sending IPCs with native extension bindings.
+void SendRequestIPC(ScriptContext* context,
+                    const ExtensionHostMsg_Request_Params& params,
+                    binding::RequestThread thread) {
+  // TODO(devlin): This won't handle incrementing/decrementing service worker
+  // lifetime.
+  WorkerThreadDispatcher::Get()->Send(
+      new ExtensionHostMsg_RequestWorker(params));
+}
+
+void SendEventListenersIPC(binding::EventListenersChanged changed,
+                           ScriptContext* context,
+                           const std::string& event_name,
+                           const base::DictionaryValue* filter,
+                           bool was_manual) {
+  // TODO(devlin/lazyboy): Wire this up once extension workers support events.
 }
 
 }  // namespace
@@ -55,6 +72,12 @@ void WorkerThreadDispatcher::Init(content::RenderThread* render_thread) {
 // static
 ExtensionBindingsSystem* WorkerThreadDispatcher::GetBindingsSystem() {
   return GetServiceWorkerData()->bindings_system();
+}
+
+// static
+ServiceWorkerRequestSender* WorkerThreadDispatcher::GetRequestSender() {
+  return static_cast<ServiceWorkerRequestSender*>(
+      GetBindingsSystem()->GetRequestSender());
 }
 
 // static
@@ -124,9 +147,14 @@ void WorkerThreadDispatcher::OnResponseWorker(int worker_thread_id,
                                               bool succeeded,
                                               const base::ListValue& response,
                                               const std::string& error) {
+  // TODO(devlin): Using the RequestSender directly here won't work with
+  // NativeExtensionBindingsSystem (since there is no associated RequestSender
+  // in that case). We should instead be going
+  // ExtensionBindingsSystem::HandleResponse().
   ServiceWorkerData* data = g_data_tls.Pointer()->Get();
-  data->bindings_system()->HandleResponse(request_id, succeeded, response,
-                                          error);
+  WorkerThreadDispatcher::GetRequestSender()->HandleWorkerResponse(
+      request_id, data->service_worker_version_id(), succeeded, response,
+      error);
 }
 
 void WorkerThreadDispatcher::OnDispatchEvent(
@@ -145,21 +173,13 @@ void WorkerThreadDispatcher::AddWorkerData(
   ServiceWorkerData* data = g_data_tls.Pointer()->Get();
   if (!data) {
     std::unique_ptr<ExtensionBindingsSystem> bindings_system;
-    // QUESTION(lazyboy): Why is passing the WorkerThreadDispatcher to the
-    // IPCMessageSender (previously the ServiceWorkerRequestSender) safe? The
-    // WorkerThreadDispatcher is a process-wide singleton, but the
-    // IPCMessageSender is per-context (thus potentially many per process).
-    std::unique_ptr<IPCMessageSender> ipc_message_sender =
-        IPCMessageSender::CreateWorkerThreadIPCMessageSender(
-            this, service_worker_version_id);
     if (FeatureSwitch::native_crx_bindings()->IsEnabled()) {
-      // The Unretained below is safe since the IPC message sender outlives the
-      // bindings system.
       bindings_system = base::MakeUnique<NativeExtensionBindingsSystem>(
-          std::move(ipc_message_sender));
+          base::Bind(&SendRequestIPC), base::Bind(&SendEventListenersIPC));
     } else {
       bindings_system = base::MakeUnique<JsExtensionBindingsSystem>(
-          source_map, std::move(ipc_message_sender));
+          source_map, base::MakeUnique<ServiceWorkerRequestSender>(
+                          this, service_worker_version_id));
     }
     ServiceWorkerData* new_data = new ServiceWorkerData(
         service_worker_version_id, context, std::move(bindings_system));

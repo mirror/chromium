@@ -212,9 +212,7 @@ class PriorityGetter : public BufferedSpdyFramerVisitorInterface {
   void OnStreamEnd(SpdyStreamId stream_id) override {}
   void OnStreamPadding(SpdyStreamId stream_id, size_t len) override {}
   void OnSettings() override {}
-  void OnSettingsAck() override {}
   void OnSetting(SpdySettingsIds id, uint32_t value) override {}
-  void OnSettingsEnd() override {}
   void OnPing(SpdyPingId unique_id, bool is_ack) override {}
   void OnRstStream(SpdyStreamId stream_id, SpdyErrorCode error_code) override {}
   void OnGoAway(SpdyStreamId last_accepted_stream_id,
@@ -556,7 +554,7 @@ base::WeakPtr<SpdySession> CreateSpdySession(HttpNetworkSession* http_session,
                                  /* enable_ip_based_pooling = */ true);
 }
 
-base::WeakPtr<SpdySession> CreateSpdySessionWithIpBasedPoolingDisabled(
+base::WeakPtr<SpdySession> CreateSecureSpdySessionWithIpBasedPoolingDisabled(
     HttpNetworkSession* http_session,
     const SpdySessionKey& key,
     const NetLogWithSource& net_log) {

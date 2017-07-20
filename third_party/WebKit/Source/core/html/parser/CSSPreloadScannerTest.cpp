@@ -25,12 +25,12 @@ namespace blink {
 
 namespace {
 
-class CSSMockHTMLResourcePreloader : public HTMLResourcePreloader {
-  WTF_MAKE_NONCOPYABLE(CSSMockHTMLResourcePreloader);
+class MockHTMLResourcePreloader : public HTMLResourcePreloader {
+  WTF_MAKE_NONCOPYABLE(MockHTMLResourcePreloader);
 
  public:
-  explicit CSSMockHTMLResourcePreloader(Document& document,
-                                        const char* expected_referrer = nullptr)
+  explicit MockHTMLResourcePreloader(Document& document,
+                                     const char* expected_referrer = nullptr)
       : HTMLResourcePreloader(document),
         expected_referrer_(expected_referrer) {}
 
@@ -78,8 +78,8 @@ TEST_F(CSSPreloadScannerTest, ScanFromResourceClient) {
       .GetSettings()
       ->SetCSSExternalScannerNoPreload(true);
 
-  CSSMockHTMLResourcePreloader* preloader =
-      new CSSMockHTMLResourcePreloader(dummy_page_holder->GetDocument());
+  MockHTMLResourcePreloader* preloader =
+      new MockHTMLResourcePreloader(dummy_page_holder->GetDocument());
 
   KURL url(kParsedURLString, "http://127.0.0.1/foo.css");
   CSSStyleSheetResource* resource =
@@ -92,6 +92,7 @@ TEST_F(CSSPreloadScannerTest, ScanFromResourceClient) {
   const char* data = "@import url('http://127.0.0.1/preload.css');";
   resource->AppendData(data, strlen(data));
 
+  EXPECT_EQ(Resource::kPreloadNotReferenced, resource->GetPreloadResult());
   EXPECT_EQ(1u, resource_client->preload_urls_.size());
   EXPECT_EQ("http://127.0.0.1/preload.css",
             resource_client->preload_urls_.front());
@@ -106,8 +107,8 @@ TEST_F(CSSPreloadScannerTest, DestroyClientBeforeDataSent) {
       .GetSettings()
       ->SetCSSExternalScannerNoPreload(true);
 
-  Persistent<CSSMockHTMLResourcePreloader> preloader =
-      new CSSMockHTMLResourcePreloader(dummy_page_holder->GetDocument());
+  Persistent<MockHTMLResourcePreloader> preloader =
+      new MockHTMLResourcePreloader(dummy_page_holder->GetDocument());
 
   KURL url(kParsedURLString, "http://127.0.0.1/foo.css");
   Persistent<CSSStyleSheetResource> resource =
@@ -133,8 +134,8 @@ TEST_F(CSSPreloadScannerTest, DontReadFromClearedData) {
       .GetSettings()
       ->SetCSSExternalScannerNoPreload(true);
 
-  CSSMockHTMLResourcePreloader* preloader =
-      new CSSMockHTMLResourcePreloader(dummy_page_holder->GetDocument());
+  MockHTMLResourcePreloader* preloader =
+      new MockHTMLResourcePreloader(dummy_page_holder->GetDocument());
 
   KURL url(kParsedURLString, "http://127.0.0.1/foo.css");
   CSSStyleSheetResource* resource =
@@ -161,8 +162,8 @@ TEST_F(CSSPreloadScannerTest, DoNotExpectValidDocument) {
       .GetSettings()
       ->SetCSSExternalScannerNoPreload(true);
 
-  CSSMockHTMLResourcePreloader* preloader =
-      new CSSMockHTMLResourcePreloader(dummy_page_holder->GetDocument());
+  MockHTMLResourcePreloader* preloader =
+      new MockHTMLResourcePreloader(dummy_page_holder->GetDocument());
 
   KURL url(kParsedURLString, "http://127.0.0.1/foo.css");
   CSSStyleSheetResource* resource =
@@ -188,7 +189,7 @@ TEST_F(CSSPreloadScannerTest, ReferrerPolicyHeader) {
   dummy_page_holder->GetDocument().GetSettings()->SetCSSExternalScannerPreload(
       true);
 
-  CSSMockHTMLResourcePreloader* preloader = new CSSMockHTMLResourcePreloader(
+  MockHTMLResourcePreloader* preloader = new MockHTMLResourcePreloader(
       dummy_page_holder->GetDocument(), "http://127.0.0.1/foo.css");
 
   KURL url(kParsedURLString, "http://127.0.0.1/foo.css");
@@ -211,6 +212,7 @@ TEST_F(CSSPreloadScannerTest, ReferrerPolicyHeader) {
   const char* data = "@import url('http://127.0.0.1/preload.css');";
   resource->AppendData(data, strlen(data));
 
+  EXPECT_EQ(Resource::kPreloadNotReferenced, resource->GetPreloadResult());
   EXPECT_EQ(1u, resource_client->preload_urls_.size());
   EXPECT_EQ("http://127.0.0.1/preload.css",
             resource_client->preload_urls_.front());

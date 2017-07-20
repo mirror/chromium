@@ -192,13 +192,7 @@ class MockImageCaptureClient
     }
   }
   MOCK_METHOD0(OnCorrectPhotoTaken, void(void));
-
-  void OnTakePhotoFailure(mojom::ImageCapture::TakePhotoCallback callback) {
-    OnTakePhotoFailureInternal(callback);
-  }
-
-  MOCK_METHOD1(OnTakePhotoFailureInternal,
-               void(mojom::ImageCapture::TakePhotoCallback&));
+  MOCK_METHOD1(OnTakePhotoFailure, void(base::Callback<void(mojom::BlobPtr)>));
 
   // GMock doesn't support move-only arguments, so we use this forward method.
   void DoOnGetPhotoState(mojom::PhotoStatePtr state) {
@@ -206,13 +200,8 @@ class MockImageCaptureClient
     OnCorrectGetPhotoState();
   }
   MOCK_METHOD0(OnCorrectGetPhotoState, void(void));
-
-  void OnGetPhotoStateFailure(
-      mojom::ImageCapture::GetPhotoStateCallback callback) {
-    OnGetPhotoStateFailureInternal(callback);
-  }
-  MOCK_METHOD1(OnGetPhotoStateFailureInternal,
-               void(mojom::ImageCapture::GetPhotoStateCallback&));
+  MOCK_METHOD1(OnGetPhotoStateFailure,
+               void(base::Callback<void(mojom::PhotoStatePtr)>));
 
   const mojom::PhotoState* capabilities() { return state_.get(); }
 
@@ -615,8 +604,8 @@ TEST_F(VideoCaptureDeviceTest, MAYBE_TakePhoto) {
   device->AllocateAndStart(capture_params, std::move(video_capture_client_));
 
   VideoCaptureDevice::TakePhotoCallback scoped_callback(
-      base::BindOnce(&MockImageCaptureClient::DoOnPhotoTaken,
-                     image_capture_client_),
+      base::Bind(&MockImageCaptureClient::DoOnPhotoTaken,
+                 image_capture_client_),
       media::BindToCurrentLoop(base::Bind(
           &MockImageCaptureClient::OnTakePhotoFailure, image_capture_client_)));
 
@@ -667,11 +656,11 @@ TEST_F(VideoCaptureDeviceTest, MAYBE_GetPhotoState) {
   device->AllocateAndStart(capture_params, std::move(video_capture_client_));
 
   VideoCaptureDevice::GetPhotoStateCallback scoped_get_callback(
-      base::BindOnce(&MockImageCaptureClient::DoOnGetPhotoState,
-                     image_capture_client_),
+      base::Bind(&MockImageCaptureClient::DoOnGetPhotoState,
+                 image_capture_client_),
       media::BindToCurrentLoop(
-          base::BindOnce(&MockImageCaptureClient::OnGetPhotoStateFailure,
-                         image_capture_client_)));
+          base::Bind(&MockImageCaptureClient::OnGetPhotoStateFailure,
+                     image_capture_client_)));
 
   base::RunLoop run_loop;
   base::Closure quit_closure = media::BindToCurrentLoop(run_loop.QuitClosure());

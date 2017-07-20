@@ -72,7 +72,8 @@ QuicPacket* BuildUnsizedDataPacket(QuicFramer* framer,
                                    const QuicFrames& frames,
                                    size_t packet_size) {
   char* buffer = new char[packet_size];
-  size_t length = framer->BuildDataPacket(header, frames, buffer, packet_size);
+  size_t length =
+      framer->BuildDataPacket(header, frames, buffer, packet_size, nullptr);
   DCHECK_NE(0u, length);
   // Re-construct the data packet with data ownership.
   return new QuicPacket(buffer, length, /* owns_buffer */ true,
@@ -210,6 +211,20 @@ bool NoOpFramerVisitor::OnBlockedFrame(const QuicBlockedFrame& frame) {
 MockQuicConnectionVisitor::MockQuicConnectionVisitor() {}
 
 MockQuicConnectionVisitor::~MockQuicConnectionVisitor() {}
+
+void MockQuicConnectionVisitor::SaveStreamData(QuicStreamId id,
+                                               QuicIOVector iov,
+                                               size_t iov_offset,
+                                               QuicStreamOffset offset,
+                                               QuicByteCount data_length) {
+  producer_.SaveStreamData(id, iov, iov_offset, offset, data_length);
+}
+bool MockQuicConnectionVisitor::WriteStreamData(QuicStreamId id,
+                                                QuicStreamOffset offset,
+                                                QuicByteCount data_length,
+                                                QuicDataWriter* writer) {
+  return producer_.WriteStreamData(id, offset, data_length, writer);
+}
 
 MockQuicConnectionHelper::MockQuicConnectionHelper() {}
 
@@ -410,10 +425,6 @@ bool MockQuicCryptoStream::handshake_confirmed() const {
 const QuicCryptoNegotiatedParameters&
 MockQuicCryptoStream::crypto_negotiated_params() const {
   return *params_;
-}
-
-CryptoMessageParser* MockQuicCryptoStream::crypto_message_parser() {
-  return &crypto_framer_;
 }
 
 MockQuicSpdySession::MockQuicSpdySession(QuicConnection* connection)
@@ -847,6 +858,21 @@ MockConnectionCloseDelegate::~MockConnectionCloseDelegate() {}
 
 MockPacketCreatorDelegate::MockPacketCreatorDelegate() {}
 MockPacketCreatorDelegate::~MockPacketCreatorDelegate() {}
+
+void MockPacketCreatorDelegate::SaveStreamData(QuicStreamId id,
+                                               QuicIOVector iov,
+                                               size_t iov_offset,
+                                               QuicStreamOffset offset,
+                                               QuicByteCount data_length) {
+  producer_.SaveStreamData(id, iov, iov_offset, offset, data_length);
+}
+
+bool MockPacketCreatorDelegate::WriteStreamData(QuicStreamId id,
+                                                QuicStreamOffset offset,
+                                                QuicByteCount data_length,
+                                                QuicDataWriter* writer) {
+  return producer_.WriteStreamData(id, offset, data_length, writer);
+}
 
 void CreateClientSessionForTest(QuicServerId server_id,
                                 bool supports_stateless_rejects,

@@ -19,28 +19,22 @@ namespace ash {
 
 namespace {
 
-// Any non-zero value used for separator height. Makes debugging easier; this
-// should not affect visual appearance.
+// Any non-zero value used for separator height. Makes debugging easier.
 constexpr int kNonEmptyHeightDp = 30;
 
-// Horizontal distance between two users in the low density layout.
-constexpr int kLowDensityDistanceBetweenUsersDp = 118;
+// Horizontal distance between the two users in the two-user layout.
+constexpr int kDistanceBetweenUsersInTwoUserModeDp = 118;
 
-// Margin left of the auth user in the medium density layout.
-constexpr int kMediumDensityMarginLeftOfAuthUserDp = 98;
-
-// Horizontal distance between the auth user and the medium density user row.
-constexpr int kMediumDensityDistanceBetweenAuthUserAndUsersDp = 220;
-
-// Vertical padding between each entry in the medium density user row
-constexpr int kMediumDensityVerticalDistanceBetweenUsersDp = 53;
-
-// Horizontal padding left and right of the high density user list.
-constexpr int kHighDensityHorizontalPaddingLeftOfUserListDp = 72;
-constexpr int kHighDensityHorizontalPaddingRightOfUserListDp = 72;
-
+// Margin left of the auth user in the small layout.
+constexpr int kSmallMarginLeftOfAuthUserDp = 98;
+// The horizontal distance between the auth user and the small user row.
+constexpr int kSmallDistanceBetweenAuthUserAndUsersDp = 220;
+// The vertical padding between each entry in the small user row
+constexpr int kSmallVerticalDistanceBetweenUsersDp = 53;
+// The horizontal padding left of and right of the extra-small user list.
+constexpr int kExtraSmallHorizontalPaddingLeftOfRightOfUserListDp = 72;
 // The vertical padding between each entry in the extra-small user row
-constexpr int kHighDensityVerticalDistanceBetweenUsersDp = 32;
+constexpr int kExtraSmallVerticalDistanceBetweenUsersDp = 32;
 
 // Duration (in milliseconds) of the auth user view animation, ie, when enabling
 // or disabling the PIN keyboard.
@@ -155,7 +149,7 @@ void LockContentsView::CreateLowDensityLayout(
     const std::vector<ash::mojom::UserInfoPtr>& users) {
   // Space between auth user and alternative user.
   AddChildView(MakePreferredSizeView(
-      gfx::Size(kLowDensityDistanceBetweenUsersDp, kNonEmptyHeightDp)));
+      gfx::Size(kDistanceBetweenUsersInTwoUserModeDp, 30)));
   auto* alt_user_view =
       new LoginUserView(LoginDisplayStyle::kLarge, false /*show_dropdown*/);
   alt_user_view->UpdateForUser(users[1]);
@@ -165,20 +159,19 @@ void LockContentsView::CreateLowDensityLayout(
 
 void LockContentsView::CreateMediumDensityLayout(
     const std::vector<ash::mojom::UserInfoPtr>& users) {
-  // Insert spacing before (left of) auth.
-  AddChildViewAt(MakePreferredSizeView(gfx::Size(
-                     kMediumDensityMarginLeftOfAuthUserDp, kNonEmptyHeightDp)),
+  // Insert spacing before auth and also between the auth and user list.
+  AddChildViewAt(MakePreferredSizeView(gfx::Size(kSmallMarginLeftOfAuthUserDp,
+                                                 kNonEmptyHeightDp)),
                  0);
-  // Insert spacing between auth and user list.
-  AddChildView(MakePreferredSizeView(gfx::Size(
-      kMediumDensityDistanceBetweenAuthUserAndUsersDp, kNonEmptyHeightDp)));
+  AddChildView(MakePreferredSizeView(
+      gfx::Size(kSmallDistanceBetweenAuthUserAndUsersDp, kNonEmptyHeightDp)));
 
   // Add additional users.
   auto* row = new views::View();
   AddChildView(row);
   auto* layout =
       new views::BoxLayout(views::BoxLayout::kVertical, gfx::Insets(),
-                           kMediumDensityVerticalDistanceBetweenUsersDp);
+                           kSmallVerticalDistanceBetweenUsersDp);
   row->SetLayoutManager(layout);
   for (std::size_t i = 1u; i < users.size(); ++i) {
     auto* view =
@@ -203,15 +196,12 @@ void LockContentsView::CreateHighDensityLayout(
   AddChildView(fill);
   layout->SetFlexForView(fill, 1);
 
-  // Padding left of user list.
-  AddChildView(MakePreferredSizeView(gfx::Size(
-      kHighDensityHorizontalPaddingLeftOfUserListDp, kNonEmptyHeightDp)));
-
-  // Add user list.
+  // Add additional users.
   auto* row = new views::View();
-  auto* row_layout =
-      new views::BoxLayout(views::BoxLayout::kVertical, gfx::Insets(),
-                           kHighDensityVerticalDistanceBetweenUsersDp);
+  auto* row_layout = new views::BoxLayout(
+      views::BoxLayout::kVertical,
+      gfx::Insets(kExtraSmallHorizontalPaddingLeftOfRightOfUserListDp, 0),
+      kExtraSmallVerticalDistanceBetweenUsersDp);
   row_layout->set_minimum_cross_axis_size(
       LoginUserView::WidthForLayoutStyle(LoginDisplayStyle::kExtraSmall));
   row->SetLayoutManager(row_layout);
@@ -227,10 +217,6 @@ void LockContentsView::CreateHighDensityLayout(
   scroller_->SetContents(row);
   scroller_->ClipHeightTo(size().height(), size().height());
   AddChildView(scroller_);
-
-  // Padding right of user list.
-  AddChildView(MakePreferredSizeView(gfx::Size(
-      kHighDensityHorizontalPaddingRightOfUserListDp, kNonEmptyHeightDp)));
 }
 
 LockContentsView::UserState* LockContentsView::FindStateForUser(

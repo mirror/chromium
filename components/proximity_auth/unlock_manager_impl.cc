@@ -18,7 +18,6 @@
 #include "components/proximity_auth/messenger.h"
 #include "components/proximity_auth/metrics.h"
 #include "components/proximity_auth/proximity_auth_client.h"
-#include "components/proximity_auth/proximity_auth_pref_manager.h"
 #include "components/proximity_auth/proximity_monitor_impl.h"
 #include "device/bluetooth/bluetooth_adapter_factory.h"
 
@@ -81,16 +80,12 @@ metrics::RemoteSecuritySettingsState GetRemoteSecuritySettingsState(
 
 }  // namespace
 
-class ProximityAuthPrefManager;
-
 UnlockManagerImpl::UnlockManagerImpl(
     ProximityAuthSystem::ScreenlockType screenlock_type,
-    ProximityAuthClient* proximity_auth_client,
-    ProximityAuthPrefManager* pref_manager)
+    ProximityAuthClient* proximity_auth_client)
     : screenlock_type_(screenlock_type),
       life_cycle_(nullptr),
       proximity_auth_client_(proximity_auth_client),
-      pref_manager_(pref_manager),
       is_locked_(false),
       is_attempting_auth_(false),
       is_waking_up_(false),
@@ -163,8 +158,7 @@ void UnlockManagerImpl::OnLifeCycleStateChanged() {
   if (state == RemoteDeviceLifeCycle::State::SECURE_CHANNEL_ESTABLISHED) {
     DCHECK(life_cycle_->GetConnection());
     DCHECK(GetMessenger());
-    proximity_monitor_ =
-        CreateProximityMonitor(life_cycle_->GetConnection(), pref_manager_);
+    proximity_monitor_ = CreateProximityMonitor(life_cycle_->GetConnection());
     GetMessenger()->AddObserver(this);
   }
 
@@ -329,10 +323,9 @@ void UnlockManagerImpl::OnAuthAttempted(mojom::AuthType auth_type) {
 }
 
 std::unique_ptr<ProximityMonitor> UnlockManagerImpl::CreateProximityMonitor(
-    cryptauth::Connection* connection,
-    ProximityAuthPrefManager* pref_manager) {
+    cryptauth::Connection* connection) {
   return base::MakeUnique<ProximityMonitorImpl>(
-      connection, base::WrapUnique(new base::DefaultTickClock()), pref_manager);
+      connection, base::WrapUnique(new base::DefaultTickClock()));
 }
 
 void UnlockManagerImpl::SendSignInChallenge() {

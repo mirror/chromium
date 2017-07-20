@@ -50,6 +50,8 @@
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebString.h"
 
+using namespace WTF;
+
 namespace blink {
 
 namespace {
@@ -73,7 +75,7 @@ bool IsWhitespace(UChar chr) {
 // if |matcher| is nullptr, isWhitespace() is used.
 inline bool SkipWhiteSpace(const String& str,
                            unsigned& pos,
-                           WTF::CharacterMatchFunctionPtr matcher = nullptr) {
+                           CharacterMatchFunctionPtr matcher = nullptr) {
   unsigned len = str.length();
 
   if (matcher) {
@@ -220,27 +222,6 @@ const UChar* ParseSuboriginPolicyOption(const UChar* begin,
   return position + 1;
 }
 
-// Parse a number with ignoring trailing [0-9.].
-// Returns NaN if the source contains invalid characters.
-double ParseRefreshTime(const String& source) {
-  int full_stop_count = 0;
-  unsigned number_end = source.length();
-  for (unsigned i = 0; i < source.length(); ++i) {
-    UChar ch = source[i];
-    if (ch == kFullstopCharacter) {
-      // TODO(tkent): According to the HTML specification, we should support
-      // only integers. However we support fractional numbers.
-      if (++full_stop_count == 2)
-        number_end = i;
-    } else if (!IsASCIIDigit(ch)) {
-      return std::numeric_limits<double>::quiet_NaN();
-    }
-  }
-  bool ok;
-  double time = source.Left(number_end).ToDouble(&ok);
-  return ok ? time : std::numeric_limits<double>::quiet_NaN();
-}
-
 }  // namespace
 
 bool IsValidHTTPHeaderValue(const String& name) {
@@ -269,9 +250,8 @@ bool IsContentDispositionAttachment(const String& content_disposition) {
   return net::HttpContentDisposition(string, std::string()).is_attachment();
 }
 
-// https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-http-equiv-refresh
 bool ParseHTTPRefresh(const String& refresh,
-                      WTF::CharacterMatchFunctionPtr matcher,
+                      CharacterMatchFunctionPtr matcher,
                       double& delay,
                       String& url) {
   unsigned len = refresh.length();
@@ -287,11 +267,13 @@ bool ParseHTTPRefresh(const String& refresh,
 
   if (pos == len) {  // no URL
     url = String();
-    delay = ParseRefreshTime(refresh.StripWhiteSpace());
-    return std::isfinite(delay);
+    bool ok;
+    delay = refresh.StripWhiteSpace().ToDouble(&ok);
+    return ok;
   } else {
-    delay = ParseRefreshTime(refresh.Left(pos).StripWhiteSpace());
-    if (!std::isfinite(delay))
+    bool ok;
+    delay = refresh.Left(pos).StripWhiteSpace().ToDouble(&ok);
+    if (!ok)
       return false;
 
     SkipWhiteSpace(refresh, pos, matcher);
@@ -380,6 +362,64 @@ AtomicString ExtractMIMETypeFromMediaType(const AtomicString& media_type) {
 
   return AtomicString(
       media_type.GetString().Substring(type_start, type_end - type_start));
+}
+
+String ExtractCharsetFromMediaType(const String& media_type) {
+  unsigned pos, len;
+  FindCharsetInMediaType(media_type, pos, len);
+  return media_type.Substring(pos, len);
+}
+
+void FindCharsetInMediaType(const String& media_type,
+                            unsigned& charset_pos,
+                            unsigned& charset_len,
+                            unsigned start) {
+  charset_pos = start;
+  charset_len = 0;
+
+  size_t pos = start;
+  unsigned length = media_type.length();
+
+  while (pos < length) {
+    pos = media_type.FindIgnoringASCIICase("charset", pos);
+    if (pos == kNotFound || !pos) {
+      charset_len = 0;
+      return;
+    }
+
+    // is what we found a beginning of a word?
+    if (media_type[pos - 1] > ' ' && media_type[pos - 1] != ';') {
+      pos += 7;
+      continue;
+    }
+
+    pos += 7;
+
+    // skip whitespace
+    while (pos != length && media_type[pos] <= ' ')
+      ++pos;
+
+    if (media_type[pos++] !=
+        '=')  // this "charset" substring wasn't a parameter
+              // name, but there may be others
+      continue;
+
+    while (pos != length && (media_type[pos] <= ' ' || media_type[pos] == '"' ||
+                             media_type[pos] == '\''))
+      ++pos;
+
+    // we don't handle spaces within quoted parameter values, because charset
+    // names cannot have any
+    unsigned endpos = pos;
+    while (pos != length && media_type[endpos] > ' ' &&
+           media_type[endpos] != '"' && media_type[endpos] != '\'' &&
+           media_type[endpos] != ';')
+      ++endpos;
+
+    charset_pos = pos;
+    charset_len = endpos - pos;
+    return;
+  }
 }
 
 ReflectedXSSDisposition ParseXSSProtectionHeader(const String& header,

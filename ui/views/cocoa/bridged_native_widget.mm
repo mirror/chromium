@@ -347,7 +347,8 @@ gfx::Size BridgedNativeWidget::GetWindowSizeForClientSize(
 // TODO(karandeepb): Remove usage of drag event monitor once we stop supporting
 // Mac OS 10.10.
 bool BridgedNativeWidget::ShouldUseDragEventMonitor() {
-  return base::mac::IsAtMostOS10_10();
+  return ![NSWindow
+      instancesRespondToSelector:@selector(performWindowDragWithEvent:)];
 }
 
 BridgedNativeWidget::BridgedNativeWidget(NativeWidgetMac* parent)

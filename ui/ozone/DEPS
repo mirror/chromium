@@ -10,8 +10,3 @@ include_rules = [
   "+ui/gl",
   "+ui/platform_window",
 ]
-specific_include_rules = {
-  "run_all_unittests\.cc": [
-    "+mojo/edk/embedder/embedder.h",
-  ],
-}

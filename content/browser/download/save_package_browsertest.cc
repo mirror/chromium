@@ -13,7 +13,6 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/content_browser_test.h"
 #include "content/public/test/content_browser_test_utils.h"
-#include "content/public/test/download_test_observer.h"
 #include "content/shell/browser/shell.h"
 #include "content/shell/browser/shell_download_manager_delegate.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
@@ -73,6 +72,15 @@ class DownloadicidalObserver : public DownloadManager::Observer {
   bool remove_download_;
 };
 
+class SavePackageCompletionWaiter : public DownloadManager::Observer {
+ public:
+  void OnSavePackageSuccessfullyFinished(DownloadManager* m,
+                                         DownloadItem* d) override {
+    quit_closure_.Run();
+  }
+  base::Closure quit_closure_;
+};
+
 class SavePackageBrowserTest : public ContentBrowserTest {
  protected:
   void SetUp() override {
@@ -125,10 +133,12 @@ class SavePackageBrowserTest : public ContentBrowserTest {
     // download item.
     {
       base::RunLoop run_loop;
-      SavePackageFinishedObserver finished_observer(download_manager,
-                                                    run_loop.QuitClosure());
+      SavePackageCompletionWaiter completion_waiter;
+      completion_waiter.quit_closure_ = run_loop.QuitClosure();
+      download_manager->AddObserver(&completion_waiter);
       shell()->web_contents()->OnSavePage();
       run_loop.Run();
+      download_manager->RemoveObserver(&completion_waiter);
     }
     download_manager->SetDelegate(old_delegate);
   }

@@ -79,7 +79,8 @@ void NetworkDropdownHandler::HandleLaunchProxySettingsDialog() {
 }
 
 void NetworkDropdownHandler::HandleLaunchAddWiFiNetworkDialog() {
-  NetworkConfigView::ShowForType(shill::kTypeWifi);
+  gfx::NativeWindow native_window = GetNativeWindow();
+  NetworkConfigView::ShowForType(shill::kTypeWifi, native_window);
 }
 
 void NetworkDropdownHandler::HandleLaunchAddMobileNetworkDialog() {

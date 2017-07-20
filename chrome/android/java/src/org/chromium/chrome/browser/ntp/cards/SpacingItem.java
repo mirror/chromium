@@ -13,7 +13,7 @@ import android.view.ViewGroup;
  * contain enough of them. It is displayed as a dummy item with variable height that just occupies
  * the remaining space between the last item in the RecyclerView and the bottom of the screen.
  */
-public class SpacingItem extends OptionalLeaf {
+public class SpacingItem extends Leaf {
     private static class SpacingView extends View {
         public SpacingView(Context context) {
             super(context);
@@ -31,10 +31,6 @@ public class SpacingItem extends OptionalLeaf {
         return new SpacingView(parent.getContext());
     }
 
-    public SpacingItem() {
-        setVisibilityInternal(true);
-    }
-
     @Override
     @ItemViewType
     protected int getItemViewType() {
@@ -47,16 +43,12 @@ public class SpacingItem extends OptionalLeaf {
     }
 
     @Override
-    public void visitOptionalItem(NodeVisitor visitor) {
+    public void visitItems(NodeVisitor visitor) {
         visitor.visitSpacingItem();
     }
 
     /** Schedules a recalculation of the space occupied by the item. */
     public void refresh() {
-        if (isVisible()) notifyItemChanged(0);
-    }
-
-    public void setVisible(boolean visible) {
-        setVisibilityInternal(visible);
+        notifyItemChanged(0);
     }
 }

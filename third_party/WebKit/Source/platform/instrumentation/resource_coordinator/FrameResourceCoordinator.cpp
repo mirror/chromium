@@ -33,14 +33,22 @@ FrameResourceCoordinator::FrameResourceCoordinator(
 
   service_.set_connection_error_handler(
       ConvertToBaseCallback(WTF::Bind(&onConnectionError)));
+
+  resource_coordinator::mojom::blink::EventPtr event =
+      resource_coordinator::mojom::blink::Event::New();
+  event->type = resource_coordinator::mojom::EventType::kOnRendererFrameCreated;
+  service_->SendEvent(std::move(event));
 }
 
 FrameResourceCoordinator::~FrameResourceCoordinator() = default;
 
-void FrameResourceCoordinator::SetProperty(
-    const resource_coordinator::mojom::blink::PropertyType property_type,
-    const bool value) {
-  service_->SetProperty(property_type, base::MakeUnique<base::Value>(value));
+void FrameResourceCoordinator::SendEvent(
+    const resource_coordinator::mojom::blink::EventType& event_type) {
+  resource_coordinator::mojom::blink::EventPtr event =
+      resource_coordinator::mojom::blink::Event::New();
+  event->type = event_type;
+
+  service_->SendEvent(std::move(event));
 }
 
 DEFINE_TRACE(FrameResourceCoordinator) {}

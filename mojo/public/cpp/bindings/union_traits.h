@@ -5,8 +5,6 @@
 #ifndef MOJO_PUBLIC_CPP_BINDINGS_UNION_TRAITS_H_
 #define MOJO_PUBLIC_CPP_BINDINGS_UNION_TRAITS_H_
 
-#include "mojo/public/cpp/bindings/lib/template_util.h"
-
 namespace mojo {
 
 // This must be specialized for any type |T| to be serialized/deserialized as
@@ -34,11 +32,7 @@ namespace mojo {
 //      will be called.
 //
 template <typename DataViewType, typename T>
-struct UnionTraits {
-  static_assert(internal::AlwaysFalse<T>::value,
-                "Cannot find the mojo::UnionTraits specialization. Did you "
-                "forget to include the corresponding header file?");
-};
+struct UnionTraits;
 
 }  // namespace mojo
 

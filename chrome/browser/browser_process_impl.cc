@@ -471,12 +471,18 @@ void BrowserProcessImpl::EndSession() {
   ProfileManager* pm = profile_manager();
   std::vector<Profile*> profiles(pm->GetLoadedProfiles());
   scoped_refptr<RundownTaskCounter> rundown_counter(new RundownTaskCounter());
+  std::vector<scoped_refptr<base::SequencedTaskRunner>> profile_writer_runners;
   for (size_t i = 0; i < profiles.size(); ++i) {
     Profile* profile = profiles[i];
     profile->SetExitType(Profile::EXIT_SESSION_ENDED);
     if (profile->GetPrefs()) {
       profile->GetPrefs()->CommitPendingWrite();
-      rundown_counter->Post(profile->GetIOTaskRunner().get());
+      if (profile->GetPrefServiceTaskRunner()) {
+        rundown_counter->Post(profile->GetPrefServiceTaskRunner().get());
+        profile_writer_runners.push_back(profile->GetIOTaskRunner());
+      } else {
+        rundown_counter->Post(profile->GetIOTaskRunner().get());
+      }
     }
   }
 
@@ -518,7 +524,15 @@ void BrowserProcessImpl::EndSession() {
   // processes to launch, this can result in a hang. See
   // http://crbug.com/318527.
   const base::TimeTicks end_time = base::TimeTicks::Now() + kEndSessionTimeout;
-  rundown_counter->TimedWaitUntil(end_time);
+  const bool timed_out = !rundown_counter->TimedWaitUntil(end_time);
+  if (timed_out || !base::FeatureList::IsEnabled(features::kPrefService))
+    return;
+
+  scoped_refptr<RundownTaskCounter> profile_write_rundown_counter(
+      new RundownTaskCounter());
+  for (auto& profile_writer_runner : profile_writer_runners)
+    profile_write_rundown_counter->Post(profile_writer_runner.get());
+  profile_write_rundown_counter->TimedWaitUntil(end_time);
 #else
   NOTIMPLEMENTED();
 #endif

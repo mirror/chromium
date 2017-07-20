@@ -127,8 +127,7 @@ class TabStripControllerTest : public PlatformTest {
     tab2_ = tab2;
     controller_ =
         [[TabStripController alloc] initWithTabModel:(TabModel*)tabModel_
-                                               style:TabStrip::kStyleDark
-                                          dispatcher:nil];
+                                               style:TabStrip::kStyleDark];
 
     // Force the view to load.
     UIWindow* window = [[UIWindow alloc] initWithFrame:CGRectZero];

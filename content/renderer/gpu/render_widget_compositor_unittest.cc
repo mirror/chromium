@@ -13,7 +13,6 @@
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "build/build_config.h"
 #include "cc/animation/animation_host.h"
 #include "cc/output/begin_frame_args.h"
 #include "cc/output/copy_output_request.h"
@@ -34,11 +33,6 @@ using testing::Field;
 
 namespace content {
 namespace {
-
-enum FailureMode {
-  NO_FAILURE,
-  GPU_CHANNEL_FAILURE,
-};
 
 class StubRenderWidgetCompositorDelegate
     : public RenderWidgetCompositorDelegate {
@@ -79,6 +73,10 @@ class FakeRenderWidgetCompositorDelegate
   void RequestNewLayerTreeFrameSink(
       bool fallback,
       const LayerTreeFrameSinkCallback& callback) override {
+    EXPECT_EQ(num_requests_since_last_success_ >
+                  RenderWidgetCompositor::
+                      LAYER_TREE_FRAME_SINK_RETRIES_BEFORE_FALLBACK,
+              fallback);
     last_create_was_fallback_ = fallback;
 
     bool success = num_failures_ >= num_failures_before_success_;
@@ -94,15 +92,6 @@ class FakeRenderWidgetCompositorDelegate
     }
     callback.Run(
         cc::FakeLayerTreeFrameSink::Create3d(std::move(context_provider)));
-  }
-
-  void Reset() {
-    num_requests_ = 0;
-    num_requests_since_last_success_ = 0;
-    num_failures_ = 0;
-    num_failures_before_success_ = 0;
-    num_fallback_successes_ = 0;
-    num_successes_ = 0;
   }
 
   void add_success() {
@@ -133,6 +122,9 @@ class FakeRenderWidgetCompositorDelegate
 
   void set_use_null_layer_tree_frame_sink(bool u) {
     use_null_layer_tree_frame_sink_ = u;
+  }
+  bool use_null_layer_tree_frame_sink() const {
+    return use_null_layer_tree_frame_sink_;
   }
 
  private:
@@ -179,11 +171,11 @@ class RenderWidgetLayerTreeFrameSink : public RenderWidgetCompositor {
   }
 
   void DidInitializeLayerTreeFrameSink() override {
-    RenderWidgetCompositor::DidInitializeLayerTreeFrameSink();
     delegate_->add_success();
     if (delegate_->num_requests() == expected_requests_) {
       EndTest();
     } else {
+      RenderWidgetCompositor::DidInitializeLayerTreeFrameSink();
       // Post the synchronous composite task so that it is not called
       // reentrantly as a part of RequestNewLayerTreeFrameSink.
       base::ThreadTaskRunnerHandle::Get()->PostTask(
@@ -194,48 +186,38 @@ class RenderWidgetLayerTreeFrameSink : public RenderWidgetCompositor {
   }
 
   void DidFailToInitializeLayerTreeFrameSink() override {
-    RenderWidgetCompositor::DidFailToInitializeLayerTreeFrameSink();
     delegate_->add_failure();
     if (delegate_->num_requests() == expected_requests_) {
       EndTest();
       return;
     }
+
+    RenderWidgetCompositor::DidFailToInitializeLayerTreeFrameSink();
   }
 
-  void SetUp(int expected_successes, FailureMode failure_mode) {
-    failure_mode_ = failure_mode;
-    switch (failure_mode_) {
-      case NO_FAILURE:
-        expected_requests_ = 1;
-        break;
-      case GPU_CHANNEL_FAILURE:
-        expected_requests_ = 2;
-        break;
-    }
+  void SetUp(int expected_successes, int expected_fallback_succeses) {
     expected_successes_ = expected_successes;
-    expected_requests_ += (expected_successes - 1);
+    expected_fallback_successes_ = expected_fallback_succeses;
+    expected_requests_ = delegate_->num_failures_before_success() +
+                         expected_successes_ + expected_fallback_successes_;
   }
 
   void EndTest() { base::MessageLoop::current()->QuitWhenIdle(); }
 
   void AfterTest() {
-    if (failure_mode_ == NO_FAILURE) {
-      EXPECT_EQ(expected_successes_, delegate_->num_successes());
-      EXPECT_EQ(0, delegate_->num_fallback_successes());
-    } else if (failure_mode_ == GPU_CHANNEL_FAILURE) {
-      EXPECT_EQ(0, delegate_->num_successes());
-      EXPECT_EQ(1, delegate_->num_fallback_successes());
-    } else {
-      NOTREACHED();
-    }
+    EXPECT_EQ(delegate_->num_failures_before_success(),
+              delegate_->num_failures());
+    EXPECT_EQ(expected_successes_, delegate_->num_successes());
+    EXPECT_EQ(expected_fallback_successes_,
+              delegate_->num_fallback_successes());
     EXPECT_EQ(expected_requests_, delegate_->num_requests());
   }
 
  private:
   FakeRenderWidgetCompositorDelegate* delegate_;
   int expected_successes_ = 0;
+  int expected_fallback_successes_ = 0;
   int expected_requests_ = 0;
-  FailureMode failure_mode_ = NO_FAILURE;
 
   DISALLOW_COPY_AND_ASSIGN(RenderWidgetLayerTreeFrameSink);
 };
@@ -258,14 +240,15 @@ class RenderWidgetLayerTreeFrameSinkTest : public testing::Test {
   }
 
   void RunTest(bool use_null_layer_tree_frame_sink,
+               int num_failures_before_success,
                int expected_successes,
-               FailureMode failure_mode) {
-    compositor_delegate_.Reset();
+               int expected_fallback_succeses) {
     compositor_delegate_.set_use_null_layer_tree_frame_sink(
         use_null_layer_tree_frame_sink);
     compositor_delegate_.set_num_failures_before_success(
-        failure_mode == NO_FAILURE ? 0 : 1);
-    render_widget_compositor_.SetUp(expected_successes, failure_mode);
+        num_failures_before_success);
+    render_widget_compositor_.SetUp(expected_successes,
+                                    expected_fallback_succeses);
     render_widget_compositor_.SetVisible(true);
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE,
@@ -287,64 +270,50 @@ class RenderWidgetLayerTreeFrameSinkTest : public testing::Test {
 };
 
 TEST_F(RenderWidgetLayerTreeFrameSinkTest, SucceedOnce) {
-  RunTest(false, 1, NO_FAILURE);
+  RunTest(false, 0, 1, 0);
 }
 
 TEST_F(RenderWidgetLayerTreeFrameSinkTest, SucceedTwice) {
-  RunTest(false, 2, NO_FAILURE);
+  RunTest(false, 0, 2, 0);
 }
 
 TEST_F(RenderWidgetLayerTreeFrameSinkTest, FailOnceNull) {
-  RunTest(true, 1, NO_FAILURE);
+  static_assert(
+      RenderWidgetCompositor::LAYER_TREE_FRAME_SINK_RETRIES_BEFORE_FALLBACK >=
+          2,
+      "Adjust the values of this test if this fails");
+  RunTest(true, 1, 1, 0);
+}
+
+TEST_F(RenderWidgetLayerTreeFrameSinkTest, FailOnceBind) {
+  static_assert(
+      RenderWidgetCompositor::LAYER_TREE_FRAME_SINK_RETRIES_BEFORE_FALLBACK >=
+          2,
+      "Adjust the values of this test if this fails");
+  RunTest(false, 1, 1, 0);
 }
 
 // Android doesn't support fallback frame sinks. (crbug.com/721102)
-#if !defined(OS_ANDROID)
-TEST_F(RenderWidgetLayerTreeFrameSinkTest, SoftwareFallbackSucceed) {
-  RunTest(false, 1, GPU_CHANNEL_FAILURE);
+#ifndef OS_ANDROID
+TEST_F(RenderWidgetLayerTreeFrameSinkTest, FallbackSuccessNull) {
+  RunTest(true,
+          RenderWidgetCompositor::LAYER_TREE_FRAME_SINK_RETRIES_BEFORE_FALLBACK,
+          0, 1);
 }
 
-TEST_F(RenderWidgetLayerTreeFrameSinkTest, FallbackSuccessNull) {
-  RunTest(true, 1, GPU_CHANNEL_FAILURE);
+TEST_F(RenderWidgetLayerTreeFrameSinkTest, FallbackSuccessBind) {
+  RunTest(false,
+          RenderWidgetCompositor::LAYER_TREE_FRAME_SINK_RETRIES_BEFORE_FALLBACK,
+          0, 1);
 }
 
 TEST_F(RenderWidgetLayerTreeFrameSinkTest, FallbackSuccessNormalSuccess) {
   // The first success is a fallback, but the next should not be a fallback.
-  RunTest(false, 1, GPU_CHANNEL_FAILURE);
-  RunTest(false, 1, NO_FAILURE);
+  RunTest(false,
+          RenderWidgetCompositor::LAYER_TREE_FRAME_SINK_RETRIES_BEFORE_FALLBACK,
+          1, 1);
 }
 #endif
-
-// Verify desktop memory limit calculations.
-#if !defined(OS_ANDROID)
-TEST(RenderWidgetCompositorTest, IgnoreGivenMemoryPolicy) {
-  auto policy = RenderWidgetCompositor::GetGpuMemoryPolicy(
-      cc::ManagedMemoryPolicy(256), ScreenInfo());
-  EXPECT_EQ(512u * 1024u * 1024u, policy.bytes_limit_when_visible);
-  EXPECT_EQ(gpu::MemoryAllocation::CUTOFF_ALLOW_NICE_TO_HAVE,
-            policy.priority_cutoff_when_visible);
-}
-
-TEST(RenderWidgetCompositorTest, LargeScreensUseMoreMemory) {
-  ScreenInfo screen_info;
-
-  screen_info.rect = gfx::Rect(4096, 2160);
-  screen_info.device_scale_factor = 1.f;
-  auto policy = RenderWidgetCompositor::GetGpuMemoryPolicy(
-      cc::ManagedMemoryPolicy(256), screen_info);
-  EXPECT_EQ(2u * 512u * 1024u * 1024u, policy.bytes_limit_when_visible);
-  EXPECT_EQ(gpu::MemoryAllocation::CUTOFF_ALLOW_NICE_TO_HAVE,
-            policy.priority_cutoff_when_visible);
-
-  screen_info.rect = gfx::Rect(2048, 1080);
-  screen_info.device_scale_factor = 2.f;
-  policy = RenderWidgetCompositor::GetGpuMemoryPolicy(
-      cc::ManagedMemoryPolicy(256), screen_info);
-  EXPECT_EQ(2u * 512u * 1024u * 1024u, policy.bytes_limit_when_visible);
-  EXPECT_EQ(gpu::MemoryAllocation::CUTOFF_ALLOW_NICE_TO_HAVE,
-            policy.priority_cutoff_when_visible);
-}
-#endif  // !defined(OS_ANDROID)
 
 }  // namespace
 }  // namespace content

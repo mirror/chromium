@@ -133,7 +133,6 @@
 #include "components/metrics/profiler/tracking_synchronizer.h"
 #include "components/metrics_services_manager/metrics_services_manager.h"
 #include "components/nacl/browser/nacl_browser.h"
-#include "components/offline_pages/features/features.h"
 #include "components/prefs/json_pref_store.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
@@ -180,15 +179,12 @@
 #include "ui/base/resource/resource_bundle.h"
 
 #if defined(OS_ANDROID)
+#include "chrome/browser/android/offline_pages/offline_page_info_handler.h"
 #include "chrome/browser/metrics/thread_watcher_android.h"
 #include "ui/base/resource/resource_bundle_android.h"
 #else
 #include "chrome/browser/feedback/feedback_profile_observer.h"
 #endif  // defined(OS_ANDROID)
-
-#if BUILDFLAG(ENABLE_OFFLINE_PAGES)
-#include "chrome/browser/offline_pages/offline_page_info_handler.h"
-#endif
 
 #if defined(OS_LINUX) && !defined(OS_CHROMEOS)
 #include "chrome/browser/first_run/upgrade_util_linux.h"
@@ -634,11 +630,16 @@ ChromeBrowserMainParts::ChromeBrowserMainParts(
       result_code_(content::RESULT_CODE_NORMAL_EXIT),
       startup_watcher_(new StartupTimeBomb()),
       shutdown_watcher_(new ShutdownWatcherHelper()),
-      sampling_profiler_(base::PlatformThread::CurrentId(),
-                         StackSamplingConfiguration::Get()
-                             ->GetSamplingParamsForCurrentProcess(),
-                         metrics::CallStackProfileMetricsProvider::
-                             GetProfilerCallbackForBrowserProcessStartup()),
+      sampling_profiler_(
+          base::PlatformThread::CurrentId(),
+          StackSamplingConfiguration::Get()->
+              GetSamplingParamsForCurrentProcess(),
+          metrics::CallStackProfileMetricsProvider::GetProfilerCallback(
+              metrics::CallStackProfileParams(
+                  metrics::CallStackProfileParams::BROWSER_PROCESS,
+                  metrics::CallStackProfileParams::UI_THREAD,
+                  metrics::CallStackProfileParams::PROCESS_STARTUP,
+                  metrics::CallStackProfileParams::MAY_SHUFFLE))),
       profile_(NULL),
       run_message_loop_(true),
       local_state_(NULL) {
@@ -774,9 +775,9 @@ void ChromeBrowserMainParts::SetupFieldTrials() {
 void ChromeBrowserMainParts::SetupMetrics() {
   TRACE_EVENT0("startup", "ChromeBrowserMainParts::SetupMetrics");
   metrics::MetricsService* metrics = browser_process_->metrics_service();
-  metrics->synthetic_trial_registry()->AddSyntheticTrialObserver(
+  metrics->AddSyntheticTrialObserver(
       variations::VariationsHttpHeaderProvider::GetInstance());
-  metrics->synthetic_trial_registry()->AddSyntheticTrialObserver(
+  metrics->AddSyntheticTrialObserver(
       variations::SyntheticTrialsActiveGroupIdProvider::GetInstance());
   // Now that field trials have been created, initializes metrics recording.
   metrics->InitializeMetricsRecordingState();
@@ -1792,11 +1793,8 @@ int ChromeBrowserMainParts::PreMainMessageLoopRunImpl() {
 
 #if defined(OS_ANDROID)
   ThreadWatcherAndroid::RegisterApplicationStatusListener();
-#endif  // defined(OS_ANDROID)
-
-#if BUILDFLAG(ENABLE_OFFLINE_PAGES)
   offline_pages::OfflinePageInfoHandler::Register();
-#endif
+#endif  // defined(OS_ANDROID)
 
 #if !defined(DISABLE_NACL)
   BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,

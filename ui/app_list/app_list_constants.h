@@ -96,7 +96,6 @@ APP_LIST_EXPORT extern const int kAppsGridPadding;
 APP_LIST_EXPORT extern const int kSearchBoxPadding;
 APP_LIST_EXPORT extern const int kSearchBoxTopPadding;
 APP_LIST_EXPORT extern const int kSearchBoxBottomPadding;
-APP_LIST_EXPORT extern const int kSearchBoxBorderCornerRadiusFullscreen;
 
 APP_LIST_EXPORT extern size_t kMaxFolderItems;
 APP_LIST_EXPORT extern const size_t kNumFolderTopItems;
@@ -110,9 +109,6 @@ APP_LIST_EXPORT extern const char kSearchQueryLength[];
 APP_LIST_EXPORT extern const char kSearchResultDistanceFromOrigin[];
 
 APP_LIST_EXPORT extern const int kSearchTileHeight;
-
-APP_LIST_EXPORT extern const int kSearchIconSize;
-APP_LIST_EXPORT extern const SkColor kDefaultSearchboxColor;
 
 // Returns the shadow values for a view at |z_height|.
 APP_LIST_EXPORT gfx::ShadowValue GetShadowForZHeight(int z_height);

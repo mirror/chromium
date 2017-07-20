@@ -371,8 +371,7 @@ cr.define('login', function() {
       // since it won't be visible in the rest of UI).
       this.classList.toggle(
           'full-header-background',
-          this.lockScreenAppsState_ == LOCK_SCREEN_APPS_STATE.FOREGROUND ||
-              this.lockScreenAppsState_ == LOCK_SCREEN_APPS_STATE.BACKGROUND);
+          this.lockScreenAppsState_ != LOCK_SCREEN_APPS_STATE.NONE);
     },
 
     /**

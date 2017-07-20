@@ -7,13 +7,13 @@
 #include <memory>
 
 #include "ash/login_status.h"
-#include "ash/metrics/user_metrics_recorder_test_api.h"
 #include "ash/public/cpp/config.h"
 #include "ash/public/cpp/shelf_model.h"
 #include "ash/session/session_controller.h"
-#include "ash/session/test_session_controller_client.h"
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
+#include "ash/test/test_session_controller_client.h"
+#include "ash/test/user_metrics_recorder_test_api.h"
 #include "base/test/histogram_tester.h"
 
 using session_manager::SessionState;
@@ -38,18 +38,18 @@ const char kAsh_Shelf_NumberOfUnpinnedItems[] =
 
 // Test fixture for the UserMetricsRecorder class. The tests manage their own
 // session state.
-class UserMetricsRecorderTest : public NoSessionAshTestBase {
+class UserMetricsRecorderTest : public test::NoSessionAshTestBase {
  public:
   UserMetricsRecorderTest() = default;
   ~UserMetricsRecorderTest() override = default;
 
-  UserMetricsRecorderTestAPI& test_api() { return test_api_; }
+  test::UserMetricsRecorderTestAPI& test_api() { return test_api_; }
 
   base::HistogramTester& histograms() { return histograms_; }
 
  private:
   // Test API to access private members of the test target.
-  UserMetricsRecorderTestAPI test_api_;
+  test::UserMetricsRecorderTestAPI test_api_;
 
   // Histogram value verifier.
   base::HistogramTester histograms_;
@@ -72,7 +72,7 @@ TEST_F(UserMetricsRecorderTest, VerifyIsUserInActiveDesktopEnvironmentValues) {
   EXPECT_TRUE(test_api().IsUserInActiveDesktopEnvironment());
 
   // Environment is not active when screen is locked.
-  TestSessionControllerClient* client = GetSessionControllerClient();
+  test::TestSessionControllerClient* client = GetSessionControllerClient();
   client->SetSessionState(SessionState::LOCKED);
   ASSERT_TRUE(session->IsScreenLocked());
   EXPECT_FALSE(test_api().IsUserInActiveDesktopEnvironment());

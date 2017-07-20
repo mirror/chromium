@@ -1067,8 +1067,7 @@ void PaymentRequest::OnShippingAddressChange(PaymentAddressPtr address) {
       GetExecutionContext(), EventTypeNames::shippingaddresschange);
   event->SetTarget(this);
   event->SetPaymentDetailsUpdater(this);
-  bool success = GetExecutionContext()->GetEventQueue()->EnqueueEvent(
-      BLINK_FROM_HERE, event);
+  bool success = GetExecutionContext()->GetEventQueue()->EnqueueEvent(event);
   DCHECK(success);
   ALLOW_UNUSED_LOCAL(success);
 }
@@ -1081,8 +1080,7 @@ void PaymentRequest::OnShippingOptionChange(const String& shipping_option_id) {
       GetExecutionContext(), EventTypeNames::shippingoptionchange);
   event->SetTarget(this);
   event->SetPaymentDetailsUpdater(this);
-  bool success = GetExecutionContext()->GetEventQueue()->EnqueueEvent(
-      BLINK_FROM_HERE, event);
+  bool success = GetExecutionContext()->GetEventQueue()->EnqueueEvent(event);
   DCHECK(success);
   ALLOW_UNUSED_LOCAL(success);
 }

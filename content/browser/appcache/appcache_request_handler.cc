@@ -127,24 +127,19 @@ AppCacheJob* AppCacheRequestHandler::MaybeLoadFallbackForRedirect(
   if (request_->GetURL().GetOrigin() == location.GetOrigin())
     return NULL;
 
-  // In network service land, the existing job initiates a fallback request.
-  if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
-    DCHECK(!job_.get());  // our jobs never generate redirects
-  } else {
-    DCHECK(job_.get());
-  }
+  DCHECK(!job_.get());  // our jobs never generate redirects
 
   std::unique_ptr<AppCacheJob> job;
   if (found_fallback_entry_.has_response_id()) {
-    job = MaybeCreateJobForFallback(network_delegate);
     // 6.9.6, step 4: If this results in a redirect to another origin,
     // get the resource of the fallback entry.
+    job = CreateJob(network_delegate);
     DeliverAppCachedResponse(found_fallback_entry_, found_cache_id_,
                              found_manifest_url_, true,
                              found_namespace_entry_url_);
   } else if (!found_network_namespace_) {
     // 6.9.6, step 6: Fail the resource load.
-    job = MaybeCreateJobForFallback(network_delegate);
+    job = CreateJob(network_delegate);
     DeliverErrorResponse();
   } else {
     // 6.9.6 step 3 and 5: Fetch the resource normally.
@@ -168,7 +163,7 @@ AppCacheJob* AppCacheRequestHandler::MaybeLoadFallbackForResponse(
   }
 
   // We don't fallback for responses that we delivered.
-  if (job_.get() && !base::FeatureList::IsEnabled(features::kNetworkService)) {
+  if (job_.get()) {
     DCHECK(!job_->IsDeliveringNetworkResponse());
     return NULL;
   }
@@ -191,12 +186,7 @@ AppCacheJob* AppCacheRequestHandler::MaybeLoadFallbackForResponse(
 
   // 6.9.6, step 4: If this results in a 4xx or 5xx status code
   // or there were network errors, get the resource of the fallback entry.
-
-  // In network service land, the job initiates a fallback request. We reuse
-  // the existing job to deliver the fallback response.
-  std::unique_ptr<AppCacheJob> job =
-      MaybeCreateJobForFallback(network_delegate);
-
+  std::unique_ptr<AppCacheJob> job = CreateJob(network_delegate);
   DeliverAppCachedResponse(found_fallback_entry_, found_cache_id_,
                            found_manifest_url_, true,
                            found_namespace_entry_url_);
@@ -350,16 +340,6 @@ std::unique_ptr<AppCacheJob> AppCacheRequestHandler::CreateJob(
   }
 
   return job;
-}
-
-std::unique_ptr<AppCacheJob> AppCacheRequestHandler::MaybeCreateJobForFallback(
-    net::NetworkDelegate* network_delegate) {
-  if (!base::FeatureList::IsEnabled(features::kNetworkService))
-    return CreateJob(network_delegate);
-  // In network service land, the job initiates a fallback request. We reuse
-  // the existing job to deliver the fallback response.
-  DCHECK(job_.get());
-  return std::unique_ptr<AppCacheJob>(job_.get());
 }
 
 // Main-resource handling ----------------------------------------------

@@ -35,7 +35,6 @@
 #include "ui/display/screen.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/geometry/insets.h"
-#include "ui/gfx/geometry/vector2d_conversions.h"
 #include "ui/gfx/image/image_skia.h"
 #include "ui/gfx/path.h"
 #include "ui/gfx/skia_util.h"
@@ -72,9 +71,6 @@ constexpr int kAppListThresholdDenominator = 3;
 // The velocity the app list must be dragged in order to transition to the next
 // state, measured in DIPs/event.
 constexpr int kAppListDragVelocityThreshold = 25;
-
-// The scroll offset in order to transition from PEEKING to FULLSCREEN
-constexpr int kAppListMinScrollToSwitchStates = 20;
 
 // The DIP distance from the bezel that a drag event must end within to transfer
 // the |app_list_state_|.
@@ -691,31 +687,6 @@ void AppListView::OnMaximizeModeChanged(bool started) {
   }
 }
 
-bool AppListView::HandleScroll(const ui::Event* event) {
-  if (app_list_state_ != PEEKING)
-    return false;
-
-  switch (event->type()) {
-    case ui::ET_MOUSEWHEEL:
-      SetState(event->AsMouseWheelEvent()->y_offset() < 0 ? FULLSCREEN_ALL_APPS
-                                                          : CLOSED);
-      return true;
-    case ui::ET_SCROLL:
-    case ui::ET_SCROLL_FLING_START: {
-      if (fabs(event->AsScrollEvent()->y_offset()) >
-          kAppListMinScrollToSwitchStates) {
-        SetState(event->AsScrollEvent()->y_offset() < 0 ? FULLSCREEN_ALL_APPS
-                                                        : CLOSED);
-        return true;
-      }
-      break;
-    }
-    default:
-      break;
-  }
-  return false;
-}
-
 void AppListView::OnBeforeBubbleWidgetInit(views::Widget::InitParams* params,
                                            views::Widget* widget) const {
   if (!params->native_widget) {
@@ -749,20 +720,6 @@ void AppListView::GetWidgetHitTestMask(gfx::Path* mask) const {
   mask->addRect(gfx::RectToSkRect(GetBubbleFrameView()->GetContentsBounds()));
 }
 
-void AppListView::OnScrollEvent(ui::ScrollEvent* event) {
-  if (!is_fullscreen_app_list_enabled_)
-    return;
-
-  if (event->type() == ui::ET_SCROLL_FLING_CANCEL)
-    return;
-
-  if (!HandleScroll(event))
-    return;
-
-  event->SetHandled();
-  event->StopPropagation();
-}
-
 void AppListView::OnMouseEvent(ui::MouseEvent* event) {
   if (!is_fullscreen_app_list_enabled_)
     return;
@@ -771,10 +728,6 @@ void AppListView::OnMouseEvent(ui::MouseEvent* event) {
     case ui::ET_MOUSE_PRESSED:
       event->SetHandled();
       HandleClickOrTap();
-      break;
-    case ui::ET_MOUSEWHEEL:
-      if (HandleScroll(event))
-        event->SetHandled();
       break;
     default:
       break;
@@ -811,11 +764,6 @@ void AppListView::OnGestureEvent(ui::GestureEvent* event) {
       EndDrag(event->location());
       event->SetHandled();
       break;
-    case ui::ET_MOUSEWHEEL: {
-      if (HandleScroll(event))
-        event->SetHandled();
-      break;
-    }
     default:
       break;
   }
@@ -843,15 +791,12 @@ bool AppListView::AcceleratorPressed(const ui::Accelerator& accelerator) {
 void AppListView::Layout() {
   const gfx::Rect contents_bounds = GetContentsBounds();
 
-  // Make sure to layout |app_list_main_view_| and |speech_view_| at the
-  // center of the widget.
+  // Make sure to layout |app_list_main_view_| and |speech_view_| at the center
+  // of the widget.
   gfx::Rect centered_bounds = contents_bounds;
-  ContentsView* contents_view = app_list_main_view_->contents_view();
-  centered_bounds.ClampToCenteredSize(
-      gfx::Size(is_fullscreen_app_list_enabled_
-                    ? contents_view->GetMaximumContentsSize().width()
-                    : contents_view->GetDefaultContentsBounds().width(),
-                contents_bounds.height()));
+  centered_bounds.ClampToCenteredSize(gfx::Size(
+      app_list_main_view_->contents_view()->GetDefaultContentsBounds().width(),
+      contents_bounds.height()));
 
   app_list_main_view_->SetBoundsRect(centered_bounds);
 
@@ -865,10 +810,10 @@ void AppListView::Layout() {
     speech_view_->SetBoundsRect(speech_bounds);
   }
 
-  if (!is_fullscreen_app_list_enabled_)
-    return;
-  contents_view->Layout();
-  app_list_background_shield_->SetBoundsRect(contents_bounds);
+  if (is_fullscreen_app_list_enabled_) {
+    app_list_main_view_->contents_view()->Layout();
+    app_list_background_shield_->SetBoundsRect(contents_bounds);
+  }
 }
 
 void AppListView::SchedulePaintInRect(const gfx::Rect& rect) {
@@ -1029,9 +974,8 @@ void AppListView::OnSpeechRecognitionStateChanged(
   } else {
     app_list_main_view_->SetVisible(true);
     // Refocus the search box. However, if the app list widget does not have
-    // focus, it means another window has already taken focus, and we *must
-    // not* focus the search box (or we would steal focus back into the app
-    // list).
+    // focus, it means another window has already taken focus, and we *must not*
+    // focus the search box (or we would steal focus back into the app list).
     if (GetWidget()->IsActive())
       search_box_view_->search_box()->RequestFocus();
   }

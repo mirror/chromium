@@ -5,7 +5,6 @@
 #ifndef WebViewBase_h
 #define WebViewBase_h
 
-#include "core/CoreExport.h"
 #include "core/page/EventWithHitTestResults.h"
 #include "platform/graphics/paint/PaintImage.h"
 #include "platform/transforms/TransformationMatrix.h"
@@ -67,7 +66,7 @@ class WebViewBase : public WebView, public RefCounted<WebViewBase> {
   virtual Page* GetPage() const = 0;
   virtual Frame* FocusedCoreFrame() const = 0;
 
-  CORE_EXPORT static HashSet<WebViewBase*>& AllInstances();
+  static HashSet<WebViewBase*>& AllInstances();
 
   // Returns the main frame associated with this view. This may be null when
   // the page is shutting down, but will be valid at all other times.
@@ -226,4 +225,4 @@ class WebViewBase : public WebView, public RefCounted<WebViewBase> {
 };
 }
 
-#endif  // WebViewBase_h
+#endif

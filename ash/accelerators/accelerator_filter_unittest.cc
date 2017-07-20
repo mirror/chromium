@@ -14,7 +14,7 @@
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
 #include "ash/test/ash_test_helper.h"
-#include "ash/test_screenshot_delegate.h"
+#include "ash/test/test_screenshot_delegate.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -30,8 +30,9 @@
 #include "ui/gfx/geometry/rect.h"
 
 namespace ash {
+namespace test {
 
-using AcceleratorFilterTest = AshTestBase;
+typedef AshTestBase AcceleratorFilterTest;
 
 // Tests if AcceleratorFilter works without a focused window.
 TEST_F(AcceleratorFilterTest, TestFilterWithoutFocus) {
@@ -208,4 +209,5 @@ TEST_F(AcceleratorFilterTest, ToggleAppListInterruptedByMouseEvent) {
   EXPECT_EQ(1u, test_app_list_presenter.toggle_count());
 }
 
+}  // namespace test
 }  // namespace ash

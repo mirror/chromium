@@ -9,28 +9,23 @@
 
 #include "base/callback.h"
 #include "base/macros.h"
+#include "components/arc/arc_service.h"
 #include "components/arc/common/storage_manager.mojom.h"
-#include "components/keyed_service/core/keyed_service.h"
-
-namespace content {
-class BrowserContext;
-}  // namespace content
 
 namespace arc {
 
 class ArcBridgeService;
 
 // This class represents as a simple proxy of StorageManager to Chrome OS.
-class ArcStorageManager : public KeyedService {
+class ArcStorageManager : public ArcService {
  public:
-  // Returns singleton instance for the given BrowserContext,
-  // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcStorageManager* GetForBrowserContext(
-      content::BrowserContext* context);
-
-  ArcStorageManager(content::BrowserContext* context,
-                    ArcBridgeService* bridge_service);
+  explicit ArcStorageManager(ArcBridgeService* bridge_service);
   ~ArcStorageManager() override;
+
+  // Gets the singleton instance of the ARC Storage Manager.
+  // MUST be called while ArcStorageManager is alive, otherwise it returns
+  // nullptr (or aborts on Debug build).
+  static ArcStorageManager* Get();
 
   // Opens detailed preference screen of private volume on ARC.
   // Returns false when an instance of ARC-side isn't ready yet.
@@ -45,8 +40,6 @@ class ArcStorageManager : public KeyedService {
   bool DeleteApplicationsCache(const base::Callback<void()>& callback);
 
  private:
-  ArcBridgeService* const arc_bridge_service_;
-
   DISALLOW_COPY_AND_ASSIGN(ArcStorageManager);
 };
 

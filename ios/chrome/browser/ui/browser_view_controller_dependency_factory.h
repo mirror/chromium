@@ -59,10 +59,7 @@ extern NSString* const kBrowserViewControllerSnackbarCategory;
 // Caller is responsible for releasing all of the created objects.
 - (PreloadController*)newPreloadController;
 
-- (TabStripController*)
-newTabStripControllerWithTabModel:(TabModel*)model
-                       dispatcher:
-                           (id<ApplicationCommands, BrowserCommands>)dispatcher;
+- (TabStripController*)newTabStripControllerWithTabModel:(TabModel*)model;
 
 - (ToolbarModelIOS*)newToolbarModelIOSWithDelegate:
     (ToolbarModelDelegateIOS*)delegate;

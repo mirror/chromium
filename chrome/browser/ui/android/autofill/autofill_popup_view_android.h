@@ -40,6 +40,8 @@ class AutofillPopupViewAndroid : public AutofillPopupView {
   void PopupDismissed(JNIEnv* env,
                       const base::android::JavaParamRef<jobject>& obj);
 
+  static bool RegisterAutofillPopupViewAndroid(JNIEnv* env);
+
  protected:
   // AutofillPopupView implementation.
   void Show() override;

@@ -91,7 +91,7 @@ config("cdm_manager_implementation") {
 component("cdm_manager") {
   visibility = [
     "//media/gpu",
-    "//media/mojo/services",
+    "//media/mojo/services:lib",
   ]
   sources = [
     "cdm_manager.cc",

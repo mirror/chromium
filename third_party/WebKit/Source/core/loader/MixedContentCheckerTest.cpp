@@ -105,9 +105,9 @@ TEST(MixedContentCheckerTest, ContextTypeForInspector) {
 
 namespace {
 
-class MixedContentCheckerMockLocalFrameClient : public EmptyLocalFrameClient {
+class MockLocalFrameClient : public EmptyLocalFrameClient {
  public:
-  MixedContentCheckerMockLocalFrameClient() : EmptyLocalFrameClient() {}
+  MockLocalFrameClient() : EmptyLocalFrameClient() {}
   MOCK_METHOD0(DidContainInsecureFormAction, void());
   MOCK_METHOD1(DidDisplayContentWithCertificateErrors, void(const KURL&));
   MOCK_METHOD1(DidRunContentWithCertificateErrors, void(const KURL&));
@@ -116,8 +116,7 @@ class MixedContentCheckerMockLocalFrameClient : public EmptyLocalFrameClient {
 }  // namespace
 
 TEST(MixedContentCheckerTest, HandleCertificateError) {
-  MixedContentCheckerMockLocalFrameClient* client =
-      new MixedContentCheckerMockLocalFrameClient;
+  MockLocalFrameClient* client = new MockLocalFrameClient;
   std::unique_ptr<DummyPageHolder> dummy_page_holder =
       DummyPageHolder::Create(IntSize(1, 1), nullptr, client);
 
@@ -150,8 +149,7 @@ TEST(MixedContentCheckerTest, HandleCertificateError) {
 }
 
 TEST(MixedContentCheckerTest, DetectMixedForm) {
-  MixedContentCheckerMockLocalFrameClient* client =
-      new MixedContentCheckerMockLocalFrameClient;
+  MockLocalFrameClient* client = new MockLocalFrameClient;
   std::unique_ptr<DummyPageHolder> dummy_page_holder =
       DummyPageHolder::Create(IntSize(1, 1), nullptr, client);
 

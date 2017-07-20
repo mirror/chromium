@@ -8,9 +8,9 @@
 #include <memory>
 
 #include "base/macros.h"
+#include "components/arc/arc_service.h"
 #include "components/arc/ime/arc_ime_bridge.h"
 #include "components/exo/wm_helper.h"
-#include "components/keyed_service/core/keyed_service.h"
 #include "ui/aura/env_observer.h"
 #include "ui/aura/window_observer.h"
 #include "ui/base/ime/text_input_client.h"
@@ -22,15 +22,11 @@
 
 namespace aura {
 class Window;
-}  // namespace aura
-
-namespace content {
-class BrowserContext;
-}  // namespace content
+}
 
 namespace ui {
 class InputMethod;
-}  // namespace ui
+}
 
 namespace arc {
 
@@ -38,7 +34,7 @@ class ArcBridgeService;
 
 // This class implements ui::TextInputClient and makes ARC windows behave
 // as a text input target in Chrome OS environment.
-class ArcImeService : public KeyedService,
+class ArcImeService : public ArcService,
                       public ArcImeBridge::Delegate,
                       public aura::EnvObserver,
                       public aura::WindowObserver,
@@ -46,12 +42,7 @@ class ArcImeService : public KeyedService,
                       public keyboard::KeyboardControllerObserver,
                       public ui::TextInputClient {
  public:
-  // Returns singleton instance for the given BrowserContext,
-  // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcImeService* GetForBrowserContext(content::BrowserContext* context);
-
-  ArcImeService(content::BrowserContext* context,
-                ArcBridgeService* bridge_service);
+  explicit ArcImeService(ArcBridgeService* bridge_service);
   ~ArcImeService() override;
 
   class ArcWindowDelegate {

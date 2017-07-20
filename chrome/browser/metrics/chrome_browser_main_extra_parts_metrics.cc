@@ -507,7 +507,7 @@ void ChromeBrowserMainExtraPartsMetrics::PostBrowserStart() {
                             UMA_LINUX_WINDOW_MANAGER_COUNT);
 #endif
 
-  constexpr base::TaskTraits background_task_traits = {
+  const base::TaskTraits background_task_traits = {
       base::MayBlock(), base::TaskPriority::BACKGROUND,
       base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN};
 #if defined(OS_LINUX) && !defined(OS_CHROMEOS)

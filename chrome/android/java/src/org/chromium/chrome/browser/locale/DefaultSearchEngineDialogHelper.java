@@ -62,11 +62,6 @@ public class DefaultSearchEngineDialogHelper implements OnCheckedChangeListener,
     private String mCurrentlySelectedKeyword;
 
     /**
-     * Keyword that is both selected and confirmed (with a click to {@link #mConfirmButton}).
-     */
-    private String mConfirmedKeyword;
-
-    /**
      * Constructs a DefaultSearchEngineDialogHelper.
      *
      * @param dialogType     Dialog type to show.
@@ -104,14 +99,7 @@ public class DefaultSearchEngineDialogHelper implements OnCheckedChangeListener,
     /** @return Keyword that corresponds to the search engine that is currently selected. */
     @Nullable
     public final String getCurrentlySelectedKeyword() {
-        // TODO(yusufo): All callers should check getConfirmedKeyword below.
         return mCurrentlySelectedKeyword;
-    }
-
-    /** @return Keyword that corresponds to the search engine that is selected and confirmed. */
-    @Nullable
-    public final String getConfirmedKeyword() {
-        return mConfirmedKeyword;
     }
 
     @Override
@@ -134,9 +122,8 @@ public class DefaultSearchEngineDialogHelper implements OnCheckedChangeListener,
             return;
         }
 
-        mConfirmedKeyword = mCurrentlySelectedKeyword;
-
-        mDelegate.onUserSeachEngineChoice(mSearchEngineKeywords, mConfirmedKeyword.toString());
+        mDelegate.onUserSeachEngineChoice(
+                mSearchEngineKeywords, mCurrentlySelectedKeyword.toString());
         mFinishRunnable.run();
     }
 

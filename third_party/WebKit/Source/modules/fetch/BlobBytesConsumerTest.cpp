@@ -235,7 +235,7 @@ TEST_F(BlobBytesConsumerTest, FailAccessControlCheck) {
   EXPECT_EQ(PublicState::kReadableOrWaiting, consumer->GetPublicState());
 
   int num_on_state_change_called = client->NumOnStateChangeCalled();
-  consumer->DidFail(ResourceError());
+  consumer->DidFailAccessControlCheck(ResourceError());
   EXPECT_EQ(num_on_state_change_called + 1, client->NumOnStateChangeCalled());
 
   EXPECT_EQ(PublicState::kErrored, consumer->GetPublicState());

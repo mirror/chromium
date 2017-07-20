@@ -148,6 +148,10 @@ cc_component("cc") {
     "output/compositor_frame.h",
     "output/compositor_frame_metadata.cc",
     "output/compositor_frame_metadata.h",
+    "output/context_cache_controller.cc",
+    "output/context_cache_controller.h",
+    "output/context_provider.cc",
+    "output/context_provider.h",
     "output/copy_output_request.cc",
     "output/copy_output_request.h",
     "output/copy_output_result.cc",
@@ -164,6 +168,8 @@ cc_component("cc") {
     "output/gl_renderer.h",
     "output/gl_renderer_draw_cache.cc",
     "output/gl_renderer_draw_cache.h",
+    "output/in_process_context_provider.cc",
+    "output/in_process_context_provider.h",
     "output/latency_info_swap_promise.cc",
     "output/latency_info_swap_promise.h",
     "output/layer_quad.cc",
@@ -339,7 +345,6 @@ cc_component("cc") {
     "tiles/gpu_image_decode_cache.h",
     "tiles/image_controller.cc",
     "tiles/image_controller.h",
-    "tiles/image_decode_cache.cc",
     "tiles/image_decode_cache.h",
     "tiles/mipmap_util.cc",
     "tiles/mipmap_util.h",
@@ -466,7 +471,7 @@ cc_component("cc") {
     "//base",
     "//base/third_party/dynamic_annotations",
     "//cc/paint",
-    "//components/viz/common",
+    "//cc/surfaces:surface_id",
     "//gpu",
     "//gpu/command_buffer/client:gles2_implementation",
     "//gpu/command_buffer/client:gles2_interface",
@@ -557,6 +562,8 @@ cc_static_library("test_support") {
     "test/fake_scrollbar.h",
     "test/fake_surface_observer.cc",
     "test/fake_surface_observer.h",
+    "test/fake_surface_resource_holder_client.cc",
+    "test/fake_surface_resource_holder_client.h",
     "test/fake_tile_manager.cc",
     "test/fake_tile_manager.h",
     "test/fake_tile_manager_client.cc",
@@ -659,6 +666,7 @@ cc_static_library("test_support") {
     "//base/third_party/dynamic_annotations",
     "//cc/paint",
     "//cc/surfaces",
+    "//cc/surfaces:surface_id",
     "//components/viz/common",
     "//components/viz/service",
     "//components/viz/test:test_support",
@@ -831,7 +839,14 @@ cc_test("cc_unittests") {
     "animation/keyframed_animation_curve_unittest.cc",
     "animation/scroll_offset_animation_curve_unittest.cc",
     "animation/transform_operations_unittest.cc",
+
+    # Surfaces test files.
+    "surfaces/frame_sink_manager_unittest.cc",
+    "surfaces/referenced_surface_tracker_unittest.cc",
     "surfaces/surface_hittest_unittest.cc",
+    "surfaces/surface_manager_ref_unittest.cc",
+    "surfaces/surface_sequence_generator_unittest.cc",
+    "surfaces/surface_synchronization_unittest.cc",
     "surfaces/surface_unittest.cc",
 
     # Setup.
@@ -857,6 +872,7 @@ cc_test("cc_unittests") {
     "//cc/ipc:test_interfaces",
     "//cc/paint",
     "//cc/surfaces",
+    "//cc/surfaces:surface_id",
     "//cc/surfaces:surfaces",
     "//components/viz/common",
     "//components/viz/service",
@@ -913,7 +929,7 @@ cc_test("cc_perftests") {
     "//cc/ipc:interfaces",
     "//cc/paint",
     "//cc/surfaces",
-    "//components/viz/common",
+    "//cc/surfaces:surface_id",
     "//components/viz/test:test_support",
     "//gpu",
     "//gpu:test_support",
@@ -935,7 +951,7 @@ cc_test("cc_perftests") {
   assert_no_deps = [ "//chrome" ]
 
   data = [
-    "//components/viz/test/data/",
+    "test/data/",
 
     # Needed for isolate script to execute.
     "//testing/scripts/common.py",

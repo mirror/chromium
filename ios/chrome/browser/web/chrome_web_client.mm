@@ -84,9 +84,10 @@ void ChromeWebClient::PreWebViewCreation() const {
   }
 }
 
-void ChromeWebClient::AddAdditionalSchemes(Schemes* schemes) const {
-  schemes->standard_schemes.push_back(kChromeUIScheme);
-  schemes->secure_schemes.push_back(kChromeUIScheme);
+void ChromeWebClient::AddAdditionalSchemes(
+    std::vector<url::SchemeWithType>* additional_standard_schemes) const {
+  url::SchemeWithType scheme = {kChromeUIScheme, url::SCHEME_WITHOUT_PORT};
+  additional_standard_schemes->push_back(scheme);
 }
 
 std::string ChromeWebClient::GetAcceptLangs(web::BrowserState* state) const {

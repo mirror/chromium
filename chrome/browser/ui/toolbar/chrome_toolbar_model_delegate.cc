@@ -13,7 +13,6 @@
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
 #include "components/google/core/browser/google_util.h"
-#include "components/offline_pages/features/features.h"
 #include "components/omnibox/browser/autocomplete_input.h"
 #include "components/prefs/pref_service.h"
 #include "components/security_state/core/security_state.h"
@@ -24,14 +23,12 @@
 #include "content/public/common/url_constants.h"
 #include "extensions/common/constants.h"
 
-#if !defined(OS_ANDROID)
+#if defined(OS_ANDROID)
+#include "chrome/browser/android/offline_pages/offline_page_utils.h"
+#else
 #include "components/omnibox/browser/vector_icons.h" // nogncheck
 #include "components/toolbar/vector_icons.h"  // nogncheck
-#endif  // !defined(OS_ANDROID)
-
-#if BUILDFLAG(ENABLE_OFFLINE_PAGES)
-#include "chrome/browser/offline_pages/offline_page_utils.h"
-#endif  // BUILDFLAG(ENABLE_OFFLINE_PAGES)
+#endif
 
 ChromeToolbarModelDelegate::ChromeToolbarModelDelegate() {}
 
@@ -133,7 +130,7 @@ const gfx::VectorIcon* ChromeToolbarModelDelegate::GetVectorIconOverride()
 }
 
 bool ChromeToolbarModelDelegate::IsOfflinePage() const {
-#if BUILDFLAG(ENABLE_OFFLINE_PAGES)
+#if defined(OS_ANDROID)
   content::WebContents* web_contents = GetActiveWebContents();
   return web_contents &&
          offline_pages::OfflinePageUtils::GetOfflinePageFromWebContents(

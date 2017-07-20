@@ -9,8 +9,8 @@
 #include "bindings/core/v8/V8GCController.h"
 #include "bindings/core/v8/V8IdleTaskRunner.h"
 #include "bindings/core/v8/V8Initializer.h"
+#include "bindings/core/v8/WorkerV8Settings.h"
 #include "core/inspector/WorkerThreadDebugger.h"
-#include "core/workers/WorkerBackingThreadStartupData.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/WebThreadSupportingGC.h"
@@ -58,12 +58,9 @@ WorkerBackingThread::WorkerBackingThread(WebThread* thread,
 
 WorkerBackingThread::~WorkerBackingThread() {}
 
-void WorkerBackingThread::InitializeOnBackingThread(
-    const WorkerBackingThreadStartupData& startup_data) {
-  DCHECK(backing_thread_->IsCurrentThread());
-  backing_thread_->InitializeOnThread();
-
+void WorkerBackingThread::Initialize(const WorkerV8Settings& settings) {
   DCHECK(!isolate_);
+  backing_thread_->Initialize();
   isolate_ = V8PerIsolateData::Initialize(
       backing_thread_->PlatformThread().GetWebTaskRunner());
   AddWorkerIsolate(isolate_);
@@ -86,17 +83,15 @@ void WorkerBackingThread::InitializeOnBackingThread(
   // Optimize for memory usage instead of latency for the worker isolate.
   isolate_->IsolateInBackgroundNotification();
 
-  if (startup_data.heap_limit_mode ==
-      WorkerBackingThreadStartupData::HeapLimitMode::kIncreasedForDebugging) {
+  if (settings.heap_limit_mode_ ==
+      WorkerV8Settings::HeapLimitMode::kIncreasedForDebugging) {
     isolate_->IncreaseHeapLimitForDebugging();
   }
-  isolate_->SetAllowAtomicsWait(
-      startup_data.atomics_wait_mode ==
-      WorkerBackingThreadStartupData::AtomicsWaitMode::kAllow);
+  isolate_->SetAllowAtomicsWait(settings.atomics_wait_mode_ ==
+                                WorkerV8Settings::AtomicsWaitMode::kAllow);
 }
 
-void WorkerBackingThread::ShutdownOnBackingThread() {
-  DCHECK(backing_thread_->IsCurrentThread());
+void WorkerBackingThread::Shutdown() {
   if (is_owning_thread_)
     Platform::Current()->WillStopWorkerThread();
 
@@ -106,7 +101,7 @@ void WorkerBackingThread::ShutdownOnBackingThread() {
     // This statement runs only in tests.
     V8GCController::CollectAllGarbageForTesting(isolate_);
   }
-  backing_thread_->ShutdownOnThread();
+  backing_thread_->Shutdown();
 
   RemoveWorkerIsolate(isolate_);
   V8PerIsolateData::Destroy(isolate_);

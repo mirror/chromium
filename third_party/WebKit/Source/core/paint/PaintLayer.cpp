@@ -340,15 +340,12 @@ void PaintLayer::DirtyAncestorChainHasSelfPaintingLayerDescendantStatus() {
 }
 
 bool PaintLayer::SticksToScroller() const {
-  if (GetLayoutObject().Style()->GetPosition() != EPosition::kSticky)
-    return false;
-  if (auto* ancestor_scrollable_area =
-          AncestorOverflowLayer()->GetScrollableArea()) {
-    return ancestor_scrollable_area->GetStickyConstraintsMap()
-        .at(const_cast<PaintLayer*>(this))
-        .GetAnchorEdges();
-  }
-  return false;
+  return GetLayoutObject().Style()->GetPosition() == EPosition::kSticky &&
+         AncestorOverflowLayer()
+             ->GetScrollableArea()
+             ->GetStickyConstraintsMap()
+             .at(const_cast<PaintLayer*>(this))
+             .GetAnchorEdges();
 }
 
 bool PaintLayer::FixedToViewport() const {
@@ -871,7 +868,7 @@ bool PaintLayer::UpdateSize() {
 
 void PaintLayer::UpdateSizeAndScrollingAfterLayout() {
   bool did_resize = UpdateSize();
-  if (RequiresScrollableArea()) {
+  if (GetLayoutObject().HasOverflowClip()) {
     scrollable_area_->UpdateAfterLayout();
     if (did_resize)
       scrollable_area_->VisibleSizeChanged();
@@ -1569,28 +1566,10 @@ void PaintLayer::UpdateStackingNode() {
     stacking_node_ = nullptr;
 }
 
-bool PaintLayer::RequiresScrollableArea() const {
-  if (!RuntimeEnabledFeatures::RootLayerScrollingEnabled() && IsRootLayer())
-    return true;
-  if (!GetLayoutBox())
-    return false;
-  if (GetLayoutObject().HasOverflowClip())
-    return true;
-  // Iframes with the resize property can be resized. This requires
-  // scroll corner painting, which is implemented, in part, by
-  // PaintLayerScrollableArea.
-  if (GetLayoutBox()->CanResize())
-    return true;
-  return false;
-}
-
 void PaintLayer::UpdateScrollableArea() {
-  if (RequiresScrollableArea() && !scrollable_area_) {
+  DCHECK(!scrollable_area_);
+  if (RequiresScrollableArea())
     scrollable_area_ = PaintLayerScrollableArea::Create(*this);
-  } else if (!RequiresScrollableArea() && scrollable_area_) {
-    scrollable_area_->Dispose();
-    scrollable_area_.Clear();
-  }
 }
 
 bool PaintLayer::HasOverflowControls() const {
@@ -2709,9 +2688,7 @@ GraphicsLayer* PaintLayer::GraphicsLayerBacking(const LayoutObject* obj) const {
 BackgroundPaintLocation PaintLayer::GetBackgroundPaintLocation(
     uint32_t* reasons) const {
   BackgroundPaintLocation location;
-  bool has_scrolling_layers =
-      scrollable_area_ && scrollable_area_->NeedsCompositedScrolling();
-  if (!ScrollsOverflow() && !has_scrolling_layers) {
+  if (!ScrollsOverflow()) {
     location = kBackgroundPaintInGraphicsLayer;
   } else if (RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
     location = GetLayoutObject().GetBackgroundPaintLocation(reasons);
@@ -3083,7 +3060,7 @@ bool PaintLayer::AttemptDirectCompositingUpdate(
         kCompositingUpdateAfterGeometryChange);
   }
 
-  if (RequiresScrollableArea())
+  if (scrollable_area_)
     scrollable_area_->UpdateAfterStyleChange(old_style);
 
   return true;
@@ -3091,13 +3068,12 @@ bool PaintLayer::AttemptDirectCompositingUpdate(
 
 void PaintLayer::StyleDidChange(StyleDifference diff,
                                 const ComputedStyle* old_style) {
-  UpdateScrollableArea();
   if (AttemptDirectCompositingUpdate(diff, old_style))
     return;
 
   stacking_node_->StyleDidChange(old_style);
 
-  if (RequiresScrollableArea())
+  if (scrollable_area_)
     scrollable_area_->UpdateAfterStyleChange(old_style);
 
   // Overlay scrollbars can make this layer self-painting so we need
@@ -3171,13 +3147,12 @@ void PaintLayer::RemoveAncestorOverflowLayer(const PaintLayer* removed_layer) {
     return;
 
   if (AncestorOverflowLayer()) {
-    if (PaintLayerScrollableArea* ancestor_scrollable_area =
-            AncestorOverflowLayer()->GetScrollableArea()) {
-      // TODO(pdr): When slimming paint v2 is enabled, we will need to
-      // invalidate the scroll paint property subtree for this so main
-      // thread scroll reasons are recomputed.
-      ancestor_scrollable_area->InvalidateStickyConstraintsFor(this);
-    }
+    // TODO(pdr): When slimming paint v2 is enabled, we will need to
+    // invalidate the scroll paint property subtree for this so main
+    // thread scroll reasons are recomputed.
+    AncestorOverflowLayer()
+        ->GetScrollableArea()
+        ->InvalidateStickyConstraintsFor(this);
   }
   UpdateAncestorOverflowLayer(nullptr);
   PaintLayer* current = first_;
@@ -3255,7 +3230,7 @@ void PaintLayer::ComputeSelfHitTestRects(LayerHitTestRects& rects) const {
       // composited then the entire contents as well as they may be on another
       // composited layer. Skip reporting contents for non-composited layers as
       // they'll get projected to the same layer as the bounding box.
-      if (GetCompositingState() != kNotComposited && scrollable_area_)
+      if (GetCompositingState() != kNotComposited)
         rect.push_back(scrollable_area_->OverflowRect());
 
       rects.Set(this, rect);

@@ -66,3 +66,7 @@ void Create(JNIEnv* env,
   service->AddInfoBar(base::MakeUnique<ReaderModeInfoBar>(
       base::MakeUnique<ReaderModeInfoBarDelegate>()));
 }
+
+bool RegisterReaderModeInfoBar(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}

@@ -64,4 +64,6 @@ class ContextualSearchRankerLoggerImpl {
   DISALLOW_COPY_AND_ASSIGN(ContextualSearchRankerLoggerImpl);
 };
 
+bool RegisterContextualSearchRankerLoggerImpl(JNIEnv* env);
+
 #endif  // CHROME_BROWSER_ANDROID_CONTEXTUALSEARCH_CONTEXTUAL_SEARCH_RANKER_LOGGER_IMPL_H_

@@ -55,14 +55,11 @@ const BOOL kDefaultStatsCheckboxValue = YES;
 // The animation which occurs at launch has run.
 @property(nonatomic, assign) BOOL ranLaunchAnimation;
 
-@property(nonatomic, readonly, weak) id<ApplicationSettingsCommands> dispatcher;
-
 @end
 
 @implementation WelcomeToChromeViewController
 
 @synthesize ranLaunchAnimation = _ranLaunchAnimation;
-@synthesize dispatcher = _dispatcher;
 
 + (BOOL)defaultStatsCheckboxValue {
   // Record metrics reporting as opt-in/opt-out only once.
@@ -77,16 +74,13 @@ const BOOL kDefaultStatsCheckboxValue = YES;
 }
 
 - (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState
-                            tabModel:(TabModel*)tabModel
-                          dispatcher:
-                              (id<ApplicationSettingsCommands>)dispatcher {
+                            tabModel:(TabModel*)tabModel {
   DCHECK(browserState);
   DCHECK(tabModel);
   self = [super initWithNibName:nil bundle:nil];
   if (self) {
     browserState_ = browserState;
     tabModel_ = tabModel;
-    _dispatcher = dispatcher;
   }
   return self;
 }
@@ -173,8 +167,7 @@ const BOOL kDefaultStatsCheckboxValue = YES;
           initWithBrowserState:browserState_
                       tabModel:tabModel_
                 firstRunConfig:firstRunConfig
-                signInIdentity:nil
-                    dispatcher:self.dispatcher];
+                signInIdentity:nil];
 
   CATransition* transition = [CATransition animation];
   transition.duration = kFadeOutAnimationDuration;

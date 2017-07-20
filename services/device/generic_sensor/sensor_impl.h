@@ -30,18 +30,20 @@ class SensorImpl final : public mojom::Sensor, public PlatformSensor::Client {
                            RemoveConfigurationCallback callback) override;
   void Suspend() override;
   void Resume() override;
-  void ConfigureReadingChangeNotifications(bool enabled) override;
 
   // device::Sensor::Client implementation.
   void OnSensorReadingChanged() override;
   void OnSensorError() override;
-  bool IsSuspended() override;
+  bool IsNotificationSuspended() override;
 
  private:
   scoped_refptr<PlatformSensor> sensor_;
   mojom::SensorClientPtr client_;
-  bool reading_notification_enabled_;
   bool suspended_;
+  // The number of configurations that have |suppress_on_change_events_|
+  // flag set to true. If there is at least one configuration that sets this
+  // flag to true, SensorClient::SensorReadingChanged() is not called.
+  int suppress_on_change_events_count_;
 
   DISALLOW_COPY_AND_ASSIGN(SensorImpl);
 };

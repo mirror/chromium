@@ -54,8 +54,7 @@ class GpuProcessTransportFactory : public ui::ContextFactory,
   // ui::ContextFactory implementation.
   void CreateLayerTreeFrameSink(
       base::WeakPtr<ui::Compositor> compositor) override;
-  scoped_refptr<viz::ContextProvider> SharedMainThreadContextProvider()
-      override;
+  scoped_refptr<cc::ContextProvider> SharedMainThreadContextProvider() override;
   double GetRefreshRate() const override;
   gpu::GpuMemoryBufferManager* GetGpuMemoryBufferManager() override;
   cc::TaskGraphRunner* GetTaskGraphRunner() override;
@@ -86,7 +85,7 @@ class GpuProcessTransportFactory : public ui::ContextFactory,
   // ImageTransportFactory implementation.
   ui::ContextFactory* GetContextFactory() override;
   ui::ContextFactoryPrivate* GetContextFactoryPrivate() override;
-  viz::FrameSinkManager* GetFrameSinkManager() override;
+  cc::FrameSinkManager* GetFrameSinkManager() override;
   viz::GLHelper* GetGLHelper() override;
   void SetGpuChannelEstablishFactory(
       gpu::GpuChannelEstablishFactory* factory) override;

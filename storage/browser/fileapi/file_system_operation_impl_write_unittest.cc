@@ -13,7 +13,6 @@
 #include "base/memory/weak_ptr.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
-#include "base/test/scoped_task_environment.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_context.h"
@@ -57,9 +56,7 @@ void AssertStatusEq(base::File::Error expected, base::File::Error actual) {
 class FileSystemOperationImplWriteTest : public testing::Test {
  public:
   FileSystemOperationImplWriteTest()
-      : scoped_task_environment_(
-            base::test::ScopedTaskEnvironment::MainThreadType::IO),
-        status_(base::File::FILE_OK),
+      : status_(base::File::FILE_OK),
         cancel_status_(base::File::FILE_ERROR_FAILED),
         bytes_written_(0),
         complete_(false),
@@ -154,10 +151,10 @@ class FileSystemOperationImplWriteTest : public testing::Test {
     return *url_request_context_;
   }
 
-  base::test::ScopedTaskEnvironment scoped_task_environment_;
-
   scoped_refptr<storage::FileSystemContext> file_system_context_;
   scoped_refptr<MockQuotaManager> quota_manager_;
+
+  base::MessageLoopForIO loop_;
 
   base::ScopedTempDir dir_;
   base::FilePath virtual_path_;

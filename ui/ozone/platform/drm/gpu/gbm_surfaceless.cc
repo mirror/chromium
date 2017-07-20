@@ -43,8 +43,6 @@ GbmSurfaceless::GbmSurfaceless(GbmSurfaceFactory* surface_factory,
 }
 
 void GbmSurfaceless::QueueOverlayPlane(const OverlayPlane& plane) {
-  if (plane.buffer->RequiresGlFinish())
-    is_on_external_drm_device_ = true;
   planes_.push_back(plane);
 }
 
@@ -120,12 +118,7 @@ void GbmSurfaceless::SwapBuffersAsync(const SwapCompletionCallback& callback) {
   // TODO(dcastagna): Remove the following workaround once we get explicit sync
   // on Intel.
   // We can not rely on implicit sync on external devices (crbug.com/692508).
-  // NOTE: When on external devices, |is_on_external_drm_device_| is set to true
-  // after the first plane is enqueued in QueueOverlayPlane, that is called from
-  // GbmSurfaceless::SubmitFrame.
-  // This means |is_on_external_drm_device_| could be incorrectly set to false
-  // the first time we're testing it.
-  if (rely_on_implicit_sync_ && !is_on_external_drm_device_) {
+  if (rely_on_implicit_sync_ && !IsOnExternalDrmDevice()) {
     frame->ready = true;
     SubmitFrame();
     return;
@@ -253,6 +246,10 @@ void GbmSurfaceless::SwapCompleted(const SwapCompletionCallback& callback,
   }
 
   SubmitFrame();
+}
+
+bool GbmSurfaceless::IsOnExternalDrmDevice() {
+  return planes_.empty() ? false : planes_[0].buffer->RequiresGlFinish();
 }
 
 }  // namespace ui

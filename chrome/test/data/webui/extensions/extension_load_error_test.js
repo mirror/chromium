@@ -61,11 +61,11 @@ cr.define('extension_load_error_tests', function() {
         expectTrue(isDialogVisible());
 
         mockDelegate.testClickingCalls(
-            loadError.$$('.action-button'), 'retryLoadUnpacked', [fakeGuid]);
+            loadError.$$('#retry'), 'retryLoadUnpacked', [fakeGuid]);
         expectFalse(isDialogVisible());
 
         loadError.show();
-        MockInteractions.tap(loadError.$$('.cancel-button'));
+        MockInteractions.tap(loadError.$$('#dismiss'));
         expectFalse(isDialogVisible());
       });
 

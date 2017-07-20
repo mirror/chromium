@@ -799,15 +799,14 @@ void Predictor::PreconnectUrlOnIOThread(
   GURL url = GetHSTSRedirectOnIOThread(original_url);
 
   // TODO(csharrison): The observer should only be notified after the null check
-  // for the URLRequestContextGetter. The predictor tests should be fixed to
-  // allow for this, as they currently expect a callback with no getter.
+  // for the ProfileIOData. The predictor tests should be fixed to allow for
+  // this, as they currently expect a callback with no getter.
   if (observer_) {
     observer_->OnPreconnectUrl(
         url, first_party_for_cookies, motivation, count);
   }
 
-  net::URLRequestContextGetter* getter = url_request_context_getter_.get();
-  if (!getter)
+  if (!profile_io_data_)
     return;
 
   // Translate the motivation from UrlRequest motivations to HttpRequest
@@ -833,8 +832,9 @@ void Predictor::PreconnectUrlOnIOThread(
   }
   UMA_HISTOGRAM_ENUMERATION("Net.PreconnectMotivation", motivation,
                             UrlInfo::MAX_MOTIVATED);
-  content::PreconnectUrl(getter, url, first_party_for_cookies, count,
-                         allow_credentials, request_motivation);
+  content::PreconnectUrl(profile_io_data_->GetResourceContext(), url,
+                         first_party_for_cookies, count, allow_credentials,
+                         request_motivation);
 }
 
 void Predictor::PredictFrameSubresources(const GURL& url,
@@ -1056,7 +1056,7 @@ void Predictor::StartSomeQueuedResolutions() {
     }
 
     int status =
-        content::PreresolveUrl(url_request_context_getter_.get(), url,
+        content::PreresolveUrl(profile_io_data_->GetResourceContext(), url,
                                base::Bind(&Predictor::OnLookupFinished,
                                           io_weak_factory_->GetWeakPtr(), url));
     if (status == net::ERR_IO_PENDING) {

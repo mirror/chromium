@@ -19,6 +19,7 @@
 #include "chrome/browser/bookmarks/bookmark_model_factory.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/browsing_data/browsing_data_helper.h"
+
 #include "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.h"
 #include "chrome/browser/policy/cloud/user_cloud_policy_manager_factory.h"
 #include "chrome/browser/policy/cloud/user_policy_signin_service_factory.h"
@@ -30,7 +31,6 @@
 #include "chrome/browser/signin/signin_manager_factory.h"
 #include "chrome/common/pref_names.h"
 #include "components/bookmarks/browser/bookmark_model.h"
-#include "components/google/core/browser/google_util.h"
 #include "components/policy/core/browser/browser_policy_connector.h"
 #include "components/policy/core/common/cloud/cloud_policy_core.h"
 #include "components/policy/core/common/cloud/cloud_policy_store.h"
@@ -42,7 +42,6 @@
 #include "components/signin/core/browser/signin_metrics.h"
 #include "components/signin/core/common/profile_management_switches.h"
 #include "components/signin/core/common/signin_pref_names.h"
-#include "content/public/browser/browsing_data_filter_builder.h"
 #include "content/public/browser/browsing_data_remover.h"
 #include "google_apis/gaia/gaia_auth_util.h"
 #include "google_apis/gaia/gaia_constants.h"
@@ -54,42 +53,19 @@ using bookmarks::BookmarkModel;
 
 namespace {
 
-// A BrowsingDataRemover::Observer that clears Profile data and then invokes
-// a callback and deletes itself. It can be configured to delete all data
-// (for enterprise users) or only Google's service workers (for all users).
+// A BrowsingDataRemover::Observer that clears all Profile data and then
+// invokes a callback and deletes itself.
 class ProfileDataRemover : public content::BrowsingDataRemover::Observer {
  public:
-  ProfileDataRemover(Profile* profile,
-                     bool all_data,
-                     const base::Closure& callback)
+  ProfileDataRemover(Profile* profile, const base::Closure& callback)
       : callback_(callback),
         origin_runner_(base::ThreadTaskRunnerHandle::Get()),
         remover_(content::BrowserContext::GetBrowsingDataRemover(profile)) {
     remover_->AddObserver(this);
-
-    if (all_data) {
-      remover_->RemoveAndReply(
-          base::Time(), base::Time::Max(),
-          ChromeBrowsingDataRemoverDelegate::ALL_DATA_TYPES,
-          ChromeBrowsingDataRemoverDelegate::ALL_ORIGIN_TYPES, this);
-    } else {
-      std::unique_ptr<content::BrowsingDataFilterBuilder> google_tld_filter =
-          content::BrowsingDataFilterBuilder::Create(
-              content::BrowsingDataFilterBuilder::WHITELIST);
-
-      // TODO(msramek): BrowsingDataFilterBuilder was not designed for
-      // large filters. Optimize it.
-      for (const std::string& domain :
-           google_util::GetGoogleRegistrableDomains()) {
-        google_tld_filter->AddRegisterableDomain(domain);
-      }
-
-      remover_->RemoveWithFilterAndReply(
-          base::Time(), base::Time::Max(),
-          content::BrowsingDataRemover::DATA_TYPE_CACHE_STORAGE,
-          ChromeBrowsingDataRemoverDelegate::ALL_ORIGIN_TYPES,
-          std::move(google_tld_filter), this);
-    }
+    remover_->RemoveAndReply(
+        base::Time(), base::Time::Max(),
+        ChromeBrowsingDataRemoverDelegate::ALL_DATA_TYPES,
+        ChromeBrowsingDataRemoverDelegate::ALL_ORIGIN_TYPES, this);
   }
 
   ~ProfileDataRemover() override {}
@@ -223,21 +199,10 @@ void SigninManagerAndroid::WipeProfileData(
   base::android::ScopedJavaGlobalRef<jobject> java_callback;
   java_callback.Reset(env, callback);
 
-  WipeData(profile_, true /* all data */,
-           base::Bind(&SigninManagerAndroid::OnBrowsingDataRemoverDone,
-                      weak_factory_.GetWeakPtr(), java_callback));
-}
-
-void SigninManagerAndroid::WipeGoogleServiceWorkerCaches(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    const JavaParamRef<jobject>& callback) {
-  base::android::ScopedJavaGlobalRef<jobject> java_callback;
-  java_callback.Reset(env, callback);
-
-  WipeData(profile_, false /* only Google service worker caches */,
-           base::Bind(&SigninManagerAndroid::OnBrowsingDataRemoverDone,
-                      weak_factory_.GetWeakPtr(), java_callback));
+  // The ProfileDataRemover deletes itself once done.
+  new ProfileDataRemover(
+      profile_, base::Bind(&SigninManagerAndroid::OnBrowsingDataRemoverDone,
+                           weak_factory_.GetWeakPtr(), java_callback));
 }
 
 void SigninManagerAndroid::OnPolicyRegisterDone(
@@ -350,14 +315,6 @@ void SigninManagerAndroid::OnSigninAllowedPrefChanged() {
       SigninManagerFactory::GetForProfile(profile_)->IsSigninAllowed());
 }
 
-// static
-void SigninManagerAndroid::WipeData(Profile* profile,
-                                    bool all_data,
-                                    const base::Closure& callback) {
-  // The ProfileDataRemover deletes itself once done.
-  new ProfileDataRemover(profile, all_data, callback);
-}
-
 static jlong Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   SigninManagerAndroid* signin_manager_android =
       new SigninManagerAndroid(env, obj);
@@ -401,4 +358,9 @@ ExtractDomainName(
   std::string email = base::android::ConvertJavaStringToUTF8(env, j_email);
   std::string domain = gaia::ExtractDomainName(email);
   return base::android::ConvertUTF8ToJavaString(env, domain);
+}
+
+// static
+bool SigninManagerAndroid::Register(JNIEnv* env) {
+  return RegisterNativesImpl(env);
 }

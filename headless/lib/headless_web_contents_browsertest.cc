@@ -9,8 +9,6 @@
 #include "base/base64.h"
 #include "base/json/json_writer.h"
 #include "base/strings/stringprintf.h"
-#include "build/build_config.h"
-#include "content/public/browser/web_contents.h"
 #include "content/public/test/browser_test.h"
 #include "headless/lib/browser/headless_web_contents_impl.h"
 #include "headless/public/devtools/domains/dom_snapshot.h"
@@ -107,16 +105,6 @@ IN_PROC_BROWSER_TEST_F(HeadlessWebContentsTest, WindowOpen) {
   // Mac doesn't have WindowTreeHosts.
   if (parent && child && parent->window_tree_host())
     EXPECT_NE(parent->window_tree_host(), child->window_tree_host());
-
-  gfx::Rect expected_bounds(0, 0, 200, 100);
-#if !defined(OS_MACOSX)
-  EXPECT_EQ(expected_bounds, child->web_contents()->GetViewBounds());
-  EXPECT_EQ(expected_bounds, child->web_contents()->GetContainerBounds());
-#else   // !defined(OS_MACOSX)
-  // Mac does not support GetViewBounds() and view positions are random.
-  EXPECT_EQ(expected_bounds.size(),
-            child->web_contents()->GetContainerBounds().size());
-#endif  // !defined(OS_MACOSX)
 }
 
 class HeadlessWindowOpenTabSocketTest : public HeadlessBrowserTest,
@@ -831,33 +819,5 @@ class SingleTabMultipleIsolatedWorldsHeadlessTabSocketTest
 
 HEADLESS_ASYNC_DEVTOOLED_TEST_F(
     SingleTabMultipleIsolatedWorldsHeadlessTabSocketTest);
-
-// Regression test for https://crbug.com/733569.
-class HeadlessWebContentsRequestStorageQuotaTest
-    : public HeadlessAsyncDevTooledBrowserTest,
-      public runtime::Observer {
- public:
-  void RunDevTooledTest() override {
-    EXPECT_TRUE(embedded_test_server()->Start());
-
-    base::RunLoop run_loop;
-    base::MessageLoop::ScopedNestableTaskAllower nest_loop(
-        base::MessageLoop::current());
-    devtools_client_->GetRuntime()->AddObserver(this);
-    devtools_client_->GetRuntime()->Enable(run_loop.QuitClosure());
-    run_loop.Run();
-
-    // Should not crash and call console.log() if quota request succeeds.
-    devtools_client_->GetPage()->Navigate(
-        embedded_test_server()->GetURL("/request_storage_quota.html").spec());
-  }
-
-  void OnConsoleAPICalled(
-      const runtime::ConsoleAPICalledParams& params) override {
-    FinishAsynchronousTest();
-  }
-};
-
-HEADLESS_ASYNC_DEVTOOLED_TEST_F(HeadlessWebContentsRequestStorageQuotaTest);
 
 }  // namespace headless

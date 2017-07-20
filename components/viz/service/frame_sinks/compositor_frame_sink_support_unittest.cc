@@ -9,6 +9,7 @@
 #include "cc/output/copy_output_request.h"
 #include "cc/output/copy_output_result.h"
 #include "cc/resources/resource_provider.h"
+#include "cc/surfaces/frame_sink_manager.h"
 #include "cc/test/begin_frame_args_test.h"
 #include "cc/test/compositor_frame_helpers.h"
 #include "cc/test/fake_external_begin_frame_source.h"
@@ -18,7 +19,6 @@
 #include "components/viz/common/surfaces/surface_id.h"
 #include "components/viz/common/surfaces/surface_info.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support_client.h"
-#include "components/viz/service/frame_sinks/frame_sink_manager.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -170,7 +170,7 @@ class CompositorFrameSinkSupportTest : public testing::Test {
   }
 
  protected:
-  FrameSinkManager manager_;
+  cc::FrameSinkManager manager_;
   FakeCompositorFrameSinkSupportClient fake_support_client_;
   std::unique_ptr<CompositorFrameSinkSupport> support_;
   cc::FakeExternalBeginFrameSource begin_frame_source_;
@@ -554,7 +554,7 @@ TEST_F(CompositorFrameSinkSupportTest,
   SurfaceId surface_id(kAnotherArbitraryFrameSinkId, local_surface_id);
   cc::Surface* surface = GetSurfaceForId(surface_id);
   surface->AddDestructionDependency(
-      SurfaceSequence(kYetAnotherArbitraryFrameSinkId, 4));
+      cc::SurfaceSequence(kYetAnotherArbitraryFrameSinkId, 4));
 
   std::vector<cc::ReturnedResource> returned_resource = {
       resource.ToReturnedResource()};
@@ -586,13 +586,12 @@ TEST_F(CompositorFrameSinkSupportTest,
             local_surface_id);
   local_surface_id_ = LocalSurfaceId();
 
-  manager_.surface_manager()->RegisterFrameSinkId(
-      kYetAnotherArbitraryFrameSinkId);
+  manager_.RegisterFrameSinkId(kYetAnotherArbitraryFrameSinkId);
 
   SurfaceId surface_id(kAnotherArbitraryFrameSinkId, local_surface_id);
   cc::Surface* surface = GetSurfaceForId(surface_id);
   surface->AddDestructionDependency(
-      SurfaceSequence(kYetAnotherArbitraryFrameSinkId, 4));
+      cc::SurfaceSequence(kYetAnotherArbitraryFrameSinkId, 4));
 
   std::vector<cc::ReturnedResource> returned_resources;
   EXPECT_TRUE(GetSurfaceForId(surface_id));
@@ -604,7 +603,7 @@ TEST_F(CompositorFrameSinkSupportTest,
   EXPECT_CALL(mock_client, DidReceiveCompositorFrameAck(returned_resources))
       .Times(1);
   manager_.surface_manager()->SatisfySequence(
-      SurfaceSequence(kYetAnotherArbitraryFrameSinkId, 4));
+      cc::SurfaceSequence(kYetAnotherArbitraryFrameSinkId, 4));
   EXPECT_FALSE(GetSurfaceForId(surface_id));
 }
 
@@ -619,14 +618,14 @@ TEST_F(CompositorFrameSinkSupportTest, DestroySequence) {
 
   // Check that waiting before the sequence is satisfied works.
   GetSurfaceForId(id2)->AddDestructionDependency(
-      SurfaceSequence(kYetAnotherArbitraryFrameSinkId, 4));
+      cc::SurfaceSequence(kYetAnotherArbitraryFrameSinkId, 4));
   support2->EvictCurrentSurface();
 
   DCHECK(GetSurfaceForId(id2));
   manager_.surface_manager()->SatisfySequence(
-      SurfaceSequence(kYetAnotherArbitraryFrameSinkId, 4));
+      cc::SurfaceSequence(kYetAnotherArbitraryFrameSinkId, 4));
   manager_.surface_manager()->SatisfySequence(
-      SurfaceSequence(kYetAnotherArbitraryFrameSinkId, 6));
+      cc::SurfaceSequence(kYetAnotherArbitraryFrameSinkId, 6));
   DCHECK(!GetSurfaceForId(id2));
 
   // Check that waiting after the sequence is satisfied works.
@@ -634,7 +633,7 @@ TEST_F(CompositorFrameSinkSupportTest, DestroySequence) {
                                   cc::test::MakeCompositorFrame());
   DCHECK(GetSurfaceForId(id2));
   GetSurfaceForId(id2)->AddDestructionDependency(
-      SurfaceSequence(kAnotherArbitraryFrameSinkId, 6));
+      cc::SurfaceSequence(kAnotherArbitraryFrameSinkId, 6));
   support2->EvictCurrentSurface();
   DCHECK(!GetSurfaceForId(id2));
 }
@@ -649,16 +648,16 @@ TEST_F(CompositorFrameSinkSupportTest, InvalidFrameSinkId) {
   support_->SubmitCompositorFrame(local_surface_id,
                                   cc::test::MakeCompositorFrame());
 
-  manager_.surface_manager()->RegisterFrameSinkId(frame_sink_id);
+  manager_.RegisterFrameSinkId(frame_sink_id);
   GetSurfaceForId(id)->AddDestructionDependency(
-      SurfaceSequence(frame_sink_id, 4));
+      cc::SurfaceSequence(frame_sink_id, 4));
 
   support_->EvictCurrentSurface();
 
   // Verify the dependency has prevented the surface from getting destroyed.
   EXPECT_TRUE(GetSurfaceForId(id));
 
-  manager_.surface_manager()->InvalidateFrameSinkId(frame_sink_id);
+  manager_.InvalidateFrameSinkId(frame_sink_id);
 
   // Verify that the invalidated namespace caused the unsatisfied sequence
   // to be ignored.
@@ -671,7 +670,7 @@ TEST_F(CompositorFrameSinkSupportTest, DestroyCycle) {
   auto support2 = CompositorFrameSinkSupport::Create(
       &fake_support_client_, &manager_, kYetAnotherArbitraryFrameSinkId,
       kIsChildRoot, kHandlesFrameSinkIdInvalidation, kNeedsSyncPoints);
-  manager_.surface_manager()->RegisterFrameSinkId(kAnotherArbitraryFrameSinkId);
+  manager_.RegisterFrameSinkId(kAnotherArbitraryFrameSinkId);
   // Give local_surface_id_ an initial frame so another client can refer to
   // that surface.
   {
@@ -688,7 +687,7 @@ TEST_F(CompositorFrameSinkSupportTest, DestroyCycle) {
               local_surface_id2);
   }
   GetSurfaceForId(id2)->AddDestructionDependency(
-      SurfaceSequence(kAnotherArbitraryFrameSinkId, 4));
+      cc::SurfaceSequence(kAnotherArbitraryFrameSinkId, 4));
   support2->EvictCurrentSurface();
   // Give local_surface_id_ a frame that references id2.
   {
@@ -704,7 +703,7 @@ TEST_F(CompositorFrameSinkSupportTest, DestroyCycle) {
 
   // Satisfy last destruction dependency for id2.
   manager_.surface_manager()->SatisfySequence(
-      SurfaceSequence(kAnotherArbitraryFrameSinkId, 4));
+      cc::SurfaceSequence(kAnotherArbitraryFrameSinkId, 4));
 
   // id2 and local_surface_id_ are in a reference cycle that has no surface
   // sequences holding on to it, so they should be destroyed.
@@ -732,7 +731,7 @@ TEST_F(CompositorFrameSinkSupportTest, DuplicateCopyRequest) {
 
   bool called1 = false;
   auto request = cc::CopyOutputRequest::CreateRequest(
-      base::BindOnce(&CopyRequestTestCallback, &called1));
+      base::Bind(&CopyRequestTestCallback, &called1));
   request->set_source(kArbitrarySourceId1);
 
   support_->RequestCopyOfSurface(std::move(request));
@@ -740,7 +739,7 @@ TEST_F(CompositorFrameSinkSupportTest, DuplicateCopyRequest) {
 
   bool called2 = false;
   request = cc::CopyOutputRequest::CreateRequest(
-      base::BindOnce(&CopyRequestTestCallback, &called2));
+      base::Bind(&CopyRequestTestCallback, &called2));
   request->set_source(kArbitrarySourceId2);
 
   support_->RequestCopyOfSurface(std::move(request));
@@ -750,7 +749,7 @@ TEST_F(CompositorFrameSinkSupportTest, DuplicateCopyRequest) {
 
   bool called3 = false;
   request = cc::CopyOutputRequest::CreateRequest(
-      base::BindOnce(&CopyRequestTestCallback, &called3));
+      base::Bind(&CopyRequestTestCallback, &called3));
   request->set_source(kArbitrarySourceId1);
 
   support_->RequestCopyOfSurface(std::move(request));

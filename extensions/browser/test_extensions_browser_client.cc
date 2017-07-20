@@ -22,10 +22,9 @@ namespace extensions {
 TestExtensionsBrowserClient::TestExtensionsBrowserClient(
     BrowserContext* main_context)
     : main_context_(main_context),
-      incognito_context_(nullptr),
-      lock_screen_context_(nullptr),
-      process_manager_delegate_(nullptr),
-      extension_system_factory_(nullptr),
+      incognito_context_(NULL),
+      process_manager_delegate_(NULL),
+      extension_system_factory_(NULL),
       extension_cache_(new NullExtensionCache) {
   DCHECK(main_context_);
   DCHECK(!main_context_->IsOffTheRecord());
@@ -68,14 +67,14 @@ bool TestExtensionsBrowserClient::IsSameContext(BrowserContext* first,
 
 bool TestExtensionsBrowserClient::HasOffTheRecordContext(
     BrowserContext* context) {
-  return context == main_context_ && incognito_context_ != nullptr;
+  return context == main_context_ && incognito_context_ != NULL;
 }
 
 BrowserContext* TestExtensionsBrowserClient::GetOffTheRecordContext(
     BrowserContext* context) {
   if (context == main_context_)
     return incognito_context_;
-  return nullptr;
+  return NULL;
 }
 
 BrowserContext* TestExtensionsBrowserClient::GetOriginalContext(
@@ -116,7 +115,7 @@ TestExtensionsBrowserClient::MaybeCreateResourceBundleRequestJob(
     const base::FilePath& directory_path,
     const std::string& content_security_policy,
     bool send_cors_header) {
-  return nullptr;
+  return NULL;
 }
 
 bool TestExtensionsBrowserClient::AllowCrossRendererResourceLoad(
@@ -181,7 +180,7 @@ TestExtensionsBrowserClient::CreateRuntimeAPIDelegate(
 
 const ComponentExtensionResourceManager*
 TestExtensionsBrowserClient::GetComponentExtensionResourceManager() {
-  return nullptr;
+  return NULL;
 }
 
 void TestExtensionsBrowserClient::BroadcastEventToRenderers(
@@ -190,7 +189,7 @@ void TestExtensionsBrowserClient::BroadcastEventToRenderers(
     std::unique_ptr<base::ListValue> args) {}
 
 net::NetLog* TestExtensionsBrowserClient::GetNetLog() {
-  return nullptr;
+  return NULL;
 }
 
 ExtensionCache* TestExtensionsBrowserClient::GetExtensionCache() {
@@ -226,7 +225,7 @@ TestExtensionsBrowserClient::CreateUpdateClient(
 
 bool TestExtensionsBrowserClient::IsLockScreenContext(
     content::BrowserContext* context) {
-  return lock_screen_context_ && context == lock_screen_context_;
+  return false;
 }
 
 }  // namespace extensions

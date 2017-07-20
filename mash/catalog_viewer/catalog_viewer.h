@@ -41,7 +41,8 @@ class CatalogViewer : public service_manager::Service,
   // mojom::Launchable:
   void Launch(uint32_t what, mojom::LaunchMode how) override;
 
-  void Create(mojom::LaunchableRequest request);
+  void Create(const service_manager::BindSourceInfo& source_info,
+              mojom::LaunchableRequest request);
 
   mojo::BindingSet<mojom::Launchable> bindings_;
   std::vector<views::Widget*> windows_;

@@ -59,6 +59,10 @@
 #undef RootWindow
 #endif  // defined(USE_X11)
 
+#if defined(USE_OZONE)
+#include "ui/events/ozone/chromeos/cursor_controller.h"
+#endif
+
 namespace ash {
 namespace {
 
@@ -68,6 +72,11 @@ namespace {
 // (one here and another one in display_manager) in sync, which is error prone.
 // This is initialized in the constructor, and then in CreatePrimaryHost().
 int64_t primary_display_id = -1;
+
+#if defined(USE_OZONE)
+// Add 20% more cursor motion on non-integrated displays.
+const float kCursorMultiplierForExternalDisplays = 1.2f;
+#endif
 
 display::DisplayManager* GetDisplayManager() {
   return Shell::Get()->display_manager();
@@ -113,7 +122,14 @@ void SetDisplayPropertiesOnHost(AshWindowTreeHost* ash_host,
   ui::SetIntProperty(xwindow, kScaleFactorProp, kCARDINAL,
                      100 * display.device_scale_factor());
 #elif defined(USE_OZONE)
-  ash_host->SetCursorConfig(display, info.GetActiveRotation());
+  // Scale all motion on High-DPI displays.
+  float scale = display.device_scale_factor();
+
+  if (!display.IsInternal())
+    scale *= kCursorMultiplierForExternalDisplays;
+
+  ui::CursorController::GetInstance()->SetCursorConfigForWindow(
+      host->GetAcceleratedWidget(), info.GetActiveRotation(), scale);
 #endif
   std::unique_ptr<RootWindowTransformer> transformer(
       CreateRootWindowTransformerForDisplay(host->window(), display));
@@ -127,14 +143,16 @@ void SetDisplayPropertiesOnHost(AshWindowTreeHost* ash_host,
                                           mode->refresh_rate()));
   }
 
-  // Just moving the display requires the full redraw.
+  // Just movnig the display requires the full redraw.
   // chrome-os-partner:33558.
   host->compositor()->ScheduleFullRedraw();
 }
 
 void ClearDisplayPropertiesOnHost(AshWindowTreeHost* ash_host) {
 #if defined(USE_OZONE)
-  ash_host->ClearCursorConfig();
+  aura::WindowTreeHost* host = ash_host->AsWindowTreeHost();
+  ui::CursorController::GetInstance()->ClearCursorConfigForWindow(
+      host->GetAcceleratedWidget());
 #endif
 }
 
@@ -588,15 +606,14 @@ void WindowTreeHostManager::OnDisplayAdded(const display::Display& display) {
     // unified and non unified, but I'm keeping them separated to minimize
     // the risk in M44. I'll consolidate this in M45.
     DCHECK(window_tree_hosts_.empty());
-    AshWindowTreeHost* ash_host = primary_tree_host_for_replace_;
-    primary_tree_host_for_replace_ = nullptr;
     primary_display_id = display.id();
-    window_tree_hosts_[display.id()] = ash_host;
-    GetRootWindowSettings(GetWindow(ash_host))->display_id = display.id();
-    for (auto& observer : observers_)
-      observer.OnWindowTreeHostReusedForDisplay(ash_host, display);
+    window_tree_hosts_[display.id()] = primary_tree_host_for_replace_;
+    GetRootWindowSettings(GetWindow(primary_tree_host_for_replace_))
+        ->display_id = display.id();
+    primary_tree_host_for_replace_ = nullptr;
     const display::ManagedDisplayInfo& display_info =
         GetDisplayManager()->GetDisplayInfo(display.id());
+    AshWindowTreeHost* ash_host = window_tree_hosts_[display.id()];
     ash_host->AsWindowTreeHost()->SetBoundsInPixels(
         display_info.bounds_in_native());
     SetDisplayPropertiesOnHost(ash_host, display);
@@ -785,18 +802,12 @@ display::DisplayConfigurator* WindowTreeHostManager::display_configurator() {
 
 ui::EventDispatchDetails WindowTreeHostManager::DispatchKeyEventPostIME(
     ui::KeyEvent* event) {
-  aura::Window* root_window = nullptr;
-  if (event->target()) {
-    root_window = static_cast<aura::Window*>(event->target())->GetRootWindow();
-    DCHECK(root_window);
-  } else {
-    // Getting the active root window to dispatch the event. This isn't
-    // significant as the event will be sent to the window resolved by
-    // aura::client::FocusClient which is FocusController in ash.
-    aura::Window* active_window = wm::GetActiveWindow();
-    root_window = active_window ? active_window->GetRootWindow()
-                                : Shell::GetPrimaryRootWindow();
-  }
+  // Getting the active root window to dispatch the event. This isn't
+  // significant as the event will be sent to the window resolved by
+  // aura::client::FocusClient which is FocusController in ash.
+  aura::Window* active_window = wm::GetActiveWindow();
+  aura::Window* root_window = active_window ? active_window->GetRootWindow()
+                                            : Shell::GetPrimaryRootWindow();
   return root_window->GetHost()->DispatchKeyEventPostIME(event);
 }
 

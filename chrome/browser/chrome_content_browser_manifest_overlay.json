@@ -72,7 +72,6 @@
           "translate::mojom::ContentTranslateDriver",
 
           // TODO(beng): These should be moved to a separate capability.
-	  "media::mojom::MediaEngagementScoreDetailsProvider",
           "mojom::OmniboxPageHandler",
           "mojom::PluginsPageHandler",
           "mojom::SiteEngagementDetailsProvider",

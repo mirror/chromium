@@ -9,9 +9,9 @@
 #include "ash/shelf/app_list_button.h"
 #include "ash/shelf/shelf.h"
 #include "ash/shelf/shelf_view.h"
-#include "ash/shelf/shelf_view_test_api.h"
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
+#include "ash/test/shelf_view_test_api.h"
 #include "base/memory/ptr_util.h"
 #include "ui/events/event_constants.h"
 #include "ui/events/test/event_generator.h"
@@ -19,6 +19,7 @@
 #include "ui/views/widget/widget.h"
 
 namespace ash {
+namespace test {
 
 class ShelfTooltipManagerTest : public AshTestBase {
  public:
@@ -28,7 +29,7 @@ class ShelfTooltipManagerTest : public AshTestBase {
   void SetUp() override {
     AshTestBase::SetUp();
     shelf_view_ = GetPrimaryShelf()->GetShelfViewForTesting();
-    tooltip_manager_ = ShelfViewTestAPI(shelf_view_).tooltip_manager();
+    tooltip_manager_ = test::ShelfViewTestAPI(shelf_view_).tooltip_manager();
     tooltip_manager_->set_timer_delay_for_test(0);
   }
 
@@ -239,4 +240,5 @@ TEST_F(ShelfTooltipManagerTest, DoNotHideForKeyEvents) {
   EXPECT_TRUE(tooltip_manager_->IsVisible());
 }
 
+}  // namespace test
 }  // namespace ash

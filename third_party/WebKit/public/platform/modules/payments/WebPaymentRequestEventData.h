@@ -7,14 +7,13 @@
 
 #include "public/platform/WebString.h"
 #include "public/platform/modules/payments/WebCanMakePaymentEventData.h"
-#include "public/platform/modules/payments/WebPaymentCurrencyAmount.h"
 
 namespace blink {
 
 struct WebPaymentRequestEventData : public WebCanMakePaymentEventData {
   WebString payment_request_id;
   WebString instrument_key;
-  WebPaymentCurrencyAmount total;
+  WebPaymentItem total;
 };
 
 }  // namespace blink

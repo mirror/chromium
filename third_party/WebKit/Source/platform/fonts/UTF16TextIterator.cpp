@@ -23,6 +23,9 @@
 
 #include "platform/fonts/UTF16TextIterator.h"
 
+using namespace WTF;
+using namespace Unicode;
+
 namespace blink {
 
 UTF16TextIterator::UTF16TextIterator(const UChar* characters, int length)
@@ -53,7 +56,7 @@ bool UTF16TextIterator::ConsumeSurrogatePair(UChar32& character) {
   DCHECK(U16_IS_SURROGATE(character));
 
   if (!IsValidSurrogatePair(character)) {
-    character = WTF::Unicode::kReplacementCharacter;
+    character = kReplacementCharacter;
     return true;
   }
 

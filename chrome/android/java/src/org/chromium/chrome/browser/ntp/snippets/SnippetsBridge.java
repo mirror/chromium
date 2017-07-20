@@ -58,8 +58,12 @@ public class SnippetsBridge implements SuggestionsSource {
         mNativeSnippetsBridge = nativeInit(profile);
     }
 
+    /**
+     * Destroys the native bridge. This object can no longer be used to send native commands, and
+     * any observer is nulled out and will stop receiving updates. This object should be discarded.
+     */
     @Override
-    public void destroy() {
+    public void onDestroy() {
         assert mNativeSnippetsBridge != 0;
         nativeDestroy(mNativeSnippetsBridge);
         mNativeSnippetsBridge = 0;
@@ -107,7 +111,6 @@ public class SnippetsBridge implements SuggestionsSource {
 
     @Override
     public void fetchRemoteSuggestions() {
-        assert mNativeSnippetsBridge != 0;
         nativeReloadSuggestions(mNativeSnippetsBridge);
     }
 
@@ -190,7 +193,6 @@ public class SnippetsBridge implements SuggestionsSource {
     @Override
     public void fetchSuggestions(@CategoryInt int category, String[] displayedSuggestionIds,
             Callback<List<SnippetArticle>> callback) {
-        assert mNativeSnippetsBridge != 0;
         nativeFetch(mNativeSnippetsBridge, category, displayedSuggestionIds, callback);
     }
 

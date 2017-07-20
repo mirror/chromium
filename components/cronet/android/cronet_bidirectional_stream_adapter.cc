@@ -322,11 +322,10 @@ void CronetBidirectionalStreamAdapter::OnFailed(int error) {
   DCHECK(context_->IsOnNetworkThread());
   stream_failed_ = true;
   JNIEnv* env = base::android::AttachCurrentThread();
-  net::NetErrorDetails net_error_details;
-  bidi_stream_->PopulateNetErrorDetails(&net_error_details);
+  // TODO(mgersh): Add support for NetErrorDetails (http://crbug.com/624942)
   cronet::Java_CronetBidirectionalStream_onError(
       env, owner_.obj(), NetErrorToUrlRequestError(error), error,
-      net_error_details.quic_connection_error,
+      net::QUIC_NO_ERROR,
       ConvertUTF8ToJavaString(env, net::ErrorToString(error)).obj(),
       bidi_stream_->GetTotalReceivedBytes());
 }

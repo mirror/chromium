@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "chrome/browser/android/profiles/profile_downloader_android.h"
+
 #include <stddef.h>
 
 #include "base/android/jni_android.h"
@@ -206,4 +208,9 @@ void StartFetchingAccountInfoFor(JNIEnv* env,
       account_tracker_service->FindAccountInfoByEmail(email).account_id, email,
       image_side_pixels, is_pre_signin);
   retriever->Start();
+}
+
+// static
+bool RegisterProfileDownloader(JNIEnv* env) {
+  return RegisterNativesImpl(env);
 }

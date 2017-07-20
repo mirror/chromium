@@ -31,7 +31,8 @@ class MojoWebUIIOSController : public web::WebUIIOSController {
   virtual void BindUIHandler(mojo::InterfaceRequest<Interface> request) = 0;
 
  private:
-  void Create(mojo::InterfaceRequest<Interface> request) {
+  void Create(const service_manager::BindSourceInfo& source_info,
+              mojo::InterfaceRequest<Interface> request) {
     BindUIHandler(std::move(request));
   }
 

@@ -57,7 +57,7 @@ enum CastDeviceCapability {
 class CastSocket {
  public:
   using OnOpenCallback =
-      base::OnceCallback<void(int channel_id, ChannelError error_state)>;
+      base::Callback<void(int channel_id, ChannelError error_state)>;
 
   class Observer {
    public:
@@ -85,7 +85,7 @@ class CastSocket {
   // If the CastSocket is destroyed while the connection is pending, |callback|
   // will be invoked with CHANNEL_ERROR_UNKNOWN. In this case, invoking
   // |callback| must not result in any re-entrancy behavior.
-  virtual void Connect(OnOpenCallback callback) = 0;
+  virtual void Connect(const OnOpenCallback& callback) = 0;
 
   // Closes the channel if not already closed. On completion, the channel will
   // be in READY_STATE_CLOSED.
@@ -129,9 +129,6 @@ class CastSocket {
 
   // Registers |observer| with the socket to receive messages and error events.
   virtual void AddObserver(Observer* observer) = 0;
-
-  // Unregisters |observer|.
-  virtual void RemoveObserver(Observer* observer) = 0;
 };
 
 // This class implements a channel between Chrome and a Cast device using a TCP
@@ -173,7 +170,7 @@ class CastSocketImpl : public CastSocket {
   ~CastSocketImpl() override;
 
   // CastSocket interface.
-  void Connect(OnOpenCallback callback) override;
+  void Connect(const OnOpenCallback& callback) override;
   CastTransport* transport() const override;
   void Close(const net::CompletionCallback& callback) override;
   const net::IPEndPoint& ip_endpoint() const override;
@@ -184,7 +181,6 @@ class CastSocketImpl : public CastSocket {
   bool keep_alive() const override;
   bool audio_only() const override;
   void AddObserver(Observer* observer) override;
-  void RemoveObserver(Observer* observer) override;
 
  protected:
   // CastTransport::Delegate methods for receiving handshake messages.

@@ -51,7 +51,6 @@ class NET_EXPORT_PRIVATE BidirectionalStreamQuicImpl
   int64_t GetTotalReceivedBytes() const override;
   int64_t GetTotalSentBytes() const override;
   bool GetLoadTimingInfo(LoadTimingInfo* load_timing_info) const override;
-  void PopulateNetErrorDetails(NetErrorDetails* details) override;
 
  private:
   int WriteHeaders();

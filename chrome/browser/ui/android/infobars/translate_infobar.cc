@@ -158,3 +158,10 @@ bool TranslateInfoBar::ShouldDisplayNeverTranslateInfoBarOnCancel() {
 translate::TranslateInfoBarDelegate* TranslateInfoBar::GetDelegate() {
   return delegate()->AsTranslateInfoBarDelegate();
 }
+
+
+// Native JNI methods ---------------------------------------------------------
+
+bool RegisterTranslateInfoBarDelegate(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}

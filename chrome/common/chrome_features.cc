@@ -96,7 +96,6 @@ const base::Feature kTabStripKeyboardFocus{"TabStripKeyboardFocus",
                                            base::FEATURE_DISABLED_BY_DEFAULT};
 #endif  // defined(OS_MACOSX)
 
-// Enables Basic/Advanced tabs in ClearBrowsingData.
 const base::Feature kTabsInCbd {
   "TabsInCBD",
 #if defined(OS_ANDROID)
@@ -117,11 +116,6 @@ const base::Feature kCaptureThumbnailDependingOnTransitionType{
 // to any other times this might happen).
 const base::Feature kCaptureThumbnailOnLoadFinished{
     "CaptureThumbnailOnLoadFinished", base::FEATURE_DISABLED_BY_DEFAULT};
-
-// Whether to capture page thumbnails when navigating away from the current page
-// (in addition to any other times this might happen).
-const base::Feature kCaptureThumbnailOnNavigatingAway{
-    "CaptureThumbnailOnNavigatingAway", base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Whether to trigger app banner installability checks on page load.
 const base::Feature kCheckInstallabilityForBannerOnLoad{
@@ -318,6 +312,10 @@ const base::Feature kPreferHtmlOverPlugins{"PreferHtmlOverPlugins",
                                            base::FEATURE_DISABLED_BY_DEFAULT};
 #endif
 
+// Enables the pref service. See https://crbug.com/654988.
+const base::Feature kPrefService{"PrefService",
+                                 base::FEATURE_DISABLED_BY_DEFAULT};
+
 #if defined(OS_CHROMEOS)
 // The lock screen will be preloaded so it is instantly available when the user
 // locks the Chromebook device.
@@ -436,5 +434,15 @@ const base::Feature kCrOSComponent{"CrOSComponent",
 const base::Feature kInstantTethering{"InstantTethering",
                                       base::FEATURE_DISABLED_BY_DEFAULT};
 #endif  // defined(OS_CHROMEOS)
+
+bool PrefServiceEnabled() {
+  return base::FeatureList::IsEnabled(features::kPrefService) ||
+#if BUILDFLAG(ENABLE_PACKAGE_MASH_SERVICES)
+         base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
+             switches::kMusConfig) == switches::kMash;
+#else
+         false;
+#endif
+}
 
 }  // namespace features

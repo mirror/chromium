@@ -236,10 +236,7 @@ Font PlatformFontMac::DeriveFont(int size_delta,
       derived = [font_manager convertWeight:NO ofFont:derived];
   }
 
-  // Always apply the italic trait, even if the italic trait is not changing.
-  // it's possible for a change in the weight to trigger the font to go italic.
-  // This is due to an AppKit bug. See http://crbug.com/742261.
-  if (style != font_style_ || weight != font_weight_) {
+  if (style != font_style_) {
     NSFontTraitMask italic_trait_mask =
         (style & Font::ITALIC) ? NSItalicFontMask : NSUnitalicFontMask;
     derived = [font_manager convertFont:derived toHaveTrait:italic_trait_mask];

@@ -3,6 +3,7 @@
    found in the LICENSE file. */
 
 button {
+  background: rgb(66, 133, 244);
   border: 0;
   border-radius: 2px;
   box-sizing: border-box;
@@ -18,15 +19,6 @@ button {
 
 [dir='rtl'] button {
   float: left;
-}
-
-.bad-clock button,
-.captive-portal button,
-.main-frame-blocked button,
-.neterror button,
-.offline button,
-.ssl button {
-  background: rgb(66, 133, 244);
 }
 
 button:active {

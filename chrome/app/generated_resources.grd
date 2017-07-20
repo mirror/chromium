@@ -3049,13 +3049,8 @@ From <ph name="DOWNLOAD_DOMAIN">$3<ex>example.com</ex></ph>
 
       <!-- User Image Selection Dialog -->
       <if expr="chromeos">
-        <message name="IDS_USER_IMAGE_SCREEN_TITLE" desc="String to be displayed in the title bar of the oobe/login user image selection dialog">
-          Set your profile picture
-        </message>
-        <message name="IDS_USER_IMAGE_SCREEN_DESCRIPTION" desc="Description text for the oobe/login user image selection dialog.">
-          Take a new photo or choose an existing photo or icon.
-          <ph name="LINE_BREAK">&lt;br&gt;&lt;br&gt;</ph>
-          This picture will show up on the Chromebook sign in screen and lock screen.
+        <message name="IDS_USER_IMAGE_SCREEN_TITLE" desc="String to be displayed in the title bar of the user image selection dialog">
+          Choose your account picture
         </message>
       </if>
 
@@ -5396,11 +5391,6 @@ the Bookmarks menu.">
       </message>
       <message name="IDS_ACCNAME_ZOOM_SET_DEFAULT" desc="The accessible description of the Reset button in the Zoom bubble.">
         Reset to default zoom level
-      </message>
-
-      <!-- Feature Enagagement Tracker strings -->
-      <message name="IDS_NEWTAB_PROMO" desc="Text shown on promotional UI appearing next to the New Tab button, which encourages users to use it.">
-        Open a new tab with one click
       </message>
 
       <!-- Browser Hung Plugin Detector -->
@@ -8784,8 +8774,8 @@ I don't think this site should be blocked!
       <message name="IDS_SYNC_CONFIRMATION_PERSONALIZE_SERVICES_BODY_CHILD_ACCOUNT" desc="Body of the personalize services section of the sync confirmation dialog in the tab modal signin flow for child accounts" formatter_data="android_java">
         Google may use your browsing history to personalize Search and other Google services
       </message>
-      <message name="IDS_SYNC_CONFIRMATION_SYNC_SETTINGS_LINK_BODY" desc="Label of the section containing the link to go to the sync setting page.">
-        Manage Chrome Sync and personalization in <ph name="BEGIN_LINK">&lt;a id="settingsLink" href="chrome://settings"&gt;</ph>Settings<ph name="END_LINK">&lt;/a&gt;<ex>&lt;/a&gt;</ex></ph>
+      <message name="IDS_SYNC_CONFIRMATION_SYNC_SETTINGS_LABEL" desc="Label of the checkbox that allows users to configure their sync settings on the settings page before signing in to Chrome.">
+        Manage Chrome Sync and personalization in Settings
       </message>
       <message name="IDS_SYNC_CONFIRMATION_CONFIRM_BUTTON_LABEL" desc="Label of the confirmation button in the sync confirmation dialog of the tab modal signin flow">
         Ok, got it

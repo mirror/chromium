@@ -4,8 +4,6 @@
 
 package org.chromium.chrome.browser.widget.bottomsheet;
 
-import org.chromium.chrome.R;
-import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.compositor.layouts.EmptyOverviewModeObserver;
 import org.chromium.chrome.browser.compositor.layouts.LayoutManagerChrome;
 import org.chromium.chrome.browser.compositor.layouts.OverviewModeBehavior.OverviewModeObserver;
@@ -15,11 +13,12 @@ import org.chromium.chrome.browser.toolbar.BottomToolbarPhone;
 
 /**
  * A class that handles showing and hiding the Chrome Home new tab UI.
+ *
+ * TODO(twellington): Add tests for this class.
  */
 public class BottomSheetNewTabController extends EmptyBottomSheetObserver {
     private final BottomSheet mBottomSheet;
     private final BottomToolbarPhone mToolbar;
-    private final ChromeActivity mActivity;
 
     private LayoutManagerChrome mLayoutManager;
     private OverviewModeObserver mOverviewModeObserver;
@@ -35,14 +34,11 @@ public class BottomSheetNewTabController extends EmptyBottomSheetObserver {
      * @param bottomSheet The {@link BottomSheet} that will be opened as part of the new tab UI.
      * @param toolbar The {@link BottomToolbarPhone} that this controller will set state on as part
      *                of the new tab UI.
-     * @param activity The {@link ChromeActivity} containing the {@link BottomSheet}.
      */
-    public BottomSheetNewTabController(
-            BottomSheet bottomSheet, BottomToolbarPhone toolbar, ChromeActivity activity) {
+    public BottomSheetNewTabController(BottomSheet bottomSheet, BottomToolbarPhone toolbar) {
         mBottomSheet = bottomSheet;
         mBottomSheet.addObserver(this);
         mToolbar = toolbar;
-        mActivity = activity;
     }
 
     /**
@@ -96,18 +92,13 @@ public class BottomSheetNewTabController extends EmptyBottomSheetObserver {
         // Tell the model that a new tab may be added soon.
         mTabModelSelector.getModel(isIncognito).setIsPendingTabAdd(true);
 
-        // Select the correct model, immediately ending animations so that the previous sheet
-        // content is not in use while calling #setIsPendingTabAdd() on previous model.
+        // Select the correct model, immediately ending animations so that the sheet content is not
+        // in transition while the sheet is opening.
         if (mTabModelSelector.isIncognitoSelected() != isIncognito) {
             mTabModelSelector.selectModel(isIncognito);
             mBottomSheet.endTransitionAnimations();
             mTabModelSelector.getModel(!isIncognito).setIsPendingTabAdd(false);
         }
-
-        // Select the correct sheet content, immediately ending animations so that the sheet content
-        // is not in transition while the sheet is opening.
-        mActivity.getBottomSheetContentController().selectItem(R.id.action_home);
-        mBottomSheet.endTransitionAnimations();
 
         // Open the sheet if it isn't already open to the desired height.
         int sheetState = mTabModelSelector.getCurrentModel().getCount() == 0

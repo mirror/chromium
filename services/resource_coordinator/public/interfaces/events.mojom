@@ -7,14 +7,12 @@ module resource_coordinator.mojom;
 enum EventType {
   kTestEvent,
   kOnNavigationCommit,
-
-  // WebContents event types.
   kOnWebContentsShown,
   kOnWebContentsHidden,
-
-  // Process event types.
+  kOnRendererFrameCreated,
   kOnProcessAudioStarted,
   kOnProcessAudioStopped,
+  kOnLocalFrameNetworkIdle,
 };
 
 struct Event {

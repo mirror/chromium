@@ -107,10 +107,7 @@ namespace feedbackPrivate {
     drmModetest,
 
     // USB device list and connectivity graph.
-    lsusb,
-
-    // Logs from daemon for Atrus device.
-    atrusLog
+    lsusb
   };
 
   // Input parameters for a readLogSource() call.

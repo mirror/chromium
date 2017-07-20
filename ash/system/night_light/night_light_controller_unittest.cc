@@ -10,11 +10,11 @@
 #include "ash/public/cpp/ash_pref_names.h"
 #include "ash/public/cpp/config.h"
 #include "ash/public/cpp/session_types.h"
-#include "ash/session/test_session_controller_client.h"
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
 #include "ash/test/ash_test_helper.h"
-#include "ash/test_shell_delegate.h"
+#include "ash/test/test_session_controller_client.h"
+#include "ash/test/test_shell_delegate.h"
 #include "base/bind.h"
 #include "base/callback_forward.h"
 #include "base/macros.h"
@@ -109,7 +109,7 @@ class TestDelegate : public NightLightController::Delegate {
   DISALLOW_COPY_AND_ASSIGN(TestDelegate);
 };
 
-class NightLightTest : public AshTestBase {
+class NightLightTest : public test::AshTestBase {
  public:
   NightLightTest() = default;
   ~NightLightTest() override = default;
@@ -123,9 +123,9 @@ class NightLightTest : public AshTestBase {
 
   TestDelegate* delegate() const { return delegate_; }
 
-  // AshTestBase:
+  // ash::test::AshTestBase:
   void SetUp() override {
-    AshTestBase::SetUp();
+    test::AshTestBase::SetUp();
     CreateTestUserSessions();
     Shell::RegisterPrefs(user1_pref_service_.registry());
     Shell::RegisterPrefs(user2_pref_service_.registry());

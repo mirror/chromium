@@ -74,9 +74,7 @@ MockDiskEntry::MockDiskEntry(const std::string& key)
       fail_sparse_requests_(false),
       busy_(false),
       delayed_(false),
-      cancel_(false),
-      defer_op_(DEFER_NONE),
-      resume_return_code_(0) {
+      cancel_(false) {
   test_mode_ = GetTestModeForEntry(key);
 }
 
@@ -127,23 +125,8 @@ int MockDiskEntry::ReadData(int index,
   if (MockHttpCache::GetTestMode(test_mode_) & TEST_MODE_SYNC_CACHE_READ)
     return num;
 
-  // Pause and resume.
-  if (defer_op_ == DEFER_READ) {
-    defer_op_ = DEFER_NONE;
-    resume_callback_ = callback;
-    resume_return_code_ = num;
-    return ERR_IO_PENDING;
-  }
-
   CallbackLater(callback, num);
   return ERR_IO_PENDING;
-}
-
-void MockDiskEntry::ResumeDiskEntryOperation() {
-  DCHECK(!resume_callback_.is_null());
-  CallbackLater(resume_callback_, resume_return_code_);
-  resume_callback_.Reset();
-  resume_return_code_ = 0;
 }
 
 int MockDiskEntry::WriteData(int index,
@@ -393,9 +376,7 @@ MockDiskCache::MockDiskCache()
       fail_requests_(false),
       soft_failures_(false),
       double_create_check_(true),
-      fail_sparse_requests_(false),
-      defer_op_(MockDiskEntry::DEFER_NONE),
-      resume_return_code_(0) {}
+      fail_sparse_requests_(false) {}
 
 MockDiskCache::~MockDiskCache() {
   ReleaseAll();
@@ -479,14 +460,6 @@ int MockDiskCache::CreateEntry(const std::string& key,
   if (GetTestModeForEntry(key) & TEST_MODE_SYNC_CACHE_START)
     return OK;
 
-  // Pause and resume.
-  if (defer_op_ == MockDiskEntry::DEFER_CREATE) {
-    defer_op_ = MockDiskEntry::DEFER_NONE;
-    resume_callback_ = callback;
-    resume_return_code_ = OK;
-    return ERR_IO_PENDING;
-  }
-
   CallbackLater(callback, OK);
   return ERR_IO_PENDING;
 }
@@ -553,8 +526,9 @@ size_t MockDiskCache::DumpMemoryStats(
 }
 
 void MockDiskCache::ReleaseAll() {
-  for (auto entry : entries_)
-    entry.second->Release();
+  EntryMap::iterator it = entries_.begin();
+  for (; it != entries_.end(); ++it)
+    it->second->Release();
   entries_.clear();
 }
 
@@ -566,25 +540,9 @@ void MockDiskCache::CallbackLater(const CompletionCallback& callback,
 
 bool MockDiskCache::IsDiskEntryDoomed(const std::string& key) {
   auto it = entries_.find(key);
-  if (it != entries_.end())
-    return it->second->is_doomed();
-
-  return false;
-}
-
-void MockDiskCache::ResumeCacheOperation() {
-  DCHECK(!resume_callback_.is_null());
-  CallbackLater(resume_callback_, resume_return_code_);
-  resume_callback_.Reset();
-  resume_return_code_ = 0;
-}
-
-scoped_refptr<MockDiskEntry> MockDiskCache::GetDiskEntryRef(
-    const std::string& key) {
-  auto it = entries_.find(key);
   if (it == entries_.end())
-    return nullptr;
-  return it->second;
+    return false;
+  return it->second->is_doomed();
 }
 
 //-----------------------------------------------------------------------------

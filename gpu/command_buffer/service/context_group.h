@@ -245,9 +245,7 @@ class GPU_EXPORT ContextGroup : public base::RefCounted<ContextGroup> {
   bool HaveContexts();
   void ReportProgress();
 
-  // It's safer to make a copy of the GpuPreferences struct rather
-  // than refer to the one passed in to the constructor.
-  const GpuPreferences gpu_preferences_;
+  const GpuPreferences& gpu_preferences_;
   MailboxManager* mailbox_manager_;
   scoped_refptr<MemoryTracker> memory_tracker_;
   ShaderTranslatorCache* shader_translator_cache_;

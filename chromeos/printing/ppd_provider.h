@@ -20,6 +20,7 @@ class URLRequestContextGetter;
 }
 
 namespace chromeos {
+namespace printing {
 
 class PpdCache;
 
@@ -136,6 +137,7 @@ class CHROMEOS_EXPORT PpdProvider : public base::RefCounted<PpdProvider> {
   virtual ~PpdProvider() {}
 };
 
+}  // namespace printing
 }  // namespace chromeos
 
 #endif  // CHROMEOS_PRINTING_PPD_PROVIDER_H_

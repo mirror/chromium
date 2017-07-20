@@ -1,7 +1,6 @@
 include_rules = [
   "-content",
   "+content/public",
-  "+components/viz/service",
   "+device/geolocation/android/geolocation_jni_registrar.h",
   "+mojo/android/system/mojo_jni_registrar.h",
   "+services/service_manager",

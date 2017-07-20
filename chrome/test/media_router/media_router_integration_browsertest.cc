@@ -56,12 +56,13 @@ const char kSendMessageAndExpectResponseScript[] =
 const char kSendMessageAndExpectConnectionCloseOnErrorScript[] =
     "sendMessageAndExpectConnectionCloseOnError()";
 const char kChooseSinkScript[] =
-    "var sinks = Array.from(document.getElementById('media-router-container')."
-    "  shadowRoot.getElementById('sink-list').getElementsByTagName('span'));"
-    "var sink = sinks.find(sink => sink.textContent.trim() == '%s');"
-    "if (sink) {"
-    "  sink.click();"
-    "}";
+    "var sinks = document.getElementById('media-router-container')."
+    "  shadowRoot.getElementById('sink-list').getElementsByTagName('span');"
+    "for (var i=0; i<sinks.length; i++) {"
+    "  if(sinks[i].textContent.trim() == '%s') {"
+    "    sinks[i].click();"
+    "    break;"
+    "}}";
 const char kCloseRouteScript[] =
     "window.document.getElementById('media-router-container').shadowRoot."
     "  getElementById('route-details').shadowRoot.getElementById("
@@ -71,23 +72,31 @@ const char kClickDialog[] =
 const char kGetSinkIdScript[] =
     "var sinks = window.document.getElementById('media-router-container')."
     "  allSinks;"
-    "var sink = sinks.find(sink => sink.name == '%s');"
-    "window.domAutomationController.send(sink ? sink.id : '');";
+    "for (var i=0; i<sinks.length; i++) {"
+    "  if (sinks[i].name == '%s') {"
+    "    domAutomationController.send(sinks[i].id);"
+    "  }"
+    "}"
+    "domAutomationController.send('');";
 const char kGetRouteIdScript[] =
     "var routes = window.document.getElementById('media-router-container')."
     "  routeList;"
-    "var route = routes.find(route => route.sinkId == '%s');"
-    "window.domAutomationController.send(route ? route.id : '');";
+    "for (var i=0; i<routes.length; i++) {"
+    "  if (routes[i].sinkId == '%s') {"
+    "    domAutomationController.send(routes[i].id);"
+    "  }"
+    "}"
+    "domAutomationController.send('');";
 const char kFindSinkScript[] =
     "var sinkList = document.getElementById('media-router-container')."
     "  shadowRoot.getElementById('sink-list');"
-    "if (!sinkList) {"
-    "  window.domAutomationController.send(false);"
-    "} else {"
-    "  var sinks = Array.from(sinkList.getElementsByTagName('span'));"
-    "  var result = sinks.some(sink => sink.textContent.trim() == '%s');"
-    "  window.domAutomationController.send(result);"
-    "}";
+    "if (sinkList) {"
+    "  var sinks = sinkList.getElementsByTagName('span');"
+    "  for (var i=0; i<sinks.length; i++) {"
+    "    if (sinks[i].textContent.trim() == '%s') {"
+    "      domAutomationController.send(true);"
+    "}}}"
+    "domAutomationController.send(false);";
 const char kCheckDialogLoadedScript[] =
     "var container = document.getElementById('media-router-container');"
     "/** Wait until media router container is not undefined and "
@@ -95,8 +104,10 @@ const char kCheckDialogLoadedScript[] =
     "*   once deviceMissingUrl is not undefined, which means "
     "*   the dialog is fully loaded."
     "*/"
-    "window.domAutomationController.send(!!container && "
-    "    !!container.deviceMissingUrl);";
+    "if (container != undefined && container.deviceMissingUrl != undefined) {"
+    "  domAutomationController.send(true);"
+    "}"
+    "domAutomationController.send(false);";
 
 std::string GetStartedConnectionId(WebContents* web_contents) {
   std::string session_id;

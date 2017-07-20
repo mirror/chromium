@@ -74,7 +74,6 @@ group("gn_all") {
     "//skia:skia_unittests",
     "//sql:sql_unittests",
     "//tools/ipc_fuzzer:ipc_fuzzer_all",
-    "//ui/base:ui_base_unittests",
     "//url:url_unittests",
   ]
 
@@ -91,6 +90,7 @@ group("gn_all") {
       "//services:services_unittests",
       "//services/service_manager/public/cpp",
       "//tools/metrics:metrics_metadata",
+      "//ui/base:ui_base_unittests",
       "//ui/gfx:gfx_unittests",
     ]
   }
@@ -155,18 +155,6 @@ group("gn_all") {
     ]
   }
 
-  if (!is_ios) {
-    deps += [
-      "//media:media_unittests",
-      "//mojo",
-      "//mojo/common:mojo_common_unittests",
-      "//mojo/edk/system:mojo_system_unittests",
-      "//mojo/edk/test:mojo_public_bindings_unittests",
-      "//mojo/edk/test:mojo_public_system_unittests",
-      "//ui/gl:gl_unittests",
-    ]
-  }
-
   if (!is_ios && !is_fuchsia) {
     deps += [
       "//cc:cc_unittests",
@@ -186,6 +174,7 @@ group("gn_all") {
       "//gpu:gpu_unittests",
       "//gpu/ipc/service:gpu_ipc_service_unittests",
       "//ipc:ipc_tests",
+      "//media:media_unittests",
       "//media/capture:capture_unittests",
       "//media/cast:cast_unittests",
       "//media/midi:midi_unittests",
@@ -209,6 +198,7 @@ group("gn_all") {
       "//tools/imagediff($host_toolchain)",
       "//ui/display:display_unittests",
       "//ui/events:events_unittests",
+      "//ui/gl:gl_unittests",
       "//ui/latency:latency_unittests",
       "//ui/touch_selection:ui_touch_selection_unittests",
       "//url/ipc:url_ipc_unittests",
@@ -702,11 +692,10 @@ group("gn_all") {
   }
 
   if (enable_vr) {
-    deps += [ "//chrome/browser/vr:vr_common_unittests" ]
-
-    if (is_android) {
-      deps += [ "//tools/perf/contrib/vr_benchmarks:vr_perf_tests" ]
-    }
+    deps += [
+      "//chrome/browser/vr:vr_common_unittests",
+      "//tools/perf/contrib/vr_benchmarks:vr_perf_tests",
+    ]
   }
 }
 

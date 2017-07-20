@@ -6,6 +6,7 @@ Polymer({
   is: 'bookmarks-item',
 
   behaviors: [
+    bookmarks.MouseFocusBehavior,
     bookmarks.StoreClient,
   ],
 
@@ -77,7 +78,6 @@ Polymer({
     this.fire('open-item-menu', {
       x: e.clientX,
       y: e.clientY,
-      source: MenuSource.LIST,
     });
   },
 
@@ -91,7 +91,6 @@ Polymer({
     this.selectThisItem_();
     this.fire('open-item-menu', {
       targetElement: e.target,
-      source: MenuSource.LIST,
     });
   },
 
@@ -163,7 +162,6 @@ Polymer({
    * @private
    */
   updateFavicon_: function(url) {
-    this.$.icon.className = url ? 'website-icon' : 'folder-icon';
-    this.$.icon.style.backgroundImage = url ? cr.icon.getFavicon(url) : null;
+    this.$.icon.style.backgroundImage = cr.icon.getFavicon(url);
   },
 });

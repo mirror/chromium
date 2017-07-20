@@ -9,12 +9,12 @@
 #include "ash/ash_switches.h"
 #include "ash/public/cpp/config.h"
 #include "ash/session/session_controller.h"
-#include "ash/session/test_session_controller_client.h"
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
-#include "ash/test_shell_delegate.h"
+#include "ash/test/lock_state_controller_test_api.h"
+#include "ash/test/test_session_controller_client.h"
+#include "ash/test/test_shell_delegate.h"
 #include "ash/wm/lock_state_controller.h"
-#include "ash/wm/lock_state_controller_test_api.h"
 #include "ash/wm/maximize_mode/maximize_mode_controller.h"
 #include "ash/wm/power_button_controller.h"
 #include "base/command_line.h"
@@ -28,6 +28,7 @@
 #include "ui/events/test/event_generator.h"
 
 namespace ash {
+namespace test {
 
 namespace {
 
@@ -407,7 +408,7 @@ TEST_F(TabletPowerButtonControllerTest, IgnorePowerOnKeyEvent) {
 // Tests that under (1) tablet power button pressed/released, (2) keyboard/mouse
 // events on laptop mode when screen is off, requesting/stopping backlights
 // forced off should also set corresponding touchscreen state in local pref.
-TEST_F(TabletPowerButtonControllerTest, DisableTouchscreenWhileForcedOff) {
+TEST_F(TabletPowerButtonControllerTest, TouchscreenState) {
   // Tests tablet power button.
   ASSERT_TRUE(shell_delegate_->IsTouchscreenEnabledInPrefs(true));
   PressPowerButton();
@@ -439,23 +440,6 @@ TEST_F(TabletPowerButtonControllerTest, DisableTouchscreenWhileForcedOff) {
   ASSERT_FALSE(shell_delegate_->IsTouchscreenEnabledInPrefs(true));
   generator_->MoveMouseBy(1, 1);
   power_manager_client_->SendBrightnessChanged(kNonZeroBrightness, false);
-  EXPECT_TRUE(shell_delegate_->IsTouchscreenEnabledInPrefs(true));
-}
-
-// When the screen is turned off automatically, the touchscreen should also be
-// disabled.
-TEST_F(TabletPowerButtonControllerTest, DisableTouchscreenForInactivity) {
-  ASSERT_TRUE(shell_delegate_->IsTouchscreenEnabledInPrefs(true));
-
-  // Turn screen off for automated change (e.g. user is inactive).
-  power_manager_client_->SendBrightnessChanged(0, false);
-  EXPECT_FALSE(shell_delegate_->IsTouchscreenEnabledInPrefs(true));
-  power_manager_client_->SendBrightnessChanged(kNonZeroBrightness, true);
-  EXPECT_TRUE(shell_delegate_->IsTouchscreenEnabledInPrefs(true));
-
-  // After decreasing the brightness to zero for a user request, the touchscreen
-  // should remain enabled.
-  power_manager_client_->SendBrightnessChanged(0, true);
   EXPECT_TRUE(shell_delegate_->IsTouchscreenEnabledInPrefs(true));
 }
 
@@ -704,4 +688,5 @@ TEST_F(TabletPowerButtonControllerTest, SuspendDoneStopsForcingOff) {
   EXPECT_FALSE(GetBacklightsForcedOff());
 }
 
+}  // namespace test
 }  // namespace ash

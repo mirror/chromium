@@ -35,7 +35,6 @@ class ContentRulesRegistry;
 class DevicePermissionsPrompt;
 class ExtensionOptionsGuest;
 class ExtensionOptionsGuestDelegate;
-class FileSystemDelegate;
 class ManagementAPIDelegate;
 class MetricsPrivateDelegate;
 class MimeHandlerViewGuest;
@@ -137,9 +136,6 @@ class ExtensionsAPIClient {
 
   // Creates a delegate for networking.castPrivate's API behavior.
   virtual NetworkingCastPrivateDelegate* GetNetworkingCastPrivateDelegate();
-
-  // Returns a delegate for embedder-specific chrome.fileSystem behavior.
-  virtual FileSystemDelegate* GetFileSystemDelegate();
 
 #if defined(OS_CHROMEOS)
   // If supported by the embedder, returns a delegate for querying non-native

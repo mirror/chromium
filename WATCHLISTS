@@ -508,9 +508,6 @@
     'ftp': {
       'filepath': 'ftp',
     },
-    'fuchsia': {
-      'filepath': 'fuchsia',
-    },
     'fuzzing': {
       'filepath': 'fuzz|Fuzz',
     },
@@ -780,7 +777,7 @@
         'chrome/browser/net/.*net_log|' \
         'chrome/browser/resources/net_internals/|' \
         'chrome/browser/ui/webui/net_internals/|' \
-        'components/net_log/'
+	'components/net_log/'
     },
     'net_spdy': {
       'filepath': 'net/spdy/',
@@ -894,7 +891,7 @@
                   '|chrome/android/javatests/src/org/chromium/chrome/browser/payments'\
                   '|chrome/browser/payments'\
                   '|chrome/browser/ui/views/payments'\
-                  '|components/payments/test/data'\
+                  '|chrome/test/data/payments'\
                   '|components/payments'\
                   '|content/browser/payments'\
                   '|content/test/data/payments'\
@@ -1272,8 +1269,8 @@
                   '|third_party/WebKit/Source/core/rendering/.*Bidi',
     },
     'blink_bindings': {
-      'filepath': 'third_party/WebKit/Source/platform/bindings' \
-                  '|third_party/WebKit/Source/bindings',
+      'filepath': 'third_party/WebKit/Source/platform/bindings',
+      'filepath': 'third_party/WebKit/Source/bindings',
     },
     'blink_bindings_serialization': {
       'filepath': 'third_party/WebKit/Source/bindings/(core|modules)/v8/.*[Ss]erializ',
@@ -1381,8 +1378,8 @@
                   '|third_party/WebKit/LayoutTests/imagecapture/'
     },
     'blink_loader': {
-      'filepath': 'third_party/WebKit/Source/core/loader' \
-                  '|third_party/WebKit/Source/platform/loader'
+      'filepath': 'third_party/WebKit/Source/core/loader', \
+      'filepath': 'third_party/WebKit/Source/platform/loader'
     },
     'blink_modules': {
       'filepath': 'third_party/WebKit/Source/modules'
@@ -1648,7 +1645,6 @@
                       'yuzo+watch@chromium.org'],
     'add_to_homescreen': ['agrieve+watch@chromium.org',
                           'dominickn+watch@chromium.org',
-                          'hanxi+watch@chromium.org',
                           'pkotwicz+watch@chromium.org',
                           'zpeng+watch@chromium.org'],
     'android_crash_reporting': ['asvitkine+watch@chromium.org'],
@@ -1714,7 +1710,6 @@
                         'jkarlin+watch@chromium.org',
                         'peter@chromium.org'],
     'banners': ['dominickn+watch@chromium.org',
-                'hanxi+watch@chromium.org',
                 'pkotwicz+watch@chromium.org',
                 'zpeng+watch@chromium.org'],
     'base_allocator': ['dmikurube@chromium.org',
@@ -2045,7 +2040,6 @@
                  'yamaguchi+watch@chromium.org'],
     'filesapp_ui': ['mtomasz+watch@chromium.org'],
     'ftp': ['phajdan.jr@chromium.org'],
-    'fuchsia': ['sergeyu@chromium.org', 'wez@chromium.org'],
     'fuzzing': ['fuzzing@chromium.org'],
     'gcm': ['johnme+watch@chromium.org',
             'peter@chromium.org',
@@ -2208,7 +2202,6 @@
                    'tzik@chromium.org',
                    'yusukes+watch@chromium.org'],
     'permissions': ['dominickn+watch@chromium.org',
-                    'hanxi+watch@chromium.org',
                     'mlamouri+watch-permissions@chromium.org',
                     'raymes+watch@chromium.org'],
     'plugin': ['jam@chromium.org'],

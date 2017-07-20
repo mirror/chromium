@@ -4,8 +4,6 @@
 
 #include "core/style/BorderEdge.h"
 
-#include <math.h>
-
 namespace blink {
 
 BorderEdge::BorderEdge(float edge_width,

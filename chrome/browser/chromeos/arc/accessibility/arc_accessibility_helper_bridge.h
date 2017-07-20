@@ -21,10 +21,6 @@
 
 class Profile;
 
-namespace content {
-class BrowserContext;
-}  // namespace content
-
 namespace arc {
 
 class AXTreeSourceArc;
@@ -41,12 +37,7 @@ class ArcAccessibilityHelperBridge
       public AXTreeSourceArc::Delegate,
       public ArcAppListPrefs::Observer {
  public:
-  // Returns singleton instance for the given BrowserContext,
-  // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcAccessibilityHelperBridge* GetForBrowserContext(
-      content::BrowserContext* context);
-
-  ArcAccessibilityHelperBridge(content::BrowserContext* browser_context,
+  ArcAccessibilityHelperBridge(Profile* profile,
                                ArcBridgeService* arc_bridge_service);
   ~ArcAccessibilityHelperBridge() override;
 

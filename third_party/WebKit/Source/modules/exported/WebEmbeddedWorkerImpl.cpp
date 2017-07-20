@@ -45,13 +45,12 @@
 #include "core/loader/ThreadableLoadingContext.h"
 #include "core/loader/WorkerFetchContext.h"
 #include "core/probe/CoreProbes.h"
-#include "core/workers/GlobalScopeCreationParams.h"
 #include "core/workers/ParentFrameTaskRunners.h"
-#include "core/workers/WorkerBackingThreadStartupData.h"
 #include "core/workers/WorkerContentSettingsClient.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "core/workers/WorkerInspectorProxy.h"
 #include "core/workers/WorkerScriptLoader.h"
+#include "core/workers/WorkerThreadStartupData.h"
 #include "modules/serviceworkers/ServiceWorkerContainerClient.h"
 #include "modules/serviceworkers/ServiceWorkerGlobalScopeClient.h"
 #include "modules/serviceworkers/ServiceWorkerGlobalScopeProxy.h"
@@ -344,10 +343,16 @@ void WebEmbeddedWorkerImpl::DidFinishDocumentLoad() {
   // Kickstart the worker before loading the script when the script has been
   // installed.
   if (RuntimeEnabledFeatures::ServiceWorkerScriptStreamingEnabled() &&
-      installed_scripts_manager_ &&
       installed_scripts_manager_->IsScriptInstalled(
           worker_start_data_.script_url)) {
-    DCHECK_EQ(pause_after_download_state_, kDontPauseAfterDownload);
+    // TODO(shimazu): Move WorkerScriptLoaded to the correct place which is
+    // after InstalledScriptsManager::GetScriptData() called at
+    // WorkerThread::InitializeOnWorkerThread().
+    worker_context_client_->WorkerScriptLoaded();
+    if (pause_after_download_state_ == kDoPauseAfterDownload) {
+      pause_after_download_state_ = kIsPausedAfterDownload;
+      return;
+    }
     StartWorkerThread();
     return;
   }
@@ -455,8 +460,11 @@ void WebEmbeddedWorkerImpl::StartWorkerThread() {
       worker_inspector_proxy_->WorkerStartMode(document);
   std::unique_ptr<WorkerSettings> worker_settings =
       WTF::WrapUnique(new WorkerSettings(document->GetSettings()));
+  WorkerV8Settings worker_v8_settings = WorkerV8Settings::Default();
+  worker_v8_settings.v8_cache_options_ =
+      static_cast<V8CacheOptions>(worker_start_data_.v8_cache_options);
 
-  std::unique_ptr<GlobalScopeCreationParams> global_scope_creation_params;
+  std::unique_ptr<WorkerThreadStartupData> startup_data;
   // |main_script_loader_| isn't created if the InstalledScriptsManager had the
   // script.
   if (main_script_loader_) {
@@ -468,7 +476,7 @@ void WebEmbeddedWorkerImpl::StartWorkerThread() {
       document->ParseAndSetReferrerPolicy(
           main_script_loader_->GetReferrerPolicy());
     }
-    global_scope_creation_params = WTF::MakeUnique<GlobalScopeCreationParams>(
+    startup_data = WorkerThreadStartupData::Create(
         worker_start_data_.script_url, worker_start_data_.user_agent,
         main_script_loader_->SourceText(),
         main_script_loader_->ReleaseCachedMetadata(), start_mode,
@@ -476,18 +484,18 @@ void WebEmbeddedWorkerImpl::StartWorkerThread() {
         main_script_loader_->GetReferrerPolicy(), starter_origin,
         worker_clients, main_script_loader_->ResponseAddressSpace(),
         main_script_loader_->OriginTrialTokens(), std::move(worker_settings),
-        static_cast<V8CacheOptions>(worker_start_data_.v8_cache_options));
+        worker_v8_settings);
     main_script_loader_.Clear();
   } else {
     // TODO(shimazu): Set ContentSecurityPolicy, ReferrerPolicy to |document|
     // before evaluating the main script.
-    global_scope_creation_params = WTF::MakeUnique<GlobalScopeCreationParams>(
+    startup_data = WorkerThreadStartupData::Create(
         worker_start_data_.script_url, worker_start_data_.user_agent,
         "" /* SourceText */, nullptr /* CachedMetadata */, start_mode,
         nullptr /* ContentSecurityPolicy */, "" /* ReferrerPolicy */,
         starter_origin, worker_clients, worker_start_data_.address_space,
         nullptr /* OriginTrialTokens */, std::move(worker_settings),
-        static_cast<V8CacheOptions>(worker_start_data_.v8_cache_options));
+        worker_v8_settings);
   }
 
   worker_global_scope_proxy_ =
@@ -499,8 +507,7 @@ void WebEmbeddedWorkerImpl::StartWorkerThread() {
   // We have a dummy document here for loading but it doesn't really represent
   // the document/frame of associated document(s) for this worker. Here we
   // populate the task runners with default task runners of the main thread.
-  worker_thread_->Start(std::move(global_scope_creation_params),
-                        WorkerBackingThreadStartupData::CreateDefault(),
+  worker_thread_->Start(std::move(startup_data),
                         ParentFrameTaskRunners::Create());
 
   worker_inspector_proxy_->WorkerThreadCreated(document, worker_thread_.get(),

@@ -391,6 +391,14 @@ CHAR-LIMIT guidelines:
           other {<ph name="CONTACT_PREVIEW">%1$s<ex>Jerry, 438-123-1922</ex></ph>\u2026 and <ph name="NUMBER_OF_ADDITIONAL_CONTACTS">%2$s<ex>2</ex></ph> more}}
       </message>
 
+      <!-- Autofill/Wallet integration preferences -->
+      <message name="IDS_AUTOFILL_WALLET_MANAGEMENT_LINK_TEXT" desc="Text for link that allows users to see and edit their Wallet information.">
+        Edit
+      </message>
+      <message name="IDS_AUTOFILL_FROM_GOOGLE_ACCOUNT_LONG" desc="Text that indicates an address or credit card came from Google servers.">
+        From Google Payments
+      </message>
+
       <!-- Save passwords preferences -->
       <message name="IDS_PREFS_SAVED_PASSWORDS" desc="Title for the Saved Passwords preferences. [CHAR-LIMIT=32]">
         Save passwords
@@ -2227,15 +2235,6 @@ To obtain new licenses, connect to the internet and play your downloaded content
       <message name="IDS_SIGNIN_GMS_UPDATING" desc="Message notifying user that Google Play Services is still updating.">
         Waiting for Google Play Services to finish updating
       </message>
-      <message name="IDS_SIGNIN_PROMO_SETTINGS" desc="Text to inform the user that they can sign in to get personal settings.">
-        Sign in to Chrome to get your bookmarks, passwords, and more on all your devices.
-      </message>
-      <message name="IDS_SIGNIN_PROMO_CONTINUE_AS" desc="Button that the user can press to login without asking the password and continue using Chrome with this acccount.">
-        Continue as <ph name="USER_FULL_NAME">%1$s<ex>John Doe</ex></ph>
-     </message>
-      <message name="IDS_SIGNIN_PROMO_CHOOSE_ACCOUNT" desc="Button that the user can press if they are not the profile that Chrome found (opposite of 'Continue as Joe Doe').">
-        Not <ph name="EMAIL">%1$s<ex>john.doe@example.com</ex></ph>?
-      </message>
 
       <!-- Messages for remote media playback (casting) -->
       <message name="IDS_CAST_CASTING_VIDEO" desc="AtHome text to tell user which screen casting is happening. [CHAR LIMIT=40]">
@@ -3083,9 +3082,6 @@ You must have Bluetooth and Location turned on in order to use the Physical Web.
       </message>
       <message name="IDS_BOTTOM_SHEET_ACCESSIBILITY_TOOLBAR" desc="Accessibilty string read when the bottom toolbar, containing the adddress bar and some buttons, is focused. Informs users that they can pull up on the address bar to see their bookmarks and other content.">
         Address bar. Pull up to see bookmarks, downloads, and history.
-      </message>
-      <message name="IDS_BOTTOM_SHEET_OPEN_ACCESSIBILITY_TOOLBAR" desc="Accessibilty string read when the bottom toolbar, containing the adddress bar and some buttons, is focused and the Chrome Home navigation panel is open. Informs users that they can pull down on the address bar to close the navigation panel.">
-        Address bar. Pull down to close navigation panel.
       </message>
       <message name="IDS_BOTTOM_SHEET_EXPAND_BUTTON_HELP_BUBBLE_MESSAGE" desc="Text displayed in a help bubble above the toolbar expand button prompting users to tap the button to see their bookmarks and other content.">
         Tap to see bookmarks and more

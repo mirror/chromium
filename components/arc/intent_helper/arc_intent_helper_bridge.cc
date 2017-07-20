@@ -10,10 +10,8 @@
 #include "ash/shell.h"
 #include "ash/shell_delegate.h"
 #include "ash/wallpaper/wallpaper_controller.h"
-#include "base/memory/singleton.h"
 #include "base/memory/weak_ptr.h"
 #include "components/arc/arc_bridge_service.h"
-#include "components/arc/arc_browser_context_keyed_service_factory_base.h"
 #include "components/arc/arc_service_manager.h"
 #include "components/arc/audio/arc_audio_bridge.h"
 #include "components/arc/intent_helper/link_handler_model_impl.h"
@@ -21,67 +19,30 @@
 #include "url/gurl.h"
 
 namespace arc {
-namespace {
 
-// Singleton factory for ArcIntentHelperBridge.
-class ArcIntentHelperBridgeFactory
-    : public internal::ArcBrowserContextKeyedServiceFactoryBase<
-          ArcIntentHelperBridge,
-          ArcIntentHelperBridgeFactory> {
- public:
-  // Factory name used by ArcBrowserContextKeyedServiceFactoryBase.
-  static constexpr const char* kName = "ArcIntentHelperBridgeFactory";
-
-  static ArcIntentHelperBridgeFactory* GetInstance() {
-    return base::Singleton<ArcIntentHelperBridgeFactory>::get();
-  }
-
- private:
-  friend struct base::DefaultSingletonTraits<ArcIntentHelperBridgeFactory>;
-
-  ArcIntentHelperBridgeFactory() = default;
-  ~ArcIntentHelperBridgeFactory() override = default;
-};
-
-}  // namespace
+// static
+const char ArcIntentHelperBridge::kArcServiceName[] =
+    "arc::ArcIntentHelperBridge";
 
 // static
 const char ArcIntentHelperBridge::kArcIntentHelperPackageName[] =
     "org.chromium.arc.intent_helper";
 
-// static
-ArcIntentHelperBridge* ArcIntentHelperBridge::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcIntentHelperBridgeFactory::GetForBrowserContext(context);
-}
-
-// static
-KeyedServiceBaseFactory* ArcIntentHelperBridge::GetFactory() {
-  return ArcIntentHelperBridgeFactory::GetInstance();
-}
-
-ArcIntentHelperBridge::ArcIntentHelperBridge(content::BrowserContext* context,
-                                             ArcBridgeService* bridge_service)
-    : context_(context), arc_bridge_service_(bridge_service), binding_(this) {
-  arc_bridge_service_->intent_helper()->AddObserver(this);
+ArcIntentHelperBridge::ArcIntentHelperBridge(ArcBridgeService* bridge_service)
+    : ArcService(bridge_service), binding_(this) {
+  arc_bridge_service()->intent_helper()->AddObserver(this);
 }
 
 ArcIntentHelperBridge::~ArcIntentHelperBridge() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-
-  // TODO(hidehiko): Currently, the lifetime of ArcBridgeService and
-  // BrowserContextKeyedService is not nested.
-  // If ArcServiceManager::Get() returns nullptr, it is already destructed,
-  // so do not touch it.
-  if (ArcServiceManager::Get())
-    arc_bridge_service_->intent_helper()->RemoveObserver(this);
+  arc_bridge_service()->intent_helper()->RemoveObserver(this);
 }
 
 void ArcIntentHelperBridge::OnInstanceReady() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   ash::Shell::Get()->set_link_handler_model_factory(this);
   auto* instance =
-      ARC_GET_INSTANCE_FOR_METHOD(arc_bridge_service_->intent_helper(), Init);
+      ARC_GET_INSTANCE_FOR_METHOD(arc_bridge_service()->intent_helper(), Init);
   DCHECK(instance);
   mojom::IntentHelperHostPtr host_proxy;
   binding_.Bind(mojo::MakeRequest(&host_proxy));
@@ -124,12 +85,7 @@ void ArcIntentHelperBridge::SetWallpaperDeprecated(
 }
 
 void ArcIntentHelperBridge::OpenVolumeControl() {
-  // TODO(hidehiko): Use browser_context passed to this class's ctor, after
-  // we migrate this into BrowserContextKeyedService.
-  auto* audio = ArcAudioBridge::GetForBrowserContext(
-      ArcServiceManager::Get()->browser_context());
-  DCHECK(audio);
-  audio->ShowVolumeControls();
+  ArcServiceManager::Get()->GetService<ArcAudioBridge>()->ShowVolumeControls();
 }
 
 ArcIntentHelperBridge::GetResult ArcIntentHelperBridge::GetActivityIcons(
@@ -165,7 +121,7 @@ void ArcIntentHelperBridge::RemoveObserver(ArcIntentHelperObserver* observer) {
 std::unique_ptr<ash::LinkHandlerModel> ArcIntentHelperBridge::CreateModel(
     const GURL& url) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  auto impl = base::MakeUnique<LinkHandlerModelImpl>(context_);
+  auto impl = base::MakeUnique<LinkHandlerModelImpl>();
   if (!impl->Init(url))
     return nullptr;
   return std::move(impl);

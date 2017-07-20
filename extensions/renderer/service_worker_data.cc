@@ -5,6 +5,7 @@
 #include "extensions/renderer/service_worker_data.h"
 
 #include "extensions/renderer/extension_bindings_system.h"
+#include "extensions/renderer/service_worker_request_sender.h"
 
 namespace extensions {
 

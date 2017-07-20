@@ -127,6 +127,8 @@ class ExternalDataUseObserverBridge {
   DISALLOW_COPY_AND_ASSIGN(ExternalDataUseObserverBridge);
 };
 
+bool RegisterExternalDataUseObserver(JNIEnv* env);
+
 }  // namespace android
 
 }  // namespace chrome

@@ -239,8 +239,7 @@ NSString* const kDoneTouchBarId = @"DONE";
 }
 
 - (NSTouchBarItem*)touchBar:(NSTouchBar*)touchBar
-      makeItemForIdentifier:(NSTouchBarItemIdentifier)identifier
-    API_AVAILABLE(macos(10.12.2)) {
+      makeItemForIdentifier:(NSTouchBarItemIdentifier)identifier {
   NSButton* button = nil;
   if ([identifier hasSuffix:kRemoveTouchBarId]) {
     button = [NSButton buttonWithTitle:l10n_util::GetNSString(

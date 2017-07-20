@@ -105,13 +105,13 @@ void FileService::OnBindInterface(
     const service_manager::BindSourceInfo& source_info,
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle interface_pipe) {
-  registry_.BindInterface(interface_name, std::move(interface_pipe),
-                          source_info);
+  registry_.BindInterface(source_info, interface_name,
+                          std::move(interface_pipe));
 }
 
 void FileService::BindFileSystemRequest(
-    mojom::FileSystemRequest request,
-    const service_manager::BindSourceInfo& source_info) {
+    const service_manager::BindSourceInfo& source_info,
+    mojom::FileSystemRequest request) {
   file_service_runner_->PostTask(
       FROM_HERE,
       base::Bind(&FileService::FileSystemObjects::OnFileSystemRequest,
@@ -120,8 +120,8 @@ void FileService::BindFileSystemRequest(
 }
 
 void FileService::BindLevelDBServiceRequest(
-    leveldb::mojom::LevelDBServiceRequest request,
-    const service_manager::BindSourceInfo& source_info) {
+    const service_manager::BindSourceInfo& source_info,
+    leveldb::mojom::LevelDBServiceRequest request) {
   leveldb_service_runner_->PostTask(
       FROM_HERE,
       base::Bind(&FileService::LevelDBServiceObjects::OnLevelDBServiceRequest,

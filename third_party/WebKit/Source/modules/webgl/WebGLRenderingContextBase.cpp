@@ -32,7 +32,11 @@
 #include "bindings/modules/v8/HTMLCanvasElementOrOffscreenCanvas.h"
 #include "bindings/modules/v8/WebGLAny.h"
 #include "build/build_config.h"
+#include "core/dom/ArrayBufferViewHelpers.h"
+#include "core/dom/DOMArrayBuffer.h"
+#include "core/dom/DOMTypedArray.h"
 #include "core/dom/ExecutionContext.h"
+#include "core/dom/FlexibleArrayBufferView.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameClient.h"
@@ -46,10 +50,6 @@
 #include "core/layout/LayoutBox.h"
 #include "core/origin_trials/OriginTrials.h"
 #include "core/probe/CoreProbes.h"
-#include "core/typed_arrays/ArrayBufferViewHelpers.h"
-#include "core/typed_arrays/DOMArrayBuffer.h"
-#include "core/typed_arrays/DOMTypedArray.h"
-#include "core/typed_arrays/FlexibleArrayBufferView.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "modules/webgl/ANGLEInstancedArrays.h"
 #include "modules/webgl/EXTBlendMinMax.h"
@@ -6344,8 +6344,7 @@ void WebGLRenderingContextBase::DrawingBufferClientRestoreMaskAndClearValues() {
   ContextGL()->ClearStencil(clear_stencil_);
 }
 
-void WebGLRenderingContextBase::
-    DrawingBufferClientRestorePixelPackParameters() {
+void WebGLRenderingContextBase::DrawingBufferClientRestorePixelPackAlignment() {
   if (!ContextGL())
     return;
   ContextGL()->PixelStorei(GL_PACK_ALIGNMENT, pack_alignment_);
@@ -6373,8 +6372,6 @@ void WebGLRenderingContextBase::DrawingBufferClientRestoreFramebufferBinding() {
 
 void WebGLRenderingContextBase::
     DrawingBufferClientRestorePixelUnpackBufferBinding() {}
-void WebGLRenderingContextBase::
-    DrawingBufferClientRestorePixelPackBufferBinding() {}
 
 ScriptValue WebGLRenderingContextBase::GetBooleanParameter(
     ScriptState* script_state,

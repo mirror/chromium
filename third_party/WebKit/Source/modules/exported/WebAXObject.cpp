@@ -262,6 +262,14 @@ bool WebAXObject::IsAnchor() const {
   return private_->IsAnchor();
 }
 
+bool WebAXObject::IsAriaReadOnly() const {
+  if (IsDetached())
+    return false;
+
+  return EqualIgnoringASCIICase(
+      private_->GetAttribute(HTMLNames::aria_readonlyAttr), "true");
+}
+
 WebString WebAXObject::AriaAutoComplete() const {
   if (IsDetached())
     return WebString();
@@ -304,11 +312,11 @@ bool WebAXObject::IsControl() const {
   return private_->IsControl();
 }
 
-WebAXRestriction WebAXObject::Restriction() const {
+bool WebAXObject::IsEnabled() const {
   if (IsDetached())
-    return kWebAXRestrictionNone;
+    return false;
 
-  return static_cast<WebAXRestriction>(private_->Restriction());
+  return private_->IsEnabled();
 }
 
 WebAXExpanded WebAXObject::IsExpanded() const {
@@ -372,6 +380,13 @@ bool WebAXObject::IsPasswordField() const {
     return false;
 
   return private_->IsPasswordField();
+}
+
+bool WebAXObject::IsReadOnly() const {
+  if (IsDetached())
+    return false;
+
+  return private_->IsReadOnly();
 }
 
 bool WebAXObject::IsRequired() const {

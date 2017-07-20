@@ -1610,7 +1610,7 @@ class OutputSurfaceMockContext : public TestWebGraphicsContext3D {
 
 class MockOutputSurface : public OutputSurface {
  public:
-  explicit MockOutputSurface(scoped_refptr<viz::ContextProvider> provider)
+  explicit MockOutputSurface(scoped_refptr<ContextProvider> provider)
       : OutputSurface(std::move(provider)) {}
   virtual ~MockOutputSurface() {}
 
@@ -1795,7 +1795,7 @@ TEST_F(GLRendererTest, DontOverlayWithCopyRequests) {
                     gfx::Transform(), FilterOperations());
   root_pass->has_transparent_background = false;
   root_pass->copy_requests.push_back(
-      CopyOutputRequest::CreateRequest(base::BindOnce(&IgnoreCopyResult)));
+      CopyOutputRequest::CreateRequest(base::Bind(&IgnoreCopyResult)));
 
   viz::TextureMailbox mailbox =
       viz::TextureMailbox(gpu::Mailbox::Generate(), gpu::SyncToken(),

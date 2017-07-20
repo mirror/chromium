@@ -6,7 +6,6 @@
 #define UI_EVENTS_TEST_DEVICE_DATA_MANAGER_TEST_API_H_
 
 #include <memory>
-#include <vector>
 
 #include "base/macros.h"
 #include "ui/events/devices/events_devices_export.h"
@@ -15,8 +14,6 @@ namespace ui {
 
 class DeviceDataManager;
 enum class StylusState;
-struct InputDevice;
-struct TouchscreenDevice;
 
 namespace test {
 
@@ -36,13 +33,6 @@ class DeviceDataManagerTestAPI {
   void NotifyObserversDeviceListsComplete();
   void NotifyObserversStylusStateChanged(StylusState stylus_state);
   void OnDeviceListsComplete();
-
-  // Methods for updating DeviceDataManager's device lists. Notify* methods must
-  // be invoked separately to notify observers after making changes.
-  void SetTouchscreenDevices(const std::vector<TouchscreenDevice>& devices);
-  void SetKeyboardDevices(const std::vector<InputDevice>& devices);
-  void SetMouseDevices(const std::vector<InputDevice>& devices);
-  void SetTouchpadDevices(const std::vector<InputDevice>& devices);
 
  private:
   DISALLOW_COPY_AND_ASSIGN(DeviceDataManagerTestAPI);

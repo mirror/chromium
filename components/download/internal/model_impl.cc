@@ -4,8 +4,6 @@
 
 #include "components/download/internal/model_impl.h"
 
-#include <map>
-
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
 #include "components/download/internal/entry.h"
@@ -28,13 +26,6 @@ void ModelImpl::Initialize(Client* client) {
   DCHECK(!store_->IsInitialized());
   store_->Initialize(base::Bind(&ModelImpl::OnInitializedFinished,
                                 weak_ptr_factory_.GetWeakPtr()));
-}
-
-void ModelImpl::HardRecover() {
-  entries_.clear();
-
-  store_->HardRecover(base::BindOnce(&ModelImpl::OnHardRecoverFinished,
-                                     weak_ptr_factory_.GetWeakPtr()));
 }
 
 void ModelImpl::Add(const Entry& entry) {
@@ -98,18 +89,11 @@ void ModelImpl::OnInitializedFinished(
     return;
   }
 
-  std::map<Entry::State, uint32_t> entries_count;
   for (const auto& entry : *entries) {
-    entries_count[entry.state]++;
     entries_.emplace(entry.guid, base::MakeUnique<Entry>(entry));
   }
 
-  stats::LogEntries(entries_count);
   client_->OnModelReady(true);
-}
-
-void ModelImpl::OnHardRecoverFinished(bool success) {
-  client_->OnModelHardRecoverComplete(success);
 }
 
 void ModelImpl::OnAddFinished(DownloadClient client,

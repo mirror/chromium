@@ -13,7 +13,6 @@
 
 #include "base/environment.h"
 #include "base/logging.h"
-#include "base/memory/ptr_util.h"
 #include "base/sha1.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
@@ -132,8 +131,6 @@ bool IsXCTestFile(const SourceFile& file) {
                         base::CompareCase::SENSITIVE);
 }
 
-// TODO(crbug.com/741147) Remove this function and switch to use
-// test_application_name once the bug is fixed and GN has rolled past it.
 const Target* FindXCTestApplicationTarget(
     const Target* xctest_module_target,
     const std::vector<const Target*>& targets) {
@@ -154,8 +151,6 @@ const Target* FindXCTestApplicationTarget(
   return nullptr;
 }
 
-// TODO(crbug.com/741147) Remove this function and switch to use
-// test_application_name once the bug is fixed and GN has rolled past it.
 // Given XCTest module targets, find the corresponding application targets and
 // the mappings between them.
 void FindXCTestApplicationTargets(
@@ -168,46 +163,6 @@ void FindXCTestApplicationTargets(
         FindXCTestApplicationTarget(xctest_module_target, targets));
     xctest_module_to_application_target->insert(std::make_pair(
         xctest_module_target, xctest_application_targets->back()));
-  }
-
-  DCHECK_EQ(xctest_module_targets.size(), xctest_application_targets->size());
-  DCHECK_EQ(xctest_module_targets.size(),
-            xctest_module_to_application_target->size());
-}
-
-// Adds |base_pbxtarget| as a dependency of |dependent_pbxtarget| in the
-// generated Xcode project.
-void AddPBXTargetDependency(const PBXTarget* base_pbxtarget,
-                            PBXTarget* dependent_pbxtarget,
-                            const PBXProject* project) {
-  auto container_item_proxy =
-      base::MakeUnique<PBXContainerItemProxy>(project, base_pbxtarget);
-  auto dependency = base::MakeUnique<PBXTargetDependency>(
-      base_pbxtarget, std::move(container_item_proxy));
-
-  dependent_pbxtarget->AddDependency(std::move(dependency));
-}
-
-// Adds the corresponding test rig application target as dependency of xctest
-// module target in the generated Xcode project.
-void AddDependencyTargetForXCModuleTargets(
-    const std::vector<const Target*>& targets,
-    const TargetToPBXTarget& bundle_target_to_pbxtarget,
-    const PBXProject* project) {
-  for (const Target* target : targets) {
-    if (!IsXCTestModuleTarget(target))
-      continue;
-
-    const Target* test_application_target =
-        FindXCTestApplicationTarget(target, targets);
-    const PBXTarget* test_application_pbxtarget =
-        bundle_target_to_pbxtarget.at(test_application_target);
-    PBXTarget* module_pbxtarget = bundle_target_to_pbxtarget.at(target);
-    DCHECK(test_application_pbxtarget);
-    DCHECK(module_pbxtarget);
-
-    AddPBXTargetDependency(test_application_pbxtarget, module_pbxtarget,
-                           project);
   }
 }
 
@@ -262,8 +217,6 @@ void FindXCTestFilesForApplicationTargets(
     xctest_files_per_application_target->insert(
         std::make_pair(target, xctest_files_per_target[target]));
   }
-  DCHECK_EQ(application_targets.size(),
-            xctest_files_per_application_target->size());
 }
 
 // Add all source files for indexing, both private and public.
@@ -303,27 +256,6 @@ void AddSourceFilesToProjectForIndexing(
                                          build_settings->root_path_utf8());
     project->AddSourceFileToIndexingTarget(source_file, source_file,
                                            CompilerFlags::NONE);
-  }
-}
-
-// Add xctest files to the "Compiler Sources" of corresponding xctest native
-// targets.
-void AddXCTestFilesToXCTestModuleTarget(
-    const Target::FileList& xctest_file_list,
-    PBXNativeTarget* native_target,
-    PBXProject* project,
-    SourceDir source_dir,
-    const BuildSettings* build_settings) {
-  for (const SourceFile& source : xctest_file_list) {
-    std::string source_path = RebasePath(source.value(), source_dir,
-                                         build_settings->root_path_utf8());
-
-    // Test files need to be known to Xcode for proper indexing and for
-    // discovery of tests function for XCTest, but the compilation is done
-    // via ninja and thus must prevent Xcode from compiling the files by
-    // adding '-help' as per file compiler flag.
-    project->AddSourceFile(source_path, source_path, CompilerFlags::HELP,
-                           native_target);
   }
 }
 
@@ -528,7 +460,12 @@ void XcodeWriter::CreateProductsProject(
   std::unique_ptr<PBXProject> main_project(
       new PBXProject("products", config_name, source_path, attributes));
 
-  // Filter xctest module and application targets.
+  SourceDir source_dir("//");
+  AddSourceFilesToProjectForIndexing(all_targets, main_project.get(),
+                                     source_dir, build_settings);
+
+  // Filter xctest module and application targets and find list of xctest files
+  // recursively under them.
   std::vector<const Target*> xctest_module_targets;
   FilterXCTestModuleTargets(targets, &xctest_module_targets);
 
@@ -539,21 +476,21 @@ void XcodeWriter::CreateProductsProject(
   FindXCTestApplicationTargets(xctest_module_targets, targets,
                                &xctest_application_targets,
                                &xctest_module_to_application_target);
+  DCHECK_EQ(xctest_module_targets.size(), xctest_application_targets.size());
+  DCHECK_EQ(xctest_module_targets.size(),
+            xctest_module_to_application_target.size());
 
-  // Find list of xctest files recursively under them, and the files will be
-  // used for proper indexing and for discovery of tests function for XCTest.
   TargetToFileList xctest_files_per_application_target;
   FindXCTestFilesForApplicationTargets(xctest_application_targets,
                                        &xctest_files_per_application_target);
+  DCHECK_EQ(xctest_application_targets.size(),
+            xctest_files_per_application_target.size());
 
-  std::vector<const Target*> bundle_targets;
   TargetToPBXTarget bundle_target_to_pbxtarget;
 
   std::string build_path;
   std::unique_ptr<base::Environment> env(base::Environment::Create());
-  SourceDir source_dir("//");
-  AddSourceFilesToProjectForIndexing(all_targets, main_project.get(),
-                                     source_dir, build_settings);
+
   main_project->AddAggregateTarget(
       "All", GetBuildScript(root_target, ninja_extra_args, env.get()));
 
@@ -588,33 +525,26 @@ void XcodeWriter::CreateProductsProject(
               0, target_name.rfind(kXCTestModuleTargetNamePostfix));
         }
 
-        PBXAttributes xcode_extra_attributes =
-            target->bundle_data().xcode_extra_attributes();
-
-        // TODO(crbug.com/740800): Remove the following comment and code once
-        // the bug is fixed and gn has rolled past it.
         // Test files need to be known to Xcode for proper indexing and for
         // discovery of tests function for XCTest, but the compilation is done
         // via ninja and thus must prevent Xcode from linking object files via
         // this hack.
+        PBXAttributes extra_attributes;
         if (IsXCTestModuleTarget(target)) {
-          xcode_extra_attributes["OTHER_LDFLAGS"] = "-help";
-          xcode_extra_attributes["ONLY_ACTIVE_ARCH"] = "YES";
-          xcode_extra_attributes["DEBUG_INFORMATION_FORMAT"] = "dwarf";
+          extra_attributes["OTHER_LDFLAGS"] = "-help";
+          extra_attributes["ONLY_ACTIVE_ARCH"] = "YES";
+          extra_attributes["DEBUG_INFORMATION_FORMAT"] = "dwarf";
         }
 
-        const std::string& target_output_name =
+        PBXNativeTarget* native_target = main_project->AddNativeTarget(
+            pbxtarget_name, std::string(),
             RebasePath(target->bundle_data()
                            .GetBundleRootDirOutput(target->settings())
                            .value(),
-                       build_settings->build_dir());
-        PBXNativeTarget* native_target = main_project->AddNativeTarget(
-            pbxtarget_name, std::string(), target_output_name,
+                       build_settings->build_dir()),
             target->bundle_data().product_type(),
             GetBuildScript(pbxtarget_name, ninja_extra_args, env.get()),
-            xcode_extra_attributes);
-
-        bundle_targets.push_back(target);
+            extra_attributes);
         bundle_target_to_pbxtarget.insert(
             std::make_pair(target, native_target));
 
@@ -622,14 +552,23 @@ void XcodeWriter::CreateProductsProject(
           continue;
 
         // Add xctest files to the "Compiler Sources" of corresponding xctest
-        // native targets for proper indexing and for discovery of tests
-        // function for XCTest.
+        // native targets.
         const Target::FileList& xctest_file_list =
             xctest_files_per_application_target
                 [xctest_module_to_application_target[target]];
-        AddXCTestFilesToXCTestModuleTarget(xctest_file_list, native_target,
-                                           main_project.get(), source_dir,
-                                           build_settings);
+
+        for (const SourceFile& source : xctest_file_list) {
+          std::string source_path = RebasePath(
+              source.value(), source_dir, build_settings->root_path_utf8());
+
+          // Test files need to be known to Xcode for proper indexing and for
+          // discovery of tests function for XCTest, but the compilation is done
+          // via ninja and thus must prevent Xcode from compiling the files by
+          // adding '-help' as per file compiler flag.
+          main_project->AddSourceFile(source_path, source_path,
+                                      CompilerFlags::HELP, native_target);
+        }
+
         break;
       }
 
@@ -638,12 +577,30 @@ void XcodeWriter::CreateProductsProject(
     }
   }
 
-  // For XCTest, tests are compiled into the application bundle, thus adding
-  // the corresponding test rig application target as a dependency of xctest
-  // module target in the generated Xcode project so that the application target
-  // is re-compiled when compiling the xctest module target.
-  AddDependencyTargetForXCModuleTargets(
-      bundle_targets, bundle_target_to_pbxtarget, main_project.get());
+  // Add corresponding application target as dependency of xctest module target
+  // so that application target is re-compiled when compiling xctest module
+  // target.
+  for (const Target* target : targets) {
+    if (target->output_type() != Target::CREATE_BUNDLE)
+      continue;
+    if (!IsXCTestModuleTarget(target))
+      continue;
+
+    const Target* application_target =
+        FindXCTestApplicationTarget(target, targets);
+    PBXTarget* application_pbxtarget =
+        bundle_target_to_pbxtarget[application_target];
+    DCHECK(application_pbxtarget);
+    PBXTarget* xctest_module_pbxtarget = bundle_target_to_pbxtarget[target];
+    DCHECK(xctest_module_pbxtarget);
+
+    std::unique_ptr<PBXContainerItemProxy> container_item_proxy(
+        new PBXContainerItemProxy(main_project.get(), application_pbxtarget));
+    std::unique_ptr<PBXTargetDependency> dependency(new PBXTargetDependency(
+        application_pbxtarget, std::move(container_item_proxy)));
+
+    xctest_module_pbxtarget->AddDependency(std::move(dependency));
+  }
 
   projects_.push_back(std::move(main_project));
 }

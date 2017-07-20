@@ -69,12 +69,16 @@ class ActivationStateComputingNavigationThrottle
   // frame.
   std::unique_ptr<AsyncDocumentSubresourceFilter> ReleaseFilter();
 
-  AsyncDocumentSubresourceFilter* filter() const;
+  AsyncDocumentSubresourceFilter* filter() { return async_filter_.get(); }
 
   void WillSendActivationToRenderer();
 
  private:
   void OnActivationStateComputed(ActivationState state);
+  void set_filter(
+      std::unique_ptr<AsyncDocumentSubresourceFilter> async_filter) {
+    async_filter_ = std::move(async_filter);
+  }
 
   ActivationStateComputingNavigationThrottle(
       content::NavigationHandle* navigation_handle,

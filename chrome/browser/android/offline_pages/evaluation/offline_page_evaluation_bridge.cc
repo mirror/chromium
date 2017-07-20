@@ -12,15 +12,15 @@
 #include "base/memory/ptr_util.h"
 #include "base/sequenced_task_runner.h"
 #include "base/task_scheduler/post_task.h"
+#include "chrome/browser/android/offline_pages/background_scheduler_bridge.h"
 #include "chrome/browser/android/offline_pages/downloads/offline_page_notification_bridge.h"
 #include "chrome/browser/android/offline_pages/evaluation/evaluation_test_scheduler.h"
+#include "chrome/browser/android/offline_pages/prerendering_offliner.h"
+#include "chrome/browser/android/offline_pages/request_coordinator_factory.h"
 #include "chrome/browser/net/nqe/ui_network_quality_estimator_service.h"
 #include "chrome/browser/net/nqe/ui_network_quality_estimator_service_factory.h"
-#include "chrome/browser/offline_pages/android/background_scheduler_bridge.h"
-#include "chrome/browser/offline_pages/android/prerendering_offliner.h"
 #include "chrome/browser/offline_pages/background_loader_offliner.h"
 #include "chrome/browser/offline_pages/offline_page_model_factory.h"
-#include "chrome/browser/offline_pages/request_coordinator_factory.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_android.h"
 #include "chrome/common/chrome_constants.h"
@@ -199,6 +199,11 @@ RequestCoordinator* GetRequestCoordinator(Profile* profile,
 }
 }  // namespace
 
+// static
+bool OfflinePageEvaluationBridge::Register(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
 static jlong CreateBridgeForProfile(JNIEnv* env,
                                     const JavaParamRef<jobject>& obj,
                                     const JavaParamRef<jobject>& j_profile,
@@ -262,7 +267,7 @@ void OfflinePageEvaluationBridge::OfflinePageAdded(
     const OfflinePageItem& added_page) {}
 
 void OfflinePageEvaluationBridge::OfflinePageDeleted(
-    const OfflinePageModel::DeletedPageInfo& page_info) {}
+    const DeletedPageInfo& page_info) {}
 
 // Implement RequestCoordinator::Observer
 void OfflinePageEvaluationBridge::OnAdded(const SavePageRequest& request) {

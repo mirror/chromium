@@ -9,13 +9,11 @@
   <template>
     <style include="settings-shared"></style>
     <dialog is="cr-dialog" id="dialog" close-text="$i18n{close}">
-      <div class="title" slot="title">
-        $i18n{storageClearDriveCacheDialogTitle}
-      </div>
-      <div class="body" slot="body">
+      <div class="title">$i18n{storageClearDriveCacheDialogTitle}</div>
+      <div class="body">
         <span>$i18n{storageClearDriveCacheDialogDescription}</span>
       </div>
-      <div class="button-container" slot="button-container">
+      <div class="button-container">
         <paper-button id="cancelButton" class="cancel-button"
             on-tap="onCancelTap_">
           $i18n{cancel}

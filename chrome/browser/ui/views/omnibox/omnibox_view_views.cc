@@ -727,8 +727,7 @@ void OmniboxViewViews::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   node_data->AddIntAttribute(ui::AX_ATTR_TEXT_SEL_END, entry_end);
 
   if (popup_window_mode_) {
-    node_data->AddIntAttribute(ui::AX_ATTR_RESTRICTION,
-                               ui::AX_RESTRICTION_READ_ONLY);
+    node_data->AddState(ui::AX_STATE_READ_ONLY);
   } else {
     node_data->AddState(ui::AX_STATE_EDITABLE);
   }
@@ -796,9 +795,6 @@ void OmniboxViewViews::OnBlur() {
 
   // Tell the model to reset itself.
   model()->OnKillFocus();
-
-  // Deselect the text. Ensures the cursor is an I-beam.
-  SelectRange(gfx::Range(0));
 
   // When deselected, elide and reset scroll position. After eliding, the old
   // scroll offset is meaningless (since the string is guaranteed to fit within

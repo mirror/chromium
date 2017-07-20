@@ -1085,26 +1085,6 @@
             ]
         }
     ],
-    "ExpectCTDynamic": [
-        {
-            "platforms": [
-                "android",
-                "chromeos",
-                "ios",
-                "linux",
-                "mac",
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "DynamicExpectCTEnabled",
-                    "enable_features": [
-                        "DynamicExpectCT"
-                    ]
-                }
-            ]
-        }
-    ],
     "ExpectCTReporting": [
         {
             "platforms": [
@@ -1621,25 +1601,6 @@
                     },
                     "enable_features": [
                         "NTPArticleSuggestions"
-                    ]
-                }
-            ]
-        }
-    ],
-    "NTPCaptureThumbnail": [
-        {
-            "platforms": [
-                "chromeos",
-                "linux",
-                "mac",
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled",
-                    "enable_features": [
-                        "CaptureThumbnailDependingOnTransitionType",
-                        "CaptureThumbnailOnNavigatingAway"
                     ]
                 }
             ]
@@ -2799,7 +2760,7 @@
                 {
                     "name": "AdIdentifiers",
                     "params": {
-                        "tag_attribute_csv": "div,data-google-query-id,div,id,iframe,id"
+                        "tag_attribute_csv": "div,id,iframe,id"
                     },
                     "enable_features": [
                         "ThreatDomDetailsTagAttributes"
@@ -2836,11 +2797,7 @@
             ],
             "experiments": [
                 {
-                    "name": "V4Only2",
-                    "enable_features": [
-                        "SafeBrowsingV4LocalDatabaseManagerEnabled",
-                        "SafeBrowsingV4OnlyEnabled"
-                    ]
+                    "name": "Enabled"
                 }
             ]
         }
@@ -2871,7 +2828,11 @@
             ],
             "experiments": [
                 {
-                    "name": "Enabled"
+                    "name": "V4Only2",
+                    "enable_features": [
+                        "SafeBrowsingV4LocalDatabaseManagerEnabled",
+                        "SafeBrowsingV4OnlyEnabled"
+                    ]
                 }
             ]
         }
@@ -3174,7 +3135,7 @@
             ]
         }
     ],
-    "TLS13Variant": [
+    "TLS13Negotiation": [
         {
             "platforms": [
                 "android",
@@ -3186,10 +3147,10 @@
             ],
             "experiments": [
                 {
-                    "name": "DraftEnabled",
-                    "params": {
-                        "variant": "draft"
-                    }
+                    "name": "Enabled",
+                    "enable_features": [
+                        "NegotiateTLS13"
+                    ]
                 }
             ]
         }

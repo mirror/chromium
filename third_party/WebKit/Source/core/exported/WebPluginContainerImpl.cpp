@@ -417,8 +417,7 @@ void WebPluginContainerImpl::DispatchProgressEvent(const WebString& type,
 void WebPluginContainerImpl::EnqueueMessageEvent(
     const WebDOMMessageEvent& event) {
   static_cast<Event*>(event)->SetTarget(element_);
-  element_->GetExecutionContext()->GetEventQueue()->EnqueueEvent(
-      BLINK_FROM_HERE, event);
+  element_->GetExecutionContext()->GetEventQueue()->EnqueueEvent(event);
 }
 
 void WebPluginContainerImpl::Invalidate() {
@@ -692,7 +691,7 @@ bool WebPluginContainerImpl::WantsWheelEvents() {
 
 WebPluginContainerImpl::WebPluginContainerImpl(HTMLPlugInElement& element,
                                                WebPlugin* web_plugin)
-    : ContextClient(element.GetDocument().GetFrame()),
+    : WebPluginContainerBase(element.GetDocument().GetFrame()),
       element_(element),
       web_plugin_(web_plugin),
       web_layer_(nullptr),
@@ -732,8 +731,7 @@ void WebPluginContainerImpl::Dispose() {
 
 DEFINE_TRACE(WebPluginContainerImpl) {
   visitor->Trace(element_);
-  ContextClient::Trace(visitor);
-  PluginView::Trace(visitor);
+  WebPluginContainerBase::Trace(visitor);
 }
 
 void WebPluginContainerImpl::HandleMouseEvent(MouseEvent* event) {

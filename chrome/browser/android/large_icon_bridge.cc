@@ -99,3 +99,8 @@ jboolean LargeIconBridge::GetLargeIconForURL(
 
   return true;
 }
+
+// static
+bool LargeIconBridge::RegisterLargeIconBridge(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}

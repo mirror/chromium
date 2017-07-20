@@ -28,9 +28,9 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/values.h"
 #include "build/build_config.h"
+#include "cc/surfaces/frame_sink_manager.h"
 #include "cc/surfaces/surface.h"
 #include "cc/surfaces/surface_manager.h"
-#include "components/viz/service/frame_sinks/frame_sink_manager.h"
 #include "content/browser/accessibility/browser_accessibility.h"
 #include "content/browser/accessibility/browser_accessibility_manager.h"
 #include "content/browser/browser_plugin/browser_plugin_guest.h"
@@ -1870,7 +1870,7 @@ TestNavigationManager::TestNavigationManager(WebContents* web_contents,
 
 TestNavigationManager::~TestNavigationManager() {
   if (navigation_paused_)
-    handle_->CallResumeForTesting();
+    handle_->Resume();
 }
 
 bool TestNavigationManager::WaitForRequestStart() {
@@ -1927,8 +1927,6 @@ void TestNavigationManager::OnWillProcessResponse() {
   OnNavigationStateChanged();
 }
 
-// TODO(csharrison): Remove CallResumeForTesting method calls in favor of doing
-// it through the throttle.
 bool TestNavigationManager::WaitForDesiredState() {
   // If the desired state has laready been reached, just return.
   if (current_state_ == desired_state_)
@@ -1936,7 +1934,7 @@ bool TestNavigationManager::WaitForDesiredState() {
 
   // Resume the navigation if it was paused.
   if (navigation_paused_)
-    handle_->CallResumeForTesting();
+     handle_->Resume();
 
   // Wait for the desired state if needed.
   if (current_state_ < desired_state_) {
@@ -1962,7 +1960,7 @@ void TestNavigationManager::OnNavigationStateChanged() {
 
   // Otherwise, the navigation should be resumed if it was previously paused.
   if (navigation_paused_)
-    handle_->CallResumeForTesting();
+    handle_->Resume();
 }
 
 bool TestNavigationManager::ShouldMonitorNavigation(NavigationHandle* handle) {

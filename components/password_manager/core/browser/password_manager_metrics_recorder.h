@@ -16,12 +16,12 @@ class GURL;
 
 namespace password_manager {
 
-// URL Keyed Metrics.
+// Internal namespace is intended for component wide access only.
+namespace internal {
 
-// Records a 1 for every page on which a user has modified the content of a
-// password field - regardless of how many password fields a page contains or
-// the user modifies.
 constexpr char kUkmUserModifiedPasswordField[] = "UserModifiedPasswordField";
+
+}  // namespace internal
 
 class BrowserSavePasswordProgressLogger;
 

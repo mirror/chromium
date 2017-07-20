@@ -14,9 +14,15 @@ namespace base {
 class ListValue;
 }
 
+namespace content {
+class WebUI;
+}
+
 namespace ui {
 class InputDeviceManager;
 }
+
+class Profile;
 
 namespace chromeos {
 namespace settings {
@@ -26,24 +32,7 @@ class KeyboardHandler
     : public ::settings::SettingsPageUIHandler,
       public ui::InputDeviceEventObserver {
  public:
-  // Name of the message sent to WebUI when the keys that should be shown
-  // change.
-  static const char kShowKeysChangedName[];
-
-  // Class used by tests to interact with KeyboardHandler internals.
-  class TestAPI {
-   public:
-    explicit TestAPI(KeyboardHandler* handler) { handler_ = handler; }
-
-    // Simulates a request from WebUI to initialize the page.
-    void Initialize();
-
-   private:
-    KeyboardHandler* handler_;  // Not owned.
-    DISALLOW_COPY_AND_ASSIGN(TestAPI);
-  };
-
-  KeyboardHandler();
+  explicit KeyboardHandler(content::WebUI* webui);
   ~KeyboardHandler() override;
 
   // SettingsPageUIHandler implementation.
@@ -64,6 +53,8 @@ class KeyboardHandler
   // Shows or hides the Caps Lock and Diamond key settings based on whether the
   // system status.
   void UpdateShowKeys();
+
+  Profile* profile_;  // Weak pointer.
 
   ScopedObserver<ui::InputDeviceManager, KeyboardHandler> observer_;
 

@@ -100,10 +100,6 @@
 
 #pragma mark - PaymentRequestEditViewControllerDataSource
 
-- (NSString*)title {
-  return nil;
-}
-
 - (CollectionViewItem*)headerItem {
   return nil;
 }

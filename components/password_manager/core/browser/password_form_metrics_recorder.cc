@@ -17,19 +17,6 @@ using autofill::PasswordForm;
 
 namespace password_manager {
 
-const char kUkmSubmissionObserved[] = "Submission.Observed";
-const char kUkmSubmissionResult[] = "Submission.SubmissionResult";
-const char kUkmSubmissionFormType[] = "Submission.SubmittedFormType";
-const char kUkmUpdatingPromptShown[] = "Updating.Prompt.Shown";
-const char kUkmUpdatingPromptTrigger[] = "Updating.Prompt.Trigger";
-const char kUkmUpdatingPromptInteraction[] = "Updating.Prompt.Interaction";
-const char kUkmSavingPromptShown[] = "Saving.Prompt.Shown";
-const char kUkmSavingPromptTrigger[] = "Saving.Prompt.Trigger";
-const char kUkmSavingPromptInteraction[] = "Saving.Prompt.Interaction";
-const char kUkmManagerFillEvent[] = "ManagerFill.Action";
-const char kUkmUserActionSimplified[] = "User.ActionSimplified";
-const char kUkmUserAction[] = "User.Action";
-
 PasswordFormMetricsRecorder::PasswordFormMetricsRecorder(
     bool is_main_frame_secure,
     std::unique_ptr<ukm::UkmEntryBuilder> ukm_entry_builder)
@@ -39,7 +26,6 @@ PasswordFormMetricsRecorder::PasswordFormMetricsRecorder(
 PasswordFormMetricsRecorder::~PasswordFormMetricsRecorder() {
   UMA_HISTOGRAM_ENUMERATION("PasswordManager.ActionsTakenV3", GetActionsTaken(),
                             kMaxNumActionsTaken);
-  RecordUkmMetric(kUkmUserActionSimplified, static_cast<int64_t>(user_action_));
 
   // Use the visible main frame URL at the time the PasswordFormManager
   // is created, in case a navigation has already started and the
@@ -57,7 +43,7 @@ PasswordFormMetricsRecorder::~PasswordFormMetricsRecorder() {
       metrics_util::LogPasswordGenerationAvailableSubmissionEvent(
           metrics_util::PASSWORD_NOT_SUBMITTED);
     }
-    RecordUkmMetric(kUkmSubmissionObserved, 0 /*false*/);
+    RecordUkmMetric(internal::kUkmSubmissionObserved, 0 /*false*/);
   }
 
   if (submitted_form_type_ != kSubmittedFormTypeUnspecified) {
@@ -68,14 +54,8 @@ PasswordFormMetricsRecorder::~PasswordFormMetricsRecorder() {
                                 submitted_form_type_, kSubmittedFormTypeMax);
     }
 
-    RecordUkmMetric(kUkmSubmissionFormType, submitted_form_type_);
+    RecordUkmMetric(internal::kUkmSubmissionFormType, submitted_form_type_);
   }
-
-  RecordUkmMetric(kUkmUpdatingPromptShown, update_prompt_shown_);
-  RecordUkmMetric(kUkmSavingPromptShown, save_prompt_shown_);
-
-  for (const DetailedUserAction& action : one_time_report_user_actions_)
-    RecordUkmMetric(kUkmUserAction, static_cast<int64_t>(action));
 }
 
 // static
@@ -132,8 +112,8 @@ void PasswordFormMetricsRecorder::LogSubmitPassed() {
     }
   }
   base::RecordAction(base::UserMetricsAction("PasswordManager_LoginPassed"));
-  RecordUkmMetric(kUkmSubmissionObserved, 1 /*true*/);
-  RecordUkmMetric(kUkmSubmissionResult, kSubmitResultPassed);
+  RecordUkmMetric(internal::kUkmSubmissionObserved, 1 /*true*/);
+  RecordUkmMetric(internal::kUkmSubmissionResult, kSubmitResultPassed);
   submit_result_ = kSubmitResultPassed;
 }
 
@@ -146,8 +126,8 @@ void PasswordFormMetricsRecorder::LogSubmitFailed() {
         metrics_util::PASSWORD_SUBMISSION_FAILED);
   }
   base::RecordAction(base::UserMetricsAction("PasswordManager_LoginFailed"));
-  RecordUkmMetric(kUkmSubmissionObserved, 1 /*true*/);
-  RecordUkmMetric(kUkmSubmissionResult, kSubmitResultFailed);
+  RecordUkmMetric(internal::kUkmSubmissionObserved, 1 /*true*/);
+  RecordUkmMetric(internal::kUkmSubmissionResult, kSubmitResultFailed);
   submit_result_ = kSubmitResultFailed;
 }
 
@@ -167,18 +147,6 @@ int PasswordFormMetricsRecorder::GetActionsTakenNew() const {
   return static_cast<int>(user_action_) +
          static_cast<int>(UserAction::kMax) *
              (manager_action_new + kManagerActionNewMax * submit_result_);
-}
-
-void PasswordFormMetricsRecorder::RecordDetailedUserAction(
-    PasswordFormMetricsRecorder::DetailedUserAction action) {
-  // One-time actions are collected and reported during destruction of the
-  // PasswordFormMetricsRecorder.
-  if (!IsRepeatedUserAction(action)) {
-    one_time_report_user_actions_.insert(action);
-    return;
-  }
-  // Repeated actions can be reported immediately.
-  RecordUkmMetric(kUkmUserAction, static_cast<int64_t>(action));
 }
 
 int PasswordFormMetricsRecorder::GetActionsTaken() const {
@@ -253,124 +221,10 @@ void PasswordFormMetricsRecorder::RecordHistogramsOnSuppressedAccounts(
       GetHistogramSampleForSuppressedAccounts(best_match),
       kMaxSuppressedAccountStats);
   RecordUkmMetric("SuppressedAccount.Manual.SameOrganizationName", best_match);
-
-  if (current_bubble_ != CurrentBubbleOfInterest::kNone)
-    RecordUIDismissalReason(metrics_util::NO_DIRECT_INTERACTION);
-}
-
-void PasswordFormMetricsRecorder::RecordPasswordBubbleShown(
-    metrics_util::CredentialSourceType credential_source_type,
-    metrics_util::UIDisplayDisposition display_disposition) {
-  if (credential_source_type == metrics_util::CredentialSourceType::kUnknown)
-    return;
-  DCHECK_EQ(CurrentBubbleOfInterest::kNone, current_bubble_);
-  BubbleTrigger automatic_trigger_type =
-      credential_source_type ==
-              metrics_util::CredentialSourceType::kPasswordManager
-          ? BubbleTrigger::kPasswordManagerSuggestionAutomatic
-          : BubbleTrigger::kCredentialManagementAPIAutomatic;
-  BubbleTrigger manual_trigger_type =
-      credential_source_type ==
-              metrics_util::CredentialSourceType::kPasswordManager
-          ? BubbleTrigger::kPasswordManagerSuggestionManual
-          : BubbleTrigger::kCredentialManagementAPIManual;
-
-  switch (display_disposition) {
-    // New credential cases:
-    case metrics_util::AUTOMATIC_WITH_PASSWORD_PENDING:
-      current_bubble_ = CurrentBubbleOfInterest::kSaveBubble;
-      save_prompt_shown_ = true;
-      RecordUkmMetric(kUkmSavingPromptTrigger,
-                      static_cast<int64_t>(automatic_trigger_type));
-      break;
-    case metrics_util::MANUAL_WITH_PASSWORD_PENDING:
-      current_bubble_ = CurrentBubbleOfInterest::kSaveBubble;
-      save_prompt_shown_ = true;
-      RecordUkmMetric(kUkmSavingPromptTrigger,
-                      static_cast<int64_t>(manual_trigger_type));
-      break;
-
-    // Update cases:
-    case metrics_util::AUTOMATIC_WITH_PASSWORD_PENDING_UPDATE:
-      current_bubble_ = CurrentBubbleOfInterest::kUpdateBubble;
-      update_prompt_shown_ = true;
-      RecordUkmMetric(kUkmUpdatingPromptTrigger,
-                      static_cast<int64_t>(automatic_trigger_type));
-      break;
-    case metrics_util::MANUAL_WITH_PASSWORD_PENDING_UPDATE:
-      current_bubble_ = CurrentBubbleOfInterest::kUpdateBubble;
-      update_prompt_shown_ = true;
-      RecordUkmMetric(kUkmUpdatingPromptTrigger,
-                      static_cast<int64_t>(manual_trigger_type));
-      break;
-
-    // Other reasons to show a bubble:
-    case metrics_util::MANUAL_MANAGE_PASSWORDS:
-    case metrics_util::AUTOMATIC_GENERATED_PASSWORD_CONFIRMATION:
-    case metrics_util::AUTOMATIC_SIGNIN_TOAST:
-      // Do nothing.
-      return;
-
-    // Obsolte display dispositions:
-    case metrics_util::MANUAL_BLACKLISTED_OBSOLETE:
-    case metrics_util::AUTOMATIC_CREDENTIAL_REQUEST_OBSOLETE:
-    case metrics_util::NUM_DISPLAY_DISPOSITIONS:
-      NOTREACHED();
-      return;
-  }
-}
-
-void PasswordFormMetricsRecorder::RecordUIDismissalReason(
-    metrics_util::UIDismissalReason ui_dismissal_reason) {
-  if (current_bubble_ != CurrentBubbleOfInterest::kUpdateBubble &&
-      current_bubble_ != CurrentBubbleOfInterest::kSaveBubble)
-    return;
-  const char* metric = current_bubble_ == CurrentBubbleOfInterest::kUpdateBubble
-                           ? kUkmUpdatingPromptInteraction
-                           : kUkmSavingPromptInteraction;
-  switch (ui_dismissal_reason) {
-    // Accepted by user.
-    case metrics_util::CLICKED_SAVE:
-      RecordUkmMetric(metric,
-                      static_cast<int64_t>(BubbleDismissalReason::kAccepted));
-      break;
-
-    // Declined by user.
-    case metrics_util::CLICKED_CANCEL:
-    case metrics_util::CLICKED_NEVER:
-      RecordUkmMetric(metric,
-                      static_cast<int64_t>(BubbleDismissalReason::kDeclined));
-      break;
-
-    // Ignored by user.
-    case metrics_util::NO_DIRECT_INTERACTION:
-      RecordUkmMetric(metric,
-                      static_cast<int64_t>(BubbleDismissalReason::kIgnored));
-      break;
-
-    // Ignore these for metrics collection:
-    case metrics_util::CLICKED_MANAGE:
-    case metrics_util::CLICKED_DONE:
-    case metrics_util::CLICKED_OK:
-    case metrics_util::CLICKED_BRAND_NAME:
-    case metrics_util::CLICKED_PASSWORDS_DASHBOARD:
-    case metrics_util::AUTO_SIGNIN_TOAST_TIMEOUT:
-      break;
-
-    // These should not reach here:
-    case metrics_util::CLICKED_UNBLACKLIST_OBSOLETE:
-    case metrics_util::CLICKED_CREDENTIAL_OBSOLETE:
-    case metrics_util::AUTO_SIGNIN_TOAST_CLICKED_OBSOLETE:
-    case metrics_util::NUM_UI_RESPONSES:
-      NOTREACHED();
-      break;
-  }
-
-  current_bubble_ = CurrentBubbleOfInterest::kNone;
 }
 
 void PasswordFormMetricsRecorder::RecordFillEvent(ManagerAutofillEvent event) {
-  RecordUkmMetric(kUkmManagerFillEvent, event);
+  RecordUkmMetric(internal::kUkmManagerFillEvent, event);
 }
 
 PasswordFormMetricsRecorder::SuppressedAccountExistence
@@ -413,19 +267,6 @@ void PasswordFormMetricsRecorder::RecordUkmMetric(const char* metric_name,
                                                   int64_t value) {
   if (ukm_entry_builder_)
     ukm_entry_builder_->AddMetric(metric_name, value);
-}
-
-// static
-bool PasswordFormMetricsRecorder::IsRepeatedUserAction(
-    DetailedUserAction action) {
-  switch (action) {
-    case DetailedUserAction::kUnknown:
-      return true;
-    case DetailedUserAction::kEditedUsernameInBubble:
-      return false;
-  }
-  NOTREACHED();
-  return true;
 }
 
 }  // namespace password_manager

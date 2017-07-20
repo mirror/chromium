@@ -25,7 +25,6 @@ from pylib.instrumentation import instrumentation_test_instance
 from pylib.local.device import local_device_environment
 from pylib.local.device import local_device_test_run
 from pylib.utils import google_storage_helper
-from pylib.utils import instrumentation_tracing
 from pylib.utils import logdog_helper
 from pylib.utils import shared_preference_utils
 from py_trace_event import trace_event
@@ -144,7 +143,6 @@ class LocalDeviceInstrumentationTestRun(
         steps.append(self._replace_package_contextmanager.__enter__)
 
       def install_helper(apk, permissions):
-        @instrumentation_tracing.no_tracing
         @trace_event.traced("apk_path")
         def install_helper_internal(d, apk_path=apk.path):
           # pylint: disable=unused-argument
@@ -204,7 +202,7 @@ class LocalDeviceInstrumentationTestRun(
         shared_preference_utils.ApplySharedPreferenceSettings(
             dev, self._test_instance.edit_shared_prefs)
 
-      @instrumentation_tracing.no_tracing
+      @trace_event.traced
       def push_test_data():
         device_root = posixpath.join(dev.GetExternalStoragePath(),
                                      'chromium_tests_root')
@@ -321,6 +319,7 @@ class LocalDeviceInstrumentationTestRun(
     extras = {}
 
     flags_to_add = []
+    flags_to_remove = []
     test_timeout_scale = None
     if self._test_instance.coverage_directory:
       coverage_basename = '%s.ec' % ('%s_group' % test[0]['method']
@@ -376,8 +375,9 @@ class LocalDeviceInstrumentationTestRun(
         target = '%s/%s' % (
             self._test_instance.test_package, self._test_instance.test_runner)
       extras['class'] = test_name
-      if 'flags' in test and test['flags']:
-        flags_to_add.extend(test['flags'])
+      if 'flags' in test:
+        flags_to_add.extend(test['flags'].add)
+        flags_to_remove.extend(test['flags'].remove)
       timeout = self._GetTimeoutFromAnnotations(
         test['annotations'], test_display_name)
 
@@ -398,9 +398,10 @@ class LocalDeviceInstrumentationTestRun(
       flags_to_add.append('--render-test-output-dir=%s' %
                           render_tests_device_output_dir)
 
-    if flags_to_add:
+    if flags_to_add or flags_to_remove:
       self._CreateFlagChangerIfNeeded(device)
-      self._flag_changers[str(device)].PushFlags(add=flags_to_add)
+      self._flag_changers[str(device)].PushFlags(
+        add=flags_to_add, remove=flags_to_remove)
 
     time_ms = lambda: int(time.time() * 1e3)
     start_ms = time_ms()
@@ -432,7 +433,7 @@ class LocalDeviceInstrumentationTestRun(
         result_code, result_bundle, statuses, start_ms, duration_ms)
 
     def restore_flags():
-      if flags_to_add:
+      if flags_to_add or flags_to_remove:
         self._flag_changers[str(device)].Restore()
 
     def restore_timeout_scale():
@@ -479,7 +480,7 @@ class LocalDeviceInstrumentationTestRun(
         result.SetLink('logcat', logcat_url)
 
     # Update the result name if the test used flags.
-    if flags_to_add:
+    if flags_to_add or flags_to_remove:
       for r in results:
         if r.GetName() == test_name:
           r.SetName(test_display_name)

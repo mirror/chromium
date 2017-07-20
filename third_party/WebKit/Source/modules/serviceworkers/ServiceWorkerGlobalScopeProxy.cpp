@@ -545,10 +545,6 @@ void ServiceWorkerGlobalScopeProxy::DidInitializeWorkerContext() {
       WorkerGlobalScope()->ScriptController()->GetContext());
 }
 
-void ServiceWorkerGlobalScopeProxy::DidLoadInstalledScript() {
-  Client().WorkerScriptLoaded();
-}
-
 void ServiceWorkerGlobalScopeProxy::WillEvaluateWorkerScript(
     size_t script_size,
     size_t cached_metadata_size) {

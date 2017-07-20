@@ -5,6 +5,8 @@
 #ifndef CHROME_BROWSER_ANDROID_CONTEXTUALSEARCH_CONTEXTUAL_SEARCH_TAB_HELPER_H_
 #define CHROME_BROWSER_ANDROID_CONTEXTUALSEARCH_CONTEXTUAL_SEARCH_TAB_HELPER_H_
 
+#include <jni.h>
+
 #include <memory>
 
 #include "base/android/jni_weak_ref.h"
@@ -29,5 +31,7 @@ class ContextualSearchTabHelper {
   base::WeakPtrFactory<ContextualSearchTabHelper> weak_factory_;
   DISALLOW_COPY_AND_ASSIGN(ContextualSearchTabHelper);
 };
+
+bool RegisterContextualSearchTabHelper(JNIEnv* env);
 
 #endif  // CHROME_BROWSER_ANDROID_CONTEXTUALSEARCH_CONTEXTUAL_SEARCH_TAB_HELPER_H_

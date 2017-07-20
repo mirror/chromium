@@ -9,7 +9,7 @@
 #include "base/logging.h"
 #include "cc/layers/layer.h"
 #include "content/browser/accessibility/browser_accessibility_manager_android.h"
-#include "content/browser/android/content_view_core.h"
+#include "content/browser/android/content_view_core_impl.h"
 #include "content/browser/frame_host/interstitial_page_impl.h"
 #include "content/browser/renderer_host/render_view_host_factory.h"
 #include "content/browser/renderer_host/render_view_host_impl.h"
@@ -98,7 +98,7 @@ WebContentsViewAndroid::~WebContentsViewAndroid() {
 }
 
 void WebContentsViewAndroid::SetContentViewCore(
-    ContentViewCore* content_view_core) {
+    ContentViewCoreImpl* content_view_core) {
   content_view_core_ = content_view_core;
   RenderWidgetHostViewAndroid* rwhv = GetRenderWidgetHostViewAndroid();
   if (rwhv)
@@ -172,8 +172,6 @@ void WebContentsViewAndroid::GetScreenInfo(ScreenInfo* result) const {
           ? display::Screen::GetScreen()->GetDisplayNearestView(native_view)
           : display::Screen::GetScreen()->GetPrimaryDisplay();
   DisplayToScreenInfo(display, result);
-  if (delegate_)
-    delegate_->OverrideDisplayColorSpace(&result->color_space);
 }
 
 void WebContentsViewAndroid::GetContainerBounds(gfx::Rect* out) const {

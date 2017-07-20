@@ -5,7 +5,6 @@
 #ifndef SERVICES_SHAPE_DETECTION_BARCODE_DETECTION_IMPL_MAC_H_
 #define SERVICES_SHAPE_DETECTION_BARCODE_DETECTION_IMPL_MAC_H_
 
-#include "base/mac/availability.h"
 #include "base/mac/scoped_nsobject.h"
 #include "services/shape_detection/public/interfaces/barcodedetection.mojom.h"
 #include "third_party/skia/include/core/SkBitmap.h"
@@ -14,10 +13,7 @@
 
 namespace shape_detection {
 
-// The __attribute__ visibility annotation is necessary to work around a clang
-// bug: https://bugs.llvm.org/show_bug.cgi?id=33796.
-class API_AVAILABLE(macosx(10.10))
-    __attribute__((visibility("hidden"))) BarcodeDetectionImplMac
+class BarcodeDetectionImplMac
     : public shape_detection::mojom::BarcodeDetection {
  public:
   BarcodeDetectionImplMac();

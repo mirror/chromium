@@ -36,6 +36,7 @@ static const CGFloat kPinEntryViewHeight = 90.f;
 static const CGFloat kReconnectViewWidth = 120.f;
 static const CGFloat kReconnectViewHeight = 90.f;
 
+static const CGFloat kTopPadding = 240.f;
 static const CGFloat kPadding = 20.f;
 static const CGFloat kMargin = 20.f;
 
@@ -57,7 +58,6 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
   RemotingClient* _client;
   SessionErrorCode _lastError;
   HostInfo* _hostInfo;
-  BOOL _hasViewAppeared;
 }
 
 @property(nonatomic, assign) SessionErrorCode lastError;
@@ -74,7 +74,6 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
   if (self) {
     _hostInfo = hostInfo;
     _remoteHostName = hostInfo.hostName;
-    _hasViewAppeared = NO;
 
     // TODO(yuweih): This logic may be reused by other views.
     UIButton* cancelButton = [UIButton buttonWithType:UIButtonTypeSystem];
@@ -108,6 +107,8 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
           constraintEqualToAnchor:[self.view trailingAnchor]],
       [[_navBar heightAnchor] constraintEqualToConstant:kBarHeight],
     ]];
+
+    [self attemptConnectionToHost];
   }
   return self;
 }
@@ -173,22 +174,6 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
          selector:@selector(hostSessionStatusChanged:)
              name:kHostSessionStatusChanged
            object:nil];
-
-  [self attemptConnectionToHost];
-
-  // Although keyboard listeners are registered here, they won't work properly
-  // if the keyboard shows/hides before the view appears.
-  [[NSNotificationCenter defaultCenter]
-      addObserver:self
-         selector:@selector(keyboardWillShow:)
-             name:UIKeyboardWillShowNotification
-           object:nil];
-
-  [[NSNotificationCenter defaultCenter]
-      addObserver:self
-         selector:@selector(keyboardWillHide:)
-             name:UIKeyboardWillHideNotification
-           object:nil];
 }
 
 - (void)initializeLayoutConstraintsWithViews:(NSDictionary*)views {
@@ -196,6 +181,7 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
   NSDictionary* layoutMetrics = @{
     @"padding" : @(kPadding),
     @"margin" : @(kMargin),
+    @"topPadding" : @(kTopPadding),
     @"iconDiameter" : @(kIconRadius * 2),
     @"pinEntryViewWidth" : @(kPinEntryViewWidth),
     @"pinEntryViewHeight" : @(kPinEntryViewHeight),
@@ -235,8 +221,9 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
                                                       views:views]];
 
   // Anchors:
-  _activityIndicatorTopConstraintFull = [_activityIndicator.bottomAnchor
-      constraintEqualToAnchor:self.view.centerYAnchor];
+  _activityIndicatorTopConstraintFull =
+      [_activityIndicator.topAnchor constraintEqualToAnchor:self.view.topAnchor
+                                                   constant:kTopPadding];
   _activityIndicatorTopConstraintFull.active = YES;
 
   [_iconView.centerYAnchor
@@ -293,11 +280,19 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
 
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
+  [[NSNotificationCenter defaultCenter]
+      addObserver:self
+         selector:@selector(keyboardWillShow:)
+             name:UIKeyboardWillShowNotification
+           object:nil];
+
+  [[NSNotificationCenter defaultCenter]
+      addObserver:self
+         selector:@selector(keyboardWillHide:)
+             name:UIKeyboardWillHideNotification
+           object:nil];
+
   [_activityIndicator startAnimating];
-
-  _hasViewAppeared = YES;
-
-  self.state = _state;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -310,6 +305,9 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
 }
 
 #pragma mark - Keyboard
+
+// TODO(nicholss): We need to listen to screen rotation and re-adjust the
+// topAnchor.
 
 - (void)keyboardWillShow:(NSNotification*)notification {
   CGSize keyboardSize =
@@ -326,7 +324,7 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
   _activityIndicatorTopConstraintKeyboard.active = NO;
   _activityIndicatorTopConstraintKeyboard = [_activityIndicator.topAnchor
       constraintEqualToAnchor:self.view.topAnchor
-                     constant:_activityIndicator.frame.origin.y + overlap];
+                     constant:kTopPadding + overlap];
   _activityIndicatorTopConstraintFull.active = NO;
   _activityIndicatorTopConstraintKeyboard.active = YES;
   [UIView animateWithDuration:kKeyboardAnimationTime
@@ -348,11 +346,6 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
 
 - (void)setState:(ClientConnectionViewState)state {
   _state = state;
-  if (!_hasViewAppeared) {
-    // Showing different state will re-layout the view, which will be broken if
-    // the view is not shown yet.
-    return;
-  }
   switch (_state) {
     case ClientViewConnecting:
       [self showConnectingState];

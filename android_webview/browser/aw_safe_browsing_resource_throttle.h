@@ -22,8 +22,6 @@ using safe_browsing::SBThreatType;
 
 namespace android_webview {
 
-class AwSafeBrowsingWhitelistManager;
-
 class AwSafeBrowsingResourceThrottle
     : public safe_browsing::BaseResourceThrottle {
  public:
@@ -34,8 +32,6 @@ class AwSafeBrowsingResourceThrottle
     BACK_TO_SAFETY,
   };
 
-  static const void* kUserDataKey;
-
   // Will construct an AwSafeBrowsingResourceThrottle if GMS exists on device
   // and supports safebrowsing.
   static AwSafeBrowsingResourceThrottle* MaybeCreate(
@@ -43,11 +39,9 @@ class AwSafeBrowsingResourceThrottle
       content::ResourceType resource_type,
       scoped_refptr<safe_browsing::SafeBrowsingDatabaseManager>
           database_manager,
-      scoped_refptr<AwSafeBrowsingUIManager> ui_manager,
-      AwSafeBrowsingWhitelistManager* whitelist_manager);
+      scoped_refptr<AwSafeBrowsingUIManager> ui_manager);
 
- protected:
-  bool CheckUrl(const GURL& url) override;
+  static const void* kUserDataKey;
 
  private:
   AwSafeBrowsingResourceThrottle(
@@ -55,8 +49,7 @@ class AwSafeBrowsingResourceThrottle
       content::ResourceType resource_type,
       scoped_refptr<safe_browsing::SafeBrowsingDatabaseManager>
           database_manager,
-      scoped_refptr<AwSafeBrowsingUIManager> ui_manager,
-      AwSafeBrowsingWhitelistManager* whitelist_manager);
+      scoped_refptr<AwSafeBrowsingUIManager> ui_manager);
 
   ~AwSafeBrowsingResourceThrottle() override;
 
@@ -83,8 +76,6 @@ class AwSafeBrowsingResourceThrottle
   void CancelResourceLoad() override;
 
   net::URLRequest* request_;
-
-  AwSafeBrowsingWhitelistManager* whitelist_manager_;
 
   DISALLOW_COPY_AND_ASSIGN(AwSafeBrowsingResourceThrottle);
 };

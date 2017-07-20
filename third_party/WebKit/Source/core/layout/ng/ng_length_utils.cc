@@ -7,7 +7,6 @@
 #include "core/layout/ng/ng_constraint_space.h"
 #include "core/layout/ng/ng_constraint_space_builder.h"
 #include "core/layout/ng/ng_fragment.h"
-#include "core/layout/ng/ng_layout_result.h"
 #include "core/style/ComputedStyle.h"
 #include "platform/LayoutUnit.h"
 #include "platform/Length.h"

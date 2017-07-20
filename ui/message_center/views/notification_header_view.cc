@@ -4,7 +4,6 @@
 
 #include "ui/message_center/views/notification_header_view.h"
 
-#include "base/memory/ptr_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"

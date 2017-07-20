@@ -15,15 +15,15 @@
 #include "ui/gfx/geometry/size.h"
 
 namespace base {
-class SingleThreadTaskRunner;
+class SequencedTaskRunner;
 }
 
 namespace cc {
 class CopyOutputResult;
+class FrameSinkManager;
 }  // namespace cc
 
 namespace viz {
-class FrameSinkManager;
 class HostFrameSinkManager;
 class FrameSinkManagerImpl;
 }
@@ -32,7 +32,7 @@ namespace content {
 
 CONTENT_EXPORT viz::FrameSinkId AllocateFrameSinkId();
 
-CONTENT_EXPORT viz::FrameSinkManager* GetFrameSinkManager();
+CONTENT_EXPORT cc::FrameSinkManager* GetFrameSinkManager();
 
 CONTENT_EXPORT viz::HostFrameSinkManager* GetHostFrameSinkManager();
 
@@ -44,16 +44,10 @@ void CopyFromCompositingSurfaceHasResult(
 
 namespace surface_utils {
 
-// Directly connects HostFrameSinkManager to FrameSinkManagerImpl without Mojo.
-CONTENT_EXPORT void ConnectWithLocalFrameSinkManager(
-    viz::HostFrameSinkManager* host_frame_sink_manager,
-    viz::FrameSinkManagerImpl* frame_sink_manager_impl);
-
-// Connects HostFrameSinkManager to FrameSinkManagerImpl using in process Mojo.
 CONTENT_EXPORT void ConnectWithInProcessFrameSinkManager(
-    viz::HostFrameSinkManager* host_frame_sink_manager,
-    viz::FrameSinkManagerImpl* frame_sink_manager_impl,
-    scoped_refptr<base::SingleThreadTaskRunner> task_runner);
+    viz::HostFrameSinkManager* host,
+    viz::FrameSinkManagerImpl* manager,
+    scoped_refptr<base::SequencedTaskRunner> task_runner);
 
 }  // namespace surface_utils
 

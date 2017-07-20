@@ -92,7 +92,7 @@ class _MediaTBMv2Benchmark(perf_benchmark.PerfBenchmark):
   def CreateStorySet(self, options):
     return page_sets.ToughVideoCasesPageSet(measure_memory=True)
 
-  def CreateCoreTimelineBasedMeasurementOptions(self):
+  def CreateTimelineBasedMeasurementOptions(self):
     category_filter = chrome_trace_category_filter.ChromeTraceCategoryFilter()
 
     # 'toplevel' category provides CPU time slices used by # cpuTimeMetric.

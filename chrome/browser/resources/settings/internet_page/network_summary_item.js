@@ -231,13 +231,12 @@ Polymer({
     if (!deviceState)
       return false;
     var type = deviceState.Type;
-    if (type == CrOnc.Type.TETHER ||
-        (type == CrOnc.Type.CELLULAR && this.tetherDeviceState)) {
-      // The "Mobile data" subpage should always be shown if Tether networks are
-      // available, even if there are currently no associated networks.
+    if (type == CrOnc.Type.CELLULAR && this.tetherDeviceState)
       return true;
-    }
-    var minlen = (type == CrOnc.Type.WI_FI || type == CrOnc.Type.VPN) ? 1 : 2;
+    var minlen = (type == CrOnc.Type.WI_FI || type == CrOnc.Type.VPN ||
+                  type == CrOnc.Type.TETHER) ?
+        1 :
+        2;
     return networkStateList.length >= minlen;
   },
 

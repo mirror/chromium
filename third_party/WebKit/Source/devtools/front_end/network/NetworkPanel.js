@@ -119,6 +119,8 @@ Network.NetworkPanel = class extends UI.Panel {
     NetworkLog.networkLog.addEventListener(NetworkLog.NetworkLog.Events.RequestAdded, this._onUpdateRequest, this);
     NetworkLog.networkLog.addEventListener(NetworkLog.NetworkLog.Events.RequestUpdated, this._onUpdateRequest, this);
     NetworkLog.networkLog.addEventListener(NetworkLog.NetworkLog.Events.Reset, this._onNetworkLogReset, this);
+
+    Components.DataSaverInfobar.maybeShowInPanel(this);
   }
 
   /**

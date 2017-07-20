@@ -81,7 +81,6 @@
 #include "platform/wtf/CurrentTime.h"
 #include "platform/wtf/text/StringBuilder.h"
 #include "public/platform/WebLayerStickyPositionConstraint.h"
-#include "public/platform/WebScrollBoundaryBehavior.h"
 
 namespace blink {
 
@@ -1139,25 +1138,9 @@ void CompositedLayerMapping::UpdateGraphicsLayerGeometry(
   UpdateShouldFlattenTransform();
   UpdateChildrenTransform();
   UpdateScrollParent(ScrollParent());
-  UpdateScrollBoundaryBehavior();
   RegisterScrollingLayers();
 
   UpdateCompositingReasons();
-}
-
-void CompositedLayerMapping::UpdateScrollBoundaryBehavior() {
-  EScrollBoundaryBehavior behavior_x =
-      GetLayoutObject().StyleRef().ScrollBoundaryBehaviorX();
-  EScrollBoundaryBehavior behavior_y =
-      GetLayoutObject().StyleRef().ScrollBoundaryBehaviorY();
-  if (scrolling_contents_layer_) {
-    scrolling_contents_layer_->SetScrollBoundaryBehavior(
-        WebScrollBoundaryBehavior(
-            static_cast<WebScrollBoundaryBehavior::ScrollBoundaryBehaviorType>(
-                behavior_x),
-            static_cast<WebScrollBoundaryBehavior::ScrollBoundaryBehaviorType>(
-                behavior_y)));
-  }
 }
 
 void CompositedLayerMapping::UpdateMainGraphicsLayerGeometry(
@@ -2336,8 +2319,6 @@ bool CompositedLayerMapping::UpdateScrollingLayers(
   ScrollingCoordinator* scrolling_coordinator =
       owning_layer_.GetScrollingCoordinator();
 
-  auto* scrollable_area = owning_layer_.GetScrollableArea();
-
   bool layer_changed = false;
   if (needs_scrolling_layers) {
     if (scrolling_layer_) {
@@ -2365,9 +2346,9 @@ bool CompositedLayerMapping::UpdateScrollingLayers(
       scrolling_layer_->AddChild(scrolling_contents_layer_.get());
 
       layer_changed = true;
-      if (scrolling_coordinator && scrollable_area) {
+      if (scrolling_coordinator) {
         scrolling_coordinator->ScrollableAreaScrollLayerDidChange(
-            scrollable_area);
+            owning_layer_.GetScrollableArea());
         scrolling_coordinator->ScrollableAreasDidChange();
       }
     }
@@ -2375,9 +2356,9 @@ bool CompositedLayerMapping::UpdateScrollingLayers(
     scrolling_layer_ = nullptr;
     scrolling_contents_layer_ = nullptr;
     layer_changed = true;
-    if (scrolling_coordinator && scrollable_area) {
+    if (scrolling_coordinator) {
       scrolling_coordinator->ScrollableAreaScrollLayerDidChange(
-          scrollable_area);
+          owning_layer_.GetScrollableArea());
       scrolling_coordinator->ScrollableAreasDidChange();
     }
   }

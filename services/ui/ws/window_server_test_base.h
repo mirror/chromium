@@ -129,6 +129,7 @@ class WindowServerTestBase : public WindowServerServiceTestBase,
   void OnWmDeactivateWindow(aura::Window* window) override;
 
   void BindWindowTreeClientRequest(
+      const service_manager::BindSourceInfo& source_info,
       mojom::WindowTreeClientRequest request);
 
  private:

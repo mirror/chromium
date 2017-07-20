@@ -8,7 +8,7 @@
 #include "components/strings/grit/components_strings.h"
 #import "ios/chrome/browser/ui/commands/generic_chrome_command.h"
 #include "ios/chrome/browser/ui/commands/ios_command_ids.h"
-#import "ios/chrome/browser/ui/commands/open_new_tab_command.h"
+#import "ios/chrome/browser/ui/commands/new_tab_command.h"
 #import "ios/chrome/browser/ui/keyboard/UIKeyCommand+Chrome.h"
 #include "ios/chrome/browser/ui/rtl_geometry.h"
 #include "ios/chrome/grit/ios_strings.h"
@@ -67,11 +67,15 @@
 
   // New tab blocks.
   void (^newTab)() = ^{
-    [weakDispatcher openNewTab:[OpenNewTabCommand command]];
+    [weakConsumer
+        chromeExecuteCommand:[[NewTabCommand alloc]
+                                 initWithIncognito:[weakConsumer
+                                                       isOffTheRecord]]];
   };
 
   void (^newIncognitoTab)() = ^{
-    [weakDispatcher openNewTab:[OpenNewTabCommand incognitoTabCommand]];
+    [weakConsumer
+        chromeExecuteCommand:[[NewTabCommand alloc] initWithIncognito:YES]];
   };
 
   const int browseLeftDescriptionID = useRTLLayout

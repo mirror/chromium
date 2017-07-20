@@ -104,6 +104,7 @@ PrintPreviewUIBrowserTest.prototype = {
   });
 });
 
+
 // Disable accessibility errors for some tests.
 [
   'AdvancedSettings1Option',
@@ -119,17 +120,5 @@ GEN('#if !defined(OS_CHROMEOS)');
 TEST_F('PrintPreviewUIBrowserTest', 'SystemDefaultPrinterPolicy', function() {
   loadTimeData.overrideValues({useSystemDefaultPrinter: true});
   mocha.grep(new RegExp('SystemDefaultPrinterPolicy' + '\\b')).run();
-});
-GEN('#endif');
-
-GEN('#if defined(OS_MACOSX)');
-TEST_F('PrintPreviewUIBrowserTest', 'MacOpenPDFInPreview', function() {
-  mocha.grep(new RegExp('MacOpenPDFInPreview' + '\\b')).run();
-});
-GEN('#endif');
-
-GEN('#if defined(OS_WIN)');
-TEST_F('PrintPreviewUIBrowserTest', 'WinSystemDialogLink', function() {
-  mocha.grep(new RegExp('WinSystemDialogLink' + '\\b')).run();
 });
 GEN('#endif');

@@ -15,6 +15,10 @@
 #include "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom.h"
 #include "url/origin.h"
 
+namespace service_manager {
+struct BindSourceInfo;
+}
+
 namespace content {
 
 class RenderFrameHost;
@@ -24,6 +28,7 @@ class CONTENT_EXPORT AuthenticatorImpl
     : public NON_EXPORTED_BASE(webauth::mojom::Authenticator) {
  public:
   static void Create(RenderFrameHost* render_frame_host,
+                     const service_manager::BindSourceInfo& source_info,
                      webauth::mojom::AuthenticatorRequest request);
   ~AuthenticatorImpl() override;
 
@@ -35,8 +40,12 @@ class CONTENT_EXPORT AuthenticatorImpl
   explicit AuthenticatorImpl(RenderFrameHost* render_frame_host);
 
   // mojom:Authenticator
-  void MakeCredential(webauth::mojom::MakeCredentialOptionsPtr options,
-                      MakeCredentialCallback callback) override;
+  void MakeCredential(
+      webauth::mojom::RelyingPartyAccountPtr account,
+      std::vector<webauth::mojom::ScopedCredentialParametersPtr> parameters,
+      const std::vector<uint8_t>& challenge,
+      webauth::mojom::ScopedCredentialOptionsPtr options,
+      MakeCredentialCallback callback) override;
 
   base::Closure connection_error_handler_;
   base::CancelableClosure timeout_callback_;

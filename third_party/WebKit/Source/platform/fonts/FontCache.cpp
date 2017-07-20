@@ -62,6 +62,8 @@
 #include "public/platform/Platform.h"
 #include "ui/gfx/font_list.h"
 
+using namespace WTF;
+
 namespace blink {
 
 #if !defined(OS_WIN) && !defined(OS_LINUX)
@@ -204,6 +206,17 @@ ShapeCache* FontCache::GetShapeCache(const FallbackListCompositeKey& key) {
   return result;
 }
 
+typedef HashMap<FontCache::FontFileKey,
+                RefPtr<OpenTypeVerticalData>,
+                IntHash<FontCache::FontFileKey>,
+                UnsignedWithZeroKeyHashTraits<FontCache::FontFileKey>>
+    FontVerticalDataCache;
+
+FontVerticalDataCache& FontVerticalDataCacheInstance() {
+  DEFINE_STATIC_LOCAL(FontVerticalDataCache, font_vertical_data_cache, ());
+  return font_vertical_data_cache;
+}
+
 void FontCache::SetFontManager(sk_sp<SkFontMgr> font_manager) {
   DCHECK(!static_font_manager_);
   static_font_manager_ = font_manager.release();
@@ -213,7 +226,7 @@ PassRefPtr<OpenTypeVerticalData> FontCache::GetVerticalData(
     const FontFileKey& key,
     const FontPlatformData& platform_data) {
   FontVerticalDataCache& font_vertical_data_cache =
-      FontGlobalContext::GetFontVerticalDataCache();
+      FontVerticalDataCacheInstance();
   FontVerticalDataCache::iterator result = font_vertical_data_cache.find(key);
   if (result != font_vertical_data_cache.end())
     return result.Get()->value;
@@ -317,7 +330,7 @@ void FontCache::PurgePlatformFontDataCache() {
 
 void FontCache::PurgeFontVerticalDataCache() {
   FontVerticalDataCache& font_vertical_data_cache =
-      FontGlobalContext::GetFontVerticalDataCache();
+      FontVerticalDataCacheInstance();
   if (!font_vertical_data_cache.IsEmpty()) {
     // Mark & sweep unused verticalData
     FontVerticalDataCache::iterator vertical_data_end =
@@ -411,11 +424,11 @@ void FontCache::CrashWithFontInfo(const FontDescription* font_description) {
   }
 
   FontDescription font_description_copy = *font_description;
-  WTF::debug::Alias(&font_description_copy);
+  debug::Alias(&font_description_copy);
 
-  WTF::debug::Alias(&font_cache);
-  WTF::debug::Alias(&font_mgr);
-  WTF::debug::Alias(&num_families);
+  debug::Alias(&font_cache);
+  debug::Alias(&font_mgr);
+  debug::Alias(&num_families);
 
   CHECK(false);
 }

@@ -164,12 +164,12 @@ viz::FrameSinkId AllocateFrameSinkId() {
 #endif
 }
 
-viz::FrameSinkManager* GetFrameSinkManager() {
+cc::FrameSinkManager* GetFrameSinkManager() {
 #if defined(OS_ANDROID)
   return CompositorImpl::GetFrameSinkManager();
 #else
   ImageTransportFactory* factory = ImageTransportFactory::GetInstance();
-  if (!factory)
+  if (factory == NULL)
     return nullptr;
   return factory->GetContextFactoryPrivate()->GetFrameSinkManager();
 #endif
@@ -179,10 +179,7 @@ viz::HostFrameSinkManager* GetHostFrameSinkManager() {
 #if defined(OS_ANDROID)
   return CompositorImpl::GetHostFrameSinkManager();
 #else
-  ImageTransportFactory* factory = ImageTransportFactory::GetInstance();
-  if (!factory)
-    return nullptr;
-  return factory->GetContextFactoryPrivate()->GetHostFrameSinkManager();
+  return BrowserMainLoop::GetInstance()->host_frame_sink_manager();
 #endif
 }
 
@@ -220,7 +217,7 @@ namespace surface_utils {
 void ConnectWithInProcessFrameSinkManager(
     viz::HostFrameSinkManager* host,
     viz::FrameSinkManagerImpl* manager,
-    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
+    scoped_refptr<base::SequencedTaskRunner> task_runner) {
   // A mojo pointer to |host| which is the FrameSinkManager's client.
   cc::mojom::FrameSinkManagerClientPtr host_mojo;
   // A mojo pointer to |manager|.
@@ -238,13 +235,6 @@ void ConnectWithInProcessFrameSinkManager(
   // Sets |host_mojo| which was given to the |manager|.
   host->BindAndSetManager(std::move(host_mojo_request), task_runner,
                           std::move(manager_mojo));
-}
-
-void ConnectWithLocalFrameSinkManager(
-    viz::HostFrameSinkManager* host_frame_sink_manager,
-    viz::FrameSinkManagerImpl* frame_sink_manager_impl) {
-  host_frame_sink_manager->SetLocalManager(frame_sink_manager_impl);
-  frame_sink_manager_impl->SetLocalClient(host_frame_sink_manager);
 }
 
 }  // namespace surface_utils

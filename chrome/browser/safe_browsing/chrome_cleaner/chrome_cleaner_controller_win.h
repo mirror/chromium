@@ -50,6 +50,7 @@ class ChromeCleanerControllerDelegate {
   // extension. If the operation fails, the file name passed to
   // |fecthed_callback| will be empty.
   virtual void FetchAndVerifyChromeCleaner(FetchedCallback fetched_callback);
+  virtual bool SafeBrowsingExtendedReportingScoutEnabled();
   virtual bool IsMetricsAndCrashReportingEnabled();
 
   // Auxiliary methods for tagging and resetting open profiles.
@@ -132,10 +133,8 @@ class ChromeCleanerController {
   static ChromeCleanerController* GetInstance();
 
   // Returns whether the Cleanup card in settings should be displayed.
-  bool ShouldShowCleanupInSettingsUI();
-
-  // Returns whether Cleanup is powered by a partner company.
-  bool IsPoweredByPartner();
+  // Static to prevent instantiation of the global controller object.
+  static bool ShouldShowCleanupInSettingsUI();
 
   State state() const { return state_; }
   IdleReason idle_reason() const { return idle_reason_; }
@@ -246,8 +245,6 @@ class ChromeCleanerController {
   // The logs permission checkboxes in the Chrome Cleaner dialog and webui page
   // are opt out.
   bool logs_enabled_ = true;
-  // Whether Cleanup is powered by an external partner.
-  bool powered_by_partner_ = false;
   IdleReason idle_reason_ = IdleReason::kInitial;
   std::unique_ptr<SwReporterInvocation> reporter_invocation_;
   std::unique_ptr<std::set<base::FilePath>> files_to_delete_;

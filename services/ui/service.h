@@ -13,8 +13,6 @@
 #include <vector>
 
 #include "base/macros.h"
-#include "base/memory/ref_counted.h"
-#include "base/memory/weak_ptr.h"
 #include "components/discardable_memory/public/interfaces/discardable_shared_memory_manager.mojom.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/cpp/service.h"
@@ -55,37 +53,17 @@ class Identity;
 
 namespace ui {
 
-class ImageCursorsSet;
 class InputDeviceController;
 class PlatformEventSource;
 
 namespace ws {
-class ThreadedImageCursorsFactory;
 class WindowServer;
 }
 
 class Service : public service_manager::Service,
                 public ws::WindowServerDelegate {
  public:
-  // Contains the configuration necessary to run the UI Service inside the
-  // Window Manager's process.
-  struct InProcessConfig {
-    InProcessConfig();
-    ~InProcessConfig();
-
-    // Can be used to load resources.
-    scoped_refptr<base::SingleThreadTaskRunner> resource_runner = nullptr;
-
-    // Can only be de-referenced on |resource_runner_|.
-    base::WeakPtr<ImageCursorsSet> image_cursors_set_weak_ptr = nullptr;
-
-   private:
-    DISALLOW_COPY_AND_ASSIGN(InProcessConfig);
-  };
-
-  // |config| should be null when UI Service runs in it's own separate process,
-  // as opposed to inside the Window Manager's process.
-  explicit Service(const InProcessConfig* config = nullptr);
+  Service();
   ~Service() override;
 
  private:
@@ -95,8 +73,6 @@ class Service : public service_manager::Service,
   struct UserState;
 
   using UserIdToUserState = std::map<ws::UserId, std::unique_ptr<UserState>>;
-
-  bool is_in_process() const { return is_in_process_; }
 
   // Attempts to initialize the resource bundle. Returns true if successful,
   // otherwise false if resources cannot be loaded.
@@ -123,59 +99,58 @@ class Service : public service_manager::Service,
   bool IsTestConfig() const override;
   void OnWillCreateTreeForWindowManager(
       bool automatically_create_display_roots) override;
-  ws::ThreadedImageCursorsFactory* GetThreadedImageCursorsFactory() override;
 
   void BindAccessibilityManagerRequest(
-      mojom::AccessibilityManagerRequest request,
-      const service_manager::BindSourceInfo& source_info);
+      const service_manager::BindSourceInfo& source_info,
+      mojom::AccessibilityManagerRequest request);
 
-  void BindClipboardRequest(mojom::ClipboardRequest request,
-                            const service_manager::BindSourceInfo& source_info);
+  void BindClipboardRequest(const service_manager::BindSourceInfo& source_info,
+                            mojom::ClipboardRequest request);
 
   void BindDisplayManagerRequest(
-      mojom::DisplayManagerRequest request,
-      const service_manager::BindSourceInfo& source_info);
+      const service_manager::BindSourceInfo& source_info,
+      mojom::DisplayManagerRequest request);
 
-  void BindGpuRequest(mojom::GpuRequest request,
-                      const service_manager::BindSourceInfo& source_info);
+  void BindGpuRequest(const service_manager::BindSourceInfo& source_info,
+                      mojom::GpuRequest request);
 
   void BindIMERegistrarRequest(
-      mojom::IMERegistrarRequest request,
-      const service_manager::BindSourceInfo& source_info);
+      const service_manager::BindSourceInfo& source_info,
+      mojom::IMERegistrarRequest request);
 
-  void BindIMEDriverRequest(mojom::IMEDriverRequest request,
-                            const service_manager::BindSourceInfo& source_info);
+  void BindIMEDriverRequest(const service_manager::BindSourceInfo& source_info,
+                            mojom::IMEDriverRequest request);
 
   void BindUserAccessManagerRequest(
-      mojom::UserAccessManagerRequest request,
-      const service_manager::BindSourceInfo& source_info);
+      const service_manager::BindSourceInfo& source_info,
+      mojom::UserAccessManagerRequest request);
 
   void BindUserActivityMonitorRequest(
-      mojom::UserActivityMonitorRequest request,
-      const service_manager::BindSourceInfo& source_info);
+      const service_manager::BindSourceInfo& source_info,
+      mojom::UserActivityMonitorRequest request);
 
   void BindWindowManagerWindowTreeFactoryRequest(
-      mojom::WindowManagerWindowTreeFactoryRequest request,
-      const service_manager::BindSourceInfo& source_info);
+      const service_manager::BindSourceInfo& source_info,
+      mojom::WindowManagerWindowTreeFactoryRequest request);
 
   void BindWindowTreeFactoryRequest(
-      mojom::WindowTreeFactoryRequest request,
-      const service_manager::BindSourceInfo& source_info);
+      const service_manager::BindSourceInfo& source_info,
+      mojom::WindowTreeFactoryRequest request);
 
   void BindWindowTreeHostFactoryRequest(
-      mojom::WindowTreeHostFactoryRequest request,
-      const service_manager::BindSourceInfo& source_info);
+      const service_manager::BindSourceInfo& source_info,
+      mojom::WindowTreeHostFactoryRequest request);
 
   void BindDiscardableSharedMemoryManagerRequest(
-      discardable_memory::mojom::DiscardableSharedMemoryManagerRequest request,
-      const service_manager::BindSourceInfo& source_info);
+      const service_manager::BindSourceInfo& source_info,
+      discardable_memory::mojom::DiscardableSharedMemoryManagerRequest request);
 
   void BindWindowServerTestRequest(
-      mojom::WindowServerTestRequest request,
-      const service_manager::BindSourceInfo& source_info);
+      const service_manager::BindSourceInfo& source_info,
+      mojom::WindowServerTestRequest request);
 
   std::unique_ptr<ws::WindowServer> window_server_;
-  std::unique_ptr<PlatformEventSource> event_source_;
+  std::unique_ptr<ui::PlatformEventSource> event_source_;
   using PendingRequests = std::vector<std::unique_ptr<PendingRequest>>;
   PendingRequests pending_requests_;
 
@@ -184,13 +159,6 @@ class Service : public service_manager::Service,
   // Provides input-device information via Mojo IPC. Registers Mojo interfaces
   // and must outlive |registry_|.
   InputDeviceServer input_device_server_;
-
-  // True if the UI Service runs inside WM's process, false if it runs inside
-  // its own process.
-  const bool is_in_process_;
-
-  std::unique_ptr<ws::ThreadedImageCursorsFactory>
-      threaded_image_cursors_factory_;
 
   bool test_config_;
 #if defined(USE_OZONE)
@@ -210,9 +178,7 @@ class Service : public service_manager::Service,
   std::unique_ptr<discardable_memory::DiscardableSharedMemoryManager>
       discardable_shared_memory_manager_;
 
-  service_manager::BinderRegistryWithArgs<
-      const service_manager::BindSourceInfo&>
-      registry_;
+  service_manager::BinderRegistry registry_;
 
   // Set to true in StartDisplayInit().
   bool is_gpu_ready_ = false;

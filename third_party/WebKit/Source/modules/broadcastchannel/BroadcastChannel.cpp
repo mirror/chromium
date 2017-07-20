@@ -107,8 +107,7 @@ void BroadcastChannel::OnMessage(const WTF::Vector<uint8_t>& message) {
       nullptr, std::move(value),
       GetExecutionContext()->GetSecurityOrigin()->ToString());
   event->SetTarget(this);
-  bool success = GetExecutionContext()->GetEventQueue()->EnqueueEvent(
-      BLINK_FROM_HERE, event);
+  bool success = GetExecutionContext()->GetEventQueue()->EnqueueEvent(event);
   DCHECK(success);
   ALLOW_UNUSED_LOCAL(success);
 }

@@ -161,15 +161,10 @@ bool NGInlineLayoutAlgorithm::PlaceItems(
       DCHECK(!box->text_metrics.IsEmpty());
       text_builder.SetSize(
           {item_result.inline_size, box->text_metrics.LineHeight()});
-      if (item_result.shape_result) {
-        // Take all used fonts into account if 'line-height: normal'.
-        if (box->include_used_fonts && item.Type() == NGInlineItem::kText) {
-          box->AccumulateUsedFonts(item_result.shape_result.Get(),
-                                   baseline_type_);
-        }
-        text_builder.SetShapeResult(std::move(item_result.shape_result));
-      } else {
-        DCHECK(!item.TextShapeResult());  // kControl or unit tests.
+      // Take all used fonts into account if 'line-height: normal'.
+      if (box->include_used_fonts && item.Type() == NGInlineItem::kText) {
+        box->AccumulateUsedFonts(item, item_result.start_offset,
+                                 item_result.end_offset, baseline_type_);
       }
       RefPtr<NGPhysicalTextFragment> text_fragment =
           text_builder.ToTextFragment(item_result.item_index,
@@ -182,6 +177,7 @@ bool NGInlineLayoutAlgorithm::PlaceItems(
       // influence the line height.
       // https://drafts.csswg.org/css2/visudet.html#line-height
       box->ComputeTextMetrics(*item.Style(), baseline_type_);
+      text_builder.SetDirection(box->style->Direction());
       if (ShouldCreateBoxFragment(item, item_result))
         box->SetNeedsBoxFragment(item_result.needs_box_when_empty);
     } else if (item.Type() == NGInlineItem::kCloseTag) {
@@ -309,6 +305,7 @@ NGInlineBoxState* NGInlineLayoutAlgorithm::PlaceAtomicInline(
   // TODO(kojii): Try to eliminate the wrapping text fragment and use the
   // |fragment| directly. Currently |CopyFragmentDataToLayoutBlockFlow|
   // requires a text fragment.
+  text_builder->SetDirection(style.Direction());
   text_builder->SetSize({fragment.InlineSize(), metrics.LineHeight()});
   LayoutUnit line_top = item_result->margins.block_start - metrics.ascent;
   RefPtr<NGPhysicalTextFragment> text_fragment = text_builder->ToTextFragment(
@@ -400,18 +397,21 @@ LayoutUnit NGInlineLayoutAlgorithm::ComputeContentSize(
   return content_size;
 }
 
-// Add a baseline from a child line box fragment.
+// Add a baseline from a child line box.
 // @return false if the specified child is not a line box.
 bool NGInlineLayoutAlgorithm::AddBaseline(const NGBaselineRequest& request,
-                                          const NGPhysicalFragment* child,
-                                          LayoutUnit child_offset) {
+                                          unsigned child_index) {
+  const NGPhysicalFragment* child =
+      container_builder_.Children()[child_index].Get();
   if (!child->IsLineBox())
     return false;
 
   const NGPhysicalLineBoxFragment* line_box =
       ToNGPhysicalLineBoxFragment(child);
   LayoutUnit offset = line_box->BaselinePosition(request.baseline_type);
-  container_builder_.AddBaseline(request, offset + child_offset);
+  container_builder_.AddBaseline(
+      request.algorithm_type, request.baseline_type,
+      offset + container_builder_.Offsets()[child_index].block_offset);
   return true;
 }
 
@@ -427,15 +427,13 @@ void NGInlineLayoutAlgorithm::PropagateBaselinesFromChildren() {
       case NGBaselineAlgorithmType::kAtomicInline:
       case NGBaselineAlgorithmType::kAtomicInlineForFirstLine:
         for (unsigned i = container_builder_.Children().size(); i--;) {
-          if (AddBaseline(request, container_builder_.Children()[i].Get(),
-                          container_builder_.Offsets()[i].block_offset))
+          if (AddBaseline(request, i))
             break;
         }
         break;
       case NGBaselineAlgorithmType::kFirstLine:
         for (unsigned i = 0; i < container_builder_.Children().size(); i++) {
-          if (AddBaseline(request, container_builder_.Children()[i].Get(),
-                          container_builder_.Offsets()[i].block_offset))
+          if (AddBaseline(request, i))
             break;
         }
         break;

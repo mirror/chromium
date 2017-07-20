@@ -43,7 +43,6 @@ class QuotaPermissionContext;
 
 namespace safe_browsing {
 class SafeBrowsingService;
-class UrlCheckerDelegate;
 }
 
 namespace user_prefs {
@@ -132,7 +131,6 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
       const GURL& current_url,
       const GURL& new_url) override;
   bool ShouldAssignSiteForURL(const GURL& url) override;
-  std::vector<url::Origin> GetOriginsRequiringDedicatedProcess() override;
   void AppendExtraCommandLineSwitches(base::CommandLine* command_line,
                                       int child_process_id) override;
   std::string GetApplicationLocale() override;
@@ -284,6 +282,7 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
       content::RenderFrameHost* render_frame_host) override;
   void BindInterfaceRequestFromFrame(
       content::RenderFrameHost* render_frame_host,
+      const service_manager::BindSourceInfo& source_info,
       const std::string& interface_name,
       mojo::ScopedMessagePipeHandle interface_pipe) override;
   bool BindAssociatedInterfaceRequestFromFrame(
@@ -312,7 +311,6 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
   GetReceiverPresentationServiceDelegate(
       content::WebContents* web_contents) override;
   void RecordURLMetric(const std::string& metric, const GURL& url) override;
-  std::string GetMetricSuffixForURL(const GURL& url) override;
   std::vector<std::unique_ptr<content::NavigationThrottle>>
   CreateThrottlesForNavigation(content::NavigationHandle* handle) override;
   std::unique_ptr<content::NavigationUIData> GetNavigationUIData(
@@ -380,8 +378,6 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
   static void SetDefaultQuotaSettingsForTesting(
       const storage::QuotaSettings *settings);
 
-  safe_browsing::UrlCheckerDelegate* GetSafeBrowsingUrlCheckerDelegate();
-
 #if BUILDFLAG(ENABLE_PLUGINS)
   // Set of origins that can use TCP/UDP private APIs from NaCl.
   std::set<std::string> allowed_socket_origins_;
@@ -399,12 +395,10 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
   service_manager::BinderRegistry gpu_binder_registry_;
 
   scoped_refptr<safe_browsing::SafeBrowsingService> safe_browsing_service_;
-  scoped_refptr<safe_browsing::UrlCheckerDelegate>
-      safe_browsing_url_checker_delegate_;
 
   std::unique_ptr<service_manager::BinderRegistry> frame_interfaces_;
   std::unique_ptr<
-      service_manager::BinderRegistryWithArgs<content::RenderFrameHost*>>
+      service_manager::BinderRegistryWithParams<content::RenderFrameHost*>>
       frame_interfaces_parameterized_;
 
   base::WeakPtrFactory<ChromeContentBrowserClient> weak_factory_;

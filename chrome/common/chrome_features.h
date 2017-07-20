@@ -65,8 +65,6 @@ extern const base::Feature kCaptureThumbnailDependingOnTransitionType;
 
 extern const base::Feature kCaptureThumbnailOnLoadFinished;
 
-extern const base::Feature kCaptureThumbnailOnNavigatingAway;
-
 extern const base::Feature kCheckInstallabilityForBannerOnLoad;
 
 extern const base::Feature kClickToOpenPDFPlaceholder;
@@ -160,6 +158,8 @@ extern const base::Feature kDisablePostScriptPrinting;
 #if BUILDFLAG(ENABLE_PLUGINS)
 extern const base::Feature kPreferHtmlOverPlugins;
 #endif
+
+extern const base::Feature kPrefService;
 
 #if defined(OS_CHROMEOS)
 extern const base::Feature kPreloadLockScreen;

@@ -32,21 +32,9 @@ MockPermissionPromptFactory::~MockPermissionPromptFactory() {
 }
 
 std::unique_ptr<PermissionPrompt> MockPermissionPromptFactory::Create(
-    content::WebContents* web_contents,
-    PermissionPrompt::Delegate* delegate) {
-  MockPermissionPrompt* prompt =
-      new MockPermissionPrompt(this, delegate, can_update_ui_);
-
-  prompts_.push_back(prompt);
-  show_count_++;
-  requests_count_ = delegate->Requests().size();
-  for (const PermissionRequest* request : delegate->Requests())
-    request_types_seen_.push_back(request->GetPermissionRequestType());
-
-  if (!show_bubble_quit_closure_.is_null())
-    show_bubble_quit_closure_.Run();
-
-  manager_->set_auto_response_for_test(response_type_);
+    content::WebContents* web_contents) {
+  MockPermissionPrompt* prompt = new MockPermissionPrompt(this, manager_);
+  prompt->can_update_ui_ = can_update_ui_;
   return base::WrapUnique(prompt);
 }
 
@@ -67,7 +55,11 @@ void MockPermissionPromptFactory::DocumentOnLoadCompletedInMainFrame() {
 }
 
 bool MockPermissionPromptFactory::is_visible() {
-  return !prompts_.empty();
+  for (auto* prompt : prompts_) {
+    if (prompt->IsVisible())
+      return true;
+  }
+  return false;
 }
 
 int MockPermissionPromptFactory::TotalRequestCount() {
@@ -90,10 +82,22 @@ void MockPermissionPromptFactory::WaitForPermissionBubble() {
 
 // static
 std::unique_ptr<PermissionPrompt> MockPermissionPromptFactory::DoNotCreate(
-    content::WebContents* web_contents,
-    PermissionPrompt::Delegate* delegate) {
+    content::WebContents* web_contents) {
   NOTREACHED();
-  return base::WrapUnique(new MockPermissionPrompt(nullptr, nullptr, false));
+  return base::WrapUnique(new MockPermissionPrompt(nullptr, nullptr));
+}
+
+void MockPermissionPromptFactory::UpdateResponseType() {
+  manager_->set_auto_response_for_test(response_type_);
+}
+
+void MockPermissionPromptFactory::ShowView(MockPermissionPrompt* prompt) {
+  if (base::ContainsValue(prompts_, prompt))
+    return;
+  prompts_.push_back(prompt);
+
+  if (!show_bubble_quit_closure_.is_null())
+    show_bubble_quit_closure_.Run();
 }
 
 void MockPermissionPromptFactory::HideView(MockPermissionPrompt* prompt) {

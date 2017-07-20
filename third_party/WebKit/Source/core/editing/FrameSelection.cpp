@@ -229,9 +229,7 @@ bool FrameSelection::SetSelectionDeprecated(
   // Note: Since, setting focus can modify DOM tree, we should use
   // |oldSelection| before setting focus
   frame_->GetEditor().RespondToChangedSelection(
-      old_selection_in_dom_tree.ComputeStartPosition(),
-      options & kCloseTyping ? TypingContinuation::kEnd
-                             : TypingContinuation::kContinue);
+      old_selection_in_dom_tree.ComputeStartPosition(), options);
   DCHECK_EQ(current_document, GetDocument());
   return true;
 }
@@ -296,6 +294,20 @@ void FrameSelection::DidSetSelectionDeprecated(SetSelectionOptions options,
       Event::Create(EventTypeNames::selectionchange));
 }
 
+void FrameSelection::SetSelection(const SelectionInFlatTree& new_selection,
+                                  SetSelectionOptions options,
+                                  CursorAlignOnScroll align,
+                                  TextGranularity granularity) {
+  new_selection.AssertValidFor(GetDocument());
+  SelectionInDOMTree::Builder builder;
+  builder.SetAffinity(new_selection.Affinity())
+      .SetBaseAndExtent(ToPositionInDOMTree(new_selection.Base()),
+                        ToPositionInDOMTree(new_selection.Extent()))
+      .SetIsDirectional(new_selection.IsDirectional())
+      .SetIsHandleVisible(new_selection.IsHandleVisible());
+  return SetSelection(builder.Build(), options, align, granularity);
+}
+
 void FrameSelection::NodeChildrenWillBeRemoved(ContainerNode& container) {
   if (!container.InActiveDocument())
     return;
@@ -340,7 +352,7 @@ static DispatchEventResult DispatchSelectStart(
 // "selectstart" event is dispatched and canceled, otherwise returns true.
 // When |userTriggered| is |NotUserTrigged|, return value specifies whether
 // selection is modified or not.
-bool FrameSelection::Modify(SelectionModifyAlteration alter,
+bool FrameSelection::Modify(EAlteration alter,
                             SelectionDirection direction,
                             TextGranularity granularity,
                             EUserTriggered user_triggered) {
@@ -381,6 +393,26 @@ bool FrameSelection::Modify(SelectionModifyAlteration alter,
     granularity_ = TextGranularity::kCharacter;
 
   ScheduleVisualUpdateForPaintInvalidationIfNeeded();
+
+  return true;
+}
+
+bool FrameSelection::Modify(EAlteration alter,
+                            unsigned vertical_distance,
+                            VerticalDirection direction) {
+  SelectionModifier selection_modifier(*GetFrame(),
+                                       ComputeVisibleSelectionInDOMTree());
+  if (!selection_modifier.ModifyWithPageGranularity(alter, vertical_distance,
+                                                    direction)) {
+    return false;
+  }
+
+  SetSelection(selection_modifier.Selection().AsSelection(),
+               kCloseTyping | kClearTypingStyle | kUserTriggered,
+               alter == kAlterationMove ? CursorAlignOnScroll::kAlways
+                                        : CursorAlignOnScroll::kIfNeeded);
+
+  granularity_ = TextGranularity::kCharacter;
 
   return true;
 }
@@ -1149,13 +1181,6 @@ void FrameSelection::ClearDocumentCachedRange() {
 
 std::pair<int, int> FrameSelection::LayoutSelectionStartEnd() {
   return layout_selection_->SelectionStartEnd();
-}
-
-base::Optional<int> FrameSelection::LayoutSelectionStart() const {
-  return layout_selection_->SelectionStart();
-}
-base::Optional<int> FrameSelection::LayoutSelectionEnd() const {
-  return layout_selection_->SelectionEnd();
 }
 
 void FrameSelection::ClearLayoutSelection() {

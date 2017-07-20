@@ -123,11 +123,7 @@ class TextInputManagerTester::InternalObserver
   }
 
   // WebContentsObserver implementation.
-  void WebContentsDestroyed() override {
-    DCHECK(text_input_manager_);
-    text_input_manager_->RemoveObserver(this);
-    text_input_manager_ = nullptr;
-  }
+  void WebContentsDestroyed() override { text_input_manager_ = nullptr; }
 
  private:
   TextInputManager* text_input_manager_;

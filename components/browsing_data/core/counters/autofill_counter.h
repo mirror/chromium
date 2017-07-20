@@ -10,7 +10,7 @@
 #include "base/time/time.h"
 #include "components/autofill/core/browser/webdata/autofill_webdata_service.h"
 #include "components/browsing_data/core/counters/browsing_data_counter.h"
-#include "components/browsing_data/core/counters/sync_tracker.h"
+#include "components/sync/driver/sync_service_observer.h"
 #include "components/webdata/common/web_data_service_consumer.h"
 
 namespace autofill {
@@ -20,7 +20,8 @@ class AutofillWebDataService;
 namespace browsing_data {
 
 class AutofillCounter : public browsing_data::BrowsingDataCounter,
-                        public WebDataServiceConsumer {
+                        public WebDataServiceConsumer,
+                        public syncer::SyncServiceObserver {
  public:
   class AutofillResult : public SyncResult {
    public:
@@ -67,13 +68,16 @@ class AutofillCounter : public browsing_data::BrowsingDataCounter,
       WebDataServiceBase::Handle handle,
       std::unique_ptr<WDTypedResult> result) override;
 
+  // SyncServiceObserver implementation.
+  void OnStateChanged(syncer::SyncService* sync) override;
+
   // Cancel all pending requests to AutofillWebdataService.
   void CancelAllRequests();
 
   base::ThreadChecker thread_checker_;
 
   scoped_refptr<autofill::AutofillWebDataService> web_data_service_;
-  SyncTracker sync_tracker_;
+  syncer::SyncService* sync_service_;
 
   WebDataServiceBase::Handle suggestions_query_;
   WebDataServiceBase::Handle credit_cards_query_;
@@ -82,6 +86,7 @@ class AutofillCounter : public browsing_data::BrowsingDataCounter,
   ResultInt num_suggestions_;
   ResultInt num_credit_cards_;
   ResultInt num_addresses_;
+  bool autofill_sync_enabled_;
 
   base::Time period_start_for_testing_;
 

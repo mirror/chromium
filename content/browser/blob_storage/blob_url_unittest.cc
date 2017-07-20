@@ -20,9 +20,9 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "content/browser/blob_storage/blob_url_loader_factory.h"
+#include "content/browser/loader/test_url_loader_client.h"
 #include "content/browser/url_loader_factory_getter.h"
 #include "content/public/test/test_browser_thread_bundle.h"
-#include "content/public/test/test_url_loader_client.h"
 #include "mojo/common/data_pipe_utils.h"
 #include "net/base/net_errors.h"
 #include "net/base/request_priority.h"
@@ -144,7 +144,8 @@ class BlobURLRequestJobTest : public testing::TestWithParam<bool> {
         net::NetworkDelegate* network_delegate) const override {
       return new BlobURLRequestJob(request, network_delegate,
                                    test_->GetHandleFromBuilder(),
-                                   test_->file_system_context_.get());
+                                   test_->file_system_context_.get(),
+                                   base::ThreadTaskRunnerHandle::Get().get());
     }
 
    private:

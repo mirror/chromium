@@ -25,7 +25,6 @@
 #include "components/crx_file/id_util.h"
 #include "components/keyed_service/core/keyed_service.h"
 #include "components/strings/grit/components_strings.h"
-#include "components/vector_icons/vector_icons.h"
 #include "content/public/browser/browser_context.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/extension_system.h"
@@ -34,6 +33,7 @@
 #include "extensions/common/value_builder.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/base/l10n/l10n_util.h"
+#include "ui/vector_icons/vector_icons.h"
 
 namespace {
 
@@ -138,7 +138,7 @@ TEST_F(ExtensionMessageBubbleBridgeUnitTest,
 
   extra_view_info = bridge->GetExtraViewInfo();
 
-  EXPECT_EQ(&vector_icons::kBusinessIcon, extra_view_info->resource);
+  EXPECT_EQ(&ui::kBusinessIcon, extra_view_info->resource);
   EXPECT_EQ(l10n_util::GetStringUTF16(IDS_EXTENSIONS_INSTALLED_BY_ADMIN),
             extra_view_info->text);
   EXPECT_FALSE(extra_view_info->is_text_linked);

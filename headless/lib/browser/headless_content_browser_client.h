@@ -25,7 +25,6 @@ class HeadlessContentBrowserClient : public content::ContentBrowserClient {
   content::DevToolsManagerDelegate* GetDevToolsManagerDelegate() override;
   std::unique_ptr<base::Value> GetServiceManifestOverlay(
       base::StringPiece name) override;
-  content::QuotaPermissionContext* CreateQuotaPermissionContext() override;
   void GetQuotaSettings(
       content::BrowserContext* context,
       content::StoragePartition* partition,

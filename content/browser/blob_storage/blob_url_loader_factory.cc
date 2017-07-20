@@ -67,7 +67,10 @@ class BlobURLLoader : public mojom::URLLoader {
       return;
     }
 
-    blob_reader_ = blob_handle_->CreateReader(file_system_context.get());
+    base::SequencedTaskRunner* file_task_runner =
+        BrowserThread::GetTaskRunnerForThread(BrowserThread::FILE).get();
+    blob_reader_ =
+        blob_handle_->CreateReader(file_system_context.get(), file_task_runner);
 
     // We only support GET request per the spec.
     if (request.method != "GET") {

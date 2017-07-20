@@ -11,7 +11,6 @@ import android.text.TextUtils;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
-import org.chromium.base.CommandLine;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.BaseChromiumInstrumentationTestRunner;
 import org.chromium.base.test.BaseTestResult;
@@ -109,13 +108,6 @@ public class ChromeInstrumentationTestRunner extends BaseChromiumInstrumentation
             }
         }
 
-        private boolean isDonEnabled() {
-            // We can't directly check whether the VR DON flow is enabled since
-            // we don't have permission to read the VrCore settings file. Instead,
-            // pass a flag.
-            return CommandLine.getInstance().hasSwitch("don-enabled");
-        }
-
         @Override
         protected boolean restrictionApplies(String restriction) {
             if (TextUtils.equals(restriction, ChromeRestriction.RESTRICTION_TYPE_PHONE)
@@ -165,9 +157,6 @@ public class ChromeInstrumentationTestRunner extends BaseChromiumInstrumentation
                         && daydreamViewPaired) {
                     return true;
                 }
-            }
-            if (TextUtils.equals(restriction, ChromeRestriction.RESTRICTION_TYPE_DON_ENABLED)) {
-                return !isDonEnabled();
             }
             return false;
         }

@@ -2,13 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "components/autofill/core/common/password_form.h"
 #include "components/password_manager/core/browser/password_ui_utils.h"
 
-#include <tuple>
-
-#include "components/autofill/core/common/password_form.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "url/gurl.h"
 
 namespace password_manager {
 
@@ -40,32 +37,44 @@ TEST(GetShownOriginTest, RemovePrefixes) {
   }
 }
 
-TEST(GetShownOriginAndLinkUrlTest, OriginFromAndroidForm_NoAppDisplayName) {
+TEST(GetShownOriginAndLinkUrlTest, OriginFromAndroidForm_NoAffiliatedRealm) {
   autofill::PasswordForm android_form;
-  android_form.signon_realm = "android://hash@com.example.android";
-  android_form.app_display_name.clear();
+  android_form.signon_realm =
+      "android://"
+      "m3HSJL1i83hdltRq0-o9czGb-8KJDKra4t_"
+      "3JRlnPKcjI8PZm6XBHXx6zG4UuMXaDEZjR1wuXDre9G9zvN7AQw=="
+      "@com.example.android";
+  android_form.affiliated_web_realm = std::string();
 
-  std::string shown_origin;
+  bool is_android_uri;
   GURL link_url;
-  std::tie(shown_origin, link_url) = GetShownOriginAndLinkUrl(android_form);
-
-  EXPECT_EQ("android.example.com", shown_origin);
-  EXPECT_EQ("https://play.google.com/store/apps/details?id=com.example.android",
-            link_url.spec());
+  bool origin_is_clickable;
+  EXPECT_EQ("android://com.example.android",
+            GetShownOriginAndLinkUrl(android_form, &is_android_uri, &link_url,
+                                     &origin_is_clickable));
+  EXPECT_TRUE(is_android_uri);
+  EXPECT_FALSE(origin_is_clickable);
+  EXPECT_EQ(GURL(android_form.signon_realm), link_url);
 }
 
-TEST(GetShownOriginAndLinkUrlTest, OriginFromAndroidForm_WithAppDisplayName) {
+TEST(GetShownOriginAndLinkUrlTest, OriginFromAndroidForm_WithAffiliatedRealm) {
   autofill::PasswordForm android_form;
-  android_form.signon_realm = "android://hash@com.example.android";
-  android_form.app_display_name = "Example Android App";
+  android_form.signon_realm =
+      "android://"
+      "m3HSJL1i83hdltRq0-o9czGb-8KJDKra4t_"
+      "3JRlnPKcjI8PZm6XBHXx6zG4UuMXaDEZjR1wuXDre9G9zvN7AQw=="
+      "@com.example.android";
+  android_form.affiliated_web_realm = "https://example.com/";
 
-  std::string shown_origin;
+  bool is_android_uri;
   GURL link_url;
-  std::tie(shown_origin, link_url) = GetShownOriginAndLinkUrl(android_form);
-
-  EXPECT_EQ("Example Android App", shown_origin);
-  EXPECT_EQ("https://play.google.com/store/apps/details?id=com.example.android",
-            link_url.spec());
+  bool origin_is_clickable;
+  EXPECT_EQ("example.com",
+            GetShownOriginAndLinkUrl(android_form, &is_android_uri, &link_url,
+                                     &origin_is_clickable));
+  EXPECT_TRUE(is_android_uri);
+  EXPECT_TRUE(origin_is_clickable);
+  EXPECT_EQ(GURL(android_form.affiliated_web_realm), link_url);
 }
 
 TEST(GetShownOriginAndLinkUrlTest, OriginFromNonAndroidForm) {
@@ -73,12 +82,15 @@ TEST(GetShownOriginAndLinkUrlTest, OriginFromNonAndroidForm) {
   form.signon_realm = "https://example.com/";
   form.origin = GURL("https://example.com/login?ref=1");
 
-  std::string shown_origin;
+  bool is_android_uri;
   GURL link_url;
-  std::tie(shown_origin, link_url) = GetShownOriginAndLinkUrl(form);
-
-  EXPECT_EQ("example.com", shown_origin);
-  EXPECT_EQ(GURL("https://example.com/login?ref=1"), link_url);
+  bool origin_is_clickable;
+  EXPECT_EQ("example.com",
+            GetShownOriginAndLinkUrl(form, &is_android_uri, &link_url,
+                                     &origin_is_clickable));
+  EXPECT_FALSE(is_android_uri);
+  EXPECT_TRUE(origin_is_clickable);
+  EXPECT_EQ(form.origin, link_url);
 }
 
 TEST(SplitByDotAndReverseTest, ReversedHostname) {

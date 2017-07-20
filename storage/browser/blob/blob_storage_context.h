@@ -149,7 +149,6 @@ class STORAGE_EXPORT BlobStorageContext {
   friend class BlobDataHandle;
   friend class BlobDataHandle::BlobDataHandleShared;
   friend class BlobFlattenerTest;
-  friend class BlobRegistryImplTest;
   friend class BlobSliceTest;
   friend class BlobStorageContextTest;
 

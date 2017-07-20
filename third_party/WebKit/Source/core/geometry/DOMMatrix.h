@@ -7,9 +7,9 @@
 
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/StringOrUnrestrictedDoubleSequence.h"
+#include "core/dom/ArrayBufferViewHelpers.h"
 #include "core/geometry/DOMMatrixInit.h"
 #include "core/geometry/DOMMatrixReadOnly.h"
-#include "core/typed_arrays/ArrayBufferViewHelpers.h"
 
 namespace blink {
 
@@ -88,7 +88,7 @@ class CORE_EXPORT DOMMatrix : public DOMMatrixReadOnly {
   }
 
   DOMMatrix* multiplySelf(DOMMatrixInit&, ExceptionState&);
-  DOMMatrix* multiplySelf(const DOMMatrix& other_matrix);
+  DOMMatrix* multiplySelf(DOMMatrix* other_matrix);
   DOMMatrix* preMultiplySelf(DOMMatrixInit&, ExceptionState&);
   DOMMatrix* translateSelf(double tx = 0, double ty = 0, double tz = 0);
   DOMMatrix* scaleSelf(double sx = 1);

@@ -43,7 +43,6 @@ class APP_LIST_EXPORT AppListPage : public views::View {
   // Returns the z height of the search box for this page.
   virtual int GetSearchBoxZHeight() const;
 
-  const ContentsView* contents_view() const { return contents_view_; }
   void set_contents_view(ContentsView* contents_view) {
     contents_view_ = contents_view;
   }
@@ -68,8 +67,6 @@ class APP_LIST_EXPORT AppListPage : public views::View {
   // contents view's coordinate space. This is the area of the contents view
   // below the search box.
   gfx::Rect GetDefaultContentsBounds() const;
-
-  bool IsCustomLauncherPageActive() const;
 
  private:
   ContentsView* contents_view_;

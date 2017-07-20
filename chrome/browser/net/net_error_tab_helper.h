@@ -14,7 +14,6 @@
 #include "chrome/browser/net/dns_probe_service.h"
 #include "chrome/common/network_diagnostics.mojom.h"
 #include "components/error_page/common/net_error_info.h"
-#include "components/offline_pages/features/features.h"
 #include "components/prefs/pref_member.h"
 #include "content/public/browser/reload_type.h"
 #include "content/public/browser/web_contents_binding_set.h"
@@ -52,11 +51,11 @@ class NetErrorTabHelper
     dns_probe_status_snoop_callback_ = dns_probe_status_snoop_callback;
   }
 
-#if BUILDFLAG(ENABLE_OFFLINE_PAGES)
+#if defined(OS_ANDROID)
   bool is_showing_download_button_in_error_page() const {
     return is_showing_download_button_in_error_page_;
   }
-#endif  // BUILDFLAG(ENABLE_OFFLINE_PAGES)
+#endif  // defined(OS_ANDROID)
 
   // content::WebContentsObserver implementation.
   void RenderFrameCreated(content::RenderFrameHost* render_frame_host) override;
@@ -84,10 +83,10 @@ class NetErrorTabHelper
     return network_diagnostics_bindings_;
   }
 
-#if BUILDFLAG(ENABLE_OFFLINE_PAGES)
+#if defined(OS_ANDROID)
   void OnDownloadPageLater();
   void OnSetIsShowingDownloadButtonInErrorPage(bool is_showing_download_button);
-#endif  // BUILDFLAG(ENABLE_OFFLINE_PAGES)
+#endif  // defined(OS_ANDROID)
 
  private:
   friend class content::WebContentsUserData<NetErrorTabHelper>;
@@ -104,10 +103,10 @@ class NetErrorTabHelper
   // testing.
   virtual void RunNetworkDiagnosticsHelper(const std::string& sanitized_url);
 
-#if BUILDFLAG(ENABLE_OFFLINE_PAGES)
+#if defined(OS_ANDROID)
   // Virtual for testing.
   virtual void DownloadPageLaterHelper(const GURL& url);
-#endif  // BUILDFLAG(ENABLE_OFFLINE_PAGES)
+#endif  // defined(OS_ANDROID)
 
   content::WebContentsFrameBindingSet<chrome::mojom::NetworkDiagnostics>
       network_diagnostics_bindings_;
@@ -123,10 +122,10 @@ class NetErrorTabHelper
   // is true.  (This should never be true if |dns_error_active_| is false.)
   bool dns_error_page_committed_;
 
-#if BUILDFLAG(ENABLE_OFFLINE_PAGES)
+#if defined(OS_ANDROID)
   // True if download button is being shown when the error page commits.
   bool is_showing_download_button_in_error_page_;
-#endif  // BUILDFLAG(ENABLE_OFFLINE_PAGES)
+#endif  // defined(OS_ANDROID)
 
   // The status of a DNS probe that may or may not have started or finished.
   // Since the renderer can change out from under the helper (in cross-process

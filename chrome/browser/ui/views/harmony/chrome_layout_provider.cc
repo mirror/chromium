@@ -4,14 +4,11 @@
 
 #include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
 
-#include <algorithm>
-
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "chrome/browser/ui/views/harmony/chrome_typography.h"
 #include "chrome/browser/ui/views/harmony/harmony_layout_provider.h"
 #include "ui/base/material_design/material_design_controller.h"
-#include "ui/gfx/font_list.h"
 
 // static
 ChromeLayoutProvider* ChromeLayoutProvider::Get() {
@@ -26,31 +23,12 @@ ChromeLayoutProvider::CreateLayoutProvider() {
              : base::MakeUnique<ChromeLayoutProvider>();
 }
 
-// static
-int ChromeLayoutProvider::GetControlHeightForFont(const gfx::FontList& font) {
-  return std::max(views::style::GetLineHeight(views::style::CONTEXT_LABEL,
-                                              views::style::STYLE_PRIMARY),
-                  font.GetHeight()) +
-         Get()->GetDistanceMetric(DISTANCE_CONTROL_TOTAL_VERTICAL_TEXT_PADDING);
-}
-
-gfx::Insets ChromeLayoutProvider::GetInsetsMetric(int metric) const {
-  switch (metric) {
-    case ChromeInsetsMetric::INSETS_TOAST:
-      return gfx::Insets(0, 8);
-    default:
-      return views::LayoutProvider::GetInsetsMetric(metric);
-  }
-}
-
 int ChromeLayoutProvider::GetDistanceMetric(int metric) const {
   switch (metric) {
     case DISTANCE_BUTTON_MINIMUM_WIDTH:
       return 48;
     case DISTANCE_CONTROL_LIST_VERTICAL:
       return GetDistanceMetric(views::DISTANCE_UNRELATED_CONTROL_VERTICAL);
-    case DISTANCE_CONTROL_TOTAL_VERTICAL_TEXT_PADDING:
-      return 6;
     case DISTANCE_RELATED_CONTROL_HORIZONTAL_SMALL:
       return 8;
     case DISTANCE_RELATED_CONTROL_VERTICAL_SMALL:
@@ -67,10 +45,6 @@ int ChromeLayoutProvider::GetDistanceMetric(int metric) const {
       return 20;
     case DISTANCE_UNRELATED_CONTROL_VERTICAL_LARGE:
       return 30;
-    case DISTANCE_TOAST_CONTROL_VERTICAL:
-      return 8;
-    case DISTANCE_TOAST_LABEL_VERTICAL:
-      return 12;
     default:
       return views::LayoutProvider::GetDistanceMetric(metric);
   }

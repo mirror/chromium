@@ -1131,6 +1131,9 @@ void RendererSchedulerImpl::UpdatePolicyLocked(UpdateType update_type) {
       break;
 
     case UseCase::NONE:
+      new_policy.compositor_queue_policy().priority =
+          main_thread_compositing_is_fast ? TaskQueue::HIGH_PRIORITY
+                                          : TaskQueue::NORMAL_PRIORITY;
       // It's only safe to block tasks that if we are expecting a compositor
       // driven gesture.
       if (touchstart_expected_soon &&
@@ -1190,6 +1193,11 @@ void RendererSchedulerImpl::UpdatePolicyLocked(UpdateType update_type) {
   if (GetMainThreadOnly().renderer_suspended) {
     new_policy.loading_queue_policy().is_suspended = true;
     new_policy.timer_queue_policy().is_suspended = true;
+  }
+
+  if (GetMainThreadOnly().renderer_backgrounded &&
+      RuntimeEnabledFeatures::TimerThrottlingForBackgroundTabsEnabled()) {
+    new_policy.timer_queue_policy().is_throttled = true;
   }
 
   if (GetMainThreadOnly().use_virtual_time) {
@@ -1951,7 +1959,6 @@ void RendererSchedulerImpl::DidProcessTask(double start_time, double end_time) {
 }
 
 void RendererSchedulerImpl::OnTaskCompleted(MainThreadTaskQueue* queue,
-                                            const TaskQueue::Task& task,
                                             base::TimeTicks start,
                                             base::TimeTicks end) {
   task_queue_throttler()->OnTaskRunTimeReported(queue, start, end);

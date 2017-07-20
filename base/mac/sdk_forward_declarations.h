@@ -20,7 +20,6 @@
 #include <stdint.h>
 
 #include "base/base_export.h"
-#include "base/mac/availability.h"
 
 // ----------------------------------------------------------------------------
 // Define typedefs, enums, and protocols not available in the version of the
@@ -189,15 +188,15 @@ BASE_EXPORT extern NSString* const CIDetectorTypeText;
 
 @interface NSView (ElCapitanSDK)
 - (void)setPressureConfiguration:(NSPressureConfiguration*)aConfiguration
-    API_AVAILABLE(macos(10.11));
-@property(readonly, strong)
-    NSLayoutXAxisAnchor* leftAnchor API_AVAILABLE(macos(10.11));
-@property(readonly, strong)
-    NSLayoutXAxisAnchor* rightAnchor API_AVAILABLE(macos(10.11));
-@property(readonly, strong)
-    NSLayoutYAxisAnchor* bottomAnchor API_AVAILABLE(macos(10.11));
-@property(readonly, strong)
-    NSLayoutDimension* widthAnchor API_AVAILABLE(macos(10.11));
+    __attribute__((availability(macos, introduced = 10.11)));
+@property(readonly, strong) NSLayoutXAxisAnchor* leftAnchor
+    __attribute__((availability(macos, introduced = 10.11)));
+@property(readonly, strong) NSLayoutXAxisAnchor* rightAnchor
+    __attribute__((availability(macos, introduced = 10.11)));
+@property(readonly, strong) NSLayoutYAxisAnchor* bottomAnchor
+    __attribute__((availability(macos, introduced = 10.11)));
+@property(readonly, strong) NSLayoutDimension* widthAnchor
+    __attribute__((availability(macos, introduced = 10.11)));
 @end
 
 @interface NSWindow (ElCapitanSDK)

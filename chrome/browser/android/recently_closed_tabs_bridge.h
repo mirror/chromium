@@ -5,6 +5,8 @@
 #ifndef CHROME_BROWSER_ANDROID_RECENTLY_CLOSED_TABS_BRIDGE_H_
 #define CHROME_BROWSER_ANDROID_RECENTLY_CLOSED_TABS_BRIDGE_H_
 
+#include <jni.h>
+
 #include "base/android/scoped_java_ref.h"
 #include "base/compiler_specific.h"
 #include "base/macros.h"
@@ -43,6 +45,9 @@ class RecentlyClosedTabsBridge : public sessions::TabRestoreServiceObserver {
   // Observer callback when our associated TabRestoreService is destroyed.
   void TabRestoreServiceDestroyed(
       sessions::TabRestoreService* service) override;
+
+  // Registers JNI methods.
+  static bool Register(JNIEnv* env);
 
  private:
   ~RecentlyClosedTabsBridge() override;

@@ -243,3 +243,8 @@ static jlong Init(JNIEnv* env, const JavaParamRef<jclass>& obj) {
   g_uma_session_stats = new UmaSessionStats();
   return reinterpret_cast<intptr_t>(g_uma_session_stats);
 }
+
+// Register native methods
+bool RegisterUmaSessionStats(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}

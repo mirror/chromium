@@ -9,8 +9,8 @@
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/screen_util.h"
 #include "ash/shell.h"
-#include "ash/shell_test_api.h"
 #include "ash/test/ash_test_base.h"
+#include "ash/test/shell_test_api.h"
 #include "ui/aura/env.h"
 #include "ui/aura/test/test_window_delegate.h"
 #include "ui/aura/window_tracker.h"
@@ -22,6 +22,7 @@
 #include "ui/events/test/event_generator.h"
 
 namespace ash {
+namespace test {
 
 namespace {
 
@@ -30,7 +31,7 @@ ScreenPositionController* GetScreenPositionController() {
   return test_api.screen_position_controller();
 }
 
-class ScreenPositionControllerTest : public AshTestBase {
+class ScreenPositionControllerTest : public test::AshTestBase {
  public:
   ScreenPositionControllerTest() {}
   ~ScreenPositionControllerTest() override {}
@@ -338,4 +339,5 @@ TEST_F(ScreenPositionControllerTest,
   EXPECT_TRUE(event_handler->could_convert_to_screen());
 }
 
+}  // namespace test
 }  // namespace ash

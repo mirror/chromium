@@ -238,7 +238,7 @@ void AppBannerManagerAndroid::ResetCurrentPageData() {
   native_app_package_ = "";
 }
 
-void AppBannerManagerAndroid::ShowBannerUi() {
+void AppBannerManagerAndroid::ShowBanner() {
   content::WebContents* contents = web_contents();
   DCHECK(contents);
 
@@ -329,6 +329,11 @@ std::string AppBannerManagerAndroid::ExtractQueryValueForName(
       return it.GetValue();
   }
   return std::string();
+}
+
+// static
+bool AppBannerManagerAndroid::Register(JNIEnv* env) {
+  return RegisterNativesImpl(env);
 }
 
 // static

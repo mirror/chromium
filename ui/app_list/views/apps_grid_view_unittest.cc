@@ -122,14 +122,11 @@ class AppsGridViewTest : public views::ViewsTestBase,
     delegate_.reset(new AppListTestViewDelegate);
     app_list_view_ = new AppListView(delegate_.get());
 
+    // Initialize around a point that ensures the window is wholly shown.
     app_list_view_->Initialize(parent, 0, false, false);
     ContentsView* contents_view =
         app_list_view_->app_list_main_view()->contents_view();
     apps_grid_view_ = contents_view->apps_container_view()->apps_grid_view();
-    // Initialize around a point that ensures the window is wholly shown. It
-    // bails out early with |test_with_fullscreen_|.
-    // TODO(warx): remove MaybeSetAnchorPoint setup here when bubble launcher is
-    // removed from code base.
     gfx::Size size = apps_grid_view_->GetPreferredSize();
     app_list_view_->MaybeSetAnchorPoint(
         gfx::Point(size.width() / 2, size.height() / 2));
@@ -322,7 +319,7 @@ TEST_P(AppsGridViewTest, RemoveSelectedLastApp) {
   EXPECT_TRUE(apps_grid_view_->IsSelectedView(view));
 }
 
-TEST_P(AppsGridViewTest, MouseDragWithFolderDisabled) {
+TEST_F(AppsGridViewTest, MouseDragWithFolderDisabled) {
   model_->SetFoldersEnabled(false);
   const int kTotalItems = 4;
   model_->PopulateApps(kTotalItems);
@@ -371,7 +368,7 @@ TEST_P(AppsGridViewTest, MouseDragWithFolderDisabled) {
   test_api_->LayoutToIdealBounds();
 }
 
-TEST_P(AppsGridViewTest, MouseDragItemIntoFolder) {
+TEST_F(AppsGridViewTest, MouseDragItemIntoFolder) {
   size_t kTotalItems = 3;
   model_->PopulateApps(kTotalItems);
   EXPECT_EQ(model_->top_level_item_list()->item_count(), kTotalItems);
@@ -418,7 +415,7 @@ TEST_P(AppsGridViewTest, MouseDragItemIntoFolder) {
   test_api_->LayoutToIdealBounds();
 }
 
-TEST_P(AppsGridViewTest, MouseDragMaxItemsInFolder) {
+TEST_F(AppsGridViewTest, MouseDragMaxItemsInFolder) {
   // Create and add a folder with 15 items in it.
   size_t kTotalItems = kMaxFolderItems - 1;
   model_->CreateAndPopulateFolderWithApps(kTotalItems);
@@ -463,7 +460,7 @@ TEST_P(AppsGridViewTest, MouseDragMaxItemsInFolder) {
 
 // Check that moving items around doesn't allow a drop to happen into a full
 // folder.
-TEST_P(AppsGridViewTest, MouseDragMaxItemsInFolderWithMovement) {
+TEST_F(AppsGridViewTest, MouseDragMaxItemsInFolderWithMovement) {
   // Create and add a folder with 16 items in it.
   size_t kTotalItems = kMaxFolderItems;
   model_->CreateAndPopulateFolderWithApps(kTotalItems);
@@ -512,11 +509,9 @@ TEST_P(AppsGridViewTest, MouseDragMaxItemsInFolderWithMovement) {
   test_api_->LayoutToIdealBounds();
 }
 
-TEST_P(AppsGridViewTest, MouseDragItemReorder) {
-  // Using a simulated 2x2 layout for the test. If fullscreen app list is
-  // enabled, rows_per_page passed should be 3 as the first row is occupied by
-  // suggested apps.
-  apps_grid_view_->SetLayout(2, test_with_fullscreen_ ? 3 : 2);
+TEST_F(AppsGridViewTest, MouseDragItemReorder) {
+  // Using a simulated 2x2 layout for the test.
+  apps_grid_view_->SetLayout(2, 2);
   model_->PopulateApps(4);
   EXPECT_EQ(4u, model_->top_level_item_list()->item_count());
   EXPECT_EQ(std::string("Item 0,Item 1,Item 2,Item 3"),
@@ -579,7 +574,7 @@ TEST_P(AppsGridViewTest, MouseDragItemReorder) {
             model_->GetModelContent());
 }
 
-TEST_P(AppsGridViewTest, MouseDragFolderReorder) {
+TEST_F(AppsGridViewTest, MouseDragFolderReorder) {
   size_t kTotalItems = 2;
   model_->CreateAndPopulateFolderWithApps(kTotalItems);
   model_->PopulateAppWithId(kTotalItems);
@@ -636,7 +631,6 @@ TEST_P(AppsGridViewTest, MouseDragWithCancelDeleteAddItem) {
   test_api_->LayoutToIdealBounds();
 }
 
-// TODO(warx): enable this test for |test_with_fullscreen_|, crbug.com/742581.
 TEST_F(AppsGridViewTest, MouseDragFlipPage) {
   test_api_->SetPageFlipDelay(10);
   GetPaginationModel()->SetTransitionDurations(10, 10);
@@ -680,7 +674,7 @@ TEST_F(AppsGridViewTest, MouseDragFlipPage) {
   apps_grid_view_->EndDrag(true);
 }
 
-TEST_P(AppsGridViewTest, SimultaneousDragWithFolderDisabled) {
+TEST_F(AppsGridViewTest, SimultaneousDragWithFolderDisabled) {
   model_->SetFoldersEnabled(false);
   const int kTotalItems = 4;
   model_->PopulateApps(kTotalItems);

@@ -57,7 +57,6 @@ cr.define('cr.ui.Oobe', function() {
 
       cr.ui.Bubble.decorate($('bubble'));
       login.HeaderBar.decorate($('login-header-bar'));
-      login.TopHeaderBar.decorate($('top-header-bar'));
 
       chrome.send('screenStateInitialize');
     },

@@ -12,14 +12,11 @@
 
 namespace cc {
 class CompositorFrame;
+class ContextProvider;
 class FakeLayerTreeFrameSink;
 class ResourceSettings;
 class TestTaskGraphRunner;
 class TestGpuMemoryBufferManager;
-}
-
-namespace viz {
-class ContextProvider;
 }
 
 namespace ui {
@@ -34,8 +31,7 @@ class FakeContextFactory : public ui::ContextFactory {
   // ui::ContextFactory:
   void CreateLayerTreeFrameSink(
       base::WeakPtr<ui::Compositor> compositor) override;
-  scoped_refptr<viz::ContextProvider> SharedMainThreadContextProvider()
-      override;
+  scoped_refptr<cc::ContextProvider> SharedMainThreadContextProvider() override;
   void RemoveCompositor(ui::Compositor* compositor) override;
   double GetRefreshRate() const override;
   gpu::GpuMemoryBufferManager* GetGpuMemoryBufferManager() override;
@@ -43,11 +39,6 @@ class FakeContextFactory : public ui::ContextFactory {
   const viz::ResourceSettings& GetResourceSettings() const override;
   void AddObserver(ui::ContextFactoryObserver* observer) override {}
   void RemoveObserver(ui::ContextFactoryObserver* observer) override {}
-
- protected:
-  const cc::RendererSettings& renderer_settings() const {
-    return renderer_settings_;
-  }
 
  private:
   cc::FakeLayerTreeFrameSink* frame_sink_ = nullptr;

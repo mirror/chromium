@@ -18,12 +18,16 @@ namespace blink {
 
 class WebThread;
 class WebThreadSupportingGC;
-struct WorkerBackingThreadStartupData;
+struct WorkerV8Settings;
 
-// WorkerBackingThread represents a WebThread with Oilpan and V8. A client of
-// WorkerBackingThread (i.e., WorkerThread) needs to call
-// InitializeOnBackingThread() to use V8 and Oilpan functionalities, and call
-// ShutdownOnBackingThread() when it no longer needs the thread.
+// WorkerBackingThread represents a WebThread with Oilpan and V8 potentially
+// shared by multiple WebWorker scripts. A WebWorker needs to call initialize()
+// to using V8 and Oilpan functionalities, and call shutdown() when the script
+// no longer needs the thread.
+// A WorkerBackingThread represents a WebThread while a WorkerThread corresponds
+// to a web worker. There is one-to-one correspondence between WorkerThread and
+// WorkerGlobalScope, but multiple WorkerThreads (i.e., multiple
+// WorkerGlobalScopes) can share one WorkerBackingThread.
 class CORE_EXPORT WorkerBackingThread final {
  public:
   static std::unique_ptr<WorkerBackingThread> Create(const char* name) {
@@ -44,12 +48,12 @@ class CORE_EXPORT WorkerBackingThread final {
 
   ~WorkerBackingThread();
 
-  // InitializeOnBackingThread() and ShutdownOnBackingThread() attaches and
-  // detaches Oilpan and V8 to / from the caller worker script, respectively.
-  // A worker script must not call any function after calling
-  // ShutdownOnBackingThread(). They should be called from |this| thread.
-  void InitializeOnBackingThread(const WorkerBackingThreadStartupData&);
-  void ShutdownOnBackingThread();
+  // initialize() and shutdown() attaches and detaches Oilpan and V8 to / from
+  // the caller worker script, respectively. A worker script must not call
+  // any function after calling shutdown().
+  // They should be called from |this| thread.
+  void Initialize(const WorkerV8Settings&);
+  void Shutdown();
 
   WebThreadSupportingGC& BackingThread() {
     DCHECK(backing_thread_);

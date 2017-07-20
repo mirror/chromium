@@ -36,7 +36,6 @@
 #include "chrome/browser/signin/signin_error_controller_factory.h"
 #include "chrome/browser/signin/signin_manager_factory.h"
 #include "chrome/browser/signin/signin_promo.h"
-#include "chrome/browser/signin/signin_util.h"
 #include "chrome/browser/sync/profile_sync_service_factory.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_window.h"
@@ -319,7 +318,7 @@ bool InlineSigninHelper::HandleCrossAccountError(
   // With force sign in enabled, cross account
   // sign in will be rejected in the early stage so there is no need to show the
   // warning page here.
-  if (signin_util::IsForceSigninEnabled())
+  if (signin::IsForceSigninEnabled())
     return false;
 
   std::string last_email =
@@ -507,7 +506,7 @@ bool InlineLoginHandlerImpl::CanOffer(Profile* profile,
     }
 
     // With force sign in enabled, cross account sign in is not allowed.
-    if (signin_util::IsForceSigninEnabled() &&
+    if (signin::IsForceSigninEnabled() &&
         IsCrossAccountError(profile, email, gaia_id)) {
       if (error_message) {
         std::string last_email =
@@ -650,7 +649,7 @@ void InlineLoginHandlerImpl::CompleteLogin(const base::ListValue* args) {
         // Otherwise, switch to the profile and finish the login. Pass the
         // profile path so it can be marked as unlocked. Don't pass a handler
         // pointer since it will be destroyed before the callback runs.
-        bool is_force_signin_enabled = signin_util::IsForceSigninEnabled();
+        bool is_force_signin_enabled = signin::IsForceSigninEnabled();
         InlineLoginHandlerImpl* handler = nullptr;
         if (is_force_signin_enabled)
           handler = this;

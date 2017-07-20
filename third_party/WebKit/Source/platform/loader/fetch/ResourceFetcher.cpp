@@ -62,6 +62,14 @@ namespace blink {
 
 namespace {
 
+// Events for UMA. Do not reorder or delete. Add new events at the end, but
+// before SriResourceIntegrityMismatchEventCount.
+enum SriResourceIntegrityMismatchEvent {
+  kCheckingForIntegrityMismatch = 0,
+  kRefetchDueToIntegrityMismatch = 1,
+  kSriResourceIntegrityMismatchEventCount
+};
+
 #define DEFINE_SINGLE_RESOURCE_HISTOGRAM(prefix, name)                      \
   case Resource::k##name: {                                                 \
     DEFINE_THREAD_SAFE_STATIC_LOCAL(                                        \
@@ -100,6 +108,14 @@ void AddRedirectsToTimingInfo(Resource* resource, ResourceTimingInfo* info) {
         !SecurityOrigin::AreSameSchemeHostPort(responses[i].Url(), new_url);
     info->AddRedirect(responses[i], cross_origin);
   }
+}
+
+void RecordSriResourceIntegrityMismatchEvent(
+    SriResourceIntegrityMismatchEvent event) {
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(EnumerationHistogram, integrity_histogram,
+                                  ("sri.resource_integrity_mismatch_event",
+                                   kSriResourceIntegrityMismatchEventCount));
+  integrity_histogram.Count(event);
 }
 
 ResourceLoadPriority TypeToPriority(Resource::Type type) {
@@ -516,8 +532,10 @@ void ResourceFetcher::RemovePreload(Resource* resource) {
   auto it = preloads_.find(PreloadKey(resource->Url(), resource->GetType()));
   if (it == preloads_.end())
     return;
-  if (it->value == resource)
+  if (it->value == resource) {
+    resource->DecreasePreloadCount();
     preloads_.erase(it);
+  }
 }
 
 ResourceFetcher::PrepareRequestResult ResourceFetcher::PrepareRequest(
@@ -633,15 +651,10 @@ Resource* ResourceFetcher::RequestResource(
                                     params.Options().initiator_info.name);
   }
 
-  // A main resource request with the "cid" scheme can only be handled by an
-  // MHTML Archive. Abort the request when there is none.
-  // Note: There are some embedders of WebView that are using Content-ID
-  // URLs for sub-resources, even without any MHTMLArchive. Please see
-  // https://crbug.com/739658.
-  if (!archive_ && factory.GetType() == Resource::kMainResource &&
-      resource_request.Url().ProtocolIs(kContentIdScheme)) {
+  // An URL with the "cid" scheme can only be handled by an MHTML Archive.
+  // Abort the request when there is none.
+  if (!archive_ && resource_request.Url().ProtocolIs(kContentIdScheme))
     return nullptr;
-  }
 
   bool is_data_url = resource_request.Url().ProtocolIsData();
   bool is_static_data = is_data_url || substitute_data.IsValid() || archive_;
@@ -898,6 +911,7 @@ Resource* ResourceFetcher::MatchPreload(const FetchParameters& params,
 
   Resource* resource = it->value;
 
+  RecordSriResourceIntegrityMismatchEvent(kCheckingForIntegrityMismatch);
   if (resource->MustRefetchDueToIntegrityMetadata(params))
     return nullptr;
 
@@ -911,7 +925,7 @@ Resource* ResourceFetcher::MatchPreload(const FetchParameters& params,
   if (!IsReusableAlsoForPreloading(params, resource, false))
     return nullptr;
 
-  resource->MatchPreload();
+  resource->DecreasePreloadCount();
   preloads_.erase(it);
   matched_preloads_.push_back(resource);
   return resource;
@@ -930,7 +944,7 @@ void ResourceFetcher::InsertAsPreloadIfNecessary(Resource* resource,
   PreloadKey key(params.Url(), type);
   if (preloads_.find(key) == preloads_.end()) {
     preloads_.insert(key, resource);
-    resource->MarkAsPreload();
+    resource->IncreasePreloadCount();
     if (preloaded_urls_for_test_)
       preloaded_urls_for_test_->insert(resource->Url().GetString());
   }
@@ -1000,14 +1014,6 @@ ResourceFetcher::DetermineRevalidationPolicy(
     return kReload;
   }
 
-  // It's hard to share a not-yet-referenced preloads via MemoryCache correctly.
-  // A not-yet-matched preloads made by a foreign ResourceFetcher and stored in
-  // the memory cache could be used without this block.
-  if ((fetch_params.IsLinkPreload() || fetch_params.IsSpeculativePreload()) &&
-      existing_resource->IsUnusedPreload()) {
-    return kReload;
-  }
-
   // Checks if the resource has an explicit policy about integrity metadata.
   //
   // This is necessary because ScriptResource and CSSStyleSheetResource objects
@@ -1023,7 +1029,9 @@ ResourceFetcher::DetermineRevalidationPolicy(
   // resource must be made to get the raw data. This is expected to be an
   // uncommon case, however, as it implies two same-origin requests to the same
   // resource, but with different integrity metadata.
+  RecordSriResourceIntegrityMismatchEvent(kCheckingForIntegrityMismatch);
   if (existing_resource->MustRefetchDueToIntegrityMetadata(fetch_params)) {
+    RecordSriResourceIntegrityMismatchEvent(kRefetchDueToIntegrityMismatch);
     return kReload;
   }
 
@@ -1131,11 +1139,6 @@ ResourceFetcher::DetermineRevalidationPolicy(
   if (request.GetCachePolicy() == WebCachePolicy::kValidatingCacheData ||
       existing_resource->MustRevalidateDueToCacheHeaders() ||
       request.CacheControlContainsNoCache()) {
-    // Revalidation is harmful for non-matched preloads because it may lead to
-    // sharing one preloaded resource among multiple ResourceFetchers.
-    if (existing_resource->IsUnusedPreload())
-      return kReload;
-
     // See if the resource has usable ETag or Last-modified headers. If the page
     // is controlled by the ServiceWorker, we choose the Reload policy because
     // the revalidation headers should not be exposed to the
@@ -1233,7 +1236,9 @@ void ResourceFetcher::ClearPreloads(ClearPreloadsPolicy policy) {
   for (const auto& pair : preloads_) {
     Resource* resource = pair.value;
     if (policy == kClearAllPreloads || !resource->IsLinkPreload()) {
-      GetMemoryCache()->Remove(resource);
+      resource->DecreasePreloadCount();
+      if (resource->GetPreloadResult() == Resource::kPreloadNotReferenced)
+        GetMemoryCache()->Remove(resource);
       keys_to_be_removed.push_back(pair.key);
     }
   }
@@ -1245,7 +1250,8 @@ void ResourceFetcher::ClearPreloads(ClearPreloadsPolicy policy) {
 void ResourceFetcher::WarnUnusedPreloads() {
   for (const auto& pair : preloads_) {
     Resource* resource = pair.value;
-    if (resource && resource->IsLinkPreload() && resource->IsUnusedPreload()) {
+    if (resource && resource->IsLinkPreload() &&
+        resource->GetPreloadResult() == Resource::kPreloadNotReferenced) {
       Context().AddConsoleMessage(
           "The resource " + resource->Url().GetString() +
               " was preloaded using link preload but not used within a few "
@@ -1538,7 +1544,8 @@ void ResourceFetcher::LogPreloadStats(ClearPreloadsPolicy policy) {
         policy == kClearSpeculativeMarkupPreloads) {
       continue;
     }
-    int miss_count = resource->IsUnusedPreload() ? 1 : 0;
+    int miss_count =
+        resource->GetPreloadResult() == Resource::kPreloadNotReferenced ? 1 : 0;
     switch (resource->GetType()) {
       case Resource::kImage:
         images++;

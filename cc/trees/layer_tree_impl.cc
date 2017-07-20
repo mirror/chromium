@@ -159,11 +159,14 @@ void LayerTreeImpl::DidUpdateScrollOffset(ElementId id) {
   ScrollTree& scroll_tree = property_trees()->scroll_tree;
   const auto* scroll_node = scroll_tree.FindNodeFromElementId(id);
 
+  // TODO(pdr): There shouldn't be any cases where scroll offset is updated
+  // without a scroll node and we should remove this check entirely.
   if (!scroll_node) {
-    // A scroll node should always exist on the active tree but may not exist
-    // if we're updating the other trees from the active tree. This can occur
-    // when the pending tree represents a different page, for example.
     DCHECK(!IsActiveTree());
+
+    // If a scroll node does not yet exist, ensure the property trees are marked
+    // for rebuilding which will update the TransformNode scroll offset.
+    DCHECK(property_trees()->needs_rebuild);
     return;
   }
 
@@ -1310,7 +1313,7 @@ const LayerTreeDebugState& LayerTreeImpl::debug_state() const {
   return layer_tree_host_impl_->debug_state();
 }
 
-viz::ContextProvider* LayerTreeImpl::context_provider() const {
+ContextProvider* LayerTreeImpl::context_provider() const {
   return layer_tree_host_impl_->layer_tree_frame_sink()->context_provider();
 }
 
@@ -1647,15 +1650,20 @@ void LayerTreeImpl::RegisterScrollbar(ScrollbarLayerImplBase* scrollbar_layer) {
     return;
 
   auto& scrollbar_ids = element_id_to_scrollbar_layer_ids_[scroll_element_id];
-  if (scrollbar_layer->orientation() == HORIZONTAL) {
-    DCHECK_EQ(scrollbar_ids.horizontal, Layer::INVALID_ID)
-        << "Existing scrollbar should have been unregistered.";
-    scrollbar_ids.horizontal = scrollbar_layer->id();
-  } else {
-    DCHECK_EQ(scrollbar_ids.vertical, Layer::INVALID_ID)
-        << "Existing scrollbar should have been unregistered.";
-    scrollbar_ids.vertical = scrollbar_layer->id();
-  }
+  int& scrollbar_layer_id = scrollbar_layer->orientation() == HORIZONTAL
+                                ? scrollbar_ids.horizontal
+                                : scrollbar_ids.vertical;
+
+  // We used to DCHECK this was not the case but this can occur on Android: as
+  // the visual viewport supplies scrollbars for the outer viewport, if the
+  // outer viewport is changed, we race between updating the visual viewport
+  // scrollbars and registering new scrollbars on the old outer viewport. It'd
+  // be nice if we could fix this to be cleaner but its harmless to just
+  // unregister here.
+  if (scrollbar_layer_id != Layer::INVALID_ID)
+    UnregisterScrollbar(scrollbar_layer);
+
+  scrollbar_layer_id = scrollbar_layer->id();
 
   if (IsActiveTree() && scrollbar_layer->is_overlay_scrollbar() &&
       scrollbar_layer->GetScrollbarAnimator() !=

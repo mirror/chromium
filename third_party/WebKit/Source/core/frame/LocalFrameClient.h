@@ -54,7 +54,6 @@
 #include "public/platform/WebFeaturePolicy.h"
 #include "public/platform/WebInsecureRequestPolicy.h"
 #include "public/platform/WebLoadingBehaviorFlag.h"
-#include "public/platform/WebSuddenTerminationDisablerType.h"
 #include "public/platform/WebURLRequest.h"
 #include "public/web/WebTriggeringEventInfo.h"
 #include "v8/include/v8.h"
@@ -85,7 +84,6 @@ class TextCheckerClient;
 class WebApplicationCacheHost;
 class WebApplicationCacheHostClient;
 class WebCookieJar;
-class WebFrame;
 class WebMediaPlayer;
 class WebMediaPlayerClient;
 class WebMediaPlayerSource;
@@ -99,8 +97,6 @@ class WebURLLoader;
 class CORE_EXPORT LocalFrameClient : public FrameClient {
  public:
   ~LocalFrameClient() override {}
-
-  virtual WebFrame* GetWebFrame() const { return nullptr; }
 
   virtual bool HasWebView() const = 0;  // mainly for assertions
 
@@ -148,11 +144,9 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
   virtual void ProgressEstimateChanged(double progress_estimate) = 0;
   virtual void DidStopLoading() = 0;
 
-  virtual void DownloadURL(const ResourceRequest&,
-                           const String& suggested_name) = 0;
   virtual void LoadURLExternally(const ResourceRequest&,
                                  NavigationPolicy,
-                                 WebTriggeringEventInfo,
+                                 const String& suggested_name,
                                  bool replaces_current_history_item) = 0;
   virtual void LoadErrorPage(int reason) = 0;
 
@@ -306,9 +300,16 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
 
   virtual bool IsLocalFrameClientImpl() const { return false; }
 
-  virtual void SuddenTerminationDisablerChanged(
-      bool present,
-      WebSuddenTerminationDisablerType) {}
+  // Called when elements preventing the sudden termination of the frame become
+  // present or stop being present. |type| is the type of element (BeforeUnload
+  // handler, Unload handler).
+  enum SuddenTerminationDisablerType {
+    kBeforeUnloadHandler,
+    kUnloadHandler,
+  };
+  virtual void SuddenTerminationDisablerChanged(bool present,
+                                                SuddenTerminationDisablerType) {
+  }
 
   virtual LinkResource* CreateServiceWorkerLinkResource(HTMLLinkElement*) {
     return nullptr;

@@ -18,11 +18,10 @@
 namespace ui {
 
 class EventSink;
+class ImageCursors;
 class PlatformWindow;
 
 namespace ws {
-
-class ThreadedImageCursors;
 
 // PlatformDisplay implementation that connects to a PlatformWindow and
 // FrameGenerator for Chrome OS.
@@ -32,7 +31,7 @@ class PlatformDisplayDefault : public PlatformDisplay,
   // |image_cursors| may be null, for example on Android or in tests.
   PlatformDisplayDefault(ServerWindow* root_window,
                          const display::ViewportMetrics& metrics,
-                         std::unique_ptr<ThreadedImageCursors> image_cursors);
+                         std::unique_ptr<ImageCursors> image_cursors);
   ~PlatformDisplayDefault() override;
 
   // EventSource::
@@ -52,8 +51,6 @@ class PlatformDisplayDefault : public PlatformDisplay,
   void UpdateViewportMetrics(const display::ViewportMetrics& metrics) override;
   gfx::AcceleratedWidget GetAcceleratedWidget() const override;
   FrameGenerator* GetFrameGenerator() override;
-  void SetCursorConfig(display::Display::Rotation rotation,
-                       float scale) override;
 
  private:
   // ui::PlatformWindowDelegate:
@@ -71,7 +68,7 @@ class PlatformDisplayDefault : public PlatformDisplay,
 
   ServerWindow* root_window_;
 
-  std::unique_ptr<ThreadedImageCursors> image_cursors_;
+  std::unique_ptr<ui::ImageCursors> image_cursors_;
 
   PlatformDisplayDelegate* delegate_ = nullptr;
   std::unique_ptr<FrameGenerator> frame_generator_;

@@ -120,7 +120,8 @@ WebContentDecryptionModuleImpl::WebContentDecryptionModuleImpl(
 WebContentDecryptionModuleImpl::~WebContentDecryptionModuleImpl() {
 }
 
-std::unique_ptr<blink::WebContentDecryptionModuleSession>
+// The caller owns the created session.
+blink::WebContentDecryptionModuleSession*
 WebContentDecryptionModuleImpl::CreateSession() {
   return adapter_->CreateSession();
 }

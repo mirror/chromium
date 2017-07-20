@@ -10,7 +10,7 @@
 #if defined(OS_ANDROID)
 #include "chrome/browser/android/android_theme_resources.h"
 #else
-#include "components/vector_icons/vector_icons.h"
+#include "ui/vector_icons/vector_icons.h"
 #endif
 
 MockPermissionRequest::MockPermissionRequest()
@@ -69,7 +69,7 @@ PermissionRequest::IconId MockPermissionRequest::GetIconId() const {
 #if defined(OS_ANDROID)
   return IDR_ANDROID_INFOBAR_WARNING;
 #else
-  return vector_icons::kWarningIcon;
+  return ui::kWarningIcon;
 #endif
 }
 

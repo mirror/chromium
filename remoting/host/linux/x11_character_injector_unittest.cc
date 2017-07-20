@@ -168,8 +168,9 @@ void X11CharacterInjectorTest::InjectAndRun(
     const std::vector<uint32_t>& code_points) {
   base::RunLoop run_loop;
   keyboard_->SetKeyPressFinishedCallback(run_loop.QuitClosure());
-  for (uint32_t code_point : code_points)
-    injector_->Inject(code_point);
+  std::for_each(code_points.begin(), code_points.end(),
+                std::bind(&X11CharacterInjector::Inject, injector_.get(),
+                          std::placeholders::_1));
   keyboard_->ExpectEnterCodePoints(code_points);
   run_loop.Run();
 }

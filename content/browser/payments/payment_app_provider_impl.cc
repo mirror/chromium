@@ -18,24 +18,22 @@
 namespace content {
 namespace {
 
-class ResponseCallback
-    : public payments::mojom::PaymentHandlerResponseCallback {
+class ResponseCallback : public payments::mojom::PaymentAppResponseCallback {
  public:
-  static payments::mojom::PaymentHandlerResponseCallbackPtr Create(
+  static payments::mojom::PaymentAppResponseCallbackPtr Create(
       int payment_request_id,
       scoped_refptr<ServiceWorkerVersion> service_worker_version,
       const PaymentAppProvider::InvokePaymentAppCallback callback) {
     ResponseCallback* response_callback = new ResponseCallback(
         payment_request_id, std::move(service_worker_version), callback);
-    payments::mojom::PaymentHandlerResponseCallbackPtr callback_proxy;
+    payments::mojom::PaymentAppResponseCallbackPtr callback_proxy;
     response_callback->binding_.Bind(mojo::MakeRequest(&callback_proxy));
     return callback_proxy;
   }
   ~ResponseCallback() override {}
 
-  void OnPaymentHandlerResponse(
-      payments::mojom::PaymentHandlerResponsePtr response,
-      base::Time dispatch_event_time) override {
+  void OnPaymentAppResponse(payments::mojom::PaymentAppResponsePtr response,
+                            base::Time dispatch_event_time) override {
     DCHECK_CURRENTLY_ON(BrowserThread::IO);
     service_worker_version_->FinishRequest(payment_request_id_, false,
                                            std::move(dispatch_event_time));
@@ -57,7 +55,7 @@ class ResponseCallback
   int payment_request_id_;
   scoped_refptr<ServiceWorkerVersion> service_worker_version_;
   const PaymentAppProvider::InvokePaymentAppCallback callback_;
-  mojo::Binding<payments::mojom::PaymentHandlerResponseCallback> binding_;
+  mojo::Binding<payments::mojom::PaymentAppResponseCallback> binding_;
 };
 
 void DidGetAllPaymentAppsOnIO(
@@ -96,7 +94,7 @@ void DispatchPaymentRequestEvent(
       ServiceWorkerMetrics::EventType::PAYMENT_REQUEST,
       base::Bind(&ServiceWorkerUtils::NoOpStatusCallback));
 
-  payments::mojom::PaymentHandlerResponseCallbackPtr response_callback_ptr =
+  payments::mojom::PaymentAppResponseCallbackPtr response_callback_ptr =
       ResponseCallback::Create(payment_request_id, active_version, callback);
   DCHECK(response_callback_ptr);
   active_version->event_dispatcher()->DispatchPaymentRequestEvent(

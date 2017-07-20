@@ -2,7 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-import("//components/vector_icons/vector_icons.gni")
+import("//ui/vector_icons/vector_icons.gni")
 
 aggregate_vector_icons("ash_vector_icons") {
   icon_directory = "."
@@ -20,12 +20,6 @@ aggregate_vector_icons("ash_vector_icons") {
     "ime_menu_on_screen_keyboard.icon",
     "ime_menu_write.1x.icon",
     "ime_menu_write.icon",
-    "lock_screen_arrow.1x.icon",
-    "lock_screen_arrow.icon",
-    "lock_screen_backspace.1x.icon",
-    "lock_screen_backspace.icon",
-    "lock_screen_dropdown.1x.icon",
-    "lock_screen_dropdown.icon",
     "network_badge_add_other.1x.icon",
     "network_badge_add_other.icon",
     "network_badge_captive_portal.1x.icon",
@@ -229,8 +223,6 @@ aggregate_vector_icons("ash_vector_icons") {
     "system_tray_rotation_lock_auto.icon",
     "system_tray_rotation_lock_locked.1x.icon",
     "system_tray_rotation_lock_locked.icon",
-    "system_tray_screen_share.1x.icon",
-    "system_tray_screen_share.icon",
     "system_tray_tracing.1x.icon",
     "system_tray_tracing.icon",
     "system_tray_update.1x.icon",

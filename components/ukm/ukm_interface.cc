@@ -33,8 +33,9 @@ UkmInterface::~UkmInterface() = default;
 
 // static
 void UkmInterface::Create(UkmRecorder* ukm_recorder,
+                          const service_manager::BindSourceInfo& source_info,
                           mojom::UkmRecorderInterfaceRequest request) {
-  static base::AtomicSequenceNumber seq;
+  static base::StaticAtomicSequenceNumber seq;
   mojo::MakeStrongBinding(
       base::MakeUnique<UkmInterface>(ukm_recorder,
                                      static_cast<int64_t>(seq.GetNext()) + 1),

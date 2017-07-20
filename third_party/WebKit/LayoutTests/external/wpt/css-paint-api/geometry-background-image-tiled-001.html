@@ -21,10 +21,9 @@ html, body { margin: 0; padding: 0; }
 <script id="code" type="text/worklet">
 registerPaint('geometry', class {
     paint(ctx, geom) {
-        ctx.fillStyle = 'green';
-        ctx.beginPath();
-        ctx.rect(0, 0, geom.width, geom.height);
-        ctx.fill();
+        ctx.strokeStyle = 'green';
+        ctx.lineWidth = 4;
+        ctx.strokeRect(0, 0, geom.width, geom.height);
     }
 });
 </script>

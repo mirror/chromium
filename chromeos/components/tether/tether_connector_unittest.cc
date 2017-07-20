@@ -287,8 +287,6 @@ class TetherConnectorTest : public NetworkStateTest {
               fake_active_host_->GetActiveHostStatus());
     EXPECT_EQ(NetworkConnectionHandler::kErrorConnectFailed,
               GetResultAndReset());
-    EXPECT_TRUE(fake_notification_presenter_
-                    ->is_connection_failed_notification_shown());
   }
 
   std::string GetResultAndReset() {
@@ -348,8 +346,6 @@ TEST_F(TetherConnectorTest, TestCannotFetchDevice) {
   EXPECT_EQ(ActiveHost::ActiveHostStatus::DISCONNECTED,
             fake_active_host_->GetActiveHostStatus());
   EXPECT_EQ(NetworkConnectionHandler::kErrorConnectFailed, GetResultAndReset());
-  EXPECT_TRUE(
-      fake_notification_presenter_->is_connection_failed_notification_shown());
 }
 
 TEST_F(TetherConnectorTest, TestCancelWhileOperationActive) {
@@ -382,8 +378,6 @@ TEST_F(TetherConnectorTest, TestCancelWhileOperationActive) {
             fake_active_host_->GetActiveHostStatus());
   EXPECT_EQ(NetworkConnectionHandler::kErrorConnectCanceled,
             GetResultAndReset());
-  EXPECT_FALSE(
-      fake_notification_presenter_->is_connection_failed_notification_shown());
 }
 
 TEST_F(TetherConnectorTest,
@@ -435,17 +429,6 @@ TEST_F(TetherConnectorTest,
           CONNECTION_RESULT_FAILURE_TETHERING_TIMED_OUT_FIRST_TIME_SETUP_WAS_REQUIRED);
 }
 
-TEST_F(TetherConnectorTest,
-       ConnectionToHostFailedNotificationRemovedWhenConnectionStarts) {
-  // Start with the "connection to host failed" notification showing.
-  fake_notification_presenter_->NotifyConnectionToHostFailed();
-
-  // Starting a connection should result in it being removed.
-  CallConnect(GetTetherNetworkGuid(test_devices_[0].GetDeviceId()));
-  EXPECT_FALSE(
-      fake_notification_presenter_->is_connection_failed_notification_shown());
-}
-
 TEST_F(TetherConnectorTest, TestConnectingToWifiFails) {
   EXPECT_CALL(*mock_host_connection_metrics_logger_,
               RecordConnectionToHostResult(
@@ -485,8 +468,6 @@ TEST_F(TetherConnectorTest, TestConnectingToWifiFails) {
   EXPECT_EQ(ActiveHost::ActiveHostStatus::DISCONNECTED,
             fake_active_host_->GetActiveHostStatus());
   EXPECT_EQ(NetworkConnectionHandler::kErrorConnectFailed, GetResultAndReset());
-  EXPECT_TRUE(
-      fake_notification_presenter_->is_connection_failed_notification_shown());
 }
 
 TEST_F(TetherConnectorTest, TestCancelWhileConnectingToWifi) {
@@ -523,8 +504,6 @@ TEST_F(TetherConnectorTest, TestCancelWhileConnectingToWifi) {
             fake_active_host_->GetActiveHostStatus());
   EXPECT_EQ(NetworkConnectionHandler::kErrorConnectCanceled,
             GetResultAndReset());
-  EXPECT_FALSE(
-      fake_notification_presenter_->is_connection_failed_notification_shown());
 }
 
 TEST_F(TetherConnectorTest, TestSuccessfulConnection) {
@@ -574,8 +553,6 @@ TEST_F(TetherConnectorTest, TestSuccessfulConnection) {
   EXPECT_EQ(kWifiNetworkGuid, fake_active_host_->GetWifiNetworkGuid());
 
   EXPECT_EQ(kSuccessResult, GetResultAndReset());
-  EXPECT_FALSE(
-      fake_notification_presenter_->is_connection_failed_notification_shown());
 }
 
 TEST_F(TetherConnectorTest, TestSuccessfulConnection_SetupRequired) {
@@ -611,8 +588,6 @@ TEST_F(TetherConnectorTest, TestSuccessfulConnection_SetupRequired) {
       fake_notification_presenter_->is_setup_required_notification_shown());
 
   EXPECT_EQ(kSuccessResult, GetResultAndReset());
-  EXPECT_FALSE(
-      fake_notification_presenter_->is_connection_failed_notification_shown());
 }
 
 TEST_F(TetherConnectorTest,
@@ -632,8 +607,6 @@ TEST_F(TetherConnectorTest,
   // error.
   EXPECT_EQ(NetworkConnectionHandler::kErrorConnectCanceled,
             GetResultAndReset());
-  EXPECT_FALSE(
-      fake_notification_presenter_->is_connection_failed_notification_shown());
 
   // Now invoke the callbacks. An operation should have been created for the
   // device 1, not device 0.
@@ -672,8 +645,6 @@ TEST_F(TetherConnectorTest,
   // error.
   EXPECT_EQ(NetworkConnectionHandler::kErrorConnectCanceled,
             GetResultAndReset());
-  EXPECT_FALSE(
-      fake_notification_presenter_->is_connection_failed_notification_shown());
   fake_tether_host_fetcher_->InvokePendingCallbacks();
 
   // Now, the active host should be the second device.
@@ -737,8 +708,6 @@ TEST_F(TetherConnectorTest,
   // error.
   EXPECT_EQ(NetworkConnectionHandler::kErrorConnectCanceled,
             GetResultAndReset());
-  EXPECT_FALSE(
-      fake_notification_presenter_->is_connection_failed_notification_shown());
   fake_tether_host_fetcher_->InvokePendingCallbacks();
 
   // Connect successfully to the first Wi-Fi network. Even though a temporary

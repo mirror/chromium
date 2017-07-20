@@ -285,13 +285,13 @@ DEFINE_TRACE(TestDocumentShutdownObserver) {
   DocumentShutdownObserver::Trace(visitor);
 }
 
-class MockDocumentValidationMessageClient
-    : public GarbageCollectedFinalized<MockDocumentValidationMessageClient>,
+class MockValidationMessageClient
+    : public GarbageCollectedFinalized<MockValidationMessageClient>,
       public ValidationMessageClient {
-  USING_GARBAGE_COLLECTED_MIXIN(MockDocumentValidationMessageClient);
+  USING_GARBAGE_COLLECTED_MIXIN(MockValidationMessageClient);
 
  public:
-  MockDocumentValidationMessageClient() { Reset(); }
+  MockValidationMessageClient() { Reset(); }
   void Reset() {
     show_validation_message_was_called = false;
     document_detached_was_called = false;
@@ -798,8 +798,7 @@ TEST_F(DocumentTest, ThemeColor) {
 TEST_F(DocumentTest, ValidationMessageCleanup) {
   ValidationMessageClient* original_client =
       &GetPage().GetValidationMessageClient();
-  MockDocumentValidationMessageClient* mock_client =
-      new MockDocumentValidationMessageClient();
+  MockValidationMessageClient* mock_client = new MockValidationMessageClient();
   GetDocument().GetSettings()->SetScriptEnabled(true);
   GetPage().SetValidationMessageClient(mock_client);
   // ImplicitOpen()-CancelParsing() makes Document.loadEventFinished()

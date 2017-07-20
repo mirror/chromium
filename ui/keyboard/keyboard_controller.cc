@@ -21,8 +21,6 @@
 #include "ui/base/ime/text_input_client.h"
 #include "ui/compositor/layer_animation_observer.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"
-#include "ui/display/display.h"
-#include "ui/display/screen.h"
 #include "ui/display/types/display_constants.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/path.h"
@@ -333,7 +331,7 @@ aura::Window* KeyboardController::GetContainerWindowWithoutCreationForTest() {
   return container_.get();
 }
 
-void KeyboardController::NotifyContentsBoundsChanging(
+void KeyboardController::NotifyKeyboardBoundsChanging(
     const gfx::Rect& new_bounds) {
   current_keyboard_bounds_ = new_bounds;
   if (ui_->HasContentsWindow() && ui_->GetContentsWindow()->IsVisible()) {
@@ -348,48 +346,11 @@ void KeyboardController::NotifyContentsBoundsChanging(
   }
 }
 
-void KeyboardController::SetContainerBounds(const gfx::Rect& new_bounds,
-                                            const bool contents_loaded) {
-  ui::LayerAnimator* animator = container_->layer()->GetAnimator();
-  // Stops previous animation if a window resize is requested during animation.
-  if (animator->is_animating())
-    animator->StopAnimating();
+void KeyboardController::NotifyKeyboardLoadingComplete() {
+  if (state_ != KeyboardControllerState::LOADING_EXTENSION)
+    return;
 
-  container_->SetBounds(new_bounds);
-
-  if (contents_loaded && show_on_resize()) {
-    // The window height is set to 0 initially or before switch to an IME in a
-    // different extension. Virtual keyboard window may wait for this bounds
-    // change to correctly animate in.
-    if (keyboard_locked()) {
-      // Do not move the keyboard to another display after switch to an IME in a
-      // different extension.
-      const int64_t display_id =
-          display::Screen::GetScreen()
-              ->GetDisplayNearestWindow(GetContainerWindow())
-              .id();
-      ShowKeyboardInDisplay(display_id);
-    } else {
-      ShowKeyboard(false /* lock */);
-    }
-  } else {
-    if (contents_loaded && !keyboard_visible()) {
-      // When the child is layed out, the controller is not shown, but showing
-      // is not desired, this is indicative that the pre-load has completed.
-      if (state_ == KeyboardControllerState::LOADING_EXTENSION) {
-        ChangeState(KeyboardControllerState::HIDDEN);
-      }
-    }
-
-    if (keyboard_mode() == FULL_WIDTH) {
-      // We need to send out this notification only if keyboard is visible since
-      // the contents window is resized even if keyboard is hidden.
-      if (keyboard_visible())
-        NotifyContentsBoundsChanging(new_bounds);
-    } else if (keyboard_mode() == FLOATING) {
-      NotifyContentsBoundsChanging(gfx::Rect());
-    }
-  }
+  ChangeState(KeyboardControllerState::HIDDEN);
 }
 
 void KeyboardController::HideKeyboard(HideReason reason) {
@@ -410,7 +371,7 @@ void KeyboardController::HideKeyboard(HideReason reason) {
           keyboard::KEYBOARD_CONTROL_HIDE_AUTO :
           keyboard::KEYBOARD_CONTROL_HIDE_USER);
 
-  NotifyContentsBoundsChanging(gfx::Rect());
+  NotifyKeyboardBoundsChanging(gfx::Rect());
 
   set_keyboard_locked(false);
 
@@ -445,8 +406,7 @@ void KeyboardController::AddObserver(KeyboardControllerObserver* observer) {
   observer_list_.AddObserver(observer);
 }
 
-bool KeyboardController::HasObserver(
-    KeyboardControllerObserver* observer) const {
+bool KeyboardController::HasObserver(KeyboardControllerObserver* observer) {
   return observer_list_.HasObserver(observer);
 }
 
@@ -462,7 +422,7 @@ void KeyboardController::SetKeyboardMode(KeyboardMode mode) {
   // When keyboard is floating, no overscroll or resize is necessary. Sets
   // keyboard bounds to zero so overscroll or resize is disabled.
   if (keyboard_mode_ == FLOATING) {
-    NotifyContentsBoundsChanging(gfx::Rect());
+    NotifyKeyboardBoundsChanging(gfx::Rect());
   } else if (keyboard_mode_ == FULL_WIDTH) {
     AdjustKeyboardBounds();
     // No animation added, so call ShowAnimationFinished immediately.
@@ -730,7 +690,7 @@ void KeyboardController::ShowAnimationFinished() {
 
   // Notify observers after animation finished to prevent reveal desktop
   // background during animation.
-  NotifyContentsBoundsChanging(container_->bounds());
+  NotifyKeyboardBoundsChanging(container_->bounds());
   ui_->EnsureCaretInWorkArea();
   ChangeState(KeyboardControllerState::SHOWN);
 }
@@ -768,6 +728,13 @@ void KeyboardController::CheckStateTransition(KeyboardControllerState prev,
     error_message << "Unexpected transition";
   // TODO(oka): Add more condition check.
 
+  // Emit log on release build too for debug.
+  // TODO(oka): Change this to DLOG_IF once enough data is collected.
+  LOG_IF(ERROR, !error_message.str().empty())
+      << "State: " << StateToStr(prev) << " -> " << StateToStr(next) << " "
+      << error_message.str()
+      << "  stack trace: " << base::debug::StackTrace(10).ToString();
+
   // Emit UMA
   const int transition_record =
       (valid_transition ? 1 : -1) *
@@ -776,13 +743,6 @@ void KeyboardController::CheckStateTransition(KeyboardControllerState prev,
                               transition_record);
   UMA_HISTOGRAM_BOOLEAN("VirtualKeyboard.ControllerStateTransitionIsValid",
                         transition_record > 0);
-
-  // Crash on release build too for debug.
-  // TODO(oka): Change this to DCHECK once enough data is collected.
-  CHECK(error_message.str().empty())
-      << "State: " << StateToStr(prev) << " -> " << StateToStr(next) << " "
-      << error_message.str()
-      << "  stack trace: " << base::debug::StackTrace(10).ToString();
 }
 
 void KeyboardController::ChangeState(KeyboardControllerState state) {

@@ -96,7 +96,8 @@ SpdyHeadersHandlerInterface* BufferedSpdyFramer::OnHeaderFrameStart(
   return coalescer_.get();
 }
 
-void BufferedSpdyFramer::OnHeaderFrameEnd(SpdyStreamId stream_id) {
+void BufferedSpdyFramer::OnHeaderFrameEnd(SpdyStreamId stream_id,
+                                          bool end_headers) {
   if (coalescer_->error_seen()) {
     visitor_->OnStreamError(stream_id,
                             "Could not parse Spdy Control Frame Header.");

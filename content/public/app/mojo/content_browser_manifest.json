@@ -25,7 +25,6 @@
           "blink::mojom::OffscreenCanvasProvider",
           "blink::mojom::PermissionService",
           "blink::mojom::WebSocket",
-	  "cc::mojom::SharedBitmapAllocationNotifier",
           "content::mojom::FieldTrialRecorder",
           "content::mojom::FrameSinkProvider",
           "content::mojom::MemoryCoordinatorHandle",
@@ -45,7 +44,6 @@
           "shape_detection::mojom::FaceDetectionProvider",
           "resource_coordinator::mojom::CoordinationUnit",
           "shape_detection::mojom::TextDetection",
-          "storage::mojom::BlobRegistry",
           "ui::mojom::Gpu"
         ],
         "geolocation_config": [
@@ -61,7 +59,6 @@
       },
       "requires": {
         "*": [ "app" ],
-        "cdm": [ "media:cdm" ],
         // In classic ash, the browser supplies ash interfaces to itself.
         "content_browser": [
           "ash",
@@ -75,7 +72,7 @@
         "content_renderer": [ "browser" ],
         "content_utility": [ "browser" ],
         "data_decoder": [ "image_decoder" ],
-        "device": [ "device:generic_sensor", "device:nfc", "device:wake_lock" ],
+        "device": [ "device:nfc", "device:wake_lock" ],
         "file": [ "file:filesystem", "file:leveldb" ],
         "media": [ "media:media" ],
         "network": [
@@ -95,7 +92,7 @@
           "face_detection",
           "text_detection"
         ],
-        "resource_coordinator": [ "coordination_unit", "service_callbacks", "tab_signal" ],
+        "resource_coordinator": [ "coordination_unit", "service_callbacks" ],
         "video_capture": [ "capture", "tests" ]
       }
     },
@@ -114,15 +111,12 @@
           "blink::mojom::SensitiveInputVisibilityService",
           "blink::mojom::WebBluetoothService",
           "blink::mojom::WebSocket",
-
           // TODO(beng): figure out how to overlay test interfaces like this.
           "content::mojom::BrowserTarget",
-
           "content::mojom::RendererAudioOutputStreamFactory",
           "device::mojom::VRService",
           "device::mojom::Geolocation",
           "device::mojom::NFC",
-          "device::mojom::SensorProvider",
           "device::mojom::WakeLock",
           "device::usb::DeviceManager",
           "discardable_memory::mojom::DiscardableSharedMemoryManager",

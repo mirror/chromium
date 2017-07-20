@@ -352,7 +352,6 @@ LinkStyle::LoadReturnValue LinkStyle::LoadStylesheetIfNeeded(
     IntegrityMetadataSet metadata_set;
     SubresourceIntegrity::ParseIntegrityAttribute(integrity_attr, metadata_set);
     params.SetIntegrityMetadata(metadata_set);
-    params.MutableResourceRequest().SetFetchIntegrity(integrity_attr);
   }
   SetResource(CSSStyleSheetResource::Fetch(params, GetDocument().Fetcher()));
 

@@ -3,19 +3,17 @@
 // found in the LICENSE file.
 
 #include <memory>
-#include "bindings/core/v8/V8CacheOptions.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/events/MessageEvent.h"
 #include "core/inspector/ConsoleMessageStorage.h"
 #include "core/testing/DummyPageHolder.h"
 #include "core/workers/DedicatedWorkerGlobalScope.h"
 #include "core/workers/DedicatedWorkerThread.h"
-#include "core/workers/GlobalScopeCreationParams.h"
 #include "core/workers/InProcessWorkerMessagingProxy.h"
 #include "core/workers/InProcessWorkerObjectProxy.h"
-#include "core/workers/WorkerBackingThreadStartupData.h"
 #include "core/workers/WorkerInspectorProxy.h"
 #include "core/workers/WorkerThread.h"
+#include "core/workers/WorkerThreadStartupData.h"
 #include "core/workers/WorkerThreadTestHelper.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/testing/UnitTestHelpers.h"
@@ -41,16 +39,17 @@ class DedicatedWorkerThreadForTest final : public DedicatedWorkerThread {
  public:
   DedicatedWorkerThreadForTest(InProcessWorkerObjectProxy& worker_object_proxy)
       : DedicatedWorkerThread(nullptr /* ThreadableLoadingContext */,
-                              worker_object_proxy) {
+                              worker_object_proxy,
+                              MonotonicallyIncreasingTime()) {
     worker_backing_thread_ = WorkerBackingThread::CreateForTest("Test thread");
   }
 
   WorkerOrWorkletGlobalScope* CreateWorkerGlobalScope(
-      std::unique_ptr<GlobalScopeCreationParams> creation_params) override {
+      std::unique_ptr<WorkerThreadStartupData> startup_data) override {
     return new DedicatedWorkerGlobalScope(
-        creation_params->script_url, creation_params->user_agent, this,
-        time_origin_, std::move(creation_params->starter_origin_privilege_data),
-        std::move(creation_params->worker_clients));
+        startup_data->script_url_, startup_data->user_agent_, this,
+        time_origin_, std::move(startup_data->starter_origin_privilege_data_),
+        std::move(startup_data->worker_clients_));
   }
 
   // Emulates API use on DedicatedWorkerGlobalScope.
@@ -132,15 +131,18 @@ class InProcessWorkerMessagingProxyForTest
     CSPHeaderAndType header_and_type("contentSecurityPolicy",
                                      kContentSecurityPolicyHeaderTypeReport);
     headers->push_back(header_and_type);
+    WorkerV8Settings worker_v8_settings = WorkerV8Settings::Default();
+    worker_v8_settings.atomics_wait_mode_ =
+        WorkerV8Settings::AtomicsWaitMode::kAllow;
     InitializeWorkerThread(
-        WTF::MakeUnique<GlobalScopeCreationParams>(
+        WorkerThreadStartupData::Create(
             script_url, "fake user agent", source, nullptr /* cachedMetaData */,
             kDontPauseWorkerGlobalScopeOnStart, headers.get(),
             "" /* referrerPolicy */, security_origin_.Get(),
             nullptr /* workerClients */, kWebAddressSpaceLocal,
             nullptr /* originTrialTokens */, nullptr /* workerSettings */,
-            kV8CacheOptionsDefault),
-        CreateBackingThreadStartupData(nullptr /* isolate */), script_url);
+            worker_v8_settings),
+        script_url);
   }
 
   enum class Notification {
@@ -202,7 +204,8 @@ class InProcessWorkerMessagingProxyForTest
   }
 
  private:
-  std::unique_ptr<WorkerThread> CreateWorkerThread() override {
+  std::unique_ptr<WorkerThread> CreateWorkerThread(
+      double origin_time) override {
     auto worker_thread =
         WTF::MakeUnique<DedicatedWorkerThreadForTest>(WorkerObjectProxy());
     mock_worker_thread_lifecycle_observer_ =
@@ -212,13 +215,6 @@ class InProcessWorkerMessagingProxyForTest
                 ContextDestroyed(::testing::_))
         .Times(1);
     return std::move(worker_thread);
-  }
-
-  WTF::Optional<WorkerBackingThreadStartupData> CreateBackingThreadStartupData(
-      v8::Isolate*) override {
-    return WorkerBackingThreadStartupData(
-        WorkerBackingThreadStartupData::HeapLimitMode::kDefault,
-        WorkerBackingThreadStartupData::AtomicsWaitMode::kAllow);
   }
 
   Member<MockWorkerThreadLifecycleObserver>

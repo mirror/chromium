@@ -80,7 +80,7 @@ public class ContentSuggestionsPreferences extends PreferenceFragment {
                 SuggestionsDependencyFactory.getInstance().createSuggestionSource(
                         Profile.getLastUsedProfile());
         boolean isEnabled = suggestionsSource.areRemoteSuggestionsEnabled();
-        suggestionsSource.destroy();
+        suggestionsSource.onDestroy();
 
         mIsEnabled = !isEnabled; // Opposite so that we trigger side effects below.
         updatePreferences(isEnabled);

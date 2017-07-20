@@ -122,10 +122,7 @@ void StorageHandler::HandleOpenDownloads(
 
 void StorageHandler::HandleOpenArcStorage(
     const base::ListValue* unused_args) {
-  auto* arc_storage_manager = arc::ArcStorageManager::GetForBrowserContext(
-      Profile::FromWebUI(web_ui()));
-  if (arc_storage_manager)
-    arc_storage_manager->OpenPrivateVolumeSettings();
+  arc::ArcStorageManager::Get()->OpenPrivateVolumeSettings();
 }
 
 void StorageHandler::HandleClearDriveCache(
@@ -343,13 +340,8 @@ void StorageHandler::UpdateAndroidSize() {
 
   // Shows the item "Android apps and cache" and start calculating size.
   FireWebUIListener("storage-android-enabled-changed", base::Value(true));
-  bool success = false;
-  auto* arc_storage_manager =
-      arc::ArcStorageManager::GetForBrowserContext(profile);
-  if (arc_storage_manager) {
-    success = arc_storage_manager->GetApplicationsSize(base::Bind(
-        &StorageHandler::OnGetAndroidSize, weak_ptr_factory_.GetWeakPtr()));
-  }
+  bool success = arc::ArcStorageManager::Get()->GetApplicationsSize(base::Bind(
+      &StorageHandler::OnGetAndroidSize, weak_ptr_factory_.GetWeakPtr()));
   if (!success)
     updating_android_size_ = false;
 }

@@ -19,11 +19,9 @@
 #include "components/viz/common/quads/resource_format.h"
 #include "third_party/skia/include/core/SkRefCnt.h"
 
-namespace viz {
-class ContextProvider;
-}
-
 namespace cc {
+
+class ContextProvider;
 
 // OVERVIEW:
 //
@@ -103,7 +101,7 @@ class CC_EXPORT GpuImageDecodeCache
  public:
   enum class DecodeTaskType { PART_OF_UPLOAD_TASK, STAND_ALONE_DECODE_TASK };
 
-  explicit GpuImageDecodeCache(viz::ContextProvider* context,
+  explicit GpuImageDecodeCache(ContextProvider* context,
                                viz::ResourceFormat decode_format,
                                size_t max_working_set_bytes,
                                size_t max_cache_bytes);
@@ -350,7 +348,7 @@ class CC_EXPORT GpuImageDecodeCache
   void DeletePendingImages();
 
   const viz::ResourceFormat format_;
-  viz::ContextProvider* context_;
+  ContextProvider* context_;
   sk_sp<GrContextThreadSafeProxy> context_threadsafe_proxy_;
 
   // All members below this point must only be accessed while holding |lock_|.

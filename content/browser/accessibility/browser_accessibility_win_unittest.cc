@@ -413,16 +413,19 @@ TEST_F(BrowserAccessibilityTest, TestSimpleHypertext) {
   ui::AXNodeData text1;
   text1.id = 11;
   text1.role = ui::AX_ROLE_STATIC_TEXT;
+  text1.AddState(ui::AX_STATE_READ_ONLY);
   text1.SetName(text1_name);
 
   ui::AXNodeData text2;
   text2.id = 12;
   text2.role = ui::AX_ROLE_STATIC_TEXT;
+  text2.AddState(ui::AX_STATE_READ_ONLY);
   text2.SetName(text2_name);
 
   ui::AXNodeData root;
   root.id = 1;
   root.role = ui::AX_ROLE_ROOT_WEB_AREA;
+  root.AddState(ui::AX_STATE_READ_ONLY);
   root.child_ids.push_back(text1.id);
   root.child_ids.push_back(text2.id);
 
@@ -491,6 +494,7 @@ TEST_F(BrowserAccessibilityTest, TestComplexHypertext) {
   ui::AXNodeData text1;
   text1.id = 11;
   text1.role = ui::AX_ROLE_STATIC_TEXT;
+  text1.AddState(ui::AX_STATE_READ_ONLY);
   text1.SetName(base::UTF16ToUTF8(text1_name));
 
   ui::AXNodeData combo_box;
@@ -502,6 +506,7 @@ TEST_F(BrowserAccessibilityTest, TestComplexHypertext) {
   ui::AXNodeData text2;
   text2.id = 13;
   text2.role = ui::AX_ROLE_STATIC_TEXT;
+  text2.AddState(ui::AX_STATE_READ_ONLY);
   text2.SetName(base::UTF16ToUTF8(text2_name));
 
   ui::AXNodeData check_box;
@@ -518,6 +523,8 @@ TEST_F(BrowserAccessibilityTest, TestComplexHypertext) {
   button_text.SetName(base::UTF16ToUTF8(button_text_name));
   button.role = ui::AX_ROLE_BUTTON;
   button_text.role = ui::AX_ROLE_STATIC_TEXT;
+  button.AddState(ui::AX_STATE_READ_ONLY);
+  button_text.AddState(ui::AX_STATE_READ_ONLY);
   button.child_ids.push_back(button_text.id);
 
   ui::AXNodeData link, link_text;
@@ -526,11 +533,14 @@ TEST_F(BrowserAccessibilityTest, TestComplexHypertext) {
   link_text.SetName(base::UTF16ToUTF8(link_text_name));
   link.role = ui::AX_ROLE_LINK;
   link_text.role = ui::AX_ROLE_STATIC_TEXT;
+  link.AddState(ui::AX_STATE_READ_ONLY);
+  link_text.AddState(ui::AX_STATE_READ_ONLY);
   link.child_ids.push_back(link_text.id);
 
   ui::AXNodeData root;
   root.id = 1;
   root.role = ui::AX_ROLE_ROOT_WEB_AREA;
+  root.AddState(ui::AX_STATE_READ_ONLY);
   root.child_ids.push_back(text1.id);
   root.child_ids.push_back(combo_box.id);
   root.child_ids.push_back(text2.id);
@@ -631,6 +641,7 @@ TEST_F(BrowserAccessibilityTest, TestCreateEmptyDocument) {
   // Try creating an empty document with busy state. Readonly is
   // set automatically.
   const int32_t busy_state = 1 << ui::AX_STATE_BUSY;
+  const int32_t readonly_state = 1 << ui::AX_STATE_READ_ONLY;
   std::unique_ptr<BrowserAccessibilityManager> manager(
       new BrowserAccessibilityManagerWin(
           BrowserAccessibilityManagerWin::GetEmptyDocument(), nullptr,
@@ -640,7 +651,7 @@ TEST_F(BrowserAccessibilityTest, TestCreateEmptyDocument) {
   BrowserAccessibility* root = manager->GetRoot();
   EXPECT_EQ(0, root->GetId());
   EXPECT_EQ(ui::AX_ROLE_ROOT_WEB_AREA, root->GetRole());
-  EXPECT_EQ(busy_state, root->GetState());
+  EXPECT_EQ(busy_state | readonly_state, root->GetState());
 
   // Tree with a child textfield.
   ui::AXNodeData tree1_1;
@@ -719,7 +730,8 @@ TEST_F(BrowserAccessibilityTest, EmptyDocHasUniqueIdWin) {
   BrowserAccessibility* root = manager->GetRoot();
   EXPECT_EQ(0, root->GetId());
   EXPECT_EQ(ui::AX_ROLE_ROOT_WEB_AREA, root->GetRole());
-  EXPECT_EQ(1 << ui::AX_STATE_BUSY, root->GetState());
+  EXPECT_EQ(1 << ui::AX_STATE_BUSY | 1 << ui::AX_STATE_READ_ONLY,
+            root->GetState());
 
   int32_t unique_id = ToBrowserAccessibilityWin(root)->unique_id();
   ASSERT_EQ(root, BrowserAccessibility::GetFromUniqueID(unique_id));
@@ -743,6 +755,7 @@ TEST_F(BrowserAccessibilityTest, TestIA2Attributes) {
   root.id = 1;
   root.SetName("Document");
   root.role = ui::AX_ROLE_ROOT_WEB_AREA;
+  root.AddState(ui::AX_STATE_READ_ONLY);
   root.AddState(ui::AX_STATE_FOCUSABLE);
   root.child_ids.push_back(2);
   root.child_ids.push_back(3);
@@ -788,6 +801,7 @@ TEST_F(BrowserAccessibilityTest, TestValueAttributeInTextControls) {
   ui::AXNodeData root;
   root.id = 1;
   root.role = ui::AX_ROLE_ROOT_WEB_AREA;
+  root.AddState(ui::AX_STATE_READ_ONLY);
   root.AddState(ui::AX_STATE_FOCUSABLE);
 
   ui::AXNodeData combo_box, combo_box_text;
@@ -832,6 +846,8 @@ TEST_F(BrowserAccessibilityTest, TestValueAttributeInTextControls) {
   link_text.SetName("Link text");
   link.role = ui::AX_ROLE_LINK;
   link_text.role = ui::AX_ROLE_STATIC_TEXT;
+  link.AddState(ui::AX_STATE_READ_ONLY);
+  link_text.AddState(ui::AX_STATE_READ_ONLY);
   link.child_ids.push_back(link_text.id);
 
   ui::AXNodeData slider, slider_text;
@@ -841,6 +857,8 @@ TEST_F(BrowserAccessibilityTest, TestValueAttributeInTextControls) {
   slider_text.SetName("Slider text");
   slider.role = ui::AX_ROLE_SLIDER;
   slider_text.role = ui::AX_ROLE_STATIC_TEXT;
+  slider.AddState(ui::AX_STATE_READ_ONLY);
+  slider_text.AddState(ui::AX_STATE_READ_ONLY);
   slider.child_ids.push_back(slider_text.id);
 
   root.child_ids.push_back(2);   // Combo box.
@@ -947,6 +965,7 @@ TEST_F(BrowserAccessibilityTest, TestWordBoundariesInTextControls) {
   ui::AXNodeData root;
   root.id = 1;
   root.role = ui::AX_ROLE_ROOT_WEB_AREA;
+  root.AddState(ui::AX_STATE_READ_ONLY);
   root.AddState(ui::AX_STATE_FOCUSABLE);
 
   ui::AXNodeData textarea, textarea_div, textarea_text;
@@ -1086,6 +1105,7 @@ TEST_F(BrowserAccessibilityTest, TestCaretAndSelectionInSimpleFields) {
   ui::AXNodeData root;
   root.id = 1;
   root.role = ui::AX_ROLE_ROOT_WEB_AREA;
+  root.AddState(ui::AX_STATE_READ_ONLY);
   root.AddState(ui::AX_STATE_FOCUSABLE);
 
   ui::AXNodeData combo_box;
@@ -1182,6 +1202,7 @@ TEST_F(BrowserAccessibilityTest, TestCaretInContentEditables) {
   ui::AXNodeData root;
   root.id = 1;
   root.role = ui::AX_ROLE_ROOT_WEB_AREA;
+  root.AddState(ui::AX_STATE_READ_ONLY);
   root.AddState(ui::AX_STATE_FOCUSABLE);
 
   ui::AXNodeData div_editable;
@@ -1303,6 +1324,7 @@ TEST_F(BrowserAccessibilityTest, TestSelectionInContentEditables) {
   ui::AXNodeData root;
   root.id = 1;
   root.role = ui::AX_ROLE_ROOT_WEB_AREA;
+  root.AddState(ui::AX_STATE_READ_ONLY);
   root.AddState(ui::AX_STATE_FOCUSABLE);
 
   ui::AXNodeData div_editable;
@@ -1459,6 +1481,7 @@ TEST_F(BrowserAccessibilityTest, TestIAccessibleHyperlink) {
   ui::AXNodeData root;
   root.id = 1;
   root.role = ui::AX_ROLE_ROOT_WEB_AREA;
+  root.AddState(ui::AX_STATE_READ_ONLY);
   root.AddState(ui::AX_STATE_FOCUSABLE);
 
   ui::AXNodeData div;
@@ -1620,6 +1643,7 @@ TEST_F(BrowserAccessibilityTest, TestTextAttributesInContentEditables) {
   ui::AXNodeData root;
   root.id = 1;
   root.role = ui::AX_ROLE_ROOT_WEB_AREA;
+  root.AddState(ui::AX_STATE_READ_ONLY);
   root.AddState(ui::AX_STATE_FOCUSABLE);
 
   ui::AXNodeData div_editable;
@@ -1859,6 +1883,7 @@ TEST_F(BrowserAccessibilityTest, TestMisspellingsInSimpleTextFields) {
   ui::AXNodeData root;
   root.id = 1;
   root.role = ui::AX_ROLE_ROOT_WEB_AREA;
+  root.AddState(ui::AX_STATE_READ_ONLY);
   root.AddState(ui::AX_STATE_FOCUSABLE);
 
   ui::AXNodeData combo_box;

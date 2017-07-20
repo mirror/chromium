@@ -23,6 +23,8 @@ namespace base {
 class Value;
 }
 
+class PrefRegistry;
+
 namespace prefs {
 
 // An implementation of PersistentPrefStore backed by a
@@ -30,6 +32,11 @@ namespace prefs {
 class PersistentPrefStoreClient
     : public PrefStoreClientMixin<PersistentPrefStore> {
  public:
+  PersistentPrefStoreClient(
+      mojom::PrefStoreConnectorPtr connector,
+      scoped_refptr<PrefRegistry> pref_registry,
+      std::vector<PrefValueStore::PrefStoreType> already_connected_types);
+
   explicit PersistentPrefStoreClient(
       mojom::PersistentPrefStoreConnectionPtr connection);
 
@@ -65,6 +72,13 @@ class PersistentPrefStoreClient
   class InFlightWriteTrie;
   struct InFlightWrite;
 
+  void OnConnect(mojom::PersistentPrefStoreConnectionPtr connection,
+                 mojom::PersistentPrefStoreConnectionPtr incognito_connection,
+                 std::vector<mojom::PrefRegistrationPtr> defaults,
+                 std::unordered_map<PrefValueStore::PrefStoreType,
+                                    prefs::mojom::PrefStoreConnectionPtr>
+                     other_pref_stores);
+
   void QueueWrite(const std::string& key,
                   std::set<std::vector<std::string>> path_components,
                   uint32_t flags);
@@ -77,6 +91,8 @@ class PersistentPrefStoreClient
                        const std::vector<std::string>& path,
                        const base::Value* new_value) override;
 
+  mojom::PrefStoreConnectorPtr connector_;
+  scoped_refptr<PrefRegistry> pref_registry_;
   bool read_only_ = false;
   PrefReadError read_error_ = PersistentPrefStore::PREF_READ_ERROR_NONE;
   mojom::PersistentPrefStorePtr pref_store_;
@@ -84,6 +100,7 @@ class PersistentPrefStoreClient
       pending_writes_;
 
   std::unique_ptr<ReadErrorDelegate> error_delegate_;
+  std::vector<PrefValueStore::PrefStoreType> already_connected_types_;
 
   std::queue<std::vector<InFlightWrite>> in_flight_writes_queue_;
   std::map<std::string, InFlightWriteTrie> in_flight_writes_tries_;

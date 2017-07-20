@@ -56,8 +56,8 @@ class CONTENT_EXPORT OffscreenCanvasSurfaceImpl
 
   // blink::mojom::OffscreenCanvasSurface implementation.
   void Require(const viz::SurfaceId& surface_id,
-               const viz::SurfaceSequence& sequence) override;
-  void Satisfy(const viz::SurfaceSequence& sequence) override;
+               const cc::SurfaceSequence& sequence) override;
+  void Satisfy(const cc::SurfaceSequence& sequence) override;
 
  private:
   // Registered as a callback for when |binding_| is closed. Will call

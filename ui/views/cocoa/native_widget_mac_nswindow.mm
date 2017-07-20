@@ -118,10 +118,7 @@
 
   // If a window drag event monitor is not used, query the BridgedNativeWidget
   // to decide if a window drag should be performed.
-  // This conditional is equivalent to
-  // !views::BridgedNativeWidget::ShouldUseDragEventMonitor(), but it also
-  // supresses the -Wunguarded-availability warning.
-  if (@available(macOS 10.11, *)) {
+  if (!views::BridgedNativeWidget::ShouldUseDragEventMonitor()) {
     views::BridgedNativeWidget* bridge =
         views::NativeWidgetMac::GetBridgeForNativeWindow(self);
 

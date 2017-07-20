@@ -5,8 +5,6 @@
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/run_loop.h"
-#include "base/synchronization/waitable_event.h"
-#include "base/test/test_timeouts.h"
 #include "build/build_config.h"
 #include "content/browser/renderer_host/render_process_host_impl.h"
 #include "content/common/child_process_messages.h"
@@ -300,17 +298,6 @@ IN_PROC_BROWSER_TEST_F(RenderProcessHostTest, SpareRendererOnProcessReuse) {
             new_browser->web_contents()->GetMainFrame()->GetProcess());
   EXPECT_EQ(nullptr,
             RenderProcessHostImpl::GetSpareRenderProcessHostForTesting());
-
-  // The launcher thread reads state from browser_client, need to wait for it to
-  // be done before resetting the browser client. crbug.com/742533.
-  base::WaitableEvent launcher_thread_done(
-      base::WaitableEvent::ResetPolicy::MANUAL,
-      base::WaitableEvent::InitialState::NOT_SIGNALED);
-  BrowserThread::PostTask(
-      content::BrowserThread::PROCESS_LAUNCHER, FROM_HERE,
-      base::BindOnce([](base::WaitableEvent* done) { done->Signal(); },
-                     base::Unretained(&launcher_thread_done)));
-  ASSERT_TRUE(launcher_thread_done.TimedWait(TestTimeouts::action_timeout()));
 
   SetBrowserClientForTesting(old_client);
 }

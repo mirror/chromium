@@ -63,8 +63,6 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
         bug=1966) # angle bug ID
 
     # Windows only.
-    self.Fail('conformance/glsl/bugs/sampler-struct-function-arg.html',
-        ['win'], bug=2103) # angle bug ID
     self.Fail('conformance2/rendering/blitframebuffer-outside-readbuffer.html',
         ['win', 'd3d11'], bug=644740)
     self.Fail('conformance2/textures/misc/tex-base-level-bug.html',
@@ -72,8 +70,6 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
     self.Flaky('conformance2/textures/svg_image/' +
         'tex-2d-rgb565-rgb-unsigned_short_5_6_5.html',
         ['win'], bug=736926)
-    self.Fail('conformance2/uniforms/uniform-blocks-with-arrays.html',
-        ['win'], bug=2103) # angle bug ID
 
     # Win / NVidia
     self.Flaky('deqp/functional/gles3/fbomultisample*',
@@ -175,7 +171,7 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
 
     # Intel HD 530
     self.Fail('conformance2/textures/misc/angle-stuck-depth-textures.html',
-        ['win', 'intel', 'no_passthrough', 'd3d11'], bug=680797)
+        ['win', 'intel', 'd3d11'], bug=680797)
     self.Fail('deqp/functional/gles3/fboinvalidate/format_00.html',
         ['win', 'intel', 'd3d11'], bug=680797)
     self.Fail('deqp/functional/gles3/fboinvalidate/format_01.html',
@@ -200,84 +196,21 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
     self.Flaky('deqp/*', ['win', 'intel', 'd3d11'], bug=628395)
 
     # Passthrough command decoder / D3D11
-    self.Fail('deqp/functional/gles3/shaderstruct.html',
+    self.Fail('conformance/glsl/misc/shaders-with-name-conflicts.html',
+        ['win', 'passthrough', 'd3d11'], bug=602688)
+    self.Skip('conformance2/textures/misc/' +
+        'copy-texture-image-webgl-specific.html',
+        ['win', 'passthrough', 'd3d11'], bug=602688)
+    self.Skip('conformance2/reading/read-pixels-into-pixel-pack-buffer.html',
         ['win', 'passthrough', 'd3d11'], bug=602688)
 
-    # Passthrough command decoder / OpenGL
-    self.Fail('conformance/extensions/webgl-compressed-texture-s3tc.html',
-        ['passthrough', 'opengl'], bug=602688)
-    self.Fail('conformance/glsl/misc/shader-with-non-reserved-words.html',
-        ['passthrough', 'opengl'], bug=602688)
-    self.Fail('conformance/textures/canvas/*', ['passthrough', 'opengl'],
-        bug=602688)
-    self.Fail('conformance/textures/canvas_sub_rectangle/*',
-        ['passthrough', 'opengl'], bug=602688)
-    self.Fail('conformance/textures/image_bitmap_from_blob/*',
-        ['passthrough', 'opengl'], bug=602688)
-    self.Fail('conformance/textures/image_bitmap_from_canvas/*',
-        ['passthrough', 'opengl'], bug=602688)
-    self.Fail('conformance/textures/image_bitmap_from_image/*',
-        ['passthrough', 'opengl'], bug=602688)
-    self.Fail('conformance/textures/image_bitmap_from_image_bitmap/*',
-        ['passthrough', 'opengl'], bug=602688)
-    self.Fail('conformance/textures/image_bitmap_from_image_data/*',
-        ['passthrough', 'opengl'], bug=602688)
-    self.Fail('conformance/textures/misc/' +
-        'copytexsubimage2d-large-partial-copy-corruption.html',
-        ['passthrough', 'opengl'], bug=602688)
-    self.Fail('conformance/textures/misc/copytexsubimage2d-subrects.html',
-        ['passthrough', 'opengl'], bug=602688)
-    self.Fail('conformance/textures/misc/gl-teximage.html',
-        ['passthrough', 'opengl'], bug=602688)
-    self.Fail('conformance/textures/misc/texture-mips.html',
-        ['passthrough', 'opengl'], bug=602688)
-    self.Fail('conformance/textures/webgl_canvas/*', ['passthrough', 'opengl'],
-        bug=602688)
-    self.Fail('conformance1/textures/image_bitmap_from_image/*',
-        ['passthrough', 'opengl'], bug=602688)
-    self.Fail('conformance2/misc/uninitialized-test-2.html',
-        ['passthrough', 'opengl'], bug=602688)
-    self.Fail('conformance2/reading/format-r11f-g11f-b10f.html',
-        ['passthrough', 'opengl'], bug=602688)
-    self.Fail('conformance2/rendering/blitframebuffer-filter-outofbounds.html',
-        ['passthrough', 'opengl'], bug=602688)
-    self.Fail('conformance2/rendering/draw-buffers-dirty-state-bug.html',
-        ['passthrough', 'opengl'], bug=602688)
-    self.Fail('conformance2/rendering/framebuffer-unsupported.html',
-        ['passthrough', 'opengl'], bug=602688)
-    self.Fail('conformance2/state/gl-get-calls.html', ['passthrough', 'opengl'],
-        bug=602688)
-    self.Fail('conformance2/textures/canvas/*', ['passthrough', 'opengl'],
-        bug=602688)
-    self.Fail('conformance2/textures/canvas_sub_rectangle/*',
-        ['passthrough', 'opengl'], bug=602688)
-    self.Fail('conformance2/textures/image_bitmap_from_blob/*',
-        ['passthrough', 'opengl'], bug=602688)
-    self.Fail('conformance2/textures/image_bitmap_from_canvas/*',
-        ['passthrough', 'opengl'], bug=602688)
-    self.Fail('conformance2/textures/image_bitmap_from_image/*',
-        ['passthrough', 'opengl'], bug=602688)
-    self.Fail('conformance2/textures/image_bitmap_from_image_bitmap/*',
-        ['passthrough', 'opengl'], bug=602688)
-    self.Fail('conformance2/textures/image_bitmap_from_image_data/*',
-        ['passthrough', 'opengl'], bug=602688)
-    self.Fail('conformance2/textures/image_bitmap_from_video/*',
-        ['passthrough', 'opengl'], bug=602688)
-    self.Fail('conformance2/textures/misc/angle-stuck-depth-textures.html',
-        ['passthrough', 'opengl'], bug=602688)
-    self.Fail('conformance2/textures/misc/' +
-        'tex-image-with-bad-args-from-dom-elements.html',
-        ['passthrough', 'opengl'], bug=602688)
-    self.Fail('conformance2/textures/misc/tex-storage-2d.html',
-        ['passthrough', 'opengl'], bug=602688)
-    self.Fail('conformance2/textures/video/tex-2d-rgb9_e5-rgb-float.html',
-        ['passthrough', 'opengl'], bug=602688)
-    self.Fail('conformance2/textures/video/tex-2d-rgb9_e5-rgb-half_float.html',
-        ['passthrough', 'opengl'], bug=602688)
-    self.Fail('conformance2/textures/webgl_canvas/*',
-        ['passthrough', 'opengl'], bug=602688)
-    self.Fail('deqp/functional/gles3/integerstatequery.html',
-        ['passthrough', 'opengl'], bug=602688)
+    self.Fail('conformance/reading/read-pixels-test.html',
+        ['win', 'passthrough', 'd3d11'], bug=602688)
+    self.Fail('conformance/textures/misc/copy-tex-image-and-sub-image-2d.html',
+        ['win', 'passthrough', 'd3d11'], bug=602688)
+
+    self.Fail('deqp/functional/gles3/shaderstruct.html',
+        ['win', 'passthrough', 'd3d11'], bug=602688)
 
     # Mac only.
     self.Fail('conformance2/renderbuffers/' +
@@ -457,10 +390,6 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
         ['mac', ('nvidia', 0xfe9)], bug=654187)
 
     # Mac AMD
-    self.Fail('conformance/rendering/texture-switch-performance.html',
-        ['mac', 'amd'], bug=735483)
-    self.Fail('conformance2/rendering/texture-switch-performance.html',
-        ['mac', 'amd'], bug=735483)
     self.Fail('deqp/functional/gles3/transformfeedback/' +
         'array_interleaved_lines.html',
         ['mac', 'amd'], bug=483282)
@@ -560,7 +489,7 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
     self.Fail('conformance2/rendering/framebuffer-texture-level1.html',
         ['mac', 'intel'], bug=680278)
     self.Fail('conformance2/textures/misc/angle-stuck-depth-textures.html',
-        ['mac', 'no_passthrough', 'intel'], bug=679692)
+        ['mac', 'intel'], bug=679692)
     self.Fail('deqp/functional/gles3/fbomultisample*',
         ['mac', 'intel'], bug=641209)
     self.Fail('deqp/functional/gles3/texturefiltering/2d_combinations_01.html',
@@ -666,14 +595,12 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
         ['linux', 'nvidia'], bug=679677)
     self.Fail('conformance2/rendering/framebuffer-texture-level1.html',
         ['linux', 'nvidia', 'opengl'], bug=680278)
-    self.Fail('conformance2/rendering/multisampling-fragment-evaluation.html',
-        ['linux', 'nvidia', 'no_passthrough'], bug=682815)
     self.Fail('conformance2/textures/image/' +
         'tex-3d-rg8ui-rg_integer-unsigned_byte.html',
         ['linux', ('nvidia', 0xf02)], bug=680282)
     self.Flaky('conformance2/textures/image_bitmap_from_image_data/' +
         'tex-2d-srgb8-rgb-unsigned_byte.html',
-        ['linux', 'no_passthrough', 'nvidia'], bug=694354)
+        ['linux', 'nvidia'], bug=694354)
 
     # Linux NVIDIA Quadro P400
     # This test causes a lost device and then the next test fails.
@@ -718,7 +645,7 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
     self.Fail('conformance/extensions/webgl-compressed-texture-astc.html',
         ['linux', 'intel'], bug=680720)
     self.Fail('conformance2/rendering/blitframebuffer-filter-outofbounds.html',
-        ['linux', 'no_passthrough', 'intel'], bug=680720)
+        ['linux', 'intel'], bug=680720)
     self.Fail('conformance2/rendering/blitframebuffer-filter-srgb.html',
         ['linux', 'intel', 'no_angle'], bug=680720)
     self.Fail('conformance2/rendering/blitframebuffer-outside-readbuffer.html',
@@ -761,10 +688,6 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
         'vector-dynamic-indexing-swizzled-lvalue.html',
         ['linux', 'intel'], bug=709874)
 
-    # Linux Intel HD 630
-    self.Fail('conformance/textures/misc/texture-size-limit.html',
-        ['linux', ('intel', 0x5912)], bug=745888)
-
     # Linux AMD only.
     # It looks like AMD shader compiler rejects many valid ES3 semantics.
     self.Fail('conformance/glsl/misc/shaders-with-invariance.html',
@@ -806,7 +729,7 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
         ['linux', 'amd'], bug=483282)
 
     self.Fail('conformance2/misc/uninitialized-test-2.html',
-        ['linux', 'no_passthrough', 'amd'], bug=483282)
+        ['linux', 'amd'], bug=483282)
     self.Fail('conformance2/reading/read-pixels-from-fbo-test.html',
         ['linux', 'amd'], bug=483282)
     self.Fail('conformance2/rendering/blitframebuffer-filter-srgb.html',
@@ -960,7 +883,7 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
     # self.Fail('conformance2/extensions/ext-color-buffer-float.html',
     #     ['linux', 'amd'], bug=633022)
     self.Fail('conformance2/rendering/blitframebuffer-filter-outofbounds.html',
-        ['linux', 'no_passthrough', 'amd'], bug=655147)
+        ['linux', 'amd'], bug=655147)
 
     self.Fail('conformance2/textures/misc/tex-base-level-bug.html',
         ['linux', 'amd'], bug=705865)
@@ -986,8 +909,6 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
         ['linux', 'amd'], bug=658842)
     self.Fail('conformance2/rendering/uniform-block-buffer-size.html',
         ['linux', 'amd'], bug=658844)
-    self.Fail('conformance2/uniforms/uniform-blocks-with-arrays.html',
-        ['linux', 'amd'], bug=2103) # angle bug ID
 
     # Linux AMD R7 240
     self.Fail('conformance2/textures/canvas/' +

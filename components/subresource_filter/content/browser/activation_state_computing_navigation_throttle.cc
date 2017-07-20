@@ -120,18 +120,7 @@ void ActivationStateComputingNavigationThrottle::OnActivationStateComputed(
         delay, base::TimeDelta::FromMicroseconds(1),
         base::TimeDelta::FromSeconds(10), 50);
   }
-  Resume();
-}
-
-AsyncDocumentSubresourceFilter*
-ActivationStateComputingNavigationThrottle::filter() const {
-  // TODO(csharrison): This should not really be necessary, as we should be
-  // delaying the navigation until the filter has computed an activation state.
-  // See crbug.com/736249. In the mean time, have a check here to avoid
-  // returning a filter in an invalid state.
-  if (async_filter_ && async_filter_->has_activation_state())
-    return async_filter_.get();
-  return nullptr;
+  navigation_handle()->Resume();
 }
 
 // Ensure the caller cannot take ownership of a subresource filter for cases

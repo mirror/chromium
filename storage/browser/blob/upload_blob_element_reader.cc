@@ -19,13 +19,17 @@ namespace storage {
 
 UploadBlobElementReader::UploadBlobElementReader(
     std::unique_ptr<BlobDataHandle> handle,
-    FileSystemContext* file_system_context)
-    : handle_(std::move(handle)), file_system_context_(file_system_context) {}
+    FileSystemContext* file_system_context,
+    base::SingleThreadTaskRunner* file_task_runner)
+    : handle_(std::move(handle)),
+      file_system_context_(file_system_context),
+      file_runner_(file_task_runner) {}
 
 UploadBlobElementReader::~UploadBlobElementReader() {}
 
 int UploadBlobElementReader::Init(const net::CompletionCallback& callback) {
-  reader_ = handle_->CreateReader(file_system_context_.get());
+  reader_ =
+      handle_->CreateReader(file_system_context_.get(), file_runner_.get());
   BlobReader::Status status = reader_->CalculateSize(callback);
   switch (status) {
     case BlobReader::Status::NET_ERROR:

@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "chrome/browser/android/feedback/connectivity_checker.h"
+
 #include "base/android/jni_android.h"
 #include "base/android/jni_string.h"
 #include "base/android/scoped_java_ref.h"
@@ -190,6 +192,10 @@ jboolean IsUrlValid(JNIEnv* env,
                     const JavaParamRef<jstring>& j_url) {
   GURL url(base::android::ConvertJavaStringToUTF8(env, j_url));
   return url.is_valid();
+}
+
+bool RegisterConnectivityChecker(JNIEnv* env) {
+  return RegisterNativesImpl(env);
 }
 
 }  // namespace android

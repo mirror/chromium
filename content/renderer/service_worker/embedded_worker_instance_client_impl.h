@@ -36,8 +36,8 @@ class EmbeddedWorkerInstanceClientImpl
   static void Create(
       base::TimeTicks blink_initialized_time,
       scoped_refptr<base::SingleThreadTaskRunner> io_thread_runner,
-      mojom::EmbeddedWorkerInstanceClientRequest request,
-      const service_manager::BindSourceInfo& source_info);
+      const service_manager::BindSourceInfo& source_info,
+      mojom::EmbeddedWorkerInstanceClientRequest request);
 
   ~EmbeddedWorkerInstanceClientImpl() override;
 

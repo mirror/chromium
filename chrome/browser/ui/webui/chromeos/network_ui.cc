@@ -144,7 +144,8 @@ class NetworkConfigMessageHandler : public content::WebUIMessageHandler {
     std::string shill_type = (onc_type == ::onc::network_type::kVPN)
                                  ? shill::kTypeVPN
                                  : shill::kTypeWifi;
-    NetworkConfigView::ShowForType(shill_type);
+    NetworkConfigView::ShowForType(
+        shill_type, web_ui()->GetWebContents()->GetTopLevelNativeWindow());
   }
 
   base::WeakPtrFactory<NetworkConfigMessageHandler> weak_ptr_factory_;

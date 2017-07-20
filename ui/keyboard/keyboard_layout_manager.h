@@ -19,7 +19,8 @@ class KeyboardController;
 class KeyboardLayoutManager : public aura::LayoutManager {
  public:
   explicit KeyboardLayoutManager(KeyboardController* controller)
-      : controller_(controller), contents_window_(NULL) {}
+      : controller_(controller), keyboard_(NULL) {
+  }
 
   // Overridden from aura::LayoutManager
   void OnWindowResized() override;
@@ -33,7 +34,7 @@ class KeyboardLayoutManager : public aura::LayoutManager {
 
  private:
   KeyboardController* controller_;
-  aura::Window* contents_window_;
+  aura::Window* keyboard_;
 
   DISALLOW_COPY_AND_ASSIGN(KeyboardLayoutManager);
 };

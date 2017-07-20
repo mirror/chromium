@@ -21,7 +21,6 @@ public class SectionHeaderViewHolder extends NewTabPageViewHolder {
     private static final double SCROLL_HEADER_HEIGHT_PERCENTAGE = 0.7;
 
     private final int mMaxSnippetHeaderHeight;
-    private final MarginResizer mMarginResizer;
 
     public SectionHeaderViewHolder(final SuggestionsRecyclerView recyclerView, UiConfig config) {
         super(LayoutInflater.from(recyclerView.getContext())
@@ -31,19 +30,13 @@ public class SectionHeaderViewHolder extends NewTabPageViewHolder {
 
         int wideLateralMargin = recyclerView.getResources().getDimensionPixelSize(
                 R.dimen.ntp_wide_card_lateral_margins);
-        mMarginResizer = new MarginResizer(itemView, config, 0, wideLateralMargin);
+        MarginResizer.createWithViewAdapter(itemView, config, 0,
+                wideLateralMargin);
     }
 
     public void onBindViewHolder(SectionHeader header) {
         ((TextView) itemView).setText(header.getHeaderText());
         updateDisplay(0, false);
-        mMarginResizer.attach();
-    }
-
-    @Override
-    public void recycle() {
-        mMarginResizer.detach();
-        super.recycle();
     }
 
     /**

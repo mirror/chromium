@@ -12,8 +12,8 @@
 #include "base/files/file_path.h"
 #include "base/files/file_util.h"
 #include "base/macros.h"
+#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
-#include "base/test/scoped_task_environment.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "content/public/common/resource_request_body.h"
@@ -38,7 +38,7 @@ using storage::BlobStorageContext;
 namespace content {
 
 TEST(UploadDataStreamBuilderTest, CreateUploadDataStream) {
-  base::test::ScopedTaskEnvironment scoped_task_environment_;
+  base::MessageLoop message_loop;
   {
     scoped_refptr<ResourceRequestBody> request_body = new ResourceRequestBody;
 
@@ -97,8 +97,7 @@ TEST(UploadDataStreamBuilderTest, CreateUploadDataStream) {
 
 TEST(UploadDataStreamBuilderTest,
      WriteUploadDataStreamWithEmptyFileBackedBlob) {
-  base::test::ScopedTaskEnvironment scoped_task_environment_(
-      base::test::ScopedTaskEnvironment::MainThreadType::IO);
+  base::MessageLoopForIO message_loop;
   {
     base::FilePath test_blob_path;
     ASSERT_TRUE(base::CreateTemporaryFile(&test_blob_path));
@@ -162,8 +161,7 @@ TEST(UploadDataStreamBuilderTest,
 }
 
 TEST(UploadDataStreamBuilderTest, ResetUploadStreamWithBlob) {
-  base::test::ScopedTaskEnvironment scoped_task_environment_(
-      base::test::ScopedTaskEnvironment::MainThreadType::IO);
+  base::MessageLoopForIO message_loop;
   {
     scoped_refptr<ResourceRequestBody> request_body = new ResourceRequestBody;
 

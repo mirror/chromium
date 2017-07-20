@@ -9,11 +9,9 @@
 #include "core/frame/UseCounter.h"
 #include "core/inspector/ConsoleTypes.h"
 #include "core/workers/ParentFrameTaskRunners.h"
-#include "core/workers/WorkerBackingThreadStartupData.h"
 #include "core/workers/WorkerClients.h"
 #include "platform/heap/SelfKeepAlive.h"
 #include "platform/wtf/Forward.h"
-#include "platform/wtf/Optional.h"
 
 namespace blink {
 
@@ -22,7 +20,7 @@ class SourceLocation;
 class ThreadableLoadingContext;
 class WorkerInspectorProxy;
 class WorkerThread;
-struct GlobalScopeCreationParams;
+class WorkerThreadStartupData;
 
 // The base proxy class to talk to Worker/WorkletGlobalScope on a worker thread
 // from the parent context thread (Note that this is always the main thread for
@@ -69,10 +67,8 @@ class CORE_EXPORT ThreadedMessagingProxyBase
  protected:
   ThreadedMessagingProxyBase(ExecutionContext*, WorkerClients*);
 
-  void InitializeWorkerThread(
-      std::unique_ptr<GlobalScopeCreationParams>,
-      const WTF::Optional<WorkerBackingThreadStartupData>&,
-      const KURL& script_url);
+  void InitializeWorkerThread(std::unique_ptr<WorkerThreadStartupData>,
+                              const KURL& script_url);
   virtual void WorkerThreadCreated();
 
   ThreadableLoadingContext* CreateThreadableLoadingContext() const;
@@ -91,7 +87,8 @@ class CORE_EXPORT ThreadedMessagingProxyBase
   bool IsParentContextThread() const;
 
  private:
-  virtual std::unique_ptr<WorkerThread> CreateWorkerThread() = 0;
+  virtual std::unique_ptr<WorkerThread> CreateWorkerThread(
+      double origin_time) = 0;
 
   Member<ExecutionContext> execution_context_;
   Member<WorkerClients> worker_clients_;

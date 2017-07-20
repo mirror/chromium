@@ -71,9 +71,6 @@ class BLINK_PLATFORM_EXPORT WebServiceWorkerRequest {
   void SetCredentialsMode(WebURLRequest::FetchCredentialsMode);
   WebURLRequest::FetchCredentialsMode CredentialsMode() const;
 
-  void SetIntegrity(const WebString&);
-  const WebString& Integrity() const;
-
   void SetCacheMode(WebURLRequest::FetchRequestCacheMode);
   WebURLRequest::FetchRequestCacheMode CacheMode() const;
 

@@ -568,9 +568,15 @@ NS_INLINE void AnimateInViews(NSArray* views,
         DCHECK([menuItem tag]);
         [_delegate commandWasSelected:[menuItem tag]];
         if ([menuItem tag] > 0) {
-          [self chromeExecuteCommand:menuItem];
+          [self chromeExecuteCommand:[menuItem command]];
         } else {
-          [menuItem executeCommandWithDispatcher:self.dispatcher];
+          DCHECK([menuItem selector]);
+          DCHECK([self.dispatcher respondsToSelector:[menuItem selector]]);
+// TODO(crbug.com/738881): Find a better way to call these methods.
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+          [self.dispatcher performSelector:[menuItem selector]];
+#pragma clang diagnostic pop
         }
       });
 }

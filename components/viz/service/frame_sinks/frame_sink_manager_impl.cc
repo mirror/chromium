@@ -35,21 +35,11 @@ FrameSinkManagerImpl::~FrameSinkManagerImpl() {
 
 void FrameSinkManagerImpl::BindAndSetClient(
     cc::mojom::FrameSinkManagerRequest request,
-    scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+    scoped_refptr<base::SequencedTaskRunner> task_runner,
     cc::mojom::FrameSinkManagerClientPtr client) {
-  DCHECK(!client_);
   DCHECK(!binding_.is_bound());
   binding_.Bind(std::move(request), std::move(task_runner));
-  client_ptr_ = std::move(client);
-
-  client_ = client_ptr_.get();
-}
-
-void FrameSinkManagerImpl::SetLocalClient(
-    cc::mojom::FrameSinkManagerClient* client) {
-  DCHECK(!client_ptr_);
-
-  client_ = client;
+  client_ = std::move(client);
 }
 
 void FrameSinkManagerImpl::CreateRootCompositorFrameSink(
@@ -105,7 +95,7 @@ void FrameSinkManagerImpl::UnregisterFrameSinkHierarchy(
 }
 
 void FrameSinkManagerImpl::DropTemporaryReference(const SurfaceId& surface_id) {
-  manager_.surface_manager()->DropTemporaryReference(surface_id);
+  manager_.DropTemporaryReference(surface_id);
 }
 
 void FrameSinkManagerImpl::DestroyCompositorFrameSink(FrameSinkId sink_id) {

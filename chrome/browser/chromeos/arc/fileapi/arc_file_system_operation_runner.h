@@ -20,19 +20,10 @@
 #include "components/arc/arc_service.h"
 #include "components/arc/common/file_system.mojom.h"
 #include "components/arc/instance_holder.h"
-#include "components/keyed_service/core/keyed_service.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "storage/browser/fileapi/watcher_manager.h"
 
-class BrowserContextKeyedServiceFactory;
-
-namespace content {
-class BrowserContext;
-}  // namespace content
-
 namespace arc {
-
-class ArcBridgeService;
 
 // Runs ARC file system operations.
 //
@@ -58,7 +49,7 @@ class ArcBridgeService;
 //
 // All member functions must be called on the UI thread.
 class ArcFileSystemOperationRunner
-    : public KeyedService,
+    : public ArcService,
       public mojom::FileSystemHost,
       public ArcSessionManager::Observer,
       public InstanceHolder<mojom::FileSystemInstance>::Observer {
@@ -87,10 +78,8 @@ class ArcFileSystemOperationRunner
     virtual ~Observer() = default;
   };
 
-  // Returns singleton instance for the given BrowserContext,
-  // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcFileSystemOperationRunner* GetForBrowserContext(
-      content::BrowserContext* context);
+  // For supporting ArcServiceManager::GetService<T>().
+  static const char kArcServiceName[];
 
   // Creates an instance suitable for unit tests.
   // This instance will run all operations immediately without deferring by
@@ -99,11 +88,10 @@ class ArcFileSystemOperationRunner
   static std::unique_ptr<ArcFileSystemOperationRunner> CreateForTesting(
       ArcBridgeService* bridge_service);
 
-  // Returns Factory instance for ArcFileSystemOperationRunner.
-  static BrowserContextKeyedServiceFactory* GetFactory();
-
-  ArcFileSystemOperationRunner(content::BrowserContext* context,
-                               ArcBridgeService* bridge_service);
+  // The standard constructor. A production instance should be created by
+  // this constructor.
+  ArcFileSystemOperationRunner(ArcBridgeService* bridge_service,
+                               const Profile* profile);
   ~ArcFileSystemOperationRunner() override;
 
   // Adds or removes observers.
@@ -139,8 +127,8 @@ class ArcFileSystemOperationRunner
  private:
   friend class ArcFileSystemOperationRunnerTest;
 
-  ArcFileSystemOperationRunner(content::BrowserContext* context,
-                               ArcBridgeService* bridge_service,
+  ArcFileSystemOperationRunner(ArcBridgeService* bridge_service,
+                               const Profile* profile,
                                bool set_should_defer_by_events);
 
   void OnWatcherAdded(const WatcherCallback& watcher_callback,
@@ -155,9 +143,9 @@ class ArcFileSystemOperationRunner
   // deferring.
   void SetShouldDefer(bool should_defer);
 
-  // Maybe nullptr in unittests.
-  content::BrowserContext* const context_;
-  ArcBridgeService* const arc_bridge_service_;  // Owned by ArcServiceManager
+  // Profile this runner is associated with. This can be nullptr in
+  // unit tests.
+  const Profile* const profile_;
 
   // Indicates if this instance should enable/disable deferring by events.
   // Usually true, but set to false in unit tests.

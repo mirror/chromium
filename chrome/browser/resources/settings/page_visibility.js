@@ -10,7 +10,6 @@
  *   dateTime: (boolean|undefined|DateTimePageVisibility),
  *   defaultBrowser: (boolean|undefined),
  *   downloads: (boolean|undefined|DownloadsPageVisibility),
- *   multidevice: (boolean|undefined),
  *   onStartup: (boolean|undefined),
  *   passwordsAndForms: (boolean|undefined),
  *   people: (boolean|undefined),
@@ -97,7 +96,6 @@ cr.define('settings', function() {
       downloads: {
         googleDrive: false,
       },
-      multidevice: false,
     };
     // </if>
   }

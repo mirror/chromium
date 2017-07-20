@@ -9,9 +9,9 @@
 #include "base/memory/ptr_util.h"
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "build/build_config.h"
+#include "cc/output/context_provider.h"
 #include "cc/surfaces/surface_manager.h"
 #include "components/viz/common/gl_helper.h"
-#include "components/viz/common/gpu/context_provider.h"
 #include "content/browser/compositor/surface_utils.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "ui/compositor/compositor.h"
@@ -22,8 +22,9 @@ NoTransportImageTransportFactory::NoTransportImageTransportFactory()
     : frame_sink_manager_(false /* use surface references */, nullptr),
       context_factory_(&host_frame_sink_manager_,
                        frame_sink_manager_.frame_sink_manager()) {
-  surface_utils::ConnectWithLocalFrameSinkManager(&host_frame_sink_manager_,
-                                                  &frame_sink_manager_);
+  surface_utils::ConnectWithInProcessFrameSinkManager(
+      &host_frame_sink_manager_, &frame_sink_manager_,
+      base::ThreadTaskRunnerHandle::Get());
 
   // The context factory created here is for unit tests, thus using a higher
   // refresh rate to spend less time waiting for BeginFrames.

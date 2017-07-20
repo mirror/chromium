@@ -117,7 +117,7 @@ void VrShellDelegate::UpdateVSyncInterval(JNIEnv* env,
                                           jlong timebase_nanos,
                                           jlong interval_micros) {
   vsync_timebase_ = base::TimeTicks() +
-                    base::TimeDelta::FromMicroseconds(timebase_nanos / 1000);
+                    base::TimeDelta::FromMilliseconds(timebase_nanos / 1000);
   vsync_interval_ = base::TimeDelta::FromMicroseconds(interval_micros);
   if (gvr_delegate_) {
     gvr_delegate_->UpdateVSyncInterval(vsync_timebase_, vsync_interval_);
@@ -244,6 +244,10 @@ void VrShellDelegate::CreateVRDisplayInfo(
 // ----------------------------------------------------------------------------
 // Native JNI methods
 // ----------------------------------------------------------------------------
+
+bool RegisterVrShellDelegate(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
 
 jlong Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   return reinterpret_cast<intptr_t>(new VrShellDelegate(env, obj));

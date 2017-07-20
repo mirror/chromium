@@ -13,6 +13,9 @@ Polymer({
     },
 
     /** @private */
+    isFolder_: Boolean,
+
+    /** @private */
     isMultiItem_: Boolean,
   },
 
@@ -29,12 +32,10 @@ Polymer({
     if (this.showing_)
       return;
 
-    var isFolder = !dragItem.url;
+    this.isFolder_ = !dragItem.url;
     this.isMultiItem_ = items.length > 1;
-
-    this.$.icon.className = isFolder ? 'folder-icon' : 'website-icon';
-    this.$.icon.style.backgroundImage =
-        isFolder ? null : cr.icon.getFavicon(assert(dragItem.url));
+    if (dragItem.url)
+      this.$.icon.style.backgroundImage = cr.icon.getFavicon(dragItem.url);
 
     this.$.title.textContent = dragItem.title;
     this.$.count.textContent = items.length;

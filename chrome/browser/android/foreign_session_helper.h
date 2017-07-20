@@ -51,6 +51,8 @@ class ForeignSessionHelper : public syncer::SyncServiceObserver {
   void OnSyncConfigurationCompleted(syncer::SyncService* sync) override;
   void OnForeignSessionUpdated(syncer::SyncService* sync) override;
 
+  static bool RegisterForeignSessionHelper(JNIEnv* env);
+
  private:
   ~ForeignSessionHelper() override;
 

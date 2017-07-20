@@ -354,7 +354,6 @@ public class CronetBufferedOutputStreamTest extends CronetTestBase {
                             + " bytes",
                     e.getMessage());
         }
-        connection.disconnect();
     }
 
     /**
@@ -386,7 +385,6 @@ public class CronetBufferedOutputStreamTest extends CronetTestBase {
                             + " bytes",
                     e.getMessage());
         }
-        connection.disconnect();
     }
 
     /**

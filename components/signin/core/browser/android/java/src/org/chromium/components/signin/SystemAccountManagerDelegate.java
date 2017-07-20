@@ -95,17 +95,17 @@ public class SystemAccountManagerDelegate implements AccountManagerDelegate {
     @Override
     public String getAuthToken(Account account, String authTokenScope) throws AuthException {
         assert !ThreadUtils.runningOnUiThread();
-        assert AccountManagerFacade.GOOGLE_ACCOUNT_TYPE.equals(account.type);
+        assert AccountManagerHelper.GOOGLE_ACCOUNT_TYPE.equals(account.type);
         try {
             return GoogleAuthUtil.getTokenWithNotification(
                     ContextUtils.getApplicationContext(), account, authTokenScope, null);
         } catch (GoogleAuthException ex) {
             // This case includes a UserRecoverableNotifiedException, but most clients will have
             // their own retry mechanism anyway.
-            throw new AuthException(AuthException.NONTRANSIENT,
-                    "Error while getting token for scope '" + authTokenScope + "'", ex);
+            // TODO(bauerb): Investigate integrating the callback with ConnectionRetry.
+            throw new AuthException(false /* isTransientError */, ex);
         } catch (IOException ex) {
-            throw new AuthException(AuthException.TRANSIENT, ex);
+            throw new AuthException(true /* isTransientError */, ex);
         }
     }
 
@@ -114,11 +114,11 @@ public class SystemAccountManagerDelegate implements AccountManagerDelegate {
         try {
             GoogleAuthUtil.clearToken(ContextUtils.getApplicationContext(), authToken);
         } catch (GooglePlayServicesAvailabilityException ex) {
-            throw new AuthException(AuthException.NONTRANSIENT, ex);
+            throw new AuthException(false /* isTransientError */, ex);
         } catch (GoogleAuthException ex) {
-            throw new AuthException(AuthException.NONTRANSIENT, ex);
+            throw new AuthException(false /* isTransientError */, ex);
         } catch (IOException ex) {
-            throw new AuthException(AuthException.TRANSIENT, ex);
+            throw new AuthException(true /* isTransientError */, ex);
         }
     }
 

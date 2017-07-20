@@ -80,10 +80,6 @@ class AURA_EXPORT WindowManagerClient {
   virtual void SetGlobalOverrideCursor(
       base::Optional<ui::CursorData> cursor) = 0;
 
-  // Sets the list of keys which don't hide the cursor.
-  virtual void SetKeyEventsThatDontHideCursor(
-      std::vector<ui::mojom::EventMatcherPtr> cursor_key_list) = 0;
-
   // Requests the client embedded in |window| to close the window. Only
   // applicable to top-level windows. If a client is not embedded in |window|,
   // this does nothing.
@@ -106,14 +102,6 @@ class AURA_EXPORT WindowManagerClient {
       const std::vector<display::Display>& displays,
       std::vector<ui::mojom::WmViewportMetricsPtr> viewport_metrics,
       int64_t primary_display_id) = 0;
-
-  // Adds |display| as a new display moving |window_tree_host| to the new
-  // display. This results in closing the previous display |window_tree_host|
-  // was associated with.
-  virtual void AddDisplayReusingWindowTreeHost(
-      WindowTreeHostMus* window_tree_host,
-      const display::Display& display,
-      ui::mojom::WmViewportMetricsPtr viewport_metrics) = 0;
 
  protected:
   virtual ~WindowManagerClient() {}

@@ -12,10 +12,10 @@
 namespace blink {
 namespace {
 
-class MockIdleDeadlineScheduler final : public WebScheduler {
+class MockScheduler final : public WebScheduler {
  public:
-  MockIdleDeadlineScheduler() {}
-  ~MockIdleDeadlineScheduler() override {}
+  MockScheduler() {}
+  ~MockScheduler() override {}
 
   // WebScheduler implementation:
   WebTaskRunner* LoadingTaskRunner() override { return nullptr; }
@@ -40,30 +40,30 @@ class MockIdleDeadlineScheduler final : public WebScheduler {
       scheduler::RendererScheduler::NavigatingFrameType) override {}
 
  private:
-  DISALLOW_COPY_AND_ASSIGN(MockIdleDeadlineScheduler);
+  DISALLOW_COPY_AND_ASSIGN(MockScheduler);
 };
 
-class MockIdleDeadlineThread final : public WebThread {
+class MockThread final : public WebThread {
  public:
-  MockIdleDeadlineThread() {}
-  ~MockIdleDeadlineThread() override {}
+  MockThread() {}
+  ~MockThread() override {}
   bool IsCurrentThread() const override { return true; }
   WebScheduler* Scheduler() const override { return &scheduler_; }
 
  private:
-  mutable MockIdleDeadlineScheduler scheduler_;
-  DISALLOW_COPY_AND_ASSIGN(MockIdleDeadlineThread);
+  mutable MockScheduler scheduler_;
+  DISALLOW_COPY_AND_ASSIGN(MockThread);
 };
 
-class MockIdleDeadlinePlatform : public TestingPlatformSupport {
+class MockPlatform : public TestingPlatformSupport {
  public:
-  MockIdleDeadlinePlatform() {}
-  ~MockIdleDeadlinePlatform() override {}
+  MockPlatform() {}
+  ~MockPlatform() override {}
   WebThread* CurrentThread() override { return &thread_; }
 
  private:
-  MockIdleDeadlineThread thread_;
-  DISALLOW_COPY_AND_ASSIGN(MockIdleDeadlinePlatform);
+  MockThread thread_;
+  DISALLOW_COPY_AND_ASSIGN(MockPlatform);
 };
 
 }  // namespace
@@ -96,7 +96,7 @@ TEST_F(IdleDeadlineTest, deadlineInPast) {
 }
 
 TEST_F(IdleDeadlineTest, yieldForHighPriorityWork) {
-  ScopedTestingPlatformSupport<MockIdleDeadlinePlatform> platform;
+  ScopedTestingPlatformSupport<MockPlatform> platform;
 
   IdleDeadline* deadline =
       IdleDeadline::Create(1.25, IdleDeadline::CallbackType::kCalledWhenIdle);

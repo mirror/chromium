@@ -84,8 +84,10 @@ void CopyCacheStorageIndex(CacheStorageIndex* dest,
 // the memory.
 std::unique_ptr<storage::BlobProtocolHandler> CreateMockBlobProtocolHandler(
     storage::BlobStorageContext* blob_storage_context) {
-  return base::WrapUnique(
-      new storage::BlobProtocolHandler(blob_storage_context, nullptr));
+  // The FileSystemContext and thread task runner are not actually used but a
+  // task runner is needed to avoid a DCHECK in BlobURLRequestJob ctor.
+  return base::WrapUnique(new storage::BlobProtocolHandler(
+      blob_storage_context, NULL, base::ThreadTaskRunnerHandle::Get().get()));
 }
 
 class CacheStorageManagerTest : public testing::Test {

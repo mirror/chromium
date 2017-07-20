@@ -32,29 +32,13 @@ class QUIC_EXPORT_PRIVATE CryptoFramerVisitorInterface {
   virtual void OnHandshakeMessage(const CryptoHandshakeMessage& message) = 0;
 };
 
-class QUIC_EXPORT_PRIVATE CryptoMessageParser {
- public:
-  virtual ~CryptoMessageParser() {}
-
-  virtual QuicErrorCode error() const = 0;
-  virtual const std::string& error_detail() const = 0;
-
-  // Processes input data, which must be delivered in order. Returns
-  // false if there was an error, and true otherwise.
-  virtual bool ProcessInput(QuicStringPiece input, Perspective perspective) = 0;
-
-  // Returns the number of bytes of buffered input data remaining to be
-  // parsed.
-  virtual size_t InputBytesRemaining() const = 0;
-};
-
 // A class for framing the crypto messages that are exchanged in a QUIC
 // session.
-class QUIC_EXPORT_PRIVATE CryptoFramer : public CryptoMessageParser {
+class QUIC_EXPORT_PRIVATE CryptoFramer {
  public:
   CryptoFramer();
 
-  ~CryptoFramer() override;
+  virtual ~CryptoFramer();
 
   // ParseMessage parses exactly one message from the given QuicStringPiece. If
   // there is an error, the message is truncated, or the message has trailing
@@ -71,16 +55,16 @@ class QUIC_EXPORT_PRIVATE CryptoFramer : public CryptoMessageParser {
     visitor_ = visitor;
   }
 
-  QuicErrorCode error() const override;
-  const std::string& error_detail() const override;
+  QuicErrorCode error() const { return error_; }
+  const std::string& error_detail() const { return error_detail_; }
 
   // Processes input data, which must be delivered in order. Returns
   // false if there was an error, and true otherwise.
-  bool ProcessInput(QuicStringPiece input, Perspective perspective) override;
+  bool ProcessInput(QuicStringPiece input, Perspective perspective);
 
   // Returns the number of bytes of buffered input data remaining to be
   // parsed.
-  size_t InputBytesRemaining() const override;
+  size_t InputBytesRemaining() const { return buffer_.length(); }
 
   // Returns a new QuicData owned by the caller that contains a serialized
   // |message|, or nullptr if there was an error.

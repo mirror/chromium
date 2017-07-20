@@ -42,7 +42,6 @@
 #include "chrome/grit/generated_resources.h"
 #include "components/prefs/pref_service.h"
 #include "components/safe_browsing/common/safe_browsing_prefs.h"
-#include "components/vector_icons/vector_icons.h"
 #include "content/public/browser/download_danger_type.h"
 #include "third_party/icu/source/common/unicode/uchar.h"
 #include "ui/accessibility/ax_node_data.h"
@@ -58,6 +57,7 @@
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/gfx/text_elider.h"
 #include "ui/gfx/text_utils.h"
+#include "ui/vector_icons/vector_icons.h"
 #include "ui/views/animation/flood_fill_ink_drop_ripple.h"
 #include "ui/views/animation/ink_drop_highlight.h"
 #include "ui/views/animation/ink_drop_impl.h"
@@ -488,12 +488,10 @@ bool DownloadItemView::GetTooltipText(const gfx::Point& p,
 void DownloadItemView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   node_data->SetName(accessible_name_);
   node_data->role = ui::AX_ROLE_BUTTON;
-  if (model_.IsDangerous()) {
-    node_data->AddIntAttribute(ui::AX_ATTR_RESTRICTION,
-                               ui::AX_RESTRICTION_DISABLED);
-  } else {
+  if (model_.IsDangerous())
+    node_data->AddState(ui::AX_STATE_DISABLED);
+  else
     node_data->AddState(ui::AX_STATE_HASPOPUP);
-  }
 }
 
 void DownloadItemView::OnThemeChanged() {
@@ -1001,7 +999,7 @@ gfx::ImageSkia DownloadItemView::GetWarningIcon() {
     case content::DOWNLOAD_DANGER_TYPE_DANGEROUS_HOST:
     case content::DOWNLOAD_DANGER_TYPE_POTENTIALLY_UNWANTED:
     case content::DOWNLOAD_DANGER_TYPE_DANGEROUS_FILE:
-      return gfx::CreateVectorIcon(vector_icons::kWarningIcon, kWarningIconSize,
+      return gfx::CreateVectorIcon(ui::kWarningIcon, kWarningIconSize,
                                    gfx::kGoogleRed700);
 
     case content::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS:

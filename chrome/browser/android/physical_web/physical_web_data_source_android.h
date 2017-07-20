@@ -5,6 +5,8 @@
 #ifndef CHROME_BROWSER_ANDROID_PHYSICAL_WEB_PHYSICAL_WEB_DATA_SOURCE_ANDROID_H_
 #define CHROME_BROWSER_ANDROID_PHYSICAL_WEB_PHYSICAL_WEB_DATA_SOURCE_ANDROID_H_
 
+#include <jni.h>
+
 #include "base/android/scoped_java_ref.h"
 #include "base/macros.h"
 #include "components/physical_web/data_source/physical_web_data_source_impl.h"
@@ -44,6 +46,8 @@ class PhysicalWebDataSourceAndroid
  public:
   PhysicalWebDataSourceAndroid();
   ~PhysicalWebDataSourceAndroid() override;
+
+  static bool RegisterPhysicalWebDataSource(JNIEnv* env);
 
   void Initialize();
 

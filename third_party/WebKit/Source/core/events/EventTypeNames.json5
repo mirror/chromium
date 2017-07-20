@@ -16,7 +16,6 @@
     "DOMNodeRemovedFromDocument",
     "DOMSubtreeModified",
     "abort",
-    "abortpayment",
     "activate",
     "active",
     "addsourcebuffer",

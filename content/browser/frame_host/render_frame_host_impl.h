@@ -53,7 +53,6 @@
 #include "services/device/public/interfaces/wake_lock_context.mojom.h"
 #include "third_party/WebKit/public/platform/WebFocusType.h"
 #include "third_party/WebKit/public/platform/WebInsecureRequestPolicy.h"
-#include "third_party/WebKit/public/platform/WebSuddenTerminationDisablerType.h"
 #include "third_party/WebKit/public/platform/modules/bluetooth/web_bluetooth.mojom.h"
 #include "third_party/WebKit/public/web/WebTextDirection.h"
 #include "third_party/WebKit/public/web/WebTreeScopeType.h"
@@ -194,9 +193,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void ResumeBlockedRequestsForFrame() override;
   void DisableBeforeUnloadHangMonitorForTesting() override;
   bool IsBeforeUnloadHangMonitorDisabledForTesting() override;
-  bool GetSuddenTerminationDisablerState(
-      blink::WebSuddenTerminationDisablerType disabler_type) override;
-
   bool IsFeatureEnabled(blink::WebFeaturePolicyFeature feature) override;
 
   // mojom::FrameHostInterfaceBroker
@@ -792,9 +788,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
                                 base::string16 text,
                                 base::string16 html);
   void OnToggleFullscreen(bool enter_fullscreen);
-  void OnSuddenTerminationDisablerChanged(
-      bool present,
-      blink::WebSuddenTerminationDisablerType disabler_type);
   void OnDidStartLoading(bool to_different_document);
   void OnDidStopLoading();
   void OnDidChangeLoadProgress(double load_progress);
@@ -923,6 +916,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // Creates Web Bluetooth Service owned by the frame. Returns a raw pointer
   // to it.
   WebBluetoothServiceImpl* CreateWebBluetoothService(
+      const service_manager::BindSourceInfo& source_info,
       blink::mojom::WebBluetoothServiceRequest request);
 
   // Deletes the Web Bluetooth Service owned by the frame.
@@ -930,18 +924,22 @@ class CONTENT_EXPORT RenderFrameHostImpl
       WebBluetoothServiceImpl* web_bluetooth_service);
 
   void CreateAudioOutputStreamFactory(
+      const service_manager::BindSourceInfo& source_info,
       mojom::RendererAudioOutputStreamFactoryRequest request);
 
   void BindMediaInterfaceFactoryRequest(
+      const service_manager::BindSourceInfo& source_info,
       media::mojom::InterfaceFactoryRequest request);
 
   // Callback for connection error on the media::mojom::InterfaceFactory client.
   void OnMediaInterfaceFactoryConnectionError();
 
-  void BindWakeLockRequest(device::mojom::WakeLockRequest request);
+  void BindWakeLockRequest(const service_manager::BindSourceInfo& source_info,
+                           device::mojom::WakeLockRequest request);
 
 #if defined(OS_ANDROID)
-  void BindNFCRequest(device::mojom::NFCRequest request);
+  void BindNFCRequest(const service_manager::BindSourceInfo& source_info,
+                      device::mojom::NFCRequest request);
 #endif
 
   // service_manager::mojom::InterfaceProvider:
@@ -951,6 +949,9 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // Allows tests to disable the swapout event timer to simulate bugs that
   // happen before it fires (to avoid flakiness).
   void DisableSwapOutTimerForTesting();
+
+  void OnRendererConnect(const service_manager::BindSourceInfo& local_info,
+                         const service_manager::BindSourceInfo& remote_info);
 
   void SendJavaScriptDialogReply(IPC::Message* reply_msg,
                                  bool success,
@@ -1218,10 +1219,6 @@ class CONTENT_EXPORT RenderFrameHostImpl
   typedef std::pair<CommonNavigationParams, BeginNavigationParams>
       PendingNavigation;
   std::unique_ptr<PendingNavigation> pendinging_navigate_;
-
-  // Bitfield for renderer-side state that blocks fast shutdown of the frame.
-  blink::WebSuddenTerminationDisablerType
-      sudden_termination_disabler_types_enabled_ = 0;
 
   // Callback for responding when
   // |FrameHostMsg_TextSurroundingSelectionResponse| message comes.

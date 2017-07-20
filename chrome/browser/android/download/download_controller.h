@@ -34,6 +34,8 @@ class DownloadController : public DownloadControllerBase {
  public:
   static DownloadController* GetInstance();
 
+  static bool RegisterDownloadController(JNIEnv* env);
+
   // DownloadControllerBase implementation.
   void AcquireFileAccessPermission(
       const content::ResourceRequestInfo::WebContentsGetter& wc_getter,

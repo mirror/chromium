@@ -141,8 +141,7 @@
   // tabs section.
   TabSwitcherPanelOverlayView* overlayView =
       [[TabSwitcherPanelOverlayView alloc] initWithFrame:self.tabs.bounds
-                                            browserState:nil
-                                              dispatcher:nil];
+                                            browserState:nil];
   overlayView.overlayType =
       TabSwitcherPanelOverlayType::OVERLAY_PANEL_USER_NO_OPEN_TABS;
   overlayView.autoresizingMask =

@@ -8,13 +8,14 @@
 #include <memory>
 
 #include "base/macros.h"
+#include "extensions/renderer/service_worker_request_sender.h"
 #include "extensions/renderer/v8_schema_registry.h"
 
 namespace extensions {
 class ExtensionBindingsSystem;
-class ScriptContext;
 
 // Per ServiceWorker data in worker thread.
+// Contains: RequestSender, V8SchemaRegistry.
 // TODO(lazyboy): Also put worker ScriptContexts in this.
 class ServiceWorkerData {
  public:

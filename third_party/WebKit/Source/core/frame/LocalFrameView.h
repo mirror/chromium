@@ -182,10 +182,6 @@ class CORE_EXPORT LocalFrameView final
   void SetNeedsUpdateGeometries() { needs_update_geometries_ = true; }
   void UpdateGeometry() override;
 
-  // Marks this frame, and ancestor frames, as needing one intersection
-  // observervation. This overrides throttling for one frame.
-  void SetNeedsIntersectionObservation();
-
   // Methods for getting/setting the size Blink should use to layout the
   // contents.
   // NOTE: Scrollbar exclusion is based on the LocalFrameView's scrollbars. To
@@ -466,8 +462,7 @@ class CORE_EXPORT LocalFrameView final
                             const ScrollAlignment& align_x,
                             const ScrollAlignment& align_y,
                             bool is_smooth,
-                            ScrollType = kProgrammaticScroll,
-                            bool is_for_scroll_sequence = false) override;
+                            ScrollType = kProgrammaticScroll) override;
 
   // The window that hosts the LocalFrameView. The LocalFrameView will
   // communicate scrolls and repaints to the host window in the window's
@@ -1195,7 +1190,6 @@ class CORE_EXPORT LocalFrameView final
   bool suppress_adjust_view_size_;
   bool allows_layout_invalidation_after_layout_clean_;
   bool forcing_layout_parent_view_;
-  bool needs_intersection_observation_;
 
   Member<ElementVisibilityObserver> visibility_observer_;
 

@@ -51,6 +51,10 @@ struct BrowserPluginHostMsg_SetComposition_Params;
 struct FrameHostMsg_ShowPopup_Params;
 #endif
 
+namespace cc {
+struct SurfaceSequence;
+}  // namespace cc
+
 namespace gfx {
 class Range;
 }  // namespace gfx
@@ -58,7 +62,6 @@ class Range;
 namespace viz {
 class SurfaceId;
 class SurfaceInfo;
-struct SurfaceSequence;
 }  // namespace viz
 
 namespace content {
@@ -239,7 +242,7 @@ class CONTENT_EXPORT BrowserPluginGuest : public GuestHost,
 
   // The next function is virtual for test purposes.
   virtual void SetChildFrameSurface(const viz::SurfaceInfo& surface_info,
-                                    const viz::SurfaceSequence& sequence);
+                                    const cc::SurfaceSequence& sequence);
 
   void ResendEventToEmbedder(const blink::WebInputEvent& event);
 
@@ -278,10 +281,10 @@ class CONTENT_EXPORT BrowserPluginGuest : public GuestHost,
   void InitInternal(const BrowserPluginHostMsg_Attach_Params& params,
                     WebContentsImpl* owner_web_contents);
 
-  void OnSatisfySequence(int instance_id, const viz::SurfaceSequence& sequence);
+  void OnSatisfySequence(int instance_id, const cc::SurfaceSequence& sequence);
   void OnRequireSequence(int instance_id,
                          const viz::SurfaceId& id,
-                         const viz::SurfaceSequence& sequence);
+                         const cc::SurfaceSequence& sequence);
   // Message handlers for messages from embedder.
   void OnDetach(int instance_id);
   // Handles drag events from the embedder.

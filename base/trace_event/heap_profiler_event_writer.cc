@@ -17,7 +17,6 @@
 #include "base/trace_event/heap_profiler_string_deduplicator.h"
 #include "base/trace_event/heap_profiler_type_name_deduplicator.h"
 #include "base/trace_event/sharded_allocation_register.h"
-#include "base/trace_event/trace_event.h"
 #include "base/trace_event/trace_event_argument.h"
 
 namespace base {
@@ -45,7 +44,6 @@ struct AggregationKey {
 std::unique_ptr<TracedValue> SerializeHeapDump(
     const ShardedAllocationRegister& allocation_register,
     HeapProfilerSerializationState* serialization_state) {
-  TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("memory-infra"), "SerializeHeapDump");
   // Aggregate allocations by {backtrace_id, type_id} key.
   using MetricsMap = std::unordered_map<AggregationKey, AllocationMetrics,
                                         AggregationKey::Hasher>;
@@ -69,13 +67,9 @@ std::unique_ptr<TracedValue> SerializeHeapDump(
         metrics.size += allocation.size;
         metrics.count += 1;
       };
-  {
-    TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("memory-infra"),
-                 "SerializeHeapDump.VisitAllocations");
-    allocation_register.VisitAllocations(base::BindRepeating(
-        visit_allocation, base::Unretained(serialization_state),
-        base::Unretained(&metrics_by_key)));
-  }
+  allocation_register.VisitAllocations(base::BindRepeating(
+      visit_allocation, base::Unretained(serialization_state),
+      base::Unretained(&metrics_by_key)));
 
   auto traced_value = MakeUnique<TracedValue>();
 
@@ -107,8 +101,6 @@ std::unique_ptr<TracedValue> SerializeHeapDump(
 std::unique_ptr<TracedValue> SerializeHeapProfileEventData(
     const SerializedHeapDumpsMap& heap_dumps,
     HeapProfilerSerializationState* serialization_state) {
-  TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("memory-infra"),
-               "SerializeHeapProfileEventData");
   auto traced_value = MakeUnique<TracedValue>();
 
   // See brief description of the format in the header file.

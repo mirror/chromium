@@ -23,7 +23,6 @@
 #include "storage/browser/quota/quota_manager.h"
 #include "ui/gfx/image/image_skia.h"
 #include "url/gurl.h"
-#include "url/origin.h"
 
 namespace content {
 
@@ -138,11 +137,6 @@ bool ContentBrowserClient::ShouldSwapProcessesForRedirect(
 
 bool ContentBrowserClient::ShouldAssignSiteForURL(const GURL& url) {
   return true;
-}
-
-std::vector<url::Origin>
-ContentBrowserClient::GetOriginsRequiringDedicatedProcess() {
-  return std::vector<url::Origin>();
 }
 
 std::string ContentBrowserClient::GetApplicationLocale() {
@@ -420,10 +414,6 @@ void ContentBrowserClient::OpenURL(
     const content::OpenURLParams& params,
     const base::Callback<void(content::WebContents*)>& callback) {
   callback.Run(nullptr);
-}
-
-std::string ContentBrowserClient::GetMetricSuffixForURL(const GURL& url) {
-  return std::string();
 }
 
 std::vector<std::unique_ptr<NavigationThrottle>>

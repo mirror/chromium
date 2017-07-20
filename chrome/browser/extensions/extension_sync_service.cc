@@ -507,11 +507,8 @@ void ExtensionSyncService::ApplySyncData(
           profile_, id, extension_sync_data.launch_type());
     }
 
-    if (!extension_sync_data.bookmark_app_url().empty()) {
-      // Handles creating and updating the bookmark app.
+    if (!extension_sync_data.bookmark_app_url().empty())
       ApplyBookmarkAppSyncData(extension_sync_data);
-      return;
-    }
   }
 
   // Finally, trigger installation/update as required.

@@ -17,9 +17,8 @@ class CompositorWorkerMessagingProxy final
 
  private:
   ~CompositorWorkerMessagingProxy() override;
-  WTF::Optional<WorkerBackingThreadStartupData> CreateBackingThreadStartupData(
-      v8::Isolate*) override;
-  std::unique_ptr<WorkerThread> CreateWorkerThread() override;
+
+  std::unique_ptr<WorkerThread> CreateWorkerThread(double origin_time) override;
 };
 
 }  // namespace blink

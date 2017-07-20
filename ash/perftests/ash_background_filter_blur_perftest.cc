@@ -4,7 +4,6 @@
 
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
-#include "base/memory/ptr_util.h"
 #include "cc/base/lap_timer.h"
 #include "testing/perf/perf_test.h"
 #include "ui/aura/window.h"
@@ -16,12 +15,12 @@ namespace {
 
 // TODO(wutao): On chromeos_linux builds, the tests only run with
 // use_ozone = false.
-class AshBackgroundFilterBlurPerfTest : public AshTestBase {
+class AshBackgroundFilterBlurPerfTest : public test::AshTestBase {
  public:
   AshBackgroundFilterBlurPerfTest() : timer_(0, base::TimeDelta(), 1) {}
   ~AshBackgroundFilterBlurPerfTest() override {}
 
-  // AshTestBase:
+  // test::AshTestBase:
   void SetUp() override;
 
  protected:

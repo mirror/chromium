@@ -4,11 +4,9 @@
 
 #include "chrome/test/base/interactive_test_utils.h"
 
-#include "base/logging.h"
 #include "build/build_config.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_window.h"
-#include "ui/events/keycodes/keyboard_codes.h"
 
 namespace ui_test_utils {
 
@@ -56,13 +54,6 @@ bool SendKeyPressToWindowSync(const gfx::NativeWindow window,
                               bool shift,
                               bool alt,
                               bool command) {
-#if defined(OS_WIN)
-  DCHECK(key != ui::VKEY_ESCAPE || !control)
-      << "'ctrl + esc' opens start menu on Windows. Start menu on windows "
-         "2012 is a full-screen always on top window. It breaks all "
-         "interactive tests.";
-#endif
-
   scoped_refptr<content::MessageLoopRunner> runner =
       new content::MessageLoopRunner;
   bool result;

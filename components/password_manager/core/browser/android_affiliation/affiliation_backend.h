@@ -8,7 +8,6 @@
 #include <stddef.h>
 
 #include <map>
-#include <memory>
 #include <unordered_map>
 #include <vector>
 
@@ -74,7 +73,7 @@ class AffiliationBackend : public FacetManagerHost,
 
   // Implementations for methods of the same name in AffiliationService. They
   // are not documented here again. See affiliation_service.h for details:
-  void GetAffiliationsAndBranding(
+  void GetAffiliations(
       const FacetURI& facet_uri,
       StrategyOnCacheMiss cache_miss_strategy,
       const AffiliationService::ResultCallback& callback,
@@ -108,7 +107,7 @@ class AffiliationBackend : public FacetManagerHost,
   void OnSendNotification(const FacetURI& facet_uri);
 
   // FacetManagerHost:
-  bool ReadAffiliationsAndBrandingFromDatabase(
+  bool ReadAffiliationsFromDatabase(
       const FacetURI& facet_uri,
       AffiliatedFacetsWithUpdateTime* affiliations) override;
   void SignalNeedNetworkRequest() override;

@@ -116,9 +116,6 @@
 #include "mojo/public/cpp/bindings/associated_interface_ptr.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "mojo/public/cpp/system/data_pipe.h"
-#include "services/device/public/cpp/device_features.h"
-#include "services/device/public/interfaces/constants.mojom.h"
-#include "services/device/public/interfaces/sensor_provider.mojom.h"
 #include "services/device/public/interfaces/wake_lock.mojom.h"
 #include "services/device/public/interfaces/wake_lock_context.mojom.h"
 #include "services/resource_coordinator/public/cpp/resource_coordinator_interface.h"
@@ -261,6 +258,7 @@ class RemoterFactoryImpl final : public media::mojom::RemoterFactory {
 
   static void Bind(int process_id,
                    int routing_id,
+                   const service_manager::BindSourceInfo& source_info,
                    media::mojom::RemoterFactoryRequest request) {
     mojo::MakeStrongBinding(
         base::MakeUnique<RemoterFactoryImpl>(process_id, routing_id),
@@ -285,13 +283,15 @@ class RemoterFactoryImpl final : public media::mojom::RemoterFactory {
 
 void CreateResourceCoordinatorFrameInterface(
     RenderFrameHostImpl* render_frame_host,
+    const service_manager::BindSourceInfo& source_info,
     resource_coordinator::mojom::CoordinationUnitRequest request) {
   render_frame_host->GetFrameResourceCoordinator()->service()->AddBinding(
       std::move(request));
 }
 
 template <typename Interface>
-void IgnoreInterfaceRequest(mojo::InterfaceRequest<Interface> request) {
+void IgnoreInterfaceRequest(const service_manager::BindSourceInfo& source_info,
+                            mojo::InterfaceRequest<Interface> request) {
   // Intentionally ignore the interface request.
 }
 
@@ -348,23 +348,26 @@ void LookupRenderFrameHostOrProxy(int process_id,
     *rfph = RenderFrameProxyHost::FromID(process_id, routing_id);
 }
 
-// Forwards service requests to Service Manager.
-template <typename Interface>
-void ForwardRequest(const char* service_name,
-                    mojo::InterfaceRequest<Interface> request) {
+// Forwards service requests to Service Manager since the renderer cannot launch
+// out-of-process services on its own.
+template <typename R>
+void ForwardShapeDetectionRequest(const service_manager::BindSourceInfo&,
+                                  R request) {
   // TODO(beng): This should really be using the per-profile connector.
   service_manager::Connector* connector =
       ServiceManagerConnection::GetForProcess()->GetConnector();
-  connector->BindInterface(service_name, std::move(request));
+  connector->BindInterface(shape_detection::mojom::kServiceName,
+                           std::move(request));
 }
 
 void CreatePaymentManager(RenderFrameHostImpl* rfh,
+                          const service_manager::BindSourceInfo& source_info,
                           payments::mojom::PaymentManagerRequest request) {
   StoragePartitionImpl* storage_partition =
       static_cast<StoragePartitionImpl*>(BrowserContext::GetStoragePartition(
           rfh->GetSiteInstance()->GetBrowserContext(), rfh->GetSiteInstance()));
   storage_partition->GetPaymentAppContext()->CreatePaymentManager(
-      std::move(request));
+      source_info, std::move(request));
 }
 
 }  // namespace
@@ -394,6 +397,7 @@ bool RenderFrameHost::IsDataUrlNavigationAllowedForAndroidWebView() {
 void CreateMediaPlayerRenderer(
     int process_id,
     int routing_id,
+    const service_manager::BindSourceInfo& source_info,
     media::mojom::RendererRequest request) {
   std::unique_ptr<MediaPlayerRenderer> renderer =
       base::MakeUnique<MediaPlayerRenderer>(process_id, routing_id);
@@ -900,8 +904,6 @@ bool RenderFrameHostImpl::OnMessageReceived(const IPC::Message &msg) {
     IPC_MESSAGE_HANDLER(AccessibilityHostMsg_SnapshotResponse,
                         OnAccessibilitySnapshotResponse)
     IPC_MESSAGE_HANDLER(FrameHostMsg_ToggleFullscreen, OnToggleFullscreen)
-    IPC_MESSAGE_HANDLER(FrameHostMsg_SuddenTerminationDisablerChanged,
-                        OnSuddenTerminationDisablerChanged)
     IPC_MESSAGE_HANDLER(FrameHostMsg_DidStartLoading, OnDidStartLoading)
     IPC_MESSAGE_HANDLER(FrameHostMsg_DidStopLoading, OnDidStopLoading)
     IPC_MESSAGE_HANDLER(FrameHostMsg_DidChangeLoadProgress,
@@ -2572,22 +2574,6 @@ void RenderFrameHostImpl::OnDidStartLoading(bool to_different_document) {
   }
 }
 
-void RenderFrameHostImpl::OnSuddenTerminationDisablerChanged(
-    bool present,
-    blink::WebSuddenTerminationDisablerType disabler_type) {
-  DCHECK_NE(GetSuddenTerminationDisablerState(disabler_type), present);
-  if (present) {
-    sudden_termination_disabler_types_enabled_ |= disabler_type;
-  } else {
-    sudden_termination_disabler_types_enabled_ &= ~disabler_type;
-  }
-}
-
-bool RenderFrameHostImpl::GetSuddenTerminationDisablerState(
-    blink::WebSuddenTerminationDisablerType disabler_type) {
-  return (sudden_termination_disabler_types_enabled_ & disabler_type) != 0;
-}
-
 void RenderFrameHostImpl::OnDidStopLoading() {
   TRACE_EVENT1("navigation", "RenderFrameHostImpl::OnDidStopLoading",
                "frame_tree_node", frame_tree_node_->frame_tree_node_id());
@@ -2958,14 +2944,14 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
   GetInterfaceRegistry()->AddInterface(base::Bind(&ImageCaptureImpl::Create));
 
   GetInterfaceRegistry()->AddInterface(
-      base::Bind(&ForwardRequest<shape_detection::mojom::BarcodeDetection>,
-                 shape_detection::mojom::kServiceName));
+      base::Bind(&ForwardShapeDetectionRequest<
+                 shape_detection::mojom::BarcodeDetectionRequest>));
   GetInterfaceRegistry()->AddInterface(
-      base::Bind(&ForwardRequest<shape_detection::mojom::FaceDetectionProvider>,
-                 shape_detection::mojom::kServiceName));
+      base::Bind(&ForwardShapeDetectionRequest<
+                 shape_detection::mojom::FaceDetectionProviderRequest>));
   GetInterfaceRegistry()->AddInterface(
-      base::Bind(&ForwardRequest<shape_detection::mojom::TextDetection>,
-                 shape_detection::mojom::kServiceName));
+      base::Bind(&ForwardShapeDetectionRequest<
+                 shape_detection::mojom::TextDetectionRequest>));
 
   GetInterfaceRegistry()->AddInterface(
       base::Bind(&CreatePaymentManager, base::Unretained(this)));
@@ -2973,12 +2959,6 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
   if (base::FeatureList::IsEnabled(features::kWebAuth)) {
     GetInterfaceRegistry()->AddInterface(
         base::Bind(&AuthenticatorImpl::Create, base::Unretained(this)));
-  }
-
-  if (base::FeatureList::IsEnabled(features::kGenericSensor)) {
-    GetInterfaceRegistry()->AddInterface(
-        base::Bind(&ForwardRequest<device::mojom::SensorProvider>,
-                   device::mojom::kServiceName));
   }
 }
 
@@ -3929,6 +3909,7 @@ void RenderFrameHostImpl::AXContentTreeDataToAXTreeData(
 }
 
 WebBluetoothServiceImpl* RenderFrameHostImpl::CreateWebBluetoothService(
+    const service_manager::BindSourceInfo& source_info,
     blink::mojom::WebBluetoothServiceRequest request) {
   // RFHI owns |web_bluetooth_services_| and |web_bluetooth_service| owns the
   // |binding_| which may run the error handler. |binding_| can't run the error
@@ -3965,6 +3946,7 @@ void RenderFrameHostImpl::ResetFeaturePolicy() {
 }
 
 void RenderFrameHostImpl::CreateAudioOutputStreamFactory(
+    const service_manager::BindSourceInfo& source_info,
     mojom::RendererAudioOutputStreamFactoryRequest request) {
   RendererAudioOutputStreamFactoryContext* factory_context =
       GetProcess()->GetRendererAudioOutputStreamFactoryContext();
@@ -3975,6 +3957,7 @@ void RenderFrameHostImpl::CreateAudioOutputStreamFactory(
 }
 
 void RenderFrameHostImpl::BindMediaInterfaceFactoryRequest(
+    const service_manager::BindSourceInfo& source_info,
     media::mojom::InterfaceFactoryRequest request) {
   DCHECK(!media_interface_proxy_);
   media_interface_proxy_.reset(new MediaInterfaceProxy(
@@ -3989,6 +3972,7 @@ void RenderFrameHostImpl::OnMediaInterfaceFactoryConnectionError() {
 }
 
 void RenderFrameHostImpl::BindWakeLockRequest(
+    const service_manager::BindSourceInfo& source_info,
     device::mojom::WakeLockRequest request) {
   device::mojom::WakeLock* renderer_wake_lock =
       delegate_ ? delegate_->GetRendererWakeLock() : nullptr;
@@ -3997,7 +3981,9 @@ void RenderFrameHostImpl::BindWakeLockRequest(
 }
 
 #if defined(OS_ANDROID)
-void RenderFrameHostImpl::BindNFCRequest(device::mojom::NFCRequest request) {
+void RenderFrameHostImpl::BindNFCRequest(
+    const service_manager::BindSourceInfo& source_info,
+    device::mojom::NFCRequest request) {
   if (delegate_)
     delegate_->GetNFC(std::move(request));
 }
@@ -4006,13 +3992,15 @@ void RenderFrameHostImpl::BindNFCRequest(device::mojom::NFCRequest request) {
 void RenderFrameHostImpl::GetInterface(
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle interface_pipe) {
+  service_manager::BindSourceInfo source_info(GetProcess()->GetChildIdentity(),
+                                              service_manager::CapabilitySet());
   if (interface_registry_.get() &&
       interface_registry_->CanBindInterface(interface_name)) {
-    interface_registry_->BindInterface(interface_name,
+    interface_registry_->BindInterface(source_info, interface_name,
                                        std::move(interface_pipe));
   } else {
     GetContentClient()->browser()->BindInterfaceRequestFromFrame(
-        this, interface_name, std::move(interface_pipe));
+        this, source_info, interface_name, std::move(interface_pipe));
   }
 }
 

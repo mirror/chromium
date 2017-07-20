@@ -7,7 +7,6 @@
 #include <string>
 
 #include "base/bind.h"
-#include "base/bind_helpers.h"
 #include "base/location.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
@@ -17,7 +16,7 @@
 #include "chrome/browser/chromeos/attestation/fake_certificate.h"
 #include "chrome/browser/chromeos/settings/scoped_cros_settings_test_helper.h"
 #include "chromeos/attestation/mock_attestation_flow.h"
-#include "chromeos/dbus/fake_cryptohome_client.h"
+#include "chromeos/dbus/mock_cryptohome_client.h"
 #include "chromeos/settings/cros_settings_names.h"
 #include "components/policy/core/common/cloud/mock_cloud_policy_client.h"
 #include "content/public/test/test_browser_thread_bundle.h"
@@ -37,6 +36,21 @@ const int64_t kCertValid = 90;
 const int64_t kCertExpiringSoon = 20;
 const int64_t kCertExpired = -20;
 
+void DBusCallbackFalse(const BoolDBusMethodCallback& callback) {
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::BindOnce(callback, DBUS_METHOD_CALL_SUCCESS, false));
+}
+
+void DBusCallbackTrue(const BoolDBusMethodCallback& callback) {
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::BindOnce(callback, DBUS_METHOD_CALL_SUCCESS, true));
+}
+
+void DBusCallbackError(const BoolDBusMethodCallback& callback) {
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::BindOnce(callback, DBUS_METHOD_CALL_FAILURE, false));
+}
+
 void CertCallbackSuccess(const AttestationFlow::CertificateCallback& callback) {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE, base::BindOnce(callback, true, "fake_cert"));
@@ -47,6 +61,20 @@ void StatusCallbackSuccess(
   base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
                                                 base::BindOnce(callback, true));
 }
+
+class FakeDBusData {
+ public:
+  explicit FakeDBusData(const std::string& data) : data_(data) {}
+
+  void operator() (const CryptohomeClient::DataMethodCallback& callback) {
+    base::ThreadTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE,
+        base::BindOnce(callback, DBUS_METHOD_CALL_SUCCESS, true, data_));
+  }
+
+ private:
+  std::string data_;
+};
 
 }  // namespace
 
@@ -60,9 +88,9 @@ class AttestationPolicyObserverTest : public ::testing::Test {
 
  protected:
   enum MockOptions {
-    MOCK_KEY_EXISTS = 1,           // Configure so a certified key exists.
-    MOCK_KEY_UPLOADED = (1 << 1),  // Configure so an upload has occurred.
-    MOCK_NEW_KEY = (1 << 2)        // Configure expecting new key generation.
+    MOCK_KEY_EXISTS = 1,          // Configure so a certified key exists.
+    MOCK_KEY_UPLOADED = (1 << 1), // Configure so an upload has occurred.
+    MOCK_NEW_KEY = (1 << 2)       // Configure expecting new key generation.
   };
 
   // Configures mock expectations according to |mock_options|.  If options
@@ -71,14 +99,21 @@ class AttestationPolicyObserverTest : public ::testing::Test {
     bool key_exists = (mock_options & MOCK_KEY_EXISTS);
     // Setup expected key / cert queries.
     if (key_exists) {
-      cryptohome_client_.SetTpmAttestationDeviceCertificate(
-          kEnterpriseMachineKey, certificate);
+      EXPECT_CALL(cryptohome_client_, TpmAttestationDoesKeyExist(_, _, _, _))
+          .WillRepeatedly(WithArgs<3>(Invoke(DBusCallbackTrue)));
+      EXPECT_CALL(cryptohome_client_, TpmAttestationGetCertificate(_, _, _, _))
+          .WillRepeatedly(WithArgs<3>(Invoke(FakeDBusData(certificate))));
+    } else {
+      EXPECT_CALL(cryptohome_client_, TpmAttestationDoesKeyExist(_, _, _, _))
+          .WillRepeatedly(WithArgs<3>(Invoke(DBusCallbackFalse)));
     }
 
     // Setup expected key payload queries.
     bool key_uploaded = (mock_options & MOCK_KEY_UPLOADED);
-    cryptohome_client_.SetTpmAttestationDeviceKeyPayload(
-        kEnterpriseMachineKey, key_uploaded ? CreatePayload() : std::string());
+    std::string payload = CreatePayload();
+    EXPECT_CALL(cryptohome_client_, TpmAttestationGetKeyPayload(_, _, _, _))
+        .WillRepeatedly(WithArgs<3>(Invoke(
+            FakeDBusData(key_uploaded ? payload : ""))));
 
     // Setup expected key uploads.  Use WillOnce() so StrictMock will trigger an
     // error if our expectations are not met exactly.  We want to verify that
@@ -90,6 +125,9 @@ class AttestationPolicyObserverTest : public ::testing::Test {
       EXPECT_CALL(policy_client_,
                   UploadCertificate(new_key ? "fake_cert" : certificate, _))
           .WillOnce(WithArgs<1>(Invoke(StatusCallbackSuccess)));
+      EXPECT_CALL(cryptohome_client_,
+                  TpmAttestationSetKeyPayload(_, _, _, payload, _))
+          .WillOnce(WithArgs<4>(Invoke(DBusCallbackTrue)));
     }
 
     // Setup expected key generations.  Again use WillOnce().  Key generation is
@@ -119,7 +157,7 @@ class AttestationPolicyObserverTest : public ::testing::Test {
 
   content::TestBrowserThreadBundle test_browser_thread_bundle_;
   ScopedCrosSettingsTestHelper settings_helper_;
-  FakeCryptohomeClient cryptohome_client_;
+  StrictMock<MockCryptohomeClient> cryptohome_client_;
   StrictMock<MockAttestationFlow> attestation_flow_;
   StrictMock<policy::MockCloudPolicyClient> policy_client_;
 };
@@ -137,9 +175,6 @@ TEST_F(AttestationPolicyObserverTest, UnregisteredPolicyClient) {
 TEST_F(AttestationPolicyObserverTest, NewCertificate) {
   SetupMocks(MOCK_NEW_KEY, "");
   Run();
-  EXPECT_EQ(CreatePayload(),
-            cryptohome_client_.GetTpmAttestationDeviceKeyPayload(
-                kEnterpriseMachineKey));
 }
 
 TEST_F(AttestationPolicyObserverTest, KeyExistsNotUploaded) {
@@ -148,9 +183,6 @@ TEST_F(AttestationPolicyObserverTest, KeyExistsNotUploaded) {
                                     &certificate));
   SetupMocks(MOCK_KEY_EXISTS, certificate);
   Run();
-  EXPECT_EQ(CreatePayload(),
-            cryptohome_client_.GetTpmAttestationDeviceKeyPayload(
-                kEnterpriseMachineKey));
 }
 
 TEST_F(AttestationPolicyObserverTest, KeyExistsAlreadyUploaded) {
@@ -185,23 +217,10 @@ TEST_F(AttestationPolicyObserverTest, IgnoreUnknownCertFormat) {
 TEST_F(AttestationPolicyObserverTest, DBusFailureRetry) {
   SetupMocks(MOCK_NEW_KEY, "");
   // Simulate a DBus failure.
-  cryptohome_client_.SetServiceIsAvailable(false);
-
-  // Emulate delayed service initialization.
-  // Run() instantiates an Observer, which synchronously calls
-  // TpmAttestationDoesKeyExist() and fails. During this call, we make the
-  // service available in the next run, so on retry, it will successfully
-  // return the result.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(
-                     [](FakeCryptohomeClient* cryptohome_client) {
-                       cryptohome_client->SetServiceIsAvailable(true);
-                     },
-                     base::Unretained(&cryptohome_client_)));
+  EXPECT_CALL(cryptohome_client_, TpmAttestationDoesKeyExist(_, _, _, _))
+      .WillOnce(WithArgs<3>(Invoke(DBusCallbackError)))
+      .WillRepeatedly(WithArgs<3>(Invoke(DBusCallbackFalse)));
   Run();
-  EXPECT_EQ(CreatePayload(),
-            cryptohome_client_.GetTpmAttestationDeviceKeyPayload(
-                kEnterpriseMachineKey));
 }
 
 }  // namespace attestation

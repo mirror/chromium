@@ -115,7 +115,7 @@ std::unique_ptr<net::UploadDataStream> UploadDataStreamBuilder::Build(
             blob_context->GetBlobDataFromUUID(element.blob_uuid());
         element_readers.push_back(
             base::MakeUnique<storage::UploadBlobElementReader>(
-                std::move(handle), file_system_context));
+                std::move(handle), file_system_context, file_task_runner));
         break;
       }
       case ResourceRequestBody::Element::TYPE_DISK_CACHE_ENTRY:

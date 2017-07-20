@@ -32,3 +32,8 @@ bool UrlFilterBridge::MatchesUrl(
   GURL url(base::android::ConvertJavaStringToUTF8(env, jurl));
   return url_filter_.Run(url);
 }
+
+// static
+bool UrlFilterBridge::Register(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}

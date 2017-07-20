@@ -57,4 +57,6 @@ class LogoBridge {
   DISALLOW_COPY_AND_ASSIGN(LogoBridge);
 };
 
+bool RegisterLogoBridge(JNIEnv* env);
+
 #endif  // CHROME_BROWSER_ANDROID_LOGO_BRIDGE_H_

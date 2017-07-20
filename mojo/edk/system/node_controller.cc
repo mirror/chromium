@@ -85,8 +85,8 @@ Channel::MessagePtr SerializeEventMessage(ports::ScopedEvent event) {
   }
 
   void* data;
-  size_t size = event->GetSerializedSize();
-  auto message = NodeChannel::CreateEventMessage(size, size, &data, 0);
+  auto message =
+      NodeChannel::CreateEventMessage(event->GetSerializedSize(), &data, 0);
   event->Serialize(data);
   return message;
 }

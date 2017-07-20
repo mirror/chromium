@@ -17,7 +17,6 @@
 @property CGFloat magnification;
 @property NSPoint locationInWindow;
 @property NSEventType type;
-@property NSEventPhase phase;
 
 // Filled with default values.
 @property(readonly) CGFloat deltaX;
@@ -32,7 +31,6 @@
 @synthesize magnification = magnification_;
 @synthesize locationInWindow = locationInWindow_;
 @synthesize type = type_;
-@synthesize phase = phase_;
 @synthesize deltaX = deltaX_;
 @synthesize deltaY = deltaY_;
 @synthesize modifierFlags = modifierFlags_;
@@ -43,7 +41,6 @@
   self = [super init];
   if (self) {
     type_ = NSEventTypeMagnify;
-    phase_ = NSEventPhaseChanged;
     magnification_ = magnification;
     locationInWindow_ = location;
 
@@ -59,12 +56,10 @@
 }
 
 + (id)eventWithMagnification:(float)magnification
-            locationInWindow:(NSPoint)location
-                       phase:(NSEventPhase)phase {
+            locationInWindow:(NSPoint)location {
   SyntheticPinchEvent* event =
       [[SyntheticPinchEvent alloc] initWithMagnification:magnification
                                         locationInWindow:location];
-  event.phase = phase;
   return [event autorelease];
 }
 
@@ -95,8 +90,7 @@ void SyntheticGestureTargetMac::DispatchInputEventToPlatform(
         id event = [SyntheticPinchEvent
             eventWithMagnification:0.0f
                   locationInWindow:NSMakePoint(gesture_event->x,
-                                               gesture_event->y)
-                             phase:NSEventPhaseBegan];
+                                               gesture_event->y)];
         [cocoa_view_ handleBeginGestureWithEvent:event];
         return;
       }
@@ -104,8 +98,7 @@ void SyntheticGestureTargetMac::DispatchInputEventToPlatform(
         id event = [SyntheticPinchEvent
             eventWithMagnification:0.0f
                   locationInWindow:NSMakePoint(gesture_event->x,
-                                               gesture_event->y)
-                             phase:NSEventPhaseEnded];
+                                               gesture_event->y)];
         [cocoa_view_ handleEndGestureWithEvent:event];
         return;
       }
@@ -113,8 +106,7 @@ void SyntheticGestureTargetMac::DispatchInputEventToPlatform(
         id event = [SyntheticPinchEvent
             eventWithMagnification:gesture_event->data.pinch_update.scale - 1.0f
                   locationInWindow:NSMakePoint(gesture_event->x,
-                                               gesture_event->y)
-                             phase:NSEventPhaseChanged];
+                                               gesture_event->y)];
         [cocoa_view_ magnifyWithEvent:event];
         return;
       }

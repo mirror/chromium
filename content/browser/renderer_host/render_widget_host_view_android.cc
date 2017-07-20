@@ -30,15 +30,15 @@
 #include "cc/output/copy_output_result.h"
 #include "cc/output/latency_info_swap_promise.h"
 #include "cc/resources/single_release_callback.h"
+#include "cc/surfaces/frame_sink_manager.h"
 #include "cc/surfaces/surface.h"
 #include "cc/surfaces/surface_hittest.h"
 #include "cc/trees/layer_tree_host.h"
 #include "components/viz/common/gl_helper.h"
-#include "components/viz/service/frame_sinks/frame_sink_manager.h"
 #include "content/browser/accessibility/browser_accessibility_manager_android.h"
 #include "content/browser/accessibility/web_contents_accessibility_android.h"
 #include "content/browser/android/composited_touch_handle_drawable.h"
-#include "content/browser/android/content_view_core.h"
+#include "content/browser/android/content_view_core_impl.h"
 #include "content/browser/android/ime_adapter_android.h"
 #include "content/browser/android/overscroll_controller_android.h"
 #include "content/browser/android/selection_popup_controller.h"
@@ -443,7 +443,7 @@ void RenderWidgetHostViewAndroid::OnContextLost() {
 
 RenderWidgetHostViewAndroid::RenderWidgetHostViewAndroid(
     RenderWidgetHostImpl* widget_host,
-    ContentViewCore* content_view_core)
+    ContentViewCoreImpl* content_view_core)
     : host_(widget_host),
       begin_frame_source_(nullptr),
       outstanding_begin_frame_requests_(0),
@@ -478,8 +478,7 @@ RenderWidgetHostViewAndroid::RenderWidgetHostViewAndroid(
     viz::FrameSinkId frame_sink_id =
         host_->AllocateFrameSinkId(false /* is_guest_view_hack */);
     delegated_frame_host_.reset(new ui::DelegatedFrameHostAndroid(
-        &view_, CompositorImpl::GetHostFrameSinkManager(),
-        CompositorImpl::GetFrameSinkManager(), this, frame_sink_id));
+        &view_, CompositorImpl::GetFrameSinkManager(), this, frame_sink_id));
 
     // Let the page-level input event router know about our frame sink ID
     // for surface-based hit testing.
@@ -643,7 +642,7 @@ void RenderWidgetHostViewAndroid::Hide() {
 }
 
 bool RenderWidgetHostViewAndroid::IsShowing() {
-  // ContentViewCore represents the native side of the Java
+  // ContentViewCoreImpl represents the native side of the Java
   // ContentViewCore.  It being NULL means that it is not attached
   // to the View system yet, so we treat this RWHVA as hidden.
   return is_showing_ && content_view_core_;
@@ -2045,7 +2044,7 @@ viz::FrameSinkId RenderWidgetHostViewAndroid::GetFrameSinkId() {
 }
 
 void RenderWidgetHostViewAndroid::SetContentViewCore(
-    ContentViewCore* content_view_core) {
+    ContentViewCoreImpl* content_view_core) {
   DCHECK(!content_view_core || !content_view_core_ ||
          (content_view_core_ == content_view_core));
   StopObservingRootWindow();

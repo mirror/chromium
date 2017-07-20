@@ -15,7 +15,7 @@ bool CSSShorthandPropertyAPIColumns::parseShorthand(
     bool important,
     CSSParserTokenRange& range,
     const CSSParserContext&,
-    bool,
+    const CSSParserLocalContext&,
     HeapVector<CSSProperty, 256>& properties) {
   CSSValue* column_width = nullptr;
   CSSValue* column_count = nullptr;

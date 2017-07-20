@@ -8,7 +8,6 @@
 
 #include "base/macros.h"
 #include "cc/paint/paint_flags.h"
-#include "components/vector_icons/vector_icons.h"
 #include "content/browser/frame_host/navigation_controller_impl.h"
 #include "content/browser/renderer_host/overscroll_controller.h"
 #include "content/browser/web_contents/web_contents_impl.h"
@@ -28,6 +27,7 @@
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/gfx/shadow_value.h"
 #include "ui/gfx/skia_paint_util.h"
+#include "ui/vector_icons/vector_icons.h"
 
 namespace content {
 
@@ -105,9 +105,6 @@ class Affordance : public ui::LayerDelegate, public gfx::AnimationDelegate {
   // Returns the root layer of the affordance.
   ui::Layer* root_layer() const { return root_layer_.get(); }
 
-  // Returns whether the affordance is performing abort or complete animation.
-  bool IsFinishing() const { return state_ != State::DRAGGING; }
-
  private:
   enum class State { DRAGGING, ABORTING, COMPLETING };
 
@@ -158,11 +155,10 @@ Affordance::Affordance(GestureNavSimple* owner,
       mode_(mode),
       root_layer_(base::MakeUnique<ui::Layer>(ui::LAYER_NOT_DRAWN)),
       painted_layer_(base::MakeUnique<ui::Layer>(ui::LAYER_TEXTURED)),
-      image_(gfx::CreateVectorIcon(mode == OVERSCROLL_EAST
-                                       ? vector_icons::kBackArrowIcon
-                                       : vector_icons::kForwardArrowIcon,
-                                   kArrowSize,
-                                   kArrowColor)) {
+      image_(gfx::CreateVectorIcon(
+          mode == OVERSCROLL_EAST ? ui::kBackArrowIcon : ui::kForwardArrowIcon,
+          kArrowSize,
+          kArrowColor)) {
   DCHECK(mode == OVERSCROLL_EAST || mode == OVERSCROLL_WEST);
   DCHECK(!image_.IsEmpty());
 
@@ -377,7 +373,7 @@ gfx::Size GestureNavSimple::GetDisplaySize() const {
 }
 
 bool GestureNavSimple::OnOverscrollUpdate(float delta_x, float delta_y) {
-  if (!affordance_ || affordance_->IsFinishing())
+  if (!affordance_)
     return false;
   affordance_->SetDragProgress(
       std::min(1.f, std::abs(delta_x) / completion_threshold_));

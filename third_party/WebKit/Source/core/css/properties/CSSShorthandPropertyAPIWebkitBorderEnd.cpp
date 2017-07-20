@@ -12,7 +12,7 @@ bool CSSShorthandPropertyAPIWebkitBorderEnd::parseShorthand(
     bool important,
     CSSParserTokenRange& range,
     const CSSParserContext& context,
-    bool,
+    const CSSParserLocalContext&,
     HeapVector<CSSProperty, 256>& properties) {
   return CSSPropertyParserHelpers::ConsumeShorthandGreedilyViaLonghandAPIs(
       webkitBorderEndShorthand(), important, context, range, properties);

@@ -738,13 +738,7 @@ CommandHandler.onCommand = function(command) {
         current = cursors.Range.fromNode(node);
       } else {
         cvox.ChromeVox.earcons.playEarcon(cvox.Earcon.WRAP);
-        var root = bound;
-        while (root && !AutomationPredicate.root(root))
-          root = root.parent;
-
-        if (!root)
-          root = bound.root;
-
+        var root = AutomationUtil.getTopLevelRoot(bound) || bound.root;
         if (dir == Dir.FORWARD) {
           bound = root;
         } else {

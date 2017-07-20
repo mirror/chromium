@@ -36,9 +36,9 @@
 #include "base/win/wrapped_window_proc.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/conflicts/enumerate_input_method_editors_win.h"
-#include "chrome/browser/conflicts/enumerate_shell_extensions_win.h"
 #include "chrome/browser/conflicts/module_database_win.h"
 #include "chrome/browser/conflicts/module_event_sink_impl_win.h"
+#include "chrome/browser/conflicts/shell_extension_enumerator_win.h"
 #include "chrome/browser/first_run/first_run.h"
 #include "chrome/browser/install_verification/win/install_verification.h"
 #include "chrome/browser/profiles/profile_manager.h"
@@ -206,9 +206,10 @@ void OnModuleEvent(uint32_t process_id,
 }
 
 // Helper function for initializing the module database subsystem. Populates
-// the provided |module_watcher|, and starts the enumeration of registered
-// modules in the Windows Registry.
-void SetupModuleDatabase(std::unique_ptr<ModuleWatcher>* module_watcher) {
+// the provided |module_watcher| and |shell_extension_enumerator|.
+void SetupModuleDatabase(
+    std::unique_ptr<ModuleWatcher>* module_watcher,
+    std::unique_ptr<ShellExtensionEnumerator>* shell_extension_enumerator) {
   uint64_t creation_time = 0;
   ModuleEventSinkImpl::GetProcessCreationTime(::GetCurrentProcess(),
                                               &creation_time);
@@ -229,16 +230,11 @@ void SetupModuleDatabase(std::unique_ptr<ModuleWatcher>* module_watcher) {
 
   // Enumerate shell extensions and input method editors. It is safe to use
   // base::Unretained() here because the ModuleDatabase is never freed.
-  EnumerateShellExtensions(
+  *shell_extension_enumerator = base::MakeUnique<ShellExtensionEnumerator>(
       base::BindRepeating(&ModuleDatabase::OnShellExtensionEnumerated,
-                          base::Unretained(module_database)),
-      base::BindOnce(&ModuleDatabase::OnShellExtensionEnumerationFinished,
-                     base::Unretained(module_database)));
-  EnumerateInputMethodEditors(
-      base::BindRepeating(&ModuleDatabase::OnImeEnumerated,
-                          base::Unretained(module_database)),
-      base::BindOnce(&ModuleDatabase::OnImeEnumerationFinished,
-                     base::Unretained(module_database)));
+                          base::Unretained(module_database)));
+  EnumerateInputMethodEditors(base::BindRepeating(
+      &ModuleDatabase::OnImeEnumerated, base::Unretained(module_database)));
 }
 
 void ShowCloseBrowserFirstMessageBox() {
@@ -353,7 +349,17 @@ int ChromeBrowserMainPartsWin::PreCreateThreads() {
   base::debug::SetCrashKeyValue(
       crash_keys::kCohortName, base::UTF16ToUTF8(details.update_cohort_name()));
 
-  return ChromeBrowserMainParts::PreCreateThreads();
+  int rv = ChromeBrowserMainParts::PreCreateThreads();
+
+  // TODO(viettrungluu): why don't we run this earlier?
+  if (!parsed_command_line().HasSwitch(switches::kNoErrorDialogs) &&
+      base::win::GetVersion() < base::win::VERSION_XP) {
+    chrome::ShowWarningMessageBox(
+        NULL, l10n_util::GetStringUTF16(IDS_PRODUCT_NAME),
+        l10n_util::GetStringUTF16(IDS_UNSUPPORTED_OS_PRE_WIN_XP));
+  }
+
+  return rv;
 }
 
 void ChromeBrowserMainPartsWin::ShowMissingLocaleMessageBox() {
@@ -370,7 +376,7 @@ void ChromeBrowserMainPartsWin::PostProfileInit() {
   // needs to be done before any child processes are initialized as the
   // ModuleDatabase is an endpoint for IPC from child processes.
   if (base::FeatureList::IsEnabled(features::kModuleDatabase))
-    SetupModuleDatabase(&module_watcher_);
+    SetupModuleDatabase(&module_watcher_, &shell_extension_enumerator_);
 }
 
 void ChromeBrowserMainPartsWin::PostBrowserStart() {
@@ -485,9 +491,16 @@ void ChromeBrowserMainPartsWin::RegisterApplicationRestart(
 int ChromeBrowserMainPartsWin::HandleIconsCommands(
     const base::CommandLine& parsed_command_line) {
   if (parsed_command_line.HasSwitch(switches::kHideIcons)) {
-    // TODO(740976): This is not up-to-date and not localized. Figure out if
-    // the --hide-icons and --show-icons switches are still used.
-    base::string16 cp_applet(L"Programs and Features");
+    base::string16 cp_applet;
+    base::win::Version version = base::win::GetVersion();
+    if (version >= base::win::VERSION_VISTA) {
+      cp_applet.assign(L"Programs and Features");  // Windows Vista and later.
+    } else if (version >= base::win::VERSION_XP) {
+      cp_applet.assign(L"Add/Remove Programs");  // Windows XP.
+    } else {
+      return chrome::RESULT_CODE_UNSUPPORTED_PARAM;  // Not supported
+    }
+
     const base::string16 msg =
         l10n_util::GetStringFUTF16(IDS_HIDE_ICONS_NOT_SUPPORTED, cp_applet);
     const base::string16 caption = l10n_util::GetStringUTF16(IDS_PRODUCT_NAME);

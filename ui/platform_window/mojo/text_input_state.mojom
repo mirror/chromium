@@ -21,9 +21,7 @@ enum TextInputType {
   TIME,
   WEEK,
   TEXT_AREA,
-  CONTENT_EDITABLE,
-  DATE_TIME_FIELD,
-  MAX = DATE_TIME_FIELD,
+  LAST = TEXT_AREA,
 };
 
 // Text input flag which is based on blink::WebTextInputFlags.

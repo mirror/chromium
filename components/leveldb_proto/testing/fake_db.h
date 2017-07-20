@@ -57,8 +57,6 @@ class FakeDB : public ProtoDatabase<T> {
 
   void UpdateCallback(bool success);
 
-  void DestroyCallback(bool success);
-
   static base::FilePath DirectoryForTestDB();
 
  private:
@@ -83,7 +81,6 @@ class FakeDB : public ProtoDatabase<T> {
   Callback load_keys_callback_;
   Callback get_callback_;
   Callback update_callback_;
-  Callback destroy_callback_;
 };
 
 template <typename T>
@@ -150,10 +147,7 @@ void FakeDB<T>::GetEntry(const std::string& key,
 }
 
 template <typename T>
-void FakeDB<T>::Destroy(typename ProtoDatabase<T>::DestroyCallback callback) {
-  db_->clear();
-  destroy_callback_ = std::move(callback);
-}
+void FakeDB<T>::Destroy(typename ProtoDatabase<T>::DestroyCallback callback) {}
 
 template <typename T>
 base::FilePath& FakeDB<T>::GetDirectory() {
@@ -183,11 +177,6 @@ void FakeDB<T>::GetCallback(bool success) {
 template <typename T>
 void FakeDB<T>::UpdateCallback(bool success) {
   std::move(update_callback_).Run(success);
-}
-
-template <typename T>
-void FakeDB<T>::DestroyCallback(bool success) {
-  std::move(destroy_callback_).Run(success);
 }
 
 // static

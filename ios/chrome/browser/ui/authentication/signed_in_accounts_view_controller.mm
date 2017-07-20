@@ -19,7 +19,9 @@
 #import "ios/chrome/browser/ui/collection_view/collection_view_controller.h"
 #import "ios/chrome/browser/ui/collection_view/collection_view_model.h"
 #import "ios/chrome/browser/ui/colors/MDCPalette+CrAdditions.h"
-#import "ios/chrome/browser/ui/commands/application_commands.h"
+#import "ios/chrome/browser/ui/commands/UIKit+ChromeExecuteCommand.h"
+#import "ios/chrome/browser/ui/commands/generic_chrome_command.h"
+#include "ios/chrome/browser/ui/commands/ios_command_ids.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #include "ios/chrome/grit/ios_chromium_strings.h"
 #include "ios/chrome/grit/ios_strings.h"
@@ -191,11 +193,9 @@ BOOL gSignedInAccountsViewControllerIsShown = NO;
   MDCButton* _primaryButton;
   MDCButton* _secondaryButton;
 }
-@property(nonatomic, readonly, weak) id<ApplicationSettingsCommands> dispatcher;
 @end
 
 @implementation SignedInAccountsViewController
-@synthesize dispatcher = _dispatcher;
 
 + (BOOL)shouldBePresentedForBrowserState:
     (ios::ChromeBrowserState*)browserState {
@@ -210,13 +210,10 @@ BOOL gSignedInAccountsViewControllerIsShown = NO;
 
 #pragma mark Initialization
 
-- (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState
-                          dispatcher:
-                              (id<ApplicationSettingsCommands>)dispatcher {
+- (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState {
   self = [super initWithNibName:nil bundle:nil];
   if (self) {
     _browserState = browserState;
-    _dispatcher = dispatcher;
     _tokenServiceObserver.reset(new OAuth2TokenServiceObserverBridge(
         OAuth2TokenServiceFactory::GetForBrowserState(_browserState), self));
     _transitionController = [[MDCDialogTransitionController alloc] init];
@@ -375,7 +372,9 @@ BOOL gSignedInAccountsViewControllerIsShown = NO;
 
 - (void)onSecondaryButtonPressed:(id)sender {
   [self dismiss];
-  [self.dispatcher showAccountsSettings];
+  GenericChromeCommand* showAccountsSettingsCommand =
+      [[GenericChromeCommand alloc] initWithTag:IDC_SHOW_ACCOUNTS_SETTINGS];
+  [self chromeExecuteCommand:showAccountsSettingsCommand];
 }
 
 #pragma mark OAuth2TokenServiceObserverBridgeDelegate

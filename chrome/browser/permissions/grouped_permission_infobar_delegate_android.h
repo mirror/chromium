@@ -24,10 +24,9 @@ class GroupedPermissionInfoBarDelegate : public ConfirmInfoBarDelegate {
   // Public so we can have std::unique_ptr<GroupedPermissionInfoBarDelegate>.
   ~GroupedPermissionInfoBarDelegate() override;
 
-  static infobars::InfoBar* Create(
-      const base::WeakPtr<PermissionPromptAndroid>& permission_prompt,
-      InfoBarService* infobar_service,
-      const GURL& requesting_origin);
+  static infobars::InfoBar* Create(PermissionPromptAndroid* permission_prompt,
+                                   InfoBarService* infobar_service,
+                                   const GURL& requesting_origin);
 
   bool persist() const { return persist_; }
   void set_persist(bool persist) { persist_ = persist; }
@@ -53,9 +52,8 @@ class GroupedPermissionInfoBarDelegate : public ConfirmInfoBarDelegate {
   bool GetAcceptState(size_t position);
 
  private:
-  GroupedPermissionInfoBarDelegate(
-      const base::WeakPtr<PermissionPromptAndroid>& permission_prompt,
-      const GURL& requesting_origin);
+  GroupedPermissionInfoBarDelegate(PermissionPromptAndroid* permission_prompt,
+                                   const GURL& requesting_origin);
 
   // ConfirmInfoBarDelegate:
   InfoBarIdentifier GetIdentifier() const override;
@@ -70,7 +68,7 @@ class GroupedPermissionInfoBarDelegate : public ConfirmInfoBarDelegate {
   const GURL requesting_origin_;
   // Whether the accept/deny decision is persisted.
   bool persist_;
-  base::WeakPtr<PermissionPromptAndroid> permission_prompt_;
+  PermissionPromptAndroid* permission_prompt_;
 
   DISALLOW_COPY_AND_ASSIGN(GroupedPermissionInfoBarDelegate);
 };

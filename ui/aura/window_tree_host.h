@@ -15,7 +15,6 @@
 #include "ui/aura/aura_export.h"
 #include "ui/base/cursor/cursor.h"
 #include "ui/base/ime/input_method_delegate.h"
-#include "ui/display/display_observer.h"
 #include "ui/events/event_source.h"
 #include "ui/gfx/geometry/insets.h"
 #include "ui/gfx/native_widget_types.h"
@@ -48,8 +47,7 @@ class WindowTreeHostObserver;
 // It provides the accelerated widget and maps events from the native os to
 // aura.
 class AURA_EXPORT WindowTreeHost : public ui::internal::InputMethodDelegate,
-                                   public ui::EventSource,
-                                   public display::DisplayObserver {
+                                   public ui::EventSource {
  public:
   ~WindowTreeHost() override;
 
@@ -228,12 +226,6 @@ class AURA_EXPORT WindowTreeHost : public ui::internal::InputMethodDelegate,
 
   // Overridden from ui::EventSource:
   ui::EventSink* GetEventSink() override;
-
-  // display::DisplayObserver implementation.
-  void OnDisplayAdded(const display::Display& new_display) override;
-  void OnDisplayRemoved(const display::Display& old_display) override;
-  void OnDisplayMetricsChanged(const display::Display& display,
-                               uint32_t metrics) override;
 
  private:
   friend class test::WindowTreeHostTestApi;

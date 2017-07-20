@@ -18,9 +18,9 @@
 #include "base/time/time.h"
 #include "build/build_config.h"
 #include "cc/output/begin_frame_args.h"
+#include "cc/surfaces/surface_sequence.h"
 #include "cc/trees/layer_tree_host_client.h"
 #include "cc/trees/layer_tree_host_single_thread_client.h"
-#include "components/viz/common/surfaces/surface_sequence.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/compositor/compositor_animation_observer.h"
 #include "ui/compositor/compositor_export.h"
@@ -40,6 +40,8 @@ class SingleThreadTaskRunner;
 namespace cc {
 class AnimationHost;
 class AnimationTimeline;
+class ContextProvider;
+class FrameSinkManager;
 class Layer;
 class LayerTreeDebugState;
 class LayerTreeFrameSink;
@@ -58,8 +60,6 @@ class GpuMemoryBufferManager;
 }
 
 namespace viz {
-class FrameSinkManager;
-class ContextProvider;
 class HostFrameSinkManager;
 class LocalSurfaceId;
 class ResourceSettings;
@@ -80,7 +80,7 @@ class COMPOSITOR_EXPORT ContextFactoryObserver {
  public:
   virtual ~ContextFactoryObserver() {}
 
-  // Notifies that the viz::ContextProvider returned from
+  // Notifies that the ContextProvider returned from
   // ui::ContextFactory::SharedMainThreadContextProvider was lost.  When this
   // is called, the old resources (e.g. shared context, GL helper) still
   // exist, but are about to be destroyed. Getting a reference to those
@@ -108,7 +108,7 @@ class COMPOSITOR_EXPORT ContextFactoryPrivate {
   // Gets the frame sink manager.
   // TODO(staraz): Remove GetFrameSinkManager once FrameSinkManager is merged
   // into FrameSinkManagerImpl.
-  virtual viz::FrameSinkManager* GetFrameSinkManager() = 0;
+  virtual cc::FrameSinkManager* GetFrameSinkManager() = 0;
 
   // Gets the frame sink manager host instance.
   virtual viz::HostFrameSinkManager* GetHostFrameSinkManager() = 0;
@@ -153,7 +153,7 @@ class COMPOSITOR_EXPORT ContextFactory {
 
   // Return a reference to a shared offscreen context provider usable from the
   // main thread.
-  virtual scoped_refptr<viz::ContextProvider>
+  virtual scoped_refptr<cc::ContextProvider>
   SharedMainThreadContextProvider() = 0;
 
   // Destroys per-compositor data.

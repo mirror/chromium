@@ -9,9 +9,9 @@
 #include <memory>
 
 #include "base/macros.h"
-#include "base/memory/singleton.h"
 #include "base/threading/thread_checker.h"
 #include "components/cast_channel/cast_socket.h"
+#include "components/keyed_service/core/refcounted_keyed_service.h"
 #include "content/public/browser/browser_thread.h"
 
 namespace cast_channel {
@@ -20,9 +20,9 @@ namespace cast_channel {
 // to underlying storage.
 // Instance of this class is created on the UI thread and destroyed on the IO
 // thread. All public API must be called from the IO thread.
-class CastSocketService {
+class CastSocketService : public RefcountedKeyedService {
  public:
-  static CastSocketService* GetInstance();
+  CastSocketService();
 
   // Returns a pointer to the Logger member variable.
   scoped_refptr<cast_channel::Logger> GetLogger();
@@ -61,7 +61,7 @@ class CastSocketService {
                  const base::TimeDelta& liveness_timeout,
                  const base::TimeDelta& ping_interval,
                  uint64_t device_capabilities,
-                 CastSocket::OnOpenCallback open_cb,
+                 const CastSocket::OnOpenCallback& open_cb,
                  CastSocket::Observer* observer);
 
   // Opens cast socket with |ip_endpoint| and invokes |open_cb| when opening
@@ -74,23 +74,27 @@ class CastSocketService {
   // Does not take ownership of |observer|.
   virtual int OpenSocket(const net::IPEndPoint& ip_endpoint,
                          net::NetLog* net_log,
-                         CastSocket::OnOpenCallback open_cb,
+                         const CastSocket::OnOpenCallback& open_cb,
                          CastSocket::Observer* observer);
 
-  // Remove |observer| from each socket in |sockets_|
-  void RemoveObserver(CastSocket::Observer* observer);
+  // Returns an observer corresponding to |id|.
+  CastSocket::Observer* GetObserver(const std::string& id);
+
+  // Adds |observer| to |socket_observer_map_| keyed by |id|. Return raw pointer
+  // of the newly added observer.
+  CastSocket::Observer* AddObserver(
+      const std::string& id,
+      std::unique_ptr<CastSocket::Observer> observer);
 
   // Allow test to inject a mock cast socket.
   void SetSocketForTest(std::unique_ptr<CastSocket> socket_for_test);
 
- private:
-  friend class CastSocketServiceTest;
-  friend class MockCastSocketService;
-  friend struct base::DefaultSingletonTraits<CastSocketService>;
-  friend struct std::default_delete<CastSocketService>;
+ protected:
+  ~CastSocketService() override;
 
-  CastSocketService();
-  virtual ~CastSocketService();
+ private:
+  // RefcountedKeyedService implementation.
+  void ShutdownOnUIThread() override;
 
   // Used to generate CastSocket id.
   static int last_channel_id_;
@@ -98,7 +102,13 @@ class CastSocketService {
   // The collection of CastSocket keyed by channel_id.
   std::map<int, std::unique_ptr<CastSocket>> sockets_;
 
-  scoped_refptr<Logger> logger_;
+  // Map of CastSocket::Observer keyed by observer id. For extension side
+  // observers, id is extension_id; For browser side observers, id is a hard
+  // coded string.
+  std::map<std::string, std::unique_ptr<CastSocket::Observer>>
+      socket_observer_map_;
+
+  scoped_refptr<cast_channel::Logger> logger_;
 
   std::unique_ptr<CastSocket> socket_for_test_;
 

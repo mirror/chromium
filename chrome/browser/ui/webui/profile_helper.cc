@@ -14,7 +14,6 @@
 #include "chrome/browser/profiles/profile_metrics.h"
 #include "chrome/browser/profiles/profile_window.h"
 #include "chrome/browser/profiles/profiles_state.h"
-#include "chrome/browser/signin/signin_util.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/user_manager.h"
 #include "chrome/browser/ui/webui/signin/signin_utils.h"
@@ -73,7 +72,7 @@ void DeleteProfileCallback(std::unique_ptr<ScopedKeepAlive> keep_alive,
 
 void OpenNewWindowForProfile(Profile* profile) {
   if (profiles::IsProfileLocked(profile->GetPath())) {
-    if (signin_util::IsForceSigninEnabled()) {
+    if (signin::IsForceSigninEnabled()) {
       ShowUserManager(base::Bind(&ShowSigninDialog, profile->GetPath()));
     } else {
       ShowUserManager(

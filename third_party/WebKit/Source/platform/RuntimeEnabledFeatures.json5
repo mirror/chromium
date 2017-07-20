@@ -302,10 +302,6 @@
       status: "experimental",
     },
     {
-      name: "CSSScrollBoundaryBehavior",
-      status: "experimental",
-    },
-    {
       name: "CSSScrollSnapPoints",
       status: "test",
     },
@@ -580,10 +576,6 @@
       name: "LayoutNG",
     },
     {
-      name: "LazyInitializeMediaControls",
-      // This is enabled by features::kLazyInitializeMediaControls.
-    },
-    {
       name: "LazyParseCSS",
       status: "experimental",
     },
@@ -704,7 +696,7 @@
     },
     {
       name: "NetInfoDownlink",
-      status: "stable",
+      status: "experimental",
     },
     {
       name: "NetInfoDownlinkMax",
@@ -712,10 +704,14 @@
     },
     {
       name: "NetInfoEffectiveType",
-      status: "stable",
+      status: "experimental",
     },
     {
       name: "NetInfoRtt",
+      status: "experimental",
+    },
+    {
+      name: "NetworkInformation",
       status: "stable",
     },
     // Not a web exposed feature, enabled from the command line.
@@ -793,6 +789,10 @@
       status: "experimental",
     },
     {
+      name: "PaymentDetailsError",
+      status: "stable",
+    },
+    {
       name: "PaymentDetailsModifierData",
       status: "experimental",
     },
@@ -803,6 +803,10 @@
     },
     {
       name: "PaymentRequestBasicCard",
+      status: "stable",
+    },
+    {
+      name: "PaymentRequestPayerName",
       status: "stable",
     },
     {

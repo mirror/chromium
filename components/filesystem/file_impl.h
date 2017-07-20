@@ -10,7 +10,6 @@
 #include "base/files/file.h"
 #include "base/files/scoped_file.h"
 #include "base/macros.h"
-#include "build/build_config.h"
 #include "components/filesystem/public/interfaces/directory.mojom.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
 
@@ -38,12 +37,10 @@ class FileImpl : public mojom::File {
   // Returns whether the underlying file handle is valid.
   bool IsValid() const;
 
-#if !defined(OS_FUCHSIA)
   // Attempts to perform the native operating system's locking operations on
-  // the internal mojom::File handle. Not supported on Fuchsia.
+  // the internal mojom::File handle
   base::File::Error RawLockFile();
   base::File::Error RawUnlockFile();
-#endif  // !OS_FUCHSIA
 
   const base::FilePath& path() const { return path_; }
 

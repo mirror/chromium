@@ -1425,120 +1425,6 @@ TEST_F(LayerTreeHostImplTest, ScrollByReturnsCorrectValue) {
           .did_scroll);
 }
 
-TEST_F(LayerTreeHostImplTest, ScrollBoundaryBehaviorPreventsPropagation) {
-  LayerImpl* scroll_layer = SetupScrollAndContentsLayers(gfx::Size(200, 200));
-  host_impl_->SetViewportSize(gfx::Size(100, 100));
-
-  gfx::Size overflow_size(400, 400);
-  ASSERT_EQ(1u, scroll_layer->test_properties()->children.size());
-  LayerImpl* overflow = scroll_layer->test_properties()->children[0];
-  overflow->SetBounds(overflow_size);
-  overflow->SetScrollable(gfx::Size(100, 100));
-  overflow->SetElementId(LayerIdToElementIdForTesting(overflow->id()));
-  overflow->layer_tree_impl()
-      ->property_trees()
-      ->scroll_tree.UpdateScrollOffsetBaseForTesting(overflow->element_id(),
-                                                     gfx::ScrollOffset());
-  overflow->SetPosition(gfx::PointF(40, 40));
-  host_impl_->active_tree()->BuildPropertyTreesForTesting();
-  scroll_layer->SetCurrentScrollOffset(gfx::ScrollOffset(30, 30));
-
-  DrawFrame();
-  gfx::Point scroll_position(50, 50);
-
-  // ScrollBoundaryBehaviorTypeAuto shouldn't prevent scroll propagation.
-  EXPECT_EQ(
-      InputHandler::SCROLL_ON_IMPL_THREAD,
-      host_impl_
-          ->ScrollBegin(BeginState(scroll_position).get(), InputHandler::WHEEL)
-          .thread);
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(30, 30), scroll_layer->CurrentScrollOffset());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(), overflow->CurrentScrollOffset());
-
-  gfx::Vector2dF x_dominant_delta(-10, -5);
-  gfx::Vector2dF y_dominant_delta(-5, -10);
-  host_impl_->ScrollBy(UpdateState(scroll_position, x_dominant_delta).get());
-  host_impl_->ScrollEnd(EndState().get());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(20, 25), scroll_layer->CurrentScrollOffset());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 0), overflow->CurrentScrollOffset());
-
-  overflow->test_properties()->scroll_boundary_behavior =
-      ScrollBoundaryBehavior(
-          ScrollBoundaryBehavior::kScrollBoundaryBehaviorTypeNone,
-          ScrollBoundaryBehavior::kScrollBoundaryBehaviorTypeAuto);
-  host_impl_->active_tree()->BuildPropertyTreesForTesting();
-
-  DrawFrame();
-
-  // ScrollBoundaryBehaviorNone on x should prevent x-dominant-scroll
-  // propagation.
-  EXPECT_EQ(
-      InputHandler::SCROLL_ON_IMPL_THREAD,
-      host_impl_
-          ->ScrollBegin(BeginState(scroll_position).get(), InputHandler::WHEEL)
-          .thread);
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(20, 25), scroll_layer->CurrentScrollOffset());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 0), overflow->CurrentScrollOffset());
-
-  host_impl_->ScrollBy(UpdateState(scroll_position, x_dominant_delta).get());
-  host_impl_->ScrollEnd(EndState().get());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(20, 25), scroll_layer->CurrentScrollOffset());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 0), overflow->CurrentScrollOffset());
-
-  // ScrollBoundaryBehaviorNone on x shouldn't prevent y-dominant-scroll
-  // propagation.
-  EXPECT_EQ(
-      InputHandler::SCROLL_ON_IMPL_THREAD,
-      host_impl_
-          ->ScrollBegin(BeginState(scroll_position).get(), InputHandler::WHEEL)
-          .thread);
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(20, 25), scroll_layer->CurrentScrollOffset());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 0), overflow->CurrentScrollOffset());
-
-  host_impl_->ScrollBy(UpdateState(scroll_position, y_dominant_delta).get());
-  host_impl_->ScrollEnd(EndState().get());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(15, 15), scroll_layer->CurrentScrollOffset());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 0), overflow->CurrentScrollOffset());
-
-  overflow->test_properties()->scroll_boundary_behavior =
-      ScrollBoundaryBehavior(
-          ScrollBoundaryBehavior::kScrollBoundaryBehaviorTypeAuto,
-          ScrollBoundaryBehavior::kScrollBoundaryBehaviorTypeNone);
-  host_impl_->active_tree()->BuildPropertyTreesForTesting();
-
-  DrawFrame();
-
-  // ScrollBoundaryBehaviorNone on y shouldn't prevent x-dominant-scroll
-  // propagation.
-  EXPECT_EQ(
-      InputHandler::SCROLL_ON_IMPL_THREAD,
-      host_impl_
-          ->ScrollBegin(BeginState(scroll_position).get(), InputHandler::WHEEL)
-          .thread);
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(15, 15), scroll_layer->CurrentScrollOffset());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 0), overflow->CurrentScrollOffset());
-
-  host_impl_->ScrollBy(UpdateState(scroll_position, x_dominant_delta).get());
-  host_impl_->ScrollEnd(EndState().get());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(5, 10), scroll_layer->CurrentScrollOffset());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 0), overflow->CurrentScrollOffset());
-
-  // ScrollBoundaryBehaviorNone on y should prevent y-dominant-scroll
-  // propagation.
-  EXPECT_EQ(
-      InputHandler::SCROLL_ON_IMPL_THREAD,
-      host_impl_
-          ->ScrollBegin(BeginState(scroll_position).get(), InputHandler::WHEEL)
-          .thread);
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(5, 10), scroll_layer->CurrentScrollOffset());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 0), overflow->CurrentScrollOffset());
-
-  host_impl_->ScrollBy(UpdateState(scroll_position, y_dominant_delta).get());
-  host_impl_->ScrollEnd(EndState().get());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(5, 10), scroll_layer->CurrentScrollOffset());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 0), overflow->CurrentScrollOffset());
-}
-
 TEST_F(LayerTreeHostImplTest, ScrollWithUserUnscrollableLayers) {
   LayerImpl* scroll_layer = SetupScrollAndContentsLayers(gfx::Size(200, 200));
   host_impl_->SetViewportSize(gfx::Size(100, 100));
@@ -3871,7 +3757,7 @@ class DidDrawCheckLayer : public LayerImpl {
 
   void AddCopyRequest() {
     test_properties()->copy_requests.push_back(
-        CopyOutputRequest::CreateRequest(base::BindOnce(&IgnoreResult)));
+        CopyOutputRequest::CreateRequest(base::Bind(&IgnoreResult)));
   }
 
  protected:
@@ -8899,12 +8785,11 @@ void ShutdownReleasesContext_Callback(
 class FrameSinkClient : public viz::TestLayerTreeFrameSinkClient {
  public:
   explicit FrameSinkClient(
-      scoped_refptr<viz::ContextProvider> display_context_provider)
+      scoped_refptr<ContextProvider> display_context_provider)
       : display_context_provider_(std::move(display_context_provider)) {}
 
   std::unique_ptr<OutputSurface> CreateDisplayOutputSurface(
-      scoped_refptr<viz::ContextProvider> compositor_context_provider)
-      override {
+      scoped_refptr<ContextProvider> compositor_context_provider) override {
     return FakeOutputSurface::Create3d(std::move(display_context_provider_));
   }
 
@@ -8916,13 +8801,13 @@ class FrameSinkClient : public viz::TestLayerTreeFrameSinkClient {
   void DisplayDidDrawAndSwap() override {}
 
  private:
-  scoped_refptr<viz::ContextProvider> display_context_provider_;
+  scoped_refptr<ContextProvider> display_context_provider_;
 };
 
 TEST_F(LayerTreeHostImplTest, ShutdownReleasesContext) {
   scoped_refptr<TestContextProvider> context_provider =
       TestContextProvider::Create();
-  FrameSinkClient test_client(context_provider);
+  FrameSinkClient test_client_(context_provider);
 
   constexpr bool synchronous_composite = true;
   constexpr bool disable_display_vsync = false;
@@ -8931,7 +8816,7 @@ TEST_F(LayerTreeHostImplTest, ShutdownReleasesContext) {
       context_provider, TestContextProvider::CreateWorker(), nullptr, nullptr,
       RendererSettings(), base::ThreadTaskRunnerHandle::Get().get(),
       synchronous_composite, disable_display_vsync, refresh_rate);
-  layer_tree_frame_sink->SetClient(&test_client);
+  layer_tree_frame_sink->SetClient(&test_client_);
 
   CreateHostImpl(DefaultSettings(), std::move(layer_tree_frame_sink));
 
@@ -8940,7 +8825,7 @@ TEST_F(LayerTreeHostImplTest, ShutdownReleasesContext) {
   LayerImpl* root = host_impl_->active_tree()->root_layer_for_testing();
   root->test_properties()->copy_requests.push_back(
       CopyOutputRequest::CreateRequest(
-          base::BindOnce(&ShutdownReleasesContext_Callback)));
+          base::Bind(&ShutdownReleasesContext_Callback)));
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
 
   TestFrameData frame;
@@ -8948,7 +8833,7 @@ TEST_F(LayerTreeHostImplTest, ShutdownReleasesContext) {
   host_impl_->DrawLayers(&frame);
   host_impl_->DidDrawAllLayers(frame);
 
-  // The CopyOutputResult's callback has a ref on the viz::ContextProvider and a
+  // The CopyOutputResult's callback has a ref on the ContextProvider and a
   // texture in a texture mailbox.
   EXPECT_FALSE(context_provider->HasOneRef());
   EXPECT_EQ(1u, context_provider->TestContext3d()->NumTextures());

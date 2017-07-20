@@ -368,7 +368,7 @@ ResourceProvider::Child::Child(const Child& other) = default;
 ResourceProvider::Child::~Child() {}
 
 ResourceProvider::Settings::Settings(
-    viz::ContextProvider* compositor_context_provider,
+    ContextProvider* compositor_context_provider,
     bool delegated_sync_points_required,
     bool enable_color_correct_rasterization,
     const viz::ResourceSettings& resource_settings)
@@ -412,7 +412,7 @@ ResourceProvider::Settings::Settings(
 }
 
 ResourceProvider::ResourceProvider(
-    viz::ContextProvider* compositor_context_provider,
+    ContextProvider* compositor_context_provider,
     viz::SharedBitmapManager* shared_bitmap_manager,
     gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
     BlockingTaskRunner* blocking_main_thread_task_runner,
@@ -1170,7 +1170,7 @@ ResourceProvider::ScopedTextureProvider::~ScopedTextureProvider() {
 }
 
 ResourceProvider::ScopedSkSurfaceProvider::ScopedSkSurfaceProvider(
-    viz::ContextProvider* context_provider,
+    ContextProvider* context_provider,
     ScopedWriteLockGL* resource_lock,
     bool use_mailbox,
     bool use_distance_field_text,
@@ -1729,12 +1729,6 @@ void ResourceProvider::TransferResource(Resource* source,
   if (source->type == RESOURCE_TYPE_BITMAP) {
     resource->mailbox_holder.mailbox = source->shared_bitmap_id;
     resource->is_software = true;
-    if (source->shared_bitmap) {
-      resource->shared_bitmap_sequence_number =
-          source->shared_bitmap->sequence_number();
-    } else {
-      resource->shared_bitmap_sequence_number = 0;
-    }
   } else {
     DCHECK(source->mailbox().IsValid());
     DCHECK(source->mailbox().IsTexture());
@@ -2053,7 +2047,7 @@ void ResourceProvider::ValidateResource(ResourceId id) const {
 }
 
 GLES2Interface* ResourceProvider::ContextGL() const {
-  viz::ContextProvider* context_provider = compositor_context_provider_;
+  ContextProvider* context_provider = compositor_context_provider_;
   return context_provider ? context_provider->ContextGL() : nullptr;
 }
 

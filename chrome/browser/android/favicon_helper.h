@@ -49,6 +49,7 @@ class FaviconHelper {
       jboolean j_is_large_icon,
       jboolean j_is_temporary,
       const base::android::JavaParamRef<jobject>& j_availability_callback);
+  static bool RegisterFaviconHelper(JNIEnv* env);
 
  private:
   FRIEND_TEST_ALL_PREFIXES(FaviconHelperTest, GetLargestSizeIndex);

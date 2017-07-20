@@ -82,9 +82,6 @@ static_library("lib") {
     "server_window_drawn_tracker_observer.h",
     "server_window_observer.h",
     "server_window_tracker.h",
-    "threaded_image_cursors.cc",
-    "threaded_image_cursors.h",
-    "threaded_image_cursors_factory.h",
     "user_activity_monitor.cc",
     "user_activity_monitor.h",
     "user_display_manager.cc",
@@ -138,7 +135,7 @@ static_library("lib") {
     "//cc",
     "//cc/ipc:interfaces",
     "//cc/surfaces",
-    "//components/viz/common",
+    "//cc/surfaces:surface_id",
     "//mojo/common:common_base",
     "//mojo/public/cpp/bindings",
     "//services/service_manager/public/cpp",
@@ -161,13 +158,10 @@ static_library("lib") {
   ]
 
   if (use_ozone) {
-    public_deps += [ "//ui/ozone" ]
+    public_deps += [ "//ui/ozone:ozone" ]
   }
   if (is_chromeos) {
     public_deps += [ "//ui/chromeos/events" ]
-    if (use_ozone) {
-      public_deps += [ "//ui/events/ozone:events_ozone" ]
-    }
   }
 
   # ui service should not depend on below components.

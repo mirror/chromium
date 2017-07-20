@@ -89,7 +89,7 @@ bool AffiliationDatabase::Init(const base::FilePath& path) {
   return true;
 }
 
-bool AffiliationDatabase::GetAffiliationsAndBrandingForFacetURI(
+bool AffiliationDatabase::GetAffiliationsForFacetURI(
     const FacetURI& facet_uri,
     AffiliatedFacetsWithUpdateTime* result) const {
   DCHECK(result);
@@ -116,7 +116,7 @@ bool AffiliationDatabase::GetAffiliationsAndBrandingForFacetURI(
   return !result->facets.empty();
 }
 
-void AffiliationDatabase::GetAllAffiliationsAndBranding(
+void AffiliationDatabase::GetAllAffiliations(
     std::vector<AffiliatedFacetsWithUpdateTime>* results) const {
   DCHECK(results);
   results->clear();
@@ -146,7 +146,7 @@ void AffiliationDatabase::GetAllAffiliationsAndBranding(
   }
 }
 
-void AffiliationDatabase::DeleteAffiliationsAndBrandingForFacetURI(
+void AffiliationDatabase::DeleteAffiliationsForFacetURI(
     const FacetURI& facet_uri) {
   sql::Transaction transaction(sql_connection_.get());
   if (!transaction.Begin())
@@ -174,7 +174,7 @@ void AffiliationDatabase::DeleteAffiliationsAndBrandingForFacetURI(
   transaction.Commit();
 }
 
-void AffiliationDatabase::DeleteAffiliationsAndBrandingOlderThan(
+void AffiliationDatabase::DeleteAffiliationsOlderThan(
     const base::Time& cutoff_threshold) {
   // Children will get deleted due to 'ON DELETE CASCADE'.
   sql::Statement statement_parent(sql_connection_->GetCachedStatement(
@@ -185,7 +185,7 @@ void AffiliationDatabase::DeleteAffiliationsAndBrandingOlderThan(
   statement_parent.Run();
 }
 
-void AffiliationDatabase::DeleteAllAffiliationsAndBranding() {
+void AffiliationDatabase::DeleteAllAffiliations() {
   // Children will get deleted due to 'ON DELETE CASCADE'.
   sql::Statement statement_parent(
       sql_connection_->GetUniqueStatement("DELETE FROM eq_classes"));
@@ -242,12 +242,12 @@ void AffiliationDatabase::StoreAndRemoveConflicting(
 
   for (const Facet& facet : affiliation.facets) {
     AffiliatedFacetsWithUpdateTime old_affiliation;
-    if (GetAffiliationsAndBrandingForFacetURI(facet.uri, &old_affiliation)) {
+    if (GetAffiliationsForFacetURI(facet.uri, &old_affiliation)) {
       if (!AreEquivalenceClassesEqual(old_affiliation.facets,
                                       affiliation.facets)) {
         removed_affiliations->push_back(old_affiliation);
       }
-      DeleteAffiliationsAndBrandingForFacetURI(facet.uri);
+      DeleteAffiliationsForFacetURI(facet.uri);
     }
   }
 

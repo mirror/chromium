@@ -76,10 +76,9 @@
 #include "components/doodle/doodle_service.h"
 #include "components/flags_ui/pref_service_flags_storage.h"
 #include "components/gcm_driver/gcm_channel_status_syncer.h"
-#include "components/language/core/browser/url_language_histogram.h"
 #include "components/network_time/network_time_tracker.h"
 #include "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.h"
-#include "components/ntp_snippets/breaking_news/subscription_manager_impl.h"
+#include "components/ntp_snippets/breaking_news/subscription_manager.h"
 #include "components/ntp_snippets/content_suggestions_service.h"
 #include "components/ntp_snippets/remote/remote_suggestions_provider_impl.h"
 #include "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.h"
@@ -107,6 +106,7 @@
 #include "components/subresource_filter/core/browser/ruleset_service.h"
 #include "components/sync/base/sync_prefs.h"
 #include "components/sync_preferences/pref_service_syncable.h"
+#include "components/translate/core/browser/language_model.h"
 #include "components/translate/core/browser/translate_prefs.h"
 #include "components/update_client/update_client.h"
 #include "components/variations/service/variations_service.h"
@@ -195,7 +195,6 @@
 #include "chrome/browser/chromeos/extensions/echo_private_api.h"
 #include "chrome/browser/chromeos/file_system_provider/registry.h"
 #include "chrome/browser/chromeos/first_run/first_run.h"
-#include "chrome/browser/chromeos/lock_screen_apps/state_controller.h"
 #include "chrome/browser/chromeos/login/demo_mode/demo_mode_detector.h"
 #include "chrome/browser/chromeos/login/quick_unlock/fingerprint_storage.h"
 #include "chrome/browser/chromeos/login/quick_unlock/pin_storage.h"
@@ -218,7 +217,7 @@
 #include "chrome/browser/chromeos/policy/policy_cert_service_factory.h"
 #include "chrome/browser/chromeos/power/power_prefs.h"
 #include "chrome/browser/chromeos/preferences.h"
-#include "chrome/browser/chromeos/printing/synced_printers_manager.h"
+#include "chrome/browser/chromeos/printing/printers_manager.h"
 #include "chrome/browser/chromeos/resource_reporter/resource_reporter.h"
 #include "chrome/browser/chromeos/settings/device_oauth2_token_service.h"
 #include "chrome/browser/chromeos/settings/device_settings_cache.h"
@@ -240,7 +239,6 @@
 #include "components/invalidation/impl/invalidator_storage.h"
 #include "components/onc/onc_pref_names.h"
 #include "components/quirks/quirks_manager.h"
-#include "extensions/browser/api/lock_screen_data/lock_screen_item_storage.h"
 #else
 #include "chrome/browser/extensions/default_apps.h"
 #endif
@@ -408,8 +406,6 @@ void RegisterLocalState(PrefRegistrySimple* registry) {
   chromeos::WallpaperManager::RegisterPrefs(registry);
   chromeos::echo_offer::RegisterPrefs(registry);
   extensions::ExtensionAssetsManagerChromeOS::RegisterPrefs(registry);
-  extensions::lock_screen_data::LockScreenItemStorage::RegisterLocalState(
-      registry);
   invalidation::InvalidatorStorage::RegisterPrefs(registry);
   ::onc::RegisterPrefs(registry);
   policy::AutoEnrollmentClient::RegisterPrefs(registry);
@@ -463,11 +459,10 @@ void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
   ImportantSitesUtil::RegisterProfilePrefs(registry);
   IncognitoModePrefs::RegisterProfilePrefs(registry);
   InstantUI::RegisterProfilePrefs(registry);
-  language::UrlLanguageHistogram::RegisterProfilePrefs(registry);
+  NavigationCorrectionTabObserver::RegisterProfilePrefs(registry);
   MediaCaptureDevicesDispatcher::RegisterProfilePrefs(registry);
   MediaDeviceIDSalt::RegisterProfilePrefs(registry);
   MediaStreamDevicesController::RegisterProfilePrefs(registry);
-  NavigationCorrectionTabObserver::RegisterProfilePrefs(registry);
   NetHttpSessionParamsObserver::RegisterProfilePrefs(registry);
   NotifierStateTracker::RegisterProfilePrefs(registry);
   ntp_snippets::BreakingNewsGCMAppHandler::RegisterProfilePrefs(registry);
@@ -477,7 +472,7 @@ void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
   ntp_snippets::RemoteSuggestionsProviderImpl::RegisterProfilePrefs(registry);
   ntp_snippets::RemoteSuggestionsSchedulerImpl::RegisterProfilePrefs(registry);
   ntp_snippets::RequestThrottler::RegisterProfilePrefs(registry);
-  ntp_snippets::SubscriptionManagerImpl::RegisterProfilePrefs(registry);
+  ntp_snippets::SubscriptionManager::RegisterProfilePrefs(registry);
   ntp_snippets::UserClassifier::RegisterProfilePrefs(registry);
   ntp_tiles::MostVisitedSites::RegisterProfilePrefs(registry);
   password_bubble_experiment::RegisterPrefs(registry);
@@ -493,6 +488,7 @@ void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
   safe_browsing::RegisterProfilePrefs(registry);
   SessionStartupPref::RegisterProfilePrefs(registry);
   TemplateURLPrepopulateData::RegisterProfilePrefs(registry);
+  translate::LanguageModel::RegisterProfilePrefs(registry);
   translate::TranslatePrefs::RegisterProfilePrefs(registry);
   UINetworkQualityEstimatorService::RegisterProfilePrefs(registry);
   ZeroSuggestProvider::RegisterProfilePrefs(registry);
@@ -592,7 +588,7 @@ void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
   chromeos::quick_unlock::FingerprintStorage::RegisterProfilePrefs(registry);
   chromeos::quick_unlock::PinStorage::RegisterProfilePrefs(registry);
   chromeos::Preferences::RegisterProfilePrefs(registry);
-  chromeos::SyncedPrintersManager::RegisterProfilePrefs(registry);
+  chromeos::PrintersManager::RegisterProfilePrefs(registry);
   chromeos::quick_unlock::RegisterProfilePrefs(registry);
   chromeos::SAMLOfflineSigninLimiter::RegisterProfilePrefs(registry);
   chromeos::ServicesCustomizationDocument::RegisterProfilePrefs(registry);
@@ -600,7 +596,6 @@ void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
   chromeos::UserImageSyncObserver::RegisterProfilePrefs(registry);
   extensions::EPKPChallengeUserKey::RegisterProfilePrefs(registry);
   flags_ui::PrefServiceFlagsStorage::RegisterProfilePrefs(registry);
-  lock_screen_apps::StateController::RegisterProfilePrefs(registry);
   policy::DeviceStatusCollector::RegisterProfilePrefs(registry);
   ::onc::RegisterProfilePrefs(registry);
 #endif
@@ -734,6 +729,32 @@ void MigrateObsoleteProfilePrefs(Profile* profile) {
 #endif  // BUILDFLAG(ENABLE_RLZ)
     profile_prefs->ClearPref(kDistroDict);
   }
+}
+
+std::set<PrefValueStore::PrefStoreType> ExpectedPrefStores() {
+  return std::set<PrefValueStore::PrefStoreType>({
+      PrefValueStore::MANAGED_STORE,
+#if BUILDFLAG(ENABLE_SUPERVISED_USERS)
+      PrefValueStore::SUPERVISED_USER_STORE,
+#endif
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+      PrefValueStore::EXTENSION_STORE,
+#endif
+      PrefValueStore::COMMAND_LINE_STORE, PrefValueStore::RECOMMENDED_STORE,
+      PrefValueStore::USER_STORE, PrefValueStore::DEFAULT_STORE
+  });
+}
+
+std::set<PrefValueStore::PrefStoreType> InProcessPrefStores() {
+  auto pref_stores = ExpectedPrefStores();
+  // Until we have a distinction between owned and unowned prefs, we always have
+  // default values for all prefs locally. Since we already have the defaults it
+  // would be wasteful to request them from the service by connecting to the
+  // DEFAULT_STORE.
+  // TODO(sammc): Once we have this distinction, connect to the default pref
+  // store here (by erasing it from |pref_stores|).
+  pref_stores.erase(PrefValueStore::USER_STORE);
+  return pref_stores;
 }
 
 }  // namespace chrome

@@ -81,11 +81,8 @@ ArcProcessTask::ArcProcessTask(base::ProcessId pid,
 void ArcProcessTask::StartIconLoading() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
-  // TaskManager is not tied to BrowserContext. Thus, we just use the
-  // BrowserContext which is tied to ARC.
-  auto* arc_service_manager = arc::ArcServiceManager::Get();
-  auto* intent_helper_bridge = arc::ArcIntentHelperBridge::GetForBrowserContext(
-      arc_service_manager->browser_context());
+  auto* intent_helper_bridge =
+      arc::ArcServiceManager::GetGlobalService<arc::ArcIntentHelperBridge>();
   arc::ArcIntentHelperBridge::GetResult result =
       arc::ArcIntentHelperBridge::GetResult::FAILED_ARC_NOT_READY;
   if (intent_helper_bridge) {
@@ -102,8 +99,10 @@ void ArcProcessTask::StartIconLoading() {
 
   if (result == arc::ArcIntentHelperBridge::GetResult::FAILED_ARC_NOT_READY) {
     // Need to retry loading the icon.
-    arc_service_manager->arc_bridge_service()->intent_helper()->AddObserver(
-        this);
+    arc::ArcServiceManager::Get()
+        ->arc_bridge_service()
+        ->intent_helper()
+        ->AddObserver(this);
   }
 }
 

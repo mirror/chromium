@@ -11,10 +11,9 @@
 
 #include "base/stl_util.h"
 #include "cc/output/copy_output_request.h"
-#include "cc/resources/returned_resource.h"
-#include "cc/resources/transferable_resource.h"
 #include "cc/surfaces/surface_client.h"
 #include "cc/surfaces/surface_manager.h"
+#include "cc/surfaces/surface_resource_holder_client.h"
 #include "components/viz/common/surfaces/local_surface_id_allocator.h"
 
 namespace cc {
@@ -356,15 +355,15 @@ void Surface::RunWillDrawCallback(const gfx::Rect& damage_rect) {
                                              damage_rect);
 }
 
-void Surface::AddDestructionDependency(viz::SurfaceSequence sequence) {
+void Surface::AddDestructionDependency(SurfaceSequence sequence) {
   destruction_dependencies_.push_back(sequence);
 }
 
 void Surface::SatisfyDestructionDependencies(
-    base::flat_set<viz::SurfaceSequence>* sequences,
+    base::flat_set<SurfaceSequence>* sequences,
     base::flat_set<viz::FrameSinkId>* valid_frame_sink_ids) {
   base::EraseIf(destruction_dependencies_,
-                [sequences, valid_frame_sink_ids](viz::SurfaceSequence seq) {
+                [sequences, valid_frame_sink_ids](SurfaceSequence seq) {
                   return (!!sequences->erase(seq) ||
                           !valid_frame_sink_ids->count(seq.frame_sink_id));
                 });

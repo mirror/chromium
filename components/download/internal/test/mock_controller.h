@@ -20,8 +20,8 @@ class MockController : public Controller {
   ~MockController() override;
 
   // Controller implementation.
-  void Initialize(const base::Closure& callback) override;
-  MOCK_METHOD0(GetState, Controller::State());
+  MOCK_METHOD0(Initialize, void());
+  MOCK_METHOD0(GetStartupStatus, const StartupStatus*());
   MOCK_METHOD1(StartDownload, void(const DownloadParams&));
   MOCK_METHOD1(PauseDownload, void(const std::string&));
   MOCK_METHOD1(ResumeDownload, void(const std::string&));
@@ -33,10 +33,7 @@ class MockController : public Controller {
                void(DownloadTaskType, const TaskFinishedCallback&));
   MOCK_METHOD1(OnStopScheduledTask, bool(DownloadTaskType task_type));
 
-  void TriggerInitCompleted();
-
  private:
-  base::Closure init_callback_;
   DISALLOW_COPY_AND_ASSIGN(MockController);
 };
 

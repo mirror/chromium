@@ -5,7 +5,6 @@
 #define SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_ID_H_
 
 #include <string>
-#include <tuple>
 
 #include "services/resource_coordinator/public/cpp/coordination_unit_types.h"
 #include "services/resource_coordinator/public/cpp/resource_coordinator_export.h"
@@ -28,10 +27,6 @@ struct SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT CoordinationUnitID {
 
   bool operator==(const CoordinationUnitID& b) const {
     return id == b.id && type == b.type;
-  }
-
-  bool operator<(const CoordinationUnitID& b) const {
-    return std::tie(id, type) < std::tie(b.id, b.type);
   }
 
   CoordinationUnitTypeId id;

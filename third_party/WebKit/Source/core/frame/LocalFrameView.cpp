@@ -35,6 +35,9 @@
 #include "core/dom/AXObjectCache.h"
 #include "core/dom/DOMNodeIds.h"
 #include "core/dom/ElementVisibilityObserver.h"
+#include "core/dom/IntersectionObserverCallback.h"
+#include "core/dom/IntersectionObserverController.h"
+#include "core/dom/IntersectionObserverInit.h"
 #include "core/dom/ResizeObserverController.h"
 #include "core/dom/StyleChangeReason.h"
 #include "core/dom/TaskRunnerHelper.h"
@@ -61,9 +64,6 @@
 #include "core/html/parser/TextResourceDecoder.h"
 #include "core/input/EventHandler.h"
 #include "core/inspector/InspectorTraceEvents.h"
-#include "core/intersection_observer/IntersectionObserverCallback.h"
-#include "core/intersection_observer/IntersectionObserverController.h"
-#include "core/intersection_observer/IntersectionObserverInit.h"
 #include "core/layout/LayoutAnalyzer.h"
 #include "core/layout/LayoutCounter.h"
 #include "core/layout/LayoutEmbeddedContent.h"
@@ -215,7 +215,6 @@ LocalFrameView::LocalFrameView(LocalFrame& frame, IntRect frame_rect)
       suppress_adjust_view_size_(false),
       allows_layout_invalidation_after_layout_clean_(true),
       forcing_layout_parent_view_(false),
-      needs_intersection_observation_(false),
       main_thread_scrolling_reasons_(0) {
   Init();
 }
@@ -1638,7 +1637,7 @@ void LocalFrameView::ViewportSizeChanged(bool width_changed,
     if (layout_view->UsesCompositing()) {
       if (root_layer_scrolling_enabled) {
         layout_view->Layer()->SetNeedsCompositingInputsUpdate();
-        SetNeedsPaintPropertyUpdate();
+          SetNeedsPaintPropertyUpdate();
       } else {
         layout_view->Compositor()->FrameViewDidChangeSize();
       }
@@ -4623,28 +4622,16 @@ LayoutRect LocalFrameView::ScrollIntoView(const LayoutRect& rect_in_content,
                                           const ScrollAlignment& align_x,
                                           const ScrollAlignment& align_y,
                                           bool is_smooth,
-                                          ScrollType scroll_type,
-                                          bool is_for_scroll_sequence) {
+                                          ScrollType scroll_type) {
   LayoutRect view_rect(VisibleContentRect());
   LayoutRect expose_rect = ScrollAlignment::GetRectToExpose(
       view_rect, rect_in_content, align_x, align_y);
-  ScrollOffset old_scroll_offset = GetScrollOffset();
   if (expose_rect != view_rect) {
     ScrollOffset target_offset(expose_rect.X().ToFloat(),
                                expose_rect.Y().ToFloat());
-    target_offset = ShouldUseIntegerScrollOffset()
-                        ? ScrollOffset(FlooredIntSize(target_offset))
-                        : target_offset;
-
-    if (is_for_scroll_sequence) {
-      DCHECK(scroll_type == kProgrammaticScroll || scroll_type == kUserScroll);
-      ScrollBehavior behavior =
-          is_smooth ? kScrollBehaviorSmooth : kScrollBehaviorInstant;
-      GetSmoothScrollSequencer()->QueueAnimation(this, target_offset, behavior);
-      ScrollOffset scroll_offset_difference =
-          ClampScrollOffset(target_offset) - old_scroll_offset;
-      GetLayoutBox()->SetPendingOffsetToScroll(
-          -LayoutSize(scroll_offset_difference));
+    if (is_smooth) {
+      DCHECK(scroll_type == kProgrammaticScroll);
+      GetSmoothScrollSequencer()->QueueAnimation(this, target_offset);
     } else {
       SetScrollOffset(target_offset, scroll_type);
     }
@@ -4966,7 +4953,6 @@ void LocalFrameView::UpdateViewportIntersectionsForSubtree(
        child = child->Tree().NextSibling()) {
     child->View()->UpdateViewportIntersectionsForSubtree(target_state);
   }
-  needs_intersection_observation_ = false;
 }
 
 void LocalFrameView::UpdateRenderThrottlingStatusForTesting() {
@@ -5127,15 +5113,9 @@ void LocalFrameView::RecordDeferredLoadingStats() {
                                    total_screens_away));
 }
 
-void LocalFrameView::SetNeedsIntersectionObservation() {
-  needs_intersection_observation_ = true;
-  if (LocalFrameView* parent = ParentFrameView())
-    parent->SetNeedsIntersectionObservation();
-}
-
 bool LocalFrameView::ShouldThrottleRendering() const {
-  return CanThrottleRendering() && !needs_intersection_observation_ &&
-         frame_->GetDocument() && Lifecycle().ThrottlingAllowed();
+  return CanThrottleRendering() && frame_->GetDocument() &&
+         Lifecycle().ThrottlingAllowed();
 }
 
 bool LocalFrameView::CanThrottleRendering() const {

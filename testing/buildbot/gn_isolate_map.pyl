@@ -403,6 +403,10 @@
     "label": "//crypto:crypto_unittests",
     "type": "console_test_launcher",
   },
+  "d8": {
+    "label": "//v8:d8",
+    "type": "additional_compile_target",
+  },
   "dbus_unittests": {
     "label": "//dbus:dbus_unittests",
     "type": "windowed_test_launcher",
@@ -561,9 +565,7 @@
   "ios_chrome_ui_egtests": {
     "label": "//ios/chrome/test/earl_grey:ios_chrome_ui_egtests",
     "type": "raw",
-    "args": [
-      "--enable-features=WebPayments",
-    ],
+    "args": [],
   },
   "ios_chrome_unittests": {
     "label": "//ios/chrome/test:ios_chrome_unittests",
@@ -634,8 +636,18 @@
     "label": "//components/leveldb:leveldb_service_unittests",
     "type": "console_test_launcher",
   },
+  # See http://crbug.com/585151
+  "libaddressinput_unittests": {
+    "label": "//third_party/libaddressinput:libaddressinput_unittests",
+    "type": "console_test_launcher",
+  },
   "libjingle_xmpp_unittests": {
     "label": "//third_party/libjingle_xmpp:libjingle_xmpp_unittests",
+    "type": "console_test_launcher",
+  },
+  # See http://crbug.com/585151
+  "libphonenumber_unittests": {
+    "label": "//third_party/libphonenumber:libphonenumber_unittests",
     "type": "console_test_launcher",
   },
   "mac_installer_unittests": {
@@ -870,10 +882,6 @@
   "system_webview_apk": {
     "label": "//android_webview:system_webview_apk",
     "type": "additional_compile_target",
-  },
-  "system_webview_shell_layout_test_apk": {
-    "label": "//android_webview/tools/system_webview_shell:system_webview_shell_layout_test_apk",
-    "type": "console_test_launcher",
   },
   "telemetry_gpu_integration_test": {
     "label": "//chrome/test:telemetry_gpu_integration_test",
@@ -1119,10 +1127,6 @@
   },
   "webview_instrumentation_test_apk": {
     "label": "//android_webview/test:webview_instrumentation_test_apk",
-    "type": "console_test_launcher",
-  },
-  "webview_ui_test_app_test_apk": {
-    "label": "//android_webview/tools/automated_ui_tests:webview_ui_test_app_test_apk",
     "type": "console_test_launcher",
   },
   "wm_unittests": {

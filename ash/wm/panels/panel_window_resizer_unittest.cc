@@ -11,11 +11,11 @@
 #include "ash/root_window_controller.h"
 #include "ash/shelf/shelf.h"
 #include "ash/shelf/shelf_layout_manager.h"
-#include "ash/shelf/shelf_view_test_api.h"
 #include "ash/shelf/shelf_widget.h"
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
-#include "ash/wm/cursor_manager_test_api.h"
+#include "ash/test/cursor_manager_test_api.h"
+#include "ash/test/shelf_view_test_api.h"
 #include "ash/wm/drag_window_resizer.h"
 #include "ash/wm/window_properties.h"
 #include "ash/wm/window_state.h"
@@ -31,7 +31,7 @@
 
 namespace ash {
 
-class PanelWindowResizerTest : public AshTestBase {
+class PanelWindowResizerTest : public test::AshTestBase {
  public:
   PanelWindowResizerTest() {}
   ~PanelWindowResizerTest() override {}
@@ -39,8 +39,8 @@ class PanelWindowResizerTest : public AshTestBase {
   void SetUp() override {
     AshTestBase::SetUp();
     UpdateDisplay("600x400");
-    shelf_view_test_.reset(
-        new ShelfViewTestAPI(GetPrimaryShelf()->GetShelfViewForTesting()));
+    shelf_view_test_.reset(new test::ShelfViewTestAPI(
+        GetPrimaryShelf()->GetShelfViewForTesting()));
     shelf_view_test_->SetAnimationDuration(1);
   }
 
@@ -170,7 +170,7 @@ class PanelWindowResizerTest : public AshTestBase {
 
  private:
   std::unique_ptr<WindowResizer> resizer_;
-  std::unique_ptr<ShelfViewTestAPI> shelf_view_test_;
+  std::unique_ptr<test::ShelfViewTestAPI> shelf_view_test_;
 
   DISALLOW_COPY_AND_ASSIGN(PanelWindowResizerTest);
 };

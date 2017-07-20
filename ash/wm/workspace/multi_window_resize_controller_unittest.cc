@@ -7,12 +7,12 @@
 #include "ash/ash_constants.h"
 #include "ash/frame/custom_frame_view_ash.h"
 #include "ash/shell.h"
-#include "ash/shell_test_api.h"
 #include "ash/test/ash_test_base.h"
+#include "ash/test/shell_test_api.h"
+#include "ash/test/workspace_controller_test_api.h"
+#include "ash/test/workspace_event_handler_test_helper.h"
 #include "ash/wm/window_util.h"
-#include "ash/wm/workspace/workspace_event_handler_test_helper.h"
 #include "ash/wm/workspace_controller.h"
-#include "ash/wm/workspace_controller_test_api.h"
 #include "base/stl_util.h"
 #include "ui/aura/test/test_window_delegate.h"
 #include "ui/aura/window.h"
@@ -46,16 +46,17 @@ class TestWidgetDelegate : public views::WidgetDelegateView {
 
 }  // namespace
 
-class MultiWindowResizeControllerTest : public AshTestBase {
+class MultiWindowResizeControllerTest : public test::AshTestBase {
  public:
   MultiWindowResizeControllerTest() : resize_controller_(NULL) {}
   ~MultiWindowResizeControllerTest() override {}
 
   void SetUp() override {
-    AshTestBase::SetUp();
-    WorkspaceController* wc = ShellTestApi(Shell::Get()).workspace_controller();
+    test::AshTestBase::SetUp();
+    WorkspaceController* wc =
+        test::ShellTestApi(Shell::Get()).workspace_controller();
     WorkspaceEventHandler* event_handler =
-        WorkspaceControllerTestApi(wc).GetEventHandler();
+        test::WorkspaceControllerTestApi(wc).GetEventHandler();
     resize_controller_ =
         WorkspaceEventHandlerTestHelper(event_handler).resize_controller();
   }

@@ -753,7 +753,7 @@ void HTMLMediaElement::ScheduleEvent(Event* event) {
   BLINK_MEDIA_LOG << "ScheduleEvent(" << (void*)this << ")"
                   << " - scheduling '" << event->type() << "'";
 #endif
-  async_event_queue_->EnqueueEvent(BLINK_FROM_HERE, event);
+  async_event_queue_->EnqueueEvent(event);
 }
 
 void HTMLMediaElement::LoadTimerFired(TimerBase*) {
@@ -3709,24 +3709,16 @@ void HTMLMediaElement::UpdateControlsVisibility() {
     return;
   }
 
+  EnsureMediaControls();
+  // TODO(mlamouri): this doesn't sound needed but the following tests, on
+  // Android fails when removed:
+  // fullscreen/compositor-touch-hit-rects-fullscreen-video-controls.html
+  GetMediaControls()->Reset();
+
   bool native_controls = ShouldShowControls(RecordMetricsBehavior::kDoRecord);
-
-  // When LazyInitializeMediaControls is enabled, initialize the controls only
-  // if native controls should be used or if using the cast overlay.
-  if (!RuntimeEnabledFeatures::LazyInitializeMediaControlsEnabled() ||
-      RuntimeEnabledFeatures::MediaCastOverlayButtonEnabled() ||
-      native_controls) {
-    EnsureMediaControls();
-
-    // TODO(mlamouri): this doesn't sound needed but the following tests, on
-    // Android fails when removed:
-    // fullscreen/compositor-touch-hit-rects-fullscreen-video-controls.html
-    GetMediaControls()->Reset();
-  }
-
   if (native_controls)
     GetMediaControls()->MaybeShow();
-  else if (GetMediaControls())
+  else
     GetMediaControls()->Hide();
 
   if (web_media_player_)

@@ -12,19 +12,19 @@
 #include "base/memory/ptr_util.h"
 #include "base/threading/thread.h"
 #include "cc/base/switches.h"
+#include "cc/output/context_provider.h"
 #include "cc/output/output_surface_client.h"
 #include "cc/output/output_surface_frame.h"
 #include "cc/output/texture_mailbox_deleter.h"
 #include "cc/scheduler/begin_frame_source.h"
 #include "cc/scheduler/delay_based_time_source.h"
+#include "cc/surfaces/frame_sink_manager.h"
 #include "cc/test/pixel_test_output_surface.h"
-#include "components/viz/common/gpu/context_provider.h"
 #include "components/viz/common/surfaces/local_surface_id_allocator.h"
 #include "components/viz/host/host_frame_sink_manager.h"
 #include "components/viz/service/display/display.h"
 #include "components/viz/service/display/display_scheduler.h"
 #include "components/viz/service/frame_sinks/direct_layer_tree_frame_sink.h"
-#include "components/viz/service/frame_sinks/frame_sink_manager.h"
 #include "gpu/command_buffer/client/context_support.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "gpu/command_buffer/common/gles2_cmd_utils.h"
@@ -137,7 +137,7 @@ struct InProcessContextFactory::PerCompositorData {
 
 InProcessContextFactory::InProcessContextFactory(
     viz::HostFrameSinkManager* host_frame_sink_manager,
-    viz::FrameSinkManager* frame_sink_manager)
+    cc::FrameSinkManager* frame_sink_manager)
     : frame_sink_id_allocator_(kDefaultClientId),
       use_test_surface_(true),
       host_frame_sink_manager_(host_frame_sink_manager),
@@ -253,10 +253,9 @@ void InProcessContextFactory::CreateLayerTreeFrameSink(
 
   auto* display = per_compositor_data_[compositor.get()]->display.get();
   auto layer_tree_frame_sink = base::MakeUnique<viz::DirectLayerTreeFrameSink>(
-      compositor->frame_sink_id(), GetHostFrameSinkManager(),
-      GetFrameSinkManager(), display, context_provider,
-      shared_worker_context_provider_, &gpu_memory_buffer_manager_,
-      &shared_bitmap_manager_);
+      compositor->frame_sink_id(), GetFrameSinkManager(), display,
+      context_provider, shared_worker_context_provider_,
+      &gpu_memory_buffer_manager_, &shared_bitmap_manager_);
   compositor->SetLayerTreeFrameSink(std::move(layer_tree_frame_sink));
 
   data->display->Resize(compositor->size());
@@ -271,7 +270,7 @@ std::unique_ptr<Reflector> InProcessContextFactory::CreateReflector(
 void InProcessContextFactory::RemoveReflector(Reflector* reflector) {
 }
 
-scoped_refptr<viz::ContextProvider>
+scoped_refptr<cc::ContextProvider>
 InProcessContextFactory::SharedMainThreadContextProvider() {
   if (shared_main_thread_contexts_ &&
       shared_main_thread_contexts_->ContextGL()->GetGraphicsResetStatusKHR() ==
@@ -350,7 +349,7 @@ void InProcessContextFactory::RemoveObserver(ContextFactoryObserver* observer) {
   observer_list_.RemoveObserver(observer);
 }
 
-viz::FrameSinkManager* InProcessContextFactory::GetFrameSinkManager() {
+cc::FrameSinkManager* InProcessContextFactory::GetFrameSinkManager() {
   return frame_sink_manager_;
 }
 

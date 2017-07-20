@@ -63,7 +63,6 @@ class FakeAmbientLightSensor : public device::mojom::Sensor {
 
   void Suspend() override {}
   void Resume() override {}
-  void ConfigureReadingChangeNotifications(bool enabled) override {}
 
   device::PlatformSensorConfiguration GetDefaultConfiguration() {
     return device::PlatformSensorConfiguration(60 /* frequency */);
@@ -127,9 +126,9 @@ class FakeSensorProvider : public device::mojom::SensorProvider {
   FakeSensorProvider() : binding_(this) {}
   ~FakeSensorProvider() override = default;
 
-  void Bind(const std::string& interface_name,
-            mojo::ScopedMessagePipeHandle handle,
-            const service_manager::BindSourceInfo& source_info) {
+  void Bind(const service_manager::BindSourceInfo& source_info,
+            const std::string& interface_name,
+            mojo::ScopedMessagePipeHandle handle) {
     DCHECK(!binding_.is_bound());
     binding_.Bind(device::mojom::SensorProviderRequest(std::move(handle)));
   }

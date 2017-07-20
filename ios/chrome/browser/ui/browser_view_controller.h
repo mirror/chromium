@@ -10,14 +10,14 @@
 #import <UIKit/UIKit.h>
 
 #import "base/ios/block_types.h"
-#import "ios/chrome/browser/ui/commands/application_commands.h"
-#import "ios/chrome/browser/ui/commands/browser_commands.h"
 #import "ios/chrome/browser/ui/side_swipe/side_swipe_controller.h"
 #import "ios/chrome/browser/ui/toolbar/toolbar_owner.h"
 #import "ios/chrome/browser/ui/toolbar/web_toolbar_controller.h"
 #import "ios/chrome/browser/ui/url_loader.h"
 #import "ios/public/provider/chrome/browser/voice/voice_search_presenter.h"
 
+@protocol ApplicationCommands;
+@protocol BrowserCommands;
 @class BrowserContainerView;
 @class BrowserViewControllerDependencyFactory;
 @class ContextualSearchController;
@@ -104,6 +104,13 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint
 // Called when the typing shield is tapped.
 - (void)shieldWasTapped:(id)sender;
 
+// Called when a UI element to create a new tab is triggered.
+- (void)newTab:(id)sender;
+
+// Makes sure that the view hierarchy has been built. Equivalent to calling
+// -view, but without the annoying compiler warning.
+- (void)ensureViewCreated;
+
 // Called when the browser state provided to this instance is being destroyed.
 // At this point the browser will no longer ever be active, and will likely be
 // deallocated soon.
@@ -120,6 +127,11 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint
 - (Tab*)addSelectedTabWithURL:(const GURL&)url
                       atIndex:(NSUInteger)position
                    transition:(ui::PageTransition)transition;
+
+// This will dismiss the web views on all the tabs and reload the frontmost one
+// if there is one. This is used when a userdefault changes and the web views
+// need to be re-created to pick it up.
+- (void)resetAllWebViews;
 
 // Informs the BVC that a new foreground tab is about to be opened. This is
 // intended to be called before setWebUsageSuspended:NO in cases where a new tab

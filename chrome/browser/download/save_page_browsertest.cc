@@ -56,7 +56,6 @@
 #include "content/public/common/content_switches.h"
 #include "content/public/common/url_constants.h"
 #include "content/public/test/browser_test_utils.h"
-#include "content/public/test/download_test_observer.h"
 #include "content/public/test/test_utils.h"
 #include "net/base/filename_util.h"
 #include "net/dns/mock_host_resolver.h"
@@ -274,6 +273,37 @@ class DownloadItemCreatedObserver : public DownloadManager::Observer {
   DISALLOW_COPY_AND_ASSIGN(DownloadItemCreatedObserver);
 };
 
+class SavePackageFinishedObserver : public content::DownloadManager::Observer {
+ public:
+  SavePackageFinishedObserver(content::DownloadManager* manager,
+                              const base::Closure& callback)
+      : download_manager_(manager),
+        callback_(callback) {
+    download_manager_->AddObserver(this);
+  }
+
+  ~SavePackageFinishedObserver() override {
+    if (download_manager_)
+      download_manager_->RemoveObserver(this);
+  }
+
+  // DownloadManager::Observer:
+  void OnSavePackageSuccessfullyFinished(content::DownloadManager* manager,
+                                         content::DownloadItem* item) override {
+    callback_.Run();
+  }
+  void ManagerGoingDown(content::DownloadManager* manager) override {
+    download_manager_->RemoveObserver(this);
+    download_manager_ = NULL;
+  }
+
+ private:
+  content::DownloadManager* download_manager_;
+  base::Closure callback_;
+
+  DISALLOW_COPY_AND_ASSIGN(SavePackageFinishedObserver);
+};
+
 class SavePageBrowserTest : public InProcessBrowserTest {
  public:
   SavePageBrowserTest() {}
@@ -357,12 +387,11 @@ class SavePageBrowserTest : public InProcessBrowserTest {
         base::Bind(&DownloadStoredProperly, url, *main_file_name,
                    expected_number_of_files, history::DownloadState::COMPLETE));
     base::RunLoop run_loop;
-    content::SavePackageFinishedObserver observer(
+    SavePackageFinishedObserver observer(
         content::BrowserContext::GetDownloadManager(browser()->profile()),
         run_loop.QuitClosure());
     ASSERT_TRUE(GetCurrentTab(browser())
                     ->SavePage(*main_file_name, *output_dir, save_page_type));
-
     run_loop.Run();
     ASSERT_TRUE(VerifySavePackageExpectations(browser(), url));
     persisted.WaitForPersisted();
@@ -564,7 +593,7 @@ IN_PROC_BROWSER_TEST_F(SavePageBrowserTest,
   GetDestinationPaths("b", &full_file_name, &dir);
   scoped_refptr<content::MessageLoopRunner> loop_runner(
       new content::MessageLoopRunner);
-  content::SavePackageFinishedObserver observer(
+  SavePackageFinishedObserver observer(
       content::BrowserContext::GetDownloadManager(incognito->profile()),
       loop_runner->QuitClosure());
   ASSERT_TRUE(GetCurrentTab(incognito)->SavePage(
@@ -597,7 +626,7 @@ IN_PROC_BROWSER_TEST_F(SavePageBrowserTest, FileNameFromPageTitle) {
       history::DownloadState::COMPLETE));
   scoped_refptr<content::MessageLoopRunner> loop_runner(
       new content::MessageLoopRunner);
-  content::SavePackageFinishedObserver observer(
+  SavePackageFinishedObserver observer(
       content::BrowserContext::GetDownloadManager(browser()->profile()),
       loop_runner->QuitClosure());
   ASSERT_TRUE(GetCurrentTab(browser())->SavePage(
@@ -662,7 +691,7 @@ IN_PROC_BROWSER_TEST_F(SavePageBrowserTest, CleanFilenameFromPageTitle) {
   SavePackageFilePicker::SetShouldPromptUser(false);
   scoped_refptr<content::MessageLoopRunner> loop_runner(
       new content::MessageLoopRunner);
-  content::SavePackageFinishedObserver observer(
+  SavePackageFinishedObserver observer(
       content::BrowserContext::GetDownloadManager(browser()->profile()),
       loop_runner->QuitClosure());
   chrome::SavePage(browser());
@@ -703,7 +732,7 @@ IN_PROC_BROWSER_TEST_F(SavePageAsMHTMLBrowserTest, SavePageAsMHTML) {
       history::DownloadState::COMPLETE));
   scoped_refptr<content::MessageLoopRunner> loop_runner(
       new content::MessageLoopRunner);
-  content::SavePackageFinishedObserver observer(
+  SavePackageFinishedObserver observer(
       content::BrowserContext::GetDownloadManager(browser()->profile()),
       loop_runner->QuitClosure());
   chrome::SavePage(browser());
@@ -729,7 +758,7 @@ IN_PROC_BROWSER_TEST_F(SavePageBrowserTest, SavePageBrowserTest_NonMHTML) {
   ui_test_utils::NavigateToURL(browser(), url);
   scoped_refptr<content::MessageLoopRunner> loop_runner(
       new content::MessageLoopRunner);
-  content::SavePackageFinishedObserver observer(
+  SavePackageFinishedObserver observer(
       content::BrowserContext::GetDownloadManager(browser()->profile()),
       loop_runner->QuitClosure());
   chrome::SavePage(browser());

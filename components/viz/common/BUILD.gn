@@ -5,11 +5,7 @@
 import("//components/viz/viz.gni")
 import("//testing/test.gni")
 
-viz_component("common") {
-  output_name = "viz_common"
-
-  defines = [ "VIZ_COMMON_IMPLEMENTATION" ]
-
+viz_source_set("common") {
   sources = [
     "gl_helper.cc",
     "gl_helper.h",
@@ -17,13 +13,6 @@ viz_component("common") {
     "gl_helper_readback_support.h",
     "gl_helper_scaling.cc",
     "gl_helper_scaling.h",
-    "gpu/context_cache_controller.cc",
-    "gpu/context_cache_controller.h",
-    "gpu/context_provider.cc",
-    "gpu/context_provider.h",
-    "gpu/in_process_context_provider.cc",
-    "gpu/in_process_context_provider.h",
-    "hit_test/aggregated_hit_test_region.h",
     "quads/resource_format.h",
     "quads/shared_bitmap.cc",
     "quads/shared_bitmap.h",
@@ -44,31 +33,17 @@ viz_component("common") {
     "surfaces/local_surface_id.h",
     "surfaces/local_surface_id_allocator.cc",
     "surfaces/local_surface_id_allocator.h",
-    "surfaces/sequence_surface_reference_factory.cc",
-    "surfaces/sequence_surface_reference_factory.h",
     "surfaces/surface_id.cc",
     "surfaces/surface_id.h",
     "surfaces/surface_info.h",
-    "surfaces/surface_reference_factory.h",
-    "surfaces/surface_reference_owner.h",
-    "surfaces/surface_sequence.h",
-    "surfaces/surface_sequence_generator.cc",
-    "surfaces/surface_sequence_generator.h",
-    "viz_common_export.h",
   ]
 
   deps = [
     "//base",
-    "//gpu",
-    "//gpu/command_buffer/client:gles2_implementation",
     "//gpu/command_buffer/client:gles2_interface",
-    "//gpu/command_buffer/service",
-    "//gpu/ipc:gl_in_process_context",
-    "//gpu/skia_bindings:skia_bindings",
     "//mojo/public/cpp/bindings",
     "//skia",
     "//ui/gfx:color_space",
-    "//ui/gfx:geometry_skia",
     "//ui/gfx/geometry",
   ]
 
@@ -85,7 +60,6 @@ viz_source_set("unit_tests") {
     "gl_helper_unittest.cc",
     "resources/buffer_to_texture_target_map_unittest.cc",
     "resources/platform_color_unittest.cc",
-    "surfaces/surface_sequence_generator_unittest.cc",
     "yuv_readback_unittest.cc",
   ]
 

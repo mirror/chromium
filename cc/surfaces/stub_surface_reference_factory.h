@@ -6,22 +6,22 @@
 #define CC_SURFACES_STUB_SURFACE_REFERENCE_FACTORY_H_
 
 #include "base/compiler_specific.h"
+#include "cc/surfaces/surface_reference_factory.h"
 #include "cc/surfaces/surfaces_export.h"
-#include "components/viz/common/surfaces/surface_reference_factory.h"
 
 namespace cc {
 
 // A stub implementation that creates a closure which does nothing.
-// TODO(kylechar): Delete this class and all usage of
-// viz::SurfaceReferenceFactory when surface references are enabled by default.
+// TODO(kylechar): Delete this class and all usage of SurfaceReferenceFactory
+// when surface references are enabled by default.
 class CC_SURFACES_EXPORT StubSurfaceReferenceFactory
-    : public NON_EXPORTED_BASE(viz::SurfaceReferenceFactory) {
+    : public NON_EXPORTED_BASE(SurfaceReferenceFactory) {
  public:
   StubSurfaceReferenceFactory() = default;
 
-  // viz::SurfaceReferenceFactory:
+  // SurfaceReferenceFactory:
   base::Closure CreateReference(
-      viz::SurfaceReferenceOwner* owner,
+      SurfaceReferenceOwner* owner,
       const viz::SurfaceId& surface_id) const override;
 
  protected:

@@ -149,4 +149,7 @@ class AutocompleteControllerAndroid : public AutocompleteControllerDelegate,
   DISALLOW_COPY_AND_ASSIGN(AutocompleteControllerAndroid);
 };
 
+// Registers the LocationBar native method.
+bool RegisterAutocompleteControllerAndroid(JNIEnv* env);
+
 #endif  // CHROME_BROWSER_ANDROID_OMNIBOX_AUTOCOMPLETE_CONTROLLER_ANDROID_H_

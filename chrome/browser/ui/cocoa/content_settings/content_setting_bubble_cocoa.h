@@ -10,7 +10,6 @@
 #include <map>
 #include <memory>
 
-#include "base/mac/availability.h"
 #include "base/macros.h"
 #import "chrome/browser/ui/cocoa/omnibox_decoration_bubble_controller.h"
 #include "content/public/common/media_stream_request.h"
@@ -106,7 +105,7 @@ parentWindow:(NSWindow*)parentWindow
   anchoredAt:(NSPoint)anchoredAt;
 
 // Override to customize the touch bar.
-- (NSTouchBar*)makeTouchBar API_AVAILABLE(macos(10.12.2));
+- (NSTouchBar*)makeTouchBar;
 
 // Initializes the layout of all the UI elements.
 - (void)layoutView;

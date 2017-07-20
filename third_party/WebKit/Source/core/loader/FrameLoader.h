@@ -245,10 +245,8 @@ class CORE_EXPORT FrameLoader final {
                           HistoryItem*,
                           ClientRedirectPolicy,
                           Document*);
-  void RestoreScrollPositionAndViewState(FrameLoadType,
-                                         HistoryLoadType,
-                                         HistoryItem::ViewState*,
-                                         HistoryScrollRestorationType);
+  void RestoreScrollPositionAndViewStateForLoadType(FrameLoadType,
+                                                    HistoryLoadType);
 
   void ScheduleCheckCompleted();
 

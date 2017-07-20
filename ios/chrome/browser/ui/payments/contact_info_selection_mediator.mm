@@ -64,10 +64,6 @@ using ::payment_request_util::GetPhoneNumberLabelFromAutofillProfile;
   return YES;
 }
 
-- (NSString*)title {
-  return l10n_util::GetNSString(IDS_PAYMENT_REQUEST_CONTACT_INFO_SECTION_NAME);
-}
-
 - (CollectionViewItem*)headerItem {
   return nil;
 }

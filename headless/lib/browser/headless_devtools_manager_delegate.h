@@ -28,7 +28,7 @@ class HeadlessBrowserImpl;
 HEADLESS_EXPORT std::unique_ptr<base::DictionaryValue> ParsePrintSettings(
     int command_id,
     const base::DictionaryValue* params,
-    HeadlessPrintSettings* settings);
+    printing::HeadlessPrintSettings* settings);
 #endif
 
 class HeadlessDevToolsManagerDelegate

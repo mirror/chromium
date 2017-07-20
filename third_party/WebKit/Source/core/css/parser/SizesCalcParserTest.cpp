@@ -13,7 +13,7 @@
 
 namespace blink {
 
-struct SizesCalcTestCase {
+struct TestCase {
   const char* input;
   const float output;
   const bool valid;
@@ -45,7 +45,7 @@ static void VerifyCSSCalc(String text,
 }
 
 TEST(SizesCalcParserTest, Basic) {
-  SizesCalcTestCase test_cases[] = {
+  TestCase test_cases[] = {
       {"calc(500px + 10em)", 660, true, false},
       {"calc(500px / 8)", 62.5, true, false},
       {"calc(500px + 2 * 10em)", 820, true, false},

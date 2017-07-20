@@ -2308,9 +2308,9 @@ void WebContentsImpl::CreateNewWindow(
   }
 
   if (delegate_) {
-    delegate_->WebContentsCreated(this, render_process_id,
-                                  opener->GetRoutingID(), params.frame_name,
-                                  params.target_url, new_contents);
+    delegate_->WebContentsCreated(
+        this, render_process_id, opener->GetRoutingID(), params.frame_name,
+        params.target_url, new_contents, create_params);
   }
 
   if (opener) {
@@ -4812,8 +4812,7 @@ void WebContentsImpl::RequestMove(const gfx::Rect& new_bounds) {
 
 void WebContentsImpl::DidStartLoading(FrameTreeNode* frame_tree_node,
                                       bool to_different_document) {
-  LoadingStateChanged(frame_tree_node->IsMainFrame() && to_different_document,
-                      false, nullptr);
+  LoadingStateChanged(to_different_document, false, nullptr);
 
   // Notify accessibility that the user is navigating away from the
   // current document.

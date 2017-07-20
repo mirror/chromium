@@ -433,7 +433,7 @@ class CC_EXPORT LayerImpl {
   }
   bool raster_even_if_not_drawn() const { return raster_even_if_not_drawn_; }
 
-  void EnsureValidPropertyTreeIndices() const;
+  bool HasValidPropertyTreeIndices() const;
 
  protected:
   LayerImpl(LayerTreeImpl* layer_impl,

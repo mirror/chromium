@@ -17,13 +17,13 @@ namespace content {
 
 namespace {
 
-constexpr char kMakeCredentialType[] = "navigator.id.makeCredential";
+const char kGetAssertionType[] = "navigator.id.getAssertion";
 
 // JSON key values
-constexpr char kTypeKey[] = "type";
-constexpr char kChallengeKey[] = "challenge";
-constexpr char kOriginKey[] = "origin";
-constexpr char kCidPubkeyKey[] = "cid_pubkey";
+const char kTypeKey[] = "type";
+const char kChallengeKey[] = "challenge";
+const char kOriginKey[] = "origin";
+const char kCidPubkeyKey[] = "cid_pubkey";
 
 }  // namespace
 
@@ -37,6 +37,7 @@ std::string SerializeValueToJson(const base::Value& value) {
 // static
 void AuthenticatorImpl::Create(
     RenderFrameHost* render_frame_host,
+    const service_manager::BindSourceInfo& source_info,
     webauth::mojom::AuthenticatorRequest request) {
   auto authenticator_impl =
       base::WrapUnique(new AuthenticatorImpl(render_frame_host));
@@ -52,7 +53,10 @@ AuthenticatorImpl::AuthenticatorImpl(RenderFrameHost* render_frame_host) {
 
 // mojom:Authenticator
 void AuthenticatorImpl::MakeCredential(
-    webauth::mojom::MakeCredentialOptionsPtr options,
+    webauth::mojom::RelyingPartyAccountPtr account,
+    std::vector<webauth::mojom::ScopedCredentialParametersPtr> parameters,
+    const std::vector<uint8_t>& challenge,
+    webauth::mojom::ScopedCredentialOptionsPtr options,
     MakeCredentialCallback callback) {
   std::string effective_domain;
   std::string relying_party_id;
@@ -67,7 +71,7 @@ void AuthenticatorImpl::MakeCredential(
     return;
   }
 
-  if (options->relying_party->id.empty()) {
+  if (!options->relying_party_id) {
     relying_party_id = caller_origin_.Serialize();
   } else {
     effective_domain = caller_origin_.host();
@@ -76,17 +80,18 @@ void AuthenticatorImpl::MakeCredential(
     // TODO(kpaulhamus): Check if relyingPartyId is a registrable domain
     // suffix of and equal to effectiveDomain and set relyingPartyId
     // appropriately.
-    relying_party_id = options->relying_party->id;
+    relying_party_id = options->relying_party_id.value_or(std::string());
   }
 
   // TODO(kpaulhamus): Check ScopedCredentialParameter's type and
   // algorithmIdentifier after algorithmIdentifier is added to mojom to
   // make sure it is U2F_V2.
-  client_data.SetString(kTypeKey, kMakeCredentialType);
-  client_data.SetString(kChallengeKey,
-                        base::StringPiece(reinterpret_cast<const char*>(
-                                              options->challenge.data()),
-                                          options->challenge.size()));
+
+  client_data.SetString(kTypeKey, kGetAssertionType);
+  client_data.SetString(
+      kChallengeKey,
+      base::StringPiece(reinterpret_cast<const char*>(challenge.data()),
+                        challenge.size()));
   client_data.SetString(kOriginKey, relying_party_id);
   // Channel ID is optional, and missing if the browser doesn't support it.
   // It is present and set to the constant "unused" if the browser

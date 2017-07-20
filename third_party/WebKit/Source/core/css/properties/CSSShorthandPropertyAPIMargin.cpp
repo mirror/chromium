@@ -13,10 +13,9 @@ bool CSSShorthandPropertyAPIMargin::parseShorthand(
     bool important,
     CSSParserTokenRange& range,
     const CSSParserContext& context,
-    bool,
+    const CSSParserLocalContext& local_context,
     HeapVector<CSSProperty, 256>& properties) {
   return CSSPropertyParserHelpers::ConsumeShorthandVia4LonghandAPIs(
       marginShorthand(), important, context, range, properties);
 }
-
 }  // namespace blink

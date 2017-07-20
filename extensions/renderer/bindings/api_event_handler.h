@@ -19,7 +19,6 @@ class ListValue;
 }
 
 namespace extensions {
-class ExceptionHandler;
 struct EventFilteringInfo;
 
 // The object to handle API events. This includes vending v8::Objects for the
@@ -41,8 +40,7 @@ class APIEventHandler {
 
   APIEventHandler(const binding::RunJSFunction& call_js,
                   const binding::RunJSFunctionSync& call_js_sync,
-                  const EventListenersChangedMethod& listeners_changed,
-                  ExceptionHandler* exception_handler);
+                  const EventListenersChangedMethod& listeners_changed);
   ~APIEventHandler();
 
   // Returns a new v8::Object for an event with the given |event_name|. If
@@ -105,10 +103,6 @@ class APIEventHandler {
 
   // The associated EventFilter; shared across all contexts and events.
   EventFilter event_filter_;
-
-  // The exception handler associated with the bindings system; guaranteed to
-  // outlive this object.
-  ExceptionHandler* const exception_handler_;
 
   DISALLOW_COPY_AND_ASSIGN(APIEventHandler);
 };

@@ -8,7 +8,6 @@
 
 #include <string>
 
-#include "base/base_switches.h"
 #include "base/command_line.h"
 #include "base/files/file_path.h"
 #include "base/logging.h"
@@ -155,15 +154,9 @@ base::CommandLine GenerateChromeWatcherCommandLine(
                      &command_line);
   AppendHandleSwitch(kParentHandleSwitch, parent_process, &command_line);
 
+#if defined(OS_WIN)
   command_line.AppendArg(switches::kPrefetchArgumentWatcher);
-
-  // Copy over logging switches.
-  static const char* const kSwitchNames[] = {switches::kEnableLogging,
-                                             switches::kV, switches::kVModule};
-  base::CommandLine current_command_line =
-      *base::CommandLine::ForCurrentProcess();
-  command_line.CopySwitchesFrom(current_command_line, kSwitchNames,
-                                arraysize(kSwitchNames));
+#endif  // defined(OS_WIN)
 
   return command_line;
 }

@@ -15,8 +15,9 @@
 #include "net/url_request/url_request_context_getter.h"
 
 namespace chromeos {
+namespace printing {
 
-scoped_refptr<PpdProvider> CreatePpdProvider(Profile* profile) {
+scoped_refptr<PpdProvider> CreateProvider(Profile* profile) {
   base::FilePath ppd_cache_path =
       profile->GetPath().Append(FILE_PATH_LITERAL("PPDCache"));
 
@@ -25,4 +26,5 @@ scoped_refptr<PpdProvider> CreatePpdProvider(Profile* profile) {
                              PpdCache::Create(ppd_cache_path));
 }
 
+}  // namespace printing
 }  // namespace chromeos

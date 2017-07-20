@@ -1,14 +1,13 @@
-<link rel="import" href="chrome://resources/html/polymer.html">
-
 <link rel="import" href="chrome://resources/cr_elements/hidden_style_css.html">
-<link rel="import" href="chrome://resources/cr_elements/cr_icons_css.html">
+<link rel="import" href="chrome://resources/cr_elements/icons.html">
 <link rel="import" href="chrome://resources/html/assert.html">
-<link rel="import" href="chrome://resources/polymer/v1_0/paper-icon-button/paper-icon-button-light.html">
+<link rel="import" href="chrome://resources/html/polymer.html">
+<link rel="import" href="chrome://resources/polymer/v1_0/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="chrome://resources/polymer/v1_0/paper-styles/default-theme.html">
 
 <dom-module id="cr-dialog">
   <template>
-    <style include="cr-hidden-style cr-icons">
+    <style include="cr-hidden-style">
       :host {
         --scroll-border: 1px solid var(--paper-grey-300);
         border: 0;
@@ -32,8 +31,8 @@
 
       /* When needing to flex, force .body-container alone to shrink. */
       .top-container,
-      :host ::slotted([slot=button-container]),
-      :host ::slotted([slot=footer]) {
+      :host ::content .button-container,
+      :host ::content .footer {
         flex-shrink: 0;
       }
 
@@ -46,31 +45,36 @@
         top: 0;
       }
 
-      :host ::slotted([slot=body]) {
+      :host ::content .body {
         padding: 12px 16px;
       }
 
-      :host ::slotted([slot=title]) {
+      :host ::content .title {
         flex: 1;
         font-size: calc(15 / 13 * 100%);
         line-height: 1;
         padding: 16px 16px;
       }
 
-      :host ::slotted([slot=button-container]) {
+      :host ::content .button-container {
         display: flex;
         justify-content: flex-end;
         padding: 16px;
       }
 
-      :host ::slotted([slot=footer]) {
+      :host ::content .button-container .cancel-button {
+        -webkit-margin-end: 8px;
+        color: var(--paper-grey-600);
+      }
+
+      :host ::content .footer {
         border-bottom-left-radius: inherit;
         border-bottom-right-radius: inherit;
         margin: 0;
         padding: 16px 20px;
       }
 
-      :host ::slotted([slot=border-top-divider]) {
+      :host ::content .border-top-divider {
         border-top: 1px solid var(--divider-color);
       }
 
@@ -108,6 +112,11 @@
       }
 
       #close {
+        --paper-icon-button: {
+          height: 36px;
+          width: 36px;
+        };
+
         --layout-inline: {
           display: flex;
         };
@@ -120,20 +129,20 @@
     </style>
     <div class="top-container">
       <div class="title-container" tabindex="-1">
-        <slot name="title"></slot>
+        <content select=".title"></content>
       </div>
-      <button is="paper-icon-button-light" class="icon-clear" id="close"
-          aria-label$="[[closeText]]" hidden$="[[noCancel]]" on-tap="cancel"
-          on-keypress="onCloseKeypress_">
-      </button>
+      <paper-icon-button icon="cr:clear" on-tap="cancel" id="close"
+          aria-label$="[[closeText]]" on-keypress="onCloseKeypress_"
+          hidden$="[[noCancel]]">
+      </paper-icon-button>
     </div>
     <div class="body-container">
       <span id="bodyTopMarker"></span>
-      <slot name="body"></slot>
+      <content select=".body"></content>
       <span id="bodyBottomMarker"></span>
     </div>
-    <slot name="button-container"></slot>
-    <slot name="footer"></slot>
+    <content select=".button-container"></content>
+    <content select=".footer"></content>
   </template>
   <script src="cr_dialog.js"></script>
 </dom-module>

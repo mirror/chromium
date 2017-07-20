@@ -9,18 +9,18 @@
 #include "base/bind.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
-#include "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.h"
+#include "chrome/browser/chromeos/app_mode/arc/arc_kiosk_app_service.h"
+#include "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge_factory.h"
 #include "chrome/browser/chromeos/arc/arc_play_store_enabled_preference_handler.h"
 #include "chrome/browser/chromeos/arc/arc_session_manager.h"
 #include "chrome/browser/chromeos/arc/arc_util.h"
-#include "chrome/browser/chromeos/arc/auth/arc_auth_service.h"
+#include "chrome/browser/chromeos/arc/auth/arc_auth_service_factory.h"
 #include "chrome/browser/chromeos/arc/boot_phase_monitor/arc_boot_phase_monitor_bridge.h"
 #include "chrome/browser/chromeos/arc/downloads_watcher/arc_downloads_watcher_service.h"
 #include "chrome/browser/chromeos/arc/enterprise/arc_enterprise_reporting_service.h"
 #include "chrome/browser/chromeos/arc/fileapi/arc_file_system_mounter.h"
 #include "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner.h"
 #include "chrome/browser/chromeos/arc/intent_helper/arc_settings_service.h"
-#include "chrome/browser/chromeos/arc/kiosk/arc_kiosk_bridge.h"
 #include "chrome/browser/chromeos/arc/notification/arc_boot_error_notification.h"
 #include "chrome/browser/chromeos/arc/notification/arc_provision_notification_service.h"
 #include "chrome/browser/chromeos/arc/policy/arc_policy_bridge.h"
@@ -36,6 +36,7 @@
 #include "chrome/browser/chromeos/arc/wallpaper/arc_wallpaper_service.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_util.h"
+#include "chromeos/chromeos_switches.h"
 #include "components/arc/arc_service_manager.h"
 #include "components/arc/arc_session.h"
 #include "components/arc/arc_session_runner.h"
@@ -45,6 +46,7 @@
 #include "components/arc/crash_collector/arc_crash_collector_bridge.h"
 #include "components/arc/ime/arc_ime_service.h"
 #include "components/arc/intent_helper/arc_intent_helper_bridge.h"
+#include "components/arc/kiosk/arc_kiosk_bridge.h"
 #include "components/arc/metrics/arc_metrics_service.h"
 #include "components/arc/net/arc_net_host_impl.h"
 #include "components/arc/obb_mounter/arc_obb_mounter_bridge.h"
@@ -52,6 +54,7 @@
 #include "components/arc/storage_manager/arc_storage_manager.h"
 #include "components/arc/volume_mounter/arc_volume_mounter_bridge.h"
 #include "components/prefs/pref_member.h"
+#include "components/user_manager/user_manager.h"
 #include "ui/arc/notification/arc_notification_manager.h"
 
 namespace arc {
@@ -79,10 +82,78 @@ ArcServiceLauncher* ArcServiceLauncher::Get() {
 }
 
 void ArcServiceLauncher::Initialize() {
+  // Create ARC service manager.
   arc_service_manager_ = base::MakeUnique<ArcServiceManager>();
-  arc_session_manager_ = base::MakeUnique<ArcSessionManager>(
-      base::MakeUnique<ArcSessionRunner>(base::Bind(
-          ArcSession::Create, arc_service_manager_->arc_bridge_service())));
+
+  ArcBridgeService* arc_bridge_service =
+      arc_service_manager_->arc_bridge_service();
+
+  // Creates ArcSessionManager at first.
+  arc_session_manager_ =
+      base::MakeUnique<ArcSessionManager>(base::MakeUnique<ArcSessionRunner>(
+          base::Bind(ArcSession::Create, arc_bridge_service)));
+
+  // List in lexicographical order.
+  arc_service_manager_->AddService(
+      base::MakeUnique<ArcAudioBridge>(arc_bridge_service));
+  arc_service_manager_->AddService(
+      base::MakeUnique<ArcBluetoothBridge>(arc_bridge_service));
+  arc_service_manager_->AddService(
+      base::MakeUnique<ArcBootErrorNotification>(arc_bridge_service));
+  arc_service_manager_->AddService(
+      base::MakeUnique<ArcClipboardBridge>(arc_bridge_service));
+  arc_service_manager_->AddService(
+      base::MakeUnique<ArcCrashCollectorBridge>(arc_bridge_service));
+  arc_service_manager_->AddService(
+      base::MakeUnique<ArcDownloadsWatcherService>(arc_bridge_service));
+  arc_service_manager_->AddService(
+      base::MakeUnique<ArcEnterpriseReportingService>(arc_bridge_service));
+  arc_service_manager_->AddService(
+      base::MakeUnique<ArcFileSystemMounter>(arc_bridge_service));
+  arc_service_manager_->AddService(
+      base::MakeUnique<ArcImeService>(arc_bridge_service));
+  arc_service_manager_->AddService(
+      base::MakeUnique<ArcIntentHelperBridge>(arc_bridge_service));
+  arc_service_manager_->AddService(
+      base::MakeUnique<ArcMetricsService>(arc_bridge_service));
+  arc_service_manager_->AddService(
+      base::MakeUnique<ArcNetHostImpl>(arc_bridge_service));
+  arc_service_manager_->AddService(
+      base::MakeUnique<ArcObbMounterBridge>(arc_bridge_service));
+  arc_service_manager_->AddService(
+      base::MakeUnique<ArcPolicyBridge>(arc_bridge_service));
+  arc_service_manager_->AddService(
+      base::MakeUnique<ArcPowerBridge>(arc_bridge_service));
+  arc_service_manager_->AddService(
+      base::MakeUnique<ArcPrintService>(arc_bridge_service));
+  arc_service_manager_->AddService(
+      base::MakeUnique<ArcProcessService>(arc_bridge_service));
+  arc_service_manager_->AddService(
+      base::MakeUnique<ArcProvisionNotificationService>(arc_bridge_service));
+  arc_service_manager_->AddService(
+      base::MakeUnique<ArcSettingsService>(arc_bridge_service));
+  arc_service_manager_->AddService(
+      base::MakeUnique<ArcStorageManager>(arc_bridge_service));
+  arc_service_manager_->AddService(
+      base::MakeUnique<ArcTracingBridge>(arc_bridge_service));
+  arc_service_manager_->AddService(
+      base::MakeUnique<ArcTtsService>(arc_bridge_service));
+  arc_service_manager_->AddService(
+      base::MakeUnique<ArcUserSessionService>(arc_bridge_service));
+  if (chromeos::switches::IsVoiceInteractionEnabled()) {
+    arc_service_manager_->AddService(
+        base::MakeUnique<ArcVoiceInteractionFrameworkService>(
+            arc_bridge_service));
+    arc_service_manager_->AddService(
+        base::MakeUnique<ArcVoiceInteractionArcHomeService>(
+            arc_bridge_service));
+  }
+  arc_service_manager_->AddService(
+      base::MakeUnique<ArcVolumeMounterBridge>(arc_bridge_service));
+  arc_service_manager_->AddService(
+      base::MakeUnique<ArcWallpaperService>(arc_bridge_service));
+  arc_service_manager_->AddService(
+      base::MakeUnique<GpuArcVideoServiceHost>(arc_bridge_service));
 }
 
 void ArcServiceLauncher::MaybeSetProfile(Profile* profile) {
@@ -111,8 +182,6 @@ void ArcServiceLauncher::MaybeSetProfile(Profile* profile) {
 
   arc_session_manager_->SetProfile(profile);
   arc_service_manager_->set_browser_context(profile);
-  arc_service_manager_->set_account_id(
-      multi_user_util::GetAccountIdFromProfile(profile));
 }
 
 void ArcServiceLauncher::OnPrimaryUserProfilePrepared(Profile* profile) {
@@ -127,43 +196,28 @@ void ArcServiceLauncher::OnPrimaryUserProfilePrepared(Profile* profile) {
 
   // Instantiate ARC related BrowserContextKeyedService classes which need
   // to be running at the beginning of the container run.
-  // Note that, to keep this list as small as possible, services which don't
-  // need to be initialized at the beginning should not be listed here.
-  // Those services will be initialized lazily.
   // List in lexicographical order.
-  ArcAccessibilityHelperBridge::GetForBrowserContext(profile);
-  ArcAudioBridge::GetForBrowserContext(profile);
-  ArcAuthService::GetForBrowserContext(profile);
-  ArcBluetoothBridge::GetForBrowserContext(profile);
-  ArcBootErrorNotification::GetForBrowserContext(profile);
-  ArcBootPhaseMonitorBridge::GetForBrowserContext(profile);
-  ArcClipboardBridge::GetForBrowserContext(profile);
-  ArcCrashCollectorBridge::GetForBrowserContext(profile);
-  ArcDownloadsWatcherService::GetForBrowserContext(profile);
-  ArcEnterpriseReportingService::GetForBrowserContext(profile);
-  ArcFileSystemMounter::GetForBrowserContext(profile);
-  ArcFileSystemOperationRunner::GetForBrowserContext(profile);
-  ArcImeService::GetForBrowserContext(profile);
-  ArcIntentHelperBridge::GetForBrowserContext(profile);
-  ArcKioskBridge::GetForBrowserContext(profile);
-  ArcMetricsService::GetForBrowserContext(profile);
-  ArcNetHostImpl::GetForBrowserContext(profile);
-  ArcNotificationManager::GetForBrowserContext(profile);
-  ArcObbMounterBridge::GetForBrowserContext(profile);
-  ArcPolicyBridge::GetForBrowserContext(profile);
-  ArcPowerBridge::GetForBrowserContext(profile);
-  ArcPrintService::GetForBrowserContext(profile);
-  ArcProcessService::GetForBrowserContext(profile);
-  ArcProvisionNotificationService::GetForBrowserContext(profile);
-  ArcSettingsService::GetForBrowserContext(profile);
-  ArcTracingBridge::GetForBrowserContext(profile);
-  ArcTtsService::GetForBrowserContext(profile);
-  ArcUserSessionService::GetForBrowserContext(profile);
-  ArcVoiceInteractionArcHomeService::GetForBrowserContext(profile);
-  ArcVoiceInteractionFrameworkService::GetForBrowserContext(profile);
-  ArcVolumeMounterBridge::GetForBrowserContext(profile);
-  ArcWallpaperService::GetForBrowserContext(profile);
-  GpuArcVideoServiceHost::GetForBrowserContext(profile);
+  ArcAccessibilityHelperBridgeFactory::GetForBrowserContext(profile);
+  ArcAuthServiceFactory::GetForBrowserContext(profile);
+
+  arc_service_manager_->AddService(base::MakeUnique<ArcBootPhaseMonitorBridge>(
+      arc_service_manager_->arc_bridge_service(),
+      multi_user_util::GetAccountIdFromProfile(profile)));
+  arc_service_manager_->AddService(
+      base::MakeUnique<ArcFileSystemOperationRunner>(
+          arc_service_manager_->arc_bridge_service(), profile));
+  arc_service_manager_->AddService(base::MakeUnique<ArcNotificationManager>(
+      arc_service_manager_->arc_bridge_service(),
+      multi_user_util::GetAccountIdFromProfile(profile)));
+
+  // Kiosk apps should be run only for kiosk sessions.
+  if (user_manager::UserManager::Get()->IsLoggedInAsArcKioskApp()) {
+    // ArcKioskAppService is BrowserContextKeyedService so that it's destroyed
+    // on destroying the Profile, that is after ArcServiceLauncher::Shutdown().
+    arc_service_manager_->AddService(base::MakeUnique<ArcKioskBridge>(
+        arc_service_manager_->arc_bridge_service(),
+        chromeos::ArcKioskAppService::Get(profile)));
+  }
 
   arc_session_manager_->Initialize();
   arc_play_store_enabled_preference_handler_ =

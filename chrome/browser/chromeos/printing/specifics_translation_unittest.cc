@@ -30,6 +30,7 @@ constexpr char kEffectiveMakeAndModel[] = "Manufacturer Model T1000";
 }  // namespace
 
 namespace chromeos {
+namespace printing {
 
 TEST(SpecificsTranslationTest, SpecificsToPrinter) {
   sync_pb::PrinterSpecifics specifics;
@@ -222,4 +223,5 @@ TEST(SpecificsTranslationTest, MakeAndModelPreferred) {
   EXPECT_EQ(kMakeAndModel, printer->make_and_model());
 }
 
+}  // namespace printing
 }  // namespace chromeos

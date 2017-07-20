@@ -266,7 +266,7 @@ CSSPreloaderResourceClient::CSSPreloaderResourceClient(
                   : kScanOnly),
       preloader_(preloader),
       resource_(ToCSSStyleSheetResource(resource)) {
-  resource_->AddClient(this);
+  resource_->AddClient(this, Resource::kDontMarkAsReferenced);
 }
 
 CSSPreloaderResourceClient::~CSSPreloaderResourceClient() {}

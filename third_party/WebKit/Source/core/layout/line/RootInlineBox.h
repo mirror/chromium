@@ -36,8 +36,6 @@ class LineLayoutBlockFlow;
 
 struct BidiStatus;
 
-enum ForceEllipsisOnLine { DoNotForceEllipsis, ForceEllipsis };
-
 class RootInlineBox : public InlineFlowBox {
  public:
   explicit RootInlineBox(LineLayoutItem);
@@ -116,8 +114,7 @@ class RootInlineBox : public InlineFlowBox {
                            LayoutUnit block_right_edge,
                            LayoutUnit ellipsis_width,
                            LayoutUnit logical_left_offset,
-                           bool found_box,
-                           ForceEllipsisOnLine = DoNotForceEllipsis);
+                           bool found_box);
   // Return the position of the EllipsisBox or -1.
   LayoutUnit PlaceEllipsisBox(bool ltr,
                               LayoutUnit block_left_edge,

@@ -84,6 +84,12 @@ void IndexedDBQuotaClient::GetOriginUsage(const GURL& origin_url,
     return;
   }
 
+  // No task runner means unit test; no cleanup necessary.
+  if (!indexed_db_context_->TaskRunner()) {
+    callback.Run(0);
+    return;
+  }
+
   base::PostTaskAndReplyWithResult(
       indexed_db_context_->TaskRunner(), FROM_HERE,
       base::Bind(&GetOriginUsageOnIndexedDBThread,
@@ -99,6 +105,12 @@ void IndexedDBQuotaClient::GetOriginsForType(
 
   // All databases are in the temp namespace for now.
   if (type != storage::kStorageTypeTemporary) {
+    callback.Run(std::set<GURL>());
+    return;
+  }
+
+  // No task runner means unit test; no cleanup necessary.
+  if (!indexed_db_context_->TaskRunner()) {
     callback.Run(std::set<GURL>());
     return;
   }
@@ -125,6 +137,12 @@ void IndexedDBQuotaClient::GetOriginsForHost(
     return;
   }
 
+  // No task runner means unit test; no cleanup necessary.
+  if (!indexed_db_context_->TaskRunner()) {
+    callback.Run(std::set<GURL>());
+    return;
+  }
+
   std::set<GURL>* origins_to_return = new std::set<GURL>();
   indexed_db_context_->TaskRunner()->PostTaskAndReply(
       FROM_HERE,
@@ -139,6 +157,12 @@ void IndexedDBQuotaClient::DeleteOriginData(const GURL& origin,
                                             const DeletionCallback& callback) {
   if (type != storage::kStorageTypeTemporary) {
     callback.Run(storage::kQuotaErrorNotSupported);
+    return;
+  }
+
+  // No task runner means unit test; no cleanup necessary.
+  if (!indexed_db_context_->TaskRunner()) {
+    callback.Run(storage::kQuotaStatusOk);
     return;
   }
 

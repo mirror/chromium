@@ -77,7 +77,6 @@ class PermissionRequestManager
   // Temporarily hides the bubble, and destroys the prompt UI surface. Any
   // existing requests will be reshown when DisplayPendingRequests is called
   // (e.g. when switching tabs away and back to a page with a prompt).
-  // TODO(timloh): Rename this to something more fitting (e.g. TabSwitchedAway).
   void HideBubble();
 
   // Will show a permission bubble if there is a pending permission request on
@@ -118,6 +117,7 @@ class PermissionRequestManager
   // lot of friends.
   friend class GeolocationBrowserTest;
   friend class GeolocationPermissionContextTests;
+  friend class MockPermissionPrompt;
   friend class MockPermissionPromptFactory;
   friend class PermissionContextBaseTests;
   friend class PermissionRequestManagerTest;
@@ -152,17 +152,13 @@ class PermissionRequestManager
   // bubble after switching tabs away and back.
   void ShowBubble();
 
-  // Delete the view object
-  void DeleteBubble();
-
-  // Delete the view object, finalize requests, asynchronously show a queued
-  // request if present.
+  // Finalize the pending permissions request.
   void FinalizeBubble();
 
-  // Cancel all pending or active requests and destroy the PermissionPrompt if
-  // one exists. This is called if the WebContents is destroyed or navigates its
-  // main frame.
-  void CleanUpRequests();
+  // Cancel any pending requests. This is called if the WebContents
+  // on which permissions calls are pending is destroyed or navigated away
+  // from the requesting page.
+  void CancelPendingQueues();
 
   // Searches |requests_|, |queued_requests_| and |queued_frame_requests_| - but
   // *not* |duplicate_requests_| - for a request matching |request|, and returns
@@ -186,13 +182,8 @@ class PermissionRequestManager
   // Factory to be used to create views when needed.
   PermissionPrompt::Factory view_factory_;
 
-  // The UI surface for an active permission prompt if we're displaying one.
+  // The UI surface to be used to display the permissions requests.
   std::unique_ptr<PermissionPrompt> view_;
-  // We only show prompts when both of these are true. On Desktop, we hide any
-  // active prompt on tab switching, while on Android we let the infobar system
-  // handle it.
-  bool main_frame_has_fully_loaded_;
-  bool tab_can_show_prompts_;
 
   std::vector<PermissionRequest*> requests_;
   std::deque<PermissionRequest*> queued_requests_;
@@ -200,6 +191,8 @@ class PermissionRequestManager
   // duped against it.
   std::unordered_multimap<PermissionRequest*, PermissionRequest*>
       duplicate_requests_;
+
+  bool main_frame_has_fully_loaded_;
 
   // Whether the response to each request should be persisted.
   bool persist_;

@@ -34,12 +34,13 @@ class MockCameraHalServer : public arc::mojom::CameraHalServer {
   MOCK_METHOD1(DoCreateChannel,
                void(arc::mojom::CameraModuleRequest& camera_module_request));
 
-  arc::mojom::CameraHalServerPtrInfo GetInterfacePtrInfo() {
-    arc::mojom::CameraHalServerPtrInfo camera_hal_server_ptr_info;
+  arc::mojom::CameraHalServerPtr GetInterfacePtr(
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
+    arc::mojom::CameraHalServerPtr camera_hal_server_ptr;
     arc::mojom::CameraHalServerRequest camera_hal_server_request =
-        mojo::MakeRequest(&camera_hal_server_ptr_info);
+        mojo::MakeRequest(&camera_hal_server_ptr, std::move(task_runner));
     binding_.Bind(std::move(camera_hal_server_request));
-    return camera_hal_server_ptr_info;
+    return camera_hal_server_ptr;
   }
 
  private:
@@ -59,12 +60,13 @@ class MockCameraHalClient : public arc::mojom::CameraHalClient {
   MOCK_METHOD1(DoSetUpChannel,
                void(arc::mojom::CameraModulePtr& camera_module_ptr));
 
-  arc::mojom::CameraHalClientPtrInfo GetInterfacePtrInfo() {
-    arc::mojom::CameraHalClientPtrInfo camera_hal_client_ptr_info;
+  arc::mojom::CameraHalClientPtr GetInterfacePtr(
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
+    arc::mojom::CameraHalClientPtr camera_hal_client_ptr;
     arc::mojom::CameraHalClientRequest camera_hal_client_request =
-        mojo::MakeRequest(&camera_hal_client_ptr_info);
+        mojo::MakeRequest(&camera_hal_client_ptr, std::move(task_runner));
     binding_.Bind(std::move(camera_hal_client_request));
-    return camera_hal_client_ptr_info;
+    return camera_hal_client_ptr;
   }
 
  private:
@@ -102,16 +104,6 @@ class CameraHalDispatcherImplTest : public ::testing::Test {
     }
   }
 
-  static void RegisterServer(CameraHalDispatcherImpl* dispatcher,
-                             arc::mojom::CameraHalServerPtrInfo server) {
-    dispatcher->RegisterServer(mojo::MakeProxy(std::move(server)));
-  }
-
-  static void RegisterClient(CameraHalDispatcherImpl* dispatcher,
-                             arc::mojom::CameraHalClientPtrInfo client) {
-    dispatcher->RegisterClient(mojo::MakeProxy(std::move(client)));
-  }
-
  protected:
   // We can't use std::unique_ptr here because the constructor and destructor of
   // CameraHalDispatcherImpl are private.
@@ -137,15 +129,15 @@ TEST_F(CameraHalDispatcherImplTest, ServerConnectionError) {
       .WillOnce(
           InvokeWithoutArgs(this, &CameraHalDispatcherImplTest::QuitRunLoop));
 
-  auto server_ptr = mock_server->GetInterfacePtrInfo();
+  auto server_ptr = mock_server->GetInterfacePtr(GetProxyTaskRunner());
   GetProxyTaskRunner()->PostTask(
       FROM_HERE,
-      base::BindOnce(&CameraHalDispatcherImplTest::RegisterServer,
+      base::BindOnce(&CameraHalDispatcherImpl::RegisterServer,
                      base::Unretained(dispatcher_), base::Passed(&server_ptr)));
-  auto client_ptr = mock_client->GetInterfacePtrInfo();
+  auto client_ptr = mock_client->GetInterfacePtr(GetProxyTaskRunner());
   GetProxyTaskRunner()->PostTask(
       FROM_HERE,
-      base::BindOnce(&CameraHalDispatcherImplTest::RegisterClient,
+      base::BindOnce(&CameraHalDispatcherImpl::RegisterClient,
                      base::Unretained(dispatcher_), base::Passed(&client_ptr)));
 
   // Wait until the client gets the established Mojo channel.
@@ -162,10 +154,10 @@ TEST_F(CameraHalDispatcherImplTest, ServerConnectionError) {
       .WillOnce(
           InvokeWithoutArgs(this, &CameraHalDispatcherImplTest::QuitRunLoop));
 
-  server_ptr = mock_server->GetInterfacePtrInfo();
+  server_ptr = mock_server->GetInterfacePtr(GetProxyTaskRunner());
   GetProxyTaskRunner()->PostTask(
       FROM_HERE,
-      base::BindOnce(&CameraHalDispatcherImplTest::RegisterServer,
+      base::BindOnce(&CameraHalDispatcherImpl::RegisterServer,
                      base::Unretained(dispatcher_), base::Passed(&server_ptr)));
 
   // Wait until the clients gets the newly established Mojo channel.
@@ -186,15 +178,15 @@ TEST_F(CameraHalDispatcherImplTest, ClientConnectionError) {
       .WillOnce(
           InvokeWithoutArgs(this, &CameraHalDispatcherImplTest::QuitRunLoop));
 
-  auto server_ptr = mock_server->GetInterfacePtrInfo();
+  auto server_ptr = mock_server->GetInterfacePtr(GetProxyTaskRunner());
   GetProxyTaskRunner()->PostTask(
       FROM_HERE,
-      base::BindOnce(&CameraHalDispatcherImplTest::RegisterServer,
+      base::BindOnce(&CameraHalDispatcherImpl::RegisterServer,
                      base::Unretained(dispatcher_), base::Passed(&server_ptr)));
-  auto client_ptr = mock_client->GetInterfacePtrInfo();
+  auto client_ptr = mock_client->GetInterfacePtr(GetProxyTaskRunner());
   GetProxyTaskRunner()->PostTask(
       FROM_HERE,
-      base::BindOnce(&CameraHalDispatcherImplTest::RegisterClient,
+      base::BindOnce(&CameraHalDispatcherImpl::RegisterClient,
                      base::Unretained(dispatcher_), base::Passed(&client_ptr)));
 
   // Wait until the client gets the established Mojo channel.
@@ -211,10 +203,10 @@ TEST_F(CameraHalDispatcherImplTest, ClientConnectionError) {
       .WillOnce(
           InvokeWithoutArgs(this, &CameraHalDispatcherImplTest::QuitRunLoop));
 
-  client_ptr = mock_client->GetInterfacePtrInfo();
+  client_ptr = mock_client->GetInterfacePtr(GetProxyTaskRunner());
   GetProxyTaskRunner()->PostTask(
       FROM_HERE,
-      base::BindOnce(&CameraHalDispatcherImplTest::RegisterClient,
+      base::BindOnce(&CameraHalDispatcherImpl::RegisterClient,
                      base::Unretained(dispatcher_), base::Passed(&client_ptr)));
 
   // Wait until the clients gets the newly established Mojo channel.

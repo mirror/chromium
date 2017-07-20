@@ -365,8 +365,8 @@ class FrameFactoryImpl : public mojom::FrameFactory {
   int32_t routing_id_highmark_;
 };
 
-void CreateFrameFactory(mojom::FrameFactoryRequest request,
-                        const service_manager::BindSourceInfo& source_info) {
+void CreateFrameFactory(const service_manager::BindSourceInfo& source_info,
+                        mojom::FrameFactoryRequest request) {
   mojo::MakeStrongBinding(base::MakeUnique<FrameFactoryImpl>(source_info),
                           std::move(request));
 }
@@ -670,13 +670,12 @@ void RenderThreadImpl::Init(
       IsRunningInMash() ? ui::mojom::kServiceName : mojom::kBrowserServiceName,
       GetIOTaskRunner());
 
-  cc::mojom::SharedBitmapAllocationNotifierPtr
+  cc::mojom::SharedBitmapAllocationNotifierAssociatedPtr
       shared_bitmap_allocation_notifier_ptr;
-  GetConnector()->BindInterface(
-      mojom::kBrowserServiceName,
+  render_message_filter()->GetSharedBitmapAllocationNotifier(
       mojo::MakeRequest(&shared_bitmap_allocation_notifier_ptr));
   shared_bitmap_manager_ = base::MakeUnique<viz::ClientSharedBitmapManager>(
-      cc::mojom::ThreadSafeSharedBitmapAllocationNotifierPtr::Create(
+      cc::mojom::ThreadSafeSharedBitmapAllocationNotifierAssociatedPtr::Create(
           shared_bitmap_allocation_notifier_ptr.PassInterface(),
           GetChannel()->ipc_task_runner_refptr()));
 
@@ -760,16 +759,14 @@ void RenderThreadImpl::Init(
   }
 #endif
 
-  auto registry = base::MakeUnique<service_manager::BinderRegistryWithArgs<
-      const service_manager::BindSourceInfo&>>();
+  auto registry = base::MakeUnique<service_manager::BinderRegistry>();
   registry->AddInterface(base::Bind(&CreateFrameFactory),
                          base::ThreadTaskRunnerHandle::Get());
   registry->AddInterface(base::Bind(&EmbeddedWorkerInstanceClientImpl::Create,
                                     base::TimeTicks::Now(), GetIOTaskRunner()),
                          base::ThreadTaskRunnerHandle::Get());
   GetServiceManagerConnection()->AddConnectionFilter(
-      base::MakeUnique<SimpleConnectionFilterWithSourceInfo>(
-          std::move(registry)));
+      base::MakeUnique<SimpleConnectionFilter>(std::move(registry)));
 
   GetContentClient()->renderer()->RenderThreadStarted();
 
@@ -1415,7 +1412,7 @@ media::GpuVideoAcceleratorFactories* RenderThreadImpl::GetGpuFactories() {
     scoped_refptr<ui::ContextProviderCommandBuffer> shared_context_provider =
         gpu_factories_.back()->ContextProviderMainThread();
     if (shared_context_provider) {
-      viz::ContextProvider::ScopedContextLock lock(
+      cc::ContextProvider::ScopedContextLock lock(
           shared_context_provider.get());
       if (lock.ContextGL()->GetGraphicsResetStatusKHR() == GL_NO_ERROR) {
         return gpu_factories_.back().get();
@@ -2392,7 +2389,7 @@ RenderThreadImpl::SharedCompositorWorkerContextProvider() {
   // Try to reuse existing shared worker context provider.
   if (shared_worker_context_provider_) {
     // Note: If context is lost, delete reference after releasing the lock.
-    viz::ContextProvider::ScopedContextLock lock(
+    cc::ContextProvider::ScopedContextLock lock(
         shared_worker_context_provider_.get());
     if (shared_worker_context_provider_->ContextGL()
             ->GetGraphicsResetStatusKHR() == GL_NO_ERROR)

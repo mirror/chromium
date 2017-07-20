@@ -16,7 +16,6 @@
 #include "ipc/ipc_sender.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "third_party/WebKit/public/platform/WebPageVisibilityState.h"
-#include "third_party/WebKit/public/platform/WebSuddenTerminationDisablerType.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/native_widget_types.h"
 #include "url/gurl.h"
@@ -284,11 +283,6 @@ class CONTENT_EXPORT RenderFrameHost : public IPC::Listener,
   // timeout skips the dialog.
   virtual void DisableBeforeUnloadHangMonitorForTesting() = 0;
   virtual bool IsBeforeUnloadHangMonitorDisabledForTesting() = 0;
-
-  // Check whether the specific Blink feature is currently preventing fast
-  // shutdown of the frame.
-  virtual bool GetSuddenTerminationDisablerState(
-      blink::WebSuddenTerminationDisablerType disabler_type) = 0;
 
   // Returns true if the given Feature Policy |feature| is enabled for this
   // RenderFrameHost and is allowed to be used by it. Use this in the browser

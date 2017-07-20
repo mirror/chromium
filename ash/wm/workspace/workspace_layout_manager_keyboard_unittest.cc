@@ -27,7 +27,6 @@
 #include "ui/display/screen.h"
 #include "ui/gfx/geometry/insets.h"
 #include "ui/keyboard/keyboard_controller.h"
-#include "ui/keyboard/keyboard_test_util.h"
 #include "ui/keyboard/keyboard_ui.h"
 #include "ui/keyboard/keyboard_util.h"
 #include "ui/views/widget/widget.h"
@@ -43,13 +42,13 @@ WorkspaceLayoutManager* GetWorkspaceLayoutManager(aura::Window* container) {
 
 }  // namespace
 
-class WorkspaceLayoutManagerKeyboardTest2 : public AshTestBase {
+class WorkspaceLayoutManagerKeyboardTest2 : public test::AshTestBase {
  public:
   WorkspaceLayoutManagerKeyboardTest2() : layout_manager_(nullptr) {}
   ~WorkspaceLayoutManagerKeyboardTest2() override {}
 
   void SetUp() override {
-    AshTestBase::SetUp();
+    test::AshTestBase::SetUp();
     UpdateDisplay("800x600");
     aura::Window* default_container =
         Shell::GetPrimaryRootWindowController()->GetContainer(

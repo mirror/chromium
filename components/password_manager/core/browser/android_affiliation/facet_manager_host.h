@@ -18,7 +18,7 @@ class FacetManagerHost {
 
   // Reads the equivalence class containing |facet_uri| from the database and
   // returns true if found; returns false otherwise.
-  virtual bool ReadAffiliationsAndBrandingFromDatabase(
+  virtual bool ReadAffiliationsFromDatabase(
       const FacetURI& facet_uri,
       AffiliatedFacetsWithUpdateTime* affiliations) = 0;
 

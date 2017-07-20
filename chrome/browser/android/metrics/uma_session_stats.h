@@ -43,4 +43,7 @@ class UmaSessionStats {
   DISALLOW_COPY_AND_ASSIGN(UmaSessionStats);
 };
 
+// Registers the native methods through jni
+bool RegisterUmaSessionStats(JNIEnv* env);
+
 #endif  // CHROME_BROWSER_ANDROID_METRICS_UMA_SESSION_STATS_H_

@@ -18,7 +18,6 @@
     "all"
   ],
   "configuration": "Release",
-  "explain": true,
   "sdk": "iphoneos10.0",
   "tests": [
   ]

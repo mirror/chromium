@@ -10,9 +10,9 @@
 
 #include "chrome/browser/permissions/permission_request.h"
 #include "chrome/browser/permissions/permission_request_manager.h"
-#include "chrome/browser/ui/permission_bubble/permission_prompt.h"
 
 class MockPermissionPrompt;
+class PermissionPrompt;
 
 namespace content {
 class WebContents;
@@ -29,9 +29,7 @@ class MockPermissionPromptFactory {
   ~MockPermissionPromptFactory();
 
   // Create method called by the PBM to show a bubble.
-  std::unique_ptr<PermissionPrompt> Create(
-      content::WebContents* web_contents,
-      PermissionPrompt::Delegate* delegate);
+  std::unique_ptr<PermissionPrompt> Create(content::WebContents* web_contents);
 
   void SetCanUpdateUi(bool can_update_ui);
 
@@ -66,9 +64,10 @@ class MockPermissionPromptFactory {
   // This shouldn't be called. Is here to fail tests that try to create a bubble
   // after the factory has been destroyed.
   static std::unique_ptr<PermissionPrompt> DoNotCreate(
-      content::WebContents* web_contents,
-      PermissionPrompt::Delegate* delegate);
+      content::WebContents* web_contents);
 
+  void UpdateResponseType();
+  void ShowView(MockPermissionPrompt* view);
   void HideView(MockPermissionPrompt* view);
 
   bool can_update_ui_;

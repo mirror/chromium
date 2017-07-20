@@ -26,7 +26,6 @@ std::unique_ptr<WebThreadSupportingGC> WebThreadSupportingGC::CreateForThread(
 WebThreadSupportingGC::WebThreadSupportingGC(const char* name,
                                              WebThread* thread)
     : thread_(thread) {
-  DCHECK(IsMainThread());
   DCHECK(!name || !thread);
 #if DCHECK_IS_ON()
   // We call this regardless of whether an existing thread is given or not,
@@ -42,20 +41,17 @@ WebThreadSupportingGC::WebThreadSupportingGC(const char* name,
 }
 
 WebThreadSupportingGC::~WebThreadSupportingGC() {
-  DCHECK(IsMainThread());
   // WebThread's destructor blocks until all the tasks are processed.
   owning_thread_.reset();
   MemoryCoordinator::UnregisterThread(thread_);
 }
 
-void WebThreadSupportingGC::InitializeOnThread() {
-  DCHECK(thread_->IsCurrentThread());
+void WebThreadSupportingGC::Initialize() {
   ThreadState::AttachCurrentThread();
   gc_task_runner_ = WTF::MakeUnique<GCTaskRunner>(thread_);
 }
 
-void WebThreadSupportingGC::ShutdownOnThread() {
-  DCHECK(thread_->IsCurrentThread());
+void WebThreadSupportingGC::Shutdown() {
 #if defined(LEAK_SANITIZER)
   ThreadState::Current()->ReleaseStaticPersistentNodes();
 #endif

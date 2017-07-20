@@ -1914,7 +1914,7 @@ static bool IsInlineWithOutlineAndContinuation(const LayoutObject& o) {
          !o.IsElementContinuation() && ToLayoutInline(o).Continuation();
 }
 
-bool LayoutBlockFlow::ShouldTruncateOverflowingText(const LayoutBlockFlow* block) const {
+static inline bool ShouldTruncateOverflowingText(const LayoutBlockFlow* block) {
   const LayoutObject* object_to_check = block;
   if (block->IsAnonymousBlock()) {
     const LayoutObject* parent = block->Parent();
@@ -1946,6 +1946,18 @@ void LayoutBlockFlow::LayoutInlineChildren(bool relayout_children,
     if (box_state->IsPaginated() || box_state->PaginationStateChanged())
       layout_state.SetNeedsPaginationStrutRecalculation();
   }
+
+  // Text truncation kicks in if overflow isn't visible and text-overflow isn't
+  // 'clip'. If this is an anonymous block, we have to examine the parent.
+  // FIXME: CSS3 says that descendants that are clipped must also know how to
+  // truncate. This is insanely difficult to figure out in general (especially
+  // in the middle of doing layout), so we only handle the simple case of an
+  // anonymous block truncating when its parent is clipped.
+  bool has_text_overflow = ShouldTruncateOverflowingText(this);
+
+  // Walk all the lines and delete our ellipsis line boxes if they exist.
+  if (has_text_overflow)
+    DeleteEllipsisLineBoxes();
 
   if (FirstChild()) {
     for (InlineWalker walker(LineLayoutBlockFlow(this)); !walker.AtEnd();
@@ -2023,7 +2035,9 @@ void LayoutBlockFlow::LayoutInlineChildren(bool relayout_children,
                    IsHorizontalWritingMode() ? kHorizontalLine : kVerticalLine,
                    kPositionOfInteriorLineBoxes));
 
-  if (ShouldTruncateOverflowingText(this))
+  // See if we have any lines that spill out of our block.  If we do, then we
+  // will possibly need to truncate text.
+  if (has_text_overflow)
     CheckLinesForTextOverflow();
 
   // Ensure the new line boxes will be painted.
@@ -2437,12 +2451,13 @@ void LayoutBlockFlow::CheckLinesForTextOverflow() {
   ETextAlign text_align = Style()->GetTextAlign();
   IndentTextOrNot indent_text = kIndentText;
   for (RootInlineBox* curr = FirstRootBox(); curr; curr = curr->NextRootBox()) {
+    LayoutUnit curr_logical_left = curr->LogicalLeft();
     LayoutUnit block_right_edge =
         LogicalRightOffsetForLine(curr->LineTop(), indent_text);
     LayoutUnit block_left_edge =
         LogicalLeftOffsetForLine(curr->LineTop(), indent_text);
-    LayoutUnit line_box_edge = ltr ? curr->LogicalRightLayoutOverflow()
-                                   : curr->LogicalLeftLayoutOverflow();
+    LayoutUnit line_box_edge =
+        ltr ? curr_logical_left + curr->LogicalWidth() : curr_logical_left;
     if ((ltr && line_box_edge > block_right_edge) ||
         (!ltr && line_box_edge < block_left_edge)) {
       // This line spills out of our box in the appropriate direction. Now we

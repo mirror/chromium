@@ -73,8 +73,8 @@ class CONTENT_EXPORT MediaStreamManager
       public base::PowerObserver {
  public:
   // Callback to deliver the result of a media request.
-  typedef base::OnceCallback<void(const MediaStreamDevices& devices,
-                                  std::unique_ptr<MediaStreamUIProxy> ui)>
+  typedef base::Callback<void(const MediaStreamDevices& devices,
+                              std::unique_ptr<MediaStreamUIProxy> ui)>
       MediaRequestResponseCallback;
 
   // Callback for testing.
@@ -124,12 +124,13 @@ class CONTENT_EXPORT MediaStreamManager
   // used to determine where the infobar will appear to the user. |callback| is
   // used to send the selected device to the clients. An empty list of device
   // will be returned if the users deny the access.
-  std::string MakeMediaAccessRequest(int render_process_id,
-                                     int render_frame_id,
-                                     int page_request_id,
-                                     const StreamControls& controls,
-                                     const url::Origin& security_origin,
-                                     MediaRequestResponseCallback callback);
+  std::string MakeMediaAccessRequest(
+      int render_process_id,
+      int render_frame_id,
+      int page_request_id,
+      const StreamControls& controls,
+      const url::Origin& security_origin,
+      const MediaRequestResponseCallback& callback);
 
   // GenerateStream opens new media devices according to |components|.  It
   // creates a new request which is identified by a unique string that's

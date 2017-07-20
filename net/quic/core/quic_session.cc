@@ -57,7 +57,7 @@ void QuicSession::Initialize() {
     connection_->SetStreamNotifier(this);
   }
   if (streams_own_data_) {
-    connection_->SetDataProducer(this);
+    connection_->SetDelegateSavesData(true);
   }
   connection_->SetFromConfig(config_);
 

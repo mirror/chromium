@@ -8,7 +8,6 @@ namespace download {
 namespace test {
 
 void EmptyClient::OnServiceInitialized(
-    bool state_lost,
     const std::vector<std::string>& outstanding_download_guids) {}
 
 void EmptyClient::OnServiceUnavailable() {}

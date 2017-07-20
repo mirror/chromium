@@ -22,8 +22,8 @@ namespace viz {
 static constexpr FrameSinkId kLayerTreeFrameSinkId(1, 1);
 
 TestLayerTreeFrameSink::TestLayerTreeFrameSink(
-    scoped_refptr<ContextProvider> compositor_context_provider,
-    scoped_refptr<ContextProvider> worker_context_provider,
+    scoped_refptr<cc::ContextProvider> compositor_context_provider,
+    scoped_refptr<cc::ContextProvider> worker_context_provider,
     SharedBitmapManager* shared_bitmap_manager,
     gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
     const cc::RendererSettings& renderer_settings,
@@ -41,7 +41,7 @@ TestLayerTreeFrameSink::TestLayerTreeFrameSink(
       refresh_rate_(refresh_rate),
       task_runner_(std::move(task_runner)),
       frame_sink_id_(kLayerTreeFrameSinkId),
-      frame_sink_manager_(new FrameSinkManager),
+      frame_sink_manager_(new cc::FrameSinkManager),
       local_surface_id_allocator_(new LocalSurfaceIdAllocator),
       external_begin_frame_source_(this),
       weak_ptr_factory_(this) {

@@ -495,10 +495,10 @@ void EncryptionMigrationScreenHandler::StartMigration() {
   initial_battery_percent_ = *current_battery_percent_;
 
   // Mount the existing eCryptfs vault to a temporary location for migration.
-  cryptohome::MountRequest mount;
-  mount.set_to_migrate_from_ecryptfs(true);
+  cryptohome::MountParameters mount(false);
+  mount.to_migrate_from_ecryptfs = true;
   if (IsArcKiosk()) {
-    mount.set_public_mount(true);
+    mount.public_mount = true;
     cryptohome::HomedirMethods::GetInstance()->MountEx(
         cryptohome::Identification(user_context_.GetAccountId()),
         cryptohome::Authorization(cryptohome::KeyDefinition()), mount,

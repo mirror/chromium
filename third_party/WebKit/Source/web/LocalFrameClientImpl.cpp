@@ -42,7 +42,6 @@
 #include "core/events/UIEventWithKeyState.h"
 #include "core/exported/SharedWorkerRepositoryClientImpl.h"
 #include "core/exported/WebDataSourceImpl.h"
-#include "core/exported/WebDevToolsAgentImpl.h"
 #include "core/exported/WebDevToolsFrontendImpl.h"
 #include "core/exported/WebPluginContainerImpl.h"
 #include "core/exported/WebViewBase.h"
@@ -108,6 +107,7 @@
 #include "public/web/WebPluginParams.h"
 #include "public/web/WebViewClient.h"
 #include "v8/include/v8.h"
+#include "web/WebDevToolsAgentImpl.h"
 
 namespace blink {
 
@@ -162,10 +162,6 @@ LocalFrameClientImpl::~LocalFrameClientImpl() {}
 DEFINE_TRACE(LocalFrameClientImpl) {
   visitor->Trace(web_frame_);
   LocalFrameClient::Trace(visitor);
-}
-
-WebLocalFrameBase* LocalFrameClientImpl::GetWebFrame() const {
-  return web_frame_.Get();
 }
 
 void LocalFrameClientImpl::DidCreateNewDocument() {
@@ -647,28 +643,18 @@ void LocalFrameClientImpl::DidStopLoading() {
     web_frame_->Client()->DidStopLoading();
 }
 
-void LocalFrameClientImpl::DownloadURL(const ResourceRequest& request,
-                                       const String& suggested_name) {
-  if (!web_frame_->Client())
-    return;
-  DCHECK(web_frame_->GetFrame()->GetDocument());
-  web_frame_->Client()->DownloadURL(WrappedResourceRequest(request),
-                                    suggested_name);
-}
-
 void LocalFrameClientImpl::LoadURLExternally(
     const ResourceRequest& request,
     NavigationPolicy policy,
-    WebTriggeringEventInfo triggering_event_info,
+    const String& suggested_name,
     bool should_replace_current_entry) {
-  DCHECK_NE(policy, NavigationPolicy::kNavigationPolicyDownload);
   if (!web_frame_->Client())
     return;
   DCHECK(web_frame_->GetFrame()->GetDocument());
   Fullscreen::FullyExitFullscreen(*web_frame_->GetFrame()->GetDocument());
   web_frame_->Client()->LoadURLExternally(
       WrappedResourceRequest(request), static_cast<WebNavigationPolicy>(policy),
-      triggering_event_info, should_replace_current_entry);
+      suggested_name, should_replace_current_entry);
 }
 
 void LocalFrameClientImpl::LoadErrorPage(int reason) {
@@ -993,9 +979,11 @@ unsigned LocalFrameClientImpl::BackForwardLength() {
 
 void LocalFrameClientImpl::SuddenTerminationDisablerChanged(
     bool present,
-    WebSuddenTerminationDisablerType type) {
+    SuddenTerminationDisablerType type) {
   if (web_frame_->Client()) {
-    web_frame_->Client()->SuddenTerminationDisablerChanged(present, type);
+    web_frame_->Client()->SuddenTerminationDisablerChanged(
+        present,
+        static_cast<WebFrameClient::SuddenTerminationDisablerType>(type));
   }
 }
 

@@ -4,11 +4,13 @@
 
 #include "ios/web/public/app/web_main_runner.h"
 
+#include "base/at_exit.h"
+#include "base/command_line.h"
 #include "base/i18n/icu_util.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/metrics/statistics_recorder.h"
 #include "ios/web/app/web_main_loop.h"
-#include "ios/web/public/global_state/ios_global_state.h"
 #include "ios/web/public/url_schemes.h"
 #import "ios/web/public/web_client.h"
 #include "mojo/edk/embedder/embedder.h"
@@ -41,12 +43,11 @@ class WebMainRunnerImpl : public WebMainRunner {
     is_initialized_ = true;
     delegate_ = params.delegate;
 
-    ios_global_state::CreateParams create_params;
-    create_params.install_at_exit_manager = params.register_exit_manager;
-    create_params.argc = params.argc;
-    create_params.argv = params.argv;
-    ios_global_state::Create(create_params);
+    if (params.register_exit_manager) {
+      exit_manager_.reset(new base::AtExitManager);
+    }
 
+    base::CommandLine::Init(params.argc, params.argv);
     if (delegate_) {
       delegate_->BasicStartupComplete();
     }
@@ -66,6 +67,7 @@ class WebMainRunnerImpl : public WebMainRunner {
 
     ////////////////////////////////////////////////////////////
     //  BrowserMainRunnerImpl::Initialize()
+    base::StatisticsRecorder::Initialize();
 
     main_loop_.reset(new WebMainLoop());
     main_loop_->Init();
@@ -97,8 +99,7 @@ class WebMainRunnerImpl : public WebMainRunner {
       delegate_->ProcessExiting();
     }
 
-    ios_global_state::DestroyAtExitManager();
-
+    exit_manager_.reset(nullptr);
     delegate_ = nullptr;
     is_shutdown_ = true;
   }
@@ -119,6 +120,7 @@ class WebMainRunnerImpl : public WebMainRunner {
   // Used if the embedder doesn't set one.
   WebClient empty_web_client_;
 
+  std::unique_ptr<base::AtExitManager> exit_manager_;
   std::unique_ptr<WebMainLoop> main_loop_;
 
   DISALLOW_COPY_AND_ASSIGN(WebMainRunnerImpl);

@@ -488,15 +488,6 @@ void SetupCryptoServerConfigForTest(const QuicClock* clock,
       crypto_config->AddDefaultConfig(rand, clock, options));
 }
 
-void SendHandshakeMessageToStream(QuicCryptoStream* stream,
-                                  const CryptoHandshakeMessage& message,
-                                  Perspective perspective) {
-  const QuicData& data = message.GetSerialized(perspective);
-  QuicStreamFrame frame(kCryptoStreamId, false, stream->stream_bytes_read(),
-                        data.AsStringPiece());
-  stream->OnStreamFrame(frame);
-}
-
 void CommunicateHandshakeMessages(PacketSavingConnection* client_conn,
                                   QuicCryptoStream* client,
                                   PacketSavingConnection* server_conn,
@@ -937,10 +928,7 @@ void MovePackets(PacketSavingConnection* source_conn,
   ASSERT_EQ(0u, crypto_framer.InputBytesRemaining());
 
   for (const CryptoHandshakeMessage& message : crypto_visitor.messages()) {
-    SendHandshakeMessageToStream(dest_stream, message,
-                                 dest_perspective == Perspective::IS_SERVER
-                                     ? Perspective::IS_CLIENT
-                                     : Perspective::IS_SERVER);
+    dest_stream->OnHandshakeMessage(message);
   }
   QuicConnectionPeer::SetCurrentPacket(dest_conn, QuicStringPiece(nullptr, 0));
 }

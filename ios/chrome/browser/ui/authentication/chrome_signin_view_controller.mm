@@ -34,6 +34,9 @@
 #include "ios/chrome/browser/ui/authentication/signin_account_selector_view_controller.h"
 #include "ios/chrome/browser/ui/authentication/signin_confirmation_view_controller.h"
 #import "ios/chrome/browser/ui/colors/MDCPalette+CrAdditions.h"
+#import "ios/chrome/browser/ui/commands/UIKit+ChromeExecuteCommand.h"
+#import "ios/chrome/browser/ui/commands/generic_chrome_command.h"
+#include "ios/chrome/browser/ui/commands/ios_command_ids.h"
 #import "ios/chrome/browser/ui/rtl_geometry.h"
 #import "ios/chrome/browser/ui/ui_util.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
@@ -178,22 +181,18 @@ void HideButton(UIButton* button) {
 
 @synthesize delegate = _delegate;
 @synthesize shouldClearData = _shouldClearData;
-@synthesize dispatcher = _dispatcher;
 
 - (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState
                isPresentedOnSettings:(BOOL)isPresentedOnSettings
                          accessPoint:(signin_metrics::AccessPoint)accessPoint
                          promoAction:(signin_metrics::PromoAction)promoAction
-                      signInIdentity:(ChromeIdentity*)identity
-                          dispatcher:
-                              (id<ApplicationSettingsCommands>)dispatcher {
+                      signInIdentity:(ChromeIdentity*)identity {
   self = [super init];
   if (self) {
     _browserState = browserState;
     _isPresentedOnSettings = isPresentedOnSettings;
     _accessPoint = accessPoint;
     _promoAction = promoAction;
-    _dispatcher = dispatcher;
 
     if (identity) {
       _autoSignIn = YES;
@@ -245,19 +244,19 @@ void HideButton(UIButton* button) {
   }
 }
 
-- (void)acceptSignInAndShowAccountsSettings:(BOOL)showAccountsSettings {
+- (void)acceptSignInAndExecuteCommand:(GenericChromeCommand*)command {
   signin_metrics::LogSigninAccessPointCompleted(_accessPoint, _promoAction);
   _didAcceptSignIn = YES;
   if (!_didFinishSignIn) {
     _didFinishSignIn = YES;
-    [_delegate didAcceptSignIn:self showAccountsSettings:showAccountsSettings];
+    [_delegate didAcceptSignIn:self executeCommand:command];
   }
 }
 
 - (void)acceptSignInAndCommitSyncChanges {
   DCHECK(_didSignIn);
   SyncSetupServiceFactory::GetForBrowserState(_browserState)->CommitChanges();
-  [self acceptSignInAndShowAccountsSettings:NO];
+  [self acceptSignInAndExecuteCommand:nil];
 }
 
 - (void)setPrimaryButtonStyling:(MDCButton*)button {
@@ -924,7 +923,9 @@ void HideButton(UIButton* button) {
     (SigninConfirmationViewController*)controller {
   DCHECK_EQ(_confirmationVC, controller);
 
-  [self acceptSignInAndShowAccountsSettings:YES];
+  GenericChromeCommand* command =
+      [[GenericChromeCommand alloc] initWithTag:IDC_SHOW_ACCOUNTS_SETTINGS];
+  [self acceptSignInAndExecuteCommand:command];
 }
 
 - (void)signinConfirmationControllerDidReachBottom:

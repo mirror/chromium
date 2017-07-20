@@ -108,10 +108,6 @@ ExtensionsAPIClient::GetNetworkingCastPrivateDelegate() {
   return nullptr;
 }
 
-FileSystemDelegate* ExtensionsAPIClient::GetFileSystemDelegate() {
-  return nullptr;
-}
-
 #if defined(OS_CHROMEOS)
 NonNativeFileSystemDelegate*
 ExtensionsAPIClient::GetNonNativeFileSystemDelegate() {

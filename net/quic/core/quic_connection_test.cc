@@ -825,8 +825,9 @@ class QuicConnectionTest : public QuicTestWithParam<TestParams> {
     QuicPacketHeader header;
     QuicPacketCreatorPeer::FillPacketHeader(&peer_creator_, &header);
     char encrypted_buffer[kMaxPacketSize];
+    // TODO(fayang): Use data producer to produce data.
     size_t length = peer_framer_.BuildDataPacket(
-        header, frames, encrypted_buffer, kMaxPacketSize);
+        header, frames, encrypted_buffer, kMaxPacketSize, nullptr);
     DCHECK_GT(length, 0u);
 
     const size_t encrypted_length = peer_framer_.EncryptInPlace(

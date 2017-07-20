@@ -59,6 +59,11 @@ void BrowsingDataCounterBridge::Destroy(JNIEnv* env,
   delete this;
 }
 
+// static
+bool BrowsingDataCounterBridge::Register(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
 void BrowsingDataCounterBridge::onCounterFinished(
     std::unique_ptr<browsing_data::BrowsingDataCounter::Result> result) {
   JNIEnv* env = base::android::AttachCurrentThread();

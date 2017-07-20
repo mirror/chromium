@@ -7,7 +7,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-#include "base/mac/availability.h"
 #import "ui/base/cocoa/touch_bar_forward_declarations.h"
 
 class Browser;
@@ -28,7 +27,7 @@ class Browser;
         browserWindowController:(BrowserWindowController*)bwc;
 
 // Creates and returns a touch bar for the browser window.
-- (NSTouchBar*)makeTouchBar API_AVAILABLE(macos(10.12.2));
+- (NSTouchBar*)makeTouchBar;
 
 @end
 

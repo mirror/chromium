@@ -11,7 +11,6 @@
 #include "base/macros.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/cast_channel/cast_socket.h"
-#include "components/cast_channel/cast_socket_service.h"
 #include "components/cast_channel/cast_transport.h"
 #include "components/cast_channel/proto/cast_channel.pb.h"
 #include "net/base/ip_endpoint.h"
@@ -65,49 +64,15 @@ class MockCastSocketObserver : public CastSocket::Observer {
                void(const CastSocket& socket, const CastMessage& message));
 };
 
-class MockCastSocketService : public CastSocketService {
- public:
-  MockCastSocketService();
-  ~MockCastSocketService() override;
-
-  int OpenSocket(const net::IPEndPoint& ip_endpoint,
-                 net::NetLog* net_log,
-                 CastSocket::OnOpenCallback open_cb,
-                 CastSocket::Observer* observer) override {
-    // Unit test should not call |open_cb| more than once. Just use
-    // base::AdaptCallbackForRepeating to pass |open_cb| to a mock method.
-    return OpenSocketInternal(
-        ip_endpoint, net_log,
-        base::AdaptCallbackForRepeating(std::move(open_cb)), observer);
-  }
-
-  MOCK_METHOD4(OpenSocketInternal,
-               int(const net::IPEndPoint& ip_endpoint,
-                   net::NetLog* net_log,
-                   const base::Callback<void(int, ChannelError)>& open_cb,
-                   CastSocket::Observer* observer));
-  MOCK_CONST_METHOD1(GetSocket, CastSocket*(int channel_id));
-};
-
 class MockCastSocket : public CastSocket {
  public:
-  using MockOnOpenCallback =
-      base::Callback<void(int channel_id, ChannelError error_state)>;
-
   MockCastSocket();
   ~MockCastSocket() override;
 
-  void Connect(CastSocket::OnOpenCallback callback) override {
-    // Unit test should not call |open_cb| more than once. Just use
-    // base::AdaptCallbackForRepeating to pass |open_cb| to a mock method.
-    ConnectInternal(base::AdaptCallbackForRepeating(std::move(callback)));
-  }
-
-  MOCK_METHOD1(ConnectInternal, void(const MockOnOpenCallback& callback));
+  MOCK_METHOD1(Connect, void(const OnOpenCallback& callback));
   MOCK_METHOD1(Close, void(const net::CompletionCallback& callback));
   MOCK_CONST_METHOD0(ready_state, ReadyState());
   MOCK_METHOD1(AddObserver, void(Observer* observer));
-  MOCK_METHOD1(RemoveObserver, void(Observer* observer));
 
   const net::IPEndPoint& ip_endpoint() const override { return ip_endpoint_; }
   void SetIPEndpoint(const net::IPEndPoint& ip_endpoint) {

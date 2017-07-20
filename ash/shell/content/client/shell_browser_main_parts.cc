@@ -18,7 +18,6 @@
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/i18n/icu_util.h"
-#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/strings/string_number_conversions.h"
@@ -39,6 +38,7 @@
 #include "ui/base/material_design/material_design_controller.h"
 #include "ui/base/ui_base_paths.h"
 #include "ui/compositor/compositor.h"
+#include "ui/display/screen.h"
 #include "ui/message_center/message_center.h"
 #include "ui/views/examples/examples_window_with_content.h"
 #include "ui/wm/core/wm_state.h"
@@ -107,7 +107,8 @@ void ShellBrowserMainParts::PreMainMessageLoopRun() {
           Shell::Get()->session_controller());
   example_session_controller_client_->Initialize();
 
-  window_watcher_ = base::MakeUnique<WindowWatcher>();
+  window_watcher_.reset(new ash::shell::WindowWatcher);
+  display::Screen::GetScreen()->AddObserver(window_watcher_.get());
 
   ash::shell::InitWindowTypeLauncher(base::Bind(
       &views::examples::ShowExamplesWindowWithContent,
@@ -123,6 +124,8 @@ void ShellBrowserMainParts::PreMainMessageLoopRun() {
 }
 
 void ShellBrowserMainParts::PostMainMessageLoopRun() {
+  display::Screen::GetScreen()->RemoveObserver(window_watcher_.get());
+
   window_watcher_.reset();
   delegate_ = nullptr;
   ash::Shell::DeleteInstance();

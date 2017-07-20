@@ -18,14 +18,18 @@
 #include "ui/base/l10n/l10n_util.h"
 
 PermissionPromptAndroid::PermissionPromptAndroid(
-    content::WebContents* web_contents,
-    Delegate* delegate)
-    : web_contents_(web_contents),
-      delegate_(delegate),
-      persist_(true),
-      weak_factory_(this) {
+    content::WebContents* web_contents)
+    : web_contents_(web_contents), delegate_(nullptr), persist_(true) {
   DCHECK(web_contents);
+}
 
+PermissionPromptAndroid::~PermissionPromptAndroid() {}
+
+void PermissionPromptAndroid::SetDelegate(Delegate* delegate) {
+  delegate_ = delegate;
+}
+
+void PermissionPromptAndroid::Show() {
   bool has_gesture = true;
   for (const PermissionRequest* request : delegate_->Requests()) {
     has_gesture &=
@@ -42,14 +46,21 @@ PermissionPromptAndroid::PermissionPromptAndroid(
     return;
 
   GroupedPermissionInfoBarDelegate::Create(
-      weak_factory_.GetWeakPtr(), infobar_service,
-      delegate_->Requests()[0]->GetOrigin());
+      this, infobar_service, delegate_->Requests()[0]->GetOrigin());
 }
-
-PermissionPromptAndroid::~PermissionPromptAndroid() {}
 
 bool PermissionPromptAndroid::CanAcceptRequestUpdate() {
   return false;
+}
+
+bool PermissionPromptAndroid::HidesAutomatically() {
+  return true;
+}
+
+void PermissionPromptAndroid::Hide() {
+  // Hide() is only called if HidesAutomatically() returns false or
+  // CanAcceptRequestUpdate() return true.
+  NOTREACHED();
 }
 
 void PermissionPromptAndroid::UpdateAnchorPosition() {
@@ -62,32 +73,38 @@ gfx::NativeWindow PermissionPromptAndroid::GetNativeWindow() {
 }
 
 void PermissionPromptAndroid::Closing() {
-  delegate_->Closing();
+  if (delegate_)
+    delegate_->Closing();
 }
 
 void PermissionPromptAndroid::TogglePersist(bool value) {
   persist_ = value;
-  delegate_->TogglePersist(value);
+  if (delegate_)
+    delegate_->TogglePersist(value);
 }
 
 void PermissionPromptAndroid::Accept() {
-  if (ShouldShowPersistenceToggle()) {
-    for (const PermissionRequest* request : delegate_->Requests()) {
-      PermissionUmaUtil::PermissionPromptAcceptedWithPersistenceToggle(
-          request->GetContentSettingsType(), persist_);
+  if (delegate_) {
+    if (ShouldShowPersistenceToggle()) {
+      for (const PermissionRequest* request : delegate_->Requests()) {
+        PermissionUmaUtil::PermissionPromptAcceptedWithPersistenceToggle(
+            request->GetContentSettingsType(), persist_);
+      }
     }
+    delegate_->Accept();
   }
-  delegate_->Accept();
 }
 
 void PermissionPromptAndroid::Deny() {
-  if (ShouldShowPersistenceToggle()) {
-    for (const PermissionRequest* request : delegate_->Requests()) {
-      PermissionUmaUtil::PermissionPromptDeniedWithPersistenceToggle(
-          request->GetContentSettingsType(), persist_);
+  if (delegate_) {
+    if (ShouldShowPersistenceToggle()) {
+      for (const PermissionRequest* request : delegate_->Requests()) {
+        PermissionUmaUtil::PermissionPromptDeniedWithPersistenceToggle(
+            request->GetContentSettingsType(), persist_);
+      }
     }
+    delegate_->Deny();
   }
-  delegate_->Deny();
 }
 
 size_t PermissionPromptAndroid::PermissionCount() const {
@@ -162,7 +179,6 @@ GURL PermissionPromptAndroid::GetLinkURL() const {
 
 // static
 std::unique_ptr<PermissionPrompt> PermissionPrompt::Create(
-    content::WebContents* web_contents,
-    Delegate* delegate) {
-  return base::MakeUnique<PermissionPromptAndroid>(web_contents, delegate);
+    content::WebContents* web_contents) {
+  return base::MakeUnique<PermissionPromptAndroid>(web_contents);
 }

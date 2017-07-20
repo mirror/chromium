@@ -28,15 +28,15 @@
 #include "cc/input/input_handler.h"
 #include "cc/layers/layer.h"
 #include "cc/output/begin_frame_args.h"
+#include "cc/output/context_provider.h"
 #include "cc/output/latency_info_swap_promise.h"
 #include "cc/scheduler/begin_frame_source.h"
+#include "cc/surfaces/frame_sink_manager.h"
 #include "cc/trees/layer_tree_host.h"
 #include "cc/trees/layer_tree_settings.h"
-#include "components/viz/common/gpu/context_provider.h"
 #include "components/viz/common/quads/resource_format.h"
 #include "components/viz/common/resources/resource_settings.h"
 #include "components/viz/common/surfaces/local_surface_id_allocator.h"
-#include "components/viz/service/frame_sinks/frame_sink_manager.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "ui/compositor/compositor_observer.h"
 #include "ui/compositor/compositor_switches.h"
@@ -69,9 +69,8 @@ Compositor::Compositor(const viz::FrameSinkId& frame_sink_id,
       weak_ptr_factory_(this),
       lock_timeout_weak_ptr_factory_(this) {
   if (context_factory_private) {
-    context_factory_private->GetFrameSinkManager()
-        ->surface_manager()
-        ->RegisterFrameSinkId(frame_sink_id_);
+    context_factory_private->GetFrameSinkManager()->RegisterFrameSinkId(
+        frame_sink_id_);
   }
   root_web_layer_ = cc::Layer::Create();
 
@@ -218,7 +217,7 @@ Compositor::~Compositor() {
       DCHECK(client.is_valid());
       manager->UnregisterFrameSinkHierarchy(frame_sink_id_, client);
     }
-    manager->surface_manager()->InvalidateFrameSinkId(frame_sink_id_);
+    manager->InvalidateFrameSinkId(frame_sink_id_);
   }
 }
 

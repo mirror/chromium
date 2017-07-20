@@ -119,7 +119,7 @@ TabAndroid* TabAndroid::GetNativeTab(JNIEnv* env, const JavaRef<jobject>& obj) {
 void TabAndroid::AttachTabHelpers(content::WebContents* web_contents) {
   DCHECK(web_contents);
 
-  TabHelpers::AttachTabHelpers(web_contents);
+  TabHelpers::AttachTabHelpers(web_contents, base::nullopt);
 }
 
 TabAndroid::TabAndroid(JNIEnv* env, const JavaRef<jobject>& obj)
@@ -835,4 +835,9 @@ static void Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   TRACE_EVENT0("native", "TabAndroid::Init");
   // This will automatically bind to the Java object and pass ownership there.
   new TabAndroid(env, obj);
+}
+
+// static
+bool TabAndroid::RegisterTabAndroid(JNIEnv* env) {
+  return RegisterNativesImpl(env);
 }

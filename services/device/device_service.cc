@@ -21,6 +21,7 @@
 #include "services/device/public/interfaces/battery_monitor.mojom.h"
 #include "services/device/time_zone_monitor/time_zone_monitor.h"
 #include "services/device/wake_lock/wake_lock_provider.h"
+#include "services/service_manager/public/cpp/bind_source_info.h"
 #include "ui/gfx/native_widget_types.h"
 
 #if defined(OS_ANDROID)
@@ -132,31 +133,39 @@ void DeviceService::OnBindInterface(
     const service_manager::BindSourceInfo& source_info,
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle interface_pipe) {
-  registry_.BindInterface(interface_name, std::move(interface_pipe));
+  registry_.BindInterface(source_info, interface_name,
+                          std::move(interface_pipe));
 }
 
 #if !defined(OS_ANDROID)
 void DeviceService::BindBatteryMonitorRequest(
+    const service_manager::BindSourceInfo& source_info,
     mojom::BatteryMonitorRequest request) {
   BatteryMonitorImpl::Create(std::move(request));
 }
 
-void DeviceService::BindNFCProviderRequest(mojom::NFCProviderRequest request) {
+void DeviceService::BindNFCProviderRequest(
+    const service_manager::BindSourceInfo& source_info,
+    mojom::NFCProviderRequest request) {
   LOG(ERROR) << "NFC is only supported on Android";
   NOTREACHED();
 }
 
 void DeviceService::BindVibrationManagerRequest(
+    const service_manager::BindSourceInfo& source_info,
     mojom::VibrationManagerRequest request) {
   VibrationManagerImpl::Create(std::move(request));
 }
 #endif
 
-void DeviceService::BindFingerprintRequest(mojom::FingerprintRequest request) {
+void DeviceService::BindFingerprintRequest(
+    const service_manager::BindSourceInfo& source_info,
+    mojom::FingerprintRequest request) {
   Fingerprint::Create(std::move(request));
 }
 
 void DeviceService::BindMotionSensorRequest(
+    const service_manager::BindSourceInfo& source_info,
     mojom::MotionSensorRequest request) {
 #if defined(OS_ANDROID)
   // On Android the device sensors implementations need to run on the UI thread
@@ -173,6 +182,7 @@ void DeviceService::BindMotionSensorRequest(
 }
 
 void DeviceService::BindOrientationSensorRequest(
+    const service_manager::BindSourceInfo& source_info,
     mojom::OrientationSensorRequest request) {
 #if defined(OS_ANDROID)
   // On Android the device sensors implementations need to run on the UI thread
@@ -190,6 +200,7 @@ void DeviceService::BindOrientationSensorRequest(
 }
 
 void DeviceService::BindOrientationAbsoluteSensorRequest(
+    const service_manager::BindSourceInfo& source_info,
     mojom::OrientationAbsoluteSensorRequest request) {
 #if defined(OS_ANDROID)
   // On Android the device sensors implementations need to run on the UI thread
@@ -207,6 +218,7 @@ void DeviceService::BindOrientationAbsoluteSensorRequest(
 }
 
 void DeviceService::BindPowerMonitorRequest(
+    const service_manager::BindSourceInfo& source_info,
     mojom::PowerMonitorRequest request) {
   if (!power_monitor_message_broadcaster_) {
     power_monitor_message_broadcaster_ =
@@ -216,6 +228,7 @@ void DeviceService::BindPowerMonitorRequest(
 }
 
 void DeviceService::BindScreenOrientationListenerRequest(
+    const service_manager::BindSourceInfo& source_info,
     mojom::ScreenOrientationListenerRequest request) {
 #if defined(OS_ANDROID)
   if (io_task_runner_) {
@@ -227,6 +240,7 @@ void DeviceService::BindScreenOrientationListenerRequest(
 }
 
 void DeviceService::BindSensorProviderRequest(
+    const service_manager::BindSourceInfo& source_info,
     mojom::SensorProviderRequest request) {
   if (io_task_runner_) {
     io_task_runner_->PostTask(
@@ -236,6 +250,7 @@ void DeviceService::BindSensorProviderRequest(
 }
 
 void DeviceService::BindTimeZoneMonitorRequest(
+    const service_manager::BindSourceInfo& source_info,
     mojom::TimeZoneMonitorRequest request) {
   if (!time_zone_monitor_)
     time_zone_monitor_ = TimeZoneMonitor::Create(file_task_runner_);
@@ -243,6 +258,7 @@ void DeviceService::BindTimeZoneMonitorRequest(
 }
 
 void DeviceService::BindWakeLockProviderRequest(
+    const service_manager::BindSourceInfo& source_info,
     mojom::WakeLockProviderRequest request) {
   WakeLockProvider::Create(std::move(request), file_task_runner_,
                            wake_lock_context_callback_);

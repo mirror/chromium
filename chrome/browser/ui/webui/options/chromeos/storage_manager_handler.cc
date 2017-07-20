@@ -191,10 +191,7 @@ void StorageManagerHandler::HandleOpenDownloads(
 
 void StorageManagerHandler::HandleOpenArcStorage(
     const base::ListValue* unused_args) {
-  auto* arc_storage_manager = arc::ArcStorageManager::GetForBrowserContext(
-      Profile::FromWebUI(web_ui()));
-  if (arc_storage_manager)
-    arc_storage_manager->OpenPrivateVolumeSettings();
+  arc::ArcStorageManager::Get()->OpenPrivateVolumeSettings();
 }
 
 void StorageManagerHandler::HandleClearDriveCache(
@@ -421,13 +418,9 @@ void StorageManagerHandler::UpdateArcSize() {
   // Shows the item "Android apps and cache" and start calculating size.
   web_ui()->CallJavascriptFunctionUnsafe(
       "options.StorageManager.showArcItem");
-  bool success = false;
-  auto* arc_storage_manager =
-      arc::ArcStorageManager::GetForBrowserContext(profile);
-  if (arc_storage_manager) {
-    success = arc_storage_manager->GetApplicationsSize(base::Bind(
-        &StorageManagerHandler::OnGetArcSize, weak_ptr_factory_.GetWeakPtr()));
-  }
+  bool success = arc::ArcStorageManager::Get()->GetApplicationsSize(
+      base::Bind(&StorageManagerHandler::OnGetArcSize,
+                 weak_ptr_factory_.GetWeakPtr()));
   if (!success)
     updating_arc_size_ = false;
 }

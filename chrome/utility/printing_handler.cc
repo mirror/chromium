@@ -91,22 +91,18 @@ void PrintingHandler::OnRenderPDFPagesToMetafile(
   pdf_rendering_settings_ = settings;
   chrome_pdf::SetPDFUseGDIPrinting(pdf_rendering_settings_.mode ==
                                    PdfRenderSettings::Mode::GDI_TEXT);
-  int printing_mode;
+  int postscript_level;
   switch (pdf_rendering_settings_.mode) {
-    case PdfRenderSettings::Mode::TEXTONLY:
-      printing_mode = chrome_pdf::PrintingMode::kTextOnly;
-      break;
     case PdfRenderSettings::Mode::POSTSCRIPT_LEVEL2:
-      printing_mode = chrome_pdf::PrintingMode::kPostScript2;
+      postscript_level = 2;
       break;
     case PdfRenderSettings::Mode::POSTSCRIPT_LEVEL3:
-      printing_mode = chrome_pdf::PrintingMode::kPostScript3;
+      postscript_level = 3;
       break;
     default:
-      // Not using postscript or text only.
-      printing_mode = chrome_pdf::PrintingMode::kEmf;
+      postscript_level = 0;  // Not using postscript.
   }
-  chrome_pdf::SetPDFUsePrintMode(printing_mode);
+  chrome_pdf::SetPDFPostscriptPrintingLevel(postscript_level);
 
   base::File pdf_file = IPC::PlatformFileForTransitToFile(pdf_transit);
   int page_count = LoadPDF(std::move(pdf_file));

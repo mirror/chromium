@@ -21,7 +21,6 @@
 #include "base/single_thread_task_runner.h"
 #include "base/synchronization/waitable_event.h"
 #include "build/build_config.h"
-#include "components/viz/service/display_embedder/shared_bitmap_allocation_notifier_impl.h"
 #include "content/browser/child_process_launcher.h"
 #include "content/browser/dom_storage/session_storage_namespace_impl.h"
 #include "content/browser/renderer_host/frame_sink_provider_impl.h"
@@ -366,9 +365,6 @@ class CONTENT_EXPORT RenderProcessHostImpl
       RenderProcessHost* render_process_host,
       const GURL& site_url);
 
-  viz::SharedBitmapAllocationNotifierImpl* GetSharedBitmapAllocationNotifier()
-      override;
-
   // Return the spare RenderProcessHost, if it exists. There is at most one
   // globally-used spare RenderProcessHost at any time.
   static RenderProcessHost* GetSpareRenderProcessHostForTesting();
@@ -434,16 +430,21 @@ class CONTENT_EXPORT RenderProcessHostImpl
 
   void BindRouteProvider(mojom::RouteProviderAssociatedRequest request);
 
-  void CreateMusGpuRequest(ui::mojom::GpuRequest request);
+  void CreateMusGpuRequest(const service_manager::BindSourceInfo& source_info,
+                           ui::mojom::GpuRequest request);
   void CreateOffscreenCanvasProvider(
+      const service_manager::BindSourceInfo& source_info,
       blink::mojom::OffscreenCanvasProviderRequest request);
-  void BindFrameSinkProvider(mojom::FrameSinkProviderRequest request);
-  void BindSharedBitmapAllocationNotifier(
-      cc::mojom::SharedBitmapAllocationNotifierRequest request);
+  void BindFrameSinkProvider(const service_manager::BindSourceInfo& source_info,
+                             mojom::FrameSinkProviderRequest request);
   void CreateStoragePartitionService(
+      const service_manager::BindSourceInfo& source_info,
       mojom::StoragePartitionServiceRequest request);
-  void CreateRendererHost(mojom::RendererHostRequest request);
-  void CreateURLLoaderFactory(mojom::URLLoaderFactoryRequest request);
+  void CreateRendererHost(const service_manager::BindSourceInfo& source_info,
+                          mojom::RendererHostRequest request);
+  void CreateURLLoaderFactory(
+      const service_manager::BindSourceInfo& source_info,
+      mojom::URLLoaderFactoryRequest request);
 
   // Control message handlers.
   void OnShutdownRequest();
@@ -509,7 +510,8 @@ class CONTENT_EXPORT RenderProcessHostImpl
 
   template <typename InterfaceType>
   using AddInterfaceCallback =
-      base::Callback<void(mojo::InterfaceRequest<InterfaceType>)>;
+      base::Callback<void(const service_manager::BindSourceInfo&,
+                          mojo::InterfaceRequest<InterfaceType>)>;
 
   template <typename CallbackType>
   struct InterfaceGetter;
@@ -519,10 +521,11 @@ class CONTENT_EXPORT RenderProcessHostImpl
     static void GetInterfaceOnUIThread(
         base::WeakPtr<RenderProcessHostImpl> weak_host,
         const AddInterfaceCallback<InterfaceType>& callback,
+        const service_manager::BindSourceInfo& source_info,
         mojo::InterfaceRequest<InterfaceType> request) {
       if (!weak_host)
         return;
-      callback.Run(std::move(request));
+      callback.Run(source_info, std::move(request));
     }
   };
 
@@ -751,9 +754,6 @@ class CONTENT_EXPORT RenderProcessHostImpl
       instance_weak_factory_;
 
   FrameSinkProviderImpl frame_sink_provider_;
-
-  viz::SharedBitmapAllocationNotifierImpl
-      shared_bitmap_allocation_notifier_impl_;
 
   base::WeakPtrFactory<RenderProcessHostImpl> weak_factory_;
 

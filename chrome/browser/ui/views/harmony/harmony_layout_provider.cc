@@ -18,8 +18,6 @@ gfx::Insets HarmonyLayoutProvider::GetInsetsMetric(int metric) const {
     }
     case views::INSETS_VECTOR_IMAGE_BUTTON:
       return gfx::Insets(kHarmonyLayoutUnit / 4);
-    case INSETS_TOAST:
-      return gfx::Insets(0, kHarmonyLayoutUnit);
     default:
       return ChromeLayoutProvider::GetInsetsMetric(metric);
   }
@@ -38,8 +36,6 @@ int HarmonyLayoutProvider::GetDistanceMetric(int metric) const {
       // margin we need to subtract out the padding.
       return kVisibleMargin - kHarmonyLayoutUnit / 4;
     }
-    case DISTANCE_CONTROL_TOTAL_VERTICAL_TEXT_PADDING:
-      return kHarmonyLayoutUnit / 2;
     case views::DISTANCE_RELATED_BUTTON_HORIZONTAL:
       return kHarmonyLayoutUnit / 2;
     case views::DISTANCE_RELATED_CONTROL_HORIZONTAL:
@@ -75,9 +71,9 @@ int HarmonyLayoutProvider::GetDistanceMetric(int metric) const {
       return kHarmonyLayoutUnit;
     case DISTANCE_UNRELATED_CONTROL_VERTICAL_LARGE:
       return kHarmonyLayoutUnit;
-    default:
-      return ChromeLayoutProvider::GetDistanceMetric(metric);
   }
+  NOTREACHED();
+  return 0;
 }
 
 views::GridLayout::Alignment

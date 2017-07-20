@@ -96,6 +96,12 @@ HarfBuzzFace::~HarfBuzzFace() {
     FontGlobalContext::GetHarfBuzzFontCache().erase(unique_id_);
 }
 
+static hb_position_t SkiaScalarToHarfBuzzPosition(SkScalar value) {
+  // We treat HarfBuzz hb_position_t as 16.16 fixed-point.
+  static constexpr int kHbPosition1 = 1 << 16;
+  return clampTo<int>(value * kHbPosition1);
+}
+
 static hb_bool_t HarfBuzzGetGlyph(hb_font_t* hb_font,
                                   void* font_data,
                                   hb_codepoint_t unicode,
@@ -143,8 +149,8 @@ static hb_bool_t HarfBuzzGetGlyphVerticalOrigin(hb_font_t* hb_font,
   Glyph the_glyph = glyph;
   vertical_data->GetVerticalTranslationsForGlyphs(
       hb_font_data->simple_font_data_, &the_glyph, 1, result);
-  *x = SkiaTextMetrics::SkiaScalarToHarfBuzzPosition(-result[0]);
-  *y = SkiaTextMetrics::SkiaScalarToHarfBuzzPosition(-result[1]);
+  *x = SkiaScalarToHarfBuzzPosition(-result[0]);
+  *y = SkiaScalarToHarfBuzzPosition(-result[1]);
   return true;
 }
 
@@ -157,14 +163,13 @@ static hb_position_t HarfBuzzGetGlyphVerticalAdvance(hb_font_t* hb_font,
   const OpenTypeVerticalData* vertical_data =
       hb_font_data->simple_font_data_->VerticalData();
   if (!vertical_data)
-    return SkiaTextMetrics::SkiaScalarToHarfBuzzPosition(
+    return SkiaScalarToHarfBuzzPosition(
         hb_font_data->simple_font_data_->GetFontMetrics().Height());
 
   Glyph the_glyph = glyph;
   float advance_height =
       -vertical_data->AdvanceHeight(hb_font_data->simple_font_data_, the_glyph);
-  return SkiaTextMetrics::SkiaScalarToHarfBuzzPosition(
-      SkFloatToScalar(advance_height));
+  return SkiaScalarToHarfBuzzPosition(SkFloatToScalar(advance_height));
 }
 
 static hb_position_t HarfBuzzGetGlyphHorizontalKerning(
@@ -189,8 +194,8 @@ static hb_position_t HarfBuzzGetGlyphHorizontalKerning(
   if (typeface->getKerningPairAdjustments(glyphs, 2, kerning_adjustments)) {
     SkScalar upm = SkIntToScalar(typeface->getUnitsPerEm());
     SkScalar size = hb_font_data->paint_.getTextSize();
-    return SkiaTextMetrics::SkiaScalarToHarfBuzzPosition(
-        SkIntToScalar(kerning_adjustments[0]) * size / upm);
+    return SkiaScalarToHarfBuzzPosition(SkIntToScalar(kerning_adjustments[0]) *
+                                        size / upm);
   }
 
   return 0;
@@ -338,8 +343,7 @@ hb_font_t* HarfBuzzFace::GetScaledFont(
   harf_buzz_font_data_->UpdateSimpleFontData(platform_data_);
 
   DCHECK(harf_buzz_font_data_->simple_font_data_);
-  int scale =
-      SkiaTextMetrics::SkiaScalarToHarfBuzzPosition(platform_data_->size());
+  int scale = SkiaScalarToHarfBuzzPosition(platform_data_->size());
   hb_font_set_scale(unscaled_font_, scale, scale);
 
   SkTypeface* typeface = harf_buzz_font_data_->paint_.getTypeface();

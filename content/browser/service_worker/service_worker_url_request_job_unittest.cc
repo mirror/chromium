@@ -109,8 +109,8 @@ class MockHttpProtocolHandler
         request, network_delegate, provider_host_->client_uuid(),
         blob_storage_context_, resource_context_, FETCH_REQUEST_MODE_NO_CORS,
         FETCH_CREDENTIALS_MODE_OMIT, FetchRedirectMode::FOLLOW_MODE,
-        std::string() /* integrity */, resource_type_,
-        REQUEST_CONTEXT_TYPE_HYPERLINK, REQUEST_CONTEXT_FRAME_TYPE_TOP_LEVEL,
+        resource_type_, REQUEST_CONTEXT_TYPE_HYPERLINK,
+        REQUEST_CONTEXT_FRAME_TYPE_TOP_LEVEL,
         scoped_refptr<ResourceRequestBody>(), ServiceWorkerFetchType::FETCH,
         custom_timeout_, delegate_);
     if (simulate_navigation_preload_) {
@@ -136,8 +136,10 @@ class MockHttpProtocolHandler
 // the memory.
 std::unique_ptr<storage::BlobProtocolHandler> CreateMockBlobProtocolHandler(
     storage::BlobStorageContext* blob_storage_context) {
-  return base::MakeUnique<storage::BlobProtocolHandler>(blob_storage_context,
-                                                        nullptr);
+  // The FileSystemContext and task runner are not actually used but a
+  // task runner is needed to avoid a DCHECK in BlobURLRequestJob ctor.
+  return base::MakeUnique<storage::BlobProtocolHandler>(
+      blob_storage_context, nullptr, base::ThreadTaskRunnerHandle::Get().get());
 }
 
 std::unique_ptr<ServiceWorkerHeaderMap> MakeHeaders() {

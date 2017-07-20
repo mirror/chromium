@@ -80,12 +80,15 @@ class TestExporterTest(unittest.TestCase):
             'pr_with_change_id',
             'pr_with_change_id',
             'pr_with_change_id',
+            'pr_with_position',
             'pr_with_change_id',
             'create_pr',
             'add_label "chromium-export"',
+            'pr_with_position',
             'pr_with_change_id',
             'create_pr',
             'add_label "chromium-export"',
+            'pr_with_position',
             'pr_with_change_id',
             'create_pr',
             'add_label "chromium-export"',
@@ -291,6 +294,7 @@ class TestExporterTest(unittest.TestCase):
         test_exporter.run()
 
         self.assertEqual(test_exporter.wpt_github.calls, [
+            'pr_with_position',
             'pr_with_change_id',
             'remove_label "do not merge yet"',
             'get_pr_branch',

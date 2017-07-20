@@ -7,16 +7,16 @@
 
 #include "ash/accessibility_delegate.h"
 #include "ash/accessibility_types.h"
-#include "ash/app_list/test_app_list_view_presenter_impl.h"
 #include "ash/drag_drop/drag_drop_controller.h"
 #include "ash/public/cpp/config.h"
 #include "ash/public/cpp/window_properties.h"
 #include "ash/shelf/shelf.h"
-#include "ash/shelf/shelf_view_test_api.h"
 #include "ash/shell.h"
-#include "ash/shell_test_api.h"
 #include "ash/system/tray/system_tray.h"
 #include "ash/test/ash_test_base.h"
+#include "ash/test/shelf_view_test_api.h"
+#include "ash/test/shell_test_api.h"
+#include "ash/test/test_app_list_view_presenter_impl.h"
 #include "ash/wm/maximize_mode/maximize_mode_controller.h"
 #include "ash/wm/overview/window_grid.h"
 #include "ash/wm/overview/window_selector.h"
@@ -87,16 +87,16 @@ float GetItemScale(const gfx::Rect& source,
 
 // TODO(bruthig): Move all non-simple method definitions out of class
 // declaration.
-class WindowSelectorTest : public AshTestBase {
+class WindowSelectorTest : public test::AshTestBase {
  public:
   WindowSelectorTest() {}
   ~WindowSelectorTest() override {}
 
   void SetUp() override {
-    AshTestBase::SetUp();
+    test::AshTestBase::SetUp();
 
-    shelf_view_test_.reset(
-        new ShelfViewTestAPI(GetPrimaryShelf()->GetShelfViewForTesting()));
+    shelf_view_test_.reset(new test::ShelfViewTestAPI(
+        GetPrimaryShelf()->GetShelfViewForTesting()));
     shelf_view_test_->SetAnimationDuration(1);
     ScopedTransformOverviewWindow::SetImmediateCloseForTests();
   }
@@ -319,7 +319,7 @@ class WindowSelectorTest : public AshTestBase {
     window_selector()->ContentsChanged(nullptr, base::UTF8ToUTF16(pattern));
   }
 
-  ShelfViewTestAPI* shelf_view_test() { return shelf_view_test_.get(); }
+  test::ShelfViewTestAPI* shelf_view_test() { return shelf_view_test_.get(); }
 
   views::Widget* text_filter_widget() {
     return window_selector()->text_filter_widget_.get();
@@ -328,7 +328,7 @@ class WindowSelectorTest : public AshTestBase {
  private:
   aura::test::TestWindowDelegate delegate_;
   NonActivatableActivationDelegate non_activatable_activation_delegate_;
-  std::unique_ptr<ShelfViewTestAPI> shelf_view_test_;
+  std::unique_ptr<test::ShelfViewTestAPI> shelf_view_test_;
 
   DISALLOW_COPY_AND_ASSIGN(WindowSelectorTest);
 };
@@ -934,7 +934,7 @@ TEST_F(WindowSelectorTest, SelectingHidesAppList) {
   std::unique_ptr<aura::Window> window2(CreateWindow(bounds));
 
   // The tested behavior relies on the app list presenter delegate.
-  TestAppListViewPresenterImpl app_list_presenter_impl;
+  test::TestAppListViewPresenterImpl app_list_presenter_impl;
 
   app_list_presenter_impl.Show(
       display::Screen::GetScreen()->GetPrimaryDisplay().id());
@@ -1293,7 +1293,7 @@ TEST_F(WindowSelectorTest, DISABLED_DragDropInProgress) {
   bool drag_canceled_by_test = false;
   gfx::Rect bounds(0, 0, 400, 400);
   std::unique_ptr<aura::Window> window(CreateWindow(bounds));
-  ShellTestApi shell_test_api(Shell::Get());
+  test::ShellTestApi shell_test_api(Shell::Get());
   DragDropController* drag_drop_controller =
       shell_test_api.drag_drop_controller();
   ui::OSExchangeData data;

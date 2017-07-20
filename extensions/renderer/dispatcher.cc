@@ -71,7 +71,6 @@
 #include "extensions/renderer/file_system_natives.h"
 #include "extensions/renderer/guest_view/guest_view_internal_custom_bindings.h"
 #include "extensions/renderer/id_generator_custom_bindings.h"
-#include "extensions/renderer/ipc_message_sender.h"
 #include "extensions/renderer/js_extension_bindings_system.h"
 #include "extensions/renderer/logging_native_handler.h"
 #include "extensions/renderer/messaging_bindings.h"
@@ -88,6 +87,7 @@
 #include "extensions/renderer/script_injection.h"
 #include "extensions/renderer/script_injection_manager.h"
 #include "extensions/renderer/send_request_natives.h"
+#include "extensions/renderer/service_worker_request_sender.h"
 #include "extensions/renderer/set_icon_natives.h"
 #include "extensions/renderer/static_v8_external_one_byte_string_resource.h"
 #include "extensions/renderer/test_features_native_handler.h"
@@ -185,6 +185,73 @@ class ChromeNativeHandler : public ObjectBackedNativeHandler {
   }
 };
 
+// Handler for sending IPCs with native extension bindings. Only used for
+// the main thread.
+void SendRequestIPC(ScriptContext* context,
+                    const ExtensionHostMsg_Request_Params& params,
+                    binding::RequestThread thread) {
+  content::RenderFrame* frame = context->GetRenderFrame();
+  if (!frame)
+    return;
+
+  switch (thread) {
+    case binding::RequestThread::UI:
+      frame->Send(new ExtensionHostMsg_Request(frame->GetRoutingID(), params));
+      break;
+    case binding::RequestThread::IO:
+      frame->Send(new ExtensionHostMsg_RequestForIOThread(frame->GetRoutingID(),
+                                                          params));
+      break;
+  }
+}
+
+// Sends a notification to the browser that an event either has or no longer has
+// listeners associated with it. Note that we only do this for the first added/
+// last removed listener, rather than for each subsequent listener; the browser
+// only cares if an event has >0 associated listeners.
+// TODO(devlin): Use this in EventBindings, too, and add logic for lazy
+// background pages.
+void SendEventListenersIPC(binding::EventListenersChanged changed,
+                           ScriptContext* context,
+                           const std::string& event_name,
+                           const base::DictionaryValue* filter,
+                           bool was_manual) {
+  bool lazy = ExtensionFrameHelper::IsContextForEventPage(context);
+  // TODO(lazyboy): For service workers, use worker specific IPC::Sender
+  // instead of |render_thread|.
+  const int worker_thread_id = content::WorkerThread::GetCurrentId();
+  std::string extension_id = context->GetExtensionID();
+  content::RenderThread* render_thread = content::RenderThread::Get();
+
+  if (filter) {
+    if (changed == binding::EventListenersChanged::HAS_LISTENERS) {
+      render_thread->Send(new ExtensionHostMsg_AddFilteredListener(
+          extension_id, event_name, *filter, lazy));
+    } else {
+      DCHECK_EQ(binding::EventListenersChanged::NO_LISTENERS, changed);
+      render_thread->Send(new ExtensionHostMsg_RemoveFilteredListener(
+          extension_id, event_name, *filter, lazy));
+    }
+  } else {
+    if (changed == binding::EventListenersChanged::HAS_LISTENERS) {
+      render_thread->Send(new ExtensionHostMsg_AddListener(
+          extension_id, context->url(), event_name, worker_thread_id));
+      if (lazy) {
+        render_thread->Send(
+            new ExtensionHostMsg_AddLazyListener(extension_id, event_name));
+      }
+    } else {
+      DCHECK_EQ(binding::EventListenersChanged::NO_LISTENERS, changed);
+      render_thread->Send(new ExtensionHostMsg_RemoveListener(
+          extension_id, context->url(), event_name, worker_thread_id));
+      if (lazy && was_manual) {
+        render_thread->Send(
+            new ExtensionHostMsg_RemoveLazyListener(extension_id, event_name));
+      }
+    }
+  }
+}
+
 base::LazyInstance<WorkerScriptContextSet>::DestructorAtExit
     g_worker_script_context_set = LAZY_INSTANCE_INITIALIZER;
 
@@ -202,18 +269,14 @@ Dispatcher::Dispatcher(DispatcherDelegate* delegate)
   const base::CommandLine& command_line =
       *(base::CommandLine::ForCurrentProcess());
 
-  std::unique_ptr<IPCMessageSender> ipc_message_sender =
-      IPCMessageSender::CreateMainThreadIPCMessageSender();
   if (FeatureSwitch::native_crx_bindings()->IsEnabled()) {
-    // This Unretained is safe because the IPCMessageSender is guaranteed to
-    // outlive the bindings system.
     auto system = base::MakeUnique<NativeExtensionBindingsSystem>(
-        std::move(ipc_message_sender));
+        base::Bind(&SendRequestIPC), base::Bind(&SendEventListenersIPC));
     delegate_->InitializeBindingsSystem(this, system->api_system());
     bindings_system_ = std::move(system);
   } else {
     bindings_system_ = base::MakeUnique<JsExtensionBindingsSystem>(
-        &source_map_, std::move(ipc_message_sender));
+        &source_map_, base::MakeUnique<RequestSender>());
   }
 
   set_idle_notifications_ =
@@ -657,7 +720,6 @@ std::vector<std::pair<const char*, int>> Dispatcher::GetJsResources() {
       {"extensionViewEvents", IDR_EXTENSION_VIEW_EVENTS_JS},
       {"extensionViewInternal", IDR_EXTENSION_VIEW_INTERNAL_CUSTOM_BINDINGS_JS},
       {"fileEntryBindingUtil", IDR_FILE_ENTRY_BINDING_UTIL_JS},
-      {"fileSystem", IDR_FILE_SYSTEM_CUSTOM_BINDINGS_JS},
       {"guestView", IDR_GUEST_VIEW_JS},
       {"guestViewAttributes", IDR_GUEST_VIEW_ATTRIBUTES_JS},
       {"guestViewContainer", IDR_GUEST_VIEW_CONTAINER_JS},
@@ -786,10 +848,7 @@ void Dispatcher::RegisterNativeHandlers(
       std::unique_ptr<NativeHandler>(new V8ContextNativeHandler(context)));
   module_system->RegisterNativeHandler(
       "event_natives",
-      base::MakeUnique<EventBindings>(
-          context,
-          // Note: |bindings_system| can be null in unit tests.
-          bindings_system ? bindings_system->GetIPCMessageSender() : nullptr));
+      std::unique_ptr<NativeHandler>(new EventBindings(context)));
   module_system->RegisterNativeHandler(
       "messaging_natives", base::MakeUnique<MessagingBindings>(context));
   module_system->RegisterNativeHandler(

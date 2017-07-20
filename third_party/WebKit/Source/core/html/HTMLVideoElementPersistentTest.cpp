@@ -20,7 +20,7 @@ namespace blink {
 
 namespace {
 
-class FullscreenMockChromeClient : public EmptyChromeClient {
+class MockChromeClient : public EmptyChromeClient {
  public:
   MOCK_METHOD1(EnterFullscreen, void(LocalFrame&));
   MOCK_METHOD1(ExitFullscreen, void(LocalFrame&));
@@ -34,7 +34,7 @@ using ::testing::Sequence;
 class HTMLVideoElementPersistentTest : public ::testing::Test {
  protected:
   void SetUp() override {
-    chrome_client_ = new FullscreenMockChromeClient();
+    chrome_client_ = new MockChromeClient();
 
     Page::PageClients clients;
     FillWithEmptyClients(clients);
@@ -59,7 +59,7 @@ class HTMLVideoElementPersistentTest : public ::testing::Test {
     return Fullscreen::FullscreenElementFrom(GetDocument());
   }
 
-  FullscreenMockChromeClient& GetMockChromeClient() { return *chrome_client_; }
+  MockChromeClient& GetMockChromeClient() { return *chrome_client_; }
 
   void SimulateDidEnterFullscreen() {
     Fullscreen::FromIfExists(GetDocument())->DidEnterFullscreen();
@@ -75,7 +75,7 @@ class HTMLVideoElementPersistentTest : public ::testing::Test {
 
  private:
   std::unique_ptr<DummyPageHolder> page_holder_;
-  Persistent<FullscreenMockChromeClient> chrome_client_;
+  Persistent<MockChromeClient> chrome_client_;
 };
 
 TEST_F(HTMLVideoElementPersistentTest, nothingIsFullscreen) {

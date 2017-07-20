@@ -58,6 +58,7 @@ TEST_F(SelectionControllerTest, setNonDirectionalSelectionIfNeeded) {
 
   Node* top = GetDocument().getElementById("top")->firstChild();
   Node* bottom = shadow_root->getElementById("bottom")->firstChild();
+  Node* host = GetDocument().getElementById("host");
 
   // top to bottom
   SetNonDirectionalSelectionIfNeeded(SelectionInFlatTree::Builder()
@@ -65,10 +66,8 @@ TEST_F(SelectionControllerTest, setNonDirectionalSelectionIfNeeded) {
                                          .Extend(PositionInFlatTree(bottom, 3))
                                          .Build(),
                                      TextGranularity::kCharacter);
-  EXPECT_EQ(VisibleSelectionInDOMTree().Start(),
-            VisibleSelectionInDOMTree().Base());
-  EXPECT_EQ(VisibleSelectionInDOMTree().End(),
-            VisibleSelectionInDOMTree().Extent());
+  EXPECT_EQ(Position(top, 1), VisibleSelectionInDOMTree().Base());
+  EXPECT_EQ(Position::BeforeNode(*host), VisibleSelectionInDOMTree().Extent());
   EXPECT_EQ(Position(top, 1), VisibleSelectionInDOMTree().Start());
   EXPECT_EQ(Position(top, 3), VisibleSelectionInDOMTree().End());
 
@@ -87,9 +86,8 @@ TEST_F(SelectionControllerTest, setNonDirectionalSelectionIfNeeded) {
           .Extend(PositionInFlatTree(top, 1))
           .Build(),
       TextGranularity::kCharacter);
-  EXPECT_EQ(VisibleSelectionInDOMTree().End(),
-            VisibleSelectionInDOMTree().Base());
-  EXPECT_EQ(VisibleSelectionInDOMTree().Start(),
+  EXPECT_EQ(Position(bottom, 3), VisibleSelectionInDOMTree().Base());
+  EXPECT_EQ(Position::BeforeNode(*bottom->parentNode()),
             VisibleSelectionInDOMTree().Extent());
   EXPECT_EQ(Position(bottom, 0), VisibleSelectionInDOMTree().Start());
   EXPECT_EQ(Position(bottom, 3), VisibleSelectionInDOMTree().End());

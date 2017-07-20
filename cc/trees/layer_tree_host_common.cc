@@ -260,7 +260,10 @@ int LayerTreeHostCommon::CalculateLayerJitter(LayerImpl* layer) {
   return jitter;
 }
 
-enum PropertyTreeOption { BUILD_PROPERTY_TREES, DONT_BUILD_PROPERTY_TREES };
+enum PropertyTreeOption {
+  BUILD_PROPERTY_TREES_IF_NEEDED,
+  DONT_BUILD_PROPERTY_TREES
+};
 
 static void AddSurfaceToRenderSurfaceList(
     RenderSurfaceImpl* render_surface,
@@ -359,10 +362,15 @@ static void ComputeInitialRenderSurfaceList(
   // surface's accumulated content rect.
   for (LayerImpl* layer : *layer_tree_impl) {
     DCHECK(layer);
-    layer->EnsureValidPropertyTreeIndices();
-
+    // TODO(crbug.com/726423): LayerImpls should never have invalid PropertyTree
+    // indices.
+    if (!layer)
+      continue;
     layer->set_contributes_to_drawn_render_surface(false);
     layer->set_raster_even_if_not_drawn(false);
+
+    if (!layer->HasValidPropertyTreeIndices())
+      continue;
 
     bool is_root = layer_tree_impl->IsRootLayer(layer);
 
@@ -492,11 +500,11 @@ void CalculateDrawPropertiesInternal(
   inputs->render_surface_list->clear();
 
   const bool should_measure_property_tree_performance =
-      property_tree_option == BUILD_PROPERTY_TREES;
+      property_tree_option == BUILD_PROPERTY_TREES_IF_NEEDED;
 
   LayerImplList visible_layer_list;
   switch (property_tree_option) {
-    case BUILD_PROPERTY_TREES: {
+    case BUILD_PROPERTY_TREES_IF_NEEDED: {
       // The translation from layer to property trees is an intermediate
       // state. We will eventually get these data passed directly to the
       // compositor.
@@ -663,9 +671,7 @@ void LayerTreeHostCommon::CalculateDrawProperties(
 
 void LayerTreeHostCommon::CalculateDrawPropertiesForTesting(
     CalcDrawPropsImplInputsForTesting* inputs) {
-  CalculateDrawPropertiesInternal(inputs, inputs->property_trees->needs_rebuild
-                                              ? BUILD_PROPERTY_TREES
-                                              : DONT_BUILD_PROPERTY_TREES);
+  CalculateDrawPropertiesInternal(inputs, BUILD_PROPERTY_TREES_IF_NEEDED);
 }
 
 PropertyTrees* GetPropertyTrees(Layer* layer) {

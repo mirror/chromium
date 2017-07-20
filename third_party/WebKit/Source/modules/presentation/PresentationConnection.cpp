@@ -6,6 +6,8 @@
 
 #include <memory>
 #include "bindings/core/v8/ScriptPromiseResolver.h"
+#include "core/dom/DOMArrayBuffer.h"
+#include "core/dom/DOMArrayBufferView.h"
 #include "core/dom/Document.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/TaskRunnerHelper.h"
@@ -16,8 +18,6 @@
 #include "core/frame/Deprecation.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/UseCounter.h"
-#include "core/typed_arrays/DOMArrayBuffer.h"
-#include "core/typed_arrays/DOMArrayBufferView.h"
 #include "modules/EventTargetModules.h"
 #include "modules/presentation/Presentation.h"
 #include "modules/presentation/PresentationConnectionAvailableEvent.h"
@@ -298,24 +298,28 @@ bool PresentationConnection::CanSendMessage(ExceptionState& exception_state) {
     return false;
   }
 
-  return !!proxy_;
+  // The connection can send a message if there is a client available.
+  return !!PresentationController::ClientFromContext(GetExecutionContext());
 }
 
 void PresentationConnection::HandleMessageQueue() {
-  if (!proxy_)
+  WebPresentationClient* client =
+      PresentationController::ClientFromContext(GetExecutionContext());
+  if (!client || !proxy_)
     return;
 
   while (!messages_.IsEmpty() && !blob_loader_) {
     Message* message = messages_.front().Get();
     switch (message->type) {
       case kMessageTypeText:
-        proxy_->SendTextMessage(message->text);
+        client->SendString(url_, id_, message->text, proxy_.get());
         messages_.pop_front();
         break;
       case kMessageTypeArrayBuffer:
-        proxy_->SendBinaryMessage(
+        client->SendArrayBuffer(
+            url_, id_,
             static_cast<const uint8_t*>(message->array_buffer->Data()),
-            message->array_buffer->ByteLength());
+            message->array_buffer->ByteLength(), proxy_.get());
         messages_.pop_front();
         break;
       case kMessageTypeBlob:
@@ -478,9 +482,11 @@ void PresentationConnection::DidFinishLoadingBlob(DOMArrayBuffer* buffer) {
   DCHECK(buffer);
   DCHECK(buffer->Buffer());
   // Send the loaded blob immediately here and continue processing the queue.
-  if (proxy_) {
-    proxy_->SendBinaryMessage(static_cast<const uint8_t*>(buffer->Data()),
-                              buffer->ByteLength());
+  WebPresentationClient* client =
+      PresentationController::ClientFromContext(GetExecutionContext());
+  if (client) {
+    client->SendBlobData(url_, id_, static_cast<const uint8_t*>(buffer->Data()),
+                         buffer->ByteLength(), proxy_.get());
   }
 
   messages_.pop_front();

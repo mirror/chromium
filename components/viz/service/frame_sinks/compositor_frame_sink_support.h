@@ -9,38 +9,36 @@
 #include <unordered_set>
 #include <vector>
 
-#include "base/callback.h"
 #include "base/compiler_specific.h"
 #include "base/memory/weak_ptr.h"
 #include "cc/output/compositor_frame.h"
 #include "cc/scheduler/begin_frame_source.h"
+#include "cc/surfaces/frame_sink_manager_client.h"
+#include "cc/surfaces/referenced_surface_tracker.h"
 #include "cc/surfaces/surface_client.h"
+#include "cc/surfaces/surface_resource_holder.h"
+#include "cc/surfaces/surface_resource_holder_client.h"
 #include "components/viz/common/surfaces/surface_info.h"
-#include "components/viz/service/frame_sinks/frame_sink_manager_client.h"
-#include "components/viz/service/frame_sinks/referenced_surface_tracker.h"
-#include "components/viz/service/frame_sinks/surface_resource_holder.h"
-#include "components/viz/service/frame_sinks/surface_resource_holder_client.h"
 #include "components/viz/service/viz_service_export.h"
 
 namespace cc {
+class FrameSinkManager;
 class Surface;
 class SurfaceManager;
 }  // namespace cc
 
 namespace viz {
-
-class FrameSinkManager;
 class CompositorFrameSinkSupportClient;
 
 class VIZ_SERVICE_EXPORT CompositorFrameSinkSupport
     : public cc::BeginFrameObserver,
-      public SurfaceResourceHolderClient,
-      public FrameSinkManagerClient,
+      public cc::SurfaceResourceHolderClient,
+      public cc::FrameSinkManagerClient,
       public cc::SurfaceClient {
  public:
   static std::unique_ptr<CompositorFrameSinkSupport> Create(
       CompositorFrameSinkSupportClient* client,
-      FrameSinkManager* frame_sink_manager,
+      cc::FrameSinkManager* frame_sink_manager,
       const FrameSinkId& frame_sink_id,
       bool is_root,
       bool handles_frame_sink_id_invalidation,
@@ -50,10 +48,8 @@ class VIZ_SERVICE_EXPORT CompositorFrameSinkSupport
 
   const FrameSinkId& frame_sink_id() const { return frame_sink_id_; }
 
-  FrameSinkManager* frame_sink_manager() { return frame_sink_manager_; }
+  cc::FrameSinkManager* frame_sink_manager() { return frame_sink_manager_; }
   cc::SurfaceManager* surface_manager() { return surface_manager_; }
-
-  void SetDestructionCallback(base::OnceCallback<void()> callback);
 
   // SurfaceClient implementation.
   void OnSurfaceActivated(cc::Surface* surface) override;
@@ -86,7 +82,7 @@ class VIZ_SERVICE_EXPORT CompositorFrameSinkSupport
                              bool handles_frame_sink_id_invalidation,
                              bool needs_sync_tokens);
 
-  void Init(FrameSinkManager* frame_sink_manager);
+  void Init(cc::FrameSinkManager* frame_sink_manager);
 
  private:
   // Updates surface references using |active_referenced_surfaces| from the most
@@ -114,7 +110,7 @@ class VIZ_SERVICE_EXPORT CompositorFrameSinkSupport
 
   CompositorFrameSinkSupportClient* const client_;
 
-  FrameSinkManager* frame_sink_manager_ = nullptr;
+  cc::FrameSinkManager* frame_sink_manager_ = nullptr;
   cc::SurfaceManager* surface_manager_ = nullptr;
 
   const FrameSinkId frame_sink_id_;
@@ -125,7 +121,7 @@ class VIZ_SERVICE_EXPORT CompositorFrameSinkSupport
   // added. This will not contain a value if |is_root_| is false.
   base::Optional<LocalSurfaceId> referenced_local_surface_id_;
 
-  SurfaceResourceHolder surface_resource_holder_;
+  cc::SurfaceResourceHolder surface_resource_holder_;
 
   // Counts the number of CompositorFrames that have been submitted and have not
   // yet received an ACK.
@@ -159,9 +155,6 @@ class VIZ_SERVICE_EXPORT CompositorFrameSinkSupport
   // is established. Once we switch to SurfaceReferences, this ordering concern
   // goes away and we can remove this bool.
   const bool handles_frame_sink_id_invalidation_;
-
-  // A callback that will be run at the start of the destructor if set.
-  base::OnceCallback<void()> destruction_callback_;
 
   base::WeakPtrFactory<CompositorFrameSinkSupport> weak_factory_;
 

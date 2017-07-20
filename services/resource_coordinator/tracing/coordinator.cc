@@ -26,6 +26,7 @@
 #include "services/resource_coordinator/public/interfaces/tracing/tracing_constants.mojom.h"
 #include "services/resource_coordinator/tracing/agent_registry.h"
 #include "services/resource_coordinator/tracing/recorder.h"
+#include "services/service_manager/public/cpp/bind_source_info.h"
 
 namespace {
 
@@ -64,7 +65,9 @@ Coordinator::~Coordinator() {
   g_coordinator = nullptr;
 }
 
-void Coordinator::BindCoordinatorRequest(mojom::CoordinatorRequest request) {
+void Coordinator::BindCoordinatorRequest(
+    const service_manager::BindSourceInfo& source_info,
+    mojom::CoordinatorRequest request) {
   binding_.Bind(std::move(request));
 }
 

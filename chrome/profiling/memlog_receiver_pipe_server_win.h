@@ -8,7 +8,6 @@
 #include <memory>
 
 #include "base/callback_forward.h"
-#include "base/files/file.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/message_loop/message_pump_win.h"
@@ -29,7 +28,7 @@ class MemlogReceiverPipeServer
     : public base::RefCountedThreadSafe<MemlogReceiverPipeServer> {
  public:
   using NewConnectionCallback =
-      base::RepeatingCallback<void(scoped_refptr<MemlogReceiverPipe>, int)>;
+      base::RepeatingCallback<void(scoped_refptr<MemlogReceiverPipe>)>;
 
   // |io_runner| is the task runner for the I/O thread. When a new connection is
   // established, the |on_new_conn| callback is called with the pipe.
@@ -44,8 +43,6 @@ class MemlogReceiverPipeServer
 
   // Starts the server which opens the pipe and begins accepting connections.
   void Start();
-
-  void OnNewPipe(base::ScopedPlatformFile pipe, int sender_pid);
 
  private:
   base::string16 GetPipeName() const;

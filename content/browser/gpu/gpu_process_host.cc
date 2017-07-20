@@ -78,6 +78,7 @@
 #endif
 
 #if defined(OS_WIN)
+#include "base/win/windows_version.h"
 #include "content/common/sandbox_win.h"
 #include "sandbox/win/src/sandbox_policy.h"
 #include "ui/gfx/switches.h"
@@ -259,31 +260,38 @@ class GpuSandboxedProcessLauncherDelegate
   // backend. Note that the GPU process is connected to the interactive
   // desktop.
   bool PreSpawnTarget(sandbox::TargetPolicy* policy) override {
-    if (cmd_line_.GetSwitchValueASCII(switches::kUseGL) ==
-        gl::kGLImplementationDesktopName) {
-      // Open GL path.
-      policy->SetTokenLevel(sandbox::USER_RESTRICTED_SAME_ACCESS,
-                            sandbox::USER_LIMITED);
-      SetJobLevel(cmd_line_, sandbox::JOB_UNPROTECTED, 0, policy);
-      policy->SetDelayedIntegrityLevel(sandbox::INTEGRITY_LEVEL_LOW);
+    if (base::win::GetVersion() > base::win::VERSION_XP) {
+      if (cmd_line_.GetSwitchValueASCII(switches::kUseGL) ==
+          gl::kGLImplementationDesktopName) {
+        // Open GL path.
+        policy->SetTokenLevel(sandbox::USER_RESTRICTED_SAME_ACCESS,
+                              sandbox::USER_LIMITED);
+        SetJobLevel(cmd_line_, sandbox::JOB_UNPROTECTED, 0, policy);
+        policy->SetDelayedIntegrityLevel(sandbox::INTEGRITY_LEVEL_LOW);
+      } else {
+        policy->SetTokenLevel(sandbox::USER_RESTRICTED_SAME_ACCESS,
+                              sandbox::USER_LIMITED);
+
+        // UI restrictions break when we access Windows from outside our job.
+        // However, we don't want a proxy window in this process because it can
+        // introduce deadlocks where the renderer blocks on the gpu, which in
+        // turn blocks on the browser UI thread. So, instead we forgo a window
+        // message pump entirely and just add job restrictions to prevent child
+        // processes.
+        SetJobLevel(cmd_line_,
+                    sandbox::JOB_LIMITED_USER,
+                    JOB_OBJECT_UILIMIT_SYSTEMPARAMETERS |
+                    JOB_OBJECT_UILIMIT_DESKTOP |
+                    JOB_OBJECT_UILIMIT_EXITWINDOWS |
+                    JOB_OBJECT_UILIMIT_DISPLAYSETTINGS,
+                    policy);
+
+        policy->SetIntegrityLevel(sandbox::INTEGRITY_LEVEL_LOW);
+      }
     } else {
-      policy->SetTokenLevel(sandbox::USER_RESTRICTED_SAME_ACCESS,
+      SetJobLevel(cmd_line_, sandbox::JOB_UNPROTECTED, 0, policy);
+      policy->SetTokenLevel(sandbox::USER_UNPROTECTED,
                             sandbox::USER_LIMITED);
-
-      // UI restrictions break when we access Windows from outside our job.
-      // However, we don't want a proxy window in this process because it can
-      // introduce deadlocks where the renderer blocks on the gpu, which in
-      // turn blocks on the browser UI thread. So, instead we forgo a window
-      // message pump entirely and just add job restrictions to prevent child
-      // processes.
-      SetJobLevel(cmd_line_, sandbox::JOB_LIMITED_USER,
-                  JOB_OBJECT_UILIMIT_SYSTEMPARAMETERS |
-                      JOB_OBJECT_UILIMIT_DESKTOP |
-                      JOB_OBJECT_UILIMIT_EXITWINDOWS |
-                      JOB_OBJECT_UILIMIT_DISPLAYSETTINGS,
-                  policy);
-
-      policy->SetIntegrityLevel(sandbox::INTEGRITY_LEVEL_LOW);
     }
 
     // Allow the server side of GPU sockets, which are pipes that have
@@ -325,7 +333,8 @@ class GpuSandboxedProcessLauncherDelegate
 
 #if defined(OS_ANDROID)
 template <typename Interface>
-void BindJavaInterface(mojo::InterfaceRequest<Interface> request) {
+void BindJavaInterface(const service_manager::BindSourceInfo& source_info,
+                       mojo::InterfaceRequest<Interface> request) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   content::GetGlobalJavaInterfaces()->GetInterface(std::move(request));
 }
@@ -353,7 +362,8 @@ class GpuProcessHost::ConnectionFilterImpl : public ConnectionFilter {
                        mojo::ScopedMessagePipeHandle* interface_pipe,
                        service_manager::Connector* connector) override {
     if (registry_.CanBindInterface(interface_name)) {
-      registry_.BindInterface(interface_name, std::move(*interface_pipe));
+      registry_.BindInterface(source_info, interface_name,
+                              std::move(*interface_pipe));
     } else {
       GetContentClient()->browser()->BindInterfaceRequest(
           source_info, interface_name, interface_pipe);
@@ -609,7 +619,6 @@ bool GpuProcessHost::Init() {
   process_->GetHost()->CreateChannelMojo();
 
   gpu::GpuPreferences gpu_preferences = GetGpuPreferencesFromCommandLine();
-  GpuDataManagerImpl::GetInstance()->UpdateGpuPreferences(&gpu_preferences);
   if (in_process_) {
     DCHECK_CURRENTLY_ON(BrowserThread::IO);
     DCHECK(GetGpuMainThreadFactory());
@@ -629,7 +638,7 @@ bool GpuProcessHost::Init() {
     in_process_gpu_thread_->StartWithOptions(options);
 
     OnProcessLaunched();  // Fake a callback that the process is ready.
-  } else if (!LaunchGpuProcess()) {
+  } else if (!LaunchGpuProcess(&gpu_preferences)) {
     return false;
   }
 
@@ -987,7 +996,7 @@ void GpuProcessHost::ForceShutdown() {
   process_->ForceShutdown();
 }
 
-bool GpuProcessHost::LaunchGpuProcess() {
+bool GpuProcessHost::LaunchGpuProcess(gpu::GpuPreferences* gpu_preferences) {
   const base::CommandLine& browser_command_line =
       *base::CommandLine::ForCurrentProcess();
 
@@ -1045,7 +1054,8 @@ bool GpuProcessHost::LaunchGpuProcess() {
   GetContentClient()->browser()->AppendExtraCommandLineSwitches(
       cmd_line.get(), process_->GetData().id);
 
-  GpuDataManagerImpl::GetInstance()->AppendGpuCommandLine(cmd_line.get());
+  GpuDataManagerImpl::GetInstance()->AppendGpuCommandLine(cmd_line.get(),
+                                                          gpu_preferences);
   if (cmd_line->HasSwitch(switches::kUseGL)) {
     swiftshader_rendering_ = (cmd_line->GetSwitchValueASCII(switches::kUseGL) ==
                               gl::kGLImplementationSwiftShaderForWebGLName);

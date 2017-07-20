@@ -20,9 +20,6 @@
 #include "core/svg/ColorDistance.h"
 
 #include "platform/graphics/Color.h"
-#include "platform/graphics/ColorBlend.h"
-
-#include <math.h>
 
 namespace blink {
 

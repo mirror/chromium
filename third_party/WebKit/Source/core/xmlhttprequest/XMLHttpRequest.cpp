@@ -27,8 +27,11 @@
 #include "bindings/core/v8/ArrayBufferOrArrayBufferViewOrBlobOrDocumentOrStringOrFormDataOrURLSearchParams.h"
 #include "bindings/core/v8/ArrayBufferOrArrayBufferViewOrBlobOrUSVString.h"
 #include "bindings/core/v8/ExceptionState.h"
+#include "core/dom/DOMArrayBuffer.h"
+#include "core/dom/DOMArrayBufferView.h"
 #include "core/dom/DOMException.h"
 #include "core/dom/DOMImplementation.h"
+#include "core/dom/DOMTypedArray.h"
 #include "core/dom/DocumentInit.h"
 #include "core/dom/DocumentParser.h"
 #include "core/dom/ExceptionCode.h"
@@ -53,9 +56,6 @@
 #include "core/page/ChromeClient.h"
 #include "core/page/Page.h"
 #include "core/probe/CoreProbes.h"
-#include "core/typed_arrays/DOMArrayBuffer.h"
-#include "core/typed_arrays/DOMArrayBufferView.h"
-#include "core/typed_arrays/DOMTypedArray.h"
 #include "core/url/URLSearchParams.h"
 #include "core/xmlhttprequest/XMLHttpRequestUpload.h"
 #include "platform/FileMetadata.h"
@@ -102,75 +102,11 @@ class ScopedEventDispatchProtect final {
   int* const level_;
 };
 
-// These methods were placed in HTTPParsers.h. Since these methods don't
-// perform ABNF validation but loosely look for the part that is likely to be
-// indicating the charset parameter, new code should use
-// HttpUtil::ParseContentType() than these. To discourage use of these methods,
-// moved from HTTPParser.h to the only user XMLHttpRequest.cpp.
-//
-// TODO(tyoshino): Switch XHR to use HttpUtil. See crbug.com/743311.
-void FindCharsetInMediaType(const String& media_type,
-                            unsigned& charset_pos,
-                            unsigned& charset_len,
-                            unsigned start) {
-  charset_pos = start;
-  charset_len = 0;
-
-  size_t pos = start;
-  unsigned length = media_type.length();
-
-  while (pos < length) {
-    pos = media_type.FindIgnoringASCIICase("charset", pos);
-    if (pos == kNotFound || !pos) {
-      charset_len = 0;
-      return;
-    }
-
-    // is what we found a beginning of a word?
-    if (media_type[pos - 1] > ' ' && media_type[pos - 1] != ';') {
-      pos += 7;
-      continue;
-    }
-
-    pos += 7;
-
-    // skip whitespace
-    while (pos != length && media_type[pos] <= ' ')
-      ++pos;
-
-    // this "charset" substring wasn't a parameter
-    // name, but there may be others
-    if (media_type[pos++] != '=')
-      continue;
-
-    while (pos != length && (media_type[pos] <= ' ' || media_type[pos] == '"' ||
-                             media_type[pos] == '\''))
-      ++pos;
-
-    // we don't handle spaces within quoted parameter values, because charset
-    // names cannot have any
-    unsigned endpos = pos;
-    while (pos != length && media_type[endpos] > ' ' &&
-           media_type[endpos] != '"' && media_type[endpos] != '\'' &&
-           media_type[endpos] != ';')
-      ++endpos;
-
-    charset_pos = pos;
-    charset_len = endpos - pos;
-    return;
-  }
-}
-String ExtractCharsetFromMediaType(const String& media_type) {
-  unsigned pos, len;
-  FindCharsetInMediaType(media_type, pos, len, 0);
-  return media_type.Substring(pos, len);
-}
-
 void ReplaceCharsetInMediaType(String& media_type,
                                const String& charset_value) {
   unsigned pos = 0, len = 0;
 
-  FindCharsetInMediaType(media_type, pos, len, 0);
+  FindCharsetInMediaType(media_type, pos, len);
 
   if (!len) {
     // When no charset found, do nothing.
@@ -1491,6 +1427,8 @@ AtomicString XMLHttpRequest::FinalResponseMIMETypeWithFallback() const {
   if (!final_type.IsEmpty())
     return final_type;
 
+  // FIXME: This fallback is not specified in the final MIME type algorithm
+  // of the XHR spec. Move this to more appropriate place.
   return AtomicString("text/xml");
 }
 
@@ -1654,8 +1592,11 @@ PassRefPtr<BlobDataHandle> XMLHttpRequest::CreateBlobDataHandleFromResponse() {
   if (!file_path.IsEmpty() && length_downloaded_to_file_) {
     blob_data->AppendFile(file_path, 0, length_downloaded_to_file_,
                           InvalidFileTime());
+    // FIXME: finalResponseMIMETypeWithFallback() defaults to
+    // text/xml which may be incorrect. Replace it with
+    // finalResponseMIMEType() after compatibility investigation.
+    blob_data->SetContentType(FinalResponseMIMETypeWithFallback().LowerASCII());
   }
-  blob_data->SetContentType(FinalResponseMIMETypeWithFallback().LowerASCII());
   return BlobDataHandle::Create(std::move(blob_data),
                                 length_downloaded_to_file_);
 }

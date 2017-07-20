@@ -81,3 +81,7 @@ void ServiceTabLauncher::OnTabLaunched(int request_id,
 
   tab_launched_callbacks_.Remove(request_id);
 }
+
+bool ServiceTabLauncher::Register(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}

@@ -19,15 +19,10 @@
 #include "url/gurl.h"
 
 class ContextualSearchRankerLoggerImpl;
-class DocumentWritePageLoadMetricsObserver;
-class FromGWSPageLoadMetricsLogger;
 class PluginInfoMessageFilter;
 class ProcessMemoryMetricsEmitter;
-class ServiceWorkerPageLoadMetricsObserver;
-class SubresourceFilterMetricsObserver;
 class UkmPageLoadMetricsObserver;
 class LocalNetworkRequestsPageLoadMetricsObserver;
-class MediaEngagementContentsObserver;
 
 namespace autofill {
 class AutofillMetrics;
@@ -55,10 +50,6 @@ namespace password_manager {
 class PasswordManagerMetricsRecorder;
 class PasswordFormMetricsRecorder;
 }  // namespace password_manager
-
-namespace previews {
-class PreviewsUKMObserver;
-}
 
 namespace ukm {
 
@@ -103,10 +94,6 @@ class METRICS_EXPORT UkmRecorder {
   friend PluginInfoMessageFilter;
   friend UkmPageLoadMetricsObserver;
   friend LocalNetworkRequestsPageLoadMetricsObserver;
-  friend DocumentWritePageLoadMetricsObserver;
-  friend FromGWSPageLoadMetricsLogger;
-  friend ServiceWorkerPageLoadMetricsObserver;
-  friend SubresourceFilterMetricsObserver;
   friend translate::TranslateRankerImpl;
   friend TestRecordingHelper;
   friend UkmInterface;
@@ -115,9 +102,7 @@ class METRICS_EXPORT UkmRecorder {
   friend content::RenderWidgetHostLatencyTracker;
   friend password_manager::PasswordManagerMetricsRecorder;
   friend password_manager::PasswordFormMetricsRecorder;
-  friend previews::PreviewsUKMObserver;
   friend resource_coordinator::CoordinationUnitManager;
-  friend MediaEngagementContentsObserver;
   FRIEND_TEST_ALL_PREFIXES(UkmServiceTest, AddEntryWithEmptyMetrics);
   FRIEND_TEST_ALL_PREFIXES(UkmServiceTest, EntryBuilderAndSerialization);
   FRIEND_TEST_ALL_PREFIXES(UkmServiceTest,

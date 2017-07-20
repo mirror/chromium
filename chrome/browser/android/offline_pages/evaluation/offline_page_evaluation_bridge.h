@@ -5,6 +5,7 @@
 #ifndef CHROME_BROWSER_ANDROID_OFFLINE_PAGES_EVALUATION_OFFLINE_PAGE_EVALUATION_BRIDGE_H_
 #define CHROME_BROWSER_ANDROID_OFFLINE_PAGES_EVALUATION_OFFLINE_PAGE_EVALUATION_BRIDGE_H_
 
+#include "base/android/jni_android.h"
 #include "base/android/jni_weak_ref.h"
 #include "base/android/scoped_java_ref.h"
 #include "base/macros.h"
@@ -28,6 +29,8 @@ class OfflinePageEvaluationBridge : public OfflinePageModel::Observer,
                                     public RequestCoordinator::Observer,
                                     public OfflineEventLogger::Client {
  public:
+  static bool Register(JNIEnv* env);
+
   OfflinePageEvaluationBridge(JNIEnv* env,
                               const base::android::JavaParamRef<jobject>& obj,
                               content::BrowserContext* browser_context,
@@ -41,8 +44,7 @@ class OfflinePageEvaluationBridge : public OfflinePageModel::Observer,
   void OfflinePageModelLoaded(OfflinePageModel* model) override;
   void OfflinePageAdded(OfflinePageModel* model,
                         const OfflinePageItem& added_page) override;
-  void OfflinePageDeleted(
-      const OfflinePageModel::DeletedPageInfo& page_info) override;
+  void OfflinePageDeleted(const DeletedPageInfo& page_info) override;
 
   // RequestCoordinator::Observer implementation.
   void OnAdded(const SavePageRequest& request) override;

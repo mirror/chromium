@@ -169,7 +169,6 @@ test("keyboard_unittests") {
   deps = [
     ":keyboard",
     ":keyboard_with_content",
-    ":test_support",
     "//base",
     "//base/test:test_support",
     "//content/test:test_support",

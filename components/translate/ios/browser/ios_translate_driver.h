@@ -17,10 +17,6 @@
 
 @class CRWJSInjectionReceiver;
 
-namespace language {
-class UrlLanguageHistogram;
-}
-
 namespace web {
 class NavigationManager;
 class WebState;
@@ -29,6 +25,7 @@ class WebState;
 namespace translate {
 
 class TranslateManager;
+class LanguageModel;
 
 // Content implementation of TranslateDriver.
 class IOSTranslateDriver : public TranslateDriver,
@@ -38,7 +35,7 @@ class IOSTranslateDriver : public TranslateDriver,
   IOSTranslateDriver(web::WebState* web_state,
                      web::NavigationManager* navigation_manager,
                      TranslateManager* translate_manager,
-                     language::UrlLanguageHistogram* language_histogram);
+                     LanguageModel* language_model);
   ~IOSTranslateDriver() override;
 
   LanguageDetectionController* language_detection_controller() {
@@ -104,7 +101,7 @@ class IOSTranslateDriver : public TranslateDriver,
   web::NavigationManager* navigation_manager_;
 
   // Model to be notified about detected language of every page visited.
-  language::UrlLanguageHistogram* language_histogram_;
+  translate::LanguageModel* language_model_;
 
   base::WeakPtr<TranslateManager> translate_manager_;
   std::unique_ptr<TranslateController> translate_controller_;

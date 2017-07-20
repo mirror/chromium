@@ -5,6 +5,8 @@
 #ifndef CHROME_BROWSER_ANDROID_LOCALE_SPECIAL_LOCALE_HANDLER_H_
 #define CHROME_BROWSER_ANDROID_LOCALE_SPECIAL_LOCALE_HANDLER_H_
 
+#include <jni.h>
+
 #include "base/android/scoped_java_ref.h"
 #include "base/macros.h"
 #include "components/search_engines/template_url.h"
@@ -46,5 +48,7 @@ class SpecialLocaleHandler {
 
   DISALLOW_COPY_AND_ASSIGN(SpecialLocaleHandler);
 };
+
+bool RegisterSpecialLocaleHandler(JNIEnv* env);
 
 #endif  // CHROME_BROWSER_ANDROID_LOCALE_SPECIAL_LOCALE_HANDLER_H_

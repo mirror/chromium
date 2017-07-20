@@ -20,14 +20,8 @@ source_set("common_source_set") {
     "app_view_controller.h",
     "client_connection_view_controller.h",
     "client_connection_view_controller.mm",
-    "first_launch_view_controller.h",
-    "first_launch_view_controller.mm",
-    "first_launch_view_presenter.h",
-    "first_launch_view_presenter.mm",
     "help_and_feedback.h",
     "help_and_feedback.mm",
-    "help_view_controller.h",
-    "help_view_controller.mm",
     "host_collection_header_view.h",
     "host_collection_header_view.mm",
     "host_collection_view_cell.h",
@@ -58,8 +52,6 @@ source_set("common_source_set") {
     "side_menu_items.mm",
     "user_status_presenter.h",
     "user_status_presenter.mm",
-    "web_view_controller.h",
-    "web_view_controller.mm",
   ]
 
   deps = [
@@ -72,9 +64,7 @@ source_set("common_source_set") {
     "//remoting/ios/app/resources:assets",
     "//remoting/ios/app/settings",
     "//remoting/ios/display",
-    "//remoting/ios/domain",
     "//remoting/ios/mdc",
-    "//remoting/ios/persistence",
     "//remoting/protocol",
     "//ui/base",
     "//ui/gfx",

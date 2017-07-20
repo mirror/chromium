@@ -1899,14 +1899,6 @@ void WindowTreeClient::SetGlobalOverrideCursor(
     window_manager_client_->WmSetGlobalOverrideCursor(std::move(cursor));
 }
 
-void WindowTreeClient::SetKeyEventsThatDontHideCursor(
-    std::vector<ui::mojom::EventMatcherPtr> cursor_key_list) {
-  if (window_manager_client_) {
-    window_manager_client_->SetKeyEventsThatDontHideCursor(
-        std::move(cursor_key_list));
-  }
-}
-
 void WindowTreeClient::RequestClose(Window* window) {
   DCHECK(window);
   if (window_manager_client_)
@@ -1922,25 +1914,6 @@ void WindowTreeClient::SetDisplayConfiguration(
     window_manager_client_->SetDisplayConfiguration(
         displays, std::move(viewport_metrics), primary_display_id,
         base::Bind(&OnAckMustSucceed));
-  }
-}
-
-void WindowTreeClient::AddDisplayReusingWindowTreeHost(
-    WindowTreeHostMus* window_tree_host,
-    const display::Display& display,
-    ui::mojom::WmViewportMetricsPtr viewport_metrics) {
-  DCHECK_NE(display.id(), window_tree_host->display_id());
-  window_tree_host->set_display_id(display.id());
-  if (window_manager_client_) {
-    // NOTE: The value of |is_primary_display| doesn't really matter as shortly
-    // after this SetDisplayConfiguration() is called.
-    const bool is_primary_display = true;
-    WindowMus* display_root_window = WindowMus::Get(window_tree_host->window());
-    window_manager_client_->SetDisplayRoot(
-        display, std::move(viewport_metrics), is_primary_display,
-        display_root_window->server_id(),
-        base::Bind(&WindowTreeClient::OnSetDisplayRootDone,
-                   base::Unretained(this), display_root_window->server_id()));
   }
 }
 

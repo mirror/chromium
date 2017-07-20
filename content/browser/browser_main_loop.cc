@@ -875,16 +875,6 @@ int BrowserMainLoop::PreCreateThreads() {
     RenderProcessHost::SetRunRendererInProcess(true);
 #endif
 
-  // Initialize origins that are whitelisted for process isolation.  Must be
-  // done after base::FeatureList is initialized, but before any navigations
-  // can happen.
-  std::vector<url::Origin> origins =
-      GetContentClient()->browser()->GetOriginsRequiringDedicatedProcess();
-  ChildProcessSecurityPolicyImpl* policy =
-      ChildProcessSecurityPolicyImpl::GetInstance();
-  for (auto origin : origins)
-    policy->AddIsolatedOrigin(origin);
-
   EVP_set_buggy_rsa_parser(
       base::FeatureList::IsEnabled(features::kBuggyRSAParser));
 
@@ -1383,7 +1373,7 @@ void BrowserMainLoop::ShutdownThreadsAndCleanUp() {
 }
 
 #if !defined(OS_ANDROID)
-viz::FrameSinkManager* BrowserMainLoop::GetFrameSinkManager() const {
+cc::FrameSinkManager* BrowserMainLoop::GetFrameSinkManager() const {
   return frame_sink_manager_impl_->frame_sink_manager();
 }
 #endif
@@ -1481,8 +1471,9 @@ int BrowserMainLoop::BrowserThreadsStarted() {
 
     // TODO(danakj): Don't make a FrameSinkManagerImpl when display is in the
     // Gpu process, instead get the mojo pointer from the Gpu process.
-    surface_utils::ConnectWithLocalFrameSinkManager(
-        host_frame_sink_manager_.get(), frame_sink_manager_impl_.get());
+    surface_utils::ConnectWithInProcessFrameSinkManager(
+        host_frame_sink_manager_.get(), frame_sink_manager_impl_.get(),
+        GetResizeTaskRunner());
   }
 #endif
 

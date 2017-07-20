@@ -30,11 +30,7 @@
 #include "chrome/browser/media/webrtc/media_stream_capture_indicator.h"
 #include "chrome/browser/memory/oom_memory_details.h"
 #include "chrome/browser/profiles/profile.h"
-#include "chrome/browser/resource_coordinator/background_tab_navigation_throttle.h"
-#include "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.h"
-#include "chrome/browser/resource_coordinator/tab_manager_grc_tab_signal_observer.h"
 #include "chrome/browser/resource_coordinator/tab_manager_observer.h"
-#include "chrome/browser/resource_coordinator/tab_manager_stats_collector.h"
 #include "chrome/browser/resource_coordinator/tab_manager_web_contents_data.h"
 #include "chrome/browser/sessions/session_restore.h"
 #include "chrome/browser/ui/browser.h"
@@ -55,7 +51,6 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/page_importance_signals.h"
-#include "services/resource_coordinator/public/cpp/resource_coordinator_features.h"
 
 #if defined(OS_CHROMEOS)
 #include "ash/multi_profile_uma.h"
@@ -154,10 +149,6 @@ TabManager::TabManager()
 #endif
   browser_tab_strip_tracker_.Init();
   session_restore_observer_.reset(new TabManagerSessionRestoreObserver(this));
-  if (resource_coordinator::IsResourceCoordinatorEnabled()) {
-    grc_tab_signal_observer_.reset(new GRCTabSignalObserver());
-  }
-  tab_manager_stats_collector_.reset(new TabManagerStatsCollector(this));
 }
 
 TabManager::~TabManager() {
@@ -225,7 +216,7 @@ void TabManager::Start() {
   // in the following way:
   // https://docs.google.com/document/d/1hPHkKtXXBTlsZx9s-9U17XC-ofEIzPo9FYbBEc7PPbk/edit?usp=sharing
   std::string purge_and_suspend_time = variations::GetVariationParamValue(
-      "PurgeAndSuspendAggressive", "purge-and-suspend-time");
+      "PurgeAndSuspend", "purge-and-suspend-time");
   unsigned int min_time_to_purge_sec = 0;
   if (purge_and_suspend_time.empty() ||
       !base::StringToUint(purge_and_suspend_time, &min_time_to_purge_sec))
@@ -234,7 +225,7 @@ void TabManager::Start() {
     min_time_to_purge_ = base::TimeDelta::FromSeconds(min_time_to_purge_sec);
 
   std::string max_purge_and_suspend_time = variations::GetVariationParamValue(
-      "PurgeAndSuspendAggressive", "max-purge-and-suspend-time");
+      "PurgeAndSuspend", "max-purge-and-suspend-time");
   unsigned int max_time_to_purge_sec = 0;
   // If max-purge-and-suspend-time is not specified or
   // max-purge-and-suspend-time is not valid (not number or smaller than
@@ -828,11 +819,6 @@ void TabManager::ActiveTabChanged(content::WebContents* old_contents,
                                   content::WebContents* new_contents,
                                   int index,
                                   int reason) {
-  // An active tab is not purged.
-  // Calling GetWebContentsData() early ensures that the WebContentsData is
-  // created for |new_contents|, which |tab_manager_stats_collector_| expects.
-  GetWebContentsData(new_contents)->set_is_purged(false);
-
   // If |old_contents| is set, that tab has switched from being active to
   // inactive, so record the time of that transition.
   if (old_contents) {
@@ -843,8 +829,11 @@ void TabManager::ActiveTabChanged(content::WebContents* old_contents,
             GetTimeToPurge(min_time_to_purge_, max_time_to_purge_));
     // Only record switch-to-tab metrics when a switch happens, i.e.
     // |old_contents| is set.
-    tab_manager_stats_collector_->RecordSwitchToTab(new_contents);
+    RecordSwitchToTab(new_contents);
   }
+
+  // An active tab is not purged.
+  GetWebContentsData(new_contents)->set_is_purged(false);
 
   // Reload |web_contents| if it is in an active browser and discarded.
   if (IsActiveWebContentsInActiveBrowser(new_contents)) {
@@ -859,16 +848,6 @@ void TabManager::TabInsertedAt(TabStripModel* tab_strip_model,
                                content::WebContents* contents,
                                int index,
                                bool foreground) {
-  // Gets CoordinationUnitID for this WebContents and adds it to
-  // GRCTabSignalObserver.
-  if (grc_tab_signal_observer_) {
-    auto* tab_resource_coordinator =
-        ResourceCoordinatorWebContentsObserver::FromWebContents(contents)
-            ->tab_resource_coordinator();
-    grc_tab_signal_observer_->AssociateCoordinationUnitIDWithWebContents(
-        tab_resource_coordinator->id(), contents);
-  }
-
   // Only interested in background tabs, as foreground tabs get taken care of by
   // ActiveTabChanged.
   if (foreground)
@@ -880,20 +859,6 @@ void TabManager::TabInsertedAt(TabStripModel* tab_strip_model,
   // Re-setting time-to-purge every time a tab becomes inactive.
   GetWebContentsData(contents)->set_time_to_purge(
       GetTimeToPurge(min_time_to_purge_, max_time_to_purge_));
-}
-
-void TabManager::TabClosingAt(TabStripModel* tab_strip_model,
-                              content::WebContents* contents,
-                              int index) {
-  // Gets CoordinationUnitID for this WebContents and removes it from
-  // GRCTabSignalObserver.
-  if (!grc_tab_signal_observer_)
-    return;
-  auto* tab_resource_coordinator =
-      ResourceCoordinatorWebContentsObserver::FromWebContents(contents)
-          ->tab_resource_coordinator();
-  grc_tab_signal_observer_->RemoveCoordinationUnitID(
-      tab_resource_coordinator->id());
 }
 
 void TabManager::OnBrowserSetLastActive(Browser* browser) {
@@ -1004,9 +969,17 @@ std::vector<TabManager::BrowserInfo> TabManager::GetBrowserInfoList() const {
   return browser_info_list;
 }
 
+void TabManager::RecordSwitchToTab(content::WebContents* contents) const {
+  if (is_session_restore_loading_tabs_) {
+    UMA_HISTOGRAM_ENUMERATION("TabManager.SessionRestore.SwitchToTab",
+                              GetWebContentsData(contents)->tab_loading_state(),
+                              TAB_LOADING_STATE_MAX);
+  }
+}
+
 content::NavigationThrottle::ThrottleCheckResult
-TabManager::MaybeThrottleNavigation(BackgroundTabNavigationThrottle* throttle) {
-  content::NavigationHandle* navigation_handle = throttle->navigation_handle();
+TabManager::MaybeThrottleNavigation(
+    content::NavigationHandle* navigation_handle) {
   if (!ShouldDelayNavigation(navigation_handle)) {
     loading_contents_.insert(navigation_handle->GetWebContents());
     return content::NavigationThrottle::PROCEED;
@@ -1016,7 +989,8 @@ TabManager::MaybeThrottleNavigation(BackgroundTabNavigationThrottle* throttle) {
   // navigation will be delayed.
   GetWebContentsData(navigation_handle->GetWebContents())
       ->SetTabLoadingState(TAB_IS_NOT_LOADING);
-  pending_navigations_.push_back(throttle);
+  pending_navigations_.push_back(navigation_handle);
+
   return content::NavigationThrottle::DEFER;
 }
 
@@ -1033,8 +1007,8 @@ void TabManager::OnDidFinishNavigation(
     content::NavigationHandle* navigation_handle) {
   auto it = pending_navigations_.begin();
   while (it != pending_navigations_.end()) {
-    BackgroundTabNavigationThrottle* throttle = *it;
-    if (throttle->navigation_handle() == navigation_handle) {
+    content::NavigationHandle* pending_handle = *it;
+    if (pending_handle == navigation_handle) {
       pending_navigations_.erase(it);
       break;
     }
@@ -1063,39 +1037,41 @@ void TabManager::LoadNextBackgroundTabIfNeeded() {
   if (pending_navigations_.empty())
     return;
 
-  BackgroundTabNavigationThrottle* throttle = pending_navigations_.front();
+  content::NavigationHandle* navigation_handle = pending_navigations_.front();
   pending_navigations_.erase(pending_navigations_.begin());
-  ResumeNavigation(throttle);
+  ResumeNavigation(navigation_handle);
 }
 
 void TabManager::ResumeTabNavigationIfNeeded(content::WebContents* contents) {
-  BackgroundTabNavigationThrottle* throttle =
+  content::NavigationHandle* navigation_handle =
       RemovePendingNavigationIfNeeded(contents);
-  if (throttle)
-    ResumeNavigation(throttle);
+  if (navigation_handle)
+    ResumeNavigation(navigation_handle);
 }
 
-void TabManager::ResumeNavigation(BackgroundTabNavigationThrottle* throttle) {
-  content::NavigationHandle* navigation_handle = throttle->navigation_handle();
+void TabManager::ResumeNavigation(
+    content::NavigationHandle* navigation_handle) {
   GetWebContentsData(navigation_handle->GetWebContents())
       ->SetTabLoadingState(TAB_IS_LOADING);
   loading_contents_.insert(navigation_handle->GetWebContents());
 
-  throttle->ResumeNavigation();
+  navigation_handle->Resume();
 }
 
-BackgroundTabNavigationThrottle* TabManager::RemovePendingNavigationIfNeeded(
+content::NavigationHandle* TabManager::RemovePendingNavigationIfNeeded(
     content::WebContents* contents) {
+  content::NavigationHandle* navigation_handle = nullptr;
   auto it = pending_navigations_.begin();
   while (it != pending_navigations_.end()) {
-    BackgroundTabNavigationThrottle* throttle = *it;
-    if (throttle->navigation_handle()->GetWebContents() == contents) {
+    navigation_handle = *it;
+    if ((*it)->GetWebContents() == contents) {
+      navigation_handle = *it;
       pending_navigations_.erase(it);
-      return throttle;
+      break;
     }
     it++;
   }
-  return nullptr;
+  return navigation_handle;
 }
 
 bool TabManager::IsTabLoadingForTest(content::WebContents* contents) const {
@@ -1111,8 +1087,8 @@ bool TabManager::IsTabLoadingForTest(content::WebContents* contents) const {
 
 bool TabManager::IsNavigationDelayedForTest(
     const content::NavigationHandle* navigation_handle) const {
-  for (const auto* it : pending_navigations_) {
-    if (it->navigation_handle() == navigation_handle)
+  for (const auto* nav : pending_navigations_) {
+    if (nav == navigation_handle)
       return true;
   }
   return false;

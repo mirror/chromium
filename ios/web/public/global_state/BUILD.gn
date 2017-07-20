@@ -7,7 +7,6 @@ source_set("global_state") {
 
   deps = [
     "//base",
-    "//net",
   ]
 
   sources = [

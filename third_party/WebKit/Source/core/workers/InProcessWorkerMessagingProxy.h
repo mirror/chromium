@@ -32,10 +32,8 @@
 #include "core/dom/ExecutionContext.h"
 #include "core/dom/MessagePort.h"
 #include "core/workers/ThreadedMessagingProxyBase.h"
-#include "core/workers/WorkerBackingThreadStartupData.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Noncopyable.h"
-#include "platform/wtf/Optional.h"
 #include "platform/wtf/PassRefPtr.h"
 
 namespace blink {
@@ -97,11 +95,6 @@ class CORE_EXPORT InProcessWorkerMessagingProxy
   InProcessWorkerMessagingProxy(ExecutionContext*,
                                 InProcessWorkerBase*,
                                 WorkerClients*);
-
-  // TODO(nhiroki): Remove this creation function once we no longer have
-  // CompositorWorker.
-  virtual WTF::Optional<WorkerBackingThreadStartupData>
-  CreateBackingThreadStartupData(v8::Isolate*) = 0;
 
   std::unique_ptr<InProcessWorkerObjectProxy> worker_object_proxy_;
 

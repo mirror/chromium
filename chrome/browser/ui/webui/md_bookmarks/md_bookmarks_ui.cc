@@ -80,8 +80,6 @@ content::WebUIDataSource* CreateMdBookmarksUIHTMLSource(Profile* profile) {
   AddLocalizedString(source, "menuOpenIncognito",
                      IDS_BOOKMARK_BAR_OPEN_INCOGNITO);
   AddLocalizedString(source, "menuRename", IDS_MD_BOOKMARK_MANAGER_MENU_RENAME);
-  AddLocalizedString(source, "menuShowInFolder",
-                     IDS_BOOKMARK_MANAGER_SHOW_IN_FOLDER);
   AddLocalizedString(source, "menuSort", IDS_MD_BOOKMARK_MANAGER_MENU_SORT);
   AddLocalizedString(source, "moreActionsButtonTitle",
                      IDS_MD_BOOKMARK_MANAGER_MORE_ACTIONS);
@@ -99,32 +97,19 @@ content::WebUIDataSource* CreateMdBookmarksUIHTMLSource(Profile* profile) {
                      IDS_MD_BOOKMARK_MANAGER_FOLDER_RENAME_TITLE);
   AddLocalizedString(source, "searchPrompt",
                      IDS_BOOKMARK_MANAGER_SEARCH_BUTTON);
-  AddLocalizedString(source, "searchResults",
-                     IDS_MD_BOOKMARK_MANAGER_SEARCH_RESULTS);
   AddLocalizedString(source, "saveEdit", IDS_SAVE);
   AddLocalizedString(source, "title", IDS_MD_BOOKMARK_MANAGER_TITLE);
   AddLocalizedString(source, "toastFolderSorted",
                      IDS_MD_BOOKMARK_MANAGER_TOAST_FOLDER_SORTED);
-  AddLocalizedString(source, "toastItemCopied",
-                     IDS_MD_BOOKMARK_MANAGER_TOAST_ITEM_COPIED);
-  AddLocalizedString(source, "toastItemDeleted",
-                     IDS_MD_BOOKMARK_MANAGER_TOAST_ITEM_DELETED);
   AddLocalizedString(source, "toastUrlCopied",
                      IDS_MD_BOOKMARK_MANAGER_TOAST_URL_COPIED);
   AddLocalizedString(source, "undo", IDS_BOOKMARK_BAR_UNDO);
 
   // Resources.
-  source->AddResourcePath("images/folder_open.svg",
-                          IDR_MD_BOOKMARKS_IMAGES_FOLDER_OPEN_SVG);
-  source->AddResourcePath("images/folder.svg",
-                          IDR_MD_BOOKMARKS_IMAGES_FOLDER_SVG);
 #if BUILDFLAG(USE_VULCANIZE)
   source->AddResourcePath("crisper.js", IDR_MD_BOOKMARKS_CRISPER_JS);
   source->SetDefaultResource(IDR_MD_BOOKMARKS_VULCANIZED_HTML);
-  std::unordered_set<std::string> exclusions;
-  exclusions.insert("images/folder_open.svg");
-  exclusions.insert("images/folder.svg");
-  source->UseGzip(exclusions);
+  source->UseGzip(std::unordered_set<std::string>());
 #else
   source->AddResourcePath("actions.html", IDR_MD_BOOKMARKS_ACTIONS_HTML);
   source->AddResourcePath("actions.js", IDR_MD_BOOKMARKS_ACTIONS_JS);
@@ -155,6 +140,7 @@ content::WebUIDataSource* CreateMdBookmarksUIHTMLSource(Profile* profile) {
                           IDR_MD_BOOKMARKS_FOLDER_NODE_HTML);
   source->AddResourcePath("folder_node.js",
                           IDR_MD_BOOKMARKS_FOLDER_NODE_JS);
+  source->AddResourcePath("icons.html", IDR_MD_BOOKMARKS_ICONS_HTML);
   source->AddResourcePath("item.html", IDR_MD_BOOKMARKS_ITEM_HTML);
   source->AddResourcePath("item.js", IDR_MD_BOOKMARKS_ITEM_JS);
   source->AddResourcePath("list.html", IDR_MD_BOOKMARKS_LIST_HTML);

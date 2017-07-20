@@ -40,8 +40,8 @@ class CoordinatorImpl : public Coordinator, public mojom::Coordinator {
 
   // Binds a client library to this coordinator instance.
   void BindCoordinatorRequest(
-      mojom::CoordinatorRequest,
-      const service_manager::BindSourceInfo& source_info) override;
+      const service_manager::BindSourceInfo& source_info,
+      mojom::CoordinatorRequest) override;
 
   // mojom::Coordinator implementation.
   void RegisterClientProcess(mojom::ClientProcessPtr,
@@ -129,8 +129,6 @@ class CoordinatorImpl : public Coordinator, public mojom::Coordinator {
   void OnOSMemoryDumpResponse(mojom::ClientProcess*,
                               bool success,
                               const OSMemDumpMap&);
-  void RemovePendingResponse(mojom::ClientProcess*,
-                             QueuedMemoryDumpRequest::PendingResponse::Type);
 
   void PerformNextQueuedGlobalMemoryDump();
   void FinalizeGlobalMemoryDumpIfAllManagersReplied();

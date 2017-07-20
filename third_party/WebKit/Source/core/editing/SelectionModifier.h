@@ -34,12 +34,11 @@
 
 namespace blink {
 
-enum class SelectionModifyAlteration { kMove, kExtend };
-
 class SelectionModifier {
   STACK_ALLOCATED();
 
  public:
+  using EAlteration = FrameSelection::EAlteration;
   using VerticalDirection = FrameSelection::VerticalDirection;
 
   // |frame| is used for providing settings.
@@ -53,8 +52,8 @@ class SelectionModifier {
   }
   const VisibleSelection& Selection() const { return selection_; }
 
-  bool Modify(SelectionModifyAlteration, SelectionDirection, TextGranularity);
-  bool ModifyWithPageGranularity(SelectionModifyAlteration,
+  bool Modify(EAlteration, SelectionDirection, TextGranularity);
+  bool ModifyWithPageGranularity(EAlteration,
                                  unsigned vertical_distance,
                                  VerticalDirection);
 

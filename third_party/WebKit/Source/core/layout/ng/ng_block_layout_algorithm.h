@@ -80,7 +80,6 @@ class CORE_EXPORT NGBlockLayoutAlgorithm
 
   NGPreviousInflowPosition ComputeInflowPosition(
       const NGPreviousInflowPosition& previous_inflow_position,
-      const NGLayoutInputNode child,
       const NGInflowChildData& child_data,
       const WTF::Optional<NGLogicalOffset>& child_bfc_offset,
       const NGLogicalOffset& logical_offset,
@@ -148,9 +147,7 @@ class CORE_EXPORT NGBlockLayoutAlgorithm
   void FinalizeForFragmentation();
 
   void PropagateBaselinesFromChildren();
-  bool AddBaseline(const NGBaselineRequest&,
-                   const NGPhysicalFragment*,
-                   LayoutUnit child_offset);
+  bool AddBaseline(const NGBaselineRequest&, unsigned);
 
   // Calculates logical offset for the current fragment using either
   // {@code content_size_} when the fragment doesn't know it's offset

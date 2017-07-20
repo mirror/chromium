@@ -139,8 +139,6 @@ const char kChromeUIUserImageURL[] = "chrome://userimage/";
 // TODO(xdai): Change it to chrome://settings/cupsPrinters after M56 since MD
 // settings is going to launch in Chrome OS in M57.
 const char kChromeUIMdCupsSettingsURL[] = "chrome://md-settings/cupsPrinters";
-const char kCupsPrintLearnMoreURL[] =
-    "https://support.google.com/chromebook?p=chromebook_printing";
 #endif  // defined(OS_CHROMEOS)
 
 #if defined(OS_WIN)
@@ -221,7 +219,6 @@ const char kChromeUILargeIconHost[] = "large-icon";
 const char kChromeUILocalStateHost[] = "local-state";
 const char kChromeUIMdPolicyHost[] = "md-policy";
 const char kChromeUIMdSettingsHost[] = "md-settings";
-const char kChromeUIMediaEngagementHost[] = "media-engagement";
 const char kChromeUINaClHost[] = "nacl";
 const char kChromeUINetExportHost[] = "net-export";
 const char kChromeUINetInternalsHost[] = "net-internals";
@@ -627,8 +624,6 @@ const char kLearnMoreEnterpriseURL[] =
     "https://support.google.com/chromebook/?p=managed";
 const char kAndroidAppsLearnMoreURL[] =
     "https://support.google.com/chromebook/?p=playapps";
-const char kInstantTetheringLearnMoreURL[] =
-    "https://support.google.com/pixelphone/answer/2812516";
 #endif
 
 const char kRemoveNonCWSExtensionURL[] =

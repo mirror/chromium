@@ -27,12 +27,10 @@
     {
       'target_name': 'app',
       'dependencies': [
-        '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:load_time_data',
         '<(DEPTH)/ui/webui/resources/js/cr/ui/compiled_resources2.gyp:splitter',
         '<(EXTERNS_GYP):chrome_extensions',
         'api_listener',
         'dnd_manager',
-        'mouse_focus_behavior',
         'router',
         'store',
         'store_client',
@@ -64,6 +62,7 @@
       'target_name': 'dialog_focus_manager',
       'dependencies': [
         '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:cr',
+        'mouse_focus_behavior',
       ],
       'includes': ['../../../../third_party/closure_compiler/compile_js2.gypi'],
     },
@@ -110,6 +109,7 @@
         '<(EXTERNS_GYP):chrome_extensions',
         'actions',
         'command_manager',
+        'mouse_focus_behavior',
         'store_client',
       ],
     },
@@ -120,6 +120,7 @@
         '<(EXTERNS_GYP):chrome_extensions',
         'actions',
         'command_manager',
+        'mouse_focus_behavior',
         'store_client',
       ],
       'includes': ['../../../../third_party/closure_compiler/compile_js2.gypi'],

@@ -22,6 +22,7 @@
 #include "core/css/CSSReflectValue.h"
 #include "core/css/CSSShadowValue.h"
 #include "core/css/CSSStringValue.h"
+#include "core/css/CSSTimingFunctionValue.h"
 #include "core/css/CSSURIValue.h"
 #include "core/css/CSSUnicodeRangeValue.h"
 #include "core/css/CSSUnsetValue.h"
@@ -34,8 +35,8 @@
 #include "core/css/parser/CSSPropertyParserHelpers.h"
 #include "core/css/parser/CSSVariableParser.h"
 #include "core/css/properties/CSSPropertyAlignmentUtils.h"
-#include "core/css/properties/CSSPropertyAnimationTimingFunctionUtils.h"
-#include "core/css/properties/CSSPropertyBackgroundUtils.h"
+#include "core/css/properties/CSSPropertyAnimationIterationCountUtils.h"
+#include "core/css/properties/CSSPropertyAnimationNameUtils.h"
 #include "core/css/properties/CSSPropertyBorderImageUtils.h"
 #include "core/css/properties/CSSPropertyBoxShadowUtils.h"
 #include "core/css/properties/CSSPropertyDescriptor.h"
@@ -46,6 +47,7 @@
 #include "core/css/properties/CSSPropertyPositionUtils.h"
 #include "core/css/properties/CSSPropertyTextDecorationLineUtils.h"
 #include "core/css/properties/CSSPropertyTransitionPropertyUtils.h"
+#include "core/css/properties/CSSPropertyWebkitBorderWidthUtils.h"
 #include "core/frame/UseCounter.h"
 #include "core/layout/LayoutTheme.h"
 #include "platform/wtf/text/StringBuilder.h"
@@ -304,6 +306,198 @@ static CSSValue* ConsumeFontVariantList(CSSParserTokenRange& range) {
   return nullptr;
 }
 
+static CSSValue* ConsumeLocale(CSSParserTokenRange& range) {
+  if (range.Peek().Id() == CSSValueAuto)
+    return ConsumeIdent(range);
+  return ConsumeString(range);
+}
+
+static CSSValue* ConsumeSteps(CSSParserTokenRange& range) {
+  DCHECK_EQ(range.Peek().FunctionId(), CSSValueSteps);
+  CSSParserTokenRange range_copy = range;
+  CSSParserTokenRange args = ConsumeFunction(range_copy);
+
+  CSSPrimitiveValue* steps = ConsumePositiveInteger(args);
+  if (!steps)
+    return nullptr;
+
+  StepsTimingFunction::StepPosition position =
+      StepsTimingFunction::StepPosition::END;
+  if (ConsumeCommaIncludingWhitespace(args)) {
+    switch (args.ConsumeIncludingWhitespace().Id()) {
+      case CSSValueMiddle:
+        if (!RuntimeEnabledFeatures::WebAnimationsAPIEnabled())
+          return nullptr;
+        position = StepsTimingFunction::StepPosition::MIDDLE;
+        break;
+      case CSSValueStart:
+        position = StepsTimingFunction::StepPosition::START;
+        break;
+      case CSSValueEnd:
+        position = StepsTimingFunction::StepPosition::END;
+        break;
+      default:
+        return nullptr;
+    }
+  }
+
+  if (!args.AtEnd())
+    return nullptr;
+
+  range = range_copy;
+  return CSSStepsTimingFunctionValue::Create(steps->GetIntValue(), position);
+}
+
+static CSSValue* ConsumeFrames(CSSParserTokenRange& range) {
+  DCHECK_EQ(range.Peek().FunctionId(), CSSValueFrames);
+  CSSParserTokenRange range_copy = range;
+  CSSParserTokenRange args = ConsumeFunction(range_copy);
+
+  CSSPrimitiveValue* frames = ConsumePositiveInteger(args);
+  if (!frames)
+    return nullptr;
+
+  int frames_int = frames->GetIntValue();
+  if (frames_int <= 1)
+    return nullptr;
+
+  if (!args.AtEnd())
+    return nullptr;
+
+  range = range_copy;
+  return CSSFramesTimingFunctionValue::Create(frames_int);
+}
+
+static CSSValue* ConsumeCubicBezier(CSSParserTokenRange& range) {
+  DCHECK_EQ(range.Peek().FunctionId(), CSSValueCubicBezier);
+  CSSParserTokenRange range_copy = range;
+  CSSParserTokenRange args = ConsumeFunction(range_copy);
+
+  double x1, y1, x2, y2;
+  if (ConsumeNumberRaw(args, x1) && x1 >= 0 && x1 <= 1 &&
+      ConsumeCommaIncludingWhitespace(args) && ConsumeNumberRaw(args, y1) &&
+      ConsumeCommaIncludingWhitespace(args) && ConsumeNumberRaw(args, x2) &&
+      x2 >= 0 && x2 <= 1 && ConsumeCommaIncludingWhitespace(args) &&
+      ConsumeNumberRaw(args, y2) && args.AtEnd()) {
+    range = range_copy;
+    return CSSCubicBezierTimingFunctionValue::Create(x1, y1, x2, y2);
+  }
+
+  return nullptr;
+}
+
+static CSSValue* ConsumeAnimationTimingFunction(CSSParserTokenRange& range) {
+  CSSValueID id = range.Peek().Id();
+  if (id == CSSValueEase || id == CSSValueLinear || id == CSSValueEaseIn ||
+      id == CSSValueEaseOut || id == CSSValueEaseInOut ||
+      id == CSSValueStepStart || id == CSSValueStepEnd ||
+      id == CSSValueStepMiddle)
+    return ConsumeIdent(range);
+
+  CSSValueID function = range.Peek().FunctionId();
+  if (function == CSSValueSteps)
+    return ConsumeSteps(range);
+  if (RuntimeEnabledFeatures::FramesTimingFunctionEnabled() &&
+      function == CSSValueFrames) {
+    return ConsumeFrames(range);
+  }
+  if (function == CSSValueCubicBezier)
+    return ConsumeCubicBezier(range);
+  return nullptr;
+}
+
+static CSSValue* ConsumeAnimationValue(CSSPropertyID property,
+                                       CSSParserTokenRange& range,
+                                       const CSSParserContext* context,
+                                       bool use_legacy_parsing) {
+  switch (property) {
+    case CSSPropertyAnimationDelay:
+    case CSSPropertyTransitionDelay:
+      return ConsumeTime(range, kValueRangeAll);
+    case CSSPropertyAnimationDirection:
+      return ConsumeIdent<CSSValueNormal, CSSValueAlternate, CSSValueReverse,
+                          CSSValueAlternateReverse>(range);
+    case CSSPropertyAnimationDuration:
+    case CSSPropertyTransitionDuration:
+      return ConsumeTime(range, kValueRangeNonNegative);
+    case CSSPropertyAnimationFillMode:
+      return ConsumeIdent<CSSValueNone, CSSValueForwards, CSSValueBackwards,
+                          CSSValueBoth>(range);
+    case CSSPropertyAnimationIterationCount:
+      return CSSPropertyAnimationIterationCountUtils::
+          ConsumeAnimationIterationCount(range);
+    case CSSPropertyAnimationName:
+      return CSSPropertyAnimationNameUtils::ConsumeAnimationName(
+          range, context, use_legacy_parsing);
+    case CSSPropertyAnimationPlayState:
+      return ConsumeIdent<CSSValueRunning, CSSValuePaused>(range);
+    case CSSPropertyTransitionProperty:
+      return CSSPropertyTransitionPropertyUtils::ConsumeTransitionProperty(
+          range);
+    case CSSPropertyAnimationTimingFunction:
+    case CSSPropertyTransitionTimingFunction:
+      return ConsumeAnimationTimingFunction(range);
+    default:
+      NOTREACHED();
+      return nullptr;
+  }
+}
+
+bool CSSPropertyParser::ConsumeAnimationShorthand(
+    const StylePropertyShorthand& shorthand,
+    bool use_legacy_parsing,
+    bool important) {
+  const unsigned longhand_count = shorthand.length();
+  CSSValueList* longhands[8];
+  DCHECK_LE(longhand_count, 8u);
+  for (size_t i = 0; i < longhand_count; ++i)
+    longhands[i] = CSSValueList::CreateCommaSeparated();
+
+  do {
+    bool parsed_longhand[8] = {false};
+    do {
+      bool found_property = false;
+      for (size_t i = 0; i < longhand_count; ++i) {
+        if (parsed_longhand[i])
+          continue;
+
+        if (CSSValue* value =
+                ConsumeAnimationValue(shorthand.properties()[i], range_,
+                                      context_, use_legacy_parsing)) {
+          parsed_longhand[i] = true;
+          found_property = true;
+          longhands[i]->Append(*value);
+          break;
+        }
+      }
+      if (!found_property)
+        return false;
+    } while (!range_.AtEnd() && range_.Peek().GetType() != kCommaToken);
+
+    // TODO(timloh): This will make invalid longhands, see crbug.com/386459
+    for (size_t i = 0; i < longhand_count; ++i) {
+      if (!parsed_longhand[i])
+        longhands[i]->Append(*CSSInitialValue::Create());
+      parsed_longhand[i] = false;
+    }
+  } while (ConsumeCommaIncludingWhitespace(range_));
+
+  for (size_t i = 0; i < longhand_count; ++i) {
+    // TODO(bugsnash): Refactor out the need to check for
+    // CSSPropertyTransitionProperty here when this is method implemented in the
+    // property APIs
+    if (shorthand.properties()[i] == CSSPropertyTransitionProperty &&
+        !CSSPropertyTransitionPropertyUtils::IsValidPropertyList(*longhands[i]))
+      return false;
+  }
+
+  for (size_t i = 0; i < longhand_count; ++i) {
+    AddParsedProperty(shorthand.properties()[i], shorthand.id(), *longhands[i],
+                      important);
+  }
+  return range_.AtEnd();
+}
+
 static CSSFunctionValue* ConsumeFilterFunction(
     CSSParserTokenRange& range,
     const CSSParserContext* context) {
@@ -514,6 +708,20 @@ static CSSValue* ConsumeBackgroundComponent(CSSPropertyID unresolved_property,
       break;
   };
   return nullptr;
+}
+
+static void AddBackgroundValue(CSSValue*& list, CSSValue* value) {
+  if (list) {
+    if (!list->IsBaseValueList()) {
+      CSSValue* first_value = list;
+      list = CSSValueList::CreateCommaSeparated();
+      ToCSSValueList(list)->Append(*first_value);
+    }
+    ToCSSValueList(list)->Append(*value);
+  } else {
+    // To conserve memory we don't actually wrap a single value in a list.
+    list = value;
+  }
 }
 
 static CSSValueList* ConsumeCommaSeparatedBackgroundComponent(
@@ -997,6 +1205,9 @@ const CSSValue* CSSPropertyParser::ParseSingleValue(
     case CSSPropertyWebkitLogicalWidth:
     case CSSPropertyWebkitLogicalHeight:
       return CSSPropertyLengthUtils::ConsumeWidthOrHeight(range_, *context_);
+    case CSSPropertyWebkitHyphenateCharacter:
+    case CSSPropertyWebkitLocale:
+      return ConsumeLocale(range_);
     case CSSPropertyAnimationDelay:
     case CSSPropertyTransitionDelay:
       return ConsumeCommaSeparatedList(ConsumeTime, range_, kValueRangeAll);
@@ -1006,13 +1217,32 @@ const CSSValue* CSSPropertyParser::ParseSingleValue(
                                        kValueRangeNonNegative);
     case CSSPropertyAnimationTimingFunction:
     case CSSPropertyTransitionTimingFunction:
-      return ConsumeCommaSeparatedList(CSSPropertyAnimationTimingFunctionUtils::
-                                           ConsumeAnimationTimingFunction,
-                                       range_);
+      return ConsumeCommaSeparatedList(ConsumeAnimationTimingFunction, range_);
     case CSSPropertyGridColumnGap:
     case CSSPropertyGridRowGap:
       return ConsumeLengthOrPercent(range_, context_->Mode(),
                                     kValueRangeNonNegative);
+    case CSSPropertyBorderBottomColor:
+    case CSSPropertyBorderLeftColor:
+    case CSSPropertyBorderRightColor:
+    case CSSPropertyBorderTopColor: {
+      bool allow_quirky_colors =
+          InQuirksMode() && (current_shorthand == CSSPropertyInvalid ||
+                             current_shorthand == CSSPropertyBorderColor);
+      return ConsumeColor(range_, context_->Mode(), allow_quirky_colors);
+    }
+    case CSSPropertyBorderBottomWidth:
+    case CSSPropertyBorderLeftWidth:
+    case CSSPropertyBorderRightWidth:
+    case CSSPropertyBorderTopWidth: {
+      bool allow_quirky_lengths =
+          InQuirksMode() && (current_shorthand == CSSPropertyInvalid ||
+                             current_shorthand == CSSPropertyBorderWidth);
+      UnitlessQuirk unitless =
+          allow_quirky_lengths ? UnitlessQuirk::kAllow : UnitlessQuirk::kForbid;
+      return CSSPropertyWebkitBorderWidthUtils::ConsumeBorderWidth(
+          range_, context_->Mode(), unitless);
+    }
     case CSSPropertyFilter:
     case CSSPropertyBackdropFilter:
       return ConsumeFilter(range_, context_);
@@ -1438,6 +1668,38 @@ bool CSSPropertyParser::Consume2Values(const StylePropertyShorthand& shorthand,
   return range_.AtEnd();
 }
 
+bool CSSPropertyParser::Consume4Values(const StylePropertyShorthand& shorthand,
+                                       bool important) {
+  DCHECK_EQ(shorthand.length(), 4u);
+  const CSSPropertyID* longhands = shorthand.properties();
+  const CSSValue* top = ParseSingleValue(longhands[0], shorthand.id());
+  if (!top)
+    return false;
+
+  const CSSValue* right = ParseSingleValue(longhands[1], shorthand.id());
+  const CSSValue* bottom = nullptr;
+  const CSSValue* left = nullptr;
+  if (right) {
+    bottom = ParseSingleValue(longhands[2], shorthand.id());
+    if (bottom)
+      left = ParseSingleValue(longhands[3], shorthand.id());
+  }
+
+  if (!right)
+    right = top;
+  if (!bottom)
+    bottom = top;
+  if (!left)
+    left = right;
+
+  AddParsedProperty(longhands[0], shorthand.id(), *top, important);
+  AddParsedProperty(longhands[1], shorthand.id(), *right, important);
+  AddParsedProperty(longhands[2], shorthand.id(), *bottom, important);
+  AddParsedProperty(longhands[3], shorthand.id(), *left, important);
+
+  return range_.AtEnd();
+}
+
 static inline CSSValueID MapFromPageBreakBetween(CSSValueID value) {
   if (value == CSSValueAlways)
     return CSSValuePage;
@@ -1510,6 +1772,24 @@ bool CSSPropertyParser::ConsumeLegacyBreakProperty(CSSPropertyID property,
   return true;
 }
 
+static bool ConsumeBackgroundPosition(CSSParserTokenRange& range,
+                                      const CSSParserContext* context,
+                                      UnitlessQuirk unitless,
+                                      CSSValue*& result_x,
+                                      CSSValue*& result_y) {
+  do {
+    CSSValue* position_x = nullptr;
+    CSSValue* position_y = nullptr;
+    if (!ConsumePosition(range, *context, unitless,
+                         WebFeature::kThreeValuedPositionBackground, position_x,
+                         position_y))
+      return false;
+    AddBackgroundValue(result_x, position_x);
+    AddBackgroundValue(result_y, position_y);
+  } while (ConsumeCommaIncludingWhitespace(range));
+  return true;
+}
+
 static bool ConsumeRepeatStyleComponent(CSSParserTokenRange& range,
                                         CSSValue*& value1,
                                         CSSValue*& value2,
@@ -1549,8 +1829,8 @@ static bool ConsumeRepeatStyle(CSSParserTokenRange& range,
     CSSValue* repeat_y = nullptr;
     if (!ConsumeRepeatStyleComponent(range, repeat_x, repeat_y, implicit))
       return false;
-    CSSPropertyBackgroundUtils::AddBackgroundValue(result_x, repeat_x);
-    CSSPropertyBackgroundUtils::AddBackgroundValue(result_y, repeat_y);
+    AddBackgroundValue(result_x, repeat_x);
+    AddBackgroundValue(result_y, repeat_y);
   } while (ConsumeCommaIncludingWhitespace(range));
   return true;
 }
@@ -1610,11 +1890,10 @@ bool CSSPropertyParser::ConsumeBackgroundShorthand(
             origin_value = value;
           parsed_longhand[i] = true;
           found_property = true;
-          CSSPropertyBackgroundUtils::AddBackgroundValue(longhands[i], value);
+          AddBackgroundValue(longhands[i], value);
           if (value_y) {
             parsed_longhand[i + 1] = true;
-            CSSPropertyBackgroundUtils::AddBackgroundValue(longhands[i + 1],
-                                                           value_y);
+            AddBackgroundValue(longhands[i + 1], value_y);
           }
         }
       }
@@ -1633,14 +1912,11 @@ bool CSSPropertyParser::ConsumeBackgroundShorthand(
       if ((property == CSSPropertyBackgroundClip ||
            property == CSSPropertyWebkitMaskClip) &&
           !parsed_longhand[i] && origin_value) {
-        CSSPropertyBackgroundUtils::AddBackgroundValue(longhands[i],
-                                                       origin_value);
+        AddBackgroundValue(longhands[i], origin_value);
         continue;
       }
-      if (!parsed_longhand[i]) {
-        CSSPropertyBackgroundUtils::AddBackgroundValue(
-            longhands[i], CSSInitialValue::Create());
-      }
+      if (!parsed_longhand[i])
+        AddBackgroundValue(longhands[i], CSSInitialValue::Create());
     }
   } while (ConsumeCommaIncludingWhitespace(range_));
   if (!range_.AtEnd())
@@ -2062,14 +2338,24 @@ bool CSSPropertyParser::ParseShorthand(CSSPropertyID unresolved_property,
       CSSPropertyDescriptor::Get(property);
   if (css_property_desc.parseShorthand) {
     return css_property_desc.parseShorthand(
-        important, range_, *context_, isPropertyAlias(unresolved_property),
+        important, range_, *context_,
+        CSSParserLocalContext(isPropertyAlias(unresolved_property)),
         *parsed_properties_);
   }
 
   switch (property) {
+    case CSSPropertyAnimation:
+      return ConsumeAnimationShorthand(
+          animationShorthandForParsing(),
+          unresolved_property == CSSPropertyAliasWebkitAnimation, important);
+    case CSSPropertyTransition:
+      return ConsumeAnimationShorthand(transitionShorthandForParsing(), false,
+                                       important);
     case CSSPropertyTextDecoration:
       DCHECK(RuntimeEnabledFeatures::CSS3TextDecorationsEnabled());
       return ConsumeShorthandGreedily(textDecorationShorthand(), important);
+    case CSSPropertyPadding:
+      return Consume4Values(paddingShorthand(), important);
     case CSSPropertyMarker: {
       const CSSValue* marker = ParseSingleValue(CSSPropertyMarkerStart);
       if (!marker || !range_.AtEnd())
@@ -2088,6 +2374,12 @@ bool CSSPropertyParser::ParseShorthand(CSSPropertyID unresolved_property,
       return ConsumeShorthandGreedily(columnRuleShorthand(), important);
     case CSSPropertyListStyle:
       return ConsumeShorthandGreedily(listStyleShorthand(), important);
+    case CSSPropertyBorderColor:
+      return Consume4Values(borderColorShorthand(), important);
+    case CSSPropertyBorderStyle:
+      return Consume4Values(borderStyleShorthand(), important);
+    case CSSPropertyBorderWidth:
+      return Consume4Values(borderWidthShorthand(), important);
     case CSSPropertyBorderTop:
       return ConsumeShorthandGreedily(borderTopShorthand(), important);
     case CSSPropertyBorderRight:
@@ -2105,6 +2397,24 @@ bool CSSPropertyParser::ParseShorthand(CSSPropertyID unresolved_property,
     case CSSPropertyWebkitColumnBreakBefore:
     case CSSPropertyWebkitColumnBreakInside:
       return ConsumeLegacyBreakProperty(property, important);
+    case CSSPropertyWebkitMaskPosition:
+    case CSSPropertyBackgroundPosition: {
+      CSSValue* result_x = nullptr;
+      CSSValue* result_y = nullptr;
+      if (!ConsumeBackgroundPosition(range_, context_, UnitlessQuirk::kAllow,
+                                     result_x, result_y) ||
+          !range_.AtEnd())
+        return false;
+      AddParsedProperty(property == CSSPropertyBackgroundPosition
+                            ? CSSPropertyBackgroundPositionX
+                            : CSSPropertyWebkitMaskPositionX,
+                        property, *result_x, important);
+      AddParsedProperty(property == CSSPropertyBackgroundPosition
+                            ? CSSPropertyBackgroundPositionY
+                            : CSSPropertyWebkitMaskPositionY,
+                        property, *result_y, important);
+      return true;
+    }
     case CSSPropertyBackgroundRepeat:
     case CSSPropertyWebkitMaskRepeat: {
       CSSValue* result_x = nullptr;
@@ -2159,8 +2469,16 @@ bool CSSPropertyParser::ParseShorthand(CSSPropertyID unresolved_property,
       return ConsumePlaceItemsShorthand(important);
     case CSSPropertyPlaceSelf:
       return ConsumePlaceSelfShorthand(important);
-    case CSSPropertyScrollBoundaryBehavior:
-      return Consume2Values(scrollBoundaryBehaviorShorthand(), important);
+    case CSSPropertyScrollPadding:
+      return Consume4Values(scrollPaddingShorthand(), important);
+    case CSSPropertyScrollPaddingInline:
+      return Consume2Values(scrollPaddingInlineShorthand(), important);
+    case CSSPropertyScrollSnapMargin:
+      return Consume4Values(scrollSnapMarginShorthand(), important);
+    case CSSPropertyScrollSnapMarginBlock:
+      return Consume2Values(scrollSnapMarginBlockShorthand(), important);
+    case CSSPropertyScrollSnapMarginInline:
+      return Consume2Values(scrollSnapMarginInlineShorthand(), important);
     default:
       return false;
   }

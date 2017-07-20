@@ -57,8 +57,7 @@ import java.util.List;
  */
 @RunWith(LocalRobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
-@Features({@Features.Register(ChromeFeatureList.NTP_OFFLINE_PAGES_FEATURE_NAME),
-        @Features.Register(ChromeFeatureList.SUGGESTIONS_HOME_MODERN_LAYOUT)})
+@Features(@Features.Register(ChromeFeatureList.NTP_OFFLINE_PAGES_FEATURE_NAME))
 public class TileGroupTest {
     private static final int MAX_TILES_TO_FETCH = 4;
     private static final int TILE_TITLE_LINES = 1;

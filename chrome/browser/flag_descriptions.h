@@ -78,9 +78,6 @@ extern const char kBypassAppBannerEngagementChecksDescription[];
 extern const char kCaptureThumbnailOnLoadFinishedName[];
 extern const char kCaptureThumbnailOnLoadFinishedDescription[];
 
-extern const char kCaptureThumbnailOnNavigatingAwayName[];
-extern const char kCaptureThumbnailOnNavigatingAwayDescription[];
-
 extern const char kCastStreamingHwEncodingName[];
 extern const char kCastStreamingHwEncodingDescription[];
 
@@ -212,6 +209,9 @@ extern const char kEnableEnumeratingAudioDevicesDescription[];
 extern const char kEnableGenericSensorName[];
 extern const char kEnableGenericSensorDescription[];
 
+extern const char kEnableGroupedHistoryName[];
+extern const char kEnableGroupedHistoryDescription[];
+
 extern const char kEnableHDRName[];
 extern const char kEnableHDRDescription[];
 
@@ -256,9 +256,6 @@ extern const char kEnableSuggestionsHomeModernLayoutDescription[];
 
 extern const char kEnableTokenBindingName[];
 extern const char kEnableTokenBindingDescription[];
-
-extern const char kEnableUsernameCorrectionName[];
-extern const char kEnableUsernameCorrectionDescription[];
 
 extern const char kEnableUseZoomForDsfName[];
 extern const char kEnableUseZoomForDsfDescription[];
@@ -381,8 +378,8 @@ extern const char kFramebustingDescription[];
 extern const char kGamepadExtensionsName[];
 extern const char kGamepadExtensionsDescription[];
 
-extern const char kGlCompositedOverlayCandidateQuadBordersName[];
-extern const char kGlCompositedOverlayCandidateQuadBordersDescription[];
+extern const char kGlCompositedTextureQuadBordersName[];
+extern const char kGlCompositedTextureQuadBordersDescription[];
 
 extern const char kGpuRasterizationMsaaSampleCountName[];
 extern const char kGpuRasterizationMsaaSampleCountDescription[];
@@ -708,12 +705,10 @@ extern const char kSpeculativeServiceWorkerStartOnQueryInputDescription[];
 extern const char kSpellingFeedbackFieldTrialName[];
 extern const char kSpellingFeedbackFieldTrialDescription[];
 
-extern const char kTLS13VariantName[];
-extern const char kTLS13VariantDescription[];
-extern const char kTLS13VariantDisabled[];
-extern const char kTLS13VariantDraft[];
-extern const char kTLS13VariantExperiment[];
-extern const char kTLS13VariantRecordTypeExperiment[];
+extern const char kSslVersionMaxName[];
+extern const char kSslVersionMaxDescription[];
+extern const char kSslVersionMaxTls12[];
+extern const char kSslVersionMaxTls13[];
 
 extern const char kSuggestionsWithSubStringMatchName[];
 extern const char kSuggestionsWithSubStringMatchDescription[];
@@ -963,6 +958,12 @@ extern const char kEnableNtpMostLikelyFaviconsFromServerDescription[];
 
 extern const char kEnableNtpOfflinePageDownloadSuggestionsName[];
 extern const char kEnableNtpOfflinePageDownloadSuggestionsDescription[];
+
+extern const char kEnableNtpPhysicalWebPageSuggestionsName[];
+extern const char kEnableNtpPhysicalWebPageSuggestionsDescription[];
+
+extern const char kEnableNtpRecentOfflineTabSuggestionsName[];
+extern const char kEnableNtpRecentOfflineTabSuggestionsDescription[];
 
 extern const char kEnableNtpRemoteSuggestionsName[];
 extern const char kEnableNtpRemoteSuggestionsDescription[];
@@ -1401,9 +1402,6 @@ extern const char kTouchscreenCalibrationDescription[];
 
 extern const char kUiDevToolsName[];
 extern const char kUiDevToolsDescription[];
-
-extern const char kUseCrosMidiServiceName[];
-extern const char kUseCrosMidiServiceNameDescription[];
 
 extern const char kUseMusName[];
 extern const char kUseMusDescription[];

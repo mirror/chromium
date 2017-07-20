@@ -22,23 +22,16 @@
 #include "cc/surfaces/surface_dependency_tracker.h"
 #include "cc/surfaces/surface_observer.h"
 #include "cc/surfaces/surface_reference.h"
+#include "cc/surfaces/surface_reference_factory.h"
+#include "cc/surfaces/surface_sequence.h"
 #include "cc/surfaces/surfaces_export.h"
 #include "components/viz/common/surfaces/frame_sink_id.h"
 #include "components/viz/common/surfaces/surface_id.h"
-#include "components/viz/common/surfaces/surface_reference_factory.h"
-#include "components/viz/common/surfaces/surface_sequence.h"
 
 #if DCHECK_IS_ON()
 #include <iosfwd>
 #include <string>
 #endif
-
-namespace viz {
-namespace test {
-class SurfaceReferencesTest;
-class SurfaceSynchronizationTest;
-}
-}  // namespace viz
 
 namespace cc {
 
@@ -46,6 +39,10 @@ struct BeginFrameAck;
 struct BeginFrameArgs;
 class CompositorFrame;
 class Surface;
+
+namespace test {
+class SurfaceSynchronizationTest;
+}
 
 class CC_SURFACES_EXPORT SurfaceManager {
  public:
@@ -121,11 +118,11 @@ class CC_SURFACES_EXPORT SurfaceManager {
   // Require that the given sequence number must be satisfied (using
   // SatisfySequence) before the given surface can be destroyed.
   void RequireSequence(const viz::SurfaceId& surface_id,
-                       const viz::SurfaceSequence& sequence);
+                       const SurfaceSequence& sequence);
 
   // Satisfies the given sequence number. Once all sequence numbers that
   // a surface depends on are satisfied, the surface can be destroyed.
-  void SatisfySequence(const viz::SurfaceSequence& sequence);
+  void SatisfySequence(const SurfaceSequence& sequence);
 
   void RegisterFrameSinkId(const viz::FrameSinkId& frame_sink_id);
 
@@ -178,7 +175,7 @@ class CC_SURFACES_EXPORT SurfaceManager {
   const base::flat_set<viz::SurfaceId>& GetSurfacesThatReferenceChild(
       const viz::SurfaceId& surface_id) const;
 
-  const scoped_refptr<viz::SurfaceReferenceFactory>& reference_factory() {
+  const scoped_refptr<SurfaceReferenceFactory>& reference_factory() {
     return reference_factory_;
   }
 
@@ -186,9 +183,13 @@ class CC_SURFACES_EXPORT SurfaceManager {
     return lifetime_type_ == LifetimeType::REFERENCES;
   }
 
+  const base::flat_set<viz::FrameSinkId>& GetValidFrameSinkIds() {
+    return valid_frame_sink_ids_;
+  }
+
  private:
-  friend class viz::test::SurfaceSynchronizationTest;
-  friend class viz::test::SurfaceReferencesTest;
+  friend class test::SurfaceSynchronizationTest;
+  friend class SurfaceManagerRefTest;
 
   using SurfaceIdSet = std::unordered_set<viz::SurfaceId, viz::SurfaceIdHash>;
 
@@ -265,7 +266,7 @@ class CC_SURFACES_EXPORT SurfaceManager {
 
   // Set of SurfaceSequences that have been satisfied by a frame but not yet
   // waited on.
-  base::flat_set<viz::SurfaceSequence> satisfied_sequences_;
+  base::flat_set<SurfaceSequence> satisfied_sequences_;
 
   // Set of valid FrameSinkIds. When a viz::FrameSinkId is removed from
   // this set, any remaining (surface) sequences with that viz::FrameSinkId are
@@ -282,7 +283,7 @@ class CC_SURFACES_EXPORT SurfaceManager {
 
   // The DirectSurfaceReferenceFactory that uses this manager to create surface
   // references.
-  scoped_refptr<viz::SurfaceReferenceFactory> reference_factory_;
+  scoped_refptr<SurfaceReferenceFactory> reference_factory_;
 
   // Keeps track of surface references for a surface. The graph of references is
   // stored in both directions, so we know the parents and children for each

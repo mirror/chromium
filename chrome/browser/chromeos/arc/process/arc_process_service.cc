@@ -18,14 +18,12 @@
 
 #include "base/callback.h"
 #include "base/logging.h"
-#include "base/memory/singleton.h"
 #include "base/process/process.h"
 #include "base/process/process_iterator.h"
 #include "base/task_runner_util.h"
 #include "base/threading/sequenced_worker_pool.h"
 #include "base/trace_event/trace_event.h"
 #include "components/arc/arc_bridge_service.h"
-#include "components/arc/arc_browser_context_keyed_service_factory_base.h"
 #include "content/public/browser/browser_thread.h"
 
 namespace arc {
@@ -37,6 +35,8 @@ using std::vector;
 
 namespace {
 
+// Weak pointer.  This class is owned by ArcServiceManager.
+ArcProcessService* g_arc_process_service = nullptr;
 static constexpr char kInitName[] = "/init";
 static constexpr bool kNotFocused = false;
 static constexpr int64_t kNoActivityTimeInfo = 0L;
@@ -200,36 +200,10 @@ void Reset(scoped_refptr<ArcProcessService::NSPidToPidMap> pid_map) {
     pid_map->clear();
 }
 
-// Singleton factory for ArcProcessService.
-class ArcProcessServiceFactory
-    : public internal::ArcBrowserContextKeyedServiceFactoryBase<
-          ArcProcessService,
-          ArcProcessServiceFactory> {
- public:
-  // Factory name used by ArcBrowserContextKeyedServiceFactoryBase.
-  static constexpr const char* kName = "ArcProcessServiceFactory";
-
-  static ArcProcessServiceFactory* GetInstance() {
-    return base::Singleton<ArcProcessServiceFactory>::get();
-  }
-
- private:
-  friend base::DefaultSingletonTraits<ArcProcessServiceFactory>;
-  ArcProcessServiceFactory() = default;
-  ~ArcProcessServiceFactory() override = default;
-};
-
 }  // namespace
 
-// static
-ArcProcessService* ArcProcessService::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcProcessServiceFactory::GetForBrowserContext(context);
-}
-
-ArcProcessService::ArcProcessService(content::BrowserContext* context,
-                                     ArcBridgeService* bridge_service)
-    : arc_bridge_service_(bridge_service),
+ArcProcessService::ArcProcessService(ArcBridgeService* bridge_service)
+    : ArcService(bridge_service),
       nspid_to_pid_(new NSPidToPidMap()),
       weak_ptr_factory_(this) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
@@ -237,30 +211,21 @@ ArcProcessService::ArcProcessService(content::BrowserContext* context,
   task_runner_ = blocking_pool->GetSequencedTaskRunnerWithShutdownBehavior(
       blocking_pool->GetSequenceToken(),
       base::SequencedWorkerPool::SKIP_ON_SHUTDOWN);
-  arc_bridge_service_->process()->AddObserver(this);
+  arc_bridge_service()->process()->AddObserver(this);
+  DCHECK(!g_arc_process_service);
+  g_arc_process_service = this;
 }
 
 ArcProcessService::~ArcProcessService() {
-  // TODO(hidehiko): Currently, the lifetime of ArcBridgeService and
-  // BrowserContextKeyedService is not nested.
-  // If ArcServiceManager::Get() returns nullptr, it is already destructed,
-  // so do not touch it.
-  if (ArcServiceManager::Get())
-    arc_bridge_service_->process()->RemoveObserver(this);
+  DCHECK(g_arc_process_service == this);
+  g_arc_process_service = nullptr;
+  arc_bridge_service()->process()->RemoveObserver(this);
 }
 
 // static
 ArcProcessService* ArcProcessService::Get() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  // This is called from TaskManager implementation, which is isolated
-  // from BrowserContext.
-  // Use ArcServiceManager's BrowserContext instance, since 1) it is always
-  // allowed to use ARC, and 2) the rest of ARC service's lifetime are
-  // tied to it.
-  auto* arc_service_manager = ArcServiceManager::Get();
-  if (!arc_service_manager || !arc_service_manager->browser_context())
-    return nullptr;
-  return GetForBrowserContext(arc_service_manager->browser_context());
+  return g_arc_process_service;
 }
 
 void ArcProcessService::RequestSystemProcessList(
@@ -284,7 +249,7 @@ bool ArcProcessService::RequestAppProcessList(
     return false;
 
   mojom::ProcessInstance* process_instance = ARC_GET_INSTANCE_FOR_METHOD(
-      arc_bridge_service_->process(), RequestProcessList);
+      arc_bridge_service()->process(), RequestProcessList);
   if (!process_instance)
     return false;
 

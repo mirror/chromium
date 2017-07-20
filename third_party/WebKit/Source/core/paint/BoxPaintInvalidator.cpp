@@ -81,8 +81,7 @@ PaintInvalidationReason BoxPaintInvalidator::ComputePaintInvalidationReason() {
   if (reason != PaintInvalidationReason::kIncremental)
     return reason;
 
-  if (!RuntimeEnabledFeatures::RootLayerScrollingEnabled() &&
-      box_.IsLayoutView()) {
+  if (box_.IsLayoutView()) {
     const LayoutView& layout_view = ToLayoutView(box_);
     // In normal compositing mode, root background doesn't need to be
     // invalidated for box changes, because the background always covers the
@@ -90,8 +89,8 @@ PaintInvalidationReason BoxPaintInvalidator::ComputePaintInvalidationReason() {
     // compositor()->m_containerLayer. Also the scrollbars are always
     // composited. There are no other box decoration on the LayoutView thus we
     // can safely exit here.
-    if (layout_view.UsesCompositing() ||
-        RuntimeEnabledFeatures::SlimmingPaintV2Enabled())
+    if (layout_view.UsesCompositing() &&
+        !RuntimeEnabledFeatures::RootLayerScrollingEnabled())
       return reason;
   }
 

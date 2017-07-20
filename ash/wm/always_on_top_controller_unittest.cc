@@ -13,10 +13,11 @@
 #include "base/memory/ptr_util.h"
 #include "ui/keyboard/keyboard_controller.h"
 #include "ui/keyboard/keyboard_switches.h"
-#include "ui/keyboard/keyboard_test_util.h"
 #include "ui/keyboard/keyboard_ui.h"
+#include "ui/keyboard/keyboard_util.h"
 
 namespace ash {
+namespace test {
 
 class VirtualKeyboardAlwaysOnTopControllerTest : public AshTestBase {
  public:
@@ -26,7 +27,7 @@ class VirtualKeyboardAlwaysOnTopControllerTest : public AshTestBase {
   void SetUp() override {
     base::CommandLine::ForCurrentProcess()->AppendSwitch(
         keyboard::switches::kEnableVirtualKeyboard);
-    AshTestBase::SetUp();
+    test::AshTestBase::SetUp();
   }
 
  private:
@@ -83,9 +84,10 @@ TEST_F(VirtualKeyboardAlwaysOnTopControllerTest, NotifyKeyboardBoundsChanged) {
       root_window->bounds(), kKeyboardHeight);
   contents_window->SetBounds(keyboard_bounds);
   contents_window->Show();
-  keyboard_controller->NotifyContentsBoundsChanging(keyboard_bounds);
+  keyboard_controller->NotifyKeyboardBoundsChanging(keyboard_bounds);
   // Verify that test manager was notified of bounds change.
   ASSERT_TRUE(manager->keyboard_bounds_changed());
 }
 
+}  // namespace test
 }  // namespace ash

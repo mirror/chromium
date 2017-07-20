@@ -16,10 +16,7 @@
 #import "remoting/ios/client_gestures.h"
 #import "remoting/ios/client_keyboard.h"
 #import "remoting/ios/display/eagl_view.h"
-#import "remoting/ios/domain/host_info.h"
-#import "remoting/ios/domain/host_settings.h"
 #import "remoting/ios/mdc/MDCActionImageView.h"
-#import "remoting/ios/persistence/remoting_preferences.h"
 #import "remoting/ios/session/remoting_client.h"
 
 #include "base/strings/sys_string_conversions.h"
@@ -40,7 +37,6 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
   ClientKeyboard* _clientKeyboard;
   CGSize _keyboardSize;
   BOOL _surfaceCreated;
-  HostSettings* _settings;
 }
 @end
 
@@ -52,8 +48,6 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
     _client = client;
     _keyboardSize = CGSizeZero;
     _surfaceCreated = NO;
-    _settings =
-        [[RemotingPreferences instance] settingsForHost:client.hostInfo.hostId];
   }
   return self;
 }
@@ -87,7 +81,9 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
   [_floatingButton addSubview:_actionImageView];
   [self.view addSubview:_floatingButton];
 
-  [self applyInputMode];
+  // TODO(yuweih): This should be loaded from and stored into user defaults.
+  _client.gestureInterpreter->SetInputMode(
+      remoting::GestureInterpreter::DIRECT_INPUT_MODE);
 }
 
 - (void)viewDidUnload {
@@ -138,9 +134,6 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
 
 - (void)viewWillDisappear:(BOOL)animated {
   [super viewWillDisappear:animated];
-
-  [[RemotingPreferences instance] setSettings:_settings
-                                      forHost:_client.hostInfo.hostId];
 
   [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
@@ -249,13 +242,15 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
 }
 
 - (void)useDirectInputMode {
-  _settings.inputMode = ClientInputModeDirect;
-  [self applyInputMode];
+  // TODO(nicholss): Store this as a preference.
+  _client.gestureInterpreter->SetInputMode(
+      remoting::GestureInterpreter::DIRECT_INPUT_MODE);
 }
 
 - (void)useTrackpadInputMode {
-  _settings.inputMode = ClientInputModeTrackpad;
-  [self applyInputMode];
+  // TODO(nicholss): Store this as a preference.
+  _client.gestureInterpreter->SetInputMode(
+      remoting::GestureInterpreter::TRACKPAD_INPUT_MODE);
 }
 
 - (void)sendCtrAltDel {
@@ -267,19 +262,6 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
 }
 
 #pragma mark - Private
-
-- (void)applyInputMode {
-  switch (_settings.inputMode) {
-    case ClientInputModeTrackpad:
-      _client.gestureInterpreter->SetInputMode(
-          remoting::GestureInterpreter::TRACKPAD_INPUT_MODE);
-      break;
-    case ClientInputModeDirect:  // Fall-through.
-    default:
-      _client.gestureInterpreter->SetInputMode(
-          remoting::GestureInterpreter::DIRECT_INPUT_MODE);
-  }
-}
 
 - (void)didTap:(id)sender {
   // TODO(nicholss): The FAB is being used to launch an alert window with
@@ -316,15 +298,10 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
           ? @"Trackpad Mode"
           : @"Touch Mode";
   void (^switchInputModeHandler)(UIAlertAction*) = ^(UIAlertAction*) {
-    switch (currentInputMode) {
-      case remoting::GestureInterpreter::DIRECT_INPUT_MODE:
-        [self useTrackpadInputMode];
-        break;
-      case remoting::GestureInterpreter::TRACKPAD_INPUT_MODE:  // Fall-through.
-      default:
-        [self useDirectInputMode];
-        break;
-    }
+    _client.gestureInterpreter->SetInputMode(
+        currentInputMode == remoting::GestureInterpreter::DIRECT_INPUT_MODE
+            ? remoting::GestureInterpreter::TRACKPAD_INPUT_MODE
+            : remoting::GestureInterpreter::DIRECT_INPUT_MODE);
     [_actionImageView setActive:NO animated:YES];
   };
   [alert addAction:[UIAlertAction actionWithTitle:switchInputModeTitle

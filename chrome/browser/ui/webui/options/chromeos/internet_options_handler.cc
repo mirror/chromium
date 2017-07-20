@@ -183,7 +183,7 @@ const PrefService* InternetOptionsHandler::GetPrefs() const {
 void InternetOptionsHandler::AddVPNConnection(const base::ListValue* args) {
   if (args->empty()) {
     // Show the "add network" dialog for the built-in OpenVPN/L2TP provider.
-    NetworkConfigView::ShowForType(shill::kTypeVPN);
+    NetworkConfigView::ShowForType(shill::kTypeVPN, GetNativeWindow());
     return;
   }
 
@@ -206,7 +206,7 @@ void InternetOptionsHandler::AddNonVPNConnection(const base::ListValue* args) {
     return;
   }
   if (onc_type == ::onc::network_type::kWiFi) {
-    NetworkConfigView::ShowForType(shill::kTypeWifi);
+    NetworkConfigView::ShowForType(shill::kTypeWifi, GetNativeWindow());
   } else if (onc_type == ::onc::network_type::kCellular) {
     ChooseMobileNetworkDialog::ShowDialog(GetNativeWindow());
   } else {
@@ -246,7 +246,7 @@ void InternetOptionsHandler::ConfigureNetwork(const base::ListValue* args) {
     return;
   }
 
-  NetworkConfigView::ShowForNetworkId(guid);
+  NetworkConfigView::ShowForNetworkId(guid, GetNativeWindow());
 }
 
 }  // namespace options

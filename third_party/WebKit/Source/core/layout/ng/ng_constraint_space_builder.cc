@@ -4,7 +4,6 @@
 
 #include "core/layout/ng/ng_constraint_space_builder.h"
 
-#include "core/layout/ng/ng_layout_result.h"
 #include "core/layout/ng/ng_length_utils.h"
 
 namespace blink {
@@ -154,17 +153,14 @@ NGConstraintSpaceBuilder& NGConstraintSpaceBuilder::SetUnpositionedFloats(
 
 void NGConstraintSpaceBuilder::AddBaselineRequests(
     const Vector<NGBaselineRequest>& requests) {
-  DCHECK(baseline_requests_.IsEmpty());
   baseline_requests_.AppendVector(requests);
 }
 
 NGConstraintSpaceBuilder& NGConstraintSpaceBuilder::AddBaselineRequest(
-    const NGBaselineRequest& request) {
-  for (const auto& existing : baseline_requests_) {
-    if (existing == request)
-      return *this;
-  }
-  baseline_requests_.push_back(request);
+    NGBaselineAlgorithmType algorithm_type,
+    FontBaseline baseline_type) {
+  baseline_requests_.push_back(
+      NGBaselineRequest{algorithm_type, baseline_type});
   return *this;
 }
 

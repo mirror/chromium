@@ -4,7 +4,6 @@ include_rules = [
   "+chromeos/cryptohome",
   "+chromeos/dbus",
   "+components/exo",
-  "+components/keyed_service",
   "+components/prefs",
   "+components/signin/core/account_id",
   "+components/user_manager",

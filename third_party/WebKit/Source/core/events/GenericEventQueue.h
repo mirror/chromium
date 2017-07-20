@@ -32,7 +32,6 @@
 #include "platform/Timer.h"
 #include "platform/wtf/RefPtr.h"
 #include "platform/wtf/Vector.h"
-#include "public/platform/WebTraceLocation.h"
 
 namespace blink {
 
@@ -43,7 +42,7 @@ class CORE_EXPORT GenericEventQueue final : public EventQueue {
 
   // EventQueue
   DECLARE_VIRTUAL_TRACE();
-  bool EnqueueEvent(const WebTraceLocation&, Event*) override;
+  bool EnqueueEvent(Event*) override;
   bool CancelEvent(Event*) override;
   void Close() override;
 

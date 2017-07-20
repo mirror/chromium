@@ -105,12 +105,10 @@ gfx::Vector2d AppListPresenterDelegateMus::GetVisibilityAnimationOffset(
 void AppListPresenterDelegateMus::OnPointerEventObserved(
     const ui::PointerEvent& event,
     const gfx::Point& location_in_screen,
-    gfx::NativeView target) {
-  views::Widget* target_widget =
-      views::Widget::GetTopLevelWidgetForNativeView(target);
+    views::Widget* target) {
   // Dismiss app list on a mouse click or touch outside of the app list window.
   if ((event.type() == ui::ET_TOUCH_PRESSED ||
        event.type() == ui::ET_POINTER_DOWN) &&
-      (!target || (view_ && target_widget != view_->GetWidget())))
+      (!target || (view_ && (target != view_->GetWidget()))))
     presenter_->Dismiss();
 }

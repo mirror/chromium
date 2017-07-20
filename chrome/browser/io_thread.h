@@ -20,17 +20,15 @@
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "base/strings/string_piece.h"
+#include "base/time/time.h"
 #include "build/build_config.h"
 #include "chrome/browser/net/chrome_network_delegate.h"
-#include "chrome/browser/net/system_network_context_manager.h"
 #include "chrome/common/features.h"
 #include "components/metrics/data_use_tracker.h"
 #include "components/prefs/pref_member.h"
 #include "components/ssl_config/ssl_config_service_manager.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/browser_thread_delegate.h"
-#include "content/public/common/network_service.mojom.h"
-#include "content/public/network/network_service.h"
 #include "extensions/features/features.h"
 #include "net/base/network_change_notifier.h"
 #include "net/http/http_network_session.h"
@@ -88,7 +86,6 @@ class ProxyConfigService;
 class RTTAndThroughputEstimatesObserver;
 class SSLConfigService;
 class URLRequestContext;
-class URLRequestContextBuilderMojo;
 class URLRequestContextGetter;
 
 namespace ct {
@@ -130,11 +127,6 @@ class IOThread : public content::BrowserThreadDelegate {
     Globals();
     ~Globals();
 
-    // In-process NetworkService for use in URLRequestContext configuration when
-    // the network service created through the ServiceManager is disabled. See
-    // SystemNetworkContextManager's header comment for more details
-    std::unique_ptr<content::NetworkService> network_service;
-
     // Ascribes all data use in Chrome to a source, such as page loads.
     std::unique_ptr<data_use_measurement::ChromeDataUseAscriber>
         data_use_ascriber;
@@ -148,8 +140,7 @@ class IOThread : public content::BrowserThreadDelegate {
 #endif  // defined(OS_ANDROID)
     std::vector<scoped_refptr<const net::CTLogVerifier>> ct_logs;
     std::unique_ptr<net::HttpAuthPreferences> http_auth_preferences;
-    std::unique_ptr<content::mojom::NetworkContext> system_network_context;
-    net::URLRequestContext* system_request_context;
+    std::unique_ptr<net::URLRequestContext> system_request_context;
     SystemRequestContextLeakChecker system_request_context_leak_checker;
 #if BUILDFLAG(ENABLE_EXTENSIONS)
     scoped_refptr<extensions::EventRouterForwarder>
@@ -210,6 +201,8 @@ class IOThread : public content::BrowserThreadDelegate {
   // supported for simplicity and requires a browser restart.
   void DisableQuic();
 
+  base::TimeTicks creation_time() const;
+
   // Returns the callback for updating data use prefs.
   metrics::UpdateUsagePrefCallbackType GetMetricsDataUseForwarder();
 
@@ -229,13 +222,6 @@ class IOThread : public content::BrowserThreadDelegate {
   // respectively.
   bool WpadQuickCheckEnabled() const;
   bool PacHttpsUrlStrippingEnabled() const;
-
-  // Configures |builder|'s ProxyService to use the specified
-  // |proxy_config_service| and sets a number of proxy-related options based on
-  // prefs, policies, and the command line.
-  void SetUpProxyConfigService(
-      net::URLRequestContextBuilderMojo* builder,
-      std::unique_ptr<net::ProxyConfigService> proxy_config_service) const;
 
  private:
   friend class test::IOThreadPeer;
@@ -337,11 +323,6 @@ class IOThread : public content::BrowserThreadDelegate {
   bool allow_gssapi_library_load_;
 #endif
 
-  // These are set on the UI thread, and then consumed during initialization on
-  // the IO thread.
-  content::mojom::NetworkContextRequest network_context_request_;
-  content::mojom::NetworkContextParamsPtr network_context_params_;
-
   // This is an instance of the default SSLConfigServiceManager for the current
   // platform and it gets SSL preferences from local_state object.
   std::unique_ptr<ssl_config::SSLConfigServiceManager>
@@ -361,6 +342,8 @@ class IOThread : public content::BrowserThreadDelegate {
 
   // True if HTTP/0.9 is allowed on non-default ports by policy.
   bool http_09_on_non_default_ports_enabled_;
+
+  const base::TimeTicks creation_time_;
 
   base::WeakPtrFactory<IOThread> weak_factory_;
 

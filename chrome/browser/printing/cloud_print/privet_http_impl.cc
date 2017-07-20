@@ -729,7 +729,7 @@ std::unique_ptr<PrivetURLFetcher> PrivetHTTPClientImpl::CreateURLFetcher(
   replacements.SetPortStr(port);
 
   net::NetworkTrafficAnnotationTag traffic_annotation =
-      net::DefineNetworkTrafficAnnotation("privet_http_impl", R"(
+      net::DefineNetworkTrafficAnnotation("cloud_print", R"(
         semantics {
           sender: "Cloud Print"
           description:

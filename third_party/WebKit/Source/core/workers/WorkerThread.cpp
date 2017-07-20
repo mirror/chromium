@@ -37,13 +37,13 @@
 #include "core/inspector/WorkerThreadDebugger.h"
 #include "core/origin_trials/OriginTrialContext.h"
 #include "core/probe/CoreProbes.h"
-#include "core/workers/GlobalScopeCreationParams.h"
 #include "core/workers/InstalledScriptsManager.h"
 #include "core/workers/ThreadedWorkletGlobalScope.h"
 #include "core/workers/WorkerBackingThread.h"
 #include "core/workers/WorkerClients.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "core/workers/WorkerReportingProxy.h"
+#include "core/workers/WorkerThreadStartupData.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/Histogram.h"
 #include "platform/RuntimeEnabledFeatures.h"
@@ -105,10 +105,8 @@ WorkerThread::~WorkerThread() {
   exit_code_histogram.Count(static_cast<int>(exit_code_));
 }
 
-void WorkerThread::Start(
-    std::unique_ptr<GlobalScopeCreationParams> global_scope_creation_params,
-    const WTF::Optional<WorkerBackingThreadStartupData>& thread_startup_data,
-    ParentFrameTaskRunners* parent_frame_task_runners) {
+void WorkerThread::Start(std::unique_ptr<WorkerThreadStartupData> startup_data,
+                         ParentFrameTaskRunners* parent_frame_task_runners) {
   DCHECK(IsMainThread());
   DCHECK(!parent_frame_task_runners_);
   parent_frame_task_runners_ = parent_frame_task_runners;
@@ -124,11 +122,9 @@ void WorkerThread::Start(
   waitable_event.Wait();
 
   GetWorkerBackingThread().BackingThread().PostTask(
-      BLINK_FROM_HERE,
-      CrossThreadBind(&WorkerThread::InitializeOnWorkerThread,
-                      CrossThreadUnretained(this),
-                      WTF::Passed(std::move(global_scope_creation_params)),
-                      thread_startup_data));
+      BLINK_FROM_HERE, CrossThreadBind(&WorkerThread::InitializeOnWorkerThread,
+                                       CrossThreadUnretained(this),
+                                       WTF::Passed(std::move(startup_data))));
 }
 
 void WorkerThread::Terminate() {
@@ -136,15 +132,26 @@ void WorkerThread::Terminate() {
 
   {
     MutexLocker lock(thread_state_mutex_);
+
     if (requested_to_terminate_)
       return;
     requested_to_terminate_ = true;
-  }
 
-  // Schedule a task to forcibly terminate the script execution in case that the
-  // shutdown sequence does not start on the worker thread in a certain time
-  // period.
-  ScheduleToTerminateScriptExecution();
+    if (ShouldScheduleToTerminateExecution(lock)) {
+      // Schedule a task to forcibly terminate the script execution in case that
+      // the shutdown sequence does not start on the worker thread in a certain
+      // time period.
+      DCHECK(!forcible_termination_task_handle_.IsActive());
+      forcible_termination_task_handle_ =
+          parent_frame_task_runners_->Get(TaskType::kUnspecedTimer)
+              ->PostDelayedCancellableTask(
+                  BLINK_FROM_HERE,
+                  WTF::Bind(&WorkerThread::EnsureScriptExecutionTerminates,
+                            WTF::Unretained(this),
+                            ExitCode::kAsyncForciblyTerminated),
+                  forcible_termination_delay_);
+    }
+  }
 
   worker_thread_lifecycle_context_->NotifyContextDestroyed();
   inspector_task_runner_->Kill();
@@ -318,8 +325,7 @@ service_manager::InterfaceProvider& WorkerThread::GetInterfaceProvider() {
 
 WorkerThread::WorkerThread(ThreadableLoadingContext* loading_context,
                            WorkerReportingProxy& worker_reporting_proxy)
-    : time_origin_(MonotonicallyIncreasingTime()),
-      worker_thread_id_(GetNextWorkerThreadId()),
+    : worker_thread_id_(GetNextWorkerThreadId()),
       forcible_termination_delay_(kForcibleTerminationDelay),
       inspector_task_runner_(WTF::MakeUnique<InspectorTaskRunner>()),
       loading_context_(loading_context),
@@ -335,19 +341,7 @@ WorkerThread::WorkerThread(ThreadableLoadingContext* loading_context,
       ConvertToBaseCallback(WTF::Bind(&ForwardInterfaceRequest)));
 }
 
-void WorkerThread::ScheduleToTerminateScriptExecution() {
-  DCHECK(!forcible_termination_task_handle_.IsActive());
-  forcible_termination_task_handle_ =
-      parent_frame_task_runners_->Get(TaskType::kUnspecedTimer)
-          ->PostDelayedCancellableTask(
-              BLINK_FROM_HERE,
-              WTF::Bind(&WorkerThread::EnsureScriptExecutionTerminates,
-                        WTF::Unretained(this),
-                        ExitCode::kAsyncForciblyTerminated),
-              forcible_termination_delay_);
-}
-
-bool WorkerThread::ShouldTerminateScriptExecution(const MutexLocker& lock) {
+bool WorkerThread::ShouldScheduleToTerminateExecution(const MutexLocker& lock) {
   DCHECK(IsMainThread());
   DCHECK(IsThreadStateMutexLocked(lock));
 
@@ -373,7 +367,7 @@ bool WorkerThread::ShouldTerminateScriptExecution(const MutexLocker& lock) {
 void WorkerThread::EnsureScriptExecutionTerminates(ExitCode exit_code) {
   DCHECK(IsMainThread());
   MutexLocker lock(thread_state_mutex_);
-  if (!ShouldTerminateScriptExecution(lock))
+  if (!ShouldScheduleToTerminateExecution(lock))
     return;
 
   DCHECK(exit_code == ExitCode::kSyncForciblyTerminated ||
@@ -398,35 +392,28 @@ void WorkerThread::InitializeSchedulerOnWorkerThread(
 }
 
 void WorkerThread::InitializeOnWorkerThread(
-    std::unique_ptr<GlobalScopeCreationParams> global_scope_creation_params,
-    const WTF::Optional<WorkerBackingThreadStartupData>& thread_startup_data) {
+    std::unique_ptr<WorkerThreadStartupData> startup_data) {
   DCHECK(IsCurrentThread());
   DCHECK_EQ(ThreadState::kNotStarted, thread_state_);
 
-  KURL script_url = global_scope_creation_params->script_url;
-  String given_source_code = global_scope_creation_params->source_code;
+  KURL script_url = startup_data->script_url_;
+  String given_source_code = startup_data->source_code_;
   std::unique_ptr<Vector<char>> given_cached_meta_data =
-      std::move(global_scope_creation_params->cached_meta_data);
-  // TODO(nhiroki): Rename WorkerThreadStartMode to GlobalScopeStartMode.
-  // (https://crbug.com/710364)
-  WorkerThreadStartMode start_mode = global_scope_creation_params->start_mode;
+      std::move(startup_data->cached_meta_data_);
+  WorkerThreadStartMode start_mode = startup_data->start_mode_;
   V8CacheOptions v8_cache_options =
-      global_scope_creation_params->v8_cache_options;
+      startup_data->worker_v8_settings_.v8_cache_options_;
+  WorkerV8Settings v8_settings = startup_data->worker_v8_settings_;
 
   {
     MutexLocker lock(thread_state_mutex_);
 
-    if (IsOwningBackingThread()) {
-      DCHECK(thread_startup_data.has_value());
-      GetWorkerBackingThread().InitializeOnBackingThread(*thread_startup_data);
-    } else {
-      DCHECK(!thread_startup_data.has_value());
-    }
+    if (IsOwningBackingThread())
+      GetWorkerBackingThread().Initialize(v8_settings);
     GetWorkerBackingThread().BackingThread().AddTaskObserver(this);
 
     console_message_storage_ = new ConsoleMessageStorage();
-    global_scope_ =
-        CreateWorkerGlobalScope(std::move(global_scope_creation_params));
+    global_scope_ = CreateWorkerGlobalScope(std::move(startup_data));
     worker_reporting_proxy_.DidCreateWorkerGlobalScope(GlobalScope());
     worker_inspector_controller_ = WorkerInspectorController::Create(this);
 
@@ -463,18 +450,15 @@ void WorkerThread::InitializeOnWorkerThread(
       GetInstalledScriptsManager() &&
       GetInstalledScriptsManager()->IsScriptInstalled(script_url)) {
     // TODO(shimazu): Set ContentSecurityPolicy, ReferrerPolicy and
-    // OriginTrialTokens to |global_scope_creation_params|.
+    // OriginTrialTokens to |startup_data|.
     // TODO(shimazu): Add a post task to the main thread for setting
     // ContentSecurityPolicy and ReferrerPolicy.
-
-    // GetScriptData blocks until the script is received from the browser.
     auto script_data = GetInstalledScriptsManager()->GetScriptData(script_url);
     DCHECK(script_data);
     DCHECK(source_code.IsEmpty());
     DCHECK(!cached_meta_data);
     source_code = std::move(script_data->source_text);
     cached_meta_data = std::move(script_data->meta_data);
-    worker_reporting_proxy_.DidLoadInstalledScript();
   } else {
     source_code = std::move(given_source_code);
     cached_meta_data = std::move(given_cached_meta_data);
@@ -534,7 +518,7 @@ void WorkerThread::PerformShutdownOnWorkerThread() {
   global_scope_ = nullptr;
 
   if (IsOwningBackingThread())
-    GetWorkerBackingThread().ShutdownOnBackingThread();
+    GetWorkerBackingThread().Shutdown();
   // We must not touch workerBackingThread() from now on.
 
   // Notify the proxy that the WorkerOrWorkletGlobalScope has been disposed

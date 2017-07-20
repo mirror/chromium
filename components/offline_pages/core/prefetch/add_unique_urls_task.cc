@@ -11,7 +11,6 @@
 
 #include "base/bind.h"
 #include "base/callback.h"
-#include "base/logging.h"
 #include "base/time/time.h"
 #include "components/offline_pages/core/prefetch/prefetch_types.h"
 #include "components/offline_pages/core/prefetch/store/prefetch_store.h"
@@ -134,11 +133,8 @@ void AddUniqueUrlsTask::Run() {
 }
 
 void AddUniqueUrlsTask::OnUrlsAdded(Result result) {
-  if (result == Result::URLS_ADDED) {
-    // TODO(carlosk): schedule NWake here if at least one new entry was added to
-    // the store.
-    NOTIMPLEMENTED();
-  }
+  // TODO(carlosk): schedule NWake here if at least one new entry was added to
+  // the store.
   TaskComplete();
 }
 

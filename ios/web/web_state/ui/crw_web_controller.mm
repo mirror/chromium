@@ -1520,18 +1520,11 @@ registerLoadRequestForURL:(const GURL&)requestURL
     // Typically on PAGE_TRANSITION_CLIENT_REDIRECT.
     [[self sessionController] updatePendingItem:requestURL];
   } else {
-    // If this is a reload then there no need to create a new pending item,
-    // instead update the pending item to the last committed item.
-    if (PageTransitionCoreTypeIs(transition, ui::PAGE_TRANSITION_RELOAD)) {
-      self.sessionController.pendingItemIndex =
-          self.sessionController.lastCommittedItemIndex;
-    } else {
-      // A new session history entry needs to be created.
-      self.navigationManagerImpl->AddPendingItem(
-          requestURL, referrer, transition,
-          web::NavigationInitiationType::RENDERER_INITIATED,
-          web::NavigationManager::UserAgentOverrideOption::INHERIT);
-    }
+    // A new session history entry needs to be created.
+    self.navigationManagerImpl->AddPendingItem(
+        requestURL, referrer, transition,
+        web::NavigationInitiationType::RENDERER_INITIATED,
+        web::NavigationManager::UserAgentOverrideOption::INHERIT);
   }
   std::unique_ptr<web::NavigationContextImpl> context =
       web::NavigationContextImpl::CreateNavigationContext(
@@ -1986,11 +1979,6 @@ registerLoadRequestForURL:(const GURL&)requestURL
     BOOL isChromeScheme =
         web::GetWebClient()->IsAppSpecificURL(currentNavigationURL);
 
-    // Since this is implicit reload, no new pending item should be created, set
-    // the pending item index to the last committed item.
-    self.sessionController.pendingItemIndex =
-        self.sessionController.lastCommittedItemIndex;
-
     // Don't immediately load the web page if in overlay mode. Always load if
     // native.
     if (isChromeScheme || !_overlayPreviewMode) {
@@ -2032,10 +2020,6 @@ registerLoadRequestForURL:(const GURL&)requestURL
   _lastUserInteraction.reset();
   base::RecordAction(UserMetricsAction("Reload"));
   GURL url = self.currentNavItem->GetURL();
-  // Reloading shouldn't create create a new pending item, instead set the
-  // pending item index to the last committed item.
-  self.sessionController.pendingItemIndex =
-      self.sessionController.lastCommittedItemIndex;
   if ([self shouldLoadURLInNativeView:url]) {
     std::unique_ptr<web::NavigationContextImpl> navigationContext = [self
         registerLoadRequestForURL:url
@@ -4029,18 +4013,8 @@ registerLoadRequestForURL:(const GURL&)requestURL
         self.navigationManagerImpl->GetVisibleItem();
     const GURL& visibleURL =
         visibleItem ? visibleItem->GetURL() : GURL::EmptyGURL();
-    if (![self shouldLoadURLInNativeView:visibleURL]) {
+    if (![self shouldLoadURLInNativeView:visibleURL])
       [self displayWebView];
-    } else if (base::ios::IsRunningOnIOS11OrLater()) {
-      // On iOS 11 WKWebView load is broken if view is not a part of the
-      // hierarchy. Add view to the hierarchy, but place it offscreen to
-      // workaround iOS bug (rdar://33184203).
-      // TODO(crbug.com/739390): Remove this workaround.
-      CGRect frame = [_webView frame];
-      frame.origin.y = CGRectGetHeight(UIScreen.mainScreen.bounds);
-      [_webView setFrame:frame];
-      [self.view addSubview:_webView];
-    }
   }
 }
 

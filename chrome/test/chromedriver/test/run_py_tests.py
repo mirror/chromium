@@ -222,7 +222,6 @@ _ANDROID_NEGATIVE_FILTER['chromedriver_webview_shell'] = (
         'ChromeDriverLogTest.testDisablingDriverLogsSuppressesChromeDriverLog',
         'ChromeDriverTest.testCookiePath',
         'ChromeDriverTest.testGetHttpOnlyCookie',
-        'ChromeDriverTest.testGetNamedCookie',
     ]
 )
 
@@ -1396,17 +1395,6 @@ class ChromeDriverTest(ChromeDriverBaseTestWithWebServer):
         self.assertEquals('/' , cookie['path'])
       if cookie['name'] == 'x':
         self.assertEquals('/chromedriver/long_url' , cookie['path'])
-
-  def testGetNamedCookie(self):
-    self._driver.Load(self.GetHttpUrlForFile(
-        '/chromedriver/empty.html'))
-    self._driver.AddCookie({'name': 'a', 'value': 'b'})
-    named_cookie = self._driver.GetNamedCookie('a')
-    self.assertEquals('a' , named_cookie['name'])
-    self.assertEquals('b' , named_cookie['value'])
-    self.assertRaisesRegexp(
-        chromedriver.NoSuchCookie, "no such cookie",
-        self._driver.GetNamedCookie, 'foo')
 
   def testGetUrlOnInvalidUrl(self):
     # Make sure we don't return 'data:text/html,chromewebdata' (see

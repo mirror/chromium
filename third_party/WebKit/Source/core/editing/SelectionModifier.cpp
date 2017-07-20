@@ -560,14 +560,14 @@ static bool IsBoundary(TextGranularity granularity) {
          granularity == TextGranularity::kDocumentBoundary;
 }
 
-bool SelectionModifier::Modify(SelectionModifyAlteration alter,
+bool SelectionModifier::Modify(EAlteration alter,
                                SelectionDirection direction,
                                TextGranularity granularity) {
   DCHECK(!GetFrame()->GetDocument()->NeedsLayoutTreeUpdate());
   DocumentLifecycle::DisallowTransitionScope disallow_transition(
       GetFrame()->GetDocument()->Lifecycle());
 
-  if (alter == SelectionModifyAlteration::kExtend) {
+  if (alter == FrameSelection::kAlterationExtend) {
     selection_ =
         CreateVisibleSelection(PrepareToExtendSeelction(selection_, direction));
   }
@@ -577,25 +577,25 @@ bool SelectionModifier::Modify(SelectionModifyAlteration alter,
   VisiblePosition position;
   switch (direction) {
     case kDirectionRight:
-      if (alter == SelectionModifyAlteration::kMove)
+      if (alter == FrameSelection::kAlterationMove)
         position = ModifyMovingRight(granularity);
       else
         position = ModifyExtendingRight(granularity);
       break;
     case kDirectionForward:
-      if (alter == SelectionModifyAlteration::kExtend)
+      if (alter == FrameSelection::kAlterationExtend)
         position = ModifyExtendingForward(granularity);
       else
         position = ModifyMovingForward(granularity);
       break;
     case kDirectionLeft:
-      if (alter == SelectionModifyAlteration::kMove)
+      if (alter == FrameSelection::kAlterationMove)
         position = ModifyMovingLeft(granularity);
       else
         position = ModifyExtendingLeft(granularity);
       break;
     case kDirectionBackward:
-      if (alter == SelectionModifyAlteration::kExtend)
+      if (alter == FrameSelection::kAlterationExtend)
         position = ModifyExtendingBackward(granularity);
       else
         position = ModifyMovingBackward(granularity);
@@ -606,7 +606,7 @@ bool SelectionModifier::Modify(SelectionModifyAlteration alter,
     return false;
 
   if (IsSpatialNavigationEnabled(GetFrame())) {
-    if (!was_range && alter == SelectionModifyAlteration::kMove &&
+    if (!was_range && alter == FrameSelection::kAlterationMove &&
         position.DeepEquivalent() == original_start_position.DeepEquivalent())
       return false;
   }
@@ -620,14 +620,14 @@ bool SelectionModifier::Modify(SelectionModifyAlteration alter,
       LineDirectionPointForBlockDirectionNavigation(selection_.Start());
 
   switch (alter) {
-    case SelectionModifyAlteration::kMove:
+    case FrameSelection::kAlterationMove:
       selection_ = CreateVisibleSelection(
           SelectionInDOMTree::Builder()
               .Collapse(position.ToPositionWithAffinity())
               .SetIsDirectional(ShouldAlwaysUseDirectionalSelection(GetFrame()))
               .Build());
       break;
-    case SelectionModifyAlteration::kExtend:
+    case FrameSelection::kAlterationExtend:
 
       if (!selection_.IsCaret() &&
           (granularity == TextGranularity::kWord ||
@@ -712,10 +712,9 @@ static bool AbsoluteCaretY(const VisiblePosition& c, int& y) {
   return true;
 }
 
-bool SelectionModifier::ModifyWithPageGranularity(
-    SelectionModifyAlteration alter,
-    unsigned vertical_distance,
-    VerticalDirection direction) {
+bool SelectionModifier::ModifyWithPageGranularity(EAlteration alter,
+                                                  unsigned vertical_distance,
+                                                  VerticalDirection direction) {
   if (!vertical_distance)
     return false;
 
@@ -723,7 +722,7 @@ bool SelectionModifier::ModifyWithPageGranularity(
   DocumentLifecycle::DisallowTransitionScope disallow_transition(
       GetFrame()->GetDocument()->Lifecycle());
 
-  if (alter == SelectionModifyAlteration::kExtend) {
+  if (alter == FrameSelection::kAlterationExtend) {
     selection_ = CreateVisibleSelection(PrepareToExtendSeelction(
         selection_, direction == FrameSelection::kDirectionUp
                         ? kDirectionBackward
@@ -733,7 +732,7 @@ bool SelectionModifier::ModifyWithPageGranularity(
   VisiblePosition pos;
   LayoutUnit x_pos;
   switch (alter) {
-    case SelectionModifyAlteration::kMove:
+    case FrameSelection::kAlterationMove:
       pos = CreateVisiblePosition(direction == FrameSelection::kDirectionUp
                                       ? selection_.Start()
                                       : selection_.End(),
@@ -742,7 +741,7 @@ bool SelectionModifier::ModifyWithPageGranularity(
           direction == FrameSelection::kDirectionUp ? selection_.Start()
                                                     : selection_.End());
       break;
-    case SelectionModifyAlteration::kExtend:
+    case FrameSelection::kAlterationExtend:
       pos = CreateVisiblePosition(selection_.Extent(), selection_.Affinity());
       x_pos =
           LineDirectionPointForBlockDirectionNavigation(selection_.Extent());
@@ -783,7 +782,7 @@ bool SelectionModifier::ModifyWithPageGranularity(
     return false;
 
   switch (alter) {
-    case SelectionModifyAlteration::kMove:
+    case FrameSelection::kAlterationMove:
       selection_ = CreateVisibleSelection(
           SelectionInDOMTree::Builder()
               .Collapse(result.ToPositionWithAffinity())
@@ -793,7 +792,7 @@ bool SelectionModifier::ModifyWithPageGranularity(
                                : TextAffinity::kDownstream)
               .Build());
       break;
-    case SelectionModifyAlteration::kExtend: {
+    case FrameSelection::kAlterationExtend: {
       selection_ = CreateVisibleSelection(SelectionInDOMTree::Builder()
                                               .Collapse(selection_.Base())
                                               .Extend(result.DeepEquivalent())

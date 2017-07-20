@@ -29,8 +29,7 @@ namespace blink {
 
 using namespace WTF::Unicode;
 
-struct SameSizeAsBidiContext
-    : public ThreadSafeRefCounted<SameSizeAsBidiContext> {
+struct SameSizeAsBidiContext : public RefCounted<SameSizeAsBidiContext> {
   uint32_t bitfields : 16;
   void* parent;
 };

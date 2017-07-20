@@ -16,6 +16,10 @@
 #include "ui/display/mojo/native_display_delegate.mojom.h"
 #include "ui/display/types/native_display_observer.h"
 
+namespace service_manager {
+struct BindSourceInfo;
+}
+
 namespace display {
 
 class FakeDisplayController;
@@ -29,20 +33,11 @@ class ScreenManagerForwarding : public ScreenManager,
                                 public NativeDisplayObserver,
                                 public mojom::NativeDisplayDelegate {
  public:
-  enum class Mode {
-    IN_WM_PROCESS,
-    OWN_PROCESS,
-  };
-
-  // |in_process|  is true if the UI Service runs inside WM's process, false if
-  // it runs inside its own process.
-  explicit ScreenManagerForwarding(Mode mode);
+  ScreenManagerForwarding();
   ~ScreenManagerForwarding() override;
 
   // ScreenManager:
-  void AddInterfaces(
-      service_manager::BinderRegistryWithArgs<
-          const service_manager::BindSourceInfo&>* registry) override;
+  void AddInterfaces(service_manager::BinderRegistry* registry) override;
   void Init(ScreenManagerDelegate* delegate) override;
   void RequestCloseDisplay(int64_t display_id) override;
   display::ScreenBase* GetScreen() override;
@@ -78,11 +73,11 @@ class ScreenManagerForwarding : public ScreenManager,
 
  private:
   void BindNativeDisplayDelegateRequest(
-      mojom::NativeDisplayDelegateRequest request,
-      const service_manager::BindSourceInfo& source_info);
+      const service_manager::BindSourceInfo& source_info,
+      mojom::NativeDisplayDelegateRequest request);
   void BindTestDisplayControllerRequest(
-      mojom::TestDisplayControllerRequest request,
-      const service_manager::BindSourceInfo& source_info);
+      const service_manager::BindSourceInfo& source_info,
+      mojom::TestDisplayControllerRequest request);
 
   // Forwards results from GetDisplays() back with |callback|.
   void ForwardGetDisplays(const GetDisplaysCallback& callback,
@@ -96,9 +91,6 @@ class ScreenManagerForwarding : public ScreenManager,
       const mojom::NativeDisplayDelegate::ConfigureCallback& callback,
       bool status);
 
-  // True if the UI Service runs inside WM's process, false if it runs inside
-  // its own process.
-  const bool is_in_process_;
   std::unique_ptr<display::ScreenBase> screen_;
   mojo::Binding<mojom::NativeDisplayDelegate> binding_;
   mojom::NativeDisplayObserverPtr observer_;

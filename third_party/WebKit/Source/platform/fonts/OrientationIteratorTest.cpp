@@ -9,29 +9,28 @@
 
 namespace blink {
 
-struct OrientationTestRun {
+struct TestRun {
   std::string text;
   OrientationIterator::RenderOrientation code;
 };
 
-struct OrientationExpectedRun {
+struct ExpectedRun {
   unsigned limit;
   OrientationIterator::RenderOrientation render_orientation;
 
-  OrientationExpectedRun(
-      unsigned the_limit,
-      OrientationIterator::RenderOrientation the_render_orientation)
+  ExpectedRun(unsigned the_limit,
+              OrientationIterator::RenderOrientation the_render_orientation)
       : limit(the_limit), render_orientation(the_render_orientation) {}
 };
 
 class OrientationIteratorTest : public ::testing::Test {
  protected:
-  void CheckRuns(const Vector<OrientationTestRun>& runs) {
+  void CheckRuns(const Vector<TestRun>& runs) {
     String text(g_empty_string16_bit);
-    Vector<OrientationExpectedRun> expect;
+    Vector<ExpectedRun> expect;
     for (auto& run : runs) {
       text.append(String::FromUTF8(run.text.c_str()));
-      expect.push_back(OrientationExpectedRun(text.length(), run.code));
+      expect.push_back(ExpectedRun(text.length(), run.code));
     }
     OrientationIterator orientation_iterator(text.Characters16(), text.length(),
                                              FontOrientation::kVerticalMixed);
@@ -39,7 +38,7 @@ class OrientationIteratorTest : public ::testing::Test {
   }
 
   void VerifyRuns(OrientationIterator* orientation_iterator,
-                  const Vector<OrientationExpectedRun>& expect) {
+                  const Vector<ExpectedRun>& expect) {
     unsigned limit;
     OrientationIterator::RenderOrientation render_orientation;
     unsigned long run_count = 0;
@@ -54,9 +53,9 @@ class OrientationIteratorTest : public ::testing::Test {
 };
 
 // TODO(esprehn): WTF::Vector should allow initialization from a literal.
-#define CHECK_ORIENTATION(...)                                       \
-  static const OrientationTestRun kRunsArray[] = __VA_ARGS__;        \
-  Vector<OrientationTestRun> runs;                                   \
+#define CHECK_RUNS(...)                                              \
+  static const TestRun kRunsArray[] = __VA_ARGS__;                   \
+  Vector<TestRun> runs;                                              \
   runs.Append(kRunsArray, sizeof(kRunsArray) / sizeof(*kRunsArray)); \
   CheckRuns(runs);
 
@@ -73,44 +72,42 @@ TEST_F(OrientationIteratorTest, Empty) {
 }
 
 TEST_F(OrientationIteratorTest, OneCharLatin) {
-  CHECK_ORIENTATION({{"A", OrientationIterator::kOrientationRotateSideways}});
+  CHECK_RUNS({{"A", OrientationIterator::kOrientationRotateSideways}});
 }
 
 TEST_F(OrientationIteratorTest, OneAceOfSpades) {
-  CHECK_ORIENTATION({{"🂡", OrientationIterator::kOrientationKeep}});
+  CHECK_RUNS({{"🂡", OrientationIterator::kOrientationKeep}});
 }
 
 TEST_F(OrientationIteratorTest, CombiningCircle) {
-  CHECK_ORIENTATION({{"◌́◌̀◌̈◌̂◌̄◌̊", OrientationIterator::kOrientationKeep}});
+  CHECK_RUNS({{"◌́◌̀◌̈◌̂◌̄◌̊", OrientationIterator::kOrientationKeep}});
 }
 
 TEST_F(OrientationIteratorTest, OneEthiopicSyllable) {
-  CHECK_ORIENTATION({{"ጀ", OrientationIterator::kOrientationRotateSideways}});
+  CHECK_RUNS({{"ጀ", OrientationIterator::kOrientationRotateSideways}});
 }
 
 TEST_F(OrientationIteratorTest, JapaneseLetterlikeEnd) {
-  CHECK_ORIENTATION(
+  CHECK_RUNS(
       {{"いろは", OrientationIterator::kOrientationKeep},
        {"ℐℒℐℒℐℒℐℒℐℒℐℒℐℒ", OrientationIterator::kOrientationRotateSideways}});
 }
 
 TEST_F(OrientationIteratorTest, LetterlikeJapaneseEnd) {
-  CHECK_ORIENTATION({{"ℐ", OrientationIterator::kOrientationRotateSideways},
-                     {"いろは", OrientationIterator::kOrientationKeep}});
+  CHECK_RUNS({{"ℐ", OrientationIterator::kOrientationRotateSideways},
+              {"いろは", OrientationIterator::kOrientationKeep}});
 }
 
 TEST_F(OrientationIteratorTest, OneCharJapanese) {
-  CHECK_ORIENTATION({{"い", OrientationIterator::kOrientationKeep}});
+  CHECK_RUNS({{"い", OrientationIterator::kOrientationKeep}});
 }
 
 TEST_F(OrientationIteratorTest, Japanese) {
-  CHECK_ORIENTATION(
-      {{"いろはにほへと", OrientationIterator::kOrientationKeep}});
+  CHECK_RUNS({{"いろはにほへと", OrientationIterator::kOrientationKeep}});
 }
 
 TEST_F(OrientationIteratorTest, IVS) {
-  CHECK_ORIENTATION(
-      {{"愉\xF3\xA0\x84\x81", OrientationIterator::kOrientationKeep}});
+  CHECK_RUNS({{"愉\xF3\xA0\x84\x81", OrientationIterator::kOrientationKeep}});
 }
 
 TEST_F(OrientationIteratorTest, MarkAtFirstCharRotated) {
@@ -120,50 +117,47 @@ TEST_F(OrientationIteratorTest, MarkAtFirstCharRotated) {
   // http://www.unicode.org/reports/tr50/#grapheme_clusters
   // https://drafts.csswg.org/css-writing-modes-3/#vertical-orientations
   // U+0300 COMBINING GRAVE ACCENT is Mn (Mark, Nonspacing) with Rotated.
-  CHECK_ORIENTATION(
-      {{"\xCC\x80", OrientationIterator::kOrientationRotateSideways}});
+  CHECK_RUNS({{"\xCC\x80", OrientationIterator::kOrientationRotateSideways}});
 }
 
 TEST_F(OrientationIteratorTest, MarkAtFirstCharUpright) {
   // U+20DD COMBINING ENCLOSING CIRCLE is Me (Mark, Enclosing) with Upright.
-  CHECK_ORIENTATION({{"\xE2\x83\x9D", OrientationIterator::kOrientationKeep}});
+  CHECK_RUNS({{"\xE2\x83\x9D", OrientationIterator::kOrientationKeep}});
 }
 
 TEST_F(OrientationIteratorTest, MarksAtFirstCharUpright) {
   // U+20DD COMBINING ENCLOSING CIRCLE is Me (Mark, Enclosing) with Upright.
   // U+0300 COMBINING GRAVE ACCENT is Mn (Mark, Nonspacing) with Rotated.
-  CHECK_ORIENTATION(
-      {{"\xE2\x83\x9D\xCC\x80", OrientationIterator::kOrientationKeep}});
+  CHECK_RUNS({{"\xE2\x83\x9D\xCC\x80", OrientationIterator::kOrientationKeep}});
 }
 
 TEST_F(OrientationIteratorTest, MarksAtFirstCharUprightThenBase) {
   // U+20DD COMBINING ENCLOSING CIRCLE is Me (Mark, Enclosing) with Upright.
   // U+0300 COMBINING GRAVE ACCENT is Mn (Mark, Nonspacing) with Rotated.
-  CHECK_ORIENTATION(
+  CHECK_RUNS(
       {{"\xE2\x83\x9D\xCC\x80", OrientationIterator::kOrientationKeep},
        {"ABC\xE2\x83\x9D", OrientationIterator::kOrientationRotateSideways}});
 }
 
 TEST_F(OrientationIteratorTest, JapaneseLatinMixedInside) {
-  CHECK_ORIENTATION({{"いろはに", OrientationIterator::kOrientationKeep},
-                     {"Abc", OrientationIterator::kOrientationRotateSideways},
-                     {"ほへと", OrientationIterator::kOrientationKeep}});
+  CHECK_RUNS({{"いろはに", OrientationIterator::kOrientationKeep},
+              {"Abc", OrientationIterator::kOrientationRotateSideways},
+              {"ほへと", OrientationIterator::kOrientationKeep}});
 }
 
 TEST_F(OrientationIteratorTest, PunctuationJapanese) {
-  CHECK_ORIENTATION({{".…¡", OrientationIterator::kOrientationRotateSideways},
-                     {"ほへと", OrientationIterator::kOrientationKeep}});
+  CHECK_RUNS({{".…¡", OrientationIterator::kOrientationRotateSideways},
+              {"ほへと", OrientationIterator::kOrientationKeep}});
 }
 
 TEST_F(OrientationIteratorTest, JapaneseLatinMixedOutside) {
-  CHECK_ORIENTATION({{"Abc", OrientationIterator::kOrientationRotateSideways},
-                     {"ほへと", OrientationIterator::kOrientationKeep},
-                     {"Xyz", OrientationIterator::kOrientationRotateSideways}});
+  CHECK_RUNS({{"Abc", OrientationIterator::kOrientationRotateSideways},
+              {"ほへと", OrientationIterator::kOrientationKeep},
+              {"Xyz", OrientationIterator::kOrientationRotateSideways}});
 }
 
 TEST_F(OrientationIteratorTest, JapaneseMahjonggMixed) {
-  CHECK_ORIENTATION(
-      {{"いろはに🀤ほへと", OrientationIterator::kOrientationKeep}});
+  CHECK_RUNS({{"いろはに🀤ほへと", OrientationIterator::kOrientationKeep}});
 }
 
 }  // namespace blink

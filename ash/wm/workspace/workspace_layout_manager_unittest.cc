@@ -15,16 +15,17 @@
 #include "ash/root_window_controller.h"
 #include "ash/screen_util.h"
 #include "ash/session/session_controller.h"
-#include "ash/session/test_session_controller_client.h"
 #include "ash/shelf/shelf.h"
 #include "ash/shelf/shelf_constants.h"
 #include "ash/shelf/shelf_layout_manager.h"
 #include "ash/shell.h"
 #include "ash/shell_observer.h"
-#include "ash/shell_test_api.h"
 #include "ash/system/tray/system_tray_notifier.h"
 #include "ash/test/ash_test_base.h"
+#include "ash/test/shell_test_api.h"
 #include "ash/test/test_accessibility_delegate.h"
+#include "ash/test/test_session_controller_client.h"
+#include "ash/test/workspace_controller_test_api.h"
 #include "ash/wm/fullscreen_window_finder.h"
 #include "ash/wm/maximize_mode/maximize_mode_backdrop_delegate_impl.h"
 #include "ash/wm/overview/window_selector_controller.h"
@@ -33,7 +34,6 @@
 #include "ash/wm/wm_event.h"
 #include "ash/wm/workspace/backdrop_delegate.h"
 #include "ash/wm/workspace/workspace_window_resizer.h"
-#include "ash/wm/workspace_controller_test_api.h"
 #include "base/command_line.h"
 #include "base/run_loop.h"
 #include "chromeos/audio/chromeos_sounds.h"
@@ -133,7 +133,7 @@ class CustomFrameViewAshSizeLock {
   DISALLOW_COPY_AND_ASSIGN(CustomFrameViewAshSizeLock);
 };
 
-using WorkspaceLayoutManagerTest = AshTestBase;
+using WorkspaceLayoutManagerTest = test::AshTestBase;
 
 // Verifies that a window containing a restore coordinate will be restored to
 // to the size prior to minimize, keeping the restore rectangle in tact (if
@@ -360,7 +360,8 @@ class DontClobberRestoreBoundsWindowObserver : public aura::WindowObserver {
       aura::Window* w = window_;
       window_ = nullptr;
 
-      gfx::Rect shelf_bounds(AshTestBase::GetPrimaryShelf()->GetIdealBounds());
+      gfx::Rect shelf_bounds(
+          test::AshTestBase::GetPrimaryShelf()->GetIdealBounds());
       const gfx::Rect& window_bounds(w->bounds());
       w->SetBounds(gfx::Rect(window_bounds.x(), shelf_bounds.y() - 1,
                              window_bounds.width(), window_bounds.height()));
@@ -623,7 +624,7 @@ TEST_F(WorkspaceLayoutManagerTest,
 }
 
 // Following "Solo" tests were originally written for BaseLayoutManager.
-using WorkspaceLayoutManagerSoloTest = AshTestBase;
+using WorkspaceLayoutManagerSoloTest = test::AshTestBase;
 
 // Tests normal->maximize->normal.
 TEST_F(WorkspaceLayoutManagerSoloTest, Maximize) {
@@ -962,7 +963,7 @@ WorkspaceLayoutManager* GetWorkspaceLayoutManager(aura::Window* container) {
   return static_cast<WorkspaceLayoutManager*>(container->layout_manager());
 }
 
-class WorkspaceLayoutManagerBackdropTest : public AshTestBase {
+class WorkspaceLayoutManagerBackdropTest : public test::AshTestBase {
  public:
   WorkspaceLayoutManagerBackdropTest() : default_container_(nullptr) {}
   ~WorkspaceLayoutManagerBackdropTest() override {}
@@ -1148,8 +1149,9 @@ TEST_F(WorkspaceLayoutManagerBackdropTest,
 }
 
 TEST_F(WorkspaceLayoutManagerBackdropTest, BackdropTest) {
-  WorkspaceController* wc = ShellTestApi(Shell::Get()).workspace_controller();
-  WorkspaceControllerTestApi test_helper(wc);
+  WorkspaceController* wc =
+      test::ShellTestApi(Shell::Get()).workspace_controller();
+  test::WorkspaceControllerTestApi test_helper(wc);
 
   std::unique_ptr<aura::Window> window1(
       CreateTestWindow(gfx::Rect(0, 0, 100, 100)));
@@ -1272,10 +1274,11 @@ TEST_F(WorkspaceLayoutManagerBackdropTest, BackdropTest) {
 }
 
 TEST_F(WorkspaceLayoutManagerBackdropTest, SpokenFeedbackFullscreenBackground) {
-  WorkspaceController* wc = ShellTestApi(Shell::Get()).workspace_controller();
-  WorkspaceControllerTestApi test_helper(wc);
-  TestAccessibilityDelegate* accessibility_delegate =
-      static_cast<TestAccessibilityDelegate*>(
+  WorkspaceController* wc =
+      test::ShellTestApi(Shell::Get()).workspace_controller();
+  test::WorkspaceControllerTestApi test_helper(wc);
+  test::TestAccessibilityDelegate* accessibility_delegate =
+      static_cast<test::TestAccessibilityDelegate*>(
           Shell::Get()->accessibility_delegate());
 
   aura::test::TestWindowDelegate delegate;
@@ -1331,10 +1334,11 @@ TEST_F(WorkspaceLayoutManagerBackdropTest, SpokenFeedbackFullscreenBackground) {
 }
 
 TEST_F(WorkspaceLayoutManagerBackdropTest, SpokenFeedbackForArc) {
-  WorkspaceController* wc = ShellTestApi(Shell::Get()).workspace_controller();
-  WorkspaceControllerTestApi test_helper(wc);
-  TestAccessibilityDelegate* accessibility_delegate =
-      static_cast<TestAccessibilityDelegate*>(
+  WorkspaceController* wc =
+      test::ShellTestApi(Shell::Get()).workspace_controller();
+  test::WorkspaceControllerTestApi test_helper(wc);
+  test::TestAccessibilityDelegate* accessibility_delegate =
+      static_cast<test::TestAccessibilityDelegate*>(
           Shell::Get()->accessibility_delegate());
 
   accessibility_delegate->ToggleSpokenFeedback(A11Y_NOTIFICATION_NONE);
@@ -1377,7 +1381,7 @@ TEST_F(WorkspaceLayoutManagerBackdropTest, SpokenFeedbackForArc) {
   EXPECT_EQ(kNoSoundKey, accessibility_delegate->GetPlayedEarconAndReset());
 }
 
-class WorkspaceLayoutManagerKeyboardTest : public AshTestBase {
+class WorkspaceLayoutManagerKeyboardTest : public test::AshTestBase {
  public:
   WorkspaceLayoutManagerKeyboardTest() : layout_manager_(nullptr) {}
   ~WorkspaceLayoutManagerKeyboardTest() override {}

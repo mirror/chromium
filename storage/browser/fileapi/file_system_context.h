@@ -17,7 +17,6 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/sequenced_task_runner_helpers.h"
-#include "build/build_config.h"
 #include "storage/browser/fileapi/file_system_url.h"
 #include "storage/browser/fileapi/open_file_system_mode.h"
 #include "storage/browser/fileapi/plugin_private_file_system_backend.h"
@@ -282,10 +281,7 @@ class STORAGE_EXPORT FileSystemContext
                                            FileSystemType type,
                                            const base::FilePath& path) const;
 
-#if defined(OS_CHROMEOS)
-  // Used only on ChromeOS for now.
   void EnableTemporaryFileSystemInIncognito();
-#endif
 
   SandboxFileSystemBackendDelegate* sandbox_delegate() {
     return sandbox_delegate_.get();

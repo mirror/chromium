@@ -135,8 +135,8 @@ class MockCoordinator : public Coordinator, public mojom::Coordinator {
   MockCoordinator(MemoryTracingIntegrationTest* client) : client_(client) {}
 
   void BindCoordinatorRequest(
-      mojom::CoordinatorRequest request,
-      const service_manager::BindSourceInfo& source_info) override {
+      const service_manager::BindSourceInfo& source_info,
+      mojom::CoordinatorRequest request) override {
     bindings_.AddBinding(this, std::move(request));
   }
 

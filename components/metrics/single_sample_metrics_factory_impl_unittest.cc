@@ -10,6 +10,7 @@
 #include "base/test/histogram_tester.h"
 #include "base/threading/thread.h"
 #include "components/metrics/single_sample_metrics.h"
+#include "services/service_manager/public/cpp/bind_source_info.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace metrics {
@@ -50,7 +51,8 @@ class SingleSampleMetricsFactoryImplTest : public testing::Test {
   }
 
   void CreateProvider(mojom::SingleSampleMetricsProviderRequest request) {
-    CreateSingleSampleMetricsProvider(std::move(request));
+    CreateSingleSampleMetricsProvider(service_manager::BindSourceInfo(),
+                                      std::move(request));
     provider_count_++;
   }
 

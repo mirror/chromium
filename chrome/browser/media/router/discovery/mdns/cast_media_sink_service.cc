@@ -8,12 +8,15 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/common/media_router/discovery/media_sink_internal.h"
 #include "components/cast_channel/cast_socket_service.h"
+#include "components/cast_channel/cast_socket_service_factory.h"
 #include "components/net_log/chrome_net_log.h"
 #include "content/public/common/content_client.h"
 #include "net/base/host_port_pair.h"
 #include "net/base/ip_address.h"
 
 namespace {
+
+constexpr char kObserverId[] = "browser_observer_id";
 
 enum ErrorType {
   NONE,
@@ -87,9 +90,10 @@ const char CastMediaSinkService::kCastServiceType[] = "_googlecast._tcp.local";
 CastMediaSinkService::CastMediaSinkService(
     const OnSinksDiscoveredCallback& callback,
     content::BrowserContext* browser_context)
-    : MediaSinkServiceBase(callback),
-      cast_socket_service_(cast_channel::CastSocketService::GetInstance()) {
+    : MediaSinkServiceBase(callback) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  cast_socket_service_ = cast_channel::CastSocketServiceFactory::GetInstance()
+                             ->GetForBrowserContext(browser_context);
   DCHECK(cast_socket_service_);
 }
 
@@ -165,14 +169,17 @@ void CastMediaSinkService::OnDnsSdEvent(
 void CastMediaSinkService::OpenChannelOnIOThread(
     const DnsSdService& service,
     const net::IPEndPoint& ip_endpoint) {
-  if (!observer_)
-    observer_.reset(new CastSocketObserver());
+  auto* observer = cast_socket_service_->GetObserver(kObserverId);
+  if (!observer) {
+    observer = new CastSocketObserver();
+    cast_socket_service_->AddObserver(kObserverId, base::WrapUnique(observer));
+  }
 
   cast_socket_service_->OpenSocket(
       ip_endpoint, g_browser_process->net_log(),
       base::Bind(&CastMediaSinkService::OnChannelOpenedOnIOThread, this,
                  service),
-      observer_.get());
+      observer);
 }
 
 void CastMediaSinkService::OnChannelOpenedOnIOThread(
@@ -221,9 +228,7 @@ void CastMediaSinkService::OnChannelOpenedOnUIThread(
 }
 
 CastMediaSinkService::CastSocketObserver::CastSocketObserver() {}
-CastMediaSinkService::CastSocketObserver::~CastSocketObserver() {
-  cast_channel::CastSocketService::GetInstance()->RemoveObserver(this);
-}
+CastMediaSinkService::CastSocketObserver::~CastSocketObserver() {}
 
 void CastMediaSinkService::CastSocketObserver::OnError(
     const cast_channel::CastSocket& socket,

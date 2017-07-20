@@ -26,6 +26,7 @@ ProfileImportHandler::~ProfileImportHandler() {}
 
 // static
 void ProfileImportHandler::Create(
+    const service_manager::BindSourceInfo& source_info,
     chrome::mojom::ProfileImportRequest request) {
   mojo::MakeStrongBinding(base::MakeUnique<ProfileImportHandler>(),
                           std::move(request));

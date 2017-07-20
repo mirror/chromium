@@ -59,6 +59,7 @@ struct LastVisitTimeCompare {
 
 class TestObserver;
 class ResourcePrefetcherManager;
+class LoadingStatsCollector;
 
 struct PreconnectPrediction {
   PreconnectPrediction();
@@ -148,6 +149,9 @@ class ResourcePrefetchPredictor : public history::HistoryServiceObserver {
   // data changes. Previously registered observer will be discarded. Call
   // this with nullptr parameter to de-register observer.
   void SetObserverForTesting(TestObserver* observer);
+
+  // Sets the |stats_collector| which is used to report histograms.
+  void SetStatsCollector(LoadingStatsCollector* stats_collector);
 
   // Returns true iff there is PrefetchData that can be used for a
   // |main_frame_url| and fills |prediction| with resources that need to be
@@ -289,6 +293,7 @@ class ResourcePrefetchPredictor : public history::HistoryServiceObserver {
 
   Profile* const profile_;
   TestObserver* observer_;
+  LoadingStatsCollector* stats_collector_;
   const LoadingPredictorConfig config_;
   InitializationState initialization_state_;
   scoped_refptr<ResourcePrefetchPredictorTables> tables_;

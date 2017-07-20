@@ -42,7 +42,6 @@ class IDLLexer(object):
       'string',
 
     # Symbol and keywords types
-      'SPECIAL_COMMENT',
       'identifier',
 
     # MultiChar operators
@@ -140,14 +139,6 @@ class IDLLexer(object):
   def t_string(self, t):
     r'"[^"]*"'
     t.value = t.value[1:-1]
-    self.AddLines(t.value.count('\n'))
-    return t
-
-  # A Javadoc style comment:  /** xxx */
-  # Unlike t_COMMENT, this is NOT ignored.
-  # Also note that this should be defined before t_COMMENT.
-  def t_SPECIAL_COMMENT(self, t):
-    r'/\*\*(.|\n)+?\*/'
     self.AddLines(t.value.count('\n'))
     return t
 

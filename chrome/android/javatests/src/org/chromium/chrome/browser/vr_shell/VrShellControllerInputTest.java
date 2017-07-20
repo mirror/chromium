@@ -19,7 +19,6 @@ import org.junit.runner.RunWith;
 
 import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.Restriction;
-import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.vr_shell.util.VrTransitionUtils;
 import org.chromium.chrome.test.ChromeActivityTestRule;
@@ -27,9 +26,6 @@ import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.browser.test.util.Criteria;
 import org.chromium.content.browser.test.util.CriteriaHelper;
-import org.chromium.content.browser.test.util.DOMUtils;
-
-import java.util.concurrent.TimeoutException;
 
 /**
  * End-to-end tests for Daydream controller input while in the VR browser.
@@ -37,7 +33,6 @@ import java.util.concurrent.TimeoutException;
 @RunWith(ChromeJUnit4ClassRunner.class)
 @CommandLineFlags.Add({ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
         ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG, "enable-features=VrShell"})
-@Restriction({RESTRICTION_TYPE_DEVICE_DAYDREAM, RESTRICTION_TYPE_VIEWER_DAYDREAM})
 public class VrShellControllerInputTest {
     @Rule
     public VrTestRule mVrTestRule = new VrTestRule();
@@ -47,6 +42,7 @@ public class VrShellControllerInputTest {
      * touchpad scrolls the webpage while in the VR browser.
      */
     @Test
+    @Restriction({RESTRICTION_TYPE_DEVICE_DAYDREAM, RESTRICTION_TYPE_VIEWER_DAYDREAM})
     @MediumTest
     public void testControllerScrolling() throws InterruptedException {
         // Load page in VR and make sure the controller is pointed at the content quad
@@ -97,36 +93,5 @@ public class VrShellControllerInputTest {
         controller.scroll(EmulatedVrController.ScrollDirection.LEFT, scrollSteps, scrollSpeed);
         endScrollPoint = cvc.getNativeScrollXForTest();
         Assert.assertTrue("Controller was able to scroll left", startScrollPoint > endScrollPoint);
-    }
-
-    /**
-     * Verifies that pressing the Daydream controller's 'app' button causes the user to exit
-     * fullscreen
-     */
-    @Test
-    @MediumTest
-    @RetryOnFailure(message = "Very rarely, button press not registered (race condition?)")
-    public void testAppButtonExitsFullscreen() throws InterruptedException, TimeoutException {
-        mVrTestRule.loadUrlAndAwaitInitialization(
-                mVrTestRule.getHtmlTestFile("test_navigation_2d_page"), PAGE_LOAD_TIMEOUT_S);
-        VrTransitionUtils.forceEnterVr();
-        VrTransitionUtils.waitForVrEntry(POLL_TIMEOUT_LONG_MS);
-        // Enter fullscreen
-        DOMUtils.clickNode(mVrTestRule.getFirstTabCvc(), "fullscreen");
-        mVrTestRule.waitOnJavaScriptStep(mVrTestRule.getFirstTabWebContents());
-        Assert.assertTrue(DOMUtils.isFullscreen(mVrTestRule.getFirstTabWebContents()));
-
-        EmulatedVrController controller = new EmulatedVrController(mVrTestRule.getActivity());
-        controller.pressReleaseAppButton();
-        CriteriaHelper.pollInstrumentationThread(new Criteria() {
-            @Override
-            public boolean isSatisfied() {
-                try {
-                    return !DOMUtils.isFullscreen(mVrTestRule.getFirstTabWebContents());
-                } catch (InterruptedException | TimeoutException e) {
-                    return false;
-                }
-            }
-        }, POLL_TIMEOUT_LONG_MS, POLL_CHECK_INTERVAL_LONG_MS);
     }
 }

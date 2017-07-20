@@ -137,8 +137,20 @@ void BoxPainterBase::PaintInsetBoxShadow(const PaintInfo& info,
     return;
   FloatRoundedRect bounds = style.GetRoundedInnerBorderFor(
       paint_rect, include_logical_left_edge, include_logical_right_edge);
+  PaintInsetBoxShadowInBounds(info, bounds, style, include_logical_left_edge,
+                              include_logical_right_edge);
+}
 
+void BoxPainterBase::PaintInsetBoxShadowInBounds(
+    const PaintInfo& info,
+    const FloatRoundedRect& bounds,
+    const ComputedStyle& style,
+    bool include_logical_left_edge,
+    bool include_logical_right_edge) {
+  // The caller should have checked style.boxShadow() when computing bounds.
+  DCHECK(style.BoxShadow());
   GraphicsContext& context = info.context;
+
   bool is_horizontal = style.IsHorizontalWritingMode();
   GraphicsContextStateSaver state_saver(context, false);
 
@@ -346,9 +358,6 @@ FloatRoundedRect BoxPainterBase::RoundedBorderRectForClip(
     bool has_line_box_sibling,
     const LayoutSize& box_size,
     LayoutRectOutsets border_padding_insets) {
-  if (!info.is_rounded_fill)
-    return FloatRoundedRect();
-
   FloatRoundedRect border =
       info.is_border_fill
           ? BackgroundRoundedRectAdjustedForBleedAvoidance(

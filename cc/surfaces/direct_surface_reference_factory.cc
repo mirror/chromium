@@ -16,7 +16,7 @@ DirectSurfaceReferenceFactory::DirectSurfaceReferenceFactory(
 
 DirectSurfaceReferenceFactory::~DirectSurfaceReferenceFactory() = default;
 void DirectSurfaceReferenceFactory::SatisfySequence(
-    const viz::SurfaceSequence& sequence) const {
+    const SurfaceSequence& sequence) const {
   if (!manager_)
     return;
   manager_->SatisfySequence(sequence);
@@ -24,7 +24,7 @@ void DirectSurfaceReferenceFactory::SatisfySequence(
 
 void DirectSurfaceReferenceFactory::RequireSequence(
     const viz::SurfaceId& surface_id,
-    const viz::SurfaceSequence& sequence) const {
+    const SurfaceSequence& sequence) const {
   manager_->RequireSequence(surface_id, sequence);
 }
 

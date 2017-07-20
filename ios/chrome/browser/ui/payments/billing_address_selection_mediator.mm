@@ -72,10 +72,6 @@ using ::payment_request_util::GetPhoneNumberLabelFromAutofillProfile;
   return YES;
 }
 
-- (NSString*)title {
-  return l10n_util::GetNSString(IDS_PAYMENTS_BILLING_ADDRESS);
-}
-
 - (CollectionViewItem*)headerItem {
   return nil;
 }

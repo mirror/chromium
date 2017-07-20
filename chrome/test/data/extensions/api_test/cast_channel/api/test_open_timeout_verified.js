@@ -17,9 +17,7 @@ chrome.cast.channel.open({
         chrome.test.assertEq(channel.keepAlive, true);
         if (channel.readyState == 'closed' &&
             error.errorState == 'ping_timeout') {
-          chrome.cast.channel.close(channel, () => {
-            chrome.test.sendMessage('timeout_ssl_verified');
-          });
+          chrome.test.sendMessage('timeout_ssl_verified');
         }
       });
   chrome.test.notifyPass();

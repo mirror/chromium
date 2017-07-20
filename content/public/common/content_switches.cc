@@ -368,10 +368,6 @@ const char kEnableExperimentalCanvasFeatures[] =
 const char kEnableExperimentalWebPlatformFeatures[] =
     "enable-experimental-web-platform-features";
 
-// Disables all RuntimeEnabledFeatures that can be enabled via OriginTrials.
-const char kDisableOriginTrialControlledBlinkFeatures[] =
-    "disable-origin-trial-controlled-blink-features";
-
 // Comma-separated list of feature names to enable. See also kDisableFeatures.
 const char kEnableFeatures[] = "enable-features";
 
@@ -404,11 +400,8 @@ const char kEnableLowResTiling[] = "enable-low-res-tiling";
 // builds.
 const char kEnableLogging[]                 = "enable-logging";
 
-// Enables the type, downlinkMax attributes of the NetInfo API. Also, enables
-// triggering of change attribute of the NetInfo API when there is a change in
-// the connection type.
-const char kEnableNetworkInformationDownlinkMax[] =
-    "enable-network-information-downlink-max";
+// Enables the network information API.
+const char kEnableNetworkInformation[]      = "enable-network-information";
 
 // Disables the video decoder from drawing to an NV12 textures instead of ARGB.
 const char kDisableNv12DxgiVideo[] = "disable-nv12-dxgi-video";
@@ -578,20 +571,6 @@ const char kHistoryEntryRequiresUserGesture[] =
 
 // These mappings only apply to the host resolver.
 const char kHostResolverRules[]             = "host-resolver-rules";
-
-// A set of public key hashes for which to ignore certificate-related errors.
-//
-// If the certificate chain presented by the server does not validate, and one
-// or more certificates have public key hashes that match a key from this list,
-// the error is ignored.
-//
-// The switch value must a be a comma-separated list of Base64-encoded SHA-256
-// SPKI Fingerprints (RFC 7469, Section 2.4).
-//
-// This switch has no effect unless --user-data-dir (as defined by the content
-// embedder) is also present.
-const char kIgnoreCertificateErrorsSPKIList[] =
-    "ignore-certificate-errors-spki-list";
 
 // Makes all APIs reflect the layout viewport.
 const char kInertVisualViewport[]           = "inert-visual-viewport";

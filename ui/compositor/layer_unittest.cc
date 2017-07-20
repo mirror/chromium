@@ -26,11 +26,11 @@
 #include "cc/layers/layer.h"
 #include "cc/output/copy_output_request.h"
 #include "cc/output/copy_output_result.h"
+#include "cc/surfaces/sequence_surface_reference_factory.h"
+#include "cc/surfaces/surface_reference_factory.h"
+#include "cc/surfaces/surface_sequence.h"
 #include "cc/test/pixel_test_utils.h"
-#include "components/viz/common/surfaces/sequence_surface_reference_factory.h"
 #include "components/viz/common/surfaces/surface_id.h"
-#include "components/viz/common/surfaces/surface_reference_factory.h"
-#include "components/viz/common/surfaces/surface_sequence.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/khronos/GLES2/gl2.h"
 #include "ui/compositor/compositor_observer.h"
@@ -199,7 +199,7 @@ class LayerWithRealCompositorTest : public testing::Test {
     scoped_refptr<ReadbackHolder> holder(new ReadbackHolder);
     std::unique_ptr<cc::CopyOutputRequest> request =
         cc::CopyOutputRequest::CreateBitmapRequest(
-            base::BindOnce(&ReadbackHolder::OutputRequestCallback, holder));
+            base::Bind(&ReadbackHolder::OutputRequestCallback, holder));
     request->set_area(source_rect);
 
     GetCompositor()->root_layer()->RequestCopyOfOutput(std::move(request));
@@ -1734,8 +1734,7 @@ TEST_F(LayerWithDelegateTest, SetBoundsWhenInvisible) {
 
 namespace {
 
-class TestSurfaceReferenceFactory
-    : public viz::SequenceSurfaceReferenceFactory {
+class TestSurfaceReferenceFactory : public cc::SequenceSurfaceReferenceFactory {
  public:
   TestSurfaceReferenceFactory() = default;
 
@@ -1743,9 +1742,9 @@ class TestSurfaceReferenceFactory
   ~TestSurfaceReferenceFactory() override = default;
 
   // cc::SequenceSurfaceReferenceFactory implementation:
-  void SatisfySequence(const viz::SurfaceSequence& seq) const override {}
+  void SatisfySequence(const cc::SurfaceSequence& seq) const override {}
   void RequireSequence(const viz::SurfaceId& id,
-                       const viz::SurfaceSequence& seq) const override {}
+                       const cc::SurfaceSequence& seq) const override {}
 
   DISALLOW_COPY_AND_ASSIGN(TestSurfaceReferenceFactory);
 };
@@ -1785,7 +1784,7 @@ TEST_F(LayerWithDelegateTest, ExternalContent) {
 
 TEST_F(LayerWithDelegateTest, ExternalContentMirroring) {
   std::unique_ptr<Layer> layer(CreateLayer(LAYER_SOLID_COLOR));
-  scoped_refptr<viz::SurfaceReferenceFactory> reference_factory(
+  scoped_refptr<cc::SurfaceReferenceFactory> reference_factory(
       new TestSurfaceReferenceFactory());
 
   viz::SurfaceId surface_id(

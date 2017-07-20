@@ -6,7 +6,6 @@
 #define FirstMeaningfulPaintDetector_h
 
 #include "core/CoreExport.h"
-#include "core/paint/PaintEvent.h"
 #include "platform/Timer.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Noncopyable.h"
@@ -49,7 +48,6 @@ class CORE_EXPORT FirstMeaningfulPaintDetector
   void NotifyInputEvent();
   void NotifyPaint();
   void CheckNetworkStable();
-  void ReportSwapTime(PaintEvent, bool did_swap, double timestamp);
 
   DECLARE_TRACE();
 
@@ -69,7 +67,6 @@ class CORE_EXPORT FirstMeaningfulPaintDetector
   void Network0QuietTimerFired(TimerBase*);
   void Network2QuietTimerFired(TimerBase*);
   void ReportHistograms();
-  void RegisterNotifySwapTime(PaintEvent);
 
   bool next_paint_is_meaningful_ = false;
   HadUserInput had_user_input_ = kNoUserInput;
@@ -78,7 +75,6 @@ class CORE_EXPORT FirstMeaningfulPaintDetector
 
   Member<PaintTiming> paint_timing_;
   double provisional_first_meaningful_paint_ = 0.0;
-  double provisional_first_meaningful_paint_swap_ = 0.0;
   double max_significance_so_far_ = 0.0;
   double accumulated_significance_while_having_blank_text_ = 0.0;
   unsigned prev_layout_object_count_ = 0;
@@ -87,7 +83,6 @@ class CORE_EXPORT FirstMeaningfulPaintDetector
   bool network2_quiet_reached_ = false;
   double first_meaningful_paint0_quiet_ = 0.0;
   double first_meaningful_paint2_quiet_ = 0.0;
-  double first_meaningful_paint2_quiet_swap_ = 0.0;
   TaskRunnerTimer<FirstMeaningfulPaintDetector> network0_quiet_timer_;
   TaskRunnerTimer<FirstMeaningfulPaintDetector> network2_quiet_timer_;
 };

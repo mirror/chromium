@@ -19,7 +19,6 @@
     "Courier New",
     "Courier",
     "Helvetica",
-    "Lucida Grande",
     "Microsoft Sans Serif",
     "MS Sans Serif",
     "MS Serif",
@@ -34,7 +33,5 @@
     "monospace",
     "sans-serif",
     "serif",
-
-    "BlinkMacSystemFont",
   ],
 }

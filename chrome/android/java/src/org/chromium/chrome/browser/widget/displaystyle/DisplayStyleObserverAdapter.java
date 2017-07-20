@@ -27,8 +27,6 @@ public class DisplayStyleObserverAdapter
 
     private boolean mIsViewAttached;
 
-    private final UiConfig mUiConfig;
-
     /**
      * @param view the view whose lifecycle is tracked to determine when to not fire the
      *             observer.
@@ -38,7 +36,6 @@ public class DisplayStyleObserverAdapter
      *                 window.
      */
     public DisplayStyleObserverAdapter(View view, UiConfig config, DisplayStyleObserver observer) {
-        mUiConfig = config;
         mObserver = observer;
 
         // TODO(dgn): getParent() is not a good way to test that, but isAttachedToWindow()
@@ -46,21 +43,9 @@ public class DisplayStyleObserverAdapter
         mIsViewAttached = view.getParent() != null;
 
         view.addOnAttachStateChangeListener(this);
-    }
 
-    /**
-     * Attaches to the {@link #mUiConfig}.
-     */
-    public void attach() {
-        // This call will also assign the initial value to |mCurrentDisplayStyle|.
-        mUiConfig.addObserver(this);
-    }
-
-    /**
-     * Detaches from the {@link #mUiConfig}.
-     */
-    public void detach() {
-        mUiConfig.removeObserver(this);
+        // This call will also assign the initial value to |mCurrentDisplayStyle|
+        config.addObserver(this);
     }
 
     @Override

@@ -13,10 +13,10 @@ namespace blink {
 typedef struct {
   const char* input;
   const float effective_size;
-} SizesAttributeParserTestCase;
+} TestCase;
 
 TEST(SizesAttributeParserTest, Basic) {
-  SizesAttributeParserTestCase test_cases[] = {
+  TestCase test_cases[] = {
       {"screen", 500},
       {"(min-width:500px)", 500},
       {"(min-width:500px) 200px", 200},
@@ -97,7 +97,7 @@ TEST(SizesAttributeParserTest, Basic) {
 }
 
 TEST(SizesAttributeParserTest, FloatViewportWidth) {
-  SizesAttributeParserTestCase test_cases[] = {
+  TestCase test_cases[] = {
       {"screen", 500.5},
       {"(min-width:500px)", 500.5},
       {"(min-width:500px) 200px", 200},

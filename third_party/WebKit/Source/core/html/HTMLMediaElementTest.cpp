@@ -13,14 +13,14 @@
 
 namespace blink {
 
-enum class MediaTestParam { kAudio, kVideo };
+enum class TestParam { kAudio, kVideo };
 
-class HTMLMediaElementTest : public ::testing::TestWithParam<MediaTestParam> {
+class HTMLMediaElementTest : public ::testing::TestWithParam<TestParam> {
  protected:
   void SetUp() {
     dummy_page_holder_ = DummyPageHolder::Create();
 
-    if (GetParam() == MediaTestParam::kAudio)
+    if (GetParam() == TestParam::kAudio)
       media_ = HTMLAudioElement::Create(dummy_page_holder_->GetDocument());
     else
       media_ = HTMLVideoElement::Create(dummy_page_holder_->GetDocument());
@@ -39,10 +39,10 @@ class HTMLMediaElementTest : public ::testing::TestWithParam<MediaTestParam> {
 
 INSTANTIATE_TEST_CASE_P(Audio,
                         HTMLMediaElementTest,
-                        ::testing::Values(MediaTestParam::kAudio));
+                        ::testing::Values(TestParam::kAudio));
 INSTANTIATE_TEST_CASE_P(Video,
                         HTMLMediaElementTest,
-                        ::testing::Values(MediaTestParam::kVideo));
+                        ::testing::Values(TestParam::kVideo));
 
 TEST_P(HTMLMediaElementTest, effectiveMediaVolume) {
   struct TestData {

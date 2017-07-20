@@ -12,14 +12,14 @@
 #include "extensions/renderer/extension_bindings_system.h"
 
 namespace extensions {
-class IPCMessageSender;
+class RequestSender;
 class ResourceBundleSourceMap;
 
 // The bindings system using the traditional JS-injection style bindings.
 class JsExtensionBindingsSystem : public ExtensionBindingsSystem {
  public:
   JsExtensionBindingsSystem(ResourceBundleSourceMap* source_map,
-                            std::unique_ptr<IPCMessageSender> request_sender);
+                            std::unique_ptr<RequestSender> request_sender);
   ~JsExtensionBindingsSystem() override;
 
   // ExtensionBindingsSystem:
@@ -37,7 +37,6 @@ class JsExtensionBindingsSystem : public ExtensionBindingsSystem {
                       const base::ListValue& response,
                       const std::string& error) override;
   RequestSender* GetRequestSender() override;
-  IPCMessageSender* GetIPCMessageSender() override;
 
  private:
   void RegisterBinding(const std::string& api_name,
@@ -45,8 +44,6 @@ class JsExtensionBindingsSystem : public ExtensionBindingsSystem {
                        ScriptContext* context);
 
   ResourceBundleSourceMap* source_map_ = nullptr;
-
-  std::unique_ptr<IPCMessageSender> ipc_message_sender_;
 
   std::unique_ptr<RequestSender> request_sender_;
 

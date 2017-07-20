@@ -173,10 +173,6 @@
     "contexts": "all",
     "matches": ["<all_urls>"]
   },
-  "fileSystem": {
-    "dependencies": ["permission:fileSystem"],
-    "contexts": ["blessed_extension"]
-  },
   "guestViewInternal": [
     {
       "internal": true,

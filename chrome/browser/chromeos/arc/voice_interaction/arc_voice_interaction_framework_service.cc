@@ -16,14 +16,12 @@
 #include "base/containers/flat_set.h"
 #include "base/logging.h"
 #include "base/memory/ref_counted.h"
-#include "base/memory/singleton.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics.h"
 #include "base/metrics/user_metrics_action.h"
 #include "base/task_scheduler/post_task.h"
 #include "chrome/browser/chromeos/login/helper.h"
 #include "chrome/browser/chromeos/login/ui/login_display_host_impl.h"
-#include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_list.h"
@@ -32,7 +30,6 @@
 #include "chrome/common/pref_names.h"
 #include "chromeos/chromeos_switches.h"
 #include "components/arc/arc_bridge_service.h"
-#include "components/arc/arc_browser_context_keyed_service_factory_base.h"
 #include "components/arc/arc_util.h"
 #include "components/arc/instance_holder.h"
 #include "components/exo/surface.h"
@@ -161,83 +158,27 @@ void EncodeAndReturnImage(
       callback);
 }
 
-// Singleton factory for ArcVoiceInteractionFrameworkService.
-class ArcVoiceInteractionFrameworkServiceFactory
-    : public internal::ArcBrowserContextKeyedServiceFactoryBase<
-          ArcVoiceInteractionFrameworkService,
-          ArcVoiceInteractionFrameworkServiceFactory> {
- public:
-  // Factory name used by ArcBrowserContextKeyedServiceFactoryBase.
-  static constexpr const char* kName =
-      "ArcVoiceInteractionFrameworkServiceFactory";
-
-  static ArcVoiceInteractionFrameworkServiceFactory* GetInstance() {
-    return base::Singleton<ArcVoiceInteractionFrameworkServiceFactory>::get();
-  }
-
- private:
-  friend base::DefaultSingletonTraits<
-      ArcVoiceInteractionFrameworkServiceFactory>;
-  ArcVoiceInteractionFrameworkServiceFactory() = default;
-  ~ArcVoiceInteractionFrameworkServiceFactory() override = default;
-
-  // BrowserContextKeyedServiceFactory override:
-  KeyedService* BuildServiceInstanceFor(
-      content::BrowserContext* context) const override {
-    if (!chromeos::switches::IsVoiceInteractionEnabled())
-      return nullptr;
-    return ArcBrowserContextKeyedServiceFactoryBase::BuildServiceInstanceFor(
-        context);
-  }
-};
-
-void SetVoiceInteractionPrefs(mojom::VoiceInteractionStatusPtr status) {
-  PrefService* prefs = ProfileManager::GetActiveUserProfile()->GetPrefs();
-  prefs->SetBoolean(prefs::kVoiceInteractionPrefSynced, status->configured);
-  prefs->SetBoolean(prefs::kVoiceInteractionEnabled,
-                    status->configured && status->voice_interaction_enabled);
-  prefs->SetBoolean(prefs::kVoiceInteractionContextEnabled,
-                    status->configured && status->context_enabled);
-}
-
 }  // namespace
 
 // static
-ArcVoiceInteractionFrameworkService*
-ArcVoiceInteractionFrameworkService::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcVoiceInteractionFrameworkServiceFactory::GetForBrowserContext(
-      context);
-}
-
-KeyedServiceBaseFactory* ArcVoiceInteractionFrameworkService::GetFactory() {
-  return ArcVoiceInteractionFrameworkServiceFactory::GetInstance();
-}
+const char ArcVoiceInteractionFrameworkService::kArcServiceName[] =
+    "arc::ArcVoiceInteractionFrameworkService";
 
 ArcVoiceInteractionFrameworkService::ArcVoiceInteractionFrameworkService(
-    content::BrowserContext* context,
     ArcBridgeService* bridge_service)
-    : context_(context), arc_bridge_service_(bridge_service), binding_(this) {
-  arc_bridge_service_->voice_interaction_framework()->AddObserver(this);
-  ArcSessionManager::Get()->AddObserver(this);
+    : ArcService(bridge_service), binding_(this) {
+  arc_bridge_service()->voice_interaction_framework()->AddObserver(this);
 }
 
 ArcVoiceInteractionFrameworkService::~ArcVoiceInteractionFrameworkService() {
-  // TODO(hidehiko): Currently, the lifetime of ArcBridgeService and
-  // BrowserContextKeyedService is not nested.
-  // If ArcServiceManager::Get() returns nullptr, it is already destructed,
-  // so do not touch it.
-  if (ArcServiceManager::Get())
-    arc_bridge_service_->voice_interaction_framework()->RemoveObserver(this);
-  ArcSessionManager::Get()->RemoveObserver(this);
-  ArcSessionManager::Get()->AddObserver(this);
+  arc_bridge_service()->voice_interaction_framework()->RemoveObserver(this);
 }
 
 void ArcVoiceInteractionFrameworkService::OnInstanceReady() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   mojom::VoiceInteractionFrameworkInstance* framework_instance =
       ARC_GET_INSTANCE_FOR_METHOD(
-          arc_bridge_service_->voice_interaction_framework(), Init);
+          arc_bridge_service()->voice_interaction_framework(), Init);
   DCHECK(framework_instance);
   mojom::VoiceInteractionFrameworkHostPtr host_proxy;
   binding_.Bind(mojo::MakeRequest(&host_proxy));
@@ -247,11 +188,6 @@ void ArcVoiceInteractionFrameworkService::OnInstanceReady() {
   ash::Shell::Get()->accelerator_controller()->Register(
       {ui::Accelerator(ui::VKEY_A, ui::EF_COMMAND_DOWN | ui::EF_SHIFT_DOWN)},
       this);
-
-  if (is_request_pending_) {
-    is_request_pending_ = false;
-    framework_instance->StartVoiceInteractionSession();
-  }
 }
 
 void ArcVoiceInteractionFrameworkService::OnInstanceClosed() {
@@ -383,23 +319,11 @@ void ArcVoiceInteractionFrameworkService::HideMetalayer() {
   SetMetalayerVisibility(false);
 }
 
-void ArcVoiceInteractionFrameworkService::OnArcPlayStoreEnabledChanged(
-    bool enabled) {
-  if (enabled)
-    return;
-  mojom::VoiceInteractionStatusPtr status =
-      mojom::VoiceInteractionStatus::New();
-  status->configured = false;
-  status->voice_interaction_enabled = false;
-  status->context_enabled = false;
-  SetVoiceInteractionPrefs(std::move(status));
-}
-
 void ArcVoiceInteractionFrameworkService::StartVoiceInteractionSetupWizard() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   arc::mojom::VoiceInteractionFrameworkInstance* framework_instance =
       ARC_GET_INSTANCE_FOR_METHOD(
-          arc_bridge_service_->voice_interaction_framework(),
+          arc_bridge_service()->voice_interaction_framework(),
           StartVoiceInteractionSetupWizard);
   if (!framework_instance)
     return;
@@ -410,7 +334,7 @@ void ArcVoiceInteractionFrameworkService::SetMetalayerVisibility(bool visible) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   mojom::VoiceInteractionFrameworkInstance* framework_instance =
       ARC_GET_INSTANCE_FOR_METHOD(
-          arc_bridge_service_->voice_interaction_framework(),
+          arc_bridge_service()->voice_interaction_framework(),
           SetMetalayerVisibility);
   if (!framework_instance) {
     CallAndResetMetalayerCallback();
@@ -433,7 +357,7 @@ void ArcVoiceInteractionFrameworkService::SetVoiceInteractionEnabled(
 
   mojom::VoiceInteractionFrameworkInstance* framework_instance =
       ARC_GET_INSTANCE_FOR_METHOD(
-          arc_bridge_service_->voice_interaction_framework(),
+          arc_bridge_service()->voice_interaction_framework(),
           SetVoiceInteractionEnabled);
   if (!framework_instance)
     return;
@@ -446,33 +370,18 @@ void ArcVoiceInteractionFrameworkService::SetVoiceInteractionContextEnabled(
 
   mojom::VoiceInteractionFrameworkInstance* framework_instance =
       ARC_GET_INSTANCE_FOR_METHOD(
-          arc_bridge_service_->voice_interaction_framework(),
+          arc_bridge_service()->voice_interaction_framework(),
           SetVoiceInteractionContextEnabled);
   if (!framework_instance)
     return;
   framework_instance->SetVoiceInteractionContextEnabled(enable);
 }
 
-void ArcVoiceInteractionFrameworkService::UpdateVoiceInteractionPrefs() {
-  if (ProfileManager::GetActiveUserProfile()->GetPrefs()->GetBoolean(
-          prefs::kVoiceInteractionPrefSynced)) {
-    return;
-  }
-  mojom::VoiceInteractionFrameworkInstance* framework_instance =
-      ARC_GET_INSTANCE_FOR_METHOD(
-          arc_bridge_service_->voice_interaction_framework(),
-          GetVoiceInteractionSettings);
-  if (!framework_instance)
-    return;
-  framework_instance->GetVoiceInteractionSettings(
-      base::Bind(&SetVoiceInteractionPrefs));
-}
-
 void ArcVoiceInteractionFrameworkService::StartSessionFromUserInteraction(
     const gfx::Rect& rect) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
-  if (!Profile::FromBrowserContext(context_)->GetPrefs()->GetBoolean(
+  if (!ProfileManager::GetActiveUserProfile()->GetPrefs()->GetBoolean(
           prefs::kArcVoiceInteractionValuePropAccepted)) {
     // If voice interaction value prop already showing, return.
     if (chromeos::LoginDisplayHost::default_host())
@@ -487,9 +396,8 @@ void ArcVoiceInteractionFrameworkService::StartSessionFromUserInteraction(
     return;
   }
 
-  if (!arc_bridge_service_->voice_interaction_framework()->has_instance()) {
+  if (!arc_bridge_service()->voice_interaction_framework()->has_instance()) {
     SetArcCpuRestriction(false);
-    is_request_pending_ = true;
     return;
   }
 
@@ -499,14 +407,14 @@ void ArcVoiceInteractionFrameworkService::StartSessionFromUserInteraction(
   if (rect.IsEmpty()) {
     mojom::VoiceInteractionFrameworkInstance* framework_instance =
         ARC_GET_INSTANCE_FOR_METHOD(
-            arc_bridge_service_->voice_interaction_framework(),
+            arc_bridge_service()->voice_interaction_framework(),
             StartVoiceInteractionSession);
     DCHECK(framework_instance);
     framework_instance->StartVoiceInteractionSession();
   } else {
     mojom::VoiceInteractionFrameworkInstance* framework_instance =
         ARC_GET_INSTANCE_FOR_METHOD(
-            arc_bridge_service_->voice_interaction_framework(),
+            arc_bridge_service()->voice_interaction_framework(),
             StartVoiceInteractionSessionForRegion);
     DCHECK(framework_instance);
     framework_instance->StartVoiceInteractionSessionForRegion(rect);

@@ -79,7 +79,7 @@ class OortOnlineTBMv2(perf_benchmark.PerfBenchmark):
         pass # http://oortonline.gl/#run not disabled.
     return StoryExpectations()
 
-  def CreateCoreTimelineBasedMeasurementOptions(self):
+  def CreateTimelineBasedMeasurementOptions(self):
     categories = [
       # Implicitly disable all categories.
       '-*',

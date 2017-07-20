@@ -4,16 +4,15 @@
 
 #include "content/browser/frame_host/cross_process_frame_connector.h"
 
+#include "cc/surfaces/frame_sink_manager.h"
 #include "cc/surfaces/surface.h"
 #include "cc/surfaces/surface_hittest.h"
-#include "components/viz/service/frame_sinks/frame_sink_manager.h"
 #include "content/browser/compositor/surface_utils.h"
 #include "content/browser/frame_host/frame_tree.h"
 #include "content/browser/frame_host/frame_tree_node.h"
 #include "content/browser/frame_host/render_frame_host_manager.h"
 #include "content/browser/frame_host/render_frame_proxy_host.h"
 #include "content/browser/frame_host/render_widget_host_view_child_frame.h"
-#include "content/browser/renderer_host/cursor_manager.h"
 #include "content/browser/renderer_host/render_view_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_delegate.h"
 #include "content/browser/renderer_host/render_widget_host_impl.h"
@@ -58,10 +57,6 @@ void CrossProcessFrameConnector::set_view(
     RenderWidgetHostViewChildFrame* view) {
   // Detach ourselves from the previous |view_|.
   if (view_) {
-    RenderWidgetHostViewBase* root_view = GetRootRenderWidgetHostView();
-    if (root_view && root_view->GetCursorManager())
-      root_view->GetCursorManager()->ViewBeingDestroyed(view_);
-
     // The RenderWidgetHostDelegate needs to be checked because set_view() can
     // be called during nested WebContents destruction. See
     // https://crbug.com/644306.
@@ -95,19 +90,19 @@ void CrossProcessFrameConnector::RenderProcessGone() {
 
 void CrossProcessFrameConnector::SetChildFrameSurface(
     const viz::SurfaceInfo& surface_info,
-    const viz::SurfaceSequence& sequence) {
+    const cc::SurfaceSequence& sequence) {
   frame_proxy_in_parent_renderer_->Send(new FrameMsg_SetChildFrameSurface(
       frame_proxy_in_parent_renderer_->GetRoutingID(), surface_info, sequence));
 }
 
 void CrossProcessFrameConnector::OnSatisfySequence(
-    const viz::SurfaceSequence& sequence) {
+    const cc::SurfaceSequence& sequence) {
   GetFrameSinkManager()->surface_manager()->SatisfySequence(sequence);
 }
 
 void CrossProcessFrameConnector::OnRequireSequence(
     const viz::SurfaceId& id,
-    const viz::SurfaceSequence& sequence) {
+    const cc::SurfaceSequence& sequence) {
   GetFrameSinkManager()->surface_manager()->RequireSequence(id, sequence);
 }
 
@@ -117,10 +112,8 @@ gfx::Rect CrossProcessFrameConnector::ChildFrameRect() {
 
 void CrossProcessFrameConnector::UpdateCursor(const WebCursor& cursor) {
   RenderWidgetHostViewBase* root_view = GetRootRenderWidgetHostView();
-  // UpdateCursor messages are ignored if the root view does not support
-  // cursors.
-  if (root_view && root_view->GetCursorManager())
-    root_view->GetCursorManager()->UpdateCursor(view_, cursor);
+  if (root_view)
+    root_view->UpdateCursor(cursor);
 }
 
 gfx::Point CrossProcessFrameConnector::TransformPointToRootCoordSpace(

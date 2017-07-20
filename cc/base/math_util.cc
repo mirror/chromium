@@ -7,7 +7,7 @@
 #include <algorithm>
 #include <cmath>
 #include <limits>
-#if defined(ARCH_CPU_X86_FAMILY)
+#ifdef __SSE__
 #include <xmmintrin.h>
 #endif
 
@@ -810,7 +810,7 @@ gfx::Vector3dF MathUtil::GetYAxis(const gfx::Transform& transform) {
 }
 
 ScopedSubnormalFloatDisabler::ScopedSubnormalFloatDisabler() {
-#if defined(ARCH_CPU_X86_FAMILY)
+#ifdef __SSE__
   // Turn on "subnormals are zero" and "flush to zero" CSR flags.
   orig_state_ = _mm_getcsr();
   _mm_setcsr(orig_state_ | 0x8040);
@@ -818,7 +818,7 @@ ScopedSubnormalFloatDisabler::ScopedSubnormalFloatDisabler() {
 }
 
 ScopedSubnormalFloatDisabler::~ScopedSubnormalFloatDisabler() {
-#if defined(ARCH_CPU_X86_FAMILY)
+#ifdef __SSE__
   _mm_setcsr(orig_state_);
 #endif
 }

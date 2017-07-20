@@ -41,7 +41,6 @@ CONTENT_EXPORT extern const base::Feature kGamepadExtensions;
 CONTENT_EXPORT extern const base::Feature kGuestViewCrossProcessFrames;
 CONTENT_EXPORT extern const base::Feature kHeapCompaction;
 CONTENT_EXPORT extern const base::Feature kIdleTimeSpellChecking;
-CONTENT_EXPORT extern const base::Feature kLazyInitializeMediaControls;
 CONTENT_EXPORT extern const base::Feature kLazyParseCSS;
 CONTENT_EXPORT extern const base::Feature kLoadingWithMojo;
 CONTENT_EXPORT extern const base::Feature kMediaDocumentDownloadButton;
@@ -64,7 +63,6 @@ CONTENT_EXPORT extern const base::Feature kPurgeAndSuspend;
 CONTENT_EXPORT extern const base::Feature kRafAlignedMouseInputEvents;
 CONTENT_EXPORT extern const base::Feature kRafAlignedTouchInputEvents;
 CONTENT_EXPORT extern const base::Feature kRenderingPipelineThrottling;
-CONTENT_EXPORT extern const base::Feature kReportRendererPeakMemoryStats;
 CONTENT_EXPORT extern const base::Feature
     kRequireSecureOriginsForPepperMediaRequests;
 CONTENT_EXPORT extern const base::Feature kResourceLoadScheduler;
@@ -72,7 +70,6 @@ CONTENT_EXPORT extern const base::Feature kScrollAnchoring;
 CONTENT_EXPORT extern const base::Feature kServiceWorkerNavigationPreload;
 CONTENT_EXPORT extern const base::Feature kServiceWorkerScriptStreaming;
 CONTENT_EXPORT extern const base::Feature kSharedArrayBuffer;
-CONTENT_EXPORT extern const base::Feature kSignInProcessIsolation;
 CONTENT_EXPORT extern const base::Feature kSkipCompositingSmallScrollers;
 CONTENT_EXPORT extern const base::Feature kSlimmingPaintInvalidation;
 CONTENT_EXPORT extern const base::Feature kTimerThrottlingForHiddenFrames;
@@ -112,7 +109,6 @@ CONTENT_EXPORT extern const base::Feature kWinSboxDisableExtensionPoints;
 #endif  // defined(OS_WIN)
 
 #if defined(OS_MACOSX)
-CONTENT_EXPORT extern const base::Feature kDeviceMonitorMac;
 CONTENT_EXPORT extern const base::Feature kMacV2Sandbox;
 #endif  // defined(OS_MACOSX)
 

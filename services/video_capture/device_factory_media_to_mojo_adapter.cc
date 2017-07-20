@@ -28,7 +28,7 @@ namespace {
 // happen in VideoCaptureDeviceClient, and talk only to VideoCaptureDeviceClient
 // instead of VideoCaptureSystem.
 static void TranslateDeviceInfos(
-    video_capture::mojom::DeviceFactory::GetDeviceInfosCallback callback,
+    const video_capture::mojom::DeviceFactory::GetDeviceInfosCallback& callback,
     const std::vector<media::VideoCaptureDeviceInfo>& device_infos) {
   std::vector<media::VideoCaptureDeviceInfo> translated_device_infos;
   for (const auto& device_info : device_infos) {
@@ -52,13 +52,13 @@ static void TranslateDeviceInfos(
       continue;
     translated_device_infos.push_back(translated_device_info);
   }
-  std::move(callback).Run(translated_device_infos);
+  callback.Run(translated_device_infos);
 }
 
 static void DiscardDeviceInfosAndCallContinuation(
-    base::OnceClosure continuation,
+    base::Closure continuation,
     const std::vector<media::VideoCaptureDeviceInfo>&) {
-  std::move(continuation).Run();
+  continuation.Run();
 }
 
 }  // anonymous namespace
@@ -92,16 +92,16 @@ DeviceFactoryMediaToMojoAdapter::DeviceFactoryMediaToMojoAdapter(
 DeviceFactoryMediaToMojoAdapter::~DeviceFactoryMediaToMojoAdapter() = default;
 
 void DeviceFactoryMediaToMojoAdapter::GetDeviceInfos(
-    GetDeviceInfosCallback callback) {
+    const GetDeviceInfosCallback& callback) {
   capture_system_->GetDeviceInfosAsync(
-      base::Bind(&TranslateDeviceInfos, base::Passed(&callback)));
+      base::Bind(&TranslateDeviceInfos, callback));
   has_called_get_device_infos_ = true;
 }
 
 void DeviceFactoryMediaToMojoAdapter::CreateDevice(
     const std::string& device_id,
     mojom::DeviceRequest device_request,
-    CreateDeviceCallback callback) {
+    const CreateDeviceCallback& callback) {
   auto active_device_iter = active_devices_by_id_.find(device_id);
   if (active_device_iter != active_devices_by_id_.end()) {
     // The requested device is already in use.
@@ -113,34 +113,32 @@ void DeviceFactoryMediaToMojoAdapter::CreateDevice(
     device_entry.binding->set_connection_error_handler(base::Bind(
         &DeviceFactoryMediaToMojoAdapter::OnClientConnectionErrorOrClose,
         base::Unretained(this), device_id));
-    std::move(callback).Run(mojom::DeviceAccessResultCode::SUCCESS);
+    callback.Run(mojom::DeviceAccessResultCode::SUCCESS);
     return;
   }
 
-  auto create_and_add_new_device_cb =
-      base::BindOnce(&DeviceFactoryMediaToMojoAdapter::CreateAndAddNewDevice,
-                     weak_factory_.GetWeakPtr(), device_id,
-                     std::move(device_request), std::move(callback));
+  const auto create_and_add_new_device_cb =
+      base::Bind(&DeviceFactoryMediaToMojoAdapter::CreateAndAddNewDevice,
+                 weak_factory_.GetWeakPtr(), device_id,
+                 base::Passed(&device_request), callback);
 
   if (has_called_get_device_infos_) {
-    std::move(create_and_add_new_device_cb).Run();
+    create_and_add_new_device_cb.Run();
     return;
   }
 
-  capture_system_->GetDeviceInfosAsync(
-      base::Bind(&DiscardDeviceInfosAndCallContinuation,
-                 base::Passed(&create_and_add_new_device_cb)));
+  capture_system_->GetDeviceInfosAsync(base::Bind(
+      &DiscardDeviceInfosAndCallContinuation, create_and_add_new_device_cb));
 }
 
 void DeviceFactoryMediaToMojoAdapter::CreateAndAddNewDevice(
     const std::string& device_id,
     mojom::DeviceRequest device_request,
-    CreateDeviceCallback callback) {
+    const CreateDeviceCallback& callback) {
   std::unique_ptr<media::VideoCaptureDevice> media_device =
       capture_system_->CreateDevice(device_id);
   if (media_device == nullptr) {
-    std::move(callback).Run(
-        mojom::DeviceAccessResultCode::ERROR_DEVICE_NOT_FOUND);
+    callback.Run(mojom::DeviceAccessResultCode::ERROR_DEVICE_NOT_FOUND);
     return;
   }
 
@@ -156,7 +154,7 @@ void DeviceFactoryMediaToMojoAdapter::CreateAndAddNewDevice(
       base::Unretained(this), device_id));
   active_devices_by_id_[device_id] = std::move(device_entry);
 
-  std::move(callback).Run(mojom::DeviceAccessResultCode::SUCCESS);
+  callback.Run(mojom::DeviceAccessResultCode::SUCCESS);
 }
 
 void DeviceFactoryMediaToMojoAdapter::OnClientConnectionErrorOrClose(

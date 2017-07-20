@@ -139,6 +139,9 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   net::HostPortPair GetSocketAddress() override;
   const net::HttpResponseHeaders* GetResponseHeaders() override;
   net::HttpResponseInfo::ConnectionInfo GetConnectionInfo() override;
+  void Resume() override;
+  void CancelDeferredNavigation(
+      NavigationThrottle::ThrottleCheckResult result) override;
   void RegisterThrottleForTesting(
       std::unique_ptr<NavigationThrottle> navigation_throttle) override;
   NavigationThrottle::ThrottleCheckResult CallWillStartRequestForTesting(
@@ -156,7 +159,6 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
       RenderFrameHost* render_frame_host,
       const std::string& raw_response_header) override;
   void CallDidCommitNavigationForTesting(const GURL& url) override;
-  void CallResumeForTesting() override;
   bool WasStartedFromContextMenu() const override;
   const GURL& GetSearchableFormURL() override;
   const std::string& GetSearchableFormEncoding() override;
@@ -164,14 +166,6 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   RestoreType GetRestoreType() override;
   const GURL& GetBaseURLForDataURL() override;
   const GlobalRequestID& GetGlobalRequestID() override;
-
-  // Resume and CancelDeferredNavigation must only be called by the
-  // NavigationThrottle that is currently deferring the navigation.
-  // |resuming_throttle| and |cancelling_throttle| are the throttles calling
-  // these methods.
-  void Resume(NavigationThrottle* resuming_throttle);
-  void CancelDeferredNavigation(NavigationThrottle* cancelling_throttle,
-                                NavigationThrottle::ThrottleCheckResult result);
 
   NavigationData* GetNavigationData() override;
 
@@ -412,10 +406,6 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   NavigationThrottle::ThrottleCheckResult CheckWillRedirectRequest();
   NavigationThrottle::ThrottleCheckResult CheckWillProcessResponse();
 
-  void ResumeInternal();
-  void CancelDeferredNavigationInternal(
-      NavigationThrottle::ThrottleCheckResult result);
-
   // Called when WillProcessResponse checks are done, to find the final
   // RenderFrameHost for the navigation. Checks whether the navigation should be
   // transferred. Returns false if the transfer attempt results in the
@@ -453,11 +443,6 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   // handle the navigation following the redirect if it can be handled by an
   // existing RenderProcessHost. Otherwise, it should be null.
   void UpdateSiteURL(RenderProcessHost* post_redirect_process);
-
-  // Returns the throttle that is currently deferring the navigation (i.e. the
-  // throttle at index |next_index_ -1|). If the handle is not deferred, returns
-  // nullptr;
-  NavigationThrottle* GetDeferringThrottle() const;
 
   // See NavigationHandle for a description of those member variables.
   GURL url_;

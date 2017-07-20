@@ -35,8 +35,6 @@ Script execution resumed.
 
 Running: testBreakpointsUpdated
 breakpoint at 3
-  inline breakpoint at (3, 4)
-  inline breakpoint at (3, 32) disabled
 
 Running: testNoCrashWhenLiveEditOnBreakpoint
 Script execution paused.

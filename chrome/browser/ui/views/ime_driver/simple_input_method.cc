@@ -4,8 +4,6 @@
 
 #include "chrome/browser/ui/views/ime_driver/simple_input_method.h"
 
-#include <utility>
-
 SimpleInputMethod::SimpleInputMethod() {}
 
 SimpleInputMethod::~SimpleInputMethod() {}
@@ -15,9 +13,10 @@ void SimpleInputMethod::OnTextInputTypeChanged(
 
 void SimpleInputMethod::OnCaretBoundsChanged(const gfx::Rect& caret_bounds) {}
 
-void SimpleInputMethod::ProcessKeyEvent(std::unique_ptr<ui::Event> key_event,
-                                        ProcessKeyEventCallback callback) {
-  std::move(callback).Run(false);
+void SimpleInputMethod::ProcessKeyEvent(
+    std::unique_ptr<ui::Event> key_event,
+    const ProcessKeyEventCallback& callback) {
+  callback.Run(false);
 }
 
 void SimpleInputMethod::CancelComposition() {}

@@ -4,7 +4,6 @@
 
 #include "ui/gfx/animation/animation.h"
 
-#include "base/memory/ptr_util.h"
 #include "build/build_config.h"
 #include "ui/gfx/animation/animation_container.h"
 #include "ui/gfx/animation/animation_delegate.h"
@@ -12,10 +11,6 @@
 #include "ui/gfx/geometry/rect.h"
 
 namespace gfx {
-
-// static
-Animation::RichAnimationRenderMode Animation::rich_animation_rendering_mode_ =
-    RichAnimationRenderMode::PLATFORM;
 
 Animation::Animation(base::TimeDelta timer_interval)
     : timer_interval_(timer_interval),
@@ -93,16 +88,9 @@ void Animation::SetContainer(AnimationContainer* container) {
     container_->Start(this);
 }
 
-bool Animation::ShouldRenderRichAnimation() {
-  if (rich_animation_rendering_mode_ == RichAnimationRenderMode::PLATFORM)
-    return ShouldRenderRichAnimationImpl();
-  return rich_animation_rendering_mode_ ==
-         RichAnimationRenderMode::FORCE_ENABLED;
-}
-
 #if !defined(OS_WIN)
 // static
-bool Animation::ShouldRenderRichAnimationImpl() {
+bool Animation::ShouldRenderRichAnimation() {
   // Defined in platform specific file for Windows.
   return true;
 }

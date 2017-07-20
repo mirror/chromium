@@ -9,7 +9,6 @@
 
 #include <memory>
 
-#include "base/mac/availability.h"
 #include "base/mac/scoped_nsobject.h"
 #include "chrome/browser/ui/bookmarks/bookmark_editor.h"
 #include "components/bookmarks/browser/bookmark_expanded_state_tracker.h"
@@ -73,7 +72,7 @@ class BookmarkModel;
 - (void)windowWillClose:(NSNotification*)notification;
 
 // Override to customize the touch bar.
-- (NSTouchBar*)makeTouchBar API_AVAILABLE(macos(10.12.2));
+- (NSTouchBar*)makeTouchBar;
 
 // Run the bookmark editor as a modal sheet.  Does not block.
 - (void)runAsModalSheet;

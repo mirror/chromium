@@ -86,10 +86,8 @@ Polymer({
         'on-printer-discovered', this.onPrinterDiscovered_.bind(this));
     this.addWebUIListener(
         'on-printer-discovery-done', this.onPrinterDiscoveryDone_.bind(this));
-  },
-
-  close: function() {
-    this.$$('add-printer-dialog').close();
+    this.addWebUIListener(
+        'on-printer-discovery-failed', this.onPrinterDiscoveryDone_.bind(this));
   },
 
   /**
@@ -110,10 +108,7 @@ Polymer({
   onPrinterDiscoveryDone_: function() {
     this.discovering_ = false;
     this.$$('add-printer-list').style.maxHeight = kPrinterListFullHeight + 'px';
-    this.$.noPrinterMessage.hidden = !!this.discoveredPrinters.length;
-
-    if (!this.discoveredPrinters.length)
-      this.fire('no-detected-printer');
+    this.$.noPrinterMessage.hidden = !!this.discoveredPrinters;
   },
 
   /** @private */
@@ -367,28 +362,16 @@ Polymer({
     currentDialog_: String,
 
     /** @private {boolean} */
-    showDiscoveryDialog_: {
-      type: Boolean,
-      value: false,
-    },
+    showDiscoveryDialog_: Boolean,
 
     /** @private {boolean} */
-    showManuallyAddDialog_: {
-      type: Boolean,
-      value: false,
-    },
+    showManuallyAddDialog_: Boolean,
 
     /** @private {boolean} */
-    showConfiguringDialog_: {
-      type: Boolean,
-      value: false,
-    },
+    showConfiguringDialog_: Boolean,
 
     /** @private {boolean} */
-    showManufacturerDialog_: {
-      type: Boolean,
-      value: false,
-    },
+    showManufacturerDialog_: Boolean,
   },
 
   listeners: {
@@ -397,7 +380,6 @@ Polymer({
     'open-configuring-printer-dialog': 'openConfiguringPrinterDialog_',
     'open-discovery-printers-dialog': 'openDiscoveryPrintersDialog_',
     'open-manufacturer-model-dialog': 'openManufacturerModelDialog_',
-    'no-detected-printer': 'onNoDetectedPrinter_',
   },
 
   /** @override */
@@ -527,18 +509,6 @@ Polymer({
     } else if (this.previousDialog_ == AddPrinterDialogs.MANUFACTURER) {
       this.switchDialog_(
           this.currentDialog_, this.previousDialog_, 'showManufacturerDialog_');
-    }
-  },
-
-  /** @private */
-  onNoDetectedPrinter_: function() {
-    // If there is no detected printer, automatically open manually-add-printer
-    // dialog only when the user opens the discovery-dialog through the
-    // "ADD PRINTER" button.
-    if (!this.previousDialog_) {
-      this.$$('add-printer-discovery-dialog').close();
-      this.newPrinter = getEmptyPrinter_();
-      this.openManuallyAddPrinterDialog_();
     }
   },
 

@@ -71,6 +71,8 @@ class DataReductionProxyResourceThrottle
     STATE_DISPLAYING_BLOCKING_PAGE,
   };
 
+  static const char* kUnsafeUrlProceedHeader;
+
   ~DataReductionProxyResourceThrottle() override;
 
   // SafeBrowsingService::UrlCheckCallback implementation.

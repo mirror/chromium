@@ -39,6 +39,7 @@ class FrameInputHandlerImpl : public mojom::FrameInputHandler {
  public:
   static void CreateMojoService(
       base::WeakPtr<RenderFrameImpl> render_frame,
+      const service_manager::BindSourceInfo& source_info,
       mojom::FrameInputHandlerRequest request);
 
   void SetCompositionFromExistingText(

@@ -9,7 +9,6 @@
 
 #include <memory>
 
-#include "base/mac/availability.h"
 #include "base/mac/scoped_nsobject.h"
 #import "chrome/browser/ui/cocoa/bookmarks/bookmark_model_observer_for_cocoa.h"
 #import "chrome/browser/ui/cocoa/has_weak_browser_pointer.h"
@@ -88,7 +87,7 @@ class ManagedBookmarkService;
 - (IBAction)folderChanged:(id)sender;
 
 // Overridden to customize the touch bar.
-- (NSTouchBar*)makeTouchBar API_AVAILABLE(macos(10.12.2));
+- (NSTouchBar*)makeTouchBar;
 
 @end
 

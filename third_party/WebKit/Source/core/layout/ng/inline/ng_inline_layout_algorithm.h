@@ -68,9 +68,7 @@ class CORE_EXPORT NGInlineLayoutAlgorithm final
   LayoutUnit ComputeContentSize(const NGLineInfo&, LayoutUnit line_bottom);
 
   void PropagateBaselinesFromChildren();
-  bool AddBaseline(const NGBaselineRequest&,
-                   const NGPhysicalFragment*,
-                   LayoutUnit child_offset);
+  bool AddBaseline(const NGBaselineRequest&, unsigned);
 
   NGInlineLayoutStateStack box_states_;
   LayoutUnit content_size_;

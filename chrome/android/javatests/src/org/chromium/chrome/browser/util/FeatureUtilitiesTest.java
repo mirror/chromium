@@ -25,7 +25,7 @@ import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.AdvancedMockContext;
 import org.chromium.base.test.util.Feature;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
-import org.chromium.components.signin.AccountManagerFacade;
+import org.chromium.components.signin.AccountManagerHelper;
 import org.chromium.components.signin.test.util.AccountHolder;
 import org.chromium.components.signin.test.util.FakeAccountManagerDelegate;
 
@@ -51,7 +51,7 @@ public class FeatureUtilitiesTest {
         mContextWithoutSpeech = new IntentTestMockContext(
                 RecognizerIntent.ACTION_WEB_SEARCH);
 
-        mTestAccount = AccountManagerFacade.createAccountFromName("Dummy");
+        mTestAccount = AccountManagerHelper.createAccountFromName("Dummy");
     }
 
     @Before
@@ -64,7 +64,7 @@ public class FeatureUtilitiesTest {
 
     @After
     public void tearDown() {
-        AccountManagerFacade.resetAccountManagerFacadeForTests();
+        AccountManagerHelper.resetAccountManagerHelperForTests();
     }
 
     private static class IntentTestPackageManager extends MockPackageManager {
@@ -140,7 +140,7 @@ public class FeatureUtilitiesTest {
 
     private void setUpAccountManager(String accountType) {
         mAccountManager = new FakeAuthenticationAccountManager(mAccountTestingContext, accountType);
-        AccountManagerFacade.overrideAccountManagerFacadeForTests(
+        AccountManagerHelper.overrideAccountManagerHelperForTests(
                 mAccountTestingContext, mAccountManager);
     }
 
@@ -212,7 +212,7 @@ public class FeatureUtilitiesTest {
     public void testHasGoogleAccountCorrectlyDetected() {
         // Set up an account manager mock that returns Google account types
         // when queried.
-        setUpAccountManager(AccountManagerFacade.GOOGLE_ACCOUNT_TYPE);
+        setUpAccountManager(AccountManagerHelper.GOOGLE_ACCOUNT_TYPE);
         addTestAccount();
 
         boolean hasAccounts = FeatureUtilities.hasGoogleAccounts(

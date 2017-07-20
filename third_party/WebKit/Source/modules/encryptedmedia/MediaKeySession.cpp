@@ -29,13 +29,13 @@
 #include <limits>
 #include "bindings/core/v8/ScriptPromise.h"
 #include "bindings/core/v8/ScriptPromiseResolver.h"
+#include "core/dom/DOMArrayBuffer.h"
 #include "core/dom/DOMException.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/events/Event.h"
 #include "core/events/GenericEventQueue.h"
-#include "core/typed_arrays/DOMArrayBuffer.h"
 #include "modules/encryptedmedia/ContentDecryptionModuleResultPromise.h"
 #include "modules/encryptedmedia/EncryptedMediaUtils.h"
 #include "modules/encryptedmedia/MediaKeyMessageEvent.h"
@@ -366,7 +366,7 @@ MediaKeySession::MediaKeySession(ScriptState* script_state,
   // initializeNewSession() is called in response to the user calling
   // generateRequest().
   WebContentDecryptionModule* cdm = media_keys->ContentDecryptionModule();
-  session_ = cdm->CreateSession();
+  session_ = WTF::WrapUnique(cdm->CreateSession());
   session_->SetClientInterface(this);
 
   // From https://w3c.github.io/encrypted-media/#createSession:
@@ -888,7 +888,7 @@ void MediaKeySession::Message(MessageType message_type,
   MediaKeyMessageEvent* event =
       MediaKeyMessageEvent::Create(EventTypeNames::message, init);
   event->SetTarget(this);
-  async_event_queue_->EnqueueEvent(BLINK_FROM_HERE, event);
+  async_event_queue_->EnqueueEvent(event);
 }
 
 void MediaKeySession::Close() {
@@ -973,7 +973,7 @@ void MediaKeySession::KeysStatusesChange(
   //    at the session.
   Event* event = Event::Create(EventTypeNames::keystatuseschange);
   event->SetTarget(this);
-  async_event_queue_->EnqueueEvent(BLINK_FROM_HERE, event);
+  async_event_queue_->EnqueueEvent(event);
 
   // 6. Queue a task to run the attempt to resume playback if necessary
   //    algorithm on each of the media element(s) whose mediaKeys attribute

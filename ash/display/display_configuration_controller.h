@@ -20,6 +20,10 @@ class DisplayManager;
 
 namespace ash {
 
+namespace test {
+class DisplayConfigurationControllerTestApi;
+}  // namespace test
+
 class DisplayAnimator;
 class ScreenRotationAnimator;
 
@@ -50,10 +54,6 @@ class ASH_EXPORT DisplayConfigurationController
                           display::Display::Rotation rotation,
                           display::Display::RotationSource source);
 
-  // Returns the rotation of the display given by |display_id|. This returns
-  // the target rotation when the display is being rotated.
-  display::Display::Rotation GetTargetRotation(int64_t display_id);
-
   // Sets the primary display id.
   void SetPrimaryDisplayId(int64_t display_id);
 
@@ -61,7 +61,7 @@ class ASH_EXPORT DisplayConfigurationController
   void OnDisplayConfigurationChanged() override;
 
  protected:
-  friend class DisplayConfigurationControllerTestApi;
+  friend class ash::test::DisplayConfigurationControllerTestApi;
 
   // Allow tests to skip animations.
   void ResetAnimatorForTest();

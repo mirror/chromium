@@ -12,7 +12,6 @@
 #include "base/macros.h"
 #include "base/run_loop.h"
 #include "base/stl_util.h"
-#include "base/task_scheduler/post_task.h"
 #include "base/threading/thread.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
@@ -109,7 +108,8 @@ class LocalFileSyncServiceTest
       public LocalFileSyncService::Observer {
  protected:
   LocalFileSyncServiceTest()
-      : thread_bundle_(content::TestBrowserThreadBundle::REAL_IO_THREAD),
+      : thread_bundle_(content::TestBrowserThreadBundle::REAL_FILE_THREAD |
+                       content::TestBrowserThreadBundle::REAL_IO_THREAD),
         num_changes_(0) {}
 
   void SetUp() override {
@@ -119,7 +119,7 @@ class LocalFileSyncServiceTest
     file_system_.reset(new CannedSyncableFileSystem(
         GURL(kOrigin), in_memory_env_.get(),
         BrowserThread::GetTaskRunnerForThread(BrowserThread::IO),
-        base::CreateSingleThreadTaskRunnerWithTraits({base::MayBlock()})));
+        BrowserThread::GetTaskRunnerForThread(BrowserThread::FILE)));
 
     local_service_ = LocalFileSyncService::CreateForTesting(
         &profile_, in_memory_env_.get());
@@ -145,8 +145,7 @@ class LocalFileSyncServiceTest
     local_service_->Shutdown();
     file_system_->TearDown();
     RevokeSyncableFileSystem();
-
-    base::TaskScheduler::GetInstance()->FlushForTesting();
+    content::RunAllPendingInMessageLoop(BrowserThread::FILE);
     content::RunAllPendingInMessageLoop(BrowserThread::IO);
   }
 
@@ -302,7 +301,7 @@ TEST_F(LocalFileSyncServiceTest, MAYBE_LocalChangeObserverMultipleContexts) {
   CannedSyncableFileSystem file_system2(
       GURL(kOrigin2), in_memory_env_.get(),
       BrowserThread::GetTaskRunnerForThread(BrowserThread::IO),
-      base::CreateSingleThreadTaskRunnerWithTraits({base::MayBlock()}));
+      BrowserThread::GetTaskRunnerForThread(BrowserThread::FILE));
   file_system2.SetUp(CannedSyncableFileSystem::QUOTA_ENABLED);
 
   base::RunLoop run_loop;

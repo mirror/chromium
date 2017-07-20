@@ -35,7 +35,6 @@ MetricsHelper* ControllerClient::metrics_helper() const {
 }
 
 void ControllerClient::SetReportingPreference(bool report) {
-  DCHECK(GetPrefService());
   GetPrefService()->SetBoolean(GetExtendedReportingPrefName(), report);
   metrics_helper_->RecordUserInteraction(
       report ? MetricsHelper::SET_EXTENDED_REPORTING_ENABLED

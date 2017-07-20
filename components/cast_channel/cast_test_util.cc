@@ -29,9 +29,6 @@ MockCastTransportDelegate::~MockCastTransportDelegate() {}
 MockCastSocketObserver::MockCastSocketObserver() {}
 MockCastSocketObserver::~MockCastSocketObserver() {}
 
-MockCastSocketService::MockCastSocketService() {}
-MockCastSocketService::~MockCastSocketService() {}
-
 MockCastSocket::MockCastSocket()
     : channel_id_(0),
       error_state_(ChannelError::NONE),

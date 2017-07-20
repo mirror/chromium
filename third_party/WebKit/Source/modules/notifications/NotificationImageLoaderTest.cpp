@@ -24,9 +24,9 @@ namespace {
 
 enum class LoadState { kNotLoaded, kLoadFailed, kLoadSuccessful };
 
-constexpr char kImageLoaderBaseUrl[] = "http://test.com/";
-constexpr char kImageLoaderBaseDir[] = "notifications/";
-constexpr char kImageLoaderIcon500x500[] = "500x500.png";
+constexpr char kBaseUrl[] = "http://test.com/";
+constexpr char kBaseDir[] = "notifications/";
+constexpr char kIcon500x500[] = "500x500.png";
 
 // This mirrors the definition in NotificationImageLoader.cpp.
 constexpr unsigned long kImageFetchTimeoutInMs = 90000;
@@ -54,8 +54,7 @@ class NotificationImageLoaderTest : public ::testing::Test {
   // directory.
   WebURL RegisterMockedURL(const String& file_name) {
     WebURL registered_url = URLTestHelpers::RegisterMockedURLLoadFromBase(
-        kImageLoaderBaseUrl, testing::CoreTestDataPath(kImageLoaderBaseDir),
-        file_name, "image/png");
+        kBaseUrl, testing::CoreTestDataPath(kBaseDir), file_name, "image/png");
     return registered_url;
   }
 
@@ -87,7 +86,7 @@ class NotificationImageLoaderTest : public ::testing::Test {
 };
 
 TEST_F(NotificationImageLoaderTest, SuccessTest) {
-  KURL url = RegisterMockedURL(kImageLoaderIcon500x500);
+  KURL url = RegisterMockedURL(kIcon500x500);
   LoadImage(url);
   histogram_tester_.ExpectTotalCount("Notifications.LoadFinishTime.Icon", 0);
   histogram_tester_.ExpectTotalCount("Notifications.LoadFileSize.Icon", 0);
@@ -106,7 +105,7 @@ TEST_F(NotificationImageLoaderTest, TimeoutTest) {
 
   // To test for a timeout, this needs to override the clock in the platform.
   // Just creating the mock platform will do everything to set it up.
-  KURL url = RegisterMockedURL(kImageLoaderIcon500x500);
+  KURL url = RegisterMockedURL(kIcon500x500);
   LoadImage(url);
 
   // Run the platform for kImageFetchTimeoutInMs-1 seconds. This should not

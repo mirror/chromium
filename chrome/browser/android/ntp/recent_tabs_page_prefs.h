@@ -5,6 +5,8 @@
 #ifndef CHROME_BROWSER_ANDROID_NTP_RECENT_TABS_PAGE_PREFS_H_
 #define CHROME_BROWSER_ANDROID_NTP_RECENT_TABS_PAGE_PREFS_H_
 
+#include <jni.h>
+
 #include "base/android/scoped_java_ref.h"
 #include "base/macros.h"
 #include "chrome/browser/profiles/profile.h"
@@ -47,6 +49,7 @@ class RecentTabsPagePrefs {
       const base::android::JavaParamRef<jstring>& session_tag,
       jboolean is_collapsed);
 
+  static bool RegisterJni(JNIEnv* env);
   static void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry);
 
  private:

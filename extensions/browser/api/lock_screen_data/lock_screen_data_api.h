@@ -5,18 +5,10 @@
 #ifndef EXTENSIONS_BROWSER_API_LOCK_SCREEN_DATA_LOCK_SCREEN_DATA_API_H_
 #define EXTENSIONS_BROWSER_API_LOCK_SCREEN_DATA_LOCK_SCREEN_DATA_API_H_
 
-#include <memory>
-#include <vector>
-
 #include "base/macros.h"
 #include "extensions/browser/extension_function.h"
 
 namespace extensions {
-
-namespace lock_screen_data {
-enum class OperationResult;
-class DataItem;
-}  // namespace lock_screen_data
 
 class LockScreenDataCreateFunction : public UIThreadExtensionFunction {
  public:
@@ -26,9 +18,6 @@ class LockScreenDataCreateFunction : public UIThreadExtensionFunction {
   ~LockScreenDataCreateFunction() override;
 
   ResponseAction Run() override;
-
-  void OnDone(lock_screen_data::OperationResult result,
-              const lock_screen_data::DataItem* item);
 
   DECLARE_EXTENSION_FUNCTION("lockScreen.data.create", LOCKSCREENDATA_CREATE);
   DISALLOW_COPY_AND_ASSIGN(LockScreenDataCreateFunction);
@@ -43,8 +32,6 @@ class LockScreenDataGetAllFunction : public UIThreadExtensionFunction {
 
   ResponseAction Run() override;
 
-  void OnDone(const std::vector<const lock_screen_data::DataItem*>& items);
-
   DECLARE_EXTENSION_FUNCTION("lockScreen.data.getAll", LOCKSCREENDATA_GETALL);
   DISALLOW_COPY_AND_ASSIGN(LockScreenDataGetAllFunction);
 };
@@ -57,9 +44,6 @@ class LockScreenDataGetContentFunction : public UIThreadExtensionFunction {
   ~LockScreenDataGetContentFunction() override;
 
   ResponseAction Run() override;
-
-  void OnDone(lock_screen_data::OperationResult result,
-              std::unique_ptr<std::vector<char>> data);
 
   DECLARE_EXTENSION_FUNCTION("lockScreen.data.getContent",
                              LOCKSCREENDATA_GETCONTENT);
@@ -75,8 +59,6 @@ class LockScreenDataSetContentFunction : public UIThreadExtensionFunction {
 
   ResponseAction Run() override;
 
-  void OnDone(lock_screen_data::OperationResult result);
-
   DECLARE_EXTENSION_FUNCTION("lockScreen.data.setContent",
                              LOCKSCREENDATA_SETCONTENT);
   DISALLOW_COPY_AND_ASSIGN(LockScreenDataSetContentFunction);
@@ -90,8 +72,6 @@ class LockScreenDataDeleteFunction : public UIThreadExtensionFunction {
   ~LockScreenDataDeleteFunction() override;
 
   ResponseAction Run() override;
-
-  void OnDone(lock_screen_data::OperationResult result);
 
   DECLARE_EXTENSION_FUNCTION("lockScreen.data.delete", LOCKSCREENDATA_DELETE);
 

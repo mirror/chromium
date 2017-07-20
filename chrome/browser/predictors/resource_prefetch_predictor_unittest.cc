@@ -145,9 +145,6 @@ class ResourcePrefetchPredictorTest : public testing::Test {
   }
 
   void ResetPredictor(bool small_db = true) {
-    if (loading_predictor_)
-      loading_predictor_->Shutdown();
-
     LoadingPredictorConfig config;
     PopulateTestConfig(&config, small_db);
     loading_predictor_ =
@@ -178,10 +175,13 @@ class ResourcePrefetchPredictorTest : public testing::Test {
 };
 
 ResourcePrefetchPredictorTest::ResourcePrefetchPredictorTest()
-    : profile_(base::MakeUnique<TestingProfile>()),
+    : profile_(new TestingProfile()),
       mock_tables_(new StrictMock<MockResourcePrefetchPredictorTables>()) {}
 
-ResourcePrefetchPredictorTest::~ResourcePrefetchPredictorTest() = default;
+ResourcePrefetchPredictorTest::~ResourcePrefetchPredictorTest() {
+  profile_.reset(NULL);
+  base::RunLoop().RunUntilIdle();
+}
 
 void ResourcePrefetchPredictorTest::SetUp() {
   InitializeSampleData();
@@ -215,7 +215,8 @@ void ResourcePrefetchPredictorTest::TearDown() {
             mock_tables_->host_redirect_table_.data_);
   EXPECT_EQ(*predictor_->origin_data_->data_cache_,
             mock_tables_->origin_table_.data_);
-  loading_predictor_->Shutdown();
+  loading_predictor_ = nullptr;
+  predictor_ = nullptr;
   profile_->DestroyHistoryService();
 }
 

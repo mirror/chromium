@@ -80,6 +80,8 @@ bool DictionaryToPrinter(const DictionaryValue& value, Printer* printer) {
 
 }  // namespace
 
+namespace printing {
+
 const char kPrinterId[] = "id";
 
 std::unique_ptr<Printer> RecommendedPrinterToPrinter(
@@ -88,7 +90,7 @@ std::unique_ptr<Printer> RecommendedPrinterToPrinter(
   DCHECK(!timestamp.is_null());
 
   std::string id;
-  if (!pref.GetString(kPrinterId, &id)) {
+  if (!pref.GetString(printing::kPrinterId, &id)) {
     LOG(WARNING) << "Record id required";
     return nullptr;
   }
@@ -115,4 +117,5 @@ std::unique_ptr<Printer> RecommendedPrinterToPrinter(
   return printer;
 }
 
+}  // namespace printing
 }  // namespace chromeos

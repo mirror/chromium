@@ -489,8 +489,6 @@ class AURA_EXPORT WindowTreeClient
   void SetCursorVisible(bool visible) override;
   void SetCursorSize(ui::CursorSize cursor_size) override;
   void SetGlobalOverrideCursor(base::Optional<ui::CursorData> cursor) override;
-  void SetKeyEventsThatDontHideCursor(
-      std::vector<ui::mojom::EventMatcherPtr> cursor_key_list) override;
   void RequestClose(Window* window) override;
   bool WaitForInitialDisplays() override;
   WindowTreeHostMusInitParams CreateInitParamsForNewDisplay() override;
@@ -498,10 +496,6 @@ class AURA_EXPORT WindowTreeClient
       const std::vector<display::Display>& displays,
       std::vector<ui::mojom::WmViewportMetricsPtr> viewport_metrics,
       int64_t primary_display_id) override;
-  void AddDisplayReusingWindowTreeHost(
-      WindowTreeHostMus* window_tree_host,
-      const display::Display& display,
-      ui::mojom::WmViewportMetricsPtr viewport_metrics) override;
 
   // Overriden from WindowTreeHostMusDelegate:
   void OnWindowTreeHostBoundsWillChange(WindowTreeHostMus* window_tree_host,

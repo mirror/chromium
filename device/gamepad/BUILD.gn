@@ -91,6 +91,8 @@ component("gamepad") {
       "GameController.framework",
       "IOKit.framework",
     ]
+
+    cflags = [ "-Wpartial-availability" ]
   }
 }
 

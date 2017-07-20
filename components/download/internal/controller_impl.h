@@ -55,8 +55,8 @@ class ControllerImpl : public Controller,
   ~ControllerImpl() override;
 
   // Controller implementation.
-  void Initialize(const base::Closure& callback) override;
-  State GetState() override;
+  void Initialize() override;
+  const StartupStatus* GetStartupStatus() override;
   void StartDownload(const DownloadParams& params) override;
   void PauseDownload(const std::string& guid) override;
   void ResumeDownload(const std::string& guid) override;
@@ -71,7 +71,6 @@ class ControllerImpl : public Controller,
  private:
   // DownloadDriver::Client implementation.
   void OnDriverReady(bool success) override;
-  void OnDriverHardRecoverComplete(bool success) override;
   void OnDownloadCreated(const DriverEntry& download) override;
   void OnDownloadFailed(const DriverEntry& download,
                         FailureType failure_type) override;
@@ -80,7 +79,6 @@ class ControllerImpl : public Controller,
 
   // Model::Client implementation.
   void OnModelReady(bool success) override;
-  void OnModelHardRecoverComplete(bool success) override;
   void OnItemAdded(bool success,
                    DownloadClient client,
                    const std::string& guid) override;
@@ -94,23 +92,12 @@ class ControllerImpl : public Controller,
   // Called when the file monitor and download file directory are initialized.
   void OnFileMonitorReady(bool success);
 
-  // Called when the file monitor finishes attempting to recover itself.
-  void OnFileMonitorHardRecoverComplete(bool success);
-
   // DeviceStatusListener::Observer implementation.
   void OnDeviceStatusChanged(const DeviceStatus& device_status) override;
 
   // Checks if initialization is complete and successful.  If so, completes the
   // internal state initialization.
   void AttemptToFinalizeSetup();
-
-  // Called when setup and recovery failed.  Shuts down the service and notifies
-  // the Clients.
-  void HandleUnrecoverableSetup();
-
-  // If initialization failed, try to reset the state of all components and
-  // restart them.  If that attempt fails the service will be unavailable.
-  void StartHardRecoveryAttempt();
 
   // Checks for all the currently active driver downloads.  This lets us know
   // which ones are active that we haven't tracked.
@@ -138,11 +125,7 @@ class ControllerImpl : public Controller,
   // Notifies all Client in |clients_| that this controller is initialized and
   // lets them know which download requests we are aware of for their
   // DownloadClient.
-  void NotifyClientsOfStartup(bool state_lost);
-
-  // Notifies the service that the startup has completed so that it can start
-  // processing any pending requests.
-  void NotifyServiceOfStartup();
+  void NotifyClientsOfStartup();
 
   void HandleStartDownloadResponse(DownloadClient client,
                                    const std::string& guid,
@@ -153,11 +136,13 @@ class ControllerImpl : public Controller,
       DownloadParams::StartResult result,
       const DownloadParams::StartCallback& callback);
 
+  // Entry point for a scheduled task after the task is fired.
+  void ProcessScheduledTasks();
+
   // Handles and clears any pending task finished callbacks.
   void HandleTaskFinished(DownloadTaskType task_type,
                           bool needs_reschedule,
                           stats::ScheduledTaskStatus status);
-  void OnCompleteCleanupTask();
 
   void HandleCompleteDownload(CompletionType type, const std::string& guid);
 
@@ -165,14 +150,11 @@ class ControllerImpl : public Controller,
   // reached maximum.
   void ActivateMoreDownloads();
 
-  void RemoveCleanupEligibleDownloads();
-
   void HandleExternalDownload(const std::string& guid, bool active);
 
   // Postable methods meant to just be pass throughs to Client APIs.  This is
   // meant to help prevent reentrancy.
   void SendOnServiceInitialized(DownloadClient client_id,
-                                bool state_lost,
                                 const std::vector<std::string>& guids);
   void SendOnServiceUnavailable();
   void SendOnDownloadUpdated(DownloadClient client_id,
@@ -212,8 +194,11 @@ class ControllerImpl : public Controller,
   std::unique_ptr<FileMonitor> file_monitor_;
 
   // Internal state.
-  base::Closure init_callback_;
-  State controller_state_;
+  // Is set to true if this class is currently in the process of initializing
+  // it's internal state.  This will be false until |startup_status_| signals it
+  // is complete *and* all internal structures are set up.  This is to prevent
+  // outside signals from triggering state updates before we are ready.
+  bool initializing_internals_;
   StartupStatus startup_status_;
   std::set<std::string> externally_active_downloads_;
   std::map<std::string, DownloadParams::StartCallback> start_callbacks_;

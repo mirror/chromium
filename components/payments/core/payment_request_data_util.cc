@@ -19,8 +19,6 @@
 #include "components/payments/core/payment_address.h"
 #include "components/payments/core/payment_method_data.h"
 #include "third_party/libphonenumber/phonenumber_api.h"
-#include "url/gurl.h"
-#include "url/url_constants.h"
 
 namespace payments {
 namespace data_util {
@@ -93,22 +91,17 @@ BasicCardResponse GetBasicCardResponseFromAutofillCreditCard(
   return response;
 }
 
-void ParseSupportedMethods(
+void ParseBasicCardSupportedNetworks(
     const std::vector<PaymentMethodData>& method_data,
     std::vector<std::string>* out_supported_networks,
-    std::set<std::string>* out_basic_card_specified_networks,
-    std::vector<std::string>* out_url_payment_method_identifiers) {
+    std::set<std::string>* out_basic_card_specified_networks) {
   DCHECK(out_supported_networks->empty());
   DCHECK(out_basic_card_specified_networks->empty());
-  DCHECK(out_url_payment_method_identifiers->empty());
 
   const std::set<std::string> kBasicCardNetworks{
       "amex",       "diners", "discover", "jcb",
       "mastercard", "mir",    "unionpay", "visa"};
   std::set<std::string> remaining_card_networks(kBasicCardNetworks);
-
-  std::set<GURL> url_payment_method_identifiers;
-
   for (const PaymentMethodData& method_data_entry : method_data) {
     if (method_data_entry.supported_methods.empty())
       return;
@@ -155,20 +148,6 @@ void ParseSupportedMethods(
               out_basic_card_specified_networks->insert(supported_network);
             }
           }
-        }
-      } else {
-        // Here |method| could be a repeated deprecated supported network (e.g.,
-        // "visa"), some invalid string or a URL Payment Method Identifier.
-        // Capture this last category if the URL is valid. A valid URL must have
-        // an https scheme and its username and password must be empty:
-        // https://www.w3.org/TR/payment-method-id/#dfn-validate-a-url-based-payment-method-identifier
-        // Avoid duplicate URLs.
-        GURL url(method);
-        if (url.is_valid() && url.SchemeIs(url::kHttpsScheme) &&
-            !url.has_username() && !url.has_password()) {
-          const auto result = url_payment_method_identifiers.insert(url);
-          if (result.second)
-            out_url_payment_method_identifiers->push_back(method);
         }
       }
     }

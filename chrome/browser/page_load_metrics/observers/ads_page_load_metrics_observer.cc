@@ -21,20 +21,7 @@ namespace {
 
 const base::Feature kAdsFeature{"AdsMetrics", base::FEATURE_ENABLED_BY_DEFAULT};
 
-#define ADS_HISTOGRAM(suffix, hist_macro, ad_type, value)                  \
-  switch (ad_type) {                                                       \
-    case AdsPageLoadMetricsObserver::AD_TYPE_GOOGLE:                       \
-      hist_macro("PageLoad.Clients.Ads.Google." suffix, value);            \
-      break;                                                               \
-    case AdsPageLoadMetricsObserver::AD_TYPE_SUBRESOURCE_FILTER:           \
-      hist_macro("PageLoad.Clients.Ads.SubresourceFilter." suffix, value); \
-      break;                                                               \
-    case AdsPageLoadMetricsObserver::AD_TYPE_ALL:                          \
-      hist_macro("PageLoad.Clients.Ads.All." suffix, value);               \
-      break;                                                               \
-  }
-
-bool DetectGoogleAd(content::NavigationHandle* navigation_handle) {
+bool FrameIsAd(content::NavigationHandle* navigation_handle) {
   // Because sub-resource filtering isn't always enabled, and doesn't work
   // well in monitoring mode (no CSS enforcement), it's difficult to identify
   // ads. Google ads are prevalent and easy to track, so we'll start by
@@ -68,22 +55,18 @@ bool DetectGoogleAd(content::NavigationHandle* navigation_handle) {
                           base::CompareCase::SENSITIVE);
 }
 
-void RecordParentExistsForSubFrame(
-    bool parent_exists,
-    const AdsPageLoadMetricsObserver::AdTypes& ad_types) {
-  ADS_HISTOGRAM("ParentExistsForSubFrame", UMA_HISTOGRAM_BOOLEAN,
-                AdsPageLoadMetricsObserver::AD_TYPE_ALL, parent_exists);
+void RecordParentExistsForSubFrame(bool parent_exists) {
+  UMA_HISTOGRAM_BOOLEAN("PageLoad.Clients.Ads.Google.ParentExistsForSubFrame",
+                        parent_exists);
 }
 
 }  // namespace
 
 AdsPageLoadMetricsObserver::AdFrameData::AdFrameData(
-    FrameTreeNodeId frame_tree_node_id,
-    AdTypes ad_types)
+    FrameTreeNodeId frame_tree_node_id)
     : frame_bytes(0u),
       frame_bytes_uncached(0u),
-      frame_tree_node_id(frame_tree_node_id),
-      ad_types(ad_types) {}
+      frame_tree_node_id(frame_tree_node_id) {}
 
 // static
 std::unique_ptr<AdsPageLoadMetricsObserver>
@@ -93,25 +76,8 @@ AdsPageLoadMetricsObserver::CreateIfNeeded() {
   return base::MakeUnique<AdsPageLoadMetricsObserver>();
 }
 
-AdsPageLoadMetricsObserver::AdsPageLoadMetricsObserver()
-    : subresource_observer_(this) {}
-
+AdsPageLoadMetricsObserver::AdsPageLoadMetricsObserver() = default;
 AdsPageLoadMetricsObserver::~AdsPageLoadMetricsObserver() = default;
-
-page_load_metrics::PageLoadMetricsObserver::ObservePolicy
-AdsPageLoadMetricsObserver::OnStart(
-    content::NavigationHandle* navigation_handle,
-    const GURL& currently_committed_url,
-    bool started_in_foreground) {
-  auto* observer_manager =
-      subresource_filter::SubresourceFilterObserverManager::FromWebContents(
-          navigation_handle->GetWebContents());
-  // |observer_manager| isn't constructed if the feature for subresource
-  // filtering isn't enabled.
-  if (observer_manager)
-    subresource_observer_.Add(observer_manager);
-  return CONTINUE_OBSERVING;
-}
 
 page_load_metrics::PageLoadMetricsObserver::ObservePolicy
 AdsPageLoadMetricsObserver::OnCommit(
@@ -137,8 +103,6 @@ void AdsPageLoadMetricsObserver::OnDidFinishSubFrameNavigation(
   content::RenderFrameHost* parent_frame_host =
       navigation_handle->GetParentFrame();
 
-  AdTypes ad_types = DetectAds(navigation_handle);
-
   const auto& id_and_data = ad_frames_data_.find(frame_tree_node_id);
   if (id_and_data != ad_frames_data_.end()) {
     // An existing subframe is navigating again.
@@ -148,15 +112,17 @@ void AdsPageLoadMetricsObserver::OnDidFinishSubFrameNavigation(
 
       if (frame_tree_node_id == id_and_data->second->frame_tree_node_id) {
         // This is the top-most frame in the ad.
-        ADS_HISTOGRAM("Navigations.AdFrameRenavigatedToAd",
-                      UMA_HISTOGRAM_BOOLEAN, AD_TYPE_ALL, ad_types.any());
+        UMA_HISTOGRAM_BOOLEAN(
+            "PageLoad.Clients.Ads.Google.Navigations.AdFrameRenavigatedToAd",
+            FrameIsAd(navigation_handle));
       }
       return;
     }
     // This frame was previously not an ad, process it as usual. If it had
     // any child frames that were ads, those will still be recorded.
-    ADS_HISTOGRAM("Navigations.NonAdFrameRenavigatedToAd",
-                  UMA_HISTOGRAM_BOOLEAN, AD_TYPE_ALL, ad_types.any());
+    UMA_HISTOGRAM_BOOLEAN(
+        "PageLoad.Clients.Ads.Google.Navigations.NonAdFrameRenavigatedToAd",
+        FrameIsAd(navigation_handle));
   }
 
   // Determine who the parent frame's ad ancestor is.
@@ -165,16 +131,17 @@ void AdsPageLoadMetricsObserver::OnDidFinishSubFrameNavigation(
   if (parent_id_and_data == ad_frames_data_.end()) {
     // We don't know who the parent for this frame is. One possibility is that
     // it's a frame from a previous navigation.
-    RecordParentExistsForSubFrame(false /* parent_exists */, ad_types);
+    RecordParentExistsForSubFrame(false /* parent_exists */);
+
     return;
   }
-  RecordParentExistsForSubFrame(true /* parent_exists */, ad_types);
+  RecordParentExistsForSubFrame(true /* parent_exists */);
 
   AdFrameData* ad_data = parent_id_and_data->second;
 
-  if (!ad_data && ad_types.any()) {
+  if (!ad_data && FrameIsAd(navigation_handle)) {
     // This frame is not nested within an ad frame but is itself an ad.
-    ad_frames_data_storage_.emplace_back(frame_tree_node_id, ad_types);
+    ad_frames_data_storage_.emplace_back(frame_tree_node_id);
     ad_data = &ad_frames_data_storage_.back();
   }
 
@@ -206,40 +173,6 @@ void AdsPageLoadMetricsObserver::OnComplete(
   RecordHistograms();
 }
 
-void AdsPageLoadMetricsObserver::OnSubframeNavigationEvaluated(
-    content::NavigationHandle* navigation_handle,
-    subresource_filter::LoadPolicy load_policy) {
-  // We don't track DISALLOW frames because their resources won't be loaded
-  // and therefore would provide bad histogram data. Note that WOULD_DISALLOW
-  // is only seen in dry runs.
-  if (load_policy == subresource_filter::LoadPolicy::WOULD_DISALLOW) {
-    unfinished_subresource_ad_frames_.insert(
-        navigation_handle->GetFrameTreeNodeId());
-  }
-}
-
-void AdsPageLoadMetricsObserver::OnSubresourceFilterGoingAway() {
-  subresource_observer_.RemoveAll();
-}
-
-bool AdsPageLoadMetricsObserver::DetectSubresourceFilterAd(
-    FrameTreeNodeId frame_tree_node_id) {
-  return unfinished_subresource_ad_frames_.erase(frame_tree_node_id);
-}
-
-AdsPageLoadMetricsObserver::AdTypes AdsPageLoadMetricsObserver::DetectAds(
-    content::NavigationHandle* navigation_handle) {
-  AdTypes ad_types;
-
-  if (DetectGoogleAd(navigation_handle))
-    ad_types.set(AD_TYPE_GOOGLE);
-
-  if (DetectSubresourceFilterAd(navigation_handle->GetFrameTreeNodeId()))
-    ad_types.set(AD_TYPE_SUBRESOURCE_FILTER);
-
-  return ad_types;
-}
-
 void AdsPageLoadMetricsObserver::ProcessLoadedResource(
     const page_load_metrics::ExtraRequestCompleteInfo& extra_request_info) {
   const auto& id_and_data =
@@ -268,7 +201,7 @@ void AdsPageLoadMetricsObserver::ProcessLoadedResource(
     }
     if (committed_) {
       UMA_HISTOGRAM_ENUMERATION(
-          "PageLoad.Clients.Ads.All.ResourceTypeWhenNoFrameFound",
+          "PageLoad.Clients.Ads.Google.ResourceTypeWhenNoFrameFound",
           extra_request_info.resource_type, content::RESOURCE_TYPE_LAST_TYPE);
     }
 
@@ -292,12 +225,6 @@ void AdsPageLoadMetricsObserver::ProcessLoadedResource(
 }
 
 void AdsPageLoadMetricsObserver::RecordHistograms() {
-  RecordHistogramsForType(AD_TYPE_GOOGLE);
-  RecordHistogramsForType(AD_TYPE_SUBRESOURCE_FILTER);
-  RecordHistogramsForType(AD_TYPE_ALL);
-}
-
-void AdsPageLoadMetricsObserver::RecordHistogramsForType(int ad_type) {
   if (page_bytes_ == 0)
     return;
 
@@ -309,58 +236,59 @@ void AdsPageLoadMetricsObserver::RecordHistogramsForType(int ad_type) {
     if (ad_frame_data.frame_bytes == 0)
       continue;
 
-    // If this isn't the type of ad we're looking for, move on to the next.
-    if (ad_type != AD_TYPE_ALL && !ad_frame_data.ad_types.test(ad_type))
-      continue;
-
     non_zero_ad_frames += 1;
     total_ad_frame_bytes += ad_frame_data.frame_bytes;
-
     uncached_ad_frame_bytes += ad_frame_data.frame_bytes_uncached;
-    ADS_HISTOGRAM("Bytes.AdFrames.PerFrame.Total", PAGE_BYTES_HISTOGRAM,
-                  ad_type, ad_frame_data.frame_bytes);
-    ADS_HISTOGRAM("Bytes.AdFrames.PerFrame.Network", PAGE_BYTES_HISTOGRAM,
-                  ad_type, ad_frame_data.frame_bytes_uncached);
-    ADS_HISTOGRAM(
-        "Bytes.AdFrames.PerFrame.PercentNetwork", UMA_HISTOGRAM_PERCENTAGE,
-        ad_type,
+
+    PAGE_BYTES_HISTOGRAM(
+        "PageLoad.Clients.Ads.Google.Bytes.AdFrames.PerFrame.Total",
+        ad_frame_data.frame_bytes);
+    PAGE_BYTES_HISTOGRAM(
+        "PageLoad.Clients.Ads.Google.Bytes.AdFrames.PerFrame.Network",
+        ad_frame_data.frame_bytes_uncached);
+    UMA_HISTOGRAM_PERCENTAGE(
+        "PageLoad.Clients.Ads.Google.Bytes.AdFrames.PerFrame.PercentNetwork",
         ad_frame_data.frame_bytes_uncached * 100 / ad_frame_data.frame_bytes);
   }
 
-  ADS_HISTOGRAM("FrameCounts.AnyParentFrame.AdFrames",
-                UMA_HISTOGRAM_COUNTS_1000, ad_type, non_zero_ad_frames);
+  UMA_HISTOGRAM_COUNTS_1000(
+      "PageLoad.Clients.Ads.Google.FrameCounts.AnyParentFrame.AdFrames",
+      non_zero_ad_frames);
 
   // Don't post UMA for pages that don't have ads.
   if (non_zero_ad_frames == 0)
     return;
 
-  ADS_HISTOGRAM("Bytes.NonAdFrames.Aggregate.Total", PAGE_BYTES_HISTOGRAM,
-                ad_type, page_bytes_ - total_ad_frame_bytes);
+  PAGE_BYTES_HISTOGRAM(
+      "PageLoad.Clients.Ads.Google.Bytes.NonAdFrames.Aggregate.Total",
+      page_bytes_ - total_ad_frame_bytes);
 
-  ADS_HISTOGRAM("Bytes.FullPage.Total", PAGE_BYTES_HISTOGRAM, ad_type,
-                page_bytes_);
-  ADS_HISTOGRAM("Bytes.FullPage.Network", PAGE_BYTES_HISTOGRAM, ad_type,
-                uncached_page_bytes_);
-
+  PAGE_BYTES_HISTOGRAM("PageLoad.Clients.Ads.Google.Bytes.FullPage.Total",
+                       page_bytes_);
+  PAGE_BYTES_HISTOGRAM("PageLoad.Clients.Ads.Google.Bytes.FullPage.Network",
+                       uncached_page_bytes_);
   if (page_bytes_) {
-    ADS_HISTOGRAM("Bytes.FullPage.Total.PercentAds", UMA_HISTOGRAM_PERCENTAGE,
-                  ad_type, total_ad_frame_bytes * 100 / page_bytes_);
+    UMA_HISTOGRAM_PERCENTAGE(
+        "PageLoad.Clients.Ads.Google.Bytes.FullPage.Total.PercentAds",
+        total_ad_frame_bytes * 100 / page_bytes_);
   }
   if (uncached_page_bytes_ > 0) {
-    ADS_HISTOGRAM("Bytes.FullPage.Network.PercentAds", UMA_HISTOGRAM_PERCENTAGE,
-                  ad_type,
-                  uncached_ad_frame_bytes * 100 / uncached_page_bytes_);
+    UMA_HISTOGRAM_PERCENTAGE(
+        "PageLoad.Clients.Ads.Google.Bytes.FullPage.Network.PercentAds",
+        uncached_ad_frame_bytes * 100 / uncached_page_bytes_);
   }
 
-  ADS_HISTOGRAM("Bytes.AdFrames.Aggregate.Total", PAGE_BYTES_HISTOGRAM, ad_type,
-                total_ad_frame_bytes);
-  ADS_HISTOGRAM("Bytes.AdFrames.Aggregate.Network", PAGE_BYTES_HISTOGRAM,
-                ad_type, uncached_ad_frame_bytes);
+  PAGE_BYTES_HISTOGRAM(
+      "PageLoad.Clients.Ads.Google.Bytes.AdFrames.Aggregate.Total",
+      total_ad_frame_bytes);
+  PAGE_BYTES_HISTOGRAM(
+      "PageLoad.Clients.Ads.Google.Bytes.AdFrames.Aggregate.Network",
+      uncached_ad_frame_bytes);
 
   if (total_ad_frame_bytes) {
-    ADS_HISTOGRAM("Bytes.AdFrames.Aggregate.PercentNetwork",
-                  UMA_HISTOGRAM_PERCENTAGE, ad_type,
-                  uncached_ad_frame_bytes * 100 / total_ad_frame_bytes);
+    UMA_HISTOGRAM_PERCENTAGE(
+        "PageLoad.Clients.Ads.Google.Bytes.AdFrames.Aggregate.PercentNetwork",
+        uncached_ad_frame_bytes * 100 / total_ad_frame_bytes);
   }
 }
 

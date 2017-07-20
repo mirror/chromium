@@ -10,7 +10,6 @@
 #include "base/callback.h"
 #include "base/guid.h"
 #include "base/memory/ptr_util.h"
-#include "base/optional.h"
 #include "components/download/internal/entry.h"
 #include "components/download/internal/proto/entry.pb.h"
 #include "components/download/internal/proto_conversions.h"
@@ -49,8 +48,6 @@ class DownloadStoreTest : public testing::Test {
     loaded_entries->swap(*entries);
   }
 
-  void RecoverCallback(bool success) { hard_recover_result_ = success; }
-
   MOCK_METHOD1(StoreCallback, void(bool));
 
   void PrepopulateSampleEntries() {
@@ -66,7 +63,6 @@ class DownloadStoreTest : public testing::Test {
   std::map<std::string, protodb::Entry> db_entries_;
   leveldb_proto::test::FakeDB<protodb::Entry>* db_;
   std::unique_ptr<DownloadStore> store_;
-  base::Optional<bool> hard_recover_result_;
 
   DISALLOW_COPY_AND_ASSIGN(DownloadStoreTest);
 };
@@ -84,86 +80,6 @@ TEST_F(DownloadStoreTest, Initialize) {
 
   ASSERT_TRUE(store_->IsInitialized());
   ASSERT_EQ(2u, preloaded_entries.size());
-}
-
-TEST_F(DownloadStoreTest, HardRecover) {
-  PrepopulateSampleEntries();
-  CreateDatabase();
-  ASSERT_FALSE(store_->IsInitialized());
-
-  std::vector<Entry> preloaded_entries;
-  store_->Initialize(base::Bind(&DownloadStoreTest::InitCallback,
-                                base::Unretained(this), &preloaded_entries));
-  db_->InitCallback(true);
-  db_->LoadCallback(true);
-
-  ASSERT_TRUE(store_->IsInitialized());
-  ASSERT_EQ(2u, preloaded_entries.size());
-
-  store_->HardRecover(
-      base::Bind(&DownloadStoreTest::RecoverCallback, base::Unretained(this)));
-
-  ASSERT_FALSE(store_->IsInitialized());
-
-  db_->DestroyCallback(true);
-  db_->InitCallback(true);
-
-  ASSERT_TRUE(store_->IsInitialized());
-  ASSERT_TRUE(hard_recover_result_.has_value());
-  ASSERT_TRUE(hard_recover_result_.value());
-}
-
-TEST_F(DownloadStoreTest, HardRecoverDestroyFails) {
-  PrepopulateSampleEntries();
-  CreateDatabase();
-  ASSERT_FALSE(store_->IsInitialized());
-
-  std::vector<Entry> preloaded_entries;
-  store_->Initialize(base::Bind(&DownloadStoreTest::InitCallback,
-                                base::Unretained(this), &preloaded_entries));
-  db_->InitCallback(true);
-  db_->LoadCallback(true);
-
-  ASSERT_TRUE(store_->IsInitialized());
-  ASSERT_EQ(2u, preloaded_entries.size());
-
-  store_->HardRecover(
-      base::Bind(&DownloadStoreTest::RecoverCallback, base::Unretained(this)));
-
-  ASSERT_FALSE(store_->IsInitialized());
-
-  db_->DestroyCallback(false);
-
-  ASSERT_FALSE(store_->IsInitialized());
-  ASSERT_TRUE(hard_recover_result_.has_value());
-  ASSERT_FALSE(hard_recover_result_.value());
-}
-
-TEST_F(DownloadStoreTest, HardRecoverInitFails) {
-  PrepopulateSampleEntries();
-  CreateDatabase();
-  ASSERT_FALSE(store_->IsInitialized());
-
-  std::vector<Entry> preloaded_entries;
-  store_->Initialize(base::Bind(&DownloadStoreTest::InitCallback,
-                                base::Unretained(this), &preloaded_entries));
-  db_->InitCallback(true);
-  db_->LoadCallback(true);
-
-  ASSERT_TRUE(store_->IsInitialized());
-  ASSERT_EQ(2u, preloaded_entries.size());
-
-  store_->HardRecover(
-      base::Bind(&DownloadStoreTest::RecoverCallback, base::Unretained(this)));
-
-  ASSERT_FALSE(store_->IsInitialized());
-
-  db_->DestroyCallback(true);
-  db_->InitCallback(false);
-
-  ASSERT_FALSE(store_->IsInitialized());
-  ASSERT_TRUE(hard_recover_result_.has_value());
-  ASSERT_FALSE(hard_recover_result_.value());
 }
 
 TEST_F(DownloadStoreTest, Update) {

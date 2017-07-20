@@ -11,6 +11,12 @@
 
 namespace blink {
 
+static hb_position_t SkiaScalarToHarfBuzzPosition(SkScalar value) {
+  // We treat HarfBuzz hb_position_t as 16.16 fixed-point.
+  static const int kHbPosition1 = 1 << 16;
+  return clampTo<int>(value * kHbPosition1);
+}
+
 SkiaTextMetrics::SkiaTextMetrics(const SkPaint* paint) : paint_(paint) {
   CHECK(paint_->getTextEncoding() == SkPaint::kGlyphID_TextEncoding);
 }
@@ -80,12 +86,6 @@ float SkiaTextMetrics::GetSkiaWidthForGlyph(Glyph glyph) {
     sk_width = SkScalarRoundToInt(sk_width);
 
   return SkScalarToFloat(sk_width);
-}
-
-hb_position_t SkiaTextMetrics::SkiaScalarToHarfBuzzPosition(SkScalar value) {
-  // We treat HarfBuzz hb_position_t as 16.16 fixed-point.
-  static const int kHbPosition1 = 1 << 16;
-  return clampTo<int>(value * kHbPosition1);
 }
 
 }  // namespace blink

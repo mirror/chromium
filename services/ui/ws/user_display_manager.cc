@@ -6,10 +6,9 @@
 
 #include <utility>
 
-#include "services/ui/display/screen_manager.h"
 #include "services/ui/ws/user_display_manager_delegate.h"
 #include "ui/display/display.h"
-#include "ui/display/screen_base.h"
+#include "ui/display/screen.h"
 #include "ui/display/types/display_constants.h"
 
 namespace ui {
@@ -96,8 +95,7 @@ mojom::WsDisplayPtr UserDisplayManager::ToWsDisplayPtr(
 }
 
 std::vector<mojom::WsDisplayPtr> UserDisplayManager::GetAllDisplays() {
-  const auto& displays =
-      display::ScreenManager::GetInstance()->GetScreen()->GetAllDisplays();
+  const auto& displays = display::Screen::GetScreen()->GetAllDisplays();
 
   std::vector<mojom::WsDisplayPtr> ws_display;
   ws_display.reserve(displays.size());
@@ -109,10 +107,8 @@ std::vector<mojom::WsDisplayPtr> UserDisplayManager::GetAllDisplays() {
 }
 
 bool UserDisplayManager::ShouldCallOnDisplaysChanged() const {
-  return got_valid_frame_decorations_ && !display::ScreenManager::GetInstance()
-                                              ->GetScreen()
-                                              ->GetAllDisplays()
-                                              .empty();
+  return got_valid_frame_decorations_ &&
+         !display::Screen::GetScreen()->GetAllDisplays().empty();
 }
 
 void UserDisplayManager::CallOnDisplaysChangedIfNecessary() {
@@ -124,12 +120,9 @@ void UserDisplayManager::CallOnDisplaysChangedIfNecessary() {
 
 void UserDisplayManager::CallOnDisplaysChanged(
     mojom::DisplayManagerObserver* observer) {
-  observer->OnDisplaysChanged(GetAllDisplays(),
-                              display::ScreenManager::GetInstance()
-                                  ->GetScreen()
-                                  ->GetPrimaryDisplay()
-                                  .id(),
-                              GetInternalDisplayId());
+  observer->OnDisplaysChanged(
+      GetAllDisplays(), display::Screen::GetScreen()->GetPrimaryDisplay().id(),
+      GetInternalDisplayId());
 }
 
 }  // namespace ws

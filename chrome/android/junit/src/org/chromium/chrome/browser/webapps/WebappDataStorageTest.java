@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 
 import org.junit.After;
 import org.junit.Before;
@@ -235,15 +236,21 @@ public class WebappDataStorageTest {
         final String scope = "scope";
         final String name = "name";
         final String shortName = "shortName";
-        final String encodedIcon = ShortcutHelper.encodeBitmapAsString(createBitmap());
+        final Bitmap icon = createBitmap();
         final int displayMode = WebDisplayMode.STANDALONE;
         final int orientation = 1;
         final long themeColor = 2;
         final long backgroundColor = 3;
         final boolean isIconGenerated = false;
-        Intent shortcutIntent = ShortcutHelper.createWebappShortcutIntent(id, action, url, scope,
-                name, shortName, encodedIcon, ShortcutHelper.WEBAPP_SHORTCUT_VERSION, displayMode,
-                orientation, themeColor, backgroundColor, isIconGenerated);
+        AsyncTask<Void, Void, Intent> shortcutIntentTask = new AsyncTask<Void, Void, Intent>() {
+            @Override
+            protected Intent doInBackground(Void... nothing) {
+                return ShortcutHelper.createWebappShortcutIntent(id, action, url, scope, name,
+                        shortName, icon, ShortcutHelper.WEBAPP_SHORTCUT_VERSION, displayMode,
+                        orientation, themeColor, backgroundColor, isIconGenerated);
+            }
+        };
+        Intent shortcutIntent = shortcutIntentTask.execute().get();
 
         WebappDataStorage storage = WebappDataStorage.open("test");
         storage.updateFromShortcutIntent(shortcutIntent);
@@ -254,7 +261,8 @@ public class WebappDataStorageTest {
         assertEquals(name, mSharedPreferences.getString(WebappDataStorage.KEY_NAME, null));
         assertEquals(shortName,
                 mSharedPreferences.getString(WebappDataStorage.KEY_SHORT_NAME, null));
-        assertEquals(encodedIcon, mSharedPreferences.getString(WebappDataStorage.KEY_ICON, null));
+        assertEquals(ShortcutHelper.encodeBitmapAsString(icon),
+                mSharedPreferences.getString(WebappDataStorage.KEY_ICON, null));
         assertEquals(ShortcutHelper.WEBAPP_SHORTCUT_VERSION,
                 mSharedPreferences.getInt(WebappDataStorage.KEY_VERSION, 0));
         assertEquals(orientation, mSharedPreferences.getInt(WebappDataStorage.KEY_ORIENTATION, 0));
@@ -300,7 +308,8 @@ public class WebappDataStorageTest {
         assertEquals(name, mSharedPreferences.getString(WebappDataStorage.KEY_NAME, null));
         assertEquals(shortName,
                 mSharedPreferences.getString(WebappDataStorage.KEY_SHORT_NAME, null));
-        assertEquals(encodedIcon, mSharedPreferences.getString(WebappDataStorage.KEY_ICON, null));
+        assertEquals(ShortcutHelper.encodeBitmapAsString(icon),
+                mSharedPreferences.getString(WebappDataStorage.KEY_ICON, null));
         assertEquals(ShortcutHelper.WEBAPP_SHORTCUT_VERSION,
                 mSharedPreferences.getInt(WebappDataStorage.KEY_VERSION, 0));
         assertEquals(orientation, mSharedPreferences.getInt(WebappDataStorage.KEY_ORIENTATION, 0));

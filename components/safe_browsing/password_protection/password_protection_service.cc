@@ -180,14 +180,11 @@ PasswordProtectionService::GetCachedVerdict(
       continue;
     }
     base::DictionaryValue* verdict_entry = nullptr;
-    verdict_dictionary->GetDictionaryWithoutPathExpansion(
-        it.key() /* cache_expression */, &verdict_entry);
+    CHECK(verdict_dictionary->GetDictionaryWithoutPathExpansion(
+        it.key() /* cache_expression */, &verdict_entry));
     int verdict_received_time;
     LoginReputationClientResponse verdict;
-    // Ignore any entry that we cannot parse. These invalid entries will be
-    // cleaned up during shutdown.
-    if (!ParseVerdictEntry(verdict_entry, &verdict_received_time, &verdict))
-      continue;
+    CHECK(ParseVerdictEntry(verdict_entry, &verdict_received_time, &verdict));
     // Since password protection content settings are keyed by origin, we only
     // need to compare the path part of the cache_expression and the given url.
     std::string cache_expression_path =
@@ -612,13 +609,13 @@ bool PasswordProtectionService::RemoveExpiredVerdicts(
       continue;
 
     base::DictionaryValue* verdict_entry = nullptr;
-    verdict_dictionary->GetDictionaryWithoutPathExpansion(it.key(),
-                                                          &verdict_entry);
+    CHECK(verdict_dictionary->GetDictionaryWithoutPathExpansion(
+        it.key(), &verdict_entry));
     int verdict_received_time;
     LoginReputationClientResponse verdict;
+    CHECK(ParseVerdictEntry(verdict_entry, &verdict_received_time, &verdict));
 
-    if (!ParseVerdictEntry(verdict_entry, &verdict_received_time, &verdict) ||
-        IsCacheExpired(verdict_received_time, verdict.cache_duration_sec())) {
+    if (IsCacheExpired(verdict_received_time, verdict.cache_duration_sec())) {
       // Since DictionaryValue::Iterator cannot be used to modify the
       // dictionary, we record the keys of expired verdicts in |expired_keys|
       // and remove them in the next for-loop.

@@ -128,12 +128,11 @@ void StagingBuffer::OnMemoryDump(base::trace_event::ProcessMemoryDump* pmd,
   }
 }
 
-StagingBufferPool::StagingBufferPool(
-    base::SequencedTaskRunner* task_runner,
-    viz::ContextProvider* worker_context_provider,
-    ResourceProvider* resource_provider,
-    bool use_partial_raster,
-    int max_staging_buffer_usage_in_bytes)
+StagingBufferPool::StagingBufferPool(base::SequencedTaskRunner* task_runner,
+                                     ContextProvider* worker_context_provider,
+                                     ResourceProvider* resource_provider,
+                                     bool use_partial_raster,
+                                     int max_staging_buffer_usage_in_bytes)
     : task_runner_(task_runner),
       worker_context_provider_(worker_context_provider),
       resource_provider_(resource_provider),
@@ -264,8 +263,7 @@ std::unique_ptr<StagingBuffer> StagingBufferPool::AcquireStagingBuffer(
 
   std::unique_ptr<StagingBuffer> staging_buffer;
 
-  viz::ContextProvider::ScopedContextLock scoped_context(
-      worker_context_provider_);
+  ContextProvider::ScopedContextLock scoped_context(worker_context_provider_);
 
   gpu::gles2::GLES2Interface* gl = scoped_context.ContextGL();
   DCHECK(gl);
@@ -411,8 +409,7 @@ void StagingBufferPool::ReleaseBuffersNotUsedSince(base::TimeTicks time) {
   lock_.AssertAcquired();
 
   {
-    viz::ContextProvider::ScopedContextLock scoped_context(
-        worker_context_provider_);
+    ContextProvider::ScopedContextLock scoped_context(worker_context_provider_);
 
     gpu::gles2::GLES2Interface* gl = scoped_context.ContextGL();
     DCHECK(gl);

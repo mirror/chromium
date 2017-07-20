@@ -150,7 +150,7 @@ public class AwContentsClientFullScreenTest extends AwTestBase {
     /*
     @MediumTest
     @Feature({"AndroidWebView"})
-    @SkipCommandLineParameterization  // crbug.com/616501
+    @ParameterizedTest.Set  // crbug.com/616501
     */
     @DisabledTest(message = "crbug.com/618749")
     public void testOnShowAndHideCustomViewWithBackKey_video() throws Throwable {

@@ -8,7 +8,6 @@
 #include "cc/base/filter_operations.h"
 #include "cc/base/region.h"
 #include "cc/cc_export.h"
-#include "cc/input/scroll_boundary_behavior.h"
 #include "ui/gfx/geometry/size.h"
 
 namespace base {
@@ -56,8 +55,6 @@ struct CC_EXPORT ScrollNode {
 
   ElementId element_id;
   int transform_id;
-
-  ScrollBoundaryBehavior scroll_boundary_behavior;
 
   bool operator==(const ScrollNode& other) const;
   void AsValueInto(base::trace_event::TracedValue* value) const;

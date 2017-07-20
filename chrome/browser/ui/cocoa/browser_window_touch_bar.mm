@@ -6,7 +6,6 @@
 
 #include <memory>
 
-#include "base/mac/availability.h"
 #include "base/mac/mac_util.h"
 #import "base/mac/scoped_nsobject.h"
 #import "base/mac/sdk_forward_declarations.h"
@@ -33,7 +32,6 @@
 #include "components/strings/grit/components_strings.h"
 #include "components/toolbar/vector_icons.h"
 #include "components/url_formatter/url_formatter.h"
-#include "components/vector_icons/vector_icons.h"
 #include "content/public/browser/web_contents.h"
 #import "ui/base/cocoa/touch_bar_util.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -43,6 +41,7 @@
 #include "ui/gfx/image/image.h"
 #include "ui/gfx/image/image_skia_util_mac.h"
 #include "ui/gfx/paint_vector_icon.h"
+#include "ui/vector_icons/vector_icons.h"
 
 namespace {
 
@@ -178,13 +177,14 @@ class HomePrefNotificationBridge {
 }
 
 // Creates and returns a touch bar for tab fullscreen mode.
-- (NSTouchBar*)createTabFullscreenTouchBar API_AVAILABLE(macos(10.12.2));
+- (NSTouchBar*)createTabFullscreenTouchBar;
 
 // Creates and returns the back and forward segmented buttons.
 - (NSView*)backOrForwardTouchBarView;
 
 // Creates and returns the search button.
-- (NSView*)searchTouchBarView API_AVAILABLE(macos(10.12));
+- (NSView*)searchTouchBarView
+    __attribute__((availability(macos, introduced = 10.12)));
 @end
 
 @implementation BrowserWindowTouchBar
@@ -253,8 +253,7 @@ class HomePrefNotificationBridge {
 }
 
 - (NSTouchBarItem*)touchBar:(NSTouchBar*)touchBar
-      makeItemForIdentifier:(NSTouchBarItemIdentifier)identifier
-    API_AVAILABLE(macos(10.12.2)) {
+      makeItemForIdentifier:(NSTouchBarItemIdentifier)identifier {
   if (!touchBar)
     return nil;
 
@@ -343,7 +342,7 @@ class HomePrefNotificationBridge {
   return touchBarItem.autorelease();
 }
 
-- (NSTouchBar*)createTabFullscreenTouchBar API_AVAILABLE(macos(10.12.2)) {
+- (NSTouchBar*)createTabFullscreenTouchBar {
   base::scoped_nsobject<NSTouchBar> touchBar([[ui::NSTouchBar() alloc] init]);
   [touchBar setDelegate:self];
 
@@ -373,8 +372,8 @@ class HomePrefNotificationBridge {
 
 - (NSView*)backOrForwardTouchBarView {
   NSMutableArray* images = [NSMutableArray arrayWithArray:@[
-    CreateNSImageFromIcon(vector_icons::kBackArrowIcon),
-    CreateNSImageFromIcon(vector_icons::kForwardArrowIcon)
+    CreateNSImageFromIcon(ui::kBackArrowIcon),
+    CreateNSImageFromIcon(ui::kForwardArrowIcon)
   ]];
 
   // Offset the icons so that it matches the height of the other Touch Bar
@@ -441,7 +440,7 @@ class HomePrefNotificationBridge {
                               gfx::kPlaceholderColor),
         base::mac::GetSRGBColorSpace());
   } else {
-    image = CreateNSImageFromIcon(vector_icons::kSearchIcon);
+    image = CreateNSImageFromIcon(ui::kSearchIcon);
   }
 
   NSButton* searchButton =

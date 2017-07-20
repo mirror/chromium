@@ -59,6 +59,7 @@ ui::AXTreeUpdate
   ui::AXNodeData empty_document;
   empty_document.id = 0;
   empty_document.role = ui::AX_ROLE_ROOT_WEB_AREA;
+  empty_document.AddState(ui::AX_STATE_READ_ONLY);
   empty_document.AddState(ui::AX_STATE_BUSY);
 
   ui::AXTreeUpdate update;

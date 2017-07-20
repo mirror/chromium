@@ -119,6 +119,12 @@ class MEDIA_GPU_EXPORT VaapiWrapper
   // CreateSurfaces(), where VaapiWrapper is the owner of the surfaces.
   scoped_refptr<VASurface> CreateVASurfaceForPixmap(
       const scoped_refptr<gfx::NativePixmap>& pixmap);
+
+  // Use VPP to process |source_pixmap| to |target_pixmap| with scaling and
+  // color space conversion.
+  bool ProcessPixmap(const scoped_refptr<gfx::NativePixmap>& source_pixmap,
+                     scoped_refptr<gfx::NativePixmap> target_pixmap);
+
 #endif
 
   // Submit parameters or slice data of |va_buffer_type|, copying them from
@@ -250,6 +256,9 @@ class MEDIA_GPU_EXPORT VaapiWrapper
 #endif  // USE_OZONE
 
    private:
+    // Returns true if the VAAPI version is less than the specified version.
+    bool VAAPIVersionLessThan(int major, int minor);
+
     // Protected by |va_lock_|.
     int refcount_;
 

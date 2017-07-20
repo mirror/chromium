@@ -5,14 +5,20 @@
 #import "ios/chrome/browser/ui/payments/contact_info_edit_mediator.h"
 
 #include "base/mac/foundation_util.h"
+#include "base/memory/ptr_util.h"
+#include "base/test/scoped_task_environment.h"
 #include "components/autofill/core/browser/autofill_profile.h"
 #include "components/autofill/core/browser/autofill_test_utils.h"
+#include "components/autofill/core/browser/test_personal_data_manager.h"
 #include "components/strings/grit/components_strings.h"
+#include "ios/chrome/browser/browser_state/test_chrome_browser_state.h"
 #include "ios/chrome/browser/payments/payment_request_test_util.h"
+#include "ios/chrome/browser/payments/test_payment_request.h"
 #import "ios/chrome/browser/ui/autofill/autofill_ui_type_util.h"
 #import "ios/chrome/browser/ui/payments/payment_request_edit_consumer.h"
 #import "ios/chrome/browser/ui/payments/payment_request_editor_field.h"
-#import "ios/chrome/browser/ui/payments/payment_request_unittest_base.h"
+#import "ios/web/public/test/fakes/test_web_state.h"
+#include "testing/gtest/include/gtest/gtest.h"
 #include "testing/platform_test.h"
 #include "third_party/ocmock/OCMock/OCMock.h"
 #include "third_party/ocmock/gtest_support.h"
@@ -22,17 +28,22 @@
 #error "This file requires ARC support."
 #endif
 
-class PaymentRequestContactInfoEditMediatorTest
-    : public PaymentRequestUnitTestBase,
-      public PlatformTest {
+class PaymentRequestContactInfoEditMediatorTest : public PlatformTest {
  protected:
-  void SetUp() override {
-    PaymentRequestUnitTestBase::SetUp();
+  PaymentRequestContactInfoEditMediatorTest()
+      : chrome_browser_state_(TestChromeBrowserState::Builder().Build()),
+        payment_request_(base::MakeUnique<payments::TestPaymentRequest>(
+            payment_request_test_util::CreateTestWebPaymentRequest(),
+            chrome_browser_state_.get(),
+            &web_state_,
+            &personal_data_manager_)) {}
 
-    CreateTestPaymentRequest();
-  }
+  base::test::ScopedTaskEnvironment scoped_task_evironment_;
 
-  void TearDown() override { PaymentRequestUnitTestBase::TearDown(); }
+  web::TestWebState web_state_;
+  autofill::TestPersonalDataManager personal_data_manager_;
+  std::unique_ptr<TestChromeBrowserState> chrome_browser_state_;
+  std::unique_ptr<payments::TestPaymentRequest> payment_request_;
 };
 
 // Tests that the expected editor fields are created when creating a profile.
@@ -81,9 +92,9 @@ TEST_F(PaymentRequestContactInfoEditMediatorTest, TestFieldsWhenCreate) {
       [OCMockObject mockForProtocol:@protocol(PaymentRequestEditConsumer)];
   [[consumer expect] setEditorFields:[OCMArg checkWithBlock:check_block]];
 
-  ContactInfoEditMediator* mediator =
-      [[ContactInfoEditMediator alloc] initWithPaymentRequest:payment_request()
-                                                      profile:nil];
+  ContactInfoEditMediator* mediator = [[ContactInfoEditMediator alloc]
+      initWithPaymentRequest:payment_request_.get()
+                     profile:nil];
   [mediator setConsumer:consumer];
 
   EXPECT_OCMOCK_VERIFY(consumer);
@@ -121,7 +132,7 @@ TEST_F(PaymentRequestContactInfoEditMediatorTest, TestFieldsWhenEdit) {
 
   autofill::AutofillProfile autofill_profile = autofill::test::GetFullProfile();
   ContactInfoEditMediator* mediator = [[ContactInfoEditMediator alloc]
-      initWithPaymentRequest:payment_request()
+      initWithPaymentRequest:payment_request_.get()
                      profile:&autofill_profile];
   [mediator setConsumer:consumer];
 
@@ -144,17 +155,17 @@ TEST_F(PaymentRequestContactInfoEditMediatorTest, TestFieldsRequestNameOnly) {
     return YES;
   };
 
-  payment_request()->web_payment_request().options.request_payer_phone = false;
-  payment_request()->web_payment_request().options.request_payer_email = false;
+  payment_request_->web_payment_request().options.request_payer_phone = false;
+  payment_request_->web_payment_request().options.request_payer_email = false;
 
   // Mock the consumer.
   id consumer =
       [OCMockObject mockForProtocol:@protocol(PaymentRequestEditConsumer)];
   [[consumer expect] setEditorFields:[OCMArg checkWithBlock:check_block]];
 
-  ContactInfoEditMediator* mediator =
-      [[ContactInfoEditMediator alloc] initWithPaymentRequest:payment_request()
-                                                      profile:nil];
+  ContactInfoEditMediator* mediator = [[ContactInfoEditMediator alloc]
+      initWithPaymentRequest:payment_request_.get()
+                     profile:nil];
   [mediator setConsumer:consumer];
 
   EXPECT_OCMOCK_VERIFY(consumer);
@@ -182,16 +193,16 @@ TEST_F(PaymentRequestContactInfoEditMediatorTest, TestFieldsRequestPhoneEmail) {
     return YES;
   };
 
-  payment_request()->web_payment_request().options.request_payer_name = false;
+  payment_request_->web_payment_request().options.request_payer_name = false;
 
   // Mock the consumer.
   id consumer =
       [OCMockObject mockForProtocol:@protocol(PaymentRequestEditConsumer)];
   [[consumer expect] setEditorFields:[OCMArg checkWithBlock:check_block]];
 
-  ContactInfoEditMediator* mediator =
-      [[ContactInfoEditMediator alloc] initWithPaymentRequest:payment_request()
-                                                      profile:nil];
+  ContactInfoEditMediator* mediator = [[ContactInfoEditMediator alloc]
+      initWithPaymentRequest:payment_request_.get()
+                     profile:nil];
   [mediator setConsumer:consumer];
 
   EXPECT_OCMOCK_VERIFY(consumer);

@@ -377,10 +377,8 @@ void PageHandler::CaptureScreenshot(
     if (!modified_params.view_size.width)
       emulated_view_size = original_view_size;
 
-    ScreenInfo screen_info;
-    widget_host->GetScreenInfo(&screen_info);
-    double dpfactor =
-        modified_params.device_scale_factor / screen_info.device_scale_factor;
+    double dpfactor = modified_params.device_scale_factor /
+                      widget_host->GetView()->current_device_scale_factor();
     modified_params.scale = dpfactor;
     modified_params.view_size.width = emulated_view_size.width();
     modified_params.view_size.height = emulated_view_size.height();
@@ -396,10 +394,9 @@ void PageHandler::CaptureScreenshot(
     emulation_handler_->SetDeviceEmulationParams(modified_params);
 
     if (clip.isJust()) {
-      double scale = dpfactor * clip.fromJust()->GetScale();
-      widget_host->GetView()->SetSize(
-          gfx::Size(gfx::ToRoundedInt(clip.fromJust()->GetWidth() * scale),
-                    gfx::ToRoundedInt(clip.fromJust()->GetHeight() * scale)));
+      widget_host->GetView()->SetSize(gfx::ScaleToCeiledSize(
+          gfx::Size(clip.fromJust()->GetWidth(), clip.fromJust()->GetHeight()),
+          dpfactor * clip.fromJust()->GetScale()));
     } else {
       widget_host->GetView()->SetSize(
           gfx::ScaleToFlooredSize(emulated_view_size, dpfactor));
@@ -427,7 +424,6 @@ void PageHandler::PrintToPDF(Maybe<bool> landscape,
                              Maybe<double> margin_left,
                              Maybe<double> margin_right,
                              Maybe<String> page_ranges,
-                             Maybe<bool> ignore_invalid_page_ranges,
                              std::unique_ptr<PrintToPDFCallback> callback) {
   callback->sendFailure(Response::Error("PrintToPDF is not implemented"));
   return;

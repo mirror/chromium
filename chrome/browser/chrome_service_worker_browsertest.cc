@@ -609,14 +609,14 @@ class ChromeServiceWorkerNavigationHintTest : public ChromeServiceWorkerTest {
  protected:
   void RunNavigationHintTest(
       const char* scope,
-      content::StartServiceWorkerForNavigationHintResult expected_result,
+      content::StartServiceWorkerForNavigationHintResult expeced_requst,
       bool expected_started) {
     base::RunLoop run_loop;
     GetServiceWorkerContext()->StartServiceWorkerForNavigationHint(
         embedded_test_server()->GetURL(scope),
         base::Bind(&ExpectResultAndRun<
                        content::StartServiceWorkerForNavigationHintResult>,
-                   expected_result, run_loop.QuitClosure()));
+                   expeced_requst, run_loop.QuitClosure()));
     run_loop.Run();
     if (expected_started) {
       histogram_tester_.ExpectBucketCount(
@@ -631,9 +631,6 @@ class ChromeServiceWorkerNavigationHintTest : public ChromeServiceWorkerTest {
       histogram_tester_.ExpectTotalCount(
           "ServiceWorker.StartWorker.StatusByPurpose_NAVIGATION_HINT", 0);
     }
-    histogram_tester_.ExpectBucketCount(
-        "ServiceWorker.StartForNavigationHint.Result",
-        static_cast<int>(expected_result), 1);
   }
 
   base::HistogramTester histogram_tester_;

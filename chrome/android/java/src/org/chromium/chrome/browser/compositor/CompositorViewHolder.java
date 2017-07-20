@@ -127,9 +127,6 @@ public class CompositorViewHolder extends FrameLayout
     private int mOverlayContentWidthMeasureSpec = ContentView.DEFAULT_MEASURE_SPEC;
     private int mOverlayContentHeightMeasureSpec = ContentView.DEFAULT_MEASURE_SPEC;
 
-    // List of callbacks to be called on nearest frame swap.
-    private List<Runnable> mNextFrameSwapCallbacks;
-
     /**
      * This view is created on demand to display debugging information.
      */
@@ -294,7 +291,6 @@ public class CompositorViewHolder extends FrameLayout
         setTab(null);
         if (mLayerTitleCache != null) mLayerTitleCache.shutDown();
         mCompositorView.shutDown();
-        if (mLayoutManager != null) mLayoutManager.destroy();
     }
 
     /**
@@ -602,24 +598,6 @@ public class CompositorViewHolder extends FrameLayout
 
         if (!mSkipInvalidation || pendingFrameCount == 0) flushInvalidation();
         mSkipInvalidation = !mSkipInvalidation;
-
-        runNextFrameSwapCallbacks();
-    }
-
-    /**
-     * @param nextFrameSwapCallback Callback to run on a nearest compositor frame swap.
-     */
-    public void addNextFrameSwapCallback(Runnable nextFrameSwapCallback) {
-        if (mNextFrameSwapCallbacks == null) mNextFrameSwapCallbacks = new ArrayList<>();
-        mNextFrameSwapCallbacks.add(nextFrameSwapCallback);
-    }
-
-    private void runNextFrameSwapCallbacks() {
-        if (mNextFrameSwapCallbacks == null) return;
-        for (Runnable r : mNextFrameSwapCallbacks) {
-            post(r);
-        }
-        mNextFrameSwapCallbacks = null;
     }
 
     @Override
@@ -742,6 +720,7 @@ public class CompositorViewHolder extends FrameLayout
 
     @Override
     public void onDetachedFromWindow() {
+        if (mLayoutManager != null) mLayoutManager.destroy();
         flushInvalidation();
         mInvalidator.set(null);
         super.onDetachedFromWindow();

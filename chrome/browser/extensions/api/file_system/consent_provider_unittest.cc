@@ -60,7 +60,6 @@ class TestingConsentProviderDelegate
   // ConsentProvider::DelegateInterface overrides:
   void ShowDialog(
       const extensions::Extension& extension,
-      content::RenderFrameHost* host,
       const base::WeakPtr<Volume>& volume,
       bool writable,
       const ConsentProvider::ShowDialogCallback& callback) override {
@@ -154,8 +153,8 @@ TEST_F(FileSystemApiConsentProviderTest, ForNonKioskApps) {
     EXPECT_TRUE(provider.IsGrantable(*whitelisted_component_extension));
 
     ConsentProvider::Consent result = ConsentProvider::CONSENT_IMPOSSIBLE;
-    provider.RequestConsent(*whitelisted_component_extension.get(), nullptr,
-                            volume_, true /* writable */,
+    provider.RequestConsent(*whitelisted_component_extension.get(), volume_,
+                            true /* writable */,
                             base::Bind(&OnConsentReceived, &result));
     base::RunLoop().RunUntilIdle();
 
@@ -197,7 +196,7 @@ TEST_F(FileSystemApiConsentProviderTest, ForKioskApps) {
     EXPECT_TRUE(provider.IsGrantable(*auto_launch_kiosk_app));
 
     ConsentProvider::Consent result = ConsentProvider::CONSENT_IMPOSSIBLE;
-    provider.RequestConsent(*auto_launch_kiosk_app.get(), nullptr, volume_,
+    provider.RequestConsent(*auto_launch_kiosk_app.get(), volume_,
                             true /* writable */,
                             base::Bind(&OnConsentReceived, &result));
     base::RunLoop().RunUntilIdle();
@@ -227,7 +226,7 @@ TEST_F(FileSystemApiConsentProviderTest, ForKioskApps) {
     EXPECT_TRUE(provider.IsGrantable(*manual_launch_kiosk_app));
 
     ConsentProvider::Consent result = ConsentProvider::CONSENT_IMPOSSIBLE;
-    provider.RequestConsent(*manual_launch_kiosk_app.get(), nullptr, volume_,
+    provider.RequestConsent(*manual_launch_kiosk_app.get(), volume_,
                             true /* writable */,
                             base::Bind(&OnConsentReceived, &result));
     base::RunLoop().RunUntilIdle();
@@ -246,7 +245,7 @@ TEST_F(FileSystemApiConsentProviderTest, ForKioskApps) {
     EXPECT_TRUE(provider.IsGrantable(*manual_launch_kiosk_app));
 
     ConsentProvider::Consent result = ConsentProvider::CONSENT_IMPOSSIBLE;
-    provider.RequestConsent(*manual_launch_kiosk_app.get(), nullptr, volume_,
+    provider.RequestConsent(*manual_launch_kiosk_app.get(), volume_,
                             true /* writable */,
                             base::Bind(&OnConsentReceived, &result));
     base::RunLoop().RunUntilIdle();

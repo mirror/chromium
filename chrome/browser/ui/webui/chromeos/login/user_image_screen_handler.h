@@ -49,12 +49,15 @@ class UserImageScreenHandler : public UserImageView, public BaseScreenHandler {
   // Handles photo taken with WebRTC UI.
   void HandlePhotoTaken(const std::string& image_url);
 
+  // Handles 'take-photo' button click.
+  void HandleTakePhoto();
+
   // Handles 'discard-photo' button click.
   void HandleDiscardPhoto();
 
   // Handles clicking on default user image.
-  void HandleSelectImage(const std::string& image_type,
-                         const std::string& image_url,
+  void HandleSelectImage(const std::string& image_url,
+                         const std::string& image_type,
                          bool is_user_selection);
 
   // Called when user accept the image closing the screen.

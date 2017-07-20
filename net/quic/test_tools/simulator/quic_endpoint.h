@@ -92,6 +92,15 @@ class QuicEndpoint : public Endpoint,
   void OnPathDegrading() override {}
   void PostProcessAfterData() override {}
   void OnAckNeedsRetransmittableFrame() override {}
+  void SaveStreamData(QuicStreamId id,
+                      QuicIOVector iov,
+                      size_t iov_offset,
+                      QuicStreamOffset offset,
+                      QuicByteCount data_length) override;
+  bool WriteStreamData(QuicStreamId id,
+                       QuicStreamOffset offset,
+                       QuicByteCount data_length,
+                       QuicDataWriter* writer) override;
   // End QuicConnectionVisitorInterface implementation.
 
  private:

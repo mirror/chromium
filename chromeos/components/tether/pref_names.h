@@ -50,11 +50,6 @@ extern const char kWifiNetworkGuid[];
 // the GUID is cleared from prefs.
 extern const char kDisconnectingWifiNetworkGuid[];
 
-// Scanned Tether host results. The value stored is a ListValue containing
-// DictionaryValues containing the scan results. See PersistentHostScanCache for
-// more details.
-extern const char kHostScanCache[];
-
 }  // namespace prefs
 
 }  // namespace tether

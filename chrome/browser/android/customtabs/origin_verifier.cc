@@ -84,4 +84,8 @@ static jlong Init(JNIEnv* env,
   return reinterpret_cast<intptr_t>(native_verifier);
 }
 
+bool RegisterOriginVerifier(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
 }  // namespace customtabs

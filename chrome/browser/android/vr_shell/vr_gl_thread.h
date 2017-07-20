@@ -62,7 +62,6 @@ class VrGLThread : public base::Thread,
   void OnContentPaused(bool enabled) override;
   void ToggleCardboardGamepad(bool enabled) override;
   void OnGLInitialized() override;
-  void OnWebVrFrameAvailable() override;
 
   // vr::UiBrowserInterface implementation (UI calling to VrShell).
   void ExitPresent() override;

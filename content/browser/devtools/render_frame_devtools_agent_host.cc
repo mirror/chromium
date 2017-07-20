@@ -647,7 +647,7 @@ void RenderFrameDevToolsAgentHost::DidFinishNavigation(
         CommitPending();
       }
       for (auto* target : protocol::TargetHandler::ForAgentHost(this))
-        target->DidCommitNavigation();
+        target->UpdateServiceWorkers();
     } else if (pending_ && pending_->host()->GetFrameTreeNodeId() ==
                                navigation_handle->GetFrameTreeNodeId()) {
       DiscardPending();
@@ -685,7 +685,7 @@ void RenderFrameDevToolsAgentHost::DidFinishNavigation(
   }
   if (handle->HasCommitted()) {
     for (auto* target : protocol::TargetHandler::ForAgentHost(this))
-      target->DidCommitNavigation();
+      target->UpdateServiceWorkers();
   }
 }
 
@@ -819,7 +819,7 @@ void RenderFrameDevToolsAgentHost::RenderFrameHostChanged(
     RenderFrameHost* old_host,
     RenderFrameHost* new_host) {
   for (auto* target : protocol::TargetHandler::ForAgentHost(this))
-    target->RenderFrameHostChanged();
+    target->UpdateFrames();
 
   if (IsBrowserSideNavigationEnabled()) {
     if (old_host != frame_host_)

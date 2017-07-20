@@ -1149,7 +1149,6 @@ def _CheckSpamLogging(input_api, output_api):
                  r"^chrome[\\\/]browser[\\\/]ui[\\\/]startup[\\\/]"
                      r"startup_browser_creator\.cc$",
                  r"^chrome[\\\/]installer[\\\/]setup[\\\/].*",
-                 r"^chrome[\\\/]installer[\\\/]zucchini[\\\/].*",
                  r"chrome[\\\/]browser[\\\/]diagnostics[\\\/]" +
                      r"diagnostics_writer\.cc$",
                  r"^chrome_elf[\\\/]dll_hash[\\\/]dll_hash_main\.cc$",
@@ -1945,6 +1944,7 @@ def _CheckNoDeprecatedCss(input_api, output_api):
                 (r"^chrome/common/extensions/docs",
                  r"^chrome/docs",
                  r"^components/dom_distiller/core/css/distilledpage_ios.css",
+                 r"^components/flags_ui/resources/apple_flags.css",
                  r"^components/neterror/resources/neterror.css",
                  r"^native_client_sdk"))
   file_filter = lambda f: input_api.FilterSourceFile(
@@ -2133,9 +2133,8 @@ def _CheckPatchFiles(input_api, output_api):
 
 
 def _CheckBuildConfigMacrosWithoutInclude(input_api, output_api):
-  # Excludes OS_CHROMEOS, which is not defined in build_config.h.
-  macro_re = input_api.re.compile(r'^\s*#(el)?if.*\bdefined\(((OS_(?!CHROMEOS)|'
-                                  'COMPILER_|ARCH_CPU_|WCHAR_T_IS_)[^)]*)')
+  macro_re = input_api.re.compile(
+      r'^\s*#(el)?if.*\bdefined\(((OS_|COMPILER_|ARCH_CPU_|WCHAR_T_IS_)[^)]*)')
   include_re = input_api.re.compile(
       r'^#include\s+"build/build_config.h"', input_api.re.MULTILINE)
   extension_re = input_api.re.compile(r'\.[a-z]+$')

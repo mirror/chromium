@@ -7,34 +7,18 @@
 #include "core/layout/ng/inline/ng_inline_node.h"
 #include "core/layout/ng/inline/ng_physical_text_fragment.h"
 #include "core/layout/ng/ng_fragment.h"
-#include "core/layout/ng/ng_layout_result.h"
-#include "core/layout/ng/ng_unpositioned_float.h"
 #include "platform/heap/Handle.h"
 
 namespace blink {
 
-namespace {
-
-NGLineOrientation ToLineOrientation(NGWritingMode writing_mode) {
-  switch (writing_mode) {
-    case NGWritingMode::kHorizontalTopBottom:
-      return NGLineOrientation::kHorizontal;
-    case NGWritingMode::kVerticalRightLeft:
-    case NGWritingMode::kVerticalLeftRight:
-    case NGWritingMode::kSidewaysRightLeft:
-      return NGLineOrientation::kClockWiseVertical;
-    case NGWritingMode::kSidewaysLeftRight:
-      return NGLineOrientation::kCounterClockWiseVertical;
-  }
-  NOTREACHED();
-  return NGLineOrientation::kHorizontal;
-}
-
-}  // namespace
-
 NGTextFragmentBuilder::NGTextFragmentBuilder(NGInlineNode node)
-    : node_(node),
-      writing_mode_(FromPlatformWritingMode(node_.Style().GetWritingMode())) {}
+    : direction_(TextDirection::kLtr), node_(node) {}
+
+NGTextFragmentBuilder& NGTextFragmentBuilder::SetDirection(
+    TextDirection direction) {
+  direction_ = direction;
+  return *this;
+}
 
 NGTextFragmentBuilder& NGTextFragmentBuilder::SetSize(
     const NGLogicalSize& size) {
@@ -42,20 +26,19 @@ NGTextFragmentBuilder& NGTextFragmentBuilder::SetSize(
   return *this;
 }
 
-NGTextFragmentBuilder& NGTextFragmentBuilder::SetShapeResult(
-    RefPtr<const ShapeResult> shape_result) {
-  shape_result_ = shape_result;
-  return *this;
+void NGTextFragmentBuilder::UniteMetrics(const NGLineHeightMetrics& metrics) {
+  metrics_.Unite(metrics);
 }
 
 RefPtr<NGPhysicalTextFragment> NGTextFragmentBuilder::ToTextFragment(
     unsigned index,
     unsigned start_offset,
     unsigned end_offset) {
+  NGWritingMode writing_mode(
+      FromPlatformWritingMode(node_.Style().GetWritingMode()));
   return AdoptRef(new NGPhysicalTextFragment(
       node_.GetLayoutObject(), node_, index, start_offset, end_offset,
-      size_.ConvertToPhysical(writing_mode_), ToLineOrientation(writing_mode_),
-      std::move(shape_result_)));
+      size_.ConvertToPhysical(writing_mode)));
 }
 
 }  // namespace blink

@@ -43,17 +43,13 @@ bool MediaControlFullscreenButtonElement::HasOverflowButton() const {
   return true;
 }
 
-const char* MediaControlFullscreenButtonElement::GetNameForHistograms() const {
-  return IsOverflowElement() ? "FullscreenOverflowButton" : "FullscreenButton";
-}
-
 void MediaControlFullscreenButtonElement::DefaultEventHandler(Event* event) {
   if (event->type() == EventTypeNames::click) {
     RecordClickMetrics();
     if (MediaElement().IsFullscreen())
-      GetMediaControls().ExitFullscreen();
+      static_cast<MediaControlsImpl&>(GetMediaControls()).ExitFullscreen();
     else
-      GetMediaControls().EnterFullscreen();
+      static_cast<MediaControlsImpl&>(GetMediaControls()).EnterFullscreen();
     event->SetDefaultHandled();
   }
   MediaControlInputElement::DefaultEventHandler(event);

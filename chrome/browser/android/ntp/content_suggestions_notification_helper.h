@@ -49,6 +49,9 @@ class ContentSuggestionsNotificationHelper {
   // that the user is interested in them.
   static bool IsDisabledForProfile(Profile* profile);
 
+  // Registers JNI methods.
+  static bool Register(JNIEnv* env);
+
  private:
   DISALLOW_IMPLICIT_CONSTRUCTORS(ContentSuggestionsNotificationHelper);
 };

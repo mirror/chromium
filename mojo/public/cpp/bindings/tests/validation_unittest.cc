@@ -12,7 +12,6 @@
 
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
-#include "base/numerics/safe_math.h"
 #include "base/run_loop.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "mojo/public/c/system/macros.h"
@@ -35,20 +34,33 @@ namespace mojo {
 namespace test {
 namespace {
 
+void GetSerializedRawMessageSize(uintptr_t context,
+                                 size_t* num_bytes,
+                                 size_t* num_handles) {
+  *num_bytes = *reinterpret_cast<size_t*>(context);
+  *num_handles = 0;
+}
+static void IgnoreSerializeHandles(uintptr_t, MojoHandle*) {}
+static void IgnoreSerializePayload(uintptr_t, void*) {}
+static void IgnoreDestroy(uintptr_t) {}
+
+const MojoMessageOperationThunks kRawMessageThunks{
+    sizeof(MojoMessageOperationThunks),
+    &GetSerializedRawMessageSize,
+    &IgnoreSerializeHandles,
+    &IgnoreSerializePayload,
+    &IgnoreDestroy,
+};
+
 Message CreateRawMessage(size_t size) {
   ScopedMessageHandle handle;
-  MojoResult rv = CreateMessage(&handle);
+  MojoResult rv = CreateMessage(reinterpret_cast<uintptr_t>(&size),
+                                &kRawMessageThunks, &handle);
   DCHECK_EQ(MOJO_RESULT_OK, rv);
   DCHECK(handle.is_valid());
 
-  DCHECK(base::IsValueInRangeForNumericType<uint32_t>(size));
-  void* buffer;
-  uint32_t buffer_size;
-  rv = MojoAttachSerializedMessageBuffer(handle->value(),
-                                         static_cast<uint32_t>(size), nullptr,
-                                         0, &buffer, &buffer_size);
+  rv = MojoSerializeMessage(handle->value());
   DCHECK_EQ(MOJO_RESULT_OK, rv);
-
   return Message(std::move(handle));
 }
 

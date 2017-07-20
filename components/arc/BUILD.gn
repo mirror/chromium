@@ -7,6 +7,8 @@ import("//testing/test.gni")
 
 static_library("arc") {
   sources = [
+    "arc_service_manager.cc",
+    "arc_service_manager.h",
     "arc_util.cc",
     "arc_util.h",
     "audio/arc_audio_bridge.cc",
@@ -43,6 +45,8 @@ static_library("arc") {
     "intent_helper/link_handler_model_impl.h",
     "intent_helper/page_transition_util.cc",
     "intent_helper/page_transition_util.h",
+    "kiosk/arc_kiosk_bridge.cc",
+    "kiosk/arc_kiosk_bridge.h",
     "metrics/arc_metrics_service.cc",
     "metrics/arc_metrics_service.h",
     "net/arc_net_host_impl.cc",
@@ -100,13 +104,10 @@ static_library("arc_base") {
     "arc_bridge_host_impl.h",
     "arc_bridge_service.cc",
     "arc_bridge_service.h",
-    "arc_browser_context_keyed_service_factory_base.h",
     "arc_features.cc",
     "arc_features.h",
     "arc_service.cc",
     "arc_service.h",
-    "arc_service_manager.cc",
-    "arc_service_manager.h",
     "arc_session.cc",
     "arc_session.h",
     "arc_session_runner.cc",
@@ -119,8 +120,6 @@ static_library("arc_base") {
   deps = [
     "//base",
     "//chromeos",
-    "//components/keyed_service/content",
-    "//components/signin/core/account_id",
     "//components/user_manager",
     "//mojo/edk/system",
   ]
@@ -225,6 +224,7 @@ source_set("unit_tests") {
     "intent_helper/intent_filter_unittest.cc",
     "intent_helper/link_handler_model_impl_unittest.cc",
     "intent_helper/page_transition_util_unittest.cc",
+    "kiosk/arc_kiosk_bridge_unittest.cc",
   ]
 
   deps = [

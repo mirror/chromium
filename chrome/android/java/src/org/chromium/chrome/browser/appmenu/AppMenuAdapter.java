@@ -103,7 +103,6 @@ class AppMenuAdapter extends BaseAdapter {
     private final int mNumMenuItems;
     private final Integer mHighlightedItemId;
     private final float mDpToPx;
-    private final boolean mTranslateMenuItemsOnShow;
 
     // Use a single PulseDrawable to spawn the other drawables so that the ConstantState gets
     // shared.  This allows the animation to stay in step even as the views are recycled and the
@@ -112,13 +111,12 @@ class AppMenuAdapter extends BaseAdapter {
     private PulseDrawable mHighlightDrawableSource;
 
     public AppMenuAdapter(AppMenu appMenu, List<MenuItem> menuItems, LayoutInflater inflater,
-            Integer highlightedItemId, boolean translateMenuItemsOnShow) {
+            Integer highlightedItemId) {
         mAppMenu = appMenu;
         mMenuItems = menuItems;
         mInflater = inflater;
         mHighlightedItemId = highlightedItemId;
         mNumMenuItems = menuItems.size();
-        mTranslateMenuItemsOnShow = translateMenuItemsOnShow;
         mDpToPx = inflater.getContext().getResources().getDisplayMetrics().density;
     }
 
@@ -378,18 +376,15 @@ class AppMenuAdapter extends BaseAdapter {
      * @return         The {@link Animator}.
      */
     private Animator buildStandardItemEnterAnimator(final View view, int position) {
+        final float offsetYPx = ENTER_STANDARD_ITEM_OFFSET_Y_DP * mDpToPx;
         final int startDelay = ENTER_ITEM_BASE_DELAY_MS + ENTER_ITEM_ADDL_DELAY_MS * position;
 
         AnimatorSet animation = new AnimatorSet();
-        if (mTranslateMenuItemsOnShow) {
-            final float offsetYPx = ENTER_STANDARD_ITEM_OFFSET_Y_DP * mDpToPx;
-            animation.playTogether(ObjectAnimator.ofFloat(view, View.ALPHA, 0.f, 1.f),
-                    ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, offsetYPx, 0.f));
-            animation.setStartDelay(startDelay);
-        } else {
-            animation.playTogether(ObjectAnimator.ofFloat(view, View.ALPHA, 0.f, 1.f));
-        }
+        animation.playTogether(
+                ObjectAnimator.ofFloat(view, View.ALPHA, 0.f, 1.f),
+                ObjectAnimator.ofFloat(view, View.TRANSLATION_Y, offsetYPx, 0.f));
         animation.setDuration(ENTER_ITEM_DURATION_MS);
+        animation.setStartDelay(startDelay);
         animation.setInterpolator(BakedBezierInterpolator.FADE_IN_CURVE);
 
         animation.addListener(new AnimatorListenerAdapter() {

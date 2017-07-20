@@ -84,6 +84,11 @@ enum class MetricsStatus {
   kDisabled,
 };
 
+enum class ScoutStatus {
+  kEnabled,
+  kDisabled,
+};
+
 // Simple test fixture that passes an invalid process handle back to the
 // ChromeCleanerRunner class and is intended for testing simple things like
 // command line flags that Chrome sends to the Chrome Cleaner process.
@@ -91,8 +96,10 @@ enum class MetricsStatus {
 // Parameters:
 // - metrics_status (MetricsStatus): whether Chrome metrics reporting is
 //   enabled.
+// - scout_status (ScoutStatus): whether logs upload in the Cleaner process
+//   should be enabled.
 class ChromeCleanerControllerSimpleTest
-    : public testing::TestWithParam<MetricsStatus>,
+    : public testing::TestWithParam<std::tuple<MetricsStatus, ScoutStatus>>,
       public ChromeCleanerRunnerTestDelegate,
       public ChromeCleanerControllerDelegate {
  public:
@@ -102,9 +109,12 @@ class ChromeCleanerControllerSimpleTest
   ~ChromeCleanerControllerSimpleTest() override {}
 
   void SetUp() override {
-    MetricsStatus metrics_status = GetParam();
+    MetricsStatus metrics_status;
+    ScoutStatus scout_status;
+    std::tie(metrics_status, scout_status) = GetParam();
 
     metrics_enabled_ = metrics_status == MetricsStatus::kEnabled;
+    scout_enabled_ = scout_status == ScoutStatus::kEnabled;
 
     SetChromeCleanerRunnerTestDelegateForTesting(this);
     ChromeCleanerController::ResetInstanceForTesting();
@@ -124,6 +134,10 @@ class ChromeCleanerControllerSimpleTest
     // executable succeeds.
     std::move(fetched_callback)
         .Run(base::FilePath(FILE_PATH_LITERAL("chrome_cleaner.exe")));
+  }
+
+  bool SafeBrowsingExtendedReportingScoutEnabled() override {
+    return scout_enabled_;
   }
 
   bool IsMetricsAndCrashReportingEnabled() override { return metrics_enabled_; }
@@ -160,6 +174,7 @@ class ChromeCleanerControllerSimpleTest
   base::test::ScopedFeatureList scoped_feature_list_;
 
   bool metrics_enabled_;
+  bool scout_enabled_;
   base::CommandLine command_line_;
 
   StrictMock<MockChromeCleanerControllerObserver> mock_observer_;
@@ -197,14 +212,17 @@ TEST_P(ChromeCleanerControllerSimpleTest, FlagsPassedToCleanerProcess) {
             command_line_.HasSwitch(chrome_cleaner::kUmaUserSwitch));
   EXPECT_EQ(metrics_enabled_, command_line_.HasSwitch(
                                   chrome_cleaner::kEnableCrashReportingSwitch));
+  EXPECT_EQ(scout_enabled_, command_line_.HasSwitch(
+                                chrome_cleaner::kEnableCleanerLoggingSwitch));
 
   controller->RemoveObserver(&mock_observer_);
 }
 
-INSTANTIATE_TEST_CASE_P(All,
-                        ChromeCleanerControllerSimpleTest,
-                        Values(MetricsStatus::kDisabled,
-                               MetricsStatus::kEnabled));
+INSTANTIATE_TEST_CASE_P(
+    All,
+    ChromeCleanerControllerSimpleTest,
+    Combine(Values(MetricsStatus::kDisabled, MetricsStatus::kEnabled),
+            Values(ScoutStatus::kDisabled, ScoutStatus::kEnabled)));
 
 enum class CleanerProcessStatus {
   kFetchFailure,
@@ -270,6 +288,12 @@ class ChromeCleanerControllerTest
             process_status_ != CleanerProcessStatus::kFetchFailure
                 ? base::FilePath(FILE_PATH_LITERAL("chrome_cleaner.exe"))
                 : base::FilePath()));
+  }
+
+  bool SafeBrowsingExtendedReportingScoutEnabled() override {
+    // Returning an arbitrary value since this is not being tested in this
+    // fixture.
+    return false;
   }
 
   bool IsMetricsAndCrashReportingEnabled() override {

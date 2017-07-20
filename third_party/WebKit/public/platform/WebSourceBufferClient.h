@@ -15,9 +15,6 @@ namespace blink {
 // extensions module.
 class WebSourceBufferClient {
  public:
-  // Parser notification types used to monitor problematic usage.
-  enum ParseWarning { kKeyframeTimeGreaterThanDependant, kMuxedSequenceMode };
-
   virtual ~WebSourceBufferClient() {}
 
   // Complete media track info: track type, unique track id, kind, label,
@@ -37,9 +34,6 @@ class WebSourceBufferClient {
   // case of success.
   virtual bool InitializationSegmentReceived(
       const WebVector<MediaTrackInfo>& tracks) = 0;
-
-  // Notifies SourceBuffer of parse warning.
-  virtual void NotifyParseWarning(const ParseWarning) = 0;
 };
 
 }  // namespace blink

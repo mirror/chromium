@@ -17,7 +17,7 @@
 namespace blink {
 namespace {
 
-const char kNotificationBaseUrl[] = "https://example.com/directory/";
+const char kBaseUrl[] = "https://example.com/directory/";
 const char kNotificationTitle[] = "My Notification";
 
 const char kNotificationDir[] = "rtl";
@@ -67,7 +67,7 @@ class CompleteUrlExecutionContext final : public NullExecutionContext {
 class NotificationDataTest : public ::testing::Test {
  public:
   void SetUp() override {
-    execution_context_ = new CompleteUrlExecutionContext(kNotificationBaseUrl);
+    execution_context_ = new CompleteUrlExecutionContext(kBaseUrl);
   }
 
   ExecutionContext* GetExecutionContext() { return execution_context_.Get(); }
@@ -126,7 +126,7 @@ TEST_F(NotificationDataTest, ReflectProperties) {
   EXPECT_EQ(kNotificationBody, notification_data.body);
   EXPECT_EQ(kNotificationTag, notification_data.tag);
 
-  KURL base(kParsedURLString, kNotificationBaseUrl);
+  KURL base(kParsedURLString, kBaseUrl);
 
   // URLs should be resolved against the base URL of the execution context.
   EXPECT_EQ(WebURL(KURL(base, kNotificationImage)), notification_data.image);

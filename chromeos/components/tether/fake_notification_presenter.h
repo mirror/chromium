@@ -44,8 +44,7 @@ class FakeNotificationPresenter : public NotificationPresenter {
 
   // NotificationPresenter:
   void NotifyPotentialHotspotNearby(
-      const cryptauth::RemoteDevice& remote_device,
-      int signal_strength) override;
+      const cryptauth::RemoteDevice& remote_device) override;
   void NotifyMultiplePotentialHotspotsNearby() override;
   void RemovePotentialHotspotNotification() override;
   void NotifySetupRequired(const std::string& device_name) override;

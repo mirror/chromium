@@ -4,16 +4,14 @@
 
 #include "chrome/browser/media/media_engagement_score.h"
 
-#include <utility>
-
 #include "chrome/browser/engagement/site_engagement_metrics.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "components/content_settings/core/common/content_settings.h"
 #include "components/content_settings/core/common/content_settings_types.h"
 
-const char MediaEngagementScore::kVisitsKey[] = "visits";
-const char MediaEngagementScore::kMediaPlaybacksKey[] = "mediaPlaybacks";
-const char MediaEngagementScore::kLastMediaPlaybackTimeKey[] =
+const char* MediaEngagementScore::kVisitsKey = "visits";
+const char* MediaEngagementScore::kMediaPlaybacksKey = "mediaPlaybacks";
+const char* MediaEngagementScore::kLastMediaPlaybackTimeKey =
     "lastMediaPlaybackTime";
 
 const int MediaEngagementScore::kScoreMinVisits = 5;
@@ -63,19 +61,14 @@ MediaEngagementScore::MediaEngagementScore(
     last_media_playback_time_ = base::Time::FromInternalValue(internal_time);
 }
 
-// TODO(beccahughes): Add typemap.
-media::mojom::MediaEngagementScoreDetailsPtr
+media::mojom::MediaEngagementScoreDetails
 MediaEngagementScore::GetScoreDetails() const {
-  return media::mojom::MediaEngagementScoreDetails::New(
-      origin_, GetTotalScore(), visits(), media_playbacks(),
-      last_media_playback_time().ToJsTime());
+  return media::mojom::MediaEngagementScoreDetails(origin_, GetTotalScore(),
+                                                   visits(), media_playbacks(),
+                                                   last_media_playback_time());
 }
 
 MediaEngagementScore::~MediaEngagementScore() = default;
-
-MediaEngagementScore::MediaEngagementScore(MediaEngagementScore&&) = default;
-MediaEngagementScore& MediaEngagementScore::operator=(MediaEngagementScore&&) =
-    default;
 
 double MediaEngagementScore::GetTotalScore() const {
   if (visits() < kScoreMinVisits)

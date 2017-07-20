@@ -30,13 +30,13 @@ class SolidColorAnalyzerTest : public testing::Test {
 
   bool IsSolidColor() {
     auto color =
-        SolidColorAnalyzer::DetermineIfSolidColor(&buffer_, rect_, 1, nullptr);
+        SolidColorAnalyzer::DetermineIfSolidColor(&buffer_, rect_, nullptr);
     return !!color;
   }
 
   SkColor GetColor() const {
     auto color =
-        SolidColorAnalyzer::DetermineIfSolidColor(&buffer_, rect_, 1, nullptr);
+        SolidColorAnalyzer::DetermineIfSolidColor(&buffer_, rect_, nullptr);
     EXPECT_TRUE(color);
     return color ? *color : SK_ColorTRANSPARENT;
   }

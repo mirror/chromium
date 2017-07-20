@@ -969,14 +969,6 @@ should be able to be added at any place in this file.
   <description>Toggles Spoken Feedback (ChromeVox)</description>
 </action>
 
-<action name="Accel_Toggle_System_Tray_Bubble">
-  <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
-  <description>
-    User invoked keyboard accelerator, such as Shift-Alt-S or Hamburger key, to
-    bring up or dismiss the system tray menu.
-  </description>
-</action>
-
 <action name="Accel_Toggle_Touchpad">
   <owner>afakhry@chromium.org</owner>
   <description>
@@ -15536,74 +15528,6 @@ should be able to be added at any place in this file.
   </description>
 </action>
 
-<action name="Signin_ImpressionWithAccount_FromBookmarkManager">
-  <owner>jlebel@chromium.org</owner>
-  <description>
-    Recorded when starting sign-in using the promo view, with a default account,
-    from bookmarks manager
-    (signin_metrics::AccessPoint::ACCESS_POINT_BOOKMARK_MANAGER).
-  </description>
-</action>
-
-<action name="Signin_ImpressionWithAccount_FromRecentTabs">
-  <owner>jlebel@chromium.org</owner>
-  <description>
-    Recorded when starting sign-in using the promo view, with a default account,
-    from recent tabs (signin_metrics::AccessPoint::ACCESS_POINT_RECENT_TABS).
-  </description>
-</action>
-
-<action name="Signin_ImpressionWithAccount_FromSettings">
-  <owner>jlebel@chromium.org</owner>
-  <description>
-    Recorded when starting sign-in using the promo view, with a default account,
-    from settings (signin_metrics::AccessPoint::ACCESS_POINT_SETTINGS).
-  </description>
-</action>
-
-<action name="Signin_ImpressionWithAccount_FromTabSwitcher">
-  <owner>jlebel@chromium.org</owner>
-  <description>
-    Recorded when starting sign-in using the promo view, with a default account,
-    from tab switcher (signin_metrics::AccessPoint::ACCESS_POINT_TAB_SWITCHER).
-  </description>
-</action>
-
-<action name="Signin_ImpressionWithNoAccount_FromBookmarkManager">
-  <owner>jlebel@chromium.org</owner>
-  <description>
-    Recorded when starting sign-in using the promo view, with no default
-    account, from bookmarks manager
-    (signin_metrics::AccessPoint::ACCESS_POINT_BOOKMARK_MANAGER).
-  </description>
-</action>
-
-<action name="Signin_ImpressionWithNoAccount_FromRecentTabs">
-  <owner>jlebel@chromium.org</owner>
-  <description>
-    Recorded when starting sign-in using the promo view, with no default
-    account, from recent tabs
-    (signin_metrics::AccessPoint::ACCESS_POINT_RECENT_TABS).
-  </description>
-</action>
-
-<action name="Signin_ImpressionWithNoAccount_FromSettings">
-  <owner>jlebel@chromium.org</owner>
-  <description>
-    Recorded when starting sign-in using the promo view, with no default
-    account, from settings (signin_metrics::AccessPoint::ACCESS_POINT_SETTINGS).
-  </description>
-</action>
-
-<action name="Signin_ImpressionWithNoAccount_FromTabSwitcher">
-  <owner>jlebel@chromium.org</owner>
-  <description>
-    Recorded when starting sign-in using the promo view, with no default
-    account, from tab switcher
-    (signin_metrics::AccessPoint::ACCESS_POINT_TAB_SWITCHER).
-  </description>
-</action>
-
 <action name="Signin_Impression_FromAppsPageLink">
   <owner>gogerald@chromium.org</owner>
   <description>
@@ -15783,14 +15707,6 @@ should be able to be added at any place in this file.
   </description>
 </action>
 
-<action name="Signin_SigninNewAccount_FromTabSwitcher">
-  <owner>jlebel@chromium.org</owner>
-  <description>
-    Recorded on sign in start from access point
-    signin_metrics::AccessPoint::ACCESS_POINT_TAB_SWITCHER, with a new account.
-  </description>
-</action>
-
 <action name="Signin_SigninNotDefault_FromBookmarkManager">
   <owner>jlebel@chromium.org</owner>
   <description>
@@ -15815,15 +15731,6 @@ should be able to be added at any place in this file.
     Recorded on sign in start from access point
     signin_metrics::AccessPoint::ACCESS_POINT_SETTINGS, using another account
     than the default one.
-  </description>
-</action>
-
-<action name="Signin_SigninNotDefault_FromTabSwitcher">
-  <owner>jlebel@chromium.org</owner>
-  <description>
-    Recorded on sign in start from access point
-    signin_metrics::AccessPoint::ACCESS_POINT_TAB_SWITCHER, using another
-    account than the default one.
   </description>
 </action>
 
@@ -15860,15 +15767,6 @@ should be able to be added at any place in this file.
   <description>
     Recorded on sign in start from access point
     signin_metrics::AccessPoint::ACCESS_POINT_SETTINGS, using the default
-    account.
-  </description>
-</action>
-
-<action name="Signin_SigninWithDefault_FromTabSwitcher">
-  <owner>jlebel@chromium.org</owner>
-  <description>
-    Recorded on sign in start from access point
-    signin_metrics::AccessPoint::ACCESS_POINT_TAB_SWITCHER, using the default
     account.
   </description>
 </action>
@@ -17578,13 +17476,6 @@ should be able to be added at any place in this file.
   <description>
     User launched voice interaction session through long pressing app list
     button.
-  </description>
-</action>
-
-<action name="VoiceInteraction.Started.Assistant">
-  <owner>muyuanli@chromium.org</owner>
-  <description>
-    User launched voice interaction session through Assistant key.
   </description>
 </action>
 

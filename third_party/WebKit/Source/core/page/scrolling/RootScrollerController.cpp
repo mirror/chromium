@@ -157,6 +157,9 @@ bool RootScrollerController::IsValidRootScroller(const Element& element) const {
       !element.IsFrameOwnerElement())
     return false;
 
+  if (!RootScrollerUtil::ScrollableAreaForRootScroller(&element))
+    return false;
+
   if (!FillsViewport(element))
     return false;
 

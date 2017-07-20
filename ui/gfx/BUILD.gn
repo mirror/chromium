@@ -522,7 +522,6 @@ source_set("memory_buffer_sources") {
     "native_pixmap.h",
     "native_pixmap_handle.cc",
     "native_pixmap_handle.h",
-    "overlay_transform.h",
   ]
 
   if (!is_ios) {
@@ -579,8 +578,6 @@ component("gfx_switches") {
 static_library("test_support") {
   testonly = true
   sources = [
-    "animation/animation_test_api.cc",
-    "animation/animation_test_api.h",
     "animation/test_animation_delegate.h",
     "geometry/test/rect_test_util.cc",
     "geometry/test/rect_test_util.h",

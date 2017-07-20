@@ -963,7 +963,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="29" label="Service worker not offline capable"/>
   <int value="30" label="Waiting for manifest to be fetched"/>
   <int value="31" label="Waiting for installability check"/>
-  <int value="32" label="No gesture associated with call to prompt"/>
 </enum>
 
 <enum name="AppBannersInstallEvent">
@@ -1291,24 +1290,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="3" label="UNREADABLE_INPUT"/>
   <int value="4" label="PLATFORM_FAILURE"/>
   <int value="5" label="INSUFFICIENT_RESOURCES"/>
-</enum>
-
-<enum name="AshNightLightScheduleType">
-  <summary>Defines the possible Night Light schedule types</summary>
-  <int value="0" label="None"/>
-  <int value="1" label="Sunset to Sunrise"/>
-  <int value="2" label="Custom Schedule"/>
-</enum>
-
-<enum name="AshNightLightTemperatureRanges">
-  <summary>
-    Defines the ranges in which the value of the color temperature may reside
-  </summary>
-  <int value="0" label="[0 to 20) (coldest)"/>
-  <int value="1" label="[20 to 40)"/>
-  <int value="2" label="[40 to 60)"/>
-  <int value="3" label="[60 to 80)"/>
-  <int value="4" label="[80 to 100) (warmest)"/>
 </enum>
 
 <enum name="AsyncDNSConfigParsePosix">
@@ -3472,11 +3453,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="1" label="Registration is a duplicate"/>
 </enum>
 
-<enum name="BooleanRenamed">
-  <int value="0" label="Not Renamed"/>
-  <int value="1" label="Renamed"/>
-</enum>
-
 <enum name="BooleanReported">
   <int value="0" label="Not reported"/>
   <int value="1" label="Reported"/>
@@ -3510,11 +3486,6 @@ uploading your change for review.  These are checked by presubmit scripts.
 <enum name="BooleanRevoked">
   <int value="0" label="Not revoked"/>
   <int value="1" label="Revoked"/>
-</enum>
-
-<enum name="BooleanSafeMode">
-  <int value="0" label="Regular mode"/>
-  <int value="1" label="Safe mode"/>
 </enum>
 
 <enum name="BooleanSecure">
@@ -7273,14 +7244,12 @@ uploading your change for review.  These are checked by presubmit scripts.
 </enum>
 
 <enum name="DataReductionProxyProtocolAcceptTransformEvent">
-  <int value="0" label="Lite page requested (pages)"/>
-  <int value="1" label="Lite page transform received (pages)"/>
-  <int value="2" label="Empty image page policy directive received (pages)"/>
-  <int value="3" label="Empty image requested (resources)"/>
-  <int value="4" label="Empty image transform received (resources)"/>
-  <int value="5" label="Compressed-video requested (resources)"/>
-  <int value="6" label="Original image ('identity') requested (resources)"/>
-  <int value="7" label="Original image ('identity') received (resources)"/>
+  <int value="0" label="Lite page requested"/>
+  <int value="1" label="Lite page transform received"/>
+  <int value="2" label="Empty image page policy directive received"/>
+  <int value="3" label="Empty image requested"/>
+  <int value="4" label="Empty image transform received"/>
+  <int value="5" label="Compressed-video requested"/>
 </enum>
 
 <enum name="DataReductionProxyProtocolNotAcceptingTransformReason">
@@ -8364,84 +8333,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="3" label="Touch"/>
 </enum>
 
-<enum name="Download.Service.BatteryRequirements">
-  <int value="0" label="BATTERY_INSENSITIVE"/>
-  <int value="1" label="BATTERY_SENSITIVE"/>
-</enum>
-
-<enum name="Download.Service.CompletionType">
-  <int value="0" label="SUCCEED"/>
-  <int value="1" label="FAIL"/>
-  <int value="2" label="ABORT"/>
-  <int value="3" label="TIMEOUT"/>
-  <int value="4" label="UNKNOWN"/>
-  <int value="5" label="CANCEL"/>
-</enum>
-
-<enum name="Download.Service.EntryStates">
-  <int value="0" label="NEW"/>
-  <int value="1" label="AVAILABLE"/>
-  <int value="2" label="ACTIVE"/>
-  <int value="3" label="PAUSED"/>
-  <int value="4" label="COMPLETE"/>
-</enum>
-
-<enum name="Download.Service.ModelAction">
-  <int value="0" label="INITIALIZE"/>
-  <int value="1" label="ADD"/>
-  <int value="2" label="UPDATE"/>
-  <int value="3" label="REMOVE"/>
-</enum>
-
-<enum name="Download.Service.NetworkRequirements">
-  <int value="0" label="NONE"/>
-  <int value="1" label="OPTIMISTIC"/>
-  <int value="2" label="UNMETERED"/>
-</enum>
-
-<enum name="Download.Service.Priority">
-  <int value="0" label="LOW"/>
-  <int value="1" label="NORMAL"/>
-  <int value="2" label="HIGH"/>
-  <int value="3" label="UI"/>
-</enum>
-
-<enum name="Download.Service.ScheduledTaskStatus">
-  <int value="0" label="ABORTED_ON_FAILED_INIT"/>
-  <int value="1" label="CANCELLED_ON_STOP"/>
-  <int value="2" label="COMPLETED_NORMALLY"/>
-</enum>
-
-<enum name="Download.Service.ServiceApiAction">
-  <int value="0" label="START_DOWNLOAD"/>
-  <int value="1" label="PAUSE_DOWNLOAD"/>
-  <int value="2" label="RESUME_DOWNLOAD"/>
-  <int value="3" label="CANCEL_DOWNLOAD"/>
-  <int value="4" label="CHANGE_CRITERIA"/>
-</enum>
-
-<enum name="Download.Service.ShouldDownload">
-  <int value="0" label="CONTINUE"/>
-  <int value="1" label="ABORT"/>
-</enum>
-
-<enum name="Download.Service.StartResult">
-  <int value="0" label="ACCEPTED"/>
-  <int value="1" label="BACKOFF"/>
-  <int value="2" label="UNEXPECTED_CLIENT"/>
-  <int value="3" label="UNEXPECTED_GUID"/>
-  <int value="4" label="CLIENT_CANCELLED"/>
-  <int value="5" label="INTERNAL_ERROR"/>
-</enum>
-
-<enum name="Download.Service.StartUpResult">
-  <int value="0" label="SUCCESS"/>
-  <int value="1" label="FAILURE"/>
-  <int value="2" label="FAILURE_REASON_DRIVER"/>
-  <int value="3" label="FAILURE_REASON_MODEL"/>
-  <int value="4" label="FAILURE_REASON_FILE_MONITOR"/>
-</enum>
-
 <enum name="DownloadConnectionSecurity">
   <int value="0"
       label="Final download url and the redirects before it all use https"/>
@@ -9254,21 +9145,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="7" label="THREAD_STARTED"/>
   <int value="8" label="SCRIPT_READ_STARTED"/>
   <int value="9" label="SCRIPT_READ_FINISHED"/>
-</enum>
-
-<enum name="EmmcLifeUsed">
-  <int value="0" label="Not defined"/>
-  <int value="1" label="0% - 10% device life time used"/>
-  <int value="2" label="10% -20% device life time used"/>
-  <int value="3" label="20% -30% device life time used"/>
-  <int value="4" label="30% - 40% device life time used"/>
-  <int value="5" label="40% - 50% device life time used"/>
-  <int value="6" label="50% - 60% device life time used"/>
-  <int value="7" label="60% - 70% device life time used"/>
-  <int value="8" label="70% - 80% device life time used"/>
-  <int value="9" label="80% - 90% device life time used"/>
-  <int value="10" label="90% - 100% device life time used"/>
-  <int value="11" label="Exceeded its maximum estimated device life time"/>
 </enum>
 
 <enum name="EncodingMethod">
@@ -15912,9 +15788,6 @@ uploading your change for review.  These are checked by presubmit scripts.
       label="GetUserMediaCameraDisallowedByFeaturePolicyInCrossOriginIframe"/>
   <int value="2059"
       label="RequestMIDIAccessDisallowedByFeaturePolicyInCrossOriginIframe"/>
-  <int value="2060" label="MediaSourceKeyframeTimeGreaterThanDependant"/>
-  <int value="2061" label="MediaSourceMuxedSequenceMode"/>
-  <int value="2062" label="PrepareModuleScript"/>
 </enum>
 
 <enum name="FeedbackSource">
@@ -16743,7 +16616,6 @@ uploading your change for review.  These are checked by presubmit scripts.
 <enum name="FileManagerQuickViewWayToOpen">
   <int value="0" label="Context menu"/>
   <int value="1" label="Space key"/>
-  <int value="2" label="Selection menu"/>
 </enum>
 
 <enum name="FileManagerRootType">
@@ -19103,47 +18975,19 @@ uploading your change for review.  These are checked by presubmit scripts.
 </enum>
 
 <enum name="HistogramNameHash">
-  <int value="-2055973512" label="Login.ConsumerNewUsersAllowed"/>
-  <int value="-2021219906"
-      label="DataUse.MessageSize.AllServices.Downstream.Foreground.NotCellular"/>
-  <int value="-1620411628"
-      label="DataUse.MessageSize.AllServices.Downstream.Unknown.NotCellular"/>
-  <int value="-1607339868"
-      label="DataUse.MessageSize.AllServices.Upstream.Unknown.NotCellular"/>
-  <int value="-1390672863"
-      label="DataUse.MessageSize.AllServices.Upstream.Background.NotCellular"/>
-  <int value="-1286300074"
-      label="Network.Shill.Wifi.ExpiredLeaseLengthSeconds"/>
-  <int value="-847447887"
-      label="DataUse.MessageSize.AllServices.Upstream.Foreground.NotCellular"/>
   <summary>
     These numbers are the lower 32 bits of the hash of the metric name.
   </summary>
-  <int value="-742109866" label="Stability.BrowserExitCodes"/>
-  <int value="-657514887" label="DataUse.MessageSize.AllServices"/>
-  <int value="-535820174"
-      label="DataUse.MessageSize.AllServices.Downstream.Background.NotCellular"/>
-  <int value="-355731177" label="UMA.SamplingRatePerMille"/>
-  <int value="-141990989" label="DataUse.AllServices.Background"/>
+  <int value="-2055973512" label="Login.ConsumerNewUsersAllowed"/>
+  <int value="-1286300074"
+      label="Network.Shill.Wifi.ExpiredLeaseLengthSeconds"/>
   <int value="0" label="Missing hash value"/>
-  <int value="149985012"
-      label="DataUse.MessageSize.AllServices.Upstream.Unknown.Cellular"/>
-  <int value="192918458"
-      label="DataUse.MessageSize.AllServices.Downstream.Unknown.Cellular"/>
   <int value="424952287"
       label="Network.Shill.Wifi.LinkMonitorResponseTimeSample"/>
   <int value="628921860"
       label="Network.Shill.Ethernet.LinkMonitorResponseTimeSample"/>
   <int value="662206917"
       label="Network.Shill.Ethernet.ExpiredLeaseLengthSeconds"/>
-  <int value="757405826"
-      label="DataUse.MessageSize.AllServices.Upstream.Foreground.Cellular"/>
-  <int value="1370064090"
-      label="DataUse.MessageSize.AllServices.Upstream.Background.Cellular"/>
-  <int value="1753226325"
-      label="DataUse.MessageSize.AllServices.Downstream.Foreground.Cellular"/>
-  <int value="1977321258"
-      label="DataUse.MessageSize.AllServices.Downstream.Background.Cellular"/>
 </enum>
 
 <enum name="HistoryFaviconsRecoveryEnum">
@@ -19902,11 +19746,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="5" label="IdleTaskNotSupported"/>
 </enum>
 
-<enum name="IE7LookupResultStatus">
-  <int value="0" label="No stored passwords from IE7 found."/>
-  <int value="1" label="Some stored passwords from IE7 found."/>
-</enum>
-
 <enum name="IMECommitType">
   <obsolete>
     Deprecated 03/2015, and replaced by IMECommitType2.
@@ -20565,14 +20404,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="33" label="Ran by google.com/support/ (deprecated)"/>
   <int value="34" label="Displayed by google.com/intl/ (deprecated)"/>
   <int value="35" label="Ran by google.com/intl/ (deprecated)"/>
-</enum>
-
-<enum name="InsignificantPlaybackReason">
-  <int value="0" label="Frame size too small"/>
-  <int value="1" label="Audio muted"/>
-  <int value="2" label="Media is paused"/>
-  <int value="3" label="No audio track"/>
-  <int value="4" label="Number of events"/>
 </enum>
 
 <enum name="InstallabilityCheckStatus">
@@ -22609,6 +22440,7 @@ uploading your change for review.  These are checked by presubmit scripts.
       label="OmniboxUIExperimentHideSuggestionUrlTrivialSubdomains:enabled"/>
   <int value="-1938263248" label="enable-extension-info-dialog"/>
   <int value="-1937077699" label="http-form-warning"/>
+  <int value="-1934673791" label="gl-composited-texture-quad-border"/>
   <int value="-1933425042" label="OfflinePreviews:enabled"/>
   <int value="-1930720286" label="nacl-debug-mask"/>
   <int value="-1928198763" label="enable-async-dns"/>
@@ -22657,7 +22489,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-1812579951" label="ContentSuggestionsCategoryRanker:enabled"/>
   <int value="-1811394154" label="disable-webrtc-hw-vp8-encoding"/>
   <int value="-1810294310" label="AndroidPaymentApps:enabled"/>
-  <int value="-1808477331" label="MidiManagerCros:disabled"/>
   <int value="-1804485171" label="disable-fullscreen-tab-detaching"/>
   <int value="-1802502753" label="enable-manual-password-generation:enabled"/>
   <int value="-1798337879" label="enable-md-downloads"/>
@@ -22721,7 +22552,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-1583728573" label="AutofillCreditCardSigninPromo:disabled"/>
   <int value="-1581724231" label="ModalPermissionPrompts:enabled"/>
   <int value="-1578295753" label="UserMediaScreenCapturing:disabled"/>
-  <int value="-1575984706" label="gl-composited-overlay-candidate-quad-border"/>
   <int value="-1575554415" label="AndroidPaymentAppsFilter:enabled"/>
   <int value="-1572010356" label="enable-privet-v3"/>
   <int value="-1571841513" label="enable-devtools-experiments"/>
@@ -23120,7 +22950,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-216219963" label="ash-shelf-color-scheme"/>
   <int value="-213518852" label="protect-sync-credential:enabled"/>
   <int value="-213214894" label="enable-chromevox-arc-support"/>
-  <int value="-208435024" label="EnableUsernameCorrection:enabled"/>
   <int value="-206393363" label="enable-scroll-prediction"/>
   <int value="-204355195" label="secondary-ui-md"/>
   <int value="-202007318" label="AndroidAIAFetching:enabled"/>
@@ -23370,7 +23199,6 @@ from previous Chrome versions.
   <int value="644674603" label="DataReductionProxySiteBreakdown:disabled"/>
   <int value="646252875" label="ReadItLaterInMenu:enabled"/>
   <int value="646738320" label="disable-gesture-editing"/>
-  <int value="649111851" label="MidiManagerCros:enabled"/>
   <int value="651421878" label="VideoRotateToFullscreen:enabled"/>
   <int value="652561231" label="CustomContextMenu:enabled"/>
   <int value="683410401"
@@ -23416,7 +23244,6 @@ from previous Chrome versions.
   <int value="835018878" label="disable-quic"/>
   <int value="838887742" label="manual-enhanced-bookmarks"/>
   <int value="841343322" label="disable-new-korean-ime"/>
-  <int value="842432903" label="CaptureThumbnailOnNavigatingAway:enabled"/>
   <int value="846951416" label="CopylessPaste:enabled"/>
   <int value="851085848" label="enable-settings-window"/>
   <int value="854730848" label="disable-app-info-dialog-mac"/>
@@ -23616,7 +23443,6 @@ from previous Chrome versions.
   <int value="1441897340" label="AndroidSpellCheckerNonLowEnd:enabled"/>
   <int value="1442798825" label="enable-quic"/>
   <int value="1442830837" label="MemoryAblation:disabled"/>
-  <int value="1454143461" label="CaptureThumbnailOnNavigatingAway:disabled"/>
   <int value="1454363479" label="disable-storage-manager"/>
   <int value="1458583431" label="arc-use-auth-endpoint"/>
   <int value="1459529277" label="disable-text-input-focus-manager"/>
@@ -23736,7 +23562,6 @@ from previous Chrome versions.
   <int value="1862207743" label="enable-android-spellchecker"/>
   <int value="1865068568" label="disable-audio-support-for-desktop-share"/>
   <int value="1865799183" label="javascript-harmony"/>
-  <int value="1865963858" label="tls13-variant"/>
   <int value="1866079109" label="team-drives"/>
   <int value="1867085340" label="brotli-encoding:enabled"/>
   <int value="1872185826" label="LocationHardReload:enabled"/>
@@ -23790,7 +23615,6 @@ from previous Chrome versions.
   <int value="2014331873" label="NTPDownloadSuggestions:disabled"/>
   <int value="2020107447" label="AndroidPayIntegrationV1:enabled"/>
   <int value="2037756154" label="enable-impl-side-painting"/>
-  <int value="2056572020" label="EnableUsernameCorrection:disabled"/>
   <int value="2059322877" label="new-avatar-menu"/>
   <int value="2063091429" label="OfflinePagesSharing:enabled"/>
   <int value="2067634730" label="LsdPermissionPrompt:disabled"/>
@@ -24670,9 +24494,6 @@ from previous Chrome versions.
   <int value="582" label="scroll-snap-margin-inline-start"/>
   <int value="583" label="scroll-snap-margin-inline-end"/>
   <int value="584" label="scroll-snap-stop"/>
-  <int value="585" label="scroll-boundary-behavior"/>
-  <int value="586" label="scroll-boundary-behavior-x"/>
-  <int value="587" label="scroll-boundary-behavior-y"/>
 </enum>
 
 <enum name="MappedEditingCommands">
@@ -24893,11 +24714,6 @@ from previous Chrome versions.
   <int value="37" label="WTV (Windows Television)"/>
   <int value="38" label="DASH"/>
   <int value="39" label="SmoothStream"/>
-</enum>
-
-<enum name="MediaControlsCTREvent">
-  <int value="0" label="Displayed"/>
-  <int value="1" label="Interacted"/>
 </enum>
 
 <enum name="MediaControlsDownloadReason">
@@ -25321,13 +25137,6 @@ from previous Chrome versions.
 <enum name="MediaUrlType">
   <int value="0" label="Non Http Live Stream Type"/>
   <int value="1" label="Http Live Stream Type"/>
-</enum>
-
-<enum name="MemCacheWriteResult">
-  <int value="0" label="Success"/>
-  <int value="1" label="Invalid Argument"/>
-  <int value="2" label="Exceeded Single Entry Size"/>
-  <int value="3" label="Exceeded Cache Size"/>
 </enum>
 
 <enum name="MemoryPressureLevel">
@@ -31059,19 +30868,15 @@ from previous Chrome versions.
 </enum>
 
 <enum name="ProvisionalSaveFailure">
-  <summary>
-    Reason why a provisional save failed. Note that the labeling is off for data
-    recorded before Nov 4, 2014 due to a re-assignment of enum values to
-    different meanings.
-  </summary>
   <int value="0" label="SAVING_DISABLED"/>
   <int value="1" label="EMPTY_PASSWORD"/>
   <int value="2" label="NO_MATCHING_FORM"/>
   <int value="3" label="MATCHING_NOT_COMPLETE"/>
   <int value="4" label="FORM_BLACKLISTED"/>
   <int value="5" label="INVALID_FORM"/>
-  <int value="6" label="SYNC_CREDENTIALS"/>
-  <int value="7" label="SAVING_ON_HTTP_AFTER_HTTPS"/>
+  <int value="6" label="AUTOCOMPLETE_OFF"/>
+  <int value="7" label="SYNC_CREDENTIALS"/>
+  <int value="8" label="SAVING_ON_HTTP_AFTER_HTTPS"/>
 </enum>
 
 <enum name="ProxyStatus">
@@ -33652,15 +33457,6 @@ from previous Chrome versions.
   <int value="4" label="Google+"/>
   <int value="5" label="Inbox"/>
   <int value="6" label="Google Docs and Drive"/>
-</enum>
-
-<enum name="ServiceWorkerStartForNavigationHintResult">
-  <int value="0" label="STARTED"/>
-  <int value="1" label="ALREADY_RUNNING"/>
-  <int value="2" label="NO_SERVICE_WORKER_REGISTRATION"/>
-  <int value="3" label="NO_ACTIVE_SERVICE_WORKER_VERSION"/>
-  <int value="4" label="NO_FETCH_HANDLER"/>
-  <int value="5" label="FAILED"/>
 </enum>
 
 <enum name="ServiceWorkerStatusCode">

@@ -11,7 +11,6 @@
 
 #include "base/macros.h"
 #include "components/viz/common/gl_helper.h"
-#include "components/viz/common/viz_common_export.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/size.h"
 
@@ -24,7 +23,7 @@ class GLHelperTest;
 // Implements GPU texture scaling methods.
 // Note that you should probably not use this class directly.
 // See gl_helper.cc::CreateScaler instead.
-class VIZ_COMMON_EXPORT GLHelperScaling {
+class GLHelperScaling {
  public:
   enum ShaderType {
     SHADER_BILINEAR,

@@ -6,7 +6,6 @@
 
 #include "android_webview/browser/aw_contents_client_bridge.h"
 #include "android_webview/browser/aw_safe_browsing_ui_manager.h"
-#include "android_webview/browser/aw_safe_browsing_whitelist_manager.h"
 #include "base/macros.h"
 #include "components/safe_browsing/base_resource_throttle.h"
 #include "components/safe_browsing_db/database_manager.h"
@@ -29,12 +28,10 @@ AwSafeBrowsingResourceThrottle* AwSafeBrowsingResourceThrottle::MaybeCreate(
     net::URLRequest* request,
     content::ResourceType resource_type,
     scoped_refptr<safe_browsing::SafeBrowsingDatabaseManager> database_manager,
-    scoped_refptr<AwSafeBrowsingUIManager> ui_manager,
-    AwSafeBrowsingWhitelistManager* whitelist_manager) {
+    scoped_refptr<AwSafeBrowsingUIManager> ui_manager) {
   if (database_manager->IsSupported()) {
     return new AwSafeBrowsingResourceThrottle(request, resource_type,
-                                              database_manager, ui_manager,
-                                              whitelist_manager);
+                                              database_manager, ui_manager);
   }
   return nullptr;
 }
@@ -43,8 +40,7 @@ AwSafeBrowsingResourceThrottle::AwSafeBrowsingResourceThrottle(
     net::URLRequest* request,
     content::ResourceType resource_type,
     scoped_refptr<safe_browsing::SafeBrowsingDatabaseManager> database_manager,
-    scoped_refptr<AwSafeBrowsingUIManager> ui_manager,
-    AwSafeBrowsingWhitelistManager* whitelist_manager)
+    scoped_refptr<AwSafeBrowsingUIManager> ui_manager)
     : safe_browsing::BaseResourceThrottle(
           request,
           resource_type,
@@ -53,17 +49,9 @@ AwSafeBrowsingResourceThrottle::AwSafeBrowsingResourceThrottle(
                safe_browsing::SB_THREAT_TYPE_URL_PHISHING}),
           database_manager,
           ui_manager),
-      request_(request),
-      whitelist_manager_(whitelist_manager) {}
+      request_(request) {}
 
 AwSafeBrowsingResourceThrottle::~AwSafeBrowsingResourceThrottle() {}
-
-bool AwSafeBrowsingResourceThrottle::CheckUrl(const GURL& gurl) {
-  if (whitelist_manager_->IsURLWhitelisted(gurl)) {
-    return true;
-  }
-  return BaseResourceThrottle::CheckUrl(gurl);
-}
 
 void AwSafeBrowsingResourceThrottle::StartDisplayingBlockingPageHelper(
     security_interstitials::UnsafeResource resource) {
@@ -101,9 +89,9 @@ void AwSafeBrowsingResourceThrottle::DoApplicationResponse(
     SafeBrowsingAction action,
     bool reporting) {
   if (!reporting) {
-    AwSafeBrowsingUIManager* aw_ui_manager =
+    AwSafeBrowsingUIManager* casted_ui_manager =
         static_cast<AwSafeBrowsingUIManager*>(ui_manager.get());
-    aw_ui_manager->SetExtendedReportingAllowed(false);
+    casted_ui_manager->set_extended_reporting_allowed(false);
   }
   // TODO(ntfschr): fully handle reporting once we add support (crbug/688629)
   bool proceed;

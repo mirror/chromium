@@ -36,9 +36,6 @@ struct Entry {
     // The download is 'complete' and successful.  At this point we are leaving
     // this entry around to make sure the files on disk are cleaned up.
     COMPLETE = 4,
-
-    // The count of entries for the enum.
-    COUNT = 5,
   };
 
   Entry();

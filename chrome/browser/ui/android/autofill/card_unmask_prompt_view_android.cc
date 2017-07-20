@@ -128,4 +128,9 @@ void CardUnmaskPromptViewAndroid::GotVerificationResult(
                                              allow_retry);
 }
 
+// static
+bool CardUnmaskPromptViewAndroid::Register(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
 }  // namespace autofill

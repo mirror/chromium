@@ -14,7 +14,6 @@
 #include "chrome/browser/permissions/permission_request.h"
 #include "chrome/browser/permissions/permission_uma_util.h"
 #include "chrome/browser/ui/permission_bubble/permission_prompt.h"
-#include "chrome/browser/vr/vr_tab_helper.h"
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/chrome_switches.h"
 #include "content/public/browser/browser_thread.h"
@@ -112,12 +111,12 @@ PermissionRequestManager::PermissionRequestManager(
       view_factory_(base::Bind(&PermissionPrompt::Create)),
       view_(nullptr),
       main_frame_has_fully_loaded_(false),
-      tab_can_show_prompts_(false),
       persist_(true),
       auto_response_for_test_(NONE),
       weak_factory_(this) {
 #if defined(OS_ANDROID)
-  tab_can_show_prompts_ = true;
+  view_ = view_factory_.Run(web_contents);
+  view_->SetDelegate(this);
 #endif
 }
 
@@ -128,8 +127,6 @@ PermissionRequestManager::~PermissionRequestManager() {
 }
 
 void PermissionRequestManager::AddRequest(PermissionRequest* request) {
-  DCHECK(!vr::VrTabHelper::IsInVr(web_contents()));
-
   // TODO(tsergeant): change the UMA to no longer mention bubbles.
   base::RecordAction(base::UserMetricsAction("PermissionBubbleRequest"));
 
@@ -194,20 +191,17 @@ void PermissionRequestManager::CancelRequest(PermissionRequest* request) {
       continue;
 
     // We can simply erase the current entry in the request table if we aren't
-    // showing the dialog (because we switched tabs with an active prompt), or
-    // if we are showing it and it can accept the update.
-    if (!view_ || view_->CanAcceptRequestUpdate()) {
-      // TODO(timloh): We should fix this at some point.
-      // Grouped (mic+camera) requests are currently never cancelled.
-      DCHECK_EQ(static_cast<size_t>(1), requests_.size());
-
-      if (view_)
-        DeleteBubble();
-
+    // showing the dialog, or if we are showing it and it can accept the update.
+    bool can_erase = !view_ || view_->CanAcceptRequestUpdate();
+    if (can_erase) {
       RequestFinishedIncludingDuplicates(*requests_iter);
       requests_.erase(requests_iter);
 
-      DequeueRequestsAndShowBubble();
+      if (view_) {
+        view_->Hide();
+        // Will redraw the bubble if it is being shown.
+        DequeueRequestsAndShowBubble();
+      }
       return;
     }
 
@@ -237,14 +231,22 @@ void PermissionRequestManager::CancelRequest(PermissionRequest* request) {
 }
 
 void PermissionRequestManager::HideBubble() {
-  tab_can_show_prompts_ = false;
+  // Disengage from the existing view if there is one and it doesn't manage
+  // its own visibility.
+  if (!view_ || view_->HidesAutomatically())
+    return;
 
-  if (view_)
-    DeleteBubble();
+  view_->SetDelegate(nullptr);
+  view_->Hide();
+  view_.reset();
 }
 
 void PermissionRequestManager::DisplayPendingRequests() {
-  tab_can_show_prompts_ = true;
+  if (IsBubbleVisible())
+    return;
+
+  view_ = view_factory_.Run(web_contents());
+  view_->SetDelegate(this);
 
   if (!main_frame_has_fully_loaded_)
     return;
@@ -289,7 +291,8 @@ void PermissionRequestManager::DidFinishNavigation(
     return;
   }
 
-  CleanUpRequests();
+  CancelPendingQueues();
+  FinalizeBubble();
   main_frame_has_fully_loaded_ = false;
 }
 
@@ -310,7 +313,8 @@ void PermissionRequestManager::DocumentLoadedInFrame(
 
 void PermissionRequestManager::WebContentsDestroyed() {
   // If the web contents has been destroyed, treat the bubble as cancelled.
-  CleanUpRequests();
+  CancelPendingQueues();
+  FinalizeBubble();
 
   // The WebContents is going away; be aggressively paranoid and delete
   // ourselves lest other parts of the system attempt to add permission bubbles
@@ -352,11 +356,6 @@ void PermissionRequestManager::Deny() {
 }
 
 void PermissionRequestManager::Closing() {
-#if defined(OS_MACOSX)
-  // Mac calls this whenever you press Esc.
-  if (!view_)
-    return;
-#endif
   std::vector<PermissionRequest*>::iterator requests_iter;
   for (requests_iter = requests_.begin();
        requests_iter != requests_.end();
@@ -379,14 +378,15 @@ void PermissionRequestManager::ScheduleShowBubble() {
 }
 
 void PermissionRequestManager::DequeueRequestsAndShowBubble() {
-  if (view_)
+  if (!view_)
     return;
-  if (!main_frame_has_fully_loaded_ || !tab_can_show_prompts_)
+  if (!requests_.empty())
+    return;
+  if (!main_frame_has_fully_loaded_)
     return;
   if (queued_requests_.empty())
     return;
 
-  DCHECK(requests_.empty());
   requests_.push_back(queued_requests_.front());
   queued_requests_.pop_front();
 
@@ -400,12 +400,11 @@ void PermissionRequestManager::DequeueRequestsAndShowBubble() {
 }
 
 void PermissionRequestManager::ShowBubble() {
-  DCHECK(!view_);
+  DCHECK(view_);
   DCHECK(!requests_.empty());
   DCHECK(main_frame_has_fully_loaded_);
-  DCHECK(tab_can_show_prompts_);
 
-  view_ = view_factory_.Run(web_contents(), this);
+  view_->Show();
   PermissionUmaUtil::PermissionPromptShown(requests_);
   NotifyBubbleAdded();
 
@@ -414,16 +413,9 @@ void PermissionRequestManager::ShowBubble() {
     DoAutoResponseForTesting();
 }
 
-void PermissionRequestManager::DeleteBubble() {
-  DCHECK(view_);
-  view_.reset();
-}
-
 void PermissionRequestManager::FinalizeBubble() {
-  DCHECK(view_);
-  DCHECK(!requests_.empty());
-
-  DeleteBubble();
+  if (view_ && !view_->HidesAutomatically())
+    view_->Hide();
 
   std::vector<PermissionRequest*>::iterator requests_iter;
   for (requests_iter = requests_.begin();
@@ -436,7 +428,7 @@ void PermissionRequestManager::FinalizeBubble() {
     DequeueRequestsAndShowBubble();
 }
 
-void PermissionRequestManager::CleanUpRequests() {
+void PermissionRequestManager::CancelPendingQueues() {
   std::deque<PermissionRequest*>::iterator requests_iter;
   for (requests_iter = queued_requests_.begin();
        requests_iter != queued_requests_.end();
@@ -444,9 +436,6 @@ void PermissionRequestManager::CleanUpRequests() {
     RequestFinishedIncludingDuplicates(*requests_iter);
   }
   queued_requests_.clear();
-
-  if (view_)
-    FinalizeBubble();
 }
 
 PermissionRequest* PermissionRequestManager::GetExistingRequest(

@@ -114,7 +114,7 @@ void SurfaceManager::SurfaceWillDraw(const viz::SurfaceId& surface_id) {
 }
 
 void SurfaceManager::RequireSequence(const viz::SurfaceId& surface_id,
-                                     const viz::SurfaceSequence& sequence) {
+                                     const SurfaceSequence& sequence) {
   auto* surface = GetSurfaceForId(surface_id);
   if (!surface) {
     DLOG(ERROR) << "Attempting to require callback on nonexistent surface";
@@ -123,7 +123,7 @@ void SurfaceManager::RequireSequence(const viz::SurfaceId& surface_id,
   surface->AddDestructionDependency(sequence);
 }
 
-void SurfaceManager::SatisfySequence(const viz::SurfaceSequence& sequence) {
+void SurfaceManager::SatisfySequence(const SurfaceSequence& sequence) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK_EQ(lifetime_type_, LifetimeType::SEQUENCES);
   satisfied_sequences_.insert(sequence);

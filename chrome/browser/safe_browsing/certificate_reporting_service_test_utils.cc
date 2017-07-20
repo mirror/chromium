@@ -71,7 +71,6 @@ namespace certificate_reporting_test_utils {
 
 RequestObserver::RequestObserver()
     : num_events_to_wait_for_(0u), num_received_events_(0u) {}
-
 RequestObserver::~RequestObserver() {}
 
 void RequestObserver::Wait(unsigned int num_events_to_wait_for) {
@@ -221,11 +220,10 @@ CertReportJobInterceptor::CertReportJobInterceptor(
     ReportSendingResult expected_report_result,
     const uint8_t* server_private_key)
     : expected_report_result_(expected_report_result),
-      server_private_key_(server_private_key) {}
+      server_private_key_(server_private_key),
+      weak_factory_(this) {}
 
-CertReportJobInterceptor::~CertReportJobInterceptor() {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
-}
+CertReportJobInterceptor::~CertReportJobInterceptor() {}
 
 net::URLRequestJob* CertReportJobInterceptor::MaybeInterceptRequest(
     net::URLRequest* request,
@@ -234,7 +232,11 @@ net::URLRequestJob* CertReportJobInterceptor::MaybeInterceptRequest(
 
   const std::string serialized_report =
       GetReportContents(request, server_private_key_);
-  RequestCreated(serialized_report, expected_report_result_);
+  content::BrowserThread::PostTask(
+      content::BrowserThread::UI, FROM_HERE,
+      base::BindOnce(&CertReportJobInterceptor::RequestCreated,
+                     weak_factory_.GetWeakPtr(), serialized_report,
+                     expected_report_result_));
 
   if (expected_report_result_ == REPORTS_FAIL) {
     return new DelayableCertReportURLRequestJob(
@@ -268,7 +270,7 @@ void CertReportJobInterceptor::SetFailureMode(
   content::BrowserThread::PostTask(
       content::BrowserThread::IO, FROM_HERE,
       base::BindOnce(&CertReportJobInterceptor::SetFailureModeOnIOThread,
-                     base::Unretained(this), expected_report_result));
+                     weak_factory_.GetWeakPtr(), expected_report_result));
 }
 
 void CertReportJobInterceptor::Resume() {
@@ -305,11 +307,8 @@ void CertReportJobInterceptor::ResumeOnIOThread() {
 void CertReportJobInterceptor::RequestCreated(
     const std::string& serialized_report,
     ReportSendingResult expected_report_result) const {
-  content::BrowserThread::PostTask(
-      content::BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&RequestObserver::OnRequest,
-                     base::Unretained(&request_created_observer_),
-                     serialized_report, expected_report_result));
+  request_created_observer_.OnRequest(serialized_report,
+                                      expected_report_result);
 }
 
 void CertReportJobInterceptor::RequestDestructed(

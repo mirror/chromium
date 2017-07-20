@@ -113,26 +113,32 @@ class CC_PAINT_EXPORT DisplayItemList
   // This gives the total number of PaintOps.
   size_t op_count() const { return paint_op_buffer_.size(); }
   size_t BytesUsed() const;
+  bool ShouldBeAnalyzedForSolidColor() const;
 
-  const DiscardableImageMap& discardable_image_map() const {
+  void EmitTraceSnapshot() const;
+
+  void GenerateDiscardableImagesMetadata();
+  void GetDiscardableImagesInRect(const gfx::Rect& rect,
+                                  float contents_scale,
+                                  const gfx::ColorSpace& target_color_space,
+                                  std::vector<DrawImage>* images);
+  gfx::Rect GetRectForImage(PaintImage::Id image_id) const;
+
+  gfx::Rect VisualRectForTesting(int index) { return visual_rects_[index]; }
+
+  const DiscardableImageMap& discardable_image_map_for_testing() const {
     return image_map_;
   }
 
-  void EmitTraceSnapshot() const;
-  void GenerateDiscardableImagesMetadata();
-
-  gfx::Rect VisualRectForTesting(int index) { return visual_rects_[index]; }
+  bool HasDiscardableImages() const {
+    return paint_op_buffer_.HasDiscardableImages();
+  }
 
   // Generate a PaintRecord from this DisplayItemList, leaving |this| in
   // an empty state.
   sk_sp<PaintRecord> ReleaseAsRecord();
 
-  // If a rectangle is solid color, returns that color. |max_ops_to_analyze|
-  // indicates the maximum number of draw ops we consider when determining if a
-  // rectangle is solid color.
-  bool GetColorIfSolidInRect(const gfx::Rect& rect,
-                             SkColor* color,
-                             int max_ops_to_analyze = 1);
+  bool GetColorIfSolidInRect(const gfx::Rect& rect, SkColor* color);
 
  private:
   FRIEND_TEST_ALL_PREFIXES(DisplayItemListTest, AsValueWithNoOps);

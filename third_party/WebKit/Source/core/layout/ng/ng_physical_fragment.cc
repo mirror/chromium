@@ -7,9 +7,7 @@
 #include "core/layout/ng/inline/ng_physical_line_box_fragment.h"
 #include "core/layout/ng/inline/ng_physical_text_fragment.h"
 #include "core/layout/ng/ng_break_token.h"
-#include "core/layout/ng/ng_layout_result.h"
 #include "core/layout/ng/ng_physical_box_fragment.h"
-#include "core/layout/ng/ng_unpositioned_float.h"
 
 namespace blink {
 
@@ -57,27 +55,6 @@ NGPixelSnappedPhysicalBoxStrut NGPhysicalFragment::BorderWidths() const {
       LayoutUnit((edges & NGBorderEdges::kLeft) ? Style().BorderLeftWidth()
                                                 : .0f));
   return box_strut.SnapToDevicePixels();
-}
-
-RefPtr<NGPhysicalFragment> NGPhysicalFragment::CloneWithoutOffset() const {
-  switch (Type()) {
-    case kFragmentBox:
-      return static_cast<const NGPhysicalBoxFragment*>(this)
-          ->CloneWithoutOffset();
-      break;
-    case kFragmentText:
-      return static_cast<const NGPhysicalTextFragment*>(this)
-          ->CloneWithoutOffset();
-      break;
-    case kFragmentLineBox:
-      return static_cast<const NGPhysicalLineBoxFragment*>(this)
-          ->CloneWithoutOffset();
-      break;
-    default:
-      NOTREACHED();
-      break;
-  }
-  return nullptr;
 }
 
 String NGPhysicalFragment::ToString() const {

@@ -22,6 +22,7 @@ class CORE_EXPORT NGPhysicalBoxFragment final : public NGPhysicalFragment {
                         NGPhysicalSize size,
                         NGPhysicalSize overflow,
                         Vector<RefPtr<NGPhysicalFragment>>& children,
+                        Vector<NGPositionedFloat>& positioned_floats,
                         Vector<NGBaseline>& baselines,
                         unsigned,  // NGBorderEdges::Physical
                         RefPtr<NGBreakToken> break_token = nullptr);
@@ -33,13 +34,19 @@ class CORE_EXPORT NGPhysicalBoxFragment final : public NGPhysicalFragment {
     return children_;
   }
 
-  const NGBaseline* Baseline(const NGBaselineRequest&) const;
+  // List of positioned floats that need to be copied to the old layout tree.
+  // TODO(layout-ng): remove this once we change painting code to handle floats
+  // differently.
+  const Vector<NGPositionedFloat>& PositionedFloats() const {
+    return positioned_floats_;
+  }
 
-  RefPtr<NGPhysicalFragment> CloneWithoutOffset() const;
+  const NGBaseline* Baseline(const NGBaselineRequest&) const;
 
  private:
   NGPhysicalSize overflow_;
   Vector<RefPtr<NGPhysicalFragment>> children_;
+  Vector<NGPositionedFloat> positioned_floats_;
   Vector<NGBaseline> baselines_;
 };
 

@@ -4,8 +4,9 @@
 
 // StorageMonitorLinux processes mount point change events, notifies listeners
 // about the addition and deletion of media devices, and answers queries about
-// mounted devices. StorageMonitorLinux uses a MtabWatcherLinux on a separate
-// background sequence that is file IO capable.
+// mounted devices.
+// StorageMonitorLinux lives on the UI thread, and uses a MtabWatcherLinux on
+// the FILE thread to get mount point change events.
 
 #ifndef COMPONENTS_STORAGE_MONITOR_STORAGE_MONITOR_LINUX_H_
 #define COMPONENTS_STORAGE_MONITOR_STORAGE_MONITOR_LINUX_H_
@@ -22,20 +23,16 @@
 #include "base/files/file_path.h"
 #include "base/files/file_path_watcher.h"
 #include "base/macros.h"
-#include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
-#include "base/sequence_checker.h"
 #include "build/build_config.h"
 #include "components/storage_monitor/mtab_watcher_linux.h"
 #include "components/storage_monitor/storage_monitor.h"
-
-namespace base {
-class SequencedTaskRunner;
-}
+#include "content/public/browser/browser_thread.h"
 
 namespace storage_monitor {
 
-class StorageMonitorLinux : public StorageMonitor {
+class StorageMonitorLinux : public StorageMonitor,
+                            public MtabWatcherLinux::Delegate {
  public:
   // Should only be called by browser start up code.
   // Use StorageMonitor::GetInstance() instead.
@@ -55,9 +52,9 @@ class StorageMonitorLinux : public StorageMonitor {
   void SetGetDeviceInfoCallbackForTest(
       const GetDeviceInfoCallback& get_device_info_callback);
 
-  // Parses |new_mtab| and find all changes.
-  virtual void UpdateMtab(
-      const MtabWatcherLinux::MountPointDeviceMap& new_mtab);
+  // MtabWatcherLinux::Delegate implementation.
+  void UpdateMtab(
+      const MtabWatcherLinux::MountPointDeviceMap& new_mtab) override;
 
  private:
   // Structure to save mounted device information such as device path, unique
@@ -65,6 +62,14 @@ class StorageMonitorLinux : public StorageMonitor {
   struct MountPointInfo {
     base::FilePath mount_device;
     StorageInfo storage_info;
+  };
+
+  // For use with std::unique_ptr.
+  struct MtabWatcherLinuxDeleter {
+    void operator()(MtabWatcherLinux* mtab_watcher) {
+      content::BrowserThread::DeleteSoon(content::BrowserThread::FILE,
+                                         FROM_HERE, mtab_watcher);
+    }
   };
 
   // Mapping of mount points to MountPointInfo.
@@ -118,12 +123,7 @@ class StorageMonitorLinux : public StorageMonitor {
   // points.
   MountPriorityMap mount_priority_map_;
 
-  // Must be created and destroyed on |mtab_watcher_task_runner_|.
-  std::unique_ptr<MtabWatcherLinux> mtab_watcher_;
-
-  scoped_refptr<base::SequencedTaskRunner> mtab_watcher_task_runner_;
-
-  SEQUENCE_CHECKER(sequence_checker_);
+  std::unique_ptr<MtabWatcherLinux, MtabWatcherLinuxDeleter> mtab_watcher_;
 
   base::WeakPtrFactory<StorageMonitorLinux> weak_ptr_factory_;
 

@@ -31,13 +31,12 @@ class FileService : public service_manager::Service {
                        const std::string& interface_name,
                        mojo::ScopedMessagePipeHandle interface_pipe) override;
 
-  void BindFileSystemRequest(
-      mojom::FileSystemRequest request,
-      const service_manager::BindSourceInfo& source_info);
+  void BindFileSystemRequest(const service_manager::BindSourceInfo& source_info,
+                             mojom::FileSystemRequest request);
 
   void BindLevelDBServiceRequest(
-      leveldb::mojom::LevelDBServiceRequest request,
-      const service_manager::BindSourceInfo& source_info);
+      const service_manager::BindSourceInfo& source_info,
+      leveldb::mojom::LevelDBServiceRequest request);
 
   void OnLevelDBServiceError();
 
@@ -52,9 +51,7 @@ class FileService : public service_manager::Service {
   class LevelDBServiceObjects;
   std::unique_ptr<LevelDBServiceObjects> leveldb_objects_;
 
-  service_manager::BinderRegistryWithArgs<
-      const service_manager::BindSourceInfo&>
-      registry_;
+  service_manager::BinderRegistry registry_;
 
   DISALLOW_COPY_AND_ASSIGN(FileService);
 };

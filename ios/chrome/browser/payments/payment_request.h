@@ -109,7 +109,7 @@ class PaymentRequest : public PaymentOptionsProvider,
   }
 
   // Returns the JourneyLogger for this instance.
-  JourneyLogger& journey_logger() { return journey_logger_; }
+  const JourneyLogger& journey_logger() const { return journey_logger_; }
 
   // Updates the payment details of the |web_payment_request_|. It also updates
   // the cached references to the shipping options in |web_payment_request_| as
@@ -180,10 +180,6 @@ class PaymentRequest : public PaymentOptionsProvider,
 
   const std::vector<std::string>& supported_card_networks() const {
     return supported_card_networks_;
-  }
-
-  const std::vector<std::string>& url_payment_method_identifiers() const {
-    return url_payment_method_identifiers_;
   }
 
   const std::map<std::string, std::set<std::string>>& stringified_method_data()
@@ -314,17 +310,13 @@ class PaymentRequest : public PaymentOptionsProvider,
   std::vector<PaymentInstrument*> payment_methods_;
   PaymentInstrument* selected_payment_method_;
 
-  // A vector of supported basic card networks.
+  // A vector of supported basic card networks. This encompasses everything that
+  // the merchant supports and should be used for support checks.
   std::vector<std::string> supported_card_networks_;
   // A subset of |supported_card_networks_| which is only the networks that have
   // been specified as part of the "basic-card" supported method. Callers should
   // use |supported_card_networks_| for merchant support checks.
   std::set<std::string> basic_card_specified_networks_;
-
-  // A vector of url-based payment method identifers supported by the merchant
-  // which encompasses one of the two types of payment method identifers, the
-  // other being standardized payment method identifiers i.e., basic-card.
-  std::vector<std::string> url_payment_method_identifiers_;
 
   // A mapping of the payment method names to the corresponding JSON-stringified
   // payment method specific data.

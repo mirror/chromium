@@ -94,9 +94,8 @@ int PartialCookieOrdering(const CanonicalCookie& a, const CanonicalCookie& b) {
 
 CanonicalCookie::CanonicalCookie()
     : secure_(false),
-      httponly_(false),
-      same_site_(CookieSameSite::NO_RESTRICTION),
-      priority_(COOKIE_PRIORITY_MEDIUM) {}
+      httponly_(false) {
+}
 
 CanonicalCookie::CanonicalCookie(const CanonicalCookie& other) = default;
 

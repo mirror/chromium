@@ -35,8 +35,6 @@ interface CoordinationPolicyCallback {
 enum PropertyType {
   kTest,
   kCPUUsage,
-  kNetworkIdle,
-  kVisible,
 };
 
 interface CoordinationUnit {

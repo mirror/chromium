@@ -285,6 +285,7 @@ void PaintLayerClipper::CalculateRectsWithGeometryMapper(
     foreground_rect = ClipRect(LayoutRect(LayoutRect::InfiniteIntRect()));
   } else {
     CalculateBackgroundClipRectWithGeometryMapper(context, background_rect);
+    background_rect.Move(context.sub_pixel_accumulation);
     background_rect.Intersect(paint_dirty_rect);
 
     foreground_rect = background_rect;
@@ -468,7 +469,6 @@ void PaintLayerClipper::CalculateBackgroundClipRectWithGeometryMapper(
   }
 
   output.MoveBy(-context.root_layer->GetLayoutObject().PaintOffset());
-  output.Move(context.sub_pixel_accumulation);
 }
 
 void PaintLayerClipper::InitializeCommonClipRectState(
@@ -527,6 +527,10 @@ LayoutRect PaintLayerClipper::LocalVisualRect() const {
           // PaintLayer are in physical coordinates, so the overflow has to be
           // flipped.
           layer_bounds_with_visual_overflow);
+  if (layer_.PaintsWithFilters()) {
+    layer_bounds_with_visual_overflow =
+        layer_.MapLayoutRectForFilter(layer_bounds_with_visual_overflow);
+  }
   return layer_bounds_with_visual_overflow;
 }
 

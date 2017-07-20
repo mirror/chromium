@@ -5,6 +5,8 @@
 #ifndef CHROME_BROWSER_ANDROID_TAB_WEB_CONTENTS_DELEGATE_ANDROID_H_
 #define CHROME_BROWSER_ANDROID_TAB_WEB_CONTENTS_DELEGATE_ANDROID_H_
 
+#include <jni.h>
+
 #include "base/files/file_path.h"
 #include "components/web_contents_delegate_android/web_contents_delegate_android.h"
 #include "content/public/browser/bluetooth_chooser.h"
@@ -94,6 +96,9 @@ class TabWebContentsDelegateAndroid
 
   content::NotificationRegistrar notification_registrar_;
 };
+
+// Register the native methods through JNI.
+bool RegisterTabWebContentsDelegateAndroid(JNIEnv* env);
 
 }  // namespace android
 

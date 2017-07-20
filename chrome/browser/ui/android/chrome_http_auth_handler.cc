@@ -82,3 +82,8 @@ ScopedJavaLocalRef<jstring> ChromeHttpAuthHandler::GetMessageBody(
   return ConvertUTF16ToJavaString(
       env, authority_ + base::ASCIIToUTF16(" ") + explanation_);
 }
+
+// static
+bool ChromeHttpAuthHandler::RegisterChromeHttpAuthHandler(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}

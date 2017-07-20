@@ -10,7 +10,6 @@
 #include <vector>
 
 #include "ash/public/interfaces/tray_action.mojom.h"
-#include "base/base64.h"
 #include "base/files/file_path.h"
 #include "base/memory/ptr_util.h"
 #include "base/test/scoped_command_line.h"
@@ -30,10 +29,8 @@
 #include "components/session_manager/core/session_manager.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
-#include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/test_utils.h"
 #include "content/public/test/web_contents_tester.h"
-#include "extensions/browser/api/lock_screen_data/lock_screen_item_storage.h"
 #include "extensions/browser/app_window/app_window.h"
 #include "extensions/browser/app_window/app_window_contents.h"
 #include "extensions/browser/app_window/native_app_window.h"
@@ -48,7 +45,6 @@
 using ash::mojom::TrayActionState;
 using extensions::DictionaryBuilder;
 using extensions::ListBuilder;
-using extensions::lock_screen_data::LockScreenItemStorage;
 
 namespace {
 
@@ -58,9 +54,6 @@ const char kSecondaryTestAppId[] = "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb";
 
 // The primary tesing profile.
 const char kPrimaryProfileName[] = "primary_profile";
-
-// Key for pref containing lock screen data crypto key.
-constexpr char kDataCryptoKeyPref[] = "lockScreenAppDataCryptoKey";
 
 scoped_refptr<extensions::Extension> CreateTestNoteTakingApp(
     const std::string& app_id) {
@@ -346,7 +339,6 @@ class LockScreenAppStateTest : public BrowserWithTestWindowTest {
     BrowserWithTestWindowTest::SetUp();
 
     session_manager_ = base::MakeUnique<session_manager::SessionManager>();
-    session_manager_->SessionStarted();
     session_manager_->SetSessionState(
         session_manager::SessionState::LOGIN_PRIMARY);
 
@@ -610,78 +602,6 @@ TEST_F(LockScreenAppStateTest, SetPrimaryProfileWhenSessionLocked) {
   ExpectObservedStatesMatch({TrayActionState::kAvailable}, "Available on lock");
 }
 
-TEST_F(LockScreenAppStateTest, InitLockScreenDataLockScreenItemStorage) {
-  EXPECT_EQ(TestAppManager::State::kNotInitialized, app_manager()->state());
-  SetPrimaryProfileAndWaitUntilReady();
-
-  LockScreenItemStorage* lock_screen_item_storage =
-      LockScreenItemStorage::GetIfAllowed(profile());
-  ASSERT_TRUE(lock_screen_item_storage);
-
-  std::string crypto_key_in_prefs =
-      profile()->GetPrefs()->GetString(kDataCryptoKeyPref);
-  ASSERT_FALSE(crypto_key_in_prefs.empty());
-  ASSERT_TRUE(base::Base64Decode(crypto_key_in_prefs, &crypto_key_in_prefs));
-
-  EXPECT_EQ(crypto_key_in_prefs,
-            lock_screen_item_storage->crypto_key_for_testing());
-
-  session_manager()->SetSessionState(session_manager::SessionState::LOCKED);
-
-  EXPECT_FALSE(LockScreenItemStorage::GetIfAllowed(profile()));
-  EXPECT_TRUE(LockScreenItemStorage::GetIfAllowed(lock_screen_profile()));
-}
-
-TEST_F(LockScreenAppStateTest,
-       InitLockScreenDataLockScreenItemStorageWhileLocked) {
-  EXPECT_EQ(TestAppManager::State::kNotInitialized, app_manager()->state());
-  session_manager()->SetSessionState(session_manager::SessionState::LOCKED);
-  SetPrimaryProfileAndWaitUntilReady();
-
-  EXPECT_FALSE(LockScreenItemStorage::GetIfAllowed(profile()));
-
-  LockScreenItemStorage* lock_screen_item_storage =
-      LockScreenItemStorage::GetIfAllowed(lock_screen_profile());
-  ASSERT_TRUE(lock_screen_item_storage);
-
-  std::string crypto_key_in_prefs =
-      profile()->GetPrefs()->GetString(kDataCryptoKeyPref);
-  ASSERT_FALSE(crypto_key_in_prefs.empty());
-  ASSERT_TRUE(base::Base64Decode(crypto_key_in_prefs, &crypto_key_in_prefs));
-
-  EXPECT_EQ(crypto_key_in_prefs,
-            lock_screen_item_storage->crypto_key_for_testing());
-
-  session_manager()->SetSessionState(session_manager::SessionState::ACTIVE);
-
-  EXPECT_TRUE(LockScreenItemStorage::GetIfAllowed(profile()));
-  EXPECT_FALSE(LockScreenItemStorage::GetIfAllowed(lock_screen_profile()));
-}
-
-TEST_F(LockScreenAppStateTest,
-       InitLockScreenDataLockScreenItemStorage_CryptoKeyExists) {
-  std::string crypto_key_in_prefs = "0123456789ABCDEF0123456789ABCDEF";
-  std::string crypto_key_in_prefs_encoded;
-  base::Base64Encode(crypto_key_in_prefs, &crypto_key_in_prefs_encoded);
-
-  profile()->GetPrefs()->SetString(kDataCryptoKeyPref,
-                                   crypto_key_in_prefs_encoded);
-
-  SetPrimaryProfileAndWaitUntilReady();
-
-  LockScreenItemStorage* lock_screen_item_storage =
-      LockScreenItemStorage::GetIfAllowed(profile());
-  ASSERT_TRUE(lock_screen_item_storage);
-
-  EXPECT_EQ(crypto_key_in_prefs,
-            lock_screen_item_storage->crypto_key_for_testing());
-
-  session_manager()->SetSessionState(session_manager::SessionState::LOCKED);
-
-  EXPECT_FALSE(LockScreenItemStorage::GetIfAllowed(profile()));
-  EXPECT_TRUE(LockScreenItemStorage::GetIfAllowed(lock_screen_profile()));
-}
-
 TEST_F(LockScreenAppStateTest, SessionLock) {
   app_manager()->SetInitialAppState(kTestAppId, true);
   SetPrimaryProfileAndWaitUntilReady();
@@ -836,24 +756,6 @@ TEST_F(LockScreenAppStateTest, MoveToBackgroundAndForeground) {
 
   base::RunLoop().RunUntilIdle();
   EXPECT_FALSE(app_window()->closed());
-}
-
-TEST_F(LockScreenAppStateTest, MoveToBackgroundWhileLaunching) {
-  ASSERT_TRUE(InitializeNoteTakingApp(TrayActionState::kLaunching,
-                                      true /* enable_app_launch */));
-
-  state_controller()->MoveToBackground();
-  state_controller()->FlushTrayActionForTesting();
-
-  EXPECT_EQ(TrayActionState::kAvailable,
-            state_controller()->GetLockScreenNoteState());
-
-  EXPECT_FALSE(state_controller()->CreateAppWindowForLockScreenAction(
-      profile(), app(), extensions::api::app_runtime::ACTION_TYPE_NEW_NOTE,
-      base::MakeUnique<ChromeAppDelegate>(true)));
-
-  ExpectObservedStatesMatch({TrayActionState::kAvailable},
-                            "Move to background cancels launch.");
 }
 
 TEST_F(LockScreenAppStateTest, MoveToForegroundFromNonBackgroundState) {

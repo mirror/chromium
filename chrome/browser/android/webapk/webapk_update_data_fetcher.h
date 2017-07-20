@@ -45,6 +45,9 @@ class WebApkUpdateDataFetcher : public content::WebContentsObserver {
              const base::android::JavaParamRef<jobject>& obj,
              const base::android::JavaParamRef<jobject>& java_web_contents);
 
+  // Registers JNI hooks.
+  static bool Register(JNIEnv* env);
+
  private:
   ~WebApkUpdateDataFetcher() override;
 

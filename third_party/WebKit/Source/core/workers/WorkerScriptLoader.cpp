@@ -81,8 +81,6 @@ void WorkerScriptLoader::LoadSynchronously(
   ThreadableLoaderOptions options;
 
   ResourceLoaderOptions resource_loader_options;
-  resource_loader_options.parser_disposition =
-      ParserDisposition::kNotParserInserted;
 
   WorkerThreadableLoader::LoadResourceSynchronously(
       ToWorkerGlobalScope(execution_context), request, *this, options,

@@ -5,7 +5,6 @@
 #include "chrome/renderer/extensions/renderer_permissions_policy_delegate.h"
 
 #include "chrome/common/extensions/extension_constants.h"
-#include "chrome/renderer/searchbox/search_bouncer.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extensions_client.h"
 #include "extensions/common/manifest_constants.h"
@@ -35,12 +34,6 @@ bool RendererPermissionsPolicyDelegate::CanExecuteScriptOnPage(
   if (dispatcher_->IsExtensionActive(kWebStoreAppId)) {
     if (error)
       *error = errors::kCannotScriptGallery;
-    return false;
-  }
-
-  if (SearchBouncer::GetInstance()->IsNewTabPage(document_url)) {
-    if (error)
-      *error = errors::kCannotScriptNtp;
     return false;
   }
 

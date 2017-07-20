@@ -79,8 +79,10 @@ BlobDataHandle* BlobProtocolHandler::GetRequestBlobDataHandle(
 
 BlobProtocolHandler::BlobProtocolHandler(
     BlobStorageContext* context,
-    storage::FileSystemContext* file_system_context)
-    : file_system_context_(file_system_context) {
+    storage::FileSystemContext* file_system_context,
+    const scoped_refptr<base::SingleThreadTaskRunner>& task_runner)
+    : file_system_context_(file_system_context),
+      file_task_runner_(task_runner) {
   if (context)
     context_ = context->AsWeakPtr();
 }
@@ -90,9 +92,9 @@ BlobProtocolHandler::~BlobProtocolHandler() {
 
 net::URLRequestJob* BlobProtocolHandler::MaybeCreateJob(
     net::URLRequest* request, net::NetworkDelegate* network_delegate) const {
-  return new storage::BlobURLRequestJob(request, network_delegate,
-                                        LookupBlobHandle(request),
-                                        file_system_context_.get());
+  return new storage::BlobURLRequestJob(
+      request, network_delegate, LookupBlobHandle(request),
+      file_system_context_.get(), file_task_runner_.get());
 }
 
 BlobDataHandle* BlobProtocolHandler::LookupBlobHandle(

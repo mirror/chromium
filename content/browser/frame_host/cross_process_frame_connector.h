@@ -17,6 +17,10 @@ namespace blink {
 class WebGestureEvent;
 }
 
+namespace cc {
+struct SurfaceSequence;
+}
+
 namespace IPC {
 class Message;
 }
@@ -24,7 +28,6 @@ class Message;
 namespace viz {
 class SurfaceId;
 class SurfaceInfo;
-struct SurfaceSequence;
 }  // namespace viz
 
 namespace content {
@@ -86,7 +89,7 @@ class CONTENT_EXPORT CrossProcessFrameConnector {
   void RenderProcessGone();
 
   virtual void SetChildFrameSurface(const viz::SurfaceInfo& surface_info,
-                                    const viz::SurfaceSequence& sequence);
+                                    const cc::SurfaceSequence& sequence);
 
   gfx::Rect ChildFrameRect();
   void UpdateCursor(const WebCursor& cursor);
@@ -152,9 +155,9 @@ class CONTENT_EXPORT CrossProcessFrameConnector {
   void OnUpdateViewportIntersection(const gfx::Rect& viewport_intersection);
   void OnVisibilityChanged(bool visible);
   void OnSetIsInert(bool);
-  void OnSatisfySequence(const viz::SurfaceSequence& sequence);
+  void OnSatisfySequence(const cc::SurfaceSequence& sequence);
   void OnRequireSequence(const viz::SurfaceId& id,
-                         const viz::SurfaceSequence& sequence);
+                         const cc::SurfaceSequence& sequence);
 
   void SetRect(const gfx::Rect& frame_rect);
 

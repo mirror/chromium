@@ -146,7 +146,6 @@
 #include "chrome/browser/ui/webui/signin/login_ui_service_factory.h"
 #include "chrome/browser/ui/window_sizer/window_sizer.h"
 #include "chrome/browser/upgrade_detector.h"
-#include "chrome/browser/vr/vr_tab_helper.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/custom_handlers/protocol_handler.h"
@@ -1685,17 +1684,19 @@ bool Browser::ShouldCreateWebContents(
   return true;
 }
 
-void Browser::WebContentsCreated(WebContents* source_contents,
-                                 int opener_render_process_id,
-                                 int opener_render_frame_id,
-                                 const std::string& frame_name,
-                                 const GURL& target_url,
-                                 WebContents* new_contents) {
+void Browser::WebContentsCreated(
+    WebContents* source_contents,
+    int opener_render_process_id,
+    int opener_render_frame_id,
+    const std::string& frame_name,
+    const GURL& target_url,
+    WebContents* new_contents,
+    const base::Optional<WebContents::CreateParams>& create_params) {
   // Adopt the WebContents now, so all observers are in place, as the network
   // requests for its initial navigation will start immediately. The WebContents
   // will later be inserted into this browser using Browser::Navigate via
   // AddNewContents.
-  TabHelpers::AttachTabHelpers(new_contents);
+  TabHelpers::AttachTabHelpers(new_contents, create_params);
 
   // Make the tab show up in the task manager.
   task_manager::WebContentsTags::CreateForTabContents(new_contents);
@@ -1784,11 +1785,6 @@ void Browser::RegisterProtocolHandler(WebContents* web_contents,
                                       bool user_gesture) {
   content::BrowserContext* context = web_contents->GetBrowserContext();
   if (context->IsOffTheRecord())
-    return;
-
-  // Permission request UI cannot currently be rendered binocularly in VR mode,
-  // so we suppress the UI. crbug.com/736568
-  if (vr::VrTabHelper::IsInVr(web_contents))
     return;
 
   ProtocolHandler handler =

@@ -22,6 +22,7 @@ namespace {
 void OnPdfCompositorRequest(
     const std::string& creator,
     service_manager::ServiceContextRefFactory* ref_factory,
+    const service_manager::BindSourceInfo& source_info,
     printing::mojom::PdfCompositorRequest request) {
   mojo::MakeStrongBinding(base::MakeUnique<printing::PdfCompositorImpl>(
                               creator, ref_factory->CreateRef()),
@@ -65,7 +66,8 @@ void PdfCompositorService::OnBindInterface(
     const service_manager::BindSourceInfo& source_info,
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle interface_pipe) {
-  registry_.BindInterface(interface_name, std::move(interface_pipe));
+  registry_.BindInterface(source_info, interface_name,
+                          std::move(interface_pipe));
 }
 
 }  // namespace printing

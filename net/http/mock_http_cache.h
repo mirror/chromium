@@ -27,12 +27,6 @@ namespace net {
 class MockDiskEntry : public disk_cache::Entry,
                       public base::RefCounted<MockDiskEntry> {
  public:
-  enum DeferOp {
-    DEFER_NONE,
-    DEFER_CREATE,
-    DEFER_READ,
-  };
-
   explicit MockDiskEntry(const std::string& key);
 
   bool is_doomed() const { return doomed_; }
@@ -80,14 +74,6 @@ class MockDiskEntry : public disk_cache::Entry,
   // again or all subsequent tests will fail.
   static void IgnoreCallbacks(bool value);
 
-  // Defers invoking the callback for the given operation. Calling code should
-  // invoke ResumeDiskEntryOperation to resume.
-  void SetDefer(DeferOp defer_op) { defer_op_ = defer_op; }
-
-  // Resumes deferred cache operation by posting |resume_callback_| with
-  // |resume_return_code_|.
-  void ResumeDiskEntryOperation();
-
  private:
   friend class base::RefCounted<MockDiskEntry>;
   struct CallbackInfo;
@@ -120,12 +106,6 @@ class MockDiskEntry : public disk_cache::Entry,
   bool busy_;
   bool delayed_;
   bool cancel_;
-
-  // Used for pause and restart.
-  DeferOp defer_op_;
-  CompletionCallback resume_callback_;
-  int resume_return_code_;
-
   static bool ignore_callbacks_;
 };
 
@@ -181,19 +161,7 @@ class MockDiskCache : public disk_cache::Backend {
 
   void ReleaseAll();
 
-  // Returns true if a doomed entry exists with this key.
   bool IsDiskEntryDoomed(const std::string& key);
-
-  // Defers invoking the callback for the given operation. Calling code should
-  // invoke ResumeCacheOperation to resume.
-  void SetDefer(MockDiskEntry::DeferOp defer_op) { defer_op_ = defer_op; }
-
-  // Resume deferred cache operation by posting |resume_callback_| with
-  // |resume_return_code_|.
-  void ResumeCacheOperation();
-
-  // Returns a reference to the disk entry with the given |key|.
-  scoped_refptr<MockDiskEntry> GetDiskEntryRef(const std::string& key);
 
  private:
   using EntryMap = std::unordered_map<std::string, MockDiskEntry*>;
@@ -209,11 +177,6 @@ class MockDiskCache : public disk_cache::Backend {
   bool soft_failures_;
   bool double_create_check_;
   bool fail_sparse_requests_;
-
-  // Used for pause and restart.
-  MockDiskEntry::DeferOp defer_op_;
-  CompletionCallback resume_callback_;
-  int resume_return_code_;
 };
 
 class MockBackendFactory : public HttpCache::BackendFactory {
@@ -281,6 +244,7 @@ class MockHttpCache {
   static void SetTestMode(int test_mode);
 
   // Functions to test the state of ActiveEntry.
+
   bool IsWriterPresent(const std::string& key);
   bool IsHeadersTransactionPresent(const std::string& key);
   int GetCountReaders(const std::string& key);

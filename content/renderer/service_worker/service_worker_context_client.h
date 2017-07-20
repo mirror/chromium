@@ -128,8 +128,9 @@ class ServiceWorkerContextClient : public blink::WebServiceWorkerContextClient,
 
   // Called on the main thread.
   void WorkerContextFailedToStart() override;
-  bool HasAssociatedRegistration() override;
   void WorkerScriptLoaded() override;
+  bool HasAssociatedRegistration() override;
+
   void WorkerContextStarted(
       blink::WebServiceWorkerContextProxy* proxy) override;
   void DidEvaluateWorkerScript(bool success) override;
@@ -203,7 +204,7 @@ class ServiceWorkerContextClient : public blink::WebServiceWorkerContextClient,
                           double dispatch_event_time) override;
   void RespondToPaymentRequestEvent(
       int payment_request_id,
-      const blink::WebPaymentHandlerResponse& response,
+      const blink::WebPaymentAppResponse& response,
       double dispatch_event_time) override;
   void DidHandlePaymentRequestEvent(int payment_request_id,
                                     blink::WebServiceWorkerEventResult result,
@@ -297,7 +298,7 @@ class ServiceWorkerContextClient : public blink::WebServiceWorkerContextClient,
   void DispatchPaymentRequestEvent(
       int payment_request_id,
       payments::mojom::PaymentRequestEventDataPtr event_data,
-      payments::mojom::PaymentHandlerResponseCallbackPtr response_callback,
+      payments::mojom::PaymentAppResponseCallbackPtr response_callback,
       DispatchPaymentRequestEventCallback callback) override;
   void Ping(PingCallback callback) override;
 

@@ -10,13 +10,14 @@
 
 namespace base {
 class DictionaryValue;
+class SequencedWorkerPool;
 }
 
 class PersistentPrefStore;
 
 PersistentPrefStore* CreateTrackedPersistentPrefStore(
     prefs::mojom::TrackedPersistentPrefStoreConfigurationPtr config,
-    scoped_refptr<base::SequencedTaskRunner> io_task_runner);
+    base::SequencedWorkerPool* worker_pool);
 
 // TODO(sammc): This should move somewhere more appropriate in the longer term.
 void InitializeMasterPrefsTracking(

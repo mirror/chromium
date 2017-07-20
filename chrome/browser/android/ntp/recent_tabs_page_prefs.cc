@@ -110,3 +110,8 @@ void RecentTabsPagePrefs::RegisterProfilePrefs(
   registry->RegisterBooleanPref(prefs::kNtpCollapsedSyncPromo, false);
   registry->RegisterDictionaryPref(prefs::kNtpCollapsedForeignSessions);
 }
+
+// static
+bool RecentTabsPagePrefs::RegisterJni(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}

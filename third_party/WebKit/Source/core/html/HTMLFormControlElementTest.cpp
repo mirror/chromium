@@ -18,10 +18,10 @@
 namespace blink {
 
 namespace {
-class MockFormValidationMessageClient
-    : public GarbageCollectedFinalized<MockFormValidationMessageClient>,
+class MockValidationMessageClient
+    : public GarbageCollectedFinalized<MockValidationMessageClient>,
       public ValidationMessageClient {
-  USING_GARBAGE_COLLECTED_MIXIN(MockFormValidationMessageClient);
+  USING_GARBAGE_COLLECTED_MIXIN(MockValidationMessageClient);
 
  public:
   void ShowValidationMessage(const Element& anchor,
@@ -127,7 +127,7 @@ TEST_F(HTMLFormControlElementTest, UpdateValidationMessageSkippedIfPrinting) {
       "<body><input required id=input></body>");
   GetDocument().View()->UpdateAllLifecyclePhases();
   ValidationMessageClient* validation_message_client =
-      new MockFormValidationMessageClient();
+      new MockValidationMessageClient();
   GetPage().SetValidationMessageClient(validation_message_client);
   Page::OrdinaryPages().insert(&GetPage());
 

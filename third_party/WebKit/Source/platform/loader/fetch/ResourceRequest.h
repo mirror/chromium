@@ -62,16 +62,6 @@ enum InputToLoadPerfMetricReportPolicy : uint8_t {
 
 struct CrossThreadResourceRequestData;
 
-// A ResourceRequest is a "request" object for ResourceLoader. Conceptually
-// it is https://fetch.spec.whatwg.org/#concept-request, but it contains
-// a lot of blink specific fields. WebURLRequest is the "public version"
-// of this class and WebURLLoader needs it. See WebURLRequest and
-// WrappedResourceRequest.
-//
-// There are cases where we need to copy a request across threads, and
-// CrossThreadResourceRequestData is a struct for the purpose. When you add a
-// member variable to this class, do not forget to add the corresponding
-// one in CrossThreadResourceRequestData and write copying logic.
 class PLATFORM_EXPORT ResourceRequest final {
   DISALLOW_NEW();
 
@@ -285,11 +275,6 @@ class PLATFORM_EXPORT ResourceRequest final {
     fetch_redirect_mode_ = redirect;
   }
 
-  const String& GetFetchIntegrity() const { return fetch_integrity_; }
-  void SetFetchIntegrity(const String& integrity) {
-    fetch_integrity_ = integrity;
-  }
-
   WebURLRequest::PreviewsState GetPreviewsState() const {
     return previews_state_;
   }
@@ -379,7 +364,6 @@ class PLATFORM_EXPORT ResourceRequest final {
   WebURLRequest::FetchRequestMode fetch_request_mode_;
   WebURLRequest::FetchCredentialsMode fetch_credentials_mode_;
   WebURLRequest::FetchRedirectMode fetch_redirect_mode_;
-  String fetch_integrity_;
   ReferrerPolicy referrer_policy_;
   bool did_set_http_referrer_;
   bool check_for_browser_side_navigation_;
@@ -397,14 +381,6 @@ class PLATFORM_EXPORT ResourceRequest final {
   double navigation_start_ = 0;
 };
 
-// This class is needed to copy a ResourceRequest across threads, because it
-// has some members which cannot be transferred across threads (AtomicString
-// for example).
-// There are some rules / restrictions:
-//  - This struct cannot contain an object that cannot be transferred across
-//    threads (e.g., AtomicString)
-//  - Non-simple members need explicit copying (e.g., String::IsolatedCopy,
-//    KURL::Copy) rather than the copy constructor or the assignment operator.
 struct CrossThreadResourceRequestData {
   WTF_MAKE_NONCOPYABLE(CrossThreadResourceRequestData);
   USING_FAST_MALLOC(CrossThreadResourceRequestData);
@@ -440,7 +416,6 @@ struct CrossThreadResourceRequestData {
   WebURLRequest::FetchRequestMode fetch_request_mode_;
   WebURLRequest::FetchCredentialsMode fetch_credentials_mode_;
   WebURLRequest::FetchRedirectMode fetch_redirect_mode_;
-  String fetch_integrity_;
   WebURLRequest::PreviewsState previews_state_;
   ReferrerPolicy referrer_policy_;
   bool did_set_http_referrer_;

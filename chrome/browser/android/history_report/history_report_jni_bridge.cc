@@ -38,6 +38,10 @@ static jlong Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   return reinterpret_cast<intptr_t>(bridge);
 }
 
+bool RegisterHistoryReportJniBridge(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
 HistoryReportJniBridge::HistoryReportJniBridge(JNIEnv* env, jobject obj)
     : weak_java_provider_(env, obj) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);

@@ -4,7 +4,6 @@
 
 #include "chrome/browser/engagement/site_engagement_score.h"
 
-#include <algorithm>
 #include <cmath>
 #include <utility>
 
@@ -59,10 +58,10 @@ std::unique_ptr<base::DictionaryValue> GetScoreDictForSettings(
 
 const double SiteEngagementScore::kMaxPoints = 100;
 
-const char SiteEngagementScore::kRawScoreKey[] = "rawScore";
-const char SiteEngagementScore::kPointsAddedTodayKey[] = "pointsAddedToday";
-const char SiteEngagementScore::kLastEngagementTimeKey[] = "lastEngagementTime";
-const char SiteEngagementScore::kLastShortcutLaunchTimeKey[] =
+const char* SiteEngagementScore::kRawScoreKey = "rawScore";
+const char* SiteEngagementScore::kPointsAddedTodayKey = "pointsAddedToday";
+const char* SiteEngagementScore::kLastEngagementTimeKey = "lastEngagementTime";
+const char* SiteEngagementScore::kLastShortcutLaunchTimeKey =
     "lastShortcutLaunchTime";
 
 // static

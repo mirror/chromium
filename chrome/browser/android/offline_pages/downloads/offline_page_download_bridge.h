@@ -7,6 +7,7 @@
 
 #include <stdint.h>
 
+#include "base/android/jni_android.h"
 #include "base/android/jni_weak_ref.h"
 #include "base/macros.h"
 #include "base/supports_user_data.h"
@@ -30,6 +31,8 @@ class OfflinePageDownloadBridge : public DownloadUIAdapter::Observer {
                             DownloadUIAdapter* download_ui_adapter,
                             content::BrowserContext* browser_context);
   ~OfflinePageDownloadBridge() override;
+
+  static bool Register(JNIEnv* env);
 
   void Destroy(
       JNIEnv* env,

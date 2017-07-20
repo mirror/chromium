@@ -4,7 +4,6 @@
 
 #include "ui/accessibility/platform/ax_platform_node_base.h"
 
-#include "base/strings/string_number_conversions.h"
 #include "base/strings/utf_string_conversions.h"
 #include "ui/accessibility/ax_action_data.h"
 #include "ui/accessibility/ax_node_data.h"
@@ -336,16 +335,6 @@ bool AXPlatformNodeBase::IsRangeValueSupported() const {
     default:
       return false;
   }
-}
-
-base::string16 AXPlatformNodeBase::GetRangeValueText() {
-  float fval;
-  base::string16 value = GetString16Attribute(ui::AX_ATTR_VALUE);
-
-  if (value.empty() && GetFloatAttribute(ui::AX_ATTR_VALUE_FOR_RANGE, &fval)) {
-    value = base::UTF8ToUTF16(base::DoubleToString(fval));
-  }
-  return value;
 }
 
 AXPlatformNodeBase* AXPlatformNodeBase::GetTable() const {

@@ -32,9 +32,7 @@ def _CheckForNonBlinkVariantMojomIncludes(input_api, output_api):
     results = []
     if errors:
         results.append(output_api.PresubmitError(
-            'Files that include non-Blink variant mojoms found. '
-            'You must include .mojom-blink.h or .mojom-shared.h instead:',
-            errors))
+            'Files that include non-Blink variant mojoms found:', errors))
     return results
 
 

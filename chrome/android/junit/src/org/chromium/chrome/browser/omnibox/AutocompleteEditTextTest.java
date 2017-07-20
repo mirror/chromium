@@ -144,9 +144,7 @@ public class AutocompleteEditTextTest {
         // The controller kicks in.
         mAutocomplete.setAutocompleteText("h", "ello world");
         // The non-spannable model changes selection in two steps.
-        if (isUsingSpannableModel()) {
-            assertFalse(mAutocomplete.isCursorVisible());
-        } else {
+        if (!isUsingSpannableModel()) {
             mInOrder.verify(mVerifier).onUpdateSelection(11, 11);
             mInOrder.verify(mVerifier).onUpdateSelection(1, 11);
         }
@@ -166,7 +164,6 @@ public class AutocompleteEditTextTest {
         assertTrue(mAutocomplete.shouldAutocomplete());
         // The controller kicks in.
         mAutocomplete.setAutocompleteText("he", "llo world");
-        if (isUsingSpannableModel()) assertFalse(mAutocomplete.isCursorVisible());
         mInOrder.verifyNoMoreInteractions();
         assertTexts("he", "llo world");
         assertTrue(mAutocomplete.shouldAutocomplete());
@@ -184,9 +181,7 @@ public class AutocompleteEditTextTest {
         assertTrue(mAutocomplete.shouldAutocomplete());
         // The controller kicks in.
         mAutocomplete.setAutocompleteText("hello", " world");
-        if (isUsingSpannableModel()) {
-            assertFalse(mAutocomplete.isCursorVisible());
-        } else {
+        if (!isUsingSpannableModel()) {
             mInOrder.verify(mVerifier).onUpdateSelection(11, 11);
             mInOrder.verify(mVerifier).onUpdateSelection(5, 11);
         }
@@ -219,7 +214,6 @@ public class AutocompleteEditTextTest {
         }
 
         mAutocomplete.setAutocompleteText("hello ", "world");
-        if (isUsingSpannableModel()) assertFalse(mAutocomplete.isCursorVisible());
         assertTexts("hello ", "world");
         mInOrder.verifyNoMoreInteractions();
     }
@@ -256,7 +250,6 @@ public class AutocompleteEditTextTest {
         if (isUsingSpannableModel()) {
             // The controller kicks in.
             mAutocomplete.setAutocompleteText("h", "ello world");
-            assertFalse(mAutocomplete.isCursorVisible());
             assertTexts("h", "ello world");
         } else {
             assertTexts("h", "");
@@ -285,7 +278,6 @@ public class AutocompleteEditTextTest {
         if (isUsingSpannableModel()) {
             // The controller kicks in.
             mAutocomplete.setAutocompleteText("hello", " world");
-            assertFalse(mAutocomplete.isCursorVisible());
             assertTexts("hello", " world");
         } else {
             assertTexts("hello", "");
@@ -330,9 +322,7 @@ public class AutocompleteEditTextTest {
         assertTrue(mAutocomplete.shouldAutocomplete());
         mAutocomplete.setAutocompleteText("hello ", "world");
         assertTexts("hello ", "world");
-        if (isUsingSpannableModel()) {
-            assertFalse(mAutocomplete.isCursorVisible());
-        } else {
+        if (!isUsingSpannableModel()) {
             mInOrder.verify(mVerifier).onUpdateSelection(6, 11);
         }
         mInOrder.verifyNoMoreInteractions();
@@ -351,7 +341,6 @@ public class AutocompleteEditTextTest {
         assertTrue(mAutocomplete.shouldAutocomplete());
         // The controller kicks in.
         mAutocomplete.setAutocompleteText("hello", " world");
-        assertFalse(mAutocomplete.isCursorVisible());
         assertTexts("hello", " world");
         mInOrder.verifyNoMoreInteractions();
 
@@ -360,7 +349,6 @@ public class AutocompleteEditTextTest {
         mInOrder.verify(mVerifier).onUpdateSelection(4, 4);
         // We restore 'o', and clears autocomplete text instead.
         mInOrder.verify(mVerifier).onUpdateSelection(5, 5);
-        assertTrue(mAutocomplete.isCursorVisible());
         mInOrder.verify(mVerifier).onAutocompleteTextStateChanged(false);
         mInOrder.verifyNoMoreInteractions();
         assertFalse(mAutocomplete.shouldAutocomplete());
@@ -368,7 +356,6 @@ public class AutocompleteEditTextTest {
 
         // Keyboard app checks the current state.
         assertEquals("hello", mInputConnection.getTextBeforeCursor(10, 0));
-        assertTrue(mAutocomplete.isCursorVisible());
         mInOrder.verifyNoMoreInteractions();
         assertFalse(mAutocomplete.shouldAutocomplete());
         assertTexts("hello", "");
@@ -403,9 +390,7 @@ public class AutocompleteEditTextTest {
         // The controller kicks in.
         mAutocomplete.setAutocompleteText("hello", " world");
         assertTexts("hello", " world");
-        if (isUsingSpannableModel()) {
-            assertFalse(mAutocomplete.isCursorVisible());
-        } else {
+        if (!isUsingSpannableModel()) {
             mInOrder.verify(mVerifier).onUpdateSelection(11, 11);
             mInOrder.verify(mVerifier).onUpdateSelection(5, 11);
         }
@@ -452,9 +437,7 @@ public class AutocompleteEditTextTest {
         // The controller kicks in.
         mAutocomplete.setAutocompleteText("hello", " world");
         assertTexts("hello", " world");
-        if (isUsingSpannableModel()) {
-            assertFalse(mAutocomplete.isCursorVisible());
-        } else {
+        if (!isUsingSpannableModel()) {
             mInOrder.verify(mVerifier).onUpdateSelection(11, 11);
             mInOrder.verify(mVerifier).onUpdateSelection(5, 11);
         }
@@ -462,7 +445,6 @@ public class AutocompleteEditTextTest {
         // User touches the user text.
         mAutocomplete.setSelection(3);
         if (isUsingSpannableModel()) {
-            assertTrue(mAutocomplete.isCursorVisible());
             mInOrder.verify(mVerifier).onUpdateSelection(3, 3);
             mInOrder.verify(mVerifier).onAutocompleteTextStateChanged(false);
         } else {
@@ -492,13 +474,11 @@ public class AutocompleteEditTextTest {
         final String url = "https://www.google.com/";
         mAutocomplete.setText(url);
         mAutocomplete.setSelection(0, url.length());
-        assertTrue(mAutocomplete.isCursorVisible());
         // User types "h" - note that this is also starting character of the URL. The selection gets
         // replaced by what user types.
         assertTrue(mInputConnection.commitText("h", 1));
         // We want to allow inline autocomplete when the user overrides an existing URL.
         assertTrue(mAutocomplete.shouldAutocomplete());
-        assertTrue(mAutocomplete.isCursorVisible());
     }
 
     @Test
@@ -521,9 +501,6 @@ public class AutocompleteEditTextTest {
         mAutocomplete.setText(url);
         mAutocomplete.setIgnoreTextChangesForAutocomplete(false);
         mInputConnection.getTextBeforeCursor(1, 1);
-        if (isUsingSpannableModel()) {
-            assertTrue(mAutocomplete.isCursorVisible());
-        }
         mInOrder.verifyNoMoreInteractions();
     }
 }

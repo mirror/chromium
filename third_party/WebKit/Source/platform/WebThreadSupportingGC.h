@@ -16,12 +16,11 @@
 namespace blink {
 
 // WebThreadSupportingGC wraps a WebThread and adds support for attaching
-// to and detaching from the Blink GC infrastructure.
-//
-// The initialize method must be called during initialization on the WebThread
-// and before the thread allocates any objects managed by the Blink GC. The
-// shutdown method must be called on the WebThread during shutdown when the
-// thread no longer needs to access objects managed by the Blink GC.
+// to and detaching from the Blink GC infrastructure. The initialize method
+// must be called during initialization on the WebThread and before the
+// thread allocates any objects managed by the Blink GC. The shutdown
+// method must be called on the WebThread during shutdown when the thread
+// no longer needs to access objects managed by the Blink GC.
 //
 // WebThreadSupportingGC usually internally creates and owns WebThread unless
 // an existing WebThread is given via createForThread.
@@ -68,9 +67,8 @@ class PLATFORM_EXPORT WebThreadSupportingGC final {
     thread_->RemoveTaskObserver(observer);
   }
 
-  // Must be called on the WebThread.
-  void InitializeOnThread();
-  void ShutdownOnThread();
+  void Initialize();
+  void Shutdown();
 
   WebThread& PlatformThread() const {
     DCHECK(thread_);

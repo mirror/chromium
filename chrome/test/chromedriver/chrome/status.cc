@@ -60,8 +60,6 @@ const char* DefaultMessageForStatusCode(StatusCode code) {
       return "forbidden";
     case kTabCrashed:
       return "tab crashed";
-    case kNoSuchCookie:
-      return "no such cookie";
     default:
       return "<unknown>";
   }

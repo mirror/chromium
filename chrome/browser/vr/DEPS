@@ -1,6 +1,0 @@
-include_rules = [
-  "+cc/animation",
-  "+cc/base",
-  "+cc/test",
-  "+cc/trees",
-]

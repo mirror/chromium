@@ -16,13 +16,13 @@
 #include "ui/display/screen.h"
 #include "ui/keyboard/keyboard_controller.h"
 #include "ui/keyboard/keyboard_switches.h"
-#include "ui/keyboard/keyboard_test_util.h"
 #include "ui/keyboard/keyboard_ui.h"
 #include "ui/keyboard/keyboard_util.h"
 #include "ui/views/widget/widget.h"
 #include "ui/views/widget/widget_delegate.h"
 
 namespace ash {
+namespace test {
 
 namespace {
 
@@ -291,4 +291,5 @@ TEST_F(LockLayoutManagerTest, MultipleMonitors) {
   EXPECT_EQ(screen_bounds.ToString(), window->GetBoundsInScreen().ToString());
 }
 
+}  // namespace test
 }  // namespace ash

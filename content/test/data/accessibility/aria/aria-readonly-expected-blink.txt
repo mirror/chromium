@@ -4,7 +4,7 @@ rootWebArea
 ++++++genericContainer
 ++++++++staticText name='Editable text'
 ++++++++++inlineTextBox name='Editable text'
-++++textField restriction=readOnly
+++++textField ariaReadonly=true
 ++++++genericContainer
 ++++++++staticText name='Uneditable text'
 ++++++++++inlineTextBox name='Uneditable text'

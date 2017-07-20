@@ -5,7 +5,6 @@
 #ifndef CC_ANIMATION_TRANSFORM_OPERATION_H_
 #define CC_ANIMATION_TRANSFORM_OPERATION_H_
 
-#include "cc/animation/animation_export.h"
 #include "ui/gfx/transform.h"
 
 namespace gfx {
@@ -14,7 +13,7 @@ class BoxF;
 
 namespace cc {
 
-struct CC_ANIMATION_EXPORT TransformOperation {
+struct TransformOperation {
   enum Type {
     TRANSFORM_OPERATION_TRANSLATE,
     TRANSFORM_OPERATION_ROTATE,
@@ -58,9 +57,6 @@ struct CC_ANIMATION_EXPORT TransformOperation {
 
   // Sets |matrix| based on type and the union values.
   void Bake();
-
-  bool operator==(const TransformOperation& other) const;
-  bool operator!=(const TransformOperation& other) const;
 
   static bool BlendTransformOperations(const TransformOperation* from,
                                        const TransformOperation* to,

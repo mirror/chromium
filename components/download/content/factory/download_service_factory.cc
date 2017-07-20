@@ -42,8 +42,7 @@ DownloadService* CreateDownloadService(
   auto store = base::MakeUnique<DownloadStore>(entry_db_storage_dir,
                                                std::move(entry_db));
   auto model = base::MakeUnique<ModelImpl>(std::move(store));
-  auto device_status_listener =
-      base::MakeUnique<DeviceStatusListener>(config->network_change_delay);
+  auto device_status_listener = base::MakeUnique<DeviceStatusListener>();
   auto scheduler = base::MakeUnique<SchedulerImpl>(
       task_scheduler.get(), config.get(), client_set.get());
   auto file_monitor = base::MakeUnique<FileMonitorImpl>(

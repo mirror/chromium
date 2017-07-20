@@ -7,7 +7,6 @@
 #include "android_webview/browser/aw_browser_context.h"
 #include "android_webview/browser/aw_safe_browsing_ui_manager.h"
 #include "android_webview/browser/net/aw_url_request_context_getter.h"
-#include "components/prefs/pref_service.h"
 #include "components/safe_browsing/browser/threat_details.h"
 #include "components/safe_browsing/triggers/trigger_manager.h"
 #include "components/security_interstitials/content/security_interstitial_controller_client.h"
@@ -72,7 +71,7 @@ AwSafeBrowsingBlockingPage::AwSafeBrowsingBlockingPage(
 void AwSafeBrowsingBlockingPage::ShowBlockingPage(
     AwSafeBrowsingUIManager* ui_manager,
     const UnsafeResource& unsafe_resource,
-    PrefService* pref_service) {
+    bool extended_reporting_allowed) {
   DVLOG(1) << __func__ << " " << unsafe_resource.url.spec();
   WebContents* web_contents = unsafe_resource.web_contents_getter.Run();
 
@@ -90,13 +89,11 @@ void AwSafeBrowsingBlockingPage::ShowBlockingPage(
     const UnsafeResourceList unsafe_resources{unsafe_resource};
     BaseSafeBrowsingErrorUI::SBErrorDisplayOptions display_options =
         BaseSafeBrowsingErrorUI::SBErrorDisplayOptions(
-            IsMainPageLoadBlocked(unsafe_resources),
-            safe_browsing::IsExtendedReportingOptInAllowed(*pref_service),
-            false,  // is_off_the_record
-            safe_browsing::IsExtendedReportingEnabled(*pref_service),
-            safe_browsing::IsScout(*pref_service),
-            pref_service->GetBoolean(
-                ::prefs::kSafeBrowsingProceedAnywayDisabled),
+            IsMainPageLoadBlocked(unsafe_resources), extended_reporting_allowed,
+            false,                    // is_off_the_record
+            false,                    // is_extended_reporting
+            false,                    // is_scout
+            false,                    // kSafeBrowsingProceedAnywayDisabled
             false,                    // should_open_links_in_new_tab
             "cpn_safe_browsing_wv");  // help_center_article_link
 
@@ -106,8 +103,7 @@ void AwSafeBrowsingBlockingPage::ShowBlockingPage(
     AwSafeBrowsingBlockingPage* blocking_page = new AwSafeBrowsingBlockingPage(
         ui_manager, web_contents, entry ? entry->GetURL() : GURL(),
         unsafe_resources,
-        CreateControllerClient(web_contents, unsafe_resources, ui_manager,
-                               pref_service),
+        CreateControllerClient(web_contents, unsafe_resources, ui_manager),
         display_options, errorType);
     blocking_page->Show();
   }

@@ -22,6 +22,7 @@
 #include "chrome/browser/android/tab_android.h"
 #include "chrome/browser/android/vr_shell/android_ui_gesture_target.h"
 #include "chrome/browser/android/vr_shell/vr_compositor.h"
+#include "chrome/browser/android/vr_shell/vr_controller_model.h"
 #include "chrome/browser/android/vr_shell/vr_gl_thread.h"
 #include "chrome/browser/android/vr_shell/vr_input_manager.h"
 #include "chrome/browser/android/vr_shell/vr_shell_delegate.h"
@@ -188,6 +189,10 @@ void VrShell::SetUiState() {
     ui_->SetFullscreen(web_contents_->IsFullscreen());
     ui_->SetIncognito(web_contents_->GetBrowserContext()->IsOffTheRecord());
   }
+}
+
+bool RegisterVrShell(JNIEnv* env) {
+  return RegisterNativesImpl(env);
 }
 
 VrShell::~VrShell() {
@@ -362,12 +367,6 @@ void VrShell::OnFullscreenChanged(bool enabled) {
 
 bool VrShell::GetWebVrMode(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   return webvr_mode_;
-}
-
-bool VrShell::IsDisplayingUrlForTesting(
-    JNIEnv* env,
-    const base::android::JavaParamRef<jobject>& obj) {
-  return ShouldDisplayURL();
 }
 
 void VrShell::OnLoadProgressChanged(JNIEnv* env,
@@ -734,12 +733,6 @@ bool VrShell::HasDaydreamSupport(JNIEnv* env) {
 
 content::WebContents* VrShell::GetActiveWebContents() const {
   return web_contents_;
-}
-
-bool VrShell::ShouldDisplayURL() const {
-  // It's possible for there to be no web contents, e.g. on the new tab page.
-  return GetActiveWebContents() &&
-         ChromeToolbarModelDelegate::ShouldDisplayURL();
 }
 
 // ----------------------------------------------------------------------------

@@ -381,7 +381,7 @@ public class HistoryManager implements OnMenuItemClickListener, SignInStateObser
     }
 
     @VisibleForTesting
-    public HistoryAdapter getAdapterForTests() {
+    HistoryAdapter getAdapterForTests() {
         return mHistoryAdapter;
     }
 

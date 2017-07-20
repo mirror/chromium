@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "chrome/browser/android/browsing_data/browsing_data_bridge.h"
+
 #include <jni.h>
 #include <stddef.h>
 
@@ -59,6 +61,10 @@ void OnBrowsingDataRemoverDone(
 }
 
 }  // namespace
+
+bool RegisterBrowsingDataBridge(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
 
 static void ClearBrowsingData(
     JNIEnv* env,

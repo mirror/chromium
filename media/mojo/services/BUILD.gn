@@ -11,6 +11,16 @@ import("//testing/test.gni")
 
 component("services") {
   output_name = "media_mojo_services"
+
+  public_deps = [
+    ":lib",
+  ]
+}
+
+# TODO(xhwang): Add this intermediate target because ServiceTest doesn't support
+# services that depend on shared libraries in component build.
+# See http://crbug.com/670094
+source_set("lib") {
   sources = [
     "gpu_mojo_media_client.cc",
     "gpu_mojo_media_client.h",
@@ -53,8 +63,6 @@ component("services") {
     "mojo_renderer_service.h",
     "mojo_video_decoder_service.cc",
     "mojo_video_decoder_service.h",
-    "mojo_video_encode_accelerator_service.cc",
-    "mojo_video_encode_accelerator_service.h",
     "test_mojo_media_client.cc",
     "test_mojo_media_client.h",
   ]
@@ -67,7 +75,6 @@ component("services") {
   public_deps = [
     "//base",
     "//media",
-    "//media/gpu",
     "//media/mojo:features",
     "//media/mojo/interfaces",
     "//mojo/public/cpp/bindings",
@@ -99,6 +106,11 @@ component("services") {
 service("media") {
   testonly = true
 
+  # crbug.com/676418: Suppress symbol import warnings.
+  if (is_win && is_component_build) {
+    ldflags = [ "/ignore:4217" ]
+  }
+
   sources = [
     "main.cc",
   ]
@@ -109,44 +121,44 @@ service("media") {
   ]
 
   deps = [
-    ":services",
+    ":lib",
     "//mojo/public/c/system",
     "//services/service_manager/public/cpp",
   ]
 }
 
-service_test("media_service_unittests") {
-  testonly = true
+# crbug.com/676055: media_service_unittests currently fails to link in Windows
+# component builds, so don't declare it, otherwise the "all" target will still
+# try to build it.
+if (!(is_win && is_component_build)) {
+  service_test("media_service_unittests") {
+    testonly = true
 
-  sources = [
-    "media_service_unittest.cc",
-  ]
+    sources = [
+      "media_service_unittest.cc",
+    ]
 
-  catalog = ":media_service_unittests_catalog"
+    catalog = ":media_service_unittests_catalog"
 
-  deps = [
-    ":services",
-    "//base",
-    "//media",
-    "//media/base:test_support",
-    "//media/mojo/clients",
-    "//media/mojo/common",
-    "//media/mojo/interfaces",
-    "//media/mojo/interfaces:constants",
-    "//services/service_manager/public/cpp:service_test_support",
-    "//testing/gmock",
-    "//testing/gtest",
-  ]
+    deps = [
+      ":lib",
+      "//base",
+      "//media",
+      "//media/base:test_support",
+      "//media/mojo/clients",
+      "//media/mojo/common",
+      "//media/mojo/interfaces",
+      "//media/mojo/interfaces:constants",
+      "//services/service_manager/public/cpp:service_test_support",
+      "//testing/gmock",
+      "//testing/gtest",
+    ]
 
-  data_deps = [
-    ":media",
-  ]
-}
-
-service_manifest("cdm_manifest") {
-  name = "cdm"
-  source = "cdm_manifest.json"
-}
+    data_deps = [
+      ":media",
+    ]
+  }
+}  # !(is_win && is_component_build)
 
 service_manifest("media_manifest") {
   name = "media"

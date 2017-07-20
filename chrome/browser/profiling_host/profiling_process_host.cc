@@ -16,7 +16,6 @@
 #include "content/public/common/content_switches.h"
 #include "mojo/edk/embedder/outgoing_broker_client_invitation.h"
 #include "mojo/edk/embedder/platform_channel_pair.h"
-#include "mojo/public/cpp/system/platform_handle.h"
 
 #if defined(OS_LINUX)
 #include <fcntl.h>
@@ -29,8 +28,6 @@
 #include "base/files/scoped_file.h"
 #include "base/process/process_metrics.h"
 #include "base/third_party/valgrind/valgrind.h"
-#include "chrome/common/profiling/profiling_constants.h"
-#include "content/public/browser/file_descriptor_info.h"
 #endif
 
 namespace profiling {
@@ -97,12 +94,6 @@ ProfilingProcessHost* ProfilingProcessHost::Get() {
 // static
 void ProfilingProcessHost::AddSwitchesToChildCmdLine(
     base::CommandLine* child_cmd_line) {
-  // TODO(ajwong): Figure out how to trace the zygote process.
-  if (child_cmd_line->GetSwitchValueASCII(switches::kProcessType) ==
-      switches::kZygoteProcess) {
-    return;
-  }
-
   // Watch out: will be called on different threads.
   ProfilingProcessHost* pph = ProfilingProcessHost::Get();
   if (!pph)
@@ -114,37 +105,6 @@ void ProfilingProcessHost::AddSwitchesToChildCmdLine(
   child_cmd_line->AppendSwitchASCII(switches::kMemlogPipe, pph->pipe_id_);
 }
 
-#if defined(OS_POSIX) && !defined(OS_MACOSX)
-void ProfilingProcessHost::GetAdditionalMappedFilesForChildProcess(
-    const base::CommandLine& command_line,
-    int child_process_id,
-    content::FileDescriptorInfo* mappings) {
-  // TODO(ajwong): Figure out how to trace the zygote process.
-  if (command_line.GetSwitchValueASCII(switches::kProcessType) ==
-      switches::kZygoteProcess) {
-    return;
-  }
-
-  ProfilingProcessHost* pph = ProfilingProcessHost::Get();
-  if (!pph)
-    return;
-
-  pph->EnsureControlChannelExists();
-
-  mojo::edk::PlatformChannelPair data_channel;
-  mappings->Transfer(
-      kProfilingDataPipe,
-      base::ScopedFD(data_channel.PassClientHandle().release().handle));
-
-  content::BrowserThread::GetTaskRunnerForThread(content::BrowserThread::IO)
-      ->PostTask(
-          FROM_HERE,
-          base::BindOnce(&ProfilingProcessHost::AddNewSenderOnIO,
-                         base::Unretained(pph), data_channel.PassServerHandle(),
-                         child_process_id));
-}
-#endif  // defined(OS_POSIX) && !defined(OS_MACOSX)
-
 void ProfilingProcessHost::Launch() {
   mojo::edk::PlatformChannelPair control_channel;
   mojo::edk::HandlePassingInformation handle_passing_info;
@@ -154,7 +114,6 @@ void ProfilingProcessHost::Launch() {
 #if defined(OS_WIN)
   base::Process process = base::Process::Current();
   pipe_id_ = base::IntToString(static_cast<int>(process.Pid()));
-  base::CommandLine profiling_cmd = MakeProfilingCommandLine(pipe_id_);
 #else
 
   // Create the socketpair for the low level memlog pipe.
@@ -170,9 +129,9 @@ void ProfilingProcessHost::Launch() {
   pipe_id_ = base::IntToString(memlog_fds[0]);
 
   handle_passing_info.emplace_back(child_end.get(), child_end.get());
+#endif
   base::CommandLine profiling_cmd =
       MakeProfilingCommandLine(base::IntToString(child_end.get()));
-#endif
 
   // Keep the server handle, pass the client handle to the child.
   pending_control_connection_ = control_channel.PassServerHandle();
@@ -224,13 +183,6 @@ void ProfilingProcessHost::ConnectControlChannelOnIO() {
       mojom::ProfilingControlPtrInfo(std::move(control_pipe), 0));
 
   StartProfilingMojo();
-}
-
-void ProfilingProcessHost::AddNewSenderOnIO(
-    mojo::edk::ScopedPlatformHandle handle,
-    int child_process_id) {
-  profiling_control_->AddNewSender(
-      mojo::WrapPlatformFile(handle.release().handle), child_process_id);
 }
 
 }  // namespace profiling

@@ -121,6 +121,10 @@ void LayerTitleCache::SetResourceManager(
 LayerTitleCache::~LayerTitleCache() {
 }
 
+bool RegisterLayerTitleCache(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
 // ----------------------------------------------------------------------------
 // Native JNI methods
 // ----------------------------------------------------------------------------

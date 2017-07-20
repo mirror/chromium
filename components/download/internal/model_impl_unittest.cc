@@ -11,9 +11,7 @@
 #include "base/guid.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
-#include "base/test/histogram_tester.h"
 #include "components/download/internal/entry.h"
-#include "components/download/internal/stats.h"
 #include "components/download/internal/test/entry_utils.h"
 #include "components/download/internal/test/mock_model_client.h"
 #include "components/download/internal/test/test_store.h"
@@ -65,7 +63,6 @@ TEST_F(DownloadServiceModelImplTest, SuccessfulInitWithEntries) {
   Entry entry2 = test::BuildBasicEntry();
   std::vector<Entry> entries = {entry1, entry2};
 
-  base::HistogramTester histogram_tester;
   InSequence sequence;
   EXPECT_CALL(client_, OnModelReady(true)).Times(1);
 
@@ -75,18 +72,6 @@ TEST_F(DownloadServiceModelImplTest, SuccessfulInitWithEntries) {
 
   EXPECT_TRUE(test::CompareEntry(&entry1, model_->Get(entry1.guid)));
   EXPECT_TRUE(test::CompareEntry(&entry2, model_->Get(entry2.guid)));
-
-  // Verify histograms.
-  histogram_tester.ExpectBucketCount("Download.Service.Db.Records", 2, 1);
-  histogram_tester.ExpectBucketCount("Download.Service.Db.Records.New", 2, 1);
-  histogram_tester.ExpectBucketCount("Download.Service.Db.Records.Available", 0,
-                                     1);
-  histogram_tester.ExpectBucketCount("Download.Service.Db.Records.Active", 0,
-                                     1);
-  histogram_tester.ExpectBucketCount("Download.Service.Db.Records.Paused", 0,
-                                     1);
-  histogram_tester.ExpectBucketCount("Download.Service.Db.Records.Complete", 0,
-                                     1);
 }
 
 TEST_F(DownloadServiceModelImplTest, BadInit) {
@@ -95,70 +80,6 @@ TEST_F(DownloadServiceModelImplTest, BadInit) {
   model_->Initialize(&client_);
   EXPECT_TRUE(store_->init_called());
   store_->TriggerInit(false, base::MakeUnique<std::vector<Entry>>());
-}
-
-TEST_F(DownloadServiceModelImplTest, HardRecoverGoodModel) {
-  Entry entry1 = test::BuildBasicEntry();
-  Entry entry2 = test::BuildBasicEntry();
-  std::vector<Entry> entries = {entry1, entry2};
-
-  EXPECT_CALL(client_, OnModelReady(true)).Times(1);
-
-  model_->Initialize(&client_);
-  EXPECT_TRUE(store_->init_called());
-  store_->TriggerInit(true, base::MakeUnique<std::vector<Entry>>(entries));
-
-  EXPECT_CALL(client_, OnModelHardRecoverComplete(true));
-
-  model_->HardRecover();
-  store_->TriggerHardRecover(true);
-  EXPECT_TRUE(model_->PeekEntries().empty());
-}
-
-TEST_F(DownloadServiceModelImplTest, HardRecoverBadModel) {
-  EXPECT_CALL(client_, OnModelReady(false)).Times(1);
-
-  model_->Initialize(&client_);
-  EXPECT_TRUE(store_->init_called());
-  store_->TriggerInit(false, base::MakeUnique<std::vector<Entry>>());
-
-  EXPECT_CALL(client_, OnModelHardRecoverComplete(true));
-
-  model_->HardRecover();
-  store_->TriggerHardRecover(true);
-  EXPECT_TRUE(model_->PeekEntries().empty());
-}
-
-TEST_F(DownloadServiceModelImplTest, HardRecoverFailsGoodModel) {
-  Entry entry1 = test::BuildBasicEntry();
-  Entry entry2 = test::BuildBasicEntry();
-  std::vector<Entry> entries = {entry1, entry2};
-
-  EXPECT_CALL(client_, OnModelReady(true)).Times(1);
-
-  model_->Initialize(&client_);
-  EXPECT_TRUE(store_->init_called());
-  store_->TriggerInit(true, base::MakeUnique<std::vector<Entry>>(entries));
-
-  EXPECT_CALL(client_, OnModelHardRecoverComplete(false));
-
-  model_->HardRecover();
-  store_->TriggerHardRecover(false);
-  EXPECT_TRUE(model_->PeekEntries().empty());
-}
-
-TEST_F(DownloadServiceModelImplTest, HardRecoverFailsBadModel) {
-  EXPECT_CALL(client_, OnModelReady(false)).Times(1);
-
-  model_->Initialize(&client_);
-  EXPECT_TRUE(store_->init_called());
-  store_->TriggerInit(false, base::MakeUnique<std::vector<Entry>>());
-
-  EXPECT_CALL(client_, OnModelHardRecoverComplete(false));
-
-  model_->HardRecover();
-  store_->TriggerHardRecover(false);
-  EXPECT_TRUE(model_->PeekEntries().empty());
 }
 
 TEST_F(DownloadServiceModelImplTest, Add) {

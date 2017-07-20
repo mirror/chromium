@@ -36,9 +36,7 @@
 
 namespace blink {
 
-class WebURL;
 enum class ResourceRequestBlockedReason;
-struct WebURLError;
 
 // Used for errors that won't be exposed to clients.
 PLATFORM_EXPORT extern const char kErrorDomainBlinkInternal[];
@@ -56,11 +54,8 @@ class PLATFORM_EXPORT ResourceError final {
   static ResourceError CancelledDueToAccessCheckError(
       const String& failing_url,
       ResourceRequestBlockedReason);
-  static ResourceError CancelledDueToAccessCheckError(
-      const String& failing_url,
-      ResourceRequestBlockedReason,
-      const String& localized_description);
 
+  // Only for Blink internal usage.
   static ResourceError CacheMissError(const String& failing_url);
 
   ResourceError()
@@ -71,6 +66,7 @@ class PLATFORM_EXPORT ResourceError final {
         is_timeout_(false),
         stale_copy_in_cache_(false),
         was_ignored_by_handler_(false),
+        is_cache_miss_(false),
         should_collapse_initiator_(false) {}
 
   ResourceError(const String& domain,
@@ -87,6 +83,7 @@ class PLATFORM_EXPORT ResourceError final {
         is_timeout_(false),
         stale_copy_in_cache_(false),
         was_ignored_by_handler_(false),
+        is_cache_miss_(false),
         should_collapse_initiator_(false) {}
 
   // Makes a deep copy. Useful for when you need to use a ResourceError on
@@ -122,7 +119,8 @@ class PLATFORM_EXPORT ResourceError final {
   }
   bool WasIgnoredByHandler() const { return was_ignored_by_handler_; }
 
-  bool IsCacheMiss() const;
+  void SetIsCacheMiss(bool is_cache_miss) { is_cache_miss_ = is_cache_miss; }
+  bool IsCacheMiss() const { return is_cache_miss_; }
   bool WasBlockedByResponse() const {
     return error_code_ == net::ERR_BLOCKED_BY_RESPONSE;
   }
@@ -133,11 +131,6 @@ class PLATFORM_EXPORT ResourceError final {
   bool ShouldCollapseInitiator() const { return should_collapse_initiator_; }
 
   static bool Compare(const ResourceError&, const ResourceError&);
-
-  static void InitializeWebURLError(WebURLError*,
-                                    const WebURL&,
-                                    bool stale_copy_in_cache,
-                                    int reason);
 
  private:
   String domain_;
@@ -150,6 +143,7 @@ class PLATFORM_EXPORT ResourceError final {
   bool is_timeout_;
   bool stale_copy_in_cache_;
   bool was_ignored_by_handler_;
+  bool is_cache_miss_;
   bool should_collapse_initiator_;
 };
 

@@ -75,7 +75,8 @@ class APP_LIST_EXPORT SearchResultTileItemView
 
   AppListViewDelegate* view_delegate_;
 
-  const bool is_fullscreen_app_list_enabled_;
+  // Whether the Play Store app search feature is enabled.
+  const bool is_play_store_app_search_enabled_;
 
   std::unique_ptr<views::MenuRunner> context_menu_runner_;
 

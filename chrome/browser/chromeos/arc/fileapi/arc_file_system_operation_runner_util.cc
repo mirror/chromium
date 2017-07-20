@@ -19,13 +19,6 @@ namespace file_system_operation_runner_util {
 
 namespace {
 
-// TODO(crbug.com/745648): Use correct BrowserContext.
-ArcFileSystemOperationRunner* GetArcFileSystemOperationRunner() {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  return ArcFileSystemOperationRunner::GetForBrowserContext(
-      ArcServiceManager::Get()->browser_context());
-}
-
 template <typename T>
 void PostToIOThread(const base::Callback<void(T)>& callback, T result) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
@@ -37,7 +30,8 @@ void PostToIOThread(const base::Callback<void(T)>& callback, T result) {
 void GetFileSizeOnUIThread(const GURL& url,
                            const GetFileSizeCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  auto* runner = GetArcFileSystemOperationRunner();
+  auto* runner =
+      ArcServiceManager::GetGlobalService<ArcFileSystemOperationRunner>();
   if (!runner) {
     DLOG(ERROR) << "ArcFileSystemOperationRunner unavailable. "
                 << "File system operations are dropped.";
@@ -50,7 +44,8 @@ void GetFileSizeOnUIThread(const GURL& url,
 void OpenFileToReadOnUIThread(const GURL& url,
                               const OpenFileToReadCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  auto* runner = GetArcFileSystemOperationRunner();
+  auto* runner =
+      ArcServiceManager::GetGlobalService<ArcFileSystemOperationRunner>();
   if (!runner) {
     DLOG(ERROR) << "ArcFileSystemOperationRunner unavailable. "
                 << "File system operations are dropped.";
@@ -64,7 +59,8 @@ void GetDocumentOnUIThread(const std::string& authority,
                            const std::string& document_id,
                            const GetDocumentCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  auto* runner = GetArcFileSystemOperationRunner();
+  auto* runner =
+      ArcServiceManager::GetGlobalService<ArcFileSystemOperationRunner>();
   if (!runner) {
     DLOG(ERROR) << "ArcFileSystemOperationRunner unavailable. "
                 << "File system operations are dropped.";
@@ -78,7 +74,8 @@ void GetChildDocumentsOnUIThread(const std::string& authority,
                                  const std::string& parent_document_id,
                                  const GetChildDocumentsCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  auto* runner = GetArcFileSystemOperationRunner();
+  auto* runner =
+      ArcServiceManager::GetGlobalService<ArcFileSystemOperationRunner>();
   if (!runner) {
     DLOG(ERROR) << "ArcFileSystemOperationRunner unavailable. "
                 << "File system operations are dropped.";
@@ -93,7 +90,8 @@ void AddWatcherOnUIThread(const std::string& authority,
                           const WatcherCallback& watcher_callback,
                           const AddWatcherCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  auto* runner = GetArcFileSystemOperationRunner();
+  auto* runner =
+      ArcServiceManager::GetGlobalService<ArcFileSystemOperationRunner>();
   if (!runner) {
     DLOG(ERROR) << "ArcFileSystemOperationRunner unavailable. "
                 << "File system operations are dropped.";
@@ -106,7 +104,8 @@ void AddWatcherOnUIThread(const std::string& authority,
 void RemoveWatcherOnUIThread(int64_t watcher_id,
                              const RemoveWatcherCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  auto* runner = GetArcFileSystemOperationRunner();
+  auto* runner =
+      ArcServiceManager::GetGlobalService<ArcFileSystemOperationRunner>();
   if (!runner) {
     DLOG(ERROR) << "ArcFileSystemOperationRunner unavailable. "
                 << "File system operations are dropped.";
@@ -118,7 +117,8 @@ void RemoveWatcherOnUIThread(int64_t watcher_id,
 
 void AddObserverOnUIThread(scoped_refptr<ObserverIOThreadWrapper> observer) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  auto* runner = GetArcFileSystemOperationRunner();
+  auto* runner =
+      ArcServiceManager::GetGlobalService<ArcFileSystemOperationRunner>();
   if (!runner) {
     DLOG(ERROR) << "ArcFileSystemOperationRunner unavailable. "
                 << "File system operations are dropped.";
@@ -129,7 +129,8 @@ void AddObserverOnUIThread(scoped_refptr<ObserverIOThreadWrapper> observer) {
 
 void RemoveObserverOnUIThread(scoped_refptr<ObserverIOThreadWrapper> observer) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  auto* runner = GetArcFileSystemOperationRunner();
+  auto* runner =
+      ArcServiceManager::GetGlobalService<ArcFileSystemOperationRunner>();
   if (!runner) {
     DLOG(ERROR) << "ArcFileSystemOperationRunner unavailable. "
                 << "File system operations are dropped.";

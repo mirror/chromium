@@ -13,12 +13,12 @@
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/root_window_controller.h"
 #include "ash/session/session_controller.h"
-#include "ash/session/test_session_controller_client.h"
 #include "ash/shelf/shelf.h"
 #include "ash/shelf/shelf_layout_manager.h"
 #include "ash/shelf/shelf_widget.h"
-#include "ash/shell_test_api.h"
 #include "ash/test/ash_test_base.h"
+#include "ash/test/shell_test_api.h"
+#include "ash/test/test_session_controller_client.h"
 #include "ash/wallpaper/wallpaper_widget_controller.h"
 #include "ash/wm/window_util.h"
 #include "base/command_line.h"
@@ -131,7 +131,7 @@ class SimpleMenuDelegate : public ui::SimpleMenuModel::Delegate {
 
 }  // namespace
 
-class ShellTest : public AshTestBase {
+class ShellTest : public test::AshTestBase {
  public:
   views::Widget* CreateTestWindow(views::Widget::InitParams params) {
     views::Widget* widget = new views::Widget;
@@ -466,7 +466,7 @@ TEST_F(ShellTest, TestPreTargetHandlerOrder) {
 
   Shell* shell = Shell::Get();
   ui::EventTargetTestApi test_api(shell);
-  ShellTestApi shell_test_api(shell);
+  test::ShellTestApi shell_test_api(shell);
 
   const ui::EventHandlerList& handlers = test_api.pre_target_handlers();
   ui::EventHandlerList::const_iterator cursor_filter =
@@ -512,7 +512,7 @@ TEST_F(ShellTest, KeyboardCreation) {
 // everything is ok, we won't crash. If there is a bug, window's destructor will
 // notify some deleted object (say VideoDetector or ActivationController) and
 // this will crash.
-class ShellTest2 : public AshTestBase {
+class ShellTest2 : public test::AshTestBase {
  public:
   ShellTest2() {}
   ~ShellTest2() override {}

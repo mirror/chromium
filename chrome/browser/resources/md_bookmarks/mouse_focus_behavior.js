@@ -4,37 +4,63 @@
 
 cr.define('bookmarks', function() {
   /** @const */
-  var HIDE_FOCUS_RING_ATTRIBUTE = 'hide-focus-ring';
+  var MOUSE_FOCUS_CLASS = 'mouse-focus';
 
   /**
-   * Behavior which adds the 'hide-focus-ring' attribute to a target element
-   * when the user interacts with it using the mouse, allowing the focus outline
-   * to be hidden without affecting keyboard users.
+   * Behavior which adds the 'mouse-focus' class to a target element when it
+   * gains focus from the mouse, allowing the outline to be hidden without
+   * affecting keyboard users.
    * @polymerBehavior
    */
   var MouseFocusBehavior = {
     attached: function() {
       this.boundOnMousedown_ = this.onMousedown_.bind(this);
-      this.boundOnKeydown = this.onKeydown_.bind(this);
+      this.boundClearMouseFocus_ = this.clearMouseFocus.bind(this);
 
-      this.addEventListener('mousedown', this.boundOnMousedown_);
-      this.addEventListener('keydown', this.boundOnKeydown, true);
-
+      var target = this.getFocusTarget();
+      target.addEventListener('mousedown', this.boundOnMousedown_);
+      target.addEventListener('contextmenu', this.boundOnMousedown_);
+      target.addEventListener('blur', this.boundClearMouseFocus_);
     },
 
     detached: function() {
-      this.removeEventListener('mousedown', this.boundOnMousedown_);
-      this.removeEventListener('keydown', this.boundOnKeydown, true);
+      var target = this.getFocusTarget();
+      target.removeEventListener('mousedown', this.boundOnMousedown_);
+      target.removeEventListener('contextmenu', this.boundOnMousedown_);
+      target.removeEventListener('blur', this.boundClearMouseFocus_);
+    },
+
+    /**
+     * Returns the element that should be watched for focus changes. Clients
+     * can override, but it is assumed that the return value is constant over
+     * the lifetime of the element.
+     * @return {!HTMLElement}
+     */
+    getFocusTarget: function() {
+      return this;
+    },
+
+    /** Reset the focus state when focus leaves the target element. */
+    clearMouseFocus: function() {
+      this.getFocusTarget().classList.remove(MOUSE_FOCUS_CLASS);
     },
 
     /** @private */
     onMousedown_: function() {
-      this.setAttribute(HIDE_FOCUS_RING_ATTRIBUTE, '');
+      this.addMouseFocusClass(this.getFocusTarget());
     },
 
-    /** @private */
-    onKeydown_: function() {
-      this.removeAttribute(HIDE_FOCUS_RING_ATTRIBUTE);
+    /**
+     * @param {HTMLElement} element
+     * @return {boolean}
+     */
+    isMouseFocused: function(element) {
+      return element.classList.contains(MOUSE_FOCUS_CLASS);
+    },
+
+    /** @param {HTMLElement} element */
+    addMouseFocusClass: function(element) {
+      element.classList.add(MOUSE_FOCUS_CLASS);
     },
   };
 

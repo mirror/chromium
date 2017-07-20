@@ -74,8 +74,6 @@
 #include "core/layout/api/LayoutAPIShim.h"
 #include "core/layout/api/LayoutEmbeddedContentItem.h"
 #include "core/layout/ng/layout_ng_block_flow.h"
-#include "core/layout/ng/ng_layout_result.h"
-#include "core/layout/ng/ng_unpositioned_float.h"
 #include "core/page/AutoscrollController.h"
 #include "core/page/Page.h"
 #include "core/paint/ObjectPaintInvalidator.h"
@@ -634,12 +632,9 @@ bool LayoutObject::ScrollRectToVisible(const LayoutRect& rect,
   if (!enclosing_box)
     return false;
 
-  GetDocument().GetPage()->GetSmoothScrollSequencer()->AbortAnimations();
   enclosing_box->ScrollRectToVisible(rect, align_x, align_y, scroll_type,
                                      make_visible_in_visual_viewport,
-                                     scroll_behavior, true);
-  GetDocument().GetPage()->GetSmoothScrollSequencer()->RunQueuedAnimations();
-
+                                     scroll_behavior);
   return true;
 }
 

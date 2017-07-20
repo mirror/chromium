@@ -248,11 +248,7 @@ public class LocaleManager {
         final Callback<Boolean> finalizeInternalCallback = new Callback<Boolean>() {
             @Override
             public void onResult(Boolean result) {
-                if (result != null && result) {
-                    mSearchEnginePromoCheckedThisSession = true;
-                } else {
-                    onUserLeavePromoDialogWithNoConfirmedChoice(getSearchEnginePromoShowType());
-                }
+                if (result != null && result) mSearchEnginePromoCheckedThisSession = true;
                 if (onSearchEngineFinalized != null) onSearchEngineFinalized.onResult(result);
             }
         };
@@ -402,10 +398,14 @@ public class LocaleManager {
     }
 
     /**
-     * To be called when the search engine promo dialog is dismissed without the user confirming
-     * a valid search engine selection.
+     * To be called after the user has made a selection from a search engine promo dialog.
+     * @param type The type of search engine promo dialog that was shown.
+     * @param keyword The keyword for the search engine chosen.
      */
-    protected void onUserLeavePromoDialogWithNoConfirmedChoice(@SearchEnginePromoType int type) {}
+    protected void onUserSearchEngineChoiceFromPromoDialog(
+            @SearchEnginePromoType int type, String keyword) {
+        // TODO(yusufo) : Not used. Remove this.
+    }
 
     private SpecialLocaleHandler getSpecialLocaleHandler() {
         if (mLocaleHandler == null) mLocaleHandler = new SpecialLocaleHandler(getSpecialLocaleId());

@@ -66,7 +66,7 @@
 #include "third_party/WebKit/public/platform/WebURLResponse.h"
 #include "third_party/WebKit/public/platform/modules/background_fetch/WebBackgroundFetchSettledFetch.h"
 #include "third_party/WebKit/public/platform/modules/notifications/WebNotificationData.h"
-#include "third_party/WebKit/public/platform/modules/payments/WebPaymentHandlerResponse.h"
+#include "third_party/WebKit/public/platform/modules/payments/WebPaymentAppResponse.h"
 #include "third_party/WebKit/public/platform/modules/payments/WebPaymentRequestEventData.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerClientQueryOptions.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerError.h"
@@ -224,7 +224,6 @@ void ToWebServiceWorkerRequest(const ServiceWorkerFetchRequest& request,
   web_request->SetFrameType(GetBlinkFrameType(request.frame_type));
   web_request->SetClientId(blink::WebString::FromUTF8(request.client_id));
   web_request->SetIsReload(request.is_reload);
-  web_request->SetIntegrity(blink::WebString::FromUTF8(request.integrity));
 }
 
 // Converts |response| to its equivalent type in the Blink API.
@@ -367,7 +366,7 @@ struct ServiceWorkerContextClient::WorkerContextData {
 
   // Pending callbacks for Payment App Response.
   std::map<int /* payment_request_id */,
-           payments::mojom::PaymentHandlerResponseCallbackPtr>
+           payments::mojom::PaymentAppResponseCallbackPtr>
       payment_response_callbacks;
 
   // Pending callbacks for Payment Request Events.
@@ -690,6 +689,9 @@ void ServiceWorkerContextClient::WorkerContextFailedToStart() {
 }
 
 void ServiceWorkerContextClient::WorkerScriptLoaded() {
+  DCHECK(main_thread_task_runner_->RunsTasksInCurrentSequence());
+  DCHECK(!proxy_);
+
   (*instance_host_)->OnScriptLoaded();
 }
 
@@ -1081,15 +1083,15 @@ void ServiceWorkerContextClient::DidHandleSyncEvent(
 
 void ServiceWorkerContextClient::RespondToPaymentRequestEvent(
     int payment_request_id,
-    const blink::WebPaymentHandlerResponse& web_response,
+    const blink::WebPaymentAppResponse& web_response,
     double dispatch_event_time) {
-  const payments::mojom::PaymentHandlerResponseCallbackPtr& response_callback =
+  const payments::mojom::PaymentAppResponseCallbackPtr& response_callback =
       context_->payment_response_callbacks[payment_request_id];
-  payments::mojom::PaymentHandlerResponsePtr response =
-      payments::mojom::PaymentHandlerResponse::New();
+  payments::mojom::PaymentAppResponsePtr response =
+      payments::mojom::PaymentAppResponse::New();
   response->method_name = web_response.method_name.Utf8();
   response->stringified_details = web_response.stringified_details.Utf8();
-  response_callback->OnPaymentHandlerResponse(
+  response_callback->OnPaymentAppResponse(
       std::move(response), base::Time::FromDoubleT(dispatch_event_time));
   context_->payment_response_callbacks.erase(payment_request_id);
 }
@@ -1228,7 +1230,7 @@ void ServiceWorkerContextClient::DispatchSyncEvent(
 void ServiceWorkerContextClient::DispatchPaymentRequestEvent(
     int payment_request_id,
     payments::mojom::PaymentRequestEventDataPtr eventData,
-    payments::mojom::PaymentHandlerResponseCallbackPtr response_callback,
+    payments::mojom::PaymentAppResponseCallbackPtr response_callback,
     DispatchPaymentRequestEventCallback callback) {
   TRACE_EVENT0("ServiceWorker",
                "ServiceWorkerContextClient::DispatchPaymentRequestEvent");

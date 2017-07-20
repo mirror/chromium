@@ -137,10 +137,6 @@ void MockMediaSource::DemuxerOpenedTask() {
       kSourceId, base::Bind(&MockMediaSource::InitSegmentReceived,
                             base::Unretained(this)));
 
-  chunk_demuxer_->SetParseWarningCallback(
-      kSourceId,
-      base::Bind(&MockMediaSource::OnParseWarningMock, base::Unretained(this)));
-
   AppendData(initial_append_size_);
 }
 

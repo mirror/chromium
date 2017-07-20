@@ -92,9 +92,6 @@ bool IsPrinterXPS(HDC hdc) {
   return IsTechnology(hdc, kXPSDriver);
 }
 
-bool IsPrinterTextOnly(HDC hdc) {
-  return ::GetDeviceCaps(hdc, TECHNOLOGY) == DT_CHARSTREAM;
-}
 }  // namespace
 
 // static
@@ -154,11 +151,6 @@ void PrintSettingsInitializerWin::InitPrintSettings(
     DCHECK_EQ(3, level);
     print_settings->set_printer_type(
         PrintSettings::PrinterType::TYPE_POSTSCRIPT_LEVEL3);
-    return;
-  }
-  // Detects the generic / text only driver.
-  if (IsPrinterTextOnly(hdc)) {
-    print_settings->set_printer_type(PrintSettings::PrinterType::TYPE_TEXTONLY);
     return;
   }
   if (IsPrinterXPS(hdc)) {

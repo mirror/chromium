@@ -29,7 +29,6 @@ class Rect;
 }
 
 namespace headless {
-class HeadlessBrowser;
 class HeadlessBrowserImpl;
 class HeadlessTabSocketImpl;
 
@@ -44,8 +43,6 @@ class HEADLESS_EXPORT HeadlessWebContentsImpl
   ~HeadlessWebContentsImpl() override;
 
   static HeadlessWebContentsImpl* From(HeadlessWebContents* web_contents);
-  static HeadlessWebContentsImpl* From(HeadlessBrowser* browser,
-                                       content::WebContents* contents);
 
   static std::unique_ptr<HeadlessWebContentsImpl> Create(
       HeadlessWebContents::Builder* builder);

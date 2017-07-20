@@ -127,10 +127,6 @@ const base::Feature kHeapCompaction{"HeapCompaction",
 const base::Feature kIdleTimeSpellChecking{"IdleTimeSpellChecking",
                                            base::FEATURE_DISABLED_BY_DEFAULT};
 
-// Enable lazy initialization of the media controls.
-const base::Feature kLazyInitializeMediaControls{
-    "LazyInitializeMediaControls", base::FEATURE_ENABLED_BY_DEFAULT};
-
 // Enables lazily parsing css properties for performance.
 const base::Feature kLazyParseCSS{"LazyParseCSS",
                                   base::FEATURE_DISABLED_BY_DEFAULT};
@@ -239,10 +235,6 @@ const base::Feature kPepper3DImageChromium {
 const base::Feature kRenderingPipelineThrottling{
     "RenderingPipelineThrottling", base::FEATURE_ENABLED_BY_DEFAULT};
 
-// Collect renderer peak memory usage during page loads.
-const base::Feature kReportRendererPeakMemoryStats{
-    "ReportRendererPeakMemoryStats", base::FEATURE_DISABLED_BY_DEFAULT};
-
 // Require camera/mic requests from pepper plugins to be made from secure
 // origins.
 const base::Feature kRequireSecureOriginsForPepperMediaRequests{
@@ -268,11 +260,6 @@ const base::Feature kServiceWorkerScriptStreaming{
 // http://tc39.github.io/ecmascript_sharedmem/shmem.html
 const base::Feature kSharedArrayBuffer{"SharedArrayBuffer",
                                        base::FEATURE_ENABLED_BY_DEFAULT};
-
-// An experiment to require process isolation for the sign-in origin,
-// https://accounts.google.com.  Launch bug: https://crbug.com/739418.
-const base::Feature kSignInProcessIsolation{"sign-in-process-isolation",
-                                            base::FEATURE_DISABLED_BY_DEFAULT};
 
 // An experiment for skipping compositing small scrollers.
 const base::Feature kSkipCompositingSmallScrollers{
@@ -332,7 +319,7 @@ const base::Feature kWebAssembly{"WebAssembly",
 
 // Enable WebAssembly streamed compilation.
 const base::Feature kWebAssemblyStreaming{"WebAssemblyStreaming",
-                                          base::FEATURE_ENABLED_BY_DEFAULT};
+                                          base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Enable WebAssembly streamed compilation.
 const base::Feature kWebAssemblyTrapHandler{"WebAssemblyTrapHandler",
@@ -424,10 +411,6 @@ const base::Feature kWinSboxDisableExtensionPoints{
 #endif
 
 #if defined(OS_MACOSX)
-// Enables caching of media devices for the purpose of enumerating them.
-const base::Feature kDeviceMonitorMac{"DeviceMonitorMac",
-                                      base::FEATURE_ENABLED_BY_DEFAULT};
-
 // The V2 sandbox on MacOS removes the unsandboed warmup phase and sandboxes the
 // entire life of the process.
 const base::Feature kMacV2Sandbox{"MacV2Sandbox",

@@ -44,12 +44,9 @@ class WebContents;
 
 namespace resource_coordinator {
 
-class BackgroundTabNavigationThrottle;
-
 #if defined(OS_CHROMEOS)
 class TabManagerDelegate;
 #endif
-class TabManagerStatsCollector;
 
 // The TabManager periodically updates (see
 // |kAdjustmentIntervalSeconds| in the source) the status of renderers
@@ -75,8 +72,6 @@ class TabManagerStatsCollector;
 class TabManager : public TabStripModelObserver,
                    public chrome::BrowserListObserver {
  public:
-  // Forward declaration of tab signal observer.
-  class GRCTabSignalObserver;
   // Needs to be public for DEFINE_WEB_CONTENTS_USER_DATA_KEY.
   class WebContentsData;
 
@@ -162,7 +157,7 @@ class TabManager : public TabStripModelObserver,
 
   // Maybe throttle a tab's navigation based on current system status.
   content::NavigationThrottle::ThrottleCheckResult MaybeThrottleNavigation(
-      BackgroundTabNavigationThrottle* throttle);
+      content::NavigationHandle* navigation_handle);
 
   // Notifies TabManager that one navigation has finished (committed, aborted or
   // replaced). TabManager should clean up the NavigationHandle objects bookkept
@@ -212,14 +207,13 @@ class TabManager : public TabStripModelObserver,
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, FastShutdownSingleTabProcess);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest,
                            GetUnsortedTabStatsIsInVisibleWindow);
+  FRIEND_TEST_ALL_PREFIXES(TabManagerTest, HistogramsSessionRestoreSwitchToTab);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, DiscardTabWithNonVisibleTabs);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, MaybeThrottleNavigation);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, OnDidFinishNavigation);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, OnDidStopLoading);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, OnWebContentsDestroyed);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, OnDelayedTabSelected);
-  FRIEND_TEST_ALL_PREFIXES(TabManagerStatsCollectorTest,
-                           HistogramsSessionRestoreSwitchToTab);
 
   // Information about a Browser.
   struct BrowserInfo {
@@ -332,9 +326,6 @@ class TabManager : public TabStripModelObserver,
                      content::WebContents* contents,
                      int index,
                      bool foreground) override;
-  void TabClosingAt(TabStripModel* tab_strip_model,
-                    content::WebContents* contents,
-                    int index) override;
 
   // BrowserListObserver overrides.
   void OnBrowserSetLastActive(Browser* browser) override;
@@ -371,6 +362,10 @@ class TabManager : public TabStripModelObserver,
   void OnSessionRestoreStartedLoadingTabs();
   void OnSessionRestoreFinishedLoadingTabs();
 
+  // Records UMA histograms for the tab state when switching to a different tab
+  // during session restore.
+  void RecordSwitchToTab(content::WebContents* contents) const;
+
   // Returns true if the navigation should be delayed.
   bool ShouldDelayNavigation(
       content::NavigationHandle* navigation_handle) const;
@@ -382,11 +377,11 @@ class TabManager : public TabStripModelObserver,
   void ResumeTabNavigationIfNeeded(content::WebContents* contents);
 
   // Resume navigation.
-  void ResumeNavigation(BackgroundTabNavigationThrottle* throttle);
+  void ResumeNavigation(content::NavigationHandle* navigation_handle);
 
   // Remove the pending navigation for the provided WebContents. Return the
-  // removed NavigationThrottle. Return nullptr if it doesn't exists.
-  BackgroundTabNavigationThrottle* RemovePendingNavigationIfNeeded(
+  // removed navigation handle. Return nullptr if it doesn't exists.
+  content::NavigationHandle* RemovePendingNavigationIfNeeded(
       content::WebContents* contents);
 
   // Check if the tab is loading. Use only in tests.
@@ -465,20 +460,13 @@ class TabManager : public TabStripModelObserver,
   class TabManagerSessionRestoreObserver;
   std::unique_ptr<TabManagerSessionRestoreObserver> session_restore_observer_;
 
-  // The list of navigations that are delayed.
-  std::vector<BackgroundTabNavigationThrottle*> pending_navigations_;
+  // The list of navigation handles that are delayed.
+  std::vector<content::NavigationHandle*> pending_navigations_;
 
   // The tabs that are currently loading. We will consider loading the next
   // background tab when these tabs have finished loading or a background tab
   // is brought to foreground.
   std::set<content::WebContents*> loading_contents_;
-
-  // GRC tab signal observer, receives tab scoped signal from GRC.
-  std::unique_ptr<GRCTabSignalObserver> grc_tab_signal_observer_;
-
-  // Records UMAs for tab and system-related events and properties during
-  // session restore.
-  std::unique_ptr<TabManagerStatsCollector> tab_manager_stats_collector_;
 
   // Weak pointer factory used for posting delayed tasks.
   base::WeakPtrFactory<TabManager> weak_ptr_factory_;

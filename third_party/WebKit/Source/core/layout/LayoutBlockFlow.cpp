@@ -50,8 +50,6 @@
 #include "core/layout/line/InlineTextBox.h"
 #include "core/layout/line/LineWidth.h"
 #include "core/layout/ng/layout_ng_block_flow.h"
-#include "core/layout/ng/ng_layout_result.h"
-#include "core/layout/ng/ng_unpositioned_float.h"
 #include "core/layout/shapes/ShapeOutsideInfo.h"
 #include "core/paint/BlockFlowPaintInvalidator.h"
 #include "core/paint/PaintLayer.h"
@@ -503,16 +501,6 @@ void LayoutBlockFlow::ResetLayout() {
   if (!FirstChild() && !IsAnonymousBlock())
     SetChildrenInline(true);
   SetContainsInlineWithOutlineAndContinuation(false);
-
-  // Text truncation kicks in if overflow isn't visible and text-overflow isn't
-  // 'clip'. If this is an anonymous block, we have to examine the parent.
-  // FIXME: CSS3 says that descendants that are clipped must also know how to
-  // truncate. This is insanely difficult to figure out in general (especially
-  // in the middle of doing layout), so we only handle the simple case of an
-  // anonymous block truncating when its parent is clipped.
-  // Walk all the lines and delete our ellipsis line boxes if they exist.
-  if (ChildrenInline() && ShouldTruncateOverflowingText(this))
-    DeleteEllipsisLineBoxes();
 
   RebuildFloatsFromIntruding();
 

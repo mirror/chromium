@@ -51,7 +51,6 @@ void ResourceCoordinatorInterface::ConnectToService(
     const CoordinationUnitID& cu_id) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(connector);
-  cu_id_ = cu_id;
   mojom::CoordinationUnitProviderPtr provider;
   connector->BindInterface(mojom::kServiceName, mojo::MakeRequest(&provider));
 
@@ -67,13 +66,6 @@ void ResourceCoordinatorInterface::SendEvent(
   event->type = event_type;
 
   service_->SendEvent(std::move(event));
-}
-
-void ResourceCoordinatorInterface::SetProperty(
-    mojom::PropertyType property_type,
-    std::unique_ptr<base::Value> value) {
-  DCHECK(thread_checker_.CalledOnValidThread());
-  service_->SetProperty(property_type, std::move(value));
 }
 
 void ResourceCoordinatorInterface::AddChild(

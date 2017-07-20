@@ -24,10 +24,6 @@ const int kDefaultSampleRate = 48000;
 static const int kMinimumOutputBufferSize = 512;
 static const int kMaximumOutputBufferSize = 8192;
 static const int kDefaultOutputBufferSize = 2048;
-
-// TODO(jyw): Query the preferred value from media backend.
-static const int kDefaultInputBufferSize = 1024;
-
 }  // namespace
 
 namespace chromecast {
@@ -69,11 +65,10 @@ void CastAudioManager::GetAudioInputDeviceNames(
 ::media::AudioParameters CastAudioManager::GetInputStreamParameters(
     const std::string& device_id) {
   LOG(WARNING) << "No support for input audio devices";
-  // Need to send a valid AudioParameters object even when it will be unused.
+  // Need to send a valid AudioParameters object even when it will unused.
   return ::media::AudioParameters(
       ::media::AudioParameters::AUDIO_PCM_LOW_LATENCY,
-      ::media::CHANNEL_LAYOUT_STEREO, kDefaultSampleRate, 16,
-      kDefaultInputBufferSize);
+      ::media::CHANNEL_LAYOUT_STEREO, 48000, 16, 1024);
 }
 
 const char* CastAudioManager::GetName() {

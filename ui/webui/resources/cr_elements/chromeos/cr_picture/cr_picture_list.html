@@ -10,22 +10,18 @@
 <dom-module id="cr-picture-list">
   <template>
     <style include="cr-shared-style">
-      :host {
-        display: inline-block;
-        margin-top: -6px;
-      }
-
       img {
         border-radius: 4px;
         height: 64px;
-        margin: 6px;
+        margin: 8px;
+        padding: 2px;
         vertical-align: top;
         width: 64px;
       }
 
       img.iron-selected {
         border: 2px solid var(--google-blue-500);
-        margin: 4px;
+        padding: 0;
       }
 
       iron-icon {
@@ -34,16 +30,17 @@
         --iron-icon-width: 32px;
         border: 1px solid var(--google-grey-500);
         border-radius: 4px;
-        margin: 6px;
-        padding: 15px;
+        margin: 8px;
+        padding: 17px;
       }
 
       iron-icon.iron-selected {
         border: 2px solid var(--google-blue-500);
-        padding: 14px;
+        padding: 16px;
       }
 
       #container {
+        margin: -8px;
         outline: none;
       }
     </style>
@@ -60,12 +57,10 @@
             icon="cr:camera-alt" title="[[takePhotoLabel]]"
             hidden="[[!cameraPresent]]">
         </iron-icon>
-        <template is="dom-if" if="[[chooseFileLabel]]">
-          <!-- Selects the file picker as the picture source. -->
-          <iron-icon data-type$="[[selectionTypesEnum_.FILE]]" role="radio"
-              icon="cr:folder" title="[[chooseFileLabel]]">
-          </iron-icon>
-        </template>
+        <!-- Selects the file picker as the picture source. -->
+        <iron-icon data-type$="[[selectionTypesEnum_.FILE]]" role="radio"
+            icon="cr:folder" title="[[chooseFileLabel]]">
+        </iron-icon>
         <!-- Shows and selects the current profile picture. -->
         <img id="profileImage" role="radio"
             data-type$="[[selectionTypesEnum_.PROFILE]]"
@@ -80,8 +75,7 @@
         <template is="dom-repeat" items="[[defaultImages]]">
           <img role="radio"
               data-type$="[[selectionTypesEnum_.DEFAULT]]"
-              data-index$="[[index]]" src="[[item.url]]"
-              srcset="[[getImgSrc2x_(item.url)]]" title="[[item.title]]">
+              data-index$="[[index]]" src="[[item.url]]" title="[[item.title]]">
         </template>
       </iron-selector>
     </div>

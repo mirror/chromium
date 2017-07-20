@@ -27,11 +27,8 @@ class SkCanvasVideoRenderer;
 class VideoFrame;
 }
 
-namespace viz {
-class ContextProvider;
-}
-
 namespace cc {
+class ContextProvider;
 class ResourceProvider;
 
 class CC_EXPORT VideoFrameExternalResources {
@@ -75,7 +72,7 @@ class CC_EXPORT VideoFrameExternalResources {
 // resources consumable by the compositor.
 class CC_EXPORT VideoResourceUpdater {
  public:
-  VideoResourceUpdater(viz::ContextProvider* context_provider,
+  VideoResourceUpdater(ContextProvider* context_provider,
                        ResourceProvider* resource_provider,
                        bool use_stream_video_draw_quad);
   ~VideoResourceUpdater();
@@ -176,7 +173,7 @@ class CC_EXPORT VideoResourceUpdater {
                             bool lost_resource,
                             BlockingTaskRunner* main_thread_task_runner);
 
-  viz::ContextProvider* context_provider_;
+  ContextProvider* context_provider_;
   ResourceProvider* resource_provider_;
   const bool use_stream_video_draw_quad_;
   std::unique_ptr<media::SkCanvasVideoRenderer> video_renderer_;

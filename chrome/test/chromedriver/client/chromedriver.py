@@ -51,8 +51,6 @@ class UnexpectedAlertOpen(ChromeDriverException):
   pass
 class NoAlertOpen(ChromeDriverException):
   pass
-class NoSuchCookie(ChromeDriverException):
-  pass
 
 def _ExceptionForLegacyResponse(response):
   exception_class_map = {
@@ -73,8 +71,7 @@ def _ExceptionForLegacyResponse(response):
     27: NoAlertOpen,
     28: ScriptTimeout,
     32: InvalidSelector,
-    33: SessionNotCreatedException,
-    105: NoSuchCookie
+    33: SessionNotCreatedException
   }
   status = response['status']
   msg = response['value']['message']
@@ -99,8 +96,7 @@ def _ExceptionForStandardResponse(response):
     'no alert open': NoAlertOpen,
     'asynchronous script timeout': ScriptTimeout,
     'invalid selector': InvalidSelector,
-    'session not created exception': SessionNotCreatedException,
-    'no such cookie': NoSuchCookie
+    'session not created exception': SessionNotCreatedException
   }
 
   error = response['error']
@@ -402,9 +398,6 @@ class ChromeDriver(object):
 
   def GetCookies(self):
     return self.ExecuteCommand(Command.GET_COOKIES)
-
-  def GetNamedCookie(self, name):
-    return self.ExecuteCommand(Command.GET_NAMED_COOKIE, {'name': name})
 
   def AddCookie(self, cookie):
     self.ExecuteCommand(Command.ADD_COOKIE, {'cookie': cookie})

@@ -10,6 +10,8 @@
 #include "base/memory/ptr_util.h"
 #include "base/time/time.h"
 #include "base/values.h"
+#include "chrome/browser/vr/animation.h"
+#include "chrome/browser/vr/easing.h"
 #include "chrome/browser/vr/elements/ui_element.h"
 
 namespace vr {
@@ -24,10 +26,10 @@ void ApplyAnchoring(const UiElement& parent,
   float x_offset;
   switch (x_anchoring) {
     case XLEFT:
-      x_offset = -0.5f * parent.size().width();
+      x_offset = -0.5f * parent.size().x();
       break;
     case XRIGHT:
-      x_offset = 0.5f * parent.size().width();
+      x_offset = 0.5f * parent.size().x();
       break;
     case XNONE:
       x_offset = 0.0f;
@@ -36,10 +38,10 @@ void ApplyAnchoring(const UiElement& parent,
   float y_offset;
   switch (y_anchoring) {
     case YTOP:
-      y_offset = 0.5f * parent.size().height();
+      y_offset = 0.5f * parent.size().y();
       break;
     case YBOTTOM:
-      y_offset = -0.5f * parent.size().height();
+      y_offset = -0.5f * parent.size().y();
       break;
     case YNONE:
       y_offset = 0.0f;
@@ -77,14 +79,26 @@ void UiScene::RemoveUiElement(int element_id) {
 }
 
 void UiScene::AddAnimation(int element_id,
-                           std::unique_ptr<cc::Animation> animation) {
+                           std::unique_ptr<Animation> animation) {
   UiElement* element = GetUiElementById(element_id);
-  element->animation_player().AddAnimation(std::move(animation));
+  CHECK_NE(element, nullptr);
+  for (const std::unique_ptr<Animation>& existing : element->animations()) {
+    CHECK_NE(existing->id, animation->id);
+  }
+  element->animations().emplace_back(std::move(animation));
 }
 
 void UiScene::RemoveAnimation(int element_id, int animation_id) {
   UiElement* element = GetUiElementById(element_id);
-  element->animation_player().RemoveAnimation(animation_id);
+  CHECK_NE(element, nullptr);
+  auto& animations = element->animations();
+  for (auto it = animations.begin(); it != animations.end(); ++it) {
+    const Animation& existing_animation = **it;
+    if (existing_animation.id == animation_id) {
+      animations.erase(it);
+      return;
+    }
+  }
 }
 
 void UiScene::OnBeginFrame(const base::TimeTicks& current_time) {
@@ -228,14 +242,20 @@ void UiScene::ApplyRecursiveTransforms(UiElement* element) {
   }
 
   gfx::Transform transform;
-  transform.Scale(element->size().width(), element->size().height());
+  transform.Scale3d(element->size().x(), element->size().y(),
+                    element->size().z());
   element->set_computed_opacity(element->opacity());
   element->set_computed_lock_to_fov(element->lock_to_fov());
 
   // Compute an inheritable transformation that can be applied to this element,
   // and it's children, if applicable.
-  gfx::Transform inheritable = element->transform_operations().Apply();
-
+  gfx::Transform inheritable;
+  inheritable.matrix().postScale(element->scale().x(), element->scale().y(),
+                                 element->scale().z());
+  inheritable.ConcatTransform(gfx::Transform(element->rotation()));
+  inheritable.matrix().postTranslate(element->translation().x(),
+                                     element->translation().y(),
+                                     element->translation().z());
   if (parent) {
     ApplyAnchoring(*parent, element->x_anchoring(), element->y_anchoring(),
                    &inheritable);
@@ -248,7 +268,8 @@ void UiScene::ApplyRecursiveTransforms(UiElement* element) {
   }
 
   transform.ConcatTransform(inheritable);
-  element->set_screen_space_transform(transform);
+
+  element->set_transform(transform);
   element->set_inheritable_transform(inheritable);
   element->set_dirty(false);
 }

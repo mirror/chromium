@@ -26,15 +26,12 @@
 
 - (void)start {
   DCHECK(!self.browser->browser_state()->IsOffTheRecord());
-  // TODO(crbug.com/738881): Clean up the dispatcher mess here.
   self.viewController = [[SettingsCollectionViewController alloc]
-      initWithBrowserState:self.browser->browser_state()
-                dispatcher:nil];
+      initWithBrowserState:self.browser->browser_state()];
   [self.browser->dispatcher()
       startDispatchingToTarget:self
                    forProtocol:@protocol(SettingsMainPageCommands)];
-  self.viewController.settingsMainPageDispatcher =
-      static_cast<id<SettingsMainPageCommands>>(self.browser->dispatcher());
+  self.viewController.dispatcher = static_cast<id>(self.browser->dispatcher());
   [super start];
 }
 

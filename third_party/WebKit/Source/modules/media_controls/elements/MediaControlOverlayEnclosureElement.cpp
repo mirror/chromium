@@ -25,7 +25,8 @@ MediaControlOverlayEnclosureElement::PreDispatchEventHandler(Event* event) {
   // can prevent their translation to click events.
   if (event && (event->type() == EventTypeNames::click ||
                 event->type() == EventTypeNames::touchstart)) {
-    GetMediaControls().ShowOverlayCastButtonIfNeeded();
+    static_cast<MediaControlsImpl&>(GetMediaControls())
+        .ShowOverlayCastButtonIfNeeded();
   }
   return MediaControlDivElement::PreDispatchEventHandler(event);
 }

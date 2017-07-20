@@ -35,9 +35,6 @@ typedef NS_ENUM(NSUInteger, PaymentRequestSelectorState) {
 // Whether or not the view controller supports edit mode.
 - (BOOL)allowsEditMode;
 
-// The title to display in the view controller.
-- (NSString*)title;
-
 // The header item to display in the collection, if any.
 - (CollectionViewItem*)headerItem;
 

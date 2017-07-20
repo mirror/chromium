@@ -5,12 +5,12 @@
 #include "ash/system/lock_screen_action/lock_screen_action_tray.h"
 
 #include "ash/resources/vector_icons/vector_icons.h"
-#include "ash/session/test_session_controller_client.h"
 #include "ash/shelf/shelf_constants.h"
 #include "ash/shell.h"
 #include "ash/system/status_area_widget.h"
-#include "ash/system/status_area_widget_test_helper.h"
 #include "ash/test/ash_test_base.h"
+#include "ash/test/status_area_widget_test_helper.h"
+#include "ash/test/test_session_controller_client.h"
 #include "ash/tray_action/tray_action.h"
 #include "base/macros.h"
 #include "components/session_manager/session_manager_types.h"
@@ -53,7 +53,7 @@ class TestTrayActionClient : public mojom::TrayActionClient {
   DISALLOW_COPY_AND_ASSIGN(TestTrayActionClient);
 };
 
-class LockScreenActionTrayTest : public AshTestBase {
+class LockScreenActionTrayTest : public test::AshTestBase {
  public:
   LockScreenActionTrayTest() = default;
   ~LockScreenActionTrayTest() override = default;

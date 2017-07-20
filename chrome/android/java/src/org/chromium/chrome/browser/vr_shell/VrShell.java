@@ -46,11 +46,6 @@ public interface VrShell {
     boolean getWebVrModeEnabled();
 
     /**
-     * Returns true if our URL bar is showing a string.
-     */
-    boolean isDisplayingUrlForTesting();
-
-    /**
      * Returns the GVRLayout as a FrameLayout.
      */
     FrameLayout getContainer();

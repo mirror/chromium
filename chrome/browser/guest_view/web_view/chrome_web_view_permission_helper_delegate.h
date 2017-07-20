@@ -72,8 +72,6 @@ class ChromeWebViewPermissionHelperDelegate :
                             const std::string& user_input);
 #endif  // BUILDFLAG(ENABLE_PLUGINS)
 
-  void OnOpenPDF(const GURL& url);
-
   void OnGeolocationPermissionResponse(
       int bridge_id,
       bool user_gesture,

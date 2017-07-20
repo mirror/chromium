@@ -12,18 +12,11 @@
 #include "ui/views/layout/grid_layout.h"
 #include "ui/views/layout/layout_provider.h"
 
-enum ChromeInsetsMetric {
-  // Margins used by toasts.
-  INSETS_TOAST = views::VIEWS_INSETS_END,
-};
-
 enum ChromeDistanceMetric {
   // Default minimum width of a button.
   DISTANCE_BUTTON_MINIMUM_WIDTH = views::VIEWS_DISTANCE_END,
   // Vertical spacing between a list of multiple controls in one column.
   DISTANCE_CONTROL_LIST_VERTICAL,
-  // The combined vertical padding applied to text in a control.
-  DISTANCE_CONTROL_TOTAL_VERTICAL_TEXT_PADDING,
   // Smaller horizontal spacing between other controls that are logically
   // related.
   DISTANCE_RELATED_CONTROL_HORIZONTAL_SMALL,
@@ -38,10 +31,6 @@ enum ChromeDistanceMetric {
   // Horizontal indent of a subsection relative to related items above, e.g.
   // checkboxes below explanatory text/headings.
   DISTANCE_SUBSECTION_HORIZONTAL_INDENT,
-  // Vertical margin for controls in a toast.
-  DISTANCE_TOAST_CONTROL_VERTICAL,
-  // Vertical margin for labels in a toast.
-  DISTANCE_TOAST_LABEL_VERTICAL,
   // Horizontal spacing between controls that are logically unrelated.
   DISTANCE_UNRELATED_CONTROL_HORIZONTAL,
   // Larger horizontal spacing between unrelated controls.
@@ -58,12 +47,7 @@ class ChromeLayoutProvider : public views::LayoutProvider {
   static ChromeLayoutProvider* Get();
   static std::unique_ptr<views::LayoutProvider> CreateLayoutProvider();
 
-  // Calculates the control height based on the |font|'s reported glyph height,
-  // the default line spacing and DISTANCE_CONTROL_TOTAL_VERTICAL_TEXT_PADDING.
-  static int GetControlHeightForFont(const gfx::FontList& font);
-
   // views::LayoutProvider:
-  gfx::Insets GetInsetsMetric(int metric) const override;
   int GetDistanceMetric(int metric) const override;
   const views::TypographyProvider& GetTypographyProvider() const override;
 

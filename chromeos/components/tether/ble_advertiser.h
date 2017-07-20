@@ -61,12 +61,6 @@ class BleAdvertiser {
       : public device::BluetoothAdapter::Observer,
         public device::BluetoothAdvertisement::Observer {
    public:
-    static void OnAdvertisementRegistered(
-        base::WeakPtr<BleAdvertiser::IndividualAdvertisement>
-            individual_advertisement,
-        const std::string& associated_device_id,
-        scoped_refptr<device::BluetoothAdvertisement> advertisement);
-
     IndividualAdvertisement(
         const std::string& device_id,
         scoped_refptr<device::BluetoothAdapter> adapter,

@@ -165,6 +165,7 @@ class WorkerThreadableLoader final : public ThreadableLoader {
     void DidFinishLoading(unsigned long identifier,
                           double finish_time) override;
     void DidFail(const ResourceError&) override;
+    void DidFailAccessControlCheck(const ResourceError&) override;
     void DidFailRedirectCheck() override;
     void DidReceiveResourceTiming(const ResourceTimingInfo&) override;
 
@@ -203,6 +204,7 @@ class WorkerThreadableLoader final : public ThreadableLoader {
   void DidReceiveCachedMetadata(std::unique_ptr<Vector<char>> data);
   void DidFinishLoading(unsigned long identifier, double finish_time);
   void DidFail(const ResourceError&);
+  void DidFailAccessControlCheck(const ResourceError&);
   void DidFailRedirectCheck();
   void DidDownloadData(int data_length);
   void DidReceiveResourceTiming(

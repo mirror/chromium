@@ -48,8 +48,7 @@ DEFINE_TRACE(GenericEventQueue) {
   EventQueue::Trace(visitor);
 }
 
-bool GenericEventQueue::EnqueueEvent(const WebTraceLocation& from_here,
-                                     Event* event) {
+bool GenericEventQueue::EnqueueEvent(Event* event) {
   if (is_closed_)
     return false;
 
@@ -64,7 +63,7 @@ bool GenericEventQueue::EnqueueEvent(const WebTraceLocation& from_here,
   pending_events_.push_back(event);
 
   if (!timer_.IsActive())
-    timer_.StartOneShot(0, from_here);
+    timer_.StartOneShot(0, BLINK_FROM_HERE);
 
   return true;
 }

@@ -22,10 +22,6 @@
 #error "This file requires ARC support."
 #endif
 
-namespace {
-NSString* const kTestTitle = @"title";
-}  // namespace
-
 @interface TestPaymentRequestEditMediator
     : NSObject<PaymentRequestEditViewControllerDataSource>
 
@@ -37,10 +33,6 @@ NSString* const kTestTitle = @"title";
 
 @synthesize state = _state;
 @synthesize consumer = _consumer;
-
-- (NSString*)title {
-  return kTestTitle;
-}
 
 - (CollectionViewItem*)headerItem {
   return [[CollectionViewTextItem alloc] init];
@@ -109,7 +101,6 @@ TEST_F(PaymentRequestEditViewControllerTest, TestModel) {
   CheckController();
 
   [GetPaymentRequestEditViewController() loadModel];
-  CheckTitle(kTestTitle);
 
   // There is one section containing the header item, In addition to that, there
   // is one section for every form field (there are three fields in total) and

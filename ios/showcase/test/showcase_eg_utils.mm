@@ -39,12 +39,7 @@ namespace showcase_utils {
 void Open(NSString* name) {
   [[EarlGrey selectElementWithMatcher:HomeScreen()]
       performAction:grey_scrollToContentEdge(kGREYContentEdgeTop)];
-  // Matcher for the UI element that has the accessibility label |name| and is
-  // sufficiently visible, so EarlGrey will not attempt to tap a partially
-  // hidden UI element.
-  id<GREYMatcher> visibleCellWithAccessibilityLabelMatcher = grey_allOf(
-      grey_accessibilityLabel(name), grey_sufficientlyVisible(), nil);
-  [[[EarlGrey selectElementWithMatcher:visibleCellWithAccessibilityLabelMatcher]
+  [[[EarlGrey selectElementWithMatcher:grey_accessibilityLabel(name)]
          usingSearchAction:grey_scrollInDirection(kGREYDirectionDown, 200)
       onElementWithMatcher:HomeScreen()] performAction:grey_tap()];
 }

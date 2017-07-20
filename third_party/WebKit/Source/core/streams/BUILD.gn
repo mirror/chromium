@@ -9,6 +9,8 @@ blink_core_sources("streams") {
     "ReadableStreamController.h",
     "ReadableStreamOperations.cpp",
     "ReadableStreamOperations.h",
+    "Stream.cpp",
+    "Stream.h",
     "UnderlyingSourceBase.cpp",
     "UnderlyingSourceBase.h",
   ]

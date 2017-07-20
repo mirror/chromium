@@ -4,6 +4,7 @@
 
 #include "chrome/browser/android/tab_state.h"
 
+#include <jni.h>
 #include <stddef.h>
 #include <stdint.h>
 
@@ -562,4 +563,8 @@ static void CreateHistoricalTab(JNIEnv* env,
           env, clazz, state, saved_state_version, true)));
   if (web_contents.get())
     TabAndroid::CreateHistoricalTabFromContents(web_contents.get());
+}
+
+bool RegisterTabState(JNIEnv* env) {
+  return RegisterNativesImpl(env);
 }

@@ -30,7 +30,7 @@
 
 #include "public/web/WebArrayBuffer.h"
 
-#include "core/typed_arrays/DOMArrayBuffer.h"
+#include "core/dom/DOMArrayBuffer.h"
 
 namespace blink {
 

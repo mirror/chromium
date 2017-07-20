@@ -7,7 +7,6 @@
 #include "base/i18n/case_conversion.h"
 #include "base/i18n/rtl.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
@@ -627,17 +626,7 @@ bool MenuController::OnMouseDragged(SubmenuView* source,
       SetSelection(part.menu ? part.menu : state_.item, SELECTION_OPEN_SUBMENU);
     }
   } else if (part.type == MenuPart::NONE) {
-    // If there is a sibling menu, show it. Otherwise, if the user has selected
-    // a menu item with no accompanying sibling menu or submenu, move selection
-    // back to the parent menu item.
-    if (!ShowSiblingMenu(source, event.location())) {
-      if (!part.is_scroll() && pending_state_.item &&
-          pending_state_.item->GetParentMenuItem() &&
-          !pending_state_.item->SubmenuIsShowing()) {
-        SetSelection(pending_state_.item->GetParentMenuItem(),
-                     SELECTION_OPEN_SUBMENU);
-      }
-    }
+    ShowSiblingMenu(source, event.location());
   }
   UpdateActiveMouseView(source, event, mouse_menu);
 
@@ -1339,7 +1328,8 @@ void MenuController::OnKeyDown(ui::KeyboardCode key_code) {
     case ui::VKEY_ESCAPE:
       if (!state_.item->GetParentMenuItem() ||
           (!state_.item->GetParentMenuItem()->GetParentMenuItem() &&
-           (!state_.item->SubmenuIsShowing()))) {
+           (!state_.item->HasSubmenu() ||
+            !state_.item->GetSubmenu()->IsShowing()))) {
         // User pressed escape and current menu has no submenus. If we are
         // nested, close the current menu on the stack. Otherwise fully exit the
         // menu.
@@ -1642,7 +1632,7 @@ MenuController::MenuPart MenuController::GetMenuPartByScreenCoordinateUsingMenu(
     const gfx::Point& screen_loc) {
   MenuPart part;
   for (; item; item = item->GetParentMenuItem()) {
-    if (item->SubmenuIsShowing() &&
+    if (item->HasSubmenu() && item->GetSubmenu()->IsShowing() &&
         GetMenuPartByScreenCoordinateImpl(item->GetSubmenu(), screen_loc,
                                           &part)) {
       return part;
@@ -1773,7 +1763,8 @@ void MenuController::CommitPendingSelection() {
     } else {
       state_.submenu_open = false;
     }
-  } else if (state_.item->SubmenuIsShowing()) {
+  } else if (state_.item->HasSubmenu() &&
+             state_.item->GetSubmenu()->IsShowing()) {
     state_.item->GetSubmenu()->Hide();
   }
 
@@ -1783,7 +1774,7 @@ void MenuController::CommitPendingSelection() {
     bool found = false;
     for (MenuItemView* item = state_.item; item && !found;
          item = item->GetParentMenuItem()) {
-      found = (item->SubmenuIsShowing() &&
+      found = (item->HasSubmenu() && item->GetSubmenu()->IsShowing() &&
                item->GetSubmenu() == scroll_task_->submenu());
     }
     if (!found)
@@ -2192,7 +2183,8 @@ void MenuController::IncrementSelection(
     SelectionIncrementDirectionType direction) {
   MenuItemView* item = pending_state_.item;
   DCHECK(item);
-  if (pending_state_.submenu_open && item->SubmenuIsShowing()) {
+  if (pending_state_.submenu_open && item->HasSubmenu() &&
+      item->GetSubmenu()->IsShowing()) {
     // A menu is selected and open, but none of its children are selected,
     // select the first menu item that is visible and enabled.
     if (item->GetSubmenu()->GetMenuItemCount()) {
@@ -2285,7 +2277,7 @@ void MenuController::CloseSubmenu() {
   DCHECK(item);
   if (!item->GetParentMenuItem())
     return;
-  if (item->SubmenuIsShowing())
+  if (item->HasSubmenu() && item->GetSubmenu()->IsShowing())
     SetSelection(item, SELECTION_UPDATE_IMMEDIATELY);
   else if (item->GetParentMenuItem()->GetParentMenuItem())
     SetSelection(item->GetParentMenuItem(), SELECTION_UPDATE_IMMEDIATELY);
@@ -2353,7 +2345,7 @@ void MenuController::SelectByChar(base::char16 character) {
   base::char16 char_array[] = { character, 0 };
   base::char16 key = base::i18n::ToLower(char_array)[0];
   MenuItemView* item = pending_state_.item;
-  if (!item->SubmenuIsShowing())
+  if (!item->HasSubmenu() || !item->GetSubmenu()->IsShowing())
     item = item->GetParentMenuItem();
   DCHECK(item);
   DCHECK(item->HasSubmenu());
@@ -2679,7 +2671,8 @@ void MenuController::HandleMouseLocation(SubmenuView* source,
     SetSelection(part.menu, SELECTION_OPEN_SUBMENU);
   } else if (!part.is_scroll() && pending_state_.item &&
              pending_state_.item->GetParentMenuItem() &&
-             !pending_state_.item->SubmenuIsShowing()) {
+             (!pending_state_.item->HasSubmenu() ||
+              !pending_state_.item->GetSubmenu()->IsShowing())) {
     // On exit if the user hasn't selected an item with a submenu, move the
     // selection back to the parent menu item.
     SetSelection(pending_state_.item->GetParentMenuItem(),

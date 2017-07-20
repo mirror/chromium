@@ -500,7 +500,7 @@ TEST_F(ResourceFetcherTest, PreloadResourceTwice) {
   fetcher->ClearPreloads(ResourceFetcher::kClearAllPreloads);
   EXPECT_FALSE(fetcher->ContainsAsPreload(resource));
   EXPECT_FALSE(GetMemoryCache()->Contains(resource));
-  EXPECT_TRUE(resource->IsUnusedPreload());
+  EXPECT_FALSE(resource->IsPreloaded());
 }
 
 TEST_F(ResourceFetcherTest, LinkPreloadResourceAndUse) {
@@ -534,7 +534,7 @@ TEST_F(ResourceFetcherTest, LinkPreloadResourceAndUse) {
   // DCL reached
   fetcher->ClearPreloads(ResourceFetcher::kClearSpeculativeMarkupPreloads);
   EXPECT_TRUE(GetMemoryCache()->Contains(resource));
-  EXPECT_FALSE(resource->IsUnusedPreload());
+  EXPECT_FALSE(resource->IsPreloaded());
 }
 
 TEST_F(ResourceFetcherTest, PreloadMatchWithBypassingCache) {
@@ -593,21 +593,21 @@ TEST_F(ResourceFetcherTest, RepetitiveLinkPreloadShouldBeMerged) {
 
   Resource* resource1 = MockResource::Fetch(fetch_params_for_preload, fetcher);
   ASSERT_TRUE(resource1);
-  EXPECT_TRUE(resource1->IsUnusedPreload());
+  EXPECT_TRUE(resource1->IsPreloaded());
   EXPECT_TRUE(fetcher->ContainsAsPreload(resource1));
   Platform::Current()->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
 
   // The second preload fetch returns the first preload.
   Resource* resource2 = MockResource::Fetch(fetch_params_for_preload, fetcher);
   EXPECT_TRUE(fetcher->ContainsAsPreload(resource1));
-  EXPECT_TRUE(resource1->IsUnusedPreload());
+  EXPECT_TRUE(resource1->IsPreloaded());
   EXPECT_EQ(resource1, resource2);
 
   // preload matching
   Resource* resource3 = MockResource::Fetch(fetch_params_for_request, fetcher);
   EXPECT_EQ(resource1, resource3);
   EXPECT_FALSE(fetcher->ContainsAsPreload(resource1));
-  EXPECT_FALSE(resource1->IsUnusedPreload());
+  EXPECT_FALSE(resource1->IsPreloaded());
 }
 
 TEST_F(ResourceFetcherTest, RepetitiveSpeculativePreloadShouldBeMerged) {
@@ -623,21 +623,21 @@ TEST_F(ResourceFetcherTest, RepetitiveSpeculativePreloadShouldBeMerged) {
 
   Resource* resource1 = MockResource::Fetch(fetch_params_for_preload, fetcher);
   ASSERT_TRUE(resource1);
-  EXPECT_TRUE(resource1->IsUnusedPreload());
+  EXPECT_TRUE(resource1->IsPreloaded());
   EXPECT_TRUE(fetcher->ContainsAsPreload(resource1));
   Platform::Current()->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
 
   // The second preload fetch returns the first preload.
   Resource* resource2 = MockResource::Fetch(fetch_params_for_preload, fetcher);
   EXPECT_TRUE(fetcher->ContainsAsPreload(resource1));
-  EXPECT_TRUE(resource1->IsUnusedPreload());
+  EXPECT_TRUE(resource1->IsPreloaded());
   EXPECT_EQ(resource1, resource2);
 
   // preload matching
   Resource* resource3 = MockResource::Fetch(fetch_params_for_request, fetcher);
   EXPECT_EQ(resource1, resource3);
   EXPECT_FALSE(fetcher->ContainsAsPreload(resource1));
-  EXPECT_FALSE(resource1->IsUnusedPreload());
+  EXPECT_FALSE(resource1->IsPreloaded());
 }
 
 TEST_F(ResourceFetcherTest, SpeculativePreloadShouldBePromotedToLinkePreload) {
@@ -657,7 +657,7 @@ TEST_F(ResourceFetcherTest, SpeculativePreloadShouldBePromotedToLinkePreload) {
   Resource* resource1 =
       MockResource::Fetch(fetch_params_for_speculative_preload, fetcher);
   ASSERT_TRUE(resource1);
-  EXPECT_TRUE(resource1->IsUnusedPreload());
+  EXPECT_TRUE(resource1->IsPreloaded());
   EXPECT_FALSE(resource1->IsLinkPreload());
   EXPECT_TRUE(fetcher->ContainsAsPreload(resource1));
   Platform::Current()->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
@@ -666,7 +666,7 @@ TEST_F(ResourceFetcherTest, SpeculativePreloadShouldBePromotedToLinkePreload) {
   Resource* resource2 =
       MockResource::Fetch(fetch_params_for_link_preload, fetcher);
   EXPECT_TRUE(fetcher->ContainsAsPreload(resource1));
-  EXPECT_TRUE(resource1->IsUnusedPreload());
+  EXPECT_TRUE(resource1->IsPreloaded());
   EXPECT_TRUE(resource1->IsLinkPreload());
   EXPECT_EQ(resource1, resource2);
 
@@ -674,7 +674,7 @@ TEST_F(ResourceFetcherTest, SpeculativePreloadShouldBePromotedToLinkePreload) {
   Resource* resource3 = MockResource::Fetch(fetch_params_for_request, fetcher);
   EXPECT_EQ(resource1, resource3);
   EXPECT_FALSE(fetcher->ContainsAsPreload(resource1));
-  EXPECT_FALSE(resource1->IsUnusedPreload());
+  EXPECT_FALSE(resource1->IsPreloaded());
   EXPECT_FALSE(resource1->IsLinkPreload());
 }
 
@@ -733,40 +733,6 @@ TEST_F(ResourceFetcherTest, ContentTypeDataURL) {
   EXPECT_EQ(ResourceStatus::kCached, resource->GetStatus());
   EXPECT_EQ("text/testmimetype", resource->GetResponse().MimeType());
   EXPECT_EQ("text/testmimetype", resource->GetResponse().HttpContentType());
-}
-
-TEST_F(ResourceFetcherTest, ContentIdURL) {
-  KURL url(kParsedURLString, "cid:0123456789@example.com");
-  ResourceResponse response;
-  response.SetURL(url);
-  response.SetHTTPStatusCode(200);
-  RegisterMockedURLLoadWithCustomResponse(url, response);
-
-  ResourceFetcher* fetcher = ResourceFetcher::Create(Context());
-
-  // Fetching a main resource with the Content-ID scheme must be canceled if
-  // there is no MHTMLArchive.
-  {
-    ResourceRequest resource_request(url);
-    resource_request.SetRequestContext(WebURLRequest::kRequestContextIframe);
-    resource_request.SetFrameType(WebURLRequest::kFrameTypeNested);
-    FetchParameters fetch_params(resource_request);
-    RawResource* resource =
-        RawResource::FetchMainResource(fetch_params, fetcher, SubstituteData());
-    EXPECT_EQ(nullptr, resource);
-  }
-
-  // For all the other resource type, it must not be canceled.
-  // Note: It is important not to cancel them because there are some embedders
-  // of WebView that are using Content-ID URLs for sub-resources, even without
-  // any MHTMLArchive. Please see https://crbug.com/739658.
-  {
-    ResourceRequest resource_request(url);
-    resource_request.SetRequestContext(WebURLRequest::kRequestContextVideo);
-    FetchParameters fetch_params(resource_request);
-    RawResource* resource = RawResource::FetchMedia(fetch_params, fetcher);
-    EXPECT_NE(nullptr, resource);
-  }
 }
 
 }  // namespace blink

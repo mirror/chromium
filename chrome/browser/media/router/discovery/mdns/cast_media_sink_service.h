@@ -16,7 +16,6 @@
 #include "chrome/browser/media/router/discovery/media_sink_service_base.h"
 #include "components/cast_channel/cast_channel_enum.h"
 #include "components/cast_channel/cast_socket.h"
-#include "content/public/browser/browser_thread.h"
 #include "net/base/ip_endpoint.h"
 
 namespace cast_channel {
@@ -120,13 +119,8 @@ class CastMediaSinkService
   // Service list from current round of discovery.
   DnsSdRegistry::DnsSdServiceList current_services_;
 
-  // Raw pointer of leaky singleton CastSocketService, which manages creating
-  // and removing Cast sockets.
-  cast_channel::CastSocketService* const cast_socket_service_;
-
-  std::unique_ptr<cast_channel::CastSocket::Observer,
-                  content::BrowserThread::DeleteOnIOThread>
-      observer_;
+  // Service managing creating and removing cast channels.
+  scoped_refptr<cast_channel::CastSocketService> cast_socket_service_;
 
   THREAD_CHECKER(thread_checker_);
 

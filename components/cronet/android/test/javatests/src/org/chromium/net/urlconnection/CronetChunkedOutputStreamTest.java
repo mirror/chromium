@@ -104,7 +104,6 @@ public class CronetChunkedOutputStreamTest extends CronetTestBase {
                         NetworkException.ERROR_CONNECTION_REFUSED, requestException.getErrorCode());
             }
         }
-        connection.disconnect();
         // Restarting server to run the test for a second time.
         assertTrue(NativeTestServer.startNativeTestServer(getContext()));
     }

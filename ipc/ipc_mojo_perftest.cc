@@ -10,13 +10,11 @@
 #include "base/process/process_metrics.h"
 #include "base/run_loop.h"
 #include "base/strings/stringprintf.h"
-#include "base/synchronization/waitable_event.h"
 #include "base/test/perf_time_logger.h"
 #include "base/test/test_io_thread.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "ipc/ipc_channel_mojo.h"
-#include "ipc/ipc_sync_channel.h"
 #include "ipc/ipc_test.mojom.h"
 #include "ipc/ipc_test_base.h"
 #include "mojo/edk/embedder/embedder.h"
@@ -26,18 +24,49 @@
 #include "mojo/public/cpp/bindings/binding.h"
 #include "mojo/public/cpp/system/message_pipe.h"
 
-#define IPC_MESSAGE_IMPL
-#include "ipc/ipc_message_macros.h"
-
-#define IPC_MESSAGE_START TestMsgStart
-
-IPC_MESSAGE_CONTROL0(TestMsg_Hello)
-IPC_MESSAGE_CONTROL0(TestMsg_Quit)
-IPC_MESSAGE_CONTROL1(TestMsg_Ping, std::string)
-IPC_SYNC_MESSAGE_CONTROL1_1(TestMsg_SyncPing, std::string, std::string)
-
 namespace IPC {
 namespace {
+
+// This class simply collects stats about abstract "events" (each of which has a
+// start time and an end time).
+class EventTimeTracker {
+ public:
+  explicit EventTimeTracker(const char* name) : name_(name), count_(0) {}
+
+  void AddEvent(const base::TimeTicks& start, const base::TimeTicks& end) {
+    DCHECK(end >= start);
+    count_++;
+    base::TimeDelta duration = end - start;
+    total_duration_ += duration;
+    max_duration_ = std::max(max_duration_, duration);
+  }
+
+  void ShowResults() const {
+    VLOG(1) << name_ << " count: " << count_;
+    VLOG(1) << name_ << " total duration: " << total_duration_.InMillisecondsF()
+            << " ms";
+    VLOG(1) << name_ << " average duration: "
+            << (total_duration_.InMillisecondsF() / static_cast<double>(count_))
+            << " ms";
+    VLOG(1) << name_ << " maximum duration: " << max_duration_.InMillisecondsF()
+            << " ms";
+  }
+
+  void Reset() {
+    count_ = 0;
+    total_duration_ = base::TimeDelta();
+    max_duration_ = base::TimeDelta();
+  }
+
+ private:
+  const std::string name_;
+
+  uint64_t count_;
+  base::TimeDelta total_duration_;
+  base::TimeDelta max_duration_;
+
+  DISALLOW_COPY_AND_ASSIGN(EventTimeTracker);
+};
 
 class PerformanceChannelListener : public Listener {
  public:
@@ -46,8 +75,8 @@ class PerformanceChannelListener : public Listener {
         sender_(NULL),
         msg_count_(0),
         msg_size_(0),
-        sync_(false),
-        count_down_(0) {
+        count_down_(0),
+        latency_tracker_("Server messages") {
     VLOG(1) << "Server listener up";
   }
 
@@ -59,11 +88,10 @@ class PerformanceChannelListener : public Listener {
   }
 
   // Call this before running the message loop.
-  void SetTestParams(int msg_count, size_t msg_size, bool sync) {
+  void SetTestParams(int msg_count, size_t msg_size) {
     DCHECK_EQ(0, count_down_);
     msg_count_ = msg_count;
     msg_size_ = msg_size;
-    sync_ = sync;
     count_down_ = msg_count_;
     payload_ = std::string(msg_size_, 'a');
   }
@@ -71,61 +99,58 @@ class PerformanceChannelListener : public Listener {
   bool OnMessageReceived(const Message& message) override {
     CHECK(sender_);
 
-    bool handled = true;
-    IPC_BEGIN_MESSAGE_MAP(PerformanceChannelListener, message)
-      IPC_MESSAGE_HANDLER(TestMsg_Hello, OnHello)
-      IPC_MESSAGE_HANDLER(TestMsg_Ping, OnPing)
-      IPC_MESSAGE_UNHANDLED(handled = false)
-    IPC_END_MESSAGE_MAP()
-    return handled;
-  }
+    base::PickleIterator iter(message);
+    int64_t time_internal;
+    EXPECT_TRUE(iter.ReadInt64(&time_internal));
+    int msgid;
+    EXPECT_TRUE(iter.ReadInt(&msgid));
+    std::string reflected_payload;
+    EXPECT_TRUE(iter.ReadString(&reflected_payload));
 
-  void OnHello() {
-    // Start timing on hello.
-    DCHECK(!perf_logger_.get());
-    std::string test_name =
-        base::StringPrintf("IPC_%s_Perf_%dx_%u", label_.c_str(), msg_count_,
-                           static_cast<unsigned>(msg_size_));
-    perf_logger_.reset(new base::PerfTimeLogger(test_name.c_str()));
-    if (sync_) {
-      for (int i = 0; i < count_down_; ++i) {
-        std::string response;
-        sender_->Send(new TestMsg_SyncPing(payload_, &response));
-        DCHECK_EQ(response, payload_);
-      }
-      perf_logger_.reset();
-      base::MessageLoop::current()->QuitWhenIdle();
-    } else {
-      SendPong();
-    }
-  }
-
-  void OnPing(const std::string& payload) {
     // Include message deserialization in latency.
-    DCHECK_EQ(payload_.size(), payload.size());
+    base::TimeTicks now = base::TimeTicks::Now();
 
-    CHECK(count_down_ > 0);
-    count_down_--;
-    if (count_down_ == 0) {
-      perf_logger_.reset();  // Stop the perf timer now.
-      base::MessageLoop::current()->QuitWhenIdle();
-      return;
+    if (reflected_payload == "hello") {
+      // Start timing on hello.
+      latency_tracker_.Reset();
+      DCHECK(!perf_logger_.get());
+      std::string test_name =
+          base::StringPrintf("IPC_%s_Perf_%dx_%u", label_.c_str(), msg_count_,
+                             static_cast<unsigned>(msg_size_));
+      perf_logger_.reset(new base::PerfTimeLogger(test_name.c_str()));
+    } else {
+      DCHECK_EQ(payload_.size(), reflected_payload.size());
+
+      latency_tracker_.AddEvent(
+          base::TimeTicks::FromInternalValue(time_internal), now);
+
+      CHECK(count_down_ > 0);
+      count_down_--;
+      if (count_down_ == 0) {
+        perf_logger_.reset();  // Stop the perf timer now.
+        latency_tracker_.ShowResults();
+        base::MessageLoop::current()->QuitWhenIdle();
+        return true;
+      }
     }
 
-    SendPong();
+    Message* msg = new Message(0, 2, Message::PRIORITY_NORMAL);
+    msg->WriteInt64(base::TimeTicks::Now().ToInternalValue());
+    msg->WriteInt(count_down_);
+    msg->WriteString(payload_);
+    sender_->Send(msg);
+    return true;
   }
-
-  void SendPong() { sender_->Send(new TestMsg_Ping(payload_)); }
 
  private:
   std::string label_;
   Sender* sender_;
   int msg_count_;
   size_t msg_size_;
-  bool sync_;
 
   int count_down_;
   std::string payload_;
+  EventTimeTracker latency_tracker_;
   std::unique_ptr<base::PerfTimeLogger> perf_logger_;
 };
 
@@ -134,46 +159,58 @@ class PerformanceChannelListener : public Listener {
 // "quit" is sent, it will exit.
 class ChannelReflectorListener : public Listener {
  public:
-  ChannelReflectorListener() : channel_(NULL) {
+  ChannelReflectorListener()
+      : channel_(NULL), latency_tracker_("Client messages") {
     VLOG(1) << "Client listener up";
   }
 
-  ~ChannelReflectorListener() override { VLOG(1) << "Client listener down"; }
+  ~ChannelReflectorListener() override {
+    VLOG(1) << "Client listener down";
+    latency_tracker_.ShowResults();
+  }
 
-  void Init(Sender* channel) {
+  void Init(Channel* channel) {
     DCHECK(!channel_);
     channel_ = channel;
   }
 
   bool OnMessageReceived(const Message& message) override {
     CHECK(channel_);
-    bool handled = true;
-    IPC_BEGIN_MESSAGE_MAP(ChannelReflectorListener, message)
-      IPC_MESSAGE_HANDLER(TestMsg_Hello, OnHello)
-      IPC_MESSAGE_HANDLER(TestMsg_Ping, OnPing)
-      IPC_MESSAGE_HANDLER(TestMsg_SyncPing, OnSyncPing)
-      IPC_MESSAGE_HANDLER(TestMsg_Quit, OnQuit)
-      IPC_MESSAGE_UNHANDLED(handled = false)
-    IPC_END_MESSAGE_MAP()
-    return handled;
+
+    base::PickleIterator iter(message);
+    int64_t time_internal;
+    EXPECT_TRUE(iter.ReadInt64(&time_internal));
+    int msgid;
+    EXPECT_TRUE(iter.ReadInt(&msgid));
+    base::StringPiece payload;
+    EXPECT_TRUE(iter.ReadStringPiece(&payload));
+
+    // Include message deserialization in latency.
+    base::TimeTicks now = base::TimeTicks::Now();
+
+    if (payload == "hello") {
+      latency_tracker_.Reset();
+    } else if (payload == "quit") {
+      latency_tracker_.ShowResults();
+      base::MessageLoop::current()->QuitWhenIdle();
+      return true;
+    } else {
+      // Don't track hello and quit messages.
+      latency_tracker_.AddEvent(
+          base::TimeTicks::FromInternalValue(time_internal), now);
+    }
+
+    Message* msg = new Message(0, 2, Message::PRIORITY_NORMAL);
+    msg->WriteInt64(base::TimeTicks::Now().ToInternalValue());
+    msg->WriteInt(msgid);
+    msg->WriteString(payload);
+    channel_->Send(msg);
+    return true;
   }
-
-  void OnHello() { channel_->Send(new TestMsg_Hello); }
-
-  void OnPing(const std::string& payload) {
-    channel_->Send(new TestMsg_Ping(payload));
-  }
-
-  void OnSyncPing(const std::string& payload, std::string* response) {
-    *response = payload;
-  }
-
-  void OnQuit() { base::MessageLoop::current()->QuitWhenIdle(); }
-
-  void Send(IPC::Message* message) { channel_->Send(message); }
 
  private:
-  Sender* channel_;
+  Channel* channel_;
+  EventTimeTracker latency_tracker_;
 };
 
 // This class locks the current thread to a particular CPU core. This is
@@ -265,6 +302,43 @@ class MojoChannelPerfTest : public IPCChannelMojoTestBase {
   MojoChannelPerfTest() = default;
   ~MojoChannelPerfTest() override = default;
 
+  void RunTestChannelPingPong() {
+    Init("MojoPerfTestClient");
+
+    // Set up IPC channel and start client.
+    PerformanceChannelListener listener("Channel");
+    CreateChannel(&listener);
+    listener.Init(channel());
+    ASSERT_TRUE(ConnectChannel());
+
+    LockThreadAffinity thread_locker(kSharedCore);
+    std::vector<PingPongTestParams> params = GetDefaultTestParams();
+    for (size_t i = 0; i < params.size(); i++) {
+      listener.SetTestParams(params[i].message_count(),
+                             params[i].message_size());
+
+      // This initial message will kick-start the ping-pong of messages.
+      Message* message = new Message(0, 2, Message::PRIORITY_NORMAL);
+      message->WriteInt64(base::TimeTicks::Now().ToInternalValue());
+      message->WriteInt(-1);
+      message->WriteString("hello");
+      sender()->Send(message);
+
+      // Run message loop.
+      base::RunLoop().Run();
+    }
+
+    // Send quit message.
+    Message* message = new Message(0, 2, Message::PRIORITY_NORMAL);
+    message->WriteInt64(base::TimeTicks::Now().ToInternalValue());
+    message->WriteInt(-1);
+    message->WriteString("quit");
+    sender()->Send(message);
+
+    EXPECT_TRUE(WaitForClientShutdown());
+    DestroyChannel();
+  }
+
   void RunTestChannelProxyPingPong() {
     io_thread_.reset(new base::TestIOThread(base::TestIOThread::kAutoStart));
 
@@ -281,54 +355,25 @@ class MojoChannelPerfTest : public IPCChannelMojoTestBase {
     std::vector<PingPongTestParams> params = GetDefaultTestParams();
     for (size_t i = 0; i < params.size(); i++) {
       listener.SetTestParams(params[i].message_count(),
-                             params[i].message_size(), false);
+                             params[i].message_size());
 
       // This initial message will kick-start the ping-pong of messages.
-      channel_proxy->Send(new TestMsg_Hello);
+      Message* message = new Message(0, 2, Message::PRIORITY_NORMAL);
+      message->WriteInt64(base::TimeTicks::Now().ToInternalValue());
+      message->WriteInt(-1);
+      message->WriteString("hello");
+      channel_proxy->Send(message);
 
       // Run message loop.
       base::RunLoop().Run();
     }
 
     // Send quit message.
-    channel_proxy->Send(new TestMsg_Quit);
-
-    EXPECT_TRUE(WaitForClientShutdown());
-    channel_proxy.reset();
-
-    io_thread_.reset();
-  }
-
-  void RunTestChannelProxySyncPing() {
-    io_thread_.reset(new base::TestIOThread(base::TestIOThread::kAutoStart));
-
-    Init("MojoPerfTestClient");
-
-    // Set up IPC channel and start client.
-    PerformanceChannelListener listener("ChannelProxy");
-    base::WaitableEvent shutdown_event(
-        base::WaitableEvent::ResetPolicy::MANUAL,
-        base::WaitableEvent::InitialState::NOT_SIGNALED);
-    auto channel_proxy = IPC::SyncChannel::Create(
-        TakeHandle().release(), IPC::Channel::MODE_SERVER, &listener,
-        io_thread_->task_runner(), false, &shutdown_event);
-    listener.Init(channel_proxy.get());
-
-    LockThreadAffinity thread_locker(kSharedCore);
-    std::vector<PingPongTestParams> params = GetDefaultTestParams();
-    for (size_t i = 0; i < params.size(); i++) {
-      listener.SetTestParams(params[i].message_count(),
-                             params[i].message_size(), true);
-
-      // This initial message will kick-start the ping-pong of messages.
-      channel_proxy->Send(new TestMsg_Hello);
-
-      // Run message loop.
-      base::RunLoop().Run();
-    }
-
-    // Send quit message.
-    channel_proxy->Send(new TestMsg_Quit);
+    Message* message = new Message(0, 2, Message::PRIORITY_NORMAL);
+    message->WriteInt64(base::TimeTicks::Now().ToInternalValue());
+    message->WriteInt(-1);
+    message->WriteString("quit");
+    channel_proxy->Send(message);
 
     EXPECT_TRUE(WaitForClientShutdown());
     channel_proxy.reset();
@@ -346,6 +391,13 @@ class MojoChannelPerfTest : public IPCChannelMojoTestBase {
   std::unique_ptr<base::TestIOThread> io_thread_;
 };
 
+TEST_F(MojoChannelPerfTest, ChannelPingPong) {
+  RunTestChannelPingPong();
+
+  base::RunLoop run_loop;
+  run_loop.RunUntilIdle();
+}
+
 TEST_F(MojoChannelPerfTest, ChannelProxyPingPong) {
   RunTestChannelProxyPingPong();
 
@@ -353,11 +405,18 @@ TEST_F(MojoChannelPerfTest, ChannelProxyPingPong) {
   run_loop.RunUntilIdle();
 }
 
-TEST_F(MojoChannelPerfTest, ChannelProxySyncPing) {
-  RunTestChannelProxySyncPing();
+// Test to see how many channels we can create.
+TEST_F(MojoChannelPerfTest, DISABLED_MaxChannelCount) {
+#if defined(OS_POSIX)
+  LOG(INFO) << "base::GetMaxFds " << base::GetMaxFds();
+  base::SetFdLimit(20000);
+#endif
 
-  base::RunLoop run_loop;
-  run_loop.RunUntilIdle();
+  std::vector<mojo::edk::PlatformChannelPair*> channels;
+  for (size_t i = 0; i < 10000; ++i) {
+    LOG(INFO) << "channels size: " << channels.size();
+    channels.push_back(new mojo::edk::PlatformChannelPair());
+  }
 }
 
 class MojoPerfTestClient {
@@ -371,19 +430,17 @@ class MojoPerfTestClient {
   int Run(MojoHandle handle) {
     handle_ = mojo::MakeScopedHandle(mojo::MessagePipeHandle(handle));
     LockThreadAffinity thread_locker(kSharedCore);
-    base::TestIOThread io_thread(base::TestIOThread::kAutoStart);
-
-    std::unique_ptr<ChannelProxy> channel =
-        IPC::ChannelProxy::Create(handle_.release(), Channel::MODE_CLIENT,
-                                  listener_.get(), io_thread.task_runner());
+    std::unique_ptr<Channel> channel = ChannelMojo::Create(
+        std::move(handle_), Channel::MODE_CLIENT, listener_.get());
     listener_->Init(channel.get());
+    CHECK(channel->Connect());
 
     base::RunLoop().Run();
     return 0;
   }
 
  private:
-  base::MessageLoop main_message_loop_;
+  base::MessageLoopForIO main_message_loop_;
   std::unique_ptr<ChannelReflectorListener> listener_;
   std::unique_ptr<Channel> channel_;
   mojo::ScopedMessagePipeHandle handle_;
@@ -412,10 +469,6 @@ class ReflectorImpl : public IPC::mojom::Reflector {
  private:
   // IPC::mojom::Reflector:
   void Ping(const std::string& value, PingCallback callback) override {
-    std::move(callback).Run(value);
-  }
-
-  void SyncPing(const std::string& value, PingCallback callback) override {
     std::move(callback).Run(value);
   }
 
@@ -471,18 +524,8 @@ class MojoInterfacePerfTest : public mojo::edk::test::MojoTestBase {
       }
     }
 
-    if (sync_) {
-      for (int i = 0; i < count_down_; ++i) {
-        std::string response;
-        ping_receiver_->SyncPing(payload_, &response);
-        DCHECK_EQ(response, payload_);
-      }
-      perf_logger_.reset();
-      base::MessageLoop::current()->QuitWhenIdle();
-    } else {
-      ping_receiver_->Ping(payload_, base::Bind(&MojoInterfacePerfTest::OnPong,
-                                                base::Unretained(this)));
-    }
+    ping_receiver_->Ping(payload_, base::Bind(&MojoInterfacePerfTest::OnPong,
+                                              base::Unretained(this)));
   }
 
   static int RunPingPongClient(MojoHandle mp) {
@@ -500,8 +543,6 @@ class MojoInterfacePerfTest : public mojo::edk::test::MojoTestBase {
     base::RunLoop().Run();
     return 0;
   }
-
-  bool sync_ = false;
 
  private:
   int message_count_;
@@ -550,14 +591,6 @@ TEST_F(MojoInterfacePerfTest, MultiprocessPingPong) {
   RunTestClient("PingPongClient", [&](MojoHandle h) {
     base::MessageLoop main_message_loop;
     RunPingPongServer(h, "Multiprocess");
-  });
-}
-
-TEST_F(MojoInterfacePerfTest, MultiprocessSyncPing) {
-  sync_ = true;
-  RunTestClient("PingPongClient", [&](MojoHandle h) {
-    base::MessageLoop main_message_loop;
-    RunPingPongServer(h, "MultiprocessSync");
   });
 }
 

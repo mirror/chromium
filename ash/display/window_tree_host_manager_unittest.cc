@@ -13,8 +13,8 @@
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
 #include "ash/test/ash_test_helper.h"
-#include "ash/test_shell_delegate.h"
-#include "ash/wm/cursor_manager_test_api.h"
+#include "ash/test/cursor_manager_test_api.h"
+#include "ash/test/test_shell_delegate.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/wm_event.h"
 #include "base/command_line.h"
@@ -34,7 +34,6 @@
 #include "ui/display/screen.h"
 #include "ui/display/test/display_manager_test_api.h"
 #include "ui/events/event_handler.h"
-#include "ui/events/keycodes/keyboard_codes.h"
 #include "ui/events/test/event_generator.h"
 #include "ui/views/mouse_watcher.h"
 #include "ui/views/mouse_watcher_view_host.h"
@@ -179,7 +178,7 @@ class TestObserver : public WindowTreeHostManager::Observer,
 
 class TestHelper {
  public:
-  explicit TestHelper(AshTestBase* delegate);
+  explicit TestHelper(test::AshTestBase* delegate);
   ~TestHelper();
 
   void SetSecondaryDisplayLayoutAndOffset(
@@ -193,11 +192,11 @@ class TestHelper {
   float GetStoredUIScale(int64_t id);
 
  private:
-  AshTestBase* delegate_;  // Not owned
+  test::AshTestBase* delegate_;  // Not owned
   DISALLOW_COPY_AND_ASSIGN(TestHelper);
 };
 
-TestHelper::TestHelper(AshTestBase* delegate) : delegate_(delegate) {}
+TestHelper::TestHelper(test::AshTestBase* delegate) : delegate_(delegate) {}
 TestHelper::~TestHelper() {}
 
 void TestHelper::SetSecondaryDisplayLayoutAndOffset(
@@ -226,14 +225,14 @@ float TestHelper::GetStoredUIScale(int64_t id) {
   return delegate_->display_manager()->GetDisplayInfo(id).GetEffectiveUIScale();
 }
 
-class WindowTreeHostManagerShutdownTest : public AshTestBase,
+class WindowTreeHostManagerShutdownTest : public test::AshTestBase,
                                           public TestHelper {
  public:
   WindowTreeHostManagerShutdownTest() : TestHelper(this) {}
   ~WindowTreeHostManagerShutdownTest() override {}
 
   void TearDown() override {
-    AshTestBase::TearDown();
+    test::AshTestBase::TearDown();
 
     // Make sure that primary display is accessible after shutdown.
     display::Display primary =
@@ -246,18 +245,18 @@ class WindowTreeHostManagerShutdownTest : public AshTestBase,
   DISALLOW_COPY_AND_ASSIGN(WindowTreeHostManagerShutdownTest);
 };
 
-class StartupHelper : public TestShellDelegate,
+class StartupHelper : public test::TestShellDelegate,
                       public WindowTreeHostManager::Observer {
  public:
   StartupHelper() : displays_initialized_(false) {}
   ~StartupHelper() override {}
 
-  // ShellDelegate:
+  // ash::ShellSelegate:
   void PreInit() override {
     Shell::Get()->window_tree_host_manager()->AddObserver(this);
   }
 
-  // WindowTreeHostManager::Observer:
+  // ash::WindowTreeHostManager::Observer:
   void OnDisplaysInitialized() override {
     DCHECK(!displays_initialized_);
     displays_initialized_ = true;
@@ -271,20 +270,21 @@ class StartupHelper : public TestShellDelegate,
   DISALLOW_COPY_AND_ASSIGN(StartupHelper);
 };
 
-class WindowTreeHostManagerStartupTest : public AshTestBase, public TestHelper {
+class WindowTreeHostManagerStartupTest : public test::AshTestBase,
+                                         public TestHelper {
  public:
   WindowTreeHostManagerStartupTest()
       : TestHelper(this), startup_helper_(new StartupHelper) {}
   ~WindowTreeHostManagerStartupTest() override {}
 
-  // AshTestBase:
+  // ash::test::AshTestBase:
   void SetUp() override {
     ash_test_helper()->set_test_shell_delegate(startup_helper_);
-    AshTestBase::SetUp();
+    test::AshTestBase::SetUp();
   }
   void TearDown() override {
     Shell::Get()->window_tree_host_manager()->RemoveObserver(startup_helper_);
-    AshTestBase::TearDown();
+    test::AshTestBase::TearDown();
   }
 
   const StartupHelper* startup_helper() const { return startup_helper_; }
@@ -388,7 +388,7 @@ class TestMouseWatcherListener : public views::MouseWatcherListener {
 
 }  // namespace
 
-class WindowTreeHostManagerTest : public AshTestBase, public TestHelper {
+class WindowTreeHostManagerTest : public test::AshTestBase, public TestHelper {
  public:
   WindowTreeHostManagerTest() : TestHelper(this) {}
   ~WindowTreeHostManagerTest() override {}
@@ -1623,7 +1623,7 @@ TEST_F(WindowTreeHostManagerTest,
   Shell* shell = Shell::Get();
   WindowTreeHostManager* window_tree_host_manager =
       shell->window_tree_host_manager();
-  CursorManagerTestApi test_api(shell->cursor_manager());
+  test::CursorManagerTestApi test_api(shell->cursor_manager());
 
   window_tree_host_manager->GetPrimaryRootWindow()->MoveCursorTo(
       gfx::Point(20, 50));
@@ -1647,7 +1647,7 @@ TEST_F(WindowTreeHostManagerTest,
   Shell* shell = Shell::Get();
   WindowTreeHostManager* window_tree_host_manager =
       shell->window_tree_host_manager();
-  CursorManagerTestApi test_api(shell->cursor_manager());
+  test::CursorManagerTestApi test_api(shell->cursor_manager());
 
   UpdateDisplay("300x300*2/r,200x200");
   // Swap the primary display to make it possible to remove the primary display
@@ -1700,19 +1700,6 @@ TEST_F(WindowTreeHostManagerTest,
   watcher.Stop();
 
   widget->CloseNow();
-}
-
-TEST_F(WindowTreeHostManagerTest, KeyEventFromSecondaryDisplay) {
-  UpdateDisplay("300x300,200x200");
-  ui::KeyEvent key_event(ui::ET_KEY_PRESSED, ui::VKEY_RETURN, 0);
-  ui::Event::DispatcherApi dispatcher_api(&key_event);
-  // Set the target to the second display. WindowTreeHostManager will end up
-  // targetting the primary display.
-  dispatcher_api.set_target(
-      Shell::Get()->window_tree_host_manager()->GetRootWindowForDisplayId(
-          GetSecondaryDisplay().id()));
-  Shell::Get()->window_tree_host_manager()->DispatchKeyEventPostIME(&key_event);
-  // As long as nothing crashes, we're good.
 }
 
 }  // namespace ash

@@ -232,7 +232,6 @@ NGLineBreaker::LineBreakState NGLineBreaker::HandleText(
     item_result->inline_size = item.InlineSize();
     LayoutUnit next_position = position_ + item_result->inline_size;
     if (!auto_wrap_ || next_position <= available_width) {
-      item_result->shape_result = item.TextShapeResult();
       position_ = next_position;
       MoveToNextOf(item);
       if (auto_wrap_ && break_iterator_.IsBreakable(item.EndOffset()))
@@ -366,12 +365,12 @@ NGLineBreaker::LineBreakState NGLineBreaker::HandleAtomicInline(
   // would synthesize box-baseline.
   if (NGBaseline::ShouldPropagateBaselines(layout_box)) {
     constraint_space_builder.AddBaselineRequest(
-        {line_info.UseFirstLineStyle()
-             ? NGBaselineAlgorithmType::kAtomicInlineForFirstLine
-             : NGBaselineAlgorithmType::kAtomicInline,
-         IsHorizontalWritingMode(constraint_space_->WritingMode())
-             ? FontBaseline::kAlphabeticBaseline
-             : FontBaseline::kIdeographicBaseline});
+        line_info.UseFirstLineStyle()
+            ? NGBaselineAlgorithmType::kAtomicInlineForFirstLine
+            : NGBaselineAlgorithmType::kAtomicInline,
+        IsHorizontalWritingMode(constraint_space_->WritingMode())
+            ? FontBaseline::kAlphabeticBaseline
+            : FontBaseline::kIdeographicBaseline);
   }
   RefPtr<NGConstraintSpace> constraint_space =
       constraint_space_builder.SetIsNewFormattingContext(true)
@@ -457,11 +456,9 @@ void NGLineBreaker::HandleFloat(const NGInlineItem& item,
     LayoutUnit origin_block_offset =
         container_bfc_offset.block_offset + content_offset_.block_offset;
 
-    NGPositionedFloat positioned_float =
+    container_builder_->AddPositionedFloat(
         PositionFloat(origin_block_offset, container_bfc_offset.block_offset,
-                      unpositioned_float.Get(), constraint_space_);
-    container_builder_->AddChild(positioned_float.layout_result,
-                                 positioned_float.logical_offset);
+                      unpositioned_float.Get(), constraint_space_));
 
     // We need to recalculate the available_width as the float probably
     // consumed space on the line.

@@ -9,6 +9,7 @@
 #include <string>
 
 namespace ash {
+namespace test {
 
 class AshTestViewsDelegate;
 
@@ -18,9 +19,9 @@ class AshTestViewsDelegate;
 //
 // AshTestBase creates an AshTestEnvironment by way of
 // AshTestEnvironment::Create(). The implementation of Create() depends upon
-// the ash target that was linked against: //ash:test_support_with_content
+// the ash target that was linked against: //ash/test:test_support_with_content
 // includes AshTestEnvironmentContent and
-// //ash:test_support_without_content includes AshTestEnvironmentDefault.
+// //ash/test:test_support_without_content includes AshTestEnvironmentDefault.
 class AshTestEnvironment {
  public:
   virtual ~AshTestEnvironment() {}
@@ -41,6 +42,7 @@ class AshTestEnvironment {
   AshTestEnvironment() {}
 };
 
+}  // namespace test
 }  // namespace ash
 
 #endif  // ASH_TEST_ASH_TEST_ENVIRONMENT_H_

@@ -23,10 +23,9 @@
 
 namespace blink {
 
-class MockEventListenerForPresentationReceiver : public EventListener {
+class MockEventListener : public EventListener {
  public:
-  MockEventListenerForPresentationReceiver()
-      : EventListener(kCPPEventListenerType) {}
+  MockEventListener() : EventListener(kCPPEventListenerType) {}
 
   bool operator==(const EventListener& other) const final {
     return this == &other;
@@ -70,8 +69,7 @@ TEST_F(PresentationReceiverTest, NoConnectionUnresolvedConnectionList) {
   V8TestingScope scope;
   auto receiver = new PresentationReceiver(&scope.GetFrame(), nullptr);
 
-  auto event_handler =
-      new StrictMock<MockEventListenerForPresentationReceiver>();
+  auto event_handler = new StrictMock<MockEventListener>();
   AddConnectionavailableEventListener(event_handler, receiver);
   EXPECT_CALL(*event_handler, handleEvent(::testing::_, ::testing::_)).Times(0);
 
@@ -86,8 +84,7 @@ TEST_F(PresentationReceiverTest, OneConnectionResolvedConnectionListNoEvent) {
   V8TestingScope scope;
   auto receiver = new PresentationReceiver(&scope.GetFrame(), nullptr);
 
-  auto event_handler =
-      new StrictMock<MockEventListenerForPresentationReceiver>();
+  auto event_handler = new StrictMock<MockEventListener>();
   AddConnectionavailableEventListener(event_handler, receiver);
   EXPECT_CALL(*event_handler, handleEvent(::testing::_, ::testing::_)).Times(0);
 
@@ -106,8 +103,8 @@ TEST_F(PresentationReceiverTest, TwoConnectionsFireOnconnectionavailableEvent) {
   V8TestingScope scope;
   auto receiver = new PresentationReceiver(&scope.GetFrame(), nullptr);
 
-  StrictMock<MockEventListenerForPresentationReceiver>* event_handler =
-      new StrictMock<MockEventListenerForPresentationReceiver>();
+  StrictMock<MockEventListener>* event_handler =
+      new StrictMock<MockEventListener>();
   AddConnectionavailableEventListener(event_handler, receiver);
   EXPECT_CALL(*event_handler, handleEvent(::testing::_, ::testing::_)).Times(1);
 
@@ -127,8 +124,8 @@ TEST_F(PresentationReceiverTest, TwoConnectionsNoEvent) {
   V8TestingScope scope;
   auto receiver = new PresentationReceiver(&scope.GetFrame(), nullptr);
 
-  StrictMock<MockEventListenerForPresentationReceiver>* event_handler =
-      new StrictMock<MockEventListenerForPresentationReceiver>();
+  StrictMock<MockEventListener>* event_handler =
+      new StrictMock<MockEventListener>();
   AddConnectionavailableEventListener(event_handler, receiver);
   EXPECT_CALL(*event_handler, handleEvent(::testing::_, ::testing::_)).Times(0);
 

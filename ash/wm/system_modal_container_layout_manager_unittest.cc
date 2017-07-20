@@ -29,14 +29,15 @@
 #include "ui/events/test/event_generator.h"
 #include "ui/keyboard/keyboard_controller.h"
 #include "ui/keyboard/keyboard_switches.h"
-#include "ui/keyboard/keyboard_test_util.h"
 #include "ui/keyboard/keyboard_ui.h"
+#include "ui/keyboard/keyboard_util.h"
 #include "ui/views/test/capture_tracking_view.h"
 #include "ui/views/widget/widget.h"
 #include "ui/views/widget/widget_delegate.h"
 #include "ui/wm/core/window_util.h"
 
 namespace ash {
+namespace test {
 
 namespace {
 
@@ -837,7 +838,7 @@ class InputTestDelegate : public aura::test::TestWindowDelegate {
   InputTestDelegate() {}
   ~InputTestDelegate() override {}
 
-  void RunTest(AshTestBase* test_base) {
+  void RunTest(test::AshTestBase* test_base) {
     std::unique_ptr<aura::Window> window(
         test_base->CreateTestWindowInShellWithDelegate(
             this, 0, gfx::Rect(0, 0, 100, 100)));
@@ -926,4 +927,5 @@ TEST_F(SystemModalContainerLayoutManagerTest, BlockEventsInMultiDisplays) {
   delegate.RunTest(this);
 }
 
+}  // namespace test
 }  // namespace ash

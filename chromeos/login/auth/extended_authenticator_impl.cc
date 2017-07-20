@@ -89,9 +89,9 @@ void ExtendedAuthenticatorImpl::CreateMount(
 
   cryptohome::Identification id(account_id);
   cryptohome::Authorization auth(keys.front());
-  cryptohome::MountRequest mount;
+  cryptohome::MountParameters mount(false);
   for (size_t i = 0; i < keys.size(); i++) {
-    KeyDefinitionToKey(keys[i], mount.mutable_create()->add_keys());
+    mount.create_keys.push_back(keys[i]);
   }
   UserContext context(account_id);
   Key key(keys.front().secret);
@@ -191,7 +191,7 @@ void ExtendedAuthenticatorImpl::DoAuthenticateToMount(
   cryptohome::Identification id(user_context.GetAccountId());
   const Key* const key = user_context.GetKey();
   cryptohome::Authorization auth(key->GetSecret(), key->GetLabel());
-  cryptohome::MountRequest mount;
+  cryptohome::MountParameters mount(false);
 
   cryptohome::HomedirMethods::GetInstance()->MountEx(
       id,

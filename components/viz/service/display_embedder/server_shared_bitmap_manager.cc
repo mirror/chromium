@@ -40,7 +40,7 @@ class ServerSharedBitmap : public SharedBitmap {
                      scoped_refptr<BitmapData> bitmap_data,
                      const SharedBitmapId& id,
                      ServerSharedBitmapManager* manager)
-      : SharedBitmap(pixels, id, 0 /* sequence_number */),
+      : SharedBitmap(pixels, id),
         bitmap_data_(bitmap_data),
         manager_(manager) {}
 

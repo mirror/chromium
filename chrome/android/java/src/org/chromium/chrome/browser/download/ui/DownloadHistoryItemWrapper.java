@@ -324,10 +324,9 @@ public abstract class DownloadHistoryItemWrapper extends TimedItem {
                         Toast.LENGTH_SHORT).show();
                 return;
             }
+
             if (DownloadUtils.openFile(getFile(), getMimeType(),
-                        mItem.getDownloadInfo().getDownloadGuid(), isOffTheRecord(),
-                        mItem.getDownloadInfo().getOriginalUrl(),
-                        mItem.getDownloadInfo().getReferrer())) {
+                        mItem.getDownloadInfo().getDownloadGuid(), isOffTheRecord())) {
                 recordOpenSuccess();
             } else {
                 recordOpenFailure();

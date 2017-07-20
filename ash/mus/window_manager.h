@@ -44,8 +44,12 @@ class WMState;
 }
 
 namespace ash {
-class AshTestHelper;
+
 enum class Config;
+
+namespace test {
+class AshTestHelper;
+}
 
 namespace mus {
 
@@ -102,14 +106,10 @@ class WindowManager : public aura::WindowManagerDelegate,
   display::mojom::DisplayController* GetDisplayController();
 
  private:
-  friend class ash::AshTestHelper;
+  friend class test::AshTestHelper;
 
   // Creates the Shell. This is done after the connection to mus is established.
   void CreateShell();
-
-  // If Mash, tells the window server about keys we don't want to hide the
-  // cursor on.
-  void InitCursorOnKeyList();
 
   // Sets the frame decoration values on the server.
   void InstallFrameDecorationValues();

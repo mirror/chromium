@@ -25,10 +25,6 @@ void MediaControlOverlayPlayButtonElement::UpdateDisplayType() {
   SetIsWanted(MediaElement().ShouldShowControls() && MediaElement().paused());
 }
 
-const char* MediaControlOverlayPlayButtonElement::GetNameForHistograms() const {
-  return "PlayOverlayButton";
-}
-
 void MediaControlOverlayPlayButtonElement::DefaultEventHandler(Event* event) {
   if (event->type() == EventTypeNames::click && MediaElement().paused()) {
     Platform::Current()->RecordAction(

@@ -13,11 +13,12 @@ namespace android {
 
 // static
 void SigninPromoUtilAndroid::StartAccountSigninActivityForPromo(
-    ui::WindowAndroid* window,
+    content::ContentViewCore* content_view_core,
     signin_metrics::AccessPoint access_point) {
-  if (window) {
+  if (content_view_core && content_view_core->GetWindowAndroid()) {
     Java_SigninPromoUtil_openAccountSigninActivityForPromo(
-        base::android::AttachCurrentThread(), window->GetJavaObject(),
+        base::android::AttachCurrentThread(),
+        content_view_core->GetWindowAndroid()->GetJavaObject(),
         jint(access_point));
   }
 }

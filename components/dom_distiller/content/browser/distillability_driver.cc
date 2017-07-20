@@ -54,6 +54,7 @@ DistillabilityDriver::~DistillabilityDriver() {
 }
 
 void DistillabilityDriver::CreateDistillabilityService(
+    const service_manager::BindSourceInfo& source_info,
     mojom::DistillabilityServiceRequest request) {
   mojo::MakeStrongBinding(
       base::MakeUnique<DistillabilityServiceImpl>(weak_factory_.GetWeakPtr()),

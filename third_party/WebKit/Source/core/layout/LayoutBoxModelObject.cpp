@@ -61,8 +61,6 @@ StickyPositionScrollingConstraints* StickyConstraintsForLayoutObject(
 
   PaintLayerScrollableArea* scrollable_area =
       ancestor_overflow_layer->GetScrollableArea();
-  if (!scrollable_area)
-    return nullptr;
   auto it = scrollable_area->GetStickyConstraintsMap().find(obj->Layer());
   if (it == scrollable_area->GetStickyConstraintsMap().end())
     return nullptr;
@@ -500,11 +498,9 @@ void LayoutBoxModelObject::InvalidateStickyConstraints() {
   // previous frame.
   DisableCompositingQueryAsserts disabler;
   if (const PaintLayer* ancestor_overflow_layer =
-          enclosing->AncestorOverflowLayer()) {
-    if (PaintLayerScrollableArea* ancestor_scrollable_area =
-            ancestor_overflow_layer->GetScrollableArea())
-      ancestor_scrollable_area->InvalidateAllStickyConstraints();
-  }
+          enclosing->AncestorOverflowLayer())
+    ancestor_overflow_layer->GetScrollableArea()
+        ->InvalidateAllStickyConstraints();
 }
 
 void LayoutBoxModelObject::CreateLayerAfterStyleChange() {
@@ -832,6 +828,8 @@ LayoutSize LayoutBoxModelObject::RelativePositionOffset() const {
 void LayoutBoxModelObject::UpdateStickyPositionConstraints() const {
   const FloatSize constraining_size = ComputeStickyConstrainingRect().Size();
 
+  PaintLayerScrollableArea* scrollable_area =
+      Layer()->AncestorOverflowLayer()->GetScrollableArea();
   StickyPositionScrollingConstraints constraints;
   FloatSize skipped_containers_offset;
   LayoutBlock* containing_block = this->ContainingBlock();
@@ -1022,8 +1020,6 @@ void LayoutBoxModelObject::UpdateStickyPositionConstraints() const {
   }
   // At least one edge should be anchored if we are calculating constraints.
   DCHECK(constraints.GetAnchorEdges());
-  PaintLayerScrollableArea* scrollable_area =
-      Layer()->AncestorOverflowLayer()->GetScrollableArea();
   scrollable_area->GetStickyConstraintsMap().Set(Layer(), constraints);
 }
 

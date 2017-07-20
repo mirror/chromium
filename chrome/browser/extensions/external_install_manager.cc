@@ -114,15 +114,10 @@ void ExternalInstallManager::RemoveExternalInstallError(
     const std::string& extension_id) {
   auto iter = errors_.find(extension_id);
   if (iter != errors_.end()) {
-    // The |extension_id| may be owned by the ExternalInstallError, which is
-    // deleted subsequently. To avoid any UAFs, make a safe copy of
-    // |extension_id| now.
-    std::string extension_id_copy = extension_id;
-
     if (iter->second.get() == currently_visible_install_alert_)
       currently_visible_install_alert_ = nullptr;
     errors_.erase(iter);
-    unacknowledged_ids_.erase(extension_id_copy);
+    unacknowledged_ids_.erase(extension_id);
     UpdateExternalExtensionAlert();
   }
 }

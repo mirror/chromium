@@ -130,10 +130,6 @@ class FailingBackend : public PasswordStoreX::NativeBackend {
     *forms = CreateTrashForms();
     return false;
   }
-
-  scoped_refptr<base::SequencedTaskRunner> GetBackgroundTaskRunner() override {
-    return nullptr;
-  }
 };
 
 class MockBackend : public PasswordStoreX::NativeBackend {
@@ -233,10 +229,6 @@ class MockBackend : public PasswordStoreX::NativeBackend {
     for (size_t i = 0; i < all_forms_.size(); ++i)
       forms->push_back(base::MakeUnique<PasswordForm>(all_forms_[i]));
     return true;
-  }
-
-  scoped_refptr<base::SequencedTaskRunner> GetBackgroundTaskRunner() override {
-    return nullptr;
   }
 
  private:
@@ -342,6 +334,7 @@ PasswordStoreXTestDelegate::PasswordStoreXTestDelegate(BackendType backend_type)
     : backend_type_(backend_type) {
   SetupTempDir();
   store_ = new PasswordStoreX(base::SequencedTaskRunnerHandle::Get(),
+                              base::SequencedTaskRunnerHandle::Get(),
                               base::MakeUnique<password_manager::LoginDatabase>(
                                   test_login_db_file_path()),
                               GetBackend(backend_type_));
@@ -411,6 +404,7 @@ TEST_P(PasswordStoreXTest, Notifications) {
       new password_manager::LoginDatabase(test_login_db_file_path()));
   scoped_refptr<PasswordStoreX> store(
       new PasswordStoreX(base::SequencedTaskRunnerHandle::Get(),
+                         base::SequencedTaskRunnerHandle::Get(),
                          std::move(login_db), GetBackend(GetParam())));
   store->Init(syncer::SyncableService::StartSyncFlare(), nullptr);
 
@@ -517,6 +511,7 @@ TEST_P(PasswordStoreXTest, NativeMigration) {
   login_db.reset(new password_manager::LoginDatabase(login_db_file));
   scoped_refptr<PasswordStoreX> store(
       new PasswordStoreX(base::SequencedTaskRunnerHandle::Get(),
+                         base::SequencedTaskRunnerHandle::Get(),
                          std::move(login_db), GetBackend(GetParam())));
   store->Init(syncer::SyncableService::StartSyncFlare(), nullptr);
 

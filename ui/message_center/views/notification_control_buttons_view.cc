@@ -4,7 +4,6 @@
 
 #include "ui/message_center/views/notification_control_buttons_view.h"
 
-#include "base/memory/ptr_util.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/compositor/layer.h"
 #include "ui/events/event.h"
@@ -40,11 +39,6 @@ NotificationControlButtonsView::NotificationControlButtonsView(
       bgcolor_target_(kInitialBackgroundColor) {
   DCHECK(message_view);
   SetLayoutManager(new views::BoxLayout(views::BoxLayout::kHorizontal));
-
-  // Use layer to change the opacity.
-  SetPaintToLayer();
-  layer()->SetFillsBoundsOpaquely(false);
-
   SetBackground(views::CreateSolidBackground(kInitialBackgroundColor));
 }
 
@@ -96,7 +90,6 @@ void NotificationControlButtonsView::ShowSettingsButton(bool show) {
 
 void NotificationControlButtonsView::SetBackgroundColor(
     const SkColor& target_bgcolor) {
-  DCHECK(background());
   if (background()->get_color() != target_bgcolor) {
     bgcolor_origin_ = background()->get_color();
     bgcolor_target_ = target_bgcolor;
@@ -107,14 +100,6 @@ void NotificationControlButtonsView::SetBackgroundColor(
     bgcolor_animation_->SetDuration(kBackgroundColorChangeDuration);
     bgcolor_animation_->Start();
   }
-}
-
-void NotificationControlButtonsView::SetVisible(bool visible) {
-  DCHECK(layer());
-  // Manipulate the opacity instead of changing the visibility to keep the tab
-  // order even when the view is invisible.
-  layer()->SetOpacity(visible ? 1. : 0.);
-  set_can_process_events_within_subtree(visible);
 }
 
 void NotificationControlButtonsView::RequestFocusOnCloseButton() {

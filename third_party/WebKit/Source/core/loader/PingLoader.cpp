@@ -31,13 +31,13 @@
 
 #include "core/loader/PingLoader.h"
 
+#include "core/dom/DOMArrayBufferView.h"
 #include "core/dom/Document.h"
 #include "core/fileapi/File.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameClient.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/html/FormData.h"
-#include "core/typed_arrays/DOMArrayBufferView.h"
 #include "platform/loader/fetch/FetchContext.h"
 #include "platform/loader/fetch/FetchInitiatorTypeNames.h"
 #include "platform/loader/fetch/FetchUtils.h"
@@ -294,7 +294,6 @@ void PingLoader::SendViolationReport(LocalFrame* frame,
       request.SetHTTPContentType("application/xss-auditor-report");
       break;
   }
-  request.SetKeepalive(true);
   request.SetHTTPBody(std::move(report));
   request.SetFetchCredentialsMode(
       WebURLRequest::kFetchCredentialsModeSameOrigin);

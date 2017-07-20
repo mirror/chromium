@@ -11,7 +11,6 @@
 #include "core/layout/compositing/CompositedLayerMapping.h"
 #include "core/paint/BackgroundImageGeometry.h"
 #include "core/paint/BlockPainter.h"
-#include "core/paint/BoxModelObjectPainter.h"
 #include "core/paint/BoxPainter.h"
 #include "core/paint/LayoutObjectDrawingRecorder.h"
 #include "core/paint/PaintInfo.h"
@@ -68,7 +67,7 @@ void ViewPainter::PaintBoxDecorationBackground(const PaintInfo& paint_info) {
   const DisplayItemClient* display_item_client = &layout_view_;
 
   Optional<ScrollRecorder> scroll_recorder;
-  if (BoxModelObjectPainter::
+  if (BoxPainter::
           IsPaintingBackgroundOfPaintContainerIntoScrollingContentsLayer(
               &layout_view_, paint_info)) {
     // Layout overflow, combined with the visible content size.
@@ -77,11 +76,8 @@ void ViewPainter::PaintBoxDecorationBackground(const PaintInfo& paint_info) {
         static_cast<const DisplayItemClient*>(layout_view_.Layer()
                                                   ->GetCompositedLayerMapping()
                                                   ->ScrollingContentsLayer());
-    if (!layout_view_.ScrolledContentOffset().IsZero()) {
-      scroll_recorder.emplace(paint_info.context, layout_view_,
-                              paint_info.phase,
-                              layout_view_.ScrolledContentOffset());
-    }
+    scroll_recorder.emplace(paint_info.context, layout_view_, paint_info.phase,
+                            layout_view_.ScrolledContentOffset());
   }
 
   if (DrawingRecorder::UseCachedDrawingIfPossible(
@@ -215,7 +211,6 @@ void ViewPainter::PaintBoxDecorationBackground(const PaintInfo& paint_info) {
   }
 
   BackgroundImageGeometry geometry(layout_view_);
-  BoxModelObjectPainter box_model_painter(layout_view_);
   for (auto it = reversed_paint_list.rbegin(); it != reversed_paint_list.rend();
        ++it) {
     DCHECK((*it)->Clip() == kBorderFillBox);
@@ -223,17 +218,17 @@ void ViewPainter::PaintBoxDecorationBackground(const PaintInfo& paint_info) {
     bool should_paint_in_viewport_space =
         (*it)->Attachment() == kFixedBackgroundAttachment;
     if (should_paint_in_viewport_space) {
-      box_model_painter.PaintFillLayer(
-          paint_info, Color(), **it, LayoutRect(LayoutRect::InfiniteIntRect()),
-          kBackgroundBleedNone, geometry);
+      BoxPainter::PaintFillLayer(layout_view_, paint_info, Color(), **it,
+                                 LayoutRect(LayoutRect::InfiniteIntRect()),
+                                 kBackgroundBleedNone, geometry);
     } else {
       context.Save();
       // TODO(trchen): We should be able to handle 3D-transformed root
       // background with slimming paint by using transform display items.
       context.ConcatCTM(transform.ToAffineTransform());
-      box_model_painter.PaintFillLayer(paint_info, Color(), **it,
-                                       LayoutRect(paint_rect),
-                                       kBackgroundBleedNone, geometry);
+      BoxPainter::PaintFillLayer(layout_view_, paint_info, Color(), **it,
+                                 LayoutRect(paint_rect), kBackgroundBleedNone,
+                                 geometry);
       context.Restore();
     }
   }

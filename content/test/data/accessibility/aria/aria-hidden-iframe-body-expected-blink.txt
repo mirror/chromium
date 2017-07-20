@@ -1,4 +1,4 @@
-rootWebArea focusable
-++genericContainer
-++++iframe focusable
-++++++rootWebArea focusable
+rootWebArea focusable readOnly
+++genericContainer readOnly
+++++iframe focusable readOnly
+++++++rootWebArea focusable readOnly

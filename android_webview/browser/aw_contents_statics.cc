@@ -8,10 +8,8 @@
 #include "android_webview/browser/aw_browser_context.h"
 #include "android_webview/browser/aw_contents_io_thread_client.h"
 #include "android_webview/browser/aw_safe_browsing_config_helper.h"
-#include "android_webview/browser/aw_safe_browsing_whitelist_manager.h"
 #include "android_webview/browser/net/aw_url_request_context_getter.h"
 #include "android_webview/common/aw_version_info_values.h"
-#include "base/android/jni_array.h"
 #include "base/android/jni_string.h"
 #include "base/android/scoped_java_ref.h"
 #include "base/callback.h"
@@ -80,27 +78,15 @@ ScopedJavaLocalRef<jstring> GetProductVersion(JNIEnv* env,
 }
 
 // static
-jboolean GetSafeBrowsingEnabledByManifest(JNIEnv* env,
-                                          const JavaParamRef<jclass>&) {
-  return AwSafeBrowsingConfigHelper::GetSafeBrowsingEnabledByManifest();
+jboolean GetSafeBrowsingEnabled(JNIEnv* env, const JavaParamRef<jclass>&) {
+  return AwSafeBrowsingConfigHelper::GetSafeBrowsingEnabled();
 }
 
 // static
-void SetSafeBrowsingEnabledByManifest(JNIEnv* env,
-                                      const JavaParamRef<jclass>&,
-                                      jboolean enable) {
-  AwSafeBrowsingConfigHelper::SetSafeBrowsingEnabledByManifest(enable);
-}
-
-// static
-void SetSafeBrowsingWhiteList(JNIEnv* env,
-                              const JavaParamRef<jclass>&,
-                              const JavaParamRef<jobjectArray>& jrules) {
-  std::vector<std::string> rules;
-  base::android::AppendJavaStringArrayToStringVector(env, jrules, &rules);
-  AwSafeBrowsingWhitelistManager* whitelist_manager =
-      AwBrowserContext::GetDefault()->GetSafeBrowsingWhitelistManager();
-  whitelist_manager->SetWhitelistOnUIThread(std::move(rules));
+void SetSafeBrowsingEnabled(JNIEnv* env,
+                            const JavaParamRef<jclass>&,
+                            jboolean enable) {
+  AwSafeBrowsingConfigHelper::SetSafeBrowsingEnabled(enable);
 }
 
 // static

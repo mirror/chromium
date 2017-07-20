@@ -35,12 +35,11 @@ views::BubbleBorder::Arrow PermissionPromptImpl::GetAnchorArrow() {
 
 // static
 std::unique_ptr<PermissionPrompt> PermissionPrompt::Create(
-    content::WebContents* web_contents,
-    Delegate* delegate) {
+    content::WebContents* web_contents) {
   if (ui::MaterialDesignController::IsSecondaryUiMaterial()) {
     return base::WrapUnique(new PermissionPromptImpl(
-        chrome::FindBrowserWithWebContents(web_contents), delegate));
+        chrome::FindBrowserWithWebContents(web_contents)));
   }
   return base::MakeUnique<PermissionBubbleCocoa>(
-      chrome::FindBrowserWithWebContents(web_contents), delegate);
+      chrome::FindBrowserWithWebContents(web_contents));
 }

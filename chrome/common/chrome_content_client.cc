@@ -9,7 +9,6 @@
 #include <map>
 #include <memory>
 #include <tuple>
-#include <utility>
 
 #include "base/command_line.h"
 #include "base/debug/crash_logging.h"
@@ -592,12 +591,12 @@ void ChromeContentClient::AddAdditionalSchemes(Schemes* schemes) {
 
   schemes->secure_origins = GetSecureOriginWhitelist();
 
+  schemes->no_access_schemes.push_back(chrome::kChromeNativeScheme);
+
   // chrome-native: is a scheme used for placeholder navigations that allow
   // UIs to be drawn with platform native widgets instead of HTML.  These pages
   // should be treated as empty documents that can commit synchronously.
   schemes->empty_document_schemes.push_back(chrome::kChromeNativeScheme);
-  schemes->no_access_schemes.push_back(chrome::kChromeNativeScheme);
-  schemes->secure_schemes.push_back(chrome::kChromeNativeScheme);
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   if (extensions::feature_util::ExtensionServiceWorkersEnabled())

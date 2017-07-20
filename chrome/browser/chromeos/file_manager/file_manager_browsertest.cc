@@ -179,8 +179,7 @@ WRAPPED_INSTANTIATE_TEST_CASE_P(
 WRAPPED_INSTANTIATE_TEST_CASE_P(
     QuickView,
     FileManagerBrowserTest,
-    ::testing::Values(TestParameter(NOT_IN_GUEST_MODE, "openQuickView"),
-                      TestParameter(NOT_IN_GUEST_MODE, "closeQuickView")));
+    ::testing::Values(TestParameter(NOT_IN_GUEST_MODE, "openQuickView")));
 
 #if defined(DISABLE_SLOW_FILESAPP_TESTS)
 #define MAYBE_DirectoryTreeContextMenu DISABLED_DirectoryTreeContextMenu

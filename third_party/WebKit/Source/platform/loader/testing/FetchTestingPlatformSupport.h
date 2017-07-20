@@ -22,6 +22,7 @@ class FetchTestingPlatformSupport
   MockFetchContext* Context();
 
   // Platform:
+  WebURLError CancelledError(const WebURL&) const override;
   WebURLLoaderMockFactory* GetURLLoaderMockFactory() override;
   std::unique_ptr<WebURLLoader> CreateURLLoader(
       const blink::WebURLRequest&,

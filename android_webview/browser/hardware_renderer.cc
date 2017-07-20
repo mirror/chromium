@@ -15,9 +15,9 @@
 #include "base/memory/ptr_util.h"
 #include "base/trace_event/trace_event.h"
 #include "cc/output/compositor_frame.h"
+#include "cc/surfaces/frame_sink_manager.h"
 #include "components/viz/common/surfaces/local_surface_id_allocator.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
-#include "components/viz/service/frame_sinks/frame_sink_manager.h"
 #include "ui/gfx/transform.h"
 #include "ui/gl/gl_bindings.h"
 
@@ -33,8 +33,7 @@ HardwareRenderer::HardwareRenderer(RenderThreadManager* state)
       last_committed_layer_tree_frame_sink_id_(0u),
       last_submitted_layer_tree_frame_sink_id_(0u) {
   DCHECK(last_egl_context_);
-  surfaces_->GetFrameSinkManager()->surface_manager()->RegisterFrameSinkId(
-      frame_sink_id_);
+  surfaces_->GetFrameSinkManager()->RegisterFrameSinkId(frame_sink_id_);
   CreateNewCompositorFrameSinkSupport();
 }
 
@@ -44,8 +43,7 @@ HardwareRenderer::~HardwareRenderer() {
   if (child_id_.is_valid())
     DestroySurface();
   support_.reset();
-  surfaces_->GetFrameSinkManager()->surface_manager()->InvalidateFrameSinkId(
-      frame_sink_id_);
+  surfaces_->GetFrameSinkManager()->InvalidateFrameSinkId(frame_sink_id_);
 
   // Reset draw constraints.
   render_thread_manager_->PostExternalDrawConstraintsToChildCompositorOnRT(

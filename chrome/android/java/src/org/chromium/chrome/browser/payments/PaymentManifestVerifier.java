@@ -256,8 +256,8 @@ public class PaymentManifestVerifier
         }
 
         mPendingWebAppManifestsCount = matchingApps.size();
-        for (String matchingAppPackageName : matchingApps) {
-            if (!mWebDataService.getPaymentWebAppManifest(matchingAppPackageName, this)) {
+        for (int i = 0; i < appPackageNames.length; i++) {
+            if (!mWebDataService.getPaymentWebAppManifest(appPackageNames[i], this)) {
                 mIsManifestCacheStaleOrUnusable = true;
                 mPendingWebAppManifestsCount = 0;
                 mDownloader.downloadPaymentMethodManifest(mMethodName, this);

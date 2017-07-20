@@ -8,7 +8,6 @@
 
 #include "base/strings/utf_string_conversions.h"
 #include "ui/app_list/app_list_constants.h"
-#include "ui/app_list/app_list_features.h"
 #include "ui/app_list/app_list_switches.h"
 #include "ui/app_list/search_result.h"
 #include "ui/app_list/views/search_result_actions_view.h"
@@ -34,8 +33,6 @@ const int kTextTrailPadding = 16;
 const int kSeparatorPadding = 62;
 const int kBorderSize = 1;
 const SkColor kSeparatorColor = SkColorSetRGB(0xE1, 0xE1, 0xE1);
-
-constexpr int kPreferredHeightFullScreen = 48;
 
 // Extra margin at the right of the rightmost action icon.
 const int kActionButtonRightMargin = 8;
@@ -83,8 +80,7 @@ SearchResultView::SearchResultView(SearchResultListView* list_view)
       icon_(new views::ImageView),
       badge_icon_(new views::ImageView),
       actions_view_(new SearchResultActionsView(this)),
-      progress_bar_(new views::ProgressBar),
-      is_fullscreen_app_list_enabled_(features::IsFullscreenAppListEnabled()) {
+      progress_bar_(new views::ProgressBar) {
   icon_->set_can_process_events_within_subtree(false);
   badge_icon_->set_can_process_events_within_subtree(false);
 
@@ -169,9 +165,7 @@ const char* SearchResultView::GetClassName() const {
 }
 
 gfx::Size SearchResultView::CalculatePreferredSize() const {
-  return gfx::Size(kPreferredWidth, is_fullscreen_app_list_enabled_
-                                        ? kPreferredHeightFullScreen
-                                        : kPreferredHeight);
+  return gfx::Size(kPreferredWidth, kPreferredHeight);
 }
 
 void SearchResultView::Layout() {
@@ -255,8 +249,7 @@ void SearchResultView::PaintButtonContents(gfx::Canvas* canvas) {
   const bool selected = list_view_->IsResultViewSelected(this);
   const bool hover = state() == STATE_HOVERED || state() == STATE_PRESSED;
 
-  if (!is_fullscreen_app_list_enabled_)
-    canvas->FillRect(content_rect, kCardBackgroundColor);
+  canvas->FillRect(content_rect, kCardBackgroundColor);
 
   // Possibly call FillRect a second time (these colours are partially
   // transparent, so the previous FillRect is not redundant).
@@ -265,7 +258,7 @@ void SearchResultView::PaintButtonContents(gfx::Canvas* canvas) {
   else if (hover)
     canvas->FillRect(content_rect, kHighlightedColor);
 
-  if (!is_fullscreen_app_list_enabled_ && !is_last_result_) {
+  if (!is_last_result_) {
     gfx::Rect line_rect = content_rect;
     line_rect.set_height(kBorderSize);
     line_rect.set_y(content_rect.bottom() - kBorderSize);

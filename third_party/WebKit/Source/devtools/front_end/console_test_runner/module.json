@@ -3,8 +3,7 @@
     "test_runner",
     "integration_test_runner",
     "console",
-    "console_model",
-    "main"
+    "console_model"
   ],
   "scripts": [
     "ConsoleTestRunner.js"

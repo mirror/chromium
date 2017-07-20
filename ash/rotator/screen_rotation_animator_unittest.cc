@@ -8,13 +8,13 @@
 #include "ash/display/window_tree_host_manager.h"
 #include "ash/public/cpp/config.h"
 #include "ash/rotator/screen_rotation_animator_observer.h"
-#include "ash/rotator/screen_rotation_animator_test_api.h"
+#include "ash/rotator/test/screen_rotation_animator_test_api.h"
 #include "ash/shell.h"
 #include "ash/system/overview/overview_button_tray.h"
 #include "ash/system/status_area_widget.h"
-#include "ash/system/status_area_widget_test_helper.h"
 #include "ash/test/ash_test_base.h"
 #include "ash/test/ash_test_helper.h"
+#include "ash/test/status_area_widget_test_helper.h"
 #include "ash/wm/maximize_mode/maximize_mode_controller.h"
 #include "base/callback_forward.h"
 #include "base/command_line.h"
@@ -106,8 +106,8 @@ TestScreenRotationAnimator::CreateAfterCopyCallbackBeforeRotation(
   CopyCallback next_callback =
       ScreenRotationAnimator::CreateAfterCopyCallbackBeforeRotation(
           std::move(rotation_request));
-  return base::BindOnce(&TestScreenRotationAnimator::IntersectBefore,
-                        base::Unretained(this), std::move(next_callback));
+  return base::Bind(&TestScreenRotationAnimator::IntersectBefore,
+                    base::Unretained(this), next_callback);
 }
 
 ScreenRotationAnimator::CopyCallback
@@ -116,27 +116,27 @@ TestScreenRotationAnimator::CreateAfterCopyCallbackAfterRotation(
   CopyCallback next_callback =
       ScreenRotationAnimator::CreateAfterCopyCallbackAfterRotation(
           std::move(rotation_request));
-  return base::BindOnce(&TestScreenRotationAnimator::IntersectAfter,
-                        base::Unretained(this), std::move(next_callback));
+  return base::Bind(&TestScreenRotationAnimator::IntersectAfter,
+                    base::Unretained(this), next_callback);
 }
 
 void TestScreenRotationAnimator::IntersectBefore(
     CopyCallback next_callback,
     std::unique_ptr<cc::CopyOutputResult> result) {
   intersect_before_callback_.Run();
-  std::move(next_callback).Run(std::move(result));
+  next_callback.Run(std::move(result));
 }
 
 void TestScreenRotationAnimator::IntersectAfter(
     CopyCallback next_callback,
     std::unique_ptr<cc::CopyOutputResult> result) {
   intersect_after_callback_.Run();
-  std::move(next_callback).Run(std::move(result));
+  next_callback.Run(std::move(result));
 }
 
 }  // namespace
 
-class ScreenRotationAnimatorSlowAnimationTest : public AshTestBase {
+class ScreenRotationAnimatorSlowAnimationTest : public test::AshTestBase {
  public:
   ScreenRotationAnimatorSlowAnimationTest() {}
   ~ScreenRotationAnimatorSlowAnimationTest() override {}
@@ -149,14 +149,14 @@ class ScreenRotationAnimatorSlowAnimationTest : public AshTestBase {
 
   ScreenRotationAnimator* animator() { return animator_.get(); }
 
-  ScreenRotationAnimatorTestApi* test_api() { return test_api_.get(); }
+  test::ScreenRotationAnimatorTestApi* test_api() { return test_api_.get(); }
 
  private:
   display::Display display_;
 
   std::unique_ptr<ScreenRotationAnimator> animator_;
 
-  std::unique_ptr<ScreenRotationAnimatorTestApi> test_api_;
+  std::unique_ptr<test::ScreenRotationAnimatorTestApi> test_api_;
 
   std::unique_ptr<ui::ScopedAnimationDurationScaleMode> non_zero_duration_mode_;
 
@@ -169,14 +169,15 @@ void ScreenRotationAnimatorSlowAnimationTest::SetUp() {
   display_ = display::Screen::GetScreen()->GetPrimaryDisplay();
   animator_ = base::MakeUnique<ScreenRotationAnimator>(
       Shell::GetRootWindowForDisplayId(display_.id()));
-  test_api_ = base::MakeUnique<ScreenRotationAnimatorTestApi>(animator_.get());
+  test_api_ =
+      base::MakeUnique<test::ScreenRotationAnimatorTestApi>(animator_.get());
   test_api()->DisableAnimationTimers();
   non_zero_duration_mode_ =
       base::MakeUnique<ui::ScopedAnimationDurationScaleMode>(
           ui::ScopedAnimationDurationScaleMode::SLOW_DURATION);
 }
 
-class ScreenRotationAnimatorSmoothAnimationTest : public AshTestBase {
+class ScreenRotationAnimatorSmoothAnimationTest : public test::AshTestBase {
  public:
   ScreenRotationAnimatorSmoothAnimationTest() {}
   ~ScreenRotationAnimatorSmoothAnimationTest() override {}
@@ -196,7 +197,7 @@ class ScreenRotationAnimatorSmoothAnimationTest : public AshTestBase {
                                  const base::Closure& before_callback,
                                  const base::Closure& after_callback);
 
-  ScreenRotationAnimatorTestApi* test_api() { return test_api_.get(); }
+  test::ScreenRotationAnimatorTestApi* test_api() { return test_api_.get(); }
 
   void WaitForCopyCallback();
 
@@ -207,7 +208,7 @@ class ScreenRotationAnimatorSmoothAnimationTest : public AshTestBase {
 
   std::unique_ptr<TestScreenRotationAnimator> animator_;
 
-  std::unique_ptr<ScreenRotationAnimatorTestApi> test_api_;
+  std::unique_ptr<test::ScreenRotationAnimatorTestApi> test_api_;
 
   std::unique_ptr<ui::ScopedAnimationDurationScaleMode> non_zero_duration_mode_;
 
@@ -247,7 +248,8 @@ void ScreenRotationAnimatorSmoothAnimationTest::SetScreenRotationAnimator(
     const base::Closure& after_callback) {
   animator_ = base::MakeUnique<TestScreenRotationAnimator>(
       root_window, before_callback, after_callback);
-  test_api_ = base::MakeUnique<ScreenRotationAnimatorTestApi>(animator_.get());
+  test_api_ =
+      base::MakeUnique<test::ScreenRotationAnimatorTestApi>(animator_.get());
   test_api()->DisableAnimationTimers();
 }
 
@@ -317,19 +319,12 @@ TEST_F(ScreenRotationAnimatorSlowAnimationTest, RotatesDuringRotation) {
   SetDisplayRotation(display_id(), display::Display::ROTATE_0);
   animator()->Rotate(display::Display::ROTATE_90,
                      display::Display::RotationSource::ROTATION_SOURCE_USER);
-  EXPECT_TRUE(animator()->IsRotating());
-  EXPECT_EQ(display::Display::ROTATE_90, animator()->GetTargetRotation());
-
   animator()->Rotate(display::Display::ROTATE_180,
                      display::Display::RotationSource::ROTATION_SOURCE_USER);
   EXPECT_TRUE(test_api()->HasActiveAnimations());
-  EXPECT_TRUE(animator()->IsRotating());
-  EXPECT_EQ(display::Display::ROTATE_180, animator()->GetTargetRotation());
 
   test_api()->CompleteAnimations();
   EXPECT_FALSE(test_api()->HasActiveAnimations());
-  EXPECT_FALSE(animator()->IsRotating());
-
   EXPECT_EQ(display::Display::ROTATE_180, GetDisplayRotation(display_id()));
 }
 
@@ -395,17 +390,8 @@ TEST_F(ScreenRotationAnimatorSmoothAnimationTest,
   SetDisplayRotation(display_id, display::Display::ROTATE_0);
   animator()->Rotate(display::Display::ROTATE_90,
                      display::Display::RotationSource::ROTATION_SOURCE_USER);
-  EXPECT_TRUE(animator()->IsRotating());
-
-  EXPECT_EQ(display::Display::ROTATE_90, animator()->GetTargetRotation());
-  EXPECT_NE(display::Display::ROTATE_90, GetDisplayRotation(display_id));
-
   WaitForCopyCallback();
   EXPECT_TRUE(test_api()->HasActiveAnimations());
-  EXPECT_EQ(display::Display::ROTATE_90, animator()->GetTargetRotation());
-  // Once copy is made, the rotation is set to the target, with the
-  // image that was rotated to the original orientation.
-  EXPECT_EQ(display::Display::ROTATE_90, GetDisplayRotation(display_id));
 
   test_api()->CompleteAnimations();
   EXPECT_FALSE(test_api()->HasActiveAnimations());

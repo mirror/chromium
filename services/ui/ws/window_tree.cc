@@ -291,7 +291,8 @@ ServerWindow* WindowTree::ProcessSetDisplayRoot(
   DCHECK(window_manager_state_);  // Only called for window manager.
   DVLOG(3) << "SetDisplayRoot client=" << id_
            << " global window_id=" << client_window_id.id;
-  if (display_manager()->GetDisplayById(display_to_create.id())) {
+  Display* display = display_manager()->GetDisplayById(display_to_create.id());
+  if (display) {
     DVLOG(1) << "SetDisplayRoot called with existing display "
              << display_to_create.id();
     return nullptr;
@@ -304,15 +305,14 @@ ServerWindow* WindowTree::ProcessSetDisplayRoot(
   }
 
   ServerWindow* window = GetWindowByClientId(client_window_id);
-  const bool is_moving_to_new_display =
-      window && window->parent() && base::ContainsKey(roots_, window);
-  if (!window || (window->parent() && !is_moving_to_new_display)) {
+  // The window must not have a parent.
+  if (!window || window->parent()) {
     DVLOG(1) << "SetDisplayRoot called with invalid window id "
              << client_window_id.id;
     return nullptr;
   }
 
-  if (base::ContainsKey(roots_, window) && !is_moving_to_new_display) {
+  if (base::ContainsKey(roots_, window)) {
     DVLOG(1) << "SetDisplayRoot called with existing root";
     return nullptr;
   }
@@ -323,7 +323,7 @@ ServerWindow* WindowTree::ProcessSetDisplayRoot(
   viewport_metrics.device_scale_factor =
       transport_viewport_metrics.device_scale_factor;
   viewport_metrics.ui_scale_factor = transport_viewport_metrics.ui_scale_factor;
-  Display* display = display_manager()->AddDisplayForWindowManager(
+  display = display_manager()->AddDisplayForWindowManager(
       is_primary_display, display_to_create, viewport_metrics);
   DCHECK(display);
   WindowManagerDisplayRoot* display_root =
@@ -336,13 +336,7 @@ ServerWindow* WindowTree::ProcessSetDisplayRoot(
   // care of any modifications it needs to do.
   roots_.insert(window);
   Operation op(this, window_server_, OperationType::ADD_WINDOW);
-  ServerWindow* old_parent =
-      is_moving_to_new_display ? window->parent() : nullptr;
   display_root->root()->Add(window);
-  if (is_moving_to_new_display) {
-    DCHECK(old_parent);
-    window_manager_state_->DeleteWindowManagerDisplayRoot(old_parent);
-  }
   return window;
 }
 
@@ -2271,13 +2265,6 @@ void WindowTree::SetExtendedHitRegionForChildren(
   }
   window->set_extended_hit_test_regions_for_children(mouse_insets,
                                                      touch_insets);
-}
-
-void WindowTree::SetKeyEventsThatDontHideCursor(
-    std::vector<::ui::mojom::EventMatcherPtr> dont_hide_cursor_list) {
-  DCHECK(window_manager_state_);
-  window_manager_state_->SetKeyEventsThatDontHideCursor(
-      std::move(dont_hide_cursor_list));
 }
 
 void WindowTree::SetDisplayRoot(const display::Display& display,

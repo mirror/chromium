@@ -7,14 +7,14 @@
 #include <memory>
 
 #include "ash/display/display_util.h"
-#include "ash/display/mirror_window_test_api.h"
 #include "ash/host/root_window_transformer.h"
 #include "ash/magnifier/magnification_controller.h"
 #include "ash/screen_util.h"
 #include "ash/shelf/shelf_widget.h"
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
-#include "ash/wm/cursor_manager_test_api.h"
+#include "ash/test/cursor_manager_test_api.h"
+#include "ash/test/mirror_window_test_api.h"
 #include "base/synchronization/waitable_event.h"
 #include "ui/aura/env.h"
 #include "ui/aura/window_event_dispatcher.h"
@@ -113,7 +113,7 @@ class TestEventHandler : public ui::EventHandler {
   DISALLOW_COPY_AND_ASSIGN(TestEventHandler);
 };
 
-class RootWindowTransformersTest : public AshTestBase {
+class RootWindowTransformersTest : public test::AshTestBase {
  public:
   RootWindowTransformersTest() {}
   ~RootWindowTransformersTest() override {}
@@ -140,6 +140,8 @@ class RootWindowTransformersTest : public AshTestBase {
 };
 
 }  // namespace
+
+// using RootWindowTransformersTest = test::AshTestBase;
 
 TEST_F(RootWindowTransformersTest, RotateAndMagnify) {
   MagnificationController* magnifier = Shell::Get()->magnification_controller();
@@ -404,7 +406,7 @@ TEST_F(RootWindowTransformersTest, ConvertHostToRootCoords) {
 }
 
 TEST_F(RootWindowTransformersTest, LetterBoxPillarBox) {
-  MirrorWindowTestApi test_api;
+  test::MirrorWindowTestApi test_api;
   display_manager()->SetMultiDisplayMode(display::DisplayManager::MIRRORING);
   UpdateDisplay("400x200,500x500");
   std::unique_ptr<RootWindowTransformer> transformer(

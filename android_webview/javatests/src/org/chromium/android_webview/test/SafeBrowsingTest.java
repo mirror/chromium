@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.net.Uri;
 import android.support.test.filters.SmallTest;
 import android.view.ViewGroup;
 import android.webkit.ValueCallback;
@@ -20,8 +19,6 @@ import org.chromium.android_webview.AwContents.InternalAccessDelegate;
 import org.chromium.android_webview.AwContents.NativeDrawGLFunctorFactory;
 import org.chromium.android_webview.AwContentsClient;
 import org.chromium.android_webview.AwContentsClient.AwWebResourceRequest;
-import org.chromium.android_webview.AwContentsStatics;
-import org.chromium.android_webview.AwSafeBrowsingConfigHelper;
 import org.chromium.android_webview.AwSafeBrowsingConversionHelper;
 import org.chromium.android_webview.AwSafeBrowsingResponse;
 import org.chromium.android_webview.AwSettings;
@@ -265,6 +262,7 @@ public class SafeBrowsingTest extends AwTestBase {
     public void setUp() throws Exception {
         super.setUp();
         mContentsClient = new SafeBrowsingContentsClient();
+
         mContainerView = createAwTestContainerViewOnMainSync(
                 mContentsClient, false, new SafeBrowsingDependencyFactory());
         mAwContents = (MockAwContents) mContainerView.getAwContents();
@@ -434,24 +432,6 @@ public class SafeBrowsingTest extends AwTestBase {
         assertTargetPageNotShowing(PHISHING_PAGE_BACKGROUND_COLOR);
         // Assume that we are rendering the interstitial, since we see neither the previous page nor
         // the target page
-    }
-
-    @SmallTest
-    @Feature({"AndroidWebView"})
-    @CommandLineFlags.Add(AwSwitches.WEBVIEW_ENABLE_SAFEBROWSING_SUPPORT)
-    public void testSafeBrowsingWhitelistedUnsafePagesDontShowInterstitial() throws Throwable {
-        loadGreenPage();
-        final String responseUrl = mTestServer.getURL(MALWARE_HTML_PATH);
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                String host = Uri.parse(responseUrl).getHost();
-                String[] s = new String[] {host};
-                AwContentsStatics.setSafeBrowsingWhiteList(s);
-            }
-        });
-        loadUrlSync(mAwContents, mContentsClient.getOnPageFinishedHelper(), responseUrl);
-        assertTargetPageHasLoaded(MALWARE_PAGE_BACKGROUND_COLOR);
     }
 
     @SmallTest
@@ -761,27 +741,5 @@ public class SafeBrowsingTest extends AwTestBase {
         assertEquals(subresourceUrl, mContentsClient.getLastRequest().url);
         assertEquals(AwSafeBrowsingConversionHelper.SAFE_BROWSING_THREAT_MALWARE,
                 mContentsClient.getLastThreatType());
-    }
-
-    @SmallTest
-    @Feature({"AndroidWebView"})
-    @CommandLineFlags.Add(AwSwitches.WEBVIEW_ENABLE_SAFEBROWSING_SUPPORT)
-    public void testSafeBrowsingUserOptOutOverridesManifest() throws Throwable {
-        AwSafeBrowsingConfigHelper.setSafeBrowsingUserOptIn(false);
-        loadGreenPage();
-        final String responseUrl = mTestServer.getURL(MALWARE_HTML_PATH);
-        loadUrlSync(mAwContents, mContentsClient.getOnPageFinishedHelper(), responseUrl);
-        assertTargetPageHasLoaded(MALWARE_PAGE_BACKGROUND_COLOR);
-    }
-
-    @SmallTest
-    @Feature({"AndroidWebView"})
-    public void testSafeBrowsingUserOptOutOverridesPerWebView() throws Throwable {
-        AwSafeBrowsingConfigHelper.setSafeBrowsingUserOptIn(false);
-        getAwSettingsOnUiThread(mAwContents).setSafeBrowsingEnabled(true);
-        loadGreenPage();
-        final String responseUrl = mTestServer.getURL(MALWARE_HTML_PATH);
-        loadUrlSync(mAwContents, mContentsClient.getOnPageFinishedHelper(), responseUrl);
-        assertTargetPageHasLoaded(MALWARE_PAGE_BACKGROUND_COLOR);
     }
 }

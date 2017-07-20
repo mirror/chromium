@@ -54,6 +54,7 @@
 #include "core/dom/DOMTokenList.h"
 #include "core/dom/DatasetDOMStringMap.h"
 #include "core/dom/ElementDataCache.h"
+#include "core/dom/ElementIntersectionObserverData.h"
 #include "core/dom/ElementRareData.h"
 #include "core/dom/ElementShadow.h"
 #include "core/dom/ElementShadowV0.h"
@@ -115,7 +116,6 @@
 #include "core/html/custom/V0CustomElementRegistrationContext.h"
 #include "core/html/parser/HTMLParserIdioms.h"
 #include "core/input/EventHandler.h"
-#include "core/intersection_observer/ElementIntersectionObserverData.h"
 #include "core/layout/LayoutTextFragment.h"
 #include "core/layout/api/LayoutBoxItem.h"
 #include "core/layout/api/LayoutViewItem.h"
@@ -528,10 +528,14 @@ void Element::scrollIntoViewWithOptions(const ScrollIntoViewOptions& options) {
   ScrollAlignment align_y =
       ToPhysicalAlignment(options, kVerticalScroll, is_horizontal_writing_mode);
 
+  GetDocument().GetPage()->GetSmoothScrollSequencer()->AbortAnimations();
   LayoutRect bounds = BoundingBox();
   GetLayoutObject()->ScrollRectToVisible(
       bounds, align_x, align_y, kProgrammaticScroll,
       make_visible_in_visual_viewport, behavior);
+
+  if (behavior == kScrollBehaviorSmooth)
+    GetDocument().GetPage()->GetSmoothScrollSequencer()->RunQueuedAnimations();
 
   GetDocument().SetSequentialFocusNavigationStartingPoint(this);
 }
@@ -3621,13 +3625,12 @@ void Element::SetIntegralAttribute(const QualifiedName& attribute_name,
 }
 
 void Element::SetUnsignedIntegralAttribute(const QualifiedName& attribute_name,
-                                           unsigned value,
-                                           unsigned default_value) {
+                                           unsigned value) {
   // Range restrictions are enforced for unsigned IDL attributes that
   // reflect content attributes,
   //   http://www.whatwg.org/specs/web-apps/current-work/multipage/common-dom-interfaces.html#reflecting-content-attributes-in-idl-attributes
   if (value > 0x7fffffffu)
-    value = default_value;
+    value = 0;
   setAttribute(attribute_name, AtomicString::Number(value));
 }
 
@@ -4167,7 +4170,7 @@ void Element::StyleAttributeChanged(
                                             ShadowRootType::kUserAgent) ||
              GetDocument().GetContentSecurityPolicy()->AllowInlineStyle(
                  this, GetDocument().Url(), String(), start_line_number,
-                 new_style_string, ContentSecurityPolicy::InlineType::kBlock)) {
+                 new_style_string)) {
     SetInlineStyleFromString(new_style_string);
   }
 

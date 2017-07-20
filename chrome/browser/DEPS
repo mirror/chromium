@@ -53,9 +53,7 @@ include_rules = [
   "+services/resource_coordinator/public/interfaces/memory_instrumentation",
   "+services/service_manager",
   "+services/shape_detection/public/interfaces",
-  "+services/ui/common",
   "+services/ui/public",
-  "+services/ui/service.h",
   "+skia/ext",
   "+third_party/boringssl/src/include",
   "+third_party/crashpad",
@@ -89,10 +87,6 @@ include_rules = [
   # Explicitly disallow using SyncMessageFilter to prevent browser from
   # sending synchronous IPC messages on non-UI threads.
   "-ipc/ipc_sync_message_filter.h",
-
-  # Allows in-process use of NetworkService for URLRequestContext configuration.
-  # Should be removed once the actual network service ships.
-  "+content/public/network",
 
   # Other libraries.
   "+libxml",

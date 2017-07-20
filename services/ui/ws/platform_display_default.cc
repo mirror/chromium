@@ -7,12 +7,11 @@
 #include <utility>
 
 #include "base/memory/ptr_util.h"
-#include "build/build_config.h"
 #include "gpu/ipc/client/gpu_channel_host.h"
 #include "services/ui/display/screen_manager.h"
 #include "services/ui/public/interfaces/cursor/cursor_struct_traits.h"
 #include "services/ui/ws/server_window.h"
-#include "services/ui/ws/threaded_image_cursors.h"
+#include "ui/base/cursor/image_cursors.h"
 #include "ui/display/display.h"
 #include "ui/events/event.h"
 #include "ui/events/event_utils.h"
@@ -26,7 +25,6 @@
 #elif defined(OS_ANDROID)
 #include "ui/platform_window/android/platform_window_android.h"
 #elif defined(USE_OZONE)
-#include "ui/events/ozone/chromeos/cursor_controller.h"
 #include "ui/ozone/public/cursor_factory_ozone.h"
 #include "ui/ozone/public/ozone_platform.h"
 #endif
@@ -37,27 +35,20 @@ namespace ws {
 PlatformDisplayDefault::PlatformDisplayDefault(
     ServerWindow* root_window,
     const display::ViewportMetrics& metrics,
-    std::unique_ptr<ThreadedImageCursors> image_cursors)
+    std::unique_ptr<ImageCursors> image_cursors)
     : root_window_(root_window),
       image_cursors_(std::move(image_cursors)),
       metrics_(metrics),
       widget_(gfx::kNullAcceleratedWidget) {}
 
 PlatformDisplayDefault::~PlatformDisplayDefault() {
-#if defined(USE_OZONE) && defined(OS_CHROMEOS)
-  ui::CursorController::GetInstance()->ClearCursorConfigForWindow(
-      GetAcceleratedWidget());
-#endif
-
   // Don't notify the delegate from the destructor.
   delegate_ = nullptr;
 
   frame_generator_.reset();
-  image_cursors_.reset();
   // Destroy the PlatformWindow early on as it may call us back during
   // destruction and we want to be in a known state. But destroy the surface
-  // and ThreadedImageCursors first because they can still be using the platform
-  // window.
+  // first because it can still be using the platform window.
   platform_window_.reset();
 }
 
@@ -113,15 +104,12 @@ void PlatformDisplayDefault::SetCursor(const ui::CursorData& cursor_data) {
   if (!image_cursors_)
     return;
 
-  ui::CursorType cursor_type = cursor_data.cursor_type();
+  ui::Cursor native_cursor(cursor_data.cursor_type());
 
 #if defined(USE_OZONE)
-  if (cursor_type != ui::CursorType::kCustom) {
-    // |platform_window_| is destroyed after |image_cursors_|, so it is
-    // guaranteed to outlive |image_cursors_|.
-    image_cursors_->SetCursor(cursor_type, platform_window_.get());
+  if (cursor_data.cursor_type() != ui::CursorType::kCustom) {
+    image_cursors_->SetPlatformCursor(&native_cursor);
   } else {
-    ui::Cursor native_cursor(cursor_type);
     // In Ozone builds, we have an interface available which turns bitmap data
     // into platform cursors.
     ui::CursorFactoryOzone* cursor_factory =
@@ -130,7 +118,6 @@ void PlatformDisplayDefault::SetCursor(const ui::CursorData& cursor_data) {
         cursor_data.cursor_frames(), cursor_data.hotspot_in_pixels(),
         cursor_data.frame_delay().InMilliseconds(),
         cursor_data.scale_factor()));
-    platform_window_->SetCursor(native_cursor.platform());
   }
 #else
   // Outside of ozone builds, there isn't a single interface for creating
@@ -142,12 +129,14 @@ void PlatformDisplayDefault::SetCursor(const ui::CursorData& cursor_data) {
   // cursor management on its own mus windows so we can remove Webcursor from
   // //content/ and do this in way that's safe cross-platform, instead of as an
   // ozone-specific hack.
-  if (cursor_type == ui::CursorType::kCustom) {
+  if (cursor_data.cursor_type() == ui::CursorType::kCustom) {
     NOTIMPLEMENTED() << "No custom cursor support on non-ozone yet.";
-    cursor_type = ui::CursorType::kPointer;
+    native_cursor = ui::Cursor(ui::CursorType::kPointer);
   }
-  image_cursors_->SetCursor(cursor_type, platform_window_.get());
+  image_cursors_->SetPlatformCursor(&native_cursor);
 #endif
+
+  platform_window_->SetCursor(native_cursor.platform());
 }
 
 void PlatformDisplayDefault::MoveCursorTo(
@@ -196,15 +185,6 @@ void PlatformDisplayDefault::UpdateViewportMetrics(
 
 gfx::AcceleratedWidget PlatformDisplayDefault::GetAcceleratedWidget() const {
   return widget_;
-}
-
-void PlatformDisplayDefault::SetCursorConfig(
-    display::Display::Rotation rotation,
-    float scale) {
-#if defined(USE_OZONE) && defined(OS_CHROMEOS)
-  ui::CursorController::GetInstance()->SetCursorConfigForWindow(
-      GetAcceleratedWidget(), rotation, scale);
-#endif
 }
 
 void PlatformDisplayDefault::OnBoundsChanged(const gfx::Rect& new_bounds) {

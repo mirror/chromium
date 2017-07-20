@@ -22,14 +22,8 @@ class Client {
   // Used by OnDownloadStarted to determine whether or not the DownloadService
   // should continue downloading the file or abort the attempt.
   enum class ShouldDownload {
-    // Continue to download the file.
     CONTINUE,
-
-    // Abort the download.
     ABORT,
-
-    // The count of entries for the enum.
-    COUNT,
   };
 
   // Used by OnDownloadFailed to determine the reason of the abort.
@@ -61,12 +55,8 @@ class Client {
 
   // Called when the DownloadService is initialized and ready to be interacted
   // with.  |outstanding_download_guids| is a list of all downloads the
-  // DownloadService is aware of that are associated with this Client.  If
-  // |state_lost| is |true|, the service ran into an error initializing and had
-  // to destroy all internal persisted state.  At this point any saved files
-  // might not be available and any previously scheduled downloads are gone.
+  // DownloadService is aware of that are associated with this Client.
   virtual void OnServiceInitialized(
-      bool state_lost,
       const std::vector<std::string>& outstanding_download_guids) = 0;
 
   // Called when the DownloadService fails to initialize and should not be used.

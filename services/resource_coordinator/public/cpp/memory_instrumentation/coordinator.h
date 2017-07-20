@@ -17,8 +17,8 @@ class Coordinator {
  public:
   // Binds a CoordinatorRequest to this Coordinator instance.
   virtual void BindCoordinatorRequest(
-      mojom::CoordinatorRequest,
-      const service_manager::BindSourceInfo& source_info) = 0;
+      const service_manager::BindSourceInfo& source_info,
+      mojom::CoordinatorRequest) = 0;
 };
 
 }  // namespace memory_instrumentation

@@ -79,17 +79,13 @@ class ClampedNumeric {
 
   constexpr ClampedNumeric operator-() const {
     return ClampedNumeric<T>(
-        // The negation of two's complement int min is int min, so we can
-        // check and just add one to prevent overflow in the constexpr case.
-        // We use an optimized code path for a known run-time variable.
+        // The negation of two's complement int min is int min, so that's the
+        // only overflow case we have to check for.
         std::is_signed<T>::value
-            ? (MustTreatAsConstexpr(value_)
-                   ? ((std::is_floating_point<T>::value ||
-                       NegateWrapper(value_) !=
-                           std::numeric_limits<T>::lowest())
-                          ? NegateWrapper(value_)
-                          : std::numeric_limits<T>::max())
-                   : ClampedSubOp<T, T>::template Do<T>(T(0), value_))
+            ? ((std::is_floating_point<T>::value ||
+                NegateWrapper(value_) != std::numeric_limits<T>::lowest())
+                   ? NegateWrapper(value_)
+                   : std::numeric_limits<T>::max())
             : T(0));  // Clamped unsigned negation is always zero.
   }
 
@@ -98,9 +94,13 @@ class ClampedNumeric {
   }
 
   constexpr ClampedNumeric Abs() const {
-    // The negation of two's complement int min is int min, so that's the
-    // only overflow case where we will saturate.
-    return ClampedNumeric<T>(SaturatedAbsWrapper(value_));
+    return ClampedNumeric<T>(
+        // The negation of two's complement int min is int min, so that's the
+        // only overflow case we have to check for.
+        (!std::is_signed<T>::value || std::is_floating_point<T>::value ||
+         AbsWrapper(value_) != std::numeric_limits<T>::lowest())
+            ? AbsWrapper(value_)
+            : std::numeric_limits<T>::max());
   }
 
   template <typename U>
@@ -108,7 +108,7 @@ class ClampedNumeric {
       const U rhs) const {
     using result_type = typename MathWrapper<ClampedMaxOp, T, U>::type;
     return ClampedNumeric<result_type>(
-        ClampedMaxOp<T, U>::Do(value_, Wrapper<U>::value(rhs)));
+        ClampedMaxOp<T, U>(value_, Wrapper<U>::value(rhs)));
   }
 
   template <typename U>
@@ -116,7 +116,7 @@ class ClampedNumeric {
       const U rhs) const {
     using result_type = typename MathWrapper<ClampedMinOp, T, U>::type;
     return ClampedNumeric<result_type>(
-        ClampedMinOp<T, U>::Do(value_, Wrapper<U>::value(rhs)));
+        ClampedMinOp<T, U>(value_, Wrapper<U>::value(rhs)));
   }
 
   // This function is available only for integral types. It returns an unsigned

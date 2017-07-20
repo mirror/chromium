@@ -4,7 +4,6 @@
 
 #include <memory>
 
-#include "ash/app_list/test_app_list_view_presenter_impl.h"
 #include "ash/ash_switches.h"
 #include "ash/public/cpp/config.h"
 #include "ash/public/cpp/shelf_types.h"
@@ -14,6 +13,7 @@
 #include "ash/shell.h"
 #include "ash/shell_port.h"
 #include "ash/test/ash_test_base.h"
+#include "ash/test/test_app_list_view_presenter_impl.h"
 #include "ash/wm/maximize_mode/maximize_mode_controller.h"
 #include "ash/wm/window_util.h"
 #include "base/command_line.h"
@@ -39,7 +39,7 @@ int64_t GetPrimaryDisplayId() {
 }
 
 void SetShelfAlignment(ShelfAlignment alignment) {
-  AshTestBase::GetPrimaryShelf()->SetAlignment(alignment);
+  test::AshTestBase::GetPrimaryShelf()->SetAlignment(alignment);
 }
 
 void EnableMaximizeMode(bool enable) {
@@ -49,7 +49,7 @@ void EnableMaximizeMode(bool enable) {
 
 }  // namespace
 
-class AppListPresenterDelegateTest : public AshTestBase,
+class AppListPresenterDelegateTest : public test::AshTestBase,
                                      public testing::WithParamInterface<bool> {
  public:
   AppListPresenterDelegateTest() {}
@@ -78,7 +78,7 @@ class AppListPresenterDelegateTest : public AshTestBase,
   }
 
  private:
-  TestAppListViewPresenterImpl app_list_presenter_impl_;
+  test::TestAppListViewPresenterImpl app_list_presenter_impl_;
   base::test::ScopedFeatureList scoped_feature_list_;
 
   DISALLOW_COPY_AND_ASSIGN(AppListPresenterDelegateTest);
@@ -87,7 +87,7 @@ class AppListPresenterDelegateTest : public AshTestBase,
 // TODO(Newcomer): Remove FullscreenAppListPresenterDelegateTest when the
 // fullscreen app list becomes default.
 class FullscreenAppListPresenterDelegateTest
-    : public AshTestBase,
+    : public test::AshTestBase,
       public testing::WithParamInterface<bool> {
  public:
   FullscreenAppListPresenterDelegateTest() {}
@@ -123,7 +123,7 @@ class FullscreenAppListPresenterDelegateTest
   }
 
  private:
-  TestAppListViewPresenterImpl app_list_presenter_impl_;
+  test::TestAppListViewPresenterImpl app_list_presenter_impl_;
   base::test::ScopedFeatureList scoped_feature_list_;
 
   DISALLOW_COPY_AND_ASSIGN(FullscreenAppListPresenterDelegateTest);
@@ -699,8 +699,6 @@ TEST_F(AppListPresenterDelegateTest,
   app_list_presenter_impl()->Show(GetPrimaryDisplayId());
   EXPECT_TRUE(app_list::features::IsFullscreenAppListEnabled());
   EXPECT_FALSE(GetPrimaryShelf()->IsHorizontalAlignment());
-  // TODO(muyuanli): This should be SHELF_BACKGROUND_OVERLAP but the test
-  // construction code is not quite correct. See crbug.com/742461.
   EXPECT_EQ(GetPrimaryShelf()->shelf_layout_manager()->GetShelfBackgroundType(),
             SHELF_BACKGROUND_DEFAULT);
 }
@@ -750,43 +748,6 @@ TEST_F(FullscreenAppListPresenterDelegateTest,
   generator.MoveMouseTo(gfx::Point(10, 10));
   generator.ClickLeftButton();
   EXPECT_FALSE(app_list_presenter_impl()->IsVisible());
-}
-
-// Tests that the app list transitions on mousewheel and gesture scroll events.
-TEST_P(FullscreenAppListPresenterDelegateTest,
-       MouseWheelAndGestureScrollTransition) {
-  const bool test_mouse_event = GetParam();
-  app_list_presenter_impl()->Show(GetPrimaryDisplayId());
-  app_list::AppListView* view = app_list_presenter_impl()->GetView();
-  ui::test::EventGenerator& generator = GetEventGenerator();
-  EXPECT_EQ(view->app_list_state(), app_list::AppListView::PEEKING);
-
-  // Move mouse to over the searchbox, mousewheel scroll up.
-  generator.MoveMouseTo(GetPointInsideSearchbox());
-  if (test_mouse_event) {
-    generator.MoveMouseWheel(0, -30);
-  } else {
-    generator.ScrollSequence(GetPointInsideSearchbox(),
-                             base::TimeDelta::FromMilliseconds(5), 0, -300, 2,
-                             2);
-  }
-  EXPECT_EQ(view->app_list_state(), app_list::AppListView::FULLSCREEN_ALL_APPS);
-
-  // Swipe down, the app list should return to peeking mode.
-  generator.GestureScrollSequence(gfx::Point(0, 0), gfx::Point(0, 720),
-                                  base::TimeDelta::FromMilliseconds(100), 10);
-  EXPECT_EQ(view->app_list_state(), app_list::AppListView::PEEKING);
-
-  // Move mouse away from the searchbox, mousewheel scroll up.
-  generator.MoveMouseTo(GetPointOutsideSearchbox());
-  if (test_mouse_event) {
-    generator.MoveMouseWheel(0, -30);
-  } else {
-    generator.ScrollSequence(GetPointOutsideSearchbox(),
-                             base::TimeDelta::FromMilliseconds(5), 0, -300, 2,
-                             2);
-  }
-  EXPECT_EQ(view->app_list_state(), app_list::AppListView::FULLSCREEN_ALL_APPS);
 }
 
 }  // namespace ash

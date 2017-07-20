@@ -14,9 +14,9 @@
 #include "ash/shelf/shelf_button.h"
 #include "ash/shelf/shelf_constants.h"
 #include "ash/shelf/shelf_view.h"
-#include "ash/shelf/shelf_view_test_api.h"
 #include "ash/shelf/shelf_widget.h"
 #include "ash/shell.h"
+#include "ash/test/shelf_view_test_api.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
 #include "base/macros.h"
@@ -316,7 +316,7 @@ class ShelfAppBrowserTest : public ExtensionBrowserTest {
   // Try to rip off |item_index|.
   void RipOffItemIndex(int index,
                        ui::test::EventGenerator* generator,
-                       ash::ShelfViewTestAPI* test,
+                       ash::test::ShelfViewTestAPI* test,
                        RipOffCommand command) {
     ash::ShelfButton* button = test->GetButton(index);
     gfx::Point start_point = button->GetBoundsInScreen().CenterPoint();
@@ -717,29 +717,22 @@ IN_PROC_BROWSER_TEST_F(LauncherPlatformAppBrowserTest,
   EXPECT_FALSE(window1->GetBaseWindow()->IsMaximized());
 
   // Creating a second window of the same type should change the behavior so
-  // that a click on the shelf item does not change the activation state.
+  // that a click does not change the activation state.
   AppWindow* window1a = CreateAppWindow(browser()->profile(), extension1);
-  EXPECT_TRUE(window1->GetNativeWindow()->IsVisible());
   EXPECT_TRUE(window1a->GetNativeWindow()->IsVisible());
-  EXPECT_FALSE(window1->GetBaseWindow()->IsActive());
   EXPECT_TRUE(window1a->GetBaseWindow()->IsActive());
-
-  // Ensure the same shelf item and delegate are used for |window1a|.
-  EXPECT_EQ(item1.id, GetLastLauncherItem().id);
-  EXPECT_EQ(item1_delegate, GetShelfItemDelegate(GetLastLauncherItem().id));
-
   // The first click does nothing.
   SelectItem(item1_delegate, ui::ET_MOUSE_PRESSED);
   EXPECT_TRUE(window1->GetNativeWindow()->IsVisible());
   EXPECT_TRUE(window1a->GetNativeWindow()->IsVisible());
-  EXPECT_FALSE(window1->GetBaseWindow()->IsActive());
-  EXPECT_TRUE(window1a->GetBaseWindow()->IsActive());
+  EXPECT_TRUE(window1->GetBaseWindow()->IsActive());
+  EXPECT_FALSE(window1a->GetBaseWindow()->IsActive());
   // The second neither.
   SelectItem(item1_delegate, ui::ET_MOUSE_PRESSED);
   EXPECT_TRUE(window1->GetNativeWindow()->IsVisible());
   EXPECT_TRUE(window1a->GetNativeWindow()->IsVisible());
-  EXPECT_FALSE(window1->GetBaseWindow()->IsActive());
-  EXPECT_TRUE(window1a->GetBaseWindow()->IsActive());
+  EXPECT_TRUE(window1->GetBaseWindow()->IsActive());
+  EXPECT_FALSE(window1a->GetBaseWindow()->IsActive());
 }
 
 // Confirm that ash::ShelfWindowWatcher correctly handles app panels.
@@ -1893,7 +1886,7 @@ IN_PROC_BROWSER_TEST_F(ShelfAppBrowserTest, DISABLED_DragAndDrop) {
   // Get a number of interfaces we need.
   ui::test::EventGenerator generator(ash::Shell::GetPrimaryRootWindow(),
                                      gfx::Point());
-  ash::ShelfViewTestAPI test(shelf_->GetShelfViewForTesting());
+  ash::test::ShelfViewTestAPI test(shelf_->GetShelfViewForTesting());
   AppListService* service = AppListService::Get();
 
   // There should be two items in our launcher by this time.
@@ -2020,7 +2013,7 @@ IN_PROC_BROWSER_TEST_F(ShelfAppBrowserTest, MultiDisplayBasicDragAndDrop) {
   ash::Shelf* secondary_shelf = ash::Shelf::ForWindow(secondary_root_window);
 
   ui::test::EventGenerator generator(secondary_root_window, gfx::Point());
-  ash::ShelfViewTestAPI test(secondary_shelf->GetShelfViewForTesting());
+  ash::test::ShelfViewTestAPI test(secondary_shelf->GetShelfViewForTesting());
   AppListService* service = AppListService::Get();
 
   // There should be two items in our shelf by this time.
@@ -2104,7 +2097,7 @@ IN_PROC_BROWSER_TEST_F(ShelfAppBrowserTest, MultiDisplayBasicDragAndDrop) {
 IN_PROC_BROWSER_TEST_F(ShelfAppBrowserTest, DISABLED_DragOffShelf) {
   ui::test::EventGenerator generator(ash::Shell::GetPrimaryRootWindow(),
                                      gfx::Point());
-  ash::ShelfViewTestAPI test(shelf_->GetShelfViewForTesting());
+  ash::test::ShelfViewTestAPI test(shelf_->GetShelfViewForTesting());
   test.SetAnimationDuration(1);  // Speed up animations for test.
   // Create a known application and check that we have 3 items in the shelf.
   CreateShortcut("app1");
@@ -2203,7 +2196,7 @@ IN_PROC_BROWSER_TEST_F(ShelfAppBrowserTest, DISABLED_DragOffShelf) {
 IN_PROC_BROWSER_TEST_F(ShelfAppBrowserTest, ShelfButtonContextMenu) {
   ui::test::EventGenerator generator(ash::Shell::GetPrimaryRootWindow(),
                                      gfx::Point());
-  ash::ShelfViewTestAPI test(shelf_->GetShelfViewForTesting());
+  ash::test::ShelfViewTestAPI test(shelf_->GetShelfViewForTesting());
   const int browser_index = GetIndexOfShelfItemType(ash::TYPE_BROWSER_SHORTCUT);
   ASSERT_LE(0, browser_index);
   ash::ShelfButton* button = test.GetButton(browser_index);
@@ -2234,7 +2227,7 @@ IN_PROC_BROWSER_TEST_F(ShelfAppBrowserTest, ClickItem) {
   // Get a number of interfaces we need.
   ui::test::EventGenerator generator(ash::Shell::GetPrimaryRootWindow(),
                                      gfx::Point());
-  ash::ShelfViewTestAPI test(shelf_->GetShelfViewForTesting());
+  ash::test::ShelfViewTestAPI test(shelf_->GetShelfViewForTesting());
   AppListService* service = AppListService::Get();
   // There should be two items in our shelf by this time.
   EXPECT_EQ(2, model_->item_count());
@@ -2343,7 +2336,7 @@ IN_PROC_BROWSER_TEST_F(ShelfAppBrowserTest, OverflowBubble) {
   // No overflow yet.
   EXPECT_FALSE(shelf_->shelf_widget()->IsShowingOverflowBubble());
 
-  ash::ShelfViewTestAPI test(shelf_->GetShelfViewForTesting());
+  ash::test::ShelfViewTestAPI test(shelf_->GetShelfViewForTesting());
 
   int items_added = 0;
   while (!test.IsOverflowButtonVisible()) {

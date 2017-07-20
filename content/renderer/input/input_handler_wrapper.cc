@@ -109,9 +109,4 @@ void InputHandlerWrapper::GenerateScrollBeginAndSendToMainThread(
       ui::WebInputEventTraits::Clone(scroll_begin), ui::LatencyInfo());
 }
 
-void InputHandlerWrapper::SetWhiteListedTouchAction(
-    cc::TouchAction touch_action) {
-  input_handler_manager_->SetWhiteListedTouchAction(routing_id_, touch_action);
-}
-
 }  // namespace content

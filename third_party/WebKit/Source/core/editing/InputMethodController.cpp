@@ -34,7 +34,6 @@
 #include "core/dom/Text.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/Editor.h"
-#include "core/editing/FrameSelection.h"
 #include "core/editing/commands/TypingCommand.h"
 #include "core/editing/markers/DocumentMarkerController.h"
 #include "core/editing/state_machines/BackwardCodePointStateMachine.h"
@@ -345,23 +344,10 @@ void InputMethodController::SelectComposition() const {
       SelectionInDOMTree::Builder().SetBaseAndExtent(range).Build(), 0);
 }
 
-bool IsCompositionTooLong(const Element& element) {
-  if (isHTMLInputElement(element))
-    return toHTMLInputElement(element).TooLong();
-  if (isHTMLTextAreaElement(element))
-    return toHTMLTextAreaElement(element).TooLong();
-  return false;
-}
-
 bool InputMethodController::FinishComposingText(
     ConfirmCompositionBehavior confirm_behavior) {
   if (!HasComposition())
     return false;
-
-  // If text is longer than maxlength, give input/textarea's handler a chance to
-  // clamp the text by replacing the composition with the same value.
-  const bool is_too_long =
-      IsCompositionTooLong(*GetDocument().FocusedElement());
 
   const String& composing = ComposingText();
 
@@ -373,12 +359,8 @@ bool InputMethodController::FinishComposingText(
     const PlainTextRange& old_offsets = GetSelectionOffsets();
     Editor::RevealSelectionScope reveal_selection_scope(&GetEditor());
 
-    if (is_too_long) {
-      ReplaceComposition(ComposingText());
-    } else {
-      Clear();
-      DispatchCompositionEndEvent(GetFrame(), composing);
-    }
+    Clear();
+    DispatchCompositionEndEvent(GetFrame(), composing);
 
     // TODO(editing-dev): Use of updateStyleAndLayoutIgnorePendingStylesheets
     // needs to be audited. see http://crbug.com/590369 for more details.
@@ -410,11 +392,7 @@ bool InputMethodController::FinishComposingText(
   if (composition_range.IsNull())
     return false;
 
-  if (is_too_long) {
-    ReplaceComposition(ComposingText());
-  } else {
-    Clear();
-  }
+  Clear();
 
   if (!MoveCaret(composition_range.End()))
     return false;
@@ -710,7 +688,7 @@ void InputMethodController::SetComposition(
   GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
 
   // We shouldn't close typing in the middle of setComposition.
-  SetEditableSelectionOffsets(selected_range, TypingContinuation::kContinue);
+  SetEditableSelectionOffsets(selected_range, kNotUserTriggered);
 
   if (underlines.IsEmpty()) {
     GetDocument().Markers().AddCompositionMarker(
@@ -821,37 +799,23 @@ EphemeralRange InputMethodController::EphemeralRangeForOffsets(
 }
 
 bool InputMethodController::SetSelectionOffsets(
-    const PlainTextRange& selection_offsets) {
-  return SetSelectionOffsets(selection_offsets, TypingContinuation::kEnd);
-}
-
-bool InputMethodController::SetSelectionOffsets(
     const PlainTextRange& selection_offsets,
-    TypingContinuation Typing_continuation) {
+    FrameSelection::SetSelectionOptions options) {
   const EphemeralRange range = EphemeralRangeForOffsets(selection_offsets);
   if (range.IsNull())
     return false;
 
   GetFrame().Selection().SetSelection(
-      SelectionInDOMTree::Builder().SetBaseAndExtent(range).Build(),
-      Typing_continuation == TypingContinuation::kEnd
-          ? FrameSelection::kCloseTyping
-          : 0);
+      SelectionInDOMTree::Builder().SetBaseAndExtent(range).Build(), options);
   return true;
 }
 
 bool InputMethodController::SetEditableSelectionOffsets(
-    const PlainTextRange& selection_offsets) {
-  return SetEditableSelectionOffsets(selection_offsets,
-                                     TypingContinuation::kEnd);
-}
-
-bool InputMethodController::SetEditableSelectionOffsets(
     const PlainTextRange& selection_offsets,
-    TypingContinuation typing_continuation) {
+    FrameSelection::SetSelectionOptions options) {
   if (!GetEditor().CanEdit())
     return false;
-  return SetSelectionOffsets(selection_offsets, typing_continuation);
+  return SetSelectionOffsets(selection_offsets, options);
 }
 
 PlainTextRange InputMethodController::CreateRangeForSelection(

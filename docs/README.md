@@ -1,40 +1,35 @@
 # Chromium docs
 
 This directory contains chromium project documentation in
-[Gitiles-flavored Markdown].  It is automatically [rendered by Gitiles].
-
-[Gitiles-flavored Markdown]: https://gerrit.googlesource.com/gitiles/+/master/Documentation/markdown.md
-[rendered by Gitiles]: https://chromium.googlesource.com/chromium/src/+/master/docs/
+[Gitiles-flavored Markdown](https://gerrit.googlesource.com/gitiles/+/master/Documentation/markdown.md).
+It is automatically
+[rendered by Gitiles](https://chromium.googlesource.com/chromium/src/+/master/docs/).
 
 If you add new documents, please also add a link to them in the Document Index
 below.
 
 [TOC]
 
-## Creating Documentation
+## Style guide
 
-Markdown documents must follow the
-[style guide](https://github.com/google/styleguide/tree/gh-pages/docguide).
+Markdown documents must follow the [style guide](https://github.com/google/styleguide/tree/gh-pages/docguide).
 
-### Preview local changes using [md_browser](../tools/md_browser/):
+## Previewing changes
+
+You can preview your local changes using [md_browser](../tools/md_browser/):
 
 ```bash
 # in chromium checkout
 ./tools/md_browser/md_browser.py
 ```
 
-This is only an estimate. The **gitiles** view may differ.
+To review someone else's changes, apply them locally first:
 
-### Review changes online with gerrit's links to gitiles:
-
-1.  Upload a patch to gerrit, or receive a review request.  
-    e.g. https://chromium-review.googlesource.com/c/572236
-2.  View a specific .md file.  
-    e.g. https://chromium-review.googlesource.com/c/572236/2/docs/README.md
-3.  Click on **gitiles** link at top of page.
-
-This **gitiles** view is the authoritative view, exactly the same as will be
-used when committed.
+```bash
+# in chromium checkout
+git cl patch <CL number or URL>
+./tools/md_browser/md_browser.py
+```
 
 ## Document Index
 

@@ -19,11 +19,7 @@ class WebContents;
 }
 namespace password_manager {
 struct InteractionsStats;
-class PasswordFormMetricsRecorder;
-namespace metrics_util {
-enum class CredentialSourceType;
-}  // namespace metrics_util
-}  // namespace password_manager
+}
 class GURL;
 
 // An interface for ManagePasswordsBubbleModel implemented by
@@ -33,12 +29,6 @@ class PasswordsModelDelegate {
  public:
   // Returns WebContents* the model is attached to.
   virtual content::WebContents* GetWebContents() const = 0;
-
-  // Returns the password_manager::PasswordFormMetricsRecorder that is
-  // associated with the PasswordFormManager that governs the password being
-  // submitted.
-  virtual password_manager::PasswordFormMetricsRecorder*
-  GetPasswordFormMetricsRecorder() = 0;
 
   // Returns the URL of the site the current forms are retrieved for.
   virtual const GURL& GetOrigin() const = 0;
@@ -50,10 +40,6 @@ class PasswordsModelDelegate {
   // PENDING_PASSWORD_UPDATE_STATE, the saved password in CONFIRMATION_STATE,
   // the returned credential in AUTO_SIGNIN_STATE.
   virtual const autofill::PasswordForm& GetPendingPassword() const = 0;
-
-  // Returns the source of the credential to be saved.
-  virtual password_manager::metrics_util::CredentialSourceType
-  GetCredentialSource() const = 0;
 
   // True if the password for previously stored account was overridden, i.e. in
   // newly submitted form the password is different from stored one.
@@ -83,10 +69,8 @@ class PasswordsModelDelegate {
   // Called from the model when the user chooses to never save passwords.
   virtual void NeverSavePassword() = 0;
 
-  // Called from the model when the user chooses to save a password. The
-  // username seen on the ui is sent as a parameter, and handled accordingly if
-  // user had edited it.
-  virtual void SavePassword(const base::string16& username) = 0;
+  // Called from the model when the user chooses to save a password.
+  virtual void SavePassword() = 0;
 
   // Called from the model when the user chooses to update a password.
   virtual void UpdatePassword(const autofill::PasswordForm& password_form) = 0;

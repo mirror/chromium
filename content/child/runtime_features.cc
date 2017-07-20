@@ -61,9 +61,8 @@ static void SetRuntimeFeatureDefaultsForPlatform() {
 #endif
 
 #if !(defined OS_ANDROID || defined OS_CHROMEOS)
-  // Only Android, ChromeOS support NetInfo downlinkMax, type and ontypechange
-  // now.
-  WebRuntimeFeatures::EnableNetInfoDownlinkMax(false);
+    // Only Android, ChromeOS support NetInfo right now.
+  WebRuntimeFeatures::EnableNetworkInformation(false);
 #endif
 
 // Web Bluetooth is shipped on Android, ChromeOS & MacOS, experimental
@@ -195,9 +194,9 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
   if (command_line.HasSwitch(switches::kEnablePrintBrowser))
     WebRuntimeFeatures::EnablePrintBrowser(true);
 
-  if (command_line.HasSwitch(switches::kEnableNetworkInformationDownlinkMax) ||
+  if (command_line.HasSwitch(switches::kEnableNetworkInformation) ||
       enableExperimentalWebPlatformFeatures) {
-    WebRuntimeFeatures::EnableNetInfoDownlinkMax(true);
+    WebRuntimeFeatures::EnableNetworkInformation(true);
   }
 
   if (command_line.HasSwitch(switches::kReducedReferrerGranularity))
@@ -398,14 +397,6 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
 
   WebRuntimeFeatures::EnableResourceLoadScheduler(
       base::FeatureList::IsEnabled(features::kResourceLoadScheduler));
-
-  if (command_line.HasSwitch(
-          switches::kDisableOriginTrialControlledBlinkFeatures)) {
-    WebRuntimeFeatures::EnableOriginTrialControlledFeatures(false);
-  }
-
-  WebRuntimeFeatures::EnableLazyInitializeMediaControls(
-      base::FeatureList::IsEnabled(features::kLazyInitializeMediaControls));
 
   // Enable explicitly enabled features, and then disable explicitly disabled
   // ones.

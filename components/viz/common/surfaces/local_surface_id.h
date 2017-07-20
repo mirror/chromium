@@ -13,7 +13,6 @@
 
 #include "base/hash.h"
 #include "base/unguessable_token.h"
-#include "components/viz/common/viz_common_export.h"
 #include "mojo/public/cpp/bindings/struct_traits.h"
 
 namespace cc {
@@ -24,7 +23,7 @@ class LocalSurfaceIdDataView;
 
 namespace viz {
 
-class VIZ_COMMON_EXPORT LocalSurfaceId {
+class LocalSurfaceId {
  public:
   constexpr LocalSurfaceId() : local_id_(0) {}
 
@@ -72,9 +71,8 @@ class VIZ_COMMON_EXPORT LocalSurfaceId {
   base::UnguessableToken nonce_;
 };
 
-VIZ_COMMON_EXPORT std::ostream& operator<<(
-    std::ostream& out,
-    const LocalSurfaceId& local_surface_id);
+std::ostream& operator<<(std::ostream& out,
+                         const LocalSurfaceId& local_surface_id);
 
 struct LocalSurfaceIdHash {
   size_t operator()(const LocalSurfaceId& key) const { return key.hash(); }

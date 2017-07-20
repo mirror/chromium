@@ -5,6 +5,7 @@
 #ifndef CHROME_BROWSER_ANDROID_INSTANTAPPS_INSTANT_APPS_SETTINGS_H_
 #define CHROME_BROWSER_ANDROID_INSTANTAPPS_INSTANT_APPS_SETTINGS_H_
 
+#include <jni.h>
 #include <string>
 #include "base/macros.h"
 
@@ -24,5 +25,8 @@ class InstantAppsSettings {
  private:
   DISALLOW_IMPLICIT_CONSTRUCTORS(InstantAppsSettings);
 };
+
+// Register native methods.
+bool RegisterInstantAppsSettings(JNIEnv* env);
 
 #endif  // CHROME_BROWSER_ANDROID_INSTANTAPPS_INSTANT_APPS_SETTINGS_H_

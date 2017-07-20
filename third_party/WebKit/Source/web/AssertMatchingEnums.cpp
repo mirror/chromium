@@ -91,7 +91,6 @@
 #include "public/platform/WebMouseWheelEvent.h"
 #include "public/platform/WebPageVisibilityState.h"
 #include "public/platform/WebReferrerPolicy.h"
-#include "public/platform/WebScrollBoundaryBehavior.h"
 #include "public/platform/WebScrollbar.h"
 #include "public/platform/WebScrollbarBehavior.h"
 #include "public/platform/WebSelectionBound.h"
@@ -420,6 +419,11 @@ STATIC_ASSERT_ENUM(WebSandboxFlags::kPropagatesToAuxiliaryBrowsingContexts,
                    kSandboxPropagatesToAuxiliaryBrowsingContexts);
 STATIC_ASSERT_ENUM(WebSandboxFlags::kModals, kSandboxModals);
 
+STATIC_ASSERT_ENUM(LocalFrameClient::kBeforeUnloadHandler,
+                   WebFrameClient::kBeforeUnloadHandler);
+STATIC_ASSERT_ENUM(LocalFrameClient::kUnloadHandler,
+                   WebFrameClient::kUnloadHandler);
+
 STATIC_ASSERT_ENUM(WebFrameLoadType::kStandard, kFrameLoadTypeStandard);
 STATIC_ASSERT_ENUM(WebFrameLoadType::kBackForward, kFrameLoadTypeBackForward);
 STATIC_ASSERT_ENUM(WebFrameLoadType::kReload, kFrameLoadTypeReload);
@@ -459,14 +463,6 @@ STATIC_ASSERT_ENUM(
     AutoplayPolicy::Type::kUserGestureRequiredForCrossOrigin);
 STATIC_ASSERT_ENUM(WebSettings::AutoplayPolicy::kDocumentUserActivationRequired,
                    AutoplayPolicy::Type::kDocumentUserActivationRequired);
-
-STATIC_ASSERT_ENUM(WebScrollBoundaryBehavior::kScrollBoundaryBehaviorTypeAuto,
-                   EScrollBoundaryBehavior::kAuto);
-STATIC_ASSERT_ENUM(
-    WebScrollBoundaryBehavior::kScrollBoundaryBehaviorTypeContain,
-    EScrollBoundaryBehavior::kContain);
-STATIC_ASSERT_ENUM(WebScrollBoundaryBehavior::kScrollBoundaryBehaviorTypeNone,
-                   EScrollBoundaryBehavior::kNone);
 
 // This ensures that the version number published in
 // WebSerializedScriptValueVersion.h matches the serializer's understanding.

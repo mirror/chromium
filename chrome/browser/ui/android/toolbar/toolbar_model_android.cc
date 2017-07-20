@@ -45,6 +45,11 @@ content::WebContents* ToolbarModelAndroid::GetActiveWebContents() const {
 }
 
 // static
+bool ToolbarModelAndroid::RegisterToolbarModelAndroid(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
+// static
 jlong Init(JNIEnv* env,
            const JavaParamRef<jobject>& obj,
            const JavaParamRef<jobject>& delegate) {

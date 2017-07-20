@@ -29,10 +29,6 @@ namespace base {
 class Value;
 }  // namespace base
 
-namespace language {
-class UrlLanguageHistogram;
-}  // namespace language
-
 namespace ntp_snippets {
 
 class UserClassifier;
@@ -44,7 +40,7 @@ class RemoteSuggestionsFetcherImpl : public RemoteSuggestionsFetcher {
       OAuth2TokenService* token_service,
       scoped_refptr<net::URLRequestContextGetter> url_request_context_getter,
       PrefService* pref_service,
-      language::UrlLanguageHistogram* language_histogram,
+      translate::LanguageModel* language_model,
       const ParseJSONCallback& parse_json_callback,
       const GURL& api_endpoint,
       const std::string& api_key,
@@ -119,7 +115,7 @@ class RemoteSuggestionsFetcherImpl : public RemoteSuggestionsFetcher {
       pending_requests_;
 
   // Weak reference, not owned.
-  language::UrlLanguageHistogram* const language_histogram_;
+  translate::LanguageModel* const language_model_;
 
   const ParseJSONCallback parse_json_callback_;
 

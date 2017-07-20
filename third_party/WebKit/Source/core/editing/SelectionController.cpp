@@ -71,17 +71,6 @@ DEFINE_TRACE(SelectionController) {
 
 namespace {
 
-SelectionInDOMTree ConvertToSelectionInDOMTree(
-    const SelectionInFlatTree& selection_in_flat_tree) {
-  return SelectionInDOMTree::Builder()
-      .SetAffinity(selection_in_flat_tree.Affinity())
-      .SetBaseAndExtent(ToPositionInDOMTree(selection_in_flat_tree.Base()),
-                        ToPositionInDOMTree(selection_in_flat_tree.Extent()))
-      .SetIsDirectional(selection_in_flat_tree.IsDirectional())
-      .SetIsHandleVisible(selection_in_flat_tree.IsHandleVisible())
-      .Build();
-}
-
 DispatchEventResult DispatchSelectStart(Node* node) {
   if (!node || !node->GetLayoutObject())
     return DispatchEventResult::kNotCanceled;
@@ -776,10 +765,8 @@ void SelectionController::SetNonDirectionalSelectionIfNeeded(
     builder.SetBaseAndExtent(adjusted_selection.Base(),
                              adjusted_selection.Extent());
   } else if (original_base.IsNotNull()) {
-    if (CreateVisiblePosition(
-            Selection().ComputeVisibleSelectionInFlatTree().Base())
-            .DeepEquivalent() ==
-        CreateVisiblePosition(new_selection.Base()).DeepEquivalent()) {
+    if (Selection().ComputeVisibleSelectionInFlatTree().Base() ==
+        new_selection.Base()) {
       builder.SetBaseAndExtent(original_base.DeepEquivalent(),
                                new_selection.Extent());
     }
@@ -797,7 +784,7 @@ void SelectionController::SetNonDirectionalSelectionIfNeeded(
       Selection().IsHandleVisible() == selection_in_flat_tree.IsHandleVisible())
     return;
   Selection().SetSelection(
-      ConvertToSelectionInDOMTree(selection_in_flat_tree),
+      selection_in_flat_tree,
       FrameSelection::kCloseTyping | FrameSelection::kClearTypingStyle,
       CursorAlignOnScroll::kIfNeeded, granularity);
 }
@@ -1017,7 +1004,7 @@ bool SelectionController::HandleMouseReleaseEvent(
 
     if (Selection().ComputeVisibleSelectionInFlatTree() !=
         CreateVisibleSelection(builder.Build())) {
-      Selection().SetSelection(ConvertToSelectionInDOMTree(builder.Build()));
+      Selection().SetSelection(builder.Build());
     }
 
     handled = true;
@@ -1175,13 +1162,12 @@ void SelectionController::PassMousePressEventToSubframe(
   const VisiblePositionInFlatTree& visible_pos =
       VisiblePositionOfHitTestResult(mev.GetHitTestResult());
   if (visible_pos.IsNull()) {
-    Selection().SetSelection(SelectionInDOMTree());
+    Selection().SetSelection(SelectionInFlatTree());
     return;
   }
-  Selection().SetSelection(ConvertToSelectionInDOMTree(
-      SelectionInFlatTree::Builder()
-          .Collapse(visible_pos.ToPositionWithAffinity())
-          .Build()));
+  Selection().SetSelection(SelectionInFlatTree::Builder()
+                               .Collapse(visible_pos.ToPositionWithAffinity())
+                               .Build());
 }
 
 void SelectionController::InitializeSelectionState() {

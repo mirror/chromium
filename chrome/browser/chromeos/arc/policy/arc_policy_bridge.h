@@ -14,15 +14,10 @@
 #include "components/arc/arc_service.h"
 #include "components/arc/common/policy.mojom.h"
 #include "components/arc/instance_holder.h"
-#include "components/keyed_service/core/keyed_service.h"
 #include "components/policy/core/common/policy_namespace.h"
 #include "components/policy/core/common/policy_service.h"
 #include "components/pref_registry/pref_registry_syncable.h"
 #include "mojo/public/cpp/bindings/binding.h"
-
-namespace content {
-class BrowserContext;
-}  // namespace content
 
 namespace policy {
 class PolicyMap;
@@ -41,20 +36,13 @@ enum ArcCertsSyncMode : int32_t {
   COPY_CA_CERTS = 1
 };
 
-class ArcPolicyBridge : public KeyedService,
+class ArcPolicyBridge : public ArcService,
                         public InstanceHolder<mojom::PolicyInstance>::Observer,
                         public mojom::PolicyHost,
                         public policy::PolicyService::Observer {
  public:
-  // Returns singleton instance for the given BrowserContext,
-  // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcPolicyBridge* GetForBrowserContext(
-      content::BrowserContext* context);
-
-  ArcPolicyBridge(content::BrowserContext* context,
-                  ArcBridgeService* bridge_service);
-  ArcPolicyBridge(content::BrowserContext* context,
-                  ArcBridgeService* bridge_service,
+  explicit ArcPolicyBridge(ArcBridgeService* bridge_service);
+  ArcPolicyBridge(ArcBridgeService* bridge_service,
                   policy::PolicyService* policy_service);
   ~ArcPolicyBridge() override;
 
@@ -88,9 +76,6 @@ class ArcPolicyBridge : public KeyedService,
       std::unique_ptr<base::Value> parsed_json);
 
   void UpdateComplianceReportMetrics(const base::DictionaryValue* report);
-
-  content::BrowserContext* const context_;
-  ArcBridgeService* const arc_bridge_service_;  // Owned by ArcServiceManager.
 
   mojo::Binding<PolicyHost> binding_;
   policy::PolicyService* policy_service_ = nullptr;

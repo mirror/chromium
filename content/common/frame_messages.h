@@ -14,9 +14,9 @@
 #include <vector>
 
 #include "build/build_config.h"
+#include "cc/surfaces/surface_sequence.h"
 #include "components/viz/common/surfaces/surface_id.h"
 #include "components/viz/common/surfaces/surface_info.h"
-#include "components/viz/common/surfaces/surface_sequence.h"
 #include "content/common/content_export.h"
 #include "content/common/content_param_traits.h"
 #include "content/common/content_security_policy/csp_context.h"
@@ -54,7 +54,6 @@
 #include "third_party/WebKit/public/platform/WebFeaturePolicy.h"
 #include "third_party/WebKit/public/platform/WebFocusType.h"
 #include "third_party/WebKit/public/platform/WebInsecureRequestPolicy.h"
-#include "third_party/WebKit/public/platform/WebSuddenTerminationDisablerType.h"
 #include "third_party/WebKit/public/web/WebFindOptions.h"
 #include "third_party/WebKit/public/web/WebFrameOwnerProperties.h"
 #include "third_party/WebKit/public/web/WebFrameSerializerCacheControlPolicy.h"
@@ -701,7 +700,7 @@ IPC_STRUCT_TRAITS_END()
 
 IPC_MESSAGE_ROUTED2(FrameMsg_SetChildFrameSurface,
                     viz::SurfaceInfo /* surface_info */,
-                    viz::SurfaceSequence /* sequence */)
+                    cc::SurfaceSequence /* sequence */)
 
 // Notifies the embedding frame that the process rendering the child frame's
 // contents has terminated.
@@ -1423,13 +1422,13 @@ IPC_MESSAGE_CONTROL3(FrameHostMsg_PluginInstanceThrottleStateChange,
 
 // Satisfies a Surface destruction dependency associated with |sequence|.
 IPC_MESSAGE_ROUTED1(FrameHostMsg_SatisfySequence,
-                    viz::SurfaceSequence /* sequence */)
+                    cc::SurfaceSequence /* sequence */)
 
 // Creates a destruction dependency for the Surface specified by the given
 // |surface_id|.
 IPC_MESSAGE_ROUTED2(FrameHostMsg_RequireSequence,
                     viz::SurfaceId /* surface_id */,
-                    viz::SurfaceSequence /* sequence */)
+                    cc::SurfaceSequence /* sequence */)
 
 // Provides the result from handling BeforeUnload.  |proceed| matches the return
 // value of the frame's beforeunload handler: true if the user decided to
@@ -1578,12 +1577,6 @@ IPC_MESSAGE_ROUTED3(FrameHostMsg_SmartClipDataExtracted,
 // Puts the browser into "tab fullscreen" mode for the sending renderer.
 // See the comment in chrome/browser/ui/browser.h for more details.
 IPC_MESSAGE_ROUTED1(FrameHostMsg_ToggleFullscreen, bool /* enter_fullscreen */)
-
-// Sent when a new sudden termination disabler condition is either introduced or
-// removed.
-IPC_MESSAGE_ROUTED2(FrameHostMsg_SuddenTerminationDisablerChanged,
-                    bool /* present */,
-                    blink::WebSuddenTerminationDisablerType /* disabler_type */)
 
 // Dispatch a load event for this frame in the iframe element of an
 // out-of-process parent frame.

@@ -33,6 +33,8 @@ struct ANativeWindow;
 
 namespace cc {
 class AnimationHost;
+class FrameSinkId;
+class FrameSinkManager;
 class Layer;
 class LayerTreeHost;
 class OutputSurface;
@@ -41,8 +43,6 @@ class VulkanContextProvider;
 
 namespace viz {
 class Display;
-class FrameSinkId;
-class FrameSinkManager;
 class HostFrameSinkManager;
 }
 
@@ -64,7 +64,7 @@ class CONTENT_EXPORT CompositorImpl
 
   static bool IsInitialized();
 
-  static viz::FrameSinkManager* GetFrameSinkManager();
+  static cc::FrameSinkManager* GetFrameSinkManager();
   static viz::HostFrameSinkManager* GetHostFrameSinkManager();
   static viz::FrameSinkId AllocateFrameSinkId();
 
@@ -79,7 +79,6 @@ class CONTENT_EXPORT CompositorImpl
   void SetSurface(jobject surface) override;
   void SetWindowBounds(const gfx::Size& size) override;
   void SetHasTransparentBackground(bool flag) override;
-  void SetRequiresAlphaChannel(bool flag) override;
   void SetNeedsComposite() override;
   ui::UIResourceProvider& GetUIResourceProvider() override;
   ui::ResourceManager& GetResourceManager() override;
@@ -135,7 +134,7 @@ class CONTENT_EXPORT CompositorImpl
   void InitializeDisplay(
       std::unique_ptr<cc::OutputSurface> display_output_surface,
       scoped_refptr<cc::VulkanContextProvider> vulkan_context_provider,
-      scoped_refptr<viz::ContextProvider> context_provider);
+      scoped_refptr<cc::ContextProvider> context_provider);
   void DidSwapBuffers();
 
   bool HavePendingReadbacks();
@@ -159,7 +158,7 @@ class CONTENT_EXPORT CompositorImpl
 
   gfx::ColorSpace display_color_space_;
   gfx::Size size_;
-  bool requires_alpha_channel_ = false;
+  bool has_transparent_background_;
 
   ANativeWindow* window_;
   gpu::SurfaceHandle surface_handle_;

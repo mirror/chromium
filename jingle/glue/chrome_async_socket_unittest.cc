@@ -158,11 +158,13 @@ class ChromeAsyncSocketTest
   ChromeAsyncSocketTest()
       : ssl_socket_data_provider_(net::ASYNC, net::OK),
         addr_("localhost", 35) {
-    // GTest death tests by default execute in a fork()ed but not exec()ed
-    // process. On macOS, a CoreFoundation-backed MessageLoop will exit with a
+    // GTest death tests execute in a fork()ed but not exec()ed process.
+    // On OS X a CoreFoundation-backed message loop will exit with a
     // __THE_PROCESS_HAS_FORKED_AND_YOU_CANNOT_USE_THIS_COREFOUNDATION_FUNCTIONALITY___YOU_MUST_EXEC__
-    // when called. Use the threadsafe mode to avoid this problem.
-    testing::GTEST_FLAG(death_test_style) = "threadsafe";
+    // when called.
+    // Explicitly create a MessagePumpDefault which can run in this enivronment.
+    std::unique_ptr<base::MessagePump> pump(new base::MessagePumpDefault());
+    message_loop_.reset(new base::MessageLoop(std::move(pump)));
   }
 
   ~ChromeAsyncSocketTest() override {}
@@ -432,7 +434,7 @@ class ChromeAsyncSocketTest
   }
 
   // ChromeAsyncSocket expects a message loop.
-  base::MessageLoop message_loop_;
+  std::unique_ptr<base::MessageLoop> message_loop_;
 
   AsyncSocketDataProvider async_socket_data_provider_;
   net::SSLSocketDataProvider ssl_socket_data_provider_;

@@ -118,14 +118,12 @@ Polymer({
    */
   setOldImageUrl(imageUrl) {
     this.oldImageUrl_ = imageUrl;
-    if (imageUrl) {
+    if (imageUrl)
       this.$.selector.select(this.$.selector.indexOf(this.$.oldImage));
-      this.selectedImageUrl_ = imageUrl;
-    } else if (this.cameraSelected_) {
+    else if (this.cameraSelected_)
       this.$.selector.select(this.$.selector.indexOf(this.$.cameraImage));
-    } else if (this.fallbackImage_) {
+    else if (this.fallbackImage_)
       this.selectImage_(this.fallbackImage_, true /* activate */);
-    }
   },
 
   /**
@@ -137,7 +135,6 @@ Polymer({
     if (!this.selectedItem ||
         this.selectedItem.dataset.type != CrPicture.SelectionTypes.CAMERA) {
       this.$.selector.select(this.$.selector.indexOf(image));
-      this.selectedItem = image;
     }
   },
 
@@ -202,20 +199,6 @@ Polymer({
    * @private
    */
   onIronActivate_: function(event) {
-    var type = event.detail.item.dataset.type;
-    // When clicking on the 'old' (current) image, do not activate (discard) it.
-    var activate = type != CrPicture.SelectionTypes.OLD;
-    this.selectImage_(event.detail.item, activate);
-  },
-
-  /**
-   * Returns the 2x (high dpi) image to use for 'srcset'. Note: 'src' will still
-   * be used as the 1x candidate as per the HTML spec.
-   * @param {string} url
-   * @return {string}
-   * @private
-   */
-  getImgSrc2x_: function(url) {
-    return url + '@2x 2x';
+    this.selectImage_(event.detail.item, true /* activate */);
   },
 });

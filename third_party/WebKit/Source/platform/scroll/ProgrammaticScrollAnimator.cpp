@@ -31,31 +31,26 @@ void ProgrammaticScrollAnimator::ResetAnimationState() {
 
 void ProgrammaticScrollAnimator::NotifyOffsetChanged(
     const ScrollOffset& offset) {
-  ScrollType scroll_type =
-      is_sequenced_scroll_ ? kSequencedScroll : kProgrammaticScroll;
+  ScrollType scroll_type = sequenced_for_smooth_scroll_ ? kSequencedSmoothScroll
+                                                        : kProgrammaticScroll;
   ScrollOffsetChanged(offset, scroll_type);
 }
 
 void ProgrammaticScrollAnimator::ScrollToOffsetWithoutAnimation(
-    const ScrollOffset& offset,
-    bool is_sequenced_scroll) {
+    const ScrollOffset& offset) {
   CancelAnimation();
-  is_sequenced_scroll_ = is_sequenced_scroll;
   NotifyOffsetChanged(offset);
-  is_sequenced_scroll_ = false;
-  if (SmoothScrollSequencer* sequencer =
-          GetScrollableArea()->GetSmoothScrollSequencer())
-    sequencer->RunQueuedAnimations();
 }
 
-void ProgrammaticScrollAnimator::AnimateToOffset(const ScrollOffset& offset,
-                                                 bool is_sequenced_scroll) {
+void ProgrammaticScrollAnimator::AnimateToOffset(
+    const ScrollOffset& offset,
+    bool sequenced_for_smooth_scroll) {
   if (run_state_ == RunState::kPostAnimationCleanup)
     ResetAnimationState();
 
   start_time_ = 0.0;
   target_offset_ = offset;
-  is_sequenced_scroll_ = is_sequenced_scroll;
+  sequenced_for_smooth_scroll_ = sequenced_for_smooth_scroll;
   animation_curve_ = CompositorScrollOffsetAnimationCurve::Create(
       CompositorOffsetFromBlinkOffset(target_offset_),
       CompositorScrollOffsetAnimationCurve::kScrollDurationDeltaBased);
@@ -133,7 +128,7 @@ void ProgrammaticScrollAnimator::UpdateCompositorAnimations() {
     // information to the compositor thread.
     // crbug.com/730705
     if (!scrollable_area_->ShouldScrollOnMainThread() &&
-        !is_sequenced_scroll_) {
+        !sequenced_for_smooth_scroll_) {
       std::unique_ptr<CompositorAnimation> animation =
           CompositorAnimation::Create(
               *animation_curve_, CompositorTargetProperty::SCROLL_OFFSET, 0, 0);
@@ -190,8 +185,8 @@ void ProgrammaticScrollAnimator::NotifyCompositorAnimationFinished(
 }
 
 void ProgrammaticScrollAnimator::AnimationFinished() {
-  if (is_sequenced_scroll_) {
-    is_sequenced_scroll_ = false;
+  if (sequenced_for_smooth_scroll_) {
+    sequenced_for_smooth_scroll_ = false;
     if (SmoothScrollSequencer* sequencer =
             GetScrollableArea()->GetSmoothScrollSequencer())
       sequencer->RunQueuedAnimations();

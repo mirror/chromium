@@ -12,6 +12,8 @@
 
 namespace resource_coordinator {
 
+struct CoordinationUnitID;
+
 class FrameCoordinationUnitImpl : public CoordinationUnitImpl {
  public:
   FrameCoordinationUnitImpl(
@@ -22,8 +24,6 @@ class FrameCoordinationUnitImpl : public CoordinationUnitImpl {
   // CoordinationUnitImpl implementation.
   std::set<CoordinationUnitImpl*> GetAssociatedCoordinationUnitsOfType(
       CoordinationUnitType type) override;
-
-  bool IsMainFrame() const;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(FrameCoordinationUnitImpl);

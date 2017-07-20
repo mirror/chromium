@@ -52,7 +52,7 @@ void FakeContextFactory::CreateLayerTreeFrameSink(
   compositor->SetLayerTreeFrameSink(std::move(frame_sink));
 }
 
-scoped_refptr<viz::ContextProvider>
+scoped_refptr<cc::ContextProvider>
 FakeContextFactory::SharedMainThreadContextProvider() {
   return nullptr;
 }

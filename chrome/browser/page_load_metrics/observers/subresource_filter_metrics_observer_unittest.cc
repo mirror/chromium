@@ -19,8 +19,6 @@
 namespace {
 const char kDefaultTestUrl[] = "https://example.com/";
 const char kDefaultTestUrlWithActivation[] = "https://example-activation.com/";
-const char kDefaultTestUrlWithActivationDryRun[] =
-    "https://dryrun.example-activation.com/";
 }  // namespace
 
 class SubresourceFilterMetricsObserverTest
@@ -80,11 +78,6 @@ class SubresourceFilterMetricsObserverTest
           handle, subresource_filter::ActivationDecision::ACTIVATED,
           subresource_filter::ActivationState(
               subresource_filter::ActivationLevel::ENABLED));
-    } else if (handle->GetURL() == kDefaultTestUrlWithActivationDryRun) {
-      observer_manager_->NotifyPageActivationComputed(
-          handle, subresource_filter::ActivationDecision::ACTIVATED,
-          subresource_filter::ActivationState(
-              subresource_filter::ActivationLevel::DRYRUN));
     } else {
       observer_manager_->NotifyPageActivationComputed(
           handle,
@@ -93,28 +86,6 @@ class SubresourceFilterMetricsObserverTest
               subresource_filter::ActivationLevel::DISABLED));
     }
     simulator->Commit();
-  }
-
-  void ExpectActivationDecision(const char* url,
-                                subresource_filter::ActivationDecision decision,
-                                subresource_filter::ActivationLevel level) {
-    histogram_tester().ExpectBucketCount(
-        internal::kHistogramSubresourceFilterActivationDecision,
-        static_cast<int>(decision), 1);
-
-    ASSERT_EQ(1ul, test_ukm_recorder().entries_count());
-    const ukm::UkmSource* source = test_ukm_recorder().GetSourceForUrl(url);
-    EXPECT_TRUE(test_ukm_recorder().HasEntry(
-        *source, internal::kUkmSubresourceFilterName));
-    test_ukm_recorder().ExpectMetric(
-        *source, internal::kUkmSubresourceFilterName,
-        internal::kUkmSubresourceFilterActivationDecision,
-        static_cast<int64_t>(decision));
-    if (level == subresource_filter::ActivationLevel::DRYRUN) {
-      test_ukm_recorder().ExpectMetric(
-          *source, internal::kUkmSubresourceFilterName,
-          internal::kUkmSubresourceFilterDryRun, true);
-    }
   }
 
  private:
@@ -138,10 +109,11 @@ TEST_F(SubresourceFilterMetricsObserverTest,
   NavigateToUntrackedUrl();
 
   EXPECT_EQ(1u, TotalMetricsRecorded());
-  ExpectActivationDecision(
-      kDefaultTestUrl,
-      subresource_filter::ActivationDecision::ACTIVATION_CONDITIONS_NOT_MET,
-      subresource_filter::ActivationLevel::DISABLED);
+  histogram_tester().ExpectBucketCount(
+      internal::kHistogramSubresourceFilterActivationDecision,
+      static_cast<int>(subresource_filter::ActivationDecision::
+                           ACTIVATION_CONDITIONS_NOT_MET),
+      1);
 }
 
 TEST_F(SubresourceFilterMetricsObserverTest, Basic) {
@@ -158,9 +130,6 @@ TEST_F(SubresourceFilterMetricsObserverTest, Basic) {
   NavigateToUntrackedUrl();
 
   EXPECT_GT(TotalMetricsRecorded(), 0u);
-  ExpectActivationDecision(kDefaultTestUrlWithActivation,
-                           subresource_filter::ActivationDecision::ACTIVATED,
-                           subresource_filter::ActivationLevel::ENABLED);
 
   histogram_tester().ExpectTotalCount(
       internal::kHistogramSubresourceFilterCount, 1);
@@ -238,25 +207,6 @@ TEST_F(SubresourceFilterMetricsObserverTest, Basic) {
       internal::kHistogramSubresourceFilterForegroundDuration, 1);
 }
 
-TEST_F(SubresourceFilterMetricsObserverTest, DryRun) {
-  SimulateNavigateAndCommit(GURL(kDefaultTestUrlWithActivationDryRun));
-
-  page_load_metrics::mojom::PageLoadTiming timing;
-  InitializePageLoadTiming(&timing);
-  page_load_metrics::mojom::PageLoadMetadata metadata;
-  metadata.behavior_flags |=
-      blink::WebLoadingBehaviorFlag::kWebLoadingBehaviorSubresourceFilterMatch;
-  SimulateTimingAndMetadataUpdate(timing, metadata);
-
-  // Navigate away from the current page to force logging of metrics.
-  NavigateToUntrackedUrl();
-
-  EXPECT_GT(TotalMetricsRecorded(), 0u);
-  ExpectActivationDecision(kDefaultTestUrlWithActivationDryRun,
-                           subresource_filter::ActivationDecision::ACTIVATED,
-                           subresource_filter::ActivationLevel::DRYRUN);
-}
-
 TEST_F(SubresourceFilterMetricsObserverTest, Subresources) {
   SimulateNavigateAndCommit(GURL(kDefaultTestUrlWithActivation));
 
@@ -289,9 +239,6 @@ TEST_F(SubresourceFilterMetricsObserverTest, Subresources) {
                           nullptr /* data_reduction_proxy_data */,
                           content::ResourceType::RESOURCE_TYPE_SCRIPT, 0});
 
-  ExpectActivationDecision(kDefaultTestUrlWithActivation,
-                           subresource_filter::ActivationDecision::ACTIVATED,
-                           subresource_filter::ActivationLevel::ENABLED);
   histogram_tester().ExpectTotalCount(
       internal::kHistogramSubresourceFilterCount, 1);
 
@@ -395,9 +342,6 @@ TEST_F(SubresourceFilterMetricsObserverTest, SubresourcesWithMedia) {
                           nullptr /* data_reduction_proxy_data */,
                           content::ResourceType::RESOURCE_TYPE_SCRIPT, 0});
 
-  ExpectActivationDecision(kDefaultTestUrlWithActivation,
-                           subresource_filter::ActivationDecision::ACTIVATED,
-                           subresource_filter::ActivationLevel::ENABLED);
   histogram_tester().ExpectTotalCount(
       internal::kHistogramSubresourceFilterCount, 1);
 

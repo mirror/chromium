@@ -12,7 +12,7 @@ bool CSSShorthandPropertyAPIWebkitTextEmphasis::parseShorthand(
     bool important,
     CSSParserTokenRange& range,
     const CSSParserContext& context,
-    bool,
+    const CSSParserLocalContext& local_context,
     HeapVector<CSSProperty, 256>& properties) {
   return CSSPropertyParserHelpers::ConsumeShorthandGreedilyViaLonghandAPIs(
       webkitTextEmphasisShorthand(), important, context, range, properties);

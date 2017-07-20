@@ -113,7 +113,7 @@ SDK.RuntimeModel = class extends SDK.SDKModel {
    * @return {?SDK.ExecutionContext}
    */
   defaultExecutionContext() {
-    for (var context of this.executionContexts()) {
+    for (var context of this._executionContextById.values()) {
       if (context.isDefault)
         return context;
     }

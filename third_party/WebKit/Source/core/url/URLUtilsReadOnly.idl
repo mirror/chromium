@@ -23,10 +23,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-// This interface was defined independently in the WHATWG URL spec, but has
-// been removed from it in
-// https://github.com/whatwg/url/commit/c2877946857bc904ecb8a5805abc423c82d9da98.
-// It's now inlined in the users. See crbug.com/699873.
+// https://url.spec.whatwg.org/#urlutilsreadonly
 
 [
     NoInterfaceObject, // Always used on target of 'implements'

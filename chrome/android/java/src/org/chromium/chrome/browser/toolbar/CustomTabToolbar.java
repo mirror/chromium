@@ -771,16 +771,4 @@ public class CustomTabToolbar extends ToolbarLayout implements LocationBar,
 
     @Override
     protected void setMenuButtonHighlightDrawable(boolean highlighting) {}
-
-    @Override
-    public boolean isSuggestionsListShown() {
-        // Custom tabs do not support suggestions.
-        return false;
-    }
-
-    @Override
-    public boolean isSuggestionsListScrolled() {
-        // Custom tabs do not support suggestions.
-        return false;
-    }
 }

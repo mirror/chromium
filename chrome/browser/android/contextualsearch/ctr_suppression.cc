@@ -99,6 +99,10 @@ void CtrSuppression::Destroy(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   delete this;
 }
 
+bool RegisterCtrSuppression(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
 jlong Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   CtrSuppression* suppression = new CtrSuppression(env, obj);
   return reinterpret_cast<intptr_t>(suppression);

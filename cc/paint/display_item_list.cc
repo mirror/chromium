@@ -14,6 +14,7 @@
 #include "cc/base/math_util.h"
 #include "cc/base/render_surface_filters.h"
 #include "cc/debug/picture_debug_util.h"
+#include "cc/paint/discardable_image_store.h"
 #include "cc/paint/solid_color_analyzer.h"
 #include "third_party/skia/include/core/SkCanvas.h"
 #include "third_party/skia/include/core/SkPictureRecorder.h"
@@ -24,6 +25,10 @@
 namespace cc {
 
 namespace {
+
+// We don't perform per-layer solid color analysis when there are too many skia
+// operations.
+const int kOpCountThatIsOkToAnalyze = 10;
 
 bool GetCanvasClipBounds(SkCanvas* canvas, gfx::Rect* clip_bounds) {
   SkRect canvas_clip_bounds;
@@ -81,6 +86,10 @@ size_t DisplayItemList::BytesUsed() const {
   return sizeof(*this) + paint_op_buffer_.bytes_used();
 }
 
+bool DisplayItemList::ShouldBeAnalyzedForSolidColor() const {
+  return op_count() <= kOpCountThatIsOkToAnalyze;
+}
+
 void DisplayItemList::EmitTraceSnapshot() const {
   bool include_items;
   TRACE_EVENT_CATEGORY_GROUP_ENABLED(
@@ -89,8 +98,7 @@ void DisplayItemList::EmitTraceSnapshot() const {
       TRACE_DISABLED_BY_DEFAULT("cc.debug.display_items") ","
       TRACE_DISABLED_BY_DEFAULT("cc.debug.picture") ","
       TRACE_DISABLED_BY_DEFAULT("devtools.timeline.picture"),
-      "cc::DisplayItemList", TRACE_ID_LOCAL(this),
-      CreateTracedValue(include_items));
+      "cc::DisplayItemList", this, CreateTracedValue(include_items));
 }
 
 std::unique_ptr<base::trace_event::TracedValue>
@@ -141,7 +149,28 @@ DisplayItemList::CreateTracedValue(bool include_items) const {
 }
 
 void DisplayItemList::GenerateDiscardableImagesMetadata() {
-  image_map_.Generate(&paint_op_buffer_, rtree_.GetBounds());
+  // This should be only called once.
+  DCHECK(image_map_.empty());
+  if (!paint_op_buffer_.HasDiscardableImages())
+    return;
+
+  gfx::Rect bounds = rtree_.GetBounds();
+  DiscardableImageMap::ScopedMetadataGenerator generator(
+      &image_map_, gfx::Size(bounds.right(), bounds.bottom()));
+  generator.image_store()->GatherDiscardableImages(&paint_op_buffer_);
+}
+
+void DisplayItemList::GetDiscardableImagesInRect(
+    const gfx::Rect& rect,
+    float contents_scale,
+    const gfx::ColorSpace& target_color_space,
+    std::vector<DrawImage>* images) {
+  image_map_.GetDiscardableImagesInRect(rect, contents_scale,
+                                        target_color_space, images);
+}
+
+gfx::Rect DisplayItemList::GetRectForImage(PaintImage::Id image_id) const {
+  return image_map_.GetRectForImage(image_id);
 }
 
 void DisplayItemList::Reset() {
@@ -167,8 +196,7 @@ sk_sp<PaintRecord> DisplayItemList::ReleaseAsRecord() {
 }
 
 bool DisplayItemList::GetColorIfSolidInRect(const gfx::Rect& rect,
-                                            SkColor* color,
-                                            int max_ops_to_analyze) {
+                                            SkColor* color) {
   std::vector<size_t>* indices_to_use = nullptr;
   std::vector<size_t> indices;
   if (!rect.Contains(rtree_.GetBounds())) {
@@ -177,8 +205,8 @@ bool DisplayItemList::GetColorIfSolidInRect(const gfx::Rect& rect,
   }
 
   base::Optional<SkColor> solid_color =
-      SolidColorAnalyzer::DetermineIfSolidColor(
-          &paint_op_buffer_, rect, max_ops_to_analyze, indices_to_use);
+      SolidColorAnalyzer::DetermineIfSolidColor(&paint_op_buffer_, rect,
+                                                indices_to_use);
   if (solid_color) {
     *color = *solid_color;
     return true;

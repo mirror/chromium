@@ -50,12 +50,12 @@ void FileSystemApp::OnBindInterface(
     const service_manager::BindSourceInfo& source_info,
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle interface_pipe) {
-  registry_.BindInterface(interface_name, std::move(interface_pipe),
-                          source_info);
+  registry_.BindInterface(source_info, interface_name,
+                          std::move(interface_pipe));
 }
 
-void FileSystemApp::Create(mojom::FileSystemRequest request,
-                           const service_manager::BindSourceInfo& source_info) {
+void FileSystemApp::Create(const service_manager::BindSourceInfo& source_info,
+                           mojom::FileSystemRequest request) {
   mojo::MakeStrongBinding(
       base::MakeUnique<FileSystemImpl>(source_info.identity, GetUserDataDir(),
                                        lock_table_),

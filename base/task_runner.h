@@ -63,9 +63,11 @@ class BASE_EXPORT TaskRunner
   // Equivalent to PostDelayedTask(from_here, task, 0).
   bool PostTask(const tracked_objects::Location& from_here, OnceClosure task);
 
-  // Like PostTask, but tries to run the posted task only after |delay_ms|
-  // has passed. Implementations should use a tick clock, rather than wall-
-  // clock time, to implement |delay|.
+  // Like PostTask, but tries to run the posted task only after
+  // |delay_ms| has passed.
+  //
+  // It is valid for an implementation to ignore |delay_ms|; that is,
+  // to have PostDelayedTask behave the same as PostTask.
   virtual bool PostDelayedTask(const tracked_objects::Location& from_here,
                                OnceClosure task,
                                base::TimeDelta delay) = 0;

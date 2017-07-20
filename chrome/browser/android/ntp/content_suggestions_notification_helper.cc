@@ -105,6 +105,11 @@ bool ContentSuggestionsNotificationHelper::IsDisabledForProfile(
   return ntp_snippets::IsDisabledForProfile(profile);
 }
 
+// static
+bool ContentSuggestionsNotificationHelper::Register(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
 static void RecordNotificationOptOut(JNIEnv* env,
                                      const JavaParamRef<jclass>& class_object,
                                      jint reason) {

@@ -26,3 +26,7 @@ int GetEngineType(JNIEnv* env,
   GURL url(base::android::ConvertJavaStringToUTF8(env, j_url));
   return TemplateURLPrepopulateData::GetEngineType(url);
 }
+
+bool RegisterLocaleManager(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}

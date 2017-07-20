@@ -20,6 +20,7 @@
 #include "components/autofill/content/renderer/page_click_tracker.h"
 #include "content/public/renderer/render_frame_observer.h"
 #include "mojo/public/cpp/bindings/binding.h"
+#include "services/service_manager/public/cpp/bind_source_info.h"
 #include "third_party/WebKit/public/web/WebAutofillClient.h"
 #include "third_party/WebKit/public/web/WebFormControlElement.h"
 #include "third_party/WebKit/public/web/WebFormElement.h"
@@ -58,7 +59,8 @@ class AutofillAgent : public content::RenderFrameObserver,
                 PasswordGenerationAgent* password_generation_agent);
   ~AutofillAgent() override;
 
-  void BindRequest(mojom::AutofillAgentRequest request);
+  void BindRequest(const service_manager::BindSourceInfo& source_info,
+                   mojom::AutofillAgentRequest request);
 
   const mojom::AutofillDriverPtr& GetAutofillDriver();
 
@@ -82,7 +84,6 @@ class AutofillAgent : public content::RenderFrameObserver,
       int32_t key,
       const PasswordFormFillData& form_data) override;
   void SetUserGestureRequired(bool required) override;
-  void SetSecureContextRequired(bool required) override;
 
   void ShowNotSecureWarning(const blink::WebInputElement& element);
 
@@ -281,10 +282,6 @@ class AutofillAgent : public content::RenderFrameObserver,
   // Whether or not a user gesture is required before notification of a text
   // field change. Default to true.
   bool is_user_gesture_required_;
-
-  // Whether or not the secure context is required to query autofill suggestion.
-  // Default to false.
-  bool is_secure_context_required_;
 
   std::unique_ptr<PageClickTracker> page_click_tracker_;
 

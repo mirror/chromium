@@ -104,8 +104,7 @@ void BaseBlockingPage::ShowBlockingPage(
     BaseBlockingPage* blocking_page = new BaseBlockingPage(
         ui_manager, web_contents, entry ? entry->GetURL() : GURL(),
         unsafe_resources,
-        CreateControllerClient(web_contents, unsafe_resources, ui_manager,
-                               nullptr),
+        CreateControllerClient(web_contents, unsafe_resources, ui_manager),
         CreateDefaultDisplayOptions(unsafe_resources));
     blocking_page->Show();
   }
@@ -340,8 +339,7 @@ std::unique_ptr<SecurityInterstitialControllerClient>
 BaseBlockingPage::CreateControllerClient(
     content::WebContents* web_contents,
     const UnsafeResourceList& unsafe_resources,
-    BaseUIManager* ui_manager,
-    PrefService* pref_service) {
+    BaseUIManager* ui_manager) {
   history::HistoryService* history_service =
       ui_manager->history_service(web_contents);
 
@@ -351,7 +349,7 @@ BaseBlockingPage::CreateControllerClient(
           history_service);
 
   return base::MakeUnique<SecurityInterstitialControllerClient>(
-      web_contents, std::move(metrics_helper), pref_service,
+      web_contents, std::move(metrics_helper), nullptr, /* prefs */
       ui_manager->app_locale(), ui_manager->default_safe_page());
 }
 

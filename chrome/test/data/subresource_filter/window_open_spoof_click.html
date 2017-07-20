@@ -1,9 +1,6 @@
 <a href = "https://www.google.com" id='target'>target</a>
 <script>
-// This document can exist in both toplevel and subframe contexts. In the case
-// of the latter, this function is called in response to any postMessage, and
-// responds in turn with an empty postMessage.
-function openWindow(e) {
+function openWindow() {
   var evt = new MouseEvent("click", {
     view : window,
     bubbles : true,
@@ -11,9 +8,5 @@ function openWindow(e) {
     shiftKey : true,
   });
   document.getElementById('target').dispatchEvent(evt);
-  if (e) {
-    e.source.postMessage('', e.origin);
-  }
 }
-window.addEventListener('message', openWindow);
 </script>

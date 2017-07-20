@@ -109,10 +109,6 @@ if (!is_android) {
   grit("settings_resources") {
     if (use_vulcanize) {
       source = "settings/settings_resources_vulcanized.grd"
-
-      # The .grd contains references to generated files.
-      source_is_generated = true
-
       deps = [
         "//chrome/browser/resources/settings:build",
       ]
@@ -154,18 +150,6 @@ if (enable_extensions) {
     outputs = [
       "grit/sync_file_system_internals_resources.h",
       "sync_file_system_internals_resources.pak",
-    ]
-    output_dir = "$root_gen_dir/chrome"
-  }
-}
-
-if (enable_vr) {
-  grit("vr_shell_resources") {
-    source = "vr_shell_resources.grd"
-    defines = chrome_grit_defines
-    outputs = [
-      "grit/vr_shell_resources.h",
-      "vr_shell_resources.pak",
     ]
     output_dir = "$root_gen_dir/chrome"
   }

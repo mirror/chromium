@@ -22,12 +22,14 @@ source_set("browser_sources") {
   visibility = [ "//content/*" ]
 
   sources = [
+    "all_download_item_notifier.h",
     "android/android_overlay_provider.h",
     "android/browser_media_player_manager_register.cc",
     "android/browser_media_player_manager_register.h",
     "android/compositor.h",
     "android/compositor_client.h",
     "android/content_protocol_handler.h",
+    "android/content_view_core.h",
     "android/content_view_layer_renderer.h",
     "android/devtools_auth.h",
     "android/java_interfaces.h",
@@ -129,7 +131,6 @@ source_set("browser_sources") {
     "guest_mode.cc",
     "guest_mode.h",
     "histogram_fetcher.h",
-    "ignore_errors_cert_verifier.h",
     "indexed_db_context.h",
     "indexed_db_info.h",
     "interstitial_page.h",
@@ -168,8 +169,6 @@ source_set("browser_sources") {
     "navigation_type.h",
     "navigation_ui_data.h",
     "network_quality_observer_factory.h",
-    "network_service_instance.cc",
-    "network_service_instance.h",
     "notification_database_data.cc",
     "notification_database_data.h",
     "notification_details.h",
@@ -324,12 +323,12 @@ source_set("browser_sources") {
     "//net",
     "//ppapi/c",
     "//services/device/public/interfaces",
-    "//third_party/webrtc/modules/desktop_capture",
     "//ui/accessibility",
     "//ui/base",
     "//ui/events",
     "//ui/gl",
     "//ui/surface",
+    "//third_party/webrtc/modules/desktop_capture",
   ]
 
   allow_circular_includes_from = [

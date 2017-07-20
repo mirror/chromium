@@ -110,11 +110,14 @@ class QuicSpdySession::SpdyFramerVisitor
     return &header_list_;
   }
 
-  void OnHeaderFrameEnd(SpdyStreamId /* stream_id */) override {
-    if (session_->IsConnected()) {
-      session_->OnHeaderList(header_list_);
+  void OnHeaderFrameEnd(SpdyStreamId /* stream_id */,
+                        bool end_headers) override {
+    if (end_headers) {
+      if (session_->IsConnected()) {
+        session_->OnHeaderList(header_list_);
+      }
+      header_list_.Clear();
     }
-    header_list_.Clear();
   }
 
   void OnStreamFrameData(SpdyStreamId stream_id,

@@ -15,6 +15,7 @@
 #include "ios/web/test/mojo_test.mojom.h"
 #include "ios/web/web_state/web_state_impl.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
+#include "services/service_manager/public/cpp/bind_source_info.h"
 #import "testing/gtest_mac.h"
 #import "third_party/ocmock/OCMock/OCMock.h"
 
@@ -93,7 +94,9 @@ class MojoFacadeTest : public WebTest {
   }
 
  private:
-  void BindTestUIHandlerMojoRequest(TestUIHandlerMojoRequest request) {}
+  void BindTestUIHandlerMojoRequest(
+      const service_manager::BindSourceInfo& source_info,
+      TestUIHandlerMojoRequest request) {}
 
   std::unique_ptr<WebStateInterfaceProvider> interface_provider_;
   OCMockObject* evaluator_;

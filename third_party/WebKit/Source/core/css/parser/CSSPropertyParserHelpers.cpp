@@ -1576,8 +1576,7 @@ const CSSValue* ParseLonghandViaAPI(CSSPropertyID unresolved_property,
   if (css_property_desc.parseSingleValue) {
     return css_property_desc.parseSingleValue(
         range, context,
-        CSSParserLocalContext(isPropertyAlias(unresolved_property),
-                              current_shorthand));
+        CSSParserLocalContext(isPropertyAlias(unresolved_property)));
   }
   needs_legacy_parsing = true;
   return nullptr;

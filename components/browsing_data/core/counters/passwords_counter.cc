@@ -25,17 +25,21 @@ namespace browsing_data {
 PasswordsCounter::PasswordsCounter(
     scoped_refptr<password_manager::PasswordStore> store,
     syncer::SyncService* sync_service)
-    : store_(store), sync_tracker_(this, sync_service) {
+    : store_(store), sync_service_(sync_service), password_sync_enabled_() {
   DCHECK(store_);
 }
 
 PasswordsCounter::~PasswordsCounter() {
   store_->RemoveObserver(this);
+  if (sync_service_)
+    sync_service_->RemoveObserver(this);
 }
 
 void PasswordsCounter::OnInitialized() {
-  sync_tracker_.OnInitialized(base::Bind(&IsPasswordSyncEnabled));
   store_->AddObserver(this);
+  if (sync_service_)
+    sync_service_->AddObserver(this);
+  password_sync_enabled_ = IsPasswordSyncEnabled(sync_service_);
 }
 
 const char* PasswordsCounter::GetPrefName() const {
@@ -60,12 +64,21 @@ void PasswordsCounter::OnGetPasswordStoreResults(
         return form->date_created >= start;
       });
   ReportResult(base::MakeUnique<SyncResult>(this, num_passwords,
-                                            sync_tracker_.IsSyncActive()));
+                                            password_sync_enabled_));
 }
 
 void PasswordsCounter::OnLoginsChanged(
     const password_manager::PasswordStoreChangeList& changes) {
   Restart();
+}
+
+void PasswordsCounter::OnStateChanged(syncer::SyncService* sync) {
+  bool sync_enabled_new = IsPasswordSyncEnabled(sync_service_);
+
+  if (password_sync_enabled_ != sync_enabled_new) {
+    password_sync_enabled_ = sync_enabled_new;
+    Restart();
+  }
 }
 
 }  // namespace browsing_data

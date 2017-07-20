@@ -12,6 +12,7 @@ import android.view.View;
 
 import org.chromium.base.test.BaseActivityInstrumentationTestCase;
 import org.chromium.base.test.util.CommandLineFlags;
+import org.chromium.base.test.util.parameter.BaseParameter;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.infobar.InfoBar;
@@ -20,10 +21,14 @@ import org.chromium.chrome.browser.preferences.Preferences;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.test.ChromeActivityTestCommon.ChromeTestCommonCallback;
 import org.chromium.chrome.test.util.ApplicationTestUtils;
+import org.chromium.chrome.test.util.parameters.AddFakeAccountToAppParameter;
+import org.chromium.chrome.test.util.parameters.AddFakeAccountToOsParameter;
+import org.chromium.chrome.test.util.parameters.AddGoogleAccountToOsParameter;
 import org.chromium.content.browser.test.util.TestTouchUtils;
 import org.chromium.content.browser.test.util.TouchCommon;
 
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeoutException;
 
 /**
@@ -369,6 +374,18 @@ public abstract class ChromeActivityTestCaseBase<T extends ChromeActivity>
     protected String runJavaScriptCodeInCurrentTab(String code) throws InterruptedException,
             TimeoutException {
         return mTestCommon.runJavaScriptCodeInCurrentTab(code);
+    }
+
+    @Override
+    protected Map<String, BaseParameter> createAvailableParameters() {
+        Map<String, BaseParameter> availableParameters = super.createAvailableParameters();
+        availableParameters.put(AddFakeAccountToAppParameter.PARAMETER_TAG,
+                new AddFakeAccountToAppParameter(getParameterReader(), getInstrumentation()));
+        availableParameters.put(AddFakeAccountToOsParameter.PARAMETER_TAG,
+                new AddFakeAccountToOsParameter(getParameterReader(), getInstrumentation()));
+        availableParameters.put(AddGoogleAccountToOsParameter.PARAMETER_TAG,
+                new AddGoogleAccountToOsParameter(getParameterReader(), getInstrumentation()));
+        return availableParameters;
     }
 
     /**

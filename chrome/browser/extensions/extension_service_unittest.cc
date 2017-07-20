@@ -3640,45 +3640,6 @@ TEST_F(ExtensionServiceTest, ComponentExtensionWhitelisted) {
   EXPECT_TRUE(service()->GetExtensionById(good0, false));
 }
 
-// Tests that active permissions are not revoked from component extensions
-// by policy when the policy is updated. https://crbug.com/746017.
-TEST_F(ExtensionServiceTest, ComponentExtensionWhitelistedPermission) {
-  InitializeEmptyExtensionServiceWithTestingPrefs();
-
-  // Install a component extension.
-  base::FilePath path = data_dir()
-                            .AppendASCII("good")
-                            .AppendASCII("Extensions")
-                            .AppendASCII(good0)
-                            .AppendASCII("1.0.0.0");
-  std::string manifest;
-  ASSERT_TRUE(base::ReadFileToString(path.Append(extensions::kManifestFilename),
-                                     &manifest));
-  service()->component_loader()->Add(manifest, path);
-  service()->Init();
-
-  // Extension should have the "tabs" permission.
-  EXPECT_TRUE(service()
-                  ->GetExtensionById(good0, false)
-                  ->permissions_data()
-                  ->active_permissions()
-                  .HasAPIPermission(extensions::APIPermission::kTab));
-
-  // Component should not lose permissions on policy change.
-  {
-    ManagementPrefUpdater pref(profile_->GetTestingPrefService());
-    pref.AddBlockedPermission(good0, "tabs");
-  }
-
-  service()->OnExtensionManagementSettingsChanged();
-  content::RunAllBlockingPoolTasksUntilIdle();
-  EXPECT_TRUE(service()
-                  ->GetExtensionById(good0, false)
-                  ->permissions_data()
-                  ->active_permissions()
-                  .HasAPIPermission(extensions::APIPermission::kTab));
-}
-
 // Tests that policy-installed extensions are not blacklisted by policy.
 TEST_F(ExtensionServiceTest, PolicyInstalledExtensionsWhitelisted) {
   InitializeEmptyExtensionServiceWithTestingPrefs();
@@ -4661,14 +4622,14 @@ TEST_F(ExtensionServiceTest, ClearExtensionData) {
   EXPECT_TRUE(base::PathExists(lso_file_path));
 
   // Create indexed db. Similarly, it is enough to only simulate this by
-  // creating the directory on the disk, and resetting the caches of
-  // "known" origins.
+  // creating the directory on the disk.
   IndexedDBContext* idb_context = BrowserContext::GetDefaultStoragePartition(
                                       profile())->GetIndexedDBContext();
+  idb_context->SetTaskRunnerForTesting(
+      base::ThreadTaskRunnerHandle::Get().get());
   base::FilePath idb_path = idb_context->GetFilePathForTesting(ext_url);
   EXPECT_TRUE(base::CreateDirectory(idb_path));
   EXPECT_TRUE(base::DirectoryExists(idb_path));
-  idb_context->ResetCachesForTesting();
 
   // Uninstall the extension.
   base::RunLoop run_loop;
@@ -4782,14 +4743,14 @@ TEST_F(ExtensionServiceTest, ClearAppData) {
   EXPECT_TRUE(base::PathExists(lso_file_path));
 
   // Create indexed db. Similarly, it is enough to only simulate this by
-  // creating the directory on the disk, and resetting the caches of
-  // "known" origins.
+  // creating the directory on the disk.
   IndexedDBContext* idb_context = BrowserContext::GetDefaultStoragePartition(
                                       profile())->GetIndexedDBContext();
+  idb_context->SetTaskRunnerForTesting(
+      base::ThreadTaskRunnerHandle::Get().get());
   base::FilePath idb_path = idb_context->GetFilePathForTesting(origin1);
   EXPECT_TRUE(base::CreateDirectory(idb_path));
   EXPECT_TRUE(base::DirectoryExists(idb_path));
-  idb_context->ResetCachesForTesting();
 
   // Uninstall one of them, unlimited storage should still be granted
   // to the origin.
@@ -6389,35 +6350,6 @@ TEST_F(ExtensionServiceTest, MultipleExternalInstallErrors) {
   EXPECT_FALSE(GetError(extension_ids[0]));
   EXPECT_FALSE(GetError(extension_ids[1]));
   EXPECT_FALSE(GetError(extension_ids[2]));
-
-  EXPECT_FALSE(HasExternalInstallErrors(service_));
-}
-
-// Regression test for crbug.com/739142. Verifies that no UAF occurs when
-// ExternalInstallError needs to be deleted asynchronously.
-TEST_F(ExtensionServiceTest, InstallPromptAborted) {
-  FeatureSwitch::ScopedOverride prompt(
-      FeatureSwitch::prompt_for_external_extensions(), true);
-  InitializeEmptyExtensionService();
-
-  MockExternalProvider* reg_provider =
-      AddMockExternalProvider(Manifest::EXTERNAL_REGISTRY);
-
-  reg_provider->UpdateOrAddExtension(good_crx, "1.0.0.0",
-                                     data_dir().AppendASCII("good.crx"));
-  WaitForExternalExtensionInstalled();
-  EXPECT_EQ(
-      1u, service()->external_install_manager()->GetErrorsForTesting().size());
-  EXPECT_FALSE(service()->IsExtensionEnabled(good_crx));
-  EXPECT_TRUE(GetError(good_crx));
-
-  // Abort the extension install prompt. This should cause the
-  // ExternalInstallError to be deleted asynchronously.
-  GetError(good_crx)->OnInstallPromptDone(
-      ExtensionInstallPrompt::Result::ABORTED);
-  EXPECT_TRUE(GetError(good_crx));
-  base::RunLoop().RunUntilIdle();
-  EXPECT_FALSE(GetError(good_crx));
 
   EXPECT_FALSE(HasExternalInstallErrors(service_));
 }

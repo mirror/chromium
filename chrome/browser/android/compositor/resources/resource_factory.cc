@@ -11,6 +11,10 @@ using base::android::JavaParamRef;
 
 namespace android {
 
+bool RegisterResourceFactory(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
 jlong CreateToolbarContainerResource(JNIEnv* env,
                                      const JavaParamRef<jclass>& clazz,
                                      jint toolbar_left,

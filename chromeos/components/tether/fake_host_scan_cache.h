@@ -16,7 +16,7 @@ namespace chromeos {
 namespace tether {
 
 // Test double for HostScanCache which stores cache results in memory.
-class FakeHostScanCache : virtual public HostScanCache {
+class FakeHostScanCache : public HostScanCache {
  public:
   FakeHostScanCache();
   ~FakeHostScanCache() override;
@@ -43,7 +43,6 @@ class FakeHostScanCache : virtual public HostScanCache {
   // HostScanCache:
   void SetHostScanResult(const HostScanCacheEntry& entry) override;
   bool RemoveHostScanResult(const std::string& tether_network_guid) override;
-  bool ExistsInCache(const std::string& tether_network_guid) override;
   void ClearCacheExceptForActiveHost() override;
   bool DoesHostRequireSetup(const std::string& tether_network_guid) override;
 

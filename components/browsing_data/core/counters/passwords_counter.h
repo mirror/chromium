@@ -9,15 +9,16 @@
 #include <vector>
 
 #include "components/browsing_data/core/counters/browsing_data_counter.h"
-#include "components/browsing_data/core/counters/sync_tracker.h"
 #include "components/password_manager/core/browser/password_store.h"
 #include "components/password_manager/core/browser/password_store_consumer.h"
+#include "components/sync/driver/sync_service_observer.h"
 
 namespace browsing_data {
 
 class PasswordsCounter : public browsing_data::BrowsingDataCounter,
                          public password_manager::PasswordStoreConsumer,
-                         public password_manager::PasswordStore::Observer {
+                         public password_manager::PasswordStore::Observer,
+                         public syncer::SyncServiceObserver {
  public:
   explicit PasswordsCounter(
       scoped_refptr<password_manager::PasswordStore> store,
@@ -39,11 +40,15 @@ class PasswordsCounter : public browsing_data::BrowsingDataCounter,
   void OnLoginsChanged(
       const password_manager::PasswordStoreChangeList& changes) override;
 
+  // SyncServiceObserver implementation.
+  void OnStateChanged(syncer::SyncService* sync) override;
+
   void Count() override;
 
   base::CancelableTaskTracker cancelable_task_tracker_;
   scoped_refptr<password_manager::PasswordStore> store_;
-  SyncTracker sync_tracker_;
+  syncer::SyncService* sync_service_;
+  bool password_sync_enabled_;
 };
 
 }  // namespace browsing_data

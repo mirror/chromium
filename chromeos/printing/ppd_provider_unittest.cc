@@ -26,6 +26,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace chromeos {
+namespace printing {
 
 namespace {
 
@@ -555,4 +556,5 @@ TEST_F(PpdProviderTest, ExtractPpdFilters) {
 }
 
 }  // namespace
+}  // namespace printing
 }  // namespace chromeos

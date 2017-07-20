@@ -46,14 +46,9 @@ buildflag_header("features") {
       enable_mojo_media_in_gpu_process = true
     } else if (mojo_media_host == "utility") {
       enable_mojo_media_in_utility_process = true
-    } else if (!enable_standalone_cdm_service) {
+    } else {
       assert(false, "Invalid mojo media host: $mojo_media_host")
     }
-  }
-
-  if (enable_standalone_cdm_service) {
-    assert(enable_mojo_cdm,
-           "Mojo CDM must be enabled to run in standalone CDM service.")
   }
 
   flags = [
@@ -66,7 +61,6 @@ buildflag_header("features") {
     "ENABLE_MOJO_MEDIA_IN_BROWSER_PROCESS=$enable_mojo_media_in_browser_process",
     "ENABLE_MOJO_MEDIA_IN_GPU_PROCESS=$enable_mojo_media_in_gpu_process",
     "ENABLE_MOJO_MEDIA_IN_UTILITY_PROCESS=$enable_mojo_media_in_utility_process",
-    "ENABLE_STANDALONE_CDM_SERVICE=$enable_standalone_cdm_service",
   ]
 }
 
@@ -86,7 +80,6 @@ source_set("unit_tests") {
     "interfaces/video_frame_struct_traits_unittest.cc",
     "services/mojo_audio_output_stream_unittest.cc",
     "services/mojo_cdm_allocator_unittest.cc",
-    "services/mojo_video_encode_accelerator_service_unittest.cc",
   ]
 
   if (is_android) {
@@ -104,7 +97,7 @@ source_set("unit_tests") {
     "//media/mojo/common:mojo_shared_buffer_video_frame",
     "//media/mojo/interfaces",
     "//media/mojo/interfaces:test_interfaces",
-    "//media/mojo/services",
+    "//media/mojo/services:lib",
     "//services/service_manager/tests:interfaces",
     "//testing/gmock",
     "//testing/gtest",
@@ -120,6 +113,14 @@ source_set("unit_tests") {
 }
 
 test("media_mojo_unittests") {
+  # crbug.com/676418: Suppress symbol import warnings.
+  if (is_win && is_component_build) {
+    ldflags = [
+      "/ignore:4217",
+      "/ignore:4049",
+    ]
+  }
+
   deps = [
     ":unit_tests",
     "//mojo/edk/test:run_all_unittests",

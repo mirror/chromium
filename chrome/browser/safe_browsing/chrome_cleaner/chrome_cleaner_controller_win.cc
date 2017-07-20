@@ -157,6 +157,11 @@ void ChromeCleanerControllerDelegate::FetchAndVerifyChromeCleaner(
       base::BindOnce(&OnChromeCleanerFetched, base::Passed(&fetched_callback)));
 }
 
+bool ChromeCleanerControllerDelegate::
+    SafeBrowsingExtendedReportingScoutEnabled() {
+  return safe_browsing::SafeBrowsingExtendedReportingScoutEnabled();
+}
+
 bool ChromeCleanerControllerDelegate::IsMetricsAndCrashReportingEnabled() {
   return ChromeMetricsServiceAccessor::IsMetricsAndCrashReportingEnabled();
 }
@@ -186,29 +191,19 @@ ChromeCleanerController* ChromeCleanerController::GetInstance() {
   return g_controller;
 }
 
+// static
 bool ChromeCleanerController::ShouldShowCleanupInSettingsUI() {
-  return state_ == State::kInfected || state_ == State::kCleaning ||
-         state_ == State::kRebootRequired ||
-         (state_ == State::kIdle &&
-          (idle_reason_ == IdleReason::kCleaningFailed ||
-           idle_reason_ == IdleReason::kConnectionLost));
-}
+  // Short-circuit if the instance doesn't exist to avoid creating it during
+  // navigation to chrome://settings.
+  if (!g_controller)
+    return false;
 
-bool ChromeCleanerController::IsPoweredByPartner() {
-  // |reporter_invocation_| is not expected to hold a value for the entire
-  // lifecycle of the ChromeCleanerController instance. To be consistent, use
-  // a cached return value if the |reporter_invocation_| has been cleaned up.
-  if (!reporter_invocation_) {
-    return powered_by_partner_;
-  }
-
-  const std::string& reporter_engine =
-      reporter_invocation_->command_line.GetSwitchValueASCII(
-          chrome_cleaner::kEngineSwitch);
-  // Currently, only engine=2 corresponds to a partner-powered engine. This
-  // condition should be updated if other partner-powered engines are added.
-  powered_by_partner_ = !reporter_engine.empty() && reporter_engine == "2";
-  return powered_by_partner_;
+  State state = GetInstance()->state();
+  IdleReason reason = GetInstance()->idle_reason();
+  return state == State::kInfected || state == State::kCleaning ||
+         state == State::kRebootRequired ||
+         (state == State::kIdle && (reason == IdleReason::kCleaningFailed ||
+                                    reason == IdleReason::kConnectionLost));
 }
 
 void ChromeCleanerController::SetLogsEnabled(bool logs_enabled) {
@@ -409,8 +404,14 @@ void ChromeCleanerController::OnChromeCleanerFetchedAndVerified(
           ? ChromeCleanerRunner::ChromeMetricsStatus::kEnabled
           : ChromeCleanerRunner::ChromeMetricsStatus::kDisabled;
 
+  ChromeCleanerRunner::CleanerLogsStatus cleaner_logs_status =
+      delegate_->SafeBrowsingExtendedReportingScoutEnabled()
+          ? ChromeCleanerRunner::CleanerLogsStatus::kUploadEnabled
+          : ChromeCleanerRunner::CleanerLogsStatus::kUploadDisabled;
+
   ChromeCleanerRunner::RunChromeCleanerAndReplyWithExitCode(
       executable_path, *reporter_invocation_, metrics_status,
+      cleaner_logs_status,
       base::Bind(&ChromeCleanerController::WeakOnPromptUser,
                  weak_factory_.GetWeakPtr()),
       base::Bind(&ChromeCleanerController::OnConnectionClosed,

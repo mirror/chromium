@@ -25,16 +25,6 @@ Polymer({
    * @param {!Event} event
    * @private
    */
-  ignoreEnterKey_: function(event) {
-    if (event.key == 'Enter') {
-      event.stopPropagation();
-    }
-  },
-
-  /**
-   * @param {!Event} event
-   * @private
-   */
   onMenuButtonTap_: function(event) {
     var button = /** @type {!HTMLElement} */ (event.target);
     var menu = /** @type {!CrActionMenuElement} */ (this.$.dotsMenu);

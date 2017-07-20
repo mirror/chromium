@@ -111,15 +111,21 @@ void UpdatePolicyForEvent(const WebInputEvent* input_event,
 }
 
 NavigationPolicy GetNavigationPolicy(const WebInputEvent* current_event,
-                                     const WebWindowFeatures& features) {
-  // If our default configuration was modified by a script or wasn't
-  // created by a user gesture, then show as a popup. Else, let this
-  // new window be opened as a toplevel window.
-  bool as_popup = !features.tool_bar_visible || !features.status_bar_visible ||
-                  !features.scrollbars_visible || !features.menu_bar_visible ||
-                  !features.resizable;
-  NavigationPolicy policy =
-      as_popup ? kNavigationPolicyNewPopup : kNavigationPolicyNewForegroundTab;
+                                     bool toolbar_visible) {
+  // If the window features didn't enable the toolbar, or this window wasn't
+  // created by a user gesture, show as a popup instead of a new tab.
+  //
+  // Note: this previously also checked that menubar, resizable, scrollbar, and
+  // statusbar are enabled too. When no feature string is specified, these
+  // features default to enabled (and the window opens as a new tab). However,
+  // when a feature string is specified, any *unspecified* features default to
+  // disabled, often causing the window to open as a popup instead.
+  //
+  // As specifying menubar, resizable, scrollbar, and statusbar have no effect
+  // on the UI, just ignore them and only consider whether or not the toolbar is
+  // enabled, which matches Firefox's behavior.
+  NavigationPolicy policy = toolbar_visible ? kNavigationPolicyNewForegroundTab
+                                            : kNavigationPolicyNewPopup;
   UpdatePolicyForEvent(current_event, &policy);
   return policy;
 }
@@ -128,11 +134,11 @@ NavigationPolicy GetNavigationPolicy(const WebInputEvent* current_event,
 
 NavigationPolicy EffectiveNavigationPolicy(NavigationPolicy policy,
                                            const WebInputEvent* current_event,
-                                           const WebWindowFeatures& features) {
+                                           bool toolbar_visible) {
   if (policy == kNavigationPolicyIgnore)
-    return GetNavigationPolicy(current_event, features);
+    return GetNavigationPolicy(current_event, toolbar_visible);
   if (policy == kNavigationPolicyNewBackgroundTab &&
-      GetNavigationPolicy(current_event, features) !=
+      GetNavigationPolicy(current_event, toolbar_visible) !=
           kNavigationPolicyNewBackgroundTab &&
       !UIEventWithKeyState::NewTabModifierSetFromIsolatedWorld()) {
     return kNavigationPolicyNewForegroundTab;
@@ -239,8 +245,6 @@ WebWindowFeatures GetWindowFeaturesFromString(const String& feature_string) {
       window_features.status_bar_visible = value;
     } else if (key_string == "scrollbars") {
       window_features.scrollbars_visible = value;
-    } else if (key_string == "resizable") {
-      window_features.resizable = value;
     } else if (key_string == "noopener") {
       window_features.noopener = true;
     } else if (key_string == "background") {
@@ -285,7 +289,8 @@ static Frame* CreateNewWindow(LocalFrame& opener_frame,
     return nullptr;
 
   policy = EffectiveNavigationPolicy(
-      policy, old_page->GetChromeClient().GetCurrentInputEvent(), features);
+      policy, old_page->GetChromeClient().GetCurrentInputEvent(),
+      features.tool_bar_visible);
 
   const SandboxFlags sandbox_flags =
       opener_frame.GetDocument()->IsSandboxed(

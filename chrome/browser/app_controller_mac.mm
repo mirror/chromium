@@ -376,7 +376,7 @@ class AppControllerProfileObserver : public ProfileAttributesStorage::Observer {
   MacStartupProfiler::GetInstance()->Profile(
       MacStartupProfiler::WILL_FINISH_LAUNCHING);
 
-  if (@available(macOS 10.12, *)) {
+  if ([NSWindow respondsToSelector:@selector(allowsAutomaticWindowTabbing)]) {
     NSWindow.allowsAutomaticWindowTabbing = NO;
   }
 }
@@ -1528,14 +1528,14 @@ class AppControllerProfileObserver : public ProfileAttributesStorage::Observer {
 
 - (BOOL)application:(NSApplication*)application
     willContinueUserActivityWithType:(NSString*)userActivityType
-    API_AVAILABLE(macos(10.10)) {
+    __attribute__((availability(macos, introduced = 10.10))) {
   return [userActivityType isEqualToString:NSUserActivityTypeBrowsingWeb];
 }
 
 - (BOOL)application:(NSApplication*)application
     continueUserActivity:(NSUserActivity*)userActivity
       restorationHandler:(void (^)(NSArray*))restorationHandler
-    API_AVAILABLE(macos(10.10)) {
+    __attribute__((availability(macos, introduced = 10.10))) {
   if (![userActivity.activityType
           isEqualToString:NSUserActivityTypeBrowsingWeb]) {
     return NO;

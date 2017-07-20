@@ -7,7 +7,6 @@
 
 #include "base/macros.h"
 #include "base/process/process.h"
-#include "build/build_config.h"
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/profiling/profiling_control.mojom.h"
 #include "mojo/edk/embedder/scoped_platform_handle.h"
@@ -20,13 +19,7 @@
 
 namespace base {
 class CommandLine;
-}  // namespace base
-
-#if defined(OS_POSIX) && !defined(OS_MACOSX)
-namespace content {
-class FileDescriptorInfo;
-}  // namespace content
-#endif  // defined(OS_POSIX) && !defined(OS_MACOSX)
+}
 
 namespace profiling {
 
@@ -58,13 +51,6 @@ class ProfilingProcessHost {
   // same mode (either profiling or not) as the browser process.
   static void AddSwitchesToChildCmdLine(base::CommandLine* child_cmd_line);
 
-#if defined(OS_POSIX) && !defined(OS_MACOSX)
-  static void GetAdditionalMappedFilesForChildProcess(
-      const base::CommandLine& command_line,
-      int child_process_id,
-      content::FileDescriptorInfo* mappings);
-#endif  // defined(OS_POSIX) && !defined(OS_MACOSX)
-
  private:
   ProfilingProcessHost();
   ~ProfilingProcessHost();
@@ -73,8 +59,6 @@ class ProfilingProcessHost {
 
   void EnsureControlChannelExists();
   void ConnectControlChannelOnIO();
-  void AddNewSenderOnIO(mojo::edk::ScopedPlatformHandle handle,
-                        int child_process_id);
 
   // Use process_.IsValid() to determine if the child process has been launched.
   base::Process process_;

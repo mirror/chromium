@@ -32,6 +32,7 @@
 #include "cc/input/input_handler.h"
 #include "cc/layers/layer.h"
 #include "cc/output/compositor_frame.h"
+#include "cc/output/context_provider.h"
 #include "cc/output/output_surface.h"
 #include "cc/output/output_surface_client.h"
 #include "cc/output/output_surface_frame.h"
@@ -42,7 +43,6 @@
 #include "cc/trees/layer_tree_host.h"
 #include "cc/trees/layer_tree_settings.h"
 #include "components/viz/common/gl_helper.h"
-#include "components/viz/common/gpu/context_provider.h"
 #include "components/viz/common/surfaces/frame_sink_id_allocator.h"
 #include "components/viz/host/host_frame_sink_manager.h"
 #include "components/viz/service/display/display.h"
@@ -104,8 +104,9 @@ struct CompositorDependencies {
     // Gpu process, instead get the mojo pointer from the Gpu process.
     frame_sink_manager_impl =
         base::MakeUnique<viz::FrameSinkManagerImpl>(false, nullptr);
-    surface_utils::ConnectWithLocalFrameSinkManager(
-        &host_frame_sink_manager, frame_sink_manager_impl.get());
+    surface_utils::ConnectWithInProcessFrameSinkManager(
+        &host_frame_sink_manager, frame_sink_manager_impl.get(),
+        base::ThreadTaskRunnerHandle::Get());
   }
 
   SingleThreadTaskGraphRunner task_graph_runner;
@@ -170,7 +171,7 @@ gpu::SharedMemoryLimits GetCompositorContextSharedMemoryLimits(
 
 gpu::gles2::ContextCreationAttribHelper GetCompositorContextAttributes(
     const gfx::ColorSpace& display_color_space,
-    bool requires_alpha_channel) {
+    bool has_transparent_background) {
   // This is used for the browser compositor (offscreen) and for the display
   // compositor (onscreen), so ask for capabilities needed by either one.
   // The default framebuffer for an offscreen context is not used, so it does
@@ -197,7 +198,7 @@ gpu::gles2::ContextCreationAttribHelper GetCompositorContextAttributes(
     }
   }
 
-  if (requires_alpha_channel) {
+  if (has_transparent_background) {
     attributes.alpha_size = 8;
   } else if (base::SysInfo::AmountOfPhysicalMemoryMB() <= 512) {
     // In this case we prefer to use RGB565 format instead of RGBA8888 if
@@ -431,7 +432,7 @@ void Compositor::CreateContextProvider(
 }
 
 // static
-viz::FrameSinkManager* CompositorImpl::GetFrameSinkManager() {
+cc::FrameSinkManager* CompositorImpl::GetFrameSinkManager() {
   return g_compositor_dependencies.Get()
       .frame_sink_manager_impl->frame_sink_manager();
 }
@@ -465,7 +466,7 @@ CompositorImpl::CompositorImpl(CompositorClient* client,
       num_successive_context_creation_failures_(0),
       layer_tree_frame_sink_request_pending_(false),
       weak_factory_(this) {
-  GetFrameSinkManager()->surface_manager()->RegisterFrameSinkId(frame_sink_id_);
+  GetFrameSinkManager()->RegisterFrameSinkId(frame_sink_id_);
   DCHECK(client);
   DCHECK(root_window);
   DCHECK(root_window->GetLayer() == nullptr);
@@ -483,8 +484,7 @@ CompositorImpl::~CompositorImpl() {
   root_window_->SetLayer(nullptr);
   // Clean-up any surface references.
   SetSurface(NULL);
-  GetFrameSinkManager()->surface_manager()->InvalidateFrameSinkId(
-      frame_sink_id_);
+  GetFrameSinkManager()->InvalidateFrameSinkId(frame_sink_id_);
 }
 
 bool CompositorImpl::IsForSubframe() {
@@ -571,6 +571,7 @@ void CompositorImpl::CreateLayerTreeHost() {
   host_->SetRootLayer(root_window_->GetLayer());
   host_->SetFrameSinkId(frame_sink_id_);
   host_->SetViewportSize(size_);
+  SetHasTransparentBackground(false);
   host_->SetDeviceScaleFactor(1);
 
   if (needs_animate_)
@@ -617,21 +618,19 @@ void CompositorImpl::SetWindowBounds(const gfx::Size& size) {
 }
 
 void CompositorImpl::SetHasTransparentBackground(bool transparent) {
-  DCHECK(host_);
-  host_->set_has_transparent_background(transparent);
+  has_transparent_background_ = transparent;
+  if (host_) {
+    host_->set_has_transparent_background(transparent);
 
-  // Give a delay in setting the background color to avoid the color for
-  // the normal mode (white) affecting the UI transition.
-  base::ThreadTaskRunnerHandle::Get().get()->PostDelayedTask(
-      FROM_HERE,
-      base::Bind(&CompositorImpl::SetBackgroundColor,
-                 weak_factory_.GetWeakPtr(),
-                 transparent ? SK_ColorBLACK : SK_ColorWHITE),
-      base::TimeDelta::FromMilliseconds(500));
-}
-
-void CompositorImpl::SetRequiresAlphaChannel(bool flag) {
-  requires_alpha_channel_ = flag;
+    // Give a delay in setting the background color to avoid the color for
+    // the normal mode (white) affecting the UI transition.
+    base::ThreadTaskRunnerHandle::Get().get()->PostDelayedTask(
+        FROM_HERE,
+        base::Bind(&CompositorImpl::SetBackgroundColor,
+                   weak_factory_.GetWeakPtr(),
+                   transparent ? SK_ColorBLACK : SK_ColorWHITE),
+        base::TimeDelta::FromMilliseconds(500));
+  }
 }
 
 void CompositorImpl::SetBackgroundColor(int color) {
@@ -765,6 +764,8 @@ void CompositorImpl::OnGpuChannelEstablished(
 
   constexpr bool support_locking = false;
   constexpr bool automatic_flushes = false;
+  // TODO(ccameron): Update the display color space based on isWideColorGamut.
+  // https://crbug.com/735658
   display_color_space_ = display::Screen::GetScreen()
                              ->GetDisplayNearestWindow(root_window_)
                              .color_space();
@@ -779,11 +780,11 @@ void CompositorImpl::OnGpuChannelEstablished(
           automatic_flushes, support_locking,
           GetCompositorContextSharedMemoryLimits(root_window_),
           GetCompositorContextAttributes(display_color_space_,
-                                         requires_alpha_channel_),
+                                         has_transparent_background_),
           shared_context,
           ui::command_buffer_metrics::DISPLAY_COMPOSITOR_ONSCREEN_CONTEXT);
   if (!context_provider->BindToCurrentThread()) {
-    LOG(ERROR) << "Failed to init viz::ContextProvider for compositor.";
+    LOG(ERROR) << "Failed to init ContextProvider for compositor.";
     LOG_IF(FATAL, ++num_successive_context_creation_failures_ >= 2)
         << "Too many context creation failures. Giving up... ";
     HandlePendingLayerTreeFrameSinkRequest();
@@ -801,7 +802,7 @@ void CompositorImpl::OnGpuChannelEstablished(
 void CompositorImpl::InitializeDisplay(
     std::unique_ptr<cc::OutputSurface> display_output_surface,
     scoped_refptr<cc::VulkanContextProvider> vulkan_context_provider,
-    scoped_refptr<viz::ContextProvider> context_provider) {
+    scoped_refptr<cc::ContextProvider> context_provider) {
   DCHECK(layer_tree_frame_sink_request_pending_);
 
   pending_frames_ = 0;
@@ -813,7 +814,7 @@ void CompositorImpl::InitializeDisplay(
     // TODO(danakj): Populate gpu_capabilities_ for VulkanContextProvider.
   }
 
-  viz::FrameSinkManager* manager = GetFrameSinkManager();
+  cc::FrameSinkManager* manager = GetFrameSinkManager();
   auto* task_runner = base::ThreadTaskRunnerHandle::Get().get();
   auto scheduler = base::MakeUnique<viz::DisplayScheduler>(
       root_window_->GetBeginFrameSource(), task_runner,
@@ -836,11 +837,10 @@ void CompositorImpl::InitializeDisplay(
   auto layer_tree_frame_sink =
       vulkan_context_provider
           ? base::MakeUnique<viz::DirectLayerTreeFrameSink>(
-                frame_sink_id_, GetHostFrameSinkManager(), manager,
-                display_.get(), vulkan_context_provider)
+                frame_sink_id_, manager, display_.get(),
+                vulkan_context_provider)
           : base::MakeUnique<viz::DirectLayerTreeFrameSink>(
-                frame_sink_id_, GetHostFrameSinkManager(), manager,
-                display_.get(), context_provider,
+                frame_sink_id_, manager, display_.get(), context_provider,
                 nullptr /* worker_context_provider */,
                 gpu_memory_buffer_manager,
                 viz::ServerSharedBitmapManager::current());

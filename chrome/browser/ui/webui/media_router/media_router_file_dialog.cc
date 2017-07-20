@@ -154,10 +154,7 @@ void MediaRouterFileDialog::MaybeReportLastSelectedFileInformation() {
         base::BindOnce(&MediaRouterFileDialog::ReportFileFormat,
                        base::Unretained(this), selected_file_->local_path));
 
-    cancelable_task_tracker_.PostTask(
-        task_runner_.get(), FROM_HERE,
-        base::BindOnce(&MediaRouterFileDialog::ReportFileSize,
-                       base::Unretained(this), selected_file_->local_path));
+    // TODO(paezagon): Report file media length.
   } else {
     VLOG(1) << "MediaRouterFileDialog did not report file information; no file "
                "to report.";
@@ -188,16 +185,6 @@ void MediaRouterFileDialog::ReportFileFormat(const base::FilePath& filename) {
   MediaRouterMetrics::RecordMediaRouterFileFormat(
       media::container_names::DetermineContainer(
           reinterpret_cast<const uint8_t*>(buffer), read));
-}
-
-void MediaRouterFileDialog::ReportFileSize(const base::FilePath& filename) {
-  int64_t size;
-  if (base::GetFileSize(filename, &size)) {
-    MediaRouterMetrics::RecordMediaRouterFileSize(size);
-  } else {
-    VLOG(1) << "Can't get file size for file: " << filename.LossyDisplayName()
-            << ".";
-  }
 }
 
 void MediaRouterFileDialog::FileSelected(const base::FilePath& path,
@@ -240,11 +227,22 @@ IssueInfo MediaRouterFileDialog::CreateIssue(
   std::string issue_title;
   switch (validation_result) {
     case MediaRouterFileDialog::FILE_MISSING:
+      issue_title = l10n_util::GetStringFUTF8(
+          IDS_MEDIA_ROUTER_ISSUE_FILE_CAST_FILE_MISSING,
+          GetFileName(file_info));
+      break;
     case MediaRouterFileDialog::FILE_EMPTY:
+      issue_title = l10n_util::GetStringFUTF8(
+          IDS_MEDIA_ROUTER_ISSUE_FILE_CAST_NOT_MEDIA, GetFileName(file_info));
+      break;
     case MediaRouterFileDialog::FILE_TYPE_NOT_SUPPORTED:
+      issue_title = l10n_util::GetStringFUTF8(
+          IDS_MEDIA_ROUTER_ISSUE_FILE_CAST_NOT_SUPPORTED,
+          GetFileName(file_info));
+      break;
     case MediaRouterFileDialog::READ_FAILURE:
       issue_title = l10n_util::GetStringFUTF8(
-          IDS_MEDIA_ROUTER_ISSUE_FILE_CAST_ERROR, GetFileName(file_info));
+          IDS_MEDIA_ROUTER_ISSUE_FILE_CAST_READ_ERROR, GetFileName(file_info));
       break;
     case MediaRouterFileDialog::FILE_OK:
       // Create issue shouldn't be called with FILE_OK, but to ensure things

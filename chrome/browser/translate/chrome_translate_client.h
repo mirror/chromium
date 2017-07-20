@@ -9,15 +9,14 @@
 #include <string>
 
 #include "base/macros.h"
-#include "chrome/browser/language/url_language_histogram_factory.h"
 #include "chrome/browser/ui/translate/translate_bubble_model.h"
-#include "components/language/core/browser/url_language_histogram.h"
 #include "components/translate/content/browser/content_translate_driver.h"
 #include "components/translate/core/browser/translate_client.h"
 #include "components/translate/core/browser/translate_step.h"
 #include "components/translate/core/common/translate_errors.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
+#include "services/service_manager/public/cpp/bind_source_info.h"
 
 namespace content {
 class BrowserContext;
@@ -26,11 +25,8 @@ class WebContents;
 
 class PrefService;
 
-namespace language {
-class UrlLanguageHistogram;
-}  // namespace language
-
 namespace translate {
+class LanguageModel;
 class LanguageState;
 class TranslateAcceptLanguages;
 class TranslatePrefs;
@@ -78,6 +74,7 @@ class ChromeTranslateClient
                                     std::string* target);
 
   static void BindContentTranslateDriver(
+      const service_manager::BindSourceInfo& source_info,
       translate::mojom::ContentTranslateDriverRequest request,
       content::RenderFrameHost* render_frame_host);
 
@@ -140,9 +137,9 @@ class ChromeTranslateClient
   translate::ContentTranslateDriver translate_driver_;
   std::unique_ptr<translate::TranslateManager> translate_manager_;
 
-  // Histogram to be notified about detected language of every page visited. Not
+  // Model to be notified about detected language of every page visited. Not
   // owned here.
-  language::UrlLanguageHistogram* language_histogram_;
+  translate::LanguageModel* language_model_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeTranslateClient);
 };

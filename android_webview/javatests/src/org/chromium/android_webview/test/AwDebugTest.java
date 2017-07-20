@@ -8,7 +8,7 @@ import android.support.test.filters.SmallTest;
 
 import org.chromium.android_webview.AwDebug;
 import org.chromium.base.test.util.Feature;
-import org.chromium.base.test.util.parameter.SkipCommandLineParameterization;
+import org.chromium.base.test.util.parameter.ParameterizedTest;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,7 +19,7 @@ import java.util.Scanner;
  * A test suite for AwDebug class.
  */
 // Only works in single-process mode, crbug.com/568825.
-@SkipCommandLineParameterization
+@ParameterizedTest.Set
 public class AwDebugTest extends AwTestBase {
     private static final String TAG = "cr_AwDebugTest";
     private static final String WHITELISTED_DEBUG_KEY = "AW_WHITELISTED_DEBUG_KEY";

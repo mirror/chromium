@@ -12,7 +12,7 @@
 #include "base/files/scoped_temp_dir.h"
 #include "base/macros.h"
 #include "base/run_loop.h"
-#include "base/threading/sequenced_task_runner_handle.h"
+#include "base/test/test_simple_task_runner.h"
 #include "base/threading/thread.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "content/browser/browser_thread_impl.h"
@@ -21,7 +21,6 @@
 #include "content/public/browser/storage_partition.h"
 #include "content/public/test/test_browser_context.h"
 #include "content/public/test/test_browser_thread_bundle.h"
-#include "content/public/test/test_utils.h"
 #include "storage/browser/test/mock_quota_manager.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -43,21 +42,26 @@ class IndexedDBQuotaClientTest : public testing::Test {
         kOriginB("http://host:8000"),
         kOriginOther("http://other"),
         usage_(0),
+        task_runner_(new base::TestSimpleTaskRunner),
         weak_factory_(this) {
     browser_context_.reset(new TestBrowserContext());
 
     scoped_refptr<storage::QuotaManager> quota_manager =
         new MockQuotaManager(false /*in_memory*/, browser_context_->GetPath(),
                              base::ThreadTaskRunnerHandle::Get(),
-                             base::SequencedTaskRunnerHandle::Get(),
+                             base::ThreadTaskRunnerHandle::Get(),
                              browser_context_->GetSpecialStoragePolicy());
 
-    idb_context_ = new IndexedDBContextImpl(
-        browser_context_->GetPath(),
-        browser_context_->GetSpecialStoragePolicy(), quota_manager->proxy());
+    idb_context_ =
+        new IndexedDBContextImpl(browser_context_->GetPath(),
+                                 browser_context_->GetSpecialStoragePolicy(),
+                                 quota_manager->proxy(),
+                                 task_runner_.get());
     base::RunLoop().RunUntilIdle();
     setup_temp_dir();
   }
+
+  void FlushIndexedDBTaskRunner() { task_runner_->RunUntilIdle(); }
 
   void setup_temp_dir() {
     ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
@@ -68,7 +72,7 @@ class IndexedDBQuotaClientTest : public testing::Test {
   }
 
   ~IndexedDBQuotaClientTest() override {
-    RunAllBlockingPoolTasksUntilIdle();
+    FlushIndexedDBTaskRunner();
     idb_context_ = NULL;
     browser_context_.reset();
     base::RunLoop().RunUntilIdle();
@@ -83,7 +87,8 @@ class IndexedDBQuotaClientTest : public testing::Test {
         type,
         base::Bind(&IndexedDBQuotaClientTest::OnGetOriginUsageComplete,
                    weak_factory_.GetWeakPtr()));
-    RunAllBlockingPoolTasksUntilIdle();
+    FlushIndexedDBTaskRunner();
+    base::RunLoop().RunUntilIdle();
     EXPECT_GT(usage_, -1);
     return usage_;
   }
@@ -95,7 +100,8 @@ class IndexedDBQuotaClientTest : public testing::Test {
         type,
         base::Bind(&IndexedDBQuotaClientTest::OnGetOriginsComplete,
                    weak_factory_.GetWeakPtr()));
-    RunAllBlockingPoolTasksUntilIdle();
+    FlushIndexedDBTaskRunner();
+    base::RunLoop().RunUntilIdle();
     return origins_;
   }
 
@@ -108,7 +114,8 @@ class IndexedDBQuotaClientTest : public testing::Test {
         host,
         base::Bind(&IndexedDBQuotaClientTest::OnGetOriginsComplete,
                    weak_factory_.GetWeakPtr()));
-    RunAllBlockingPoolTasksUntilIdle();
+    FlushIndexedDBTaskRunner();
+    base::RunLoop().RunUntilIdle();
     return origins_;
   }
 
@@ -120,7 +127,8 @@ class IndexedDBQuotaClientTest : public testing::Test {
         kTemp,
         base::Bind(&IndexedDBQuotaClientTest::OnDeleteOriginComplete,
                    weak_factory_.GetWeakPtr()));
-    RunAllBlockingPoolTasksUntilIdle();
+    FlushIndexedDBTaskRunner();
+    base::RunLoop().RunUntilIdle();
     return delete_status_;
   }
 
@@ -140,7 +148,7 @@ class IndexedDBQuotaClientTest : public testing::Test {
     }
     file_path_origin = file_path_origin.Append(FILE_PATH_LITERAL("fake_file"));
     SetFileSizeTo(file_path_origin, size);
-    idb_context()->ResetCachesForTesting();
+    idb_context()->ResetCaches();
   }
 
  private:
@@ -154,11 +162,12 @@ class IndexedDBQuotaClientTest : public testing::Test {
     delete_status_ = code;
   }
 
-  content::TestBrowserThreadBundle thread_bundle_;
   base::ScopedTempDir temp_dir_;
   int64_t usage_;
   std::set<GURL> origins_;
+  scoped_refptr<base::TestSimpleTaskRunner> task_runner_;
   scoped_refptr<IndexedDBContextImpl> idb_context_;
+  content::TestBrowserThreadBundle thread_bundle_;
   std::unique_ptr<TestBrowserContext> browser_context_;
   storage::QuotaStatusCode delete_status_;
   base::WeakPtrFactory<IndexedDBQuotaClientTest> weak_factory_;

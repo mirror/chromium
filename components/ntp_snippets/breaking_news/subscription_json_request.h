@@ -14,6 +14,7 @@
 #include "base/optional.h"
 #include "base/time/time.h"
 #include "components/ntp_snippets/status.h"
+#include "components/translate/core/browser/language_model.h"
 #include "google_apis/gaia/oauth2_token_service.h"
 #include "net/http/http_request_headers.h"
 
@@ -27,9 +28,10 @@ class SubscriptionJsonRequest : public net::URLFetcherDelegate {
  public:
   // A client can expect a message in the status only, if there was any error
   // during the subscription. In successful cases, it will be an empty string.
-  using CompletedCallback = base::OnceCallback<void(const Status& status)>;
+  using CompletedCallback =
+      base::OnceCallback<void(const ntp_snippets::Status& status)>;
 
-  // Builds non-authenticated and authenticated SubscriptionJsonRequests.
+  // Builds non-authenticated SubscriptionJsonRequests.
   class Builder {
    public:
     Builder();
@@ -43,7 +45,6 @@ class SubscriptionJsonRequest : public net::URLFetcherDelegate {
     Builder& SetUrl(const GURL& url);
     Builder& SetUrlRequestContextGetter(
         const scoped_refptr<net::URLRequestContextGetter>& context_getter);
-    Builder& SetAuthenticationHeader(const std::string& auth_header);
 
    private:
     std::string BuildHeaders() const;
@@ -53,21 +54,18 @@ class SubscriptionJsonRequest : public net::URLFetcherDelegate {
         const std::string& headers,
         const std::string& body) const;
 
-    // GCM subscription token obtained from GCM driver (instanceID::getToken()).
+    // GCM subscribtion token obtain from GCM driver (instanceID::getToken())
     std::string token_;
-    // TODO(mamir): Additional fields to be added: country, language.
+    // TODO(mamir): Additional fields to be added: country, language
 
     GURL url_;
     scoped_refptr<net::URLRequestContextGetter> url_request_context_getter_;
-    std::string auth_header_;
-
-    DISALLOW_COPY_AND_ASSIGN(Builder);
   };
 
   ~SubscriptionJsonRequest() override;
 
-  // Starts an async request. The callback is invoked when the request succeeds
-  // or fails. The callback is not called if the request is destroyed.
+  // Starts an async request. The callback is invoked when the request succeeds,
+  // fails or gets destroyed.
   void Start(CompletedCallback callback);
 
  private:

@@ -7,8 +7,6 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol ApplicationCommands;
-@protocol BrowserCommands;
 @class ToolsMenuViewCell;
 
 @interface ToolsMenuViewItem : NSObject
@@ -27,10 +25,9 @@
                          selector:(SEL)selector
                           command:(int)commandID;
 
-// Execute the command associated with this item using |dispatcher|. |selector|
-// must be defined on the receiver.
-- (void)executeCommandWithDispatcher:
-    (id<ApplicationCommands, BrowserCommands>)dispatcher;
+// The object that should be sent via -chromeExecuteCommand: when this item is
+// tapped.
+- (id)command;
 
 @end
 

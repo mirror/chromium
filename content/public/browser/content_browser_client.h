@@ -310,10 +310,6 @@ class CONTENT_EXPORT ContentBrowserClient {
   // current SiteInstance, if it does not yet have a site.
   virtual bool ShouldAssignSiteForURL(const GURL& url);
 
-  // Allows the embedder to provide a list of origins that require a dedicated
-  // process.
-  virtual std::vector<url::Origin> GetOriginsRequiringDedicatedProcess();
-
   // Allows the embedder to pass extra command line flags.
   // switches::kProcessType will already be set at this point.
   virtual void AppendExtraCommandLineSwitches(base::CommandLine* command_line,
@@ -661,6 +657,7 @@ class CONTENT_EXPORT ContentBrowserClient {
   // should try.
   virtual void BindInterfaceRequestFromFrame(
       RenderFrameHost* render_frame_host,
+      const service_manager::BindSourceInfo& source_info,
       const std::string& interface_name,
       mojo::ScopedMessagePipeHandle interface_pipe) {}
 
@@ -747,13 +744,6 @@ class CONTENT_EXPORT ContentBrowserClient {
 
   // Allows the embedder to record |metric| for a specific |url|.
   virtual void RecordURLMetric(const std::string& metric, const GURL& url) {}
-
-  // Allows the embedder to map URLs to strings, intended to be used as suffixes
-  // for metric names. For example, the embedder can map
-  // "my-special-site-with-a-complicated-name.example.com/and-complicated-path"
-  // to the string "MySpecialSite", which will cause some UMA involving that URL
-  // to be logged as "UmaName.MySpecialSite".
-  virtual std::string GetMetricSuffixForURL(const GURL& url);
 
   // Allows the embedder to register one or more NavigationThrottles for the
   // navigation indicated by |navigation_handle|.  A NavigationThrottle is used

@@ -46,6 +46,8 @@ class CORE_EXPORT NGFragmentBuilder final {
   NGFragmentBuilder& AddChild(RefPtr<NGPhysicalFragment>,
                               const NGLogicalOffset&);
 
+  NGFragmentBuilder& AddPositionedFloat(NGPositionedFloat);
+
   NGFragmentBuilder& SetBfcOffset(const NGLogicalOffset& offset);
 
   // Builder has non-trivial out-of-flow descendant methods.
@@ -104,8 +106,6 @@ class CORE_EXPORT NGFragmentBuilder final {
 
   RefPtr<NGLayoutResult> Abort(NGLayoutResult::NGLayoutResultStatus);
 
-  // A vector of child offsets. Initially set by AddChild().
-  const Vector<NGLogicalOffset>& Offsets() const { return offsets_; }
   Vector<NGLogicalOffset>& MutableOffsets() { return offsets_; }
 
   void SwapUnpositionedFloats(
@@ -121,6 +121,8 @@ class CORE_EXPORT NGFragmentBuilder final {
     return children_;
   }
 
+  const Vector<NGLogicalOffset>& Offsets() const { return offsets_; }
+
   bool DidBreak() const { return did_break_; }
 
   NGFragmentBuilder& SetBorderEdges(NGBorderEdges border_edges) {
@@ -128,15 +130,7 @@ class CORE_EXPORT NGFragmentBuilder final {
     return *this;
   }
 
-  // Layout algorithms should call this function for each baseline request in
-  // the constraint space.
-  //
-  // If a request should use a synthesized baseline from the box rectangle,
-  // algorithms can omit the call.
-  //
-  // This function should be called at most once for a given algorithm/baseline
-  // type pair.
-  void AddBaseline(NGBaselineRequest, LayoutUnit);
+  void AddBaseline(NGBaselineAlgorithmType, FontBaseline, LayoutUnit);
 
  private:
   // An out-of-flow positioned-candidate is a temporary data structure used
@@ -184,6 +178,8 @@ class CORE_EXPORT NGFragmentBuilder final {
   // Floats that need to be positioned by the next in-flow fragment that can
   // determine its block position in space.
   Vector<RefPtr<NGUnpositionedFloat>> unpositioned_floats_;
+
+  Vector<NGPositionedFloat> positioned_floats_;
 
   WTF::Optional<NGLogicalOffset> bfc_offset_;
   NGMarginStrut end_margin_strut_;

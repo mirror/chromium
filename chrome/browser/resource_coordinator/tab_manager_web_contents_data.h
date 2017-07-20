@@ -61,9 +61,6 @@ class TabManager::WebContentsData
       content::NavigationHandle* navigation_handle) override;
   void WebContentsDestroyed() override;
 
-  // Tab signal received from GRC.
-  void DoneLoading() {}
-
   // Returns true if the tab has been discarded to save memory.
   bool IsDiscarded();
 
@@ -141,6 +138,7 @@ class TabManager::WebContentsData
   // Needed to access tab_data_.
   FRIEND_TEST_ALL_PREFIXES(TabManagerWebContentsDataTest, CopyState);
   FRIEND_TEST_ALL_PREFIXES(TabManagerWebContentsDataTest, TabLoadingState);
+  FRIEND_TEST_ALL_PREFIXES(TabManagerTest, HistogramsSessionRestoreSwitchToTab);
 
   struct Data {
     Data();

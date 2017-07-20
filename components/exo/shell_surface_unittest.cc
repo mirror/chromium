@@ -10,11 +10,11 @@
 #include "ash/public/interfaces/window_pin_type.mojom.h"
 #include "ash/shell.h"
 #include "ash/shell_port.h"
-#include "ash/shell_test_api.h"
+#include "ash/test/shell_test_api.h"
+#include "ash/test/workspace_controller_test_api.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/wm_event.h"
 #include "ash/wm/workspace/workspace_window_resizer.h"
-#include "ash/wm/workspace_controller_test_api.h"
 #include "base/message_loop/message_loop.h"
 #include "base/strings/utf_string_conversions.h"
 #include "components/exo/buffer.h"
@@ -891,8 +891,8 @@ TEST_F(ShellSurfaceTest, ToggleFullscreen) {
 
 TEST_F(ShellSurfaceTest, MaximizedAndImmersiveFullscreenBackdrop) {
   ash::WorkspaceController* wc =
-      ash::ShellTestApi(ash::Shell::Get()).workspace_controller();
-  ash::WorkspaceControllerTestApi test_helper(wc);
+      ash::test::ShellTestApi(ash::Shell::Get()).workspace_controller();
+  ash::test::WorkspaceControllerTestApi test_helper(wc);
 
   const gfx::Size display_size =
       display::Screen::GetScreen()->GetPrimaryDisplay().size();

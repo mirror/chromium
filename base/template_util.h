@@ -87,8 +87,7 @@ struct is_trivially_copyable {
 #if _GNUC_VER >= 501
   static constexpr bool value = __is_trivially_copyable(T);
 #else
-  static constexpr bool value =
-      __has_trivial_copy(T) && __has_trivial_destructor(T);
+  static constexpr bool value = __has_trivial_copy(T);
 #endif
 };
 #else

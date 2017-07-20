@@ -21,25 +21,6 @@
 
 namespace media {
 
-static blink::WebSourceBufferClient::ParseWarning ParseWarningToBlink(
-    const SourceBufferParseWarning warning) {
-#define CHROMIUM_PARSE_WARNING_TO_BLINK_ENUM_CASE(name) \
-  case SourceBufferParseWarning::name:                  \
-    return blink::WebSourceBufferClient::ParseWarning::name
-
-  switch (warning) {
-    CHROMIUM_PARSE_WARNING_TO_BLINK_ENUM_CASE(
-        kKeyframeTimeGreaterThanDependant);
-    CHROMIUM_PARSE_WARNING_TO_BLINK_ENUM_CASE(kMuxedSequenceMode);
-  }
-
-  NOTREACHED();
-  return blink::WebSourceBufferClient::ParseWarning::
-      kKeyframeTimeGreaterThanDependant;
-
-#undef CHROMIUM_PARSE_WARNING_TO_BLINK_ENUM_CASE
-}
-
 static base::TimeDelta DoubleToTimeDelta(double time) {
   DCHECK(!std::isnan(time));
   DCHECK_NE(time, -std::numeric_limits<double>::infinity());
@@ -69,9 +50,6 @@ WebSourceBufferImpl::WebSourceBufferImpl(const std::string& id,
   DCHECK(demuxer_);
   demuxer_->SetTracksWatcher(
       id, base::Bind(&WebSourceBufferImpl::InitSegmentReceived,
-                     base::Unretained(this)));
-  demuxer_->SetParseWarningCallback(
-      id, base::Bind(&WebSourceBufferImpl::NotifyParseWarning,
                      base::Unretained(this)));
 }
 
@@ -220,11 +198,6 @@ void WebSourceBufferImpl::InitSegmentReceived(
   }
 
   client_->InitializationSegmentReceived(trackInfoVector);
-}
-
-void WebSourceBufferImpl::NotifyParseWarning(
-    const SourceBufferParseWarning warning) {
-  client_->NotifyParseWarning(ParseWarningToBlink(warning));
 }
 
 }  // namespace media

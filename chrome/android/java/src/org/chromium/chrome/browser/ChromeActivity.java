@@ -330,11 +330,6 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
     public void postInflationStartup() {
         super.postInflationStartup();
 
-        Intent intent = getIntent();
-        if (intent != null && getSavedInstanceState() == null) {
-            VrShellDelegate.maybeHandleVrIntentPreNative(this, intent);
-        }
-
         mSnackbarManager = new SnackbarManager(this, null);
         mDataUseSnackbarController = new DataUseSnackbarController(this, getSnackbarManager());
 
@@ -919,21 +914,12 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
     }
 
     @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        VrShellDelegate.maybeHandleVrIntentPreNative(this, intent);
-    }
-
-    @Override
     public void onNewIntentWithNative(Intent intent) {
         mPictureInPictureController.cleanup(this);
 
         super.onNewIntentWithNative(intent);
         if (mIntentHandler.shouldIgnoreIntent(intent)) return;
 
-        // We send this intent so that we can enter WebVr presentation mode if needed. This
-        // call doesn't consume the intent because it also has the url that we need to load.
-        VrShellDelegate.onNewIntentWithNative(this, intent);
         mIntentHandler.onNewIntent(intent);
     }
 
@@ -1143,16 +1129,6 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
             mToolbarManager = null;
         }
 
-        if (mBottomSheet != null) {
-            mBottomSheet.destroy();
-            mBottomSheet = null;
-        }
-
-        if (mBottomSheetContentController != null) {
-            mBottomSheetContentController.destroy();
-            mBottomSheetContentController = null;
-        }
-
         if (mTabModelsInitialized) {
             TabModelSelector selector = getTabModelSelector();
             if (selector != null) selector.destroy();
@@ -1239,9 +1215,6 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
         maybeRemoveWindowBackground();
         DownloadManagerService.getDownloadManagerService().onActivityLaunched();
 
-        if (getSavedInstanceState() == null && getIntent() != null) {
-            VrShellDelegate.onNewIntentWithNative(this, getIntent());
-        }
         VrShellDelegate.onNativeLibraryAvailable();
         super.finishNativeInitialization();
     }

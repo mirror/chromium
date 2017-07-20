@@ -6,7 +6,6 @@
 #include <vector>
 
 #include "ash/session/session_controller.h"
-#include "ash/session/test_session_controller_client.h"
 #include "ash/shell.h"
 #include "ash/shell_delegate.h"
 #include "ash/system/tray/system_tray.h"
@@ -15,7 +14,8 @@
 #include "ash/system/user/tray_user.h"
 #include "ash/system/user/user_view.h"
 #include "ash/test/ash_test_base.h"
-#include "ash/test_shell_delegate.h"
+#include "ash/test/test_session_controller_client.h"
+#include "ash/test/test_shell_delegate.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "components/signin/core/account_id/account_id.h"
@@ -47,7 +47,7 @@ gfx::ImageSkia CreateImageSkiaWithColor(int width, int height, SkColor color) {
   return gfx::ImageSkia::CreateFrom1xBitmap(bitmap);
 }
 
-class TrayUserTest : public AshTestBase {
+class TrayUserTest : public test::AshTestBase {
  public:
   TrayUserTest() = default;
 
@@ -81,7 +81,7 @@ class TrayUserTest : public AshTestBase {
 };
 
 void TrayUserTest::SetUp() {
-  AshTestBase::SetUp();
+  test::AshTestBase::SetUp();
   tray_ = GetPrimarySystemTray();
 }
 
@@ -97,8 +97,8 @@ void TrayUserTest::InitializeParameters(int users_logged_in,
   GetSessionControllerClient()->SetSessionState(
       session_manager::SessionState::ACTIVE);
 
-  TestShellDelegate* shell_delegate =
-      static_cast<TestShellDelegate*>(Shell::Get()->shell_delegate());
+  test::TestShellDelegate* shell_delegate =
+      static_cast<test::TestShellDelegate*>(Shell::Get()->shell_delegate());
   shell_delegate->set_multi_profiles_enabled(multiprofile);
 
   // Instead of using the existing tray panels we create new ones which makes

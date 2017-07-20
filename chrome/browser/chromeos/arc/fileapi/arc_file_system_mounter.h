@@ -6,26 +6,19 @@
 #define CHROME_BROWSER_CHROMEOS_ARC_FILEAPI_ARC_FILE_SYSTEM_MOUNTER_H_
 
 #include "base/macros.h"
-#include "components/keyed_service/core/keyed_service.h"
-
-namespace content {
-class BrowserContext;
-}  // namespace content
+#include "components/arc/arc_service.h"
 
 namespace arc {
 
 class ArcBridgeService;
 
 // Mounts/unmounts ARC file systems.
-class ArcFileSystemMounter : public KeyedService {
+class ArcFileSystemMounter : public ArcService {
  public:
-  // Returns singleton instance for the given BrowserContext,
-  // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcFileSystemMounter* GetForBrowserContext(
-      content::BrowserContext* context);
+  // For supporting ArcServiceManager::GetService<T>().
+  static const char kArcServiceName[];
 
-  ArcFileSystemMounter(content::BrowserContext* context,
-                       ArcBridgeService* bridge_service);
+  explicit ArcFileSystemMounter(ArcBridgeService* bridge_service);
   ~ArcFileSystemMounter() override;
 
  private:

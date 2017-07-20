@@ -62,6 +62,7 @@ class WebContents;
 class CONTENT_EXPORT SavePackage
     : public base::RefCountedThreadSafe<SavePackage>,
       public WebContentsObserver,
+      public DownloadItem::Observer,
       public base::SupportsWeakPtr<SavePackage> {
  public:
   enum WaitState {

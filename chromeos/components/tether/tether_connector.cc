@@ -60,7 +60,6 @@ void TetherConnector::ConnectToNetwork(
 
   PA_LOG(INFO) << "Attempting to connect to network with GUID "
                << tether_network_guid << ".";
-  notification_presenter_->RemoveConnectionToHostFailedNotification();
 
   const std::string device_id =
       device_id_tether_network_guid_map_->GetDeviceIdForTetherNetworkGuid(
@@ -147,7 +146,8 @@ void TetherConnector::OnSuccessfulConnectTetheringResponse(
 
   PA_LOG(INFO) << "Received successful ConnectTetheringResponse from device "
                << "with ID " << remote_device.GetTruncatedDeviceIdForLogs()
-               << ". SSID: \"" << ssid << "\".";
+               << ". SSID: \"" << ssid << "\", Password: \"" << password
+               << "\"";
 
   // Make a copy of the device ID, SSID, and password to pass below before
   // destroying |connect_tethering_operation_|.
@@ -244,13 +244,6 @@ void TetherConnector::SetConnectionFailed(
 
   host_connection_metrics_logger_->RecordConnectionToHostResult(
       connection_to_host_result);
-
-  if (error_name == NetworkConnectionHandler::kErrorConnectFailed) {
-    // Only show notification if the error is kErrorConnectFailed. Other error
-    // names (e.g., kErrorConnectCanceled) are a result of user interaction and
-    // should not result in any error UI.
-    notification_presenter_->NotifyConnectionToHostFailed();
-  }
 }
 
 void TetherConnector::SetConnectionSucceeded(

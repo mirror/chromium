@@ -121,8 +121,7 @@ void ExtractVersionNumbers(const std::string& version,
 
 // Returns if a micro-architecture supports LBR callgraph profiling.
 bool MicroarchitectureHasLBRCallgraph(const std::string& uarch) {
-  return uarch == "Haswell" || uarch == "Broadwell" || uarch == "Skylake" ||
-         uarch == "Kabylake";
+  return uarch == "Haswell" || uarch == "Broadwell" || uarch == "Skylake";
 }
 
 // Returns if a kernel release supports LBR callgraph profiling.
@@ -159,7 +158,7 @@ const char kPerfRecordDataTLBMissesCmd[] =
   "perf record -a -e dTLB-misses -c 2003";
 
 const char kPerfRecordCacheMissesCmd[] =
-    "perf record -a -e cache-misses -c 10007";
+  "perf record -a -e cache-misses -c 4001";
 
 const char kPerfStatMemoryBandwidthCmd[] =
   "perf stat -a -e cycles -e instructions "
@@ -196,8 +195,7 @@ const std::vector<RandomSelector::WeightAndValue> GetDefaultCommands_x86_64(
     cmds.push_back(WeightAndValue(5.0, kPerfRecordCacheMissesCmd));
     return cmds;
   }
-  if (intel_uarch == "SandyBridge" || intel_uarch == "Skylake" ||
-      intel_uarch == "Kabylake") {
+  if (intel_uarch == "SandyBridge" || intel_uarch == "Skylake") {
     cmds.push_back(WeightAndValue(50.0, kPerfRecordCyclesCmd));
     cmds.push_back(WeightAndValue(20.0, callgraph_cmd));
     cmds.push_back(WeightAndValue(15.0, kPerfRecordLBRCmd));
@@ -206,8 +204,7 @@ const std::vector<RandomSelector::WeightAndValue> GetDefaultCommands_x86_64(
     cmds.push_back(WeightAndValue(5.0, kPerfRecordCacheMissesCmd));
     return cmds;
   }
-  if (intel_uarch == "Silvermont" || intel_uarch == "Airmont" ||
-      intel_uarch == "Goldmont") {
+  if (intel_uarch == "Silvermont" || intel_uarch == "Airmont") {
     cmds.push_back(WeightAndValue(50.0, kPerfRecordCyclesCmd));
     cmds.push_back(WeightAndValue(20.0, callgraph_cmd));
     cmds.push_back(WeightAndValue(15.0, kPerfRecordLBRCmdAtom));

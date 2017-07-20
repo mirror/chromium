@@ -48,22 +48,23 @@ struct WebURLError {
   // of 0 means no error. WebKit does not interpret the meaning of other
   // values and normally just forwards this error information back to the
   // embedder (see for example WebFrameClient).
-  int reason = 0;
+  int reason;
 
   // A flag showing whether or not "unreachableURL" has a copy in the
   // cache that was too stale to return for this request.
-  bool stale_copy_in_cache = false;
+  bool stale_copy_in_cache;
 
   // A flag showing whether this error should be treated as a cancellation,
   // e.g. we do not show console errors for cancellations.
-  bool is_cancellation = false;
+  bool is_cancellation;
 
   // A flag showing whether this error is the result of a request being
   // ignored (e.g. through shouldOverrideUrlLoading).
-  bool was_ignored_by_handler = false;
+  bool was_ignored_by_handler;
 
-  // True if this error is created for a web security violation.
-  bool is_web_security_violation = false;
+  // A flag showing whether this error is a disk cache miss by requesting to
+  // load only from disk cache.
+  bool is_cache_miss;
 
   // The url that failed to load.
   WebURL unreachable_url;
@@ -71,11 +72,12 @@ struct WebURLError {
   // A description for the error.
   WebString localized_description;
 
-  WebURLError() = default;
-  // This constructor infers some members from the parameters.
-  BLINK_PLATFORM_EXPORT WebURLError(const WebURL&,
-                                    bool stale_copy_in_cache,
-                                    int reason);
+  WebURLError()
+      : reason(0),
+        stale_copy_in_cache(false),
+        is_cancellation(false),
+        was_ignored_by_handler(false),
+        is_cache_miss(false) {}
 
 #if INSIDE_BLINK
   BLINK_PLATFORM_EXPORT WebURLError(const ResourceError&);

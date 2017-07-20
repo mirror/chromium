@@ -70,7 +70,6 @@ int CallFutimes(PlatformFile file, const struct timeval times[2]) {
 #endif
 }
 
-#if !defined(OS_FUCHSIA)
 File::Error CallFcntlFlock(PlatformFile file, bool do_lock) {
   struct flock lock;
   lock.l_type = do_lock ? F_WRLCK : F_UNLCK;
@@ -81,8 +80,6 @@ File::Error CallFcntlFlock(PlatformFile file, bool do_lock) {
     return File::OSErrorToFileError(errno);
   return File::FILE_OK;
 }
-#endif
-
 #else   // defined(OS_NACL) && !defined(OS_AIX)
 
 bool IsOpenAppend(PlatformFile file) {
@@ -363,7 +360,6 @@ bool File::GetInfo(Info* info) {
   return true;
 }
 
-#if !defined(OS_FUCHSIA)
 File::Error File::Lock() {
   SCOPED_FILE_TRACE("Lock");
   return CallFcntlFlock(file_.get(), true);
@@ -373,7 +369,6 @@ File::Error File::Unlock() {
   SCOPED_FILE_TRACE("Unlock");
   return CallFcntlFlock(file_.get(), false);
 }
-#endif
 
 File File::Duplicate() const {
   if (!IsValid())

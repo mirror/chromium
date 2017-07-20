@@ -69,21 +69,20 @@ class JsonRequestTest : public testing::Test {
         clock_(mock_task_runner_->GetMockClock()),
         request_context_getter_(
             new net::TestURLRequestContextGetter(mock_task_runner_.get())) {
-    language::UrlLanguageHistogram::RegisterProfilePrefs(
-        pref_service_->registry());
+    translate::LanguageModel::RegisterProfilePrefs(pref_service_->registry());
   }
 
-  std::unique_ptr<language::UrlLanguageHistogram> MakeLanguageHistogram(
+  std::unique_ptr<translate::LanguageModel> MakeLanguageModel(
       const std::set<std::string>& codes) {
-    std::unique_ptr<language::UrlLanguageHistogram> language_histogram =
-        base::MakeUnique<language::UrlLanguageHistogram>(pref_service_.get());
+    std::unique_ptr<translate::LanguageModel> language_model =
+        base::MakeUnique<translate::LanguageModel>(pref_service_.get());
     // There must be at least 10 visits before the top languages are defined.
     for (int i = 0; i < 10; i++) {
       for (const std::string& code : codes) {
-        language_histogram->OnPageVisited(code);
+        language_model->OnPageVisited(code);
       }
     }
-    return language_histogram;
+    return language_model;
   }
 
   JsonRequest::Builder CreateMinimalBuilder() {
@@ -222,12 +221,12 @@ TEST_F(JsonRequestTest, BuildRequestNoUserClass) {
 
 TEST_F(JsonRequestTest, BuildRequestWithTwoLanguages) {
   JsonRequest::Builder builder;
-  std::unique_ptr<language::UrlLanguageHistogram> language_histogram =
-      MakeLanguageHistogram({"de", "en"});
+  std::unique_ptr<translate::LanguageModel> language_model =
+      MakeLanguageModel({"de", "en"});
   RequestParams params;
   params.interactive_request = true;
   params.language_code = "en";
-  builder.SetParams(params).SetLanguageHistogram(language_histogram.get());
+  builder.SetParams(params).SetLanguageModel(language_model.get());
 
   EXPECT_THAT(builder.PreviewRequestBodyForTesting(),
               EqualsJSON("{"
@@ -249,12 +248,12 @@ TEST_F(JsonRequestTest, BuildRequestWithTwoLanguages) {
 
 TEST_F(JsonRequestTest, BuildRequestWithUILanguageOnly) {
   JsonRequest::Builder builder;
-  std::unique_ptr<language::UrlLanguageHistogram> language_histogram =
-      MakeLanguageHistogram({"en"});
+  std::unique_ptr<translate::LanguageModel> language_model =
+      MakeLanguageModel({"en"});
   RequestParams params;
   params.interactive_request = true;
   params.language_code = "en";
-  builder.SetParams(params).SetLanguageHistogram(language_histogram.get());
+  builder.SetParams(params).SetLanguageModel(language_model.get());
 
   EXPECT_THAT(builder.PreviewRequestBodyForTesting(),
               EqualsJSON("{"

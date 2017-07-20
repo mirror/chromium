@@ -108,10 +108,13 @@ SpotlightProvider* ChromeBrowserProvider::GetSpotlightProvider() const {
   return nullptr;
 }
 
-void ChromeBrowserProvider::CheckForFirstPartyApps() const {}
-
 BrandedImageProvider* ChromeBrowserProvider::GetBrandedImageProvider() const {
   return nullptr;
+}
+
+id<NativeAppWhitelistManager>
+ChromeBrowserProvider::GetNativeAppWhitelistManager() const {
+  return nil;
 }
 
 void ChromeBrowserProvider::HideModalViewStack() const {}

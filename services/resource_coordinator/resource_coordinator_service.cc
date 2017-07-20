@@ -7,7 +7,7 @@
 #include <utility>
 
 #include "base/memory/ptr_util.h"
-#include "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.h"
+#include "services/resource_coordinator/coordination_unit/tab_signal_generator.h"
 #include "services/resource_coordinator/service_callbacks_impl.h"
 #include "services/service_manager/public/cpp/service_context.h"
 
@@ -17,7 +17,12 @@ std::unique_ptr<service_manager::Service> ResourceCoordinatorService::Create() {
   auto resource_coordinator_service =
       base::MakeUnique<ResourceCoordinatorService>();
 
-  return resource_coordinator_service;
+  // Register new |CoordinationUnitGraphObserver| implementations here.
+  resource_coordinator_service->coordination_unit_manager()->RegisterObserver(
+      base::MakeUnique<TabSignalGenerator>());
+
+  return std::unique_ptr<service_manager::Service>(
+      resource_coordinator_service.release());
 }
 
 ResourceCoordinatorService::ResourceCoordinatorService()
@@ -34,14 +39,6 @@ void ResourceCoordinatorService::OnStart() {
                                     base::Unretained(ref_factory_.get()),
                                     base::Unretained(this)));
 
-  // Register new |CoordinationUnitGraphObserver| implementations here.
-  auto tab_signal_generator_impl = base::MakeUnique<TabSignalGeneratorImpl>();
-  registry_.AddInterface(
-      base::Bind(&TabSignalGeneratorImpl::BindToInterface,
-                 base::Unretained(tab_signal_generator_impl.get())));
-  coordination_unit_manager_.RegisterObserver(
-      std::move(tab_signal_generator_impl));
-
   coordination_unit_manager_.OnStart(&registry_, ref_factory_.get());
 }
 
@@ -49,7 +46,8 @@ void ResourceCoordinatorService::OnBindInterface(
     const service_manager::BindSourceInfo& source_info,
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle interface_pipe) {
-  registry_.BindInterface(interface_name, std::move(interface_pipe));
+  registry_.BindInterface(source_info, interface_name,
+                          std::move(interface_pipe));
 }
 
 void ResourceCoordinatorService::SetUkmRecorder(

@@ -45,6 +45,8 @@ class JavascriptAppModalDialogAndroid
 
   const base::android::ScopedJavaGlobalRef<jobject>& GetDialogObject() const;
 
+  static bool RegisterJavascriptAppModalDialog(JNIEnv* env);
+
  private:
   // The object deletes itself.
   ~JavascriptAppModalDialogAndroid() override;

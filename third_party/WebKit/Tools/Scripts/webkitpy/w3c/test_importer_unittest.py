@@ -67,21 +67,24 @@ class TestImporterTest(LoggingTestCase):
             'INFO: Aborting import to prevent clobbering commits.\n',
         ])
 
-    def test_update_expectations_for_cl_no_results(self):
+    def test_do_auto_update_no_results(self):
         host = MockHost()
         host.filesystem.write_text_file(
             '/mock-checkout/third_party/WebKit/LayoutTests/W3CImportExpectations', '')
         importer = TestImporter(host)
         importer.git_cl = MockGitCL(host, results={})
-        success = importer.update_expectations_for_cl()
+        success = importer.do_auto_update()
         self.assertFalse(success)
         self.assertLog([
-            'INFO: Triggering try jobs for updating expectations.\n',
+            'INFO: Uploading change list.\n',
+            'INFO: Gathering directory owners emails to CC.\n',
+            'INFO: Issue: mock output\n',
+            'INFO: Triggering try jobs.\n',
             'ERROR: No initial try job results, aborting.\n',
         ])
         self.assertEqual(importer.git_cl.calls[-1], ['git', 'cl', 'set-close'])
 
-    def test_update_expectations_for_cl_all_jobs_pass(self):
+    def test_do_auto_update_all_jobs_pass(self):
         host = MockHost()
         host.filesystem.write_text_file(
             '/mock-checkout/third_party/WebKit/LayoutTests/W3CImportExpectations', '')
@@ -89,46 +92,19 @@ class TestImporterTest(LoggingTestCase):
         importer.git_cl = MockGitCL(host, results={
             Build('builder-a', 123): TryJobStatus('COMPLETED', 'SUCCESS')
         })
-        success = importer.update_expectations_for_cl()
-        self.assertTrue(success)
-
-    def test_update_expectations_for_cl_fail_but_no_changes(self):
-        host = MockHost()
-        host.filesystem.write_text_file(
-            '/mock-checkout/third_party/WebKit/LayoutTests/W3CImportExpectations', '')
-        importer = TestImporter(host)
-        importer.git_cl = MockGitCL(host, results={
-            Build('builder-a', 123): TryJobStatus('COMPLETED', 'FAILURE')
-        })
-        importer.fetch_new_expectations_and_baselines = lambda: None
-        success = importer.update_expectations_for_cl()
+        success = importer.do_auto_update()
         self.assertTrue(success)
         self.assertLog([
-            'INFO: Triggering try jobs for updating expectations.\n',
-        ])
-
-    def test_run_commit_queue_for_cl_pass(self):
-        host = MockHost()
-        host.filesystem.write_text_file(
-            '/mock-checkout/third_party/WebKit/LayoutTests/W3CImportExpectations', '')
-        importer = TestImporter(host)
-        importer.git_cl = MockGitCL(host, results={
-            Build('builder-a', 123): TryJobStatus('COMPLETED', 'SUCCESS')
-        })
-        success = importer.run_commit_queue_for_cl()
-        self.assertTrue(success)
-        self.assertLog([
-            'INFO: Triggering CQ try jobs.\n',
+            'INFO: Uploading change list.\n',
+            'INFO: Gathering directory owners emails to CC.\n',
+            'INFO: Issue: mock output\n',
+            'INFO: Triggering try jobs.\n',
             'INFO: CQ appears to have passed; trying to commit.\n',
             'INFO: Update completed.\n',
         ])
-        self.assertEqual(importer.git_cl.calls, [
-            ['git', 'cl', 'try'],
-            ['git', 'cl', 'upload', '-f', '--send-mail'],
-            ['git', 'cl', 'set-commit'],
-        ])
+        self.assertEqual(importer.git_cl.calls[-1], ['git', 'cl', 'set-commit'])
 
-    def test_run_commit_queue_for_cl_fails(self):
+    def test_do_auto_update_some_job_fails(self):
         host = MockHost()
         host.filesystem.write_text_file(
             '/mock-checkout/third_party/WebKit/LayoutTests/W3CImportExpectations', '')
@@ -137,16 +113,16 @@ class TestImporterTest(LoggingTestCase):
             Build('builder-a', 123): TryJobStatus('COMPLETED', 'FAILURE')
         })
         importer.fetch_new_expectations_and_baselines = lambda: None
-        success = importer.run_commit_queue_for_cl()
+        success = importer.do_auto_update()
         self.assertFalse(success)
         self.assertLog([
-            'INFO: Triggering CQ try jobs.\n',
+            'INFO: Uploading change list.\n',
+            'INFO: Gathering directory owners emails to CC.\n',
+            'INFO: Issue: mock output\n',
+            'INFO: Triggering try jobs.\n',
             'ERROR: CQ appears to have failed; aborting.\n',
         ])
-        self.assertEqual(importer.git_cl.calls, [
-            ['git', 'cl', 'try'],
-            ['git', 'cl', 'set-close'],
-        ])
+        self.assertEqual(importer.git_cl.calls[-1], ['git', 'cl', 'set-close'])
 
     def test_update_all_test_expectations_files(self):
         host = MockHost()
@@ -223,6 +199,7 @@ class TestImporterTest(LoggingTestCase):
             'lines to TestExpectations rather than reverting. See:\n'
             'https://chromium.googlesource.com'
             '/chromium/src/+/master/docs/testing/web_platform_tests.md\n\n'
+            'TBR: qyearsley@chromium.org\n'
             'No-Export: true')
         self.assertEqual(host.executive.calls, [['git', 'log', '-1', '--format=%B']])
 
@@ -245,6 +222,7 @@ class TestImporterTest(LoggingTestCase):
         importer = TestImporter(host)
         description = importer._cl_description(directory_owners={})
         self.assertIn(
+            'TBR: qyearsley@chromium.org\n'
             'No-Export: true',
             description)
 

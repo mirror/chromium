@@ -27,7 +27,6 @@
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/chrome_pages.h"
 #include "chrome/browser/ui/tabs/tab_strip_model_observer.h"
-#include "chrome/browser/vr/vr_tab_helper.h"
 #include "chrome/browser/web_data_service_factory.h"
 #include "chrome/common/url_constants.h"
 #include "components/autofill/content/browser/content_autofill_driver.h"
@@ -57,7 +56,7 @@
 #include "components/autofill/core/browser/autofill_save_card_infobar_delegate_mobile.h"
 #include "components/autofill/core/browser/autofill_save_card_infobar_mobile.h"
 #include "components/infobars/core/infobar.h"
-#include "ui/android/window_android.h"
+#include "content/public/browser/android/content_view_core.h"
 #else  // !OS_ANDROID
 #include "chrome/browser/ui/autofill/save_card_bubble_controller_impl.h"
 #include "chrome/browser/ui/browser.h"
@@ -378,11 +377,9 @@ bool ChromeAutofillClient::ShouldShowSigninPromo() {
 
 void ChromeAutofillClient::StartSigninFlow() {
 #if defined(OS_ANDROID)
-  auto* window = web_contents()->GetNativeView()->GetWindowAndroid();
-  if (window) {
-    chrome::android::SigninPromoUtilAndroid::StartAccountSigninActivityForPromo(
-        window, signin_metrics::AccessPoint::ACCESS_POINT_AUTOFILL_DROPDOWN);
-  }
+  chrome::android::SigninPromoUtilAndroid::StartAccountSigninActivityForPromo(
+      content::ContentViewCore::FromWebContents(web_contents()),
+      signin_metrics::AccessPoint::ACCESS_POINT_AUTOFILL_DROPDOWN);
 #endif
 }
 
@@ -406,14 +403,6 @@ void ChromeAutofillClient::ShowHttpNotSecureExplanation() {
       GURL(kSecurityIndicatorHelpCenterUrl), content::Referrer(),
       WindowOpenDisposition::NEW_FOREGROUND_TAB, ui::PAGE_TRANSITION_LINK,
       false /* is_renderer_initiated */));
-}
-
-bool ChromeAutofillClient::IsAutofillSupported() {
-  // VR browsing does not support popups at the moment.
-  if (vr::VrTabHelper::IsInVr(web_contents()))
-    return false;
-
-  return true;
 }
 
 }  // namespace autofill

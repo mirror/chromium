@@ -53,7 +53,7 @@
 #include "chrome/grit/theme_resources.h"
 #include "ui/android/window_android.h"
 #else  // !defined(OS_ANDROID)
-#include "components/vector_icons/vector_icons.h"
+#include "ui/vector_icons/vector_icons.h"
 #endif
 
 using content::BrowserThread;
@@ -225,8 +225,7 @@ PermissionRequest::IconId MediaStreamDevicesController::Request::GetIconId()
   return IsAskingForVideo() ? IDR_INFOBAR_MEDIA_STREAM_CAMERA
                             : IDR_INFOBAR_MEDIA_STREAM_MIC;
 #else
-  return IsAskingForVideo() ? vector_icons::kVideocamIcon
-                            : vector_icons::kMicrophoneIcon;
+  return IsAskingForVideo() ? ui::kVideocamIcon : ui::kMicrophoneIcon;
 #endif
 }
 

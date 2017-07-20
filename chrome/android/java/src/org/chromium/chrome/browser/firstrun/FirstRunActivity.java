@@ -239,7 +239,6 @@ public class FirstRunActivity extends AsyncInitializationActivity implements Fir
 
         mPager = new FirstRunViewPager(this);
         mPager.setId(R.id.fre_pager);
-        mPager.setOffscreenPageLimit(3);
         setContentView(mPager);
 
         mFirstRunFlowSequencer = new FirstRunFlowSequencer(this, mFreProperties) {

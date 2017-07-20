@@ -21,7 +21,6 @@ import org.junit.runner.RunWith;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.base.test.util.CommandLineFlags;
-import org.chromium.base.test.util.FlakyTest;
 import org.chromium.base.test.util.Restriction;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeSwitches;
@@ -164,7 +163,6 @@ public class BottomSheetNewTabControllerTest {
 
     @Test
     @SmallTest
-    @FlakyTest(message = "crbug.com/744710")
     public void testNTPOverTabSwitcher_Incognito_FromTab() {
         LayoutManagerChrome layoutManager = mActivity.getLayoutManager();
         TabModel incognitoTabModel = mTabModelSelector.getModel(true);
@@ -522,7 +520,7 @@ public class BottomSheetNewTabControllerTest {
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
-                mBottomSheet.endAnimations();
+                mBottomSheet.endAnimationsForTests();
             }
         });
 

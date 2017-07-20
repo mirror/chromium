@@ -4,8 +4,6 @@
 
 #include "ui/aura/mus/input_method_mus.h"
 
-#include <utility>
-
 #include "services/ui/public/interfaces/ime/ime.mojom.h"
 #include "ui/aura/test/aura_test_base.h"
 #include "ui/aura/test/mus/input_method_mus_test_api.h"
@@ -31,7 +29,7 @@ class TestInputMethodDelegate : public ui::internal::InputMethodDelegate {
   DISALLOW_COPY_AND_ASSIGN(TestInputMethodDelegate);
 };
 
-using ProcessKeyEventCallback = base::OnceCallback<void(bool)>;
+using ProcessKeyEventCallback = base::Callback<void(bool)>;
 using ProcessKeyEventCallbacks = std::vector<ProcessKeyEventCallback>;
 using EventResultCallback = base::Callback<void(ui::mojom::EventResult)>;
 
@@ -50,8 +48,8 @@ class TestInputMethod : public ui::mojom::InputMethod {
   void OnTextInputTypeChanged(ui::TextInputType text_input_type) override {}
   void OnCaretBoundsChanged(const gfx::Rect& caret_bounds) override {}
   void ProcessKeyEvent(std::unique_ptr<ui::Event> key_event,
-                       ProcessKeyEventCallback callback) override {
-    process_key_event_callbacks_.push_back(std::move(callback));
+                       const ProcessKeyEventCallback& callback) override {
+    process_key_event_callbacks_.push_back(callback);
   }
   void CancelComposition() override {}
 
@@ -199,7 +197,7 @@ TEST_F(InputMethodMusTest, ChangeTextInputTypeWhileProcessingCallback) {
   ASSERT_EQ(1u, test_input_method.process_key_event_callbacks()->size());
   // Callback should not have been run yet.
   EXPECT_FALSE(was_event_result_callback_run);
-  std::move((*test_input_method.process_key_event_callbacks())[0]).Run(false);
+  (*test_input_method.process_key_event_callbacks())[0].Run(false);
 
   // Callback should have been run.
   EXPECT_TRUE(was_event_result_callback_run);

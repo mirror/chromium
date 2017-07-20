@@ -18,13 +18,15 @@
 #import "remoting/ios/facade/ios_client_runtime_delegate.h"
 #import "remoting/ios/facade/remoting_service.h"
 #import "remoting/ios/keychain_wrapper.h"
-#import "remoting/ios/persistence/remoting_preferences.h"
 
 #include "base/logging.h"
 #include "base/strings/sys_string_conversions.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "remoting/base/oauth_token_getter.h"
 #include "remoting/base/oauth_token_getter_impl.h"
+
+static NSString* const kCRDAuthenticatedUserEmailKey =
+    @"kCRDAuthenticatedUserEmailKey";
 
 const char kOauthRedirectUrl[] =
     "https://chromoting-oauth.talkgadget."
@@ -182,19 +184,22 @@ RemotingAuthenticationStatus oauthStatusToRemotingAuthenticationStatus(
 #pragma mark - Persistence
 
 - (void)storeUserInfo:(UserInfo*)user {
+  NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
   if (user) {
-    [RemotingPreferences instance].activeUserKey = user.userEmail;
+    [defaults setObject:user.userEmail forKey:kCRDAuthenticatedUserEmailKey];
     // TODO(nicholss): Need to match the token with the email.
     [_keychainWrapper setRefreshToken:user.refreshToken];
   } else {
-    [RemotingPreferences instance].activeUserKey = nil;
+    [defaults removeObjectForKey:kCRDAuthenticatedUserEmailKey];
     [_keychainWrapper resetKeychainItem];
   }
+  [defaults synchronize];
 }
 
 - (UserInfo*)loadUserInfo {
   UserInfo* user = [[UserInfo alloc] init];
-  user.userEmail = [RemotingPreferences instance].activeUserKey;
+  NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+  user.userEmail = [defaults objectForKey:kCRDAuthenticatedUserEmailKey];
   // TODO(nicholss): Need to match the token with the email.
   user.refreshToken = [_keychainWrapper refreshToken];
 

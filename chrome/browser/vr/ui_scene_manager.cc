@@ -6,7 +6,6 @@
 
 #include "base/callback.h"
 #include "base/memory/ptr_util.h"
-#include "cc/base/math_util.h"
 #include "chrome/browser/vr/elements/button.h"
 #include "chrome/browser/vr/elements/close_button_texture.h"
 #include "chrome/browser/vr/elements/exclusive_screen_toast.h"
@@ -25,7 +24,7 @@
 #include "chrome/browser/vr/ui_scene.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/vector_icons/vector_icons.h"
-#include "ui/gfx/transform_util.h"
+#include "ui/vector_icons/vector_icons.h"
 
 namespace vr {
 
@@ -101,7 +100,7 @@ static constexpr float kSplashScreenIconHeight =
 static constexpr float kSplashScreenIconWidth =
     kSplashScreenIconDMM * kSplashScreenDistance;
 static constexpr float kSplashScreenIconVerticalOffset =
-    -0.1 * kSplashScreenDistance;
+    0.2 * kSplashScreenDistance;
 
 static constexpr float kCloseButtonDistance = 2.4;
 static constexpr float kCloseButtonHeight =
@@ -141,8 +140,8 @@ UiSceneManager::UiSceneManager(UiBrowserInterface* browser,
       scene_(scene),
       in_cct_(in_cct),
       web_vr_mode_(in_web_vr),
-      started_for_autopresentation_(web_vr_autopresentation_expected),
-      waiting_for_first_web_vr_frame_(web_vr_autopresentation_expected),
+      web_vr_autopresentation_(web_vr_autopresentation_expected),
+      web_vr_autopresentation_expected_(web_vr_autopresentation_expected),
       weak_ptr_factory_(this) {
   CreateSplashScreen();
   CreateBackground();
@@ -183,11 +182,13 @@ void UiSceneManager::CreateSecurityWarnings() {
   element->set_debug_id(kWebVrPermanentHttpSecurityWarning);
   element->set_id(AllocateId());
   element->set_fill(vr::Fill::NONE);
-  element->SetSize(kPermanentWarningWidth, kPermanentWarningHeight);
-  element->SetTranslate(0, kWarningDistance * sin(kWarningAngleRadians),
-                        -kWarningDistance * cos(kWarningAngleRadians));
-  element->SetRotate(1, 0, 0, kWarningAngleRadians);
-  element->SetScale(kWarningDistance, kWarningDistance, 1);
+  element->set_size({kPermanentWarningWidth, kPermanentWarningHeight, 1});
+  element->set_scale({kWarningDistance, kWarningDistance, 1});
+  element->set_translation(
+      gfx::Vector3dF(0, kWarningDistance * sin(kWarningAngleRadians),
+                     -kWarningDistance * cos(kWarningAngleRadians)));
+  element->set_rotation(
+      gfx::Quaternion(gfx::Vector3dF(1, 0, 0), kWarningAngleRadians));
   element->set_visible(false);
   element->set_hit_testable(false);
   element->set_lock_to_fov(true);
@@ -201,8 +202,9 @@ void UiSceneManager::CreateSecurityWarnings() {
   element->set_debug_id(kWebVrTransientHttpSecurityWarning);
   element->set_id(AllocateId());
   element->set_fill(vr::Fill::NONE);
-  element->SetSize(kTransientWarningWidth, kTransientWarningHeight);
-  element->SetTranslate(0, 0, -kWarningDistance);
+  element->set_size({kTransientWarningWidth, kTransientWarningHeight, 1});
+  element->set_scale({kWarningDistance, kWarningDistance, 1});
+  element->set_translation({0, 0, -kWarningDistance});
   element->set_visible(false);
   element->set_hit_testable(false);
   element->set_lock_to_fov(true);
@@ -212,9 +214,9 @@ void UiSceneManager::CreateSecurityWarnings() {
   element->set_debug_id(kExitWarning);
   element->set_id(AllocateId());
   element->set_fill(vr::Fill::NONE);
-  element->SetSize(kExitWarningWidth, kExitWarningHeight);
-  element->SetTranslate(0, 0, -kExitWarningDistance);
-  element->SetScale(kExitWarningDistance, kExitWarningDistance, 1);
+  element->set_size({kExitWarningWidth, kExitWarningHeight, 1});
+  element->set_scale({kExitWarningDistance, kExitWarningDistance, 1});
+  element->set_translation({0, 0, -kExitWarningDistance});
   element->set_visible(false);
   element->set_hit_testable(false);
   element->set_lock_to_fov(true);
@@ -232,16 +234,16 @@ void UiSceneManager::CreateSystemIndicators() {
     int resource_string;
   };
   const std::vector<Indicator> indicators = {
-      {&audio_capture_indicator_, kAudioCaptureIndicator,
-       vector_icons::kMicrophoneIcon, IDS_AUDIO_CALL_NOTIFICATION_TEXT_2},
-      {&video_capture_indicator_, kVideoCaptureIndicator,
-       vector_icons::kVideocamIcon, IDS_VIDEO_CALL_NOTIFICATION_TEXT_2},
+      {&audio_capture_indicator_, kAudioCaptureIndicator, ui::kMicrophoneIcon,
+       IDS_AUDIO_CALL_NOTIFICATION_TEXT_2},
+      {&video_capture_indicator_, kVideoCaptureIndicator, ui::kVideocamIcon,
+       IDS_VIDEO_CALL_NOTIFICATION_TEXT_2},
       {&screen_capture_indicator_, kScreenCaptureIndicator,
        vector_icons::kScreenShareIcon, IDS_SCREEN_CAPTURE_NOTIFICATION_TEXT_2},
       {&bluetooth_connected_indicator_, kBluetoothConnectedIndicator,
        vector_icons::kBluetoothConnectedIcon, 0},
       {&location_access_indicator_, kLocationAccessIndicator,
-       vector_icons::kLocationOnIcon, 0},
+       ui::kLocationOnIcon, 0},
   };
 
   for (const auto& indicator : indicators) {
@@ -267,8 +269,8 @@ void UiSceneManager::CreateContentQuad() {
   element->set_debug_id(kContentQuad);
   element->set_id(AllocateId());
   element->set_fill(vr::Fill::CONTENT);
-  element->SetSize(kContentWidth, kContentHeight);
-  element->SetTranslate(0, kContentVerticalOffset, -kContentDistance);
+  element->set_size({kContentWidth, kContentHeight, 1});
+  element->set_translation({0, kContentVerticalOffset, -kContentDistance});
   element->set_visible(false);
   element->set_corner_radius(kContentCornerRadius);
   main_content_ = element.get();
@@ -281,16 +283,15 @@ void UiSceneManager::CreateContentQuad() {
   element->set_debug_id(kBackplane);
   element->set_id(AllocateId());
   element->set_fill(vr::Fill::NONE);
-  element->SetSize(kBackplaneSize, kBackplaneSize);
-  element->SetTranslate(0, 0, -kTextureOffset);
+  element->set_size({kBackplaneSize, kBackplaneSize, 1.0});
+  element->set_translation({0.0, 0.0, -kTextureOffset});
   element->set_parent_id(main_content_->id());
   content_elements_.push_back(element.get());
   scene_->AddUiElement(std::move(element));
 
   // Limit reticle distance to a sphere based on content distance.
-  scene_->SetBackgroundDistance(
-      main_content_->transform_operations().Apply().matrix().get(2, 3) *
-      -kBackgroundDistanceMultiplier);
+  scene_->SetBackgroundDistance(main_content_->translation().z() *
+                                -kBackgroundDistanceMultiplier);
 }
 
 void UiSceneManager::CreateSplashScreen() {
@@ -300,9 +301,9 @@ void UiSceneManager::CreateSplashScreen() {
   icon->set_debug_id(kSplashScreenIcon);
   icon->set_id(AllocateId());
   icon->set_hit_testable(false);
-  icon->SetSize(kSplashScreenIconWidth, kSplashScreenIconHeight);
-  icon->SetTranslate(0, kSplashScreenIconVerticalOffset,
-                     -kSplashScreenDistance);
+  icon->set_size({kSplashScreenIconWidth, kSplashScreenIconHeight, 1.0});
+  icon->set_translation(
+      {0, kSplashScreenIconVerticalOffset, -kSplashScreenDistance});
   splash_screen_icon_ = icon.get();
   scene_->AddUiElement(std::move(icon));
 }
@@ -314,9 +315,9 @@ void UiSceneManager::CreateBackground() {
   element = base::MakeUnique<UiElement>();
   element->set_debug_id(kFloor);
   element->set_id(AllocateId());
-  element->SetSize(kSceneSize, kSceneSize);
-  element->SetTranslate(0.0, -kSceneHeight / 2, 0.0);
-  element->SetRotate(1, 0, 0, -M_PI_2);
+  element->set_size({kSceneSize, kSceneSize, 1.0});
+  element->set_translation({0.0, -kSceneHeight / 2, 0.0});
+  element->set_rotation(gfx::Quaternion(gfx::Vector3dF(1, 0, 0), -M_PI / 2));
   element->set_fill(vr::Fill::GRID_GRADIENT);
   element->set_draw_phase(0);
   element->set_gridline_count(kFloorGridlineCount);
@@ -328,9 +329,9 @@ void UiSceneManager::CreateBackground() {
   element = base::MakeUnique<UiElement>();
   element->set_debug_id(kCeiling);
   element->set_id(AllocateId());
-  element->SetSize(kSceneSize, kSceneSize);
-  element->SetTranslate(0.0, kSceneHeight / 2, 0.0);
-  element->SetRotate(1, 0, 0, M_PI_2);
+  element->set_size({kSceneSize, kSceneSize, 1.0});
+  element->set_translation({0.0, kSceneHeight / 2, 0.0});
+  element->set_rotation(gfx::Quaternion(gfx::Vector3dF(1, 0, 0), M_PI / 2));
   element->set_fill(vr::Fill::OPAQUE_GRADIENT);
   element->set_draw_phase(0);
   ceiling_ = element.get();
@@ -350,9 +351,10 @@ void UiSceneManager::CreateUrlBar() {
       base::Bind(&UiSceneManager::OnUnsupportedMode, base::Unretained(this)));
   url_bar->set_debug_id(kUrlBar);
   url_bar->set_id(AllocateId());
-  url_bar->SetTranslate(0, kUrlBarVerticalOffset, -kUrlBarDistance);
-  url_bar->SetRotate(1, 0, 0, kUrlBarRotationRad);
-  url_bar->SetSize(kUrlBarWidth, kUrlBarHeight);
+  url_bar->set_translation({0, kUrlBarVerticalOffset, -kUrlBarDistance});
+  url_bar->set_rotation(
+      gfx::Quaternion(gfx::Vector3dF(1, 0, 0), kUrlBarRotationRad));
+  url_bar->set_size({kUrlBarWidth, kUrlBarHeight, 1});
   url_bar_ = url_bar.get();
   control_elements_.push_back(url_bar.get());
   scene_->AddUiElement(std::move(url_bar));
@@ -360,9 +362,9 @@ void UiSceneManager::CreateUrlBar() {
   auto indicator = base::MakeUnique<LoadingIndicator>(256);
   indicator->set_debug_id(kLoadingIndicator);
   indicator->set_id(AllocateId());
-  indicator->SetTranslate(0, kLoadingIndicatorVerticalOffset,
-                          kLoadingIndicatorDepthOffset);
-  indicator->SetSize(kLoadingIndicatorWidth, kLoadingIndicatorHeight);
+  indicator->set_translation(
+      {0, kLoadingIndicatorVerticalOffset, kLoadingIndicatorDepthOffset});
+  indicator->set_size({kLoadingIndicatorWidth, kLoadingIndicatorHeight, 1});
   indicator->set_parent_id(url_bar_->id());
   indicator->set_y_anchoring(YAnchoring::YTOP);
   loading_indicator_ = indicator.get();
@@ -379,10 +381,11 @@ void UiSceneManager::CreateTransientUrlBar() {
   url_bar->set_lock_to_fov(true);
   url_bar->set_visible(false);
   url_bar->set_hit_testable(false);
-  url_bar->SetTranslate(0, kTransientUrlBarVerticalOffset,
-                        -kTransientUrlBarDistance);
-  url_bar->SetRotate(1, 0, 0, kUrlBarRotationRad);
-  url_bar->SetSize(kTransientUrlBarWidth, kTransientUrlBarHeight);
+  url_bar->set_translation(
+      {0, kTransientUrlBarVerticalOffset, -kTransientUrlBarDistance});
+  url_bar->set_rotation(
+      gfx::Quaternion(gfx::Vector3dF(1, 0, 0), kUrlBarRotationRad));
+  url_bar->set_size({kTransientUrlBarWidth, kTransientUrlBarHeight, 1});
   transient_url_bar_ = url_bar.get();
   scene_->AddUiElement(std::move(url_bar));
 }
@@ -394,9 +397,10 @@ void UiSceneManager::CreateCloseButton() {
   element->set_debug_id(kCloseButton);
   element->set_id(AllocateId());
   element->set_fill(vr::Fill::NONE);
-  element->SetTranslate(0, kContentVerticalOffset - (kContentHeight / 2) - 0.3,
-                        -kCloseButtonDistance);
-  element->SetSize(kCloseButtonWidth, kCloseButtonHeight);
+  element->set_translation(
+      gfx::Vector3dF(0, kContentVerticalOffset - (kContentHeight / 2) - 0.3,
+                     -kCloseButtonDistance));
+  element->set_size(gfx::Vector3dF(kCloseButtonWidth, kCloseButtonHeight, 1));
   close_button_ = element.get();
   scene_->AddUiElement(std::move(element));
 }
@@ -411,8 +415,8 @@ void UiSceneManager::CreateExitPrompt() {
   element->set_debug_id(kExitPrompt);
   element->set_id(AllocateId());
   element->set_fill(vr::Fill::NONE);
-  element->SetSize(kExitPromptWidth, kExitPromptHeight);
-  element->SetTranslate(0.0, kExitPromptVerticalOffset, kTextureOffset);
+  element->set_size({kExitPromptWidth, kExitPromptHeight, 1});
+  element->set_translation({0.0, kExitPromptVerticalOffset, kTextureOffset});
   element->set_parent_id(main_content_->id());
   element->set_visible(false);
   exit_prompt_ = element.get();
@@ -425,8 +429,8 @@ void UiSceneManager::CreateExitPrompt() {
   element->set_debug_id(kExitPromptBackplane);
   element->set_id(AllocateId());
   element->set_fill(vr::Fill::NONE);
-  element->SetSize(kExitPromptBackplaneSize, kExitPromptBackplaneSize);
-  element->SetTranslate(0.0, 0.0, -kTextureOffset);
+  element->set_size({kExitPromptBackplaneSize, kExitPromptBackplaneSize, 1.0});
+  element->set_translation({0.0, 0.0, -kTextureOffset});
   element->set_parent_id(exit_prompt_->id());
   exit_prompt_backplane_ = element.get();
   content_elements_.push_back(element.get());
@@ -439,7 +443,7 @@ void UiSceneManager::CreateToasts() {
   element->set_debug_id(kExclusiveScreenToast);
   element->set_id(AllocateId());
   element->set_fill(vr::Fill::NONE);
-  element->SetSize(kToastWidthDMM, kToastHeightDMM);
+  element->set_size({kToastWidthDMM, kToastHeightDMM, 1});
   element->set_visible(false);
   element->set_hit_testable(false);
   exclusive_screen_toast_ = element.get();
@@ -456,11 +460,11 @@ void UiSceneManager::SetWebVrMode(bool web_vr, bool show_toast) {
   }
 
   web_vr_mode_ = web_vr;
+  web_vr_autopresentation_expected_ = false;
   web_vr_show_toast_ = show_toast;
-  if (!web_vr_mode_) {
-    waiting_for_first_web_vr_frame_ = false;
-    started_for_autopresentation_ = false;
-  }
+  if (!web_vr_mode_)
+    web_vr_autopresentation_ = false;
+  scene_->set_showing_splash_screen(false);
   ConfigureScene();
 
   // Because we may be transitioning from and to fullscreen, where the toast is
@@ -472,22 +476,10 @@ void UiSceneManager::SetWebVrMode(bool web_vr, bool show_toast) {
   }
 }
 
-void UiSceneManager::OnWebVrFrameAvailable() {
-  if (!waiting_for_first_web_vr_frame_)
-    return;
-  waiting_for_first_web_vr_frame_ = false;
-  ConfigureScene();
-}
-
 void UiSceneManager::ConfigureScene() {
-  // We disable WebVR rendering if we're expecting to auto present so that we
-  // can continue to show the 2D splash screen while the site submits the first
-  // WebVR frame.
-  scene_->SetWebVrRenderingEnabled(web_vr_mode_ &&
-                                   !waiting_for_first_web_vr_frame_);
   // Splash screen.
-  scene_->set_showing_splash_screen(waiting_for_first_web_vr_frame_);
-  splash_screen_icon_->SetEnabled(waiting_for_first_web_vr_frame_);
+  scene_->set_showing_splash_screen(web_vr_autopresentation_expected_);
+  splash_screen_icon_->SetEnabled(web_vr_autopresentation_expected_);
 
   // Exit warning.
   exit_warning_->SetEnabled(scene_->is_exiting());
@@ -523,31 +515,34 @@ void UiSceneManager::ConfigureScene() {
   // Update content quad parameters depending on fullscreen.
   // TODO(http://crbug.com/642937): Animate fullscreen transitions.
   if (fullscreen_) {
-    main_content_->SetTranslate(0, kFullscreenVerticalOffset,
-                                -kFullscreenDistance);
-    main_content_->SetSize(kFullscreenWidth, kFullscreenHeight);
-    close_button_->SetTranslate(
+    main_content_->set_translation(
+        {0, kFullscreenVerticalOffset, -kFullscreenDistance});
+    main_content_->set_size({kFullscreenWidth, kFullscreenHeight, 1});
+
+    close_button_->set_translation(gfx::Vector3dF(
         0, kFullscreenVerticalOffset - (kFullscreenHeight / 2) - 0.35,
-        -kCloseButtonFullscreenDistance);
-    close_button_->SetSize(kCloseButtonFullscreenWidth,
-                           kCloseButtonFullscreenHeight);
+        -kCloseButtonFullscreenDistance));
+    close_button_->set_size(gfx::Vector3dF(kCloseButtonFullscreenWidth,
+                                           kCloseButtonFullscreenHeight, 1));
   } else {
     // Note that main_content_ is already visible in this case.
-    main_content_->SetTranslate(0, kContentVerticalOffset, -kContentDistance);
-    main_content_->SetSize(kContentWidth, kContentHeight);
-    close_button_->SetTranslate(
-        0, kContentVerticalOffset - (kContentHeight / 2) - 0.3,
-        -kCloseButtonDistance);
-    close_button_->SetSize(kCloseButtonWidth, kCloseButtonHeight);
+    main_content_->set_translation(
+        {0, kContentVerticalOffset, -kContentDistance});
+    main_content_->set_size({kContentWidth, kContentHeight, 1});
+
+    close_button_->set_translation(
+        gfx::Vector3dF(0, kContentVerticalOffset - (kContentHeight / 2) - 0.3,
+                       -kCloseButtonDistance));
+    close_button_->set_size(
+        gfx::Vector3dF(kCloseButtonWidth, kCloseButtonHeight, 1));
   }
 
   scene_->SetMode(mode());
-  scene_->SetBackgroundDistance(
-      main_content_->transform_operations().Apply().matrix().get(2, 3) *
-      -kBackgroundDistanceMultiplier);
+  scene_->SetBackgroundDistance(main_content_->translation().z() *
+                                -kBackgroundDistanceMultiplier);
   UpdateBackgroundColor();
 
-  transient_url_bar_->SetEnabled(started_for_autopresentation_ &&
+  transient_url_bar_->SetEnabled(web_vr_autopresentation_ &&
                                  !scene_->showing_splash_screen());
 
   ConfigureExclusiveScreenToast();
@@ -632,8 +627,7 @@ void UiSceneManager::SetFullscreen(bool fullscreen) {
 }
 
 void UiSceneManager::ConfigureSecurityWarnings() {
-  bool enabled =
-      web_vr_mode_ && !secure_origin_ && !waiting_for_first_web_vr_frame_;
+  bool enabled = web_vr_mode_ && !secure_origin_;
   permanent_security_warning_->SetEnabled(enabled);
   transient_security_warning_->SetEnabled(enabled);
 }
@@ -656,16 +650,17 @@ void UiSceneManager::ConfigureIndicators() {
     if (indicator->visible()) {
       if (total_width > 0)
         total_width += kIndicatorGap;
-      total_width += indicator->size().width();
+      total_width += indicator->size().x();
     }
   }
   float x_position = -total_width / 2;
   for (UiElement* indicator : system_indicators_) {
     if (!indicator->visible())
       continue;
-    float width = indicator->size().width();
-    indicator->SetTranslate(x_position + width / 2, kIndicatorVerticalOffset,
-                            kIndicatorDistanceOffset);
+    float width = indicator->size().x();
+    indicator->set_translation({x_position + width / 2,
+                                kIndicatorVerticalOffset,
+                                kIndicatorDistanceOffset});
     x_position += width + kIndicatorGap;
   }
 }
@@ -677,24 +672,24 @@ void UiSceneManager::ConfigureExclusiveScreenToast() {
   if (fullscreen_ && !web_vr_mode_) {
     // Do not set size again. The size might have been changed by the backing
     // texture size in UpdateElementSize.
-    cc::TransformOperations operations;
-    operations.AppendTranslate(
-        0,
-        kFullscreenVerticalOffset + kFullscreenHeight / 2 +
-            (kToastOffsetDMM + kToastHeightDMM) * kFullscreenToastDistance,
-        -kFullscreenToastDistance);
-    operations.AppendRotate(1, 0, 0, 0);
-    operations.AppendScale(kFullscreenToastDistance, kFullscreenToastDistance,
-                           1);
-    exclusive_screen_toast_->SetTransformOperations(operations);
+    exclusive_screen_toast_->set_scale(
+        {kFullscreenToastDistance, kFullscreenToastDistance, 1});
+    exclusive_screen_toast_->set_translation(
+        {0,
+         kFullscreenVerticalOffset + kFullscreenHeight / 2 +
+             (kToastOffsetDMM + kToastHeightDMM) * kFullscreenToastDistance,
+         -kFullscreenToastDistance});
+    exclusive_screen_toast_->set_rotation(
+        gfx::Quaternion(gfx::Vector3dF(1, 0, 0), 0.0));
     exclusive_screen_toast_->set_lock_to_fov(false);
   } else if (web_vr_mode_ && web_vr_show_toast_) {
-    cc::TransformOperations operations;
-    operations.AppendTranslate(0, kWebVrToastDistance * sin(kWebVrAngleRadians),
-                               -kWebVrToastDistance * cos(kWebVrAngleRadians));
-    operations.AppendRotate(1, 0, 0, cc::MathUtil::Rad2Deg(kWebVrAngleRadians));
-    operations.AppendScale(kWebVrToastDistance, kWebVrToastDistance, 1);
-    exclusive_screen_toast_->SetTransformOperations(operations);
+    exclusive_screen_toast_->set_scale(
+        {kWebVrToastDistance, kWebVrToastDistance, 1});
+    exclusive_screen_toast_->set_translation(
+        gfx::Vector3dF(0, kWebVrToastDistance * sin(kWebVrAngleRadians),
+                       -kWebVrToastDistance * cos(kWebVrAngleRadians)));
+    exclusive_screen_toast_->set_rotation(
+        gfx::Quaternion(gfx::Vector3dF(1, 0, 0), kWebVrAngleRadians));
     exclusive_screen_toast_->set_lock_to_fov(true);
   }
 }

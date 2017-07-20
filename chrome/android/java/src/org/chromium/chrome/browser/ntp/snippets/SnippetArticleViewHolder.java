@@ -39,12 +39,11 @@ public class SnippetArticleViewHolder extends CardViewHolder implements Impressi
             REFRESH_OFFLINE_BADGE_VISIBILITY_CALLBACK = new RefreshOfflineBadgeVisibilityCallback();
 
     private final SuggestionsUiDelegate mUiDelegate;
+    private final UiConfig mUiConfig;
     private final SuggestionsBinder mSuggestionsBinder;
 
     private SuggestionsCategoryInfo mCategoryInfo;
     private SnippetArticle mArticle;
-
-    private final DisplayStyleObserverAdapter mDisplayStyleObserver;
 
     /**
      * Constructs a {@link SnippetArticleViewHolder} item used to display snippets.
@@ -59,16 +58,16 @@ public class SnippetArticleViewHolder extends CardViewHolder implements Impressi
         super(getLayout(), parent, uiConfig, contextMenuManager);
 
         mUiDelegate = uiDelegate;
+        mUiConfig = uiConfig;
         mSuggestionsBinder = new SuggestionsBinder(itemView, uiDelegate);
-        mDisplayStyleObserver =
-                new DisplayStyleObserverAdapter(itemView, uiConfig, new DisplayStyleObserver() {
-                    @Override
-                    public void onDisplayStyleChanged(UiConfig.DisplayStyle newDisplayStyle) {
-                        updateLayout();
-                    }
-                });
 
         new ImpressionTracker(itemView, this);
+        new DisplayStyleObserverAdapter(itemView, uiConfig, new DisplayStyleObserver() {
+            @Override
+            public void onDisplayStyleChanged(UiConfig.DisplayStyle newDisplayStyle) {
+                updateLayout();
+            }
+        });
     }
 
     @Override
@@ -127,17 +126,9 @@ public class SnippetArticleViewHolder extends CardViewHolder implements Impressi
 
         updateLayout();
 
-        mDisplayStyleObserver.attach();
         mSuggestionsBinder.updateViewInformation(mArticle);
 
         refreshOfflineBadgeVisibility();
-    }
-
-    @Override
-    public void recycle() {
-        mDisplayStyleObserver.detach();
-        mSuggestionsBinder.recycle();
-        super.recycle();
     }
 
     /**

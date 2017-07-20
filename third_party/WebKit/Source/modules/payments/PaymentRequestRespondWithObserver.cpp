@@ -7,13 +7,13 @@
 #include <v8.h>
 #include "bindings/core/v8/ScriptValue.h"
 #include "bindings/core/v8/V8BindingForCore.h"
-#include "bindings/modules/v8/V8PaymentHandlerResponse.h"
+#include "bindings/modules/v8/V8PaymentAppResponse.h"
 #include "core/dom/ExecutionContext.h"
-#include "modules/payments/PaymentHandlerResponse.h"
+#include "modules/payments/PaymentAppResponse.h"
 #include "modules/payments/PaymentHandlerUtils.h"
 #include "modules/serviceworkers/ServiceWorkerGlobalScopeClient.h"
 #include "modules/serviceworkers/WaitUntilObserver.h"
-#include "public/platform/modules/payments/WebPaymentHandlerResponse.h"
+#include "public/platform/modules/payments/WebPaymentAppResponse.h"
 
 namespace blink {
 
@@ -29,7 +29,7 @@ void PaymentRequestRespondWithObserver::OnResponseRejected(
   PaymentHandlerUtils::ReportResponseError(GetExecutionContext(),
                                            "PaymentRequestEvent", error);
 
-  WebPaymentHandlerResponse web_data;
+  WebPaymentAppResponse web_data;
   ServiceWorkerGlobalScopeClient::From(GetExecutionContext())
       ->RespondToPaymentRequestEvent(event_id_, web_data, event_dispatch_time_);
 }
@@ -40,7 +40,7 @@ void PaymentRequestRespondWithObserver::OnResponseFulfilled(
   ExceptionState exception_state(value.GetIsolate(),
                                  ExceptionState::kUnknownContext,
                                  "PaymentRequestEvent", "respondWith");
-  PaymentHandlerResponse response = ScriptValue::To<PaymentHandlerResponse>(
+  PaymentAppResponse response = ScriptValue::To<PaymentAppResponse>(
       ToIsolate(GetExecutionContext()), value, exception_state);
   if (exception_state.HadException()) {
     exception_state.ClearException();
@@ -48,7 +48,7 @@ void PaymentRequestRespondWithObserver::OnResponseFulfilled(
     return;
   }
 
-  WebPaymentHandlerResponse web_data;
+  WebPaymentAppResponse web_data;
   web_data.method_name = response.methodName();
 
   v8::Local<v8::String> details_value;
@@ -66,7 +66,7 @@ void PaymentRequestRespondWithObserver::OnResponseFulfilled(
 void PaymentRequestRespondWithObserver::OnNoResponse() {
   DCHECK(GetExecutionContext());
   ServiceWorkerGlobalScopeClient::From(GetExecutionContext())
-      ->RespondToPaymentRequestEvent(event_id_, WebPaymentHandlerResponse(),
+      ->RespondToPaymentRequestEvent(event_id_, WebPaymentAppResponse(),
                                      event_dispatch_time_);
 }
 

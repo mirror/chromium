@@ -238,10 +238,7 @@ class TestExporter(object):
                 'the WPT Importer is blocked from operating.\n\n'
                 '(There is ongoing work to 1. prevent CLs with red upstream PRs from landing '
                 '(https://crbug.com/711447) and 2. prevent the importer from being blocked on '
-                'stuck exportable changes (https://crbug.com/734121))\n\n'
-                'WPT Export docs:\n'
-                'https://chromium.googlesource.com/chromium/src/+/master'
-                '/docs/testing/web_platform_tests.md#Automatic-export-process'
+                'stuck exportable changes (https://crbug.com/734121))'
             ).format(
                 pr_url='%spull/%d' % (WPT_GH_URL, response_data['number'])
             ))
@@ -253,14 +250,14 @@ class TestExporter(object):
 
         Returns the pull_request if found, else returns None.
         """
-        # Check for PRs created by open Gerrit CLs.
-        change_id = exportable_commit.change_id()
-        if change_id:
-            return self.wpt_github.pr_with_change_id(change_id)
-
         # Check for PRs created by commits on master.
         pull_request = self.wpt_github.pr_with_position(exportable_commit.position)
         if pull_request:
             return pull_request
+
+        # Check for PRs created by open Gerrit CLs.
+        change_id = exportable_commit.change_id()
+        if change_id:
+            return self.wpt_github.pr_with_change_id(change_id)
 
         return None

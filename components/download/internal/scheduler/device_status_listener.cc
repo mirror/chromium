@@ -37,8 +37,8 @@ NetworkStatus ToNetworkStatus(net::NetworkChangeNotifier::ConnectionType type) {
 
 }  // namespace
 
-DeviceStatusListener::DeviceStatusListener(const base::TimeDelta& delay)
-    : observer_(nullptr), listening_(false), delay_(delay) {}
+DeviceStatusListener::DeviceStatusListener()
+    : observer_(nullptr), listening_(false) {}
 
 DeviceStatusListener::~DeviceStatusListener() {
   Stop();
@@ -82,24 +82,9 @@ void DeviceStatusListener::Stop() {
 
 void DeviceStatusListener::OnConnectionTypeChanged(
     net::NetworkChangeNotifier::ConnectionType type) {
-  NetworkStatus new_network_status = ToNetworkStatus(type);
-  if (status_.network_status == new_network_status)
-    return;
-
-  bool change_to_online =
-      (status_.network_status == NetworkStatus::DISCONNECTED) &&
-      (new_network_status != NetworkStatus::DISCONNECTED);
-
-  // It's unreliable to send requests immediately after the network becomes
-  // online. Notify network change to the observer after a delay.
-  if (change_to_online) {
-    timer_.Start(
-        FROM_HERE, delay_,
-        base::Bind(&DeviceStatusListener::NotifyNetworkChangeAfterDelay,
-                   base::Unretained(this), new_network_status));
-  } else {
-    status_.network_status = new_network_status;
-    timer_.Stop();
+  NetworkStatus new_status = ToNetworkStatus(type);
+  if (status_.network_status != new_status) {
+    status_.network_status = new_status;
     NotifyStatusChange();
   }
 }
@@ -111,12 +96,6 @@ void DeviceStatusListener::OnPowerStateChange(bool on_battery_power) {
 
 void DeviceStatusListener::NotifyStatusChange() {
   observer_->OnDeviceStatusChanged(status_);
-}
-
-void DeviceStatusListener::NotifyNetworkChangeAfterDelay(
-    NetworkStatus network_status) {
-  status_.network_status = network_status;
-  NotifyStatusChange();
 }
 
 }  // namespace download

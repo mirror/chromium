@@ -31,7 +31,8 @@ class CORE_EXPORT PerformanceObserver final
   friend class PerformanceObserverTest;
 
  public:
-  static PerformanceObserver* Create(ScriptState*,
+  static PerformanceObserver* Create(ExecutionContext*,
+                                     PerformanceBase*,
                                      PerformanceObserverCallback*);
   static void ResumeSuspendedObservers();
 
@@ -44,7 +45,7 @@ class CORE_EXPORT PerformanceObserver final
   DECLARE_TRACE_WRAPPERS();
 
  private:
-  PerformanceObserver(ScriptState*,
+  PerformanceObserver(ExecutionContext*,
                       PerformanceBase*,
                       PerformanceObserverCallback*);
   void Deliver();

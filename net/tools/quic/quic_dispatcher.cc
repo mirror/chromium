@@ -50,14 +50,12 @@ class DeleteSessionsAlarm : public QuicAlarm::Delegate {
 
 // Collects packets serialized by a QuicPacketCreator in order
 // to be handed off to the time wait list manager.
-class PacketCollector : public QuicPacketCreator::DelegateInterface,
-                        public QuicStreamFrameDataProducer {
+class PacketCollector : public QuicPacketCreator::DelegateInterface {
  public:
   explicit PacketCollector(QuicBufferAllocator* allocator)
       : send_buffer_(allocator) {}
   ~PacketCollector() override {}
 
-  // QuicPacketCreator::DelegateInterface methods:
   void OnSerializedPacket(SerializedPacket* serialized_packet) override {
     // Make a copy of the serialized packet to send later.
     packets_.push_back(std::unique_ptr<QuicEncryptedPacket>(
@@ -72,7 +70,6 @@ class PacketCollector : public QuicPacketCreator::DelegateInterface,
                             const string& error_details,
                             ConnectionCloseSource source) override {}
 
-  // QuicStreamFrameDataProducer methods:
   void SaveStreamData(QuicStreamId id,
                       QuicIOVector iov,
                       size_t iov_offset,
@@ -117,18 +114,7 @@ class StatelessConnectionTerminator {
                  framer,
                  helper->GetBufferAllocator(),
                  &collector_),
-        time_wait_list_manager_(time_wait_list_manager) {
-    if (FLAGS_quic_reloadable_flag_quic_stream_owns_data) {
-      framer_->set_data_producer(&collector_);
-    }
-  }
-
-  ~StatelessConnectionTerminator() {
-    if (framer_->HasDataProducer()) {
-      // Clear framer's producer.
-      framer_->set_data_producer(nullptr);
-    }
-  }
+        time_wait_list_manager_(time_wait_list_manager) {}
 
   // Generates a packet containing a CONNECTION_CLOSE frame specifying
   // |error_code| and |error_details| and add the connection to time wait.

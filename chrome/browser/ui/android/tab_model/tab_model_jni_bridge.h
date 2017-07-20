@@ -33,6 +33,9 @@ class TabModelJniBridge : public TabModel {
   void Destroy(JNIEnv* env, const base::android::JavaParamRef<jobject>& obj);
   ~TabModelJniBridge() override;
 
+  // Registers the JNI bindings.
+  static bool Register(JNIEnv* env);
+
   // Called by JNI
   base::android::ScopedJavaLocalRef<jobject> GetProfileAndroid(
       JNIEnv* env,

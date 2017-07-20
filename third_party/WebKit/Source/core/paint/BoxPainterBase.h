@@ -17,6 +17,7 @@ namespace blink {
 class ComputedStyle;
 class Document;
 class FloatRoundedRect;
+class LayoutPoint;
 class LayoutRect;
 class FillLayer;
 class LayoutRectOutsets;
@@ -46,6 +47,16 @@ class BoxPainterBase {
                                   bool include_logical_left_edge = true,
                                   bool include_logical_right_edge = true);
 
+  // This form is used by callers requiring special computation of the outer
+  // bounds of the shadow. For example, TableCellPainter insets the bounds by
+  // half widths of collapsed borders instead of the default whole widths.
+  static void PaintInsetBoxShadowInBounds(
+      const PaintInfo&,
+      const FloatRoundedRect& bounds,
+      const ComputedStyle&,
+      bool include_logical_left_edge = true,
+      bool include_logical_right_edge = true);
+
   static void PaintBorder(const ImageResourceObserver&,
                           const Document&,
                           Node*,
@@ -58,6 +69,9 @@ class BoxPainterBase {
 
   static bool ShouldForceWhiteBackgroundForPrintEconomy(const Document&,
                                                         const ComputedStyle&);
+
+  LayoutRect BoundsForDrawingRecorder(const PaintInfo&,
+                                      const LayoutPoint& adjusted_paint_offset);
 
   typedef Vector<const FillLayer*, 8> FillLayerOcclusionOutputList;
   // Returns true if the result fill layers have non-associative blending or

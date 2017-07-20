@@ -15,11 +15,11 @@
 #include "build/build_config.h"
 #include "cc/output/copy_output_request.h"
 #include "cc/output/copy_output_result.h"
+#include "cc/surfaces/frame_sink_manager.h"
 #include "cc/surfaces/surface.h"
 #include "cc/surfaces/surface_manager.h"
 #include "components/viz/host/host_frame_sink_manager.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
-#include "components/viz/service/frame_sinks/frame_sink_manager.h"
 #include "content/browser/accessibility/browser_accessibility_manager.h"
 #include "content/browser/browser_plugin/browser_plugin_guest.h"
 #include "content/browser/compositor/surface_utils.h"
@@ -66,8 +66,7 @@ RenderWidgetHostViewChildFrame::RenderWidgetHostViewChildFrame(
       background_color_(SK_ColorWHITE),
       weak_factory_(this) {
   if (!service_manager::ServiceManagerIsRemote()) {
-    GetFrameSinkManager()->surface_manager()->RegisterFrameSinkId(
-        frame_sink_id_);
+    GetFrameSinkManager()->RegisterFrameSinkId(frame_sink_id_);
     CreateCompositorFrameSinkSupport();
   }
 }
@@ -75,10 +74,8 @@ RenderWidgetHostViewChildFrame::RenderWidgetHostViewChildFrame(
 RenderWidgetHostViewChildFrame::~RenderWidgetHostViewChildFrame() {
   if (!service_manager::ServiceManagerIsRemote()) {
     ResetCompositorFrameSinkSupport();
-    if (GetFrameSinkManager()) {
-      GetFrameSinkManager()->surface_manager()->InvalidateFrameSinkId(
-          frame_sink_id_);
-    }
+    if (GetFrameSinkManager())
+      GetFrameSinkManager()->InvalidateFrameSinkId(frame_sink_id_);
   }
 }
 
@@ -480,8 +477,8 @@ void RenderWidgetHostViewChildFrame::ProcessCompositorFrame(
 void RenderWidgetHostViewChildFrame::SendSurfaceInfoToEmbedder() {
   if (service_manager::ServiceManagerIsRemote())
     return;
-  viz::SurfaceSequence sequence =
-      viz::SurfaceSequence(frame_sink_id_, next_surface_sequence_++);
+  cc::SurfaceSequence sequence =
+      cc::SurfaceSequence(frame_sink_id_, next_surface_sequence_++);
   cc::SurfaceManager* manager = GetFrameSinkManager()->surface_manager();
   viz::SurfaceId surface_id(frame_sink_id_, local_surface_id_);
   // The renderer process will satisfy this dependency when it creates a
@@ -494,7 +491,7 @@ void RenderWidgetHostViewChildFrame::SendSurfaceInfoToEmbedder() {
 
 void RenderWidgetHostViewChildFrame::SendSurfaceInfoToEmbedderImpl(
     const viz::SurfaceInfo& surface_info,
-    const viz::SurfaceSequence& sequence) {
+    const cc::SurfaceSequence& sequence) {
   frame_connector_->SetChildFrameSurface(surface_info, sequence);
 }
 
@@ -516,7 +513,7 @@ void RenderWidgetHostViewChildFrame::OnDidNotProduceFrame(
 
 void RenderWidgetHostViewChildFrame::OnSurfaceChanged(
     const viz::SurfaceInfo& surface_info) {
-  viz::SurfaceSequence sequence(frame_sink_id_, next_surface_sequence_++);
+  cc::SurfaceSequence sequence(frame_sink_id_, next_surface_sequence_++);
   SendSurfaceInfoToEmbedderImpl(surface_info, sequence);
 }
 
@@ -735,8 +732,8 @@ void RenderWidgetHostViewChildFrame::SubmitSurfaceCopyRequest(
 
   std::unique_ptr<cc::CopyOutputRequest> request =
       cc::CopyOutputRequest::CreateRequest(
-          base::BindOnce(&CopyFromCompositingSurfaceHasResult, output_size,
-                         preferred_color_type, callback));
+          base::Bind(&CopyFromCompositingSurfaceHasResult, output_size,
+                     preferred_color_type, callback));
   if (!src_subrect.IsEmpty())
     request->set_area(src_subrect);
 
@@ -826,7 +823,7 @@ bool RenderWidgetHostViewChildFrame::IsChildFrameForTesting() const {
 
 viz::SurfaceId RenderWidgetHostViewChildFrame::SurfaceIdForTesting() const {
   return viz::SurfaceId(frame_sink_id_, local_surface_id_);
-}
+};
 
 void RenderWidgetHostViewChildFrame::CreateCompositorFrameSinkSupport() {
   if (service_manager::ServiceManagerIsRemote())
@@ -836,9 +833,9 @@ void RenderWidgetHostViewChildFrame::CreateCompositorFrameSinkSupport() {
   constexpr bool is_root = false;
   constexpr bool handles_frame_sink_id_invalidation = false;
   constexpr bool needs_sync_points = true;
-  support_ = GetHostFrameSinkManager()->CreateCompositorFrameSinkSupport(
-      this, frame_sink_id_, is_root, handles_frame_sink_id_invalidation,
-      needs_sync_points);
+  support_ = viz::CompositorFrameSinkSupport::Create(
+      this, GetFrameSinkManager(), frame_sink_id_, is_root,
+      handles_frame_sink_id_invalidation, needs_sync_points);
   if (parent_frame_sink_id_.is_valid()) {
     GetFrameSinkManager()->RegisterFrameSinkHierarchy(parent_frame_sink_id_,
                                                       frame_sink_id_);

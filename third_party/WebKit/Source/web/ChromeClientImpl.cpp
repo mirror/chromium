@@ -48,7 +48,6 @@
 #include "core/frame/Settings.h"
 #include "core/frame/UseCounter.h"
 #include "core/frame/VisualViewport.h"
-#include "core/frame/WebFrameWidgetImpl.h"
 #include "core/fullscreen/Fullscreen.h"
 #include "core/html/HTMLInputElement.h"
 #include "core/html/forms/ColorChooser.h"
@@ -110,6 +109,7 @@
 #include "public/web/WebUserGestureToken.h"
 #include "public/web/WebViewClient.h"
 #include "public/web/WebWindowFeatures.h"
+#include "web/WebFrameWidgetImpl.h"
 #include "web/WebLocalFrameImpl.h"
 
 namespace blink {

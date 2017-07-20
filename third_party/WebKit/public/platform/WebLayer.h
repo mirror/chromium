@@ -36,7 +36,6 @@
 #include "WebFloatSize.h"
 #include "WebPoint.h"
 #include "WebRect.h"
-#include "WebScrollBoundaryBehavior.h"
 #include "WebSize.h"
 #include "WebString.h"
 #include "WebTouchInfo.h"
@@ -212,12 +211,6 @@ class WebLayer {
   // responsibility of the client to reset the layer's scroll client before
   // deleting the scroll client.
   virtual void SetScrollClient(WebLayerScrollClient*) = 0;
-
-  // The scroll-boundary-behavior allows developers to specify whether the
-  // scroll should be propagated to its ancestors at the beginning of the
-  // scroll, and whether the overscroll should cause UI affordance such as
-  // glow/bounce etc.
-  virtual void SetScrollBoundaryBehavior(const WebScrollBoundaryBehavior&) = 0;
 
   // Sets the cc-side layer client.
   virtual void SetLayerClient(cc::LayerClient*) = 0;

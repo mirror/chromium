@@ -12,28 +12,18 @@
 #include "components/arc/arc_service.h"
 #include "components/arc/common/audio.mojom.h"
 #include "components/arc/instance_holder.h"
-#include "components/keyed_service/core/keyed_service.h"
 #include "mojo/public/cpp/bindings/binding.h"
-
-namespace content {
-class BrowserContext;
-}  // namespace content
 
 namespace arc {
 
 class ArcBridgeService;
 
-class ArcAudioBridge : public KeyedService,
+class ArcAudioBridge : public ArcService,
                        public InstanceHolder<mojom::AudioInstance>::Observer,
                        public mojom::AudioHost,
                        public chromeos::CrasAudioHandler::AudioObserver {
  public:
-  // Returns singleton instance for the given BrowserContext,
-  // or nullptr if the browser |context| is not allowed to use ARC.
-  static ArcAudioBridge* GetForBrowserContext(content::BrowserContext* context);
-
-  ArcAudioBridge(content::BrowserContext* context,
-                 ArcBridgeService* bridge_service);
+  explicit ArcAudioBridge(ArcBridgeService* bridge_service);
   ~ArcAudioBridge() override;
 
   // InstanceHolder<mojom::AudioInstance>::Observer overrides.
@@ -44,6 +34,9 @@ class ArcAudioBridge : public KeyedService,
   void ShowVolumeControls() override;
   void OnSystemVolumeUpdateRequest(int32_t percent) override;
 
+  // For supporting ArcServiceManager::GetService<T>().
+  static const char kArcServiceName[];
+
  private:
   // chromeos::CrasAudioHandler::AudioObserver overrides.
   void OnAudioNodesChanged() override;
@@ -52,8 +45,6 @@ class ArcAudioBridge : public KeyedService,
 
   void SendSwitchState(bool headphone_inserted, bool microphone_inserted);
   void SendVolumeState();
-
-  ArcBridgeService* const arc_bridge_service_;  // Owned by ArcServiceManager.
 
   mojo::Binding<mojom::AudioHost> binding_;
 

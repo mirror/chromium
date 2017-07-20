@@ -1,7 +1,8 @@
 # What is GN?
 
-GN is a meta-build system that generates [Ninja](https://ninja-build.org)
-build files so that you can build Chromium with Ninja.
+GN is a meta-build system that generates
+[NinjaBuild](https://ninja-build.org)
+files so that you can build Chromium with Ninja.
 
 ## Why did you switch from GYP?
 
@@ -38,9 +39,9 @@ Read these links:
   * [Quick start](docs/quick_start.md)
   * [FAQ](docs/faq.md)
   * [Language and operation details](docs/language.md)
-  * [Reference](docs/reference.md): The built-in `gn help` documentation.
+  * [Reference](docs/reference.md) The built-in `gn help` documentation.
   * [Style guide](docs/style_guide.md)
   * [Cross compiling and toolchains](docs/cross_compiles.md)
   * [Hacking on GN itself](docs/hacking.md)
-  * [Standaline GN projects](docs/standalone.md)
-  * [Pushing new binaries](docs/update_binaries.md)
+  * [GNStandalone](docs/standalone.md) Standalone GN projects
+  * [UpdateGNBinaries](docs/update_binaries.md) Pushing new binaries

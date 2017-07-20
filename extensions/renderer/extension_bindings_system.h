@@ -12,7 +12,6 @@ class ListValue;
 }
 
 namespace extensions {
-class IPCMessageSender;
 class RequestSender;
 class ScriptContext;
 struct EventFilteringInfo;
@@ -55,26 +54,9 @@ class ExtensionBindingsSystem {
                               const base::ListValue& response,
                               const std::string& error) = 0;
 
-  // Returns the associated IPC message sender.
-  virtual IPCMessageSender* GetIPCMessageSender() = 0;
-
   // Returns the associated RequestSender, if any.
   // TODO(devlin): Factor this out.
   virtual RequestSender* GetRequestSender() = 0;
-
-  // Returns true if any portion of the runtime API is available to the given
-  // |context|. This is different than just checking features because runtime's
-  // availability depends on the installed extensions and the active URL (in the
-  // case of extensions communicating with external websites).
-  static bool IsRuntimeAvailableToContext(ScriptContext* context);
-
-  // The APIs that could potentially be available to webpage-like contexts.
-  // This is the list of possible features; most web pages will not have access
-  // to these APIs.
-  // Note: `runtime` is not included here, since it's handled specially above.
-  // Note: We specify the size of the array to allow for its use in for loops
-  // without needing to expose a separate "kNumWebAvailableFeatures".
-  static const char* kWebAvailableFeatures[3];
 };
 
 }  // namespace extensions

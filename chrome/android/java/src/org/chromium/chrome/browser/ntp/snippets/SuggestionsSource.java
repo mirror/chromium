@@ -8,13 +8,14 @@ import android.graphics.Bitmap;
 
 import org.chromium.base.Callback;
 import org.chromium.chrome.browser.ntp.cards.SuggestionsCategoryInfo;
+import org.chromium.chrome.browser.suggestions.DestructionObserver;
 
 import java.util.List;
 
 /**
  * An interface for classes that provide content suggestions.
  */
-public interface SuggestionsSource {
+public interface SuggestionsSource extends DestructionObserver {
     /**
      * An observer for events in the content suggestions service.
      */
@@ -35,12 +36,6 @@ public interface SuggestionsSource {
         /** Called when the observer should discard the suggestions it has and pull new ones. */
         void onFullRefreshRequired();
     }
-
-    /**
-     * Destroys the resources associated with the source and all observers will be unregistered.
-     * It should not be used after this is called.
-     */
-    void destroy();
 
     /**
      * Fetches new snippets for all remote categories.

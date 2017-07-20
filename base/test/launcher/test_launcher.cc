@@ -1193,10 +1193,13 @@ size_t NumParallelJobs() {
   CommandLine* command_line = CommandLine::ForCurrentProcess();
   CommandLine::SwitchMap switches = command_line->GetSwitches();
 
-  if (command_line->HasSwitch(switches::kTestLauncherJobs)) {
-    // If the number of test launcher jobs was specified, return that number.
-    size_t jobs = 0U;
+  size_t jobs = 0U;
 
+  if (command_line->HasSwitch(kGTestFilterFlag) && !BotModeEnabled()) {
+    // Do not run jobs in parallel by default if we are running a subset of
+    // the tests and if bot mode is off.
+    return 1U;
+  } else if (command_line->HasSwitch(switches::kTestLauncherJobs)) {
     if (!StringToSizeT(
             command_line->GetSwitchValueASCII(switches::kTestLauncherJobs),
             &jobs) ||
@@ -1204,14 +1207,10 @@ size_t NumParallelJobs() {
       LOG(ERROR) << "Invalid value for " << switches::kTestLauncherJobs;
       return 0U;
     }
+
     return jobs;
-  } else if (command_line->HasSwitch(kGTestFilterFlag) && !BotModeEnabled()) {
-    // Do not run jobs in parallel by default if we are running a subset of
-    // the tests and if bot mode is off.
-    return 1U;
   }
 
-  // Default to the number of processor cores.
   return base::checked_cast<size_t>(SysInfo::NumberOfProcessors());
 }
 

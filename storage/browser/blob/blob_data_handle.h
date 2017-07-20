@@ -83,7 +83,8 @@ class STORAGE_EXPORT BlobDataHandle
   // intended to be transient and should not be stored for any extended period
   // of time.
   std::unique_ptr<BlobReader> CreateReader(
-      FileSystemContext* file_system_context) const;
+      FileSystemContext* file_system_context,
+      base::SequencedTaskRunner* file_task_runner) const;
 
   // May be accessed on any thread.
   const std::string& uuid() const;

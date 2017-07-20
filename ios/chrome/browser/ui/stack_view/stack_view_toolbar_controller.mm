@@ -7,11 +7,9 @@
 #include "base/mac/foundation_util.h"
 #include "base/metrics/user_metrics.h"
 #include "base/metrics/user_metrics_action.h"
-#import "ios/chrome/browser/ui/commands/browser_commands.h"
-#import "ios/chrome/browser/ui/commands/open_new_tab_command.h"
 #import "ios/chrome/browser/ui/image_util.h"
 #import "ios/chrome/browser/ui/rtl_geometry.h"
-#import "ios/chrome/browser/ui/toolbar/new_tab_button.h"
+#include "ios/chrome/browser/ui/toolbar/new_tab_button.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -29,7 +27,6 @@ const CGFloat kBackgroundViewColorAlpha = 0.95;
 @implementation StackViewToolbarController {
   UIView* _stackViewToolbar;
   NewTabButton* _openNewTabButton;
-  __weak id<ApplicationCommands, BrowserCommands> _dispatcher;
 }
 
 - (instancetype)initWithDispatcher:
@@ -37,7 +34,6 @@ const CGFloat kBackgroundViewColorAlpha = 0.95;
   self = [super initWithStyle:ToolbarControllerStyleDarkMode
                    dispatcher:dispatcher];
   if (self) {
-    _dispatcher = dispatcher;
     _stackViewToolbar =
         [[UIView alloc] initWithFrame:[self specificControlsArea]];
     [_stackViewToolbar setAutoresizingMask:UIViewAutoresizingFlexibleHeight |
@@ -54,10 +50,7 @@ const CGFloat kBackgroundViewColorAlpha = 0.95;
         kNewTabLeadingOffset, [_stackViewToolbar bounds].size.width, 0,
         buttonSize, buttonSize);
     [_openNewTabButton setFrame:LayoutRectGetRect(newTabButtonLayout)];
-    // Set button actions.
-    [_openNewTabButton addTarget:self
-                          action:@selector(sendNewTabCommand:)
-                forControlEvents:UIControlEventTouchUpInside];
+    // Set additional button action.
     [_openNewTabButton addTarget:self
                           action:@selector(recordUserMetrics:)
                 forControlEvents:UIControlEventTouchUpInside];
@@ -75,19 +68,6 @@ const CGFloat kBackgroundViewColorAlpha = 0.95;
 
 - (NewTabButton*)openNewTabButton {
   return _openNewTabButton;
-}
-
-- (void)sendNewTabCommand:(id)sender {
-  if (sender != _openNewTabButton)
-    return;
-
-  CGPoint center =
-      [_openNewTabButton.superview convertPoint:_openNewTabButton.center
-                                         toView:_openNewTabButton.window];
-  OpenNewTabCommand* command =
-      [[OpenNewTabCommand alloc] initWithIncognito:_openNewTabButton.isIncognito
-                                       originPoint:center];
-  [_dispatcher openNewTab:command];
 }
 
 - (IBAction)recordUserMetrics:(id)sender {

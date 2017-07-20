@@ -15,9 +15,9 @@
 #include "base/pickle.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
+#include "cc/surfaces/frame_sink_manager.h"
 #include "cc/surfaces/surface.h"
 #include "components/viz/common/surfaces/surface_info.h"
-#include "components/viz/service/frame_sinks/frame_sink_manager.h"
 #include "content/browser/browser_plugin/browser_plugin_embedder.h"
 #include "content/browser/browser_thread_impl.h"
 #include "content/browser/child_process_security_policy_impl.h"
@@ -431,7 +431,7 @@ void BrowserPluginGuest::PointerLockPermissionResponse(bool allow) {
 
 void BrowserPluginGuest::SetChildFrameSurface(
     const viz::SurfaceInfo& surface_info,
-    const viz::SurfaceSequence& sequence) {
+    const cc::SurfaceSequence& sequence) {
   has_attached_since_surface_set_ = false;
   SendMessageToEmbedder(base::MakeUnique<BrowserPluginMsg_SetChildFrameSurface>(
       browser_plugin_instance_id(), surface_info, sequence));
@@ -439,14 +439,14 @@ void BrowserPluginGuest::SetChildFrameSurface(
 
 void BrowserPluginGuest::OnSatisfySequence(
     int instance_id,
-    const viz::SurfaceSequence& sequence) {
+    const cc::SurfaceSequence& sequence) {
   GetFrameSinkManager()->surface_manager()->SatisfySequence(sequence);
 }
 
 void BrowserPluginGuest::OnRequireSequence(
     int instance_id,
     const viz::SurfaceId& id,
-    const viz::SurfaceSequence& sequence) {
+    const cc::SurfaceSequence& sequence) {
   GetFrameSinkManager()->surface_manager()->RequireSequence(id, sequence);
 }
 

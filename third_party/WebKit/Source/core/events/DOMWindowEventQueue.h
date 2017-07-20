@@ -44,7 +44,7 @@ class DOMWindowEventQueue final : public EventQueue {
 
   // EventQueue
   DECLARE_VIRTUAL_TRACE();
-  bool EnqueueEvent(const WebTraceLocation&, Event*) override;
+  bool EnqueueEvent(Event*) override;
   bool CancelEvent(Event*) override;
   void Close() override;
 

@@ -4,8 +4,6 @@
 
 #include "mojo/public/cpp/bindings/lib/binding_state.h"
 
-#include "mojo/public/cpp/bindings/lib/task_runner_helper.h"
-
 namespace mojo {
 namespace internal {
 
@@ -76,7 +74,7 @@ void BindingStateBase::EnableTestingMode() {
 
 void BindingStateBase::BindInternal(
     ScopedMessagePipeHandle handle,
-    scoped_refptr<base::SingleThreadTaskRunner> runner,
+    scoped_refptr<base::SequencedTaskRunner> runner,
     const char* interface_name,
     std::unique_ptr<MessageReceiver> request_validator,
     bool passes_associated_kinds,
@@ -85,22 +83,19 @@ void BindingStateBase::BindInternal(
     uint32_t interface_version) {
   DCHECK(!router_);
 
-  auto sequenced_runner =
-      GetTaskRunnerToUseFromUserProvidedTaskRunner(std::move(runner));
   MultiplexRouter::Config config =
       passes_associated_kinds
           ? MultiplexRouter::MULTI_INTERFACE
           : (has_sync_methods
                  ? MultiplexRouter::SINGLE_INTERFACE_WITH_SYNC_METHODS
                  : MultiplexRouter::SINGLE_INTERFACE);
-  router_ =
-      new MultiplexRouter(std::move(handle), config, false, sequenced_runner);
+  router_ = new MultiplexRouter(std::move(handle), config, false, runner);
   router_->SetMasterInterfaceName(interface_name);
 
   endpoint_client_.reset(new InterfaceEndpointClient(
       router_->CreateLocalEndpointHandle(kMasterInterfaceId), stub,
-      std::move(request_validator), has_sync_methods,
-      std::move(sequenced_runner), interface_version));
+      std::move(request_validator), has_sync_methods, std::move(runner),
+      interface_version));
 }
 
 }  // namesapce internal

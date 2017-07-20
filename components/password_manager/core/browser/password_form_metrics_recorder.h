@@ -8,75 +8,38 @@
 #include <stdint.h>
 
 #include <memory>
-#include <set>
 #include <vector>
 
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "components/autofill/core/common/password_form.h"
 #include "components/password_manager/core/browser/password_form_user_action.h"
-#include "components/password_manager/core/browser/password_manager_metrics_util.h"
 #include "services/metrics/public/cpp/ukm_recorder.h"
 
 namespace password_manager {
 
-// URL Keyed Metrics.
+// Internal namespace is intended for component wide access only.
+namespace internal {
+// UKM Metric names. Exposed in internal namespace for unittesting.
 
 // This metric records whether a submission of a password form has been
 // observed. The values 0 and 1 correspond to false and true respectively.
-extern const char kUkmSubmissionObserved[];
+constexpr char kUkmSubmissionObserved[] = "Submission.Observed";
 
 // This metric records the outcome of a password form submission. The values are
 // numbered according to PasswordFormMetricsRecorder::SubmitResult.
 // Note that no metric is recorded for kSubmitResultNotSubmitted.
-extern const char kUkmSubmissionResult[];
+constexpr char kUkmSubmissionResult[] = "Submission.SubmissionResult";
 
 // This metric records the classification of a form at submission time. The
 // values correspond to PasswordFormMetricsRecorder::SubmittedFormType.
 // Note that no metric is recorded for kSubmittedFormTypeUnspecified.
-extern const char kUkmSubmissionFormType[];
-
-// This metric records the boolean value indicating whether a password update
-// prompt was shown, which asked the user for permission to update a password.
-extern const char kUkmUpdatingPromptShown[];
-
-// This metric records the reason why a password update prompt was shown to ask
-// the user for permission to update a password. The values correspond to
-// PasswordFormMetricsRecorder::BubbleTrigger.
-extern const char kUkmUpdatingPromptTrigger[];
-
-// This metric records how a user interacted with an updating prompt. The values
-// correspond to PasswordFormMetricsRecorder::BubbleDismissalReason.
-extern const char kUkmUpdatingPromptInteraction[];
-
-// This metric records the boolean value indicating whether a password save
-// prompt was shown, which asked the user for permission to save a new
-// credential.
-extern const char kUkmSavingPromptShown[];
-
-// This metric records the reason why a password save prompt was shown to ask
-// the user for permission to save a new credential. The values correspond to
-// PasswordFormMetricsRecorder::BubbleTrigger.
-extern const char kUkmSavingPromptTrigger[];
-
-// This metric records how a user interacted with a saving prompt. The values
-// correspond to PasswordFormMetricsRecorder::BubbleDismissalReason.
-extern const char kUkmSavingPromptInteraction[];
+constexpr char kUkmSubmissionFormType[] = "Submission.SubmittedFormType";
 
 // This metric records attempts to fill a password form. Values correspond to
 // PasswordFormMetricsRecorder::ManagerFillEvent.
-extern const char kUkmManagerFillEvent[];
-
-// This metric records what the user does with a form. Values correspond to the
-// enum UserAction.
-extern const char kUkmUserActionSimplified[];
-
-// This metric records what the user does with all UI entry points of the
-// password manager, like bubbles, context menus, forms, form fields, etc.
-// in relation to a given form. Values correspond to the enum
-// DetailedUserAction. In contrast to kUkmUserActionSimplified, ths metric is
-// intended to be extensible with new user action types.
-extern const char kUkmUserAction[];
+constexpr char kUkmManagerFillEvent[] = "ManagerFill.Action";
+}  // namespace internal
 
 class FormFetcher;
 
@@ -184,39 +147,6 @@ class PasswordFormMetricsRecorder
     kSubmittedFormTypeMax
   };
 
-  // The reason why a password bubble was shown on the screen.
-  enum class BubbleTrigger {
-    kUnknown = 0,
-    // The password manager suggests the user to save a password and asks for
-    // confirmation.
-    kPasswordManagerSuggestionAutomatic,
-    kPasswordManagerSuggestionManual,
-    // The site asked the user to save a password via the credential management
-    // API.
-    kCredentialManagementAPIAutomatic,
-    kCredentialManagementAPIManual,
-    kMax,
-  };
-
-  // The reason why a password bubble was dismissed.
-  enum class BubbleDismissalReason {
-    kUnknown = 0,
-    kAccepted = 1,
-    kDeclined = 2,
-    kIgnored = 3
-  };
-
-  // This enum is a designed to be able to collect all kinds of potentially
-  // interesting user interactions with sites and password manager UI in
-  // relation to a given form. In contrast to UserAction, it is intended to be
-  // extensible.
-  enum class DetailedUserAction {
-    kUnknown = 0,
-
-    // Interactions with password bubble.
-    kEditedUsernameInBubble = 100,
-  };
-
   // The maximum number of combinations of the ManagerAction, UserAction and
   // SubmitResult enums.
   // This is used when recording the actions taken by the form in UMA.
@@ -264,15 +194,6 @@ class PasswordFormMetricsRecorder
       const FormFetcher& form_fetcher,
       const autofill::PasswordForm& pending_credentials);
 
-  // Records the event that a password bubble was shown.
-  void RecordPasswordBubbleShown(
-      metrics_util::CredentialSourceType credential_source_type,
-      metrics_util::UIDisplayDisposition display_disposition);
-
-  // Records the dismissal of a password bubble.
-  void RecordUIDismissalReason(
-      metrics_util::UIDismissalReason ui_dismissal_reason);
-
   // Records that the password manager managed or failed to fill a form.
   void RecordFillEvent(ManagerAutofillEvent event);
 
@@ -281,22 +202,8 @@ class PasswordFormMetricsRecorder
   // Public for testing.
   int GetActionsTakenNew() const;
 
-  // Records a DetailedUserAction UKM metric.
-  void RecordDetailedUserAction(DetailedUserAction action);
-
  private:
   friend class base::RefCounted<PasswordFormMetricsRecorder>;
-
-  // Enum to track which password bubble is currently being displayed.
-  enum class CurrentBubbleOfInterest {
-    // This covers the cases that no password bubble is currently being
-    // displayed or the one displayed is none of the interesting cases.
-    kNone,
-    // The user is currently seeing a password save bubble.
-    kSaveBubble,
-    // The user is currently seeing a password update bubble.
-    kUpdateBubble,
-  };
 
   // Destructor reports a couple of UMA metrics as well as calls
   // RecordUkmMetric.
@@ -332,10 +239,6 @@ class PasswordFormMetricsRecorder
   // Records a metric into |ukm_entry_builder_| if it is not nullptr.
   void RecordUkmMetric(const char* metric_name, int64_t value);
 
-  // Returns true if an |action| should be recorded multiple times per life-cyle
-  // of a PasswordFormMetricsRecorder.
-  static bool IsRepeatedUserAction(DetailedUserAction action);
-
   // True if the main frame's visible URL, at the time this PasswordFormManager
   // was created, is secure.
   const bool is_main_frame_secure_;
@@ -345,15 +248,6 @@ class PasswordFormMetricsRecorder
 
   // Whether this form has an auto generated password.
   bool has_generated_password_ = false;
-
-  // Tracks which bubble is currently being displayed to the user.
-  CurrentBubbleOfInterest current_bubble_ = CurrentBubbleOfInterest::kNone;
-
-  // Whether the user was shown a prompt to update a password.
-  bool update_prompt_shown_ = false;
-
-  // Whether the user was shown a prompt to save a new credential.
-  bool save_prompt_shown_ = false;
 
   // These three fields record the "ActionsTaken" by the browser and
   // the user with this form, and the result. They are combined and
@@ -370,10 +264,6 @@ class PasswordFormMetricsRecorder
   // Records URL keyed metrics (UKMs) and submits them on its destruction. May
   // be a nullptr in which case no recording is expected.
   std::unique_ptr<ukm::UkmEntryBuilder> ukm_entry_builder_;
-
-  // Set of observed user actions that are only recorded once for the lifetime
-  // of a PasswordFormMetricsRecorder.
-  std::set<DetailedUserAction> one_time_report_user_actions_;
 
   DISALLOW_COPY_AND_ASSIGN(PasswordFormMetricsRecorder);
 };

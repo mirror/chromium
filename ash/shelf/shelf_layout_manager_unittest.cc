@@ -6,11 +6,9 @@
 
 #include "ash/accelerators/accelerator_controller.h"
 #include "ash/accelerators/accelerator_table.h"
-#include "ash/app_list/test_app_list_view_presenter_impl.h"
 #include "ash/focus_cycler.h"
 #include "ash/public/cpp/config.h"
 #include "ash/public/cpp/shell_window_ids.h"
-#include "ash/root_window_controller.h"
 #include "ash/session/session_controller.h"
 #include "ash/shelf/shelf.h"
 #include "ash/shelf/shelf_constants.h"
@@ -22,8 +20,9 @@
 #include "ash/system/status_area_widget.h"
 #include "ash/system/tray/system_tray.h"
 #include "ash/system/tray/system_tray_item.h"
-#include "ash/system/tray/test_system_tray_item.h"
 #include "ash/test/ash_test_base.h"
+#include "ash/test/test_app_list_view_presenter_impl.h"
+#include "ash/test/test_system_tray_item.h"
 #include "ash/wm/lock_state_controller.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
@@ -61,11 +60,11 @@ void StepWidgetLayerAnimatorToEnd(views::Widget* widget) {
 }
 
 ShelfWidget* GetShelfWidget() {
-  return AshTestBase::GetPrimaryShelf()->shelf_widget();
+  return test::AshTestBase::GetPrimaryShelf()->shelf_widget();
 }
 
 ShelfLayoutManager* GetShelfLayoutManager() {
-  return AshTestBase::GetPrimaryShelf()->shelf_layout_manager();
+  return test::AshTestBase::GetPrimaryShelf()->shelf_layout_manager();
 }
 
 // Class which waits till the shelf finishes animating to the target size and
@@ -155,7 +154,7 @@ class ShelfDragCallback {
     if (type == ui::ET_GESTURE_SCROLL_UPDATE)
       scroll_.Add(delta);
 
-    Shelf* shelf = AshTestBase::GetPrimaryShelf();
+    Shelf* shelf = test::AshTestBase::GetPrimaryShelf();
     gfx::Rect shelf_bounds = GetShelfWidget()->GetWindowBoundsInScreen();
     if (shelf->IsHorizontalAlignment()) {
       EXPECT_EQ(auto_hidden_shelf_widget_bounds_.bottom(),
@@ -239,7 +238,7 @@ class ShelfLayoutObserverTest : public ShelfLayoutManagerObserver {
 
 }  // namespace
 
-class ShelfLayoutManagerTest : public AshTestBase {
+class ShelfLayoutManagerTest : public test::AshTestBase {
  public:
   ShelfLayoutManagerTest() {}
 
@@ -999,7 +998,7 @@ TEST_F(ShelfLayoutManagerTest, OpenAppListWithShelfVisibleState) {
   shelf->SetAutoHideBehavior(SHELF_AUTO_HIDE_BEHAVIOR_NEVER);
 
   // The tested behavior relies on the app list presenter implementation.
-  TestAppListViewPresenterImpl app_list_presenter_impl;
+  test::TestAppListViewPresenterImpl app_list_presenter_impl;
 
   // Create a normal unmaximized window; the shelf should be visible.
   aura::Window* window = CreateTestWindow();
@@ -1030,7 +1029,7 @@ TEST_F(ShelfLayoutManagerTest, OpenAppListWithShelfAutoHideState) {
   shelf->SetAutoHideBehavior(SHELF_AUTO_HIDE_BEHAVIOR_ALWAYS);
 
   // The tested behavior relies on the app list presenter implementation.
-  TestAppListViewPresenterImpl app_list_presenter_impl;
+  test::TestAppListViewPresenterImpl app_list_presenter_impl;
 
   // Create a normal unmaximized window; the shelf should be hidden.
   aura::Window* window = CreateTestWindow();
@@ -1097,7 +1096,7 @@ TEST_F(ShelfLayoutManagerTest, DualDisplayOpenAppListWithShelfAutoHideState) {
   wm::ActivateWindow(window_1);
 
   // The tested behavior relies on the app list presenter implementation.
-  TestAppListViewPresenterImpl app_list_presenter_impl;
+  test::TestAppListViewPresenterImpl app_list_presenter_impl;
 
   Shell::Get()->UpdateShelfVisibility();
   EXPECT_FALSE(app_list_presenter_impl.GetTargetVisibility());
@@ -1135,7 +1134,7 @@ TEST_F(ShelfLayoutManagerTest, OpenAppListWithShelfHiddenState) {
   Shelf* shelf = GetPrimaryShelf();
 
   // The tested behavior relies on the app list presenter implementation.
-  TestAppListViewPresenterImpl app_list_presenter_impl;
+  test::TestAppListViewPresenterImpl app_list_presenter_impl;
 
   // Create a window and make it full screen; the shelf should be hidden.
   aura::Window* window = CreateTestWindow();
@@ -1560,24 +1559,6 @@ TEST_F(ShelfLayoutManagerTest, AutohideShelfForAutohideWhenActiveWindow) {
       ->set_autohide_shelf_when_maximized_or_fullscreen(false);
   widget_two->Activate();
   EXPECT_EQ(SHELF_VISIBLE, shelf->GetVisibilityState());
-
-  wm::GetWindowState(window_two)
-      ->set_autohide_shelf_when_maximized_or_fullscreen(true);
-  window_two->SetProperty(aura::client::kAlwaysOnTopKey, true);
-
-  auto* shelf_window = shelf->GetWindow();
-  aura::Window* container = shelf_window->GetRootWindow()->GetChildById(
-      kShellWindowId_AlwaysOnTopContainer);
-  auto iter = std::find(container->children().begin(),
-                        container->children().end(), window_two);
-  EXPECT_NE(iter, container->children().end());
-
-  widget_two->Maximize();
-  EXPECT_EQ(SHELF_AUTO_HIDE, shelf->GetVisibilityState());
-
-  wm::WorkspaceWindowState window_state =
-      RootWindowController::ForWindow(shelf_window)->GetWorkspaceWindowState();
-  EXPECT_EQ(wm::WORKSPACE_WINDOW_STATE_MAXIMIZED, window_state);
 }
 
 TEST_F(ShelfLayoutManagerTest, ShelfFlickerOnTrayActivation) {
@@ -1597,7 +1578,7 @@ TEST_F(ShelfLayoutManagerTest, ShelfFlickerOnTrayActivation) {
 
   // Show the status menu. That should make the shelf visible again.
   Shell::Get()->accelerator_controller()->PerformActionIfEnabled(
-      TOGGLE_SYSTEM_TRAY_BUBBLE);
+      SHOW_SYSTEM_TRAY_BUBBLE);
   EXPECT_EQ(SHELF_AUTO_HIDE, shelf->GetVisibilityState());
   EXPECT_EQ(SHELF_AUTO_HIDE_SHOWN, shelf->GetAutoHideState());
   EXPECT_TRUE(GetPrimarySystemTray()->HasSystemBubble());
@@ -1793,22 +1774,22 @@ TEST_F(ShelfLayoutManagerTest, ShelfLayoutInUnifiedDesktop) {
   EXPECT_EQ(gfx::Point(500, 400), status_area_bounds.bottom_right());
 }
 
-class ShelfLayoutManagerKeyboardTest : public AshTestBase {
+class ShelfLayoutManagerKeyboardTest : public test::AshTestBase {
  public:
   ShelfLayoutManagerKeyboardTest() {}
   ~ShelfLayoutManagerKeyboardTest() override {}
 
-  // AshTestBase:
+  // test::AshTestBase:
   void SetUp() override {
-    AshTestBase::SetUp();
+    test::AshTestBase::SetUp();
     UpdateDisplay("800x600");
     keyboard::SetAccessibilityKeyboardEnabled(true);
   }
 
-  // AshTestBase:
+  // test::AshTestBase:
   void TearDown() override {
     keyboard::SetAccessibilityKeyboardEnabled(false);
-    AshTestBase::TearDown();
+    test::AshTestBase::TearDown();
   }
 
   void InitKeyboardBounds() {

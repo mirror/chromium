@@ -5,13 +5,11 @@
 #ifndef COMPONENTS_DOWNLOAD_CONTENT_INTERNAL_DOWNLOAD_DRIVER_IMPL_H_
 #define COMPONENTS_DOWNLOAD_CONTENT_INTERNAL_DOWNLOAD_DRIVER_IMPL_H_
 
-#include <memory>
 #include <set>
 #include <string>
 
 #include "base/files/file_path.h"
 #include "base/memory/weak_ptr.h"
-#include "components/download/content/public/all_download_item_notifier.h"
 #include "components/download/internal/download_driver.h"
 #include "components/download/public/download_params.h"
 #include "content/public/browser/browser_context.h"
@@ -25,7 +23,8 @@ struct DriverEntry;
 // Aggregates and handles all interaction between download service and content
 // download logic.
 class DownloadDriverImpl : public DownloadDriver,
-                           public AllDownloadItemNotifier::Observer {
+                           public content::DownloadManager::Observer,
+                           public content::DownloadItem::Observer {
  public:
   // Creates a driver entry based on a download item.
   static DriverEntry CreateDriverEntry(const content::DownloadItem* item);
@@ -36,7 +35,6 @@ class DownloadDriverImpl : public DownloadDriver,
 
   // DownloadDriver implementation.
   void Initialize(DownloadDriver::Client* client) override;
-  void HardRecover() override;
   bool IsReady() const override;
   void Start(
       const RequestParams& request_params,
@@ -50,17 +48,15 @@ class DownloadDriverImpl : public DownloadDriver,
   std::set<std::string> GetActiveDownloads() override;
 
  private:
-  // content::AllDownloadItemNotifier::Observer implementation.
-  void OnManagerInitialized(content::DownloadManager* manager) override;
-  void OnManagerGoingDown(content::DownloadManager* manager) override;
+  // content::DownloadItem::Observer implementation.
+  void OnDownloadUpdated(content::DownloadItem* item) override;
+  void OnDownloadRemoved(content::DownloadItem* download) override;
+
+  // content::DownloadManager::Observer implementation.
   void OnDownloadCreated(content::DownloadManager* manager,
                          content::DownloadItem* item) override;
-  void OnDownloadUpdated(content::DownloadManager* manager,
-                         content::DownloadItem* item) override;
-  void OnDownloadRemoved(content::DownloadManager* manager,
-                         content::DownloadItem* item) override;
-
-  void OnHardRecoverComplete(bool success);
+  void OnManagerInitialized() override;
+  void ManagerGoingDown(content::DownloadManager* manager) override;
 
   // Remove the download, used to be posted to the task queue.
   void DoRemoveDownload(const std::string& guid);
@@ -70,9 +66,6 @@ class DownloadDriverImpl : public DownloadDriver,
 
   // The client that receives updates from low level download logic.
   DownloadDriver::Client* client_;
-
-  // Built lazily on initialize and destroyed when/if the manager is torn down.
-  std::unique_ptr<AllDownloadItemNotifier> notifier_;
 
   // Pending guid set of downloads that will be removed soon.
   std::set<std::string> guid_to_remove_;

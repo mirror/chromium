@@ -34,7 +34,6 @@
 #include "chrome/browser/page_load_metrics/observers/omnibox_suggestion_used_page_load_metrics_observer.h"
 #include "chrome/browser/page_load_metrics/observers/prerender_page_load_metrics_observer.h"
 #include "chrome/browser/page_load_metrics/observers/previews_page_load_metrics_observer.h"
-#include "chrome/browser/page_load_metrics/observers/previews_ukm_observer.h"
 #include "chrome/browser/page_load_metrics/observers/protocol_page_load_metrics_observer.h"
 #include "chrome/browser/page_load_metrics/observers/service_worker_page_load_metrics_observer.h"
 #include "chrome/browser/page_load_metrics/observers/subresource_filter_metrics_observer.h"
@@ -99,7 +98,6 @@ void PageLoadMetricsEmbedder::RegisterObservers(
         base::MakeUnique<MultiTabLoadingPageLoadMetricsObserver>());
     tracker->AddObserver(
         base::MakeUnique<previews::PreviewsPageLoadMetricsObserver>());
-    tracker->AddObserver(base::MakeUnique<previews::PreviewsUKMObserver>());
     tracker->AddObserver(
         base::MakeUnique<ServiceWorkerPageLoadMetricsObserver>());
     tracker->AddObserver(base::MakeUnique<SubresourceFilterMetricsObserver>());
@@ -170,9 +168,11 @@ bool PageLoadMetricsEmbedder::IsNewTabPageUrl(const GURL& url) {
 }  // namespace
 
 void InitializePageLoadMetricsForWebContents(
-    content::WebContents* web_contents) {
+    content::WebContents* web_contents,
+    const base::Optional<content::WebContents::CreateParams>& create_params) {
   page_load_metrics::MetricsWebContentsObserver::CreateForWebContents(
-      web_contents, base::MakeUnique<PageLoadMetricsEmbedder>(web_contents));
+      web_contents, create_params,
+      base::MakeUnique<PageLoadMetricsEmbedder>(web_contents));
 }
 
 }  // namespace chrome

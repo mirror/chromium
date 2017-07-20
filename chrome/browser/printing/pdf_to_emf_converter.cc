@@ -228,8 +228,7 @@ PdfConverterUtilityProcessHostClient::GetFileFromTemp(
   std::unique_ptr<base::File, content::BrowserThread::DeleteOnFileThread>
       temp_file) {
   if (settings_.mode == PdfRenderSettings::Mode::POSTSCRIPT_LEVEL2 ||
-      settings_.mode == PdfRenderSettings::Mode::POSTSCRIPT_LEVEL3 ||
-      settings_.mode == PdfRenderSettings::Mode::TEXTONLY) {
+      settings_.mode == PdfRenderSettings::Mode::POSTSCRIPT_LEVEL3) {
     return base::MakeUnique<PostScriptMetaFile>(temp_dir_,
                                                 std::move(temp_file));
   }

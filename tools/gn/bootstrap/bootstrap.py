@@ -467,6 +467,7 @@ def write_gn_ninja(path, root_gen_dir, options):
       'base/process/process_metrics.cc',
       'base/profiler/scoped_profile.cc',
       'base/profiler/scoped_tracker.cc',
+      'base/profiler/tracked_time.cc',
       'base/rand_util.cc',
       'base/run_loop.cc',
       'base/sequence_token.cc',
@@ -548,6 +549,7 @@ def write_gn_ninja(path, root_gen_dir, options):
       'base/trace_event/memory_dump_scheduler.cc',
       'base/trace_event/memory_infra_background_whitelist.cc',
       'base/trace_event/memory_peak_detector.cc',
+      'base/trace_event/memory_tracing_observer.cc',
       'base/trace_event/memory_usage_estimator.cc',
       'base/trace_event/process_memory_dump.cc',
       'base/trace_event/process_memory_maps.cc',
@@ -566,7 +568,6 @@ def write_gn_ninja(path, root_gen_dir, options):
       'base/tracked_objects.cc',
       'base/tracking_info.cc',
       'base/unguessable_token.cc',
-      'base/value_iterators.cc',
       'base/values.cc',
       'base/vlog.cc',
   ])

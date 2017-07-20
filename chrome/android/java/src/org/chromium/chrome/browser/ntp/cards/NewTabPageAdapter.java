@@ -230,14 +230,10 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
     }
 
     private void updateAllDismissedVisibility() {
-        boolean areRemoteSuggestionsEnabled =
-                mUiDelegate.getSuggestionsSource().areRemoteSuggestionsEnabled();
-
-        mAllDismissed.setVisible(areRemoteSuggestionsEnabled && hasAllBeenDismissed());
-        mFooter.setVisible(areRemoteSuggestionsEnabled && !hasAllBeenDismissed());
-        if (mBottomSpacer != null) {
-            mBottomSpacer.setVisible(areRemoteSuggestionsEnabled || !hasAllBeenDismissed());
-        }
+        boolean showAllDismissed = hasAllBeenDismissed()
+                && mUiDelegate.getSuggestionsSource().areRemoteSuggestionsEnabled();
+        mAllDismissed.setVisible(showAllDismissed);
+        mFooter.setVisible(!showAllDismissed);
     }
 
     @Override
@@ -277,11 +273,6 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
         assert recyclerView instanceof SuggestionsRecyclerView;
 
         mRecyclerView = (SuggestionsRecyclerView) recyclerView;
-    }
-
-    @Override
-    public void onViewRecycled(NewTabPageViewHolder holder) {
-        holder.recycle();
     }
 
     /**

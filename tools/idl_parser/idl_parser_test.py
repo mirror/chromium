@@ -21,7 +21,7 @@ class WebIDLParser(unittest.TestCase):
     self.filenames = glob.glob('test_parser/*_web.idl')
 
   def _TestNode(self, node):
-    comments = node.GetListOf('SpecialComment')
+    comments = node.GetListOf('Comment')
     for comment in comments:
       check, value = ParseCommentTest(comment.GetName())
       if check == 'BUILD':
@@ -52,7 +52,7 @@ class WebIDLParser(unittest.TestCase):
       self.assertTrue(len(children) > 2, 'Expecting children in %s.' %
                       filename)
 
-      for node in filenode.GetChildren():
+      for node in filenode.GetChildren()[2:]:
         self._TestNode(node)
 
 

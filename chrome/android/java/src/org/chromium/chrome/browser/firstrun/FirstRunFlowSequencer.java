@@ -29,8 +29,7 @@ import org.chromium.chrome.browser.services.AndroidEduAndChildAccountHelper;
 import org.chromium.chrome.browser.signin.SigninManager;
 import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.util.IntentUtils;
-import org.chromium.chrome.browser.vr_shell.VrShellDelegate;
-import org.chromium.components.signin.AccountManagerFacade;
+import org.chromium.components.signin.AccountManagerHelper;
 import org.chromium.components.signin.ChromeSigninController;
 
 import java.lang.ref.WeakReference;
@@ -111,7 +110,7 @@ public abstract class FirstRunFlowSequencer  {
 
     @VisibleForTesting
     protected Account[] getGoogleAccounts() {
-        return AccountManagerFacade.get().tryGetGoogleAccounts();
+        return AccountManagerHelper.get().tryGetGoogleAccounts();
     }
 
     @VisibleForTesting
@@ -376,10 +375,17 @@ public abstract class FirstRunFlowSequencer  {
                 List<WeakReference<Activity>> activities = ApplicationStatus.getRunningActivities();
                 for (WeakReference<Activity> weakActivity : activities) {
                     Activity activity = weakActivity.get();
-                    if (activity instanceof FirstRunActivity
-                            && !(activity instanceof LightweightFirstRunActivity)) {
+                    if (activity == null) {
+                        continue;
+                    } else if (activity instanceof LightweightFirstRunActivity) {
+                        // A Generic or a new Lightweight First Run Experience will be launched
+                        // below, so finish the old Lightweight First Run Experience.
+                        activity.setResult(Activity.RESULT_CANCELED);
+                        activity.finish();
+                        continue;
+                    } else if (activity instanceof FirstRunActivity) {
                         isGenericFreActive = true;
-                        break;
+                        continue;
                     }
                 }
 
@@ -390,19 +396,12 @@ public abstract class FirstRunFlowSequencer  {
                 }
             }
 
-            boolean isVrIntent = VrShellDelegate.isVrIntent(intent);
-            if (isVrIntent) {
-                // Remove VR-specific extras from the intent to Chrome because we don't want the
-                // VR intent to auto-present after the FRE is complete.
-                VrShellDelegate.removeVrExtras(intent);
-            }
             // Add a PendingIntent so that the intent used to launch Chrome will be resent when
             // First Run is completed or canceled.
             addPendingIntent(caller, freIntent, intent, requiresBroadcast);
             freIntent.putExtra(FirstRunActivity.EXTRA_FINISH_ON_TOUCH_OUTSIDE, true);
 
             if (!(caller instanceof Activity)) freIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            if (isVrIntent) freIntent = VrShellDelegate.setupVrFreIntent(caller, freIntent);
             IntentUtils.safeStartActivity(caller, freIntent);
         } else {
             // First Run requires that the Intent contains NEW_TASK so that it doesn't sit on top

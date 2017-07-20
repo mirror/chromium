@@ -103,8 +103,7 @@ public class SuggestionsNavigationDelegateImpl implements SuggestionsNavigationD
                     || windowOpenDisposition == WindowOpenDisposition.NEW_WINDOW
                     || windowOpenDisposition == WindowOpenDisposition.NEW_BACKGROUND_TAB;
             DownloadUtils.openFile(article.getAssetDownloadFile(),
-                    article.getAssetDownloadMimeType(), article.getAssetDownloadGuid(), false, null,
-                    null);
+                    article.getAssetDownloadMimeType(), article.getAssetDownloadGuid(), false);
             return;
         }
 

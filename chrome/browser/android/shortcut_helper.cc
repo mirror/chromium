@@ -407,3 +407,7 @@ void OnWebApksRetrieved(JNIEnv* env,
   webapk_list_callback->Run(webapk_list);
   delete webapk_list_callback;
 }
+
+bool ShortcutHelper::RegisterShortcutHelper(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}

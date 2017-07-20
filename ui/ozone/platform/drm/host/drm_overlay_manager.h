@@ -17,7 +17,6 @@
 
 namespace ui {
 class DrmWindowHostManager;
-class OverlaySurfaceCandidate;
 
 class DrmOverlayManager : public OverlayManagerOzone {
  public:
@@ -49,8 +48,9 @@ class DrmOverlayManager : public OverlayManagerOzone {
   void SendOverlayValidationRequest(
       const std::vector<OverlayCheck_Params>& new_params,
       gfx::AcceleratedWidget widget) const;
-  bool CanHandleCandidate(const OverlaySurfaceCandidate& candidate,
-                          gfx::AcceleratedWidget widget) const;
+  bool CanHandleCandidate(
+      const OverlayCandidatesOzone::OverlaySurfaceCandidate& candidate,
+      gfx::AcceleratedWidget widget) const;
 
   GpuThreadAdapter* proxy_;               // Not owned.
   DrmWindowHostManager* window_manager_;  // Not owned.

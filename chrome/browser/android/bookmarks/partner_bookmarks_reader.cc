@@ -200,6 +200,11 @@ static void DisablePartnerBookmarksEditing(JNIEnv* env,
   PartnerBookmarksShim::DisablePartnerBookmarksEditing();
 }
 
+// static
+bool PartnerBookmarksReader::RegisterPartnerBookmarksReader(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
 // ----------------------------------------------------------------
 
 static jlong Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {

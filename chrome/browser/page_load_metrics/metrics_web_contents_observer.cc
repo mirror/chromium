@@ -65,14 +65,15 @@ UserInitiatedInfo CreateUserInitiatedInfo(
 
 MetricsWebContentsObserver::MetricsWebContentsObserver(
     content::WebContents* web_contents,
+    const base::Optional<content::WebContents::CreateParams>& create_params,
     std::unique_ptr<PageLoadMetricsEmbedderInterface> embedder_interface)
     : content::WebContentsObserver(web_contents),
-      in_foreground_(web_contents->IsVisible()),
+      in_foreground_(create_params ? !create_params->initially_hidden : false),
       embedder_interface_(std::move(embedder_interface)),
       has_navigated_(false),
       page_load_metrics_binding_(web_contents, this) {
-  // Prerenders erroneously report that they are initially visible, so we
-  // manually override visibility state for prerender.
+  // Prerender's CreateParams erroneously reports that it is not initially
+  // hidden, so we manually override visibility state for prerender.
   const bool is_prerender =
       prerender::PrerenderContents::FromWebContents(web_contents) != nullptr;
   if (is_prerender)
@@ -84,12 +85,13 @@ MetricsWebContentsObserver::MetricsWebContentsObserver(
 // static
 MetricsWebContentsObserver* MetricsWebContentsObserver::CreateForWebContents(
     content::WebContents* web_contents,
+    const base::Optional<content::WebContents::CreateParams>& create_params,
     std::unique_ptr<PageLoadMetricsEmbedderInterface> embedder_interface) {
   DCHECK(web_contents);
 
   MetricsWebContentsObserver* metrics = FromWebContents(web_contents);
   if (!metrics) {
-    metrics = new MetricsWebContentsObserver(web_contents,
+    metrics = new MetricsWebContentsObserver(web_contents, create_params,
                                              std::move(embedder_interface));
     web_contents->SetUserData(UserDataKey(), base::WrapUnique(metrics));
   }
@@ -663,12 +665,6 @@ MetricsWebContentsObserver::TestingObserver::~TestingObserver() {
 
 void MetricsWebContentsObserver::TestingObserver::OnGoingAway() {
   observer_ = nullptr;
-}
-
-void MetricsWebContentsObserver::BroadcastEventToObservers(
-    const void* const event_key) {
-  if (committed_load_)
-    committed_load_->BroadcastEventToObservers(event_key);
 }
 
 }  // namespace page_load_metrics

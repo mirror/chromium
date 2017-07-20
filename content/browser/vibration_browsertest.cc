@@ -38,10 +38,9 @@ class VibrationTest : public ContentBrowserTest,
                    base::Unretained(this)));
   }
 
-  void BindVibrationManager(
-      const std::string& interface_name,
-      mojo::ScopedMessagePipeHandle handle,
-      const service_manager::BindSourceInfo& source_info) {
+  void BindVibrationManager(const service_manager::BindSourceInfo& source_info,
+                            const std::string& interface_name,
+                            mojo::ScopedMessagePipeHandle handle) {
     binding_.Bind(device::mojom::VibrationManagerRequest(std::move(handle)));
   }
 

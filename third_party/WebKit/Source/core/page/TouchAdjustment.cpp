@@ -204,8 +204,6 @@ static inline void AppendContextSubtargetsForNode(
   } else {
     if (text_layout_object->GetSelectionState() == SelectionState::kNone)
       return AppendBasicSubtargetsForNode(node, subtargets);
-    const FrameSelection& frame_selection =
-        text_layout_object->GetFrame()->Selection();
     // If selected, make subtargets out of only the selected part of the text.
     int start_pos, end_pos;
     switch (text_layout_object->GetSelectionState()) {
@@ -214,16 +212,15 @@ static inline void AppendContextSubtargetsForNode(
         end_pos = text_layout_object->TextLength();
         break;
       case SelectionState::kStart:
-        start_pos = frame_selection.LayoutSelectionStart().value();
+        std::tie(start_pos, end_pos) = text_layout_object->SelectionStartEnd();
         end_pos = text_layout_object->TextLength();
         break;
       case SelectionState::kEnd:
+        std::tie(start_pos, end_pos) = text_layout_object->SelectionStartEnd();
         start_pos = 0;
-        end_pos = frame_selection.LayoutSelectionEnd().value();
         break;
       case SelectionState::kStartAndEnd:
-        start_pos = frame_selection.LayoutSelectionStart().value();
-        end_pos = frame_selection.LayoutSelectionEnd().value();
+        std::tie(start_pos, end_pos) = text_layout_object->SelectionStartEnd();
         break;
       default:
         NOTREACHED();

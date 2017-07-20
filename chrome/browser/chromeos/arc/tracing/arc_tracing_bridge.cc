@@ -6,10 +6,8 @@
 
 #include "base/bind.h"
 #include "base/logging.h"
-#include "base/memory/singleton.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/arc/arc_bridge_service.h"
-#include "components/arc/arc_browser_context_keyed_service_factory_base.h"
 #include "components/arc/arc_service_manager.h"
 #include "content/public/browser/browser_thread.h"
 #include "mojo/public/cpp/system/platform_handle.h"
@@ -23,25 +21,6 @@ namespace {
 // the prefix and the real categories.
 constexpr char kCategoryPrefix[] = TRACE_DISABLED_BY_DEFAULT("android ");
 
-// Singleton factory for ArcTracingBridge.
-class ArcTracingBridgeFactory
-    : public internal::ArcBrowserContextKeyedServiceFactoryBase<
-          ArcTracingBridge,
-          ArcTracingBridgeFactory> {
- public:
-  // Factory name used by ArcBrowserContextKeyedServiceFactoryBase.
-  static constexpr const char* kName = "ArcTracingBridgeFactory";
-
-  static ArcTracingBridgeFactory* GetInstance() {
-    return base::Singleton<ArcTracingBridgeFactory>::get();
-  }
-
- private:
-  friend base::DefaultSingletonTraits<ArcTracingBridgeFactory>;
-  ArcTracingBridgeFactory() = default;
-  ~ArcTracingBridgeFactory() override = default;
-};
-
 }  // namespace
 
 struct ArcTracingBridge::Category {
@@ -51,34 +30,21 @@ struct ArcTracingBridge::Category {
   std::string full_name;
 };
 
-// static
-ArcTracingBridge* ArcTracingBridge::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcTracingBridgeFactory::GetForBrowserContext(context);
-}
-
-ArcTracingBridge::ArcTracingBridge(content::BrowserContext* context,
-                                   ArcBridgeService* bridge_service)
-    : arc_bridge_service_(bridge_service), weak_ptr_factory_(this) {
-  arc_bridge_service_->tracing()->AddObserver(this);
+ArcTracingBridge::ArcTracingBridge(ArcBridgeService* bridge_service)
+    : ArcService(bridge_service), weak_ptr_factory_(this) {
+  arc_bridge_service()->tracing()->AddObserver(this);
   content::ArcTracingAgent::GetInstance()->SetDelegate(this);
 }
 
 ArcTracingBridge::~ArcTracingBridge() {
   content::ArcTracingAgent::GetInstance()->SetDelegate(nullptr);
-
-  // TODO(hidehiko): Currently, the lifetime of ArcBridgeService and
-  // BrowserContextKeyedService is not nested.
-  // If ArcServiceManager::Get() returns nullptr, it is already destructed,
-  // so do not touch it.
-  if (ArcServiceManager::Get())
-    arc_bridge_service_->tracing()->RemoveObserver(this);
+  arc_bridge_service()->tracing()->RemoveObserver(this);
 }
 
 void ArcTracingBridge::OnInstanceReady() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   mojom::TracingInstance* tracing_instance = ARC_GET_INSTANCE_FOR_METHOD(
-      arc_bridge_service_->tracing(), QueryAvailableCategories);
+      arc_bridge_service()->tracing(), QueryAvailableCategories);
   if (!tracing_instance)
     return;
   tracing_instance->QueryAvailableCategories(base::Bind(
@@ -107,8 +73,8 @@ void ArcTracingBridge::StartTracing(
     const StartTracingCallback& callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
-  mojom::TracingInstance* tracing_instance =
-      ARC_GET_INSTANCE_FOR_METHOD(arc_bridge_service_->tracing(), StartTracing);
+  mojom::TracingInstance* tracing_instance = ARC_GET_INSTANCE_FOR_METHOD(
+      arc_bridge_service()->tracing(), StartTracing);
   if (!tracing_instance) {
     // Use PostTask as the convention of TracingAgent. The caller expects
     // callback to be called after this function returns.
@@ -132,7 +98,7 @@ void ArcTracingBridge::StopTracing(const StopTracingCallback& callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   mojom::TracingInstance* tracing_instance =
-      ARC_GET_INSTANCE_FOR_METHOD(arc_bridge_service_->tracing(), StopTracing);
+      ARC_GET_INSTANCE_FOR_METHOD(arc_bridge_service()->tracing(), StopTracing);
   if (!tracing_instance) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE, base::BindOnce(callback, false));

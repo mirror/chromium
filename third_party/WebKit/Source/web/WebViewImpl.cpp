@@ -53,7 +53,6 @@
 #include "core/events/UIEventWithKeyState.h"
 #include "core/events/WebInputEventConversion.h"
 #include "core/events/WheelEvent.h"
-#include "core/exported/WebDevToolsAgentImpl.h"
 #include "core/exported/WebFactory.h"
 #include "core/exported/WebPluginContainerImpl.h"
 #include "core/exported/WebRemoteFrameImpl.h"
@@ -97,6 +96,7 @@
 #include "core/page/PageOverlay.h"
 #include "core/page/PagePopupClient.h"
 #include "core/page/PointerLockController.h"
+#include "core/page/ScopedPageSuspender.h"
 #include "core/page/TouchDisambiguation.h"
 #include "core/page/ValidationMessageClientImpl.h"
 #include "core/page/scrolling/TopDocumentRootScrollerController.h"
@@ -172,6 +172,7 @@
 #include "public/web/WebSelection.h"
 #include "public/web/WebViewClient.h"
 #include "public/web/WebWindowFeatures.h"
+#include "web/WebDevToolsAgentImpl.h"
 
 #if defined(WTF_USE_DEFAULT_RENDER_THEME)
 #include "core/layout/LayoutThemeDefault.h"
@@ -216,6 +217,15 @@ namespace blink {
 const double WebView::kTextSizeMultiplierRatio = 1.2;
 const double WebView::kMinTextSizeMultiplier = 0.5;
 const double WebView::kMaxTextSizeMultiplier = 3.0;
+
+// Used to defer all page activity in cases where the embedder wishes to run
+// a nested event loop. Using a stack enables nesting of message loop
+// invocations.
+static Vector<std::unique_ptr<ScopedPageSuspender>>& PageSuspenderStack() {
+  DEFINE_STATIC_LOCAL(Vector<std::unique_ptr<ScopedPageSuspender>>,
+                      suspender_stack, ());
+  return suspender_stack;
+}
 
 static bool g_should_use_external_popup_menus = false;
 
@@ -286,6 +296,15 @@ void WebView::ResetVisitedLinkState(bool invalidate_visited_link_hashes) {
   Page::AllVisitedStateChanged(invalidate_visited_link_hashes);
 }
 
+void WebView::WillEnterModalLoop() {
+  PageSuspenderStack().push_back(WTF::MakeUnique<ScopedPageSuspender>());
+}
+
+void WebView::DidExitModalLoop() {
+  DCHECK(PageSuspenderStack().size());
+  PageSuspenderStack().pop_back();
+}
+
 void WebViewImpl::SetCredentialManagerClient(
     WebCredentialManagerClient* web_credential_manager_client) {
   DCHECK(page_);
@@ -298,6 +317,12 @@ void WebViewImpl::SetPrerendererClient(
   DCHECK(page_);
   ProvidePrerendererClientTo(*page_,
                              new PrerendererClient(*page_, prerenderer_client));
+}
+
+// static
+HashSet<WebViewBase*>& WebViewBase::AllInstances() {
+  DEFINE_STATIC_LOCAL(HashSet<WebViewBase*>, all_instances, ());
+  return all_instances;
 }
 
 WebViewImpl::WebViewImpl(WebViewClient* client,
@@ -3286,7 +3311,7 @@ void WebViewImpl::ResetScrollAndScaleState() {
           ToLocalFrame(GetPage()->MainFrame())->GetDocument()) {
     if (DocumentLoader* loader = document->Loader()) {
       if (HistoryItem* item = loader->GetHistoryItem())
-        item->ClearViewState();
+        item->SetDidSaveScrollOrScaleState(false);
     }
   }
 

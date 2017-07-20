@@ -113,9 +113,7 @@ class PLATFORM_EXPORT MainThreadTaskQueue : public TaskQueue {
 
   bool CanBeSuspended() const { return can_be_suspended_; }
 
-  void OnTaskCompleted(const TaskQueue::Task& task,
-                       base::TimeTicks start,
-                       base::TimeTicks end);
+  void OnTaskCompleted(base::TimeTicks start, base::TimeTicks end);
 
   // Override base method to notify RendererScheduler about unregistered queue.
   void UnregisterTaskQueue() override;

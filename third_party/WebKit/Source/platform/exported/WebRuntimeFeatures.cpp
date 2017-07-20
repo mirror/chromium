@@ -64,10 +64,6 @@ void WebRuntimeFeatures::EnableTestOnlyFeatures(bool enable) {
   RuntimeEnabledFeatures::SetTestFeaturesEnabled(enable);
 }
 
-void WebRuntimeFeatures::EnableOriginTrialControlledFeatures(bool enable) {
-  RuntimeEnabledFeatures::SetOriginTrialControlledFeaturesEnabled(enable);
-}
-
 void WebRuntimeFeatures::EnableAccelerated2dCanvas(bool enable) {
   RuntimeEnabledFeatures::SetAccelerated2dCanvasEnabled(enable);
 }
@@ -200,8 +196,8 @@ void WebRuntimeFeatures::EnableNavigatorContentUtils(bool enable) {
   RuntimeEnabledFeatures::SetNavigatorContentUtilsEnabled(enable);
 }
 
-void WebRuntimeFeatures::EnableNetInfoDownlinkMax(bool enable) {
-  RuntimeEnabledFeatures::SetNetInfoDownlinkMaxEnabled(enable);
+void WebRuntimeFeatures::EnableNetworkInformation(bool enable) {
+  RuntimeEnabledFeatures::SetNetworkInformationEnabled(enable);
 }
 
 void WebRuntimeFeatures::EnableOffMainThreadFetch(bool enable) {
@@ -432,10 +428,6 @@ void WebRuntimeFeatures::EnableWebAuth(bool enable) {
 
 void WebRuntimeFeatures::EnableClientPlaceholdersForServerLoFi(bool enable) {
   RuntimeEnabledFeatures::SetClientPlaceholdersForServerLoFiEnabled(enable);
-}
-
-void WebRuntimeFeatures::EnableLazyInitializeMediaControls(bool enable) {
-  RuntimeEnabledFeatures::SetLazyInitializeMediaControlsEnabled(enable);
 }
 
 }  // namespace blink

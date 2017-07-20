@@ -10,7 +10,6 @@
 #include "ash/shell.h"
 #include "base/bind.h"
 #include "base/logging.h"
-#include "base/memory/singleton.h"
 #include "base/strings/string16.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/chromeos/arc/arc_session_manager.h"
@@ -22,9 +21,7 @@
 #include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
-#include "chromeos/chromeos_switches.h"
 #include "components/arc/arc_bridge_service.h"
-#include "components/arc/arc_browser_context_keyed_service_factory_base.h"
 #include "components/arc/arc_service_manager.h"
 #include "components/arc/instance_holder.h"
 #include "content/public/browser/browser_thread.h"
@@ -83,69 +80,23 @@ void RequestVoiceInteractionStructureCallback(
   callback.Run(std::move(root));
 }
 
-// Singleton factory for ArcVoiceInteractionArcHomeService.
-class ArcVoiceInteractionArcHomeServiceFactory
-    : public internal::ArcBrowserContextKeyedServiceFactoryBase<
-          ArcVoiceInteractionArcHomeService,
-          ArcVoiceInteractionArcHomeServiceFactory> {
- public:
-  // Factory name used by ArcBrowserContextKeyedServiceFactoryBase.
-  static constexpr const char* kName =
-      "ArcVoiceInteractionArcHomeServiceFactory";
-
-  static ArcVoiceInteractionArcHomeServiceFactory* GetInstance() {
-    return base::Singleton<ArcVoiceInteractionArcHomeServiceFactory>::get();
-  }
-
- private:
-  friend base::DefaultSingletonTraits<ArcVoiceInteractionArcHomeServiceFactory>;
-
-  ArcVoiceInteractionArcHomeServiceFactory() {
-    DependsOn(ArcVoiceInteractionFrameworkService::GetFactory());
-  }
-  ~ArcVoiceInteractionArcHomeServiceFactory() override = default;
-
-  // BrowserContextKeyedServiceFactory override:
-  KeyedService* BuildServiceInstanceFor(
-      content::BrowserContext* context) const override {
-    if (!chromeos::switches::IsVoiceInteractionEnabled())
-      return nullptr;
-    return ArcBrowserContextKeyedServiceFactoryBase::BuildServiceInstanceFor(
-        context);
-  }
-};
-
 }  // namespace
 
-// static
-ArcVoiceInteractionArcHomeService*
-ArcVoiceInteractionArcHomeService::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcVoiceInteractionArcHomeServiceFactory::GetForBrowserContext(
-      context);
-}
-
 ArcVoiceInteractionArcHomeService::ArcVoiceInteractionArcHomeService(
-    content::BrowserContext* context,
     ArcBridgeService* bridge_service)
-    : context_(context), arc_bridge_service_(bridge_service), binding_(this) {
-  arc_bridge_service_->voice_interaction_arc_home()->AddObserver(this);
+    : ArcService(bridge_service), binding_(this) {
+  arc_bridge_service()->voice_interaction_arc_home()->AddObserver(this);
 }
 
 ArcVoiceInteractionArcHomeService::~ArcVoiceInteractionArcHomeService() {
-  // TODO(hidehiko): Currently, the lifetime of ArcBridgeService and
-  // BrowserContextKeyedService is not nested.
-  // If ArcServiceManager::Get() returns nullptr, it is already destructed,
-  // so do not touch it.
-  if (ArcServiceManager::Get())
-    arc_bridge_service_->voice_interaction_arc_home()->RemoveObserver(this);
+  arc_bridge_service()->voice_interaction_arc_home()->RemoveObserver(this);
 }
 
 void ArcVoiceInteractionArcHomeService::OnInstanceReady() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   mojom::VoiceInteractionArcHomeInstance* home_instance =
       ARC_GET_INSTANCE_FOR_METHOD(
-          arc_bridge_service_->voice_interaction_arc_home(), Init);
+          arc_bridge_service()->voice_interaction_arc_home(), Init);
   DCHECK(home_instance);
   mojom::VoiceInteractionArcHomeHostPtr host_proxy;
   binding_.Bind(mojo::MakeRequest(&host_proxy));
@@ -157,7 +108,8 @@ void ArcVoiceInteractionArcHomeService::GetVoiceInteractionStructure(
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   auto* framework_service =
-      ArcVoiceInteractionFrameworkService::GetForBrowserContext(context_);
+      ArcServiceManager::Get()
+          ->GetService<ArcVoiceInteractionFrameworkService>();
   if (!framework_service->ValidateTimeSinceUserInteraction()) {
     callback.Run(mojom::VoiceInteractionStructure::New());
     return;
@@ -191,8 +143,6 @@ void ArcVoiceInteractionArcHomeService::OnVoiceInteractionOobeSetupComplete() {
   if (pai_starter)
     pai_starter->ReleaseLock();
   chromeos::first_run::MaybeLaunchDialogImmediately();
-  arc::ArcVoiceInteractionFrameworkService::GetForBrowserContext(context_)
-      ->UpdateVoiceInteractionPrefs();
 }
 
 // static

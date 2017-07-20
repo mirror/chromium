@@ -62,8 +62,7 @@ class CORE_EXPORT RootFrameViewport final
                             const ScrollAlignment& align_x,
                             const ScrollAlignment& align_y,
                             bool is_smooth,
-                            ScrollType = kProgrammaticScroll,
-                            bool is_for_scroll_sequence = false) override;
+                            ScrollType = kProgrammaticScroll) override;
   IntRect VisibleContentRect(
       IncludeScrollbarsInRect = kExcludeScrollbars) const override;
   bool ShouldUseIntegerScrollOffset() const override;
