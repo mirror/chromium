@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "27917d27_250166a0",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-07-20T12:33:51Z",
+      "side": 1,
+      "message": "I really need to find some tooling support for this :) Will do this in the CL where I switch UserCloudPolicyStoreChromeOS to use this.",
+      "parentUuid": "38c0e156_a6ac1a13",
+      "revId": "8b4e922ac528e988f66bee04d67ece750a872d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7a494e2_eded8d18",
         "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.cc",
         "patchSetId": 20
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-20T12:19:55Z",
       "side": 1,
       "message": "Why does EnsurePolicyKeyLoaded() unconditionally retrieve the sanitized user name when you can do it only if required here?",
+      "revId": "8b4e922ac528e988f66bee04d67ece750a872d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5451a6e2_4a434091",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-07-20T12:33:51Z",
+      "side": 1,
+      "message": "The usual usage of this class, from UserCloudPolicyStoreChromeOS will be:\n- One initial load using EnsurePolicyKeyLoaded or LoadPolicyKeyImmediately.\n- Then, after each cloud policy store operation, a ReloadPolicyKey call,\n\nSo I didn\u0027t want to do this unconditionally here, because this is supposed to be a used many times. But we must do it here at least conditionally, in case someone calls ReloadPolicyKey immediately after EnsurePolicyKeyLoaded (when OnGetSanitizedUsername was not called yet).\n\nOn the other hand, I didn\u0027t want to introduce the condition in EnsurePolicyKeyLoaded which would only help when EnsurePolicyKeyLoaded is called while a load is in progress, which sounds like a very rare edge case.\n\nSo: Doing it conditionally is an optimization and I think it only makes sense on Reload, when we expect cached_policy_key_path_ to be filled in the usual case.",
+      "parentUuid": "d7a494e2_eded8d18",
       "revId": "8b4e922ac528e988f66bee04d67ece750a872d5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
