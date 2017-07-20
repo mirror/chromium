@@ -309,6 +309,8 @@ TestSiteSettingsPrefsBrowserProxy.prototype = {
         contentType = 'camera';
       } else if (contentType == settings.ContentSettingsTypes.MIC) {
         contentType = 'mic';
+      } else if (contentType == settings.ContentSettingsTypes.MIDI_DEVICES) {
+        contentType = 'midiDevices';
       } else if (contentType == settings.ContentSettingsTypes.BACKGROUND_SYNC) {
         contentType = 'background_sync';
       } else if (
