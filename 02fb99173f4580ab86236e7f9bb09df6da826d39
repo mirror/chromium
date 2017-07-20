@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42a1c1ab_6ae93aef",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-20T14:32:00Z",
+      "side": 1,
+      "message": "I could also add a check for whether we are currently in a low-memory situation (regardless of device), but I would have to make the corresponding method in SysUtils public, which currently is only used from native. Thoughts?",
+      "revId": "02fb99173f4580ab86236e7f9bb09df6da826d39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
