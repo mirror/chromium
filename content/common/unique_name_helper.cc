@@ -7,8 +7,10 @@
 #include <algorithm>
 
 #include "base/logging.h"
+#include "base/macros.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
+#include "crypto/sha2.h"
 
 namespace content {
 
@@ -18,7 +20,8 @@ using FrameAdapter = UniqueNameHelper::FrameAdapter;
 
 class PendingChildFrameAdapter : public UniqueNameHelper::FrameAdapter {
  public:
-  explicit PendingChildFrameAdapter(FrameAdapter* parent) : parent_(parent) {}
+  explicit PendingChildFrameAdapter(const FrameAdapter* parent)
+      : parent_(parent) {}
 
   // FrameAdapter overrides:
   bool IsMainFrame() const override { return false; }
@@ -47,7 +50,7 @@ class PendingChildFrameAdapter : public UniqueNameHelper::FrameAdapter {
   }
 
  private:
-  FrameAdapter* const parent_;
+  const FrameAdapter* const parent_;
 };
 
 constexpr char kFramePathPrefix[] = "<!--framePath /";
@@ -59,6 +62,12 @@ bool IsNameWithFramePath(base::StringPiece name) {
          (kFramePathPrefixLength + kFramePathSuffixLength) < name.size();
 }
 
+base::StringPiece UnwrapNameWithFramePath(base::StringPiece name) {
+  return name.substr(
+      kFramePathPrefixLength,
+      name.size() - kFramePathPrefixLength - kFramePathSuffixLength);
+}
+
 std::string GenerateCandidate(const FrameAdapter* frame) {
   std::string new_name(kFramePathPrefix);
   std::vector<base::StringPiece> ancestor_names = frame->CollectAncestorNames(
@@ -67,12 +76,8 @@ std::string GenerateCandidate(const FrameAdapter* frame) {
   // Note: This checks ancestor_names[0] twice, but it's nicer to do the name
   // extraction here rather than passing another function pointer to
   // CollectAncestorNames().
-  if (!ancestor_names.empty() && IsNameWithFramePath(ancestor_names[0])) {
-    ancestor_names[0] = ancestor_names[0].substr(kFramePathPrefixLength,
-                                                 ancestor_names[0].size() -
-                                                     kFramePathPrefixLength -
-                                                     kFramePathSuffixLength);
-  }
+  if (!ancestor_names.empty() && IsNameWithFramePath(ancestor_names[0]))
+    ancestor_names[0] = UnwrapNameWithFramePath(ancestor_names[0]);
   new_name += base::JoinString(ancestor_names, "/");
 
   new_name += "/<!--frame";
@@ -130,8 +135,8 @@ std::string AppendUniqueSuffix(const FrameAdapter* frame,
   return candidate;
 }
 
-std::string CalculateNewName(const FrameAdapter* frame,
-                             const std::string& name) {
+std::string CalculateLegacyName(const FrameAdapter* frame,
+                                const std::string& name) {
   if (!name.empty() && frame->IsCandidateUnique(name) && name != "_blank")
     return name;
 
@@ -143,11 +148,44 @@ std::string CalculateNewName(const FrameAdapter* frame,
   return AppendUniqueSuffix(frame, candidate, likely_unique_suffix);
 }
 
+std::string CalculateHashedName(const std::string& name) {
+  uint8_t result[crypto::kSHA256Length];
+  crypto::SHA256HashString(name, result, arraysize(result));
+  std::string hashed_candidate;
+  hashed_candidate.reserve(
+      // '<!--framePath /'
+      kFramePathPrefixLength +
+      // '/ <!--frameHash '
+      16 +
+      // each byte takes two characters in hexadecimal
+      arraysize(result) * 2 +
+      // '-->'
+      3 +
+      // '-->'
+      kFramePathSuffixLength);
+  hashed_candidate += kFramePathPrefix;
+  hashed_candidate += "/<!--frameHash ";
+  hashed_candidate += base::HexEncode(result, arraysize(result));
+  hashed_candidate += "-->-->";
+  return hashed_candidate;
+}
+
+std::string CalculateNewName(const FrameAdapter* frame,
+                             const std::string& name) {
+  std::string candidate = CalculateLegacyName(frame, name);
+  if (candidate.size() < UniqueNameHelper::kMaxSize)
+    return candidate;
+  do
+    candidate = CalculateHashedName(candidate);
+  while (!frame->IsCandidateUnique(candidate));
+  return candidate;
+}
+
 }  // namespace
 
 UniqueNameHelper::FrameAdapter::~FrameAdapter() {}
 
-UniqueNameHelper::UniqueNameHelper(FrameAdapter* frame) : frame_(frame) {}
+UniqueNameHelper::UniqueNameHelper(const FrameAdapter* frame) : frame_(frame) {}
 
 UniqueNameHelper::~UniqueNameHelper() {}
 
@@ -165,6 +203,83 @@ void UniqueNameHelper::UpdateName(const std::string& name) {
   // calculation checks for collisions with existing unique names.
   unique_name_.clear();
   unique_name_ = CalculateNewName(frame_, name);
+}
+
+bool UniqueNameHelper::AdjustLegacyNameForMaxSize(
+    std::string legacy_name,
+    const Replacement* last_replacement,
+    std::string* new_name,
+    base::Optional<Replacement>* new_replacement) {
+  // Simplest case: nothing required since the legacy name is under the max
+  // size limit.
+  if (legacy_name.size() < kMaxSize)
+    return false;
+
+  // If there's a replacement that matches, apply it.
+  if (IsNameWithFramePath(legacy_name) && last_replacement) {
+    size_t replaced_index = legacy_name.find(last_replacement->original_path);
+    if (replaced_index != std::string::npos) {
+      std::string name_with_replacement;
+      name_with_replacement.reserve(
+          // Length from the replacement index to the end
+          legacy_name.size() - replaced_index -
+          // Adjusted by the difference in the size of the replacement
+          (last_replacement->original_path.size() -
+           last_replacement->hashed_path.size()) +
+          // Plus space for the frame path prefix.
+          kFramePathPrefixLength);
+      name_with_replacement += kFramePathPrefix;
+      name_with_replacement += last_replacement->hashed_path;
+      name_with_replacement += legacy_name.substr(
+          replaced_index + last_replacement->original_path.size());
+      // If the name with the replacement is under the max size limit, use it as
+      // the updated name. Note that no new replacement needs to be generated in
+      // this case, as there the unique name generated for this frame did not
+      // need to be hashed to bring it under the size limit.
+      if (name_with_replacement.size() < kMaxSize) {
+        *new_name = std::move(name_with_replacement);
+        return true;
+      }
+      // If it's still over the max size limit, use the name with the
+      // replacement as the basis for calculating the hashed name.
+      legacy_name = std::move(name_with_replacement);
+    }
+  }
+
+  // While normal unique name calculation will re-hash in case there's a
+  // collision, this doesn't bother: if ExplodedFrameState isn't deserialized in
+  // the same order as the frames originally loaded, it's not going to match
+  // anyway.
+  *new_name = CalculateHashedName(legacy_name);
+  // Since this hashed a portion of the frame path, generate a new Replacement
+  // object for adjusting descendant's unique names.
+  new_replacement->emplace();
+  if (IsNameWithFramePath(legacy_name)) {
+    (*new_replacement)->original_path =
+        UnwrapNameWithFramePath(legacy_name).as_string();
+  } else {
+    // If the legacy name was simply an extremely long unique name, it will
+    // become the root of the frame path for any descendant frames. Prepend '/'
+    // to match the convention used by frame path.
+    (*new_replacement)->original_path = '/';
+    (*new_replacement)->original_path += legacy_name;
+  }
+  // Unconditionally include a trailing slash as part of the replacement string.
+  // The returned replacement will only be used for adjusting unique names of
+  // descendants: any descendant that includes the frame path will necessarily
+  // include '/' as a delimiter after the portion of the frame path that has
+  // already been seen.
+  (*new_replacement)->original_path += '/';
+  (*new_replacement)->hashed_path =
+      UnwrapNameWithFramePath(*new_name).as_string();
+  (*new_replacement)->hashed_path += '/';
+  return true;
+}
+
+std::string UniqueNameHelper::CalculateLegacyNameForTest(
+    const FrameAdapter* adapter,
+    const std::string& name) {
+  return CalculateLegacyName(adapter, name);
 }
 
 }  // namespace content
