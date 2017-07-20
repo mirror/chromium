@@ -22,6 +22,26 @@
 
 #include "url/gurl.h"
 
+namespace {
+
+#include <dns_sd.h>
+dispatch_semaphore_t _semaphore;
+
+void DNSSD_API
+DNSServiceGetAddrInfoReplyCallback(DNSServiceRef sdRef,
+                                   DNSServiceFlags flags,
+                                   uint32_t interfaceIndex,
+                                   DNSServiceErrorType errorCode,
+                                   const char* hostname,
+                                   const struct sockaddr* address,
+                                   uint32_t ttl,
+                                   void* context) {
+  LOG(INFO) << "***** " << hostname << " Status: " << errorCode;
+
+  dispatch_semaphore_signal(_semaphore);
+}
+}
+
 namespace cronet {
 const char kUserAgent[] = "CronetTest/1.0.0.0";
 
@@ -86,6 +106,116 @@ TEST_F(HttpTest, CreateSslKeyLogFile) {
   [Cronet setExperimentalOptions:@""];
 
   EXPECT_TRUE(ssl_file_created);
+}
+
+#include <netdb.h>
+#include <sys/socket.h>
+#include <sys/types.h>
+TEST_F(HttpTest, GetAddrInfoGoogleVideo) {
+  for (int i = 0; i < 25; ++i) {
+    std::string host([[NSString
+        stringWithFormat:@"a%i.googlevideo.com", arc4random()] UTF8String]);
+    struct addrinfo* ai = NULL;
+    struct addrinfo hints = {0};
+    hints.ai_family = AF_UNSPEC;
+    hints.ai_flags = AI_ADDRCONFIG;
+    hints.ai_socktype = SOCK_STREAM;
+
+    NSDate* start = [NSDate date];
+    int err = getaddrinfo(host.c_str(), NULL, &hints, &ai);
+    NSTimeInterval elapsed = -[start timeIntervalSinceNow];
+    LOG(INFO) << "***** " << host << " DNS Elapsed: " << elapsed * 1000
+              << " Status: " << err;
+  }
+}
+
+TEST_F(HttpTest, NSURLSessionGoogleVideo) {
+  int iterations = 250;
+  NSTimeInterval elapsed_avg = 0;
+  NSTimeInterval elapsed_max = 0;
+  for (int i = 0; i < iterations; ++i) {
+    std::string host([[NSString stringWithFormat:@"https://c%i.googlevideo.com",
+                                                 arc4random()] UTF8String]);
+    NSURL* url = net::NSURLWithGURL(GURL(host));
+
+    [delegate_ reset];
+    __block BOOL block_used = NO;
+    NSURLSessionDataTask* task = [session_ dataTaskWithURL:url];
+    [Cronet setRequestFilterBlock:^(NSURLRequest* request) {
+      block_used = YES;
+      EXPECT_EQ([request URL], url);
+      return YES;
+    }];
+    NSDate* start = [NSDate date];
+    StartDataTaskAndWaitForCompletion(task);
+    NSTimeInterval elapsed = -[start timeIntervalSinceNow];
+    elapsed_avg += elapsed;
+    if (elapsed > elapsed_max)
+      elapsed_max = elapsed;
+    EXPECT_TRUE(block_used);
+    EXPECT_NE(nil, [delegate_ error]);
+  }
+  LOG(INFO) << "Elapsed Average:" << elapsed_avg * 1000 / iterations
+            << "ms Max:" << elapsed_max * 1000 << "ms";
+}
+
+TEST_F(HttpTest, NSURLSessionGoogleVideoPlatform) {
+  int iterations = 250;
+  NSTimeInterval elapsed_avg = 0;
+  NSTimeInterval elapsed_max = 0;
+  for (int i = 0; i < iterations; ++i) {
+    std::string host([[NSString stringWithFormat:@"https://c%i.googlevideo.com",
+                                                 arc4random()] UTF8String]);
+    NSURL* url = net::NSURLWithGURL(GURL(host));
+
+    [delegate_ reset];
+    __block BOOL block_used = NO;
+    NSURLSessionDataTask* task = [session_ dataTaskWithURL:url];
+    [Cronet setRequestFilterBlock:^(NSURLRequest* request) {
+      block_used = YES;
+      EXPECT_EQ([request URL], url);
+      return NO;
+    }];
+    NSDate* start = [NSDate date];
+    StartDataTaskAndWaitForCompletion(task);
+    NSTimeInterval elapsed = -[start timeIntervalSinceNow];
+    elapsed_avg += elapsed;
+    if (elapsed > elapsed_max)
+      elapsed_max = elapsed;
+    EXPECT_TRUE(block_used);
+    EXPECT_NE(nil, [delegate_ error]);
+  }
+  LOG(INFO) << "Elapsed Average:" << elapsed_avg * 1000 / iterations
+            << "ms Max:" << elapsed_max * 1000 << "ms";
+}
+
+TEST_F(HttpTest, DISABLED_DNSServiceGetAddrInfoGoogleVideo) {
+  _semaphore = dispatch_semaphore_create(0);
+  for (int i = 0; i < 25; ++i) {
+    std::string host(
+        [[NSString stringWithFormat:@"b%i.googlevideo.com", 1] UTF8String]);
+
+    NSDate* start = [NSDate date];
+
+    DNSServiceRef sdRef = nullptr;
+    DNSServiceFlags flags = kDNSServiceFlagsAllowRemoteQuery |
+                            kDNSServiceFlagsTimeout |
+                            kDNSServiceFlagsDenyExpensive;
+
+    DNSServiceErrorType error = DNSServiceGetAddrInfo(
+        &sdRef, flags, 0, kDNSServiceProtocol_IPv6 | kDNSServiceProtocol_IPv4,
+        // | kDNSServiceProtocol_UDP | kDNSServiceProtocol_TCP,
+        host.c_str(), DNSServiceGetAddrInfoReplyCallback, nullptr);
+    if (error == kDNSServiceErr_NoError) {
+      int64_t deadline_ns = 3 * NSEC_PER_SEC;
+      dispatch_semaphore_wait(_semaphore,
+                              dispatch_time(DISPATCH_TIME_NOW, deadline_ns));
+    }
+
+    NSTimeInterval elapsed = -[start timeIntervalSinceNow];
+    LOG(INFO) << "***** " << host << " DNSService Elapsed: " << elapsed * 1000
+              << " Status: " << error;
+  }
 }
 
 TEST_F(HttpTest, NSURLSessionReceivesData) {
