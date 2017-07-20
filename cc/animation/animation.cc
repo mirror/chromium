@@ -211,7 +211,7 @@ base::TimeDelta Animation::TrimTimeToCurrentIteration(
       fmod(iterations_ + iteration_start_, 1) == 0)
     iteration_time = curve_->Duration();
   else
-    iteration_time = TimeUtil::Mod(scaled_active_time, curve_->Duration());
+    iteration_time = scaled_active_time % curve_->Duration();
 
   // Calculate the current iteration
   int iteration;

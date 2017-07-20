@@ -9,9 +9,7 @@ namespace cc {
 BeginFrameTracker::BeginFrameTracker(const tracked_objects::Location& location)
     : location_(location),
       location_string_(location.ToString()),
-      current_updated_at_(),
-      current_args_(),
-      current_finished_at_(base::TimeTicks::FromInternalValue(-1)) {}
+      current_args_() {}
 
 BeginFrameTracker::~BeginFrameTracker() {
 }
@@ -20,23 +18,25 @@ void BeginFrameTracker::Start(BeginFrameArgs new_args) {
   // Trace the frame time being passed between BeginFrameTrackers.
   TRACE_EVENT_FLOW_STEP0(
       TRACE_DISABLED_BY_DEFAULT("cc.debug.scheduler.frames"), "BeginFrameArgs",
-      new_args.frame_time.ToInternalValue(), location_string_);
+      (new_args.frame_time - base::TimeTicks()).InMicroseconds(),
+      location_string_);
 
   // Trace this specific begin frame tracker Start/Finish times.
   TRACE_EVENT_COPY_ASYNC_BEGIN2(
       TRACE_DISABLED_BY_DEFAULT("cc.debug.scheduler.frames"),
-      location_string_.c_str(), new_args.frame_time.ToInternalValue(),
-      "new args", new_args.AsValue(), "current args", current_args_.AsValue());
+      location_string_.c_str(),
+      (new_args.frame_time - base::TimeTicks()).InMicroseconds(), "new args",
+      new_args.AsValue(), "current args", current_args_.AsValue());
 
   // Check the new BeginFrameArgs are valid and monotonically increasing.
   DCHECK(new_args.IsValid());
   DCHECK_LE(current_args_.frame_time, new_args.frame_time);
 
-  DCHECK(HasFinished())
+  DCHECK(!current_updated_at_ || HasFinished())
       << "Tried to start a new frame before finishing an existing frame.";
   current_updated_at_ = base::TimeTicks::Now();
   current_args_ = new_args;
-  current_finished_at_ = base::TimeTicks();
+  current_finished_at_ = base::nullopt;
 
   // TODO(mithro): Add UMA tracking of delta between current_updated_at_ time
   // and the new_args.frame_time argument. This will give us how long after a
@@ -56,7 +56,8 @@ void BeginFrameTracker::Finish() {
   current_finished_at_ = base::TimeTicks::Now();
   TRACE_EVENT_COPY_ASYNC_END0(
       TRACE_DISABLED_BY_DEFAULT("cc.debug.scheduler.frames"),
-      location_string_.c_str(), current_args_.frame_time.ToInternalValue());
+      location_string_.c_str(),
+      (current_args_.frame_time - base::TimeTicks()).InMicroseconds());
 }
 
 const BeginFrameArgs& BeginFrameTracker::Last() const {
@@ -80,12 +81,15 @@ base::TimeDelta BeginFrameTracker::Interval() const {
 void BeginFrameTracker::AsValueInto(
     base::TimeTicks now,
     base::trace_event::TracedValue* state) const {
-  state->SetDouble("updated_at_ms",
-                   (current_updated_at_ - base::TimeTicks()).InMillisecondsF());
-  state->SetDouble(
-      "finished_at_ms",
-      (current_finished_at_ - base::TimeTicks()).InMillisecondsF());
+  if (current_updated_at_) {
+    state->SetDouble(
+        "updated_at_ms",
+        (*current_updated_at_ - base::TimeTicks()).InMillisecondsF());
+  }
   if (HasFinished()) {
+    state->SetDouble(
+        "finished_at_ms",
+        (*current_finished_at_ - base::TimeTicks()).InMillisecondsF());
     state->SetString("state", "FINISHED");
     state->BeginDictionary("current_args_");
   } else {

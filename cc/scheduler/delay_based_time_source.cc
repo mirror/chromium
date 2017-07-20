@@ -166,10 +166,13 @@ std::string DelayBasedTimeSource::TypeString() const {
 void DelayBasedTimeSource::AsValueInto(
     base::trace_event::TracedValue* state) const {
   state->SetString("type", TypeString());
-  state->SetDouble("last_tick_time_us", LastTickTime().ToInternalValue());
-  state->SetDouble("next_tick_time_us", NextTickTime().ToInternalValue());
+  state->SetDouble("last_tick_time_us",
+                   (LastTickTime() - base::TimeTicks()).InMicroseconds());
+  state->SetDouble("next_tick_time_us",
+                   (NextTickTime() - base::TimeTicks()).InMicroseconds());
   state->SetDouble("interval_us", interval_.InMicroseconds());
-  state->SetDouble("timebase_us", timebase_.ToInternalValue());
+  state->SetDouble("timebase_us",
+                   (timebase_ - base::TimeTicks()).InMicroseconds());
   state->SetBoolean("active", active_);
 }
 
