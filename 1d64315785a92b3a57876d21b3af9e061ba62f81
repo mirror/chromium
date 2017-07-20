@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e1f93648_53b38957",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1229024
+      },
+      "writtenOn": "2017-07-20T02:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39b8cb14_3cba75cb",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 7
+      },
+      "revId": "1d64315785a92b3a57876d21b3af9e061ba62f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62f9d6c1_1f64f4d9",
         "filename": "components/cast_certificate/cast_cert_validator.cc",
         "patchSetId": 2
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "2838a1b5_3d2effce",
+        "filename": "components/cast_certificate/cast_cert_validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1229024
+      },
+      "writtenOn": "2017-07-20T02:51:43Z",
+      "side": 1,
+      "message": "Sounds good. Updated as per your suggestion.",
+      "parentUuid": "62f9d6c1_1f64f4d9",
+      "revId": "1d64315785a92b3a57876d21b3af9e061ba62f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a6c54f8_8c9a19ac",
         "filename": "components/cast_certificate/cast_cert_validator_unittest.cc",
         "patchSetId": 2
@@ -53,6 +95,30 @@
       "writtenOn": "2017-07-20T00:59:23Z",
       "side": 1,
       "message": "Can you update this comment?",
+      "range": {
+        "startLine": 43,
+        "startChar": 37,
+        "endLine": 43,
+        "endChar": 52
+      },
+      "revId": "1d64315785a92b3a57876d21b3af9e061ba62f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d80bfc0c_3cc10578",
+        "filename": "components/cast_certificate/cast_cert_validator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1229024
+      },
+      "writtenOn": "2017-07-20T02:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a6c54f8_8c9a19ac",
       "range": {
         "startLine": 43,
         "startChar": 37,
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "0d24b098_72992cbb",
+        "filename": "components/cast_certificate/cast_cert_validator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1229024
+      },
+      "writtenOn": "2017-07-20T02:51:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26f811b6_6fa40046",
+      "range": {
+        "startLine": 104,
+        "startChar": 16,
+        "endLine": 104,
+        "endChar": 22
+      },
+      "revId": "1d64315785a92b3a57876d21b3af9e061ba62f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a67397e2_1237d799",
         "filename": "components/cast_channel/cast_auth_util.cc",
         "patchSetId": 2
@@ -99,6 +189,24 @@
       "writtenOn": "2017-07-20T00:59:23Z",
       "side": 1,
       "message": "Not sure what \"above\" is referring to.",
+      "revId": "1d64315785a92b3a57876d21b3af9e061ba62f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "853e33c3_a4919aad",
+        "filename": "components/cast_channel/cast_auth_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1229024
+      },
+      "writtenOn": "2017-07-20T02:51:43Z",
+      "side": 1,
+      "message": "Done. Reworded.",
+      "parentUuid": "a67397e2_1237d799",
       "revId": "1d64315785a92b3a57876d21b3af9e061ba62f81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
