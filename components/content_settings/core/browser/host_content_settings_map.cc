@@ -28,6 +28,7 @@
 #include "components/content_settings/core/browser/content_settings_registry.h"
 #include "components/content_settings/core/browser/content_settings_rule.h"
 #include "components/content_settings/core/browser/content_settings_utils.h"
+#include "components/content_settings/core/browser/user_modifiable_provider.h"
 #include "components/content_settings/core/browser/website_settings_registry.h"
 #include "components/content_settings/core/common/content_settings_pattern.h"
 #include "components/content_settings/core/common/content_settings_utils.h"
@@ -202,6 +203,7 @@ HostContentSettingsMap::HostContentSettingsMap(PrefService* prefs,
   pref_provider_ = new content_settings::PrefProvider(prefs_, is_incognito_,
                                                       store_last_modified_);
   content_settings_providers_[PREF_PROVIDER] = base::WrapUnique(pref_provider_);
+  user_modifiable_providers_.push_back(pref_provider_);
   pref_provider_->AddObserver(this);
 
   // This ensures that content settings are cleared for the guest profile. This
@@ -233,6 +235,13 @@ void HostContentSettingsMap::RegisterProfilePrefs(
   content_settings::DefaultProvider::RegisterProfilePrefs(registry);
   content_settings::PrefProvider::RegisterProfilePrefs(registry);
   content_settings::PolicyProvider::RegisterProfilePrefs(registry);
+}
+
+void HostContentSettingsMap::RegisterUserModifiableProvider(
+    ProviderType type,
+    std::unique_ptr<content_settings::UserModifiableProvider> provider) {
+  user_modifiable_providers_.push_back(provider.get());
+  RegisterProvider(type, std::move(provider));
 }
 
 void HostContentSettingsMap::RegisterProvider(
@@ -669,8 +678,13 @@ base::Time HostContentSettingsMap::GetSettingLastModifiedDate(
     const ContentSettingsPattern& primary_pattern,
     const ContentSettingsPattern& secondary_pattern,
     ContentSettingsType content_type) const {
-  return pref_provider_->GetWebsiteSettingLastModified(
-      primary_pattern, secondary_pattern, content_type, std::string());
+  base::Time most_recent_time = base::Time::Min();
+  for (auto* provider : user_modifiable_providers_) {
+    base::Time time = provider->GetWebsiteSettingLastModified(
+        primary_pattern, secondary_pattern, content_type, std::string());
+    most_recent_time = time > most_recent_time ? time : most_recent_time;
+  }
+  return most_recent_time.is_min() ? base::Time() : most_recent_time;
 }
 
 void HostContentSettingsMap::ClearSettingsForOneTypeWithPredicate(
@@ -688,13 +702,15 @@ void HostContentSettingsMap::ClearSettingsForOneTypeWithPredicate(
     if (pattern_predicate.is_null() ||
         pattern_predicate.Run(setting.primary_pattern,
                               setting.secondary_pattern)) {
-      base::Time last_modified = pref_provider_->GetWebsiteSettingLastModified(
-          setting.primary_pattern, setting.secondary_pattern, content_type,
-          std::string());
-      if (last_modified >= begin_time) {
-        pref_provider_->SetWebsiteSetting(setting.primary_pattern,
-                                          setting.secondary_pattern,
-                                          content_type, std::string(), nullptr);
+      for (auto* provider : user_modifiable_providers_) {
+        base::Time last_modified = provider->GetWebsiteSettingLastModified(
+            setting.primary_pattern, setting.secondary_pattern, content_type,
+            std::string());
+        if (last_modified >= begin_time) {
+          provider->SetWebsiteSetting(setting.primary_pattern,
+                                      setting.secondary_pattern, content_type,
+                                      std::string(), nullptr);
+        }
       }
     }
   }
@@ -720,6 +736,8 @@ void HostContentSettingsMap::ShutdownOnUIThread() {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(prefs_);
   prefs_ = NULL;
+  for (auto* provider : user_modifiable_providers_)
+    provider->RemoveObserver(this);
   for (const auto& provider_pair : content_settings_providers_)
     provider_pair.second->ShutdownOnUIThread();
 }

@@ -20,6 +20,7 @@
 #include "base/threading/thread_checker.h"
 #include "components/content_settings/core/browser/content_settings_observer.h"
 #include "components/content_settings/core/browser/content_settings_utils.h"
+#include "components/content_settings/core/browser/user_modifiable_provider.h"
 #include "components/content_settings/core/common/content_settings.h"
 #include "components/content_settings/core/common/content_settings_pattern.h"
 #include "components/content_settings/core/common/content_settings_types.h"
@@ -72,6 +73,11 @@ class HostContentSettingsMap : public content_settings::Observer,
                          bool store_last_modified);
 
   static void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry);
+
+  // Adds a new user modifiable provider for |type|.
+  void RegisterUserModifiableProvider(
+      ProviderType type,
+      std::unique_ptr<content_settings::UserModifiableProvider> provider);
 
   // Adds a new provider for |type|.
   void RegisterProvider(
@@ -385,6 +391,9 @@ class HostContentSettingsMap : public content_settings::Observer,
   // before any other uses of it.
   std::map<ProviderType, std::unique_ptr<content_settings::ProviderInterface>>
       content_settings_providers_;
+
+  std::vector<content_settings::UserModifiableProvider*>
+      user_modifiable_providers_;
 
   // content_settings_providers_[PREF_PROVIDER] but specialized.
   content_settings::PrefProvider* pref_provider_ = nullptr;
