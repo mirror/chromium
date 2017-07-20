@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "faa1ec45_d3743faf",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-20T16:26:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e5491a5_10cdd595",
+      "revId": "ff485f9c73e6cdbff716655d7bb49e062491f6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e54171e6_7020d005",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
         "patchSetId": 12
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-20T15:41:01Z",
       "side": 1,
       "message": "I feel this new_url is a bit confusing, because I think new_url and original_url are same from begin to end?  (While new_request.Url() could be mutated)",
+      "revId": "ff485f9c73e6cdbff716655d7bb49e062491f6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4322c4df_9d74d62c",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-20T16:26:16Z",
+      "side": 1,
+      "message": "Ah, yes. I\u0027ve moved this down to the place right above the code that may modify new_request.Url(), updated the stale comment at L296 and placed it right above this line. PTAL.",
+      "parentUuid": "e54171e6_7020d005",
       "revId": "ff485f9c73e6cdbff716655d7bb49e062491f6d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cef3937c_b26bb196",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-20T16:26:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fde6ce68_000681ac",
+      "revId": "ff485f9c73e6cdbff716655d7bb49e062491f6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ad2ad39_0ca8e07b",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
         "patchSetId": 12
@@ -67,6 +121,24 @@
       "revId": "ff485f9c73e6cdbff716655d7bb49e062491f6d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd95c30e_33aada65",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-20T16:26:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ad2ad39_0ca8e07b",
+      "revId": "ff485f9c73e6cdbff716655d7bb49e062491f6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
