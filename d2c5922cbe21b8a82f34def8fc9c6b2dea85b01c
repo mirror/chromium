@@ -22,6 +22,30 @@
       "revId": "d2c5922cbe21b8a82f34def8fc9c6b2dea85b01c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fe5678e_63dd79fb",
+        "filename": "extensions/renderer/module_system_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-20T16:01:37Z",
+      "side": 1,
+      "message": "D\u0027oh!  Missed this one (still adjusting to Gerrit).  I\u0027ll make sure to add this in a followup.  Sorry about that!",
+      "parentUuid": "9557b033_e973231c",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 56
+      },
+      "revId": "d2c5922cbe21b8a82f34def8fc9c6b2dea85b01c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
