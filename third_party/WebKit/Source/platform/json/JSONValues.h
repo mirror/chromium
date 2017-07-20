@@ -212,6 +212,10 @@ class PLATFORM_EXPORT JSONObject : public JSONValue {
   bool GetDouble(const String& name, double* output) const;
   bool GetString(const String& name, String* output) const;
 
+// Avoid to replace GetObject with GetObjectW by windows.h.
+#ifdef GetObject
+#undef GetObject
+#endif
   JSONObject* GetObject(const String& name) const;
   JSONArray* GetArray(const String& name) const;
   JSONValue* Get(const String& name) const;
