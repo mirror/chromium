@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "c60c4f68_e214b224",
+        "filename": "base/values.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-20T06:42:32Z",
+      "side": 1,
+      "message": "I decided to go ahead and simplify call sites. For this I made use of Value::SetKey(const std::string\u0026 key, Value value), which was introduced recently.\n\nThis allows for a shorter syntax (e.g. changed_prefs_.SetKey(key, value-\u003eClone()) and should address the problem addressed above. Given that it takes it\u0027s argument by value, it is not possible that a given Value is shared by two dicts.",
+      "parentUuid": "b11a81e7_b6d01a10",
+      "revId": "39d838aa591d37a5c9bb4af72a3593c6abfdb6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc5dc17f_7aeba935",
         "filename": "base/values.h",
         "patchSetId": 6
