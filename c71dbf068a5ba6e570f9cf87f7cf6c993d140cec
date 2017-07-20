@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae14f2ea_ce44da0f",
+        "filename": "chrome/browser/search/suggestions/suggestions_ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-20T13:16:29Z",
+      "side": 1,
+      "message": "nit: Is this git cl formatted? Alignment looks weird...",
+      "revId": "c71dbf068a5ba6e570f9cf87f7cf6c993d140cec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
