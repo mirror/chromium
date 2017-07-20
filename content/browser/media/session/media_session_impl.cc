@@ -395,6 +395,14 @@ void MediaSessionImpl::Stop(SuspendType suspend_type) {
   AbandonSystemAudioFocusIfNeeded();
 }
 
+void MediaSessionImpl::SeekForward(double seconds) {
+  OnSeekForwardInternal(seconds);
+}
+
+void MediaSessionImpl::SeekBackward(double seconds) {
+  OnSeekBackwardInternal(seconds);
+}
+
 void MediaSessionImpl::StartDucking() {
   if (is_ducking_)
     return;
@@ -540,6 +548,16 @@ void MediaSessionImpl::OnResumeInternal(SuspendType suspend_type) {
     it.observer->OnSetVolumeMultiplier(it.player_id, GetVolumeMultiplier());
 
   NotifyAboutStateChange();
+}
+
+void MediaSessionImpl::OnSeekForwardInternal(double seconds) {
+  for (const auto& it : normal_players_)
+    it.observer->OnSeekForward(it.player_id, seconds);
+}
+
+void MediaSessionImpl::OnSeekBackwardInternal(double seconds) {
+  for (const auto& it : normal_players_)
+    it.observer->OnSeekBackward(it.player_id, seconds);
 }
 
 MediaSessionImpl::MediaSessionImpl(WebContents* web_contents)

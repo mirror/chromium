@@ -20,6 +20,12 @@ class MediaSessionPlayerObserver {
   // The given |player_id| has been resumed by the MediaSession.
   virtual void OnResume(int player_id) = 0;
 
+  // The given |player_id| has been seeked forward by the MediaSession.
+  virtual void OnSeekForward(int player_id, double seconds) = 0;
+
+  // The given |player_id| has been seeked backward by the MediaSession.
+  virtual void OnSeekBackward(int player_id, double seconds) = 0;
+
   // The given |player_id| has been set a new volume multiplier by
   // the MediaSession.
   virtual void OnSetVolumeMultiplier(int player_id,

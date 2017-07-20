@@ -34,6 +34,8 @@ class MockMediaSessionPlayerObserver : public MediaSessionPlayerObserver {
 
   void OnSuspend(int player_id) override {}
   void OnResume(int player_id) override {}
+  void OnSeekForward(int player_id, double seconds) override {}
+  void OnSeekBackward(int player_id, double seconds) override {}
   void OnSetVolumeMultiplier(int player_id, double volume_multiplier) override {
   }
 

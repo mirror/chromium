@@ -83,6 +83,8 @@ class CONTENT_EXPORT RendererWebMediaPlayerDelegate
  private:
   void OnMediaDelegatePause(int player_id);
   void OnMediaDelegatePlay(int player_id);
+  void OnMediaDelegateSeekForward(int player_id, double seconds);
+  void OnMediaDelegateSeekBackward(int player_id, double seconds);
   void OnMediaDelegateSuspendAllMediaPlayers();
   void OnMediaDelegateVolumeMultiplierUpdate(int player_id, double multiplier);
   void OnMediaDelegateBecamePersistentVideo(int player_id, bool value);

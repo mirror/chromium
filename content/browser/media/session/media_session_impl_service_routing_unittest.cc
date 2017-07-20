@@ -64,6 +64,8 @@ class MockMediaSessionPlayerObserver : public MediaSessionPlayerObserver {
 
   MOCK_METHOD1(OnSuspend, void(int player_id));
   MOCK_METHOD1(OnResume, void(int player_id));
+  MOCK_METHOD2(OnSeekForward, void(int player_id, double seconds));
+  MOCK_METHOD2(OnSeekBackward, void(int player_id, double seconds));
   MOCK_METHOD2(OnSetVolumeMultiplier,
                void(int player_id, double volume_multiplier));
 

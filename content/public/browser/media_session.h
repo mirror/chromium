@@ -45,13 +45,19 @@ class MediaSession {
   // |type| represents the origin of the request.
   virtual void Resume(SuspendType suspend_type) = 0;
 
-  // Resume the media session.
+  // Suspend the media session.
   // |type| represents the origin of the request.
   virtual void Suspend(SuspendType suspend_type) = 0;
 
-  // Resume the media session.
+  // Stop the media session.
   // |type| represents the origin of the request.
   virtual void Stop(SuspendType suspend_type) = 0;
+
+  // Seek the media session forward.
+  virtual void SeekForward(double seconds) = 0;
+
+  // Seek the media session backward.
+  virtual void SeekBackward(double seconds) = 0;
 
   // Tell the media session a user action has performed.
   virtual void DidReceiveAction(blink::mojom::MediaSessionAction action) = 0;

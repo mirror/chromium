@@ -211,6 +211,10 @@ bool RendererWebMediaPlayerDelegate::OnMessageReceived(
   IPC_BEGIN_MESSAGE_MAP(RendererWebMediaPlayerDelegate, msg)
     IPC_MESSAGE_HANDLER(MediaPlayerDelegateMsg_Pause, OnMediaDelegatePause)
     IPC_MESSAGE_HANDLER(MediaPlayerDelegateMsg_Play, OnMediaDelegatePlay)
+    IPC_MESSAGE_HANDLER(MediaPlayerDelegateMsg_SeekForward,
+                        OnMediaDelegateSeekForward)
+    IPC_MESSAGE_HANDLER(MediaPlayerDelegateMsg_SeekBackward,
+                        OnMediaDelegateSeekBackward)
     IPC_MESSAGE_HANDLER(MediaPlayerDelegateMsg_SuspendAllMediaPlayers,
                         OnMediaDelegateSuspendAllMediaPlayers)
     IPC_MESSAGE_HANDLER(MediaPlayerDelegateMsg_UpdateVolumeMultiplier,
@@ -273,6 +277,28 @@ void RendererWebMediaPlayerDelegate::OnMediaDelegatePlay(int player_id) {
             ? new blink::WebScopedUserGesture(render_frame()->GetWebFrame())
             : nullptr);
     observer->OnPlay();
+  }
+}
+
+void RendererWebMediaPlayerDelegate::OnMediaDelegateSeekForward(
+    int player_id,
+    double seconds) {
+  RecordAction(base::UserMetricsAction("Media.Controls.RemoteSeekForward"));
+
+  Observer* observer = id_map_.Lookup(player_id);
+  if (observer) {
+    observer->OnSeekForward(seconds);
+  }
+}
+
+void RendererWebMediaPlayerDelegate::OnMediaDelegateSeekBackward(
+    int player_id,
+    double seconds) {
+  RecordAction(base::UserMetricsAction("Media.Controls.RemoteSeekBackward"));
+
+  Observer* observer = id_map_.Lookup(player_id);
+  if (observer) {
+    observer->OnSeekBackward(seconds);
   }
 }
 

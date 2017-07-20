@@ -127,6 +127,12 @@ class MediaSessionImpl : public MediaSession,
   // |type| represents the origin of the request.
   CONTENT_EXPORT void Stop(MediaSession::SuspendType suspend_type) override;
 
+  // Seek the media session forward.
+  CONTENT_EXPORT void SeekForward(double seconds) override;
+
+  // Seek the media session backward.
+  CONTENT_EXPORT void SeekBackward(double seconds) override;
+
   // Let the media session start ducking such that the volume multiplier is
   // reduced.
   CONTENT_EXPORT void StartDucking() override;
@@ -226,6 +232,9 @@ class MediaSessionImpl : public MediaSession,
   CONTENT_EXPORT void OnSuspendInternal(MediaSession::SuspendType suspend_type,
                                         State new_state);
   CONTENT_EXPORT void OnResumeInternal(MediaSession::SuspendType suspend_type);
+
+  CONTENT_EXPORT void OnSeekForwardInternal(double seconds);
+  CONTENT_EXPORT void OnSeekBackwardInternal(double seconds);
 
   // Requests audio focus to the AudioFocusDelegate.
   // Returns whether the request was granted.
