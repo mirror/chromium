@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1cc42bd7_fe4ec89c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-20T03:06:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44131b99_b4cd2a84",
+      "revId": "aca2052f0b74112d31db07fb87612b003cacfed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "218ccc74_687576ec",
         "filename": "chrome/browser/extensions/api/messaging/message_service.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-20T02:17:12Z",
       "side": 1,
       "message": "should this be added to the delegate, too (or do you plan to leave it here/do it in another cl)?",
+      "revId": "aca2052f0b74112d31db07fb87612b003cacfed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bb0f3a3_4f3bdc1f",
+        "filename": "chrome/browser/extensions/api/messaging/message_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-20T03:06:46Z",
+      "side": 1,
+      "message": "Yep. The Tab and NativeApp functions will be updated in the follow-up.",
+      "parentUuid": "218ccc74_687576ec",
       "revId": "aca2052f0b74112d31db07fb87612b003cacfed8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "aca2052f0b74112d31db07fb87612b003cacfed8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8cb69ac_a4b95bb2",
+        "filename": "chrome/browser/extensions/api/messaging/messaging_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-20T03:06:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "372333ff_f9ec28ae",
+      "revId": "aca2052f0b74112d31db07fb87612b003cacfed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

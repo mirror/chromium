@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d5882a92_3cc67398",
+        "filename": "chrome/browser/extensions/api/messaging/message_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-20T03:06:46Z",
+      "side": 1,
+      "message": "whoops, done",
+      "parentUuid": "df0c3323_26363ad8",
+      "revId": "5d63ea0a601e1e15870efe9f21ce86cdae5fe043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca61787e_86e24f96",
         "filename": "chrome/browser/extensions/api/messaging/message_service.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "5d63ea0a601e1e15870efe9f21ce86cdae5fe043",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56b4bc84_b2580380",
+        "filename": "chrome/browser/extensions/api/messaging/message_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-20T03:06:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca61787e_86e24f96",
+      "revId": "5d63ea0a601e1e15870efe9f21ce86cdae5fe043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "736efac8_f292d3ef",
+        "filename": "chrome/browser/extensions/api/messaging/messaging_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-20T03:06:46Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b8677e6f_7521e049",
+      "revId": "5d63ea0a601e1e15870efe9f21ce86cdae5fe043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5db4755_834bbbbc",
         "filename": "chrome/browser/extensions/api/messaging/messaging_delegate.h",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "db3a5c7e_6b5ea705",
+        "filename": "chrome/browser/extensions/api/messaging/messaging_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-20T03:06:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5db4755_834bbbbc",
+      "revId": "5d63ea0a601e1e15870efe9f21ce86cdae5fe043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f3fdaa2_94de4153",
         "filename": "chrome/browser/extensions/api/messaging/messaging_delegate.h",
         "patchSetId": 1
@@ -81,6 +153,24 @@
       "writtenOn": "2017-07-20T02:17:12Z",
       "side": 1,
       "message": "suggestion (correct me if I misunderstood the meaning of the method):\n\nRuns |callback| with true if |url| is allowed to connect to |extension| in incognito mode, false otherwise.\nThe user will be prompted for the answer if the answer cannot be determined.",
+      "revId": "5d63ea0a601e1e15870efe9f21ce86cdae5fe043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f7a7756_8d13b1c9",
+        "filename": "chrome/browser/extensions/api/messaging/messaging_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-20T03:06:46Z",
+      "side": 1,
+      "message": "Yep pretty much. I\u0027ve made it clearer.",
+      "parentUuid": "9f3fdaa2_94de4153",
       "revId": "5d63ea0a601e1e15870efe9f21ce86cdae5fe043",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
