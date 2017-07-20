@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59b6b785_9541fb2a",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScopeProxy.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-20T10:44:12Z",
+      "side": 1,
+      "message": "This feels a little sketchy, should we then probably use loading task runner? There wouldn\u0027t be such a guarantee that unthrottled is higher in terms of priority.",
+      "revId": "3269a1c031a2624605cc2b0d1fd0998da0b15838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
