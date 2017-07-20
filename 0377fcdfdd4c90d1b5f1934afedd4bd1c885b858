@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adedb8ee_f0737e60",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-20T20:17:20Z",
+      "side": 1,
+      "message": "This is confusing and potentially buggy; it\u0027s a singleton instance but |profile| is passed as a parameter which usually implies an instance per profile.\n\nIt\u0027s also a lot of extra production code just for test support.\n\nWhy not just provide a set_notification_presenter_for_test() method to TetherService?",
+      "revId": "0377fcdfdd4c90d1b5f1934afedd4bd1c885b858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e535eb2_edf1ec38",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-20T20:17:20Z",
+      "side": 1,
+      "message": "If you want to use this pattern this should be a separate class in a separate file.",
+      "revId": "0377fcdfdd4c90d1b5f1934afedd4bd1c885b858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32d965fe_1321a35b",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-20T20:17:20Z",
+      "side": 1,
+      "message": "s/Can/Should/ ? This gets triggered any time the default network state changes, so we\u0027re relying on the method to test not just whether showing the notification is -allowed-, but whether or not it is the correct thing to do.",
+      "revId": "0377fcdfdd4c90d1b5f1934afedd4bd1c885b858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c515eba_544bbfdd",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-20T20:17:20Z",
+      "side": 1,
+      "message": "Don\u0027t describe the logic in {Should}EnableBluetoothNotificationBeShown() here, it might change.",
+      "revId": "0377fcdfdd4c90d1b5f1934afedd4bd1c885b858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1783be26_01dbf980",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-20T20:17:20Z",
+      "side": 1,
+      "message": "Prefer \u0027foo \u003d\u003d 0\u0027:\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#Code-formatting",
+      "range": {
+        "startLine": 335,
+        "startChar": 64,
+        "endLine": 335,
+        "endChar": 65
+      },
+      "revId": "0377fcdfdd4c90d1b5f1934afedd4bd1c885b858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5268a67d_b08bb95c",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-20T20:17:20Z",
+      "side": 1,
+      "message": "It seems like we should do this test at the top, i.e. if (!Enabled || !BluetoothAvaialble) return false;",
+      "revId": "0377fcdfdd4c90d1b5f1934afedd4bd1c885b858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
