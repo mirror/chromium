@@ -17,11 +17,9 @@
 #include "mojo/public/cpp/bindings/associated_binding.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
-namespace cc {
-class BeginFrameSource;
-}
-
 namespace viz {
+
+class BeginFrameSource;
 class CompositorFrameSinkSupport;
 class Display;
 class FrameSinkManagerImpl;
@@ -37,7 +35,7 @@ class GpuRootCompositorFrameSink
       FrameSinkManagerImpl* frame_sink_manager,
       const FrameSinkId& frame_sink_id,
       std::unique_ptr<Display> display,
-      std::unique_ptr<cc::BeginFrameSource> begin_frame_source,
+      std::unique_ptr<BeginFrameSource> begin_frame_source,
       cc::mojom::CompositorFrameSinkAssociatedRequest request,
       cc::mojom::CompositorFrameSinkPrivateRequest private_request,
       cc::mojom::CompositorFrameSinkClientPtr client,
@@ -57,7 +55,7 @@ class GpuRootCompositorFrameSink
   void SetNeedsBeginFrame(bool needs_begin_frame) override;
   void SubmitCompositorFrame(const LocalSurfaceId& local_surface_id,
                              cc::CompositorFrame frame) override;
-  void DidNotProduceFrame(const cc::BeginFrameAck& begin_frame_ack) override;
+  void DidNotProduceFrame(const BeginFrameAck& begin_frame_ack) override;
 
   // cc::mojom::CompositorFrameSinkPrivate:
   void ClaimTemporaryReference(const SurfaceId& surface_id) override;
@@ -74,7 +72,7 @@ class GpuRootCompositorFrameSink
   // CompositorFrameSinkSupportClient:
   void DidReceiveCompositorFrameAck(
       const std::vector<cc::ReturnedResource>& resources) override;
-  void OnBeginFrame(const cc::BeginFrameArgs& args) override;
+  void OnBeginFrame(const BeginFrameArgs& args) override;
   void ReclaimResources(
       const std::vector<cc::ReturnedResource>& resources) override;
   void WillDrawSurface(const LocalSurfaceId& local_surface_id,
@@ -87,7 +85,7 @@ class GpuRootCompositorFrameSink
 
   // GpuRootCompositorFrameSink holds a Display and its BeginFrameSource if
   // it was created with a non-null gpu::SurfaceHandle.
-  std::unique_ptr<cc::BeginFrameSource> display_begin_frame_source_;
+  std::unique_ptr<BeginFrameSource> display_begin_frame_source_;
   std::unique_ptr<Display> display_;
 
   cc::mojom::CompositorFrameSinkClientPtr client_;

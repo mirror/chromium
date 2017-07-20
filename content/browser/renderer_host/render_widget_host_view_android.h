@@ -19,8 +19,8 @@
 #include "base/memory/weak_ptr.h"
 #include "base/process/process.h"
 #include "cc/input/selection.h"
-#include "cc/output/begin_frame_args.h"
-#include "cc/scheduler/begin_frame_source.h"
+#include "components/viz/common/begin_frame_args.h"
+#include "components/viz/common/begin_frame_source.h"
 #include "components/viz/service/frame_sinks/frame_evictor.h"
 #include "content/browser/android/content_view_core_observer.h"
 #include "content/browser/renderer_host/input/mouse_wheel_phase_handler.h"
@@ -75,7 +75,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
       public content::ContentViewCoreObserver,
       public content::TextInputManager::Observer,
       public ui::DelegatedFrameHostAndroid::Client,
-      public cc::BeginFrameObserver {
+      public viz::BeginFrameObserver {
  public:
   RenderWidgetHostViewAndroid(RenderWidgetHostImpl* widget,
                               ContentViewCore* content_view_core);
@@ -155,7 +155,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
       override;
   void SubmitCompositorFrame(const viz::LocalSurfaceId& local_surface_id,
                              cc::CompositorFrame frame) override;
-  void OnDidNotProduceFrame(const cc::BeginFrameAck& ack) override;
+  void OnDidNotProduceFrame(const viz::BeginFrameAck& ack) override;
   void ClearCompositorFrame() override;
   void SetIsInVR(bool is_in_vr) override;
   bool IsInVR() const override;
@@ -233,14 +233,14 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   std::unique_ptr<ui::TouchHandleDrawable> CreateDrawable() override;
 
   // DelegatedFrameHostAndroid::Client implementation.
-  void SetBeginFrameSource(cc::BeginFrameSource* begin_frame_source) override;
+  void SetBeginFrameSource(viz::BeginFrameSource* begin_frame_source) override;
   void DidReceiveCompositorFrameAck() override;
   void ReclaimResources(
       const std::vector<cc::ReturnedResource>& resources) override;
 
-  // cc::BeginFrameObserver implementation.
-  void OnBeginFrame(const cc::BeginFrameArgs& args) override;
-  const cc::BeginFrameArgs& LastUsedBeginFrameArgs() const override;
+  // viz::BeginFrameObserver implementation.
+  void OnBeginFrame(const viz::BeginFrameArgs& args) override;
+  const viz::BeginFrameArgs& LastUsedBeginFrameArgs() const override;
   void OnBeginFrameSourcePausedChanged(bool paused) override;
 
   // Non-virtual methods
@@ -349,10 +349,10 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   };
   void AddBeginFrameRequest(BeginFrameRequestType request);
   void ClearBeginFrameRequest(BeginFrameRequestType request);
-  void AcknowledgeBeginFrame(const cc::BeginFrameAck& ack);
+  void AcknowledgeBeginFrame(const viz::BeginFrameAck& ack);
   void StartObservingRootWindow();
   void StopObservingRootWindow();
-  void SendBeginFrame(cc::BeginFrameArgs args);
+  void SendBeginFrame(viz::BeginFrameArgs args);
   bool Animate(base::TimeTicks frame_time);
   void RequestDisallowInterceptTouchEvent();
 
@@ -372,8 +372,8 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   RenderWidgetHostImpl* host_;
 
   // The begin frame source being observed.  Null if none.
-  cc::BeginFrameSource* begin_frame_source_;
-  cc::BeginFrameArgs last_begin_frame_args_;
+  viz::BeginFrameSource* begin_frame_source_;
+  viz::BeginFrameArgs last_begin_frame_args_;
 
   // Indicates whether and for what reason a request for begin frames has been
   // issued. Used to control action dispatch at the next |OnBeginFrame()| call.

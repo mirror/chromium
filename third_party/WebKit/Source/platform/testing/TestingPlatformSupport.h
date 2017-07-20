@@ -49,13 +49,13 @@ class SimpleTestTickClock;
 class TestDiscardableMemoryAllocator;
 }
 
-namespace cc {
-class OrderedSimpleTaskRunner;
-}
-
 namespace cc_blink {
 class WebCompositorSupportImpl;
 }  // namespace cc_blink
+
+namespace viz {
+class OrderedSimpleTaskRunner;
+}
 
 namespace blink {
 namespace scheduler {
@@ -171,7 +171,7 @@ class TestingPlatformSupportWithMockScheduler : public TestingPlatformSupport {
   static double GetTestTime();
 
   std::unique_ptr<base::SimpleTestTickClock> clock_;
-  scoped_refptr<cc::OrderedSimpleTaskRunner> mock_task_runner_;
+  scoped_refptr<viz::OrderedSimpleTaskRunner> mock_task_runner_;
   std::unique_ptr<scheduler::RendererSchedulerImpl> scheduler_;
   std::unique_ptr<WebThread> thread_;
 };
