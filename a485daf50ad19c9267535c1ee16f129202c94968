@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f26216cd_536569a4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-20T00:02:00Z",
+      "side": 1,
+      "message": "nit: explicit initializations turn into code in the constructor. Better to name this \"mTrustedIntentCheckDisabled\" and leave it default initialized.",
+      "range": {
+        "startLine": 174,
+        "startChar": 20,
+        "endLine": 174,
+        "endChar": 46
+      },
+      "revId": "a485daf50ad19c9267535c1ee16f129202c94968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "333421b0_37193096",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/util/VrTransitionUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-20T00:02:00Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s safe to hardcode this package name. Instead, use ContextUtil.getApplicationContext().getPackageName()",
+      "revId": "a485daf50ad19c9267535c1ee16f129202c94968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
