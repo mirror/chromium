@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "973e18fb_1dc2a685",
+        "filename": "chrome/browser/ui/signin_view_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-07-20T13:56:39Z",
+      "side": 1,
+      "message": "login\n\nor \"An HTTP authentication dialog...\"",
+      "range": {
+        "startLine": 28,
+        "startChar": 65,
+        "endLine": 28,
+        "endChar": 72
+      },
+      "revId": "3dd85ce53344b94f6fdad595ebfa9e2805ecd1e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f6faa49_d856b4c5",
+        "filename": "chrome/browser/ui/signin_view_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-07-20T13:56:39Z",
+      "side": 1,
+      "message": "... when the load of the Gaia webpage ...\n\nis a lot easier to parse.",
+      "range": {
+        "startLine": 29,
+        "startChar": 32,
+        "endLine": 29,
+        "endChar": 39
+      },
+      "revId": "3dd85ce53344b94f6fdad595ebfa9e2805ecd1e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
