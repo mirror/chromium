@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef MEDIA_GPU_ANDROID_VIDEO_DECODE_ACCELERATOR_H_
-#define MEDIA_GPU_ANDROID_VIDEO_DECODE_ACCELERATOR_H_
+#ifndef MEDIA_GPU_ANDROID_ANDROID_VIDEO_DECODE_ACCELERATOR_H_
+#define MEDIA_GPU_ANDROID_ANDROID_VIDEO_DECODE_ACCELERATOR_H_
 
 #include <stdint.h>
 
@@ -22,11 +22,11 @@
 #include "media/base/android/media_drm_bridge_cdm_context.h"
 #include "media/base/android_overlay_mojo_factory.h"
 #include "media/base/content_decryption_module.h"
+#include "media/gpu/android/android_video_surface_chooser.h"
+#include "media/gpu/android/avda_codec_allocator.h"
+#include "media/gpu/android/avda_picture_buffer_manager.h"
+#include "media/gpu/android/avda_state_provider.h"
 #include "media/gpu/android/device_info.h"
-#include "media/gpu/android_video_surface_chooser.h"
-#include "media/gpu/avda_codec_allocator.h"
-#include "media/gpu/avda_picture_buffer_manager.h"
-#include "media/gpu/avda_state_provider.h"
 #include "media/gpu/gpu_video_decode_accelerator_helpers.h"
 #include "media/gpu/media_gpu_export.h"
 #include "media/video/video_decode_accelerator.h"
@@ -407,4 +407,4 @@ class MEDIA_GPU_EXPORT AndroidVideoDecodeAccelerator
 
 }  // namespace media
 
-#endif  // MEDIA_GPU_ANDROID_VIDEO_DECODE_ACCELERATOR_H_
+#endif  // MEDIA_GPU_ANDROID_ANDROID_VIDEO_DECODE_ACCELERATOR_H_

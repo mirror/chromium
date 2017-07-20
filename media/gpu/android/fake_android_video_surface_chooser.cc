@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "media/gpu/fake_android_video_surface_chooser.h"
+#include "media/gpu/android/fake_android_video_surface_chooser.h"
 
 namespace media {
 
