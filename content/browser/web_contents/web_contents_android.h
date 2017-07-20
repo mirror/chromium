@@ -23,6 +23,8 @@ class GURL;
 
 namespace content {
 
+class RenderWidgetHostImpl;
+class SyntheticGestureTarget;
 class WebContentsImpl;
 
 // Android wrapper around WebContents that provides safer passage from java and
@@ -218,6 +220,9 @@ class CONTENT_EXPORT WebContentsAndroid
 
   void SetMediaSession(
       const base::android::ScopedJavaLocalRef<jobject>& j_media_session);
+
+  SyntheticGestureTarget* CreateSyntheticGestureTarget(
+      RenderWidgetHostImpl* host);
 
  private:
   RenderWidgetHostViewAndroid* GetRenderWidgetHostViewAndroid();

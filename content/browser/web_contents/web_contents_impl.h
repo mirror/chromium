@@ -735,6 +735,10 @@ class CONTENT_EXPORT WebContentsImpl
   void FocusedNodeTouched(bool editable) override;
   void DidReceiveCompositorFrame() override;
   bool IsShowingContextMenuOnPage() const override;
+#if defined(OS_ANDROID)
+  SyntheticGestureTarget* CreateSyntheticGestureTarget(
+      RenderWidgetHostImpl* render_widget_host) override;
+#endif
 
   // RenderFrameHostManager::Delegate ------------------------------------------
 
