@@ -88,6 +88,24 @@
       "revId": "14c2869baad5964e8f69375b895eefb610431117",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c33082f0_f63b52d6",
+        "filename": "ash/drag_drop/drag_drop_controller_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-20T15:53:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fafccad_ee736b24",
+      "revId": "14c2869baad5964e8f69375b895eefb610431117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
