@@ -195,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "c2f1a30e_8756fd9b",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface.cpp.tmpl",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-07-20T12:00:22Z",
+      "side": 1,
+      "message": "I think saving ~8.9kb would be great :)",
+      "parentUuid": "d5c74e7d_75a81540",
+      "revId": "59588f033746ef35be84984082f495372cd83bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd398927_2c6ec418",
         "filename": "third_party/WebKit/Source/bindings/templates/interface.cpp.tmpl",
         "patchSetId": 2
