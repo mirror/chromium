@@ -1,0 +1,337 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2742e892_b74190a5",
+        "filename": "chrome/installer/zucchini/patch_read_write_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-20T19:11:44Z",
+      "side": 1,
+      "message": "#include \u003ccstdint\u003e\n#include \u003ccstdlib\u003e\n#include \u003cvector\u003e",
+      "revId": "c8cb3d63c9897a4e7fbe66235f4d5c339e7da004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4a61967_3c500265",
+        "filename": "chrome/installer/zucchini/patch_read_write_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-20T19:11:44Z",
+      "side": 1,
+      "message": "Wrap local stuff with  namespace {}?",
+      "revId": "c8cb3d63c9897a4e7fbe66235f4d5c339e7da004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "490cedec_9f6e42ee",
+        "filename": "chrome/installer/zucchini/patch_read_write_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-20T19:11:44Z",
+      "side": 1,
+      "message": "You still use std::vector\u003cuint8_t\u003e all over. That\u0027s okay if you think |vec| should only be used for initializing raw test data -- but then please comment, and apply this when appropriate (e.g., lines 519, 520).",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 32
+      },
+      "revId": "c8cb3d63c9897a4e7fbe66235f4d5c339e7da004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f74ff28e_a3e25271",
+        "filename": "chrome/installer/zucchini/patch_read_write_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-20T19:11:44Z",
+      "side": 1,
+      "message": "It\u0027s const, may as well use \"\u0026\"? Same below.",
+      "range": {
+        "startLine": 21,
+        "startChar": 43,
+        "endLine": 21,
+        "endChar": 44
+      },
+      "revId": "c8cb3d63c9897a4e7fbe66235f4d5c339e7da004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0561b0b4_08284625",
+        "filename": "chrome/installer/zucchini/patch_read_write_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-20T19:11:44Z",
+      "side": 1,
+      "message": "\u0026 ?",
+      "range": {
+        "startLine": 106,
+        "startChar": 48,
+        "endLine": 106,
+        "endChar": 49
+      },
+      "revId": "c8cb3d63c9897a4e7fbe66235f4d5c339e7da004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ae88457_edd20734",
+        "filename": "chrome/installer/zucchini/patch_read_write_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-20T19:11:44Z",
+      "side": 1,
+      "message": "Period at end.",
+      "range": {
+        "startLine": 110,
+        "startChar": 72,
+        "endLine": 110,
+        "endChar": 80
+      },
+      "revId": "c8cb3d63c9897a4e7fbe66235f4d5c339e7da004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54e8d708_84a88ce0",
+        "filename": "chrome/installer/zucchini/patch_read_write_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-20T19:11:44Z",
+      "side": 1,
+      "message": "Should have some big values, so uint8_t addition overflow occurs (which is okay).",
+      "range": {
+        "startLine": 257,
+        "startChar": 10,
+        "endLine": 257,
+        "endChar": 12
+      },
+      "revId": "c8cb3d63c9897a4e7fbe66235f4d5c339e7da004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b26a6db_6def546c",
+        "filename": "chrome/installer/zucchini/patch_read_write_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-20T19:11:44Z",
+      "side": 1,
+      "message": "Expected values should come first.",
+      "range": {
+        "startLine": 482,
+        "startChar": 3,
+        "endLine": 485,
+        "endChar": 41
+      },
+      "revId": "c8cb3d63c9897a4e7fbe66235f4d5c339e7da004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9afb0a21_cbc9ac9d",
+        "filename": "chrome/installer/zucchini/patch_read_write_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-20T19:11:44Z",
+      "side": 1,
+      "message": "Expected value should come first.",
+      "range": {
+        "startLine": 487,
+        "startChar": 2,
+        "endLine": 487,
+        "endChar": 11
+      },
+      "revId": "c8cb3d63c9897a4e7fbe66235f4d5c339e7da004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "693ddd58_2627faa5",
+        "filename": "chrome/installer/zucchini/patch_writer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-20T19:11:44Z",
+      "side": 1,
+      "message": "DCHECK_GT ?",
+      "range": {
+        "startLine": 127,
+        "startChar": 2,
+        "endLine": 127,
+        "endChar": 11
+      },
+      "revId": "c8cb3d63c9897a4e7fbe66235f4d5c339e7da004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41d9d222_950a7bad",
+        "filename": "chrome/installer/zucchini/patch_writer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-20T19:11:44Z",
+      "side": 1,
+      "message": "|preV_copy_offset| should store what it says it stores, so perhaps:\n\n  DCHECK_GE(delta.copy_offset, prev_copy_offset_);\n  // Bias stored delta by 1, so a sequence of single byte deltas is represented as a string of 0\u0027s.\n  EncodeVarUInt\u003cuint32_t\u003e(delta.copy_offset - prev_copy_offset_ - 1,\n                          std::back_inserter(raw_delta_skip_));\n  prev_copy_offset_ \u003d delta.copy_offset;\n\n?",
+      "range": {
+        "startLine": 128,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 44
+      },
+      "revId": "c8cb3d63c9897a4e7fbe66235f4d5c339e7da004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85523a16_66a96597",
+        "filename": "chrome/installer/zucchini/patch_writer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-20T19:11:44Z",
+      "side": 1,
+      "message": "Same as before: target - prev_target_ - 1;\n\nAlso move comment to before this. Also, make the 2 comments here re. biasing look the same.",
+      "range": {
+        "startLine": 177,
+        "startChar": 26,
+        "endLine": 177,
+        "endChar": 51
+      },
+      "revId": "c8cb3d63c9897a4e7fbe66235f4d5c339e7da004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "185f4cf6_eb034de2",
+        "filename": "chrome/installer/zucchini/patch_writer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-20T19:11:44Z",
+      "side": 1,
+      "message": "prev_target_ \u003d target;",
+      "range": {
+        "startLine": 182,
+        "startChar": 2,
+        "endLine": 182,
+        "endChar": 32
+      },
+      "revId": "c8cb3d63c9897a4e7fbe66235f4d5c339e7da004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d787586f_f665c35f",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-20T19:11:44Z",
+      "side": 1,
+      "message": "s/encode/encoded/",
+      "range": {
+        "startLine": 75,
+        "startChar": 34,
+        "endLine": 75,
+        "endChar": 40
+      },
+      "revId": "c8cb3d63c9897a4e7fbe66235f4d5c339e7da004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "937c4228_38a62b2c",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-20T19:11:44Z",
+      "side": 1,
+      "message": "|prev_target_|, since you\u0027ve used |prev_copy_offset_| before anyway?",
+      "range": {
+        "startLine": 179,
+        "startChar": 11,
+        "endLine": 179,
+        "endChar": 27
+      },
+      "revId": "c8cb3d63c9897a4e7fbe66235f4d5c339e7da004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
