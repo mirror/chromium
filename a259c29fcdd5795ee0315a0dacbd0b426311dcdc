@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d3b65d8c_12a51d9d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-20T03:06:20Z",
+      "side": 1,
+      "message": "I don\u0027t think titles are exempt from the 72 char guide. https://www.chromium.org/developers/contributing-code#TOC-Writing-change-list-descriptions",
+      "parentUuid": "c332ff01_27f96395",
+      "revId": "a259c29fcdd5795ee0315a0dacbd0b426311dcdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "571317a2_c94a3c2e",
         "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
         "patchSetId": 3
