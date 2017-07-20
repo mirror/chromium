@@ -2759,7 +2759,7 @@ void Element::focus(const FocusParams& params) {
       ToHTMLFrameOwnerElement(this)->contentDocument()->UnloadStarted())
     return;
 
-  GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheetsForNode(this);
+  GetDocument().EnsurePaintLocationDataValidForNode(this);
   if (!IsFocusable())
     return;
 
