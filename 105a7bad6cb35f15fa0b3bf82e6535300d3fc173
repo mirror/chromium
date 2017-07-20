@@ -70,6 +70,24 @@
       "revId": "105a7bad6cb35f15fa0b3bf82e6535300d3fc173",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c714058b_ed840e36",
+        "filename": "chrome/test/chromedriver/session_commands.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-07-20T18:22:39Z",
+      "side": 1,
+      "message": "yeah, something like this would be fine with me.",
+      "parentUuid": "4778e7a1_7a8c92c3",
+      "revId": "105a7bad6cb35f15fa0b3bf82e6535300d3fc173",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
