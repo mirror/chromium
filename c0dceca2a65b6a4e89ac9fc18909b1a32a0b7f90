@@ -16,6 +16,24 @@
       "revId": "c0dceca2a65b6a4e89ac9fc18909b1a32a0b7f90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ae9c881_deec4aaf",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-20T17:21:53Z",
+      "side": 1,
+      "message": "Yeah, it\u0027s simpler to recreate the model than to modify it back to initial state.",
+      "parentUuid": "7a74fbf2_e14060f6",
+      "revId": "c0dceca2a65b6a4e89ac9fc18909b1a32a0b7f90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
