@@ -16,6 +16,24 @@
       "revId": "168d24e29f3583053c57bb012e6923c7172c290f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a53319d4_2858fd54",
+        "filename": "chrome/browser/geolocation/geolocation_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-07-20T00:29:38Z",
+      "side": 1,
+      "message": "Given that they already have permission (even if temporary), we won\u0027t ask again.  In the blocked case, there is no permission, so we do ask again.",
+      "parentUuid": "3e08e576_87402419",
+      "revId": "168d24e29f3583053c57bb012e6923c7172c290f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
