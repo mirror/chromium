@@ -32,14 +32,28 @@ class VrTestArgParser(argparse.ArgumentParser):
                       default=None,
                       help='A string containing any additional Chrome command '
                            'line flags to set for a test run')
+    # Add --isolated-script-test-* args to be compatible being run as an
+    # isolated script on the automated bots
+    # TODO(bsheedy): Implement a cleaner solution than this
+    self.add_argument('--isolated-script-test-chartjson-output',
+                      type=os.path.realpath,
+                      help='Path to a JSON file where the perf dashboard '
+                           'chart data will be output.')
+    self.add_argument('--isolated-script-test-output',
+                      type=os.path.realpath,
+                      help='Path to a JSON file where failures and the '
+                           'of the results will be reported.')
     self.add_argument('--output-dir',
                       type=os.path.realpath,
                       help='The directory where the script\'s output files '
-                           'will be saved')
+                           'will be saved. The --isolated-script-test-* '
+                           'arguments take priority over this.')
     self.add_argument('--results-file',
                       default=DEFAULT_RESULTS_FILE,
                       help='The name of the JSON file the results will be '
-                           'saved to')
+                           'saved to in the output directory. Not used if '
+                           '--isolated-script-test-chartjson-output is '
+                           'specified.')
     self.add_argument('--url',
                       action='append',
                       default=[],
