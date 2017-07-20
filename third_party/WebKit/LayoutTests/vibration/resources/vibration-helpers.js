@@ -27,6 +27,7 @@ function vibration_mocks(mojo) {
           cancel() {
             this.cancelled_ = true;
             window.postMessage('Cancel', '*');
+            return Promise.resolve();
           }
 
           getDuration() {
