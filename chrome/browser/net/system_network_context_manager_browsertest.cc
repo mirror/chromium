@@ -56,7 +56,7 @@ class SystemNetworkContextManagerTest
 };
 
 IN_PROC_BROWSER_TEST_P(SystemNetworkContextManagerTest, BasicRequest) {
-  content::mojom::URLLoaderAssociatedPtr loader;
+  content::mojom::URLLoaderPtr loader;
   content::ResourceRequest request;
   content::TestURLLoaderClient client;
   request.url = embedded_test_server()->GetURL("/echo");
