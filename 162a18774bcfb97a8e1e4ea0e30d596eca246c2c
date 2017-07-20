@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "8e83aa5d_4f9afff0",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-20T15:25:44Z",
+      "side": 1,
+      "message": "No, I just hadn\u0027t uncommented them yet. Thank you for catching this.\n\nI also added a check for the service manager connection to ensure\nthis does not fail during any tests where it is inactive.",
+      "parentUuid": "43b36b86_901984ab",
+      "revId": "162a18774bcfb97a8e1e4ea0e30d596eca246c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa83f186_16af6004",
         "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe.h",
         "patchSetId": 22
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "582b197e_6f12b3c7",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-20T15:25:44Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "aa83f186_16af6004",
+      "revId": "162a18774bcfb97a8e1e4ea0e30d596eca246c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac1b138b_0a0e4107",
         "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe.h",
         "patchSetId": 22
@@ -64,6 +100,24 @@
       "writtenOn": "2017-07-19T17:54:04Z",
       "side": 1,
       "message": "These accessors are not needed as you are using AllRenderProcessMeasurementsAreCurrentForTesting now.",
+      "revId": "162a18774bcfb97a8e1e4ea0e30d596eca246c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaff2abd_58c4fcfd",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-20T15:25:44Z",
+      "side": 1,
+      "message": "These accessors are still used in the browsertest, but I\u0027m going\nto make them private and append _for_testing to their names.",
+      "parentUuid": "ac1b138b_0a0e4107",
       "revId": "162a18774bcfb97a8e1e4ea0e30d596eca246c2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
