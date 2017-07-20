@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bff39438_c10f88f3",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-07-20T10:14:58Z",
+      "side": 1,
+      "message": "nit: How about \"... has the same domain as (or is subdomain of) the frame ...\" ?",
+      "revId": "d71891b87f352e31ded8039d3f54c1d3d3399296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "597a9c9d_374c7259",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-07-20T10:14:58Z",
+      "side": 1,
+      "message": "nit: If used at either end of the pattern, specifies the beginning/ending or the URL.",
+      "revId": "d71891b87f352e31ded8039d3f54c1d3d3399296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bfbe543_aae3330b",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-07-20T10:14:58Z",
+      "side": 1,
+      "message": "If used at the beginning of the pattern, specifies the start of a (sub-)domain of the URL.",
+      "revId": "d71891b87f352e31ded8039d3f54c1d3d3399296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c46a4ad_2203b43f",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-07-20T10:14:58Z",
+      "side": 1,
+      "message": "nit: s/is/matches/\nnit: s/digit/a digit/",
+      "revId": "d71891b87f352e31ded8039d3f54c1d3d3399296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66d0c7e9_02a5e598",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-07-20T10:14:58Z",
+      "side": 1,
+      "message": "nit: How about urlPattern?",
+      "revId": "d71891b87f352e31ded8039d3f54c1d3d3399296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec1ee6b7_01422e67",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-07-20T10:14:58Z",
+      "side": 1,
+      "message": "nit: The rule will only match network requests ...",
+      "revId": "d71891b87f352e31ded8039d3f54c1d3d3399296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "878ddd58_d418e56d",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-07-20T10:14:58Z",
+      "side": 1,
+      "message": "nit: The rule will not match network requests ...",
+      "revId": "d71891b87f352e31ded8039d3f54c1d3d3399296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2effea5_9bd4e0cf",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-07-20T10:14:58Z",
+      "side": 1,
+      "message": "nit: ... which the rule can match.",
+      "revId": "d71891b87f352e31ded8039d3f54c1d3d3399296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0e6e833_c5e6cf6c",
+        "filename": "extensions/common/api/declarative_net_request.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-07-20T10:14:58Z",
+      "side": 1,
+      "message": "nit: s/triggered/matched/.",
+      "revId": "d71891b87f352e31ded8039d3f54c1d3d3399296",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
