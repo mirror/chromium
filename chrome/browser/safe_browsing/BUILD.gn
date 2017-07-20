@@ -123,6 +123,8 @@ static_library("safe_browsing") {
         "browser_feature_extractor.h",
         "browser_features.cc",
         "browser_features.h",
+        "check_client_download_request.cc",
+        "check_client_download_request.h",
         "chrome_password_protection_service.cc",
         "chrome_password_protection_service.h",
         "chunk_range.cc",
