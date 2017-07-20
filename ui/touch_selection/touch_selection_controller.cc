@@ -479,6 +479,7 @@ void TouchSelectionController::DeactivateInsertion() {
     return;
   DCHECK(insertion_handle_);
   active_status_ = INACTIVE;
+  insertion_handle_->SetVisible(false, TouchHandle::ANIMATION_NONE);
   insertion_handle_->SetEnabled(false);
   client_->OnSelectionEvent(INSERTION_HANDLE_CLEARED);
 }
@@ -530,6 +531,8 @@ void TouchSelectionController::DeactivateSelection() {
   DCHECK(end_selection_handle_);
   LogSelectionEnd();
   longpress_drag_selector_.OnSelectionDeactivated();
+  start_selection_handle_->SetVisible(false, TouchHandle::ANIMATION_NONE);
+  end_selection_handle_->SetVisible(false, TouchHandle::ANIMATION_NONE);
   start_selection_handle_->SetEnabled(false);
   end_selection_handle_->SetEnabled(false);
   active_status_ = INACTIVE;
