@@ -613,13 +613,15 @@ if (is_android) {
 set_defaults("shared_library") {
   configs = default_shared_library_configs
 }
-set_defaults("loadable_module") {
-  configs = default_shared_library_configs
 
+default_loadable_module_configs = default_shared_library_configs
+if (is_android) {
   # loadable_modules are generally used by other libs, not just via JNI.
-  if (is_android) {
-    configs -= [ "//build/config/android:hide_all_but_jni_onload" ]
-  }
+  configs -= [ "//build/config/android:hide_all_but_jni_onload" ]
+}
+
+set_defaults("loadable_module") {
+  configs = default_loadable_module_configs
 }
 
 # ==============================================================================
