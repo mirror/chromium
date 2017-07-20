@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cd4742e_1177277e",
+        "filename": "content/public/test/navigation_simulator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-07-20T09:38:50Z",
+      "side": 1,
+      "message": "I hesitated to use an enum element of content/common/navigation_gesture.h here instead of the bool. I will let you decide, since both are used in the current code.\n\nWe could use:\n    navigation-\u003eSetNavigationGesture(NavigationGestureUser)\n    navigation-\u003eSetNavigationGesture(NavigationGestureAuto)\ninstead of:\n   navigation-\u003eSetHasUserGesture(true)\n   navigation-\u003eSetHasUserGesture(false)",
+      "revId": "381c50ca14b995c9c45154cf0dee9a7f47fb3888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
