@@ -68,6 +68,7 @@ void DocumentLoadTiming::EnsureReferenceTimesSet() {
     reference_wall_time_ = CurrentTime();
   if (!reference_monotonic_time_)
     reference_monotonic_time_ = MonotonicallyIncreasingTime();
+  fprintf(stderr, "DocumentLoadTiming::EnsureReferenceTimesSet %f\n", reference_monotonic_time_);
 }
 
 double DocumentLoadTiming::MonotonicTimeToZeroBasedDocumentTime(

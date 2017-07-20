@@ -19,6 +19,7 @@ AutoAdvancingVirtualTimeDomain::DelayTillNextTask(LazyNow* lazy_now) {
   if (!can_advance_virtual_time_ || !NextScheduledRunTime(&run_time))
     return base::nullopt;
 
+  fprintf(stderr, "AdvanceTo %f\n", (run_time - base::TimeTicks()).InSecondsF());
   AdvanceTo(run_time);
   return base::TimeDelta();  // Makes DoWork post an immediate continuation.
 }

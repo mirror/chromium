@@ -10,6 +10,7 @@
 #include <string>
 
 #include "base/macros.h"
+#include "gin/public/v8_platform.h"
 #include "platform/PlatformExport.h"
 #include "platform/scheduler/base/task_queue.h"
 #include "platform/scheduler/child/web_scheduler.h"
@@ -29,6 +30,7 @@ namespace scheduler {
 
 class RendererSchedulerImpl;
 class CPUTimeBudgetPool;
+class VirtualTimeDomain;
 class WebFrameSchedulerImpl;
 
 class PLATFORM_EXPORT WebViewSchedulerImpl : public WebViewScheduler {
@@ -45,7 +47,8 @@ class PLATFORM_EXPORT WebViewSchedulerImpl : public WebViewScheduler {
   void SetPageVisible(bool page_visible) override;
   std::unique_ptr<WebFrameScheduler> CreateFrameScheduler(
       BlameContext* blame_context) override;
-  void EnableVirtualTime() override;
+  void EnableVirtualTime(
+    base::Optional<base::TimeTicks> initial_virtual_time) override;
   void DisableVirtualTimeForTesting() override;
   bool VirtualTimeAllowedToAdvance() const override;
   void SetVirtualTimePolicy(VirtualTimePolicy virtual_time_policy) override;
@@ -93,6 +96,8 @@ class PLATFORM_EXPORT WebViewSchedulerImpl : public WebViewScheduler {
   static const char* VirtualTimePolicyToString(
       VirtualTimePolicy virtual_time_policy);
 
+  static double GetCurrentVirtualTime();
+
   // Depending on page visibility, either turns throttling off, or schedules a
   // call to enable it after a grace period.
   void UpdateBackgroundThrottlingState();
@@ -102,6 +107,8 @@ class PLATFORM_EXPORT WebViewSchedulerImpl : public WebViewScheduler {
   // number of active connections.
   void UpdateBackgroundBudgetPoolThrottlingState();
 
+  static VirtualTimeDomain* virtual_time_domain_;
+
   std::set<WebFrameSchedulerImpl*> frame_schedulers_;
   std::set<unsigned long> pending_loads_;
   std::set<WebFrameSchedulerImpl*> provisional_loads_;
@@ -110,6 +117,8 @@ class PLATFORM_EXPORT WebViewSchedulerImpl : public WebViewScheduler {
   RendererSchedulerImpl* renderer_scheduler_;
   VirtualTimePolicy virtual_time_policy_;
   RefPtr<WebTaskRunnerImpl> virtual_time_control_task_queue_;
+  WTF::TimeFunction origional_blink_time_function_;
+  gin::V8Platform::TimeFunction origional_v8_time_function_;
   TaskHandle virtual_time_budget_expired_task_handle_;
   int background_parser_count_;
   bool page_visible_;

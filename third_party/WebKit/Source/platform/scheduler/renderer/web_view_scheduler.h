@@ -44,7 +44,11 @@ class PLATFORM_EXPORT WebViewScheduler {
   //
   // |ABCDE                       (virtual time)
   // |-----------------------------> time
-  virtual void EnableVirtualTime() = 0;
+  //
+  // This function also overrides MonotonicallyIncreasingTime for Blink & V8.
+  // If set the virtual time base is initialized to |initial_virtual_time|.
+  virtual void EnableVirtualTime(
+     base::Optional<base::TimeTicks> initial_virtual_time) = 0;
 
   // Disables virtual time. Note that this is only used for testing, because
   // there's no reason to do this in production.

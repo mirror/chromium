@@ -17,6 +17,7 @@
 #include "platform/scheduler/renderer/budget_pool.h"
 #include "platform/scheduler/renderer/renderer_scheduler_impl.h"
 #include "platform/scheduler/renderer/web_frame_scheduler_impl.h"
+#include "platform/wtf/CurrentTime.h"
 
 namespace blink {
 namespace scheduler {
@@ -94,6 +95,8 @@ BackgroundThrottlingSettings GetBackgroundThrottlingSettings() {
 
 }  // namespace
 
+VirtualTimeDomain* WebViewSchedulerImpl::virtual_time_domain_ = nullptr;
+
 WebViewSchedulerImpl::WebViewSchedulerImpl(
     WebScheduler::InterventionReporter* intervention_reporter,
     WebViewScheduler::WebViewSchedulerDelegate* delegate,
@@ -102,6 +105,8 @@ WebViewSchedulerImpl::WebViewSchedulerImpl(
     : intervention_reporter_(intervention_reporter),
       renderer_scheduler_(renderer_scheduler),
       virtual_time_policy_(VirtualTimePolicy::ADVANCE),
+      origional_blink_time_function_(nullptr),
+      origional_v8_time_function_(nullptr),
       background_parser_count_(0),
       page_visible_(true),
       disable_background_timer_throttling_(disable_background_timer_throttling),
@@ -115,9 +120,11 @@ WebViewSchedulerImpl::WebViewSchedulerImpl(
       background_time_budget_pool_(nullptr),
       delegate_(delegate) {
   renderer_scheduler->AddWebViewScheduler(this);
+  fprintf(stderr, "WebViewSchedulerImpl::WebViewSchedulerImpl\n");
 }
 
 WebViewSchedulerImpl::~WebViewSchedulerImpl() {
+  fprintf(stderr, "WebViewSchedulerImpl::~WebViewSchedulerImpl\n");
   // TODO(alexclarke): Find out why we can't rely on the web view outliving the
   // frame.
   for (WebFrameSchedulerImpl* frame_scheduler : frame_schedulers_) {
@@ -127,6 +134,14 @@ WebViewSchedulerImpl::~WebViewSchedulerImpl() {
 
   if (background_time_budget_pool_)
     background_time_budget_pool_->Close();
+
+  if (origional_blink_time_function_)
+    WTF::SetTimeFunctionsForTesting(origional_blink_time_function_);
+
+  if (origional_v8_time_function_) {
+    gin::V8Platform::Get()->SetTimeFunctionsForTesting(
+        origional_v8_time_function_);
+  }
 }
 
 void WebViewSchedulerImpl::SetPageVisible(bool page_visible) {
@@ -169,7 +184,17 @@ void WebViewSchedulerImpl::ReportIntervention(const std::string& message) {
   intervention_reporter_->ReportIntervention(WebString::FromUTF8(message));
 }
 
-void WebViewSchedulerImpl::EnableVirtualTime() {
+// static
+double WebViewSchedulerImpl::GetCurrentVirtualTime() {
+  DCHECK(WebViewSchedulerImpl::virtual_time_domain_);
+  fprintf(stderr, "GetCurrentVirtualTime %f\n",
+      (WebViewSchedulerImpl::virtual_time_domain_->Now() - base::TimeTicks()).InSecondsF());
+  return WebViewSchedulerImpl::virtual_time_domain_->Now().ToInternalValue() /
+         static_cast<double>(base::Time::kMicrosecondsPerSecond);
+}
+
+void WebViewSchedulerImpl::EnableVirtualTime(
+    base::Optional<base::TimeTicks> initial_virtual_time) {
   if (virtual_time_)
     return;
 
@@ -178,9 +203,29 @@ void WebViewSchedulerImpl::EnableVirtualTime() {
       allow_virtual_time_to_advance_);
 
   renderer_scheduler_->EnableVirtualTime();
+  WebViewSchedulerImpl::virtual_time_domain_ =
+      renderer_scheduler_->GetVirtualTimeDomain();
+
+  if (initial_virtual_time) {
+    WebViewSchedulerImpl::virtual_time_domain_->AdvanceTo(
+        *initial_virtual_time);
+  }
+
   virtual_time_control_task_queue_ = WebTaskRunnerImpl::Create(
       renderer_scheduler_->VirtualTimeControlTaskQueue());
   ApplyVirtualTimePolicyToTimers();
+
+  // VirtualTime is a special feature which replaces the regular wall clock with
+  // a programmatic time source. For consistency this needs to be done for Blink
+  // and V8 as well as for the scheduler.
+  origional_blink_time_function_ = WTF::SetTimeFunctionsForTesting(
+      WebViewSchedulerImpl::GetCurrentVirtualTime);
+
+  // TODO(alexclarke): Do we really want to do this? Will that mess up all the
+  // gc tuning?
+  origional_v8_time_function_ =
+      gin::V8Platform::Get()->SetTimeFunctionsForTesting(
+          WebViewSchedulerImpl::GetCurrentVirtualTime);
 }
 
 void WebViewSchedulerImpl::DisableVirtualTimeForTesting() {
@@ -189,7 +234,13 @@ void WebViewSchedulerImpl::DisableVirtualTimeForTesting() {
   virtual_time_ = false;
   renderer_scheduler_->DisableVirtualTimeForTesting();
   virtual_time_control_task_queue_ = nullptr;
+  WebViewSchedulerImpl::virtual_time_domain_ = nullptr;
   ApplyVirtualTimePolicyToTimers();
+  WTF::SetTimeFunctionsForTesting(origional_blink_time_function_);
+  origional_blink_time_function_ = nullptr;
+  gin::V8Platform::Get()->SetTimeFunctionsForTesting(
+      origional_v8_time_function_);
+  origional_v8_time_function_ = nullptr;
 }
 
 void WebViewSchedulerImpl::ApplyVirtualTimePolicyToTimers() {

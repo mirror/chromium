@@ -129,7 +129,7 @@ Response InspectorEmulationAgent::setVirtualTimePolicy(const String& policy,
     web_local_frame_->View()->Scheduler()->SetVirtualTimePolicy(
         WebViewScheduler::VirtualTimePolicy::DETERMINISTIC_LOADING);
   }
-  web_local_frame_->View()->Scheduler()->EnableVirtualTime();
+  web_local_frame_->View()->Scheduler()->EnableVirtualTime(base::nullopt);
 
   if (budget.isJust()) {
     WTF::TimeDelta budget_amount =

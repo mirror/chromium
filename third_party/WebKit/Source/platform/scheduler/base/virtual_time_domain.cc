@@ -54,7 +54,7 @@ void VirtualTimeDomain::AsValueIntoInternal(
 
 void VirtualTimeDomain::AdvanceTo(base::TimeTicks now) {
   base::AutoLock lock(lock_);
-  DCHECK_GE(now, now_);
+  //DCHECK_GE(now, now_);
   now_ = now;
 }
 

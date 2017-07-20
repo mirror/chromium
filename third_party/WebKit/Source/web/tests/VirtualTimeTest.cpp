@@ -51,22 +51,23 @@ class VirtualTimeTest : public SimTest {
     // runloop to busy loop. Disabling virtual time here fixes that.
     WebView().Scheduler()->DisableVirtualTimeForTesting();
   }
+
+  void QuitRunLoop() {
+    WebView().Scheduler()->SetVirtualTimePolicy(
+        WebViewScheduler::VirtualTimePolicy::PAUSE);
+    base::MessageLoop::current()->QuitNow();
+  }
+
+  // Some task queues may have repeating v8 tasks that run forever so we impose
+  // a hard time limit.
+  void RunTasksForPeriodMs(int delay_ms) {
+    Platform::Current()->CurrentThread()->GetWebTaskRunner()->PostDelayedTask(
+        BLINK_FROM_HERE, WTF::Bind(&VirtualTimeTest::QuitRunLoop,
+                                   base::Unretained(this)),
+        TimeDelta::FromMilliseconds(delay_ms));
+    testing::EnterRunLoop();
+  }
 };
-
-namespace {
-void QuitRunLoop() {
-  base::MessageLoop::current()->QuitNow();
-}
-
-// Some task queues may have repeating v8 tasks that run forever so we impose a
-// hard time limit.
-void RunTasksForPeriod(double delay_ms) {
-  Platform::Current()->CurrentThread()->GetWebTaskRunner()->PostDelayedTask(
-      BLINK_FROM_HERE, WTF::Bind(&QuitRunLoop),
-      TimeDelta::FromMillisecondsD(delay_ms));
-  testing::EnterRunLoop();
-}
-}
 
 // http://crbug.com/633321
 #if defined(OS_ANDROID)
@@ -75,7 +76,7 @@ void RunTasksForPeriod(double delay_ms) {
 #define MAYBE_DOMTimersFireInExpectedOrder DOMTimersFireInExpectedOrder
 #endif
 TEST_F(VirtualTimeTest, MAYBE_DOMTimersFireInExpectedOrder) {
-  WebView().Scheduler()->EnableVirtualTime();
+  WebView().Scheduler()->EnableVirtualTime(base::nullopt);
 
   ExecuteJavaScript(
       "var run_order = [];"
@@ -102,7 +103,7 @@ TEST_F(VirtualTimeTest, MAYBE_DOMTimersFireInExpectedOrder) {
 #define MAYBE_SetInterval SetInterval
 #endif
 TEST_F(VirtualTimeTest, MAYBE_SetInterval) {
-  WebView().Scheduler()->EnableVirtualTime();
+  WebView().Scheduler()->EnableVirtualTime(base::nullopt);
 
   ExecuteJavaScript(
       "var run_order = [];"
@@ -115,7 +116,7 @@ TEST_F(VirtualTimeTest, MAYBE_SetInterval) {
       "}, 1000);"
       "setTimeout(function() { run_order.push('timer'); }, 1500);");
 
-  RunTasksForPeriod(12000);
+  RunTasksForPeriodMs(12000);
 
   EXPECT_EQ("9, timer, 8, 7, 6, 5, 4, 3, 2, 1, 0",
             ExecuteJavaScript("run_order.join(', ')"));
@@ -128,7 +129,7 @@ TEST_F(VirtualTimeTest, MAYBE_SetInterval) {
 #define MAYBE_AllowVirtualTimeToAdvance AllowVirtualTimeToAdvance
 #endif
 TEST_F(VirtualTimeTest, MAYBE_AllowVirtualTimeToAdvance) {
-  WebView().Scheduler()->EnableVirtualTime();
+  WebView().Scheduler()->EnableVirtualTime(base::nullopt);
   WebView().Scheduler()->SetVirtualTimePolicy(
       WebViewScheduler::VirtualTimePolicy::PAUSE);
 
@@ -146,7 +147,7 @@ TEST_F(VirtualTimeTest, MAYBE_AllowVirtualTimeToAdvance) {
 
   WebView().Scheduler()->SetVirtualTimePolicy(
       WebViewScheduler::VirtualTimePolicy::ADVANCE);
-  RunTasksForPeriod(1000);
+  RunTasksForPeriodMs(1000);
 
   EXPECT_EQ("c, b, a", ExecuteJavaScript("run_order.join(', ')"));
 }
@@ -161,7 +162,7 @@ TEST_F(VirtualTimeTest, MAYBE_AllowVirtualTimeToAdvance) {
 #endif
 TEST_F(VirtualTimeTest,
        MAYBE_VirtualTimeNotAllowedToAdvanceWhileResourcesLoading) {
-  WebView().Scheduler()->EnableVirtualTime();
+  WebView().Scheduler()->EnableVirtualTime(base::nullopt);
   WebView().Scheduler()->SetVirtualTimePolicy(
       WebViewScheduler::VirtualTimePolicy::DETERMINISTIC_LOADING);
 
@@ -207,7 +208,7 @@ TEST_F(VirtualTimeTest,
 #define MAYBE_DOMTimersSuspended DOMTimersSuspended
 #endif
 TEST_F(VirtualTimeTest, MAYBE_DOMTimersSuspended) {
-  WebView().Scheduler()->EnableVirtualTime();
+  WebView().Scheduler()->EnableVirtualTime(base::nullopt);
 
   // Schedule normal DOM timers to run at 1s and 1.001s in the future.
   ExecuteJavaScript(
@@ -235,6 +236,36 @@ TEST_F(VirtualTimeTest, MAYBE_DOMTimersSuspended) {
   // expired.
   testing::RunPendingTasks();
   EXPECT_EQ("1, 2", ExecuteJavaScript("run_order.join(', ')"));
+}
+
+namespace {
+const char kMainFrame[] = "https://example.com/main.html";
+}
+
+// http://crbug.com/633321
+#if defined(OS_ANDROID)
+#define MAYBE_PerformanceNow DISABLED_PerformanceNow
+#else
+#define MAYBE_PerformanceNow PerformanceNow
+#endif
+TEST_F(VirtualTimeTest, MAYBE_PerformanceNow) {
+  WebView().Scheduler()->SetVirtualTimePolicy(
+      WebViewScheduler::VirtualTimePolicy::PAUSE);
+  WebView().Scheduler()->EnableVirtualTime(base::nullopt);
+
+  // A navigation is required for performance.now to update correctly.
+  SimRequest main(kMainFrame, "text/html");
+  LoadURL(kMainFrame);
+  main.Complete("<html></html>");
+ 
+  EXPECT_EQ("0", ExecuteJavaScript("JSON.stringify(performance.now())"));
+
+  WebView().Scheduler()->SetVirtualTimePolicy(
+      WebViewScheduler::VirtualTimePolicy::ADVANCE);
+  RunTasksForPeriodMs(1000); // 1 virtual second.
+
+  EXPECT_EQ("1000", ExecuteJavaScript(
+      "JSON.stringify(Math.ceil(performance.now()))"));
 }
 
 }  // namespace blink

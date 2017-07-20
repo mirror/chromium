@@ -34,6 +34,9 @@ class GIN_EXPORT V8Platform : public NON_EXPORTED_BASE(v8::Platform) {
   StackTracePrinter GetStackTracePrinter() override;
   v8::TracingController* GetTracingController() override;
 
+  using TimeFunction = double (*)();
+  TimeFunction SetTimeFunctionsForTesting(TimeFunction new_function);
+
  private:
   friend struct base::LazyInstanceTraitsBase<V8Platform>;
 
@@ -42,6 +45,7 @@ class GIN_EXPORT V8Platform : public NON_EXPORTED_BASE(v8::Platform) {
 
   class TracingControllerImpl;
   std::unique_ptr<TracingControllerImpl> tracing_controller_;
+  TimeFunction mock_time_function_for_testing_;
 
   DISALLOW_COPY_AND_ASSIGN(V8Platform);
 };

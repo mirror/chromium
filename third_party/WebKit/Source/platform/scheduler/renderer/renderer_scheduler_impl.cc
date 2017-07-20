@@ -93,6 +93,8 @@ RendererSchedulerImpl::RendererSchedulerImpl(
                         helper_.scheduler_tqm_delegate()->NowTicks()),
       policy_may_need_update_(&any_thread_lock_),
       weak_factory_(this) {
+  fprintf(stderr, "RendererSchedulerImpl::RendererSchedulerImpl\n");
+    
   task_queue_throttler_.reset(new TaskQueueThrottler(this));
   update_policy_closure_ = base::Bind(&RendererSchedulerImpl::UpdatePolicy,
                                       weak_factory_.GetWeakPtr());

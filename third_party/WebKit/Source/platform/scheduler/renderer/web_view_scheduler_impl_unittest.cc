@@ -210,7 +210,7 @@ TEST_F(WebViewSchedulerImplTest, VirtualTime_TimerFastForwarding) {
           ->MonotonicallyIncreasingVirtualTimeSeconds() *
       1000.0;
 
-  web_view_scheduler_->EnableVirtualTime();
+  web_view_scheduler_->EnableVirtualTime(base::nullopt);
 
   web_frame_scheduler_->TimerTaskRunner()->PostDelayedTask(
       BLINK_FROM_HERE,
@@ -251,7 +251,7 @@ TEST_F(WebViewSchedulerImplTest, VirtualTime_LoadingTaskFastForwarding) {
           ->MonotonicallyIncreasingVirtualTimeSeconds() *
       1000.0;
 
-  web_view_scheduler_->EnableVirtualTime();
+  web_view_scheduler_->EnableVirtualTime(base::nullopt);
 
   web_frame_scheduler_->LoadingTaskRunner()->PostDelayedTask(
       BLINK_FROM_HERE,
@@ -285,7 +285,7 @@ TEST_F(WebViewSchedulerImplTest, VirtualTime_LoadingTaskFastForwarding) {
 
 TEST_F(WebViewSchedulerImplTest,
        RepeatingTimer_PageInBackground_MeansNothingForVirtualTime) {
-  web_view_scheduler_->EnableVirtualTime();
+  web_view_scheduler_->EnableVirtualTime(base::nullopt);
   web_view_scheduler_->SetPageVisible(false);
   base::TimeTicks initial_real_time = scheduler_->tick_clock()->NowTicks();
 
@@ -324,7 +324,7 @@ TEST_F(WebViewSchedulerImplTest, VirtualTime_NotAllowedToAdvance) {
   std::vector<int> run_order;
 
   web_view_scheduler_->SetVirtualTimePolicy(VirtualTimePolicy::PAUSE);
-  web_view_scheduler_->EnableVirtualTime();
+  web_view_scheduler_->EnableVirtualTime(base::nullopt);
 
   web_frame_scheduler_->TimerTaskRunner()->PostTask(
       BLINK_FROM_HERE,
@@ -354,7 +354,7 @@ TEST_F(WebViewSchedulerImplTest, VirtualTime_AllowedToAdvance) {
   std::vector<int> run_order;
 
   web_view_scheduler_->SetVirtualTimePolicy(VirtualTimePolicy::ADVANCE);
-  web_view_scheduler_->EnableVirtualTime();
+  web_view_scheduler_->EnableVirtualTime(base::nullopt);
 
   web_frame_scheduler_->TimerTaskRunner()->PostTask(
       BLINK_FROM_HERE,
@@ -406,7 +406,7 @@ TEST_F(WebViewSchedulerImplTest, VirtualTimeSettings_NewWebFrameScheduler) {
   std::vector<int> run_order;
 
   web_view_scheduler_->SetVirtualTimePolicy(VirtualTimePolicy::PAUSE);
-  web_view_scheduler_->EnableVirtualTime();
+  web_view_scheduler_->EnableVirtualTime(base::nullopt);
 
   std::unique_ptr<WebFrameSchedulerImpl> web_frame_scheduler =
       web_view_scheduler_->CreateWebFrameSchedulerImpl(nullptr);
@@ -615,7 +615,7 @@ TEST_F(WebViewSchedulerImplTest, SuspendTimersWhileVirtualTimeIsPaused) {
   std::unique_ptr<WebFrameSchedulerImpl> web_frame_scheduler =
       web_view_scheduler_->CreateWebFrameSchedulerImpl(nullptr);
   web_view_scheduler_->SetVirtualTimePolicy(VirtualTimePolicy::PAUSE);
-  web_view_scheduler_->EnableVirtualTime();
+  web_view_scheduler_->EnableVirtualTime(base::nullopt);
 
   web_frame_scheduler->TimerTaskRunner()->PostTask(
       BLINK_FROM_HERE,
@@ -639,7 +639,7 @@ TEST_F(WebViewSchedulerImplTest, VirtualTimeBudgetExhaustedCallback) {
           ->MonotonicallyIncreasingVirtualTimeSeconds() *
       1000.0;
 
-  web_view_scheduler_->EnableVirtualTime();
+  web_view_scheduler_->EnableVirtualTime(base::nullopt);
 
   web_frame_scheduler_->TimerTaskRunner()->PostDelayedTask(
       BLINK_FROM_HERE,

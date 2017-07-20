@@ -76,7 +76,9 @@ PerformanceBase::PerformanceBase(double time_origin,
       deliver_observations_timer_(
           std::move(task_runner),
           this,
-          &PerformanceBase::DeliverObservationsTimerFired) {}
+          &PerformanceBase::DeliverObservationsTimerFired) {
+  fprintf(stderr, "PerformanceBase::PerformanceBas %f\n", time_origin);
+}
 
 PerformanceBase::~PerformanceBase() {}
 
@@ -517,6 +519,7 @@ DOMHighResTimeStamp PerformanceBase::MonotonicTimeToDOMHighResTimeStamp(
     double time_origin,
     double monotonic_time,
     bool allow_negative_value) {
+  fprintf(stderr, "MonotonicTimeToDOMHighResTimeStamp %f %f\n", time_origin, monotonic_time);
   // Avoid exposing raw platform timestamps.
   if (!monotonic_time || !time_origin)
     return 0.0;

@@ -191,7 +191,9 @@ class V8Platform::TracingControllerImpl : public v8::TracingController {
 // static
 V8Platform* V8Platform::Get() { return g_v8_platform.Pointer(); }
 
-V8Platform::V8Platform() : tracing_controller_(new TracingControllerImpl) {}
+V8Platform::V8Platform()
+    : tracing_controller_(new TracingControllerImpl),
+      mock_time_function_for_testing_(nullptr) {}
 
 V8Platform::~V8Platform() {}
 
@@ -253,6 +255,8 @@ bool V8Platform::IdleTasksEnabled(v8::Isolate* isolate) {
 }
 
 double V8Platform::MonotonicallyIncreasingTime() {
+  if (mock_time_function_for_testing_)
+    return mock_time_function_for_testing_();
   return base::TimeTicks::Now().ToInternalValue() /
       static_cast<double>(base::Time::kMicrosecondsPerSecond);
 }
@@ -263,6 +267,13 @@ v8::TracingController* V8Platform::GetTracingController() {
 
 v8::Platform::StackTracePrinter V8Platform::GetStackTracePrinter() {
   return PrintStackTrace;
+}
+
+V8Platform::TimeFunction V8Platform::SetTimeFunctionsForTesting(
+    TimeFunction new_function) {
+  TimeFunction old_function = mock_time_function_for_testing_;
+  mock_time_function_for_testing_ = new_function;
+  return old_function;
 }
 
 }  // namespace gin
