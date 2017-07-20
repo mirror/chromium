@@ -1,0 +1,251 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a1093bb_e5c6a916",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/SignInPreference.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-20T17:10:00Z",
+      "side": 1,
+      "message": "This code is called in both branches. Can you pull it out of the if statement?",
+      "range": {
+        "startLine": 144,
+        "startChar": 12,
+        "endLine": 144,
+        "endChar": 67
+      },
+      "revId": "a39dc7f5ac33cac0ff922be412e2cee4d94aa932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecd02a6b_7ff2998c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-20T17:10:00Z",
+      "side": 1,
+      "message": "\"Mediator\" seems a bit like an iOS-ism :) I can\u0027t find another reference to that term in our Android code. Maybe ...Coordinator or ...Controller?",
+      "range": {
+        "startLine": 29,
+        "startChar": 24,
+        "endLine": 29,
+        "endChar": 32
+      },
+      "revId": "a39dc7f5ac33cac0ff922be412e2cee4d94aa932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e22c749c_fd000302",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-20T17:10:00Z",
+      "side": 1,
+      "message": "Please document public methods with Javadoc. Alternatively, just use a Runnable.",
+      "range": {
+        "startLine": 33,
+        "startChar": 41,
+        "endLine": 33,
+        "endChar": 58
+      },
+      "revId": "a39dc7f5ac33cac0ff922be412e2cee4d94aa932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e839100_88d6e306",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-20T17:10:00Z",
+      "side": 1,
+      "message": "Nit: I think |num...| is more common (and one character shorter!)",
+      "range": {
+        "startLine": 47,
+        "startChar": 12,
+        "endLine": 47,
+        "endChar": 16
+      },
+      "revId": "a39dc7f5ac33cac0ff922be412e2cee4d94aa932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53a8e65c_cbe9431d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-20T17:10:00Z",
+      "side": 1,
+      "message": "Nit: Don\u0027t align parameter descriptions.",
+      "range": {
+        "startLine": 58,
+        "startChar": 31,
+        "endLine": 58,
+        "endChar": 32
+      },
+      "revId": "a39dc7f5ac33cac0ff922be412e2cee4d94aa932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f78b9fb3_d4e47e4b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-20T17:10:00Z",
+      "side": 1,
+      "message": "This method could be static.",
+      "revId": "a39dc7f5ac33cac0ff922be412e2cee4d94aa932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76dfe0cf_0e968bb2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-20T17:10:00Z",
+      "side": 1,
+      "message": "Can you directly use setImageResource()?",
+      "range": {
+        "startLine": 120,
+        "startChar": 32,
+        "endLine": 120,
+        "endChar": 40
+      },
+      "revId": "a39dc7f5ac33cac0ff922be412e2cee4d94aa932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb39a4f2_0e9de5fe",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-20T17:10:00Z",
+      "side": 1,
+      "message": "You should also be able to set the text resource directly here.",
+      "range": {
+        "startLine": 124,
+        "startChar": 31,
+        "endLine": 124,
+        "endChar": 38
+      },
+      "revId": "a39dc7f5ac33cac0ff922be412e2cee4d94aa932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d836595_be8e6430",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-20T17:10:00Z",
+      "side": 1,
+      "message": "What if the image isn\u0027t in the cache yet? Wouldn\u0027t you want to subscribe this object to as an observer of the cache?",
+      "range": {
+        "startLine": 136,
+        "startChar": 32,
+        "endLine": 136,
+        "endChar": 72
+      },
+      "revId": "a39dc7f5ac33cac0ff922be412e2cee4d94aa932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c5d1976_c492d9d9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-20T17:10:00Z",
+      "side": 1,
+      "message": "getDimensionPixelSize()?",
+      "range": {
+        "startLine": 165,
+        "startChar": 53,
+        "endLine": 165,
+        "endChar": 76
+      },
+      "revId": "a39dc7f5ac33cac0ff922be412e2cee4d94aa932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bef796b8_0fd72ca1",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1394,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-20T17:10:00Z",
+      "side": 1,
+      "message": "\"Zine\" is not used public-facing. The feature is called content suggestions.",
+      "range": {
+        "startLine": 1394,
+        "startChar": 32,
+        "endLine": 1394,
+        "endChar": 36
+      },
+      "revId": "a39dc7f5ac33cac0ff922be412e2cee4d94aa932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
