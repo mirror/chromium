@@ -68,10 +68,10 @@ class CHROME_DBUS_EXPORT ObjectProxy
 
   // Called when an error response is returned or no response is returned.
   // Used for CallMethodWithErrorCallback().
-  typedef base::Callback<void(ErrorResponse*)> ErrorCallback;
+  typedef base::OnceCallback<void(ErrorResponse*)> ErrorCallback;
 
   // Called when the response is returned. Used for CallMethod().
-  typedef base::Callback<void(Response*)> ResponseCallback;
+  typedef base::OnceCallback<void(Response*)> ResponseCallback;
 
   // Called when a signal is received. Signal* is the incoming signal.
   typedef base::Callback<void (Signal*)> SignalCallback;
@@ -201,38 +201,41 @@ class CHROME_DBUS_EXPORT ObjectProxy
  private:
   friend class base::RefCountedThreadSafe<ObjectProxy>;
 
+  using CallMethodInternalCallback =
+      base::OnceCallback<void(Response* response,
+                              ErrorResponse* error_response)>;
+
   // Struct of data we'll be passing from StartAsyncMethodCall() to
   // OnPendingCallIsCompleteThunk().
   struct OnPendingCallIsCompleteData {
     OnPendingCallIsCompleteData(ObjectProxy* in_object_proxy,
-                                ResponseCallback in_response_callback,
-                                ErrorCallback error_callback,
+                                CallMethodInternalCallback callback,
                                 base::TimeTicks start_time);
     ~OnPendingCallIsCompleteData();
 
     ObjectProxy* object_proxy;
-    ResponseCallback response_callback;
-    ErrorCallback error_callback;
+    CallMethodInternalCallback callback;
     base::TimeTicks start_time;
   };
+
+  void CallMethodInternal(MethodCall* method_call,
+                          int timeout_ms,
+                          CallMethodInternalCallback callback);
 
   // Starts the async method call. This is a helper function to implement
   // CallMethod().
   void StartAsyncMethodCall(int timeout_ms,
                             DBusMessage* request_message,
-                            ResponseCallback response_callback,
-                            ErrorCallback error_callback,
+                            CallMethodInternalCallback callback,
                             base::TimeTicks start_time);
 
   // Called when the pending call is complete.
   void OnPendingCallIsComplete(DBusPendingCall* pending_call,
-                               ResponseCallback response_callback,
-                               ErrorCallback error_callback,
+                               CallMethodInternalCallback callback,
                                base::TimeTicks start_time);
 
   // Runs the response callback with the given response object.
-  void RunResponseCallback(ResponseCallback response_callback,
-                           ErrorCallback error_callback,
+  void RunResponseCallback(CallMethodInternalCallback callback,
                            base::TimeTicks start_time,
                            DBusMessage* response_message);
 
@@ -272,11 +275,12 @@ class CHROME_DBUS_EXPORT ObjectProxy
                             const base::StringPiece& error_name,
                             const base::StringPiece& error_message) const;
 
-  // Used as ErrorCallback by CallMethod().
-  void OnCallMethodError(const std::string& interface_name,
-                         const std::string& method_name,
-                         ResponseCallback response_callback,
-                         ErrorResponse* error_response);
+  // Used as CallMethodInternalCallback by CallMethod().
+  void OnCallMethod(const std::string& interface_name,
+                    const std::string& method_name,
+                    ResponseCallback response_callback,
+                    Response* response,
+                    ErrorResponse* error_response);
 
   // Adds the match rule to the bus and associate the callback with the signal.
   bool AddMatchRuleWithCallback(const std::string& match_rule,
