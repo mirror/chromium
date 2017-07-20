@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "176c53cb_c7d56bae",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-07-20T18:42:42Z",
+      "side": 1,
+      "message": "What about changing this to time_scanning_started_ and the other time_cleanup_started_",
+      "range": {
+        "startLine": 427,
+        "startChar": 2,
+        "endLine": 427,
+        "endChar": 32
+      },
+      "revId": "7a97ad8564e5d8d9f3c620b61e0e12988a468f34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d4afacc_437b7da4",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-07-20T18:42:42Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we also log this if the IPC connection is broken?",
+      "range": {
+        "startLine": 461,
+        "startChar": 57,
+        "endLine": 461,
+        "endChar": 0
+      },
+      "revId": "7a97ad8564e5d8d9f3c620b61e0e12988a468f34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "904b085d_17926c36",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-07-20T18:42:42Z",
+      "side": 1,
+      "message": "As discussed, please use:\n\n    UMA_HISTOGRAM_CUSTOM_TIMES(\n        \"SoftwareReporter.Cleaner.CleaningTime\",\n        base::Time::Now() - time_cleaning_started_,\n        base::TimeDelta::FromMilliseconds(1),\n        base::TimeDelta::FromHours(1),\n        100);",
+      "range": {
+        "startLine": 526,
+        "startChar": 77,
+        "endLine": 526,
+        "endChar": 0
+      },
+      "revId": "7a97ad8564e5d8d9f3c620b61e0e12988a468f34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
