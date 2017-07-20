@@ -6,9 +6,15 @@
 
 #include "apps/launcher.h"
 #include "base/bind.h"
+#include "base/feature_list.h"
 #include "base/logging.h"
 #include "chrome/browser/prerender/prerender_contents.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/ui/browser_finder.h"
+#include "chrome/browser/ui/extensions/app_launch_params.h"
+#include "chrome/browser/ui/extensions/application_launch.h"
+#include "chrome/browser/web_applications/web_app.h"
+#include "chrome/common/chrome_features.h"
 #include "chrome/common/extensions/api/url_handlers/url_handlers_parser.h"
 #include "components/navigation_interception/intercept_navigation_throttle.h"
 #include "components/navigation_interception/navigation_params.h"
@@ -35,6 +41,16 @@ bool LaunchAppWithUrl(
     const navigation_interception::NavigationParams& params) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
+  LOG(ERROR) << "0";
+
+  // Redirecting for Bookmark Apps is hidden behind a feature flag.
+  if (app->from_bookmark() &&
+      !base::FeatureList::IsEnabled(features::kDesktopPWAWindowing)) {
+    return false;
+  }
+
+  LOG(ERROR) << "1";
+
   // Redirect top-level navigations only. This excludes iframes and webviews
   // in particular.
   if (source->IsSubframe()) {
@@ -42,26 +58,81 @@ bool LaunchAppWithUrl(
     return false;
   }
 
+  LOG(ERROR) << "2";
+
   // If prerendering, don't launch the app but abort the navigation.
   prerender::PrerenderContents* prerender_contents =
       prerender::PrerenderContents::FromWebContents(source);
+  LOG(ERROR) << "3";
+
   if (prerender_contents) {
+    LOG(ERROR) << "4";
+
     prerender_contents->Destroy(prerender::FINAL_STATUS_NAVIGATION_INTERCEPTED);
+    LOG(ERROR) << "5";
+
     return true;
   }
 
+  LOG(ERROR) << "6";
+
   // These are guaranteed by CreateThrottleFor below.
   DCHECK(UrlHandlers::CanExtensionHandleUrl(app.get(), params.url()));
+
+  LOG(ERROR) << "7";
+
   DCHECK(!params.is_post());
+
+  LOG(ERROR) << "8";
 
   Profile* profile =
       Profile::FromBrowserContext(source->GetBrowserContext());
 
+  LOG(ERROR) << "9";
+
+  if (app->from_bookmark()) {
+    LOG(ERROR) << "10";
+
+    // If we are in the same app that is navigating no need to open a new
+    // app window.
+    Browser* browser = chrome::FindBrowserWithWebContents(source);
+    LOG(ERROR) << "11";
+
+    if (browser->app_name() ==
+        web_app::GenerateApplicationNameFromExtensionId(app->id())) {
+      LOG(ERROR) << "12";
+
+      return false;
+    } else {
+      LOG(ERROR) << "13";
+
+      AppLaunchParams launch_params(profile, app.get(),
+                                    extensions::LAUNCH_CONTAINER_WINDOW,
+                                    WindowOpenDisposition::CURRENT_TAB,
+                                    extensions::SOURCE_CHROME_INTERNAL);
+      LOG(ERROR) << "14";
+
+      launch_params.override_url = params.url();
+      LOG(ERROR) << "15";
+
+      OpenApplication(launch_params);
+      LOG(ERROR) << "16";
+
+      return true;
+    }
+  }
+
+  LOG(ERROR) << "17";
+
   DVLOG(1) << "Launching app handler with URL: "
            << params.url().spec() << " -> "
            << app->name() << "(" << app->id() << "):" << handler_id;
+  LOG(ERROR) << "18";
+
   apps::LaunchPlatformAppWithUrl(
       profile, app.get(), handler_id, params.url(), params.referrer().url);
+
+  LOG(ERROR) << "19";
 
   return true;
 }
