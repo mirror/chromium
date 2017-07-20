@@ -51,10 +51,7 @@ class DecryptContextImpl : public DecryptContext {
  private:
   CastKeySystem key_system_;
 
-  // TODO(smcgruer): Restore macro usage next public API release.
-  // DISALLOW_COPY_AND_ASSIGN(DecryptContextImpl);
-  DecryptContextImpl(const DecryptContextImpl&) = delete;
-  void operator=(const DecryptContextImpl&) = delete;
+  DISALLOW_COPY_AND_ASSIGN(DecryptContextImpl);
 };
 
 }  // namespace media
