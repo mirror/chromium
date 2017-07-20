@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5504feb_383f1436",
+        "filename": "chrome/browser/chromeos/net/network_portal_detector_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-20T23:38:10Z",
+      "side": 1,
+      "message": "Why not move these to inside GetRandomizedTestURL?",
+      "revId": "b6fc802f25caa62356292de9e0157da391697883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "690eba13_b4d53f72",
+        "filename": "chrome/browser/chromeos/net/network_portal_detector_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-20T23:38:10Z",
+      "side": 1,
+      "message": "Return GURL?",
+      "revId": "b6fc802f25caa62356292de9e0157da391697883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbb8ba5d_3fed697f",
+        "filename": "chrome/browser/chromeos/net/network_portal_detector_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-20T23:38:10Z",
+      "side": 1,
+      "message": "nit const",
+      "revId": "b6fc802f25caa62356292de9e0157da391697883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
