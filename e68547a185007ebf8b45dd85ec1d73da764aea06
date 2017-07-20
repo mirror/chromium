@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a368f891_9def2b4d",
+        "filename": "ios/chrome/browser/ui/qr_scanner/requirements/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-20T08:44:49Z",
+      "side": 1,
+      "message": "Should this not be empty?",
+      "range": {
+        "startLine": 7,
+        "startChar": 13,
+        "endLine": 7,
+        "endChar": 14
+      },
+      "revId": "e68547a185007ebf8b45dd85ec1d73da764aea06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c6f6cee_49e13a7b",
+        "filename": "ios/chrome/browser/ui/qr_scanner/requirements/qr_scanner_presenting.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-20T08:44:49Z",
+      "side": 1,
+      "message": "Comments here and elsewhere where there aren\u0027t any.",
+      "range": {
+        "startLine": 10,
+        "startChar": 8,
+        "endLine": 10,
+        "endChar": 38
+      },
+      "revId": "e68547a185007ebf8b45dd85ec1d73da764aea06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
