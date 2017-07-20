@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "13dc983a_1b07eead",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-20T17:52:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d95496e0_c7ab1706",
+      "range": {
+        "startLine": 142,
+        "startChar": 71,
+        "endLine": 142,
+        "endChar": 73
+      },
+      "revId": "b8cce09ea35cbf8a5eca2fb25326f2727a5b3b0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73f9598f_31198a8c",
         "filename": "chrome/browser/metrics/process_memory_metrics_emitter.cc",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "b8cce09ea35cbf8a5eca2fb25326f2727a5b3b0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bc49371_7416a0d3",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-20T17:52:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73f9598f_31198a8c",
+      "range": {
+        "startLine": 153,
+        "startChar": 2,
+        "endLine": 153,
+        "endChar": 25
+      },
+      "revId": "b8cce09ea35cbf8a5eca2fb25326f2727a5b3b0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c52cc3bc_d007b2d3",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-20T17:52:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0510db38_187a56ba",
+      "range": {
+        "startLine": 213,
+        "startChar": 8,
+        "endLine": 213,
+        "endChar": 51
+      },
+      "revId": "b8cce09ea35cbf8a5eca2fb25326f2727a5b3b0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "831101f2_ea30864c",
         "filename": "chrome/browser/metrics/process_memory_metrics_emitter.h",
         "patchSetId": 12
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "0abde2c7_e8a61dc8",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-20T17:52:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "831101f2_ea30864c",
+      "range": {
+        "startLine": 69,
+        "startChar": 19,
+        "endLine": 69,
+        "endChar": 30
+      },
+      "revId": "b8cce09ea35cbf8a5eca2fb25326f2727a5b3b0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a7a1090_895c75fc",
         "filename": "chrome/browser/metrics/process_memory_metrics_emitter_browsertest.cc",
         "patchSetId": 12
@@ -105,6 +201,30 @@
       "writtenOn": "2017-07-20T17:22:12Z",
       "side": 1,
       "message": "is there any way to test that we did actually created the UKM builder and feed it with data?",
+      "range": {
+        "startLine": 59,
+        "startChar": 7,
+        "endLine": 59,
+        "endChar": 27
+      },
+      "revId": "b8cce09ea35cbf8a5eca2fb25326f2727a5b3b0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a12306d_89169220",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-20T17:52:21Z",
+      "side": 1,
+      "message": "I already pinged the UKM team to start this discussion. I\u0027ll need to make some changes to the browser test harness, probably.",
+      "parentUuid": "0a7a1090_895c75fc",
       "range": {
         "startLine": 59,
         "startChar": 7,
