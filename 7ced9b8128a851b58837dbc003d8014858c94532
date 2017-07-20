@@ -22,6 +22,30 @@
       "revId": "7ced9b8128a851b58837dbc003d8014858c94532",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "256f041d_68ced4e8",
+        "filename": "chrome/browser/chrome_navigation_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-20T17:33:44Z",
+      "side": 1,
+      "message": "Interesting, thanks for pointing this out!  In this case, the kSignInProcessIsolation feature is only checked on startup when initializing the isolated origin list, as part of PreCreateThreads (I tried to do it as soon as possible after the FeatureList singleton was initialized).  So, future modifications to the FeatureList singleton here won\u0027t affect the decision of whether or not a process swap is required: we will just always swap processes for accounts.google.com in this test (since it enables the feature in SignInIsolationBrowserTest::SetUp(), and the isolated origin list won\u0027t change afterward).  The runtime FeatureList singleton modification *will* affect which synthetic trial is in place, since that\u0027s currently set up on each navigation, and this is what this test relies on, but those modifications are sequentially ordered with navigations on the UI thread.  So I *think* there\u0027s no race.\n\nSince you\u0027ve looked at a lot of these issues in 722409, would you mind also reviewing this?  I\u0027m not sure if reinitializing the global FeatureList once the test is already running is considered a bad practice - if so, maybe there\u0027s a better way to structure it? (E.g., I thought about parameterizing the test and doing the four different kinds of setup in SetUp(); it just seemed a bit more complicated than this approach.)",
+      "parentUuid": "c7596e47_7674a42f",
+      "range": {
+        "startLine": 580,
+        "startChar": 4,
+        "endLine": 580,
+        "endChar": 43
+      },
+      "revId": "7ced9b8128a851b58837dbc003d8014858c94532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
