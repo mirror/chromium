@@ -1,0 +1,28 @@
+executable("ct_mapper") {
+  testonly = true
+  sources = [
+    "ct_mapper_main.cc",
+    "entry.cc",
+    "entry.h",
+    "entry_reader.cc",
+    "entry_reader.h",
+    "mapper.cc",
+    "mapper.h",
+    "metrics.cc",
+    "metrics.h",
+    "my_visitor.cc",
+    "my_visitor.h",
+    "visitor.h",
+    "write_results.cc",
+    "write_results.h",
+  ]
+
+  # TODO(jschuh): crbug.com/167187 fix size_t to int truncations.
+  configs += [ "//build/config/compiler:no_size_t_to_int_warning" ]
+
+  deps = [
+    "//net",
+    "//base",
+  ]
+}
+
