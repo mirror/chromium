@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "2accab8a_1131ff96",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-20T23:15:25Z",
+      "side": 1,
+      "message": "The two CSS rules added here can be removed if a |primary-toggle| CSS class is added. See the CSS rules at [1] and an example usage at [2].\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/resources/settings/settings_shared_css.html?q\u003dsettings_shared_css.html\u0026l\u003d102-109\n[2] https://cs.chromium.org/chromium/src/chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.html?l\u003d23",
+      "revId": "d8ed9778607d86be44f92142c4cd83a444084f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f3eaa60_96b3121a",
         "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.js",
         "patchSetId": 8
