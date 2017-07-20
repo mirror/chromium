@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbf698ed_bf6977a4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-20T02:49:06Z",
+      "side": 1,
+      "message": "Not sure it\u0027s important to mention the intentionally different default because the comment already covers the reason why.",
+      "range": {
+        "startLine": 66,
+        "startChar": 21,
+        "endLine": 66,
+        "endChar": 22
+      },
+      "revId": "6322016950bfd1a53cfda0e92c3bcbd44855e6f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7331dd1e_5d903401",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-20T02:49:06Z",
+      "side": 1,
+      "message": "Nit: add this to the end, it seems out of place in the middle.",
+      "range": {
+        "startLine": 60,
+        "startChar": 20,
+        "endLine": 60,
+        "endChar": 36
+      },
+      "revId": "6322016950bfd1a53cfda0e92c3bcbd44855e6f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e016022c_3044fbc5",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/webapps/WebApkInfoTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-20T02:49:06Z",
+      "side": 1,
+      "message": "Similarly, not sure if you need to call out the different default value here.",
+      "revId": "6322016950bfd1a53cfda0e92c3bcbd44855e6f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
