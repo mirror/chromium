@@ -160,7 +160,7 @@ std::vector<std::string> IdentityAPI::GetAccounts() const {
   const std::vector<gaia::AccountIds> ids = account_tracker_.GetAccounts();
   std::vector<std::string> gaia_ids;
 
-  if (switches::IsExtensionsMultiAccount()) {
+  if (signin::IsExtensionsMultiAccount()) {
     for (std::vector<gaia::AccountIds>::const_iterator it = ids.begin();
          it != ids.end();
          ++it) {

@@ -39,6 +39,7 @@
 #include "components/policy/core/common/cloud/policy_header_service.h"
 #include "components/policy/core/common/policy_switches.h"
 #include "components/prefs/pref_service.h"
+#include "components/signin/core/browser/scoped_account_consistency.h"
 #include "components/signin/core/browser/signin_header_helper.h"
 #include "components/signin/core/common/profile_management_switches.h"
 #include "components/signin/core/common/signin_pref_names.h"
@@ -473,8 +474,8 @@ IN_PROC_BROWSER_TEST_F(ChromeResourceDispatcherHostDelegateBrowserTest,
                        MirrorRequestHeader) {
   // Enable account consistency so that mirror actually sets the
   // X-Chrome-Connected header in requests to Google.
-  switches::EnableAccountConsistencyMirrorForTesting(
-      base::CommandLine::ForCurrentProcess());
+  signin::ScopedAccountConsistency scoped_mirror(
+      signin::AccountConsistencyMethod::kMirror, false);
 
   browser()->profile()->GetPrefs()->SetString(prefs::kGoogleServicesUsername,
                                               "user@gmail.com");
