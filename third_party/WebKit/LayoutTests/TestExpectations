@@ -1216,7 +1216,7 @@ crbug.com/392706 virtual/threaded/animations/play-state-initially-paused.html [ 
 crbug.com/743009 [ Win ] virtual/threaded/animations/responsive/zoom-responsive-transform-animation.html [ Pass Timeout ]
 
 # Part of a larger issue referenced in the bug. This specific issue will be fixed shortly.
-crbug.com/408159 accessibility/is-ignored-change-sends-notification.html [ Timeout ]
+crbug.com/408159 [ Mac10.11 ] accessibility/is-ignored-change-sends-notification.html [ Timeout ]
 
 crbug.com/504706 [ Linux ] inspector/profiler/heap-snapshot-containment-expansion-preserved-when-sorting.html [ Pass ]
 crbug.com/504706 [ Linux ] inspector/profiler/heap-snapshot-containment-sorting.html [ Pass ]
