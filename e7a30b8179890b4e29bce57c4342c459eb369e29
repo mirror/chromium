@@ -34,6 +34,24 @@
       "revId": "e7a30b8179890b4e29bce57c4342c459eb369e29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab9faa65_41668b0b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-20T21:14:19Z",
+      "side": 1,
+      "message": "This CL forms the basis for https://chromium-review.googlesource.com/c/578169/, which has a bug. And it gives us the possibility to exit VR due to other unsupported features we may discover in the future.",
+      "parentUuid": "b636f6c2_6e08cad3",
+      "revId": "e7a30b8179890b4e29bce57c4342c459eb369e29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
