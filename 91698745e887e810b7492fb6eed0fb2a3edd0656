@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "364462df_0acd0967",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-20T18:17:13Z",
+      "side": 1,
+      "message": "Done\n\nI will go with DCHECK. However, IMHO, as long as the test coverage doesn\u0027t simulate the use case accurately when users build relationship between CUs, then it\u0027s unlikely that we will catch it in trybot.",
+      "parentUuid": "bf509cdc_74771dec",
+      "revId": "91698745e887e810b7492fb6eed0fb2a3edd0656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce0167e9_950c7239",
         "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.cc",
         "patchSetId": 2
@@ -57,6 +75,30 @@
       "revId": "91698745e887e810b7492fb6eed0fb2a3edd0656",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c71f5313_75739e30",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-20T18:17:13Z",
+      "side": 1,
+      "message": "Ack\n\nI think both are fine. IsAncestor is \"is |unit| an ancestor of |this|. Thus ACK here, same applies below.",
+      "parentUuid": "ce0167e9_950c7239",
+      "range": {
+        "startLine": 230,
+        "startChar": 27,
+        "endLine": 230,
+        "endChar": 37
+      },
+      "revId": "91698745e887e810b7492fb6eed0fb2a3edd0656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -83,6 +125,30 @@
     },
     {
       "key": {
+        "uuid": "d12d0303_cc358836",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-20T18:17:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ec9f503c_be69cc02",
+      "range": {
+        "startLine": 240,
+        "startChar": 27,
+        "endLine": 240,
+        "endChar": 39
+      },
+      "revId": "91698745e887e810b7492fb6eed0fb2a3edd0656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4acfb307_f2b78728",
         "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl_unittest.cc",
         "patchSetId": 2
@@ -94,6 +160,24 @@
       "writtenOn": "2017-07-20T14:38:49Z",
       "side": 1,
       "message": "Are you going to change the tab-frame relationship in the next CL?",
+      "revId": "91698745e887e810b7492fb6eed0fb2a3edd0656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5dfc46f_47b26f20",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-20T18:17:13Z",
+      "side": 1,
+      "message": "Isn\u0027t this already the correct relationship? Without the fix this test will fail.",
+      "parentUuid": "4acfb307_f2b78728",
       "revId": "91698745e887e810b7492fb6eed0fb2a3edd0656",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
