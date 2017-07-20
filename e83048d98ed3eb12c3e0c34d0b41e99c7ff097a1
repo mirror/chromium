@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6bfedd7_28e12bbd",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-07-20T01:08:21Z",
+      "side": 1,
+      "message": "better making one single constant in app_list_constants",
+      "revId": "e83048d98ed3eb12c3e0c34d0b41e99c7ff097a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
