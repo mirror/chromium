@@ -22,6 +22,47 @@
       "revId": "eb5841064436d028daea21c86a0dd07a01c65ccb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67fce942_f4612a26",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-20T16:00:55Z",
+      "side": 1,
+      "message": "This overrides public method, so specifically in Chrome, I don\u0027t think we have benefit to hide these in non-public section.\nActually it can access by casting:\n\nArcPlayStoreSearchProvider p;\nstatic_cast\u003cSearchProvider\u0026\u003e(p).Start(...);\n\nThus, IMHO, there\u0027s no much benefit to declare friend, which requires proxy method in test fixture (or FRIEND_TEST macro).\n\nPutting them in \"protected\" looks somehow weird, too, because this class is not designed to be inherited.\nNote: I think it\u0027s ok to put Stop() here, as well.\n\nWDYT?",
+      "parentUuid": "7933543f_ce10f128",
+      "range": {
+        "startLine": 27,
+        "startChar": 7,
+        "endLine": 27,
+        "endChar": 12
+      },
+      "revId": "eb5841064436d028daea21c86a0dd07a01c65ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a39ad8c_baf4071c",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-20T16:00:55Z",
+      "side": 1,
+      "message": "nit: Let\u0027s delay to declare this until it is used. So at L76.",
+      "revId": "eb5841064436d028daea21c86a0dd07a01c65ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
