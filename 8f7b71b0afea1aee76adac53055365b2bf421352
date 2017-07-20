@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "7d10cc8f_da9e557c",
+        "filename": "cc/trees/layer_tree_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1024,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-20T16:16:39Z",
+      "side": 1,
+      "message": "height -\u003e top_height",
+      "range": {
+        "startLine": 1024,
+        "startChar": 51,
+        "endLine": 1024,
+        "endChar": 57
+      },
+      "revId": "8f7b71b0afea1aee76adac53055365b2bf421352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8199edec_42a80f58",
+        "filename": "cc/trees/layer_tree_host.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-20T16:16:39Z",
+      "side": 1,
+      "message": "height -\u003e top_height",
+      "range": {
+        "startLine": 290,
+        "startChar": 38,
+        "endLine": 290,
+        "endChar": 44
+      },
+      "revId": "8f7b71b0afea1aee76adac53055365b2bf421352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66df9767_ccb7c3fb",
+        "filename": "cc/trees/layer_tree_host.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-20T16:16:39Z",
+      "side": 1,
+      "message": "We should remove this method and replace callers to use the above one.",
+      "range": {
+        "startLine": 292,
+        "startChar": 7,
+        "endLine": 292,
+        "endChar": 44
+      },
+      "revId": "8f7b71b0afea1aee76adac53055365b2bf421352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d8a3a00_de6918a0",
+        "filename": "content/renderer/gpu/render_widget_compositor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-20T16:16:39Z",
+      "side": 1,
+      "message": "height -\u003e top_height (in .cc too)",
+      "range": {
+        "startLine": 181,
+        "startChar": 38,
+        "endLine": 181,
+        "endChar": 44
+      },
+      "revId": "8f7b71b0afea1aee76adac53055365b2bf421352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f625f58b_8854274a",
         "filename": "third_party/WebKit/Source/core/frame/BrowserControls.cpp",
         "patchSetId": 6
@@ -49,6 +141,53 @@
     },
     {
       "key": {
+        "uuid": "15c703b1_1bd5ba4d",
+        "filename": "third_party/WebKit/Source/core/frame/BrowserControls.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-20T16:16:39Z",
+      "side": 1,
+      "message": "D\u0027oh, right, missed the fact that we do actually scroll when top controls are hiding. Thanks.",
+      "parentUuid": "79b285b4_8b58bb85",
+      "range": {
+        "startLine": 73,
+        "startChar": 9,
+        "endLine": 73,
+        "endChar": 73
+      },
+      "revId": "8f7b71b0afea1aee76adac53055365b2bf421352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4c536d4_0cf0356c",
+        "filename": "third_party/WebKit/Source/core/frame/BrowserControls.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-20T16:16:39Z",
+      "side": 1,
+      "message": "please explain in this comment that the browser controls can appear either on the top or on the bottom (or potentially both at the same time).",
+      "range": {
+        "startLine": 19,
+        "startChar": 1,
+        "endLine": 19,
+        "endChar": 64
+      },
+      "revId": "8f7b71b0afea1aee76adac53055365b2bf421352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2de392e6_079de397",
         "filename": "third_party/WebKit/Source/core/frame/BrowserControlsTest.cpp",
         "patchSetId": 6
@@ -89,6 +228,122 @@
         "startChar": 2,
         "endLine": 215,
         "endChar": 54
+      },
+      "revId": "8f7b71b0afea1aee76adac53055365b2bf421352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "184bdae3_8dd0f77e",
+        "filename": "third_party/WebKit/Source/core/frame/BrowserControlsTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-20T16:16:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0a455e95_c22ef8b4",
+      "range": {
+        "startLine": 215,
+        "startChar": 2,
+        "endLine": 215,
+        "endChar": 54
+      },
+      "revId": "8f7b71b0afea1aee76adac53055365b2bf421352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "08b3cc9b_324047af",
+        "filename": "third_party/WebKit/Source/core/frame/BrowserControlsTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-20T16:16:39Z",
+      "side": 1,
+      "message": "For completeness, please send a ScrollEnd event when you\u0027re done (in the other test too).",
+      "range": {
+        "startLine": 217,
+        "startChar": 35,
+        "endLine": 217,
+        "endChar": 55
+      },
+      "revId": "8f7b71b0afea1aee76adac53055365b2bf421352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f95d3097_fbc4da29",
+        "filename": "third_party/WebKit/Source/core/frame/BrowserControlsTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-20T16:16:39Z",
+      "side": 1,
+      "message": "Add a ScrollEnd and a ScrollBegin to make the \"scroll up to show browser controls\" its own gesture.",
+      "range": {
+        "startLine": 261,
+        "startChar": 11,
+        "endLine": 262,
+        "endChar": 19
+      },
+      "revId": "8f7b71b0afea1aee76adac53055365b2bf421352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53b21250_cfce4685",
+        "filename": "third_party/WebKit/Source/core/frame/BrowserControlsTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-20T16:16:39Z",
+      "side": 1,
+      "message": "You shouldn\u0027t have to call this yourself, it should be called from handing the GestureScrollBegin, is it not?",
+      "range": {
+        "startLine": 264,
+        "startChar": 2,
+        "endLine": 264,
+        "endChar": 47
+      },
+      "revId": "8f7b71b0afea1aee76adac53055365b2bf421352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "930fc023_6aaf02a1",
+        "filename": "third_party/WebKit/public/platform/WebLayerTreeView.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-20T16:16:39Z",
+      "side": 1,
+      "message": "height -\u003e top_height. Please also explain the top/bottom distinction in the comment.",
+      "range": {
+        "startLine": 118,
+        "startChar": 46,
+        "endLine": 118,
+        "endChar": 52
       },
       "revId": "8f7b71b0afea1aee76adac53055365b2bf421352",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
