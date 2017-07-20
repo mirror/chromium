@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "26845ff5_a517d7df",
+        "filename": "ash/shelf/shelf_layout_manager.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-07-20T04:49:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcab3f21_405b37bf",
+      "revId": "2a22eae0868ce7d4925c46747320e720ed572524",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "366f263b_acc2747b",
         "filename": "ash/shelf/shelf_view.cc",
         "patchSetId": 24
@@ -47,6 +65,41 @@
       "writtenOn": "2017-07-20T03:43:24Z",
       "side": 1,
       "message": "I don\u0027t understand. Is the reason you need screen coordinates because you are *setting* the bounds of the app list using raw data from the event? Or because you need to compare the raw data from the event with something that\u0027s in screen coords?",
+      "revId": "2a22eae0868ce7d4925c46747320e720ed572524",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edc1c48c_9f5397b9",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 1484,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-07-20T04:49:03Z",
+      "side": 1,
+      "message": "Sorry for the explanation. I think since the app list is full screen. In order to update the y position of the app list based on the dragging event position, should convert the event position from its view to screen? Since ProcessGesureEvent func is in ShelfLayoutManager, when it is processing the event, actually it doesn\u0027t know which view the event is triggered. So I converted the event\u0027s location in corresponding view before sent it to be processed in ShelfLayoutManager.",
+      "parentUuid": "366f263b_acc2747b",
+      "revId": "2a22eae0868ce7d4925c46747320e720ed572524",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3e8553f_6fbcdad1",
+        "filename": "ui/app_list/presenter/test/test_app_list_presenter.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-07-20T04:49:03Z",
+      "side": 1,
+      "message": "Checked this count in the tests.",
       "revId": "2a22eae0868ce7d4925c46747320e720ed572524",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
