@@ -67,6 +67,7 @@
 #include "core/dom/NodeComputedStyle.h"
 #include "core/dom/PresentationAttributeStyle.h"
 #include "core/dom/PseudoElement.h"
+#include "core/dom/ResizeObservation.h"
 #include "core/dom/ScriptableDocumentParser.h"
 #include "core/dom/SelectorQuery.h"
 #include "core/dom/ShadowRoot.h"
@@ -131,7 +132,6 @@
 #include "core/page/scrolling/TopDocumentRootScrollerController.h"
 #include "core/paint/PaintLayer.h"
 #include "core/probe/CoreProbes.h"
-#include "core/resize_observer/ResizeObservation.h"
 #include "core/svg/SVGAElement.h"
 #include "core/svg/SVGElement.h"
 #include "core/svg/SVGTreeScopeResources.h"
@@ -3621,13 +3621,12 @@ void Element::SetIntegralAttribute(const QualifiedName& attribute_name,
 }
 
 void Element::SetUnsignedIntegralAttribute(const QualifiedName& attribute_name,
-                                           unsigned value,
-                                           unsigned default_value) {
+                                           unsigned value) {
   // Range restrictions are enforced for unsigned IDL attributes that
   // reflect content attributes,
   //   http://www.whatwg.org/specs/web-apps/current-work/multipage/common-dom-interfaces.html#reflecting-content-attributes-in-idl-attributes
   if (value > 0x7fffffffu)
-    value = default_value;
+    value = 0;
   setAttribute(attribute_name, AtomicString::Number(value));
 }
 

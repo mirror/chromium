@@ -120,7 +120,7 @@ void ActivationStateComputingNavigationThrottle::OnActivationStateComputed(
         delay, base::TimeDelta::FromMicroseconds(1),
         base::TimeDelta::FromSeconds(10), 50);
   }
-  Resume();
+  navigation_handle()->Resume();
 }
 
 AsyncDocumentSubresourceFilter*
@@ -138,14 +138,13 @@ ActivationStateComputingNavigationThrottle::filter() const {
 // when activation IPCs are not sent to the render process.
 std::unique_ptr<AsyncDocumentSubresourceFilter>
 ActivationStateComputingNavigationThrottle::ReleaseFilter() {
-  return could_send_activation_to_renderer_ ? std::move(async_filter_)
-                                            : nullptr;
+  return will_send_activation_to_renderer_ ? std::move(async_filter_) : nullptr;
 }
 
 void ActivationStateComputingNavigationThrottle::
-    CouldSendActivationToRenderer() {
+    WillSendActivationToRenderer() {
   DCHECK(async_filter_);
-  could_send_activation_to_renderer_ = true;
+  will_send_activation_to_renderer_ = true;
 }
 
 }  // namespace subresource_filter

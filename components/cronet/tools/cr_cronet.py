@@ -105,8 +105,7 @@ def main():
       'use_platform_icu_alternatives=true '+ \
       'enable_reporting=false '+ \
       'is_component_build=false ' + \
-      'ignore_elf32_limitations=true use_partition_alloc=false ' + \
-      'include_transport_security_state_preload_list=false'
+      'ignore_elf32_limitations=true use_partition_alloc=false'
 
   extra_options = ' '.join(extra_options_list)
   if options.gn:

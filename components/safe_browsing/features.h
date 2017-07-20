@@ -19,10 +19,9 @@ class ListValue;
 
 namespace safe_browsing {
 // Features list
-extern const base::Feature kAdSamplerTriggerFeature;
 extern const base::Feature kLocalDatabaseManagerEnabled;
-extern const base::Feature kThreatDomDetailsTagAndAttributeFeature;
 extern const base::Feature kV4OnlyEnabled;
+extern const base::Feature kThreatDomDetailsTagAndAttributeFeature;
 
 base::ListValue GetFeatureStatusList();
 

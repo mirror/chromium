@@ -110,4 +110,3 @@ For Chromium contributors that have different nicks on other domains.
 | wjmaclean         | seumas, wjmaclean | wjmaclean, wjm, seumas |
 | yoz               | yaws            | yoz             |
 | zmo               | zhenyao         | zmo             |
-| robertma          | Hexcles         | robertma        |

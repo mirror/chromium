@@ -4,10 +4,8 @@
 
 #include "extensions/renderer/native_extension_bindings_system.h"
 
-#include "base/callback.h"
 #include "base/command_line.h"
 #include "base/memory/ptr_util.h"
-#include "content/public/child/worker_thread.h"
 #include "content/public/common/console_message_level.h"
 #include "content/public/common/content_switches.h"
 #include "extensions/common/constants.h"
@@ -23,14 +21,12 @@
 #include "extensions/renderer/console.h"
 #include "extensions/renderer/content_setting.h"
 #include "extensions/renderer/declarative_content_hooks_delegate.h"
-#include "extensions/renderer/extension_frame_helper.h"
 #include "extensions/renderer/ipc_message_sender.h"
 #include "extensions/renderer/module_system.h"
 #include "extensions/renderer/script_context.h"
 #include "extensions/renderer/script_context_set.h"
 #include "extensions/renderer/storage_area.h"
 #include "extensions/renderer/web_request_hooks.h"
-#include "extensions/renderer/worker_thread_dispatcher.h"
 #include "gin/converter.h"
 #include "gin/handle.h"
 #include "gin/per_context_data.h"
@@ -147,26 +143,13 @@ BindingsSystemPerContextData* GetBindingsDataFromContext(
   return data;
 }
 
-// Returns the ScriptContext associated with the given v8::Context.
-// TODO(devlin): Does this belong here, or should it be curried in as a
-// callback? This is the only place we have knowledge of worker vs. non-worker
-// threads here.
-ScriptContext* GetScriptContext(v8::Local<v8::Context> context) {
-  ScriptContext* script_context =
-      content::WorkerThread::GetCurrentId() > 0
-          ? WorkerThreadDispatcher::GetScriptContext()
-          : ScriptContextSet::GetContextByV8Context(context);
-  CHECK(script_context);
-  DCHECK(script_context->v8_context() == context);
-  return script_context;
-}
-
 // Handler for calling safely into JS.
 void CallJsFunction(v8::Local<v8::Function> function,
                     v8::Local<v8::Context> context,
                     int argc,
                     v8::Local<v8::Value> argv[]) {
-  ScriptContext* script_context = GetScriptContext(context);
+  ScriptContext* script_context =
+      ScriptContextSet::GetContextByV8Context(context);
   CHECK(script_context);
   script_context->SafeCallFunction(function, argc, argv);
 }
@@ -190,7 +173,8 @@ v8::Global<v8::Value> CallJsFunctionSync(v8::Local<v8::Function> function,
   }, base::Unretained(context->GetIsolate()),
      base::Unretained(&did_complete), base::Unretained(&result));
 
-  ScriptContext* script_context = GetScriptContext(context);
+  ScriptContext* script_context =
+      ScriptContextSet::GetContextByV8Context(context);
   CHECK(script_context);
   script_context->SafeCallFunction(function, argc, argv, callback);
   CHECK(did_complete) << "expected script to execute synchronously";
@@ -198,7 +182,8 @@ v8::Global<v8::Value> CallJsFunctionSync(v8::Local<v8::Function> function,
 }
 
 void AddConsoleError(v8::Local<v8::Context> context, const std::string& error) {
-  ScriptContext* script_context = GetScriptContext(context);
+  ScriptContext* script_context =
+      ScriptContextSet::GetContextByV8Context(context);
   CHECK(script_context);
   console::AddMessage(script_context, content::CONSOLE_MESSAGE_LEVEL_ERROR,
                       error);
@@ -216,7 +201,8 @@ const base::DictionaryValue& GetAPISchema(const std::string& api_name) {
 // |context|.
 bool IsAPIFeatureAvailable(v8::Local<v8::Context> context,
                            const std::string& name) {
-  ScriptContext* script_context = GetScriptContext(context);
+  ScriptContext* script_context =
+      ScriptContextSet::GetContextByV8Context(context);
   DCHECK(script_context);
   return script_context->GetAvailability(name).is_available();
 }
@@ -364,8 +350,10 @@ v8::Local<v8::Object> CreateFullBinding(
 }  // namespace
 
 NativeExtensionBindingsSystem::NativeExtensionBindingsSystem(
-    std::unique_ptr<IPCMessageSender> ipc_message_sender)
+    std::unique_ptr<IPCMessageSender> ipc_message_sender,
+    const SendEventListenerIPCMethod& send_event_listener_ipc)
     : ipc_message_sender_(std::move(ipc_message_sender)),
+      send_event_listener_ipc_(send_event_listener_ipc),
       api_system_(
           base::Bind(&CallJsFunction),
           base::Bind(&CallJsFunctionSync),
@@ -583,13 +571,6 @@ IPCMessageSender* NativeExtensionBindingsSystem::GetIPCMessageSender() {
   return ipc_message_sender_.get();
 }
 
-v8::Local<v8::Object> NativeExtensionBindingsSystem::GetAPIObjectForTesting(
-    ScriptContext* context,
-    const std::string& api_name) {
-  return GetAPIHelper(context->v8_context(),
-                      gin::StringToSymbol(context->isolate(), api_name));
-}
-
 void NativeExtensionBindingsSystem::BindingAccessor(
     v8::Local<v8::Name> name,
     const v8::PropertyCallbackInfo<v8::Value>& info) {
@@ -633,7 +614,8 @@ v8::Local<v8::Object> NativeExtensionBindingsSystem::GetAPIHelper(
     return value.As<v8::Object>();
   }
 
-  ScriptContext* script_context = GetScriptContext(context);
+  ScriptContext* script_context =
+      ScriptContextSet::GetContextByV8Context(context);
   std::string api_name_string;
   CHECK(
       gin::Converter<std::string>::FromV8(isolate, api_name, &api_name_string));
@@ -702,7 +684,8 @@ void NativeExtensionBindingsSystem::GetInternalAPI(
 
   std::string api_name = gin::V8ToString(info[0]);
   const Feature* feature = FeatureProvider::GetAPIFeature(api_name);
-  ScriptContext* script_context = GetScriptContext(context);
+  ScriptContext* script_context =
+      ScriptContextSet::GetContextByV8Context(context);
   if (!feature ||
       !script_context->IsAnyFeatureAvailableToContext(
           *feature, CheckAliasStatus::NOT_ALLOWED)) {
@@ -734,7 +717,8 @@ void NativeExtensionBindingsSystem::GetInternalAPI(
 void NativeExtensionBindingsSystem::SendRequest(
     std::unique_ptr<APIRequestHandler::Request> request,
     v8::Local<v8::Context> context) {
-  ScriptContext* script_context = GetScriptContext(context);
+  ScriptContext* script_context =
+      ScriptContextSet::GetContextByV8Context(context);
 
   GURL url;
   blink::WebLocalFrame* frame = script_context->web_frame();
@@ -763,52 +747,11 @@ void NativeExtensionBindingsSystem::OnEventListenerChanged(
     const std::string& event_name,
     binding::EventListenersChanged change,
     const base::DictionaryValue* filter,
-    bool update_lazy_listeners,
+    bool was_manual,
     v8::Local<v8::Context> context) {
-  ScriptContext* script_context = GetScriptContext(context);
-  // Note: Check context_type() first to avoid accessing ExtensionFrameHelper on
-  // a worker thread.
-  bool is_lazy =
-      update_lazy_listeners &&
-      (script_context->context_type() == Feature::SERVICE_WORKER_CONTEXT ||
-       ExtensionFrameHelper::IsContextForEventPage(script_context));
-  // We only remove a lazy listener if the listener removal was triggered
-  // manually by the extension.
-
-  if (filter) {  // Filtered event listeners.
-    DCHECK(filter);
-    if (change == binding::EventListenersChanged::HAS_LISTENERS) {
-      ipc_message_sender_->SendAddFilteredEventListenerIPC(
-          script_context, event_name, *filter, is_lazy);
-    } else {
-      DCHECK_EQ(binding::EventListenersChanged::NO_LISTENERS, change);
-      ipc_message_sender_->SendRemoveFilteredEventListenerIPC(
-          script_context, event_name, *filter, is_lazy);
-    }
-  } else {  // Unfiltered event listeners.
-    if (change == binding::EventListenersChanged::HAS_LISTENERS) {
-      // TODO(devlin): The JS bindings code only adds one listener per extension
-      // per event per process, whereas this is one listener per context per
-      // event per process. Typically, this won't make a difference, but it
-      // could if there are multiple contexts for the same extension (e.g.,
-      // multiple frames). In that case, it would result in extra IPCs being
-      // sent. I'm not sure it's a big enough deal to warrant refactoring.
-      ipc_message_sender_->SendAddUnfilteredEventListenerIPC(script_context,
-                                                             event_name);
-      if (is_lazy) {
-        ipc_message_sender_->SendAddUnfilteredLazyEventListenerIPC(
-            script_context, event_name);
-      }
-    } else {
-      DCHECK_EQ(binding::EventListenersChanged::NO_LISTENERS, change);
-      ipc_message_sender_->SendRemoveUnfilteredEventListenerIPC(script_context,
-                                                                event_name);
-      if (is_lazy) {
-        ipc_message_sender_->SendRemoveUnfilteredLazyEventListenerIPC(
-            script_context, event_name);
-      }
-    }
-  }
+  send_event_listener_ipc_.Run(change,
+                               ScriptContextSet::GetContextByV8Context(context),
+                               event_name, filter, was_manual);
 }
 
 void NativeExtensionBindingsSystem::GetJSBindingUtil(

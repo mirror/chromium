@@ -13,8 +13,10 @@
 #include "extensions/common/api/cast_channel.h"
 
 namespace extensions {
+namespace api {
+namespace cast_channel {
 
-bool MessageInfoToCastMessage(const api::cast_channel::MessageInfo& message,
+bool MessageInfoToCastMessage(const MessageInfo& message,
                               ::cast_channel::CastMessage* message_proto) {
   DCHECK(message_proto);
   if (!message.data)
@@ -53,7 +55,7 @@ bool MessageInfoToCastMessage(const api::cast_channel::MessageInfo& message,
 }
 
 bool CastMessageToMessageInfo(const ::cast_channel::CastMessage& message_proto,
-                              api::cast_channel::MessageInfo* message) {
+                              MessageInfo* message) {
   DCHECK(message);
   message->source_id = message_proto.source_id();
   message->destination_id = message_proto.destination_id();
@@ -84,4 +86,6 @@ bool CastMessageToMessageInfo(const ::cast_channel::CastMessage& message_proto,
   }
 }
 
+}  // namespace cast_channel
+}  // namespace api
 }  // namespace extensions

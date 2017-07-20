@@ -43,7 +43,7 @@ make_names("module_names") {
   deps = []  # Don't use default deps (otherwise it will be circular).
 }
 
-target("jumbo_" + modules_target_type, "modules") {
+target(modules_target_type, "modules") {
   output_name = "blink_modules"
 
   if (modules_target_type == "split_static_library") {
@@ -83,7 +83,6 @@ target("jumbo_" + modules_target_type, "modules") {
     ":module_names",
     "//device/geolocation/public/interfaces:interfaces_blink",
     "//third_party/WebKit/Source/bindings/modules:generated",
-    "//third_party/WebKit/Source/bindings/modules/v8:bindings_modules_conditional_features",
     "//third_party/WebKit/Source/bindings/modules/v8:bindings_modules_impl",
     "//third_party/WebKit/Source/core",
     "//third_party/WebKit/Source/modules/accessibility",
@@ -265,7 +264,6 @@ source_set("unit_tests") {
     "filesystem/DOMFileSystemBaseTest.cpp",
     "indexeddb/IDBKeyPathTest.cpp",
     "indexeddb/IDBRequestTest.cpp",
-    "indexeddb/IDBTestHelper.cpp",
     "indexeddb/IDBTransactionTest.cpp",
     "indexeddb/IDBValueWrappingTest.cpp",
     "indexeddb/MockWebIDBDatabase.cpp",

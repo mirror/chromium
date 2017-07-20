@@ -773,8 +773,6 @@ const FeatureEntry::Choice kTLS13VariantChoices[] = {
      switches::kTLS13VariantExperiment},
     {flag_descriptions::kTLS13VariantRecordTypeExperiment,
      switches::kTLS13Variant, switches::kTLS13VariantRecordTypeExperiment},
-    {flag_descriptions::kTLS13VariantNoSessionIDExperiment,
-     switches::kTLS13Variant, switches::kTLS13VariantNoSessionIDExperiment},
 };
 
 #if !defined(OS_ANDROID)
@@ -1398,12 +1396,12 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kAshEnableUnifiedDesktopName,
      flag_descriptions::kAshEnableUnifiedDesktopDescription, kOsCrOS,
      SINGLE_VALUE_TYPE(switches::kEnableUnifiedDesktop)},
-    {"disable-easy-unlock-bluetooth-low-energy-detection",
+    {"enable-easy-unlock-bluetooth-low-energy-detection",
      flag_descriptions::kEasyUnlockBluetoothLowEnergyDiscoveryName,
      flag_descriptions::kEasyUnlockBluetoothLowEnergyDiscoveryDescription,
      kOsCrOS,
-     SINGLE_DISABLE_VALUE_TYPE(
-         proximity_auth::switches::kDisableBluetoothLowEnergyDiscovery)},
+     SINGLE_VALUE_TYPE(
+         proximity_auth::switches::kEnableBluetoothLowEnergyDiscovery)},
     {"spurious-power-button-window",
      flag_descriptions::kSpuriousPowerButtonWindowName,
      flag_descriptions::kSpuriousPowerButtonWindowDescription, kOsCrOS,
@@ -1535,11 +1533,6 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kPasswordGenerationDescription, kOsAll,
      ENABLE_DISABLE_VALUE_TYPE(autofill::switches::kEnablePasswordGeneration,
                                autofill::switches::kDisablePasswordGeneration)},
-    {"enable-username-correction",
-     flag_descriptions::kEnableUsernameCorrectionName,
-     flag_descriptions::kEnableUsernameCorrectionDescription,
-     kOsWin | kOsLinux | kOsCrOS,
-     FEATURE_VALUE_TYPE(password_manager::features::kEnableUsernameCorrection)},
     {"enable-password-force-saving",
      flag_descriptions::kPasswordForceSavingName,
      flag_descriptions::kPasswordForceSavingDescription, kOsAll,
@@ -1860,6 +1853,9 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kSettingsWindowDescription, kOsDesktop,
      ENABLE_DISABLE_VALUE_TYPE(switches::kEnableSettingsWindow,
                                switches::kDisableSettingsWindow)},
+    {"inert-visual-viewport", flag_descriptions::kInertVisualViewportName,
+     flag_descriptions::kInertVisualViewportDescription, kOsAll,
+     SINGLE_VALUE_TYPE(switches::kInertVisualViewport)},
     {"distance-field-text", flag_descriptions::kDistanceFieldTextName,
      flag_descriptions::kDistanceFieldTextDescription, kOsAll,
      ENABLE_DISABLE_VALUE_TYPE(switches::kEnableDistanceFieldText,
@@ -2191,10 +2187,6 @@ const FeatureEntry kFeatureEntries[] = {
     {"background-loader", flag_descriptions::kNewBackgroundLoaderName,
      flag_descriptions::kNewBackgroundLoaderDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(offline_pages::kNewBackgroundLoaderFeature)},
-    {"offline-pages-renovations",
-     flag_descriptions::kOfflinePagesRenovationsName,
-     flag_descriptions::kOfflinePagesRenovationsDescription, kOsAndroid,
-     FEATURE_VALUE_TYPE(offline_pages::kOfflinePagesRenovationsFeature)},
 #endif  // OS_ANDROID
     {"disallow-doc-written-script-loads",
      flag_descriptions::kDisallowDocWrittenScriptsUiName,
@@ -2834,11 +2826,6 @@ const FeatureEntry kFeatureEntries[] = {
     {"team-drives", flag_descriptions::kTeamDrivesName,
      flag_descriptions::kTeamDrivesDescription, kOsCrOS,
      SINGLE_VALUE_TYPE(google_apis::kEnableTeamDrives)},
-    {"file-manager-touch-mode", flag_descriptions::kFileManagerTouchModeName,
-     flag_descriptions::kFileManagerTouchModeDescription, kOsCrOS,
-     ENABLE_DISABLE_VALUE_TYPE(
-         chromeos::switches::kEnableFileManagerTouchMode,
-         chromeos::switches::kDisableFileManagerTouchMode)},
 #endif  // OS_CHROMEOS
 
 #if defined(OS_WIN)
@@ -3186,18 +3173,12 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kResourceLoadSchedulerDescription, kOsAll,
      FEATURE_VALUE_TYPE(features::kResourceLoadScheduler)},
 
-#if defined(OS_ANDROID)
-    {"omnibox-spare-renderer", flag_descriptions::kOmniboxSpareRendererName,
-     flag_descriptions::kOmniboxSpareRendererDescription, kOsAndroid,
-     FEATURE_VALUE_TYPE(chrome::android::kOmniboxSpareRenderer)},
-#endif
-
 #if defined(TOOLKIT_VIEWS)
     {"delay-reload-stop-button-change",
      flag_descriptions::kDelayReloadStopButtonChangeName,
      flag_descriptions::kDelayReloadStopButtonChangeDescription,
      kOsCrOS | kOsWin | kOsLinux,
-     SINGLE_VALUE_TYPE(switches::kDelayReloadStopButtonChange)},
+     SINGLE_DISABLE_VALUE_TYPE(switches::kDelayReloadStopButtonChange)},
 #endif  // TOOLKIT_VIEWS
 
     {"enable-async-image-decoding", flag_descriptions::kAsyncImageDecodingName,
@@ -3209,18 +3190,6 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kCaptureThumbnailOnNavigatingAwayDescription,
      kOsDesktop,
      FEATURE_VALUE_TYPE(features::kCaptureThumbnailOnNavigatingAway)},
-
-#if defined(OS_CHROMEOS)
-    {"use-cros-midi-service", flag_descriptions::kUseCrosMidiServiceName,
-     flag_descriptions::kUseCrosMidiServiceNameDescription, kOsCrOS,
-     FEATURE_VALUE_TYPE(midi::features::kMidiManagerCros)},
-#endif  // defined(OS_CHROMEOS)
-
-#if defined(OS_CHROMEOS)
-    {"enable-lock-screen-apps", flag_descriptions::kEnableLockScreenAppsName,
-     flag_descriptions::kEnableLockScreenAppsDescription, kOsCrOS,
-     SINGLE_VALUE_TYPE(chromeos::switches::kEnableLockScreenApps)},
-#endif  // defined(OS_CHROMEOS)
 
     // NOTE: Adding new command-line switches requires adding corresponding
     // entries to enum "LoginCustomFlags" in histograms/enums.xml. See note in

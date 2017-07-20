@@ -12,7 +12,6 @@
 #include "core/editing/EditingTestBase.h"
 #include "core/editing/FrameCaret.h"
 #include "core/editing/SelectionController.h"
-#include "core/editing/SelectionModifier.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/html/HTMLBodyElement.h"
 #include "core/input/EventHandler.h"
@@ -167,12 +166,11 @@ TEST_F(FrameSelectionTest, ModifyExtendWithFlatTree) {
   // Select "two" for selection in DOM tree
   // Select "twoone" for selection in Flat tree
   Selection().SetSelection(
-      SelectionInDOMTree::Builder()
-          .Collapse(ToPositionInDOMTree(PositionInFlatTree(host, 0)))
-          .Extend(
-              ToPositionInDOMTree(PositionInFlatTree(GetDocument().body(), 2)))
+      SelectionInFlatTree::Builder()
+          .Collapse(PositionInFlatTree(host, 0))
+          .Extend(PositionInFlatTree(GetDocument().body(), 2))
           .Build());
-  Selection().Modify(SelectionModifyAlteration::kExtend, kDirectionForward,
+  Selection().Modify(FrameSelection::kAlterationExtend, kDirectionForward,
                      TextGranularity::kWord);
   EXPECT_EQ(Position(two, 0), VisibleSelectionInDOMTree().Start());
   EXPECT_EQ(Position(two, 3), VisibleSelectionInDOMTree().End());
@@ -189,7 +187,7 @@ TEST_F(FrameSelectionTest, ModifyWithUserTriggered) {
       SelectionInDOMTree::Builder().Collapse(end_of_text).Build());
 
   EXPECT_FALSE(
-      Selection().Modify(SelectionModifyAlteration::kMove, kDirectionForward,
+      Selection().Modify(FrameSelection::kAlterationMove, kDirectionForward,
                          TextGranularity::kCharacter, kNotUserTriggered))
       << "Selection.modify() returns false for non-user-triggered call when "
          "selection isn't modified.";
@@ -197,7 +195,7 @@ TEST_F(FrameSelectionTest, ModifyWithUserTriggered) {
             Selection().ComputeVisibleSelectionInDOMTreeDeprecated().Start())
       << "Selection isn't modified";
 
-  EXPECT_TRUE(Selection().Modify(SelectionModifyAlteration::kMove,
+  EXPECT_TRUE(Selection().Modify(FrameSelection::kAlterationMove,
                                  kDirectionForward, TextGranularity::kCharacter,
                                  kUserTriggered))
       << "Selection.modify() returns true for user-triggered call";
@@ -452,8 +450,9 @@ TEST_F(FrameSelectionTest, RangeInShadowTree) {
 
   Node* text_node = shadow_root->firstChild();
   Selection().SetSelection(
-      SelectionInDOMTree::Builder()
-          .SetBaseAndExtent(Position(text_node, 0), Position(text_node, 3))
+      SelectionInFlatTree::Builder()
+          .SetBaseAndExtent(PositionInFlatTree(text_node, 0),
+                            PositionInFlatTree(text_node, 3))
           .Build());
   EXPECT_EQ_SELECTED_TEXT("hey");
   EXPECT_TRUE(Selection().GetSelectionInDOMTree().IsRange());

@@ -63,9 +63,6 @@ class OnScreenKeyboardDetector {
   void AddObserver(OnScreenKeyboardObserver* observer);
   void RemoveObserver(OnScreenKeyboardObserver* observer);
 
-  // Returns true if the osk is visible. Sets osk bounding rect if non-null
-  static bool IsKeyboardVisible(gfx::Rect* osk_bounding_rect);
-
  private:
   // Executes as a task and detects if the on screen keyboard is displayed.
   // Once the keyboard is displayed it schedules the HideIfNecessary() task to
@@ -169,21 +166,15 @@ void OnScreenKeyboardDetector::RemoveObserver(
   observers_.RemoveObserver(observer);
 }
 
-// static
-bool OnScreenKeyboardDetector::IsKeyboardVisible(gfx::Rect* osk_bounding_rect) {
+void OnScreenKeyboardDetector::CheckIfKeyboardVisible() {
   HWND osk = ::FindWindow(kOSKClassName, nullptr);
   if (!::IsWindow(osk))
-    return false;
-  if (osk_bounding_rect) {
-    RECT osk_rect = {};
-    ::GetWindowRect(osk, &osk_rect);
-    *osk_bounding_rect = gfx::Rect(osk_rect);
-  }
-  return ::IsWindowVisible(osk) && ::IsWindowEnabled(osk);
-}
+    return;
 
-void OnScreenKeyboardDetector::CheckIfKeyboardVisible() {
-  if (IsKeyboardVisible(&osk_rect_pixels_)) {
+  RECT osk_rect = {};
+  ::GetWindowRect(osk, &osk_rect);
+  osk_rect_pixels_ = gfx::Rect(osk_rect);
+  if (::IsWindowVisible(osk) && ::IsWindowEnabled(osk)) {
     if (!osk_visible_notification_received_)
       HandleKeyboardVisible();
   } else {
@@ -367,10 +358,6 @@ bool OnScreenKeyboardDisplayManager::GetOSKPath(base::string16* osk_path) {
     osk_path->insert(common_program_files_offset, common_program_files_path);
   }
   return !osk_path->empty();
-}
-
-bool OnScreenKeyboardDisplayManager::IsKeyboardVisible() const {
-  return OnScreenKeyboardDetector::IsKeyboardVisible(nullptr);
 }
 
 }  // namespace ui

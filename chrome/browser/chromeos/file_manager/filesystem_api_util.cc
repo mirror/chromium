@@ -201,8 +201,8 @@ void GetNonNativeLocalPathMimeType(
   if (arc::IsArcAllowedForProfile(profile) &&
       base::FilePath(arc::kContentFileSystemMountPointPath).IsParent(path)) {
     GURL arc_url = arc::PathToArcUrl(path);
-    auto* runner =
-        arc::ArcFileSystemOperationRunner::GetForBrowserContext(profile);
+    auto* runner = arc::ArcServiceManager::GetGlobalService<
+        arc::ArcFileSystemOperationRunner>();
     if (!runner) {
       content::BrowserThread::PostTask(
           content::BrowserThread::UI, FROM_HERE,

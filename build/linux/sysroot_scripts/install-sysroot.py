@@ -64,17 +64,17 @@ def DetectHostArch():
   detected_host_arch = detect_host_arch.HostArch()
   if detected_host_arch == 'x64':
     return 'amd64'
-  if detected_host_arch == 'ia32':
+  elif detected_host_arch == 'ia32':
     return 'i386'
-  if detected_host_arch == 'arm':
+  elif detected_host_arch == 'arm':
     return 'arm'
-  if detected_host_arch == 'arm64':
+  elif detected_host_arch == 'arm64':
     return 'arm64'
-  if detected_host_arch == 'mips':
+  elif detected_host_arch == 'mips':
     return 'mips'
-  if detected_host_arch == 'ppc':
+  elif detected_host_arch == 'ppc':
     return 'ppc'
-  if detected_host_arch == 's390':
+  elif detected_host_arch == 's390':
     return 's390'
 
   raise Error('Unrecognized host arch: %s' % detected_host_arch)
@@ -93,13 +93,13 @@ def DetectTargetArch():
   target_arch = gyp_defines.get('target_arch')
   if target_arch == 'x64':
     return 'amd64'
-  if target_arch == 'ia32':
+  elif target_arch == 'ia32':
     return 'i386'
-  if target_arch == 'arm':
+  elif target_arch == 'arm':
     return 'arm'
-  if target_arch == 'arm64':
+  elif target_arch == 'arm64':
     return 'arm64'
-  if target_arch == 'mipsel':
+  elif target_arch == 'mipsel':
     return 'mips'
 
   return None

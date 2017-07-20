@@ -188,10 +188,12 @@ UI.TreeOutline = class extends Common.Object {
     var nextSelectedElement = this.selectedTreeElement.traversePreviousTreeElement(true);
     while (nextSelectedElement && !nextSelectedElement.selectable)
       nextSelectedElement = nextSelectedElement.traversePreviousTreeElement(!this.expandTreeElementsWhenArrowing);
-    if (!nextSelectedElement)
-      return false;
-    nextSelectedElement.select(false, true);
-    return true;
+    if (nextSelectedElement) {
+      nextSelectedElement.reveal();
+      nextSelectedElement.select(false, true);
+      return true;
+    }
+    return false;
   }
 
   /**
@@ -201,10 +203,12 @@ UI.TreeOutline = class extends Common.Object {
     var nextSelectedElement = this.selectedTreeElement.traverseNextTreeElement(true);
     while (nextSelectedElement && !nextSelectedElement.selectable)
       nextSelectedElement = nextSelectedElement.traverseNextTreeElement(!this.expandTreeElementsWhenArrowing);
-    if (!nextSelectedElement)
-      return false;
-    nextSelectedElement.select(false, true);
-    return true;
+    if (nextSelectedElement) {
+      nextSelectedElement.reveal();
+      nextSelectedElement.select(false, true);
+      return true;
+    }
+    return false;
   }
 
   /**
@@ -925,10 +929,13 @@ UI.TreeElement = class {
     while (nextSelectedElement && !nextSelectedElement.selectable)
       nextSelectedElement = nextSelectedElement.parent;
 
-    if (!nextSelectedElement)
-      return false;
-    nextSelectedElement.select(false, true);
-    return true;
+    if (nextSelectedElement) {
+      nextSelectedElement.reveal();
+      nextSelectedElement.select(false, true);
+      return true;
+    }
+
+    return false;
   }
 
   /**
@@ -951,10 +958,13 @@ UI.TreeElement = class {
     while (nextSelectedElement && !nextSelectedElement.selectable)
       nextSelectedElement = nextSelectedElement.nextSibling;
 
-    if (!nextSelectedElement)
-      return false;
-    nextSelectedElement.select(false, true);
-    return true;
+    if (nextSelectedElement) {
+      nextSelectedElement.reveal();
+      nextSelectedElement.select(false, true);
+      return true;
+    }
+
+    return false;
   }
 
   /**

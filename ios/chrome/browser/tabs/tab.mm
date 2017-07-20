@@ -83,7 +83,6 @@
 #include "ios/chrome/browser/translate/chrome_ios_translate_client.h"
 #import "ios/chrome/browser/u2f/u2f_controller.h"
 #import "ios/chrome/browser/ui/commands/UIKit+ChromeExecuteCommand.h"
-#import "ios/chrome/browser/ui/commands/application_commands.h"
 #import "ios/chrome/browser/ui/commands/browser_commands.h"
 #import "ios/chrome/browser/ui/commands/generic_chrome_command.h"
 #include "ios/chrome/browser/ui/commands/ios_command_ids.h"
@@ -479,6 +478,7 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 
   if (experimental_flags::IsAutoReloadEnabled())
     _autoReloadBridge = [[AutoReloadBridge alloc] initWithTab:self];
+  _printObserver = base::MakeUnique<PrintObserver>(self.webState);
 
   id<PasswordsUiDelegate> passwordsUiDelegate =
       [[PasswordsUiDelegateImpl alloc] init];
@@ -507,13 +507,6 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
         [[ReaderModeController alloc] initWithWebState:self.webState
                                               delegate:self];
   }
-}
-
-// Attach any tab helpers which are dependent on the dispatcher having been
-// set on the tab.
-- (void)attachDispatcherDependentTabHelpers {
-  _printObserver =
-      base::MakeUnique<PrintObserver>(self.webState, self.dispatcher);
 }
 
 - (NSArray*)accessoryViewProviders {
@@ -795,18 +788,6 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   [_overscrollActionsController
       setDelegate:overscrollActionsControllerDelegate];
   overscrollActionsControllerDelegate_ = overscrollActionsControllerDelegate;
-}
-
-- (void)setDispatcher:(id<ApplicationCommands, BrowserCommands>)dispatcher {
-  if (_dispatcher == dispatcher)
-    return;
-  // The dispatcher shouldn't change once set, so at this stage the dispatcher
-  // should be nil, or the new value should be nil.
-  DCHECK(!_dispatcher || !dispatcher);
-  _dispatcher = dispatcher;
-  // If the new dispatcher is nonnull, add tab helpers.
-  if (self.dispatcher)
-    [self attachDispatcherDependentTabHelpers];
 }
 
 - (void)saveTitleToHistoryDB {
@@ -1751,7 +1732,9 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   signin_metrics::LogAccountReconcilorStateOnGaiaResponse(
       ios::AccountReconcilorFactory::GetForBrowserState(_browserState)
           ->GetState());
-  [self.dispatcher showAccountsSettings];
+  GenericChromeCommand* command =
+      [[GenericChromeCommand alloc] initWithTag:IDC_SHOW_ACCOUNTS_SETTINGS];
+  [self.view chromeExecuteCommand:command];
 }
 
 - (void)onAddAccount {

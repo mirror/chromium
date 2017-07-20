@@ -10,7 +10,7 @@
 #include "ash/public/cpp/shelf_model.h"
 #include "ash/public/cpp/window_properties.h"
 #include "ash/shell.h"
-#include "ash/wm/tablet_mode/tablet_mode_controller.h"
+#include "ash/wm/maximize_mode/maximize_mode_controller.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
 #include "base/bind.h"
@@ -314,8 +314,8 @@ void ArcAppWindowLauncherController::AttachControllerToWindowIfNeeded(
   const ash::ShelfID shelf_id(info->app_window()->shelf_id());
   window->SetProperty(ash::kShelfIDKey, new std::string(shelf_id.Serialize()));
   if (ash::Shell::Get()
-          ->tablet_mode_controller()
-          ->IsTabletModeWindowManagerEnabled()) {
+          ->maximize_mode_controller()
+          ->IsMaximizeModeWindowManagerEnabled()) {
     SetOrientationLockForAppWindow(info->app_window());
   }
 }
@@ -430,8 +430,8 @@ void ArcAppWindowLauncherController::OnTaskOrientationLockRequested(
   }
 
   if (ash::Shell::Get()
-          ->tablet_mode_controller()
-          ->IsTabletModeWindowManagerEnabled()) {
+          ->maximize_mode_controller()
+          ->IsMaximizeModeWindowManagerEnabled()) {
     ArcAppWindow* app_window = info->app_window();
     if (app_window)
       SetOrientationLockForAppWindow(app_window);
@@ -520,7 +520,7 @@ void ArcAppWindowLauncherController::OnWindowActivated(
   OnTaskSetActive(active_task_id_);
 }
 
-void ArcAppWindowLauncherController::OnTabletModeStarted() {
+void ArcAppWindowLauncherController::OnMaximizeModeStarted() {
   for (auto& it : task_id_to_app_window_info_) {
     ArcAppWindow* app_window = it.second->app_window();
     if (app_window)
@@ -528,7 +528,7 @@ void ArcAppWindowLauncherController::OnTabletModeStarted() {
   }
 }
 
-void ArcAppWindowLauncherController::OnTabletModeEnded() {
+void ArcAppWindowLauncherController::OnMaximizeModeEnded() {
   ash::ScreenOrientationController* orientation_controller =
       ash::Shell::Get()->screen_orientation_controller();
   // Don't unlock one by one because it'll switch to next rotation.

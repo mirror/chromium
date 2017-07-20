@@ -9,53 +9,20 @@
 #include "base/bind.h"
 #include "base/location.h"
 #include "base/memory/ptr_util.h"
-#include "base/memory/singleton.h"
 #include "base/optional.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/chromeos/arc/arc_util.h"
-#include "chrome/browser/profiles/profile.h"
 #include "components/arc/arc_bridge_service.h"
-#include "components/arc/arc_browser_context_keyed_service_factory_base.h"
 #include "content/public/browser/browser_thread.h"
 #include "url/gurl.h"
 
 using content::BrowserThread;
 
 namespace arc {
-namespace {
-
-// Singleton factory for ArcFileSystemOperationRunner.
-class ArcFileSystemOperationRunnerFactory
-    : public internal::ArcBrowserContextKeyedServiceFactoryBase<
-          ArcFileSystemOperationRunner,
-          ArcFileSystemOperationRunnerFactory> {
- public:
-  // Factory name used by ArcBrowserContextKeyedServiceFactoryBase.
-  static constexpr const char* kName = "ArcFileSystemOperationRunnerFactory";
-
-  static ArcFileSystemOperationRunnerFactory* GetInstance() {
-    return base::Singleton<ArcFileSystemOperationRunnerFactory>::get();
-  }
-
- private:
-  friend base::DefaultSingletonTraits<ArcFileSystemOperationRunnerFactory>;
-  ArcFileSystemOperationRunnerFactory() = default;
-  ~ArcFileSystemOperationRunnerFactory() override = default;
-};
-
-}  // namespace
 
 // static
-ArcFileSystemOperationRunner*
-ArcFileSystemOperationRunner::GetForBrowserContext(
-    content::BrowserContext* context) {
-  return ArcFileSystemOperationRunnerFactory::GetForBrowserContext(context);
-}
-
-// static
-BrowserContextKeyedServiceFactory* ArcFileSystemOperationRunner::GetFactory() {
-  return ArcFileSystemOperationRunnerFactory::GetInstance();
-}
+const char ArcFileSystemOperationRunner::kArcServiceName[] =
+    "arc::ArcFileSystemOperationRunner";
 
 // static
 std::unique_ptr<ArcFileSystemOperationRunner>
@@ -64,31 +31,29 @@ ArcFileSystemOperationRunner::CreateForTesting(
   // We can't use base::MakeUnique() here because we are calling a private
   // constructor.
   return base::WrapUnique<ArcFileSystemOperationRunner>(
-      new ArcFileSystemOperationRunner(nullptr, bridge_service, false));
+      new ArcFileSystemOperationRunner(bridge_service, nullptr, false));
 }
 
 ArcFileSystemOperationRunner::ArcFileSystemOperationRunner(
-    content::BrowserContext* context,
-    ArcBridgeService* bridge_service)
-    : ArcFileSystemOperationRunner(Profile::FromBrowserContext(context),
-                                   bridge_service,
-                                   true) {
-  DCHECK(context);
-}
-
-ArcFileSystemOperationRunner::ArcFileSystemOperationRunner(
-    content::BrowserContext* context,
     ArcBridgeService* bridge_service,
+    const Profile* profile)
+    : ArcFileSystemOperationRunner(bridge_service, profile, true) {
+  DCHECK(profile);
+}
+
+ArcFileSystemOperationRunner::ArcFileSystemOperationRunner(
+    ArcBridgeService* bridge_service,
+    const Profile* profile,
     bool set_should_defer_by_events)
-    : context_(context),
-      arc_bridge_service_(bridge_service),
+    : ArcService(bridge_service),
+      profile_(profile),
       set_should_defer_by_events_(set_should_defer_by_events),
       binding_(this),
       weak_ptr_factory_(this) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   // We need to observe FileSystemInstance even in unit tests to call Init().
-  arc_bridge_service_->file_system()->AddObserver(this);
+  arc_bridge_service()->file_system()->AddObserver(this);
 
   // ArcSessionManager may not exist in unit tests.
   auto* arc_session_manager = ArcSessionManager::Get();
@@ -105,12 +70,7 @@ ArcFileSystemOperationRunner::~ArcFileSystemOperationRunner() {
   if (arc_session_manager)
     arc_session_manager->RemoveObserver(this);
 
-  // TODO(hidehiko): Currently, the lifetime of ArcBridgeService and
-  // BrowserContextKeyedService is not nested.
-  // If ArcServiceManager::Get() returns nullptr, it is already destructed,
-  // so do not touch it.
-  if (ArcServiceManager::Get())
-    arc_bridge_service_->file_system()->RemoveObserver(this);
+  arc_bridge_service()->file_system()->RemoveObserver(this);
   // On destruction, deferred operations are discarded.
 }
 
@@ -135,7 +95,7 @@ void ArcFileSystemOperationRunner::GetFileSize(
     return;
   }
   auto* file_system_instance = ARC_GET_INSTANCE_FOR_METHOD(
-      arc_bridge_service_->file_system(), GetFileSize);
+      arc_bridge_service()->file_system(), GetFileSize);
   if (!file_system_instance) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
                                                   base::BindOnce(callback, -1));
@@ -155,7 +115,7 @@ void ArcFileSystemOperationRunner::GetMimeType(
     return;
   }
   auto* file_system_instance = ARC_GET_INSTANCE_FOR_METHOD(
-      arc_bridge_service_->file_system(), GetMimeType);
+      arc_bridge_service()->file_system(), GetMimeType);
   if (!file_system_instance) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE, base::BindOnce(callback, base::nullopt));
@@ -175,7 +135,7 @@ void ArcFileSystemOperationRunner::OpenFileToRead(
     return;
   }
   auto* file_system_instance = ARC_GET_INSTANCE_FOR_METHOD(
-      arc_bridge_service_->file_system(), OpenFileToRead);
+      arc_bridge_service()->file_system(), OpenFileToRead);
   if (!file_system_instance) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE,
@@ -197,7 +157,7 @@ void ArcFileSystemOperationRunner::GetDocument(
     return;
   }
   auto* file_system_instance = ARC_GET_INSTANCE_FOR_METHOD(
-      arc_bridge_service_->file_system(), GetDocument);
+      arc_bridge_service()->file_system(), GetDocument);
   if (!file_system_instance) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE,
@@ -220,7 +180,7 @@ void ArcFileSystemOperationRunner::GetChildDocuments(
     return;
   }
   auto* file_system_instance = ARC_GET_INSTANCE_FOR_METHOD(
-      arc_bridge_service_->file_system(), GetChildDocuments);
+      arc_bridge_service()->file_system(), GetChildDocuments);
   if (!file_system_instance) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE, base::BindOnce(callback, base::nullopt));
@@ -244,7 +204,7 @@ void ArcFileSystemOperationRunner::AddWatcher(
     return;
   }
   auto* file_system_instance = ARC_GET_INSTANCE_FOR_METHOD(
-      arc_bridge_service_->file_system(), AddWatcher);
+      arc_bridge_service()->file_system(), AddWatcher);
   if (!file_system_instance) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
                                                   base::BindOnce(callback, -1));
@@ -280,7 +240,7 @@ void ArcFileSystemOperationRunner::RemoveWatcher(
   watcher_callbacks_.erase(iter);
 
   auto* file_system_instance = ARC_GET_INSTANCE_FOR_METHOD(
-      arc_bridge_service_->file_system(), AddWatcher);
+      arc_bridge_service()->file_system(), AddWatcher);
   if (!file_system_instance) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE, base::BindOnce(callback, false));
@@ -310,7 +270,7 @@ void ArcFileSystemOperationRunner::OnArcPlayStoreEnabledChanged(bool enabled) {
 void ArcFileSystemOperationRunner::OnInstanceReady() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   auto* file_system_instance =
-      ARC_GET_INSTANCE_FOR_METHOD(arc_bridge_service_->file_system(), Init);
+      ARC_GET_INSTANCE_FOR_METHOD(arc_bridge_service()->file_system(), Init);
   if (file_system_instance) {
     mojom::FileSystemHostPtr host_proxy;
     binding_.Bind(mojo::MakeRequest(&host_proxy));
@@ -349,9 +309,8 @@ void ArcFileSystemOperationRunner::OnWatcherAdded(
 void ArcFileSystemOperationRunner::OnStateChanged() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   if (set_should_defer_by_events_) {
-    SetShouldDefer(IsArcPlayStoreEnabledForProfile(
-                       Profile::FromBrowserContext(context_)) &&
-                   !arc_bridge_service_->file_system()->has_instance());
+    SetShouldDefer(IsArcPlayStoreEnabledForProfile(profile_) &&
+                   !arc_bridge_service()->file_system()->has_instance());
   }
 }
 

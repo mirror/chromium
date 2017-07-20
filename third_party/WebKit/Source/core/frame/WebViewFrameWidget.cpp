@@ -147,6 +147,10 @@ bool WebViewFrameWidget::IsSelectionAnchorFirst() const {
   return web_view_->IsSelectionAnchorFirst();
 }
 
+WebRange WebViewFrameWidget::CaretOrSelectionRange() {
+  return web_view_->CaretOrSelectionRange();
+}
+
 void WebViewFrameWidget::SetTextDirection(WebTextDirection direction) {
   return web_view_->SetTextDirection(direction);
 }

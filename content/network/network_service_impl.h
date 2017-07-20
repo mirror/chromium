@@ -57,7 +57,8 @@ class CONTENT_EXPORT NetworkServiceImpl : public service_manager::Service,
                        const std::string& interface_name,
                        mojo::ScopedMessagePipeHandle interface_pipe) override;
 
-  void Create(mojom::NetworkServiceRequest request);
+  void Create(const service_manager::BindSourceInfo& source_info,
+              mojom::NetworkServiceRequest request);
 
   std::unique_ptr<MojoNetLog> net_log_;
 

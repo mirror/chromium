@@ -30,21 +30,19 @@ class CopyOutputResult;
 
 class CC_EXPORT CopyOutputRequest {
  public:
-  using CopyOutputRequestCallback =
-      base::OnceCallback<void(std::unique_ptr<CopyOutputResult> result)>;
+  typedef base::Callback<void(std::unique_ptr<CopyOutputResult> result)>
+      CopyOutputRequestCallback;
 
   static std::unique_ptr<CopyOutputRequest> CreateEmptyRequest() {
     return base::WrapUnique(new CopyOutputRequest);
   }
   static std::unique_ptr<CopyOutputRequest> CreateRequest(
-      CopyOutputRequestCallback result_callback) {
-    return base::WrapUnique(
-        new CopyOutputRequest(false, std::move(result_callback)));
+      const CopyOutputRequestCallback& result_callback) {
+    return base::WrapUnique(new CopyOutputRequest(false, result_callback));
   }
   static std::unique_ptr<CopyOutputRequest> CreateBitmapRequest(
-      CopyOutputRequestCallback result_callback) {
-    return base::WrapUnique(
-        new CopyOutputRequest(true, std::move(result_callback)));
+      const CopyOutputRequestCallback& result_callback) {
+    return base::WrapUnique(new CopyOutputRequest(true, result_callback));
   }
 
   ~CopyOutputRequest();
@@ -99,7 +97,7 @@ class CC_EXPORT CopyOutputRequest {
 
   CopyOutputRequest();
   CopyOutputRequest(bool force_bitmap_result,
-                    CopyOutputRequestCallback result_callback);
+                    const CopyOutputRequestCallback& result_callback);
 
   scoped_refptr<base::TaskRunner> result_task_runner_;
   base::Optional<base::UnguessableToken> source_;

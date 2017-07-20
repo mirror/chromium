@@ -38,8 +38,6 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 using ::testing::AnyNumber;
-using ::testing::Contains;
-using ::testing::Not;
 using ::testing::Return;
 using ::testing::ReturnRef;
 using ::testing::_;
@@ -327,67 +325,6 @@ TEST_F(ManagePasswordsBubbleModelTest, ClickUpdate) {
   DestroyModel();
 }
 
-TEST_F(ManagePasswordsBubbleModelTest, Edit) {
-  using password_manager::metrics_util::CredentialSourceType;
-  for (const bool do_change : {false, true}) {
-    ukm::TestUkmRecorder test_ukm_recorder;
-    {
-      // Setup metrics recorder
-      ukm::SourceId source_id = test_ukm_recorder.GetNewSourceID();
-      auto recorder =
-          base::MakeRefCounted<password_manager::PasswordFormMetricsRecorder>(
-              true /*is_main_frame_secure*/, &test_ukm_recorder, source_id,
-              GURL("https://www.example.com/"));
-
-      // Exercise bubble.
-      ON_CALL(*controller(), GetPasswordFormMetricsRecorder())
-          .WillByDefault(Return(recorder.get()));
-      ON_CALL(*controller(), GetCredentialSource())
-          .WillByDefault(Return(CredentialSourceType::kPasswordManager));
-
-      PretendPasswordWaiting();
-
-      const base::string16 kExpectedUsername =
-          base::UTF8ToUTF16(do_change ? "new_username" : kUsername);
-
-      EXPECT_CALL(*GetStore(),
-                  RemoveSiteStatsImpl(GURL(kSiteOrigin).GetOrigin()));
-
-      model()->OnUsernameEdited(kExpectedUsername);
-      EXPECT_EQ(kExpectedUsername, model()->pending_password().username_value);
-
-      EXPECT_CALL(*controller(), SavePassword(kExpectedUsername));
-      model()->OnSaveClicked();
-      DestroyModel();
-
-      ASSERT_TRUE(testing::Mock::VerifyAndClearExpectations(controller()));
-      // Flush async calls on password store.
-      base::RunLoop().RunUntilIdle();
-      ASSERT_TRUE(testing::Mock::VerifyAndClearExpectations(GetStore()));
-    }
-
-    // Verify metrics.
-    const ukm::UkmSource* source =
-        test_ukm_recorder.GetSourceForUrl("https://www.example.com/");
-    ASSERT_TRUE(source);
-
-    const int64_t kEditedUsernameInBubbleAsInt64 =
-        static_cast<int64_t>(password_manager::PasswordFormMetricsRecorder::
-                                 DetailedUserAction::kEditedUsernameInBubble);
-    if (do_change) {
-      EXPECT_THAT(
-          test_ukm_recorder.GetMetrics(*source, "PasswordForm",
-                                       password_manager::kUkmUserAction),
-          Contains(kEditedUsernameInBubbleAsInt64));
-    } else {
-      EXPECT_THAT(
-          test_ukm_recorder.GetMetrics(*source, "PasswordForm",
-                                       password_manager::kUkmUserAction),
-          Not(Contains(kEditedUsernameInBubbleAsInt64)));
-    }
-  }
-}
-
 TEST_F(ManagePasswordsBubbleModelTest, OnBrandLinkClicked) {
   PretendPasswordWaiting();
 
@@ -568,11 +505,14 @@ TEST_F(ManagePasswordsBubbleModelTest, RecordUKMs) {
         ukm::TestUkmRecorder test_ukm_recorder;
         {
           // Setup metrics recorder
+          ukm::SourceId source_id = test_ukm_recorder.GetNewSourceID();
+          static_cast<ukm::UkmRecorder*>(&test_ukm_recorder)
+              ->UpdateSourceURL(source_id, GURL("https://www.example.com/"));
           auto recorder = base::MakeRefCounted<
               password_manager::PasswordFormMetricsRecorder>(
-              true /*is_main_frame_secure*/, &test_ukm_recorder,
-              test_ukm_recorder.GetNewSourceID(),
-              GURL("https://www.example.com/"));
+              true /*is_main_frame_secure*/,
+              password_manager::PasswordFormMetricsRecorder::
+                  CreateUkmEntryBuilder(&test_ukm_recorder, source_id));
 
           // Exercise bubble.
           ON_CALL(*controller(), GetPasswordFormMetricsRecorder())
@@ -624,10 +564,9 @@ TEST_F(ManagePasswordsBubbleModelTest, RecordUKMs) {
           }
           DestroyModel();
         }
-
-        ASSERT_TRUE(testing::Mock::VerifyAndClearExpectations(controller()));
         // Flush async calls on password store.
         base::RunLoop().RunUntilIdle();
+        ASSERT_TRUE(testing::Mock::VerifyAndClearExpectations(controller()));
         ASSERT_TRUE(testing::Mock::VerifyAndClearExpectations(GetStore()));
 
         // Verify metrics.

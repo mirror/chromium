@@ -23,7 +23,6 @@ class ExceptionState;
 class ModuleScript;
 class ModuleScriptFetchRequest;
 class ModuleScriptLoaderClient;
-class ModuleTreeReachedUrlSet;
 class ScriptModuleResolver;
 class ScriptState;
 class ScriptValue;
@@ -92,7 +91,6 @@ class CORE_EXPORT Modulator : public GarbageCollectedFinalized<Modulator>,
   virtual void FetchTreeInternal(const ModuleScriptFetchRequest&,
                                  const AncestorList&,
                                  ModuleGraphLevel,
-                                 ModuleTreeReachedUrlSet*,
                                  ModuleTreeClient*) = 0;
 
   // Asynchronously retrieve a module script from the module map, or fetch it

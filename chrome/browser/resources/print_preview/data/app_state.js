@@ -86,7 +86,8 @@ cr.define('print_preview', function() {
   function AppState() {
     /**
      * Internal representation of application state.
-     * @private {Object}
+     * @type {Object}
+     * @private
      */
     this.state_ = {};
     this.state_[print_preview.AppStateField.VERSION] = AppState.VERSION_;
@@ -96,15 +97,10 @@ cr.define('print_preview', function() {
     /**
      * Whether the app state has been initialized. The app state will ignore all
      * writes until it has been initialized.
-     * @private {boolean}
+     * @type {boolean}
+     * @private
      */
     this.isInitialized_ = false;
-
-    /**
-     * Native Layer object to use for sending app state to C++ handler.
-     * @private {!print_preview.NativeLayer}
-     */
-    this.nativeLayer_ = print_preview.NativeLayer.getInstance();
   }
 
   /**
@@ -121,6 +117,14 @@ cr.define('print_preview', function() {
    * @private
    */
   AppState.VERSION_ = 2;
+
+  /**
+   * Name of C++ layer function to persist app state.
+   * @type {string}
+   * @const
+   * @private
+   */
+  AppState.NATIVE_FUNCTION_NAME_ = 'saveAppState';
 
   AppState.prototype = {
     /**
@@ -303,7 +307,8 @@ cr.define('print_preview', function() {
      * @private
      */
     persist_: function() {
-      this.nativeLayer_.saveAppState(JSON.stringify(this.state_));
+      chrome.send(
+          AppState.NATIVE_FUNCTION_NAME_, [JSON.stringify(this.state_)]);
     }
   };
 

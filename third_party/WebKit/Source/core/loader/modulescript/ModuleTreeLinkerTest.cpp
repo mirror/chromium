@@ -11,7 +11,6 @@
 #include "core/dom/ModuleScript.h"
 #include "core/loader/modulescript/ModuleScriptFetchRequest.h"
 #include "core/loader/modulescript/ModuleTreeLinkerRegistry.h"
-#include "core/loader/modulescript/ModuleTreeReachedUrlSet.h"
 #include "core/testing/DummyModulator.h"
 #include "core/testing/DummyPageHolder.h"
 #include "platform/bindings/ScriptState.h"
@@ -168,7 +167,6 @@ class ModuleTreeLinkerTestModulator final : public DummyModulator {
   void FetchTreeInternal(const ModuleScriptFetchRequest& request,
                          const AncestorList& list,
                          ModuleGraphLevel level,
-                         ModuleTreeReachedUrlSet* reached_url_set,
                          ModuleTreeClient* client) override {
     const auto& url = request.Url();
 
@@ -176,7 +174,6 @@ class ModuleTreeLinkerTestModulator final : public DummyModulator {
     EXPECT_TRUE(ancestor_result.is_new_entry);
 
     EXPECT_EQ(ModuleGraphLevel::kDependentModuleFetch, level);
-    EXPECT_TRUE(reached_url_set);
 
     auto result_map = pending_tree_client_map_.insert(url, client);
     EXPECT_TRUE(result_map.is_new_entry);
@@ -277,7 +274,7 @@ TEST_F(ModuleTreeLinkerTest, FetchTreeNoDeps) {
   TestModuleTreeClient* client = new TestModuleTreeClient;
   registry->Fetch(module_request, AncestorList(),
                   ModuleGraphLevel::kTopLevelModuleFetch, GetModulator(),
-                  nullptr, client);
+                  client);
 
   EXPECT_FALSE(client->WasNotifyFinished())
       << "ModuleTreeLinker should always finish asynchronously.";
@@ -301,7 +298,7 @@ TEST_F(ModuleTreeLinkerTest, FetchTreeInstantiationFailure) {
   TestModuleTreeClient* client = new TestModuleTreeClient;
   registry->Fetch(module_request, AncestorList(),
                   ModuleGraphLevel::kTopLevelModuleFetch, GetModulator(),
-                  nullptr, client);
+                  client);
 
   EXPECT_FALSE(client->WasNotifyFinished())
       << "ModuleTreeLinker should always finish asynchronously.";
@@ -329,7 +326,7 @@ TEST_F(ModuleTreeLinkerTest, FetchTreePreviousInstantiationFailure) {
   TestModuleTreeClient* client = new TestModuleTreeClient;
   registry->Fetch(module_request, AncestorList(),
                   ModuleGraphLevel::kTopLevelModuleFetch, GetModulator(),
-                  nullptr, client);
+                  client);
 
   EXPECT_FALSE(client->WasNotifyFinished())
       << "ModuleTreeLinker should always finish asynchronously.";
@@ -353,7 +350,7 @@ TEST_F(ModuleTreeLinkerTest, FetchTreeWithSingleDependency) {
   TestModuleTreeClient* client = new TestModuleTreeClient;
   registry->Fetch(module_request, AncestorList(),
                   ModuleGraphLevel::kTopLevelModuleFetch, GetModulator(),
-                  nullptr, client);
+                  client);
 
   EXPECT_FALSE(client->WasNotifyFinished())
       << "ModuleTreeLinker should always finish asynchronously.";
@@ -386,7 +383,7 @@ TEST_F(ModuleTreeLinkerTest, FetchTreeWith3Deps) {
   TestModuleTreeClient* client = new TestModuleTreeClient;
   registry->Fetch(module_request, AncestorList(),
                   ModuleGraphLevel::kTopLevelModuleFetch, GetModulator(),
-                  nullptr, client);
+                  client);
 
   EXPECT_FALSE(client->WasNotifyFinished())
       << "ModuleTreeLinker should always finish asynchronously.";
@@ -436,7 +433,7 @@ TEST_F(ModuleTreeLinkerTest, FetchTreeWith3Deps1Fail) {
   TestModuleTreeClient* client = new TestModuleTreeClient;
   registry->Fetch(module_request, AncestorList(),
                   ModuleGraphLevel::kTopLevelModuleFetch, GetModulator(),
-                  nullptr, client);
+                  client);
 
   EXPECT_FALSE(client->WasNotifyFinished())
       << "ModuleTreeLinker should always finish asynchronously.";
@@ -496,14 +493,11 @@ TEST_F(ModuleTreeLinkerTest, FetchDependencyTree) {
   KURL url(kParsedURLString, "http://example.com/depth1.js");
   ModuleScriptFetchRequest module_request(
       url, String(), kParserInserted, WebURLRequest::kFetchCredentialsModeOmit);
-  ModuleTreeReachedUrlSet* reached_url_set =
-      ModuleTreeReachedUrlSet::CreateFromTopLevelAncestorList(AncestorList());
   TestModuleTreeClient* client = new TestModuleTreeClient;
   registry->Fetch(
       module_request,
       AncestorList{KURL(kParsedURLString, "http://example.com/root.js")},
-      ModuleGraphLevel::kDependentModuleFetch, GetModulator(), reached_url_set,
-      client);
+      ModuleGraphLevel::kDependentModuleFetch, GetModulator(), client);
 
   EXPECT_FALSE(client->WasNotifyFinished())
       << "ModuleTreeLinker should always finish asynchronously.";
@@ -534,13 +528,11 @@ TEST_F(ModuleTreeLinkerTest, FetchDependencyOfCyclicGraph) {
   KURL url(kParsedURLString, "http://example.com/a.js");
   ModuleScriptFetchRequest module_request(
       url, String(), kParserInserted, WebURLRequest::kFetchCredentialsModeOmit);
-  AncestorList ancestor_list{KURL(kParsedURLString, "http://example.com/a.js")};
-  ModuleTreeReachedUrlSet* reached_url_set =
-      ModuleTreeReachedUrlSet::CreateFromTopLevelAncestorList(ancestor_list);
   TestModuleTreeClient* client = new TestModuleTreeClient;
-  registry->Fetch(module_request, ancestor_list,
-                  ModuleGraphLevel::kDependentModuleFetch, GetModulator(),
-                  reached_url_set, client);
+  registry->Fetch(
+      module_request,
+      AncestorList{KURL(kParsedURLString, "http://example.com/a.js")},
+      ModuleGraphLevel::kDependentModuleFetch, GetModulator(), client);
 
   EXPECT_FALSE(client->WasNotifyFinished())
       << "ModuleTreeLinker should always finish asynchronously.";
@@ -549,8 +541,8 @@ TEST_F(ModuleTreeLinkerTest, FetchDependencyOfCyclicGraph) {
   GetModulator()->ResolveSingleModuleScriptFetch(
       url, {"./a.js"}, ScriptModuleState::kUninstantiated);
 
-  auto ancestor_list2 = GetModulator()->GetAncestorListForTreeFetch(url);
-  EXPECT_EQ(0u, ancestor_list2.size());
+  auto ancestor_list = GetModulator()->GetAncestorListForTreeFetch(url);
+  EXPECT_EQ(0u, ancestor_list.size());
 
   EXPECT_TRUE(client->WasNotifyFinished());
   ASSERT_TRUE(client->GetModuleScript());

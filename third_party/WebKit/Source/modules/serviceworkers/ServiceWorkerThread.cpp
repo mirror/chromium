@@ -57,8 +57,7 @@ void ServiceWorkerThread::ClearWorkerBackingThread() {
 
 WorkerOrWorkletGlobalScope* ServiceWorkerThread::CreateWorkerGlobalScope(
     std::unique_ptr<GlobalScopeCreationParams> creation_params) {
-  return ServiceWorkerGlobalScope::Create(this, std::move(creation_params),
-                                          time_origin_);
+  return ServiceWorkerGlobalScope::Create(this, std::move(creation_params));
 }
 
 InstalledScriptsManager* ServiceWorkerThread::GetInstalledScriptsManager() {

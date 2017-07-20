@@ -212,10 +212,7 @@ public class SearchWidgetProvider extends AppWidgetProvider {
         Context context = getDelegate().getContext();
 
         // Abort if the user needs to go through First Run.
-        if (FirstRunFlowSequencer.launch(context, intent, true /* requiresBroadcast */,
-                    false /* preferLightweightFre */)) {
-            return;
-        }
+        if (FirstRunFlowSequencer.launch(context, intent, true)) return;
 
         // Launch the SearchActivity.
         Intent searchIntent = new Intent();

@@ -752,9 +752,9 @@ void FrameFetchContext::ModifyRequestForCSP(ResourceRequest& resource_request) {
   GetFrame()->Loader().ModifyRequestForCSP(resource_request, document_);
 }
 
-float FrameFetchContext::ClientHintsDeviceMemory(int64_t physical_memory_mb) {
+float FrameFetchContext::ClientHintsDeviceRAM(int64_t physical_memory_mb) {
   // The calculations in this method are described in the specifcations:
-  // https://github.com/WICG/device-memory.
+  // https://github.com/WICG/device-ram.
   DCHECK_GT(physical_memory_mb, 0);
   int lower_bound = physical_memory_mb;
   int power = 0;
@@ -784,12 +784,11 @@ void FrameFetchContext::AddClientHintsIfNecessary(
   if (!RuntimeEnabledFeatures::ClientHintsEnabled())
     return;
 
-  if (ShouldSendClientHint(kWebClientHintsTypeDeviceMemory,
-                           hints_preferences)) {
+  if (ShouldSendClientHint(kWebClientHintsTypeDeviceRam, hints_preferences)) {
     int64_t physical_memory = MemoryCoordinator::GetPhysicalMemoryMB();
     request.AddHTTPHeaderField(
-        "Device-Memory",
-        AtomicString(String::Number(ClientHintsDeviceMemory(physical_memory))));
+        "device-ram",
+        AtomicString(String::Number(ClientHintsDeviceRAM(physical_memory))));
   }
 
   float dpr = GetDevicePixelRatio();

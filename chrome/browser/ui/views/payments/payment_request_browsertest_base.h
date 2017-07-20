@@ -34,6 +34,10 @@ namespace content {
 class WebContents;
 }  // namespace content
 
+namespace service_manager {
+struct BindSourceInfo;
+}
+
 namespace payments {
 
 enum class DialogViewID;
@@ -83,7 +87,7 @@ class PaymentRequestBrowserTestBase
 
  protected:
   // Test will open a browser window to |test_file_path| (relative to
-  // components/test/data/payments).
+  // chrome/test/data/payments).
   explicit PaymentRequestBrowserTestBase(const std::string& test_file_path);
   ~PaymentRequestBrowserTestBase() override;
 
@@ -157,6 +161,7 @@ class PaymentRequestBrowserTestBase
 
   void CreatePaymentRequestForTest(
       content::WebContents* web_contents,
+      const service_manager::BindSourceInfo& source_info,
       payments::mojom::PaymentRequestRequest request);
 
   // Click on a view from within the dialog and waits for an observed event

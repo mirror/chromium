@@ -11,6 +11,10 @@
 #include "base/power_monitor/power_monitor.h"
 #include "content/shell/common/power_monitor_test.mojom.h"
 
+namespace service_manager {
+struct BindSourceInfo;
+}
+
 namespace content {
 
 class PowerMonitorTestImpl : public base::PowerObserver,
@@ -18,6 +22,7 @@ class PowerMonitorTestImpl : public base::PowerObserver,
  public:
   static void MakeStrongBinding(
       std::unique_ptr<PowerMonitorTestImpl> instance,
+      const service_manager::BindSourceInfo& source_info,
       mojom::PowerMonitorTestRequest request);
 
   PowerMonitorTestImpl();

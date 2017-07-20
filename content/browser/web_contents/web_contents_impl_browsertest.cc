@@ -938,57 +938,6 @@ IN_PROC_BROWSER_TEST_F(WebContentsImplBrowserTest,
 }
 
 namespace {
-void NavigateToDataURLAndCheckForTerminationDisabler(
-    Shell* shell,
-    const std::string& html,
-    bool expect_onunload,
-    bool expect_onbeforeunload) {
-  NavigateToURL(shell, GURL("data:text/html," + html));
-  RenderFrameHostImpl* rfh =
-      static_cast<RenderFrameHostImpl*>(shell->web_contents()->GetMainFrame());
-  EXPECT_EQ(expect_onunload,
-            rfh->GetSuddenTerminationDisablerState(blink::kUnloadHandler));
-  EXPECT_EQ(expect_onbeforeunload, rfh->GetSuddenTerminationDisablerState(
-                                       blink::kBeforeUnloadHandler));
-}
-}  // namespace
-
-IN_PROC_BROWSER_TEST_F(WebContentsImplBrowserTest,
-                       SuddenTerminationDisablerNone) {
-  const std::string NO_HANDLERS_HTML = "<html><body>foo</body></html>";
-  NavigateToDataURLAndCheckForTerminationDisabler(shell(), NO_HANDLERS_HTML,
-                                                  false, false);
-}
-
-IN_PROC_BROWSER_TEST_F(WebContentsImplBrowserTest,
-                       SuddenTerminationDisablerOnUnload) {
-  const std::string UNLOAD_HTML =
-      "<html><body><script>window.onunload=function(e) {}</script>"
-      "</body></html>";
-  NavigateToDataURLAndCheckForTerminationDisabler(shell(), UNLOAD_HTML, true,
-                                                  false);
-}
-
-IN_PROC_BROWSER_TEST_F(WebContentsImplBrowserTest,
-                       SuddenTerminationDisablerOnBeforeUnload) {
-  const std::string BEFORE_UNLOAD_HTML =
-      "<html><body><script>window.onbeforeunload=function(e) {}</script>"
-      "</body></html>";
-  NavigateToDataURLAndCheckForTerminationDisabler(shell(), BEFORE_UNLOAD_HTML,
-                                                  false, true);
-}
-
-IN_PROC_BROWSER_TEST_F(WebContentsImplBrowserTest,
-                       SuddenTerminationDisablerOnUnloadAndBeforeUnload) {
-  const std::string UNLOAD_AND_BEFORE_UNLOAD_HTML =
-      "<html><body><script>window.onunload=function(e) {};"
-      "window.onbeforeunload=function(e) {}</script>"
-      "</body></html>";
-  NavigateToDataURLAndCheckForTerminationDisabler(
-      shell(), UNLOAD_AND_BEFORE_UNLOAD_HTML, true, true);
-}
-
-namespace {
 
 class TestJavaScriptDialogManager : public JavaScriptDialogManager,
                                     public WebContentsDelegate {
@@ -1590,28 +1539,6 @@ IN_PROC_BROWSER_TEST_F(WebContentsImplBrowserTest,
   EXPECT_TRUE(NavigateToURL(
       shell(), embedded_test_server()->GetURL("b.com", "/title2.html")));
   bubble_delegate.WaitUntilHidden();
-}
-
-IN_PROC_BROWSER_TEST_F(WebContentsImplBrowserTest,
-                       FrameDetachInCopyDoesNotCrash) {
-  ASSERT_TRUE(embedded_test_server()->Start());
-  EXPECT_TRUE(NavigateToURL(
-      shell(),
-      embedded_test_server()->GetURL("a.com", "/detach_frame_in_copy.html")));
-
-  WebContentsImpl* web_contents =
-      static_cast<WebContentsImpl*>(shell()->web_contents());
-  // Focus the child frame before sending it a copy command: the child frame
-  // will detach itself upon getting a 'copy' event.
-  ASSERT_TRUE(ExecuteScript(web_contents, "window[0].focus();"));
-  FrameTree* frame_tree = web_contents->GetFrameTree();
-  FrameTreeNode* root = frame_tree->root();
-  ASSERT_EQ(root->child_at(0), frame_tree->GetFocusedFrame());
-  shell()->web_contents()->Copy();
-
-  TitleWatcher title_watcher(web_contents, base::ASCIIToUTF16("done"));
-  base::string16 title = title_watcher.WaitAndGetTitle();
-  ASSERT_EQ(title, base::ASCIIToUTF16("done"));
 }
 
 }  // namespace content

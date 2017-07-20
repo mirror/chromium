@@ -17,6 +17,11 @@ using ::base::android::ConvertJavaStringToUTF8;
 
 }  // namespace
 
+// static
+bool JourneyLoggerAndroid::Register(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
 JourneyLoggerAndroid::JourneyLoggerAndroid(bool is_incognito,
                                            const std::string& url)
     : journey_logger_(is_incognito,
@@ -34,13 +39,11 @@ void JourneyLoggerAndroid::SetNumberOfSuggestionsShown(
     JNIEnv* env,
     const base::android::JavaParamRef<jobject>& jcaller,
     jint jsection,
-    jint jnumber,
-    jboolean jhas_complete_suggestion) {
+    jint jnumber) {
   DCHECK_GE(jsection, 0);
   DCHECK_LT(jsection, JourneyLogger::Section::SECTION_MAX);
   journey_logger_.SetNumberOfSuggestionsShown(
-      static_cast<JourneyLogger::Section>(jsection), jnumber,
-      jhas_complete_suggestion);
+      static_cast<JourneyLogger::Section>(jsection), jnumber);
 }
 
 void JourneyLoggerAndroid::IncrementSelectionChanges(
@@ -140,6 +143,12 @@ void JourneyLoggerAndroid::SetNotShown(
   DCHECK_LT(jreason, JourneyLogger::NotShownReason::NOT_SHOWN_REASON_MAX);
   journey_logger_.SetNotShown(
       static_cast<JourneyLogger::NotShownReason>(jreason));
+}
+
+void JourneyLoggerAndroid::SetUserHadInitialFormOfPayment(
+    JNIEnv* env,
+    const base::android::JavaParamRef<jobject>& jcaller) {
+  journey_logger_.SetUserHadInitialFormOfPayment();
 }
 
 static jlong InitJourneyLoggerAndroid(

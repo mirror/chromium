@@ -51,9 +51,7 @@ class TestFontSelector : public FontSelector {
 
  private:
   TestFontSelector(PassRefPtr<FontCustomPlatformData> custom_platform_data)
-      : custom_platform_data_(std::move(custom_platform_data)) {
-    DCHECK(custom_platform_data_);
-  }
+      : custom_platform_data_(std::move(custom_platform_data)) {}
 
   RefPtr<FontCustomPlatformData> custom_platform_data_;
 };

@@ -22,6 +22,8 @@ namespace media {
 
 namespace {
 
+const base::StringPiece kArcCamera3SocketPath("/var/run/camera/camera3.sock");
+
 const base::TimeDelta kEventWaitTimeoutMs =
     base::TimeDelta::FromMilliseconds(3000);
 

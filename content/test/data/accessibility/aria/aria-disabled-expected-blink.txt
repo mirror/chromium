@@ -1,13 +1,4 @@
 rootWebArea
 ++genericContainer
-++++textField
-++++textField restriction=disabled
-++++textField
-++genericContainer restriction=disabled
-++++textField restriction=disabled
-++++textField restriction=disabled
-++++textField
-++genericContainer
-++++textField
-++++textField restriction=disabled
+++++textField disabled
 ++++textField

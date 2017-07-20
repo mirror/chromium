@@ -278,65 +278,28 @@ be describing additional metrics about the same event.
     Ranker.  These metrics are recorded each time the user triggers the
     Contextual Search UI via a tap gesture (when enabled).
   </summary>
-  <metric name="DidOptIn">
-    <summary>
-      Emits a 1 or 0 to indicate whether the user has Opted-in to the privacy
-      conditions for Contextual Search or not.
-    </summary>
-  </metric>
   <metric name="DurationAfterScrollMs">
     <summary>
       Duration in MS between showing the UI and a subsequent scroll event, or
       not recorded if there was no subsequent scroll.
     </summary>
   </metric>
-  <metric name="IsEntity">
-    <summary>
-      Emits a 1 or 0 to indicate whether the word tapped appears to be part of
-      an entity, given simple English language rules that check capitalization
-      and punctuation.
-    </summary>
-  </metric>
-  <metric name="IsLongWord">
-    <summary>
-      Emits a 1 or 0 to indicate whether the word tapped was considered long (at
-      least 10 chars in length).
-    </summary>
-  </metric>
-  <metric name="IsShortWord">
-    <summary>
-      Emits a 1 or 0 to indicate whether the word tapped was considered short
-      (less than 4 characters in length).
-    </summary>
-  </metric>
-  <metric name="IsWordEdge">
-    <summary>
-      Emits a 1 or 0 to indicate whether the tap gesture was on the edge of a
-      word, rather than in the middle 50% of the word.
-    </summary>
-  </metric>
-  <metric name="OutcomeWasCardsDataShown">
-    <summary>
-      Emits a 1 or 0 to indicate whether any Contextual Cards data was shown in
-      the Contextual Search Bar.
-    </summary>
-  </metric>
   <metric name="OutcomeWasPanelOpened">
     <summary>
-      Emits a 1 or 0 to indicate whether the user opened the overlay panel. This
-      is the primary outcome metric.
+      Whether the user opened the overlay panel.  This is the primary outcome
+      metric.
     </summary>
   </metric>
   <metric name="OutcomeWasQuickActionClicked">
     <summary>
-      Emits a 1 or 0 to indicate whether the user clicked within the overlay
-      panel when a Quick-Action was shown.  This is a secondary outcome metric.
+      Whether the user clicked within the overlay panel when a Quick-Action was
+      shown.  This is a secondary outcome metric.
     </summary>
   </metric>
   <metric name="OutcomeWasQuickAnswerSeen">
     <summary>
-      Emits a 1 or 0 to indicate whether the user could see a Quick-Answer
-      caption within the overlay panel.  This is a tertiary outcome metric.
+      Whether the user could see a Quick-Answer caption within the overlay
+      panel.  This is a tertiary outcome metric.
     </summary>
   </metric>
   <metric name="Previous28DayCtrPercent">
@@ -367,11 +330,6 @@ be describing additional metrics about the same event.
     <summary>
       The location of the tap relative to the top of the screen, expressed in
       DPs.
-    </summary>
-  </metric>
-  <metric name="TapDuration">
-    <summary>
-      The duration of the tap gesture expressed in milliseconds.
     </summary>
   </metric>
   <metric name="WasScreenBottom">
@@ -503,24 +461,6 @@ be describing additional metrics about the same event.
       routers, and 16 for localhost resources.
     </summary>
   </metric>
-</event>
-
-<event name="Media.Engagement.SessionFinished">
-  <owner>beccahughes@chromium.org</owner>
-  <owner>media-dev@chromium.org</owner>
-  <summary>
-    The Media Engagement index stores the number of significant media playbacks
-    per origin and the number of visits. From that we calculate a Media
-    Engagement Score.
-
-    To tweak the scoring function we are logging the total number of significant
-    media playbacks, the total number of visits, the calculated engagement score
-    and the new number of significant media playbacks that occured this visit.
-  </summary>
-  <metric name="Engagement.Score"/>
-  <metric name="Playbacks.Delta"/>
-  <metric name="Playbacks.Total"/>
-  <metric name="Visits.Total"/>
 </event>
 
 <event name="Media.WatchTime">
@@ -904,15 +844,6 @@ be describing additional metrics about the same event.
       correspond to the enum PasswordFormMetricsRecorder::BubbleTrigger.
     </summary>
   </metric>
-  <metric name="User.Action">
-    <summary>
-      Records what the user does with all UI entry points of the password
-      manager UI, like bubbles, context menus, forms, form fields, etc. in
-      relation to a given form. Recorded values correspond to the enum
-      PasswordFormMetricsRecorder::DetailedUserAction. In contrast to
-      User.ActionSimplified, this metric is intended to be extended over time.
-    </summary>
-  </metric>
   <metric name="User.ActionSimplified">
     <summary>
       Records what the user does with a form. Recorded values correspond to the
@@ -928,13 +859,6 @@ be describing additional metrics about the same event.
     interactions with them. No events are created for pages that don't contain
     password forms.
   </summary>
-  <metric name="ProvisionalSaveFailure">
-    <summary>
-      Records a provisional save failure in case the password manager cannot
-      offer to save a credential. Recorded values correspond to the enum
-      PasswordManagerMetricsRecorder::ProvisionalSaveFailure.
-    </summary>
-  </metric>
   <metric name="UserModifiedPasswordField">
     <summary>
       Records a 1 for every page on which a user has modified a password text

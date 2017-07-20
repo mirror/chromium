@@ -25,8 +25,9 @@ function GearMenu(element) {
   /**
    * @type {!HTMLElement}
    * @const
+   * @private
    */
-  this.volumeSpaceInfo = queryRequiredElement('#volume-space-info', element);
+  this.volumeSpaceInfo_ = queryRequiredElement('#volume-space-info', element);
 
   /**
    * @type {!HTMLElement}
@@ -83,12 +84,12 @@ GearMenu.prototype.setSpaceInfo = function(
   this.spaceInfoPromise_ = spaceInfoPromise;
 
   if (!spaceInfoPromise) {
-    this.volumeSpaceInfo.hidden = true;
+    this.volumeSpaceInfo_.hidden = true;
     this.volumeSpaceInfoSeparator_.hidden = true;
     return;
   }
 
-  this.volumeSpaceInfo.hidden = false;
+  this.volumeSpaceInfo_.hidden = false;
   this.volumeSpaceInfoSeparator_.hidden = false;
   this.volumeSpaceInnerBar_.setAttribute('pending', '');
   if (showLoadingCaption) {

@@ -97,8 +97,7 @@ class RenderWidgetHostLatencyTrackerTestBrowserClient
 class RenderWidgetHostLatencyTrackerTest
     : public RenderViewHostImplTestHarness {
  public:
-  RenderWidgetHostLatencyTrackerTest()
-      : tracker_(false), old_browser_client_(NULL) {
+  RenderWidgetHostLatencyTrackerTest() : old_browser_client_(NULL) {
     tracker_.Initialize(kTestRoutingId, kTestProcessId);
     ResetHistograms();
   }

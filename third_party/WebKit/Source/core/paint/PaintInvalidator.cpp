@@ -250,10 +250,11 @@ void PaintInvalidator::UpdatePaintingLayer(const LayoutObject& object,
 
 namespace {
 
-// This is a helper to handle paint invalidation for frames in
-// non-RootLayerScrolling mode.
+// This is temporary to workaround paint invalidation issues in
+// non-rootLayerScrolls mode.
 // It undoes LocalFrameView's content clip and scroll for paint invalidation of
-// frame scroll controls to which the content clip and scroll don't apply.
+// frame scroll controls and the LayoutView to which the content clip and scroll
+// don't apply.
 class ScopedUndoFrameViewContentClipAndScroll {
  public:
   ScopedUndoFrameViewContentClipAndScroll(
@@ -265,18 +266,18 @@ class ScopedUndoFrameViewContentClipAndScroll {
         saved_context_(tree_builder_context_.current) {
     DCHECK(!RuntimeEnabledFeatures::RootLayerScrollingEnabled());
 
-    if (const auto* scroll_translation = frame_view.ScrollTranslation()) {
-      DCHECK_EQ(scroll_translation, saved_context_.transform);
-      DCHECK_EQ(scroll_translation->ScrollNode(), saved_context_.scroll);
-      tree_builder_context_.current.transform =
-          saved_context_.transform->Parent();
-      tree_builder_context_.current.scroll = saved_context_.scroll->Parent();
+    if (frame_view.ContentClip() == saved_context_.clip) {
+      tree_builder_context_.current.clip = saved_context_.clip->Parent();
     }
-    DCHECK_EQ(frame_view.PreTranslation(),
-              tree_builder_context_.current.transform);
-
-    DCHECK_EQ(frame_view.ContentClip(), saved_context_.clip);
-    tree_builder_context_.current.clip = saved_context_.clip->Parent();
+    if (const auto* scroll_translation = frame_view.ScrollTranslation()) {
+      if (scroll_translation->ScrollNode() == saved_context_.scroll) {
+        tree_builder_context_.current.scroll = saved_context_.scroll->Parent();
+      }
+      if (scroll_translation == saved_context_.transform) {
+        tree_builder_context_.current.transform =
+            saved_context_.transform->Parent();
+      }
+    }
   }
 
   ~ScopedUndoFrameViewContentClipAndScroll() {
@@ -387,6 +388,15 @@ void PaintInvalidator::UpdateVisualRect(const LayoutObject& object,
   // PaintPropertyTreeBuilder::updatePropertiesForSelf.
   DCHECK(context.tree_builder_context_->current.paint_offset ==
          object.PaintOffset());
+
+  Optional<ScopedUndoFrameViewContentClipAndScroll>
+      undo_frame_view_content_clip_and_scroll;
+
+  if (!RuntimeEnabledFeatures::RootLayerScrollingEnabled() &&
+      object.IsLayoutView() && !object.IsPaintInvalidationContainer()) {
+    undo_frame_view_content_clip_and_scroll.emplace(
+        *ToLayoutView(object).GetFrameView(), *context.tree_builder_context_);
+  }
 
   LayoutRect new_visual_rect = ComputeVisualRectInBacking(object, context);
   if (object.IsBoxModelObject()) {

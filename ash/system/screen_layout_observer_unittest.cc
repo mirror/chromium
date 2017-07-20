@@ -9,7 +9,7 @@
 #include "ash/system/devicetype_utils.h"
 #include "ash/system/tray/system_tray.h"
 #include "ash/test/ash_test_base.h"
-#include "ash/wm/tablet_mode/tablet_mode_controller.h"
+#include "ash/wm/maximize_mode/maximize_mode_controller.h"
 #include "base/strings/string16.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
@@ -467,7 +467,8 @@ TEST_F(ScreenLayoutObserverTest, RotationNotification) {
             GetDisplayNotificationAdditionalText());
 
   // Switch to Tablet
-  Shell::Get()->tablet_mode_controller()->EnableTabletModeWindowManager(true);
+  Shell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
+      true);
 
   // The accelerometer source.
   display_manager()->SetDisplayRotation(

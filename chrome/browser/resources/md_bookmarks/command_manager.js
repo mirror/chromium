@@ -89,7 +89,7 @@ cr.define('bookmarks', function() {
       this.addShortcut_(Command.EDIT, 'F2', 'Enter');
       this.addShortcut_(Command.DELETE, 'Delete', 'Delete Backspace');
 
-      this.addShortcut_(Command.OPEN, 'Enter', 'Meta|o');
+      this.addShortcut_(Command.OPEN, 'Enter', 'Meta|ArrowDown Meta|o');
       this.addShortcut_(Command.OPEN_NEW_TAB, 'Ctrl|Enter', 'Meta|Enter');
       this.addShortcut_(Command.OPEN_NEW_WINDOW, 'Shift|Enter');
 
@@ -648,10 +648,8 @@ cr.define('bookmarks', function() {
      */
     onKeydown_: function(e) {
       var selection = this.getState().selection.items;
-      if (e.target == document.body &&
-          !bookmarks.DialogFocusManager.getInstance().hasOpenDialog()) {
+      if (e.target == document.body)
         this.handleKeyEvent(e, selection);
-      }
     },
 
     /**

@@ -4,8 +4,6 @@
 
 #include "chrome/browser/media/media_engagement_score.h"
 
-#include <utility>
-
 #include "chrome/browser/engagement/site_engagement_metrics.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "components/content_settings/core/common/content_settings.h"

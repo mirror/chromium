@@ -7,11 +7,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "ios/chrome/browser/ui/commands/application_commands.h"
-
-@protocol BrowserCommands;
-@protocol ImportDataControllerDelegate;
 @class OpenUrlCommand;
+@protocol ImportDataControllerDelegate;
 @protocol UserFeedbackDataSource;
 
 namespace ios {
@@ -40,15 +37,10 @@ class ChromeBrowserState;
 // closed.
 - (void)closeSettings;
 
-// Asks the delegate for a dispatcher that can be passed into child view
-// controllers when they are created.
-- (id<ApplicationCommands, BrowserCommands>)dispatcherForSettings;
-
 @end
 
 // Controller to modify user settings.
-@interface SettingsNavigationController
-    : UINavigationController<ApplicationSettingsCommands>
+@interface SettingsNavigationController : UINavigationController
 
 // Whether sync changes should be committed when the settings are being
 // dismissed. Defaults to YES.

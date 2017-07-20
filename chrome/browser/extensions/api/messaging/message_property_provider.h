@@ -11,13 +11,10 @@
 #include "base/macros.h"
 
 class GURL;
+class Profile;
 
 namespace base {
 class TaskRunner;
-}
-
-namespace content {
-class BrowserContext;
 }
 
 namespace net {
@@ -36,7 +33,7 @@ class MessagePropertyProvider {
   // Gets the DER-encoded public key of the domain-bound cert,
   // aka TLS channel ID, for the given URL.
   // Runs |reply| on the current message loop.
-  void GetChannelID(content::BrowserContext* browser_context,
+  void GetChannelID(Profile* profile,
                     const GURL& source_url,
                     const ChannelIDCallback& reply);
 

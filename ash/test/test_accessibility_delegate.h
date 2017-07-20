@@ -11,7 +11,6 @@
 
 namespace ash {
 
-// TODO(jamescook): Move to //ash/accessibility.
 class TestAccessibilityDelegate : public DefaultAccessibilityDelegate {
  public:
   TestAccessibilityDelegate() {}

@@ -19,7 +19,7 @@
 #include "cc/surfaces/surface_manager.h"
 #include "components/viz/host/host_frame_sink_manager.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
-#include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
+#include "components/viz/service/frame_sinks/frame_sink_manager.h"
 #include "content/browser/accessibility/browser_accessibility_manager.h"
 #include "content/browser/browser_plugin/browser_plugin_guest.h"
 #include "content/browser/compositor/surface_utils.h"
@@ -735,8 +735,8 @@ void RenderWidgetHostViewChildFrame::SubmitSurfaceCopyRequest(
 
   std::unique_ptr<cc::CopyOutputRequest> request =
       cc::CopyOutputRequest::CreateRequest(
-          base::BindOnce(&CopyFromCompositingSurfaceHasResult, output_size,
-                         preferred_color_type, callback));
+          base::Bind(&CopyFromCompositingSurfaceHasResult, output_size,
+                     preferred_color_type, callback));
   if (!src_subrect.IsEmpty())
     request->set_area(src_subrect);
 
@@ -756,10 +756,6 @@ void RenderWidgetHostViewChildFrame::ReclaimResources(
 void RenderWidgetHostViewChildFrame::OnBeginFrame(
     const cc::BeginFrameArgs& args) {
   renderer_compositor_frame_sink_->OnBeginFrame(args);
-}
-
-void RenderWidgetHostViewChildFrame::OnBeginFramePausedChanged(bool paused) {
-  renderer_compositor_frame_sink_->OnBeginFramePausedChanged(paused);
 }
 
 void RenderWidgetHostViewChildFrame::SetNeedsBeginFrames(

@@ -287,4 +287,5 @@ def Parse(proguard_output):
       else:
         state.InitMethod(None)
 
+
   return results

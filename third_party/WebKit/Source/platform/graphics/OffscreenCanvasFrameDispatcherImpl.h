@@ -46,7 +46,6 @@ class PLATFORM_EXPORT OffscreenCanvasFrameDispatcherImpl final
   void DidReceiveCompositorFrameAck(
       const WTF::Vector<cc::ReturnedResource>& resources) final;
   void OnBeginFrame(const cc::BeginFrameArgs&) final;
-  void OnBeginFramePausedChanged(bool paused) final{};
   void ReclaimResources(
       const WTF::Vector<cc::ReturnedResource>& resources) final;
 

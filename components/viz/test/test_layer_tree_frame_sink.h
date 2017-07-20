@@ -14,7 +14,7 @@
 #include "components/viz/service/display/display.h"
 #include "components/viz/service/display/display_client.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support_client.h"
-#include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
+#include "components/viz/service/frame_sinks/frame_sink_manager.h"
 
 namespace base {
 class SingleThreadTaskRunner;
@@ -95,7 +95,6 @@ class TestLayerTreeFrameSink : public cc::LayerTreeFrameSink,
       const std::vector<cc::ReturnedResource>& resources) override;
   void WillDrawSurface(const LocalSurfaceId& local_surface_id,
                        const gfx::Rect& damage_rect) override;
-  void OnBeginFramePausedChanged(bool paused) override;
 
   // DisplayClient implementation.
   void DisplayOutputSurfaceLost() override;
@@ -119,7 +118,7 @@ class TestLayerTreeFrameSink : public cc::LayerTreeFrameSink,
   FrameSinkId frame_sink_id_;
   // TODO(danakj): These don't need to be stored in unique_ptrs when
   // LayerTreeFrameSink is owned/destroyed on the compositor thread.
-  std::unique_ptr<FrameSinkManagerImpl> frame_sink_manager_;
+  std::unique_ptr<FrameSinkManager> frame_sink_manager_;
   std::unique_ptr<LocalSurfaceIdAllocator> local_surface_id_allocator_;
   LocalSurfaceId local_surface_id_;
   gfx::Size display_size_;

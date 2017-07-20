@@ -683,7 +683,6 @@ std::unique_ptr<HistogramBase> PersistentHistogramAllocator::CreateHistogram(
     RecordCreateHistogramResult(CREATE_HISTOGRAM_UNKNOWN_TYPE);
   }
 
-  histogram->ValidateHistogramContents();
   return histogram;
 }
 

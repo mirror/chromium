@@ -6,13 +6,12 @@
 #include "chrome/browser/profiles/profile.h"
 #include "components/browsing_data/content/conditional_cache_counting_helper.h"
 #include "components/browsing_data/core/pref_names.h"
-#include "components/offline_pages/features/features.h"
 #include "content/public/browser/browser_thread.h"
 #include "net/base/net_errors.h"
 
-#if BUILDFLAG(ENABLE_OFFLINE_PAGES)
-#include "chrome/browser/offline_pages/offline_page_utils.h"
-#endif  // BUILDFLAG(ENABLE_OFFLINE_PAGES)
+#if defined(OS_ANDROID)
+#include "chrome/browser/android/offline_pages/offline_page_utils.h"
+#endif  // OS_ANDROID
 
 CacheCounter::CacheResult::CacheResult(const CacheCounter* source,
                                        int64_t cache_size,
@@ -49,7 +48,7 @@ void CacheCounter::Count() {
           ->CountAndDestroySelfWhenFinished(
               base::Bind(&CacheCounter::OnCacheSizeCalculated,
                          weak_ptr_factory_.GetWeakPtr()));
-#if BUILDFLAG(ENABLE_OFFLINE_PAGES)
+#if defined(OS_ANDROID)
   if (offline_pages::OfflinePageUtils::GetCachedOfflinePageSizeBetween(
           profile_,
           base::Bind(&CacheCounter::OnCacheSizeCalculated,
@@ -58,7 +57,7 @@ void CacheCounter::Count() {
           GetPeriodStart(), base::Time::Max())) {
     pending_sources_++;
   }
-#endif  // BUILDFLAG(ENABLE_OFFLINE_PAGES)
+#endif  // OS_ANDROID
 }
 
 void CacheCounter::OnCacheSizeCalculated(bool is_upper_limit,

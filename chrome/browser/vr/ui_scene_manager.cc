@@ -27,9 +27,6 @@
 #include "components/vector_icons/vector_icons.h"
 #include "ui/gfx/transform_util.h"
 
-using cc::TargetProperty::BOUNDS;
-using cc::TargetProperty::TRANSFORM;
-
 namespace vr {
 
 namespace {
@@ -97,9 +94,14 @@ static constexpr float kToastOffsetDMM = 0.004;
 static constexpr float kWebVrAngleRadians = 9.88 * M_PI / 180.0;
 static constexpr int kToastTimeoutSeconds = kTransientUrlBarTimeoutSeconds;
 
-static constexpr float kSplashScreenDistance = 2.5;
-static constexpr float kSplashScreenIconSize = 0.405;
-static constexpr float kSplashScreenIconVerticalOffset = -0.18;
+static constexpr float kSplashScreenDistance = 1;
+static constexpr float kSplashScreenIconDMM = 0.12;
+static constexpr float kSplashScreenIconHeight =
+    kSplashScreenIconDMM * kSplashScreenDistance;
+static constexpr float kSplashScreenIconWidth =
+    kSplashScreenIconDMM * kSplashScreenDistance;
+static constexpr float kSplashScreenIconVerticalOffset =
+    -0.1 * kSplashScreenDistance;
 
 static constexpr float kCloseButtonDistance = 2.4;
 static constexpr float kCloseButtonHeight =
@@ -140,7 +142,7 @@ UiSceneManager::UiSceneManager(UiBrowserInterface* browser,
       in_cct_(in_cct),
       web_vr_mode_(in_web_vr),
       started_for_autopresentation_(web_vr_autopresentation_expected),
-      showing_web_vr_splash_screen_(web_vr_autopresentation_expected),
+      waiting_for_first_web_vr_frame_(web_vr_autopresentation_expected),
       weak_ptr_factory_(this) {
   CreateSplashScreen();
   CreateBackground();
@@ -269,7 +271,6 @@ void UiSceneManager::CreateContentQuad() {
   element->SetTranslate(0, kContentVerticalOffset, -kContentDistance);
   element->set_visible(false);
   element->set_corner_radius(kContentCornerRadius);
-  element->animation_player().SetTransitionedProperties({TRANSFORM, BOUNDS});
   main_content_ = element.get();
   content_elements_.push_back(element.get());
   scene_->AddUiElement(std::move(element));
@@ -287,7 +288,7 @@ void UiSceneManager::CreateContentQuad() {
   scene_->AddUiElement(std::move(element));
 
   // Limit reticle distance to a sphere based on content distance.
-  scene_->set_background_distance(
+  scene_->SetBackgroundDistance(
       main_content_->transform_operations().Apply().matrix().get(2, 3) *
       -kBackgroundDistanceMultiplier);
 }
@@ -299,7 +300,7 @@ void UiSceneManager::CreateSplashScreen() {
   icon->set_debug_id(kSplashScreenIcon);
   icon->set_id(AllocateId());
   icon->set_hit_testable(false);
-  icon->SetSize(kSplashScreenIconSize, kSplashScreenIconSize);
+  icon->SetSize(kSplashScreenIconWidth, kSplashScreenIconHeight);
   icon->SetTranslate(0, kSplashScreenIconVerticalOffset,
                      -kSplashScreenDistance);
   splash_screen_icon_ = icon.get();
@@ -336,7 +337,7 @@ void UiSceneManager::CreateBackground() {
   background_elements_.push_back(element.get());
   scene_->AddUiElement(std::move(element));
 
-  ConfigureBackgroundColor();
+  UpdateBackgroundColor();
 }
 
 void UiSceneManager::CreateUrlBar() {
@@ -461,7 +462,7 @@ void UiSceneManager::SetWebVrMode(bool web_vr, bool show_toast) {
   web_vr_mode_ = web_vr;
   web_vr_show_toast_ = show_toast;
   if (!web_vr_mode_) {
-    showing_web_vr_splash_screen_ = false;
+    waiting_for_first_web_vr_frame_ = false;
     started_for_autopresentation_ = false;
   }
   ConfigureScene();
@@ -476,9 +477,9 @@ void UiSceneManager::SetWebVrMode(bool web_vr, bool show_toast) {
 }
 
 void UiSceneManager::OnWebVrFrameAvailable() {
-  if (!showing_web_vr_splash_screen_)
+  if (!waiting_for_first_web_vr_frame_)
     return;
-  showing_web_vr_splash_screen_ = false;
+  waiting_for_first_web_vr_frame_ = false;
   ConfigureScene();
 }
 
@@ -486,21 +487,22 @@ void UiSceneManager::ConfigureScene() {
   // We disable WebVR rendering if we're expecting to auto present so that we
   // can continue to show the 2D splash screen while the site submits the first
   // WebVR frame.
-  scene_->set_web_vr_rendering_enabled(web_vr_mode_ &&
-                                       !showing_web_vr_splash_screen_);
+  scene_->SetWebVrRenderingEnabled(web_vr_mode_ &&
+                                   !waiting_for_first_web_vr_frame_);
   // Splash screen.
-  splash_screen_icon_->SetEnabled(showing_web_vr_splash_screen_);
+  scene_->set_showing_splash_screen(waiting_for_first_web_vr_frame_);
+  splash_screen_icon_->SetEnabled(waiting_for_first_web_vr_frame_);
 
   // Exit warning.
-  exit_warning_->SetEnabled(exiting_);
-  screen_dimmer_->SetEnabled(exiting_);
+  exit_warning_->SetEnabled(scene_->is_exiting());
+  screen_dimmer_->SetEnabled(scene_->is_exiting());
 
-  bool browsing_mode = !web_vr_mode_ && !showing_web_vr_splash_screen_;
+  bool browsing_mode = !web_vr_mode_ && !scene_->showing_splash_screen();
 
   // Controls (URL bar, loading progress, etc).
-  bool controls_visible = browsing_mode && !fullscreen_ && !prompting_to_exit_;
+  bool controls_visible = browsing_mode && !fullscreen_;
   for (UiElement* element : control_elements_) {
-    element->SetEnabled(controls_visible);
+    element->SetEnabled(controls_visible && !scene_->is_prompting_to_exit());
   }
 
   // Close button is a special control element that needs to be hidden when in
@@ -509,7 +511,7 @@ void UiSceneManager::ConfigureScene() {
 
   // Content elements.
   for (UiElement* element : content_elements_) {
-    element->SetEnabled(browsing_mode && !prompting_to_exit_);
+    element->SetEnabled(browsing_mode && !scene_->is_prompting_to_exit());
   }
 
   // Background elements.
@@ -518,7 +520,7 @@ void UiSceneManager::ConfigureScene() {
   }
 
   // Exit prompt.
-  bool showExitPrompt = browsing_mode && prompting_to_exit_;
+  bool showExitPrompt = browsing_mode && scene_->is_prompting_to_exit();
   exit_prompt_->SetEnabled(showExitPrompt);
   exit_prompt_backplane_->SetEnabled(showExitPrompt);
 
@@ -542,26 +544,22 @@ void UiSceneManager::ConfigureScene() {
         -kCloseButtonDistance);
     close_button_->SetSize(kCloseButtonWidth, kCloseButtonHeight);
   }
-  scene_->set_background_distance(
+
+  scene_->SetMode(mode());
+  scene_->SetBackgroundDistance(
       main_content_->transform_operations().Apply().matrix().get(2, 3) *
       -kBackgroundDistanceMultiplier);
-
-  for (auto& element : scene_->GetUiElements())
-    element->SetMode(mode());
+  UpdateBackgroundColor();
 
   transient_url_bar_->SetEnabled(started_for_autopresentation_ &&
-                                 !showing_web_vr_splash_screen_);
-
-  scene_->set_reticle_rendering_enabled(
-      !(web_vr_mode_ || exiting_ || showing_web_vr_splash_screen_));
+                                 !scene_->showing_splash_screen());
 
   ConfigureExclusiveScreenToast();
   ConfigureSecurityWarnings();
   ConfigureIndicators();
-  ConfigureBackgroundColor();
 }
 
-void UiSceneManager::ConfigureBackgroundColor() {
+void UiSceneManager::UpdateBackgroundColor() {
   // TODO(vollick): it would be nice if ceiling, floor and the grid were
   // UiElement subclasses and could respond to the OnSetMode signal.
   ceiling_->set_center_color(color_scheme().ceiling);
@@ -569,10 +567,6 @@ void UiSceneManager::ConfigureBackgroundColor() {
   floor_->set_center_color(color_scheme().floor);
   floor_->set_edge_color(color_scheme().world_background);
   floor_->set_grid_color(color_scheme().floor_grid);
-
-  scene_->set_background_color(showing_web_vr_splash_screen_
-                                   ? color_scheme().splash_screen_background
-                                   : color_scheme().world_background);
 }
 
 void UiSceneManager::SetSplashScreenIcon(const SkBitmap& bitmap) {
@@ -644,7 +638,7 @@ void UiSceneManager::SetFullscreen(bool fullscreen) {
 void UiSceneManager::SetExitVrPromptEnabled(bool enabled,
                                             UiUnsupportedMode reason) {
   DCHECK(enabled || reason == UiUnsupportedMode::kCount);
-  if (prompting_to_exit_ && enabled) {
+  if (scene_->is_prompting_to_exit() && enabled) {
     browser_->OnExitVrPromptResult(exit_vr_prompt_reason_,
                                    ExitVrPromptChoice::CHOICE_NONE);
   }
@@ -653,13 +647,13 @@ void UiSceneManager::SetExitVrPromptEnabled(bool enabled,
           ? IDS_VR_SHELL_EXIT_PROMPT_DESCRIPTION_SITE_INFO
           : IDS_VR_SHELL_EXIT_PROMPT_DESCRIPTION);
   exit_vr_prompt_reason_ = reason;
-  prompting_to_exit_ = enabled;
+  scene_->set_is_prompting_to_exit(enabled);
   ConfigureScene();
 }
 
 void UiSceneManager::ConfigureSecurityWarnings() {
   bool enabled =
-      web_vr_mode_ && !secure_origin_ && !showing_web_vr_splash_screen_;
+      web_vr_mode_ && !secure_origin_ && !waiting_for_first_web_vr_frame_;
   permanent_security_warning_->SetEnabled(enabled);
   transient_security_warning_->SetEnabled(enabled);
 }
@@ -766,9 +760,9 @@ void UiSceneManager::SetLoadProgress(float progress) {
 }
 
 void UiSceneManager::SetIsExiting() {
-  if (exiting_)
+  if (scene_->is_exiting())
     return;
-  exiting_ = true;
+  scene_->set_is_exiting();
   ConfigureScene();
 }
 

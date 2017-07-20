@@ -13,7 +13,6 @@
 #include "content/renderer/render_thread_impl.h"
 #include "content/renderer/render_view_impl.h"
 #include "content/renderer/render_widget.h"
-#include "third_party/WebKit/public/web/WebInputMethodController.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 
 namespace content {
@@ -47,6 +46,7 @@ FrameInputHandlerImpl::~FrameInputHandlerImpl() {}
 // static
 void FrameInputHandlerImpl::CreateMojoService(
     base::WeakPtr<RenderFrameImpl> render_frame,
+    const service_manager::BindSourceInfo& source_info,
     mojom::FrameInputHandlerRequest request) {
   DCHECK(render_frame);
 
@@ -256,9 +256,8 @@ void FrameInputHandlerImpl::CollapseSelection() {
 
   if (!render_frame_)
     return;
-  const blink::WebRange& range = render_frame_->GetWebFrame()
-                                     ->GetInputMethodController()
-                                     ->GetSelectionOffsets();
+  const blink::WebRange& range =
+      render_frame_->GetRenderWidget()->GetWebWidget()->CaretOrSelectionRange();
   if (range.IsNull())
     return;
 
@@ -300,9 +299,8 @@ void FrameInputHandlerImpl::AdjustSelectionByCharacterOffset(int32_t start,
 
   if (!render_frame_)
     return;
-  blink::WebRange range = render_frame_->GetWebFrame()
-                              ->GetInputMethodController()
-                              ->GetSelectionOffsets();
+  blink::WebRange range =
+      render_frame_->GetRenderWidget()->GetWebWidget()->CaretOrSelectionRange();
   if (range.IsNull())
     return;
 

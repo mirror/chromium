@@ -19,16 +19,9 @@
 #include "printing/print_job_constants.h"
 #include "printing/units.h"
 
-DEFINE_WEB_CONTENTS_USER_DATA_KEY(headless::HeadlessPrintManager);
+DEFINE_WEB_CONTENTS_USER_DATA_KEY(printing::HeadlessPrintManager);
 
-namespace headless {
-
-HeadlessPrintSettings::HeadlessPrintSettings()
-    : landscape(false),
-      display_header_footer(false),
-      should_print_backgrounds(false),
-      scale(1),
-      ignore_invalid_page_ranges(false) {}
+namespace printing {
 
 HeadlessPrintManager::HeadlessPrintManager(content::WebContents* web_contents)
     : PrintManager(web_contents) {
@@ -81,10 +74,9 @@ HeadlessPrintManager::PDFContentsToDictionaryValue(const std::string& data) {
 // static
 HeadlessPrintManager::PageRangeStatus
 HeadlessPrintManager::PageRangeTextToPages(base::StringPiece page_range_text,
-                                           bool ignore_invalid_page_ranges,
                                            int pages_count,
                                            std::vector<int>* pages) {
-  printing::PageRanges page_ranges;
+  PageRanges page_ranges;
   for (const auto& range_string :
        base::SplitStringPiece(page_range_text, ",", base::TRIM_WHITESPACE,
                               base::SPLIT_WANT_NONEMPTY)) {
@@ -113,17 +105,10 @@ HeadlessPrintManager::PageRangeTextToPages(base::StringPiece page_range_text,
         return SYNTAX_ERROR;
     }
 
-    if (range.from < 1 || range.from > range.to) {
-      if (!ignore_invalid_page_ranges)
-        return SYNTAX_ERROR;
-      continue;
-    }
-    if (range.from > pages_count) {
-      if (!ignore_invalid_page_ranges)
-        return LIMIT_ERROR;
-      continue;
-    }
-
+    if (range.from < 1 || range.from > range.to)
+      return SYNTAX_ERROR;
+    if (range.from > pages_count)
+      return LIMIT_ERROR;
     if (range.to > pages_count)
       range.to = pages_count;
 
@@ -133,7 +118,7 @@ HeadlessPrintManager::PageRangeTextToPages(base::StringPiece page_range_text,
     range.to--;
     page_ranges.push_back(range);
   }
-  *pages = printing::PageRange::GetPages(page_ranges);
+  *pages = PageRange::GetPages(page_ranges);
   return PRINT_NO_ERROR;
 }
 
@@ -150,15 +135,14 @@ void HeadlessPrintManager::GetPDFContents(content::RenderFrameHost* rfh,
   callback_ = callback;
   print_params_ = GetPrintParamsFromSettings(settings);
   page_ranges_text_ = settings.page_ranges;
-  ignore_invalid_page_ranges_ = settings.ignore_invalid_page_ranges;
   rfh->Send(new PrintMsg_PrintPages(rfh->GetRoutingID()));
 }
 
 std::unique_ptr<PrintMsg_PrintPages_Params>
 HeadlessPrintManager::GetPrintParamsFromSettings(
     const HeadlessPrintSettings& settings) {
-  printing::PrintSettings print_settings;
-  print_settings.set_dpi(printing::kPointsPerInch);
+  PrintSettings print_settings;
+  print_settings.set_dpi(kPointsPerInch);
   print_settings.set_should_print_backgrounds(
       settings.should_print_backgrounds);
   print_settings.set_scale_factor(settings.scale);
@@ -175,7 +159,7 @@ HeadlessPrintManager::GetPrintParamsFromSettings(
     print_settings.set_url(base::UTF8ToUTF16(url));
   }
 
-  print_settings.set_margin_type(printing::CUSTOM_MARGINS);
+  print_settings.set_margin_type(CUSTOM_MARGINS);
   print_settings.SetCustomMargins(settings.margins_in_points);
 
   gfx::Rect printable_area_device_units(settings.paper_size_in_points);
@@ -183,9 +167,8 @@ HeadlessPrintManager::GetPrintParamsFromSettings(
                                          printable_area_device_units, true);
 
   auto print_params = base::MakeUnique<PrintMsg_PrintPages_Params>();
-  printing::RenderParamsFromPrintSettings(print_settings,
-                                          &print_params->params);
-  print_params->params.document_cookie = printing::PrintSettings::NewCookie();
+  RenderParamsFromPrintSettings(print_settings, &print_params->params);
+  print_params->params.document_cookie = PrintSettings::NewCookie();
   return print_params;
 }
 
@@ -239,9 +222,8 @@ void HeadlessPrintManager::OnGetDefaultPrintSettings(IPC::Message* reply_msg) {
 void HeadlessPrintManager::OnScriptedPrint(
     const PrintHostMsg_ScriptedPrint_Params& params,
     IPC::Message* reply_msg) {
-  PageRangeStatus status =
-      PageRangeTextToPages(page_ranges_text_, ignore_invalid_page_ranges_,
-                           params.expected_pages_count, &print_params_->pages);
+  PageRangeStatus status = PageRangeTextToPages(
+      page_ranges_text_, params.expected_pages_count, &print_params_->pages);
   switch (status) {
     case SYNTAX_ERROR:
       printing_rfh_->Send(reply_msg);
@@ -292,8 +274,7 @@ void HeadlessPrintManager::OnDidPrintPage(
       ReleaseJob(METAFILE_MAP_ERROR);
       return;
     }
-    auto metafile = base::MakeUnique<printing::PdfMetafileSkia>(
-        printing::PDF_SKIA_DOCUMENT_TYPE);
+    auto metafile = base::MakeUnique<PdfMetafileSkia>(PDF_SKIA_DOCUMENT_TYPE);
     if (!metafile->InitFromData(shared_buf->memory(), params.data_size)) {
       ReleaseJob(METAFILE_INVALID_HEADER);
       return;
@@ -321,7 +302,6 @@ void HeadlessPrintManager::Reset() {
   callback_.Reset();
   print_params_.reset();
   page_ranges_text_.clear();
-  ignore_invalid_page_ranges_ = false;
   data_.clear();
   expecting_first_page_ = true;
   number_pages_ = 0;
@@ -343,4 +323,4 @@ void HeadlessPrintManager::ReleaseJob(PrintResult result) {
   Reset();
 }
 
-}  // namespace headless
+}  // namespace printing

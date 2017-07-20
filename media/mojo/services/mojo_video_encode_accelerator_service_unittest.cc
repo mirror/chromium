@@ -53,7 +53,7 @@ class MockMojoVideoEncodeAcceleratorClient
                void(uint32_t, const gfx::Size&, uint32_t));
   MOCK_METHOD4(BitstreamBufferReady,
                void(int32_t, uint32_t, bool, base::TimeDelta));
-  MOCK_METHOD1(NotifyError, void(VideoEncodeAccelerator::Error));
+  MOCK_METHOD1(NotifyError, void(mojom::VideoEncodeAccelerator::Error));
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MockMojoVideoEncodeAcceleratorClient);
@@ -98,10 +98,9 @@ class MojoVideoEncodeAcceleratorServiceTest : public ::testing::Test {
                 RequireBitstreamBuffers(_, kInputVisibleSize, _));
 
     const uint32_t kInitialBitrate = 100000u;
-    mojo_vea_service()->Initialize(
-        PIXEL_FORMAT_I420, kInputVisibleSize, H264PROFILE_MIN, kInitialBitrate,
-        std::move(mojo_vea_client),
-        base::Bind([](bool success) { ASSERT_TRUE(success); }));
+    mojo_vea_service()->Initialize(PIXEL_FORMAT_I420, kInputVisibleSize,
+                                   H264PROFILE_MIN, kInitialBitrate,
+                                   std::move(mojo_vea_client));
     base::RunLoop().RunUntilIdle();
   }
 
@@ -191,15 +190,16 @@ TEST_F(MojoVideoEncodeAcceleratorServiceTest, InitializeFailure) {
       base::MakeUnique<MockMojoVideoEncodeAcceleratorClient>(),
       mojo::MakeRequest(&mojo_vea_client));
 
-  EXPECT_CALL(*static_cast<media::MockMojoVideoEncodeAcceleratorClient*>(
-                  mojo_vea_binding->impl()),
-              NotifyError(VideoEncodeAccelerator::kPlatformFailureError));
+  EXPECT_CALL(
+      *static_cast<media::MockMojoVideoEncodeAcceleratorClient*>(
+          mojo_vea_binding->impl()),
+      NotifyError(
+          mojom::VideoEncodeAccelerator::Error::PLATFORM_FAILURE_ERROR));
 
   const uint32_t kInitialBitrate = 100000u;
-  mojo_vea_service()->Initialize(
-      PIXEL_FORMAT_I420, kInputVisibleSize, H264PROFILE_MIN, kInitialBitrate,
-      std::move(mojo_vea_client),
-      base::Bind([](bool success) { ASSERT_FALSE(success); }));
+  mojo_vea_service()->Initialize(PIXEL_FORMAT_I420, kInputVisibleSize,
+                                 H264PROFILE_MIN, kInitialBitrate,
+                                 std::move(mojo_vea_client));
   base::RunLoop().RunUntilIdle();
 
   mojo_vea_binding->Close();
@@ -216,8 +216,10 @@ TEST_F(MojoVideoEncodeAcceleratorServiceTest,
   const uint64_t wrong_size = fake_vea()->minimum_output_buffer_size() / 2;
   auto handle = mojo::SharedBufferHandle::Create(wrong_size);
 
-  EXPECT_CALL(*mock_mojo_vea_client(),
-              NotifyError(VideoEncodeAccelerator::kInvalidArgumentError));
+  EXPECT_CALL(
+      *mock_mojo_vea_client(),
+      NotifyError(
+          mojom::VideoEncodeAccelerator::Error::INVALID_ARGUMENT_ERROR));
 
   mojo_vea_service()->UseOutputBitstreamBuffer(kBitstreamBufferId,
                                                std::move(handle));
@@ -236,8 +238,10 @@ TEST_F(MojoVideoEncodeAcceleratorServiceTest, EncodeWithWrongSizeFails) {
                              kInputVisibleSize.height() / 2);
   const auto video_frame = VideoFrame::CreateBlackFrame(wrong_size);
 
-  EXPECT_CALL(*mock_mojo_vea_client(),
-              NotifyError(VideoEncodeAccelerator::kInvalidArgumentError));
+  EXPECT_CALL(
+      *mock_mojo_vea_client(),
+      NotifyError(
+          mojom::VideoEncodeAccelerator::Error::INVALID_ARGUMENT_ERROR));
 
   mojo_vea_service()->Encode(video_frame, true /* is_keyframe */,
                              base::Bind(&base::DoNothing));

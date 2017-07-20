@@ -25,7 +25,6 @@
 #include "extensions/common/extension_urls.h"
 #include "extensions/common/value_counter.h"
 #include "extensions/renderer/extension_frame_helper.h"
-#include "extensions/renderer/ipc_message_sender.h"
 #include "extensions/renderer/script_context.h"
 #include "extensions/renderer/worker_thread_dispatcher.h"
 #include "gin/converter.h"
@@ -151,19 +150,10 @@ v8::Local<v8::Array> GetMatchingListeners(ScriptContext* script_context,
   return array;
 }
 
-bool IsLazyContext(ScriptContext* context) {
-  // Note: Check context type first so that ExtensionFrameHelper isn't accessed
-  // on a worker thread.
-  return context->context_type() == Feature::SERVICE_WORKER_CONTEXT ||
-         ExtensionFrameHelper::IsContextForEventPage(context);
-}
-
 }  // namespace
 
-EventBindings::EventBindings(ScriptContext* context,
-                             IPCMessageSender* ipc_message_sender)
-    : ObjectBackedNativeHandler(context),
-      ipc_message_sender_(ipc_message_sender) {
+EventBindings::EventBindings(ScriptContext* context)
+    : ObjectBackedNativeHandler(context) {
   RouteFunction("AttachEvent", base::Bind(&EventBindings::AttachEventHandler,
                                           base::Unretained(this)));
   RouteFunction("DetachEvent", base::Bind(&EventBindings::DetachEventHandler,
@@ -238,14 +228,12 @@ void EventBindings::DispatchEventInContext(
 
 void EventBindings::AttachEventHandler(
     const v8::FunctionCallbackInfo<v8::Value>& args) {
-  CHECK_EQ(2, args.Length());
+  CHECK_EQ(1, args.Length());
   CHECK(args[0]->IsString());
-  CHECK(args[1]->IsBoolean());
-  AttachEvent(*v8::String::Utf8Value(args[0]), args[1]->BooleanValue());
+  AttachEvent(*v8::String::Utf8Value(args[0]));
 }
 
-void EventBindings::AttachEvent(const std::string& event_name,
-                                bool supports_lazy_listeners) {
+void EventBindings::AttachEvent(const std::string& event_name) {
   if (!context()->HasAccessOrThrowError(event_name))
     return;
 
@@ -258,49 +246,78 @@ void EventBindings::AttachEvent(const std::string& event_name,
   // chrome/test/data/extensions/api_test/events/background.js.
   attached_event_names_.insert(event_name);
 
+  const int worker_thread_id = content::WorkerThread::GetCurrentId();
+  const std::string& extension_id = context()->GetExtensionID();
+  const bool is_service_worker_context =
+      context()->context_type() == Feature::SERVICE_WORKER_CONTEXT;
+  IPC::Sender* sender = GetIPCSender();
   if (IncrementEventListenerCount(context(), event_name) == 1) {
-    ipc_message_sender_->SendAddUnfilteredEventListenerIPC(context(),
-                                                           event_name);
+    sender->Send(new ExtensionHostMsg_AddListener(
+        extension_id,
+        is_service_worker_context ? context()->service_worker_scope()
+                                  : context()->url(),
+        event_name, worker_thread_id));
   }
 
   // This is called the first time the page has added a listener. Since
   // the background page is the only lazy page, we know this is the first
   // time this listener has been registered.
-  if (IsLazyContext(context()) && supports_lazy_listeners) {
-    ipc_message_sender_->SendAddUnfilteredLazyEventListenerIPC(context(),
-                                                               event_name);
+  bool is_lazy_context =
+      ExtensionFrameHelper::IsContextForEventPage(context()) ||
+      context()->context_type() == Feature::SERVICE_WORKER_CONTEXT;
+  if (is_lazy_context) {
+    if (is_service_worker_context) {
+      sender->Send(new ExtensionHostMsg_AddLazyServiceWorkerListener(
+          extension_id, event_name, context()->service_worker_scope()));
+    } else {
+      sender->Send(
+          new ExtensionHostMsg_AddLazyListener(extension_id, event_name));
+    }
   }
 }
 
 void EventBindings::DetachEventHandler(
     const v8::FunctionCallbackInfo<v8::Value>& args) {
-  CHECK_EQ(3, args.Length());
+  CHECK_EQ(2, args.Length());
   CHECK(args[0]->IsString());
   CHECK(args[1]->IsBoolean());
-  CHECK(args[2]->IsBoolean());
-  bool was_manual = args[1]->BooleanValue();
-  bool supports_lazy_listeners = args[2]->BooleanValue();
-  DetachEvent(*v8::String::Utf8Value(args[0]),
-              was_manual && supports_lazy_listeners);
+  DetachEvent(*v8::String::Utf8Value(args[0]), args[1]->BooleanValue());
 }
 
-void EventBindings::DetachEvent(const std::string& event_name,
-                                bool remove_lazy_listener) {
+void EventBindings::DetachEvent(const std::string& event_name, bool is_manual) {
   // See comment in AttachEvent().
   attached_event_names_.erase(event_name);
 
+  int worker_thread_id = content::WorkerThread::GetCurrentId();
+  const bool is_service_worker_context = worker_thread_id != kNonWorkerThreadId;
+  IPC::Sender* sender = GetIPCSender();
+  const std::string& extension_id = context()->GetExtensionID();
+
   if (DecrementEventListenerCount(context(), event_name) == 0) {
-    ipc_message_sender_->SendRemoveUnfilteredEventListenerIPC(context(),
-                                                              event_name);
+    sender->Send(new ExtensionHostMsg_RemoveListener(
+        extension_id,
+        is_service_worker_context ? context()->service_worker_scope()
+                                  : context()->url(),
+        event_name, worker_thread_id));
   }
 
   // DetachEvent is called when the last listener for the context is
   // removed. If the context is the background page or service worker, and it
   // removes the last listener manually, then we assume that it is no longer
   // interested in being awakened for this event.
-  if (remove_lazy_listener && IsLazyContext(context())) {
-    ipc_message_sender_->SendRemoveUnfilteredLazyEventListenerIPC(context(),
-                                                                  event_name);
+  if (is_manual) {
+    bool is_lazy_context =
+        ExtensionFrameHelper::IsContextForEventPage(context()) ||
+        context()->context_type() == Feature::SERVICE_WORKER_CONTEXT;
+    if (is_lazy_context) {
+      if (is_service_worker_context) {
+        sender->Send(new ExtensionHostMsg_RemoveLazyServiceWorkerListener(
+            extension_id, event_name, context()->service_worker_scope()));
+      } else {
+        sender->Send(
+            new ExtensionHostMsg_RemoveLazyListener(extension_id, event_name));
+      }
+    }
   }
 }
 
@@ -311,10 +328,9 @@ void EventBindings::DetachEvent(const std::string& event_name,
 // dispatchEvent().
 void EventBindings::AttachFilteredEvent(
     const v8::FunctionCallbackInfo<v8::Value>& args) {
-  CHECK_EQ(3, args.Length());
+  CHECK_EQ(2, args.Length());
   CHECK(args[0]->IsString());
   CHECK(args[1]->IsObject());
-  CHECK(args[2]->IsBoolean());
 
   std::string event_name = *v8::String::Utf8Value(args[0]);
   if (!context()->HasAccessOrThrowError(event_name))
@@ -332,8 +348,6 @@ void EventBindings::AttachFilteredEvent(
     filter = base::DictionaryValue::From(std::move(filter_value));
   }
 
-  bool supports_lazy_listeners = args[2]->BooleanValue();
-
   int id = g_event_filter.Get().AddEventMatcher(
       event_name,
       base::MakeUnique<EventMatcher>(
@@ -348,12 +362,11 @@ void EventBindings::AttachFilteredEvent(
   const EventMatcher* matcher = g_event_filter.Get().GetEventMatcher(id);
   DCHECK(matcher);
   base::DictionaryValue* filter_weak = matcher->value();
-  const ExtensionId& extension_id = context()->GetExtensionID();
+  std::string extension_id = context()->GetExtensionID();
   if (AddFilter(event_name, extension_id, *filter_weak)) {
-    bool lazy = supports_lazy_listeners &&
-                ExtensionFrameHelper::IsContextForEventPage(context());
-    ipc_message_sender_->SendAddFilteredEventListenerIPC(context(), event_name,
-                                                         *filter_weak, lazy);
+    bool lazy = ExtensionFrameHelper::IsContextForEventPage(context());
+    content::RenderThread::Get()->Send(new ExtensionHostMsg_AddFilteredListener(
+        extension_id, event_name, *filter_weak, lazy));
   }
 
   args.GetReturnValue().Set(static_cast<int32_t>(id));
@@ -361,30 +374,26 @@ void EventBindings::AttachFilteredEvent(
 
 void EventBindings::DetachFilteredEventHandler(
     const v8::FunctionCallbackInfo<v8::Value>& args) {
-  CHECK_EQ(3, args.Length());
+  CHECK_EQ(2, args.Length());
   CHECK(args[0]->IsInt32());
   CHECK(args[1]->IsBoolean());
-  CHECK(args[2]->IsBoolean());
-  bool was_manual = args[1]->BooleanValue();
-  bool supports_lazy_listeners = args[2]->BooleanValue();
-  DetachFilteredEvent(args[0]->Int32Value(),
-                      was_manual && supports_lazy_listeners);
+  DetachFilteredEvent(args[0]->Int32Value(), args[1]->BooleanValue());
 }
 
-void EventBindings::DetachFilteredEvent(int matcher_id,
-                                        bool remove_lazy_event) {
+void EventBindings::DetachFilteredEvent(int matcher_id, bool is_manual) {
   EventFilter& event_filter = g_event_filter.Get();
   EventMatcher* event_matcher = event_filter.GetEventMatcher(matcher_id);
 
   const std::string& event_name = event_filter.GetEventName(matcher_id);
 
   // Only send IPCs the last time a filter gets removed.
-  const ExtensionId& extension_id = context()->GetExtensionID();
+  std::string extension_id = context()->GetExtensionID();
   if (RemoveFilter(event_name, extension_id, event_matcher->value())) {
-    bool remove_lazy = remove_lazy_event &&
-                       ExtensionFrameHelper::IsContextForEventPage(context());
-    ipc_message_sender_->SendRemoveFilteredEventListenerIPC(
-        context(), event_name, *event_matcher->value(), remove_lazy);
+    bool remove_lazy =
+        is_manual && ExtensionFrameHelper::IsContextForEventPage(context());
+    content::RenderThread::Get()->Send(
+        new ExtensionHostMsg_RemoveFilteredListener(
+            extension_id, event_name, *event_matcher->value(), remove_lazy));
   }
 
   event_filter.RemoveEventMatcher(matcher_id);
@@ -409,6 +418,16 @@ void EventBindings::DetachUnmanagedEvent(
   CHECK(args[0]->IsString());
   std::string event_name = gin::V8ToString(args[0]);
   g_unmanaged_listeners.Get()[context()].erase(event_name);
+}
+
+IPC::Sender* EventBindings::GetIPCSender() {
+  const bool is_service_worker_context =
+      context()->context_type() == Feature::SERVICE_WORKER_CONTEXT;
+  DCHECK_EQ(is_service_worker_context,
+            content::WorkerThread::GetCurrentId() != kNonWorkerThreadId);
+  return is_service_worker_context
+             ? static_cast<IPC::Sender*>(WorkerThreadDispatcher::Get())
+             : static_cast<IPC::Sender*>(content::RenderThread::Get());
 }
 
 void EventBindings::OnInvalidated() {

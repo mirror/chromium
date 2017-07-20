@@ -31,13 +31,15 @@
     // Now test successful cases of setConfiguration. Changes should trigger an
     // ICE restart in the next offer. To do this, first we need to trigger an
     // initial ICE gathering phase and wait until it completes.
-    gPeerConnection.onicegatheringstatechange = iceGatheringCallback1;
+    //  TODO(deadbeef): Once onicegatheringstatechange is implemented, use that
+    // instead of a "null" candidate.
+    gPeerConnection.onicecandidate = iceCandidateCallback1;
     createOfferAndSetLocalDescription();
   }
 
-  function iceGatheringCallback1(candidate) {
+  function iceCandidateCallback1(candidate) {
     if (gPeerConnection.iceGatheringState === 'complete') {
-      gPeerConnection.onicegatheringstatechange = iceGatheringCallback2;
+      gPeerConnection.onicecandidate = iceCandidateCallback2;
       // Policy changed.
       gPeerConnection.setConfiguration(
           {iceServers:[], iceTransportPolicy:'relay', bundlePolicy:'balanced',
@@ -46,9 +48,9 @@
     }
   }
 
-  function iceGatheringCallback2(candidate) {
+  function iceCandidateCallback2(candidate) {
     if (gPeerConnection.iceGatheringState === 'complete') {
-      gPeerConnection.onicegatheringstatechange = iceGatheringCallback3;
+      gPeerConnection.onicecandidate = iceCandidateCallback3;
       // Servers changed.
       gPeerConnection.setConfiguration(
           {iceServers:[{urls:'stun:foo.invalid'}], iceTransportPolicy:'all',
@@ -58,7 +60,7 @@
     }
   }
 
-  function iceGatheringCallback3(candidate) {
+  function iceCandidateCallback3(candidate) {
     // Only wait for 'gathering', since it will take a while for the requests to
     // 'foo.invalid' to time out.
     if (gPeerConnection.iceGatheringState === 'gathering') {

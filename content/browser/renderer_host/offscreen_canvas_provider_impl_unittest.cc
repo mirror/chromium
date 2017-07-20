@@ -83,7 +83,6 @@ class StubCompositorFrameSinkClient
   void DidReceiveCompositorFrameAck(
       const std::vector<cc::ReturnedResource>& resources) override {}
   void OnBeginFrame(const cc::BeginFrameArgs& begin_frame_args) override {}
-  void OnBeginFramePausedChanged(bool paused) override {}
   void ReclaimResources(
       const std::vector<cc::ReturnedResource>& resources) override {}
 
@@ -152,8 +151,9 @@ class OffscreenCanvasProviderImplTest : public testing::Test {
 #endif
     host_frame_sink_manager_ = base::MakeUnique<viz::HostFrameSinkManager>();
 
-    // The FrameSinkManagerImpl implementation is in-process here for tests.
-    frame_sink_manager_ = base::MakeUnique<viz::FrameSinkManagerImpl>();
+    // The FrameSinkManager implementation is in-process here for tests.
+    frame_sink_manager_ =
+        base::MakeUnique<viz::FrameSinkManagerImpl>(false, nullptr);
     surface_utils::ConnectWithLocalFrameSinkManager(
         host_frame_sink_manager_.get(), frame_sink_manager_.get());
 

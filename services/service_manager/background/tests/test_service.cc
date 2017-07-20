@@ -28,13 +28,15 @@ class TestClient : public Service,
   void OnBindInterface(const BindSourceInfo& source_info,
                        const std::string& interface_name,
                        mojo::ScopedMessagePipeHandle interface_pipe) override {
-    registry_.BindInterface(interface_name, std::move(interface_pipe));
+    registry_.BindInterface(source_info, interface_name,
+                            std::move(interface_pipe));
   }
 
   // mojom::TestService
   void Test(TestCallback callback) override { std::move(callback).Run(); }
 
-  void BindTestServiceRequest(mojom::TestServiceRequest request) {
+  void BindTestServiceRequest(const BindSourceInfo& source_info,
+                              mojom::TestServiceRequest request) {
     bindings_.AddBinding(this, std::move(request));
   }
 

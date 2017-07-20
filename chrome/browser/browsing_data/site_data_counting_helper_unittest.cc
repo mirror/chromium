@@ -31,7 +31,6 @@ class SiteDataCountingHelperTest : public testing::Test {
 
   void SetUp() override {
     profile_.reset(new TestingProfile());
-    run_loop_.reset(new base::RunLoop());
     tasks_ = 0;
     cookie_callback_ = base::Bind(&SiteDataCountingHelperTest::CookieCallback,
                                   base::Unretained(this));
@@ -45,6 +44,7 @@ class SiteDataCountingHelperTest : public testing::Test {
   void CookieCallback(int count) {
     // Negative values represent an unexpected error.
     DCHECK(count >= 0);
+    DCHECK_CURRENTLY_ON(BrowserThread::UI);
     last_count_ = count;
 
     if (run_loop_)
@@ -61,11 +61,16 @@ class SiteDataCountingHelperTest : public testing::Test {
                        base::Unretained(this)));
   }
 
-  void DoneCallback() { run_loop_->Quit(); }
+  void DoneCallback() {
+    DCHECK_CURRENTLY_ON(BrowserThread::UI);
+    if (run_loop_)
+      run_loop_->Quit();
+  }
 
   void WaitForTasksOnIOThread() {
-    run_loop_->Run();
+    DCHECK_CURRENTLY_ON(BrowserThread::UI);
     run_loop_.reset(new base::RunLoop());
+    run_loop_->Run();
   }
 
   void CreateCookies(base::Time creation_time,
@@ -102,6 +107,8 @@ class SiteDataCountingHelperTest : public testing::Test {
       const scoped_refptr<net::URLRequestContextGetter>& rq_context,
       base::Time creation_time,
       std::vector<std::string> urls) {
+    DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
     net::CookieStore* cookie_store =
         rq_context->GetURLRequestContext()->cookie_store();
 
@@ -121,6 +128,7 @@ class SiteDataCountingHelperTest : public testing::Test {
   }
 
   void CountEntries(base::Time begin_time) {
+    DCHECK_CURRENTLY_ON(BrowserThread::UI);
     last_count_ = -1;
     auto* helper =
         new SiteDataCountingHelper(profile(), begin_time, cookie_callback_);

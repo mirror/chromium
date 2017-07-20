@@ -329,8 +329,8 @@ void Service::OnBindInterface(
     const service_manager::BindSourceInfo& source_info,
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle interface_pipe) {
-  registry_.BindInterface(interface_name, std::move(interface_pipe),
-                          source_info);
+  registry_.BindInterface(source_info, interface_name,
+                          std::move(interface_pipe));
 }
 
 void Service::StartDisplayInit() {
@@ -345,11 +345,11 @@ void Service::OnFirstDisplayReady() {
   requests.swap(pending_requests_);
   for (auto& request : requests) {
     if (request->wtf_request) {
-      BindWindowTreeFactoryRequest(std::move(*request->wtf_request),
-                                   request->source_info);
+      BindWindowTreeFactoryRequest(request->source_info,
+                                   std::move(*request->wtf_request));
     } else {
-      BindDisplayManagerRequest(std::move(*request->dm_request),
-                                request->source_info);
+      BindDisplayManagerRequest(request->source_info,
+                                std::move(*request->dm_request));
     }
   }
 }
@@ -400,8 +400,8 @@ ws::ThreadedImageCursorsFactory* Service::GetThreadedImageCursorsFactory() {
 }
 
 void Service::BindAccessibilityManagerRequest(
-    mojom::AccessibilityManagerRequest request,
-    const service_manager::BindSourceInfo& source_info) {
+    const service_manager::BindSourceInfo& source_info,
+    mojom::AccessibilityManagerRequest request) {
   UserState* user_state = GetUserState(source_info.identity);
   if (!user_state->accessibility) {
     const ws::UserId& user_id = source_info.identity.user_id();
@@ -412,8 +412,8 @@ void Service::BindAccessibilityManagerRequest(
 }
 
 void Service::BindClipboardRequest(
-    mojom::ClipboardRequest request,
-    const service_manager::BindSourceInfo& source_info) {
+    const service_manager::BindSourceInfo& source_info,
+    mojom::ClipboardRequest request) {
   UserState* user_state = GetUserState(source_info.identity);
   if (!user_state->clipboard)
     user_state->clipboard.reset(new clipboard::ClipboardImpl);
@@ -421,8 +421,8 @@ void Service::BindClipboardRequest(
 }
 
 void Service::BindDisplayManagerRequest(
-    mojom::DisplayManagerRequest request,
-    const service_manager::BindSourceInfo& source_info) {
+    const service_manager::BindSourceInfo& source_info,
+    mojom::DisplayManagerRequest request) {
   // Wait for the DisplayManager to be configured before binding display
   // requests. Otherwise the client sees no displays.
   if (!window_server_->display_manager()->IsReady()) {
@@ -438,33 +438,32 @@ void Service::BindDisplayManagerRequest(
       ->AddDisplayManagerBinding(std::move(request));
 }
 
-void Service::BindGpuRequest(
-    mojom::GpuRequest request,
-    const service_manager::BindSourceInfo& source_info) {
+void Service::BindGpuRequest(const service_manager::BindSourceInfo& source_info,
+                             mojom::GpuRequest request) {
   window_server_->gpu_host()->Add(std::move(request));
 }
 
 void Service::BindIMERegistrarRequest(
-    mojom::IMERegistrarRequest request,
-    const service_manager::BindSourceInfo& source_info) {
+    const service_manager::BindSourceInfo& source_info,
+    mojom::IMERegistrarRequest request) {
   ime_registrar_.AddBinding(std::move(request));
 }
 
 void Service::BindIMEDriverRequest(
-    mojom::IMEDriverRequest request,
-    const service_manager::BindSourceInfo& source_info) {
+    const service_manager::BindSourceInfo& source_info,
+    mojom::IMEDriverRequest request) {
   ime_driver_.AddBinding(std::move(request));
 }
 
 void Service::BindUserAccessManagerRequest(
-    mojom::UserAccessManagerRequest request,
-    const service_manager::BindSourceInfo& source_info) {
+    const service_manager::BindSourceInfo& source_info,
+    mojom::UserAccessManagerRequest request) {
   window_server_->user_id_tracker()->Bind(std::move(request));
 }
 
 void Service::BindUserActivityMonitorRequest(
-    mojom::UserActivityMonitorRequest request,
-    const service_manager::BindSourceInfo& source_info) {
+    const service_manager::BindSourceInfo& source_info,
+    mojom::UserActivityMonitorRequest request) {
   AddUserIfNecessary(source_info.identity);
   const ws::UserId& user_id = source_info.identity.user_id();
   window_server_->GetUserActivityMonitorForUser(user_id)->Add(
@@ -472,16 +471,16 @@ void Service::BindUserActivityMonitorRequest(
 }
 
 void Service::BindWindowManagerWindowTreeFactoryRequest(
-    mojom::WindowManagerWindowTreeFactoryRequest request,
-    const service_manager::BindSourceInfo& source_info) {
+    const service_manager::BindSourceInfo& source_info,
+    mojom::WindowManagerWindowTreeFactoryRequest request) {
   AddUserIfNecessary(source_info.identity);
   window_server_->window_manager_window_tree_factory_set()->Add(
       source_info.identity.user_id(), std::move(request));
 }
 
 void Service::BindWindowTreeFactoryRequest(
-    mojom::WindowTreeFactoryRequest request,
-    const service_manager::BindSourceInfo& source_info) {
+    const service_manager::BindSourceInfo& source_info,
+    mojom::WindowTreeFactoryRequest request) {
   AddUserIfNecessary(source_info.identity);
   if (!window_server_->display_manager()->IsReady()) {
     std::unique_ptr<PendingRequest> pending_request(new PendingRequest);
@@ -500,8 +499,8 @@ void Service::BindWindowTreeFactoryRequest(
 }
 
 void Service::BindWindowTreeHostFactoryRequest(
-    mojom::WindowTreeHostFactoryRequest request,
-    const service_manager::BindSourceInfo& source_info) {
+    const service_manager::BindSourceInfo& source_info,
+    mojom::WindowTreeHostFactoryRequest request) {
   UserState* user_state = GetUserState(source_info.identity);
   if (!user_state->window_tree_host_factory) {
     user_state->window_tree_host_factory.reset(new ws::WindowTreeHostFactory(
@@ -511,14 +510,14 @@ void Service::BindWindowTreeHostFactoryRequest(
 }
 
 void Service::BindDiscardableSharedMemoryManagerRequest(
-    discardable_memory::mojom::DiscardableSharedMemoryManagerRequest request,
-    const service_manager::BindSourceInfo& source_info) {
-  discardable_shared_memory_manager_->Bind(std::move(request), source_info);
+    const service_manager::BindSourceInfo& source_info,
+    discardable_memory::mojom::DiscardableSharedMemoryManagerRequest request) {
+  discardable_shared_memory_manager_->Bind(source_info, std::move(request));
 }
 
 void Service::BindWindowServerTestRequest(
-    mojom::WindowServerTestRequest request,
-    const service_manager::BindSourceInfo& source_info) {
+    const service_manager::BindSourceInfo& source_info,
+    mojom::WindowServerTestRequest request) {
   if (!test_config_)
     return;
   mojo::MakeStrongBinding(

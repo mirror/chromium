@@ -989,15 +989,6 @@ static inline bool UserScrollableVertical(LayerImpl* layer) {
   return layer->test_properties()->user_scrollable_vertical;
 }
 
-static inline ScrollBoundaryBehavior GetScrollBoundaryBehavior(Layer* layer) {
-  return layer->scroll_boundary_behavior();
-}
-
-static inline ScrollBoundaryBehavior GetScrollBoundaryBehavior(
-    LayerImpl* layer) {
-  return layer->test_properties()->scroll_boundary_behavior;
-}
-
 template <typename LayerType>
 void SetHasTransformNode(LayerType* layer, bool val) {
   layer->SetHasTransformNode(val);
@@ -1058,7 +1049,6 @@ void AddScrollNodeIfNeeded(
     node.element_id = layer->element_id();
     node.transform_id =
         data_for_children->transform_tree_parent->transform_tree_index();
-    node.scroll_boundary_behavior = GetScrollBoundaryBehavior(layer);
 
     node_id =
         data_for_children->property_trees->scroll_tree.Insert(node, parent_id);

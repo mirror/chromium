@@ -14,7 +14,7 @@ class TapDurationSuppression extends ContextualSearchHeuristic {
 
     private final int mTapDurationMs;
     private final int mTapDurationThresholdMs;
-    private final boolean mIsConditionSatisfied;
+    private final boolean mIsTapDurationConditionSatisfied;
 
     /**
      * Constructs a heuristic to categorize the Tap based on duration as either short or long.
@@ -25,28 +25,26 @@ class TapDurationSuppression extends ContextualSearchHeuristic {
         mTapDurationThresholdMs = ContextualSearchFieldTrial.getTapDurationThresholdMs();
         int tapDurationThreshold = mTapDurationThresholdMs != 0 ? mTapDurationThresholdMs
                                                                 : DEFAULT_TAP_DURATION_THRESHOLD_MS;
-        mIsConditionSatisfied = tapDurationMs < tapDurationThreshold;
+        mIsTapDurationConditionSatisfied = tapDurationMs < tapDurationThreshold;
     }
 
     @Override
     protected boolean isConditionSatisfiedAndEnabled() {
-        return mIsConditionSatisfied && mTapDurationThresholdMs != 0;
+        return mIsTapDurationConditionSatisfied && mTapDurationThresholdMs != 0;
     }
 
     @Override
     protected void logResultsSeen(boolean wasSearchContentViewSeen, boolean wasActivatedByTap) {
         if (wasActivatedByTap) {
-            ContextualSearchUma.logTapDurationSeen(wasSearchContentViewSeen, mIsConditionSatisfied);
+            ContextualSearchUma.logTapDurationSeen(
+                    wasSearchContentViewSeen, mIsTapDurationConditionSatisfied);
 
-            // TODO(donnd): remove when these histograms have been analyzed.
+            // TODO(donnd): remove when logging to Ranker is done!
             ContextualSearchUma.logTapDuration(wasSearchContentViewSeen, mTapDurationMs);
         }
     }
 
-    @Override
-    protected void logRankerTapSuppression(ContextualSearchRankerLogger logger) {
-        logger.logFeature(ContextualSearchRankerLogger.Feature.TAP_DURATION, mIsConditionSatisfied);
-    }
+    // TODO(donnd): Log the actual tap duration to Ranker once we have privacy-approval!
 
     @Override
     protected boolean shouldAggregateLogForTapSuppression() {
@@ -55,6 +53,6 @@ class TapDurationSuppression extends ContextualSearchHeuristic {
 
     @Override
     protected boolean isConditionSatisfiedForAggregateLogging() {
-        return mIsConditionSatisfied;
+        return mIsTapDurationConditionSatisfied;
     }
 }

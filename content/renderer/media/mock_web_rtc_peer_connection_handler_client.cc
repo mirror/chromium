@@ -34,9 +34,15 @@ MockWebRTCPeerConnectionHandlerClient::
 
 void MockWebRTCPeerConnectionHandlerClient::didGenerateICECandidateWorker(
     const blink::WebRTCICECandidate& candidate) {
-  candidate_sdp_ = candidate.Candidate().Utf8();
-  candidate_mline_index_ = candidate.SdpMLineIndex();
-  candidate_mid_ = candidate.SdpMid().Utf8();
+  if (!candidate.IsNull()) {
+    candidate_sdp_ = candidate.Candidate().Utf8();
+    candidate_mline_index_ = candidate.SdpMLineIndex();
+    candidate_mid_ = candidate.SdpMid().Utf8();
+  } else {
+    candidate_sdp_ = "";
+    candidate_mline_index_ = -1;
+    candidate_mid_ = "";
+  }
 }
 
 void MockWebRTCPeerConnectionHandlerClient::didAddRemoteStreamWorker(

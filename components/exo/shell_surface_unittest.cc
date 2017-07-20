@@ -10,11 +10,11 @@
 #include "ash/public/interfaces/window_pin_type.mojom.h"
 #include "ash/shell.h"
 #include "ash/shell_port.h"
-#include "ash/shell_test_api.h"
+#include "ash/test/shell_test_api.h"
+#include "ash/test/workspace_controller_test_api.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/wm_event.h"
 #include "ash/wm/workspace/workspace_window_resizer.h"
-#include "ash/wm/workspace_controller_test_api.h"
 #include "base/message_loop/message_loop.h"
 #include "base/strings/utf_string_conversions.h"
 #include "components/exo/buffer.h"
@@ -932,11 +932,11 @@ TEST_F(ShellSurfaceTest, MaximizedAndImmersiveFullscreenBackdrop) {
 
   ash::wm::WMEvent maximize_event(ash::wm::WM_EVENT_TOGGLE_MAXIMIZE);
 
-  // Enter tablet mode.
+  // Enter maximized mode.
   ash::wm::GetWindowState(window)->OnWMEvent(&maximize_event);
   EXPECT_TRUE(test_helper.GetBackdropWindow());
 
-  // Leave tablet mode.
+  // Leave maximized mode.
   ash::wm::GetWindowState(window)->OnWMEvent(&maximize_event);
   EXPECT_FALSE(test_helper.GetBackdropWindow());
 }

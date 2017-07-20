@@ -302,10 +302,6 @@
       status: "experimental",
     },
     {
-      name: "CSSScrollBoundaryBehavior",
-      status: "experimental",
-    },
-    {
       name: "CSSScrollSnapPoints",
       status: "test",
     },
@@ -363,7 +359,7 @@
       status: "experimental",
     },
     {
-      name: "DeviceMemoryHeader",
+      name: "DeviceRAMHeader",
       status: "experimental",
     },
     {
@@ -770,9 +766,6 @@
       origin_trial_feature_name: "Frobulate",
     },
     {
-      name: "OutOfBlinkCORS",
-    },
-    {
       name: "OverlayScrollbars",
       settable_from_internals: true,
     },
@@ -794,6 +787,10 @@
     {
       name: "PaymentApp",
       status: "experimental",
+    },
+    {
+      name: "PaymentDetailsError",
+      status: "stable",
     },
     {
       name: "PaymentDetailsModifierData",

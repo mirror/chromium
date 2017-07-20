@@ -27,8 +27,8 @@ class ImageView;
 
 namespace ash {
 
-class PaletteToolManager;
 class TrayBubbleWrapper;
+class PaletteToolManager;
 
 // The PaletteTray shows the palette in the bottom area of the screen. This
 // class also controls the lifetime for all of the tools available in the
@@ -38,30 +38,14 @@ class ASH_EXPORT PaletteTray : public TrayBackgroundView,
                                public SessionObserver,
                                public ShellObserver,
                                public PaletteToolManager::Delegate,
-                               public ui::InputDeviceEventObserver {
+                               public ui::InputDeviceEventObserver,
+                               public views::TrayBubbleView::Delegate {
  public:
-  // For testing.
-  class TestApi {
-   public:
-    explicit TestApi(PaletteTray* palette_tray);
-    ~TestApi();
-
-    PaletteToolManager* GetPaletteToolManager() {
-      return palette_tray_->palette_tool_manager_.get();
-    }
-
-    TrayBubbleWrapper* GetTrayBubbleWrapper() {
-      return palette_tray_->bubble_.get();
-    }
-
-   private:
-    PaletteTray* palette_tray_ = nullptr;  // not owned
-
-    DISALLOW_COPY_AND_ASSIGN(TestApi);
-  };
-
   explicit PaletteTray(Shelf* shelf);
   ~PaletteTray() override;
+
+  // ActionableView:
+  bool PerformAction(const ui::Event& event) override;
 
   // SessionObserver:
   void OnSessionStateChanged(session_manager::SessionState state) override;
@@ -75,16 +59,16 @@ class ASH_EXPORT PaletteTray : public TrayBackgroundView,
   void HideBubbleWithView(const views::TrayBubbleView* bubble_view) override;
   void AnchorUpdated() override;
   void Initialize() override;
-  bool PerformAction(const ui::Event& event) override;
-  void CloseBubble() override;
-  void ShowBubble() override;
-  views::TrayBubbleView* GetBubbleView() override;
 
   // PaletteToolManager::Delegate:
   void HidePalette() override;
   void HidePaletteImmediately() override;
   void RecordPaletteOptionsUsage(PaletteTrayOptions option) override;
   void RecordPaletteModeCancellation(PaletteModeCancelType type) override;
+
+  // Opens up the palette if it is not already open. Returns true if the palette
+  // was opened.
+  bool ShowPalette();
 
   // Returns true if the palette tray contains the given point. This is useful
   // for determining if an event should be propagated through to the palette.

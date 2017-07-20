@@ -591,21 +591,13 @@ void FrameLoader::LoadInSameDocument(
 
   frame_->GetDocument()->CheckCompleted();
 
-  // onpopstate might change view state, so stash for later restore.
-  std::unique_ptr<HistoryItem::ViewState> view_state;
-  if (history_item && history_item->GetViewState()) {
-    view_state =
-        WTF::MakeUnique<HistoryItem::ViewState>(*history_item->GetViewState());
-  }
-
   frame_->DomWindow()->StatePopped(state_object
                                        ? std::move(state_object)
                                        : SerializedScriptValue::NullValue());
 
   if (history_item) {
-    RestoreScrollPositionAndViewState(frame_load_type, kHistorySameDocumentLoad,
-                                      view_state.get(),
-                                      history_item->ScrollRestorationType());
+    RestoreScrollPositionAndViewStateForLoadType(frame_load_type,
+                                                 kHistorySameDocumentLoad);
   }
 
   // We need to scroll to the fragment whether or not a hash change occurred,
@@ -1100,32 +1092,30 @@ bool FrameLoader::IsLoadingMainFrame() const {
 }
 
 void FrameLoader::RestoreScrollPositionAndViewState() {
-  if (!frame_->GetPage() || !GetDocumentLoader() ||
-      !GetDocumentLoader()->GetHistoryItem())
+  if (!frame_->GetPage() || !GetDocumentLoader())
     return;
-  RestoreScrollPositionAndViewState(
-      GetDocumentLoader()->LoadType(), kHistoryDifferentDocumentLoad,
-      GetDocumentLoader()->GetHistoryItem()->GetViewState(),
-      GetDocumentLoader()->GetHistoryItem()->ScrollRestorationType());
+  RestoreScrollPositionAndViewStateForLoadType(GetDocumentLoader()->LoadType(),
+                                               kHistoryDifferentDocumentLoad);
 }
 
-void FrameLoader::RestoreScrollPositionAndViewState(
+void FrameLoader::RestoreScrollPositionAndViewStateForLoadType(
     FrameLoadType load_type,
-    HistoryLoadType history_load_type,
-    HistoryItem::ViewState* view_state,
-    HistoryScrollRestorationType scroll_restoration_type) {
+    HistoryLoadType history_load_type) {
   LocalFrameView* view = frame_->View();
   if (!view || !view->LayoutViewportScrollableArea() ||
       !state_machine_.CommittedFirstRealDocumentLoad() ||
       !frame_->IsAttached()) {
     return;
   }
-  if (!NeedsHistoryItemRestore(load_type) || !view_state)
+  if (!NeedsHistoryItemRestore(load_type))
+    return;
+  HistoryItem* history_item = document_loader_->GetHistoryItem();
+  if (!history_item || !history_item->DidSaveScrollOrScaleState())
     return;
 
   bool should_restore_scroll =
-      scroll_restoration_type != kScrollRestorationManual;
-  bool should_restore_scale = view_state->page_scale_factor_;
+      history_item->ScrollRestorationType() != kScrollRestorationManual;
+  bool should_restore_scale = history_item->PageScaleFactor();
 
   // This tries to balance:
   // 1. restoring as soon as possible.
@@ -1138,7 +1128,7 @@ void FrameLoader::RestoreScrollPositionAndViewState(
   //    be smaller than the previous page).
   bool can_restore_without_clamping =
       view->LayoutViewportScrollableArea()->ClampScrollOffset(
-          view_state->scroll_offset_) == view_state->scroll_offset_;
+          history_item->GetScrollOffset()) == history_item->GetScrollOffset();
 
   bool should_force_clamping =
       !frame_->IsLoading() || history_load_type == kHistorySameDocumentLoad;
@@ -1156,13 +1146,13 @@ void FrameLoader::RestoreScrollPositionAndViewState(
 
   if (should_restore_scroll) {
     view->LayoutViewportScrollableArea()->SetScrollOffset(
-        view_state->scroll_offset_, kProgrammaticScroll);
+        history_item->GetScrollOffset(), kProgrammaticScroll);
   }
 
   // For main frame restore scale and visual viewport position
   if (frame_->IsMainFrame()) {
     ScrollOffset visual_viewport_offset(
-        view_state->visual_viewport_scroll_offset_);
+        history_item->VisualViewportScrollOffset());
 
     // If the visual viewport's offset is (-1, -1) it means the history item
     // is an old version of HistoryItem so distribute the scroll between
@@ -1170,16 +1160,16 @@ void FrameLoader::RestoreScrollPositionAndViewState(
     if (visual_viewport_offset.Width() == -1 &&
         visual_viewport_offset.Height() == -1) {
       visual_viewport_offset =
-          view_state->scroll_offset_ -
+          history_item->GetScrollOffset() -
           view->LayoutViewportScrollableArea()->GetScrollOffset();
     }
 
     VisualViewport& visual_viewport = frame_->GetPage()->GetVisualViewport();
     if (should_restore_scale && should_restore_scroll) {
-      visual_viewport.SetScaleAndLocation(view_state->page_scale_factor_,
+      visual_viewport.SetScaleAndLocation(history_item->PageScaleFactor(),
                                           FloatPoint(visual_viewport_offset));
     } else if (should_restore_scale) {
-      visual_viewport.SetScale(view_state->page_scale_factor_);
+      visual_viewport.SetScale(history_item->PageScaleFactor());
     } else if (should_restore_scroll) {
       visual_viewport.SetLocation(FloatPoint(visual_viewport_offset));
     }

@@ -11,16 +11,9 @@ var EventBindings;
 var CreateEvent = function(name) {
   if (bindingUtil) {
     return bindingUtil.createCustomEvent(name, null,
-                                         true /* supportsFilters */,
-                                         false /* supportsLazyListeners */);
+                                         true /* supportsFilters */);
   }
-  var eventOpts = {
-    __proto__: null,
-    supportsListeners: true,
-    supportsFilters: true,
-    // GuestView-related events never support lazy listeners.
-    supportsLazyListeners: false,
-  };
+  var eventOpts = {supportsListeners: true, supportsFilters: true};
   if (!EventBindings)
     EventBindings = require('event_bindings');
   return new EventBindings.Event(name, undefined, eventOpts);

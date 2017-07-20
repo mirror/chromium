@@ -238,7 +238,7 @@ void AppBannerManagerAndroid::ResetCurrentPageData() {
   native_app_package_ = "";
 }
 
-void AppBannerManagerAndroid::ShowBannerUi() {
+void AppBannerManagerAndroid::ShowBanner() {
   content::WebContents* contents = web_contents();
   DCHECK(contents);
 

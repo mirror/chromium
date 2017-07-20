@@ -35,7 +35,6 @@
 #include "core/css/parser/CSSVariableParser.h"
 #include "core/css/properties/CSSPropertyAlignmentUtils.h"
 #include "core/css/properties/CSSPropertyAnimationTimingFunctionUtils.h"
-#include "core/css/properties/CSSPropertyBackgroundUtils.h"
 #include "core/css/properties/CSSPropertyBorderImageUtils.h"
 #include "core/css/properties/CSSPropertyBoxShadowUtils.h"
 #include "core/css/properties/CSSPropertyDescriptor.h"
@@ -304,6 +303,12 @@ static CSSValue* ConsumeFontVariantList(CSSParserTokenRange& range) {
   return nullptr;
 }
 
+static CSSValue* ConsumeLocale(CSSParserTokenRange& range) {
+  if (range.Peek().Id() == CSSValueAuto)
+    return ConsumeIdent(range);
+  return ConsumeString(range);
+}
+
 static CSSFunctionValue* ConsumeFilterFunction(
     CSSParserTokenRange& range,
     const CSSParserContext* context) {
@@ -514,6 +519,20 @@ static CSSValue* ConsumeBackgroundComponent(CSSPropertyID unresolved_property,
       break;
   };
   return nullptr;
+}
+
+static void AddBackgroundValue(CSSValue*& list, CSSValue* value) {
+  if (list) {
+    if (!list->IsBaseValueList()) {
+      CSSValue* first_value = list;
+      list = CSSValueList::CreateCommaSeparated();
+      ToCSSValueList(list)->Append(*first_value);
+    }
+    ToCSSValueList(list)->Append(*value);
+  } else {
+    // To conserve memory we don't actually wrap a single value in a list.
+    list = value;
+  }
 }
 
 static CSSValueList* ConsumeCommaSeparatedBackgroundComponent(
@@ -997,6 +1016,9 @@ const CSSValue* CSSPropertyParser::ParseSingleValue(
     case CSSPropertyWebkitLogicalWidth:
     case CSSPropertyWebkitLogicalHeight:
       return CSSPropertyLengthUtils::ConsumeWidthOrHeight(range_, *context_);
+    case CSSPropertyWebkitHyphenateCharacter:
+    case CSSPropertyWebkitLocale:
+      return ConsumeLocale(range_);
     case CSSPropertyAnimationDelay:
     case CSSPropertyTransitionDelay:
       return ConsumeCommaSeparatedList(ConsumeTime, range_, kValueRangeAll);
@@ -1344,6 +1366,39 @@ bool CSSPropertyParser::ParseViewportDescriptor(CSSPropertyID prop_id,
   }
 }
 
+bool CSSPropertyParser::ConsumeShorthandGreedily(
+    const StylePropertyShorthand& shorthand,
+    bool important) {
+  // Existing shorthands have at most 6 longhands.
+  DCHECK_LE(shorthand.length(), 6u);
+  const CSSValue* longhands[6] = {nullptr, nullptr, nullptr,
+                                  nullptr, nullptr, nullptr};
+  const CSSPropertyID* shorthand_properties = shorthand.properties();
+  do {
+    bool found_longhand = false;
+    for (size_t i = 0; !found_longhand && i < shorthand.length(); ++i) {
+      if (longhands[i])
+        continue;
+      longhands[i] = ParseSingleValue(shorthand_properties[i], shorthand.id());
+      if (longhands[i])
+        found_longhand = true;
+    }
+    if (!found_longhand)
+      return false;
+  } while (!range_.AtEnd());
+
+  for (size_t i = 0; i < shorthand.length(); ++i) {
+    if (longhands[i]) {
+      AddParsedProperty(shorthand_properties[i], shorthand.id(), *longhands[i],
+                        important);
+    } else {
+      AddParsedProperty(shorthand_properties[i], shorthand.id(),
+                        *CSSInitialValue::Create(), important);
+    }
+  }
+  return true;
+}
+
 bool CSSPropertyParser::ConsumeBorder(bool important) {
   CSSValue* width = nullptr;
   const CSSValue* style = nullptr;
@@ -1401,6 +1456,38 @@ bool CSSPropertyParser::Consume2Values(const StylePropertyShorthand& shorthand,
     end = start;
   AddParsedProperty(longhands[0], shorthand.id(), *start, important);
   AddParsedProperty(longhands[1], shorthand.id(), *end, important);
+
+  return range_.AtEnd();
+}
+
+bool CSSPropertyParser::Consume4Values(const StylePropertyShorthand& shorthand,
+                                       bool important) {
+  DCHECK_EQ(shorthand.length(), 4u);
+  const CSSPropertyID* longhands = shorthand.properties();
+  const CSSValue* top = ParseSingleValue(longhands[0], shorthand.id());
+  if (!top)
+    return false;
+
+  const CSSValue* right = ParseSingleValue(longhands[1], shorthand.id());
+  const CSSValue* bottom = nullptr;
+  const CSSValue* left = nullptr;
+  if (right) {
+    bottom = ParseSingleValue(longhands[2], shorthand.id());
+    if (bottom)
+      left = ParseSingleValue(longhands[3], shorthand.id());
+  }
+
+  if (!right)
+    right = top;
+  if (!bottom)
+    bottom = top;
+  if (!left)
+    left = right;
+
+  AddParsedProperty(longhands[0], shorthand.id(), *top, important);
+  AddParsedProperty(longhands[1], shorthand.id(), *right, important);
+  AddParsedProperty(longhands[2], shorthand.id(), *bottom, important);
+  AddParsedProperty(longhands[3], shorthand.id(), *left, important);
 
   return range_.AtEnd();
 }
@@ -1477,6 +1564,24 @@ bool CSSPropertyParser::ConsumeLegacyBreakProperty(CSSPropertyID property,
   return true;
 }
 
+static bool ConsumeBackgroundPosition(CSSParserTokenRange& range,
+                                      const CSSParserContext* context,
+                                      UnitlessQuirk unitless,
+                                      CSSValue*& result_x,
+                                      CSSValue*& result_y) {
+  do {
+    CSSValue* position_x = nullptr;
+    CSSValue* position_y = nullptr;
+    if (!ConsumePosition(range, *context, unitless,
+                         WebFeature::kThreeValuedPositionBackground, position_x,
+                         position_y))
+      return false;
+    AddBackgroundValue(result_x, position_x);
+    AddBackgroundValue(result_y, position_y);
+  } while (ConsumeCommaIncludingWhitespace(range));
+  return true;
+}
+
 static bool ConsumeRepeatStyleComponent(CSSParserTokenRange& range,
                                         CSSValue*& value1,
                                         CSSValue*& value2,
@@ -1516,8 +1621,8 @@ static bool ConsumeRepeatStyle(CSSParserTokenRange& range,
     CSSValue* repeat_y = nullptr;
     if (!ConsumeRepeatStyleComponent(range, repeat_x, repeat_y, implicit))
       return false;
-    CSSPropertyBackgroundUtils::AddBackgroundValue(result_x, repeat_x);
-    CSSPropertyBackgroundUtils::AddBackgroundValue(result_y, repeat_y);
+    AddBackgroundValue(result_x, repeat_x);
+    AddBackgroundValue(result_y, repeat_y);
   } while (ConsumeCommaIncludingWhitespace(range));
   return true;
 }
@@ -1577,11 +1682,10 @@ bool CSSPropertyParser::ConsumeBackgroundShorthand(
             origin_value = value;
           parsed_longhand[i] = true;
           found_property = true;
-          CSSPropertyBackgroundUtils::AddBackgroundValue(longhands[i], value);
+          AddBackgroundValue(longhands[i], value);
           if (value_y) {
             parsed_longhand[i + 1] = true;
-            CSSPropertyBackgroundUtils::AddBackgroundValue(longhands[i + 1],
-                                                           value_y);
+            AddBackgroundValue(longhands[i + 1], value_y);
           }
         }
       }
@@ -1600,14 +1704,11 @@ bool CSSPropertyParser::ConsumeBackgroundShorthand(
       if ((property == CSSPropertyBackgroundClip ||
            property == CSSPropertyWebkitMaskClip) &&
           !parsed_longhand[i] && origin_value) {
-        CSSPropertyBackgroundUtils::AddBackgroundValue(longhands[i],
-                                                       origin_value);
+        AddBackgroundValue(longhands[i], origin_value);
         continue;
       }
-      if (!parsed_longhand[i]) {
-        CSSPropertyBackgroundUtils::AddBackgroundValue(
-            longhands[i], CSSInitialValue::Create());
-      }
+      if (!parsed_longhand[i])
+        AddBackgroundValue(longhands[i], CSSInitialValue::Create());
     }
   } while (ConsumeCommaIncludingWhitespace(range_));
   if (!range_.AtEnd())
@@ -2034,6 +2135,11 @@ bool CSSPropertyParser::ParseShorthand(CSSPropertyID unresolved_property,
   }
 
   switch (property) {
+    case CSSPropertyTextDecoration:
+      DCHECK(RuntimeEnabledFeatures::CSS3TextDecorationsEnabled());
+      return ConsumeShorthandGreedily(textDecorationShorthand(), important);
+    case CSSPropertyPadding:
+      return Consume4Values(paddingShorthand(), important);
     case CSSPropertyMarker: {
       const CSSValue* marker = ParseSingleValue(CSSPropertyMarkerStart);
       if (!marker || !range_.AtEnd())
@@ -2046,6 +2152,26 @@ bool CSSPropertyParser::ParseShorthand(CSSPropertyID unresolved_property,
                         important);
       return true;
     }
+    case CSSPropertyFlexFlow:
+      return ConsumeShorthandGreedily(flexFlowShorthand(), important);
+    case CSSPropertyColumnRule:
+      return ConsumeShorthandGreedily(columnRuleShorthand(), important);
+    case CSSPropertyListStyle:
+      return ConsumeShorthandGreedily(listStyleShorthand(), important);
+    case CSSPropertyBorderColor:
+      return Consume4Values(borderColorShorthand(), important);
+    case CSSPropertyBorderStyle:
+      return Consume4Values(borderStyleShorthand(), important);
+    case CSSPropertyBorderWidth:
+      return Consume4Values(borderWidthShorthand(), important);
+    case CSSPropertyBorderTop:
+      return ConsumeShorthandGreedily(borderTopShorthand(), important);
+    case CSSPropertyBorderRight:
+      return ConsumeShorthandGreedily(borderRightShorthand(), important);
+    case CSSPropertyBorderBottom:
+      return ConsumeShorthandGreedily(borderBottomShorthand(), important);
+    case CSSPropertyBorderLeft:
+      return ConsumeShorthandGreedily(borderLeftShorthand(), important);
     case CSSPropertyBorder:
       return ConsumeBorder(important);
     case CSSPropertyPageBreakAfter:
@@ -2055,6 +2181,24 @@ bool CSSPropertyParser::ParseShorthand(CSSPropertyID unresolved_property,
     case CSSPropertyWebkitColumnBreakBefore:
     case CSSPropertyWebkitColumnBreakInside:
       return ConsumeLegacyBreakProperty(property, important);
+    case CSSPropertyWebkitMaskPosition:
+    case CSSPropertyBackgroundPosition: {
+      CSSValue* result_x = nullptr;
+      CSSValue* result_y = nullptr;
+      if (!ConsumeBackgroundPosition(range_, context_, UnitlessQuirk::kAllow,
+                                     result_x, result_y) ||
+          !range_.AtEnd())
+        return false;
+      AddParsedProperty(property == CSSPropertyBackgroundPosition
+                            ? CSSPropertyBackgroundPositionX
+                            : CSSPropertyWebkitMaskPositionX,
+                        property, *result_x, important);
+      AddParsedProperty(property == CSSPropertyBackgroundPosition
+                            ? CSSPropertyBackgroundPositionY
+                            : CSSPropertyWebkitMaskPositionY,
+                        property, *result_y, important);
+      return true;
+    }
     case CSSPropertyBackgroundRepeat:
     case CSSPropertyWebkitMaskRepeat: {
       CSSValue* result_x = nullptr;
@@ -2109,8 +2253,10 @@ bool CSSPropertyParser::ParseShorthand(CSSPropertyID unresolved_property,
       return ConsumePlaceItemsShorthand(important);
     case CSSPropertyPlaceSelf:
       return ConsumePlaceSelfShorthand(important);
-    case CSSPropertyScrollBoundaryBehavior:
-      return Consume2Values(scrollBoundaryBehaviorShorthand(), important);
+    case CSSPropertyScrollPadding:
+      return Consume4Values(scrollPaddingShorthand(), important);
+    case CSSPropertyScrollSnapMargin:
+      return Consume4Values(scrollSnapMarginShorthand(), important);
     default:
       return false;
   }

@@ -152,8 +152,11 @@ class ClearKeyCdm : public ClearKeyCdmInterface {
 
   void StartOutputProtectionTest();
   void StartPlatformVerificationTest();
+
+  // Keep track of the last session created.
+  void SetSessionId(const std::string& session_id);
+
   void VerifyCdmHostTest();
-  void StartStorageIdTest();
 
   scoped_refptr<ContentDecryptionModule> cdm_;
 
@@ -190,7 +193,6 @@ class ClearKeyCdm : public ClearKeyCdmInterface {
 
   bool is_running_output_protection_test_;
   bool is_running_platform_verification_test_;
-  bool is_running_storage_id_test_;
 
   DISALLOW_COPY_AND_ASSIGN(ClearKeyCdm);
 };

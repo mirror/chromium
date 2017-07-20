@@ -12,7 +12,7 @@
 #include "cc/test/scheduler_test_common.h"
 #include "components/viz/common/surfaces/local_surface_id_allocator.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
-#include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
+#include "components/viz/service/frame_sinks/frame_sink_manager.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/gfx/geometry/size.h"
 
@@ -25,8 +25,7 @@ constexpr bool kHandlesFrameSinkIdInvalidation = true;
 constexpr bool kNeedsSyncPoints = true;
 
 TEST(SurfaceTest, SurfaceLifetime) {
-  viz::FrameSinkManagerImpl frame_sink_manager(
-      nullptr /* display_provider */, SurfaceManager::LifetimeType::SEQUENCES);
+  viz::FrameSinkManager frame_sink_manager;
   SurfaceManager* surface_manager = frame_sink_manager.surface_manager();
   auto support = viz::CompositorFrameSinkSupport::Create(
       nullptr, &frame_sink_manager, kArbitraryFrameSinkId, kIsRoot,
@@ -58,7 +57,7 @@ void TestCopyResultCallback(bool* called,
 // Test that CopyOutputRequests can outlive the current frame and be
 // aggregated on the next frame.
 TEST(SurfaceTest, CopyRequestLifetime) {
-  viz::FrameSinkManagerImpl frame_sink_manager;
+  viz::FrameSinkManager frame_sink_manager;
   SurfaceManager* surface_manager = frame_sink_manager.surface_manager();
   auto support = viz::CompositorFrameSinkSupport::Create(
       nullptr, &frame_sink_manager, kArbitraryFrameSinkId, kIsRoot,
@@ -73,7 +72,7 @@ TEST(SurfaceTest, CopyRequestLifetime) {
 
   bool copy_called = false;
   support->RequestCopyOfSurface(CopyOutputRequest::CreateRequest(
-      base::BindOnce(&TestCopyResultCallback, &copy_called)));
+      base::Bind(&TestCopyResultCallback, &copy_called)));
   EXPECT_TRUE(surface_manager->GetSurfaceForId(surface_id));
   EXPECT_FALSE(copy_called);
 

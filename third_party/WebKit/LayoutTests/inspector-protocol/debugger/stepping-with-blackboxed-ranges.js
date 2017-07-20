@@ -1,5 +1,5 @@
 (async function(testRunner) {
-  let {page, session, dp} = await testRunner.startBlank('Tests how stepping works with some source ranges blackboxed.');
+  let {page, session, dp} = await testRunner.startBlank('');
 
   function printCallFrames(response) {
     var callFrames = response.params.callFrames;

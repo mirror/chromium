@@ -30,7 +30,8 @@ class TestService : public service_manager::Service, public mojom::TestService {
                        const std::string& interface_name,
                        mojo::ScopedMessagePipeHandle interface_pipe) override;
 
-  void Create(mojom::TestServiceRequest request);
+  void Create(const service_manager::BindSourceInfo& source_info,
+              mojom::TestServiceRequest request);
 
   // TestService:
   void DoSomething(DoSomethingCallback callback) override;

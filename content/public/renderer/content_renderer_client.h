@@ -375,9 +375,8 @@ class CONTENT_EXPORT ContentRendererClient {
   virtual std::unique_ptr<base::TaskScheduler::InitParams>
   GetTaskSchedulerInitParams();
 
-  // Whether the renderer allows idle media players to be automatically
-  // suspended after a period of inactivity.
-  virtual bool AllowIdleMediaSuspend();
+  // Returns true if the media pipeline can be suspended, or false otherwise.
+  virtual bool AllowMediaSuspend();
 };
 
 }  // namespace content

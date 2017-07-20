@@ -11,8 +11,14 @@
 namespace WTF {
 
 // string -> int.
-WTF_EXPORT int CharactersToIntStrict(const LChar*, size_t, bool* ok = 0);
-WTF_EXPORT int CharactersToIntStrict(const UChar*, size_t, bool* ok = 0);
+WTF_EXPORT int CharactersToIntStrict(const LChar*,
+                                     size_t,
+                                     bool* ok = 0,
+                                     int base = 10);
+WTF_EXPORT int CharactersToIntStrict(const UChar*,
+                                     size_t,
+                                     bool* ok = 0,
+                                     int base = 10);
 WTF_EXPORT int CharactersToInt(const LChar*,
                                size_t,
                                bool* ok = 0);  // ignores trailing garbage
@@ -20,22 +26,15 @@ WTF_EXPORT int CharactersToInt(const UChar*,
                                size_t,
                                bool* ok = 0);  // ignores trailing garbage
 
-enum class NumberParsingState {
-  kSuccess,
-  kError,
-  // For UInt functions, kOverflowMin never happens. Negative numbers are
-  // treated as kError. This behavior matches to the HTML standard.
-  // https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#rules-for-parsing-non-negative-integers
-  kOverflowMin,
-  kOverflowMax,
-};
-
 // string -> unsigned.
-// These functions do not accept "-0".
-WTF_EXPORT unsigned CharactersToUIntStrict(const LChar*, size_t, bool* ok = 0);
-WTF_EXPORT unsigned CharactersToUIntStrict(const UChar*, size_t, bool* ok = 0);
-WTF_EXPORT unsigned HexCharactersToUIntStrict(const LChar*, size_t, bool* ok);
-WTF_EXPORT unsigned HexCharactersToUIntStrict(const UChar*, size_t, bool* ok);
+WTF_EXPORT unsigned CharactersToUIntStrict(const LChar*,
+                                           size_t,
+                                           bool* ok = 0,
+                                           int base = 10);
+WTF_EXPORT unsigned CharactersToUIntStrict(const UChar*,
+                                           size_t,
+                                           bool* ok = 0,
+                                           int base = 10);
 WTF_EXPORT unsigned CharactersToUInt(const LChar*,
                                      size_t,
                                      bool* ok = 0);  // ignores trailing garbage
@@ -43,18 +42,15 @@ WTF_EXPORT unsigned CharactersToUInt(const UChar*,
                                      size_t,
                                      bool* ok = 0);  // ignores trailing garbage
 
-// NumberParsingState versions of CharactersToUIntStrict. They can detect
-// overflow. |NumberParsingState*| should not be nullptr;
-WTF_EXPORT unsigned CharactersToUIntStrict(const LChar*,
-                                           size_t,
-                                           NumberParsingState*);
-WTF_EXPORT unsigned CharactersToUIntStrict(const UChar*,
-                                           size_t,
-                                           NumberParsingState*);
-
 // string -> int64_t.
-WTF_EXPORT int64_t CharactersToInt64Strict(const LChar*, size_t, bool* ok = 0);
-WTF_EXPORT int64_t CharactersToInt64Strict(const UChar*, size_t, bool* ok = 0);
+WTF_EXPORT int64_t CharactersToInt64Strict(const LChar*,
+                                           size_t,
+                                           bool* ok = 0,
+                                           int base = 10);
+WTF_EXPORT int64_t CharactersToInt64Strict(const UChar*,
+                                           size_t,
+                                           bool* ok = 0,
+                                           int base = 10);
 WTF_EXPORT int64_t CharactersToInt64(const LChar*,
                                      size_t,
                                      bool* ok = 0);  // ignores trailing garbage
@@ -63,13 +59,14 @@ WTF_EXPORT int64_t CharactersToInt64(const UChar*,
                                      bool* ok = 0);  // ignores trailing garbage
 
 // string -> uint64_t.
-// These functions do not accept "-0".
 WTF_EXPORT uint64_t CharactersToUInt64Strict(const LChar*,
                                              size_t,
-                                             bool* ok = 0);
+                                             bool* ok = 0,
+                                             int base = 10);
 WTF_EXPORT uint64_t CharactersToUInt64Strict(const UChar*,
                                              size_t,
-                                             bool* ok = 0);
+                                             bool* ok = 0,
+                                             int base = 10);
 WTF_EXPORT uint64_t
 CharactersToUInt64(const LChar*,
                    size_t,

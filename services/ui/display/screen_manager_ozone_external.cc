@@ -23,8 +23,7 @@ ScreenManagerOzoneExternal::ScreenManagerOzoneExternal()
 ScreenManagerOzoneExternal::~ScreenManagerOzoneExternal() {}
 
 void ScreenManagerOzoneExternal::AddInterfaces(
-    service_manager::BinderRegistryWithArgs<
-        const service_manager::BindSourceInfo&>* registry) {}
+    service_manager::BinderRegistry* registry) {}
 
 void ScreenManagerOzoneExternal::Init(ScreenManagerDelegate* delegate) {}
 

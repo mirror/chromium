@@ -491,7 +491,7 @@ void VrShellGl::UpdateController(const gfx::Vector3dF& head_direction) {
 }
 
 void VrShellGl::HandleControllerInput(const gfx::Vector3dF& head_direction) {
-  if (is_exiting_) {
+  if (scene_->is_exiting()) {
     // When we're exiting, we don't show the reticle and the only input
     // processing we do is to handle immediate exits.
     SendImmediateExitRequestIfNecessary();
@@ -975,7 +975,7 @@ void VrShellGl::DrawFrameSubmitWhenReady(
 }
 
 bool VrShellGl::ShouldDrawWebVr() {
-  return web_vr_mode_ && scene_->web_vr_rendering_enabled();
+  return web_vr_mode_ && scene_->GetWebVrRenderingEnabled();
 }
 
 void VrShellGl::DrawWebVr() {
@@ -1067,20 +1067,18 @@ void VrShellGl::OnVSync() {
     return;
 
   base::TimeTicks now = base::TimeTicks::Now();
-  base::TimeTicks target = now + vsync_interval_;
-  double intervalsF =
-      (target - vsync_timebase_).InSecondsF() / vsync_interval_.InSecondsF();
-  uint64_t intervals = std::llround(intervalsF);
+  base::TimeTicks target;
+  target = now + vsync_interval_;
+  int64_t intervals = (target - vsync_timebase_) / vsync_interval_;
   target = vsync_timebase_ + intervals * vsync_interval_;
   task_runner_->PostDelayedTask(FROM_HERE, vsync_task_.callback(),
                                 target - now);
-
-  base::TimeDelta current_time = target - vsync_interval_ - base::TimeTicks();
+  base::TimeDelta current = target - vsync_interval_ - base::TimeTicks();
   if (!callback_.is_null()) {
-    SendVSync(current_time, base::ResetAndReturn(&callback_));
+    SendVSync(current, base::ResetAndReturn(&callback_));
   } else {
     pending_vsync_ = true;
-    pending_time_ = current_time;
+    pending_time_ = current;
   }
   if (!ShouldDrawWebVr()) {
     DrawFrame(-1);

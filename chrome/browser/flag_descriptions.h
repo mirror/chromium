@@ -257,9 +257,6 @@ extern const char kEnableSuggestionsHomeModernLayoutDescription[];
 extern const char kEnableTokenBindingName[];
 extern const char kEnableTokenBindingDescription[];
 
-extern const char kEnableUsernameCorrectionName[];
-extern const char kEnableUsernameCorrectionDescription[];
-
 extern const char kEnableUseZoomForDsfName[];
 extern const char kEnableUseZoomForDsfDescription[];
 extern const char kEnableUseZoomForDsfChoiceDefault[];
@@ -525,9 +522,6 @@ extern const char kOmniboxDisplayTitleForCurrentUrlDescription[];
 extern const char kOmniboxUIElideSuggestionUrlAfterHostName[];
 extern const char kOmniboxUIElideSuggestionUrlAfterHostDescription[];
 
-extern const char kOmniboxSpareRendererName[];
-extern const char kOmniboxSpareRendererDescription[];
-
 extern const char kOmniboxUIHideSuggestionUrlSchemeName[];
 extern const char kOmniboxUIHideSuggestionUrlSchemeDescription[];
 
@@ -714,7 +708,6 @@ extern const char kTLS13VariantDisabled[];
 extern const char kTLS13VariantDraft[];
 extern const char kTLS13VariantExperiment[];
 extern const char kTLS13VariantRecordTypeExperiment[];
-extern const char kTLS13VariantNoSessionIDExperiment[];
 
 extern const char kSuggestionsWithSubStringMatchName[];
 extern const char kSuggestionsWithSubStringMatchDescription[];
@@ -1061,9 +1054,6 @@ extern const char kOfflinePagesLoadSignalCollectingDescription[];
 extern const char kOfflinePagesPrefetchingName[];
 extern const char kOfflinePagesPrefetchingDescription[];
 
-extern const char kOfflinePagesRenovationsName[];
-extern const char kOfflinePagesRenovationsDescription[];
-
 extern const char kOfflinePagesSharingName[];
 extern const char kOfflinePagesSharingDescription[];
 
@@ -1306,14 +1296,8 @@ extern const char kEnableEncryptionMigrationDescription[];
 extern const char kEnableImeMenuName[];
 extern const char kEnableImeMenuDescription[];
 
-extern const char kEnableLockScreenAppsName[];
-extern const char kEnableLockScreenAppsDescription[];
-
 extern const char kEnableTouchSupportForScreenMagnifierName[];
 extern const char kEnableTouchSupportForScreenMagnifierDescription[];
-
-extern const char kFileManagerTouchModeName[];
-extern const char kFileManagerTouchModeDescription[];
 
 extern const char kEnableZipArchiverOnFileManagerName[];
 extern const char kEnableZipArchiverOnFileManagerDescription[];
@@ -1411,9 +1395,6 @@ extern const char kTouchscreenCalibrationDescription[];
 
 extern const char kUiDevToolsName[];
 extern const char kUiDevToolsDescription[];
-
-extern const char kUseCrosMidiServiceName[];
-extern const char kUseCrosMidiServiceNameDescription[];
 
 extern const char kUseMusName[];
 extern const char kUseMusDescription[];

@@ -9,6 +9,7 @@
 #include "base/bind.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
+#include "chrome/browser/chromeos/app_mode/arc/arc_kiosk_app_service.h"
 #include "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.h"
 #include "chrome/browser/chromeos/arc/arc_play_store_enabled_preference_handler.h"
 #include "chrome/browser/chromeos/arc/arc_session_manager.h"
@@ -20,7 +21,6 @@
 #include "chrome/browser/chromeos/arc/fileapi/arc_file_system_mounter.h"
 #include "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner.h"
 #include "chrome/browser/chromeos/arc/intent_helper/arc_settings_service.h"
-#include "chrome/browser/chromeos/arc/kiosk/arc_kiosk_bridge.h"
 #include "chrome/browser/chromeos/arc/notification/arc_boot_error_notification.h"
 #include "chrome/browser/chromeos/arc/notification/arc_provision_notification_service.h"
 #include "chrome/browser/chromeos/arc/policy/arc_policy_bridge.h"
@@ -45,6 +45,7 @@
 #include "components/arc/crash_collector/arc_crash_collector_bridge.h"
 #include "components/arc/ime/arc_ime_service.h"
 #include "components/arc/intent_helper/arc_intent_helper_bridge.h"
+#include "components/arc/kiosk/arc_kiosk_bridge.h"
 #include "components/arc/metrics/arc_metrics_service.h"
 #include "components/arc/net/arc_net_host_impl.h"
 #include "components/arc/obb_mounter/arc_obb_mounter_bridge.h"
@@ -52,6 +53,7 @@
 #include "components/arc/storage_manager/arc_storage_manager.h"
 #include "components/arc/volume_mounter/arc_volume_mounter_bridge.h"
 #include "components/prefs/pref_member.h"
+#include "components/user_manager/user_manager.h"
 #include "ui/arc/notification/arc_notification_manager.h"
 
 namespace arc {
@@ -62,17 +64,13 @@ ArcServiceLauncher* g_arc_service_launcher = nullptr;
 
 }  // namespace
 
-ArcServiceLauncher::ArcServiceLauncher()
-    : arc_service_manager_(base::MakeUnique<ArcServiceManager>()),
-      arc_session_manager_(base::MakeUnique<ArcSessionManager>(
-          base::MakeUnique<ArcSessionRunner>(
-              base::Bind(ArcSession::Create,
-                         arc_service_manager_->arc_bridge_service())))) {
+ArcServiceLauncher::ArcServiceLauncher() {
   DCHECK(g_arc_service_launcher == nullptr);
   g_arc_service_launcher = this;
 }
 
 ArcServiceLauncher::~ArcServiceLauncher() {
+  DCHECK(!arc_service_manager_);
   DCHECK_EQ(g_arc_service_launcher, this);
   g_arc_service_launcher = nullptr;
 }
@@ -82,7 +80,17 @@ ArcServiceLauncher* ArcServiceLauncher::Get() {
   return g_arc_service_launcher;
 }
 
+void ArcServiceLauncher::Initialize() {
+  arc_service_manager_ = base::MakeUnique<ArcServiceManager>();
+  arc_session_manager_ = base::MakeUnique<ArcSessionManager>(
+      base::MakeUnique<ArcSessionRunner>(base::Bind(
+          ArcSession::Create, arc_service_manager_->arc_bridge_service())));
+}
+
 void ArcServiceLauncher::MaybeSetProfile(Profile* profile) {
+  DCHECK(arc_service_manager_);
+  DCHECK(arc_session_manager_);
+
   if (!IsArcAllowedForProfile(profile))
     return;
 
@@ -105,8 +113,6 @@ void ArcServiceLauncher::MaybeSetProfile(Profile* profile) {
 
   arc_session_manager_->SetProfile(profile);
   arc_service_manager_->set_browser_context(profile);
-  arc_service_manager_->set_account_id(
-      multi_user_util::GetAccountIdFromProfile(profile));
 }
 
 void ArcServiceLauncher::OnPrimaryUserProfilePrepared(Profile* profile) {
@@ -136,13 +142,10 @@ void ArcServiceLauncher::OnPrimaryUserProfilePrepared(Profile* profile) {
   ArcDownloadsWatcherService::GetForBrowserContext(profile);
   ArcEnterpriseReportingService::GetForBrowserContext(profile);
   ArcFileSystemMounter::GetForBrowserContext(profile);
-  ArcFileSystemOperationRunner::GetForBrowserContext(profile);
   ArcImeService::GetForBrowserContext(profile);
   ArcIntentHelperBridge::GetForBrowserContext(profile);
-  ArcKioskBridge::GetForBrowserContext(profile);
   ArcMetricsService::GetForBrowserContext(profile);
   ArcNetHostImpl::GetForBrowserContext(profile);
-  ArcNotificationManager::GetForBrowserContext(profile);
   ArcObbMounterBridge::GetForBrowserContext(profile);
   ArcPolicyBridge::GetForBrowserContext(profile);
   ArcPowerBridge::GetForBrowserContext(profile);
@@ -159,6 +162,22 @@ void ArcServiceLauncher::OnPrimaryUserProfilePrepared(Profile* profile) {
   ArcWallpaperService::GetForBrowserContext(profile);
   GpuArcVideoServiceHost::GetForBrowserContext(profile);
 
+  arc_service_manager_->AddService(
+      base::MakeUnique<ArcFileSystemOperationRunner>(
+          arc_service_manager_->arc_bridge_service(), profile));
+  arc_service_manager_->AddService(base::MakeUnique<ArcNotificationManager>(
+      arc_service_manager_->arc_bridge_service(),
+      multi_user_util::GetAccountIdFromProfile(profile)));
+
+  // Kiosk apps should be run only for kiosk sessions.
+  if (user_manager::UserManager::Get()->IsLoggedInAsArcKioskApp()) {
+    // ArcKioskAppService is BrowserContextKeyedService so that it's destroyed
+    // on destroying the Profile, that is after ArcServiceLauncher::Shutdown().
+    arc_service_manager_->AddService(base::MakeUnique<ArcKioskBridge>(
+        arc_service_manager_->arc_bridge_service(),
+        chromeos::ArcKioskAppService::Get(profile)));
+  }
+
   arc_session_manager_->Initialize();
   arc_play_store_enabled_preference_handler_ =
       base::MakeUnique<ArcPlayStoreEnabledPreferenceHandler>(
@@ -167,23 +186,12 @@ void ArcServiceLauncher::OnPrimaryUserProfilePrepared(Profile* profile) {
 }
 
 void ArcServiceLauncher::Shutdown() {
+  // Destroy in the reverse order of the initialization.
   arc_play_store_enabled_preference_handler_.reset();
-  arc_service_manager_->Shutdown();
-  arc_session_manager_->Shutdown();
-}
-
-void ArcServiceLauncher::ResetForTesting() {
-  // First destroy the internal states, then re-initialize them.
-  // These are for workaround of singletonness DCHECK in their ctors/dtors.
-  Shutdown();
+  if (arc_service_manager_)
+    arc_service_manager_->Shutdown();
   arc_session_manager_.reset();
-
-  // No recreation of arc_service_manager. Pointers to its ArcBridgeService
-  // may be referred from existing KeyedService, so destoying it would cause
-  // unexpected behavior, specifically on test teardown.
-  arc_session_manager_ = base::MakeUnique<ArcSessionManager>(
-      base::MakeUnique<ArcSessionRunner>(base::Bind(
-          ArcSession::Create, arc_service_manager_->arc_bridge_service())));
+  arc_service_manager_.reset();
 }
 
 }  // namespace arc

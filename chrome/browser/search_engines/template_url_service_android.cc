@@ -382,3 +382,8 @@ static jlong Init(JNIEnv* env, const JavaParamRef<jobject>& obj) {
       new TemplateUrlServiceAndroid(env, obj);
   return reinterpret_cast<intptr_t>(template_url_service_android);
 }
+
+// static
+bool TemplateUrlServiceAndroid::Register(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}

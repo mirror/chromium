@@ -59,19 +59,13 @@ void UpdateToggleStateWithTag(NSInteger tag, id item, NSWindow* window) {
 
   if (tag == IDC_WINDOW_MUTE_TAB) {
     TabStripModel* model = browser->tab_strip_model();
-    // Menu items may be validated during browser startup, before the
-    // TabStripModel has been populated.
-    SetToggleState(
-        !model->empty() && !model->WillContextMenuMute(model->active_index()),
-        item);
+    SetToggleState(!model->WillContextMenuMute(model->active_index()), item);
     return;
   }
 
   if (tag == IDC_WINDOW_PIN_TAB) {
     TabStripModel* model = browser->tab_strip_model();
-    SetToggleState(
-        !model->empty() && !model->WillContextMenuPin(model->active_index()),
-        item);
+    SetToggleState(!model->WillContextMenuPin(model->active_index()), item);
     return;
   }
 }

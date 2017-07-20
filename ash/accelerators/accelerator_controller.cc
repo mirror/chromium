@@ -380,7 +380,7 @@ void HandleShowMessageCenterBubble() {
     WebNotificationTray* notification_tray =
         status_area_widget->web_notification_tray();
     if (notification_tray->visible())
-      notification_tray->ShowBubble();
+      notification_tray->ShowMessageCenterBubble();
   }
 }
 
@@ -512,8 +512,8 @@ void HandleShowImeMenuBubble() {
   if (status_area_widget) {
     ImeMenuTray* ime_menu_tray = status_area_widget->ime_menu_tray();
     if (ime_menu_tray && ime_menu_tray->visible() &&
-        !ime_menu_tray->GetBubbleView()) {
-      ime_menu_tray->ShowBubble();
+        !ime_menu_tray->IsImeMenuBubbleShown()) {
+      ime_menu_tray->ShowImeMenuBubble();
     }
   }
 }
@@ -572,7 +572,7 @@ void HandleShowStylusTools() {
   Shelf::ForWindow(Shell::GetRootWindowForNewWindows())
       ->GetStatusAreaWidget()
       ->palette_tray()
-      ->ShowBubble();
+      ->ShowPalette();
 }
 
 bool CanHandleShowStylusTools() {
@@ -590,9 +590,6 @@ void HandleStartVoiceInteraction(const ui::Accelerator& accelerator) {
   } else if (accelerator.IsCmdDown() && accelerator.key_code() == ui::VKEY_A) {
     base::RecordAction(
         base::UserMetricsAction("VoiceInteraction.Started.Search_A"));
-  } else if (accelerator.key_code() == ui::VKEY_ASSISTANT) {
-    base::RecordAction(
-        base::UserMetricsAction("VoiceInteraction.Started.Assistant"));
   }
   Shell::Get()->app_list()->StartVoiceInteractionSession();
 }

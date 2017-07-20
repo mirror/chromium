@@ -36,7 +36,6 @@ extern const char kArcCompatibleFilesystemChosen[];
 extern const char kArcVoiceInteractionValuePropAccepted[];
 extern const char kVoiceInteractionEnabled[];
 extern const char kVoiceInteractionContextEnabled[];
-extern const char kVoiceInteractionPrefSynced[];
 #endif
 extern const char kChildAccountStatusKnown[];
 extern const char kDefaultApps[];

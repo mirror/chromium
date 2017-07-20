@@ -1,5 +1,5 @@
 (async function(testRunner) {
-  let {page, session, dp} = await testRunner.startBlank('Tests that JS can be interrupted and paused.');
+  let {page, session, dp} = await testRunner.startBlank('');
 
   await dp.Runtime.enable();
   await dp.Debugger.enable();

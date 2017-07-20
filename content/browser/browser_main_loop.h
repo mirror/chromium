@@ -83,8 +83,9 @@ class ClientNativePixmapFactory;
 #endif
 
 namespace viz {
-class FrameSinkManagerImpl;
+class FrameSinkManager;
 class HostFrameSinkManager;
+class FrameSinkManagerImpl;
 }
 
 namespace content {
@@ -192,7 +193,7 @@ class CONTENT_EXPORT BrowserMainLoop {
 
   // TODO(crbug.com/657959): This will be removed once there are no users, as
   // SurfaceManager is being moved out of process.
-  viz::FrameSinkManagerImpl* GetFrameSinkManager() const;
+  viz::FrameSinkManager* GetFrameSinkManager() const;
 #endif
 
   void StopStartupTracingTimer();

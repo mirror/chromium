@@ -5,7 +5,7 @@
 #include "components/exo/keyboard.h"
 
 #include "ash/shell.h"
-#include "ash/wm/tablet_mode/tablet_mode_controller.h"
+#include "ash/wm/maximize_mode/maximize_mode_controller.h"
 #include "base/macros.h"
 #include "components/exo/buffer.h"
 #include "components/exo/keyboard_delegate.h"
@@ -227,9 +227,9 @@ TEST_F(KeyboardTest, OnKeyboardTypeChanged) {
   const std::vector<ui::InputDevice> keyboards =
       device_data_manager->GetKeyboardDevices();
 
-  ash::TabletModeController* tablet_mode_controller =
-      ash::Shell::Get()->tablet_mode_controller();
-  tablet_mode_controller->EnableTabletModeWindowManager(true);
+  ash::MaximizeModeController* maximize_mode_controller =
+      ash::Shell::Get()->maximize_mode_controller();
+  maximize_mode_controller->EnableMaximizeModeWindowManager(true);
 
   MockKeyboardDelegate delegate;
   std::unique_ptr<Keyboard> keyboard(new Keyboard(&delegate));
@@ -239,7 +239,7 @@ TEST_F(KeyboardTest, OnKeyboardTypeChanged) {
   keyboard->SetDeviceConfigurationDelegate(&configuration_delegate);
   EXPECT_TRUE(keyboard->HasDeviceConfigurationDelegate());
 
-  // Removing all keyboard devices in tablet mode calls
+  // Removing all keyboard devices in maximize mode calls
   // OnKeyboardTypeChanged() with false.
   EXPECT_CALL(configuration_delegate, OnKeyboardTypeChanged(false));
   static_cast<ui::DeviceHotplugEventObserver*>(device_data_manager)
@@ -252,7 +252,7 @@ TEST_F(KeyboardTest, OnKeyboardTypeChanged) {
 
   keyboard.reset();
 
-  tablet_mode_controller->EnableTabletModeWindowManager(false);
+  maximize_mode_controller->EnableMaximizeModeWindowManager(false);
 }
 
 TEST_F(KeyboardTest, KeyboardObserver) {

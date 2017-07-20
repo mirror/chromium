@@ -14,7 +14,6 @@
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "third_party/leveldatabase/env_chromium.h"
 #include "third_party/leveldatabase/src/helpers/memenv/memenv.h"
 #include "third_party/leveldatabase/src/include/leveldb/db.h"
 #include "third_party/leveldatabase/src/include/leveldb/env.h"
@@ -75,16 +74,16 @@ class LevelDBWrapperTest : public testing::Test {
 
  private:
   void InitializeLevelDB() {
-    std::unique_ptr<leveldb::DB> db;
+    leveldb::DB* db = nullptr;
     leveldb::Options options;
     options.create_if_missing = true;
     options.max_open_files = 0;  // Use minimum.
     options.env = in_memory_env_.get();
-    leveldb::Status status = leveldb_env::OpenDB(
-        options, database_dir_.GetPath().AsUTF8Unsafe(), &db);
+    leveldb::Status status =
+        leveldb::DB::Open(options, database_dir_.GetPath().AsUTF8Unsafe(), &db);
     ASSERT_TRUE(status.ok());
 
-    db_.reset(new LevelDBWrapper(std::move(db)));
+    db_.reset(new LevelDBWrapper(base::WrapUnique(db)));
   }
 
   base::ScopedTempDir database_dir_;

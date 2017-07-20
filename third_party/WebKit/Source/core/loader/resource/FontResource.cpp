@@ -55,11 +55,10 @@ enum FontPackageFormat {
 };
 
 static FontPackageFormat PackageFormatOf(SharedBuffer* buffer) {
-  static constexpr size_t kMaxHeaderSize = 4;
-  char data[kMaxHeaderSize];
-  if (!buffer->GetBytes(data, kMaxHeaderSize))
+  if (buffer->size() < 4)
     return kPackageFormatUnknown;
 
+  const char* data = buffer->Data();
   if (data[0] == 'w' && data[1] == 'O' && data[2] == 'F' && data[3] == 'F')
     return kPackageFormatWOFF;
   if (data[0] == 'w' && data[1] == 'O' && data[2] == 'F' && data[3] == '2')

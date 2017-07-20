@@ -28,7 +28,7 @@ class Transform;
 namespace viz {
 class CompositorFrameSinkSupport;
 class Display;
-class FrameSinkManagerImpl;
+class FrameSinkManager;
 class LocalSurfaceIdAllocator;
 }  // namespace viz
 
@@ -43,7 +43,7 @@ class SurfacesInstance : public base::RefCounted<SurfacesInstance>,
   static scoped_refptr<SurfacesInstance> GetOrCreateInstance();
 
   viz::FrameSinkId AllocateFrameSinkId();
-  viz::FrameSinkManagerImpl* GetFrameSinkManager();
+  viz::FrameSinkManager* GetFrameSinkManager();
 
   void DrawAndSwap(const gfx::Size& viewport,
                    const gfx::Rect& clip,
@@ -73,7 +73,6 @@ class SurfacesInstance : public base::RefCounted<SurfacesInstance>,
   void OnBeginFrame(const cc::BeginFrameArgs& args) override;
   void WillDrawSurface(const viz::LocalSurfaceId& local_surface_id,
                        const gfx::Rect& damage_rect) override;
-  void OnBeginFramePausedChanged(bool paused) override;
   void ReclaimResources(
       const std::vector<cc::ReturnedResource>& resources) override;
 
@@ -83,7 +82,7 @@ class SurfacesInstance : public base::RefCounted<SurfacesInstance>,
 
   viz::FrameSinkId frame_sink_id_;
 
-  std::unique_ptr<viz::FrameSinkManagerImpl> frame_sink_manager_;
+  std::unique_ptr<viz::FrameSinkManager> frame_sink_manager_;
   std::unique_ptr<cc::BeginFrameSource> begin_frame_source_;
   std::unique_ptr<viz::Display> display_;
   std::unique_ptr<viz::LocalSurfaceIdAllocator> local_surface_id_allocator_;

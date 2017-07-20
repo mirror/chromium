@@ -17,7 +17,7 @@ namespace media {
 
 // static
 void MojoVideoEncodeAcceleratorService::Create(
-    mojom::VideoEncodeAcceleratorRequest request,
+    media::mojom::VideoEncodeAcceleratorRequest request,
     const CreateAndInitializeVideoEncodeAcceleratorCallback&
         create_vea_callback,
     const gpu::GpuPreferences& gpu_preferences) {
@@ -44,12 +44,11 @@ MojoVideoEncodeAcceleratorService::~MojoVideoEncodeAcceleratorService() {
 }
 
 void MojoVideoEncodeAcceleratorService::Initialize(
-    VideoPixelFormat input_format,
+    media::VideoPixelFormat input_format,
     const gfx::Size& input_visible_size,
-    VideoCodecProfile output_profile,
+    media::VideoCodecProfile output_profile,
     uint32_t initial_bitrate,
-    mojom::VideoEncodeAcceleratorClientPtr client,
-    InitializeCallback success_callback) {
+    mojom::VideoEncodeAcceleratorClientPtr client) {
   DVLOG(1) << __func__
            << " input_format=" << VideoPixelFormatToString(input_format)
            << ", input_visible_size=" << input_visible_size.ToString()
@@ -61,7 +60,6 @@ void MojoVideoEncodeAcceleratorService::Initialize(
 
   if (!client) {
     DLOG(ERROR) << __func__ << "null |client|";
-    std::move(success_callback).Run(false);
     return;
   }
   vea_client_ = std::move(client);
@@ -72,7 +70,6 @@ void MojoVideoEncodeAcceleratorService::Initialize(
     DLOG(ERROR) << __func__ << "too large input_visible_size "
                 << input_visible_size.ToString();
     NotifyError(::media::VideoEncodeAccelerator::kInvalidArgumentError);
-    std::move(success_callback).Run(false);
     return;
   }
 
@@ -82,7 +79,6 @@ void MojoVideoEncodeAcceleratorService::Initialize(
   if (!encoder_) {
     DLOG(ERROR) << __func__ << " Error creating or initializing VEA";
     NotifyError(::media::VideoEncodeAccelerator::kPlatformFailureError);
-    std::move(success_callback).Run(false);
     return;
   }
 
@@ -90,7 +86,6 @@ void MojoVideoEncodeAcceleratorService::Initialize(
   // ad-hoc background worker thread, but for the time being this doesn't seem
   // necessary since we're already on a background thread.
 
-  std::move(success_callback).Run(true);
   return;
 }
 
@@ -108,7 +103,6 @@ void MojoVideoEncodeAcceleratorService::Encode(
                 << input_coded_size_.ToString() << ", got "
                 << frame->coded_size().ToString();
     NotifyError(::media::VideoEncodeAccelerator::kInvalidArgumentError);
-    std::move(callback).Run();
     return;
   }
 
@@ -211,7 +205,20 @@ void MojoVideoEncodeAcceleratorService::NotifyError(
   if (!vea_client_)
     return;
 
-  vea_client_->NotifyError(error);
+  // TODO(mcasas): Use EnumTraits, https://crbug.com/736517
+  Error mojo_error = Error::PLATFORM_FAILURE_ERROR;
+  switch (error) {
+    case ::media::VideoEncodeAccelerator::kIllegalStateError:
+      mojo_error = Error::ILLEGAL_STATE_ERROR;
+      break;
+    case ::media::VideoEncodeAccelerator::kInvalidArgumentError:
+      mojo_error = Error::INVALID_ARGUMENT_ERROR;
+      break;
+    case ::media::VideoEncodeAccelerator::kPlatformFailureError:
+      mojo_error = Error::PLATFORM_FAILURE_ERROR;
+      break;
+  }
+  vea_client_->NotifyError(mojo_error);
 }
 
 }  // namespace media

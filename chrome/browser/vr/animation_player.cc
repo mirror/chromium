@@ -58,11 +58,7 @@ void ReverseAnimation(base::TimeTicks monotonic_time,
   // This implies that,
   //   0 = d - o - 2t
   //   o = d - 2t
-  //
-  // Now if there was a previous offset, we must adjust d by that offset before
-  // performing this computation, so it becomes d - o_old - 2t:
   animation->set_time_offset(animation->curve()->Duration() -
-                             animation->time_offset() -
                              (2 * (monotonic_time - animation->start_time())));
 }
 
@@ -70,20 +66,6 @@ std::unique_ptr<cc::CubicBezierTimingFunction>
 CreateTransitionTimingFunction() {
   return cc::CubicBezierTimingFunction::CreatePreset(
       cc::CubicBezierTimingFunction::EaseType::EASE);
-}
-
-base::TimeDelta GetStartTime(cc::Animation* animation) {
-  if (animation->direction() == cc::Animation::Direction::NORMAL) {
-    return base::TimeDelta();
-  }
-  return animation->curve()->Duration();
-}
-
-base::TimeDelta GetEndTime(cc::Animation* animation) {
-  if (animation->direction() == cc::Animation::Direction::REVERSE) {
-    return base::TimeDelta();
-  }
-  return animation->curve()->Duration();
 }
 
 }  // namespace
@@ -161,14 +143,6 @@ void AnimationPlayer::Tick(base::TimeTicks monotonic_time) {
   StartAnimations(monotonic_time);
 }
 
-void AnimationPlayer::SetTransitionedProperties(
-    const std::vector<cc::TargetProperty::Type>& properties) {
-  transition_.target_properties.reset();
-  for (auto property : properties) {
-    transition_.target_properties[property] = true;
-  }
-}
-
 void AnimationPlayer::TransitionOpacityTo(base::TimeTicks monotonic_time,
                                           float current,
                                           float target) {
@@ -182,17 +156,10 @@ void AnimationPlayer::TransitionOpacityTo(base::TimeTicks monotonic_time,
   cc::Animation* running_animation =
       GetRunningAnimationForProperty(cc::TargetProperty::OPACITY);
 
-  if (running_animation) {
-    const cc::FloatAnimationCurve* curve =
-        running_animation->curve()->ToFloatAnimationCurve();
-    if (target == curve->GetValue(GetEndTime(running_animation))) {
-      return;
-    }
-    if (target == curve->GetValue(GetStartTime(running_animation))) {
-      ReverseAnimation(monotonic_time, running_animation);
-      return;
-    }
-  } else if (target == current) {
+  if (running_animation &&
+      target == running_animation->curve()->ToFloatAnimationCurve()->GetValue(
+                    base::TimeDelta())) {
+    ReverseAnimation(monotonic_time, running_animation);
     return;
   }
 
@@ -228,17 +195,11 @@ void AnimationPlayer::TransitionTransformOperationsTo(
   cc::Animation* running_animation =
       GetRunningAnimationForProperty(cc::TargetProperty::TRANSFORM);
 
-  if (running_animation) {
-    const cc::TransformAnimationCurve* curve =
-        running_animation->curve()->ToTransformAnimationCurve();
-    if (target == curve->GetValue(GetEndTime(running_animation))) {
-      return;
-    }
-    if (target == curve->GetValue(GetStartTime(running_animation))) {
-      ReverseAnimation(monotonic_time, running_animation);
-      return;
-    }
-  } else if (target == current) {
+  if (running_animation &&
+      target ==
+          running_animation->curve()->ToTransformAnimationCurve()->GetValue(
+              base::TimeDelta())) {
+    ReverseAnimation(monotonic_time, running_animation);
     return;
   }
 
@@ -271,17 +232,10 @@ void AnimationPlayer::TransitionBoundsTo(base::TimeTicks monotonic_time,
   cc::Animation* running_animation =
       GetRunningAnimationForProperty(cc::TargetProperty::BOUNDS);
 
-  if (running_animation) {
-    const cc::SizeAnimationCurve* curve =
-        running_animation->curve()->ToSizeAnimationCurve();
-    if (target == curve->GetValue(GetEndTime(running_animation))) {
-      return;
-    }
-    if (target == curve->GetValue(GetStartTime(running_animation))) {
-      ReverseAnimation(monotonic_time, running_animation);
-      return;
-    }
-  } else if (target == current) {
+  if (running_animation &&
+      target == running_animation->curve()->ToSizeAnimationCurve()->GetValue(
+                    base::TimeDelta())) {
+    ReverseAnimation(monotonic_time, running_animation);
     return;
   }
 
@@ -302,24 +256,17 @@ void AnimationPlayer::TransitionBoundsTo(base::TimeTicks monotonic_time,
 }
 
 cc::Animation* AnimationPlayer::GetRunningAnimationForProperty(
-    cc::TargetProperty::Type target_property) const {
-  for (auto& animation : animations_) {
-    if ((animation->run_state() == cc::Animation::RUNNING ||
-         animation->run_state() == cc::Animation::PAUSED) &&
-        animation->target_property() == target_property) {
-      return animation.get();
-    }
-  }
-  return nullptr;
-}
-
-bool AnimationPlayer::IsAnimatingProperty(
-    cc::TargetProperty::Type property) const {
-  for (auto& animation : animations_) {
-    if (animation->target_property() == property)
-      return true;
-  }
-  return false;
+    cc::TargetProperty::Type target_property) {
+  auto it = std::find_if(
+      animations_.begin(), animations_.end(),
+      [target_property](const std::unique_ptr<cc::Animation>& animation) {
+        if (animation->run_state() != cc::Animation::RUNNING &&
+            animation->run_state() != cc::Animation::PAUSED) {
+          return false;
+        }
+        return animation->target_property() == target_property;
+      });
+  return it == animations_.end() ? nullptr : it->get();
 }
 
 }  // namespace vr

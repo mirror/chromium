@@ -58,9 +58,6 @@ class DesktopSessionDurationTracker : public AudibleContentsTracker::Observer {
   void AddObserver(Observer* observer);
   void RemoveObserver(Observer* observer);
 
-  // Cleans up any global state for testing.
-  static void CleanupForTesting();
-
  protected:
   DesktopSessionDurationTracker();
   ~DesktopSessionDurationTracker() override;

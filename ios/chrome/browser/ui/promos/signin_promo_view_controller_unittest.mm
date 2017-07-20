@@ -88,8 +88,7 @@ class SigninPromoViewControllerTest : public BlockCleanupTest {
     ios::FakeChromeIdentityService::GetInstanceFromChromeProvider()
         ->AddIdentities(@[ @"foo", @"bar" ]);
     controller_ = [[FakeVersionSigninPromoViewController alloc]
-        initWithBrowserState:chrome_browser_state_.get()
-                  dispatcher:nil];
+        initWithBrowserState:chrome_browser_state_.get()];
   }
 
   void TearDown() override {

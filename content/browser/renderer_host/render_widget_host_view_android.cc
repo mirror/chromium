@@ -34,7 +34,7 @@
 #include "cc/surfaces/surface_hittest.h"
 #include "cc/trees/layer_tree_host.h"
 #include "components/viz/common/gl_helper.h"
-#include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
+#include "components/viz/service/frame_sinks/frame_sink_manager.h"
 #include "content/browser/accessibility/browser_accessibility_manager_android.h"
 #include "content/browser/accessibility/web_contents_accessibility_android.h"
 #include "content/browser/android/composited_touch_handle_drawable.h"
@@ -73,7 +73,6 @@
 #include "content/public/browser/devtools_agent_host.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/render_widget_host_iterator.h"
-#include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "gpu/command_buffer/client/gles2_implementation.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
@@ -1200,10 +1199,6 @@ void RenderWidgetHostViewAndroid::DidCreateNewRendererCompositorFrameSink(
 }
 
 void RenderWidgetHostViewAndroid::EvictFrameIfNecessary() {
-  if (!base::FeatureList::IsEnabled(
-          features::kHideIncorrectlySizedFullscreenFrames)) {
-    return;
-  }
   if (host_->delegate()->IsFullscreenForCurrentTab() &&
       current_surface_size_ != view_.GetPhysicalBackingSize()) {
     // When we're in a fullscreen and the frame size doesn't match the view
@@ -1638,7 +1633,8 @@ void RenderWidgetHostViewAndroid::StartObservingRootWindow() {
     return;
 
   observing_root_window_ = true;
-  SendBeginFramePaused();
+  if (host_)
+    host_->Send(new ViewMsg_SetBeginFramePaused(host_->GetRoutingID(), false));
   view_.GetWindowAndroid()->AddObserver(this);
   // When using browser compositor, DelegatedFrameHostAndroid provides the BFS.
   if (!using_browser_compositor_)
@@ -1664,7 +1660,8 @@ void RenderWidgetHostViewAndroid::StopObservingRootWindow() {
   is_window_activity_started_ = true;
   is_window_visible_ = true;
   observing_root_window_ = false;
-  SendBeginFramePaused();
+  if (host_)
+    host_->Send(new ViewMsg_SetBeginFramePaused(host_->GetRoutingID(), true));
   view_.GetWindowAndroid()->RemoveObserver(this);
   if (!using_browser_compositor_)
     SetBeginFrameSource(nullptr);
@@ -2248,24 +2245,11 @@ const cc::BeginFrameArgs& RenderWidgetHostViewAndroid::LastUsedBeginFrameArgs()
   return last_begin_frame_args_;
 }
 
-void RenderWidgetHostViewAndroid::SendBeginFramePaused() {
-  bool paused = begin_frame_paused_ || !observing_root_window_;
-
-  if (!using_browser_compositor_) {
-    if (host_) {
-      host_->Send(
-          new ViewMsg_SetBeginFramePaused(host_->GetRoutingID(), paused));
-    }
-  } else if (renderer_compositor_frame_sink_) {
-    renderer_compositor_frame_sink_->OnBeginFramePausedChanged(paused);
-  }
-}
-
 void RenderWidgetHostViewAndroid::OnBeginFrameSourcePausedChanged(bool paused) {
-  if (paused != begin_frame_paused_) {
-    begin_frame_paused_ = paused;
-    SendBeginFramePaused();
-  }
+  // The BeginFrameSources we listen to don't use this. For WebView, we signal
+  // the "paused" state to the RenderWidget when our window attaches/detaches,
+  // see |StartObservingRootWindow()| and |StopObservingRootWindow()|.
+  DCHECK(!paused);
 }
 
 void RenderWidgetHostViewAndroid::OnAnimate(base::TimeTicks begin_frame_time) {

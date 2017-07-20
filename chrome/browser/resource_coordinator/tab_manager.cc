@@ -30,7 +30,6 @@
 #include "chrome/browser/media/webrtc/media_stream_capture_indicator.h"
 #include "chrome/browser/memory/oom_memory_details.h"
 #include "chrome/browser/profiles/profile.h"
-#include "chrome/browser/resource_coordinator/background_tab_navigation_throttle.h"
 #include "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.h"
 #include "chrome/browser/resource_coordinator/tab_manager_grc_tab_signal_observer.h"
 #include "chrome/browser/resource_coordinator/tab_manager_observer.h"
@@ -55,6 +54,7 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/page_importance_signals.h"
+#include "services/resource_coordinator/public/cpp/resource_coordinator_features.h"
 
 #if defined(OS_CHROMEOS)
 #include "ash/multi_profile_uma.h"
@@ -153,7 +153,7 @@ TabManager::TabManager()
 #endif
   browser_tab_strip_tracker_.Init();
   session_restore_observer_.reset(new TabManagerSessionRestoreObserver(this));
-  if (GRCTabSignalObserver::IsEnabled()) {
+  if (resource_coordinator::IsResourceCoordinatorEnabled()) {
     grc_tab_signal_observer_.reset(new GRCTabSignalObserver());
   }
   tab_manager_stats_collector_.reset(new TabManagerStatsCollector(this));
@@ -1004,8 +1004,8 @@ std::vector<TabManager::BrowserInfo> TabManager::GetBrowserInfoList() const {
 }
 
 content::NavigationThrottle::ThrottleCheckResult
-TabManager::MaybeThrottleNavigation(BackgroundTabNavigationThrottle* throttle) {
-  content::NavigationHandle* navigation_handle = throttle->navigation_handle();
+TabManager::MaybeThrottleNavigation(
+    content::NavigationHandle* navigation_handle) {
   if (!ShouldDelayNavigation(navigation_handle)) {
     loading_contents_.insert(navigation_handle->GetWebContents());
     return content::NavigationThrottle::PROCEED;
@@ -1015,7 +1015,8 @@ TabManager::MaybeThrottleNavigation(BackgroundTabNavigationThrottle* throttle) {
   // navigation will be delayed.
   GetWebContentsData(navigation_handle->GetWebContents())
       ->SetTabLoadingState(TAB_IS_NOT_LOADING);
-  pending_navigations_.push_back(throttle);
+  pending_navigations_.push_back(navigation_handle);
+
   return content::NavigationThrottle::DEFER;
 }
 
@@ -1032,8 +1033,8 @@ void TabManager::OnDidFinishNavigation(
     content::NavigationHandle* navigation_handle) {
   auto it = pending_navigations_.begin();
   while (it != pending_navigations_.end()) {
-    BackgroundTabNavigationThrottle* throttle = *it;
-    if (throttle->navigation_handle() == navigation_handle) {
+    content::NavigationHandle* pending_handle = *it;
+    if (pending_handle == navigation_handle) {
       pending_navigations_.erase(it);
       break;
     }
@@ -1062,39 +1063,41 @@ void TabManager::LoadNextBackgroundTabIfNeeded() {
   if (pending_navigations_.empty())
     return;
 
-  BackgroundTabNavigationThrottle* throttle = pending_navigations_.front();
+  content::NavigationHandle* navigation_handle = pending_navigations_.front();
   pending_navigations_.erase(pending_navigations_.begin());
-  ResumeNavigation(throttle);
+  ResumeNavigation(navigation_handle);
 }
 
 void TabManager::ResumeTabNavigationIfNeeded(content::WebContents* contents) {
-  BackgroundTabNavigationThrottle* throttle =
+  content::NavigationHandle* navigation_handle =
       RemovePendingNavigationIfNeeded(contents);
-  if (throttle)
-    ResumeNavigation(throttle);
+  if (navigation_handle)
+    ResumeNavigation(navigation_handle);
 }
 
-void TabManager::ResumeNavigation(BackgroundTabNavigationThrottle* throttle) {
-  content::NavigationHandle* navigation_handle = throttle->navigation_handle();
+void TabManager::ResumeNavigation(
+    content::NavigationHandle* navigation_handle) {
   GetWebContentsData(navigation_handle->GetWebContents())
       ->SetTabLoadingState(TAB_IS_LOADING);
   loading_contents_.insert(navigation_handle->GetWebContents());
 
-  throttle->ResumeNavigation();
+  navigation_handle->Resume();
 }
 
-BackgroundTabNavigationThrottle* TabManager::RemovePendingNavigationIfNeeded(
+content::NavigationHandle* TabManager::RemovePendingNavigationIfNeeded(
     content::WebContents* contents) {
+  content::NavigationHandle* navigation_handle = nullptr;
   auto it = pending_navigations_.begin();
   while (it != pending_navigations_.end()) {
-    BackgroundTabNavigationThrottle* throttle = *it;
-    if (throttle->navigation_handle()->GetWebContents() == contents) {
+    navigation_handle = *it;
+    if ((*it)->GetWebContents() == contents) {
+      navigation_handle = *it;
       pending_navigations_.erase(it);
-      return throttle;
+      break;
     }
     it++;
   }
-  return nullptr;
+  return navigation_handle;
 }
 
 bool TabManager::IsTabLoadingForTest(content::WebContents* contents) const {
@@ -1110,8 +1113,8 @@ bool TabManager::IsTabLoadingForTest(content::WebContents* contents) const {
 
 bool TabManager::IsNavigationDelayedForTest(
     const content::NavigationHandle* navigation_handle) const {
-  for (const auto* it : pending_navigations_) {
-    if (it->navigation_handle() == navigation_handle)
+  for (const auto* nav : pending_navigations_) {
+    if (nav == navigation_handle)
       return true;
   }
   return false;

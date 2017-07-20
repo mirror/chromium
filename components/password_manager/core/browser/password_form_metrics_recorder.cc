@@ -28,21 +28,12 @@ const char kUkmSavingPromptTrigger[] = "Saving.Prompt.Trigger";
 const char kUkmSavingPromptInteraction[] = "Saving.Prompt.Interaction";
 const char kUkmManagerFillEvent[] = "ManagerFill.Action";
 const char kUkmUserActionSimplified[] = "User.ActionSimplified";
-const char kUkmUserAction[] = "User.Action";
 
 PasswordFormMetricsRecorder::PasswordFormMetricsRecorder(
     bool is_main_frame_secure,
-    ukm::UkmRecorder* ukm_recorder,
-    ukm::SourceId source_id,
-    const GURL& main_frame_url)
+    std::unique_ptr<ukm::UkmEntryBuilder> ukm_entry_builder)
     : is_main_frame_secure_(is_main_frame_secure),
-      ukm_recorder_(ukm_recorder),
-      source_id_(source_id),
-      main_frame_url_(main_frame_url),
-      ukm_entry_builder_(
-          ukm_recorder
-              ? ukm_recorder->GetEntryBuilder(source_id, "PasswordForm")
-              : nullptr) {}
+      ukm_entry_builder_(std::move(ukm_entry_builder)) {}
 
 PasswordFormMetricsRecorder::~PasswordFormMetricsRecorder() {
   UMA_HISTOGRAM_ENUMERATION("PasswordManager.ActionsTakenV3", GetActionsTaken(),
@@ -81,14 +72,16 @@ PasswordFormMetricsRecorder::~PasswordFormMetricsRecorder() {
 
   RecordUkmMetric(kUkmUpdatingPromptShown, update_prompt_shown_);
   RecordUkmMetric(kUkmSavingPromptShown, save_prompt_shown_);
+}
 
-  for (const DetailedUserAction& action : one_time_report_user_actions_)
-    RecordUkmMetric(kUkmUserAction, static_cast<int64_t>(action));
-
-  // Bind |main_frame_url_| to |source_id_| directly before sending the content
-  // of |ukm_recorder_| to ensure that the binding has not been purged already.
-  if (ukm_recorder_)
-    ukm_recorder_->UpdateSourceURL(source_id_, main_frame_url_);
+// static
+std::unique_ptr<ukm::UkmEntryBuilder>
+PasswordFormMetricsRecorder::CreateUkmEntryBuilder(
+    ukm::UkmRecorder* ukm_recorder,
+    ukm::SourceId source_id) {
+  if (!ukm_recorder)
+    return nullptr;
+  return ukm_recorder->GetEntryBuilder(source_id, "PasswordForm");
 }
 
 void PasswordFormMetricsRecorder::MarkGenerationAvailable() {
@@ -170,18 +163,6 @@ int PasswordFormMetricsRecorder::GetActionsTakenNew() const {
   return static_cast<int>(user_action_) +
          static_cast<int>(UserAction::kMax) *
              (manager_action_new + kManagerActionNewMax * submit_result_);
-}
-
-void PasswordFormMetricsRecorder::RecordDetailedUserAction(
-    PasswordFormMetricsRecorder::DetailedUserAction action) {
-  // One-time actions are collected and reported during destruction of the
-  // PasswordFormMetricsRecorder.
-  if (!IsRepeatedUserAction(action)) {
-    one_time_report_user_actions_.insert(action);
-    return;
-  }
-  // Repeated actions can be reported immediately.
-  RecordUkmMetric(kUkmUserAction, static_cast<int64_t>(action));
 }
 
 int PasswordFormMetricsRecorder::GetActionsTaken() const {
@@ -416,19 +397,6 @@ void PasswordFormMetricsRecorder::RecordUkmMetric(const char* metric_name,
                                                   int64_t value) {
   if (ukm_entry_builder_)
     ukm_entry_builder_->AddMetric(metric_name, value);
-}
-
-// static
-bool PasswordFormMetricsRecorder::IsRepeatedUserAction(
-    DetailedUserAction action) {
-  switch (action) {
-    case DetailedUserAction::kUnknown:
-      return true;
-    case DetailedUserAction::kEditedUsernameInBubble:
-      return false;
-  }
-  NOTREACHED();
-  return true;
 }
 
 }  // namespace password_manager

@@ -132,7 +132,7 @@ final class PaymentRequestTestCommon implements PaymentRequestObserverForTest,
         mTestFilePath = testFileName.startsWith("data:")
                 ? testFileName
                 : UrlUtils.getIsolatedTestFilePath(
-                          String.format("components/test/data/payments/%s", testFileName));
+                          String.format("chrome/test/data/payments/%s", testFileName));
     }
 
     public void startMainActivity() throws InterruptedException {
@@ -466,23 +466,6 @@ final class PaymentRequestTestCommon implements PaymentRequestObserverForTest,
             @Override
             public void run() {
                 ((OptionSection) mUI.getPaymentMethodSectionForTest())
-                        .getOptionLabelsForTest(suggestionIndex)
-                        .performClick();
-            }
-        });
-        helper.waitForCallback(callCount);
-    }
-
-    protected void clickOnContactInfoSuggestionOptionAndWait(
-            final int suggestionIndex, CallbackHelper helper)
-            throws ExecutionException, TimeoutException, InterruptedException {
-        Assert.assertTrue(suggestionIndex < getNumberOfContactDetailSuggestions());
-
-        int callCount = helper.getCallCount();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                ((OptionSection) mUI.getContactDetailsSectionForTest())
                         .getOptionLabelsForTest(suggestionIndex)
                         .performClick();
             }

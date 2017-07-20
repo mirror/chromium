@@ -616,6 +616,11 @@ void PersonalDataManagerAndroid::OnPersonalDataChanged() {
   Java_PersonalDataManager_personalDataChanged(env, java_obj);
 }
 
+// static
+bool PersonalDataManagerAndroid::Register(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
 void PersonalDataManagerAndroid::RecordAndLogProfileUse(
     JNIEnv* env,
     const JavaParamRef<jobject>& unused_obj,

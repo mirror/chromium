@@ -126,53 +126,53 @@ class Service : public service_manager::Service,
   ws::ThreadedImageCursorsFactory* GetThreadedImageCursorsFactory() override;
 
   void BindAccessibilityManagerRequest(
-      mojom::AccessibilityManagerRequest request,
-      const service_manager::BindSourceInfo& source_info);
+      const service_manager::BindSourceInfo& source_info,
+      mojom::AccessibilityManagerRequest request);
 
-  void BindClipboardRequest(mojom::ClipboardRequest request,
-                            const service_manager::BindSourceInfo& source_info);
+  void BindClipboardRequest(const service_manager::BindSourceInfo& source_info,
+                            mojom::ClipboardRequest request);
 
   void BindDisplayManagerRequest(
-      mojom::DisplayManagerRequest request,
-      const service_manager::BindSourceInfo& source_info);
+      const service_manager::BindSourceInfo& source_info,
+      mojom::DisplayManagerRequest request);
 
-  void BindGpuRequest(mojom::GpuRequest request,
-                      const service_manager::BindSourceInfo& source_info);
+  void BindGpuRequest(const service_manager::BindSourceInfo& source_info,
+                      mojom::GpuRequest request);
 
   void BindIMERegistrarRequest(
-      mojom::IMERegistrarRequest request,
-      const service_manager::BindSourceInfo& source_info);
+      const service_manager::BindSourceInfo& source_info,
+      mojom::IMERegistrarRequest request);
 
-  void BindIMEDriverRequest(mojom::IMEDriverRequest request,
-                            const service_manager::BindSourceInfo& source_info);
+  void BindIMEDriverRequest(const service_manager::BindSourceInfo& source_info,
+                            mojom::IMEDriverRequest request);
 
   void BindUserAccessManagerRequest(
-      mojom::UserAccessManagerRequest request,
-      const service_manager::BindSourceInfo& source_info);
+      const service_manager::BindSourceInfo& source_info,
+      mojom::UserAccessManagerRequest request);
 
   void BindUserActivityMonitorRequest(
-      mojom::UserActivityMonitorRequest request,
-      const service_manager::BindSourceInfo& source_info);
+      const service_manager::BindSourceInfo& source_info,
+      mojom::UserActivityMonitorRequest request);
 
   void BindWindowManagerWindowTreeFactoryRequest(
-      mojom::WindowManagerWindowTreeFactoryRequest request,
-      const service_manager::BindSourceInfo& source_info);
+      const service_manager::BindSourceInfo& source_info,
+      mojom::WindowManagerWindowTreeFactoryRequest request);
 
   void BindWindowTreeFactoryRequest(
-      mojom::WindowTreeFactoryRequest request,
-      const service_manager::BindSourceInfo& source_info);
+      const service_manager::BindSourceInfo& source_info,
+      mojom::WindowTreeFactoryRequest request);
 
   void BindWindowTreeHostFactoryRequest(
-      mojom::WindowTreeHostFactoryRequest request,
-      const service_manager::BindSourceInfo& source_info);
+      const service_manager::BindSourceInfo& source_info,
+      mojom::WindowTreeHostFactoryRequest request);
 
   void BindDiscardableSharedMemoryManagerRequest(
-      discardable_memory::mojom::DiscardableSharedMemoryManagerRequest request,
-      const service_manager::BindSourceInfo& source_info);
+      const service_manager::BindSourceInfo& source_info,
+      discardable_memory::mojom::DiscardableSharedMemoryManagerRequest request);
 
   void BindWindowServerTestRequest(
-      mojom::WindowServerTestRequest request,
-      const service_manager::BindSourceInfo& source_info);
+      const service_manager::BindSourceInfo& source_info,
+      mojom::WindowServerTestRequest request);
 
   std::unique_ptr<ws::WindowServer> window_server_;
   std::unique_ptr<PlatformEventSource> event_source_;
@@ -210,9 +210,7 @@ class Service : public service_manager::Service,
   std::unique_ptr<discardable_memory::DiscardableSharedMemoryManager>
       discardable_shared_memory_manager_;
 
-  service_manager::BinderRegistryWithArgs<
-      const service_manager::BindSourceInfo&>
-      registry_;
+  service_manager::BinderRegistry registry_;
 
   // Set to true in StartDisplayInit().
   bool is_gpu_ready_ = false;

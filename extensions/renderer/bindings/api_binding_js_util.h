@@ -62,8 +62,7 @@ class APIBindingJSUtil final : public gin::Wrappable<APIBindingJSUtil> {
   void CreateCustomEvent(gin::Arguments* arguments,
                          v8::Local<v8::Value> v8_event_name,
                          v8::Local<v8::Value> unused_schema,
-                         bool supports_filters,
-                         bool supports_lazy_listeners);
+                         bool supports_filters);
 
   // Creates a new declarative event.
   void CreateCustomDeclarativeEvent(

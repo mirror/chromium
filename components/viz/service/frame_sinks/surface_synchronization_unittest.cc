@@ -10,7 +10,7 @@
 #include "cc/test/mock_compositor_frame_sink_support_client.h"
 #include "components/viz/common/surfaces/surface_id.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
-#include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
+#include "components/viz/service/frame_sinks/frame_sink_manager.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -74,8 +74,7 @@ class FakeExternalBeginFrameSourceClient
 class SurfaceSynchronizationTest : public testing::Test {
  public:
   SurfaceSynchronizationTest()
-      : frame_sink_manager_(nullptr /* display_provider */,
-                            cc::SurfaceManager::LifetimeType::REFERENCES),
+      : frame_sink_manager_(cc::SurfaceManager::LifetimeType::REFERENCES),
         surface_observer_(false) {}
   ~SurfaceSynchronizationTest() override {}
 
@@ -104,7 +103,7 @@ class SurfaceSynchronizationTest : public testing::Test {
     return support(index).GetCurrentSurfaceForTesting();
   }
 
-  FrameSinkManagerImpl& frame_sink_manager() { return frame_sink_manager_; }
+  FrameSinkManager& frame_sink_manager() { return frame_sink_manager_; }
 
   // Returns all the references where |surface_id| is the parent.
   const base::flat_set<SurfaceId>& GetChildReferences(
@@ -190,7 +189,7 @@ class SurfaceSynchronizationTest : public testing::Test {
   testing::NiceMock<MockCompositorFrameSinkSupportClient> support_client_;
 
  private:
-  FrameSinkManagerImpl frame_sink_manager_;
+  FrameSinkManager frame_sink_manager_;
   cc::FakeSurfaceObserver surface_observer_;
   FakeExternalBeginFrameSourceClient begin_frame_source_client_;
   std::unique_ptr<cc::FakeExternalBeginFrameSource> begin_frame_source_;

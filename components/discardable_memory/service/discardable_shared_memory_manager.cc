@@ -247,8 +247,8 @@ DiscardableSharedMemoryManager::~DiscardableSharedMemoryManager() {
 }
 
 void DiscardableSharedMemoryManager::Bind(
-    mojom::DiscardableSharedMemoryManagerRequest request,
-    const service_manager::BindSourceInfo& source_info) {
+    const service_manager::BindSourceInfo& source_info,
+    mojom::DiscardableSharedMemoryManagerRequest request) {
   mojo::MakeStrongBinding(
       base::MakeUnique<MojoDiscardableSharedMemoryManagerImpl>(
           next_client_id_++, this),

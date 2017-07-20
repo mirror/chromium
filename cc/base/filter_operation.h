@@ -13,7 +13,6 @@
 #include "third_party/skia/include/core/SkImageFilter.h"
 #include "third_party/skia/include/core/SkRegion.h"
 #include "third_party/skia/include/core/SkScalar.h"
-#include "third_party/skia/include/effects/SkBlurImageFilter.h"
 #include "ui/gfx/geometry/point.h"
 
 namespace base {
@@ -98,11 +97,6 @@ class CC_BASE_EXPORT FilterOperation {
     return region_;
   }
 
-  SkBlurImageFilter::TileMode blur_tile_mode() const {
-    DCHECK_EQ(type_, BLUR);
-    return blur_tile_mode_;
-  }
-
   static FilterOperation CreateGrayscaleFilter(float amount) {
     return FilterOperation(GRAYSCALE, amount);
   }
@@ -135,11 +129,8 @@ class CC_BASE_EXPORT FilterOperation {
     return FilterOperation(OPACITY, amount);
   }
 
-  static FilterOperation CreateBlurFilter(
-      float amount,
-      SkBlurImageFilter::TileMode tile_mode =
-          SkBlurImageFilter::kClampToBlack_TileMode) {
-    return FilterOperation(BLUR, amount, tile_mode);
+  static FilterOperation CreateBlurFilter(float amount) {
+    return FilterOperation(BLUR, amount);
   }
 
   static FilterOperation CreateDropShadowFilter(const gfx::Point& offset,
@@ -227,11 +218,6 @@ class CC_BASE_EXPORT FilterOperation {
     region_ = region;
   }
 
-  void set_blur_tile_mode(SkBlurImageFilter::TileMode tile_mode) {
-    DCHECK_EQ(type_, BLUR);
-    blur_tile_mode_ = tile_mode;
-  }
-
   // Given two filters of the same type, returns a filter operation created by
   // linearly interpolating a |progress| fraction from |from| to |to|. If either
   // |from| or |to| (but not both) is null, it is treated as a no-op filter of
@@ -254,10 +240,6 @@ class CC_BASE_EXPORT FilterOperation {
 
  private:
   FilterOperation(FilterType type, float amount);
-
-  FilterOperation(FilterType type,
-                  float amount,
-                  SkBlurImageFilter::TileMode tile_mode);
 
   FilterOperation(FilterType type,
                   const gfx::Point& offset,
@@ -284,7 +266,6 @@ class CC_BASE_EXPORT FilterOperation {
   SkScalar matrix_[20];
   int zoom_inset_;
   SkRegion region_;
-  SkBlurImageFilter::TileMode blur_tile_mode_;
 };
 
 }  // namespace cc

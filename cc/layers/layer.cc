@@ -37,7 +37,7 @@
 
 namespace cc {
 
-base::AtomicSequenceNumber g_next_layer_id;
+base::StaticAtomicSequenceNumber g_next_layer_id;
 
 Layer::Inputs::Inputs(int layer_id)
     : layer_id(layer_id),
@@ -65,9 +65,7 @@ Layer::Inputs::Inputs(int layer_id)
       clip_parent(nullptr),
       has_will_change_transform_hint(false),
       hide_layer_and_subtree(false),
-      client(nullptr),
-      scroll_boundary_behavior(
-          ScrollBoundaryBehavior::kScrollBoundaryBehaviorTypeAuto) {}
+      client(nullptr) {}
 
 Layer::Inputs::~Inputs() {}
 
@@ -301,25 +299,6 @@ void Layer::SetBounds(const gfx::Size& size) {
     auto& scroll_tree = layer_tree_host_->property_trees()->scroll_tree;
     if (auto* scroll_node = scroll_tree.Node(scroll_tree_index_))
       scroll_node->bounds = inputs_.bounds;
-    else
-      SetPropertyTreesNeedRebuild();
-  }
-
-  SetNeedsCommit();
-}
-
-void Layer::SetScrollBoundaryBehavior(const ScrollBoundaryBehavior& behavior) {
-  DCHECK(IsPropertyChangeAllowed());
-  if (scroll_boundary_behavior() == behavior)
-    return;
-  inputs_.scroll_boundary_behavior = behavior;
-  if (!layer_tree_host_)
-    return;
-
-  if (scrollable()) {
-    auto& scroll_tree = layer_tree_host_->property_trees()->scroll_tree;
-    if (auto* scroll_node = scroll_tree.Node(scroll_tree_index_))
-      scroll_node->scroll_boundary_behavior = behavior;
     else
       SetPropertyTreesNeedRebuild();
   }
@@ -954,7 +933,7 @@ void Layer::Set3dSortingContextId(int id) {
 }
 
 void Layer::SetTransformTreeIndex(int index) {
-  DCHECK(IsPropertyChangeAllowed());
+  CHECK(IsPropertyChangeAllowed());
   if (transform_tree_index_ == index)
     return;
   if (index == TransformTree::kInvalidNodeId)
@@ -973,7 +952,7 @@ int Layer::transform_tree_index() const {
 }
 
 void Layer::SetClipTreeIndex(int index) {
-  DCHECK(IsPropertyChangeAllowed());
+  CHECK(IsPropertyChangeAllowed());
   if (clip_tree_index_ == index)
     return;
   clip_tree_index_ = index;
@@ -990,7 +969,7 @@ int Layer::clip_tree_index() const {
 }
 
 void Layer::SetEffectTreeIndex(int index) {
-  DCHECK(IsPropertyChangeAllowed());
+  CHECK(IsPropertyChangeAllowed());
   if (effect_tree_index_ == index)
     return;
   effect_tree_index_ = index;
@@ -1007,7 +986,7 @@ int Layer::effect_tree_index() const {
 }
 
 void Layer::SetScrollTreeIndex(int index) {
-  DCHECK(IsPropertyChangeAllowed());
+  CHECK(IsPropertyChangeAllowed());
   if (scroll_tree_index_ == index)
     return;
   scroll_tree_index_ = index;

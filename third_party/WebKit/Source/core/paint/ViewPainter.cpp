@@ -77,11 +77,8 @@ void ViewPainter::PaintBoxDecorationBackground(const PaintInfo& paint_info) {
         static_cast<const DisplayItemClient*>(layout_view_.Layer()
                                                   ->GetCompositedLayerMapping()
                                                   ->ScrollingContentsLayer());
-    if (!layout_view_.ScrolledContentOffset().IsZero()) {
-      scroll_recorder.emplace(paint_info.context, layout_view_,
-                              paint_info.phase,
-                              layout_view_.ScrolledContentOffset());
-    }
+    scroll_recorder.emplace(paint_info.context, layout_view_, paint_info.phase,
+                            layout_view_.ScrolledContentOffset());
   }
 
   if (DrawingRecorder::UseCachedDrawingIfPossible(

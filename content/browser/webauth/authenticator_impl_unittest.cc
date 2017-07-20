@@ -15,6 +15,7 @@
 #include "content/public/test/test_renderer_host.h"
 #include "content/test/test_render_frame_host.h"
 #include "mojo/public/cpp/bindings/binding.h"
+#include "services/service_manager/public/cpp/bind_source_info.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -49,7 +50,8 @@ class AuthenticatorImplTest : public content::RenderViewHostTestHarness {
 
   AuthenticatorPtr ConnectToAuthenticator() {
     AuthenticatorPtr authenticator;
-    AuthenticatorImpl::Create(main_rfh(), mojo::MakeRequest(&authenticator));
+    AuthenticatorImpl::Create(main_rfh(), service_manager::BindSourceInfo(),
+                              mojo::MakeRequest(&authenticator));
     return authenticator;
   }
 };

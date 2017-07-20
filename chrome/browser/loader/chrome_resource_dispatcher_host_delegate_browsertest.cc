@@ -394,15 +394,16 @@ class MirrorMockJobInterceptor : public net::URLRequestInterceptor {
     base::FilePath file_path(root_http);
     file_path =
         file_path.AppendASCII(url.scheme() + "." + url.host() + ".html");
-    net::URLRequestFilter::GetInstance()->AddUrlInterceptor(
-        url, base::WrapUnique(
-                 new MirrorMockJobInterceptor(file_path, report_on_ui)));
+    net::URLRequestFilter::GetInstance()->AddHostnameInterceptor(
+        url.scheme(), url.host(), base::WrapUnique(new MirrorMockJobInterceptor(
+                                      file_path, report_on_ui)));
   }
 
   static void Unregister(const GURL& url) {
     EXPECT_TRUE(
         content::BrowserThread::CurrentlyOn(content::BrowserThread::IO));
-    net::URLRequestFilter::GetInstance()->RemoveUrlHandler(url);
+    net::URLRequestFilter::GetInstance()->RemoveHostnameHandler(url.scheme(),
+                                                                url.host());
   }
 
  private:
@@ -419,7 +420,8 @@ void ReportRequestHeaders(std::map<std::string, std::string>* request_headers,
                           const std::string& headers) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   // Ensure that a previous value is not overwritten.
-  EXPECT_FALSE(base::ContainsKey(*request_headers, url));
+  EXPECT_FALSE(base::ContainsKey(*request_headers, url))
+      << "URL: " << url << ", Headers: " << headers;
   (*request_headers)[url] = headers;
 }
 
@@ -484,14 +486,9 @@ IN_PROC_BROWSER_TEST_F(ChromeResourceDispatcherHostDelegateBrowserTest,
   root_http = root_http.AppendASCII("mirror_request_header");
 
   struct TestCase {
-    GURL original_url;       // The URL from which the request begins.
-    GURL redirected_to_url;  // The URL to which naviagtion is redirected.
-    bool inject_header;  // Should X-Chrome-Connected header be injected to the
-                         // original request.
-    bool original_url_expects_header;       // Expectation: The header should be
-                                            // visible in original URL.
-    bool redirected_to_url_expects_header;  // Expectation: The header should be
-                                            // visible in redirected URL.
+    GURL original_url, redirected_to_url;
+    bool inject_header, original_url_expects_header,
+        redirected_to_url_expects_header;
   } all_tests[] = {
       // Neither should have the header.
       {GURL("http://www.google.com"), GURL("http://www.redirected.com"), false,

@@ -27,10 +27,8 @@
 #include <algorithm>
 #include "core/dom/AXObjectCache.h"
 #include "core/dom/Text.h"
-#include "core/editing/FrameSelection.h"
 #include "core/editing/VisiblePosition.h"
 #include "core/editing/iterators/TextIterator.h"
-#include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/layout/LayoutBlock.h"
@@ -1918,18 +1916,11 @@ LayoutRect LayoutText::LocalSelectionRect() const {
     start_pos = 0;
     end_pos = TextLength();
   } else {
-    const FrameSelection& frame_selection = GetFrame()->Selection();
-    if (GetSelectionState() == SelectionState::kStart) {
-      start_pos = frame_selection.LayoutSelectionStart().value();
+    std::tie(start_pos, end_pos) = SelectionStartEnd();
+    if (GetSelectionState() == SelectionState::kStart)
       end_pos = TextLength();
-    } else if (GetSelectionState() == SelectionState::kEnd) {
+    else if (GetSelectionState() == SelectionState::kEnd)
       start_pos = 0;
-      end_pos = frame_selection.LayoutSelectionEnd().value();
-    } else {
-      DCHECK(GetSelectionState() == SelectionState::kStartAndEnd);
-      start_pos = frame_selection.LayoutSelectionStart().value();
-      end_pos = frame_selection.LayoutSelectionEnd().value();
-    }
   }
 
   LayoutRect rect;

@@ -299,7 +299,7 @@ void ClipboardMessageFilter::OnWriteImage(ui::ClipboardType clipboard_type,
     return;
 
   if (!bitmap.installPixels(bitmap.info(), bitmap_buffer->memory(),
-                            bitmap.rowBytes(), &ReleaseSharedMemoryPixels,
+                            bitmap.rowBytes(), NULL, &ReleaseSharedMemoryPixels,
                             bitmap_buffer.get()))
     return;
 

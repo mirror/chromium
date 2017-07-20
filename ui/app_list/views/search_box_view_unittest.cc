@@ -191,15 +191,12 @@ class SearchBoxViewFullscreenTest : public views::test::WidgetTest,
   }
 
  protected:
-  views::Widget* widget() { return widget_; }
   SearchBoxView* view() { return view_.get(); }
   AppListView* app_list_view() { return app_list_view_; }
 
   void SetSearchEngineIsGoogle(bool is_google) {
     view_delegate_.SetSearchEngineIsGoogle(is_google);
   }
-
-  void SetSearchBoxActive(bool active) { view()->SetSearchBoxActive(active); }
 
   void KeyPress(ui::KeyboardCode key_code) {
     ui::KeyEvent event(ui::ET_KEY_PRESSED, key_code, ui::EF_NONE);
@@ -271,83 +268,32 @@ TEST_P(SearchBoxViewTest, CancelAutoLaunch) {
 }
 
 TEST_F(SearchBoxViewFullscreenTest, CloseButtonTest) {
-  EXPECT_FALSE(view()->close_button()->visible());
-  EXPECT_EQ(AppListView::PEEKING, app_list_view()->app_list_state());
-
   KeyPress(ui::VKEY_A);
-  EXPECT_TRUE(view()->close_button()->visible());
-  EXPECT_EQ(AppListView::HALF, app_list_view()->app_list_state());
+  EXPECT_TRUE(view()->IsCloseButtonVisible());
 
-  // Click the close button in search box view.
-  view()->ButtonPressed(
-      view()->close_button(),
-      ui::MouseEvent(ui::ET_MOUSE_PRESSED, gfx::Point(), gfx::Point(),
-                     base::TimeTicks(), ui::EF_LEFT_MOUSE_BUTTON,
-                     ui::EF_LEFT_MOUSE_BUTTON));
-  EXPECT_FALSE(view()->close_button()->visible());
-  EXPECT_EQ(AppListView::PEEKING, app_list_view()->app_list_state());
+  view()->ClearSearch();
+  EXPECT_FALSE(view()->IsCloseButtonVisible());
 }
 
-// Tests that the search box is inactive by default.
-TEST_F(SearchBoxViewFullscreenTest, SearchBoxInactiveByDefault) {
-  ASSERT_FALSE(view()->is_search_box_active());
-}
-
-// Tests that the black Google icon is used for an inactive Google search.
-TEST_F(SearchBoxViewFullscreenTest, SearchBoxInactiveSearchBoxGoogle) {
+TEST_F(SearchBoxViewFullscreenTest, SearchEngineGoogle) {
   SetSearchEngineIsGoogle(true);
-  SetSearchBoxActive(false);
-  const gfx::ImageSkia expected_icon = gfx::CreateVectorIcon(
+  gfx::ImageSkia expected_icon = gfx::CreateVectorIcon(
       kIcGoogleBlackIcon, kSearchIconSize, kDefaultSearchboxColor);
   view()->ModelChanged();
 
-  const gfx::ImageSkia actual_icon =
-      view()->get_search_icon_for_test()->GetImage();
+  gfx::ImageSkia actual_icon = view()->get_search_icon_for_test()->GetImage();
 
   EXPECT_TRUE(gfx::test::AreBitmapsEqual(*expected_icon.bitmap(),
                                          *actual_icon.bitmap()));
 }
 
-// Tests that the colored Google icon is used for an active Google search.
-TEST_F(SearchBoxViewFullscreenTest, SearchBoxActiveSearchEngineGoogle) {
-  SetSearchEngineIsGoogle(true);
-  SetSearchBoxActive(true);
-  const gfx::ImageSkia expected_icon = gfx::CreateVectorIcon(
-      kIcGoogleColorIcon, kSearchIconSize, kDefaultSearchboxColor);
-  view()->ModelChanged();
-
-  const gfx::ImageSkia actual_icon =
-      view()->get_search_icon_for_test()->GetImage();
-
-  EXPECT_TRUE(gfx::test::AreBitmapsEqual(*expected_icon.bitmap(),
-                                         *actual_icon.bitmap()));
-}
-
-// Tests that the non-Google icon is used for an inactive non-Google search.
-TEST_F(SearchBoxViewFullscreenTest, SearchBoxInactiveSearchEngineNotGoogle) {
+TEST_F(SearchBoxViewFullscreenTest, SearchEngineNotGoogle) {
   SetSearchEngineIsGoogle(false);
-  SetSearchBoxActive(false);
-  const gfx::ImageSkia expected_icon = gfx::CreateVectorIcon(
+  gfx::ImageSkia expected_icon = gfx::CreateVectorIcon(
       kIcSearchEngineNotGoogleIcon, kSearchIconSize, kDefaultSearchboxColor);
   view()->ModelChanged();
 
-  const gfx::ImageSkia actual_icon =
-      view()->get_search_icon_for_test()->GetImage();
-
-  EXPECT_TRUE(gfx::test::AreBitmapsEqual(*expected_icon.bitmap(),
-                                         *actual_icon.bitmap()));
-}
-
-// Tests that the non-Google icon is used for an active non-Google search.
-TEST_F(SearchBoxViewFullscreenTest, SearchBoxActiveSearchEngineNotGoogle) {
-  SetSearchEngineIsGoogle(false);
-  SetSearchBoxActive(true);
-  const gfx::ImageSkia expected_icon = gfx::CreateVectorIcon(
-      kIcSearchEngineNotGoogleIcon, kSearchIconSize, kDefaultSearchboxColor);
-  view()->ModelChanged();
-
-  const gfx::ImageSkia actual_icon =
-      view()->get_search_icon_for_test()->GetImage();
+  gfx::ImageSkia actual_icon = view()->get_search_icon_for_test()->GetImage();
 
   EXPECT_TRUE(gfx::test::AreBitmapsEqual(*expected_icon.bitmap(),
                                          *actual_icon.bitmap()));

@@ -73,6 +73,10 @@
 using content::BrowserThread;
 using content::ResourceType;
 
+namespace service_manager {
+struct BindSourceInfo;
+}
+
 namespace android_webview {
 namespace {
 
@@ -161,6 +165,7 @@ void AwContentsMessageFilter::OnSubFrameCreated(int parent_render_frame_id,
 
 // A dummy binder for mojo interface autofill::mojom::PasswordManagerDriver.
 void DummyBindPasswordManagerDriver(
+    const service_manager::BindSourceInfo& source_info,
     autofill::mojom::PasswordManagerDriverRequest request,
     content::RenderFrameHost* render_frame_host) {}
 
@@ -545,10 +550,14 @@ std::unique_ptr<base::Value> AwContentBrowserClient::GetServiceManifestOverlay(
 
 void AwContentBrowserClient::BindInterfaceRequestFromFrame(
     content::RenderFrameHost* render_frame_host,
+    const service_manager::BindSourceInfo& source_info,
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle interface_pipe) {
-  frame_interfaces_.TryBindInterface(interface_name, &interface_pipe,
-                                     render_frame_host);
+  if (frame_interfaces_.CanBindInterface(interface_name)) {
+    frame_interfaces_.BindInterface(source_info, interface_name,
+                                    std::move(interface_pipe),
+                                    render_frame_host);
+  }
 }
 
 }  // namespace android_webview

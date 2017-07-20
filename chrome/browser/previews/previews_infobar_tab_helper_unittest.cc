@@ -24,16 +24,15 @@
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_pref_names.h"
 #include "components/offline_pages/core/offline_page_item.h"
 #include "components/offline_pages/core/request_header/offline_page_header.h"
-#include "components/offline_pages/features/features.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/proxy_config/proxy_config_pref_names.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/test/web_contents_tester.h"
 #include "net/http/http_util.h"
 
-#if BUILDFLAG(ENABLE_OFFLINE_PAGES)
-#include "chrome/browser/offline_pages/offline_page_tab_helper.h"
-#endif  // BUILDFLAG(ENABLE_OFFLINE_PAGES)
+#if defined(OS_ANDROID)
+#include "chrome/browser/android/offline_pages/offline_page_tab_helper.h"
+#endif  // defined(OS_ANDROID)
 
 namespace {
 const char kTestUrl[] = "http://www.test.com/";
@@ -45,9 +44,9 @@ class PreviewsInfoBarTabHelperUnitTest
   void SetUp() override {
     ChromeRenderViewHostTestHarness::SetUp();
 // Insert an OfflinePageTabHelper before PreviewsInfoBarTabHelper.
-#if BUILDFLAG(ENABLE_OFFLINE_PAGES)
+#if defined(OS_ANDROID)
     offline_pages::OfflinePageTabHelper::CreateForWebContents(web_contents());
-#endif  // BUILDFLAG(ENABLE_OFFLINE_PAGES)
+#endif  // defined(OS_ANDROID)
     InfoBarService::CreateForWebContents(web_contents());
     PreviewsInfoBarTabHelper::CreateForWebContents(web_contents());
     test_handle_ = content::NavigationHandle::CreateNavigationHandleForTesting(
@@ -127,7 +126,7 @@ TEST_F(PreviewsInfoBarTabHelperUnitTest, CreateLitePageInfoBar) {
   EXPECT_FALSE(infobar_tab_helper->displayed_preview_infobar());
 }
 
-#if BUILDFLAG(ENABLE_OFFLINE_PAGES)
+#if defined(OS_ANDROID)
 TEST_F(PreviewsInfoBarTabHelperUnitTest, CreateOfflineInfoBar) {
   PreviewsInfoBarTabHelper* infobar_tab_helper =
       PreviewsInfoBarTabHelper::FromWebContents(web_contents());
@@ -152,4 +151,4 @@ TEST_F(PreviewsInfoBarTabHelperUnitTest, CreateOfflineInfoBar) {
 
   EXPECT_FALSE(infobar_tab_helper->displayed_preview_infobar());
 }
-#endif  // BUILDFLAG(ENABLE_OFFLINE_PAGES)
+#endif  // defined(OS_ANDROID)

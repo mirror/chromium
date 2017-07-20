@@ -193,10 +193,10 @@ class COMPOSITOR_EXPORT Layer
   // temperature otherwise.
   float GetTargetTemperature() const;
 
-  // Blur pixels by 3 * this amount in anything below the layer and visible
-  // through the layer.
-  float background_blur() const { return background_blur_sigma_; }
-  void SetBackgroundBlur(float blur_sigma);
+  // Blur pixels by this amount in anything below the layer and visible through
+  // the layer.
+  int background_blur() const { return background_blur_radius_; }
+  void SetBackgroundBlur(int blur_radius);
 
   // Saturate all pixels of this layer by this amount.
   // This effect will get "combined" with the inverted,
@@ -503,7 +503,7 @@ class COMPOSITOR_EXPORT Layer
   // to paint the content.
   cc::Region paint_region_;
 
-  float background_blur_sigma_;
+  int background_blur_radius_;
 
   // Several variables which will change the visible representation of
   // the layer.

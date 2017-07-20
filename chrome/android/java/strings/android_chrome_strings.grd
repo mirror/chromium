@@ -391,6 +391,14 @@ CHAR-LIMIT guidelines:
           other {<ph name="CONTACT_PREVIEW">%1$s<ex>Jerry, 438-123-1922</ex></ph>\u2026 and <ph name="NUMBER_OF_ADDITIONAL_CONTACTS">%2$s<ex>2</ex></ph> more}}
       </message>
 
+      <!-- Autofill/Wallet integration preferences -->
+      <message name="IDS_AUTOFILL_WALLET_MANAGEMENT_LINK_TEXT" desc="Text for link that allows users to see and edit their Wallet information.">
+        Edit
+      </message>
+      <message name="IDS_AUTOFILL_FROM_GOOGLE_ACCOUNT_LONG" desc="Text that indicates an address or credit card came from Google servers.">
+        From Google Payments
+      </message>
+
       <!-- Save passwords preferences -->
       <message name="IDS_PREFS_SAVED_PASSWORDS" desc="Title for the Saved Passwords preferences. [CHAR-LIMIT=32]">
         Save passwords
@@ -1204,13 +1212,13 @@ To obtain new licenses, connect to the internet and play your downloaded content
         Chrome Privacy Notice
       </message>
       <message name="IDS_CHROME_PRIVACY_NOTICE_URL" desc="URL for the Chrome privacy notice" translateable="false">
-        https://www.google.com/intl/$LOCALE/chrome/browser/privacy/
+        https://www.google.com/intl/[GRITLANGCODE]/chrome/browser/privacy/
       </message>
       <message name="IDS_CHROME_TERMS_OF_SERVICE_URL" desc="URL for Google Chrome Terms of Service" translateable="false">
-        https://www.google.com/intl/$LOCALE/chrome/browser/privacy/eula_text.html
+        https://www.google.com/intl/[GRITLANGCODE]/chrome/browser/privacy/eula_text.html
       </message>
       <message name="IDS_FAMILY_LINK_PRIVACY_POLICY_URL" desc="URL for the Family Link privacy policy" translateable="false">
-        https://families.google.com/intl/$LOCALE/familylink/privacy/child-policy/
+        https://families.google.com/intl/[GRITLANGCODE]/familylink/privacy/child-policy/
       </message>
 
       <!-- JavaScript dialogs -->
@@ -2226,15 +2234,6 @@ To obtain new licenses, connect to the internet and play your downloaded content
       </message>
       <message name="IDS_SIGNIN_GMS_UPDATING" desc="Message notifying user that Google Play Services is still updating.">
         Waiting for Google Play Services to finish updating
-      </message>
-      <message name="IDS_SIGNIN_PROMO_SETTINGS" desc="Text to inform the user that they can sign in to get personal settings.">
-        Sign in to Chrome to get your bookmarks, passwords, and more on all your devices.
-      </message>
-      <message name="IDS_SIGNIN_PROMO_CONTINUE_AS" desc="Button that the user can press to login without asking the password and continue using Chrome with this acccount.">
-        Continue as <ph name="USER_FULL_NAME">%1$s<ex>John Doe</ex></ph>
-     </message>
-      <message name="IDS_SIGNIN_PROMO_CHOOSE_ACCOUNT" desc="Button that the user can press if they are not the profile that Chrome found (opposite of 'Continue as Joe Doe').">
-        Not <ph name="EMAIL">%1$s<ex>john.doe@example.com</ex></ph>?
       </message>
 
       <!-- Messages for remote media playback (casting) -->

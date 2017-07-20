@@ -18,24 +18,11 @@
 
 DEFINE_WEB_CONTENTS_USER_DATA_KEY(banners::AppBannerManagerDesktop);
 
-namespace {
-
-bool gDisableTriggeringForTesting = false;
-
-}  // namespace
-
 namespace banners {
 
 bool AppBannerManagerDesktop::IsEnabled() {
-  if (gDisableTriggeringForTesting)
-    return false;
-
   return base::FeatureList::IsEnabled(features::kAppBanners) ||
          base::FeatureList::IsEnabled(features::kExperimentalAppBanners);
-}
-
-void AppBannerManagerDesktop::DisableTriggeringForTesting() {
-  gDisableTriggeringForTesting = true;
 }
 
 AppBannerManagerDesktop::AppBannerManagerDesktop(
@@ -71,7 +58,7 @@ bool AppBannerManagerDesktop::IsWebAppInstalled(
       browser_context, start_url);
 }
 
-void AppBannerManagerDesktop::ShowBannerUi() {
+void AppBannerManagerDesktop::ShowBanner() {
   content::WebContents* contents = web_contents();
   DCHECK(contents && !manifest_.IsEmpty());
 
@@ -99,7 +86,9 @@ void AppBannerManagerDesktop::ShowBannerUi() {
 void AppBannerManagerDesktop::DidFinishLoad(
     content::RenderFrameHost* render_frame_host,
     const GURL& validated_url) {
-  if (gDisableTriggeringForTesting)
+  // Explicitly forbid banners from triggering on navigation unless this is
+  // enabled.
+  if (!IsEnabled())
     return;
 
   AppBannerManager::DidFinishLoad(render_frame_host, validated_url);
@@ -109,7 +98,9 @@ void AppBannerManagerDesktop::OnEngagementIncreased(
     content::WebContents* web_contents,
     const GURL& url,
     double score) {
-  if (gDisableTriggeringForTesting)
+  // Explicitly forbid banners from triggering on navigation unless this is
+  // enabled.
+  if (!IsEnabled())
     return;
 
   AppBannerManager::OnEngagementIncreased(web_contents, url, score);

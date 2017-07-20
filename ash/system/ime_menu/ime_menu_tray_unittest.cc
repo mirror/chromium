@@ -11,8 +11,8 @@
 #include "ash/shell.h"
 #include "ash/system/ime_menu/ime_list_view.h"
 #include "ash/system/status_area_widget.h"
-#include "ash/system/status_area_widget_test_helper.h"
 #include "ash/test/ash_test_base.h"
+#include "ash/test/status_area_widget_test_helper.h"
 #include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
 #include "ui/accessibility/ax_node_data.h"
@@ -76,7 +76,7 @@ class ImeMenuTrayTest : public AshTestBase {
   bool IsTrayBackgroundActive() { return GetTray()->is_active(); }
 
   // Returns true if the IME menu bubble has been shown.
-  bool IsBubbleShown() { return GetTray()->GetBubbleView() != nullptr; }
+  bool IsBubbleShown() { return GetTray()->IsImeMenuBubbleShown(); }
 
   // Returns true if emoji palatte is enabled for the current keyboard.
   bool IsEmojiEnabled() { return GetTray()->emoji_enabled_; }

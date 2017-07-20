@@ -24,7 +24,9 @@ void RunCallbackWithNoResults(mojom::TextDetection::DetectCallback callback) {
 }  // anonymous namespace
 
 // static
-void TextDetectionImpl::Create(mojom::TextDetectionRequest request) {
+void TextDetectionImpl::Create(
+    const service_manager::BindSourceInfo& source_info,
+    mojom::TextDetectionRequest request) {
   // Text detection needs at least MAC OS X 10.11.
   if (@available(macOS 10.11, *)) {
     mojo::MakeStrongBinding(base::MakeUnique<TextDetectionImplMac>(),

@@ -9,17 +9,19 @@
 namespace base {
 namespace internal {
 
-constexpr uintptr_t kTrueMask = ~static_cast<uintptr_t>(0);
+static constexpr uintptr_t kTrueMask = ~static_cast<uintptr_t>(0);
 
 WeakReference::Flag::Flag() : is_valid_(kTrueMask) {
+#if DCHECK_IS_ON()
   // Flags only become bound when checked for validity, or invalidated,
   // so that we can check that later validity/invalidation operations on
   // the same Flag take place on the same sequenced thread.
-  DETACH_FROM_SEQUENCE(sequence_checker_);
+  sequence_checker_.DetachFromSequence();
+#endif
 }
 
 WeakReference::Flag::Flag(WeakReference::Flag::NullFlagTag) : is_valid_(false) {
-  // There is no need for DETACH_FROM_SEQUENCE(sequence_checker_) because the
+  // There is no need for sequence_checker_.DetachFromSequence() because the
   // null flag doesn't participate in the sequence checks. See DCHECK in
   // Invalidate() and IsValid().
 

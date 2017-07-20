@@ -4,12 +4,8 @@
 
 package org.chromium.chrome.browser.notifications;
 
-import android.app.NotificationManager;
-
 import org.chromium.base.BuildInfo;
 import org.chromium.base.annotations.CalledByNative;
-import org.chromium.chrome.browser.notifications.channels.Channel;
-import org.chromium.chrome.browser.notifications.channels.ChannelDefinitions;
 import org.chromium.chrome.browser.notifications.channels.SiteChannelsManager;
 
 /**
@@ -24,23 +20,19 @@ public class NotificationSettingsBridge {
     }
 
     /**
-     * Creates a notification channel for the given origin, unless a channel for this origin
-     * already exists.
-     *
+     * Creates a notification channel for the given origin.
      * @param origin The site origin to be used as the channel name.
-     * @param creationTime A string representing the time of channel creation.
      * @param enabled True if the channel should be initially enabled, false if
      *                it should start off as blocked.
-     * @return The channel created for this origin.
      */
     @CalledByNative
-    static SiteChannel createChannel(String origin, long creationTime, boolean enabled) {
-        return SiteChannelsManager.getInstance().createSiteChannel(origin, creationTime, enabled);
+    static void createChannel(String origin, boolean enabled) {
+        SiteChannelsManager.getInstance().createSiteChannel(origin, enabled);
     }
 
     @CalledByNative
-    static @NotificationChannelStatus int getChannelStatus(String channelId) {
-        return SiteChannelsManager.getInstance().getChannelStatus(channelId);
+    static @NotificationChannelStatus int getChannelStatus(String origin) {
+        return SiteChannelsManager.getInstance().getChannelStatus(origin);
     }
 
     @CalledByNative
@@ -49,30 +41,20 @@ public class NotificationSettingsBridge {
     }
 
     @CalledByNative
-    static void deleteChannel(String channelId) {
-        SiteChannelsManager.getInstance().deleteSiteChannel(channelId);
+    static void deleteChannel(String origin) {
+        SiteChannelsManager.getInstance().deleteSiteChannel(origin);
     }
 
     /**
      * Helper type for passing site channel objects across the JNI.
      */
     public static class SiteChannel {
-        private final String mId;
         private final String mOrigin;
-        private final long mTimestamp;
         private final @NotificationChannelStatus int mStatus;
 
-        public SiteChannel(String channelId, String origin, long creationTimestamp,
-                @NotificationChannelStatus int status) {
-            mId = channelId;
+        public SiteChannel(String origin, @NotificationChannelStatus int status) {
             mOrigin = origin;
-            mTimestamp = creationTimestamp;
             mStatus = status;
-        }
-
-        @CalledByNative("SiteChannel")
-        public long getTimestamp() {
-            return mTimestamp;
         }
 
         @CalledByNative("SiteChannel")
@@ -83,19 +65,6 @@ public class NotificationSettingsBridge {
         @CalledByNative("SiteChannel")
         public @NotificationChannelStatus int getStatus() {
             return mStatus;
-        }
-
-        @CalledByNative("SiteChannel")
-        public String getId() {
-            return mId;
-        }
-
-        public Channel toChannel() {
-            return new Channel(mId, mOrigin,
-                    mStatus == NotificationChannelStatus.BLOCKED
-                            ? NotificationManager.IMPORTANCE_NONE
-                            : NotificationManager.IMPORTANCE_DEFAULT,
-                    ChannelDefinitions.CHANNEL_GROUP_ID_SITES);
         }
     }
 }

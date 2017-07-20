@@ -32,7 +32,7 @@ var ContextMenusHandlerEvent =
 var jsEvent;
 function createCustomEvent(name, schema, options, webviewId) {
   if (bindingUtil)
-    return bindingUtil.createCustomEvent(name, undefined, false, false);
+    return bindingUtil.createCustomEvent(name, undefined, false);
   if (!jsEvent)
     jsEvent = require('event_bindings').Event;
   return new jsEvent(name, schema, options, webviewId);
@@ -146,7 +146,7 @@ WebViewImpl.prototype.maybeSetupContextMenus = function() {
     var eventName = 'chromeWebViewInternal.onContextMenuShow';
     var eventSchema =
         utils.lookup(ChromeWebViewSchema.events, 'name', 'onShow');
-    var eventOptions = {supportsListeners: true, supportsLazyListeners: false};
+    var eventOptions = {supportsListeners: true};
     this.contextMenusOnContextMenuEvent_ = createContextMenusOnContextMenuEvent(
         this.viewInstanceId, eventName, eventSchema, eventOptions);
   }
@@ -166,8 +166,7 @@ WebViewImpl.prototype.maybeSetupContextMenus = function() {
             var eventName = 'chromeWebViewInternal.onClicked';
             var eventSchema =
                 utils.lookup(ChromeWebViewSchema.events, 'name', 'onClicked');
-            var eventOptions =
-                {supportsListeners: true, supportsLazyListeners: false};
+            var eventOptions = {supportsListeners: true};
             var onClickedEvent = createContextMenusOnClickedEvent(
                 this.viewInstanceId, eventName, eventSchema, eventOptions);
             this.contextMenusOnClickedEvent_ = onClickedEvent;

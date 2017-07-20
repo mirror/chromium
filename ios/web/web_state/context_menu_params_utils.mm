@@ -7,19 +7,17 @@
 #include "base/strings/sys_string_conversions.h"
 #include "components/url_formatter/url_formatter.h"
 #include "ios/web/public/referrer_util.h"
-#import "ios/web/web_state/context_menu_constants.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
 
 namespace web {
-
 ContextMenuParams ContextMenuParamsFromElementDictionary(
     NSDictionary* element) {
   ContextMenuParams params;
   NSString* title = nil;
-  NSString* href = element[kContextMenuElementHyperlink];
+  NSString* href = element[@"href"];
   if (href) {
     params.link_url = GURL(base::SysNSStringToUTF8(href));
     if (params.link_url.SchemeIs(url::kJavaScriptScheme)) {
@@ -29,7 +27,7 @@ ContextMenuParams ContextMenuParamsFromElementDictionary(
       title = base::SysUTF16ToNSString(URLText);
     }
   }
-  NSString* src = element[kContextMenuElementSource];
+  NSString* src = element[@"src"];
   if (src) {
     params.src_url = GURL(base::SysNSStringToUTF8(src));
     if (!title)
@@ -37,18 +35,18 @@ ContextMenuParams ContextMenuParamsFromElementDictionary(
     if ([title hasPrefix:base::SysUTF8ToNSString(url::kDataScheme)])
       title = nil;
   }
-  NSString* titleAttribute = element[kContextMenuElementTitle];
+  NSString* titleAttribute = element[@"title"];
   if (titleAttribute)
     title = titleAttribute;
   if (title) {
     params.menu_title.reset([title copy]);
   }
-  NSString* referrerPolicy = element[kContextMenuElementReferrerPolicy];
+  NSString* referrerPolicy = element[@"referrerPolicy"];
   if (referrerPolicy) {
     params.referrer_policy =
         web::ReferrerPolicyFromString(base::SysNSStringToUTF8(referrerPolicy));
   }
-  NSString* innerText = element[kContextMenuElementInnerText];
+  NSString* innerText = element[@"innerText"];
   if ([innerText length] > 0) {
     params.link_text.reset([innerText copy]);
   }

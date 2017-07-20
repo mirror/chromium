@@ -635,6 +635,8 @@ NSString* const kNativeControllerTemporaryKey = @"NativeControllerTemporaryKey";
 - (void)sharePageWithData:(ShareToData*)data;
 // Convenience method to share the current page.
 - (void)sharePage;
+// Prints the web page in the current tab.
+- (void)print;
 // Shows the Online Help Page in a tab.
 - (void)showHelpPage;
 // Show the bookmarks page.
@@ -949,16 +951,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
                               forProtocol:@protocol(BrowserCommands)];
     [_dispatcher startDispatchingToTarget:applicationCommandEndpoint
                               forProtocol:@protocol(ApplicationCommands)];
-    // -startDispatchingToTarget:forProtocol: doesn't pick up protocols the
-    // passed protocol conforms to, so ApplicationSettingsCommands is explicitly
-    // dispatched to the endpoint as well. Since this is potentially
-    // fragile, DCHECK that it should still work (if the endpoint is nonnull).
-    DCHECK(!applicationCommandEndpoint ||
-           [applicationCommandEndpoint
-               conformsToProtocol:@protocol(ApplicationSettingsCommands)]);
-    [_dispatcher
-        startDispatchingToTarget:applicationCommandEndpoint
-                     forProtocol:@protocol(ApplicationSettingsCommands)];
 
     _javaScriptDialogPresenter.reset(
         new JavaScriptDialogPresenterImpl(_dialogPresenter));
@@ -2013,8 +2005,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   return [self addSelectedTabWithURL:url
                             postData:postData
                              atIndex:[_model count]
-                          transition:transition
-                  tabAddedCompletion:nil];
+                          transition:transition];
 }
 
 - (Tab*)addSelectedTabWithURL:(const GURL&)url
@@ -2028,27 +2019,15 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
                       atIndex:(NSUInteger)position
                    transition:(ui::PageTransition)transition {
   return [self addSelectedTabWithURL:url
-                             atIndex:position
-                          transition:transition
-                  tabAddedCompletion:nil];
-}
-
-- (Tab*)addSelectedTabWithURL:(const GURL&)url
-                      atIndex:(NSUInteger)position
-                   transition:(ui::PageTransition)transition
-           tabAddedCompletion:(ProceduralBlock)tabAddedCompletion {
-  return [self addSelectedTabWithURL:url
                             postData:NULL
                              atIndex:position
-                          transition:transition
-                  tabAddedCompletion:tabAddedCompletion];
+                          transition:transition];
 }
 
 - (Tab*)addSelectedTabWithURL:(const GURL&)URL
                      postData:(TemplateURLRef::PostContent*)postData
                       atIndex:(NSUInteger)position
-                   transition:(ui::PageTransition)transition
-           tabAddedCompletion:(ProceduralBlock)tabAddedCompletion {
+                   transition:(ui::PageTransition)transition {
   if (position == NSNotFound)
     position = [_model count];
   DCHECK(position <= [_model count]);
@@ -2064,20 +2043,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
     params.post_data.reset(data);
     params.extra_headers.reset(@{ @"Content-Type" : contentType });
   }
-
-  if (tabAddedCompletion) {
-    if (self.foregroundTabWasAddedCompletionBlock) {
-      ProceduralBlock oldForegroundTabWasAddedCompletionBlock =
-          self.foregroundTabWasAddedCompletionBlock;
-      self.foregroundTabWasAddedCompletionBlock = ^{
-        oldForegroundTabWasAddedCompletionBlock();
-        tabAddedCompletion();
-      };
-    } else {
-      self.foregroundTabWasAddedCompletionBlock = tabAddedCompletion;
-    }
-  }
-
   Tab* tab = [_model insertTabWithLoadParams:params
                                       opener:nil
                                  openedByDOM:NO
@@ -3515,6 +3480,26 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   [_toolbarController dismissTabHistoryPopup];
 }
 
+- (void)print {
+  Tab* currentTab = [_model currentTab];
+  // The UI should prevent users from printing non-printable pages. However, a
+  // redirection to an un-printable page can happen before it is reflected in
+  // the UI.
+  if (![currentTab viewForPrinting]) {
+    TriggerHapticFeedbackForNotification(UINotificationFeedbackTypeError);
+    [self showSnackbar:l10n_util::GetNSString(IDS_IOS_CANNOT_PRINT_PAGE_ERROR)];
+    return;
+  }
+  DCHECK(_browserState);
+  if (!_printController) {
+    _printController = [[PrintController alloc]
+        initWithContextGetter:_browserState->GetRequestContext()];
+  }
+  [_printController printView:[currentTab viewForPrinting]
+                    withTitle:[currentTab title]
+               viewController:self];
+}
+
 - (void)addToReadingListURL:(const GURL&)URL title:(NSString*)title {
   base::RecordAction(UserMetricsAction("MobileReadingListAdd"));
 
@@ -4024,12 +4009,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 
   NSTimeInterval startTime = [NSDate timeIntervalSinceReferenceDate];
   BOOL offTheRecord = self.isOffTheRecord;
-  ProceduralBlock oldForegroundTabWasAddedCompletionBlock =
-      self.foregroundTabWasAddedCompletionBlock;
   self.foregroundTabWasAddedCompletionBlock = ^{
-    if (oldForegroundTabWasAddedCompletionBlock) {
-      oldForegroundTabWasAddedCompletionBlock();
-    }
     double duration = [NSDate timeIntervalSinceReferenceDate] - startTime;
     base::TimeDelta timeDelta = base::TimeDelta::FromSecondsD(duration);
     if (offTheRecord) {
@@ -4048,26 +4028,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   }
   [self addSelectedTabWithURL:GURL(kChromeUINewTabURL)
                    transition:ui::PAGE_TRANSITION_TYPED];
-}
-
-- (void)printTab {
-  Tab* currentTab = [_model currentTab];
-  // The UI should prevent users from printing non-printable pages. However, a
-  // redirection to an un-printable page can happen before it is reflected in
-  // the UI.
-  if (![currentTab viewForPrinting]) {
-    TriggerHapticFeedbackForNotification(UINotificationFeedbackTypeError);
-    [self showSnackbar:l10n_util::GetNSString(IDS_IOS_CANNOT_PRINT_PAGE_ERROR)];
-    return;
-  }
-  DCHECK(_browserState);
-  if (!_printController) {
-    _printController = [[PrintController alloc]
-        initWithContextGetter:_browserState->GetRequestContext()];
-  }
-  [_printController printView:[currentTab viewForPrinting]
-                    withTitle:[currentTab title]
-               viewController:self];
 }
 
 #pragma mark - Command Handling
@@ -4178,6 +4138,9 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
       DCHECK([sender isKindOfClass:[TabHistoryCell class]]);
       [self navigateToSelectedEntry:sender];
       break;
+    case IDC_PRINT:
+      [self print];
+      break;
     case IDC_ADD_READING_LIST: {
       ReadingListAddCommand* command =
           base::mac::ObjCCastStrict<ReadingListAddCommand>(sender);
@@ -4242,7 +4205,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   [controller shareWithData:data
                  controller:self
                browserState:_browserState
-                 dispatcher:self.dispatcher
             shareToDelegate:self
                    fromRect:fromRect
                      inView:inView];

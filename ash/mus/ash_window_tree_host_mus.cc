@@ -29,9 +29,13 @@ AshWindowTreeHostMus::AshWindowTreeHostMus(
 
 AshWindowTreeHostMus::~AshWindowTreeHostMus() {}
 
+void AshWindowTreeHostMus::ToggleFullScreen() {
+  NOTIMPLEMENTED();
+}
+
 bool AshWindowTreeHostMus::ConfineCursorToRootWindow() {
   // TODO: when implementing see implementation in AshWindowTreeHostPlatform
-  // for how it uses |transformer_helper_|. http://crbug.com/746054.
+  // for how it uses |transformer_helper_|.
   NOTIMPLEMENTED();
   return true;
 }
@@ -67,12 +71,9 @@ void AshWindowTreeHostMus::PrepareForShutdown() {
 
 void AshWindowTreeHostMus::RegisterMirroringHost(
     AshWindowTreeHost* mirroring_ash_host) {
-  // This should not be called, but it is because mirroring isn't wired up for
-  // mus. Once that is done, this should be converted to a NOTREACHED.
   NOTIMPLEMENTED();
 }
 
-#if defined(USE_OZONE)
 void AshWindowTreeHostMus::SetCursorConfig(
     const display::Display& display,
     display::Display::Rotation rotation) {
@@ -82,7 +83,6 @@ void AshWindowTreeHostMus::SetCursorConfig(
 void AshWindowTreeHostMus::ClearCursorConfig() {
   // Nothing to do here, mus takes care of this.
 }
-#endif
 
 void AshWindowTreeHostMus::SetRootTransform(const gfx::Transform& transform) {
   transformer_helper_->SetTransform(transform);

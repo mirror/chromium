@@ -2099,8 +2099,4 @@ bool IsCrashReporterEnabled() {
   return g_is_crash_reporter_enabled;
 }
 
-void SetFirstChanceExceptionHandler(bool (*handler)(int, void*, void*)) {
-  google_breakpad::SetFirstChanceExceptionHandler(handler);
-}
-
 }  // namespace breakpad

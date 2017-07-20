@@ -21,7 +21,6 @@
 #include "ipc/ipc_test_sink.h"
 #include "media/media_features.h"
 #include "mojo/public/cpp/bindings/associated_interface_ptr.h"
-#include "services/resource_coordinator/public/cpp/resource_coordinator_interface.h"
 #include "services/service_manager/public/cpp/identity.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
 
@@ -135,8 +134,6 @@ class MockRenderProcessHost : public RenderProcessHost {
   viz::SharedBitmapAllocationNotifierImpl* GetSharedBitmapAllocationNotifier()
       override;
 
-  bool HostHasNotBeenUsed() override;
-
   // IPC::Sender via RenderProcessHost.
   bool Send(IPC::Message* msg) override;
 
@@ -187,8 +184,6 @@ class MockRenderProcessHost : public RenderProcessHost {
   std::unique_ptr<mojo::AssociatedInterfacePtr<mojom::Renderer>>
       renderer_interface_;
   std::map<std::string, InterfaceBinder> binder_overrides_;
-  std::unique_ptr<resource_coordinator::ResourceCoordinatorInterface>
-      process_resource_coordinator_;
   service_manager::Identity child_identity_;
   viz::SharedBitmapAllocationNotifierImpl
       shared_bitmap_allocation_notifier_impl_;
@@ -209,11 +204,6 @@ class MockRenderProcessHostFactory : public RenderProcessHostFactory {
   // without deleting it. When a test deletes a MockRenderProcessHost, we need
   // to remove it from |processes_| to prevent it from being deleted twice.
   void Remove(MockRenderProcessHost* host) const;
-
-  // Retrieve the current list of mock processes.
-  std::vector<std::unique_ptr<MockRenderProcessHost>>* GetProcesses() {
-    return &processes_;
-  }
 
  private:
   // A list of MockRenderProcessHosts created by this object. This list is used

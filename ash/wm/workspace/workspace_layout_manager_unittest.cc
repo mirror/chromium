@@ -15,25 +15,25 @@
 #include "ash/root_window_controller.h"
 #include "ash/screen_util.h"
 #include "ash/session/session_controller.h"
-#include "ash/session/test_session_controller_client.h"
 #include "ash/shelf/shelf.h"
 #include "ash/shelf/shelf_constants.h"
 #include "ash/shelf/shelf_layout_manager.h"
 #include "ash/shell.h"
 #include "ash/shell_observer.h"
-#include "ash/shell_test_api.h"
 #include "ash/system/tray/system_tray_notifier.h"
 #include "ash/test/ash_test_base.h"
+#include "ash/test/shell_test_api.h"
 #include "ash/test/test_accessibility_delegate.h"
+#include "ash/test/test_session_controller_client.h"
+#include "ash/test/workspace_controller_test_api.h"
 #include "ash/wm/fullscreen_window_finder.h"
+#include "ash/wm/maximize_mode/maximize_mode_backdrop_delegate_impl.h"
 #include "ash/wm/overview/window_selector_controller.h"
-#include "ash/wm/tablet_mode/tablet_mode_backdrop_delegate_impl.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
 #include "ash/wm/wm_event.h"
 #include "ash/wm/workspace/backdrop_delegate.h"
 #include "ash/wm/workspace/workspace_window_resizer.h"
-#include "ash/wm/workspace_controller_test_api.h"
 #include "base/command_line.h"
 #include "base/run_loop.h"
 #include "chromeos/audio/chromeos_sounds.h"
@@ -978,7 +978,7 @@ class WorkspaceLayoutManagerBackdropTest : public AshTestBase {
   void ShowTopWindowBackdrop(bool show) {
     std::unique_ptr<BackdropDelegate> backdrop;
     if (show) {
-      backdrop = base::MakeUnique<TabletModeBackdropDelegateImpl>();
+      backdrop = base::MakeUnique<MaximizeModeBackdropDelegateImpl>();
     }
     GetWorkspaceLayoutManager(default_container_)
         ->SetBackdropDelegate(std::move(backdrop));
@@ -1234,7 +1234,7 @@ TEST_F(WorkspaceLayoutManagerBackdropTest, BackdropTest) {
     EXPECT_EQ(children[3], window3.get());
   }
 
-  // Enabling the backdrop delegate for tablet mode will put the
+  // Enabling the backdrop delegate for maximized mode will put the
   // backdrop on the top most window.
   ShowTopWindowBackdrop(true);
   {

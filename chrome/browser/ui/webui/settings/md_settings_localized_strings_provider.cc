@@ -1088,11 +1088,6 @@ void AddInternetStrings(content::WebUIDataSource* html_source) {
   html_source->AddBoolean("networkSettingsConfig",
                           base::CommandLine::ForCurrentProcess()->HasSwitch(
                               chromeos::switches::kNetworkSettingsConfig));
-  html_source->AddString(
-      "internetNoNetworksMobileData",
-      l10n_util::GetStringFUTF16(
-          IDS_SETTINGS_INTERNET_NO_NETWORKS_MOBILE_DATA,
-          base::ASCIIToUTF16(chrome::kInstantTetheringLearnMoreURL)));
 }
 #endif
 
@@ -1893,12 +1888,6 @@ void AddSiteSettingsStrings(content::WebUIDataSource* html_source,
     {"siteSettingsBlockedRecommended",
      IDS_SETTINGS_SITE_SETTINGS_BLOCKED_RECOMMENDED},
     {"siteSettingsSiteUrl", IDS_SETTINGS_SITE_SETTINGS_SITE_URL},
-    {"siteSettingsActionAskDefault",
-     IDS_SETTINGS_SITE_SETTINGS_ASK_DEFAULT_MENU},
-    {"siteSettingsActionAllowDefault",
-     IDS_SETTINGS_SITE_SETTINGS_ALLOW_DEFAULT_MENU},
-    {"siteSettingsActionBlockDefault",
-     IDS_SETTINGS_SITE_SETTINGS_BLOCK_DEFAULT_MENU},
     {"siteSettingsActionAllow", IDS_SETTINGS_SITE_SETTINGS_ALLOW_MENU},
     {"siteSettingsActionBlock", IDS_SETTINGS_SITE_SETTINGS_BLOCK_MENU},
     {"siteSettingsActionReset", IDS_SETTINGS_SITE_SETTINGS_RESET_MENU},

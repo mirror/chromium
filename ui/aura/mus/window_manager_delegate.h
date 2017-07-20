@@ -115,10 +115,6 @@ class AURA_EXPORT WindowManagerClient {
       const display::Display& display,
       ui::mojom::WmViewportMetricsPtr viewport_metrics) = 0;
 
-  // Swaps the roots of the two displays.
-  virtual void SwapDisplayRoots(WindowTreeHostMus* window_tree_host1,
-                                WindowTreeHostMus* window_tree_host2) = 0;
-
  protected:
   virtual ~WindowManagerClient() {}
 };

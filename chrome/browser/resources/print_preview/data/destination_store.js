@@ -8,6 +8,8 @@ cr.define('print_preview', function() {
   /**
    * A data store that stores destinations and dispatches events when the data
    * store changes.
+   * @param {!print_preview.NativeLayer} nativeLayer Used to fetch local print
+   *     destinations.
    * @param {!print_preview.UserInfo} userInfo User information repository.
    * @param {!print_preview.AppState} appState Application state.
    * @param {!WebUIListenerTracker} listenerTracker Tracker for WebUI listeners
@@ -15,14 +17,14 @@ cr.define('print_preview', function() {
    * @constructor
    * @extends {cr.EventTarget}
    */
-  function DestinationStore(userInfo, appState, listenerTracker) {
+  function DestinationStore(nativeLayer, userInfo, appState, listenerTracker) {
     cr.EventTarget.call(this);
 
     /**
      * Used to fetch local print destinations.
      * @private {!print_preview.NativeLayer}
      */
-    this.nativeLayer_ = print_preview.NativeLayer.getInstance();
+    this.nativeLayer_ = nativeLayer;
 
     /**
      * User information repository.

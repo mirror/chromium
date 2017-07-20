@@ -11,6 +11,7 @@ namespace content {
 // static
 void PowerMonitorTestImpl::MakeStrongBinding(
     std::unique_ptr<PowerMonitorTestImpl> instance,
+    const service_manager::BindSourceInfo& source_info,
     mojom::PowerMonitorTestRequest request) {
   mojo::MakeStrongBinding(std::move(instance), std::move(request));
 }

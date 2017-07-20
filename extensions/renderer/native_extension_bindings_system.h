@@ -8,6 +8,7 @@
 #include <memory>
 #include <string>
 
+#include "base/callback.h"
 #include "base/memory/weak_ptr.h"
 #include "extensions/renderer/bindings/api_binding_types.h"
 #include "extensions/renderer/bindings/api_bindings_system.h"
@@ -27,8 +28,16 @@ class ScriptContext;
 // Designed to be used in a single thread, but for all contexts on that thread.
 class NativeExtensionBindingsSystem : public ExtensionBindingsSystem {
  public:
-  explicit NativeExtensionBindingsSystem(
-      std::unique_ptr<IPCMessageSender> ipc_message_sender);
+  using SendEventListenerIPCMethod =
+      base::Callback<void(binding::EventListenersChanged,
+                          ScriptContext*,
+                          const std::string& event_name,
+                          const base::DictionaryValue* filter,
+                          bool was_manual)>;
+
+  NativeExtensionBindingsSystem(
+      std::unique_ptr<IPCMessageSender> ipc_message_sender,
+      const SendEventListenerIPCMethod& send_event_listener_ipc);
   ~NativeExtensionBindingsSystem() override;
 
   // ExtensionBindingsSystem:
@@ -49,11 +58,6 @@ class NativeExtensionBindingsSystem : public ExtensionBindingsSystem {
   IPCMessageSender* GetIPCMessageSender() override;
 
   APIBindingsSystem* api_system() { return &api_system_; }
-
-  // Returns the API with the given |name| for the given |context|. Used for
-  // testing purposes.
-  v8::Local<v8::Object> GetAPIObjectForTesting(ScriptContext* context,
-                                               const std::string& api_name);
 
  private:
   // Handles sending a given |request|, forwarding it on to the send_ipc_ after
@@ -93,6 +97,10 @@ class NativeExtensionBindingsSystem : public ExtensionBindingsSystem {
                         v8::Local<v8::Value>* binding_util_out);
 
   std::unique_ptr<IPCMessageSender> ipc_message_sender_;
+
+  // Handler to notify the browser of event registrations. Abstracted out for
+  // testing purposes.
+  SendEventListenerIPCMethod send_event_listener_ipc_;
 
   // The APIBindingsSystem associated with this class.
   APIBindingsSystem api_system_;

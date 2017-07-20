@@ -517,12 +517,6 @@ void ChannelProxy::Close() {
 }
 
 bool ChannelProxy::Send(Message* message) {
-  DCHECK(!message->is_sync()) << "Need to use IPC::SyncChannel";
-  SendInternal(message);
-  return true;
-}
-
-void ChannelProxy::SendInternal(Message* message) {
   DCHECK(did_init_);
 
   // TODO(alexeypa): add DCHECK(CalledOnValidThread()) here. Currently there are
@@ -541,6 +535,7 @@ void ChannelProxy::SendInternal(Message* message) {
 #endif
 
   context_->Send(message);
+  return true;
 }
 
 void ChannelProxy::AddFilter(MessageFilter* filter) {

@@ -114,11 +114,6 @@ struct Conditional<false, T, F> {
   typedef F type;
 };
 
-template <typename T>
-struct AlwaysFalse {
-  static const bool value = false;
-};
-
 }  // namespace internal
 }  // namespace mojo
 

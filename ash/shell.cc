@@ -97,6 +97,8 @@
 #include "ash/wm/immersive_context_ash.h"
 #include "ash/wm/immersive_handler_factory_ash.h"
 #include "ash/wm/lock_state_controller.h"
+#include "ash/wm/maximize_mode/maximize_mode_controller.h"
+#include "ash/wm/maximize_mode/maximize_mode_window_manager.h"
 #include "ash/wm/mru_window_tracker.h"
 #include "ash/wm/native_cursor_manager_ash_classic.h"
 #include "ash/wm/native_cursor_manager_ash_mus.h"
@@ -110,8 +112,6 @@
 #include "ash/wm/system_gesture_event_filter.h"
 #include "ash/wm/system_modal_container_event_filter.h"
 #include "ash/wm/system_modal_container_layout_manager.h"
-#include "ash/wm/tablet_mode/tablet_mode_controller.h"
-#include "ash/wm/tablet_mode/tablet_mode_window_manager.h"
 #include "ash/wm/toplevel_window_event_handler.h"
 #include "ash/wm/video_detector.h"
 #include "ash/wm/window_animations.h"
@@ -420,9 +420,6 @@ PrefService* Shell::GetActiveUserPrefService() const {
 }
 
 PrefService* Shell::GetLocalStatePrefService() const {
-  if (shell_port_->GetAshConfig() == Config::MASH)
-    return local_state_.get();
-
   return shell_delegate_->GetLocalStatePrefService();
 }
 
@@ -517,19 +514,19 @@ void Shell::UpdateAfterLoginStatusChange(LoginStatus status) {
     root_window_controller->UpdateAfterLoginStatusChange(status);
 }
 
-void Shell::NotifyTabletModeStarted() {
+void Shell::NotifyMaximizeModeStarted() {
   for (auto& observer : shell_observers_)
-    observer.OnTabletModeStarted();
+    observer.OnMaximizeModeStarted();
 }
 
-void Shell::NotifyTabletModeEnding() {
+void Shell::NotifyMaximizeModeEnding() {
   for (auto& observer : shell_observers_)
-    observer.OnTabletModeEnding();
+    observer.OnMaximizeModeEnding();
 }
 
-void Shell::NotifyTabletModeEnded() {
+void Shell::NotifyMaximizeModeEnded() {
   for (auto& observer : shell_observers_)
-    observer.OnTabletModeEnded();
+    observer.OnMaximizeModeEnded();
 }
 
 void Shell::NotifyOverviewModeStarting() {
@@ -636,8 +633,7 @@ Shell::Shell(std::unique_ptr<ShellDelegate> shell_delegate,
       display_configurator_(new display::DisplayConfigurator()),
       native_cursor_manager_(nullptr),
       simulate_modal_window_open_for_testing_(false),
-      is_touch_hud_projection_enabled_(false),
-      weak_factory_(this) {
+      is_touch_hud_projection_enabled_(false) {
   // TODO(sky): better refactor cash/mash dependencies. Perhaps put all cash
   // state on ShellPortClassic. http://crbug.com/671246.
 
@@ -695,14 +691,14 @@ Shell::~Shell() {
   screen_orientation_controller_.reset();
   screen_layout_observer_.reset();
 
-  // Destroy the virtual keyboard controller before the tablet mode controller
+  // Destroy the virtual keyboard controller before the maximize mode controller
   // since the latters destructor triggers events that the former is listening
   // to but no longer cares about.
   virtual_keyboard_controller_.reset();
 
-  // Destroy tablet mode controller early on since it has some observers which
+  // Destroy maximize mode controller early on since it has some observers which
   // need to be removed.
-  tablet_mode_controller_.reset();
+  maximize_mode_controller_.reset();
 
   // Destroy the keyboard before closing the shelf, since it will invoke a shelf
   // layout.
@@ -860,17 +856,10 @@ void Shell::Init(const ShellInitParams& init_params) {
   if (config == Config::MASH && shell_delegate_->GetShellConnector()) {
     auto pref_registry = base::MakeRefCounted<PrefRegistrySimple>();
     Shell::RegisterPrefs(pref_registry.get());
-    prefs::ConnectToPrefService(shell_delegate_->GetShellConnector(),
-                                std::move(pref_registry),
-                                base::Bind(&Shell::OnPrefServiceInitialized,
-                                           weak_factory_.GetWeakPtr()),
-                                prefs::mojom::kForwarderServiceName);
-    pref_registry = base::MakeRefCounted<PrefRegistrySimple>();
     prefs::ConnectToPrefService(
         shell_delegate_->GetShellConnector(), std::move(pref_registry),
-        base::Bind(&Shell::OnLocalStatePrefServiceInitialized,
-                   weak_factory_.GetWeakPtr()),
-        prefs::mojom::kLocalStateServiceName);
+        base::Bind(&Shell::OnPrefServiceInitialized, base::Unretained(this)),
+        prefs::mojom::kForwarderServiceName);
   }
 
   // Some delegates access ShellPort during their construction. Create them here
@@ -995,7 +984,7 @@ void Shell::Init(const ShellInitParams& init_params) {
   }
 
   accelerator_controller_ = shell_port_->CreateAcceleratorController();
-  tablet_mode_controller_ = base::MakeUnique<TabletModeController>();
+  maximize_mode_controller_ = base::MakeUnique<MaximizeModeController>();
 
   magnifier_key_scroll_handler_ = MagnifierKeyScroller::CreateHandler();
   AddPreTargetHandler(magnifier_key_scroll_handler_.get());
@@ -1303,16 +1292,11 @@ void Shell::InitializeShelf() {
 
 void Shell::OnPrefServiceInitialized(
     std::unique_ptr<::PrefService> pref_service) {
+  if (!instance_)
+    return;
   // |pref_service_| is null if can't connect to Chrome (as happens when
   // running mash outside of chrome --mash and chrome isn't built).
   pref_service_ = std::move(pref_service);
-}
-
-void Shell::OnLocalStatePrefServiceInitialized(
-    std::unique_ptr<::PrefService> pref_service) {
-  // |pref_service_| is null if can't connect to Chrome (as happens when
-  // running mash outside of chrome --mash and chrome isn't built).
-  local_state_ = std::move(pref_service);
 }
 
 }  // namespace ash

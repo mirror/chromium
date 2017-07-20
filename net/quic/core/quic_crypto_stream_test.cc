@@ -24,12 +24,10 @@ namespace net {
 namespace test {
 namespace {
 
-class MockQuicCryptoStream : public QuicCryptoStream,
-                             public QuicCryptoHandshaker {
+class MockQuicCryptoStream : public QuicCryptoStream {
  public:
   explicit MockQuicCryptoStream(QuicSession* session)
       : QuicCryptoStream(session),
-        QuicCryptoHandshaker(this, session),
         params_(new QuicCryptoNegotiatedParameters) {}
 
   void OnHandshakeMessage(const CryptoHandshakeMessage& message) override {
@@ -44,9 +42,6 @@ class MockQuicCryptoStream : public QuicCryptoStream,
   const QuicCryptoNegotiatedParameters& crypto_negotiated_params()
       const override {
     return *params_;
-  }
-  CryptoMessageParser* crypto_message_parser() override {
-    return QuicCryptoHandshaker::crypto_message_parser();
   }
 
  private:

@@ -62,8 +62,7 @@ void ScreenManagerStubInternal::FixedSizeScreenConfiguration() {
 }
 
 void ScreenManagerStubInternal::AddInterfaces(
-    service_manager::BinderRegistryWithArgs<
-        const service_manager::BindSourceInfo&>* registry) {}
+    service_manager::BinderRegistry* registry) {}
 
 void ScreenManagerStubInternal::Init(ScreenManagerDelegate* delegate) {
   DCHECK(delegate);

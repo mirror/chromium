@@ -397,6 +397,29 @@ bool AXLayoutObject::IsOffScreen() const {
   return view_rect.IsEmpty();
 }
 
+bool AXLayoutObject::IsReadOnly() const {
+  DCHECK(layout_object_);
+
+  if (IsWebArea()) {
+    Document& document = layout_object_->GetDocument();
+    // Non-active documents don't have an editable style.
+    // Return |true| so as not to confuse Windows screen readers which will not
+    // initialize their virtual buffer if the document is marked editable.
+    if (!document.IsActive())
+      return true;
+
+    HTMLElement* body = document.body();
+    if (body && HasEditableStyle(*body)) {
+      AXObject* ax_body = AxObjectCache().GetOrCreate(body);
+      return !ax_body || ax_body == ax_body->AriaHiddenRoot();
+    }
+
+    return !HasEditableStyle(document);
+  }
+
+  return AXNodeObject::IsReadOnly();
+}
+
 bool AXLayoutObject::IsVisited() const {
   // FIXME: Is it a privacy violation to expose visited information to
   // accessibility APIs?
@@ -1256,11 +1279,7 @@ void AXLayoutObject::AriaLabelledbyElements(AXObjectVector& labelledby) const {
 }
 
 bool AXLayoutObject::AriaHasPopup() const {
-  const AtomicString& has_popup =
-      GetAOMPropertyOrARIAAttribute(AOMStringProperty::kHasPopUp);
-
-  return !has_popup.IsNull() && !has_popup.IsEmpty() &&
-         !EqualIgnoringASCIICase(has_popup, "false");
+  return ElementAttributeValue(aria_haspopupAttr);
 }
 
 bool AXLayoutObject::AriaRoleHasPresentationalChildren() const {

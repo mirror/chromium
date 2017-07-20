@@ -25,11 +25,11 @@ namespace content {
 namespace {
 
 void BindMemoryCoordinatorRequest(
-    memory_instrumentation::mojom::CoordinatorRequest request,
-    const service_manager::BindSourceInfo& source_info) {
+    const service_manager::BindSourceInfo& source_info,
+    memory_instrumentation::mojom::CoordinatorRequest request) {
   auto* coordinator = memory_instrumentation::CoordinatorImpl::GetInstance();
   if (coordinator)
-    coordinator->BindCoordinatorRequest(std::move(request), source_info);
+    coordinator->BindCoordinatorRequest(source_info, std::move(request));
 }
 
 class ConnectionFilterImpl : public ConnectionFilter {
@@ -55,25 +55,28 @@ class ConnectionFilterImpl : public ConnectionFilter {
  private:
   template <typename Interface>
   using InterfaceBinder =
-      base::Callback<void(mojo::InterfaceRequest<Interface>,
-                          const service_manager::BindSourceInfo&)>;
+      base::Callback<void(const service_manager::BindSourceInfo&,
+                          mojo::InterfaceRequest<Interface>)>;
 
   // ConnectionFilter:
   void OnBindInterface(const service_manager::BindSourceInfo& source_info,
                        const std::string& interface_name,
                        mojo::ScopedMessagePipeHandle* interface_pipe,
                        service_manager::Connector* connector) override {
-    registry_.TryBindInterface(interface_name, interface_pipe, source_info);
+    if (registry_.CanBindInterface(interface_name)) {
+      registry_.BindInterface(source_info, interface_name,
+                              std::move(*interface_pipe));
+    }
   }
 
   template <typename Interface>
   static void BindOnTaskRunner(
       const scoped_refptr<base::TaskRunner>& task_runner,
       const InterfaceBinder<Interface>& binder,
-      mojo::InterfaceRequest<Interface> request,
-      const service_manager::BindSourceInfo& source_info) {
+      const service_manager::BindSourceInfo& source_info,
+      mojo::InterfaceRequest<Interface> request) {
     task_runner->PostTask(
-        FROM_HERE, base::BindOnce(binder, std::move(request), source_info));
+        FROM_HERE, base::BindOnce(binder, source_info, std::move(request)));
   }
 
   template <typename Interface>
@@ -83,9 +86,7 @@ class ConnectionFilterImpl : public ConnectionFilter {
   }
 
   const scoped_refptr<base::TaskRunner> main_thread_task_runner_;
-  service_manager::BinderRegistryWithArgs<
-      const service_manager::BindSourceInfo&>
-      registry_;
+  service_manager::BinderRegistry registry_;
 
   DISALLOW_COPY_AND_ASSIGN(ConnectionFilterImpl);
 };

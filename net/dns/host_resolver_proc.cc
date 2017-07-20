@@ -133,7 +133,7 @@ int SystemHostResolverCall(const std::string& host,
   bool valid_hostname = false;
   {
     std::string out_ignored;
-    if (!DNSDomainFromDot(host, &out_ignored))
+    if (!DNSDomainFromDotWithValidityCheck(host, &out_ignored, &valid_hostname))
       return ERR_NAME_NOT_RESOLVED;
   }
 

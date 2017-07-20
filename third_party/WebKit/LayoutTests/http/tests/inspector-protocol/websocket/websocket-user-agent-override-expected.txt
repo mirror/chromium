@@ -1,4 +1,5 @@
 Tests that WebSocket headers are set properly from overriden User Agent.
+
 Test started
 Enabling network
 Network enabled

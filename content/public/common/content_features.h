@@ -64,7 +64,6 @@ CONTENT_EXPORT extern const base::Feature kPurgeAndSuspend;
 CONTENT_EXPORT extern const base::Feature kRafAlignedMouseInputEvents;
 CONTENT_EXPORT extern const base::Feature kRafAlignedTouchInputEvents;
 CONTENT_EXPORT extern const base::Feature kRenderingPipelineThrottling;
-CONTENT_EXPORT extern const base::Feature kReportRendererPeakMemoryStats;
 CONTENT_EXPORT extern const base::Feature
     kRequireSecureOriginsForPepperMediaRequests;
 CONTENT_EXPORT extern const base::Feature kResourceLoadScheduler;
@@ -102,14 +101,10 @@ extern const base::Feature kSendBeaconThrowForBlobWithNonSimpleType;
 
 #if defined(OS_ANDROID)
 CONTENT_EXPORT extern const base::Feature kAndroidAutofillAccessibility;
-CONTENT_EXPORT extern const base::Feature kHideIncorrectlySizedFullscreenFrames;
 CONTENT_EXPORT extern const base::Feature kImeThread;
 CONTENT_EXPORT extern const base::Feature kServiceWorkerPaymentApps;
 CONTENT_EXPORT extern const base::Feature kWebNfc;
 #endif  // defined(OS_ANDROID)
-
-CONTENT_EXPORT extern const base::Feature
-    kDisablePreferCompositingToLCDTextOnLowEndAndroid;
 
 #if defined(OS_WIN)
 CONTENT_EXPORT extern const base::Feature kWinSboxDisableExtensionPoints;

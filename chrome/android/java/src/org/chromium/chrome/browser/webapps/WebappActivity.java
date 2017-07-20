@@ -179,7 +179,7 @@ public class WebappActivity extends SingleTabActivity {
                 controlContainer);
 
         if (getFullscreenManager() != null) getFullscreenManager().setTab(getActivityTab());
-        mSplashController.onFinishedNativeInit(getActivityTab());
+        mSplashController.onFinishedNativeInit(getActivityTab(), getCompositorViewHolder());
         super.finishNativeInitialization();
         mIsInitialized = true;
     }
@@ -655,7 +655,7 @@ public class WebappActivity extends SingleTabActivity {
 
     @Override
     protected TabDelegate createTabDelegate(boolean incognito) {
-        return new WebappTabDelegate(incognito);
+        return new WebappTabDelegate(this, incognito);
     }
 
     // We're temporarily disable CS on webapp since there are some issues. (http://crbug.com/471950)

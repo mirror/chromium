@@ -383,18 +383,6 @@ _BANNED_CPP_FUNCTIONS = (
         r'^content[\\\/]public[\\\/]test[\\\/]test_web_ui\.(cc|h)$',
       ),
     ),
-    (
-      'leveldb::DB::Open',
-      (
-        'Instead of leveldb::DB::Open() use leveldb_env::OpenDB() from',
-        'third_party/leveldatabase/env_chromium.h. It exposes databases to',
-        "Chrome's tracing, making their memory usage visible.",
-      ),
-      True,
-      (
-        r'^third_party/leveldatabase/.*\.(cc|h)$',
-      ),
-    )
 )
 
 
@@ -1957,6 +1945,7 @@ def _CheckNoDeprecatedCss(input_api, output_api):
                 (r"^chrome/common/extensions/docs",
                  r"^chrome/docs",
                  r"^components/dom_distiller/core/css/distilledpage_ios.css",
+                 r"^components/flags_ui/resources/apple_flags.css",
                  r"^components/neterror/resources/neterror.css",
                  r"^native_client_sdk"))
   file_filter = lambda f: input_api.FilterSourceFile(

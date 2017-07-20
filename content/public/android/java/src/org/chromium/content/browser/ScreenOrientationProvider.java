@@ -13,7 +13,6 @@ import android.view.Surface;
 import org.chromium.base.Log;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
-import org.chromium.content_public.browser.ScreenOrientationDelegate;
 import org.chromium.content_public.common.ScreenOrientationConstants;
 import org.chromium.content_public.common.ScreenOrientationValues;
 import org.chromium.ui.base.WindowAndroid;
@@ -27,7 +26,6 @@ import javax.annotation.Nullable;
 @JNINamespace("content")
 public class ScreenOrientationProvider {
     private static final String TAG = "cr.ScreenOrientation";
-    private static ScreenOrientationDelegate sDelegate;
 
     private static int getOrientationFromWebScreenOrientations(byte orientation,
             @Nullable WindowAndroid window, Context context) {
@@ -73,8 +71,6 @@ public class ScreenOrientationProvider {
 
     @CalledByNative
     public static void lockOrientation(@Nullable WindowAndroid window, byte webScreenOrientation) {
-        if (sDelegate != null && !sDelegate.canLockOrientation()) return;
-
         // WindowAndroid may be null if the tab is being reparented.
         if (window == null) return;
         Activity activity = window.getActivity().get();
@@ -123,19 +119,8 @@ public class ScreenOrientationProvider {
         } catch (PackageManager.NameNotFoundException e) {
             // Do nothing, defaultOrientation should be SCREEN_ORIENTATION_UNSPECIFIED.
         } finally {
-            if (sDelegate == null || sDelegate.canUnlockOrientation(activity, defaultOrientation)) {
-                activity.setRequestedOrientation(defaultOrientation);
-            }
+            activity.setRequestedOrientation(defaultOrientation);
         }
-    }
-
-    @CalledByNative
-    static boolean isOrientationLockEnabled() {
-        return sDelegate == null || sDelegate.canLockOrientation();
-    }
-
-    public static void setOrientationDelegate(ScreenOrientationDelegate delegate) {
-        sDelegate = delegate;
     }
 
     private ScreenOrientationProvider() {

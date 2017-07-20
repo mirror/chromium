@@ -1,5 +1,5 @@
 (async function(testRunner) {
-  let {page, session, dp} = await testRunner.startURL('../resources/get-layers.html', 'Tests LayerTree domain reporting layers.');
+  let {page, session, dp} = await testRunner.startURL('../resources/get-layers.html', '');
 
   function layerMutations(oldLayers, newLayers) {
     var oldLayerIds = oldLayers.map(layer => layer.layerId);

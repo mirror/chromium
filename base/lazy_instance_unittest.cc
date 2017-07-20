@@ -13,8 +13,8 @@
 
 namespace {
 
-base::AtomicSequenceNumber constructed_seq_;
-base::AtomicSequenceNumber destructed_seq_;
+base::StaticAtomicSequenceNumber constructed_seq_;
+base::StaticAtomicSequenceNumber destructed_seq_;
 
 class ConstructAndDestructLogger {
  public:

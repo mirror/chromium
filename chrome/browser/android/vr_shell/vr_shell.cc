@@ -125,9 +125,6 @@ VrShell::VrShell(JNIEnv* env,
   base::Thread::Options options(base::MessageLoop::TYPE_DEFAULT, 0);
   options.priority = base::ThreadPriority::DISPLAY;
   gl_thread_->StartWithOptions(options);
-
-  if (for_web_vr || web_vr_autopresentation_expected)
-    UMA_HISTOGRAM_BOOLEAN("VRAutopresentedWebVR", !for_web_vr);
 }
 
 void VrShell::SetSplashScreenIcon(JNIEnv* env,
@@ -470,6 +467,12 @@ void VrShell::SetHistoryButtonsEnabled(JNIEnv* env,
   ui_->SetHistoryButtonsEnabled(can_go_back, can_go_forward);
 }
 
+void VrShell::RequestToExitVr(JNIEnv* env,
+                              const JavaParamRef<jobject>& obj,
+                              int reason) {
+  ui_->SetExitVrPromptEnabled(true, (vr::UiUnsupportedMode)reason);
+}
+
 void VrShell::ContentSurfaceChanged(jobject surface) {
   content_surface_ = surface;
   JNIEnv* env = base::android::AttachCurrentThread();
@@ -585,52 +588,56 @@ void VrShell::ExitFullscreen() {
   }
 }
 
-void VrShell::ExitVrDueToUnsupportedMode(vr::UiUnsupportedMode mode,
-                                         bool show_exit_warning) {
-  if (mode == vr::UiUnsupportedMode::kUnhandledPageInfo) {
-    UMA_HISTOGRAM_ENUMERATION("VR.Shell.EncounteredUnsupportedMode", mode,
-                              vr::UiUnsupportedMode::kCount);
-    JNIEnv* env = base::android::AttachCurrentThread();
-    Java_VrShellImpl_onUnhandledPageInfo(env, j_vr_shell_.obj());
-    return;
-  }
-  if (show_exit_warning) {
-    ui_->SetIsExiting();
-    PostToGlThread(FROM_HERE, base::Bind(&VrShellGl::set_is_exiting,
-                                         gl_thread_->GetVrShellGl(), true));
-    main_thread_task_runner_->PostDelayedTask(
-        FROM_HERE,
-        base::Bind(&VrShell::ForceExitVr, weak_ptr_factory_.GetWeakPtr()),
-        kExitVrDueToUnsupportedModeDelay);
-  } else {
-    ForceExitVr();
-  }
+void VrShell::LogUnsupportedModeUserMetric(JNIEnv* env,
+                                           const JavaParamRef<jobject>& obj,
+                                           int mode) {
+  LogUnsupportedModeUserMetric((vr::UiUnsupportedMode)mode);
+}
+
+void VrShell::LogUnsupportedModeUserMetric(vr::UiUnsupportedMode mode) {
   UMA_HISTOGRAM_ENUMERATION("VR.Shell.EncounteredUnsupportedMode", mode,
                             vr::UiUnsupportedMode::kCount);
 }
 
+void VrShell::ExitVrDueToUnsupportedMode(vr::UiUnsupportedMode mode) {
+  ui_->SetIsExiting();
+  main_thread_task_runner_->PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&VrShell::ForceExitVr, weak_ptr_factory_.GetWeakPtr()),
+      kExitVrDueToUnsupportedModeDelay);
+  LogUnsupportedModeUserMetric(mode);
+}
+
 void VrShell::OnUnsupportedMode(vr::UiUnsupportedMode mode) {
   switch (mode) {
-    case vr::UiUnsupportedMode::kUnhandledPageInfo:
-      ui_->SetExitVrPromptEnabled(true, mode);
+    case vr::UiUnsupportedMode::kUnhandledPageInfo: {
+      JNIEnv* env = base::android::AttachCurrentThread();
+      Java_VrShellImpl_onUnhandledPageInfo(env, j_vr_shell_.obj());
       break;
+    }
     default:
-      ExitVrDueToUnsupportedMode(mode, true);
+      ExitVrDueToUnsupportedMode(mode);
       break;
   }
 }
 
 void VrShell::OnExitVrPromptResult(vr::UiUnsupportedMode reason,
                                    vr::ExitVrPromptChoice choice) {
+  bool should_exit;
   switch (choice) {
     case vr::ExitVrPromptChoice::CHOICE_NONE:
     case vr::ExitVrPromptChoice::CHOICE_STAY:
       ui_->SetExitVrPromptEnabled(false, vr::UiUnsupportedMode::kCount);
-      return;
+      should_exit = false;
+      break;
     case vr::ExitVrPromptChoice::CHOICE_EXIT:
-      ExitVrDueToUnsupportedMode(reason, false);
-      return;
+      should_exit = true;
+      break;
   }
+
+  JNIEnv* env = base::android::AttachCurrentThread();
+  Java_VrShellImpl_onExitVrRequestResult(env, j_vr_shell_.obj(),
+                                         static_cast<int>(reason), should_exit);
 }
 
 void VrShell::UpdateVSyncInterval(base::TimeTicks vsync_timebase,

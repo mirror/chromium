@@ -1,4 +1,6 @@
 include_rules = [
   "+cc",
-  "+ash/fast_ink",
+  "+components/viz/common/gpu",
+  "+components/viz/common/quads",
+  "+gpu/command_buffer/client",
 ]

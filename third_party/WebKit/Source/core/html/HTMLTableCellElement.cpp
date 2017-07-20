@@ -31,7 +31,6 @@
 #include "core/dom/ElementTraversal.h"
 #include "core/frame/UseCounter.h"
 #include "core/html/HTMLTableElement.h"
-#include "core/html/TableConstants.h"
 #include "core/html/parser/HTMLParserIdioms.h"
 #include "core/layout/LayoutTableCell.h"
 
@@ -48,9 +47,9 @@ DEFINE_ELEMENT_FACTORY_WITH_TAGNAME(HTMLTableCellElement)
 unsigned HTMLTableCellElement::colSpan() const {
   const AtomicString& col_span_value = FastGetAttribute(colspanAttr);
   unsigned value = 0;
-  if (!ParseHTMLClampedNonNegativeInteger(col_span_value, kMinColSpan,
-                                          kMaxColSpan, value))
-    return kDefaultColSpan;
+  if (col_span_value.IsEmpty() ||
+      !ParseHTMLNonNegativeInteger(col_span_value, value))
+    return 1;
   // Counting for https://github.com/whatwg/html/issues/1198
   UseCounter::Count(GetDocument(), WebFeature::kHTMLTableCellElementColspan);
   if (value > 8190) {
@@ -60,16 +59,16 @@ unsigned HTMLTableCellElement::colSpan() const {
     UseCounter::Count(GetDocument(),
                       WebFeature::kHTMLTableCellElementColspanGreaterThan1000);
   }
-  return value;
+  return std::max(1u, std::min(value, MaxColSpan()));
 }
 
 unsigned HTMLTableCellElement::rowSpan() const {
   const AtomicString& row_span_value = FastGetAttribute(rowspanAttr);
   unsigned value = 0;
-  if (!ParseHTMLClampedNonNegativeInteger(row_span_value, kMinRowSpan,
-                                          kMaxRowSpan, value))
-    return kDefaultRowSpan;
-  return value;
+  if (row_span_value.IsEmpty() ||
+      !ParseHTMLNonNegativeInteger(row_span_value, value))
+    return 1;
+  return std::max(1u, std::min(value, MaxRowSpan()));
 }
 
 int HTMLTableCellElement::cellIndex() const {
@@ -161,7 +160,7 @@ const AtomicString& HTMLTableCellElement::Axis() const {
 }
 
 void HTMLTableCellElement::setColSpan(unsigned n) {
-  SetUnsignedIntegralAttribute(colspanAttr, n, kDefaultColSpan);
+  SetUnsignedIntegralAttribute(colspanAttr, n);
 }
 
 const AtomicString& HTMLTableCellElement::Headers() const {
@@ -169,7 +168,7 @@ const AtomicString& HTMLTableCellElement::Headers() const {
 }
 
 void HTMLTableCellElement::setRowSpan(unsigned n) {
-  SetUnsignedIntegralAttribute(rowspanAttr, n, kDefaultRowSpan);
+  SetUnsignedIntegralAttribute(rowspanAttr, n);
 }
 
 }  // namespace blink

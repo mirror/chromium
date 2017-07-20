@@ -29,7 +29,6 @@ class FakeRendererCompositorFrameSink
   void DidReceiveCompositorFrameAck(
       const std::vector<cc::ReturnedResource>& resources) override;
   void OnBeginFrame(const cc::BeginFrameArgs& args) override {}
-  void OnBeginFramePausedChanged(bool paused) override {}
   void ReclaimResources(
       const std::vector<cc::ReturnedResource>& resources) override;
 

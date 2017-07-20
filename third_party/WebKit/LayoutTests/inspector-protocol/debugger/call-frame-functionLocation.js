@@ -1,5 +1,5 @@
 (async function(testRunner) {
-  let {page, session, dp} = await testRunner.startBlank('Tests function location in CallFrame.');
+  let {page, session, dp} = await testRunner.startBlank('');
 
   dp.Debugger.enable();
   dp.Runtime.evaluate({expression: `

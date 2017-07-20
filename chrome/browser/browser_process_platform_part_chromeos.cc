@@ -85,7 +85,7 @@ class ChromeServiceChromeOS : public service_manager::Service,
   void OnBindInterface(const service_manager::BindSourceInfo& remote_info,
                        const std::string& name,
                        mojo::ScopedMessagePipeHandle handle) override {
-    interfaces_.BindInterface(name, std::move(handle), remote_info);
+    interfaces_.BindInterface(remote_info, name, std::move(handle));
   }
 
   // mash::mojom::Launchable:
@@ -116,14 +116,12 @@ class ChromeServiceChromeOS : public service_manager::Service,
     CreateNewWindowImpl(is_incognito);
   }
 
-  void Create(mash::mojom::LaunchableRequest request,
-              const service_manager::BindSourceInfo& source_info) {
+  void Create(const service_manager::BindSourceInfo& source_info,
+              mash::mojom::LaunchableRequest request) {
     bindings_.AddBinding(this, std::move(request));
   }
 
-  service_manager::BinderRegistryWithArgs<
-      const service_manager::BindSourceInfo&>
-      interfaces_;
+  service_manager::BinderRegistry interfaces_;
   mojo::BindingSet<mash::mojom::Launchable> bindings_;
 #if defined(USE_OZONE)
   ui::InputDeviceController input_device_controller_;

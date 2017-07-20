@@ -50,7 +50,6 @@ class GraphicsContext;
 class Range;
 class SelectionEditor;
 class LayoutSelection;
-enum class SelectionModifyAlteration;
 class TextIteratorBehavior;
 struct PaintInvalidatorContext;
 
@@ -78,6 +77,7 @@ class CORE_EXPORT FrameSelection final
   }
   ~FrameSelection();
 
+  enum EAlteration { kAlterationMove, kAlterationExtend };
   enum SetSelectionOption {
     // 1 << 0 is reserved for EUserTriggered
     kCloseTyping = 1 << 1,
@@ -114,6 +114,11 @@ class CORE_EXPORT FrameSelection final
                     SetSelectionOptions = kCloseTyping | kClearTypingStyle,
                     CursorAlignOnScroll = CursorAlignOnScroll::kIfNeeded,
                     TextGranularity = TextGranularity::kCharacter);
+
+  void SetSelection(const SelectionInFlatTree&,
+                    SetSelectionOptions = kCloseTyping | kClearTypingStyle,
+                    CursorAlignOnScroll = CursorAlignOnScroll::kIfNeeded,
+                    TextGranularity = TextGranularity::kCharacter);
   void SelectAll(EUserTriggered = kNotUserTriggered);
   void Clear();
   bool IsHidden() const;
@@ -137,10 +142,11 @@ class CORE_EXPORT FrameSelection final
 
   bool Contains(const LayoutPoint&);
 
-  bool Modify(SelectionModifyAlteration,
+  bool Modify(EAlteration,
               SelectionDirection,
               TextGranularity,
               EUserTriggered = kNotUserTriggered);
+  enum VerticalDirection { kDirectionUp, kDirectionDown };
 
   // Moves the selection extent based on the selection granularity strategy.
   // This function does not allow the selection to collapse. If the new

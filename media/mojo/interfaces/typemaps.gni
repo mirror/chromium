@@ -14,6 +14,5 @@ typemaps = [
   "//media/mojo/interfaces/pipeline_statistics.typemap",
   "//media/mojo/interfaces/video_color_space.typemap",
   "//media/mojo/interfaces/video_decoder_config.typemap",
-  "//media/mojo/interfaces/video_encode_accelerator.typemap",
   "//media/mojo/interfaces/video_frame.typemap",
 ]

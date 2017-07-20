@@ -211,10 +211,9 @@ void ChooserBubbleUi::Close() {
 }
 
 void ChooserBubbleUi::UpdateAnchorPosition() {
-  if (chooser_bubble_ui_view_delegate_) {
-    chooser_bubble_ui_view_delegate_->UpdateAnchor(GetAnchorView(),
-                                                   GetAnchorArrow());
-  }
+  DCHECK(chooser_bubble_ui_view_delegate_);
+  chooser_bubble_ui_view_delegate_->UpdateAnchor(GetAnchorView(),
+                                                 GetAnchorArrow());
 }
 
 void ChooserBubbleUi::OnWidgetClosing(views::Widget* widget) {

@@ -90,42 +90,41 @@ ControllerImpl::ControllerImpl(
       scheduler_(std::move(scheduler)),
       task_scheduler_(std::move(task_scheduler)),
       file_monitor_(std::move(file_monitor)),
-      controller_state_(State::CREATED),
+      initializing_internals_(false),
       weak_ptr_factory_(this) {}
 
 ControllerImpl::~ControllerImpl() = default;
 
 void ControllerImpl::Initialize(const base::Closure& callback) {
-  DCHECK_EQ(controller_state_, State::CREATED);
+  DCHECK(!startup_status_.Complete());
 
   init_callback_ = callback;
-  controller_state_ = State::INITIALIZING;
-
+  initializing_internals_ = true;
   driver_->Initialize(this);
   model_->Initialize(this);
   file_monitor_->Initialize(base::Bind(&ControllerImpl::OnFileMonitorReady,
                                        weak_ptr_factory_.GetWeakPtr()));
 }
 
-Controller::State ControllerImpl::GetState() {
-  return controller_state_;
+const StartupStatus* ControllerImpl::GetStartupStatus() {
+  return &startup_status_;
 }
 
 void ControllerImpl::StartDownload(const DownloadParams& params) {
-  DCHECK(controller_state_ == State::READY ||
-         controller_state_ == State::UNAVAILABLE);
-
-  // TODO(dtrainor): Validate all input parameters.
-  DCHECK_LE(base::Time::Now(), params.scheduling_params.cancel_time);
-
-  if (controller_state_ != State::READY) {
+  DCHECK(startup_status_.Complete());
+  if (!startup_status_.Ok()) {
     HandleStartDownloadResponse(params.client, params.guid,
                                 DownloadParams::StartResult::INTERNAL_ERROR,
                                 params.callback);
     return;
   }
 
+  DCHECK_LE(base::Time::Now(), params.scheduling_params.cancel_time);
   KillTimedOutDownloads();
+
+  // TODO(dtrainor): Check if there are any downloads we can cancel.  We don't
+  // want to return a BACKOFF if we technically could time out a download to
+  // start this one.
 
   if (start_callbacks_.find(params.guid) != start_callbacks_.end() ||
       model_->Get(params.guid) != nullptr) {
@@ -159,9 +158,8 @@ void ControllerImpl::StartDownload(const DownloadParams& params) {
 }
 
 void ControllerImpl::PauseDownload(const std::string& guid) {
-  DCHECK(controller_state_ == State::READY ||
-         controller_state_ == State::UNAVAILABLE);
-  if (controller_state_ != State::READY)
+  DCHECK(startup_status_.Complete());
+  if (!startup_status_.Ok())
     return;
 
   auto* entry = model_->Get(guid);
@@ -181,9 +179,8 @@ void ControllerImpl::PauseDownload(const std::string& guid) {
 }
 
 void ControllerImpl::ResumeDownload(const std::string& guid) {
-  DCHECK(controller_state_ == State::READY ||
-         controller_state_ == State::UNAVAILABLE);
-  if (controller_state_ != State::READY)
+  DCHECK(startup_status_.Complete());
+  if (!startup_status_.Ok())
     return;
 
   auto* entry = model_->Get(guid);
@@ -199,9 +196,8 @@ void ControllerImpl::ResumeDownload(const std::string& guid) {
 }
 
 void ControllerImpl::CancelDownload(const std::string& guid) {
-  DCHECK(controller_state_ == State::READY ||
-         controller_state_ == State::UNAVAILABLE);
-  if (controller_state_ != State::READY)
+  DCHECK(startup_status_.Complete());
+  if (!startup_status_.Ok())
     return;
 
   auto* entry = model_->Get(guid);
@@ -221,9 +217,8 @@ void ControllerImpl::CancelDownload(const std::string& guid) {
 
 void ControllerImpl::ChangeDownloadCriteria(const std::string& guid,
                                             const SchedulingParams& params) {
-  DCHECK(controller_state_ == State::READY ||
-         controller_state_ == State::UNAVAILABLE);
-  if (controller_state_ != State::READY)
+  DCHECK(startup_status_.Complete());
+  if (!startup_status_.Ok())
     return;
 
   auto* entry = model_->Get(guid);
@@ -242,9 +237,8 @@ void ControllerImpl::ChangeDownloadCriteria(const std::string& guid,
 }
 
 DownloadClient ControllerImpl::GetOwnerOfDownload(const std::string& guid) {
-  DCHECK(controller_state_ == State::READY ||
-         controller_state_ == State::UNAVAILABLE);
-  if (controller_state_ != State::READY)
+  DCHECK(startup_status_.Complete());
+  if (!startup_status_.Ok())
     return DownloadClient::INVALID;
 
   auto* entry = model_->Get(guid);
@@ -254,27 +248,18 @@ DownloadClient ControllerImpl::GetOwnerOfDownload(const std::string& guid) {
 void ControllerImpl::OnStartScheduledTask(
     DownloadTaskType task_type,
     const TaskFinishedCallback& callback) {
+  DCHECK(startup_status_.Complete());
   task_finished_callbacks_[task_type] = callback;
+  if (!startup_status_.Ok()) {
+    HandleTaskFinished(task_type, false,
+                       stats::ScheduledTaskStatus::ABORTED_ON_FAILED_INIT);
+    return;
+  }
 
-  switch (controller_state_) {
-    case State::READY:
-      if (task_type == DownloadTaskType::DOWNLOAD_TASK) {
-        ActivateMoreDownloads();
-      } else if (task_type == DownloadTaskType::CLEANUP_TASK) {
-        RemoveCleanupEligibleDownloads();
-        ScheduleCleanupTask();
-      }
-      break;
-    case State::UNAVAILABLE:
-      HandleTaskFinished(task_type, false,
-                         stats::ScheduledTaskStatus::ABORTED_ON_FAILED_INIT);
-      break;
-    case State::CREATED:       // Intentional fallthrough.
-    case State::INITIALIZING:  // Intentional fallthrough.
-    case State::RECOVERING:    // Intentional fallthrough.
-    default:
-      NOTREACHED();
-      break;
+  if (task_type == DownloadTaskType::DOWNLOAD_TASK) {
+    ActivateMoreDownloads();
+  } else if (task_type == DownloadTaskType::CLEANUP_TASK) {
+    RemoveCleanupEligibleDownloads();
   }
 }
 
@@ -323,14 +308,10 @@ void ControllerImpl::OnDriverReady(bool success) {
   AttemptToFinalizeSetup();
 }
 
-void ControllerImpl::OnDriverHardRecoverComplete(bool success) {
-  DCHECK(!startup_status_.driver_ok.has_value());
-  startup_status_.driver_ok = success;
-  AttemptToFinalizeSetup();
-}
+void ControllerImpl::OnDriverHardRecoverComplete(bool success) {}
 
 void ControllerImpl::OnDownloadCreated(const DriverEntry& download) {
-  if (controller_state_ != State::READY)
+  if (initializing_internals_)
     return;
 
   Entry* entry = model_->Get(download.guid);
@@ -353,7 +334,7 @@ void ControllerImpl::OnDownloadCreated(const DriverEntry& download) {
 
 void ControllerImpl::OnDownloadFailed(const DriverEntry& download,
                                       FailureType failure_type) {
-  if (controller_state_ != State::READY)
+  if (initializing_internals_)
     return;
 
   Entry* entry = model_->Get(download.guid);
@@ -363,14 +344,7 @@ void ControllerImpl::OnDownloadFailed(const DriverEntry& download,
   }
 
   if (failure_type == FailureType::RECOVERABLE) {
-    // Because the network offline signal comes later than actual download
-    // failure, retry the download after a delay to avoid the retry to fail
-    // immediately again.
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-        FROM_HERE,
-        base::Bind(&ControllerImpl::UpdateDriverStateWithGuid,
-                   weak_ptr_factory_.GetWeakPtr(), download.guid),
-        config_->download_retry_delay);
+    UpdateDriverState(entry);
   } else {
     // TODO(dtrainor, xingliu): We probably have to prevent cancel calls from
     // coming through here as we remove downloads (especially through
@@ -380,7 +354,7 @@ void ControllerImpl::OnDownloadFailed(const DriverEntry& download,
 }
 
 void ControllerImpl::OnDownloadSucceeded(const DriverEntry& download) {
-  if (controller_state_ != State::READY)
+  if (initializing_internals_)
     return;
 
   Entry* entry = model_->Get(download.guid);
@@ -393,7 +367,7 @@ void ControllerImpl::OnDownloadSucceeded(const DriverEntry& download) {
 }
 
 void ControllerImpl::OnDownloadUpdated(const DriverEntry& download) {
-  if (controller_state_ != State::READY)
+  if (initializing_internals_)
     return;
 
   Entry* entry = model_->Get(download.guid);
@@ -416,22 +390,14 @@ void ControllerImpl::OnFileMonitorReady(bool success) {
   AttemptToFinalizeSetup();
 }
 
-void ControllerImpl::OnFileMonitorHardRecoverComplete(bool success) {
-  DCHECK(!startup_status_.file_monitor_ok.has_value());
-  startup_status_.file_monitor_ok = success;
-  AttemptToFinalizeSetup();
-}
-
 void ControllerImpl::OnModelReady(bool success) {
   DCHECK(!startup_status_.model_ok.has_value());
   startup_status_.model_ok = success;
   AttemptToFinalizeSetup();
 }
 
-void ControllerImpl::OnModelHardRecoverComplete(bool success) {
-  DCHECK(!startup_status_.model_ok.has_value());
-  startup_status_.model_ok = success;
-  AttemptToFinalizeSetup();
+void ControllerImpl::OnHardRecoverComplete(bool success) {
+  // TODO(dtrainor): Support recovery.
 }
 
 void ControllerImpl::OnItemAdded(bool success,
@@ -481,31 +447,25 @@ void ControllerImpl::OnItemRemoved(bool success,
 }
 
 void ControllerImpl::OnDeviceStatusChanged(const DeviceStatus& device_status) {
-  if (controller_state_ != State::READY)
-    return;
-
   UpdateDriverStates();
   ActivateMoreDownloads();
 }
 
 void ControllerImpl::AttemptToFinalizeSetup() {
-  DCHECK(controller_state_ == State::INITIALIZING ||
-         controller_state_ == State::RECOVERING);
-
   if (!startup_status_.Complete())
     return;
 
-  bool in_recovery = controller_state_ == State::RECOVERING;
-
-  stats::LogControllerStartupStatus(in_recovery, startup_status_);
+  stats::LogControllerStartupStatus(startup_status_);
   if (!startup_status_.Ok()) {
-    if (in_recovery) {
-      HandleUnrecoverableSetup();
-      NotifyServiceOfStartup();
-    } else {
-      StartHardRecoveryAttempt();
-    }
+    // TODO(dtrainor): Recover here.  Try to clean up any disk state and, if
+    // possible, any DownloadDriver data and continue with initialization?
 
+    // If we cannot recover, notify Clients that the service is unavailable.
+    base::ThreadTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE, base::Bind(&ControllerImpl::SendOnServiceUnavailable,
+                              weak_ptr_factory_.GetWeakPtr()));
+
+    NotifyServiceOfStartup();
     return;
   }
 
@@ -516,9 +476,9 @@ void ControllerImpl::AttemptToFinalizeSetup() {
   RemoveCleanupEligibleDownloads();
   ResolveInitialRequestStates();
 
-  NotifyClientsOfStartup(in_recovery);
+  NotifyClientsOfStartup();
 
-  controller_state_ = State::READY;
+  initializing_internals_ = false;
 
   UpdateDriverStates();
 
@@ -529,30 +489,7 @@ void ControllerImpl::AttemptToFinalizeSetup() {
   ActivateMoreDownloads();
 }
 
-void ControllerImpl::HandleUnrecoverableSetup() {
-  controller_state_ = State::UNAVAILABLE;
-
-  // If we cannot recover, notify Clients that the service is unavailable.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::Bind(&ControllerImpl::SendOnServiceUnavailable,
-                            weak_ptr_factory_.GetWeakPtr()));
-}
-
-void ControllerImpl::StartHardRecoveryAttempt() {
-  startup_status_.Reset();
-  controller_state_ = State::RECOVERING;
-
-  driver_->HardRecover();
-  model_->HardRecover();
-  file_monitor_->HardRecover(
-      base::Bind(&ControllerImpl::OnFileMonitorHardRecoverComplete,
-                 weak_ptr_factory_.GetWeakPtr()));
-}
-
 void ControllerImpl::PollActiveDriverDownloads() {
-  DCHECK(controller_state_ == State::INITIALIZING ||
-         controller_state_ == State::RECOVERING);
-
   std::set<std::string> guids = driver_->GetActiveDownloads();
 
   for (auto guid : guids) {
@@ -562,9 +499,6 @@ void ControllerImpl::PollActiveDriverDownloads() {
 }
 
 void ControllerImpl::CancelOrphanedRequests() {
-  DCHECK(controller_state_ == State::INITIALIZING ||
-         controller_state_ == State::RECOVERING);
-
   auto entries = model_->PeekEntries();
 
   std::vector<std::string> guids_to_remove;
@@ -586,9 +520,6 @@ void ControllerImpl::CancelOrphanedRequests() {
 }
 
 void ControllerImpl::CleanupUnknownFiles() {
-  DCHECK(controller_state_ == State::INITIALIZING ||
-         controller_state_ == State::RECOVERING);
-
   auto entries = model_->PeekEntries();
   std::vector<DriverEntry> driver_entries;
   for (auto* entry : entries) {
@@ -601,9 +532,6 @@ void ControllerImpl::CleanupUnknownFiles() {
 }
 
 void ControllerImpl::ResolveInitialRequestStates() {
-  DCHECK(controller_state_ == State::INITIALIZING ||
-         controller_state_ == State::RECOVERING);
-
   auto entries = model_->PeekEntries();
   for (auto* entry : entries) {
     // Pull the initial Entry::State and DriverEntry::State.
@@ -727,14 +655,8 @@ void ControllerImpl::UpdateDriverStates() {
     UpdateDriverState(entry);
 }
 
-void ControllerImpl::UpdateDriverStateWithGuid(const std::string& guid) {
-  Entry* entry = model_->Get(guid);
-  if (entry)
-    UpdateDriverState(entry);
-}
-
 void ControllerImpl::UpdateDriverState(Entry* entry) {
-  DCHECK_EQ(controller_state_, State::READY);
+  DCHECK(!initializing_internals_);
 
   if (entry->state != Entry::State::ACTIVE &&
       entry->state != Entry::State::PAUSED) {
@@ -781,7 +703,7 @@ void ControllerImpl::UpdateDriverState(Entry* entry) {
   }
 }
 
-void ControllerImpl::NotifyClientsOfStartup(bool state_lost) {
+void ControllerImpl::NotifyClientsOfStartup() {
   std::set<Entry::State> ignored_states = {Entry::State::COMPLETE};
   auto categorized = util::MapEntriesToClients(
       clients_->GetRegisteredClients(), model_->PeekEntries(), ignored_states);
@@ -790,7 +712,7 @@ void ControllerImpl::NotifyClientsOfStartup(bool state_lost) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE, base::Bind(&ControllerImpl::SendOnServiceInitialized,
                               weak_ptr_factory_.GetWeakPtr(), client_id,
-                              state_lost, categorized[client_id]));
+                              categorized[client_id]));
   }
 }
 
@@ -896,8 +818,7 @@ void ControllerImpl::ScheduleCleanupTask() {
   base::TimeDelta end_time = start_time + config_->file_cleanup_window;
 
   task_scheduler_->ScheduleTask(DownloadTaskType::CLEANUP_TASK, false, false,
-                                std::ceil(start_time.InSecondsF()),
-                                std::ceil(end_time.InSecondsF()));
+                                start_time.InSeconds(), end_time.InSeconds());
 }
 
 void ControllerImpl::ScheduleKillDownloadTaskIfNecessary() {
@@ -935,7 +856,7 @@ void ControllerImpl::KillTimedOutDownloads() {
 }
 
 void ControllerImpl::ActivateMoreDownloads() {
-  if (controller_state_ != State::READY)
+  if (initializing_internals_)
     return;
 
   // Check all the entries and the configuration to throttle number of
@@ -989,11 +910,10 @@ void ControllerImpl::HandleExternalDownload(const std::string& guid,
 
 void ControllerImpl::SendOnServiceInitialized(
     DownloadClient client_id,
-    bool state_lost,
     const std::vector<std::string>& guids) {
   auto* client = clients_->GetClient(client_id);
   DCHECK(client);
-  client->OnServiceInitialized(state_lost, guids);
+  client->OnServiceInitialized(guids);
 }
 
 void ControllerImpl::SendOnServiceUnavailable() {

@@ -31,18 +31,10 @@ constexpr char kFileKeepAliveTimeMinutesConfig[] = "file_keep_alive_time";
 constexpr char kFileCleanupWindowMinutesConfig[] = "file_cleanup_window";
 
 // Configuration name for window start time.
-constexpr char kWindowStartTimeSecondsConfig[] = "window_start_time_seconds";
+constexpr char kWindowStartTimeConfig[] = "window_start_time_seconds";
 
 // Configuration name for window end time.
-constexpr char kWindowEndTimeSecondsConfig[] = "window_end_time_seconds";
-
-// Configuration name for the delay to notify network status change, measured in
-// milliseconds.
-constexpr char kNetworkChangeDelayMsConfig[] = "network_change_delay_ms";
-
-// Configuration name for the retry delay when the download is failed, measured
-// in milliseconds.
-constexpr char kDownloadRetryDelayMsConfig[] = "retry_delay_ms";
+constexpr char kWindowEndTimeConfig[] = "window_end_time_seconds";
 
 // Download service configuration.
 //
@@ -79,17 +71,11 @@ struct Configuration {
 
   // The start window time in seconds for OS to schedule background task.
   // The OS will trigger the background task in this window.
-  base::TimeDelta window_start_time;
+  uint32_t window_start_time_seconds;
 
   // The end window time in seconds for OS to schedule background task.
   // The OS will trigger the background task in this window.
-  base::TimeDelta window_end_time;
-
-  // The delay to notify network status changes.
-  base::TimeDelta network_change_delay;
-
-  // The delay to retry a download when the download is failed.
-  base::TimeDelta download_retry_delay;
+  uint32_t window_end_time_seconds;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(Configuration);

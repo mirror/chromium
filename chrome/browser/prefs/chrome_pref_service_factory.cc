@@ -438,8 +438,7 @@ std::unique_ptr<PrefService> CreateLocalState(
     base::SequencedTaskRunner* pref_io_task_runner,
     policy::PolicyService* policy_service,
     const scoped_refptr<PrefRegistry>& pref_registry,
-    bool async,
-    std::unique_ptr<PrefValueStore::Delegate> delegate) {
+    bool async) {
   sync_preferences::PrefServiceSyncableFactory factory;
   PrepareFactory(&factory, pref_filename, policy_service,
                  NULL,  // supervised_user_settings
@@ -447,7 +446,7 @@ std::unique_ptr<PrefService> CreateLocalState(
                                    std::unique_ptr<PrefFilter>()),
                  NULL,  // extension_prefs
                  async);
-  return factory.Create(pref_registry.get(), std::move(delegate));
+  return factory.Create(pref_registry.get());
 }
 
 std::unique_ptr<sync_preferences::PrefServiceSyncable> CreateProfilePrefs(

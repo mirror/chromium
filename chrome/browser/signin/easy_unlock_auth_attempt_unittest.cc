@@ -6,12 +6,10 @@
 
 #include <stddef.h>
 
-#include "base/command_line.h"
 #include "base/macros.h"
 #include "build/build_config.h"
 #include "chrome/browser/signin/easy_unlock_app_manager.h"
 #include "components/proximity_auth/screenlock_bridge.h"
-#include "components/proximity_auth/switches.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 #if defined(OS_CHROMEOS)
@@ -273,8 +271,6 @@ TEST_F(EasyUnlockAuthAttemptUnlockTest, StartWhenAuthTypeIsPassword) {
 
 TEST_F(EasyUnlockAuthAttemptUnlockTest,
        StartWhenDispatchingAuthAttemptEventFails) {
-  base::CommandLine::ForCurrentProcess()->AppendSwitch(
-      proximity_auth::switches::kDisableBluetoothLowEnergyDiscovery);
   InitScreenLock();
   ASSERT_TRUE(proximity_auth::ScreenlockBridge::Get()->IsLocked());
   ASSERT_EQ(TestLockHandler::STATE_ATTEMPTING_UNLOCK, lock_handler_->state());
@@ -433,8 +429,6 @@ TEST_F(EasyUnlockAuthAttemptSigninTest, StartWhenAuthTypeIsPassword) {
 
 TEST_F(EasyUnlockAuthAttemptSigninTest,
        StartWhenDispatchingAuthAttemptEventFails) {
-  base::CommandLine::ForCurrentProcess()->AppendSwitch(
-      proximity_auth::switches::kDisableBluetoothLowEnergyDiscovery);
   InitScreenLock();
   ASSERT_TRUE(proximity_auth::ScreenlockBridge::Get()->IsLocked());
   ASSERT_EQ(TestLockHandler::STATE_ATTEMPTING_SIGNIN, lock_handler_->state());

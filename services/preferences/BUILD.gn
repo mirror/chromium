@@ -11,11 +11,6 @@ service_manifest("manifest") {
   source = "manifest.json"
 }
 
-service_manifest("local_state_manifest") {
-  name = "local_state"
-  source = "local_state_manifest.json"
-}
-
 source_set("preferences") {
   visibility = [
     ":*",

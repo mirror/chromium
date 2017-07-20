@@ -17,7 +17,7 @@
 #include "cc/output/compositor_frame.h"
 #include "components/viz/common/surfaces/local_surface_id_allocator.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
-#include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
+#include "components/viz/service/frame_sinks/frame_sink_manager.h"
 #include "ui/gfx/transform.h"
 #include "ui/gl/gl_bindings.h"
 
@@ -196,8 +196,6 @@ void HardwareRenderer::ReclaimResources(
 void HardwareRenderer::WillDrawSurface(
     const viz::LocalSurfaceId& local_surface_id,
     const gfx::Rect& damage_rect) {}
-
-void HardwareRenderer::OnBeginFramePausedChanged(bool paused) {}
 
 // static
 ChildFrameQueue HardwareRenderer::WaitAndPruneFrameQueue(

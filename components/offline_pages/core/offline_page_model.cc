@@ -14,10 +14,16 @@ OfflinePageModel::SavePageParams::SavePageParams()
     : proposed_offline_id(OfflinePageModel::kInvalidOfflineId),
       is_background(false) {}
 
-OfflinePageModel::SavePageParams::SavePageParams(const SavePageParams& other) =
-    default;
+OfflinePageModel::SavePageParams::SavePageParams(const SavePageParams& other) {
+  url = other.url;
+  client_id = other.client_id;
+  proposed_offline_id = other.proposed_offline_id;
+  original_url = other.original_url;
+  is_background = other.is_background;
+  request_origin = other.request_origin;
+}
 
-OfflinePageModel::SavePageParams::~SavePageParams() = default;
+OfflinePageModel::SavePageParams::~SavePageParams() {}
 
 OfflinePageModel::DeletedPageInfo::DeletedPageInfo(
     int64_t offline_id,
@@ -32,8 +38,8 @@ bool OfflinePageModel::CanSaveURL(const GURL& url) {
   return url.is_valid() && url.SchemeIsHTTPOrHTTPS();
 }
 
-OfflinePageModel::OfflinePageModel() = default;
+OfflinePageModel::OfflinePageModel() {}
 
-OfflinePageModel::~OfflinePageModel() = default;
+OfflinePageModel::~OfflinePageModel() {}
 
 }  // namespace offline_pages

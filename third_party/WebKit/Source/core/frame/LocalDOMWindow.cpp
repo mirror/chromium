@@ -171,7 +171,7 @@ class PostMessageTimer final
 static void UpdateSuddenTerminationStatus(
     LocalDOMWindow* dom_window,
     bool added_listener,
-    WebSuddenTerminationDisablerType disabler_type) {
+    LocalFrameClient::SuddenTerminationDisablerType disabler_type) {
   Platform::Current()->SuddenTerminationChanged(!added_listener);
   if (dom_window->GetFrame() && dom_window->GetFrame()->Client())
     dom_window->GetFrame()->Client()->SuddenTerminationDisablerChanged(
@@ -191,60 +191,80 @@ static DOMWindowSet& WindowsWithBeforeUnloadEventListeners() {
   return windows_with_before_unload_event_listeners;
 }
 
-static void TrackUnloadEventListener(LocalDOMWindow* dom_window) {
+static void AddUnloadEventListener(LocalDOMWindow* dom_window) {
   DOMWindowSet& set = WindowsWithUnloadEventListeners();
-  if (set.insert(dom_window).is_new_entry) {
-    // The first unload handler was added.
-    UpdateSuddenTerminationStatus(dom_window, true, kUnloadHandler);
+  if (set.IsEmpty()) {
+    UpdateSuddenTerminationStatus(dom_window, true,
+                                  LocalFrameClient::kUnloadHandler);
   }
+
+  set.insert(dom_window);
 }
 
-static void UntrackUnloadEventListener(LocalDOMWindow* dom_window) {
+static void RemoveUnloadEventListener(LocalDOMWindow* dom_window) {
   DOMWindowSet& set = WindowsWithUnloadEventListeners();
   DOMWindowSet::iterator it = set.find(dom_window);
   if (it == set.end())
     return;
-  if (set.erase(it)) {
-    // The last unload handler was removed.
-    UpdateSuddenTerminationStatus(dom_window, false, kUnloadHandler);
+  set.erase(it);
+  if (set.IsEmpty()) {
+    UpdateSuddenTerminationStatus(dom_window, false,
+                                  LocalFrameClient::kUnloadHandler);
   }
 }
 
-static void UntrackAllUnloadEventListeners(LocalDOMWindow* dom_window) {
+static void RemoveAllUnloadEventListeners(LocalDOMWindow* dom_window) {
   DOMWindowSet& set = WindowsWithUnloadEventListeners();
   DOMWindowSet::iterator it = set.find(dom_window);
   if (it == set.end())
     return;
   set.RemoveAll(it);
-  UpdateSuddenTerminationStatus(dom_window, false, kUnloadHandler);
-}
-
-static void TrackBeforeUnloadEventListener(LocalDOMWindow* dom_window) {
-  DOMWindowSet& set = WindowsWithBeforeUnloadEventListeners();
-  if (set.insert(dom_window).is_new_entry) {
-    // The first beforeunload handler was added.
-    UpdateSuddenTerminationStatus(dom_window, true, kBeforeUnloadHandler);
+  if (set.IsEmpty()) {
+    UpdateSuddenTerminationStatus(dom_window, false,
+                                  LocalFrameClient::kUnloadHandler);
   }
 }
 
-static void UntrackBeforeUnloadEventListener(LocalDOMWindow* dom_window) {
+static void AddBeforeUnloadEventListener(LocalDOMWindow* dom_window) {
+  DOMWindowSet& set = WindowsWithBeforeUnloadEventListeners();
+  if (set.IsEmpty()) {
+    UpdateSuddenTerminationStatus(dom_window, true,
+                                  LocalFrameClient::kBeforeUnloadHandler);
+  }
+
+  set.insert(dom_window);
+}
+
+static void RemoveBeforeUnloadEventListener(LocalDOMWindow* dom_window) {
   DOMWindowSet& set = WindowsWithBeforeUnloadEventListeners();
   DOMWindowSet::iterator it = set.find(dom_window);
   if (it == set.end())
     return;
-  if (set.erase(it)) {
-    // The last beforeunload handler was removed.
-    UpdateSuddenTerminationStatus(dom_window, false, kBeforeUnloadHandler);
+  set.erase(it);
+  if (set.IsEmpty()) {
+    UpdateSuddenTerminationStatus(dom_window, false,
+                                  LocalFrameClient::kBeforeUnloadHandler);
   }
 }
 
-static void UntrackAllBeforeUnloadEventListeners(LocalDOMWindow* dom_window) {
+static void RemoveAllBeforeUnloadEventListeners(LocalDOMWindow* dom_window) {
   DOMWindowSet& set = WindowsWithBeforeUnloadEventListeners();
   DOMWindowSet::iterator it = set.find(dom_window);
   if (it == set.end())
     return;
   set.RemoveAll(it);
-  UpdateSuddenTerminationStatus(dom_window, false, kBeforeUnloadHandler);
+  if (set.IsEmpty()) {
+    UpdateSuddenTerminationStatus(dom_window, false,
+                                  LocalFrameClient::kBeforeUnloadHandler);
+  }
+}
+
+static bool AllowsBeforeUnloadListeners(LocalDOMWindow* window) {
+  DCHECK(window);
+  LocalFrame* frame = window->GetFrame();
+  if (!frame)
+    return false;
+  return frame->IsMainFrame();
 }
 
 LocalDOMWindow::LocalDOMWindow(LocalFrame& frame)
@@ -1043,8 +1063,6 @@ double LocalDOMWindow::scrollX() const {
 
   document()->UpdateStyleAndLayoutIgnorePendingStylesheets();
 
-  // TODO(bokan): This is wrong when the document.rootScroller is non-default.
-  // crbug.com/505516.
   double viewport_x =
       view->LayoutViewportScrollableArea()->GetScrollOffset().Width();
   return AdjustScrollForAbsoluteZoom(viewport_x, GetFrame()->PageZoomFactor());
@@ -1063,8 +1081,6 @@ double LocalDOMWindow::scrollY() const {
 
   document()->UpdateStyleAndLayoutIgnorePendingStylesheets();
 
-  // TODO(bokan): This is wrong when the document.rootScroller is non-default.
-  // crbug.com/505516.
   double viewport_y =
       view->LayoutViewportScrollableArea()->GetScrollOffset().Height();
   return AdjustScrollForAbsoluteZoom(viewport_y, GetFrame()->PageZoomFactor());
@@ -1422,11 +1438,17 @@ void LocalDOMWindow::AddedEventListener(
 
   if (event_type == EventTypeNames::unload) {
     UseCounter::Count(document(), WebFeature::kDocumentUnloadRegistered);
-    TrackUnloadEventListener(this);
+    AddUnloadEventListener(this);
   } else if (event_type == EventTypeNames::beforeunload) {
     UseCounter::Count(document(), WebFeature::kDocumentBeforeUnloadRegistered);
-    TrackBeforeUnloadEventListener(this);
-    if (GetFrame() && !GetFrame()->IsMainFrame()) {
+    if (AllowsBeforeUnloadListeners(this)) {
+      // This is confusingly named. It doesn't actually add the listener. It
+      // just increments a count so that we know we have listeners registered
+      // for the purposes of determining if we can fast terminate the renderer
+      // process.
+      AddBeforeUnloadEventListener(this);
+    } else {
+      // Subframes return false from allowsBeforeUnloadListeners.
       UseCounter::Count(document(),
                         WebFeature::kSubFrameBeforeUnloadRegistered);
     }
@@ -1446,9 +1468,10 @@ void LocalDOMWindow::RemovedEventListener(
   }
 
   if (event_type == EventTypeNames::unload) {
-    UntrackUnloadEventListener(this);
-  } else if (event_type == EventTypeNames::beforeunload) {
-    UntrackBeforeUnloadEventListener(this);
+    RemoveUnloadEventListener(this);
+  } else if (event_type == EventTypeNames::beforeunload &&
+             AllowsBeforeUnloadListeners(this)) {
+    RemoveBeforeUnloadEventListener(this);
   }
 }
 
@@ -1539,8 +1562,8 @@ void LocalDOMWindow::RemoveAllEventListeners() {
     GetFrame()->GetPage()->GetEventHandlerRegistry().DidRemoveAllEventHandlers(
         *this);
 
-  UntrackAllUnloadEventListeners(this);
-  UntrackAllBeforeUnloadEventListeners(this);
+  RemoveAllUnloadEventListeners(this);
+  RemoveAllBeforeUnloadEventListeners(this);
 }
 
 void LocalDOMWindow::FinishedLoading() {

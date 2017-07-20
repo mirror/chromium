@@ -1,5 +1,5 @@
 (async function(testRunner) {
-  let {page, session, dp} = await testRunner.startBlank('Tests continueToLocation functionality.');
+  let {page, session, dp} = await testRunner.startBlank('');
 
   function statementsExample()
   {

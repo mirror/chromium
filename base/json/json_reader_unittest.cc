@@ -606,7 +606,7 @@ TEST(JSONReaderTest, StringOptimizations) {
         "    \"b\""
         "  ]"
         "}",
-        JSON_PARSE_RFC);
+        JSON_DETACHABLE_CHILDREN);
     ASSERT_TRUE(root);
 
     DictionaryValue* root_dict = nullptr;

@@ -57,6 +57,7 @@ class WebSocketManager::Handle : public base::SupportsUserData::Data,
 void WebSocketManager::CreateWebSocket(
     int process_id,
     int frame_id,
+    const service_manager::BindSourceInfo& source_info,
     blink::mojom::WebSocketRequest request) {
   DCHECK(BrowserThread::CurrentlyOn(BrowserThread::UI));
 

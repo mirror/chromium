@@ -131,7 +131,7 @@ class MediaControlsOrientationLockDelegateTest : public ::testing::Test {
       MediaControlsOrientationLockDelegate::DeviceOrientationType;
 
   static constexpr TimeDelta GetUnlockDelay() {
-    return MediaControlsOrientationLockDelegate::kLockToAnyDelay;
+    return MediaControlsOrientationLockDelegate::kUnlockDelay;
   }
 
   void SetUp() override {
@@ -795,10 +795,9 @@ TEST_F(MediaControlsOrientationLockAndRotateToFullscreenDelegateTest,
   RotateDeviceTo(90 /* landscape primary */);
   testing::RunDelayedTasks(GetUnlockDelay());
 
-  // MediaControlsOrientationLockDelegate should lock to "any" orientation.
-  CheckStateMaybeLockedFullscreen();
-  EXPECT_EQ(kWebScreenOrientationLockAny, DelegateOrientationLock());
-  EXPECT_TRUE(DelegateWillUnlockFullscreen());
+  // MediaControlsOrientationLockDelegate should unlock orientation.
+  CheckStatePendingFullscreen();
+  EXPECT_FALSE(DelegateWillUnlockFullscreen());
 }
 
 TEST_F(MediaControlsOrientationLockAndRotateToFullscreenDelegateTest,
@@ -857,10 +856,9 @@ TEST_F(MediaControlsOrientationLockAndRotateToFullscreenDelegateTest,
   RotateDeviceTo(90 /* landscape primary */);
   testing::RunDelayedTasks(GetUnlockDelay());
 
-  // MediaControlsOrientationLockDelegate should lock to "any" orientation.
-  CheckStateMaybeLockedFullscreen();
-  EXPECT_EQ(kWebScreenOrientationLockAny, DelegateOrientationLock());
-  EXPECT_TRUE(DelegateWillUnlockFullscreen());
+  // MediaControlsOrientationLockDelegate should unlock orientation.
+  CheckStatePendingFullscreen();
+  EXPECT_FALSE(DelegateWillUnlockFullscreen());
   EXPECT_TRUE(Video().IsFullscreen());
 }
 
@@ -962,10 +960,9 @@ TEST_F(MediaControlsOrientationLockAndRotateToFullscreenDelegateTest,
   RotateDeviceTo(90 /* landscape primary */);
   testing::RunDelayedTasks(GetUnlockDelay());
 
-  // MediaControlsOrientationLockDelegate should lock to "any" orientation.
-  CheckStateMaybeLockedFullscreen();
-  EXPECT_EQ(kWebScreenOrientationLockAny, DelegateOrientationLock());
-  EXPECT_TRUE(DelegateWillUnlockFullscreen());
+  // MediaControlsOrientationLockDelegate should unlock orientation.
+  CheckStatePendingFullscreen();
+  EXPECT_FALSE(DelegateWillUnlockFullscreen());
 }
 
 TEST_F(MediaControlsOrientationLockAndRotateToFullscreenDelegateTest,
@@ -977,14 +974,13 @@ TEST_F(MediaControlsOrientationLockAndRotateToFullscreenDelegateTest,
   InitVideo(640, 480);
   SetIsAutoRotateEnabledByUser(true);
 
-  // Initially fullscreen, locked to "any" orientation.
+  // Initially fullscreen, unlocked orientation.
   SimulateEnterFullscreen();
   RotateDeviceTo(90 /* landscape primary */);
   testing::RunDelayedTasks(GetUnlockDelay());
   ASSERT_TRUE(Video().IsFullscreen());
-  CheckStateMaybeLockedFullscreen();
-  EXPECT_EQ(kWebScreenOrientationLockAny, DelegateOrientationLock());
-  EXPECT_TRUE(DelegateWillUnlockFullscreen());
+  CheckStatePendingFullscreen();
+  EXPECT_FALSE(DelegateWillUnlockFullscreen());
 
   // Simulate user rotating their device to portrait triggering a screen
   // orientation change.
@@ -995,7 +991,7 @@ TEST_F(MediaControlsOrientationLockAndRotateToFullscreenDelegateTest,
   // MediaControlsRotateToFullscreenDelegate should exit fullscreen.
   EXPECT_FALSE(Video().IsFullscreen());
 
-  // MediaControlsOrientationLockDelegate should unlock screen orientation.
+  // MediaControlsOrientationLockDelegate should remain unlocked.
   CheckStatePendingFullscreen();
   EXPECT_FALSE(DelegateWillUnlockFullscreen());
 }
@@ -1009,20 +1005,19 @@ TEST_F(MediaControlsOrientationLockAndRotateToFullscreenDelegateTest,
   InitVideo(640, 480);
   SetIsAutoRotateEnabledByUser(true);
 
-  // Initially fullscreen, locked to "any" orientation.
+  // Initially fullscreen, unlocked orientation.
   SimulateEnterFullscreen();
   RotateDeviceTo(90 /* landscape primary */);
   testing::RunDelayedTasks(GetUnlockDelay());
   ASSERT_TRUE(Video().IsFullscreen());
-  CheckStateMaybeLockedFullscreen();
-  EXPECT_EQ(kWebScreenOrientationLockAny, DelegateOrientationLock());
-  EXPECT_TRUE(DelegateWillUnlockFullscreen());
+  CheckStatePendingFullscreen();
+  EXPECT_FALSE(DelegateWillUnlockFullscreen());
 
   // Simulate user clicking on media controls exit fullscreen button.
   SimulateExitFullscreen();
   EXPECT_FALSE(Video().IsFullscreen());
 
-  // MediaControlsOrientationLockDelegate should unlock screen orientation.
+  // MediaControlsOrientationLockDelegate should remain unlocked.
   CheckStatePendingFullscreen();
   EXPECT_FALSE(DelegateWillUnlockFullscreen());
 }
@@ -1263,10 +1258,9 @@ TEST_F(MediaControlsOrientationLockAndRotateToFullscreenDelegateTest,
   RotateDeviceTo(0 /* portrait primary */);
   testing::RunDelayedTasks(GetUnlockDelay());
 
-  // MediaControlsOrientationLockDelegate should lock to "any" orientation.
-  CheckStateMaybeLockedFullscreen();
-  EXPECT_EQ(kWebScreenOrientationLockAny, DelegateOrientationLock());
-  EXPECT_TRUE(DelegateWillUnlockFullscreen());
+  // MediaControlsOrientationLockDelegate should unlock orientation.
+  CheckStatePendingFullscreen();
+  EXPECT_FALSE(DelegateWillUnlockFullscreen());
   EXPECT_TRUE(Video().IsFullscreen());
 
   // Simulate user rotating their device to landscape triggering a screen
@@ -1277,7 +1271,7 @@ TEST_F(MediaControlsOrientationLockAndRotateToFullscreenDelegateTest,
   // MediaControlsRotateToFullscreenDelegate should exit fullscreen.
   EXPECT_FALSE(Video().IsFullscreen());
 
-  // MediaControlsOrientationLockDelegate should unlock screen orientation.
+  // MediaControlsOrientationLockDelegate should remain unlocked.
   CheckStatePendingFullscreen();
   EXPECT_FALSE(DelegateWillUnlockFullscreen());
 }
@@ -1315,10 +1309,9 @@ TEST_F(MediaControlsOrientationLockAndRotateToFullscreenDelegateTest,
   RotateDeviceTo(0 /* landscape primary */);
   testing::RunDelayedTasks(GetUnlockDelay());
 
-  // MediaControlsOrientationLockDelegate should lock to "any" orientation.
-  CheckStateMaybeLockedFullscreen();
-  EXPECT_EQ(kWebScreenOrientationLockAny, DelegateOrientationLock());
-  EXPECT_TRUE(DelegateWillUnlockFullscreen());
+  // MediaControlsOrientationLockDelegate should unlock orientation.
+  CheckStatePendingFullscreen();
+  EXPECT_FALSE(DelegateWillUnlockFullscreen());
   EXPECT_TRUE(Video().IsFullscreen());
 
   // Simulate user rotating their device to portrait triggering a screen
@@ -1329,7 +1322,7 @@ TEST_F(MediaControlsOrientationLockAndRotateToFullscreenDelegateTest,
   // MediaControlsRotateToFullscreenDelegate should exit fullscreen.
   EXPECT_FALSE(Video().IsFullscreen());
 
-  // MediaControlsOrientationLockDelegate should unlock screen orientation.
+  // MediaControlsOrientationLockDelegate should remain unlocked.
   CheckStatePendingFullscreen();
   EXPECT_FALSE(DelegateWillUnlockFullscreen());
 }
@@ -1404,10 +1397,9 @@ TEST_F(MediaControlsOrientationLockAndRotateToFullscreenDelegateTest,
   // Wait for the rest of the unlock delay.
   testing::RunDelayedTasks(GetUnlockDelay() - kMinUnlockDelay);
 
-  // MediaControlsOrientationLockDelegate should've locked to "any" orientation.
-  CheckStateMaybeLockedFullscreen();
-  EXPECT_EQ(kWebScreenOrientationLockAny, DelegateOrientationLock());
-  EXPECT_TRUE(DelegateWillUnlockFullscreen());
+  // MediaControlsOrientationLockDelegate should now have unlocked.
+  CheckStatePendingFullscreen();
+  EXPECT_FALSE(DelegateWillUnlockFullscreen());
 }
 
 }  // namespace blink

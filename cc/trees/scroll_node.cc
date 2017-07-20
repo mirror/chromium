@@ -24,9 +24,7 @@ ScrollNode::ScrollNode()
       should_flatten(false),
       user_scrollable_horizontal(false),
       user_scrollable_vertical(false),
-      transform_id(0),
-      scroll_boundary_behavior(
-          ScrollBoundaryBehavior::kScrollBoundaryBehaviorTypeAuto) {}
+      transform_id(0) {}
 
 ScrollNode::ScrollNode(const ScrollNode& other) = default;
 
@@ -44,8 +42,7 @@ bool ScrollNode::operator==(const ScrollNode& other) const {
          should_flatten == other.should_flatten &&
          user_scrollable_horizontal == other.user_scrollable_horizontal &&
          user_scrollable_vertical == other.user_scrollable_vertical &&
-         element_id == other.element_id && transform_id == other.transform_id &&
-         scroll_boundary_behavior == other.scroll_boundary_behavior;
+         element_id == other.element_id && transform_id == other.transform_id;
 }
 
 void ScrollNode::AsValueInto(base::trace_event::TracedValue* value) const {
@@ -62,8 +59,6 @@ void ScrollNode::AsValueInto(base::trace_event::TracedValue* value) const {
 
   element_id.AddToTracedValue(value);
   value->SetInteger("transform_id", transform_id);
-  value->SetInteger("scroll_boundary_behavior_x", scroll_boundary_behavior.x);
-  value->SetInteger("scroll_boundary_behavior_y", scroll_boundary_behavior.y);
 }
 
 }  // namespace cc

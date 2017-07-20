@@ -194,13 +194,11 @@ TEST_F(CastMediaSinkServiceTest, TestOnDnsSdEvent) {
   // Add dns services.
   DnsSdRegistry::DnsSdServiceList service_list{service1, service2};
 
-  cast_channel::MockCastSocket::MockOnOpenCallback callback1;
-  cast_channel::MockCastSocket::MockOnOpenCallback callback2;
-  EXPECT_CALL(*mock_cast_socket_service_,
-              OpenSocketInternal(ip_endpoint1, _, _, _))
+  cast_channel::CastSocket::OnOpenCallback callback1;
+  cast_channel::CastSocket::OnOpenCallback callback2;
+  EXPECT_CALL(*mock_cast_socket_service_, OpenSocket(ip_endpoint1, _, _, _))
       .WillOnce(DoAll(SaveArg<2>(&callback1), Return(1)));
-  EXPECT_CALL(*mock_cast_socket_service_,
-              OpenSocketInternal(ip_endpoint2, _, _, _))
+  EXPECT_CALL(*mock_cast_socket_service_, OpenSocket(ip_endpoint2, _, _, _))
       .WillOnce(DoAll(SaveArg<2>(&callback2), Return(2)));
 
   // Invoke CastSocketService::OpenSocket on the IO thread.
@@ -238,10 +236,8 @@ TEST_F(CastMediaSinkServiceTest, TestMultipleOnDnsSdEvent) {
   media_sink_service_->OnDnsSdEvent(CastMediaSinkService::kCastServiceType,
                                     service_list1);
 
-  EXPECT_CALL(*mock_cast_socket_service_,
-              OpenSocketInternal(ip_endpoint1, _, _, _));
-  EXPECT_CALL(*mock_cast_socket_service_,
-              OpenSocketInternal(ip_endpoint2, _, _, _));
+  EXPECT_CALL(*mock_cast_socket_service_, OpenSocket(ip_endpoint1, _, _, _));
+  EXPECT_CALL(*mock_cast_socket_service_, OpenSocket(ip_endpoint2, _, _, _));
   base::RunLoop().RunUntilIdle();
 
   // Channel 2 opened.
@@ -252,10 +248,8 @@ TEST_F(CastMediaSinkServiceTest, TestMultipleOnDnsSdEvent) {
   media_sink_service_->OnDnsSdEvent(CastMediaSinkService::kCastServiceType,
                                     service_list2);
 
-  EXPECT_CALL(*mock_cast_socket_service_,
-              OpenSocketInternal(ip_endpoint2, _, _, _));
-  EXPECT_CALL(*mock_cast_socket_service_,
-              OpenSocketInternal(ip_endpoint3, _, _, _));
+  EXPECT_CALL(*mock_cast_socket_service_, OpenSocket(ip_endpoint2, _, _, _));
+  EXPECT_CALL(*mock_cast_socket_service_, OpenSocket(ip_endpoint3, _, _, _));
   base::RunLoop().RunUntilIdle();
 
   // Channel 1 and 3 opened.
@@ -279,10 +273,8 @@ TEST_F(CastMediaSinkServiceTest, TestTimer) {
   media_sink_service_->OnDnsSdEvent(CastMediaSinkService::kCastServiceType,
                                     service_list1);
 
-  EXPECT_CALL(*mock_cast_socket_service_,
-              OpenSocketInternal(ip_endpoint1, _, _, _));
-  EXPECT_CALL(*mock_cast_socket_service_,
-              OpenSocketInternal(ip_endpoint2, _, _, _));
+  EXPECT_CALL(*mock_cast_socket_service_, OpenSocket(ip_endpoint1, _, _, _));
+  EXPECT_CALL(*mock_cast_socket_service_, OpenSocket(ip_endpoint2, _, _, _));
   base::RunLoop().RunUntilIdle();
 
   // Channel 2 is opened.

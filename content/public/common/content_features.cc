@@ -239,10 +239,6 @@ const base::Feature kPepper3DImageChromium {
 const base::Feature kRenderingPipelineThrottling{
     "RenderingPipelineThrottling", base::FEATURE_ENABLED_BY_DEFAULT};
 
-// Collect renderer peak memory usage during page loads.
-const base::Feature kReportRendererPeakMemoryStats{
-    "ReportRendererPeakMemoryStats", base::FEATURE_DISABLED_BY_DEFAULT};
-
 // Require camera/mic requests from pepper plugins to be made from secure
 // origins.
 const base::Feature kRequireSecureOriginsForPepperMediaRequests{
@@ -405,10 +401,6 @@ const base::Feature kSendBeaconThrowForBlobWithNonSimpleType{
 const base::Feature kAndroidAutofillAccessibility{
     "AndroidAutofillAccessibility", base::FEATURE_ENABLED_BY_DEFAULT};
 
-// Enables hiding incorrectly-sized frames while in fullscreen.
-const base::Feature kHideIncorrectlySizedFullscreenFrames{
-    "HideIncorrectlySizedFullscreenFrames", base::FEATURE_ENABLED_BY_DEFAULT};
-
 // Service worker based payment apps as defined by w3c here:
 // https://w3c.github.io/webpayments-payment-apps-api/
 const base::Feature kServiceWorkerPaymentApps{
@@ -419,12 +411,6 @@ const base::Feature kServiceWorkerPaymentApps{
 // https://w3c.github.io/web-nfc/
 const base::Feature kWebNfc{"WebNFC", base::FEATURE_DISABLED_BY_DEFAULT};
 #endif
-
-// Controls whether PreferCompositingToLCDText is forced off, even for
-// screens with high resolution.
-const base::Feature kDisablePreferCompositingToLCDTextOnLowEndAndroid{
-    "DisablePreferCompositingToLCDTextOnLowEndAndroid",
-    base::FEATURE_DISABLED_BY_DEFAULT};
 
 #if defined(OS_WIN)
 // Emergency "off switch" for new Windows sandbox security mitigation,

@@ -11,6 +11,10 @@
 #include "device/bluetooth/public/interfaces/test/fake_bluetooth.mojom.h"
 #include "device/bluetooth/test/fake_central.h"
 
+namespace service_manager {
+struct BindSourceInfo;
+}
+
 namespace bluetooth {
 
 // Implementation of FakeBluetooth in
@@ -22,7 +26,8 @@ class FakeBluetooth : NON_EXPORTED_BASE(public mojom::FakeBluetooth) {
   FakeBluetooth();
   ~FakeBluetooth() override;
 
-  static void Create(mojom::FakeBluetoothRequest request);
+  static void Create(const service_manager::BindSourceInfo& source_info,
+                     mojom::FakeBluetoothRequest request);
 
   void SetLESupported(bool available, SetLESupportedCallback callback) override;
   void SimulateCentral(mojom::CentralState state,

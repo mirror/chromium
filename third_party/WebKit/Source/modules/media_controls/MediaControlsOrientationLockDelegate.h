@@ -103,12 +103,6 @@ class MediaControlsOrientationLockDelegate final : public EventListener {
   // otherwise.
   void MaybeLockOrientation();
 
-  // Changes a previously locked screen orientation to instead be locked to
-  // the "any" orientation that allows accelerometer-based rotation. This is
-  // not the same as unlocking (which returns to the "default" orientation,
-  // which may in fact be more restrictive).
-  void ChangeLockToAnyOrientation();
-
   // Unlocks the screen orientation if the screen orientation was previously
   // locked.
   void MaybeUnlockOrientation();
@@ -119,12 +113,12 @@ class MediaControlsOrientationLockDelegate final : public EventListener {
   MODULES_EXPORT DeviceOrientationType
   ComputeDeviceOrientation(DeviceOrientationData*) const;
 
-  void MaybeLockToAnyIfDeviceOrientationMatchesVideo(DeviceOrientationEvent*);
+  void MaybeUnlockIfDeviceOrientationMatchesVideo(DeviceOrientationEvent*);
 
-  // Delay before `MaybeLockToAnyIfDeviceOrientationMatchesVideo` changes lock.
+  // Delay before unlocking - see `MaybeUnlockIfDeviceOrientationMatchesVideo`.
   // Emprically, 200ms is too short, but 250ms avoids glitches. 500ms gives us
   // a 2x margin in case the device is running slow, without being noticeable.
-  MODULES_EXPORT static constexpr TimeDelta kLockToAnyDelay =
+  MODULES_EXPORT static constexpr TimeDelta kUnlockDelay =
       TimeDelta::FromMilliseconds(500);
 
   // Current state of the object. See comment at the top of the file for a
@@ -135,7 +129,7 @@ class MediaControlsOrientationLockDelegate final : public EventListener {
   WebScreenOrientationLockType locked_orientation_ =
       kWebScreenOrientationLockDefault /* unlocked */;
 
-  TaskHandle lock_to_any_task_;
+  TaskHandle unlock_task_;
 
   device::mojom::blink::ScreenOrientationListenerPtr monitor_;
 

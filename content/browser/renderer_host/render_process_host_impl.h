@@ -81,7 +81,6 @@ class RenderWidgetHelper;
 class RenderWidgetHost;
 class RenderWidgetHostImpl;
 class ResourceMessageFilter;
-class SiteInstance;
 class SiteInstanceImpl;
 class StoragePartition;
 class StoragePartitionImpl;
@@ -116,29 +115,9 @@ class CONTENT_EXPORT RenderProcessHostImpl
       public NON_EXPORTED_BASE(mojom::AssociatedInterfaceProvider),
       public NON_EXPORTED_BASE(mojom::RendererHost) {
  public:
-  // Use the spare RenderProcessHost if it exists, or create a new one. This
-  // should be the usual way to get a new RenderProcessHost.
-  // If |storage_partition_impl| is null, the default partition from the
-  // browser_context is used, using |site_instance| (for which a null value is
-  // legal).
-  static RenderProcessHost* CreateOrUseSpareRenderProcessHost(
-      BrowserContext* browser_context,
-      StoragePartitionImpl* storage_partition_impl,
-      SiteInstance* site_instance,
-      bool is_for_guests_only);
-
-  // Create a new RenderProcessHost. In most cases
-  // CreateOrUseSpareRenderProcessHost, above, should be used instead.
-  // If |storage_partition_impl| is null, the default partition from the
-  // browser_context is used, using |site_instance| (for which a null value is
-  // legal). |site_instance| is not used if |storage_partition_impl| is not
-  // null.
-  static RenderProcessHost* CreateRenderProcessHost(
-      BrowserContext* browser_context,
-      StoragePartitionImpl* storage_partition_impl,
-      SiteInstance* site_instance,
-      bool is_for_guests_only);
-
+  RenderProcessHostImpl(BrowserContext* browser_context,
+                        StoragePartitionImpl* storage_partition_impl,
+                        bool is_for_guests_only);
   ~RenderProcessHostImpl() override;
 
   // RenderProcessHost implementation (public portion).
@@ -218,8 +197,6 @@ class CONTENT_EXPORT RenderProcessHostImpl
   bool IsUnused() override;
   void SetIsUsed() override;
 
-  bool HostHasNotBeenUsed() override;
-
   mojom::RouteProvider* GetRemoteRouteProvider();
 
   // IPC::Sender via RenderProcessHost.
@@ -293,11 +270,6 @@ class CONTENT_EXPORT RenderProcessHostImpl
       BrowserContext* browser_context,
       SiteInstanceImpl* site_instance);
 
-  // Cleanup and remove any spare renderer. This should be used when a
-  // navigation has occurred or will be occurring that will not use the spare
-  // renderer and resources should be cleaned up.
-  static void CleanupSpareRenderProcessHost();
-
   static base::MessageLoop* GetInProcessRendererThreadForTesting();
 
   // This forces a renderer that is running "in process" to shut down.
@@ -369,10 +341,6 @@ class CONTENT_EXPORT RenderProcessHostImpl
   viz::SharedBitmapAllocationNotifierImpl* GetSharedBitmapAllocationNotifier()
       override;
 
-  // Return the spare RenderProcessHost, if it exists. There is at most one
-  // globally-used spare RenderProcessHost at any time.
-  static RenderProcessHost* GetSpareRenderProcessHostForTesting();
-
  protected:
   // A proxy for our IPC::Channel that lives on the IO thread.
   std::unique_ptr<IPC::ChannelProxy> channel_;
@@ -398,12 +366,6 @@ class CONTENT_EXPORT RenderProcessHostImpl
   friend class VisitRelayingRenderProcessHost;
   class ConnectionFilterController;
   class ConnectionFilterImpl;
-
-  // Use CreateRenderProcessHost() instead of calling this constructor
-  // directly.
-  RenderProcessHostImpl(BrowserContext* browser_context,
-                        StoragePartitionImpl* storage_partition_impl,
-                        bool is_for_guests_only);
 
   // Initializes a new IPC::ChannelProxy in |channel_|, which will be connected
   // to the next child process launched for this host, if any.
@@ -434,16 +396,24 @@ class CONTENT_EXPORT RenderProcessHostImpl
 
   void BindRouteProvider(mojom::RouteProviderAssociatedRequest request);
 
-  void CreateMusGpuRequest(ui::mojom::GpuRequest request);
+  void CreateMusGpuRequest(const service_manager::BindSourceInfo& source_info,
+                           ui::mojom::GpuRequest request);
   void CreateOffscreenCanvasProvider(
+      const service_manager::BindSourceInfo& source_info,
       blink::mojom::OffscreenCanvasProviderRequest request);
-  void BindFrameSinkProvider(mojom::FrameSinkProviderRequest request);
+  void BindFrameSinkProvider(const service_manager::BindSourceInfo& source_info,
+                             mojom::FrameSinkProviderRequest request);
   void BindSharedBitmapAllocationNotifier(
+      const service_manager::BindSourceInfo& source_info,
       cc::mojom::SharedBitmapAllocationNotifierRequest request);
   void CreateStoragePartitionService(
+      const service_manager::BindSourceInfo& source_info,
       mojom::StoragePartitionServiceRequest request);
-  void CreateRendererHost(mojom::RendererHostRequest request);
-  void CreateURLLoaderFactory(mojom::URLLoaderFactoryRequest request);
+  void CreateRendererHost(const service_manager::BindSourceInfo& source_info,
+                          mojom::RendererHostRequest request);
+  void CreateURLLoaderFactory(
+      const service_manager::BindSourceInfo& source_info,
+      mojom::URLLoaderFactoryRequest request);
 
   // Control message handlers.
   void OnShutdownRequest();
@@ -509,7 +479,8 @@ class CONTENT_EXPORT RenderProcessHostImpl
 
   template <typename InterfaceType>
   using AddInterfaceCallback =
-      base::Callback<void(mojo::InterfaceRequest<InterfaceType>)>;
+      base::Callback<void(const service_manager::BindSourceInfo&,
+                          mojo::InterfaceRequest<InterfaceType>)>;
 
   template <typename CallbackType>
   struct InterfaceGetter;
@@ -519,10 +490,11 @@ class CONTENT_EXPORT RenderProcessHostImpl
     static void GetInterfaceOnUIThread(
         base::WeakPtr<RenderProcessHostImpl> weak_host,
         const AddInterfaceCallback<InterfaceType>& callback,
+        const service_manager::BindSourceInfo& source_info,
         mojo::InterfaceRequest<InterfaceType> request) {
       if (!weak_host)
         return;
-      callback.Run(std::move(request));
+      callback.Run(source_info, std::move(request));
     }
   };
 

@@ -36,8 +36,7 @@ TEST_F(LayerTreeHostFiltersPixelTest, BackgroundFilterBlur) {
   background->AddChild(blur);
 
   FilterOperations filters;
-  filters.Append(FilterOperation::CreateBlurFilter(
-      2.f, SkBlurImageFilter::kClamp_TileMode));
+  filters.Append(FilterOperation::CreateBlurFilter(2.f));
   blur->SetBackgroundFilters(filters);
 
 #if defined(OS_WIN)
@@ -78,13 +77,12 @@ TEST_F(LayerTreeHostFiltersPixelTest, BackgroundFilterBlurOutsets) {
   background->AddChild(blur);
 
   FilterOperations filters;
-  filters.Append(FilterOperation::CreateBlurFilter(
-      5.f, SkBlurImageFilter::kClamp_TileMode));
+  filters.Append(FilterOperation::CreateBlurFilter(5.f));
   blur->SetBackgroundFilters(filters);
 
 #if defined(OS_WIN)
-  // Windows has 5.9325% pixels by at most 2: crbug.com/259922
-  float percentage_pixels_large_error = 6.0f;
+  // Windows has 5.6075% pixels by at most 2: crbug.com/259922
+  float percentage_pixels_large_error = 5.7f;
   float percentage_pixels_small_error = 0.0f;
   float average_error_allowed_in_bad_pixels = 2.f;
   int large_error_allowed = 2;
@@ -140,8 +138,7 @@ TEST_F(LayerTreeHostFiltersPixelTest, BackgroundFilterBlurOffAxis) {
   blur->SetTransform(blur_transform);
 
   FilterOperations filters;
-  filters.Append(FilterOperation::CreateBlurFilter(
-      2.f, SkBlurImageFilter::kClamp_TileMode));
+  filters.Append(FilterOperation::CreateBlurFilter(2.f));
   blur->SetBackgroundFilters(filters);
 
 #if defined(OS_WIN)
@@ -481,8 +478,7 @@ class ImageBackgroundFilter : public LayerTreeHostFiltersPixelTest {
 
     // Add a blur filter to the blue layer.
     FilterOperations filters;
-    filters.Append(FilterOperation::CreateBlurFilter(
-        5.0f, SkBlurImageFilter::kClamp_TileMode));
+    filters.Append(FilterOperation::CreateBlurFilter(5.0f));
     filter->SetBackgroundFilters(filters);
 
     // Allow some fuzziness so that this doesn't fail when Skia makes minor
@@ -939,8 +935,7 @@ class BlurFilterWithClip : public LayerTreeHostFiltersPixelTest {
     filter_layer->AddChild(child4);
 
     FilterOperations filters;
-    filters.Append(FilterOperation::CreateBlurFilter(
-        2.f, SkBlurImageFilter::kClamp_TileMode));
+    filters.Append(FilterOperation::CreateBlurFilter(2.f));
     filter_layer->SetFilters(filters);
 
     // Force the allocation a larger textures.

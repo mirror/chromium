@@ -9,12 +9,13 @@
 #include "base/command_line.h"
 #include "components/viz/service/display/display.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
-#include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
+#include "components/viz/service/frame_sinks/frame_sink_manager.h"
 
 namespace viz {
 
 GpuRootCompositorFrameSink::GpuRootCompositorFrameSink(
-    FrameSinkManagerImpl* frame_sink_manager,
+    GpuCompositorFrameSinkDelegate* delegate,
+    FrameSinkManager* frame_sink_manager,
     const FrameSinkId& frame_sink_id,
     std::unique_ptr<Display> display,
     std::unique_ptr<cc::BeginFrameSource> begin_frame_source,
@@ -23,7 +24,8 @@ GpuRootCompositorFrameSink::GpuRootCompositorFrameSink(
         compositor_frame_sink_private_request,
     cc::mojom::CompositorFrameSinkClientPtr client,
     cc::mojom::DisplayPrivateAssociatedRequest display_private_request)
-    : support_(CompositorFrameSinkSupport::Create(
+    : delegate_(delegate),
+      support_(CompositorFrameSinkSupport::Create(
           this,
           frame_sink_manager,
           frame_sink_id,
@@ -135,11 +137,6 @@ void GpuRootCompositorFrameSink::OnBeginFrame(const cc::BeginFrameArgs& args) {
     client_->OnBeginFrame(args);
 }
 
-void GpuRootCompositorFrameSink::OnBeginFramePausedChanged(bool paused) {
-  if (client_)
-    client_->OnBeginFramePausedChanged(paused);
-}
-
 void GpuRootCompositorFrameSink::ReclaimResources(
     const std::vector<cc::ReturnedResource>& resources) {
   if (client_)
@@ -151,13 +148,11 @@ void GpuRootCompositorFrameSink::WillDrawSurface(
     const gfx::Rect& damage_rect) {}
 
 void GpuRootCompositorFrameSink::OnClientConnectionLost() {
-  support_->frame_sink_manager()->OnClientConnectionLost(
-      support_->frame_sink_id());
+  delegate_->OnClientConnectionLost(support_->frame_sink_id());
 }
 
 void GpuRootCompositorFrameSink::OnPrivateConnectionLost() {
-  support_->frame_sink_manager()->OnPrivateConnectionLost(
-      support_->frame_sink_id());
+  delegate_->OnPrivateConnectionLost(support_->frame_sink_id());
 }
 
 }  // namespace viz

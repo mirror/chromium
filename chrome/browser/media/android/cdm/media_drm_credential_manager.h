@@ -5,6 +5,7 @@
 #ifndef CHROME_BROWSER_MEDIA_ANDROID_CDM_MEDIA_DRM_CREDENTIAL_MANAGER_H_
 #define CHROME_BROWSER_MEDIA_ANDROID_CDM_MEDIA_DRM_CREDENTIAL_MANAGER_H_
 
+#include <jni.h>
 #include <string>
 
 #include "base/callback.h"
@@ -37,6 +38,8 @@ class MediaDrmCredentialManager {
   // Called to reset the DRM credentials. The result is returned in the
   // |reset_credentials_cb|.
   void ResetCredentials(const ResetCredentialsCB& reset_credentials_cb);
+
+  static bool RegisterMediaDrmCredentialManager(JNIEnv* env);
 
  private:
   friend struct base::DefaultSingletonTraits<MediaDrmCredentialManager>;

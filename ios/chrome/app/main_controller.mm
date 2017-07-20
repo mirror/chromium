@@ -133,6 +133,7 @@
 #import "ios/net/crn_http_protocol_handler.h"
 #include "ios/public/provider/chrome/browser/chrome_browser_provider.h"
 #include "ios/public/provider/chrome/browser/distribution/app_distribution_provider.h"
+#import "ios/public/provider/chrome/browser/native_app_launcher/native_app_whitelist_manager.h"
 #include "ios/public/provider/chrome/browser/signin/chrome_identity_service.h"
 #import "ios/public/provider/chrome/browser/user_feedback/user_feedback_provider.h"
 #import "ios/third_party/material_components_ios/src/components/Typography/src/MaterialTypography.h"
@@ -365,6 +366,8 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
 - (void)activateBVCAndMakeCurrentBVCPrimary;
 // Sets |currentBVC| as the root view controller for the window.
 - (void)displayCurrentBVC;
+// Shows the accounts settings UI.
+- (void)showAccountsSettings;
 // Shows the Sync settings UI.
 - (void)showSyncSettings;
 // Shows the Save Passwords settings.
@@ -415,11 +418,9 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
 // Checks the target BVC's current tab's URL. If this URL is chrome://newtab,
 // loads |url| in this tab. Otherwise, open |url| in a new tab in the target
 // BVC.
-// |tabDisplayedCompletion| will be called on the new tab (if not nil).
 - (Tab*)openOrReuseTabInMode:(ApplicationMode)targetMode
                      withURL:(const GURL&)url
-                  transition:(ui::PageTransition)transition
-         tabOpenedCompletion:(ProceduralBlock)tabOpenedCompletion;
+                  transition:(ui::PageTransition)transition;
 // Returns whether the restore infobar should be displayed.
 - (bool)mustShowRestoreInfobar;
 // Begins the process of dismissing the stack view with the given current model,
@@ -1283,8 +1284,7 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
   WelcomeToChromeViewController* welcomeToChrome =
       [[WelcomeToChromeViewController alloc]
           initWithBrowserState:_mainBrowserState
-                      tabModel:self.mainTabModel
-                    dispatcher:self.mainBVC.dispatcher];
+                      tabModel:self.mainTabModel];
   UINavigationController* navController =
       [[OrientationLimitingNavigationController alloc]
           initWithRootViewController:welcomeToChrome];
@@ -1321,18 +1321,31 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
   if (_startupParameters)
     return;
 
-  // Show the sign-in promo if needed
-  if ([SigninPromoViewController
-          shouldBePresentedForBrowserState:_mainBrowserState]) {
-    UIViewController* promoController = [[SigninPromoViewController alloc]
-        initWithBrowserState:_mainBrowserState
-                  dispatcher:self.mainBVC.dispatcher];
+  // This array should contain Class objects - one for each promo class.
+  // New PromoViewController subclasses should be added here.
+  // Note that ordering matters -- only the first promo in the array that
+  // returns true to +shouldBePresentedForProfile: will be shown.
+  // TODO(crbug.com/516154): Now that there's only one promo class, this
+  // implementation is overkill.
+  NSArray* possiblePromos = @[ [SigninPromoViewController class] ];
+  for (id promoController in possiblePromos) {
+    Class promoClass = (Class)promoController;
+    DCHECK(class_isMetaClass(object_getClass(promoClass)));
+    DCHECK(class_getClassMethod(object_getClass(promoClass),
+                                @selector(shouldBePresentedForBrowserState:)));
+    if ([promoClass shouldBePresentedForBrowserState:_mainBrowserState]) {
+      UIViewController* promoController =
+          [promoClass controllerToPresentForBrowserState:_mainBrowserState];
 
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
-                                 (int64_t)(kDisplayPromoDelay * NSEC_PER_SEC)),
-                   dispatch_get_main_queue(), ^{
-                     [self showPromo:promoController];
-                   });
+      dispatch_after(
+          dispatch_time(DISPATCH_TIME_NOW,
+                        (int64_t)(kDisplayPromoDelay * NSEC_PER_SEC)),
+          dispatch_get_main_queue(), ^{
+            [self showPromo:promoController];
+          });
+
+      break;
+    }
   }
 }
 
@@ -1399,6 +1412,10 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
                           promoAction:command.promoAction
                              callback:command.callback];
       }
+      break;
+    }
+    case IDC_SHOW_ACCOUNTS_SETTINGS: {
+      [self showAccountsSettings];
       break;
     }
     case IDC_SHOW_SYNC_SETTINGS:
@@ -1900,10 +1917,8 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
 
 - (void)presentSignedInAccountsViewControllerForBrowserState:
     (ios::ChromeBrowserState*)browserState {
-  UIViewController* accountsViewController =
-      [[SignedInAccountsViewController alloc]
-          initWithBrowserState:browserState
-                    dispatcher:self.mainBVC.dispatcher];
+  UIViewController* accountsViewController = [
+      [SignedInAccountsViewController alloc] initWithBrowserState:browserState];
   [[self topPresentedViewController]
       presentViewController:accountsViewController
                    animated:YES
@@ -1926,12 +1941,10 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
 }
 
 - (void)showAccountsSettings {
+  if (_settingsNavigationController)
+    return;
   if ([self currentBrowserState]->IsOffTheRecord()) {
     NOTREACHED();
-    return;
-  }
-  if (_settingsNavigationController) {
-    [_settingsNavigationController showAccountsSettings];
     return;
   }
   _settingsNavigationController = [SettingsNavigationController
@@ -2048,8 +2061,7 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
       presentingViewController:[self topPresentedViewController]
          isPresentedOnSettings:areSettingsPresented
                    accessPoint:accessPoint
-                   promoAction:promoAction
-                    dispatcher:self.mainBVC.dispatcher];
+                   promoAction:promoAction];
 
   signin_ui::CompletionCallback completion = ^(BOOL success) {
     _signinInteractionController = nil;
@@ -2090,8 +2102,7 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
          isPresentedOnSettings:areSettingsPresented
                    accessPoint:signin_metrics::AccessPoint::ACCESS_POINT_UNKNOWN
                    promoAction:signin_metrics::PromoAction::
-                                   PROMO_ACTION_NO_SIGNIN_PROMO
-                    dispatcher:self.mainBVC.dispatcher];
+                                   PROMO_ACTION_NO_SIGNIN_PROMO];
 
   [_signinInteractionController
       addAccountWithCompletion:^(BOOL success) {
@@ -2172,8 +2183,7 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
 
 - (Tab*)openOrReuseTabInMode:(ApplicationMode)targetMode
                      withURL:(const GURL&)URL
-                  transition:(ui::PageTransition)transition
-         tabOpenedCompletion:(ProceduralBlock)tabOpenedCompletion {
+                  transition:(ui::PageTransition)transition {
   BrowserViewController* targetBVC =
       targetMode == ApplicationMode::NORMAL ? self.mainBVC : self.otrBVC;
 
@@ -2181,8 +2191,7 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
   if (!(currentTabInTargetBVC && IsURLNtp(currentTabInTargetBVC.visibleURL))) {
     return [targetBVC addSelectedTabWithURL:URL
                                     atIndex:NSNotFound
-                                 transition:transition
-                         tabAddedCompletion:tabOpenedCompletion];
+                                 transition:transition];
   }
 
   Tab* newTab = currentTabInTargetBVC;
@@ -2190,9 +2199,6 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
   if (!(IsURLNtp(URL))) {
     web::NavigationManager::WebLoadParams params(URL);
     [newTab webState]->GetNavigationManager()->LoadURLWithParams(params);
-  }
-  if (tabOpenedCompletion) {
-    tabOpenedCompletion();
   }
   return newTab;
 }
@@ -2203,34 +2209,6 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
   BrowserViewController* targetBVC =
       targetMode == ApplicationMode::NORMAL ? self.mainBVC : self.otrBVC;
   NSUInteger tabIndex = NSNotFound;
-
-  // Commands are only allowed on NTP and there must be at most one command.
-  DCHECK_GE(
-      1,
-      (IsURLNtp(url) ? 0 : 1) +  // Not NTP URL
-          ([_startupParameters launchVoiceSearch] ? 1
-                                                  : 0) +  // Open Voice Search
-          ([_startupParameters launchQRScanner] ? 1
-                                                : 0) +  // Launch QR Code search
-          ([_startupParameters launchFocusOmnibox] ? 1 : 0)  // Focus Omnibox
-      );
-
-  ProceduralBlock tabOpenedCompletion;
-  if ([_startupParameters launchVoiceSearch]) {
-    tabOpenedCompletion = ^{
-      [self startVoiceSearch];
-    };
-  }
-  if ([_startupParameters launchQRScanner]) {
-    tabOpenedCompletion = ^{
-      [targetBVC showQRScanner];
-    };
-  }
-  if ([_startupParameters launchFocusOmnibox]) {
-    tabOpenedCompletion = ^{
-      [targetBVC focusOmnibox];
-    };
-  }
 
   Tab* tab = nil;
   if (_tabSwitcherIsActive) {
@@ -2244,17 +2222,8 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
               : StackViewDismissalMode::INCOGNITO;
       tab = [targetBVC addSelectedTabWithURL:url
                                      atIndex:tabIndex
-                                  transition:transition
-                          tabAddedCompletion:tabOpenedCompletion];
+                                  transition:transition];
     } else {
-      // Voice search, QRScanner and the omnibox are presented by the BVC.
-      // They must be started after the BVC view is added in the hierarchy.
-      self.startVoiceSearchAfterTabSwitcherDismissal =
-          [_startupParameters launchVoiceSearch];
-      self.startQRScannerAfterTabSwitcherDismissal =
-          [_startupParameters launchQRScanner];
-      self.startFocusOmniboxAfterTabSwitcherDismissal =
-          [_startupParameters launchFocusOmnibox];
       tab = [_tabSwitcherController
           dismissWithNewTabAnimationToModel:targetBVC.tabModel
                                     withURL:url
@@ -2268,8 +2237,45 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
     self.currentBVC = targetBVC;
     tab = [self openOrReuseTabInMode:targetMode
                              withURL:url
-                          transition:transition
-                 tabOpenedCompletion:tabOpenedCompletion];
+                          transition:transition];
+  }
+
+  if ([_startupParameters launchVoiceSearch]) {
+    if (_tabSwitcherIsActive || _dismissingStackView) {
+      // Since VoiceSearch is presented by the BVC, it must be started after the
+      // Tab Switcher dismissal completes and the BVC's view is in the
+      // hierarchy.
+      self.startVoiceSearchAfterTabSwitcherDismissal = YES;
+    } else {
+      // When starting the application from the Notification center,
+      // ApplicationWillResignActive is sent just after startup.
+      // If the voice search is triggered synchronously, it is immediately
+      // dismissed. Start it asynchronously instead.
+      dispatch_async(dispatch_get_main_queue(), ^{
+        [self startVoiceSearch];
+      });
+    }
+  } else if ([_startupParameters launchQRScanner]) {
+    if (_tabSwitcherIsActive || _dismissingStackView) {
+      // QR Scanner is presented by the BVC, similarly to VoiceSearch. It must
+      // also be started after the BVC's view is in the hierarchy.
+      self.startQRScannerAfterTabSwitcherDismissal = YES;
+    } else {
+      // Start the QR Scanner asynchronously to prevent the application from
+      // dismissing the modal view if QR Scanner is started from the
+      // Notification center.
+      dispatch_async(dispatch_get_main_queue(), ^{
+        [self.currentBVC showQRScanner];
+      });
+    }
+  } else if ([_startupParameters launchFocusOmnibox]) {
+    if (_tabSwitcherIsActive || _dismissingStackView) {
+      self.startFocusOmniboxAfterTabSwitcherDismissal = YES;
+    } else {
+      dispatch_async(dispatch_get_main_queue(), ^{
+        [self.currentBVC focusOmnibox];
+      });
+    }
   }
 
   if (_restoreHelper) {
@@ -2434,11 +2440,6 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
                      [self switchModesAndOpenNewTab:[OpenNewTabCommand
                                                         incognitoTabCommand]];
                    }];
-}
-
-- (id<ApplicationCommands, BrowserCommands>)dispatcherForSettings {
-  // Assume that settings always wants the dispatcher from the main BVC.
-  return self.mainBVC.dispatcher;
 }
 
 #pragma mark - UserFeedbackDataSource

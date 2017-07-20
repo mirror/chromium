@@ -260,13 +260,8 @@ class SubresourceFilterBrowserTest : public InProcessBrowserTest {
     PathService::Get(chrome::DIR_TEST_DATA, &test_data_dir);
     embedded_test_server()->ServeFilesFromDirectory(test_data_dir);
     host_resolver()->AddSimulatedFailure("host-with-dns-lookup-failure");
-
     host_resolver()->AddRule("*", "127.0.0.1");
     content::SetupCrossSiteRedirector(embedded_test_server());
-
-    // Add content/test/data for cross_site_iframe_factory.html
-    embedded_test_server()->ServeFilesFromSourceDirectory("content/test/data");
-
     ASSERT_TRUE(embedded_test_server()->Start());
     ResetConfigurationToEnableOnPhishingSites();
 
@@ -740,67 +735,6 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest,
   }
 }
 
-// Tests that navigations to special URLs (e.g. about:blank, data URLs, etc)
-// which do not trigger ReadyToCommitNavigation (and therefore our activation
-// IPC), properly inherit the activation of their parent frame.
-IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest,
-                       NavigationsWithNoIPC_HaveActivation) {
-  const GURL url(GetTestUrl("subresource_filter/frame_set_special_urls.html"));
-  const std::vector<const char*> subframe_names{"blank", "js", "data",
-                                                "srcdoc"};
-  ConfigureAsPhishingURL(url);
-
-  ui_test_utils::NavigateToURL(browser(), url);
-  ASSERT_NO_FATAL_FAILURE(ExpectParsedScriptElementLoadedStatusInFrames(
-      subframe_names, {true, true, true, true}));
-
-  // Disallow included_script.js, and all frames should filter it in subsequent
-  // navigations.
-  ASSERT_NO_FATAL_FAILURE(
-      SetRulesetToDisallowURLsWithPathSuffix("included_script.js"));
-  ui_test_utils::NavigateToURL(browser(), url);
-  ASSERT_NO_FATAL_FAILURE(ExpectParsedScriptElementLoadedStatusInFrames(
-      subframe_names, {false, false, false, false}));
-}
-
-// Navigate to a site with site hierarchy a(b(c)). Let a navigate c to a data
-// URL, and expect that the resulting frame has activation. We expect to fail in
-// --site-per-process because c is navigated to a's process. Therefore we can't
-// sniff b's activation state from c. See crbug.com/739777.
-IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest,
-                       NavigateCrossProcessDataUrl_MaintainsActivation) {
-  const GURL main_url(embedded_test_server()->GetURL(
-      "a.com", "/cross_site_iframe_factory.html?a(b(c))"));
-  ConfigureAsPhishingURL(main_url);
-  ASSERT_NO_FATAL_FAILURE(
-      SetRulesetToDisallowURLsWithPathSuffix("included_script.js"));
-  const GURL included_url(embedded_test_server()->GetURL(
-      "a.com", "/subresource_filter/included_script.js"));
-
-  ui_test_utils::NavigateToURL(browser(), main_url);
-
-  // The root node will initiate the navigation; its grandchild node will be the
-  // target of the navigation.
-  content::TestNavigationObserver navigation_observer(web_contents(), 1);
-  EXPECT_TRUE(content::ExecuteScript(
-      web_contents()->GetMainFrame(),
-      base::StringPrintf(
-          "var data_url = 'data:text/html,<script src=\"%s\"></script>';"
-          "window.frames[0][0].location.href = data_url;",
-          included_url.spec().c_str())));
-  navigation_observer.Wait();
-
-  content::RenderFrameHost* target = content::FrameMatchingPredicate(
-      web_contents(), base::Bind([](content::RenderFrameHost* rfh) {
-        return rfh->GetLastCommittedURL().scheme_piece() == url::kDataScheme;
-      }));
-  ASSERT_NE(target, nullptr);
-  EXPECT_TRUE(target->GetLastCommittedOrigin().unique());
-
-  EXPECT_EQ(content::AreAllSitesIsolatedForTesting(),
-            WasParsedScriptElementLoaded(target));
-}
-
 IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest,
                        HistoryNavigationActivation) {
   content::ConsoleObserverDelegate console_observer(web_contents(),
@@ -1028,6 +962,34 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest,
   receiver.ExpectReceivedOnce(ActivationState(ActivationLevel::DISABLED));
 }
 
+// Schemes 'about:' and 'chrome-native:' are loaded synchronously as empty
+// documents in Blink, so there is no chance (or need) to send an activation
+// IPC message. Make sure that histograms are not polluted with these loads.
+IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest, NoActivationOnAboutBlank) {
+  GURL url(GetTestUrl("subresource_filter/frame_set_sync_loads.html"));
+  ASSERT_NO_FATAL_FAILURE(
+      SetRulesetToDisallowURLsWithPathSuffix("included_script.js"));
+  ConfigureAsPhishingURL(url);
+
+  base::HistogramTester histogram_tester;
+  ui_test_utils::NavigateToURL(browser(), url);
+
+  content::RenderFrameHost* frame = FindFrameByName("initially_blank");
+  ASSERT_TRUE(frame);
+  EXPECT_FALSE(WasParsedScriptElementLoaded(frame));
+
+  // Support both pre-/post-PersistentHistograms worlds. The latter is enabled
+  // through field trials, so the former is still used on offical builders.
+  content::FetchHistogramsFromChildProcesses();
+  SubprocessMetricsProvider::MergeHistogramDeltasForTesting();
+
+  // The only frames where filtering was (even considered to be) activated
+  // should be the main frame, and the child that was navigated to an HTTP URL.
+  histogram_tester.ExpectUniqueSample(
+      kDocumentLoadActivationLevel,
+      static_cast<base::Histogram::Sample>(ActivationLevel::ENABLED), 2);
+}
+
 IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest, PageLoadMetrics) {
   GURL url(GetTestUrl("subresource_filter/frame_with_included_script.html"));
   ConfigureAsPhishingURL(url);
@@ -1139,18 +1101,6 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest,
 }
 
 IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest,
-                       DisableRuleset_SubresourceAllowed) {
-  Configuration config = Configuration::MakePresetForLiveRunOnPhishingSites();
-  config.activation_options.should_disable_ruleset_rules = true;
-  ResetConfiguration(std::move(config));
-
-  GURL url(GetTestUrl("subresource_filter/frame_with_included_script.html"));
-  ConfigureAsPhishingURL(url);
-  ui_test_utils::NavigateToURL(browser(), url);
-  EXPECT_TRUE(WasParsedScriptElementLoaded(web_contents()->GetMainFrame()));
-}
-
-IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest,
                        NoConfiguration_AllowCreatingNewWindows) {
   base::HistogramTester tester;
   const char kWindowOpenPath[] = "/subresource_filter/window_open.html";
@@ -1195,8 +1145,10 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest, BlockCreatingNewWindows) {
   EXPECT_TRUE(content::ExecuteScriptAndExtractBool(web_contents, "openWindow()",
                                                    &opened_window));
   EXPECT_FALSE(opened_window);
+  // Do not force the UI if the popup was the only thing disallowed. The popup
+  // UI is good enough.
   tester.ExpectBucketCount(kSubresourceFilterActionsHistogram, kActionUIShown,
-                           1);
+                           0);
   // Make sure the popup UI was shown.
   EXPECT_TRUE(TabSpecificContentSettings::FromWebContents(web_contents)
                   ->IsContentBlocked(CONTENT_SETTINGS_TYPE_POPUPS));
@@ -1233,8 +1185,10 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest, BlockOpenURLFromTab) {
   content::WebContents* web_contents =
       browser()->tab_strip_model()->GetActiveWebContents();
   EXPECT_TRUE(content::ExecuteScript(web_contents, "openWindow()"));
+  // Do not force the UI if the popup was the only thing disallowed. The popup
+  // UI is good enough.
   tester.ExpectBucketCount(kSubresourceFilterActionsHistogram, kActionUIShown,
-                           1);
+                           0);
 
   EXPECT_TRUE(TabSpecificContentSettings::FromWebContents(web_contents)
                   ->IsContentBlocked(CONTENT_SETTINGS_TYPE_POPUPS));

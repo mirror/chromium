@@ -253,7 +253,7 @@ static_library("test_support") {
 
     public_deps += [
       "//ash",
-      "//ash:test_support_with_content",
+      "//ash/test:test_support_with_content",
       "//ui/aura",
       "//ui/aura:test_support",
     ]
@@ -839,7 +839,7 @@ if (!is_android) {
         # Use only the _chromeos version on Ash / Chrome OS.
         "base/view_event_test_platform_part_default.cc",
       ]
-      deps += [ "//ash:interactive_ui_test_support" ]
+      deps += [ "//ash/test:interactive_ui_test_support" ]
     }
 
     if (is_android) {
@@ -1701,7 +1701,6 @@ test("browser_tests") {
       "//chrome/browser/policy/test/policy_testserver.py",
       "//chrome/common/extensions/docs/examples/apps/calculator/",
       "//chrome/third_party/mock4js/",
-      "//components/test/data/payments/",
       "//components/test/data/update_client/",
       "//content/test/data/",
       "//google_apis/test/",
@@ -2048,7 +2047,7 @@ test("browser_tests") {
         "../browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
       ]
       deps += [
-        "//ash:test_support_with_content",
+        "//ash/test:test_support_with_content",
         "//ui/keyboard:test_support",
       ]
 
@@ -3090,7 +3089,6 @@ test("unit_tests") {
     "../browser/content_settings/host_content_settings_map_unittest.cc",
     "../browser/content_settings/mock_settings_observer.cc",
     "../browser/content_settings/mock_settings_observer.h",
-    "../browser/content_settings/sound_content_setting_observer_unittest.cc",
     "../browser/content_settings/tab_specific_content_settings_unittest.cc",
     "../browser/custom_handlers/protocol_handler_registry_unittest.cc",
     "../browser/data_usage/tab_id_annotator_unittest.cc",
@@ -3547,26 +3545,22 @@ test("unit_tests") {
 
   if (enable_offline_pages) {
     sources += [
+      "../browser/android/offline_pages/offline_page_mhtml_archiver_unittest.cc",
+      "../browser/android/offline_pages/offline_page_request_job_unittest.cc",
+      "../browser/android/offline_pages/offline_page_tab_helper_unittest.cc",
+      "../browser/android/offline_pages/offline_page_utils_unittest.cc",
+      "../browser/android/offline_pages/prerender_adapter_unittest.cc",
+      "../browser/android/offline_pages/prerendering_loader_unittest.cc",
+      "../browser/android/offline_pages/prerendering_offliner_unittest.cc",
+      "../browser/android/offline_pages/recent_tab_helper_unittest.cc",
+      "../browser/android/offline_pages/test_offline_page_model_builder.cc",
+      "../browser/android/offline_pages/test_offline_page_model_builder.h",
+      "../browser/android/offline_pages/test_request_coordinator_builder.cc",
+      "../browser/android/offline_pages/test_request_coordinator_builder.h",
       "../browser/offline_pages/background_loader_offliner_unittest.cc",
-      "../browser/offline_pages/offline_page_mhtml_archiver_unittest.cc",
-      "../browser/offline_pages/offline_page_request_job_unittest.cc",
-      "../browser/offline_pages/offline_page_tab_helper_unittest.cc",
-      "../browser/offline_pages/offline_page_utils_unittest.cc",
       "../browser/offline_pages/prefetch/offline_metrics_collector_impl_unittest.cc",
       "../browser/offline_pages/prefetch/prefetch_instance_id_proxy_unittest.cc",
-      "../browser/offline_pages/prerender_adapter_unittest.cc",
-      "../browser/offline_pages/prerendering_loader_unittest.cc",
-      "../browser/offline_pages/recent_tab_helper_unittest.cc",
-      "../browser/offline_pages/test_offline_page_model_builder.cc",
-      "../browser/offline_pages/test_offline_page_model_builder.h",
-      "../browser/offline_pages/test_request_coordinator_builder.cc",
-      "../browser/offline_pages/test_request_coordinator_builder.h",
     ]
-    if (is_android) {
-      sources += [
-        "../browser/offline_pages/android/prerendering_offliner_unittest.cc",
-      ]
-    }
     deps += [
       "//components/offline_pages/content/background_loader:test_support",
       "//components/offline_pages/core:test_support",
@@ -4251,9 +4245,9 @@ test("unit_tests") {
       "../browser/ui/window_sizer/window_sizer_ash_unittest.cc",
     ]
     deps += [
-      "//ash:test_support_with_content",
       "//ash/resources",
       "//ash/strings",
+      "//ash/test:test_support_with_content",
     ]
 
     # Chrome OS uses window_sizer_ash_unittest.cc

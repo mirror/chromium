@@ -196,13 +196,10 @@ class CORE_EXPORT WorkerThread : public WebThread::TaskObserver {
   // out of this class.
   virtual bool IsOwningBackingThread() const { return true; }
 
-  // Official moment of creation of worker: when the worker thread is created.
-  // (https://w3c.github.io/hr-time/#time-origin)
-  const double time_origin_;
-
  private:
   friend class WorkerThreadTest;
-  FRIEND_TEST_ALL_PREFIXES(WorkerThreadTest, ShouldTerminateScriptExecution);
+  FRIEND_TEST_ALL_PREFIXES(WorkerThreadTest,
+                           ShouldScheduleToTerminateExecution);
   FRIEND_TEST_ALL_PREFIXES(
       WorkerThreadTest,
       Terminate_WhileDebuggerTaskIsRunningOnInitialization);
@@ -220,14 +217,11 @@ class CORE_EXPORT WorkerThread : public WebThread::TaskObserver {
     kReadyToShutdown,
   };
 
-  // Posts a delayed task to forcibly terminate script execution in case the
-  // normal shutdown sequence does not start within a certain time period.
-  void ScheduleToTerminateScriptExecution();
-
-  // Returns true if we should synchronously terminate the script execution so
-  // that a shutdown task can be handled by the thread event loop. This must be
-  // called with |m_threadStateMutex| acquired.
-  bool ShouldTerminateScriptExecution(const MutexLocker&);
+  // Returns true if we should synchronously terminate or schedule to
+  // terminate the worker execution so that a shutdown task can be handled by
+  // the thread event loop. This must be called with |m_threadStateMutex|
+  // acquired.
+  bool ShouldScheduleToTerminateExecution(const MutexLocker&);
 
   // Terminates worker script execution if the worker thread is running and not
   // already shutting down. Does not terminate if a debugger task is running,

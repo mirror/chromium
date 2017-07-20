@@ -21,6 +21,7 @@
 #include "chrome/browser/chromeos/arc/arc_util.h"
 #include "chrome/browser/chromeos/arc/auth/arc_auth_context.h"
 #include "chrome/browser/chromeos/arc/auth/arc_auth_service.h"
+#include "chrome/browser/chromeos/arc/optin/arc_active_directory_auth_negotiator.h"
 #include "chrome/browser/chromeos/arc/optin/arc_terms_of_service_default_negotiator.h"
 #include "chrome/browser/chromeos/arc/optin/arc_terms_of_service_oobe_negotiator.h"
 #include "chrome/browser/chromeos/arc/policy/arc_android_management_checker.h"
@@ -172,9 +173,6 @@ void ArcSessionManager::RegisterProfilePrefs(
   registry->RegisterBooleanPref(prefs::kArcTermsAccepted, false);
   registry->RegisterBooleanPref(prefs::kArcVoiceInteractionValuePropAccepted,
                                 false);
-  registry->RegisterBooleanPref(prefs::kVoiceInteractionEnabled, false);
-  registry->RegisterBooleanPref(prefs::kVoiceInteractionContextEnabled, false);
-  registry->RegisterBooleanPref(prefs::kVoiceInteractionPrefSynced, false);
   // Note that ArcBackupRestoreEnabled and ArcLocationServiceEnabled prefs have
   // to be off by default, until an explicit gesture from the user to enable
   // them is received. This is crucial in the cases when these prefs transition
@@ -182,7 +180,8 @@ void ArcSessionManager::RegisterProfilePrefs(
   registry->RegisterBooleanPref(prefs::kArcBackupRestoreEnabled, false);
   registry->RegisterBooleanPref(prefs::kArcLocationServiceEnabled, false);
   // This is used to delete the Play user ID if ARC is disabled for an
-  // Active Directory managed device.
+  // AD-managed device and as an indicator whether the ARC enrollment token has
+  // already been fetched.
   registry->RegisterStringPref(prefs::kArcActiveDirectoryPlayUserId,
                                std::string());
 }
@@ -311,14 +310,18 @@ void ArcSessionManager::OnProvisioningFinished(ProvisioningResult result) {
     // * In case ARC is enabled from OOBE.
     // * In ARC Kiosk mode, because the only one UI in kiosk mode must be the
     //   kiosk app and device is not needed for opt-in;
-    // * When ARC is managed and all OptIn preferences are managed/unused, too,
-    //   because the whole OptIn flow should happen as seamless as possible for
-    //   the user.
+    // * When ARC is managed, the user is not an Active Directory user and all
+    //   OptIn preferences are managed too, because the whole OptIn flow should
+    //   happen as seamless as possible for the user.
+    // For Active Directory users we always show a page notifying them that they
+    // have to authenticate with their identity provider (through SAML) to make
+    // it less weird that a browser window pops up.
     const bool suppress_play_store_app =
         !IsPlayStoreAvailable() || IsArcOptInVerificationDisabled() ||
         IsArcKioskMode() || oobe_start_ ||
         (IsArcPlayStoreEnabledPreferenceManagedForProfile(profile_) &&
-         AreArcAllOptInPreferencesIgnorableForProfile(profile_));
+         AreArcAllOptInPreferencesManagedForProfile(profile_) &&
+         !IsActiveDirectoryUserForProfile(profile_));
     if (!suppress_play_store_app) {
       playstore_launcher_ = base::MakeUnique<ArcAppLauncher>(
           profile_, kPlayStoreAppId,
@@ -453,7 +456,6 @@ void ArcSessionManager::Shutdown() {
     support_host_.reset();
   }
   context_.reset();
-  pai_starter_.reset();
   profile_ = nullptr;
   state_ = State::NOT_INITIALIZED;
   if (scoped_opt_in_tracker_) {
@@ -551,16 +553,14 @@ void ArcSessionManager::CancelAuthCode() {
   }
 
   // If ARC failed to boot normally, stop ARC. Similarly, if the current page is
-  // LSO or ACTIVE_DIRECTORY_AUTH, closing the window should stop ARC since the
-  // user chooses to not sign in. In any other case, ARC is booting normally and
-  // the instance should not be stopped.
+  // LSO, closing the window should stop ARC since the user activity chooses to
+  // not sign in. In any other case, ARC is booting normally and the instance
+  // should not be stopped.
   if ((state_ != State::NEGOTIATING_TERMS_OF_SERVICE &&
        state_ != State::CHECKING_ANDROID_MANAGEMENT) &&
       (!support_host_ ||
        (support_host_->ui_page() != ArcSupportHost::UIPage::ERROR &&
-        support_host_->ui_page() != ArcSupportHost::UIPage::LSO &&
-        support_host_->ui_page() !=
-            ArcSupportHost::UIPage::ACTIVE_DIRECTORY_AUTH))) {
+        support_host_->ui_page() != ArcSupportHost::UIPage::LSO))) {
     return;
   }
 
@@ -751,9 +751,15 @@ void ArcSessionManager::MaybeStartTermsOfServiceNegotiation() {
   }
 
   if (IsOobeOptInActive()) {
+    // For AD users the OOBE opt in screen should not be shown.
+    DCHECK(!IsActiveDirectoryUserForProfile(profile_));
     VLOG(1) << "Use OOBE negotiator.";
     terms_of_service_negotiator_ =
         base::MakeUnique<ArcTermsOfServiceOobeNegotiator>();
+  } else if (support_host_ && IsActiveDirectoryUserForProfile(profile_)) {
+    VLOG(1) << "Use Active Directory default negotiator.";
+    terms_of_service_negotiator_ =
+        base::MakeUnique<ArcActiveDirectoryAuthNegotiator>(support_host_.get());
   } else if (support_host_) {
     VLOG(1) << "Use default negotiator.";
     terms_of_service_negotiator_ =
@@ -795,11 +801,20 @@ void ArcSessionManager::OnTermsOfServiceNegotiated(bool accepted) {
 bool ArcSessionManager::IsArcTermsOfServiceNegotiationNeeded() const {
   DCHECK(profile_);
 
+  // For Active Directory, we'll always show a page notifying them that they
+  // have to authenticate with their identity provider.
+  if (IsActiveDirectoryUserForProfile(profile_) &&
+      profile_->GetPrefs()
+          ->GetString(prefs::kArcActiveDirectoryPlayUserId)
+          .empty()) {
+    return true;
+  }
+
   // Skip to show UI asking users to set up ARC OptIn preferences, if all of
   // them are managed by the admin policy. Note that the ToS agreement is anyway
   // not shown in the case of the managed ARC.
   if (IsArcPlayStoreEnabledPreferenceManagedForProfile(profile_) &&
-      AreArcAllOptInPreferencesIgnorableForProfile(profile_)) {
+      AreArcAllOptInPreferencesManagedForProfile(profile_)) {
     VLOG(1) << "All opt-in preferences are under managed. "
             << "Skip ARC Terms of Service negotiation.";
     return false;

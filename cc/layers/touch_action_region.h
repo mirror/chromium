@@ -23,7 +23,7 @@ class CC_EXPORT TouchActionRegion {
 
   void Union(TouchAction, const gfx::Rect&);
   const Region& region() const { return *region_; }
-  const Region& GetRegionForTouchAction(TouchAction) const;
+  const Region& GetRegionForTouchAction(TouchAction);
 
   // Returns the touch actions that we are sure will be allowed at the point
   // by finding the intersection of all touch actions whose regions contain the

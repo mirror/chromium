@@ -1,5 +1,5 @@
 (async function(testRunner) {
-  let {page, session, dp} = await testRunner.startBlank(`Tests line and column numbers in reported console messages.`);
+  let {page, session, dp} = await testRunner.startBlank(``);
 
   dp.Runtime.enable();
 

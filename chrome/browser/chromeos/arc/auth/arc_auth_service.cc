@@ -298,8 +298,7 @@ void ArcAuthService::RequestAccountInfoInternal(
     // For Active Directory enrolled devices, we get an enrollment token for a
     // managed Google Play account from DMServer.
     auto enrollment_token_fetcher =
-        base::MakeUnique<ArcActiveDirectoryEnrollmentTokenFetcher>(
-            ArcSessionManager::Get()->support_host());
+        base::MakeUnique<ArcActiveDirectoryEnrollmentTokenFetcher>();
     enrollment_token_fetcher->Fetch(
         base::Bind(&ArcAuthService::OnEnrollmentTokenFetched,
                    weak_ptr_factory_.GetWeakPtr()));

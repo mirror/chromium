@@ -12,6 +12,10 @@
 #include "mojo/public/cpp/bindings/strong_binding_set.h"
 #include "third_party/WebKit/public/platform/modules/permissions/permission.mojom.h"
 
+namespace service_manager {
+struct BindSourceInfo;
+}
+
 namespace url {
 class Origin;
 }
@@ -32,7 +36,8 @@ class CONTENT_EXPORT PermissionServiceContext : public WebContentsObserver {
   explicit PermissionServiceContext(RenderProcessHost* render_process_host);
   ~PermissionServiceContext() override;
 
-  void CreateService(blink::mojom::PermissionServiceRequest request);
+  void CreateService(const service_manager::BindSourceInfo& source_info,
+                     blink::mojom::PermissionServiceRequest request);
 
   void CreateSubscription(PermissionType permission_type,
                           const url::Origin& origin,

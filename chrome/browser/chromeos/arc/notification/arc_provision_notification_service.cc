@@ -149,7 +149,7 @@ void ArcProvisionNotificationService::OnArcOptInManagementCheckStarted() {
   // managed prefs), or ensure that no notification is shown otherwise.
   const Profile* const profile = ArcSessionManager::Get()->profile();
   if (IsArcPlayStoreEnabledPreferenceManagedForProfile(profile) &&
-      AreArcAllOptInPreferencesIgnorableForProfile(profile)) {
+      AreArcAllOptInPreferencesManagedForProfile(profile)) {
     delegate_->ShowManagedProvisionNotification();
   } else {
     delegate_->RemoveManagedProvisionNotification();

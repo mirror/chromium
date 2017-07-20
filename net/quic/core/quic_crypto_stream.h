@@ -31,7 +31,9 @@ class QuicSession;
 //
 // For more details:
 // https://docs.google.com/document/d/1g5nIXAIkN_Y-7XJW5K45IblHd_L2f5LTaDUDwvZ5L6g/edit?usp=sharing
-class QUIC_EXPORT_PRIVATE QuicCryptoStream : public QuicStream {
+class QUIC_EXPORT_PRIVATE QuicCryptoStream
+    : public QuicStream,
+      public CryptoFramerVisitorInterface {
  public:
   explicit QuicCryptoStream(QuicSession* session);
 
@@ -41,8 +43,16 @@ class QUIC_EXPORT_PRIVATE QuicCryptoStream : public QuicStream {
   // handshake message for |version|.
   static QuicByteCount CryptoMessageFramingOverhead(QuicVersion version);
 
+  // CryptoFramerVisitorInterface implementation
+  void OnError(CryptoFramer* framer) override;
+  void OnHandshakeMessage(const CryptoHandshakeMessage& message) override;
+
   // QuicStream implementation
   void OnDataAvailable() override;
+
+  // Sends |message| to the peer.
+  // TODO(wtc): return a success/failure status.
+  void SendHandshakeMessage(const CryptoHandshakeMessage& message);
 
   // Performs key extraction to derive a new secret of |result_len| bytes
   // dependent on |label|, |context|, and the stream's negotiated subkey secret.
@@ -73,38 +83,10 @@ class QUIC_EXPORT_PRIVATE QuicCryptoStream : public QuicStream {
   virtual const QuicCryptoNegotiatedParameters& crypto_negotiated_params()
       const = 0;
 
-  // Provides the message parser to use when data is received on this stream.
-  virtual CryptoMessageParser* crypto_message_parser() = 0;
-
  private:
-  DISALLOW_COPY_AND_ASSIGN(QuicCryptoStream);
-};
-
-class QUIC_EXPORT_PRIVATE QuicCryptoHandshaker
-    : public CryptoFramerVisitorInterface {
- public:
-  QuicCryptoHandshaker(QuicCryptoStream* stream, QuicSession* session);
-
-  ~QuicCryptoHandshaker() override;
-
-  // Sends |message| to the peer.
-  // TODO(wtc): return a success/failure status.
-  void SendHandshakeMessage(const CryptoHandshakeMessage& message);
-
-  void OnError(CryptoFramer* framer) override;
-  void OnHandshakeMessage(const CryptoHandshakeMessage& message) override;
-
-  CryptoMessageParser* crypto_message_parser();
-
- private:
-  QuicSession* session() { return session_; }
-
-  QuicCryptoStream* stream_;
-  QuicSession* session_;
-
   CryptoFramer crypto_framer_;
 
-  DISALLOW_COPY_AND_ASSIGN(QuicCryptoHandshaker);
+  DISALLOW_COPY_AND_ASSIGN(QuicCryptoStream);
 };
 
 }  // namespace net

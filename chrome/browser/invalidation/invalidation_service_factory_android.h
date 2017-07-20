@@ -5,6 +5,7 @@
 #ifndef CHROME_BROWSER_INVALIDATION_INVALIDATION_SERVICE_FACTORY_ANDROID_H_
 #define CHROME_BROWSER_INVALIDATION_INVALIDATION_SERVICE_FACTORY_ANDROID_H_
 
+#include <jni.h>
 #include "base/android/scoped_java_ref.h"
 
 namespace invalidation {
@@ -17,6 +18,8 @@ class InvalidationServiceFactoryAndroid {
       const base::android::JavaRef<jobject>& j_profile);
 
   static base::android::ScopedJavaLocalRef<jobject> GetForTest();
+
+  static bool Register(JNIEnv* env);
 };
 
 }  // namespace invalidation

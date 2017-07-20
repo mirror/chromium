@@ -296,6 +296,20 @@ void FrameSelection::DidSetSelectionDeprecated(SetSelectionOptions options,
       Event::Create(EventTypeNames::selectionchange));
 }
 
+void FrameSelection::SetSelection(const SelectionInFlatTree& new_selection,
+                                  SetSelectionOptions options,
+                                  CursorAlignOnScroll align,
+                                  TextGranularity granularity) {
+  new_selection.AssertValidFor(GetDocument());
+  SelectionInDOMTree::Builder builder;
+  builder.SetAffinity(new_selection.Affinity())
+      .SetBaseAndExtent(ToPositionInDOMTree(new_selection.Base()),
+                        ToPositionInDOMTree(new_selection.Extent()))
+      .SetIsDirectional(new_selection.IsDirectional())
+      .SetIsHandleVisible(new_selection.IsHandleVisible());
+  return SetSelection(builder.Build(), options, align, granularity);
+}
+
 void FrameSelection::NodeChildrenWillBeRemoved(ContainerNode& container) {
   if (!container.InActiveDocument())
     return;
@@ -340,7 +354,7 @@ static DispatchEventResult DispatchSelectStart(
 // "selectstart" event is dispatched and canceled, otherwise returns true.
 // When |userTriggered| is |NotUserTrigged|, return value specifies whether
 // selection is modified or not.
-bool FrameSelection::Modify(SelectionModifyAlteration alter,
+bool FrameSelection::Modify(EAlteration alter,
                             SelectionDirection direction,
                             TextGranularity granularity,
                             EUserTriggered user_triggered) {

@@ -69,8 +69,6 @@ class CORE_EXPORT NGLayoutResult : public RefCounted<NGLayoutResult> {
 
   const NGMarginStrut EndMarginStrut() const { return end_margin_strut_; }
 
-  RefPtr<NGLayoutResult> CloneWithoutOffset() const;
-
  private:
   friend class NGFragmentBuilder;
 

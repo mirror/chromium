@@ -223,7 +223,6 @@ void HeadsUpDisplayLayerImpl::UpdateHudTexture(
     resource_provider->CopyToResource(
         resources_.back()->id(), static_cast<const uint8_t*>(pixmap.addr()),
         internal_content_bounds_);
-    resource_provider->GenerateSyncTokenForResource(resources_.back()->id());
   }
 }
 
@@ -766,8 +765,7 @@ void HeadsUpDisplayLayerImpl::DrawDebugRects(
         stroke_color = DebugColors::TouchEventHandlerRectBorderColor();
         fill_color = DebugColors::TouchEventHandlerRectFillColor();
         stroke_width = DebugColors::TouchEventHandlerRectBorderWidth();
-        label_text = "touch event listener: ";
-        label_text.append(TouchActionToString(debug_rects[i].touch_action));
+        label_text = "touch event listener";
         break;
       case WHEEL_EVENT_HANDLER_RECT_TYPE:
         stroke_color = DebugColors::WheelEventHandlerRectBorderColor();

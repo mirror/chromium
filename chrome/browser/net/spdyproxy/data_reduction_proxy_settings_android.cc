@@ -9,6 +9,7 @@
 #include <map>
 #include <string>
 
+#include "base/android/jni_android.h"
 #include "base/android/jni_string.h"
 #include "base/strings/string_piece.h"
 #include "base/values.h"
@@ -166,6 +167,11 @@ jboolean DataReductionProxySettingsAndroid::AreLoFiPreviewsEnabled(
   return data_reduction_proxy::params::IsIncludedInLitePageFieldTrial() ||
       (data_reduction_proxy::params::IsLoFiOnViaFlags() &&
           data_reduction_proxy::params::AreLitePagesEnabledViaFlags());
+}
+
+// static
+bool DataReductionProxySettingsAndroid::Register(JNIEnv* env) {
+  return RegisterNativesImpl(env);
 }
 
 ScopedJavaLocalRef<jlongArray>

@@ -24,9 +24,9 @@ CompositorWorkerMessagingProxy::CreateBackingThreadStartupData(v8::Isolate*) {
 }
 
 std::unique_ptr<WorkerThread>
-CompositorWorkerMessagingProxy::CreateWorkerThread() {
+CompositorWorkerMessagingProxy::CreateWorkerThread(double origin_time) {
   return CompositorWorkerThread::Create(CreateThreadableLoadingContext(),
-                                        WorkerObjectProxy());
+                                        WorkerObjectProxy(), origin_time);
 }
 
 }  // namespace blink

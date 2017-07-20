@@ -33,22 +33,25 @@ import "ui/gfx/geometry/mojo/geometry.mojom";
 // of these messages are acknowledged.
 
 interface VideoEncodeAccelerator {
-  // See media::VideoEncodeAccelerator::Error
+  // Equivalent to media::VideoEncodeAccelerator::Error
+  // TODO(mcasas): Use EnumTraits, https://crbug.com/736517
   enum Error {
-    ILLEGAL_STATE,
-    INVALID_ARGUMENT,
-    PLATFORM_FAILURE
+    // An operation was attempted during an incompatible encoder state.
+    ILLEGAL_STATE_ERROR,
+    // Invalid argument was passed to an API method.
+    INVALID_ARGUMENT_ERROR,
+    // A failure occurred at the GPU process or one of its dependencies. Examples
+    // of such failures include GPU hardware failures, GPU driver failures, GPU
+    // library failures, GPU process programming errors, and so on.
+    PLATFORM_FAILURE_ERROR
   };
 
   // Responded by VideoEncodeAcceleratorClient.RequireBitstreamBuffers().
-  // TODO(mcasas): Update to asynchronous, https://crbug.com/744210.
-  [Sync]
   Initialize(VideoPixelFormat input_format,
              gfx.mojom.Size input_visible_size,
              VideoCodecProfile output_profile,
              uint32 initial_bitrate,
-             VideoEncodeAcceleratorClient client)
-      => (bool result);
+             VideoEncodeAcceleratorClient client);
 
   // Encodes a |frame|, being completely done with it after its callback.
   Encode(VideoFrame frame, bool force_keyframe) => ();

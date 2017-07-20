@@ -245,7 +245,6 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
     }
 
     private final void onCreateInternal(Bundle savedInstanceState) {
-        Intent intent = getIntent();
         if (DocumentModeAssassin.getInstance().isMigrationNecessary()) {
             super.onCreate(null);
 
@@ -257,14 +256,13 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
             return;
         }
 
-        if (!isStartedUpCorrectly(intent)) {
+        if (!isStartedUpCorrectly(getIntent())) {
             abortLaunch();
             return;
         }
 
-        if (requiresFirstRunToBeCompleted(intent)
-                && FirstRunFlowSequencer.launch(this, intent, false /* requiresBroadcast */,
-                           shouldPreferLightweightFre(intent))) {
+        if (requiresFirstRunToBeCompleted(getIntent())
+                && FirstRunFlowSequencer.launch(this, getIntent(), false)) {
             abortLaunch();
             return;
         }
@@ -332,14 +330,6 @@ public abstract class AsyncInitializationActivity extends AppCompatActivity impl
      */
     protected boolean requiresFirstRunToBeCompleted(Intent intent) {
         return true;
-    }
-
-    /**
-     * Whether to use the Lightweight First Run Experience instead of the
-     * non-Lightweight First Run Experience.
-     */
-    protected boolean shouldPreferLightweightFre(Intent intent) {
-        return false;
     }
 
     /**

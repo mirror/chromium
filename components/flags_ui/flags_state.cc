@@ -548,6 +548,10 @@ void FlagsState::GetFlagFeatureEntries(
       supported = true;
     }
 #endif
+#if defined(OS_IOS)
+    if (access == kAppleReviewAccessToFlags)
+      supported = ((entry.supported_platforms & kOsIosAppleReview) != 0);
+#endif
     if (supported)
       supported_entries->Append(std::move(data));
     else

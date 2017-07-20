@@ -42,18 +42,21 @@ namespace blink {
 
 std::unique_ptr<DedicatedWorkerThread> DedicatedWorkerThread::Create(
     ThreadableLoadingContext* loading_context,
-    InProcessWorkerObjectProxy& worker_object_proxy) {
-  return WTF::WrapUnique(
-      new DedicatedWorkerThread(loading_context, worker_object_proxy));
+    InProcessWorkerObjectProxy& worker_object_proxy,
+    double time_origin) {
+  return WTF::WrapUnique(new DedicatedWorkerThread(
+      loading_context, worker_object_proxy, time_origin));
 }
 
 DedicatedWorkerThread::DedicatedWorkerThread(
     ThreadableLoadingContext* loading_context,
-    InProcessWorkerObjectProxy& worker_object_proxy)
+    InProcessWorkerObjectProxy& worker_object_proxy,
+    double time_origin)
     : WorkerThread(loading_context, worker_object_proxy),
       worker_backing_thread_(
           WorkerBackingThread::Create("DedicatedWorker Thread")),
-      worker_object_proxy_(worker_object_proxy) {}
+      worker_object_proxy_(worker_object_proxy),
+      time_origin_(time_origin) {}
 
 DedicatedWorkerThread::~DedicatedWorkerThread() {}
 

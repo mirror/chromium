@@ -39,6 +39,10 @@ const uint32_t kScreenReaderAndHTMLAccessibilityModes =
     content::AccessibilityMode::kScreenReader |
     content::AccessibilityMode::kHTML;
 
+const WCHAR* const IA2_RELATION_DETAILS = L"details";
+const WCHAR* const IA2_RELATION_DETAILS_FOR = L"detailsFor";
+const WCHAR* const IA2_RELATION_ERROR_MESSAGE = L"errorMessage";
+
 namespace content {
 
 using AXPlatformPositionInstance = AXPlatformPosition::AXPositionInstance;
@@ -65,6 +69,153 @@ void AddAccessibilityModeFlags(AccessibilityMode mode_flags) {
 }
 
 //
+// BrowserAccessibilityRelation
+//
+// A simple implementation of IAccessibleRelation, used to represent
+// a relationship between two accessible nodes in the tree.
+//
+
+class BrowserAccessibilityRelation
+    : public CComObjectRootEx<CComMultiThreadModel>,
+      public IAccessibleRelation {
+  BEGIN_COM_MAP(BrowserAccessibilityRelation)
+  COM_INTERFACE_ENTRY(IAccessibleRelation)
+  END_COM_MAP()
+
+  CONTENT_EXPORT BrowserAccessibilityRelation() {}
+  CONTENT_EXPORT virtual ~BrowserAccessibilityRelation() {}
+
+  CONTENT_EXPORT void Initialize(BrowserAccessibilityComWin* owner,
+                                 const base::string16& type);
+  CONTENT_EXPORT void AddTarget(int target_id);
+  CONTENT_EXPORT void RemoveTarget(int target_id);
+
+  // Accessors.
+  const base::string16& get_type() const { return type_; }
+  const std::vector<int>& get_target_ids() const { return target_ids_; }
+
+  // IAccessibleRelation methods.
+  CONTENT_EXPORT STDMETHODIMP get_relationType(BSTR* relation_type) override;
+  CONTENT_EXPORT STDMETHODIMP get_nTargets(long* n_targets) override;
+  CONTENT_EXPORT STDMETHODIMP get_target(long target_index,
+                                         IUnknown** target) override;
+  CONTENT_EXPORT STDMETHODIMP get_targets(long max_targets,
+                                          IUnknown** targets,
+                                          long* n_targets) override;
+
+  // IAccessibleRelation methods not implemented.
+  CONTENT_EXPORT STDMETHODIMP
+  get_localizedRelationType(BSTR* relation_type) override {
+    return E_NOTIMPL;
+  }
+
+ private:
+  base::string16 type_;
+  base::win::ScopedComPtr<BrowserAccessibilityComWin> owner_;
+  std::vector<int> target_ids_;
+};
+
+void BrowserAccessibilityRelation::Initialize(BrowserAccessibilityComWin* owner,
+                                              const base::string16& type) {
+  owner_ = owner;
+  type_ = type;
+}
+
+void BrowserAccessibilityRelation::AddTarget(int target_id) {
+  target_ids_.push_back(target_id);
+}
+
+void BrowserAccessibilityRelation::RemoveTarget(int target_id) {
+  target_ids_.erase(
+      std::remove(target_ids_.begin(), target_ids_.end(), target_id),
+      target_ids_.end());
+}
+
+STDMETHODIMP BrowserAccessibilityRelation::get_relationType(
+    BSTR* relation_type) {
+  if (!relation_type)
+    return E_INVALIDARG;
+
+  if (!owner_->owner())
+    return E_FAIL;
+
+  *relation_type = SysAllocString(type_.c_str());
+  DCHECK(*relation_type);
+  return S_OK;
+}
+
+STDMETHODIMP BrowserAccessibilityRelation::get_nTargets(long* n_targets) {
+  if (!n_targets)
+    return E_INVALIDARG;
+
+  if (!owner_->owner())
+    return E_FAIL;
+
+  *n_targets = static_cast<long>(target_ids_.size());
+
+  for (long i = *n_targets - 1; i >= 0; --i) {
+    BrowserAccessibilityComWin* result = owner_->GetFromID(target_ids_[i]);
+    if (!result || !result->owner()) {
+      *n_targets = 0;
+      break;
+    }
+  }
+  return S_OK;
+}
+
+STDMETHODIMP BrowserAccessibilityRelation::get_target(long target_index,
+                                                      IUnknown** target) {
+  if (!target)
+    return E_INVALIDARG;
+
+  if (!owner_->owner())
+    return E_FAIL;
+
+  auto* manager = owner_->Manager();
+  if (!manager)
+    return E_FAIL;
+
+  if (target_index < 0 ||
+      target_index >= static_cast<long>(target_ids_.size())) {
+    return E_INVALIDARG;
+  }
+
+  BrowserAccessibility* result = manager->GetFromID(target_ids_[target_index]);
+  if (!result || !result->instance_active())
+    return E_FAIL;
+
+  *target = static_cast<IAccessible*>(
+      ToBrowserAccessibilityComWin(result)->NewReference());
+  return S_OK;
+}
+
+STDMETHODIMP BrowserAccessibilityRelation::get_targets(long max_targets,
+                                                       IUnknown** targets,
+                                                       long* n_targets) {
+  if (!targets || !n_targets)
+    return E_INVALIDARG;
+
+  if (!owner_->owner())
+    return E_FAIL;
+
+  long count = static_cast<long>(target_ids_.size());
+  if (count > max_targets)
+    count = max_targets;
+
+  *n_targets = count;
+  if (count == 0)
+    return S_FALSE;
+
+  for (long i = 0; i < count; ++i) {
+    HRESULT result = get_target(i, &targets[i]);
+    if (result != S_OK)
+      return result;
+  }
+
+  return S_OK;
+}
+
+//
 // BrowserAccessibilityComWin::WinAttributes
 //
 
@@ -83,22 +234,200 @@ BrowserAccessibilityComWin::BrowserAccessibilityComWin()
       previous_scroll_y_(0) {}
 
 BrowserAccessibilityComWin::~BrowserAccessibilityComWin() {
+  for (BrowserAccessibilityRelation* relation : relations_)
+    relation->Release();
 }
 
 //
-// IAccessible overrides:
+// IAccessible methods.
 //
+// Conventions:
+// * Always test for owner() first and return E_FAIL if it's false.
+// * Always check for invalid arguments first, even if they're unused.
+// * Return S_FALSE if the only output is a string argument and it's empty.
+// * There are some methods that don't touch any state such as get_toolkitName.
+//   For these rare cases, you may not need to call owner().
+//
+
+HRESULT BrowserAccessibilityComWin::accDoDefaultAction(VARIANT var_id) {
+  if (!owner())
+    return E_FAIL;
+
+  return AXPlatformNodeWin::accDoDefaultAction(var_id);
+}
+
+STDMETHODIMP BrowserAccessibilityComWin::accHitTest(LONG x_left,
+                                                    LONG y_top,
+                                                    VARIANT* child) {
+  if (!owner())
+    return E_FAIL;
+
+  return AXPlatformNodeWin::accHitTest(x_left, y_top, child);
+}
+
+STDMETHODIMP BrowserAccessibilityComWin::accLocation(LONG* x_left,
+                                                     LONG* y_top,
+                                                     LONG* width,
+                                                     LONG* height,
+                                                     VARIANT var_id) {
+  if (!owner())
+    return E_FAIL;
+
+  return AXPlatformNodeWin::accLocation(x_left, y_top, width, height, var_id);
+}
+
+STDMETHODIMP BrowserAccessibilityComWin::accNavigate(LONG nav_dir,
+                                                     VARIANT start,
+                                                     VARIANT* end) {
+  if (!owner())
+    return E_FAIL;
+
+  return AXPlatformNodeWin::accNavigate(nav_dir, start, end);
+}
+
+STDMETHODIMP BrowserAccessibilityComWin::get_accChild(VARIANT var_child,
+                                                      IDispatch** disp_child) {
+  if (!owner())
+    return E_FAIL;
+
+  return AXPlatformNodeWin::get_accChild(var_child, disp_child);
+}
+
+STDMETHODIMP BrowserAccessibilityComWin::get_accChildCount(LONG* child_count) {
+  if (!owner())
+    return E_FAIL;
+
+  return AXPlatformNodeWin::get_accChildCount(child_count);
+}
 
 STDMETHODIMP BrowserAccessibilityComWin::get_accDefaultAction(
     VARIANT var_id,
     BSTR* def_action) {
+  if (!owner())
+    return E_FAIL;
+
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
   return AXPlatformNodeWin::get_accDefaultAction(var_id, def_action);
 }
 
+STDMETHODIMP BrowserAccessibilityComWin::get_accDescription(VARIANT var_id,
+                                                            BSTR* desc) {
+  if (!owner())
+    return E_FAIL;
+
+  return AXPlatformNodeWin::get_accDescription(var_id, desc);
+}
+
+STDMETHODIMP BrowserAccessibilityComWin::get_accFocus(VARIANT* focus_child) {
+  if (!owner())
+    return E_FAIL;
+
+  return AXPlatformNodeWin::get_accFocus(focus_child);
+}
+
+STDMETHODIMP BrowserAccessibilityComWin::get_accHelp(VARIANT var_id,
+                                                     BSTR* help) {
+  if (!owner())
+    return E_FAIL;
+
+  return AXPlatformNodeWin::get_accHelp(var_id, help);
+}
+
+STDMETHODIMP BrowserAccessibilityComWin::get_accKeyboardShortcut(
+    VARIANT var_id,
+    BSTR* acc_key) {
+  if (!owner())
+    return E_FAIL;
+
+  return AXPlatformNodeWin::get_accKeyboardShortcut(var_id, acc_key);
+}
+
+STDMETHODIMP BrowserAccessibilityComWin::get_accName(VARIANT var_id,
+                                                     BSTR* name) {
+  if (!owner())
+    return E_FAIL;
+
+  return AXPlatformNodeWin::get_accName(var_id, name);
+}
+
+STDMETHODIMP BrowserAccessibilityComWin::get_accParent(
+    IDispatch** disp_parent) {
+  if (!owner())
+    return E_FAIL;
+
+  return AXPlatformNodeWin::get_accParent(disp_parent);
+}
+
+STDMETHODIMP BrowserAccessibilityComWin::get_accRole(VARIANT var_id,
+                                                     VARIANT* role) {
+  if (!owner())
+    return E_FAIL;
+
+  return AXPlatformNodeWin::get_accRole(var_id, role);
+}
+
+STDMETHODIMP BrowserAccessibilityComWin::get_accState(VARIANT var_id,
+                                                      VARIANT* state) {
+  if (!owner())
+    return E_FAIL;
+
+  return AXPlatformNodeWin::get_accState(var_id, state);
+}
+
+STDMETHODIMP BrowserAccessibilityComWin::get_accValue(VARIANT var_id,
+                                                      BSTR* value) {
+  if (!owner())
+    return E_FAIL;
+
+  return AXPlatformNodeWin::get_accValue(var_id, value);
+}
+
+STDMETHODIMP BrowserAccessibilityComWin::get_accHelpTopic(BSTR* help_file,
+                                                          VARIANT var_id,
+                                                          LONG* topic_id) {
+  return AXPlatformNodeWin::get_accHelpTopic(help_file, var_id, topic_id);
+}
+
+STDMETHODIMP BrowserAccessibilityComWin::get_accSelection(VARIANT* selected) {
+  if (!owner())
+    return E_FAIL;
+
+  return AXPlatformNodeWin::get_accSelection(selected);
+}
+
+STDMETHODIMP BrowserAccessibilityComWin::accSelect(LONG flags_sel,
+                                                   VARIANT var_id) {
+  if (!owner())
+    return E_FAIL;
+
+  return AXPlatformNodeWin::accSelect(flags_sel, var_id);
+}
+
+STDMETHODIMP
+BrowserAccessibilityComWin::put_accName(VARIANT var_id, BSTR put_name) {
+  if (!owner())
+    return E_FAIL;
+
+  return AXPlatformNodeWin::put_accName(var_id, put_name);
+}
+STDMETHODIMP
+BrowserAccessibilityComWin::put_accValue(VARIANT var_id, BSTR put_val) {
+  if (!owner())
+    return E_FAIL;
+
+  return AXPlatformNodeWin::put_accValue(var_id, put_val);
+}
+
 //
-// IAccessible2 overrides:
+// IAccessible2 methods.
 //
+
+STDMETHODIMP BrowserAccessibilityComWin::role(LONG* role) {
+  if (!owner())
+    return E_FAIL;
+
+  return AXPlatformNodeWin::role(role);
+}
 
 STDMETHODIMP BrowserAccessibilityComWin::get_attributes(BSTR* attributes) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_IA2_GET_ATTRIBUTES);
@@ -125,7 +454,10 @@ STDMETHODIMP BrowserAccessibilityComWin::get_attributes(BSTR* attributes) {
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_states(AccessibleStates* states) {
+  if (!owner())
+    return E_FAIL;
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+
   return AXPlatformNodeWin::get_states(states);
 }
 
@@ -173,7 +505,14 @@ STDMETHODIMP BrowserAccessibilityComWin::get_indexInParent(
 STDMETHODIMP BrowserAccessibilityComWin::get_nRelations(LONG* n_relations) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_N_RELATIONS);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
-  return AXPlatformNodeWin::get_nRelations(n_relations);
+  if (!owner())
+    return E_FAIL;
+
+  if (!n_relations)
+    return E_INVALIDARG;
+
+  *n_relations = relations_.size();
+  return S_OK;
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_relation(
@@ -181,7 +520,20 @@ STDMETHODIMP BrowserAccessibilityComWin::get_relation(
     IAccessibleRelation** relation) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_RELATION);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
-  return AXPlatformNodeWin::get_relation(relation_index, relation);
+  if (!owner())
+    return E_FAIL;
+
+  if (relation_index < 0 ||
+      relation_index >= static_cast<long>(relations_.size())) {
+    return E_INVALIDARG;
+  }
+
+  if (!relation)
+    return E_INVALIDARG;
+
+  relations_[relation_index]->AddRef();
+  *relation = relations_[relation_index];
+  return S_OK;
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_relations(
@@ -190,8 +542,23 @@ STDMETHODIMP BrowserAccessibilityComWin::get_relations(
     LONG* n_relations) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_RELATIONS);
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
-  return AXPlatformNodeWin::get_relations(max_relations, relations,
-                                          n_relations);
+  if (!owner())
+    return E_FAIL;
+
+  if (!relations || !n_relations)
+    return E_INVALIDARG;
+
+  long count = static_cast<long>(relations_.size());
+  *n_relations = count;
+  if (count == 0)
+    return S_FALSE;
+
+  for (long i = 0; i < count; ++i) {
+    relations_[i]->AddRef();
+    relations[i] = relations_[i];
+  }
+
+  return S_OK;
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::scrollTo(IA2ScrollType scroll_type) {
@@ -302,6 +669,44 @@ BrowserAccessibilityComWin::get_localizedExtendedRole(
 
   return GetStringAttributeAsBstr(ui::AX_ATTR_ROLE_DESCRIPTION,
                                   localized_extended_role);
+}
+
+//
+// IAccessible2 methods not implemented.
+//
+
+STDMETHODIMP BrowserAccessibilityComWin::get_extendedRole(BSTR* extended_role) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_EXTENDED_ROLE);
+  AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  return E_NOTIMPL;
+}
+STDMETHODIMP
+BrowserAccessibilityComWin::get_nExtendedStates(LONG* n_extended_states) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_N_EXTENDED_STATES);
+  AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  return E_NOTIMPL;
+}
+STDMETHODIMP
+BrowserAccessibilityComWin::get_extendedStates(LONG max_extended_states,
+                                               BSTR** extended_states,
+                                               LONG* n_extended_states) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_EXTENDED_STATES);
+  AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  return E_NOTIMPL;
+}
+STDMETHODIMP
+BrowserAccessibilityComWin::get_localizedExtendedStates(
+    LONG max_localized_extended_states,
+    BSTR** localized_extended_states,
+    LONG* n_localized_extended_states) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_LOCALIZED_EXTENDED_STATES);
+  AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  return E_NOTIMPL;
+}
+STDMETHODIMP BrowserAccessibilityComWin::get_locale(IA2Locale* locale) {
+  WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_LOCALE);
+  AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  return E_NOTIMPL;
 }
 
 //
@@ -446,11 +851,17 @@ STDMETHODIMP BrowserAccessibilityComWin::get_accessibleAt(
     long column,
     IUnknown** accessible) {
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_accessibleAt(row, column, accessible);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_caption(IUnknown** accessible) {
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_caption(accessible);
 }
 
@@ -458,6 +869,9 @@ STDMETHODIMP BrowserAccessibilityComWin::get_childIndex(long row,
                                                         long column,
                                                         long* cell_index) {
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_childIndex(row, column, cell_index);
 }
 
@@ -465,6 +879,9 @@ STDMETHODIMP BrowserAccessibilityComWin::get_columnDescription(
     long column,
     BSTR* description) {
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_columnDescription(column, description);
 }
 
@@ -473,6 +890,9 @@ STDMETHODIMP BrowserAccessibilityComWin::get_columnExtentAt(
     long column,
     long* n_columns_spanned) {
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_columnExtentAt(row, column, n_columns_spanned);
 }
 
@@ -480,6 +900,10 @@ STDMETHODIMP BrowserAccessibilityComWin::get_columnHeader(
     IAccessibleTable** accessible_table,
     long* starting_row_index) {
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_columnHeader(accessible_table,
                                              starting_row_index);
 }
@@ -487,39 +911,60 @@ STDMETHODIMP BrowserAccessibilityComWin::get_columnHeader(
 STDMETHODIMP BrowserAccessibilityComWin::get_columnIndex(long cell_index,
                                                          long* column_index) {
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_columnIndex(cell_index, column_index);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_nColumns(long* column_count) {
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_nColumns(column_count);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_nRows(long* row_count) {
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_nRows(row_count);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_nSelectedChildren(
     long* cell_count) {
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_nSelectedChildren(cell_count);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_nSelectedColumns(
     long* column_count) {
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_nSelectedColumns(column_count);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_nSelectedRows(long* row_count) {
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_nSelectedRows(row_count);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_rowDescription(long row,
                                                             BSTR* description) {
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_rowDescription(row, description);
 }
 
@@ -527,6 +972,9 @@ STDMETHODIMP BrowserAccessibilityComWin::get_rowExtentAt(long row,
                                                          long column,
                                                          long* n_rows_spanned) {
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_rowExtentAt(row, column, n_rows_spanned);
 }
 
@@ -534,6 +982,9 @@ STDMETHODIMP BrowserAccessibilityComWin::get_rowHeader(
     IAccessibleTable** accessible_table,
     long* starting_column_index) {
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_rowHeader(accessible_table,
                                           starting_column_index);
 }
@@ -541,6 +992,9 @@ STDMETHODIMP BrowserAccessibilityComWin::get_rowHeader(
 STDMETHODIMP BrowserAccessibilityComWin::get_rowIndex(long cell_index,
                                                       long* row_index) {
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_rowIndex(cell_index, row_index);
 }
 
@@ -549,6 +1003,9 @@ STDMETHODIMP BrowserAccessibilityComWin::get_selectedChildren(
     long** children,
     long* n_children) {
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_selectedChildren(max_children, children,
                                                  n_children);
 }
@@ -557,6 +1014,9 @@ STDMETHODIMP BrowserAccessibilityComWin::get_selectedColumns(long max_columns,
                                                              long** columns,
                                                              long* n_columns) {
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_selectedColumns(max_columns, columns,
                                                 n_columns);
 }
@@ -565,11 +1025,17 @@ STDMETHODIMP BrowserAccessibilityComWin::get_selectedRows(long max_rows,
                                                           long** rows,
                                                           long* n_rows) {
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_selectedRows(max_rows, rows, n_rows);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_summary(IUnknown** accessible) {
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_summary(accessible);
 }
 
@@ -577,6 +1043,9 @@ STDMETHODIMP BrowserAccessibilityComWin::get_isColumnSelected(
     long column,
     boolean* is_selected) {
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_isColumnSelected(column, is_selected);
 }
 
@@ -584,6 +1053,9 @@ STDMETHODIMP BrowserAccessibilityComWin::get_isRowSelected(
     long row,
     boolean* is_selected) {
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_isRowSelected(row, is_selected);
 }
 
@@ -591,6 +1063,9 @@ STDMETHODIMP BrowserAccessibilityComWin::get_isSelected(long row,
                                                         long column,
                                                         boolean* is_selected) {
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_isSelected(row, column, is_selected);
 }
 
@@ -602,32 +1077,50 @@ STDMETHODIMP BrowserAccessibilityComWin::get_rowColumnExtentsAtIndex(
     long* column_extents,
     boolean* is_selected) {
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_rowColumnExtentsAtIndex(
       index, row, column, row_extents, column_extents, is_selected);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::selectRow(long row) {
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::selectRow(row);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::selectColumn(long column) {
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::selectColumn(column);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::unselectRow(long row) {
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::unselectRow(row);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::unselectColumn(long column) {
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::unselectColumn(column);
 }
 
 STDMETHODIMP
 BrowserAccessibilityComWin::get_modelChange(IA2TableModelChange* model_change) {
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_modelChange(model_change);
 }
 
@@ -639,11 +1132,17 @@ STDMETHODIMP BrowserAccessibilityComWin::get_cellAt(long row,
                                                     long column,
                                                     IUnknown** cell) {
   AddAccessibilityModeFlags(AccessibilityMode::kScreenReader);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_cellAt(row, column, cell);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_nSelectedCells(long* cell_count) {
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_nSelectedCells(cell_count);
 }
 
@@ -651,18 +1150,27 @@ STDMETHODIMP BrowserAccessibilityComWin::get_selectedCells(
     IUnknown*** cells,
     long* n_selected_cells) {
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_selectedCells(cells, n_selected_cells);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_selectedColumns(long** columns,
                                                              long* n_columns) {
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_selectedColumns(columns, n_columns);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_selectedRows(long** rows,
                                                           long* n_rows) {
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_selectedRows(rows, n_rows);
 }
 
@@ -673,6 +1181,9 @@ STDMETHODIMP BrowserAccessibilityComWin::get_selectedRows(long** rows,
 STDMETHODIMP BrowserAccessibilityComWin::get_columnExtent(
     long* n_columns_spanned) {
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_columnExtent(n_columns_spanned);
 }
 
@@ -680,17 +1191,26 @@ STDMETHODIMP BrowserAccessibilityComWin::get_columnHeaderCells(
     IUnknown*** cell_accessibles,
     long* n_column_header_cells) {
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_columnHeaderCells(cell_accessibles,
                                                   n_column_header_cells);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_columnIndex(long* column_index) {
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_columnIndex(column_index);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_rowExtent(long* n_rows_spanned) {
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_rowExtent(n_rows_spanned);
 }
 
@@ -698,17 +1218,26 @@ STDMETHODIMP BrowserAccessibilityComWin::get_rowHeaderCells(
     IUnknown*** cell_accessibles,
     long* n_row_header_cells) {
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_rowHeaderCells(cell_accessibles,
                                                n_row_header_cells);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_rowIndex(long* row_index) {
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_rowIndex(row_index);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_isSelected(boolean* is_selected) {
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_isSelected(is_selected);
 }
 
@@ -719,12 +1248,18 @@ STDMETHODIMP BrowserAccessibilityComWin::get_rowColumnExtents(
     long* column_extents,
     boolean* is_selected) {
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_rowColumnExtents(
       row_index, column_index, row_extents, column_extents, is_selected);
 }
 
 STDMETHODIMP BrowserAccessibilityComWin::get_table(IUnknown** table) {
   AddAccessibilityModeFlags(kScreenReaderAndHTMLAccessibilityModes);
+  if (!owner())
+    return E_FAIL;
+
   return AXPlatformNodeWin::get_table(table);
 }
 
@@ -2452,7 +2987,33 @@ void BrowserAccessibilityComWin::UpdateStep1ComputeWinAttributes() {
 
   win_attributes_->value = value;
 
-  CalculateRelationships();
+  ClearOwnRelations();
+  AddBidirectionalRelations(IA2_RELATION_CONTROLLER_FOR,
+                            IA2_RELATION_CONTROLLED_BY,
+                            ui::AX_ATTR_CONTROLS_IDS);
+  AddBidirectionalRelations(IA2_RELATION_DESCRIBED_BY,
+                            IA2_RELATION_DESCRIPTION_FOR,
+                            ui::AX_ATTR_DESCRIBEDBY_IDS);
+  AddBidirectionalRelations(IA2_RELATION_FLOWS_TO, IA2_RELATION_FLOWS_FROM,
+                            ui::AX_ATTR_FLOWTO_IDS);
+  AddBidirectionalRelations(IA2_RELATION_LABELLED_BY, IA2_RELATION_LABEL_FOR,
+                            ui::AX_ATTR_LABELLEDBY_IDS);
+
+  int32_t details_id;
+  if (GetIntAttribute(ui::AX_ATTR_DETAILS_ID, &details_id)) {
+    std::vector<int32_t> details_ids;
+    details_ids.push_back(details_id);
+    AddBidirectionalRelations(IA2_RELATION_DETAILS, IA2_RELATION_DETAILS_FOR,
+                              details_ids);
+  }
+
+  int member_of_id;
+  if (owner()->GetIntAttribute(ui::AX_ATTR_MEMBER_OF_ID, &member_of_id))
+    AddRelation(IA2_RELATION_MEMBER_OF, member_of_id);
+
+  int error_message_id;
+  if (owner()->GetIntAttribute(ui::AX_ATTR_ERRORMESSAGE_ID, &error_message_id))
+    AddRelation(IA2_RELATION_ERROR_MESSAGE, error_message_id);
 }
 
 void BrowserAccessibilityComWin::UpdateStep2ComputeHypertext() {
@@ -3382,6 +3943,135 @@ bool BrowserAccessibilityComWin::IsListBoxOptionOrMenuListOption() {
   }
 
   return false;
+}
+
+void BrowserAccessibilityComWin::AddRelation(
+    const base::string16& relation_type,
+    int target_id) {
+  // Reflexive relations don't need to be exposed through IA2.
+  if (target_id == owner()->GetId())
+    return;
+
+  CComObject<BrowserAccessibilityRelation>* relation;
+  HRESULT hr =
+      CComObject<BrowserAccessibilityRelation>::CreateInstance(&relation);
+  DCHECK(SUCCEEDED(hr));
+  relation->AddRef();
+  relation->Initialize(this, relation_type);
+  relation->AddTarget(target_id);
+  relations_.push_back(relation);
+}
+
+void BrowserAccessibilityComWin::AddBidirectionalRelations(
+    const base::string16& relation_type,
+    const base::string16& reverse_relation_type,
+    ui::AXIntListAttribute attribute) {
+  if (!owner()->HasIntListAttribute(attribute))
+    return;
+
+  const std::vector<int32_t>& target_ids =
+      owner()->GetIntListAttribute(attribute);
+  AddBidirectionalRelations(relation_type, reverse_relation_type, target_ids);
+}
+
+void BrowserAccessibilityComWin::AddBidirectionalRelations(
+    const base::string16& relation_type,
+    const base::string16& reverse_relation_type,
+    const std::vector<int32_t>& target_ids) {
+  // Reflexive relations don't need to be exposed through IA2.
+  std::vector<int32_t> filtered_target_ids;
+  int32_t current_id = owner()->GetId();
+  std::copy_if(target_ids.begin(), target_ids.end(),
+               std::back_inserter(filtered_target_ids),
+               [current_id](int32_t id) { return id != current_id; });
+  if (filtered_target_ids.empty())
+    return;
+
+  CComObject<BrowserAccessibilityRelation>* relation;
+  HRESULT hr =
+      CComObject<BrowserAccessibilityRelation>::CreateInstance(&relation);
+  DCHECK(SUCCEEDED(hr));
+  relation->AddRef();
+  relation->Initialize(this, relation_type);
+
+  for (int target_id : filtered_target_ids) {
+    BrowserAccessibilityComWin* target =
+        GetFromID(static_cast<int32_t>(target_id));
+    if (!target || !target->owner())
+      continue;
+    relation->AddTarget(target_id);
+    target->AddRelation(reverse_relation_type, owner()->GetId());
+  }
+
+  relations_.push_back(relation);
+}
+
+// Clears all the forward relations from this object to any other object and the
+// associated  reverse relations on the other objects, but leaves any reverse
+// relations on this object alone.
+void BrowserAccessibilityComWin::ClearOwnRelations() {
+  RemoveBidirectionalRelationsOfType(IA2_RELATION_CONTROLLER_FOR,
+                                     IA2_RELATION_CONTROLLED_BY);
+  RemoveBidirectionalRelationsOfType(IA2_RELATION_DESCRIBED_BY,
+                                     IA2_RELATION_DESCRIPTION_FOR);
+  RemoveBidirectionalRelationsOfType(IA2_RELATION_FLOWS_TO,
+                                     IA2_RELATION_FLOWS_FROM);
+  RemoveBidirectionalRelationsOfType(IA2_RELATION_LABELLED_BY,
+                                     IA2_RELATION_LABEL_FOR);
+
+  relations_.erase(
+      std::remove_if(relations_.begin(), relations_.end(),
+                     [](BrowserAccessibilityRelation* relation) {
+                       if (relation->get_type() == IA2_RELATION_MEMBER_OF) {
+                         relation->Release();
+                         return true;
+                       }
+                       return false;
+                     }),
+      relations_.end());
+}
+
+void BrowserAccessibilityComWin::RemoveBidirectionalRelationsOfType(
+    const base::string16& relation_type,
+    const base::string16& reverse_relation_type) {
+  for (auto iter = relations_.begin(); iter != relations_.end();) {
+    BrowserAccessibilityRelation* relation = *iter;
+    DCHECK(relation);
+    if (relation->get_type() == relation_type) {
+      for (int target_id : relation->get_target_ids()) {
+        BrowserAccessibilityComWin* target =
+            GetFromID(static_cast<int32_t>(target_id));
+        if (!target || !target->owner())
+          continue;
+        DCHECK_NE(target, this);
+        target->RemoveTargetFromRelation(reverse_relation_type,
+                                         owner()->GetId());
+      }
+      iter = relations_.erase(iter);
+      relation->Release();
+    } else {
+      ++iter;
+    }
+  }
+}
+
+void BrowserAccessibilityComWin::RemoveTargetFromRelation(
+    const base::string16& relation_type,
+    int target_id) {
+  for (auto iter = relations_.begin(); iter != relations_.end();) {
+    BrowserAccessibilityRelation* relation = *iter;
+    DCHECK(relation);
+    if (relation->get_type() == relation_type) {
+      // If |target_id| is not present, |RemoveTarget| will do nothing.
+      relation->RemoveTarget(target_id);
+    }
+    if (relation->get_target_ids().empty()) {
+      iter = relations_.erase(iter);
+      relation->Release();
+    } else {
+      ++iter;
+    }
+  }
 }
 
 void BrowserAccessibilityComWin::FireNativeEvent(LONG win_event_type) const {

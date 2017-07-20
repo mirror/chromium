@@ -101,9 +101,8 @@ bool IsArcPlayStoreEnabledPreferenceManagedForProfile(const Profile* profile);
 bool SetArcPlayStoreEnabledForProfile(Profile* profile, bool enabled);
 
 // Returns whether all ARC related OptIn preferences (i.e.
-// ArcBackupRestoreEnabled and ArcLocationServiceEnabled) are managed or unused
-// (e.g. for Active Directory users).
-bool AreArcAllOptInPreferencesIgnorableForProfile(const Profile* profile);
+// ArcBackupRestoreEnabled and ArcLocationServiceEnabled) are managed.
+bool AreArcAllOptInPreferencesManagedForProfile(const Profile* profile);
 
 // Returns true iff there is a user associated with |profile|, and it is an
 // Active Directory user.

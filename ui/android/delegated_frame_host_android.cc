@@ -14,7 +14,7 @@
 #include "cc/surfaces/surface.h"
 #include "components/viz/common/surfaces/surface_id.h"
 #include "components/viz/host/host_frame_sink_manager.h"
-#include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
+#include "components/viz/service/frame_sinks/frame_sink_manager.h"
 #include "ui/android/view_android.h"
 #include "ui/android/window_android_compositor.h"
 #include "ui/display/display.h"
@@ -45,7 +45,7 @@ void CopyOutputRequestCallback(
     cc::CopyOutputRequest::CopyOutputRequestCallback result_callback,
     std::unique_ptr<cc::CopyOutputResult> copy_output_result) {
   readback_layer->RemoveFromParent();
-  std::move(result_callback).Run(std::move(copy_output_result));
+  result_callback.Run(std::move(copy_output_result));
 }
 
 }  // namespace
@@ -53,7 +53,7 @@ void CopyOutputRequestCallback(
 DelegatedFrameHostAndroid::DelegatedFrameHostAndroid(
     ui::ViewAndroid* view,
     viz::HostFrameSinkManager* host_frame_sink_manager,
-    viz::FrameSinkManagerImpl* frame_sink_manager,
+    viz::FrameSinkManager* frame_sink_manager,
     Client* client,
     const viz::FrameSinkId& frame_sink_id)
     : frame_sink_id_(frame_sink_id),
@@ -124,9 +124,8 @@ void DelegatedFrameHostAndroid::RequestCopyOfSurface(
   readback_layer->SetHideLayerAndSubtree(true);
   compositor->AttachLayerForReadback(readback_layer);
   std::unique_ptr<cc::CopyOutputRequest> copy_output_request =
-      cc::CopyOutputRequest::CreateRequest(
-          base::BindOnce(&CopyOutputRequestCallback, readback_layer,
-                         std::move(result_callback)));
+      cc::CopyOutputRequest::CreateRequest(base::Bind(
+          &CopyOutputRequestCallback, readback_layer, result_callback));
 
   if (!src_subrect_in_pixel.IsEmpty())
     copy_output_request->set_area(src_subrect_in_pixel);
@@ -193,10 +192,6 @@ void DelegatedFrameHostAndroid::ReclaimResources(
 void DelegatedFrameHostAndroid::WillDrawSurface(
     const viz::LocalSurfaceId& local_surface_id,
     const gfx::Rect& damage_rect) {}
-
-void DelegatedFrameHostAndroid::OnBeginFramePausedChanged(bool paused) {
-  begin_frame_source_.OnSetBeginFrameSourcePaused(paused);
-}
 
 void DelegatedFrameHostAndroid::OnNeedsBeginFrames(bool needs_begin_frames) {
   support_->SetNeedsBeginFrame(needs_begin_frames);

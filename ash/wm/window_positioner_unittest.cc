@@ -10,7 +10,7 @@
 #include "ash/shell.h"
 #include "ash/shell/toplevel_window.h"
 #include "ash/test/ash_test_base.h"
-#include "ash/test_shell_delegate.h"
+#include "ash/test/test_shell_delegate.h"
 #include "ash/wm/window_positioner.h"
 #include "ash/wm/window_state.h"
 #include "base/strings/string_number_conversions.h"
@@ -143,7 +143,7 @@ TEST_F(WindowPositionerTest, EnsureMinimumVisibility) {
 // opened being not maximized. To enforce maximization for all screen
 // resolutions, one can set "ForceMaximizeBrowserWindowOnFirstRun"
 // policy. In the following tests we check if the window will be opened in
-// tablet mode for low and high resolution when this policy is set.
+// maximized mode for low and high resolution when this policy is set.
 TEST_F(WindowPositionerTest, FirstRunMaximizeWindowHighResloution) {
   const int width = ash::WindowPositioner::GetForceMaximizedWidthLimit() + 100;
   // Set resolution to 1466x300.

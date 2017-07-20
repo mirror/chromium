@@ -14,7 +14,6 @@
   [textfield setEditable:NO];
   [textfield setFont:[NSFont systemFontOfSize:[NSFont systemFontSize]]];
   [textfield setStringValue:text];
-  [textfield setAlignment:NSNaturalTextAlignment];
   return textfield;
 }
 

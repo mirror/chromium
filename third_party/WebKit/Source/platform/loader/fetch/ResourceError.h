@@ -31,7 +31,6 @@
 #include <iosfwd>
 #include "net/base/net_errors.h"
 #include "platform/PlatformExport.h"
-#include "platform/weborigin/KURL.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/text/WTFString.h"
 
@@ -53,28 +52,42 @@ class PLATFORM_EXPORT ResourceError final {
     BLOCKED_BY_XSS_AUDITOR = net::ERR_BLOCKED_BY_XSS_AUDITOR
   };
 
-  static ResourceError CancelledError(const KURL&);
+  static ResourceError CancelledError(const String& failing_url);
   static ResourceError CancelledDueToAccessCheckError(
-      const KURL&,
+      const String& failing_url,
       ResourceRequestBlockedReason);
   static ResourceError CancelledDueToAccessCheckError(
-      const KURL&,
+      const String& failing_url,
       ResourceRequestBlockedReason,
       const String& localized_description);
 
-  static ResourceError CacheMissError(const KURL&);
+  static ResourceError CacheMissError(const String& failing_url);
 
-  ResourceError() = default;
+  ResourceError()
+      : error_code_(0),
+        is_null_(true),
+        is_cancellation_(false),
+        is_access_check_(false),
+        is_timeout_(false),
+        stale_copy_in_cache_(false),
+        was_ignored_by_handler_(false),
+        should_collapse_initiator_(false) {}
 
   ResourceError(const String& domain,
                 int error_code,
-                const KURL& failing_url,
+                const String& failing_url,
                 const String& localized_description)
       : domain_(domain),
         error_code_(error_code),
         failing_url_(failing_url),
         localized_description_(localized_description),
-        is_null_(false) {}
+        is_null_(false),
+        is_cancellation_(false),
+        is_access_check_(false),
+        is_timeout_(false),
+        stale_copy_in_cache_(false),
+        was_ignored_by_handler_(false),
+        should_collapse_initiator_(false) {}
 
   // Makes a deep copy. Useful for when you need to use a ResourceError on
   // another thread.
@@ -87,7 +100,10 @@ class PLATFORM_EXPORT ResourceError final {
   const String& FailingURL() const { return failing_url_; }
   const String& LocalizedDescription() const { return localized_description_; }
 
-  bool IsCancellation() const;
+  void SetIsCancellation(bool is_cancellation) {
+    is_cancellation_ = is_cancellation;
+  }
+  bool IsCancellation() const { return is_cancellation_; }
 
   void SetIsAccessCheck(bool is_access_check) {
     is_access_check_ = is_access_check;
@@ -125,15 +141,16 @@ class PLATFORM_EXPORT ResourceError final {
 
  private:
   String domain_;
-  int error_code_ = 0;
-  KURL failing_url_;
+  int error_code_;
+  String failing_url_;
   String localized_description_;
-  bool is_null_ = true;
-  bool is_access_check_ = false;
-  bool is_timeout_ = false;
-  bool stale_copy_in_cache_ = false;
-  bool was_ignored_by_handler_ = false;
-  bool should_collapse_initiator_ = false;
+  bool is_null_;
+  bool is_cancellation_;
+  bool is_access_check_;
+  bool is_timeout_;
+  bool stale_copy_in_cache_;
+  bool was_ignored_by_handler_;
+  bool should_collapse_initiator_;
 };
 
 inline bool operator==(const ResourceError& a, const ResourceError& b) {

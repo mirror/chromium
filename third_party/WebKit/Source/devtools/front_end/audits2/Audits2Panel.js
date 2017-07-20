@@ -6,7 +6,7 @@
  * @implements {SDK.SDKModelObserver<!SDK.ServiceWorkerManager>}
  * @unrestricted
  */
-Audits2.Audits2Panel = class extends UI.Panel {
+Audits2.Audits2Panel = class extends UI.PanelWithSidebar {
   constructor() {
     super('audits2');
     this.registerRequiredCSS('audits2/audits2Panel.css');
@@ -15,26 +15,27 @@ Audits2.Audits2Panel = class extends UI.Panel {
     this._protocolService = new Audits2.ProtocolService();
     this._protocolService.registerStatusCallback(msg => this._updateStatus(Common.UIString(msg)));
 
-    var toolbar = new UI.Toolbar('', this.element);
+    var toolbar = new UI.Toolbar('', this.panelSidebarElement());
 
     var newButton = new UI.ToolbarButton(Common.UIString('New audit\u2026'), 'largeicon-add');
     toolbar.appendToolbarItem(newButton);
     newButton.addEventListener(UI.ToolbarButton.Events.Click, this._showLauncherUI.bind(this));
 
-    var downloadButton = new UI.ToolbarButton(Common.UIString('Download report'), 'largeicon-download');
-    toolbar.appendToolbarItem(downloadButton);
-    downloadButton.addEventListener(UI.ToolbarButton.Events.Click, this._downloadSelected.bind(this));
+    var deleteButton = new UI.ToolbarButton(Common.UIString('Delete audit'), 'largeicon-delete');
+    toolbar.appendToolbarItem(deleteButton);
+    deleteButton.addEventListener(UI.ToolbarButton.Events.Click, this._deleteSelected.bind(this));
 
     toolbar.appendSeparator();
-
-    this._reportSelector = new Audits2.ReportSelector();
-    toolbar.appendToolbarItem(this._reportSelector.comboBox());
 
     var clearButton = new UI.ToolbarButton(Common.UIString('Clear all'), 'largeicon-clear');
     toolbar.appendToolbarItem(clearButton);
     clearButton.addEventListener(UI.ToolbarButton.Events.Click, this._clearAll.bind(this));
 
-    this._auditResultsElement = this.contentElement.createChild('div', 'audits2-results-container');
+    this._treeOutline = new UI.TreeOutlineInShadow();
+    this._treeOutline.registerRequiredCSS('audits2/lighthouse/report-styles.css');
+    this._treeOutline.registerRequiredCSS('audits2/audits2Tree.css');
+    this.panelSidebarElement().appendChild(this._treeOutline.element);
+
     this._dropTarget = new UI.DropTarget(
         this.contentElement, [UI.DropTarget.Types.Files], Common.UIString('Drop audit file here'),
         this._handleDrop.bind(this));
@@ -147,20 +148,22 @@ Audits2.Audits2Panel = class extends UI.Panel {
   }
 
   _clearAll() {
-    this._reportSelector.clearAll();
+    this._treeOutline.removeChildren();
     this._showLandingPage();
   }
 
-  _downloadSelected() {
-    this._reportSelector.downloadSelected();
+  _deleteSelected() {
+    var selection = this._treeOutline.selectedTreeElement;
+    if (selection)
+      selection._deleteItem();
   }
 
   _showLandingPage() {
-    if (this._reportSelector.comboBox().size())
+    if (this._treeOutline.rootElement().childCount())
       return;
 
-    this._auditResultsElement.removeChildren();
-    var landingPage = this._auditResultsElement.createChild('div', 'vbox audits2-landing-page');
+    this.mainElement().removeChildren();
+    var landingPage = this.mainElement().createChild('div', 'vbox audits2-landing-page');
     var landingCenter = landingPage.createChild('div', 'vbox audits2-landing-center');
     landingCenter.createChild('div', 'audits2-logo');
     var text = landingCenter.createChild('div', 'audits2-landing-text');
@@ -217,7 +220,7 @@ Audits2.Audits2Panel = class extends UI.Panel {
 
     this._dialog.setSizeBehavior(UI.GlassPane.SizeBehavior.SetExactWidthMaxHeight);
     this._dialog.setMaxContentSize(new UI.Size(500, 400));
-    this._dialog.show(this._auditResultsElement);
+    this._dialog.show(this.mainElement());
     auditsViewElement.tabIndex = 0;
     auditsViewElement.focus();
   }
@@ -382,9 +385,11 @@ Audits2.Audits2Panel = class extends UI.Panel {
       this._updateStatus(Common.UIString('Auditing failed.'));
       return;
     }
-    var optionElement =
-        new Audits2.ReportSelector.Item(lighthouseResult, this._auditResultsElement, this._showLandingPage.bind(this));
-    this._reportSelector.prepend(optionElement);
+    var treeElement =
+        new Audits2.Audits2Panel.TreeElement(lighthouseResult, this.mainElement(), this._showLandingPage.bind(this));
+    this._treeOutline.appendChild(treeElement);
+    treeElement._populate();
+    treeElement.select();
     this._hideDialog();
   }
 
@@ -607,105 +612,80 @@ Audits2.ProtocolService = class extends Common.Object {
   }
 };
 
-
-Audits2.ReportSelector = class {
-  constructor() {
-    this._comboBox = new UI.ToolbarComboBox(this._handleChange.bind(this), 'audits2-report');
-    this._comboBox.setMaxWidth(270);
-    this._comboBox.setMinWidth(200);
-    this._itemByOptionElement = new Map();
-  }
-
-  /**
-   * @param {!Event} event
-   */
-  _handleChange(event) {
-    var item = this._selectedItem();
-    if (item)
-      item.select();
-  }
-
-  /**
-   * @return {!Audits2.ReportSelector.Item}
-   */
-  _selectedItem() {
-    var option = this._comboBox.selectedOption();
-    return this._itemByOptionElement.get(option);
-  }
-
-  /**
-   * @return {!UI.ToolbarComboBox}
-   */
-  comboBox() {
-    return this._comboBox;
-  }
-
-  /**
-   * @param {!Audits2.ReportSelector.Item} item
-   */
-  prepend(item) {
-    var optionEl = item.optionElement();
-    var selectEl = this._comboBox.selectElement();
-
-    this._itemByOptionElement.set(optionEl, item);
-    selectEl.insertBefore(optionEl, selectEl.firstElementChild);
-    this._comboBox.select(optionEl);
-    item.select();
-  }
-
-  clearAll() {
-    for (var elem of this._comboBox.options())
-      this._itemByOptionElement.get(elem).delete();
-  }
-
-  downloadSelected() {
-    var item = this._selectedItem();
-    item.download();
-  }
-};
-
-Audits2.ReportSelector.Item = class {
+Audits2.Audits2Panel.TreeElement = class extends UI.TreeElement {
   /**
    * @param {!ReportRenderer.ReportJSON} lighthouseResult
    * @param {!Element} resultsView
    * @param {function()} showLandingCallback
    */
   constructor(lighthouseResult, resultsView, showLandingCallback) {
+    super('', false);
     this._lighthouseResult = lighthouseResult;
     this._resultsView = resultsView;
     this._showLandingCallback = showLandingCallback;
     /** @type {?Element} */
     this._reportContainer = null;
 
-
     var url = new Common.ParsedURL(lighthouseResult.url);
     var timestamp = lighthouseResult.generatedTime;
-    this._element = createElement('option');
-    this._element.label = `${url.domain()} ${new Date(timestamp).toLocaleString()}`;
+    var titleElement = this.titleElement();
+    titleElement.classList.add('audits2-report-tree-item');
+    titleElement.createChild('div').textContent = url.domain();
+    titleElement.createChild('span', 'dimmed').textContent = new Date(timestamp).toLocaleString();
+    this.listItemElement.addEventListener('contextmenu', this._handleContextMenuEvent.bind(this), false);
   }
 
-  select() {
-    this._renderReport();
+  _populate() {
+    for (var category of this._lighthouseResult.reportCategories) {
+      var treeElement = new Audits2.Audits2Panel.TreeSubElement(category.id, category.name, category.score);
+      this.appendChild(treeElement);
+    }
   }
 
   /**
-   * @return {!Element}
+   * @override
+   * @param {boolean=} selectedByUser
+   * @return {boolean}
    */
-  optionElement() {
-    return this._element;
+  onselect(selectedByUser) {
+    this._renderReport();
+    return true;
   }
 
-  delete() {
-    if (this._element)
-      this._element.remove();
+  /**
+   * @override
+   */
+  ondelete() {
+    this._deleteItem();
+    return true;
+  }
+
+  _deleteItem() {
+    this.treeOutline.removeChild(this);
     this._showLandingCallback();
   }
 
-  download() {
-    var url = new Common.ParsedURL(this._lighthouseResult.url).domain();
-    var timestamp = this._lighthouseResult.generatedTime;
-    var fileName = `${url}-${new Date(timestamp).toISO8601Compact()}.json`;
-    Workspace.fileManager.save(fileName, JSON.stringify(this._lighthouseResult), true);
+  /**
+   * @param {!Event} event
+   */
+  _handleContextMenuEvent(event) {
+    var contextMenu = new UI.ContextMenu(event);
+    contextMenu.appendItem(Common.UIString('Save as\u2026'), () => {
+      var url = new Common.ParsedURL(this._lighthouseResult.url).domain();
+      var timestamp = this._lighthouseResult.generatedTime;
+      var fileName = `${url}-${new Date(timestamp).toISO8601Compact()}.json`;
+      Workspace.fileManager.save(fileName, JSON.stringify(this._lighthouseResult), true);
+    });
+    contextMenu.appendItem(Common.UIString('Delete'), () => this._deleteItem());
+    contextMenu.show();
+  }
+
+  /**
+   * @override
+   */
+  onunbind() {
+    if (this._reportContainer && this._reportContainer.parentElement)
+      this._reportContainer.remove();
   }
 
   _renderReport() {
@@ -729,6 +709,36 @@ Audits2.ReportSelector.Item = class {
 
     renderer.setTemplateContext(templatesDOM);
     renderer.renderReport(this._lighthouseResult, this._reportContainer);
+  }
+};
+
+Audits2.Audits2Panel.TreeSubElement = class extends UI.TreeElement {
+  /**
+   * @param {string} id
+   * @param {string} name
+   * @param {number} score
+   */
+  constructor(id, name, score) {
+    super('');
+    this._id = id;
+    this.listItemElement.textContent = name;
+    var label = Util.calculateRating(score);
+    var subtitleElement = this.listItemElement.createChild('span', 'lh-vars audits2-tree-subtitle-' + label);
+    subtitleElement.textContent = String(Math.round(score));
+  }
+
+  /**
+   * @override
+   * @return {boolean}
+   */
+  onselect() {
+    this.parent._renderReport();
+    var node = this.parent._resultsView.querySelector('.lh-category[id=' + this._id + ']');
+    if (node) {
+      node.scrollIntoView(true);
+      return true;
+    }
+    return false;
   }
 };
 

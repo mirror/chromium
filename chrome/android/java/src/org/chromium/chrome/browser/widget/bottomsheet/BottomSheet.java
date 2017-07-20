@@ -295,6 +295,11 @@ public class BottomSheet
          */
         @ContentType
         int getType();
+
+        /**
+         * @return Whether the default top padding should be applied to the content view.
+         */
+        boolean applyDefaultTopPadding();
     }
 
     /**
@@ -770,15 +775,7 @@ public class BottomSheet
 
                 if (!mIsScrolling) {
                     cancelAnimation();
-
-                    // This onLayoutChange() will be called after the user enters fullscreen video
-                    // mode. Ensure the sheet state is reset to peek so that the sheet does not
-                    // open over the fullscreen video. See crbug.com/740499.
-                    if (mFullscreenManager != null && mFullscreenManager.isOverlayVideoMode()) {
-                        setSheetState(SHEET_STATE_PEEK, false);
-                    } else {
-                        setSheetState(mCurrentState, false);
-                    }
+                    setSheetState(mCurrentState, false);
                 }
             }
         });
@@ -910,6 +907,13 @@ public class BottomSheet
     }
 
     /**
+     * @return The {@link BottomSheetNewTabController} used to present the new tab UI.
+     */
+    public BottomSheetNewTabController getNewTabController() {
+        return mNtpController;
+    }
+
+    /**
      * Show content in the bottom sheet's content area.
      * @param content The {@link BottomSheetContent} to show.
      */
@@ -944,11 +948,17 @@ public class BottomSheet
             }
         });
 
+        View contentView = content.getContentView();
+        if (content.applyDefaultTopPadding()) {
+            contentView.setPadding(contentView.getPaddingLeft(), mToolbarHolder.getHeight(),
+                    contentView.getPaddingRight(), contentView.getPaddingBottom());
+        }
+
         // For the toolbar transition, make sure we don't detach the default toolbar view.
         animators.add(getViewTransitionAnimator(
                 newToolbar, oldToolbar, mToolbarHolder, mDefaultToolbarView != oldToolbar));
         animators.add(getViewTransitionAnimator(
-                content.getContentView(), oldContent, mBottomSheetContentContainer, true));
+                contentView, oldContent, mBottomSheetContentContainer, true));
 
         // Temporarily make the background of the toolbar holder a solid color so the transition
         // doesn't appear to show a hole in the toolbar.
@@ -1089,14 +1099,11 @@ public class BottomSheet
         // The max height ratio will be greater than 1 to account for the toolbar shadow.
         mStateRatios[2] = (mContainerHeight + mToolbarShadowHeight) / mContainerHeight;
 
-        // Compute the height that the content section of the bottom sheet.
-        float contentHeight = (mContainerHeight * getFullRatio()) - mToolbarHeight;
-
         MarginLayoutParams sheetContentParams =
                 (MarginLayoutParams) mBottomSheetContentContainer.getLayoutParams();
         sheetContentParams.width = (int) mContainerWidth;
-        sheetContentParams.height = (int) contentHeight;
-        sheetContentParams.topMargin = (int) mToolbarHeight;
+        sheetContentParams.height = (int) mContainerHeight;
+        sheetContentParams.topMargin = mToolbarShadowHeight;
 
         MarginLayoutParams toolbarShadowParams =
                 (MarginLayoutParams) findViewById(R.id.toolbar_shadow).getLayoutParams();

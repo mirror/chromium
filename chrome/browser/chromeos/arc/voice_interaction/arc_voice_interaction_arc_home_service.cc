@@ -191,8 +191,6 @@ void ArcVoiceInteractionArcHomeService::OnVoiceInteractionOobeSetupComplete() {
   if (pai_starter)
     pai_starter->ReleaseLock();
   chromeos::first_run::MaybeLaunchDialogImmediately();
-  arc::ArcVoiceInteractionFrameworkService::GetForBrowserContext(context_)
-      ->UpdateVoiceInteractionPrefs();
 }
 
 // static

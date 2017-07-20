@@ -19,7 +19,6 @@ public class BrotliTest extends CronetTestBase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        TestFilesInstaller.installIfNeeded(getContext());
         assertTrue(Http2TestServer.startHttp2TestServer(
                 getContext(), SERVER_CERT_PEM, SERVER_KEY_PKCS8_PEM));
     }

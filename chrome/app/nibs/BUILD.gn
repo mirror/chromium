@@ -19,6 +19,7 @@ translated_xibs = [
   "ContentBlockedMIDISysEx.xib",
   "ContentBlockedMedia.xib",
   "ContentBlockedMixedScript.xib",
+  "ContentBlockedPlugins.xib",
   "ContentBlockedPopups.xib",
   "ContentBlockedSimple.xib",
   "ContentProtocolHandlers.xib",

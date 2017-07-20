@@ -537,11 +537,9 @@ class MockQuicCryptoStream : public QuicCryptoStream {
   bool handshake_confirmed() const override;
   const QuicCryptoNegotiatedParameters& crypto_negotiated_params()
       const override;
-  CryptoMessageParser* crypto_message_parser() override;
 
  private:
   QuicReferenceCountedPointer<QuicCryptoNegotiatedParameters> params_;
-  CryptoFramer crypto_framer_;
 };
 
 class MockQuicSpdySession : public QuicSpdySession {

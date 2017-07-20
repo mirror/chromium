@@ -83,6 +83,7 @@ class MODULES_EXPORT AXLayoutObject : public AXNodeObject {
   bool IsLinked() const override;
   bool IsLoaded() const override;
   bool IsOffScreen() const override;
+  bool IsReadOnly() const override;
   bool IsVisited() const override;
 
   // Check object state.

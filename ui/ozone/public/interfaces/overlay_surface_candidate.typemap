@@ -9,7 +9,5 @@ public_deps = [
 ]
 traits_headers =
     [ "//ui/ozone/public/interfaces/overlay_surface_candidate_struct_traits.h" ]
-type_mappings = [
-  "ui.ozone.mojom.OverlaySurfaceCandidate=ui::OverlaySurfaceCandidate",
-  "ui.ozone.mojom.OverlayStatus=ui::OverlayStatus",
-]
+type_mappings =
+    [ "ui.ozone.mojom.OverlaySurfaceCandidate=ui::OverlaySurfaceCandidate" ]

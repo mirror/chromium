@@ -411,9 +411,6 @@ void WindowTreeHostManager::SetPrimaryDisplayId(int64_t id) {
   primary_window->SetTitle(non_primary_window->GetTitle());
   non_primary_window->SetTitle(old_primary_title);
 
-  for (auto& observer : observers_)
-    observer.OnWindowTreeHostsSwappedDisplays(primary_host, non_primary_host);
-
   const display::DisplayLayout& layout =
       GetDisplayManager()->GetCurrentDisplayLayout();
   // The requested primary id can be same as one in the stored layout
@@ -500,7 +497,7 @@ void WindowTreeHostManager::UpdateMouseLocationAfterDisplayChange() {
   // Do not move the cursor if the cursor's location did not change. This avoids
   // moving (and showing) the cursor:
   // - At startup.
-  // - When the device is rotated in tablet mode.
+  // - When the device is rotated in maximized mode.
   // |cursor_display_id_for_restore_| is checked to ensure that the cursor is
   // moved when the cursor's native position does not change but the display
   // that it is on has changed. This occurs when swapping the primary display.
@@ -662,9 +659,6 @@ void WindowTreeHostManager::OnDisplayRemoved(const display::Display& display) {
     GetRootWindowSettings(GetWindow(primary_host))->display_id =
         primary_display_id;
 
-    for (auto& observer : observers_)
-      observer.OnWindowTreeHostsSwappedDisplays(host_to_delete, primary_host);
-
     OnDisplayMetricsChanged(
         GetDisplayManager()->GetDisplayForId(primary_display_id),
         DISPLAY_METRIC_BOUNDS);
@@ -791,18 +785,12 @@ display::DisplayConfigurator* WindowTreeHostManager::display_configurator() {
 
 ui::EventDispatchDetails WindowTreeHostManager::DispatchKeyEventPostIME(
     ui::KeyEvent* event) {
-  aura::Window* root_window = nullptr;
-  if (event->target()) {
-    root_window = static_cast<aura::Window*>(event->target())->GetRootWindow();
-    DCHECK(root_window);
-  } else {
-    // Getting the active root window to dispatch the event. This isn't
-    // significant as the event will be sent to the window resolved by
-    // aura::client::FocusClient which is FocusController in ash.
-    aura::Window* active_window = wm::GetActiveWindow();
-    root_window = active_window ? active_window->GetRootWindow()
-                                : Shell::GetPrimaryRootWindow();
-  }
+  // Getting the active root window to dispatch the event. This isn't
+  // significant as the event will be sent to the window resolved by
+  // aura::client::FocusClient which is FocusController in ash.
+  aura::Window* active_window = wm::GetActiveWindow();
+  aura::Window* root_window = active_window ? active_window->GetRootWindow()
+                                            : Shell::GetPrimaryRootWindow();
   return root_window->GetHost()->DispatchKeyEventPostIME(event);
 }
 

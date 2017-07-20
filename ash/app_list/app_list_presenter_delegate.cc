@@ -14,7 +14,7 @@
 #include "ash/shelf/shelf_layout_manager.h"
 #include "ash/shelf/shelf_widget.h"
 #include "ash/shell.h"
-#include "ash/wm/tablet_mode/tablet_mode_controller.h"
+#include "ash/wm/maximize_mode/maximize_mode_controller.h"
 #include "ash/wm/window_state.h"
 #include "base/command_line.h"
 #include "ui/app_list/app_list_constants.h"
@@ -113,8 +113,8 @@ void AppListPresenterDelegate::Init(app_list::AppListView* view,
 
   view->Initialize(container, current_apps_page,
                    Shell::Get()
-                       ->tablet_mode_controller()
-                       ->IsTabletModeWindowManagerEnabled(),
+                       ->maximize_mode_controller()
+                       ->IsMaximizeModeWindowManagerEnabled(),
                    IsSideShelf(root_window));
 
   if (!app_list::features::IsFullscreenAppListEnabled()) {
@@ -247,18 +247,18 @@ void AppListPresenterDelegate::OnOverviewModeStarting() {
     presenter_->Dismiss();
 }
 
-void AppListPresenterDelegate::OnTabletModeStarted() {
+void AppListPresenterDelegate::OnMaximizeModeStarted() {
   if (!app_list::features::IsFullscreenAppListEnabled())
     return;
 
-  view_->OnTabletModeChanged(true);
+  view_->OnMaximizeModeChanged(true);
 }
 
-void AppListPresenterDelegate::OnTabletModeEnded() {
+void AppListPresenterDelegate::OnMaximizeModeEnded() {
   if (!app_list::features::IsFullscreenAppListEnabled())
     return;
 
-  view_->OnTabletModeChanged(false);
+  view_->OnMaximizeModeChanged(false);
 }
 
 }  // namespace ash

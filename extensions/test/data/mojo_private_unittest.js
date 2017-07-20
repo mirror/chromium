@@ -4,9 +4,8 @@
 
 'use strict';
 
-let getApi = requireNative('apiGetter').get;
-let mojoPrivate = getApi('mojoPrivate');
-let test = getApi('test');
+let mojoPrivate = require('mojoPrivate').binding;
+let test = require('test').binding;
 let unittestBindings = require('test_environment_specific_bindings');
 
 unittestBindings.exportTests([

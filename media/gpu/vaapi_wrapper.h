@@ -250,6 +250,9 @@ class MEDIA_GPU_EXPORT VaapiWrapper
 #endif  // USE_OZONE
 
    private:
+    // Returns true if the VAAPI version is less than the specified version.
+    bool VAAPIVersionLessThan(int major, int minor);
+
     // Protected by |va_lock_|.
     int refcount_;
 

@@ -693,25 +693,25 @@ void AppsGridView::Layout() {
     bounds_animator_.Cancel();
 
   gfx::Rect rect(GetContentsBounds());
+  const gfx::Vector2d page_zero_offset = CalculateTransitionOffset(0);
 
   if (!folder_delegate_) {
-    gfx::Rect indicator_rect(rect);
-    LayoutSuggestedAppsIndicator(&indicator_rect);
+    LayoutSuggestedAppsIndicator(&rect);
     if (suggestions_container_) {
-      gfx::Rect suggestions_rect(indicator_rect);
+      gfx::Rect suggestions_rect(rect);
       suggestions_rect.set_height(
           suggestions_container_->GetHeightForWidth(suggestions_rect.width()));
       suggestions_rect.Offset((suggestions_rect.width() - kGridTileWidth) / 2 -
                                   (kGridTileWidth + kGridTileSpacing) * 2,
                               0);
-      suggestions_rect.Offset(CalculateTransitionOffset(0));
+      suggestions_rect.Offset(page_zero_offset.x(), page_zero_offset.y());
       suggestions_container_->SetBoundsRect(suggestions_rect);
-      indicator_rect.Inset(0,
-                           suggestions_container_->GetPreferredSize().height() +
-                               kSuggestionsAllAppsIndicatorPadding,
-                           0, 0);
+      rect.Inset(0,
+                 suggestions_container_->GetPreferredSize().height() +
+                     kSuggestionsAllAppsIndicatorPadding,
+                 0, 0);
     }
-    LayoutAllAppsIndicator(&indicator_rect);
+    LayoutAllAppsIndicator(&rect);
   }
 
   CalculateIdealBounds();

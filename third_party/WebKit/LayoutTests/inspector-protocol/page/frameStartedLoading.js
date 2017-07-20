@@ -1,5 +1,5 @@
 (async function(testRunner) {
-  let {page, session, dp} = await testRunner.startBlank('Tests frameStartedLoading/frameStoppedLoading events.');
+  let {page, session, dp} = await testRunner.startBlank('');
 
   dp.Page.enable();
   session.evaluate(`

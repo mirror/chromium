@@ -12,6 +12,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "chromeos/system/devicemode.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
+#include "services/service_manager/public/cpp/bind_source_info.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/ui/display/output_protection.h"
 #include "third_party/skia/include/core/SkColor.h"
@@ -111,8 +112,7 @@ void ScreenManagerOzoneInternal::SetPrimaryDisplayId(int64_t display_id) {
 }
 
 void ScreenManagerOzoneInternal::AddInterfaces(
-    service_manager::BinderRegistryWithArgs<
-        const service_manager::BindSourceInfo&>* registry) {
+    service_manager::BinderRegistry* registry) {
   registry->AddInterface<mojom::DisplayController>(
       base::Bind(&ScreenManagerOzoneInternal::BindDisplayControllerRequest,
                  base::Unretained(this)));
@@ -339,22 +339,22 @@ DisplayConfigurator* ScreenManagerOzoneInternal::display_configurator() {
 }
 
 void ScreenManagerOzoneInternal::BindDisplayControllerRequest(
-    mojom::DisplayControllerRequest request,
-    const service_manager::BindSourceInfo& source_info) {
+    const service_manager::BindSourceInfo& source_info,
+    mojom::DisplayControllerRequest request) {
   controller_bindings_.AddBinding(this, std::move(request));
 }
 
 void ScreenManagerOzoneInternal::BindOutputProtectionRequest(
-    mojom::OutputProtectionRequest request,
-    const service_manager::BindSourceInfo& source_info) {
+    const service_manager::BindSourceInfo& source_info,
+    mojom::OutputProtectionRequest request) {
   mojo::MakeStrongBinding(
       base::MakeUnique<OutputProtection>(display_configurator()),
       std::move(request));
 }
 
 void ScreenManagerOzoneInternal::BindTestDisplayControllerRequest(
-    mojom::TestDisplayControllerRequest request,
-    const service_manager::BindSourceInfo& source_info) {
+    const service_manager::BindSourceInfo& source_info,
+    mojom::TestDisplayControllerRequest request) {
   test_bindings_.AddBinding(this, std::move(request));
 }
 

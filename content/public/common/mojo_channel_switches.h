@@ -9,6 +9,7 @@
 
 namespace switches {
 
+CONTENT_EXPORT extern const char kMojoChannelToken[];
 CONTENT_EXPORT extern const char kServiceRequestChannelToken[];
 
 }  // namespace switches

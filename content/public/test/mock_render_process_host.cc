@@ -31,10 +31,8 @@
 #include "content/public/browser/notification_types.h"
 #include "content/public/browser/render_widget_host_iterator.h"
 #include "content/public/browser/storage_partition.h"
-#include "content/public/common/service_manager_connection.h"
 #include "media/media_features.h"
 #include "mojo/public/cpp/bindings/associated_interface_ptr.h"
-#include "services/resource_coordinator/public/interfaces/coordination_unit.mojom.h"
 
 namespace content {
 
@@ -352,14 +350,8 @@ mojom::Renderer* MockRenderProcessHost::GetRendererInterface() {
 
 resource_coordinator::ResourceCoordinatorInterface*
 MockRenderProcessHost::GetProcessResourceCoordinator() {
-  if (!process_resource_coordinator_) {
-    service_manager::Connector* connector =
-        content::ServiceManagerConnection::GetForProcess()->GetConnector();
-    process_resource_coordinator_ =
-        base::MakeUnique<resource_coordinator::ResourceCoordinatorInterface>(
-            connector, resource_coordinator::CoordinationUnitType::kProcess);
-  }
-  return process_resource_coordinator_.get();
+  NOTREACHED();
+  return nullptr;
 }
 
 void MockRenderProcessHost::SetIsNeverSuitableForReuse() {
@@ -376,10 +368,6 @@ bool MockRenderProcessHost::IsUnused() {
 
 void MockRenderProcessHost::SetIsUsed() {
   is_unused_ = false;
-}
-
-bool MockRenderProcessHost::HostHasNotBeenUsed() {
-  return IsUnused() && listeners_.IsEmpty() && GetWorkerRefCount() == 0;
 }
 
 void MockRenderProcessHost::FilterURL(bool empty_allowed, GURL* url) {

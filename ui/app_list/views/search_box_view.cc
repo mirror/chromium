@@ -52,7 +52,6 @@ constexpr int kPadding = 12;
 constexpr int kInnerPadding = 24;
 constexpr int kPreferredWidth = 360;
 constexpr int kPreferredWidthFullscreen = 544;
-constexpr int kSearchBoxPreferredHeight = 48;
 
 constexpr SkColor kHintTextColor = SkColorSetARGBMacro(0xFF, 0xA0, 0xA0, 0xA0);
 
@@ -162,7 +161,7 @@ SearchBoxView::SearchBoxView(SearchBoxViewDelegate* delegate,
 
   SetShadow(GetShadowForZHeight(2));
   content_container_->SetBackground(
-      base::MakeUnique<SearchBoxBackground>(background_color_));
+      base::MakeUnique<SearchBoxBackground>(kSearchBoxBackgroundDefault));
 
   views::BoxLayout* layout = new views::BoxLayout(
       views::BoxLayout::kHorizontal, gfx::Insets(0, kPadding),
@@ -174,7 +173,7 @@ SearchBoxView::SearchBoxView(SearchBoxViewDelegate* delegate,
 
   search_box_->SetBorder(views::NullBorder());
   search_box_->SetTextColor(kSearchTextColor);
-  search_box_->SetBackgroundColor(background_color_);
+  search_box_->SetBackgroundColor(kSearchBoxBackgroundDefault);
   search_box_->set_controller(this);
   search_box_->SetTextInputType(ui::TEXT_INPUT_TYPE_SEARCH);
   search_box_->SetTextInputFlags(ui::TEXT_INPUT_FLAG_AUTOCORRECT_OFF);
@@ -189,8 +188,10 @@ SearchBoxView::SearchBoxView(SearchBoxViewDelegate* delegate,
 
   if (is_fullscreen_app_list_enabled_) {
     search_icon_ = new views::ImageView();
+    UpdateSearchIcon(view_delegate_->GetModel()->search_engine_is_google(),
+                     kDefaultSearchboxColor);
     content_container_->AddChildView(search_icon_);
-    search_box_->set_placeholder_text_color(search_box_color_);
+    search_box_->set_placeholder_text_color(kDefaultSearchboxColor);
     search_box_->set_placeholder_text_draw_flags(
         gfx::Canvas::TEXT_ALIGN_CENTER);
     search_box_->SetFontList(search_box_->GetFontList().DeriveWithSizeDelta(2));
@@ -204,9 +205,9 @@ SearchBoxView::SearchBoxView(SearchBoxViewDelegate* delegate,
 
   if (is_fullscreen_app_list_enabled_) {
     close_button_ = new SearchBoxImageButton(this);
-    close_button_->SetImage(
-        views::ImageButton::STATE_NORMAL,
-        gfx::CreateVectorIcon(kIcCloseIcon, kCloseIconSize, search_box_color_));
+    close_button_->SetImage(views::ImageButton::STATE_NORMAL,
+                            gfx::CreateVectorIcon(kIcCloseIcon, kCloseIconSize,
+                                                  kDefaultSearchboxColor));
     close_button_->SetVisible(false);
     content_container_->AddChildView(close_button_);
   }
@@ -227,7 +228,7 @@ void SearchBoxView::ModelChanged() {
   model_ = view_delegate_->GetModel();
   DCHECK(model_);
   if (is_fullscreen_app_list_enabled_)
-    UpdateSearchIcon();
+    UpdateSearchIcon(model_->search_engine_is_google(), kDefaultSearchboxColor);
   model_->search_box()->AddObserver(this);
   SpeechRecognitionButtonPropChanged();
   HintTextChanged();
@@ -268,8 +269,8 @@ views::ImageButton* SearchBoxView::back_button() {
   return static_cast<views::ImageButton*>(back_button_);
 }
 
-views::ImageButton* SearchBoxView::close_button() {
-  return static_cast<views::ImageButton*>(close_button_);
+bool SearchBoxView::IsCloseButtonVisible() const {
+  return close_button_ && close_button_->visible();
 }
 
 // Returns true if set internally, i.e. if focused_view_ != CONTENTS_VIEW.
@@ -387,11 +388,10 @@ void SearchBoxView::SetSearchBoxActive(bool active) {
     return;
 
   is_search_box_active_ = active;
-  UpdateSearchIcon();
   search_box_->set_placeholder_text_draw_flags(
       active ? gfx::Canvas::TEXT_ALIGN_LEFT : gfx::Canvas::TEXT_ALIGN_CENTER);
   search_box_->set_placeholder_text_color(active ? kZeroQuerySearchboxColor
-                                                 : search_box_color_);
+                                                 : kDefaultSearchboxColor);
   search_box_->SetCursorEnabled(active);
   search_box_->SchedulePaint();
 
@@ -471,11 +471,25 @@ int SearchBoxView::GetSearchBoxBorderCornerRadiusForState(
   return kSearchBoxBorderCornerRadiusFullscreen;
 }
 
-SkColor SearchBoxView::GetBackgroundColorForState(
+SkColor SearchBoxView::GetSearchBoxColorForState(
     AppListModel::State state) const {
   if (state == AppListModel::STATE_SEARCH_RESULTS)
     return kSearchBoxBackgroundDefault;
-  return background_color_;
+
+  // Uses wallpaper prominent color for other states.
+  const std::vector<SkColor> prominent_colors =
+      model_->search_box()->wallpaper_prominent_colors();
+  if (prominent_colors.empty())
+    return kSearchBoxBackgroundDefault;
+
+  DCHECK_EQ(static_cast<size_t>(ColorProfileType::NUM_OF_COLOR_PROFILES),
+            prominent_colors.size());
+  const SkColor light_vibrant =
+      prominent_colors[static_cast<int>(ColorProfileType::LIGHT_VIBRANT)];
+  const SkColor light_vibrant_mixed = color_utils::AlphaBlend(
+      SK_ColorWHITE, light_vibrant, kLightVibrantBlendAlpha);
+  return SK_ColorTRANSPARENT == light_vibrant ? kSearchBoxBackgroundDefault
+                                              : light_vibrant_mixed;
 }
 
 void SearchBoxView::UpdateBackground(double progress,
@@ -487,24 +501,10 @@ void SearchBoxView::UpdateBackground(double progress,
       progress, GetSearchBoxBorderCornerRadiusForState(current_state),
       GetSearchBoxBorderCornerRadiusForState(target_state)));
   const SkColor color = gfx::Tween::ColorValueBetween(
-      progress, GetBackgroundColorForState(current_state),
-      GetBackgroundColorForState(target_state));
+      progress, GetSearchBoxColorForState(current_state),
+      GetSearchBoxColorForState(target_state));
   background->set_color(color);
   search_box_->SetBackgroundColor(color);
-}
-
-void SearchBoxView::ButtonPressed(views::Button* sender,
-                                  const ui::Event& event) {
-  if (back_button_ && sender == back_button_) {
-    delegate_->BackButtonPressed();
-  } else if (speech_button_ && sender == speech_button_) {
-    view_delegate_->StartSpeechRecognition();
-  } else if (close_button_ && sender == close_button_) {
-    ClearSearch();
-    app_list_view_->SetStateFromSearchBoxView(true);
-  } else {
-    NOTREACHED();
-  }
 }
 
 void SearchBoxView::UpdateModel() {
@@ -608,6 +608,18 @@ bool SearchBoxView::HandleGestureEvent(views::Textfield* sender,
   return OnTextfieldEvent();
 }
 
+void SearchBoxView::ButtonPressed(views::Button* sender,
+                                  const ui::Event& event) {
+  if (back_button_ && sender == back_button_)
+    delegate_->BackButtonPressed();
+  else if (speech_button_ && sender == speech_button_)
+    view_delegate_->StartSpeechRecognition();
+  else if (close_button_ && sender == close_button_)
+    ClearSearch();
+  else
+    NOTREACHED();
+}
+
 void SearchBoxView::SpeechRecognitionButtonPropChanged() {
   const SearchBoxModel::SpeechButtonProperty* speech_button_prop =
       model_->search_box()->speech_button();
@@ -669,28 +681,36 @@ void SearchBoxView::WallpaperProminentColorsChanged() {
   if (!is_fullscreen_app_list_enabled_)
     return;
 
-  const std::vector<SkColor> prominent_colors = GetWallpaperProminentColors();
+  const std::vector<SkColor> prominent_colors =
+      model_->search_box()->wallpaper_prominent_colors();
   if (prominent_colors.empty())
     return;
+
   DCHECK_EQ(static_cast<size_t>(ColorProfileType::NUM_OF_COLOR_PROFILES),
             prominent_colors.size());
-
-  SetSearchBoxColor(
-      prominent_colors[static_cast<int>(ColorProfileType::DARK_MUTED)]);
-  SetBackgroundColor(
-      prominent_colors[static_cast<int>(ColorProfileType::LIGHT_VIBRANT)]);
-  UpdateSearchIcon();
+  const SkColor dark_muted =
+      prominent_colors[static_cast<int>(ColorProfileType::DARK_MUTED)];
+  const SkColor search_box_color =
+      SK_ColorTRANSPARENT == dark_muted ? kDefaultSearchboxColor : dark_muted;
+  UpdateSearchIcon(model_->search_engine_is_google(), search_box_color);
   speech_button_->SetImage(
       views::Button::STATE_NORMAL,
-      gfx::CreateVectorIcon(kIcMicBlackIcon, kMicIconSize, search_box_color_));
+      gfx::CreateVectorIcon(kIcMicBlackIcon, kMicIconSize, search_box_color));
   close_button_->SetImage(
       views::Button::STATE_NORMAL,
-      gfx::CreateVectorIcon(kIcCloseIcon, kCloseIconSize, search_box_color_));
-  search_box_->set_placeholder_text_color(search_box_color_);
+      gfx::CreateVectorIcon(kIcCloseIcon, kCloseIconSize, search_box_color));
+  search_box_->set_placeholder_text_color(search_box_color);
+  const SkColor light_vibrant =
+      prominent_colors[static_cast<int>(ColorProfileType::LIGHT_VIBRANT)];
+  const SkColor light_vibrant_mixed = color_utils::AlphaBlend(
+      SK_ColorWHITE, light_vibrant, kLightVibrantBlendAlpha);
+  const SkColor background_color = SK_ColorTRANSPARENT == light_vibrant
+                                       ? kSearchBoxBackgroundDefault
+                                       : light_vibrant_mixed;
   SearchBoxBackground* background =
       static_cast<SearchBoxBackground*>(content_container_->background());
-  background->set_color(background_color_);
-  search_box_->SetBackgroundColor(background_color_);
+  background->set_color(background_color);
+  search_box_->SetBackgroundColor(background_color);
   SchedulePaint();
 }
 
@@ -700,31 +720,12 @@ void SearchBoxView::OnSpeechRecognitionStateChanged(
   SchedulePaint();
 }
 
-void SearchBoxView::UpdateSearchIcon() {
-  const gfx::VectorIcon& google_icon =
-      is_search_box_active() ? kIcGoogleColorIcon : kIcGoogleBlackIcon;
-  const gfx::VectorIcon& icon = model_->search_engine_is_google()
-                                    ? google_icon
-                                    : kIcSearchEngineNotGoogleIcon;
+void SearchBoxView::UpdateSearchIcon(bool is_google,
+                                     const SkColor& search_box_color) {
+  const gfx::VectorIcon& icon =
+      is_google ? kIcGoogleBlackIcon : kIcSearchEngineNotGoogleIcon;
   search_icon_->SetImage(
-      gfx::CreateVectorIcon(icon, kSearchIconSize, search_box_color_));
-}
-
-const std::vector<SkColor>& SearchBoxView::GetWallpaperProminentColors() const {
-  return model_->search_box()->wallpaper_prominent_colors();
-}
-
-void SearchBoxView::SetBackgroundColor(SkColor light_vibrant) {
-  const SkColor light_vibrant_mixed = color_utils::AlphaBlend(
-      SK_ColorWHITE, light_vibrant, kLightVibrantBlendAlpha);
-  background_color_ = SK_ColorTRANSPARENT == light_vibrant
-                          ? kSearchBoxBackgroundDefault
-                          : light_vibrant_mixed;
-}
-
-void SearchBoxView::SetSearchBoxColor(SkColor color) {
-  search_box_color_ =
-      SK_ColorTRANSPARENT == color ? kDefaultSearchboxColor : color;
+      gfx::CreateVectorIcon(icon, kSearchIconSize, search_box_color));
 }
 
 }  // namespace app_list

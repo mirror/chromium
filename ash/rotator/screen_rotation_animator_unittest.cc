@@ -8,14 +8,14 @@
 #include "ash/display/window_tree_host_manager.h"
 #include "ash/public/cpp/config.h"
 #include "ash/rotator/screen_rotation_animator_observer.h"
-#include "ash/rotator/screen_rotation_animator_test_api.h"
+#include "ash/rotator/test/screen_rotation_animator_test_api.h"
 #include "ash/shell.h"
 #include "ash/system/overview/overview_button_tray.h"
 #include "ash/system/status_area_widget.h"
-#include "ash/system/status_area_widget_test_helper.h"
 #include "ash/test/ash_test_base.h"
 #include "ash/test/ash_test_helper.h"
-#include "ash/wm/tablet_mode/tablet_mode_controller.h"
+#include "ash/test/status_area_widget_test_helper.h"
+#include "ash/wm/maximize_mode/maximize_mode_controller.h"
 #include "base/callback_forward.h"
 #include "base/command_line.h"
 #include "base/memory/ptr_util.h"
@@ -106,8 +106,8 @@ TestScreenRotationAnimator::CreateAfterCopyCallbackBeforeRotation(
   CopyCallback next_callback =
       ScreenRotationAnimator::CreateAfterCopyCallbackBeforeRotation(
           std::move(rotation_request));
-  return base::BindOnce(&TestScreenRotationAnimator::IntersectBefore,
-                        base::Unretained(this), std::move(next_callback));
+  return base::Bind(&TestScreenRotationAnimator::IntersectBefore,
+                    base::Unretained(this), next_callback);
 }
 
 ScreenRotationAnimator::CopyCallback
@@ -116,22 +116,22 @@ TestScreenRotationAnimator::CreateAfterCopyCallbackAfterRotation(
   CopyCallback next_callback =
       ScreenRotationAnimator::CreateAfterCopyCallbackAfterRotation(
           std::move(rotation_request));
-  return base::BindOnce(&TestScreenRotationAnimator::IntersectAfter,
-                        base::Unretained(this), std::move(next_callback));
+  return base::Bind(&TestScreenRotationAnimator::IntersectAfter,
+                    base::Unretained(this), next_callback);
 }
 
 void TestScreenRotationAnimator::IntersectBefore(
     CopyCallback next_callback,
     std::unique_ptr<cc::CopyOutputResult> result) {
   intersect_before_callback_.Run();
-  std::move(next_callback).Run(std::move(result));
+  next_callback.Run(std::move(result));
 }
 
 void TestScreenRotationAnimator::IntersectAfter(
     CopyCallback next_callback,
     std::unique_ptr<cc::CopyOutputResult> result) {
   intersect_after_callback_.Run();
-  std::move(next_callback).Run(std::move(result));
+  next_callback.Run(std::move(result));
 }
 
 }  // namespace
@@ -358,7 +358,8 @@ TEST_F(ScreenRotationAnimatorSlowAnimationTest, ShouldCompleteAnimations) {
 // The OverviewButton should be hidden.
 TEST_F(ScreenRotationAnimatorSlowAnimationTest,
        OverviewButtonTrayHideAnimationAlwaysCompletes) {
-  Shell::Get()->tablet_mode_controller()->EnableTabletModeWindowManager(true);
+  Shell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
+      true);
 
   // Long duration for hide animation, to allow it to be interrupted.
   ui::ScopedAnimationDurationScaleMode hide_duration(
@@ -554,7 +555,8 @@ TEST_F(ScreenRotationAnimatorSmoothAnimationTest,
   if (Shell::GetAshConfig() == Config::MASH)
     return;
 
-  Shell::Get()->tablet_mode_controller()->EnableTabletModeWindowManager(true);
+  Shell::Get()->maximize_mode_controller()->EnableMaximizeModeWindowManager(
+      true);
 
   // Long duration for hide animation, to allow it to be interrupted.
   ui::ScopedAnimationDurationScaleMode hide_duration(

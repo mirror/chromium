@@ -11,9 +11,8 @@
 #include "base/strings/string_piece.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/values.h"
-#include "content/public/browser/browser_context.h"
+#include "chrome/browser/profiles/profile.h"
 #include "content/public/browser/browser_thread.h"
-#include "content/public/browser/storage_partition.h"
 #include "crypto/ec_private_key.h"
 #include "extensions/common/api/runtime.h"
 #include "net/base/completion_callback.h"
@@ -28,20 +27,16 @@ namespace extensions {
 
 MessagePropertyProvider::MessagePropertyProvider() {}
 
-void MessagePropertyProvider::GetChannelID(
-    content::BrowserContext* browser_context,
-    const GURL& source_url,
-    const ChannelIDCallback& reply) {
+void MessagePropertyProvider::GetChannelID(Profile* profile,
+    const GURL& source_url, const ChannelIDCallback& reply) {
   if (!source_url.is_valid()) {
     // This isn't a real URL, so there's no sense in looking for a channel ID
     // for it. Dispatch with an empty tls channel ID.
     reply.Run(std::string());
     return;
   }
-
   scoped_refptr<net::URLRequestContextGetter> request_context_getter(
-      content::BrowserContext::GetDefaultStoragePartition(browser_context)
-          ->GetURLRequestContext());
+      profile->GetRequestContext());
   content::BrowserThread::PostTask(
       content::BrowserThread::IO, FROM_HERE,
       base::BindOnce(&MessagePropertyProvider::GetChannelIDOnIOThread,

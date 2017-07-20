@@ -47,4 +47,8 @@ ScopedJavaLocalRef<jobject> GetForTest(JNIEnv* env,
   return InvalidationServiceFactoryAndroid::GetForTest();
 }
 
+bool InvalidationServiceFactoryAndroid::Register(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
 }  // namespace invalidation

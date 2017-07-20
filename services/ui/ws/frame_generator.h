@@ -36,9 +36,6 @@ class FrameGenerator : public cc::mojom::CompositorFrameSinkClient {
   // Updates the WindowManager's SurfaceInfo.
   void OnSurfaceCreated(const viz::SurfaceInfo& surface_info);
 
-  // Swaps the |window_manager_surface_info_| with that of |other|.
-  void SwapSurfaceWith(FrameGenerator* other);
-
   void OnWindowDamaged();
   void OnWindowSizeChanged(const gfx::Size& pixel_size);
   void Bind(
@@ -49,7 +46,6 @@ class FrameGenerator : public cc::mojom::CompositorFrameSinkClient {
   void DidReceiveCompositorFrameAck(
       const std::vector<cc::ReturnedResource>& resources) override;
   void OnBeginFrame(const cc::BeginFrameArgs& args) override;
-  void OnBeginFramePausedChanged(bool paused) override {}
   void ReclaimResources(
       const std::vector<cc::ReturnedResource>& resources) override;
 

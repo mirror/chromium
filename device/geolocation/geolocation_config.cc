@@ -15,8 +15,8 @@ GeolocationConfig::~GeolocationConfig() {}
 
 // static
 void GeolocationConfig::Create(
-    mojom::GeolocationConfigRequest request,
-    const service_manager::BindSourceInfo& source_info) {
+    const service_manager::BindSourceInfo& source_info,
+    mojom::GeolocationConfigRequest request) {
   mojo::MakeStrongBinding(base::MakeUnique<GeolocationConfig>(),
                           std::move(request));
 }

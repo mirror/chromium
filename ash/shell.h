@@ -114,7 +114,7 @@ class LockStateController;
 class LogoutConfirmationController;
 class LockScreenController;
 class MagnificationController;
-class TabletModeController;
+class MaximizeModeController;
 class MediaController;
 class MouseCursorEventFilter;
 class MruWindowTracker;
@@ -277,8 +277,8 @@ class ASH_EXPORT Shell : public SessionObserver,
   // Destroys the virtual keyboard.
   void DestroyKeyboard();
 
-  // Test if TabletModeWindowManager is not enabled, and if
-  // TabletModeController is not currently setting a display rotation. Or if
+  // Test if MaximizeModeWindowManager is not enabled, and if
+  // MaximizeModeController is not currently setting a display rotation. Or if
   // the |resolution_notification_controller_| is not showing its confirmation
   // dialog. If true then changes to display settings can be saved.
   bool ShouldSaveDisplaySettings();
@@ -317,8 +317,8 @@ class ASH_EXPORT Shell : public SessionObserver,
   LockScreenController* lock_screen_controller() {
     return lock_screen_controller_.get();
   }
-  TabletModeController* tablet_mode_controller() {
-    return tablet_mode_controller_.get();
+  MaximizeModeController* maximize_mode_controller() {
+    return maximize_mode_controller_.get();
   }
   MediaController* media_controller() { return media_controller_.get(); }
   MruWindowTracker* mru_window_tracker() { return mru_window_tracker_.get(); }
@@ -430,8 +430,7 @@ class ASH_EXPORT Shell : public SessionObserver,
   // desired stored settings.
   PrefService* GetActiveUserPrefService() const;
 
-  // Gets the local state pref service. It can be null in mash if connecting to
-  // local state pref service has not completed successfully.
+  // Gets the local state pref service. It will be null under mash.
   PrefService* GetLocalStatePrefService() const;
 
   // Returns WebNotificationTray on the primary root window.
@@ -556,16 +555,16 @@ class ASH_EXPORT Shell : public SessionObserver,
   // TODO(oshima): Investigate if we can merge this and |OnLoginStateChanged|.
   void UpdateAfterLoginStatusChange(LoginStatus status);
 
-  // Notifies observers that tablet mode has started, windows might still
+  // Notifies observers that maximize mode has started, windows might still
   // animate.
-  void NotifyTabletModeStarted();
+  void NotifyMaximizeModeStarted();
 
-  // Notifies observers that tablet mode is about to end.
-  void NotifyTabletModeEnding();
+  // Notifies observers that maximize mode is about to end.
+  void NotifyMaximizeModeEnding();
 
-  // Notifies observers that tablet mode has ended, windows might still be
+  // Notifies observers that maximize mode has ended, windows might still be
   // returning to their original position.
-  void NotifyTabletModeEnded();
+  void NotifyMaximizeModeEnded();
 
   // Notifies observers that overview mode is about to be started (before the
   // windows get re-arranged).
@@ -660,10 +659,8 @@ class ASH_EXPORT Shell : public SessionObserver,
   // the profile is available.
   void InitializeShelf();
 
-  // Callbacks for prefs::ConnectToPrefService.
+  // Callback for prefs::ConnectToPrefService.
   void OnPrefServiceInitialized(std::unique_ptr<::PrefService> pref_service);
-  void OnLocalStatePrefServiceInitialized(
-      std::unique_ptr<::PrefService> pref_service);
 
   static Shell* instance_;
 
@@ -698,7 +695,7 @@ class ASH_EXPORT Shell : public SessionObserver,
   std::unique_ptr<LocaleNotificationController> locale_notification_controller_;
   std::unique_ptr<LockScreenController> lock_screen_controller_;
   std::unique_ptr<LogoutConfirmationController> logout_confirmation_controller_;
-  std::unique_ptr<TabletModeController> tablet_mode_controller_;
+  std::unique_ptr<MaximizeModeController> maximize_mode_controller_;
   std::unique_ptr<MediaController> media_controller_;
   std::unique_ptr<MruWindowTracker> mru_window_tracker_;
   std::unique_ptr<NewWindowController> new_window_controller_;
@@ -725,7 +722,6 @@ class ASH_EXPORT Shell : public SessionObserver,
   std::unique_ptr<::wm::WindowModalityController> window_modality_controller_;
   std::unique_ptr<app_list::AppList> app_list_;
   std::unique_ptr<::PrefService> pref_service_;
-  std::unique_ptr<::PrefService> local_state_;
   std::unique_ptr<views::corewm::TooltipController> tooltip_controller_;
   LinkHandlerModelFactory* link_handler_model_factory_;
   std::unique_ptr<PowerButtonController> power_button_controller_;
@@ -835,8 +831,6 @@ class ASH_EXPORT Shell : public SessionObserver,
   std::unique_ptr<AppListDelegateImpl> app_list_delegate_impl_;
 
   base::ObserverList<ShellObserver> shell_observers_;
-
-  base::WeakPtrFactory<Shell> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(Shell);
 };

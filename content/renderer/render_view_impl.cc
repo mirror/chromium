@@ -336,10 +336,6 @@ static bool DeviceScaleEnsuresTextQuality(float device_scale_factor) {
 
 static bool PreferCompositingToLCDText(CompositorDependencies* compositor_deps,
                                        float device_scale_factor) {
-  if (base::FeatureList::IsEnabled(
-          features::kDisablePreferCompositingToLCDTextOnLowEndAndroid) &&
-      base::SysInfo::AmountOfPhysicalMemoryMB() <= 512)
-    return false;
   const base::CommandLine& command_line =
       *base::CommandLine::ForCurrentProcess();
   if (command_line.HasSwitch(switches::kDisablePreferCompositingToLCDText))
@@ -889,6 +885,8 @@ void RenderView::ApplyWebPreferences(const WebPreferences& prefs,
       static_cast<WebSettings::EditingBehavior>(prefs.editing_behavior));
 
   settings->SetSupportsMultipleWindows(prefs.supports_multiple_windows);
+
+  settings->SetInertVisualViewport(prefs.inert_visual_viewport);
 
   settings->SetMainFrameClipsContent(!prefs.record_whole_document);
 

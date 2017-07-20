@@ -110,3 +110,8 @@ void MediaDrmCredentialManager::ResetCredentialsInternal(
 
   media_drm_bridge_->ResetDeviceCredentials(reset_credentials_cb);
 }
+
+// static
+bool MediaDrmCredentialManager::RegisterMediaDrmCredentialManager(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}

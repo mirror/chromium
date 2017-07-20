@@ -24,44 +24,44 @@ cr.define('print_preview', function() {
 
     /**
      * Data store containing the destinations to search through.
-     * @private {!print_preview.DestinationStore}
+     * @type {!print_preview.DestinationStore}
+     * @private
      */
     this.destinationStore_ = destinationStore;
 
     /**
      * Data store holding printer sharing invitations.
-     * @private {!print_preview.InvitationStore}
+     * @type {!print_preview.InvitationStore}
+     * @private
      */
     this.invitationStore_ = invitationStore;
 
     /**
      * Event target that contains information about the logged in user.
-     * @private {!print_preview.UserInfo}
+     * @type {!print_preview.UserInfo}
+     * @private
      */
     this.userInfo_ = userInfo;
 
     /**
-     * Instance of native layer used to send metrics to C++ metrics handler.
-     * @private {!print_preview.NativeLayer}
-     */
-    this.nativeLayer_ = print_preview.NativeLayer.getInstance();
-
-    /**
      * Currently displayed printer sharing invitation.
-     * @private {print_preview.Invitation}
+     * @type {print_preview.Invitation}
+     * @private
      */
     this.invitation_ = null;
 
     /**
      * Used to record usage statistics.
-     * @private {!print_preview.DestinationSearchMetricsContext}
+     * @type {!print_preview.DestinationSearchMetricsContext}
+     * @private
      */
     this.metrics_ = new print_preview.DestinationSearchMetricsContext();
 
     /**
      * Whether or not a UMA histogram for the register promo being shown was
      * already recorded.
-     * @private {boolean}
+     * @type {boolean}
+     * @private
      */
     this.registerPromoShownMetricRecorded_ = false;
 
@@ -81,7 +81,8 @@ cr.define('print_preview', function() {
 
     /**
      * Search box used to search through the destination lists.
-     * @private {!print_preview.SearchBox}
+     * @type {!print_preview.SearchBox}
+     * @private
      */
     this.searchBox_ = new print_preview.SearchBox(
         loadTimeData.getString('searchBoxPlaceholder'));
@@ -89,14 +90,16 @@ cr.define('print_preview', function() {
 
     /**
      * Destination list containing recent destinations.
-     * @private {!print_preview.DestinationList}
+     * @type {!print_preview.DestinationList}
+     * @private
      */
     this.recentList_ = new print_preview.RecentDestinationList(this);
     this.addChild(this.recentList_);
 
     /**
      * Destination list containing local destinations.
-     * @private {!print_preview.DestinationList}
+     * @type {!print_preview.DestinationList}
+     * @private
      */
     this.localList_ = new print_preview.DestinationList(
         this, loadTimeData.getString('localDestinationsTitle'),
@@ -107,7 +110,8 @@ cr.define('print_preview', function() {
 
     /**
      * Destination list containing cloud destinations.
-     * @private {!print_preview.DestinationList}
+     * @type {!print_preview.DestinationList}
+     * @private
      */
     this.cloudList_ = new print_preview.CloudDestinationList(this);
     this.addChild(this.cloudList_);
@@ -151,7 +155,9 @@ cr.define('print_preview', function() {
         if (getIsVisible(this.getChildElement('.cloudprint-promo'))) {
           this.metrics_.record(
               print_preview.Metrics.DestinationSearchBucket.SIGNIN_PROMPT);
-          this.nativeLayer_.recordAction('Signin_Impression_FromCloudPrint');
+          chrome.send(
+              'metricsHandler:recordAction',
+              ['Signin_Impression_FromCloudPrint']);
         }
         if (this.userInfo_.initialized)
           this.onUsersChanged_();
@@ -183,7 +189,9 @@ cr.define('print_preview', function() {
       if (this.getIsVisible()) {
         this.metrics_.record(
             print_preview.Metrics.DestinationSearchBucket.SIGNIN_PROMPT);
-        this.nativeLayer_.recordAction('Signin_Impression_FromCloudPrint');
+        chrome.send(
+            'metricsHandler:recordAction',
+            ['Signin_Impression_FromCloudPrint']);
       }
       this.reflowLists_();
     },

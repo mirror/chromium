@@ -21,7 +21,6 @@ const base::TimeDelta kZeroTime = base::TimeDelta::FromSeconds(0);
 
 // static
 void DesktopSessionDurationTracker::Initialize() {
-  DCHECK(!g_instance);
   g_instance = new DesktopSessionDurationTracker;
 }
 
@@ -74,13 +73,6 @@ void DesktopSessionDurationTracker::OnUserEvent() {
     DVLOG(4) << "Starting session due to user event";
     StartSession();
   }
-}
-
-// static
-void DesktopSessionDurationTracker::CleanupForTesting() {
-  DCHECK(g_instance);
-  delete g_instance;
-  g_instance = nullptr;
 }
 
 void DesktopSessionDurationTracker::OnAudioStart() {

@@ -13,9 +13,13 @@
 #include <vector>
 
 @class BookmarkHomeHandsetViewController;
+@class BookmarkCollectionView;
 class GURL;
-
 @protocol UrlLoader;
+
+namespace bookmarks {
+class BookmarkNode;
+}  // namespace bookmarks
 
 @protocol BookmarkHomeHandsetViewControllerDelegate
 // The view controller wants to be dismissed.
@@ -37,6 +41,13 @@ class GURL;
 // nothing.
 - (void)dismissModals:(BOOL)animated;
 
+@end
+
+@interface BookmarkHomeHandsetViewController (ExposedForTesting)
+// Creates the default view to show all bookmarks, if it doesn't already exist.
+- (void)ensureAllViewExists;
+- (const std::set<const bookmarks::BookmarkNode*>&)editNodes;
+- (void)setEditNodes:(const std::set<const bookmarks::BookmarkNode*>&)editNodes;
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_BOOKMARKS_BOOKMARK_HOME_HANDSET_VIEW_CONTROLLER_H_

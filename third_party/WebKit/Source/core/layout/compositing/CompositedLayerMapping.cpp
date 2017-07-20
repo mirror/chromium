@@ -81,7 +81,6 @@
 #include "platform/wtf/CurrentTime.h"
 #include "platform/wtf/text/StringBuilder.h"
 #include "public/platform/WebLayerStickyPositionConstraint.h"
-#include "public/platform/WebScrollBoundaryBehavior.h"
 
 namespace blink {
 
@@ -1139,25 +1138,9 @@ void CompositedLayerMapping::UpdateGraphicsLayerGeometry(
   UpdateShouldFlattenTransform();
   UpdateChildrenTransform();
   UpdateScrollParent(ScrollParent());
-  UpdateScrollBoundaryBehavior();
   RegisterScrollingLayers();
 
   UpdateCompositingReasons();
-}
-
-void CompositedLayerMapping::UpdateScrollBoundaryBehavior() {
-  EScrollBoundaryBehavior behavior_x =
-      GetLayoutObject().StyleRef().ScrollBoundaryBehaviorX();
-  EScrollBoundaryBehavior behavior_y =
-      GetLayoutObject().StyleRef().ScrollBoundaryBehaviorY();
-  if (scrolling_contents_layer_) {
-    scrolling_contents_layer_->SetScrollBoundaryBehavior(
-        WebScrollBoundaryBehavior(
-            static_cast<WebScrollBoundaryBehavior::ScrollBoundaryBehaviorType>(
-                behavior_x),
-            static_cast<WebScrollBoundaryBehavior::ScrollBoundaryBehaviorType>(
-                behavior_y)));
-  }
 }
 
 void CompositedLayerMapping::UpdateMainGraphicsLayerGeometry(

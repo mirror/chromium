@@ -16,6 +16,7 @@ ShellContentGpuClient::ShellContentGpuClient() = default;
 ShellContentGpuClient::~ShellContentGpuClient() = default;
 
 void ShellContentGpuClient::Initialize(
+    base::FieldTrialList::Observer* observer,
     service_manager::BinderRegistry* registry) {
   registry->AddInterface<mojom::PowerMonitorTest>(
       base::Bind(&PowerMonitorTestImpl::MakeStrongBinding,

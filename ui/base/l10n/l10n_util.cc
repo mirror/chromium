@@ -117,7 +117,6 @@ static const char* const kAcceptLanguageList[] = {
     "haw",     // Hawaiian
     "he",      // Hebrew
     "hi",      // Hindi
-    "hmn",     // Hmong
     "hr",      // Croatian
     "hu",      // Hungarian
     "hy",      // Armenian
@@ -128,7 +127,7 @@ static const char* const kAcceptLanguageList[] = {
     "it-CH",   // Italian (Switzerland)
     "it-IT",   // Italian (Italy)
     "ja",      // Japanese
-    "jv",      // Javanese
+    "jw",      // Javanese
     "ka",      // Georgian
     "kk",      // Kazakh
     "km",      // Cambodian
@@ -137,7 +136,6 @@ static const char* const kAcceptLanguageList[] = {
     "ku",      // Kurdish
     "ky",      // Kyrgyz
     "la",      // Latin
-    "lb",      // Luxembourgish
     "ln",      // Lingala
     "lo",      // Laothian
     "lt",      // Lithuanian
@@ -172,7 +170,6 @@ static const char* const kAcceptLanguageList[] = {
     "si",      // Sinhalese
     "sk",      // Slovak
     "sl",      // Slovenian
-    "sm",      // Samoan
     "sn",      // Shona
     "so",      // Somali
     "sq",      // Albanian

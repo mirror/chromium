@@ -40,8 +40,7 @@
 - (NSArray*)activityItemsForData:(ShareToData*)data;
 // Returns an array of UIActivity objects that can handle the given |data|.
 - (NSArray*)applicationActivitiesForData:(ShareToData*)data
-                              controller:(UIViewController*)controller
-                              dispatcher:(id<BrowserCommands>)dispatcher;
+                              controller:(UIViewController*)controller;
 // Processes |extensionItems| returned from App Extension invocation returning
 // the |activityType|. Calls shareDelegate_ with the processed returned items
 // and |result| of activity. Returns whether caller should reset UI.
@@ -92,7 +91,6 @@
 - (void)shareWithData:(ShareToData*)data
            controller:(UIViewController*)controller
          browserState:(ios::ChromeBrowserState*)browserState
-           dispatcher:(id<BrowserCommands>)dispatcher
       shareToDelegate:(id<ShareToDelegate>)delegate
              fromRect:(CGRect)fromRect
                inView:(UIView*)inView {
@@ -111,12 +109,11 @@
   activityViewController_ = [[UIActivityViewController alloc]
       initWithActivityItems:[self activityItemsForData:data]
       applicationActivities:[self applicationActivitiesForData:data
-                                                    controller:controller
-                                                    dispatcher:dispatcher]];
+                                                    controller:controller]];
 
   // Reading List and Print activities refer to iOS' version of these.
   // Chrome-specific implementations of these two activities are provided below
-  // in applicationActivitiesForData:controller:dispatcher:
+  // in applicationActivitiesForData:controller:
   NSArray* excludedActivityTypes = @[
     UIActivityTypeAddToReadingList, UIActivityTypePrint,
     UIActivityTypeSaveToCameraRoll
@@ -214,12 +211,11 @@
 }
 
 - (NSArray*)applicationActivitiesForData:(ShareToData*)data
-                              controller:(UIViewController*)controller
-                              dispatcher:(id<BrowserCommands>)dispatcher {
+                              controller:(UIViewController*)controller {
   NSMutableArray* applicationActivities = [NSMutableArray array];
   if (data.isPagePrintable) {
     PrintActivity* printActivity = [[PrintActivity alloc] init];
-    printActivity.dispatcher = dispatcher;
+    [printActivity setResponder:controller];
     [applicationActivities addObject:printActivity];
   }
   if (data.url.SchemeIsHTTPOrHTTPS()) {

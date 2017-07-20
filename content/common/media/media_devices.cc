@@ -44,9 +44,7 @@ MediaDeviceInfo& MediaDeviceInfo::operator=(const MediaDeviceInfo& other) =
 MediaDeviceInfo& MediaDeviceInfo::operator=(MediaDeviceInfo&& other) = default;
 
 bool operator==(const MediaDeviceInfo& first, const MediaDeviceInfo& second) {
-  return first.device_id == second.device_id && first.label == second.label &&
-         first.group_id == second.group_id &&
-         first.video_facing == second.video_facing;
+  return first.device_id == second.device_id && first.label == second.label;
 }
 
 }  // namespace content

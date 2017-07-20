@@ -195,7 +195,7 @@ class ImeButtonsView : public views::View, public views::ButtonListener {
   // views::ButtonListener:
   void ButtonPressed(views::Button* sender, const ui::Event& event) override {
     if (sender == settings_button_) {
-      ime_menu_tray_->CloseBubble();
+      ime_menu_tray_->HideImeMenuBubble();
       ShowIMESettings();
       return;
     }
@@ -312,9 +312,6 @@ ImeMenuTray::ImeMenuTray(Shelf* shelf)
   SystemTrayNotifier* tray_notifier = Shell::Get()->system_tray_notifier();
   tray_notifier->AddIMEObserver(this);
   tray_notifier->AddVirtualKeyboardObserver(this);
-
-  if (!drag_controller())
-    set_drag_controller(base::MakeUnique<TrayDragController>(shelf));
 }
 
 ImeMenuTray::~ImeMenuTray() {
@@ -327,6 +324,19 @@ ImeMenuTray::~ImeMenuTray() {
       keyboard::KeyboardController::GetInstance();
   if (keyboard_controller)
     keyboard_controller->RemoveObserver(this);
+}
+
+void ImeMenuTray::ShowImeMenuBubble() {
+  keyboard::KeyboardController* keyboard_controller =
+      keyboard::KeyboardController::GetInstance();
+  if (keyboard_controller && keyboard_controller->keyboard_visible()) {
+    show_bubble_after_keyboard_hidden_ = true;
+    keyboard_controller->AddObserver(this);
+    keyboard_controller->HideKeyboard(
+        keyboard::KeyboardController::HIDE_REASON_AUTOMATIC);
+  } else {
+    ShowImeMenuBubbleInternal();
+  }
 }
 
 void ImeMenuTray::ShowImeMenuBubbleInternal() {
@@ -361,8 +371,19 @@ void ImeMenuTray::ShowImeMenuBubbleInternal() {
   SetIsActive(true);
 }
 
+void ImeMenuTray::HideImeMenuBubble() {
+  bubble_.reset();
+  ime_list_view_ = nullptr;
+  SetIsActive(false);
+  shelf()->UpdateAutoHideState();
+}
+
+bool ImeMenuTray::IsImeMenuBubbleShown() {
+  return !!bubble_;
+}
+
 void ImeMenuTray::ShowKeyboardWithKeyset(const std::string& keyset) {
-  CloseBubble();
+  HideImeMenuBubble();
 
   // Overrides the keyboard url ref to make it shown with the given keyset.
   if (InputMethodManager::Get())
@@ -440,43 +461,19 @@ base::string16 ImeMenuTray::GetAccessibleNameForTray() {
 
 void ImeMenuTray::HideBubbleWithView(const views::TrayBubbleView* bubble_view) {
   if (bubble_->bubble_view() == bubble_view)
-    CloseBubble();
+    HideImeMenuBubble();
 }
 
 void ImeMenuTray::ClickedOutsideBubble() {
-  CloseBubble();
+  HideImeMenuBubble();
 }
 
 bool ImeMenuTray::PerformAction(const ui::Event& event) {
   if (bubble_)
-    CloseBubble();
+    HideImeMenuBubble();
   else
-    ShowBubble();
+    ShowImeMenuBubble();
   return true;
-}
-
-void ImeMenuTray::CloseBubble() {
-  bubble_.reset();
-  ime_list_view_ = nullptr;
-  SetIsActive(false);
-  shelf()->UpdateAutoHideState();
-}
-
-void ImeMenuTray::ShowBubble() {
-  keyboard::KeyboardController* keyboard_controller =
-      keyboard::KeyboardController::GetInstance();
-  if (keyboard_controller && keyboard_controller->keyboard_visible()) {
-    show_bubble_after_keyboard_hidden_ = true;
-    keyboard_controller->AddObserver(this);
-    keyboard_controller->HideKeyboard(
-        keyboard::KeyboardController::HIDE_REASON_AUTOMATIC);
-  } else {
-    ShowImeMenuBubbleInternal();
-  }
-}
-
-views::TrayBubbleView* ImeMenuTray::GetBubbleView() {
-  return bubble_ ? bubble_->bubble_view() : nullptr;
 }
 
 void ImeMenuTray::OnIMERefresh() {
@@ -494,7 +491,7 @@ void ImeMenuTray::OnIMEMenuActivationChanged(bool is_activated) {
   if (is_activated)
     UpdateTrayLabel();
   else
-    CloseBubble();
+    HideImeMenuBubble();
 }
 
 void ImeMenuTray::BubbleViewDestroyed() {
@@ -581,7 +578,7 @@ void ImeMenuTray::OnKeyboardHidden() {
 
 void ImeMenuTray::OnKeyboardSuppressionChanged(bool suppressed) {
   if (suppressed != keyboard_suppressed_ && bubble_)
-    CloseBubble();
+    HideImeMenuBubble();
   keyboard_suppressed_ = suppressed;
 }
 

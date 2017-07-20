@@ -289,16 +289,6 @@ CommandUtil.isRootEntry = function(volumeManager, entry) {
 };
 
 /**
- * Returns true if the given event was triggered by the selection menu button.
- * @event {!Event} event Command event.
- * @return {boolean} Ture if the event was triggered by the selection menu
- * button.
- */
-CommandUtil.isFromSelectionMenu = function(event) {
-  return event.target.id == 'selection-menu-button';
-};
-
-/**
  * If entry is fake/invalid/root, we don't show menu items for regular entries.
  * @param {VolumeManagerWrapper} volumeManager
  * @param {(!Entry|!FakeEntry)} entry Entry or a fake entry.
@@ -941,10 +931,7 @@ CommandHandler.COMMANDS_['rename'] = /** @type {Command} */ ({
    * @param {!CommandHandlerDeps} fileManager CommandHandlerDeps to use.
    */
   canExecute: function(event, fileManager) {
-    var renameTarget = CommandUtil.isFromSelectionMenu(event) ?
-        fileManager.ui.listContainer.currentList :
-        event.target;
-    var entries = CommandUtil.getCommandEntries(renameTarget);
+    var entries = CommandUtil.getCommandEntries(event.target);
     if (entries.length === 0 ||
         !CommandUtil.shouldShowMenuItemsForEntry(
             fileManager.volumeManager, entries[0])) {
@@ -954,7 +941,7 @@ CommandHandler.COMMANDS_['rename'] = /** @type {Command} */ ({
     }
 
     var parentEntry =
-        CommandUtil.getParentEntry(renameTarget, fileManager.directoryModel);
+        CommandUtil.getParentEntry(event.target, fileManager.directoryModel);
     var locationInfo = parentEntry ?
         fileManager.volumeManager.getLocationInfo(parentEntry) : null;
     event.canExecute =
@@ -1620,7 +1607,7 @@ CommandHandler.COMMANDS_['set-wallpaper'] = /** @type {Command} */ ({
     });
   },
   canExecute: function(event, fileManager) {
-    var entries = fileManager.getSelection().entries;
+    var entries = CommandUtil.getCommandEntries(event.target);
     if (entries.length === 0) {
       event.canExecute = false;
       event.command.setHidden(true);

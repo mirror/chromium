@@ -73,11 +73,11 @@
 #include "chrome/browser/renderer_host/chrome_render_message_filter.h"
 #include "chrome/browser/renderer_host/pepper/chrome_browser_pepper_host_factory.h"
 #include "chrome/browser/resource_coordinator/background_tab_navigation_throttle.h"
+#include "chrome/browser/safe_browsing/browser_url_loader_throttle.h"
 #include "chrome/browser/safe_browsing/certificate_reporting_service.h"
 #include "chrome/browser/safe_browsing/certificate_reporting_service_factory.h"
+#include "chrome/browser/safe_browsing/mojo_safe_browsing_impl.h"
 #include "chrome/browser/safe_browsing/safe_browsing_service.h"
-#include "chrome/browser/safe_browsing/ui_manager.h"
-#include "chrome/browser/safe_browsing/url_checker_delegate_impl.h"
 #include "chrome/browser/search/instant_service.h"
 #include "chrome/browser/search/instant_service_factory.h"
 #include "chrome/browser/search/search.h"
@@ -147,11 +147,7 @@
 #include "components/rappor/public/rappor_utils.h"
 #include "components/rappor/rappor_recorder_impl.h"
 #include "components/rappor/rappor_service_impl.h"
-#include "components/safe_browsing/browser/browser_url_loader_throttle.h"
-#include "components/safe_browsing/browser/mojo_safe_browsing_impl.h"
-#include "components/safe_browsing/browser/url_checker_delegate.h"
 #include "components/safe_browsing/common/safe_browsing_prefs.h"
-#include "components/safe_browsing_db/database_manager.h"
 #include "components/security_interstitials/core/ssl_error_ui.h"
 #include "components/signin/core/common/profile_management_switches.h"
 #include "components/spellcheck/spellcheck_build_features.h"
@@ -212,8 +208,6 @@
 #include "ppapi/features/features.h"
 #include "ppapi/host/ppapi_host.h"
 #include "printing/features/features.h"
-#include "services/preferences/public/cpp/in_process_service_factory.h"
-#include "services/preferences/public/interfaces/preferences.mojom.h"
 #include "storage/browser/fileapi/external_mount_points.h"
 #include "third_party/WebKit/public/platform/modules/installedapp/installed_app_provider.mojom.h"
 #include "third_party/WebKit/public/platform/modules/webshare/webshare.mojom.h"
@@ -715,7 +709,8 @@ AppLoadedInTabSource ClassifyAppLoadedInTabSource(
 }
 #endif  // BUILDFLAG(ENABLE_EXTENSIONS)
 
-void CreateUsbDeviceManager(device::mojom::UsbDeviceManagerRequest request,
+void CreateUsbDeviceManager(const service_manager::BindSourceInfo& source_info,
+                            device::mojom::UsbDeviceManagerRequest request,
                             content::RenderFrameHost* render_frame_host) {
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   if (render_frame_host->GetSiteInstance()->GetSiteURL().SchemeIs(
@@ -737,6 +732,7 @@ void CreateUsbDeviceManager(device::mojom::UsbDeviceManagerRequest request,
 }
 
 void CreateWebUsbChooserService(
+    const service_manager::BindSourceInfo& source_info,
     device::mojom::UsbChooserServiceRequest request,
     content::RenderFrameHost* render_frame_host) {
 #if BUILDFLAG(ENABLE_EXTENSIONS)
@@ -758,10 +754,11 @@ void CreateWebUsbChooserService(
   tab_helper->CreateChooserService(render_frame_host, std::move(request));
 }
 
-void CreateBudgetService(blink::mojom::BudgetServiceRequest request,
+void CreateBudgetService(const service_manager::BindSourceInfo& source_info,
+                         blink::mojom::BudgetServiceRequest request,
                          content::RenderFrameHost* render_frame_host) {
   BudgetServiceImpl::Create(render_frame_host->GetProcess()->GetID(),
-                            std::move(request));
+                            source_info, std::move(request));
 }
 
 bool GetDataSaverEnabledPref(const PrefService* prefs) {
@@ -1517,6 +1514,7 @@ void MaybeAppendBlinkSettingsSwitchForFieldTrial(
 #if defined(OS_ANDROID)
 template <typename Interface>
 void ForwardToJavaFrameRegistry(
+    const service_manager::BindSourceInfo& source_info,
     mojo::InterfaceRequest<Interface> request,
     content::RenderFrameHost* render_frame_host) {
   render_frame_host->GetJavaInterfaces()->GetInterface(std::move(request));
@@ -1524,6 +1522,7 @@ void ForwardToJavaFrameRegistry(
 
 template <typename Interface>
 void ForwardToJavaWebContentsRegistry(
+    const service_manager::BindSourceInfo& source_info,
     mojo::InterfaceRequest<Interface> request,
     content::RenderFrameHost* render_frame_host) {
   content::WebContents* contents =
@@ -2872,12 +2871,10 @@ void ChromeContentBrowserClient::ExposeInterfacesToRenderer(
 
   if (base::FeatureList::IsEnabled(features::kNetworkService)) {
     registry->AddInterface(
-        base::Bind(
-            &safe_browsing::MojoSafeBrowsingImpl::MaybeCreate,
-            render_process_host->GetID(),
-            base::Bind(
-                &ChromeContentBrowserClient::GetSafeBrowsingUrlCheckerDelegate,
-                base::Unretained(this))),
+        base::Bind(&safe_browsing::MojoSafeBrowsingImpl::Create,
+                   safe_browsing_service_->database_manager(),
+                   safe_browsing_service_->ui_manager(),
+                   render_process_host->GetID()),
         BrowserThread::GetTaskRunnerForThread(BrowserThread::IO));
   }
 
@@ -2932,14 +2929,19 @@ void ChromeContentBrowserClient::ExposeInterfacesToMediaService(
 
 void ChromeContentBrowserClient::BindInterfaceRequestFromFrame(
     content::RenderFrameHost* render_frame_host,
+    const service_manager::BindSourceInfo& source_info,
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle interface_pipe) {
   if (!frame_interfaces_.get() && !frame_interfaces_parameterized_.get())
     InitFrameInterfaces();
 
-  if (!frame_interfaces_parameterized_->TryBindInterface(
-          interface_name, &interface_pipe, render_frame_host)) {
-    frame_interfaces_->TryBindInterface(interface_name, &interface_pipe);
+  if (frame_interfaces_parameterized_->CanBindInterface(interface_name)) {
+    frame_interfaces_parameterized_->BindInterface(source_info, interface_name,
+                                                   std::move(interface_pipe),
+                                                   render_frame_host);
+  } else if (frame_interfaces_->CanBindInterface(interface_name)) {
+    frame_interfaces_->BindInterface(source_info, interface_name,
+                                     std::move(interface_pipe));
   }
 }
 
@@ -2963,20 +2965,15 @@ void ChromeContentBrowserClient::BindInterfaceRequest(
     const service_manager::BindSourceInfo& source_info,
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle* interface_pipe) {
-  if (source_info.identity.name() == content::mojom::kGpuServiceName)
-    gpu_binder_registry_.TryBindInterface(interface_name, interface_pipe);
+  if (source_info.identity.name() == content::mojom::kGpuServiceName &&
+      gpu_binder_registry_.CanBindInterface(interface_name)) {
+    gpu_binder_registry_.BindInterface(source_info, interface_name,
+                                       std::move(*interface_pipe));
+  }
 }
 
 void ChromeContentBrowserClient::RegisterInProcessServices(
     StaticServiceMap* services) {
-  if (g_browser_process->pref_service_factory()) {
-    service_manager::EmbeddedServiceInfo info;
-    info.factory =
-        g_browser_process->pref_service_factory()->CreatePrefServiceFactory();
-    info.task_runner = base::ThreadTaskRunnerHandle::Get();
-    services->insert(
-        std::make_pair(prefs::mojom::kLocalStateServiceName, info));
-  }
 #if BUILDFLAG(ENABLE_MOJO_MEDIA_IN_BROWSER_PROCESS)
   service_manager::EmbeddedServiceInfo info;
   info.factory = base::Bind(&media::CreateMediaService);
@@ -3281,7 +3278,7 @@ void ChromeContentBrowserClient::OverridePageVisibilityState(
 void ChromeContentBrowserClient::InitFrameInterfaces() {
   frame_interfaces_ = base::MakeUnique<service_manager::BinderRegistry>();
   frame_interfaces_parameterized_ = base::MakeUnique<
-      service_manager::BinderRegistryWithArgs<content::RenderFrameHost*>>();
+      service_manager::BinderRegistryWithParams<content::RenderFrameHost*>>();
 
   if (base::FeatureList::IsEnabled(features::kWebUsb)) {
     frame_interfaces_parameterized_->AddInterface(
@@ -3384,13 +3381,9 @@ ChromeContentBrowserClient::CreateURLLoaderThrottles(
   DCHECK(base::FeatureList::IsEnabled(features::kNetworkService));
 
   std::vector<std::unique_ptr<content::URLLoaderThrottle>> result;
-
-  auto safe_browsing_throttle =
-      safe_browsing::BrowserURLLoaderThrottle::MaybeCreate(
-          GetSafeBrowsingUrlCheckerDelegate(), wc_getter);
-  if (safe_browsing_throttle)
-    result.push_back(std::move(safe_browsing_throttle));
-
+  result.push_back(base::MakeUnique<safe_browsing::BrowserURLLoaderThrottle>(
+      safe_browsing_service_->database_manager(),
+      safe_browsing_service_->ui_manager(), wc_getter));
   return result;
 }
 
@@ -3445,19 +3438,4 @@ bool ChromeContentBrowserClient::HandleWebUIReverse(
 void ChromeContentBrowserClient::SetDefaultQuotaSettingsForTesting(
     const storage::QuotaSettings* settings) {
   g_default_quota_settings = settings;
-}
-
-safe_browsing::UrlCheckerDelegate*
-ChromeContentBrowserClient::GetSafeBrowsingUrlCheckerDelegate() {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-
-  // |safe_browsing_service_| may be unavailable in tests.
-  if (safe_browsing_service_ && !safe_browsing_url_checker_delegate_) {
-    safe_browsing_url_checker_delegate_ =
-        new safe_browsing::UrlCheckerDelegateImpl(
-            safe_browsing_service_->database_manager(),
-            safe_browsing_service_->ui_manager());
-  }
-
-  return safe_browsing_url_checker_delegate_.get();
 }

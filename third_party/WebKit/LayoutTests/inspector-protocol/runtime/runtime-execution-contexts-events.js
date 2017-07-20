@@ -1,5 +1,5 @@
 (async function(testRunner) {
-  let {page, session, dp} = await testRunner.startBlank(`Tests execution context lifetime events.`);
+  let {page, session, dp} = await testRunner.startBlank(``);
 
   dp.Runtime.enable();
   await dp.Runtime.onceExecutionContextCreated();

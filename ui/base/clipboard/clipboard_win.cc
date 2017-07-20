@@ -654,7 +654,7 @@ SkBitmap ClipboardWin::ReadImage(ClipboardType type) const {
 
   SkBitmap skia_bitmap;
   skia_bitmap.installPixels(device_pixels.info(), device_pixels.writable_addr(),
-                            device_pixels.rowBytes(),
+                            device_pixels.rowBytes(), nullptr,
                             [](void* pixels, void* hbitmap) {
                               DeleteObject(static_cast<HBITMAP>(hbitmap));
                             },

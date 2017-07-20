@@ -10,12 +10,16 @@
 
 namespace ui {
 
+// TODO(fuchsia): Implement ui::ResourceBundle.
+
 void ResourceBundle::LoadCommonResources() {
-  LoadChromeResources();
+  NOTIMPLEMENTED();
 }
 
 gfx::Image& ResourceBundle::GetNativeImageNamed(int resource_id) {
-  return GetImageNamed(resource_id);
+  NOTIMPLEMENTED();
+  CR_DEFINE_STATIC_LOCAL(gfx::Image, empty_image, ());
+  return empty_image;
 }
 
 }  // namespace ui

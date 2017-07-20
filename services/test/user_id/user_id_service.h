@@ -29,7 +29,8 @@ class UserIdService : public service_manager::Service, public mojom::UserId {
   // mojom::UserId:
   void GetUserId(GetUserIdCallback callback) override;
 
-  void BindUserIdRequest(mojom::UserIdRequest request);
+  void BindUserIdRequest(const service_manager::BindSourceInfo& source_info,
+                         mojom::UserIdRequest request);
 
   service_manager::BinderRegistry registry_;
   mojo::BindingSet<mojom::UserId> bindings_;

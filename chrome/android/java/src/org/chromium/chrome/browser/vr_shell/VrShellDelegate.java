@@ -51,13 +51,10 @@ import org.chromium.chrome.browser.customtabs.CustomTabActivity;
 import org.chromium.chrome.browser.help.HelpAndFeedback;
 import org.chromium.chrome.browser.infobar.InfoBarIdentifier;
 import org.chromium.chrome.browser.infobar.SimpleConfirmInfoBarBuilder;
-import org.chromium.chrome.browser.page_info.PageInfoPopup;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.TabModelSelector;
 import org.chromium.chrome.browser.util.IntentUtils;
 import org.chromium.chrome.browser.webapps.WebappActivity;
-import org.chromium.content_public.browser.ScreenOrientationDelegate;
-import org.chromium.content_public.browser.ScreenOrientationDelegateManager;
 import org.chromium.ui.UiUtils;
 
 import java.lang.annotation.Retention;
@@ -70,9 +67,8 @@ import java.lang.reflect.InvocationTargetException;
  * Manages interactions with the VR Shell.
  */
 @JNINamespace("vr_shell")
-public class VrShellDelegate
-        implements ApplicationStatus.ActivityStateListener, View.OnSystemUiVisibilityChangeListener,
-                   ScreenOrientationDelegate {
+public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
+                                        View.OnSystemUiVisibilityChangeListener {
     private static final String TAG = "VrShellDelegate";
 
     // Pseudo-random number to avoid request id collisions.
@@ -120,9 +116,6 @@ public class VrShellDelegate
     private static VrShellDelegate sInstance;
     private static VrBroadcastReceiver sVrBroadcastReceiver;
     private static boolean sRegisteredDaydreamHook = false;
-
-    // TODO(crbug.com/746409): Remove this suppression after this lint error is fixed.
-    @SuppressWarnings("StaticFieldLeak")
     private static View sBlackOverlayView;
 
     private ChromeActivity mActivity;
@@ -157,9 +150,10 @@ public class VrShellDelegate
     private Boolean mInVrAtChromeLaunch;
     private boolean mShowingDaydreamDoff;
     private boolean mDoffOptional;
-    // Whether we should show the PageInfo UI. This is shown when we force exit the user
-    // out of VR when they attempt to view the PageInfo.
-    private boolean mShouldShowPageInfo;
+    // Listener to be called once we exited VR due to to an unsupported mode, e.g. the user clicked
+    // the URL bar security icon.
+    private OnExitVrRequestListener mOnExitVrRequestListenerForUnsupportedMode;
+    private boolean mExitedDueToUnsupportedMode = false;
     private boolean mExitingCct;
     private boolean mPaused;
     private int mRestoreSystemUiVisibilityFlag = -1;
@@ -381,6 +375,19 @@ public class VrShellDelegate
     public static void showDoffAndExitVr(boolean optional) {
         assert sInstance != null;
         sInstance.showDoffAndExitVrInternal(optional);
+    }
+
+    public static void requestToExitVr(
+            OnExitVrRequestListener listener, @UiUnsupportedMode int reason) {
+        assert listener != null;
+        // If we are currently processing another request or we are not in VR, deny the request.
+        if (sInstance == null || sInstance.mOnExitVrRequestListenerForUnsupportedMode != null
+                || !sInstance.mInVr) {
+            listener.onDenied();
+            return;
+        }
+        sInstance.mOnExitVrRequestListenerForUnsupportedMode = listener;
+        sInstance.mVrShell.requestToExitVr(reason);
     }
 
     @CalledByNative
@@ -619,7 +626,6 @@ public class VrShellDelegate
             case ActivityState.RESUMED:
                 if (mInVr && activity != mActivity) {
                     if (mShowingDaydreamDoff) {
-                        mShouldShowPageInfo = false;
                         onExitVrResult(true);
                     } else {
                         shutdownVr(true /* disableVrMode */, false /* canReenter */,
@@ -784,12 +790,11 @@ public class VrShellDelegate
             mVrDaydreamApi.launchVrHomescreen();
             return;
         }
-        mShouldShowPageInfo = false;
+        mExitedDueToUnsupportedMode = false;
         shutdownNonPresentingNativeContext();
 
         // Lock orientation to landscape after enter VR.
         mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        ScreenOrientationDelegateManager.setOrientationDelegate(this);
 
         addVrViews();
         boolean webVrMode = mRequestedWebVr || tentativeWebVrMode && !mAutopresentWebVr;
@@ -951,20 +956,6 @@ public class VrShellDelegate
         }
     }
 
-    @Override
-    public boolean canUnlockOrientation(Activity activity, int defaultOrientation) {
-        if (mActivity == activity && mRestoreOrientation != null) {
-            mRestoreOrientation = defaultOrientation;
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public boolean canLockOrientation() {
-        return false;
-    }
-
     private boolean isWindowModeCorrectForVr() {
         int flags = mActivity.getWindow().getDecorView().getSystemUiVisibility();
         int orientation = mActivity.getResources().getConfiguration().orientation;
@@ -978,13 +969,11 @@ public class VrShellDelegate
             mRestoreOrientation = mActivity.getRequestedOrientation();
         }
         mActivity.setRequestedOrientation(requestedOrientation);
-        ScreenOrientationDelegateManager.setOrientationDelegate(this);
         setupVrModeWindowFlags();
     }
 
     private void restoreWindowMode() {
         if (mRestoreOrientation != null) mActivity.setRequestedOrientation(mRestoreOrientation);
-        ScreenOrientationDelegateManager.setOrientationDelegate(null);
         mRestoreOrientation = null;
         clearVrModeWindowFlags();
     }
@@ -1206,10 +1195,8 @@ public class VrShellDelegate
         if (!mDoffOptional && !success && showDoff(false /* optional */)) return;
 
         mShowingDaydreamDoff = false;
+        callOnExitVrRequestListenerForUnsupportedMode(success);
         if (success) {
-            if (mShouldShowPageInfo) {
-                sInstance.showPageInfoPopup();
-            }
             shutdownVr(true /* disableVrMode */, false /* canReenter */,
                     !mExitingCct /* stayingInChrome */);
             if (mExitingCct) ((CustomTabActivity) mActivity).finishAndClose(false);
@@ -1308,10 +1295,18 @@ public class VrShellDelegate
         promptForFeedbackIfNeeded(stayingInChrome);
         if (stayingInChrome) createNonPresentingNativeContext();
 
-        // We don't want to show the PageInfo prompt if we return to Chrome
-        // after shutting down for reasons other than a successful DOFF (e.g.
-        // clicking the controller home button and returning to Chrome).
-        mShouldShowPageInfo = false;
+        callOnExitVrRequestListenerForUnsupportedMode(false);
+    }
+
+    private void callOnExitVrRequestListenerForUnsupportedMode(boolean success) {
+        if (mOnExitVrRequestListenerForUnsupportedMode != null) {
+            if (success) {
+                mOnExitVrRequestListenerForUnsupportedMode.onSucceeded();
+            } else {
+                mOnExitVrRequestListenerForUnsupportedMode.onDenied();
+            }
+        }
+        mOnExitVrRequestListenerForUnsupportedMode = null;
     }
 
     private void showDoffAndExitVrInternal(boolean optional) {
@@ -1320,9 +1315,14 @@ public class VrShellDelegate
         shutdownVr(true /* disableVrMode */, false /* canReenter */, true /* stayingInChrome */);
     }
 
-    /* package */ void onUnhandledPageInfo() {
-        mShouldShowPageInfo = true;
-        showDoffAndExitVrInternal(true);
+    /* package */ void onExitVrRequestResult(boolean shouldExit) {
+        assert mOnExitVrRequestListenerForUnsupportedMode != null;
+        if (shouldExit) {
+            mExitedDueToUnsupportedMode = true;
+            showDoffAndExitVrInternal(true);
+        } else {
+            callOnExitVrRequestListenerForUnsupportedMode(false);
+        }
     }
 
     /* package */ void exitCct() {
@@ -1337,15 +1337,6 @@ public class VrShellDelegate
                     true /* disableVrMode */, false /* canReenter */, false /* stayingInChrome */);
             ((CustomTabActivity) mActivity).finishAndClose(false);
         }
-    }
-
-    private void showPageInfoPopup() {
-        assert mShouldShowPageInfo;
-        // Note: we don't set mShouldShowPageInfo to false here because we don't
-        // want to show the feedback prompt when the user exits VR to view PageInfo. So this gets
-        // reset in shutdownVr.
-        PageInfoPopup.show(
-                mActivity, mActivity.getActivityTab(), null, PageInfoPopup.OPENED_FROM_VR);
     }
 
     private static void startFeedback(Tab tab) {
@@ -1396,7 +1387,7 @@ public class VrShellDelegate
         if (!stayingInChrome) return;
         if (VrFeedbackStatus.getFeedbackOptOut()) return;
         if (!mVrBrowserUsed) return;
-        if (mShouldShowPageInfo) return;
+        if (mExitedDueToUnsupportedMode) return;
 
         int exitCount = VrFeedbackStatus.getUserExitedAndEntered2DCount();
         VrFeedbackStatus.setUserExitedAndEntered2DCount((exitCount + 1) % mFeedbackFrequency);

@@ -237,5 +237,17 @@ void SupervisedUserNavigationThrottle::OnInterstitialResult(
   if (continue_request)
     Resume();
   else
-    CancelDeferredNavigation(CANCEL);
+    Cancel();
+}
+
+void SupervisedUserNavigationThrottle::Resume() {
+  DCHECK(deferred_);
+  deferred_ = false;
+  navigation_handle()->Resume();
+}
+
+void SupervisedUserNavigationThrottle::Cancel() {
+  DCHECK(deferred_);
+  deferred_ = false;
+  navigation_handle()->CancelDeferredNavigation(CANCEL);
 }

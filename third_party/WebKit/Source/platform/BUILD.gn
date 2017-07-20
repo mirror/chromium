@@ -745,7 +745,6 @@ component("platform") {
     "fonts/shaping/HarfBuzzShaper.h",
     "fonts/shaping/RunSegmenter.cpp",
     "fonts/shaping/RunSegmenter.h",
-    "fonts/shaping/ShapeCache.cpp",
     "fonts/shaping/ShapeCache.h",
     "fonts/shaping/ShapeResult.cpp",
     "fonts/shaping/ShapeResult.h",
@@ -2266,7 +2265,6 @@ source_set("unit_tests") {
     "graphics/test/FakeGLES2Interface.h",
     "graphics/test/FakeWebGraphicsContext3DProvider.h",
     "graphics/test/MockImageDecoder.h",
-    "graphics/test/MockPaintCanvas.h",
 
     # Tests migrated from the web/tests directory.
     "TimerPerfTest.cpp",

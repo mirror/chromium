@@ -106,6 +106,7 @@ class CORE_EXPORT WebSettingsImpl final
   void SetImageAnimationPolicy(ImageAnimationPolicy) override;
   void SetImagesEnabled(bool) override;
   void SetInlineTextBoxAccessibilityEnabled(bool) override;
+  void SetInertVisualViewport(bool) override;
   void SetJavaScriptCanAccessClipboard(bool) override;
   void SetJavaScriptEnabled(bool) override;
   void SetLoadsImagesAutomatically(bool) override;

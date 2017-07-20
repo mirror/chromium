@@ -43,7 +43,7 @@ class NoTransportImageTransportFactory : public ImageTransportFactory {
 #endif
 
  private:
-  // The FrameSinkManagerImpl implementation lives in-process here for tests.
+  // The FrameSinkManager implementation lives in-process here for tests.
   viz::FrameSinkManagerImpl frame_sink_manager_;
   viz::HostFrameSinkManager host_frame_sink_manager_;
   ui::InProcessContextFactory context_factory_;

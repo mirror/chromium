@@ -34,10 +34,10 @@ DedicatedWorkerMessagingProxy::CreateBackingThreadStartupData(
                              : AtomicsWaitMode::kDisallow);
 }
 
-std::unique_ptr<WorkerThread>
-DedicatedWorkerMessagingProxy::CreateWorkerThread() {
+std::unique_ptr<WorkerThread> DedicatedWorkerMessagingProxy::CreateWorkerThread(
+    double origin_time) {
   return DedicatedWorkerThread::Create(CreateThreadableLoadingContext(),
-                                       WorkerObjectProxy());
+                                       WorkerObjectProxy(), origin_time);
 }
 
 }  // namespace blink

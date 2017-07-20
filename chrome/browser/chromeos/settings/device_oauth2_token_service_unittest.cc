@@ -8,7 +8,6 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
-#include "base/task_scheduler/task_scheduler.h"
 #include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/chromeos/policy/device_policy_builder.h"
@@ -123,7 +122,7 @@ class DeviceOAuth2TokenServiceTest : public testing::Test {
     oauth2_service_.reset();
     CrosSettings::Shutdown();
     TestingBrowserProcess::GetGlobal()->ShutdownBrowserPolicyConnector();
-    base::TaskScheduler::GetInstance()->FlushForTesting();
+    content::BrowserThread::GetBlockingPool()->FlushForTesting();
     DeviceSettingsService::Get()->UnsetSessionManager();
     DeviceSettingsService::Shutdown();
     SystemSaltGetter::Shutdown();

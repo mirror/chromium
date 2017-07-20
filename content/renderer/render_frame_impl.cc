@@ -4,7 +4,6 @@
 
 #include "content/renderer/render_frame_impl.h"
 
-#include <string.h>
 #include <algorithm>
 #include <map>
 #include <string>
@@ -1233,8 +1232,6 @@ RenderFrameImpl::RenderFrameImpl(const CreateParams& params)
 #endif
 
   manifest_manager_ = new ManifestManager(this);
-  memset(&peak_memory_metrics_, 0,
-         sizeof(RenderThreadImpl::RendererMemoryMetrics));
 }
 
 mojom::FrameHostAssociatedPtr RenderFrameImpl::GetFrameHost() {
@@ -1355,7 +1352,8 @@ void RenderFrameImpl::GetInterface(
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle interface_pipe) {
   // TODO(beng): We should be getting this info from the frame factory request.
-  interface_registry_->BindInterface(interface_name, std::move(interface_pipe));
+  interface_registry_->BindInterface(browser_info_, interface_name,
+                                     std::move(interface_pipe));
 }
 
 RenderWidget* RenderFrameImpl::GetRenderWidget() {
@@ -1926,28 +1924,23 @@ void RenderFrameImpl::OnRedo() {
 }
 
 void RenderFrameImpl::OnCut() {
-  AutoResetMember<bool> handling_select_range(
-      this, &RenderFrameImpl::handling_select_range_, true);
+  base::AutoReset<bool> handling_select_range(&handling_select_range_, true);
   frame_->ExecuteCommand(WebString::FromUTF8("Cut"));
 }
 
 void RenderFrameImpl::OnCopy() {
-  AutoResetMember<bool> handling_select_range(
-      this, &RenderFrameImpl::handling_select_range_, true);
+  base::AutoReset<bool> handling_select_range(&handling_select_range_, true);
   frame_->ExecuteCommand(WebString::FromUTF8("Copy"));
 }
 
 void RenderFrameImpl::OnPaste() {
-  AutoResetMember<bool> handling_select_range(
-      this, &RenderFrameImpl::handling_select_range_, true);
-  AutoResetMember<bool> handling_paste(this, &RenderFrameImpl::is_pasting_,
-                                       true);
+  base::AutoReset<bool> handling_select_range(&handling_select_range_, true);
+  base::AutoReset<bool> handling_paste(&is_pasting_, true);
   frame_->ExecuteCommand(WebString::FromUTF8("Paste"));
 }
 
 void RenderFrameImpl::OnPasteAndMatchStyle() {
-  AutoResetMember<bool> handling_select_range(
-      this, &RenderFrameImpl::handling_select_range_, true);
+  base::AutoReset<bool> handling_select_range(&handling_select_range_, true);
   frame_->ExecuteCommand(WebString::FromUTF8("PasteAndMatchStyle"));
 }
 
@@ -1968,8 +1961,7 @@ void RenderFrameImpl::OnDelete() {
 }
 
 void RenderFrameImpl::OnSelectAll() {
-  AutoResetMember<bool> handling_select_range(
-      this, &RenderFrameImpl::handling_select_range_, true);
+  base::AutoReset<bool> handling_select_range(&handling_select_range_, true);
   frame_->ExecuteCommand(WebString::FromUTF8("SelectAll"));
 }
 
@@ -1978,15 +1970,14 @@ void RenderFrameImpl::OnSelectRange(const gfx::Point& base,
   // This IPC is dispatched by RenderWidgetHost, so use its routing id.
   Send(new InputHostMsg_SelectRange_ACK(GetRenderWidget()->routing_id()));
 
-  AutoResetMember<bool> handling_select_range(
-      this, &RenderFrameImpl::handling_select_range_, true);
+  base::AutoReset<bool> handling_select_range(&handling_select_range_, true);
   frame_->SelectRange(render_view_->ConvertWindowPointToViewport(base),
                       render_view_->ConvertWindowPointToViewport(extent));
 }
 
 void RenderFrameImpl::OnAdjustSelectionByCharacterOffset(int start_adjust,
                                                          int end_adjust) {
-  WebRange range = frame_->GetInputMethodController()->GetSelectionOffsets();
+  WebRange range = GetRenderWidget()->GetWebWidget()->CaretOrSelectionRange();
   if (range.IsNull())
     return;
 
@@ -1995,8 +1986,7 @@ void RenderFrameImpl::OnAdjustSelectionByCharacterOffset(int start_adjust,
       range.StartOffset() + start_adjust < 0)
     return;
 
-  AutoResetMember<bool> handling_select_range(
-      this, &RenderFrameImpl::handling_select_range_, true);
+  base::AutoReset<bool> handling_select_range(&handling_select_range_, true);
 
   // A negative adjust amount moves the selection towards the beginning of
   // the document, a positive amount moves the selection towards the end of
@@ -2008,12 +1998,11 @@ void RenderFrameImpl::OnAdjustSelectionByCharacterOffset(int start_adjust,
 
 void RenderFrameImpl::OnCollapseSelection() {
   const WebRange& range =
-      frame_->GetInputMethodController()->GetSelectionOffsets();
+      GetRenderWidget()->GetWebWidget()->CaretOrSelectionRange();
   if (range.IsNull())
     return;
 
-  AutoResetMember<bool> handling_select_range(
-      this, &RenderFrameImpl::handling_select_range_, true);
+  base::AutoReset<bool> handling_select_range(&handling_select_range_, true);
   frame_->SelectRange(WebRange(range.EndOffset(), 0));
 }
 
@@ -2022,8 +2011,7 @@ void RenderFrameImpl::OnMoveRangeSelectionExtent(const gfx::Point& point) {
   Send(new InputHostMsg_MoveRangeSelectionExtent_ACK(
       GetRenderWidget()->routing_id()));
 
-  AutoResetMember<bool> handling_select_range(
-      this, &RenderFrameImpl::handling_select_range_, true);
+  base::AutoReset<bool> handling_select_range(&handling_select_range_, true);
   frame_->MoveRangeSelectionExtent(
       render_view_->ConvertWindowPointToViewport(point));
 }
@@ -2199,8 +2187,7 @@ void RenderFrameImpl::OnVisualStateRequest(uint64_t id) {
 }
 
 void RenderFrameImpl::OnSetEditableSelectionOffsets(int start, int end) {
-  AutoResetMember<bool> handling_select_range(
-      this, &RenderFrameImpl::handling_select_range_, true);
+  base::AutoReset<bool> handling_select_range(&handling_select_range_, true);
   ImeEventGuard guard(GetRenderWidget());
   frame_->SetEditableSelectionOffsets(start, end);
 }
@@ -3989,7 +3976,6 @@ void RenderFrameImpl::DidFinishLoad() {
   WebDataSource* ds = frame_->DataSource();
   Send(new FrameHostMsg_DidFinishLoad(routing_id_, ds->GetRequest().Url()));
 
-  ReportPeakMemoryStats();
   if (RenderThreadImpl::current()) {
     RenderThreadImpl::RendererMemoryMetrics memory_metrics;
     if (!RenderThreadImpl::current()->GetRendererMemoryMetrics(&memory_metrics))
@@ -4719,13 +4705,6 @@ void RenderFrameImpl::EnterFullscreen() {
 
 void RenderFrameImpl::ExitFullscreen() {
   Send(new FrameHostMsg_ToggleFullscreen(routing_id_, false));
-}
-
-void RenderFrameImpl::SuddenTerminationDisablerChanged(
-    bool present,
-    blink::WebSuddenTerminationDisablerType disabler_type) {
-  Send(new FrameHostMsg_SuddenTerminationDisablerChanged(routing_id_, present,
-                                                         disabler_type));
 }
 
 void RenderFrameImpl::RegisterProtocolHandler(const WebString& scheme,
@@ -6243,7 +6222,7 @@ void RenderFrameImpl::SyncSelectionIfRequired() {
 #endif
   {
     WebRange selection =
-        frame_->GetInputMethodController()->GetSelectionOffsets();
+        GetRenderWidget()->GetWebWidget()->CaretOrSelectionRange();
     if (selection.IsNull())
       return;
 
@@ -6266,8 +6245,9 @@ void RenderFrameImpl::SyncSelectionIfRequired() {
       text = frame_->SelectionAsText().Utf16();
       // http://crbug.com/101435
       // In some case, frame->selectionAsText() returned text's length is not
-      // equal to the length returned from frame_->GetSelectionOffsets(). So we
-      // have to set the range according to text.length().
+      // equal to the length returned from
+      // GetWebWidget()->caretOrSelectionRange().
+      // So we have to set the range according to text.length().
       range.set_end(range.start() + text.length());
     }
   }
@@ -6740,8 +6720,6 @@ blink::WebPageVisibilityState RenderFrameImpl::VisibilityState() const {
 std::unique_ptr<blink::WebURLLoader> RenderFrameImpl::CreateURLLoader(
     const blink::WebURLRequest& request,
     base::SingleThreadTaskRunner* task_runner) {
-  UpdatePeakMemoryStats();
-
   ChildThreadImpl* child_thread = ChildThreadImpl::current();
   if (base::FeatureList::IsEnabled(features::kNetworkService) && child_thread) {
     // Use if per-frame or per-scheme URLLoaderFactory is given.
@@ -6923,97 +6901,6 @@ void RenderFrameImpl::RenderWidgetWillHandleMouseEvent() {
   // |pepper_last_mouse_event_target_|.
   pepper_last_mouse_event_target_ = nullptr;
 #endif
-}
-
-void RenderFrameImpl::UpdatePeakMemoryStats() {
-  if (!base::FeatureList::IsEnabled(features::kReportRendererPeakMemoryStats))
-    return;
-
-  RenderThreadImpl::RendererMemoryMetrics memory_metrics;
-  if (!RenderThreadImpl::current()->GetRendererMemoryMetrics(&memory_metrics))
-    return;
-  peak_memory_metrics_.partition_alloc_kb =
-      std::max(peak_memory_metrics_.partition_alloc_kb,
-               memory_metrics.partition_alloc_kb);
-  peak_memory_metrics_.blink_gc_kb =
-      std::max(peak_memory_metrics_.blink_gc_kb, memory_metrics.blink_gc_kb);
-  peak_memory_metrics_.malloc_mb =
-      std::max(peak_memory_metrics_.malloc_mb, memory_metrics.malloc_mb);
-  peak_memory_metrics_.discardable_kb = std::max(
-      peak_memory_metrics_.discardable_kb, memory_metrics.discardable_kb);
-  peak_memory_metrics_.v8_main_thread_isolate_mb =
-      std::max(peak_memory_metrics_.v8_main_thread_isolate_mb,
-               memory_metrics.v8_main_thread_isolate_mb);
-  peak_memory_metrics_.total_allocated_mb =
-      std::max(peak_memory_metrics_.total_allocated_mb,
-               memory_metrics.total_allocated_mb);
-  peak_memory_metrics_.non_discardable_total_allocated_mb =
-      std::max(peak_memory_metrics_.non_discardable_total_allocated_mb,
-               memory_metrics.non_discardable_total_allocated_mb);
-  peak_memory_metrics_.total_allocated_per_render_view_mb =
-      std::max(peak_memory_metrics_.total_allocated_per_render_view_mb,
-               memory_metrics.total_allocated_per_render_view_mb);
-}
-
-void RenderFrameImpl::ReportPeakMemoryStats() {
-  if (!base::FeatureList::IsEnabled(features::kReportRendererPeakMemoryStats))
-    return;
-
-  UMA_HISTOGRAM_MEMORY_MB(
-      "Memory.Experimental.Renderer.PartitionAlloc.PeakDuringLoad",
-      peak_memory_metrics_.partition_alloc_kb / 1024);
-  UMA_HISTOGRAM_MEMORY_MB("Memory.Experimental.Renderer.BlinkGC.PeakDuringLoad",
-                          peak_memory_metrics_.blink_gc_kb / 1024);
-  UMA_HISTOGRAM_MEMORY_MB("Memory.Experimental.Renderer.Malloc.PeakDuringLoad",
-                          peak_memory_metrics_.malloc_mb);
-  UMA_HISTOGRAM_MEMORY_MB(
-      "Memory.Experimental.Renderer.Discardable.PeakDuringLoad",
-      peak_memory_metrics_.discardable_kb / 1024);
-  UMA_HISTOGRAM_MEMORY_MB(
-      "Memory.Experimental.Renderer.V8MainThreadIsolate.PeakDuringLoad",
-      peak_memory_metrics_.v8_main_thread_isolate_mb);
-  UMA_HISTOGRAM_MEMORY_MB(
-      "Memory.Experimental.Renderer.TotalAllocated.PeakDuringLoad",
-      peak_memory_metrics_.total_allocated_mb);
-  UMA_HISTOGRAM_MEMORY_MB(
-      "Memory.Experimental.Renderer.NonDiscardableTotalAllocated."
-      "PeakDuringLoad",
-      peak_memory_metrics_.non_discardable_total_allocated_mb);
-  UMA_HISTOGRAM_MEMORY_MB(
-      "Memory.Experimental.Renderer.TotalAllocatedPerRenderView."
-      "PeakDuringLoad",
-      peak_memory_metrics_.total_allocated_per_render_view_mb);
-  if (IsMainFrame()) {
-    UMA_HISTOGRAM_MEMORY_MB(
-        "Memory.Experimental.Renderer.PartitionAlloc."
-        "MainFrame.PeakDuringLoad",
-        peak_memory_metrics_.partition_alloc_kb / 1024);
-    UMA_HISTOGRAM_MEMORY_MB(
-        "Memory.Experimental.Renderer.BlinkGC.MainFrame.PeakDuringLoad",
-        peak_memory_metrics_.blink_gc_kb / 1024);
-    UMA_HISTOGRAM_MEMORY_MB(
-        "Memory.Experimental.Renderer.Malloc.MainFrame.PeakDuringLoad",
-        peak_memory_metrics_.malloc_mb);
-    UMA_HISTOGRAM_MEMORY_MB(
-        "Memory.Experimental.Renderer.Discardable.MainFrame.PeakDuringLoad",
-        peak_memory_metrics_.discardable_kb / 1024);
-    UMA_HISTOGRAM_MEMORY_MB(
-        "Memory.Experimental.Renderer.V8MainThreadIsolate."
-        "MainFrame.PeakDuringLoad",
-        peak_memory_metrics_.v8_main_thread_isolate_mb);
-    UMA_HISTOGRAM_MEMORY_MB(
-        "Memory.Experimental.Renderer.TotalAllocated."
-        "MainFrame.PeakDuringLoad",
-        peak_memory_metrics_.total_allocated_mb);
-    UMA_HISTOGRAM_MEMORY_MB(
-        "Memory.Experimental.Renderer.NonDiscardableTotalAllocated."
-        "MainFrame.PeakDuringLoad",
-        peak_memory_metrics_.non_discardable_total_allocated_mb);
-    UMA_HISTOGRAM_MEMORY_MB(
-        "Memory.Experimental.Renderer.TotalAllocatedPerRenderView."
-        "MainFrame.PeakDuringLoad",
-        peak_memory_metrics_.total_allocated_per_render_view_mb);
-  }
 }
 
 RenderFrameImpl::PendingNavigationInfo::PendingNavigationInfo(

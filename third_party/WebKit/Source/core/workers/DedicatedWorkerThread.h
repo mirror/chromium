@@ -42,7 +42,8 @@ class CORE_EXPORT DedicatedWorkerThread : public WorkerThread {
  public:
   static std::unique_ptr<DedicatedWorkerThread> Create(
       ThreadableLoadingContext*,
-      InProcessWorkerObjectProxy&);
+      InProcessWorkerObjectProxy&,
+      double time_origin);
   ~DedicatedWorkerThread() override;
 
   WorkerBackingThread& GetWorkerBackingThread() override {
@@ -54,7 +55,9 @@ class CORE_EXPORT DedicatedWorkerThread : public WorkerThread {
   }
 
  protected:
-  DedicatedWorkerThread(ThreadableLoadingContext*, InProcessWorkerObjectProxy&);
+  DedicatedWorkerThread(ThreadableLoadingContext*,
+                        InProcessWorkerObjectProxy&,
+                        double time_origin);
   WorkerOrWorkletGlobalScope* CreateWorkerGlobalScope(
       std::unique_ptr<GlobalScopeCreationParams>) override;
 
@@ -63,6 +66,7 @@ class CORE_EXPORT DedicatedWorkerThread : public WorkerThread {
 
   std::unique_ptr<WorkerBackingThread> worker_backing_thread_;
   InProcessWorkerObjectProxy& worker_object_proxy_;
+  double time_origin_;
 };
 
 }  // namespace blink

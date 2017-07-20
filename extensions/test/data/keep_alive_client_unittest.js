@@ -8,19 +8,29 @@
  * They are launched by extensions/renderer/mojo/keep_alive_client_unittest.cc.
  */
 
-var getApi = requireNative('apiGetter').get;
-var test = getApi('test');
+var test = require('test').binding;
 var unittestBindings = require('test_environment_specific_bindings');
 var utils = require('utils');
 
+var shouldSucceed;
+
 // We need to set custom bindings for a real API and serial.getDevices has a
 // simple signature.
-var serial = getApi('serial');
-var apiFunction = serial.getDevices;
+var binding = require('binding').Binding.create('serial');
+binding.registerCustomHook(function(bindingsAPI) {
+  utils.handleRequestWithPromiseDoNotUse(bindingsAPI.apiFunctions,
+                                         'serial', 'getDevices', function() {
+    if (shouldSucceed)
+      return Promise.resolve([]);
+    else
+      return Promise.reject();
+  });
+});
+var apiFunction = binding.generate().getDevices;
 
 function runFunction() {
   apiFunction(function() {
-    if (serial.shouldSucceed)
+    if (shouldSucceed)
       test.assertNoLastError();
     else
       test.assertTrue(!!chrome.runtime.lastError);
@@ -31,16 +41,14 @@ function runFunction() {
 unittestBindings.exportTests([
   // Test that a keep alive is created and destroyed for a successful API call.
   function testKeepAliveWithSuccessfulCall() {
-    // We cheat and put a property on the API object as a way of passing it to
-    // the custom hooks.
-    serial.shouldSucceed = true;
+    shouldSucceed = true;
     runFunction();
   },
 
   // Test that a keep alive is created and destroyed for an unsuccessful API
   // call.
   function testKeepAliveWithError() {
-    serial.shouldSucceed = true;
+    shouldSucceed = false;
     runFunction();
   },
 ], test.runTests, exports);

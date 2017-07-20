@@ -57,7 +57,6 @@
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/ByteOrder.h"
-#include "platform/wtf/CheckedNumeric.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/Vector.h"
 #include "platform/wtf/dtoa/utils.h"
@@ -93,16 +92,7 @@ PassRefPtr<SerializedScriptValue> SerializedScriptValue::Create() {
 
 PassRefPtr<SerializedScriptValue> SerializedScriptValue::Create(
     const String& data) {
-  CheckedNumeric<size_t> data_buffer_size = data.length();
-  data_buffer_size *= 2;
-  if (!data_buffer_size.IsValid())
-    return Create();
-
-  DataBufferPtr data_buffer = AllocateBuffer(data_buffer_size.ValueOrDie());
-  data.CopyTo(reinterpret_cast<UChar*>(data_buffer.get()), 0, data.length());
-
-  return AdoptRef(new SerializedScriptValue(std::move(data_buffer),
-                                            data_buffer_size.ValueOrDie()));
+  return AdoptRef(new SerializedScriptValue(data));
 }
 
 // Versions 16 and below (prior to April 2017) used ntohs() to byte-swap SSV
@@ -110,7 +100,7 @@ PassRefPtr<SerializedScriptValue> SerializedScriptValue::Create(
 //
 // As IndexedDB stores SSVs to disk indefinitely, we still need to keep around
 // the code needed to deserialize the old format.
-inline static bool IsByteSwappedWiredData(const uint8_t* data, size_t length) {
+inline static bool IsByteSwappedWiredData(const char* data, size_t length) {
   // TODO(pwnall): Return false early if we're on big-endian hardware. Chromium
   // doesn't currently support big-endian hardware, and there's no header
   // exposing endianness to Blink yet. ARCH_CPU_LITTLE_ENDIAN seems promising,
@@ -127,7 +117,7 @@ inline static bool IsByteSwappedWiredData(const uint8_t* data, size_t length) {
   // v1-16 (byte-swapped) - [v,    0xFF, ...], v = version (1 <= v <= 16)
   // v17+                 - [0xFF, v,    ...], v = first byte of version varint
 
-  if (data[0] == kVersionTag) {
+  if (static_cast<uint8_t>(data[0]) == kVersionTag) {
     // The only case where byte-swapped data can have 0xFF in byte zero is
     // version 0. This can only happen if byte one is a tag (supported in
     // version 0) that takes in extra data, and the first byte of extra data is
@@ -175,7 +165,7 @@ inline static bool IsByteSwappedWiredData(const uint8_t* data, size_t length) {
 
     // Fast path until the Blink-side SSV envelope reaches version 35.
     if (SerializedScriptValue::kWireFormatVersion < 35) {
-      if (data[1] < 35)
+      if (static_cast<uint8_t>(data[1]) < 35)
         return false;
 
       // TODO(pwnall): Add UMA metric here.
@@ -190,29 +180,16 @@ inline static bool IsByteSwappedWiredData(const uint8_t* data, size_t length) {
                      data[1]) != std::end(version0Tags);
   }
 
-  if (data[1] == kVersionTag) {
+  if (static_cast<uint8_t>(data[1]) == kVersionTag) {
     // The last SSV format that used byte-swapping was version 16. The version
     // number is stored (before byte-swapping) after a serialization tag, which
     // is 0xFF.
-    return data[0] != kVersionTag;
+    return static_cast<uint8_t>(data[0]) != kVersionTag;
   }
 
   // If kVersionTag isn't in any of the first two bytes, this is SSV version 0,
   // which was byte-swapped.
   return true;
-}
-
-static void SwapWiredDataIfNeeded(uint8_t* buffer, size_t buffer_size) {
-  DCHECK(!(buffer_size % sizeof(UChar)));
-
-  if (!IsByteSwappedWiredData(buffer, buffer_size))
-    return;
-
-  UChar* uchars = reinterpret_cast<UChar*>(buffer);
-  size_t uchars_size = buffer_size / sizeof(UChar);
-
-  for (size_t i = 0; i < uchars_size; ++i)
-    uchars[i] = ntohs(uchars[i]);
 }
 
 PassRefPtr<SerializedScriptValue> SerializedScriptValue::Create(
@@ -221,47 +198,36 @@ PassRefPtr<SerializedScriptValue> SerializedScriptValue::Create(
   if (!data)
     return Create();
 
-  DataBufferPtr data_buffer = AllocateBuffer(length);
-  std::copy(data, data + length, data_buffer.get());
-  SwapWiredDataIfNeeded(data_buffer.get(), length);
+  DCHECK(!(length % sizeof(UChar)));
+  const UChar* src = reinterpret_cast<const UChar*>(data);
+  size_t string_length = length / sizeof(UChar);
 
-  return AdoptRef(new SerializedScriptValue(std::move(data_buffer), length));
-}
+  if (IsByteSwappedWiredData(data, length)) {
+    // Decode wire data from big endian to host byte order.
+    StringBuffer<UChar> buffer(string_length);
+    UChar* dst = buffer.Characters();
+    for (size_t i = 0; i < string_length; ++i)
+      dst[i] = ntohs(src[i]);
 
-PassRefPtr<SerializedScriptValue> SerializedScriptValue::Create(
-    RefPtr<const SharedBuffer> buffer) {
-  if (!buffer)
-    return Create();
+    return AdoptRef(new SerializedScriptValue(String::Adopt(buffer)));
+  }
 
-  DataBufferPtr data_buffer = AllocateBuffer(buffer->size());
-  buffer->ForEachSegment([&data_buffer](const char* segment,
-                                        size_t segment_size,
-                                        size_t segment_offset) {
-    std::copy(segment, segment + segment_size,
-              data_buffer.get() + segment_offset);
-    return true;
-  });
-  SwapWiredDataIfNeeded(data_buffer.get(), buffer->size());
-
-  return AdoptRef(
-      new SerializedScriptValue(std::move(data_buffer), buffer->size()));
+  return AdoptRef(new SerializedScriptValue(String(src, string_length)));
 }
 
 SerializedScriptValue::SerializedScriptValue()
     : has_registered_external_allocation_(false),
       transferables_need_external_allocation_registration_(false) {}
 
-SerializedScriptValue::SerializedScriptValue(DataBufferPtr data,
-                                             size_t data_size)
-    : data_buffer_(std::move(data)),
-      data_buffer_size_(data_size),
-      has_registered_external_allocation_(false),
-      transferables_need_external_allocation_registration_(false) {}
-
-SerializedScriptValue::DataBufferPtr SerializedScriptValue::AllocateBuffer(
-    size_t buffer_size) {
-  return DataBufferPtr(static_cast<uint8_t*>(WTF::Partitions::BufferMalloc(
-      buffer_size, "SerializedScriptValue buffer")));
+SerializedScriptValue::SerializedScriptValue(const String& wire_data)
+    : has_registered_external_allocation_(false),
+      transferables_need_external_allocation_registration_(false) {
+  size_t byte_length = wire_data.length() * 2;
+  data_buffer_.reset(static_cast<uint8_t*>(WTF::Partitions::BufferMalloc(
+      byte_length, "SerializedScriptValue buffer")));
+  data_buffer_size_ = byte_length;
+  wire_data.CopyTo(reinterpret_cast<UChar*>(data_buffer_.get()), 0,
+                   wire_data.length());
 }
 
 SerializedScriptValue::~SerializedScriptValue() {

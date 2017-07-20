@@ -33,7 +33,6 @@
 #define LocalFrameClientImpl_h
 
 #include "core/frame/LocalFrameClient.h"
-#include "core/frame/WebLocalFrameBase.h"
 #include "platform/heap/Handle.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/wtf/RefPtr.h"
@@ -55,7 +54,7 @@ class LocalFrameClientImpl final : public LocalFrameClient {
 
   DECLARE_VIRTUAL_TRACE();
 
-  WebLocalFrameBase* GetWebFrame() const override;
+  WebLocalFrameBase* GetWebFrame() const { return web_frame_.Get(); }
 
   // LocalFrameClient ----------------------------------------------
 
@@ -211,9 +210,8 @@ class LocalFrameClientImpl final : public LocalFrameClient {
 
   unsigned BackForwardLength() override;
 
-  void SuddenTerminationDisablerChanged(
-      bool present,
-      WebSuddenTerminationDisablerType) override;
+  void SuddenTerminationDisablerChanged(bool present,
+                                        SuddenTerminationDisablerType) override;
 
   BlameContext* GetFrameBlameContext() override;
 

@@ -80,12 +80,6 @@ class ContextualSearchEntityHeuristic extends ContextualSearchHeuristic {
         }
     }
 
-    @Override
-    protected void logRankerTapSuppression(ContextualSearchRankerLogger logger) {
-        logger.logFeature(
-                ContextualSearchRankerLogger.Feature.IS_ENTITY, mIsProbablyEnglishProperNoun);
-    }
-
     @VisibleForTesting
     protected boolean isProbablyEnglishProperNoun() {
         return mIsProbablyEnglishProperNoun;
@@ -199,7 +193,14 @@ class ContextualSearchEntityHeuristic extends ContextualSearchHeuristic {
      */
     private boolean hasCharWithUnreliableWordBreak(
             ContextualSearchContext contextualSearchContext, String word) {
-        return contextualSearchContext.hasCharFromAlphabetWithUnreliableWordBreak(word);
+        for (int index = 0; index < word.length(); index++) {
+            if (contextualSearchContext.isCharFromAlphabetWithUnreliableWordBreakAtIndex(
+                        word, index)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

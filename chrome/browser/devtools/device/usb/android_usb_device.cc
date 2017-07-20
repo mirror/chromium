@@ -64,11 +64,6 @@ typedef std::set<scoped_refptr<UsbDevice> > UsbDeviceSet;
 base::LazyInstance<std::vector<AndroidUsbDevice*>>::Leaky g_devices =
     LAZY_INSTANCE_INITIALIZER;
 
-// Stores the GUIDs of devices that are currently opened so that they are not
-// re-probed.
-base::LazyInstance<std::vector<std::string>>::Leaky g_open_devices =
-    LAZY_INSTANCE_INITIALIZER;
-
 bool IsAndroidInterface(const UsbInterfaceDescriptor& interface) {
   if (interface.alternate_setting != 0 ||
       interface.interface_class != kAdbClass ||
@@ -138,7 +133,6 @@ void DumpMessage(bool outgoing, const char* data, size_t length) {
 
 void CloseDevice(scoped_refptr<UsbDeviceHandle> usb_device,
                  bool release_successful) {
-  base::Erase(g_open_devices.Get(), usb_device->GetDevice()->guid());
   usb_device->Close();
 }
 
@@ -193,7 +187,6 @@ void CreateDeviceOnInterfaceClaimed(AndroidUsbDevices* devices,
 }
 
 void OnDeviceOpened(AndroidUsbDevices* devices,
-                    const std::string& device_guid,
                     crypto::RSAPrivateKey* rsa_key,
                     int inbound_address,
                     int outbound_address,
@@ -202,7 +195,6 @@ void OnDeviceOpened(AndroidUsbDevices* devices,
                     const base::Closure& barrier,
                     scoped_refptr<UsbDeviceHandle> usb_handle) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-
   if (usb_handle.get()) {
     usb_handle->ClaimInterface(
         interface_number,
@@ -210,7 +202,6 @@ void OnDeviceOpened(AndroidUsbDevices* devices,
                    usb_handle, inbound_address, outbound_address, zero_mask,
                    interface_number, barrier));
   } else {
-    base::Erase(g_open_devices.Get(), device_guid);
     barrier.Run();
   }
 }
@@ -252,15 +243,8 @@ void OpenAndroidDevice(AndroidUsbDevices* devices,
     return;
   }
 
-  if (base::ContainsValue(g_open_devices.Get(), device->guid())) {
-    // |device| is already open, do not make parallel attempts to connect to it.
-    barrier.Run();
-    return;
-  }
-
-  g_open_devices.Get().push_back(device->guid());
-  device->Open(base::Bind(&OnDeviceOpened, devices, device->guid(), rsa_key,
-                          inbound_address, outbound_address, zero_mask,
+  device->Open(base::Bind(&OnDeviceOpened, devices, rsa_key, inbound_address,
+                          outbound_address, zero_mask,
                           interface.interface_number, barrier));
 }
 
@@ -475,8 +459,9 @@ void AndroidUsbDevice::ProcessOutgoing() {
 void AndroidUsbDevice::OutgoingMessageSent(UsbTransferStatus status,
                                            scoped_refptr<net::IOBuffer> buffer,
                                            size_t result) {
-  if (status != UsbTransferStatus::COMPLETED)
+  if (status != UsbTransferStatus::COMPLETED) {
     return;
+  }
 
   task_runner_->PostTask(
       FROM_HERE, base::BindOnce(&AndroidUsbDevice::ProcessOutgoing, this));

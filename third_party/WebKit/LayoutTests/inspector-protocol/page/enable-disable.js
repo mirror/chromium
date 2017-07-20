@@ -1,5 +1,5 @@
 (async function(testRunner) {
-  let {page, session, dp} = await testRunner.startBlank('Tests enabling/disabling Page domain while recording Timeline.');
+  let {page, session, dp} = await testRunner.startBlank('');
 
   var log = [];
   dp.Timeline.onEventRecorded(msg => {

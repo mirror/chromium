@@ -24,7 +24,6 @@ class OfflinePrefetchDownloadClient : public download::Client {
  private:
   // Overridden from Client:
   void OnServiceInitialized(
-      bool state_lost,
       const std::vector<std::string>& outstanding_download_guids) override;
   void OnServiceUnavailable() override;
   download::Client::ShouldDownload OnDownloadStarted(

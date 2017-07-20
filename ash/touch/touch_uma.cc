@@ -7,7 +7,6 @@
 #include "ash/metrics/user_metrics_recorder.h"
 #include "ash/shell.h"
 #include "base/metrics/histogram_macros.h"
-#include "base/optional.h"
 #include "base/strings/stringprintf.h"
 #include "ui/aura/env.h"
 #include "ui/aura/window.h"
@@ -27,12 +26,12 @@ namespace {
 
 struct WindowTouchDetails {
   // Last time-stamp of the last touch-end event.
-  base::Optional<base::TimeTicks> last_release_time_;
+  base::TimeTicks last_release_time_;
 
   // Stores the time of the last touch released on this window (if there was a
   // multi-touch gesture on the window, then this is the release-time of the
   // last touch on the window).
-  base::Optional<base::TimeTicks> last_mt_time_;
+  base::TimeTicks last_mt_time_;
 };
 
 DEFINE_OWNED_UI_CLASS_PROPERTY_KEY(WindowTouchDetails,
@@ -117,15 +116,14 @@ void TouchUMA::RecordTouchEvent(aura::Window* target,
   if (event.type() == ui::ET_TOUCH_PRESSED) {
     Shell::Get()->metrics()->RecordUserMetricsAction(UMA_TOUCHSCREEN_TAP_DOWN);
 
-    if (details->last_release_time_) {
+    if (details->last_release_time_.ToInternalValue()) {
       // Measuring the interval between a touch-release and the next
       // touch-start is probably less useful when doing multi-touch (e.g.
       // gestures, or multi-touch friendly apps). So count this only if the user
       // hasn't done any multi-touch during the last 30 seconds.
-      base::TimeDelta diff = event.time_stamp() -
-                             details->last_mt_time_.value_or(base::TimeTicks());
+      base::TimeDelta diff = event.time_stamp() - details->last_mt_time_;
       if (diff.InSeconds() > 30) {
-        base::TimeDelta gap = event.time_stamp() - *details->last_release_time_;
+        base::TimeDelta gap = event.time_stamp() - details->last_release_time_;
         UMA_HISTOGRAM_COUNTS_10000("Ash.TouchStartAfterEnd",
                                    gap.InMilliseconds());
       }

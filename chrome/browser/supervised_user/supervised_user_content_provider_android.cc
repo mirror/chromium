@@ -149,3 +149,7 @@ void SupervisedUserContentProvider::OnInsertRequestSendComplete(
   Java_SupervisedUserInsertReply_onInsertRequestSendComplete(
       AttachCurrentThread(), insert_reply_jobj, sent_ok);
 }
+
+bool SupervisedUserContentProvider::Register(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}

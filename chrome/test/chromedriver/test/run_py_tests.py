@@ -222,7 +222,6 @@ _ANDROID_NEGATIVE_FILTER['chromedriver_webview_shell'] = (
         'ChromeDriverLogTest.testDisablingDriverLogsSuppressesChromeDriverLog',
         'ChromeDriverTest.testCookiePath',
         'ChromeDriverTest.testGetHttpOnlyCookie',
-        'ChromeDriverTest.testGetNamedCookie',
     ]
 )
 

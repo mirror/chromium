@@ -41,6 +41,10 @@ AshWindowTreeHostPlatform::AshWindowTreeHostPlatform()
 
 AshWindowTreeHostPlatform::~AshWindowTreeHostPlatform() {}
 
+void AshWindowTreeHostPlatform::ToggleFullScreen() {
+  NOTIMPLEMENTED();
+}
+
 bool AshWindowTreeHostPlatform::ConfineCursorToRootWindow() {
   gfx::Rect confined_bounds(GetBoundsInPixels().size());
   confined_bounds.Inset(transformer_helper_.GetHostInsets());

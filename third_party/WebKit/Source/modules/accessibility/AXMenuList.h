@@ -55,6 +55,7 @@ class AXMenuList final : public AXLayoutObject {
 
   bool IsMenuList() const override { return true; }
   AccessibilityRole DetermineAccessibilityRole() final;
+  bool CanSetFocusAttribute() const override;
 
   void AddChildren() override;
 };

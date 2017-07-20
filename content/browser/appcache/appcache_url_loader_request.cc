@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 #include "content/browser/appcache/appcache_url_loader_request.h"
-#include "content/public/common/resource_type.h"
 #include "net/url_request/url_request.h"
 
 namespace content {
@@ -34,8 +33,7 @@ const GURL AppCacheURLLoaderRequest::GetReferrer() const {
 }
 
 bool AppCacheURLLoaderRequest::IsSuccess() const {
-  int response_code = GetResponseCode();
-  return (response_code >= 200 && response_code <= 226);
+  return false;
 }
 
 bool AppCacheURLLoaderRequest::IsCancelled() const {
@@ -47,8 +45,6 @@ bool AppCacheURLLoaderRequest::IsError() const {
 }
 
 int AppCacheURLLoaderRequest::GetResponseCode() const {
-  if (response_.headers)
-    return response_.headers->response_code();
   return 0;
 }
 
@@ -59,10 +55,6 @@ std::string AppCacheURLLoaderRequest::GetResponseHeaderByName(
 
 ResourceRequest* AppCacheURLLoaderRequest::GetResourceRequest() {
   return &request_;
-}
-
-AppCacheURLLoaderRequest* AppCacheURLLoaderRequest::AsURLLoaderRequest() {
-  return this;
 }
 
 AppCacheURLLoaderRequest::AppCacheURLLoaderRequest(

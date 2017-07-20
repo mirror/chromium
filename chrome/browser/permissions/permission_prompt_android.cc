@@ -41,8 +41,9 @@ PermissionPromptAndroid::PermissionPromptAndroid(
   if (!infobar_service)
     return;
 
-  GroupedPermissionInfoBarDelegate::Create(weak_factory_.GetWeakPtr(),
-                                           infobar_service);
+  GroupedPermissionInfoBarDelegate::Create(
+      weak_factory_.GetWeakPtr(), infobar_service,
+      delegate_->Requests()[0]->GetOrigin());
 }
 
 PermissionPromptAndroid::~PermissionPromptAndroid() {}

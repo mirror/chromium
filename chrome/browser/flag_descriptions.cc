@@ -224,7 +224,7 @@ const char kDropSyncCredentialDescription[] =
 const char kEasyUnlockBluetoothLowEnergyDiscoveryName[] =
     "Smart Lock Bluetooth Low Energy Discovery";
 const char kEasyUnlockBluetoothLowEnergyDiscoveryDescription[] =
-    "Disables a Smart Lock setting that allows Chromebook to discover phones "
+    "Enables a Smart Lock setting that allows Chromebook to discover phones "
     "over Bluetooth Low Energy in order to unlock the Chromebook when the "
     "phone is in its proximity.";
 
@@ -380,11 +380,6 @@ const char kEnableSuggestionsHomeModernLayoutDescription[] =
 
 const char kEnableTokenBindingName[] = "Token Binding.";
 const char kEnableTokenBindingDescription[] = "Enable Token Binding support.";
-
-const char kEnableUsernameCorrectionName[] = "Enable username correction";
-const char kEnableUsernameCorrectionDescription[] =
-    "While on the pending password state, add an edit button to the bubble so "
-    "that user can edit the username.";
 
 const char kEnableUseZoomForDsfName[] =
     "Use Blink's zoom for device scale factor.";
@@ -831,12 +826,6 @@ const char kOmniboxUIElideSuggestionUrlAfterHostDescription[] =
     "Elides the path, query, and ref of suggested URLs in the Omnibox "
     "dropdown.";
 
-const char kOmniboxSpareRendererName[] =
-    "Start spare renderer on omnibox focus";
-const char kOmniboxSpareRendererDescription[] =
-    "When the omnibox is focused, start an empty spare renderer. This can "
-    "speed up the load of the navigation from the omnibox.";
-
 const char kOmniboxUIHideSuggestionUrlSchemeName[] =
     "Omnibox UI Hide Suggestion URL Scheme";
 const char kOmniboxUIHideSuggestionUrlSchemeDescription[] =
@@ -1193,8 +1182,6 @@ const char kTLS13VariantDraft[] = "Enabled (Draft)";
 const char kTLS13VariantExperiment[] = "Enabled (Experiment)";
 const char kTLS13VariantRecordTypeExperiment[] =
     "Enabled (Record Type Experiment)";
-const char kTLS13VariantNoSessionIDExperiment[] =
-    "Enabled (No Session ID Experiment)";
 
 const char kTopDocumentIsolationName[] = "Top document isolation";
 const char kTopDocumentIsolationDescription[] =
@@ -1731,11 +1718,6 @@ const char kOfflinePagesPrefetchingName[] =
 const char kOfflinePagesPrefetchingDescription[] =
     "Enables suggested offline pages to be prefetched, so useful content is "
     "available while offline.";
-
-const char kOfflinePagesRenovationsName[] = "Enables offline page renovations.";
-const char kOfflinePagesRenovationsDescription[] =
-    "Enables offline page renovations which correct issues with dynamic "
-    "content that occur when offlining pages that use JavaScript.";
 
 const char kOfflinePagesSharingName[] = "Enables offline pages to be shared.";
 const char kOfflinePagesSharingDescription[] =
@@ -2309,10 +2291,6 @@ const char kEnableTouchSupportForScreenMagnifierName[] =
 const char kEnableTouchSupportForScreenMagnifierDescription[] =
     "Enables touch support for screen magnifier";
 
-const char kFileManagerTouchModeName[] = "Files App. touch mode";
-const char kFileManagerTouchModeDescription[] =
-    "Touchscreen-specific interactions of the Files app.";
-
 const char kEnableZipArchiverOnFileManagerName[] = "ZIP archiver for Drive";
 
 const char kEnableZipArchiverOnFileManagerDescription[] =
@@ -2566,13 +2544,6 @@ const char kForceEnableStylusToolsDescription[] =
     "Forces display of the stylus tools menu in the shelf and the stylus "
     "section in settings, even if there is no attached stylus device.";
 
-const char kEnableLockScreenAppsName[] = "Enable lock screen note taking";
-
-const char kEnableLockScreenAppsDescription[] =
-    "Enable new-note action handler apps on the lock screen. The user will be "
-    "able to launch the preferred note-taking action from the lock screen, "
-    "provided that the app supports lock screen note taking.";
-
 //  Network portal notification
 
 const char kNetworkPortalNotificationName[] =
@@ -2724,11 +2695,6 @@ const char kUiDevToolsName[] = "Enable native UI inspection";
 const char kUiDevToolsDescription[] =
     "Enables inspection of native UI elements. For local inspection use "
     "chrome://inspect#other";
-
-const char kUseCrosMidiServiceName[] = "Use Chrome OS MIDI Service";
-const char kUseCrosMidiServiceNameDescription[] =
-    "Use Chrome OS MIDI Service for Web MIDI and allow ARC to support Android "
-    "MIDI.";
 
 const char kMultideviceName[] = "Enable multidevice features";
 const char kMultideviceDescription[] =

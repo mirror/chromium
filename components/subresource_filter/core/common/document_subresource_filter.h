@@ -44,7 +44,7 @@ class DocumentSubresourceFilter {
 
   ~DocumentSubresourceFilter();
 
-  const ActivationState& activation_state() const { return activation_state_; }
+  ActivationState activation_state() const { return activation_state_; }
   const DocumentLoadStatistics& statistics() const { return statistics_; }
 
   // WARNING: This is only to allow DocumentSubresourceFilter's wrappers to

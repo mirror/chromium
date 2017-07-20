@@ -58,6 +58,7 @@ public class SpareChildConnectionTest {
             assert mConnection == null;
             mConnection = new TestChildProcessConnection(
                     serviceName, bindToCaller, bindAsExternalService, serviceBundle);
+            mConnection.setPostOnServiceConnected(false);
             return mConnection;
         }
 

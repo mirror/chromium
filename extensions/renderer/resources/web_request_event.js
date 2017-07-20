@@ -16,13 +16,8 @@ function getUniqueSubEventName(eventName) {
 }
 
 function createSubEvent(name, argSchemas) {
-  if (bindingUtil) {
-    var supportsFilters = false;
-    var supportsLazyListeners = true;
-    return bindingUtil.createCustomEvent(name, undefined,
-                                         supportsFilters,
-                                         supportsLazyListeners);
-  }
+  if (bindingUtil)
+    return bindingUtil.createCustomEvent(name, undefined, false);
   return new eventBindings.Event(name, argSchemas);
 }
 

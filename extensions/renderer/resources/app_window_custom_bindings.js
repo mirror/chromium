@@ -22,11 +22,8 @@ if (!apiBridge)
 var jsEvent;
 function createAnonymousEvent() {
   if (bindingUtil) {
-    var supportsFilters = false;
-    var supportsLazyListeners = false;
     // Native custom events ignore schema.
-    return bindingUtil.createCustomEvent(undefined, undefined, supportsFilters,
-                                         supportsLazyListeners);
+    return bindingUtil.createCustomEvent(undefined, undefined, false);
   }
   if (!jsEvent)
     jsEvent = require('event_bindings').Event;

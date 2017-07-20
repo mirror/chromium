@@ -7,7 +7,6 @@
 
 #include "content/browser/appcache/appcache_request.h"
 #include "content/public/common/resource_request.h"
-#include "content/public/common/resource_response.h"
 
 namespace content {
 
@@ -40,18 +39,12 @@ class CONTENT_EXPORT AppCacheURLLoaderRequest : public AppCacheRequest {
   int GetResponseCode() const override;
   std::string GetResponseHeaderByName(const std::string& name) const override;
   ResourceRequest* GetResourceRequest() override;
-  AppCacheURLLoaderRequest* AsURLLoaderRequest() override;
-
-  void set_response(const ResourceResponseHead& response) {
-    response_ = response;
-  }
 
  protected:
   explicit AppCacheURLLoaderRequest(const ResourceRequest& request);
 
  private:
   ResourceRequest request_;
-  ResourceResponseHead response_;
 
   DISALLOW_COPY_AND_ASSIGN(AppCacheURLLoaderRequest);
 };

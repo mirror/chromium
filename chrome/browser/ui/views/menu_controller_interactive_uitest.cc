@@ -55,17 +55,41 @@ class MenuControllerMnemonicTest : public MenuTestBase {
 typedef MenuControllerMnemonicTest<ui::VKEY_DIVIDE,1>
     MenuControllerMnemonicTestMnemonicMatch;
 
-VIEW_TEST(MenuControllerMnemonicTestMnemonicMatch, MnemonicMatch);
+#if defined(USE_OZONE)
+// ozone bringup - http://crbug.com/401304
+#define MAYBE_MnemonicMatch DISABLED_MnemonicMatch
+#else
+// If this flakes, disable and log details in http://crbug.com/523255.
+#define MAYBE_MnemonicMatch MnemonicMatch
+#endif
+
+VIEW_TEST(MenuControllerMnemonicTestMnemonicMatch, MAYBE_MnemonicMatch);
 
 // Pressing a key which matches the first letter of the menu item's title
 // should execute the command for that menu item.
 typedef MenuControllerMnemonicTest<ui::VKEY_T,2>
     MenuControllerMnemonicTestTitleMatch;
 
-VIEW_TEST(MenuControllerMnemonicTestTitleMatch, TitleMatch);
+#if defined(USE_OZONE)
+// ozone bringup - http://crbug.com/401304
+#define MAYBE_TitleMatch DISABLED_TitleMatch
+#else
+// If this flakes, disable and log details in http://crbug.com/523255.
+#define MAYBE_TitleMatch TitleMatch
+#endif
+
+VIEW_TEST(MenuControllerMnemonicTestTitleMatch, MAYBE_TitleMatch);
 
 // Pressing an arbitrary key should not execute any commands.
 typedef MenuControllerMnemonicTest<ui::VKEY_A,0>
     MenuControllerMnemonicTestNoMatch;
 
-VIEW_TEST(MenuControllerMnemonicTestNoMatch, NoMatch);
+#if defined(USE_OZONE)
+// ozone bringup - http://crbug.com/401304
+#define MAYBE_NoMatch DISABLED_NoMatch
+#else
+// If this flakes, disable and log details in http://crbug.com/523255.
+#define MAYBE_NoMatch NoMatch
+#endif
+
+VIEW_TEST(MenuControllerMnemonicTestNoMatch, MAYBE_NoMatch);

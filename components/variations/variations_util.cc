@@ -6,7 +6,6 @@
 
 #include <vector>
 
-#include "base/strings/string_piece.h"
 #include "components/crash/core/common/crash_keys.h"
 #include "components/variations/active_field_trials.h"
 
@@ -14,8 +13,7 @@ namespace variations {
 
 void SetVariationListCrashKeys() {
   std::vector<std::string> experiment_strings;
-  GetFieldTrialActiveGroupIdsAsStrings(base::StringPiece(),
-                                       &experiment_strings);
+  GetFieldTrialActiveGroupIdsAsStrings(&experiment_strings);
   GetSyntheticTrialGroupIdsAsString(&experiment_strings);
   crash_keys::SetVariationsList(experiment_strings);
 }

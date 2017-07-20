@@ -467,6 +467,7 @@ def write_gn_ninja(path, root_gen_dir, options):
       'base/process/process_metrics.cc',
       'base/profiler/scoped_profile.cc',
       'base/profiler/scoped_tracker.cc',
+      'base/profiler/tracked_time.cc',
       'base/rand_util.cc',
       'base/run_loop.cc',
       'base/sequence_token.cc',
@@ -537,6 +538,7 @@ def write_gn_ninja(path, root_gen_dir, options):
       'base/trace_event/heap_profiler_event_writer.cc',
       'base/trace_event/heap_profiler_serialization_state.cc',
       'base/trace_event/heap_profiler_stack_frame_deduplicator.cc',
+      'base/trace_event/heap_profiler_string_deduplicator.cc',
       'base/trace_event/heap_profiler_type_name_deduplicator.cc',
       'base/trace_event/malloc_dump_provider.cc',
       'base/trace_event/memory_allocator_dump.cc',
@@ -565,7 +567,6 @@ def write_gn_ninja(path, root_gen_dir, options):
       'base/tracked_objects.cc',
       'base/tracking_info.cc',
       'base/unguessable_token.cc',
-      'base/value_iterators.cc',
       'base/values.cc',
       'base/vlog.cc',
   ])

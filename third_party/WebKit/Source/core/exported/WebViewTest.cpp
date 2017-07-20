@@ -43,7 +43,6 @@
 #include "core/editing/FrameSelection.h"
 #include "core/editing/InputMethodController.h"
 #include "core/editing/markers/DocumentMarkerController.h"
-#include "core/exported/FakeWebPlugin.h"
 #include "core/exported/WebSettingsImpl.h"
 #include "core/exported/WebViewBase.h"
 #include "core/frame/EventHandlerRegistry.h"
@@ -56,7 +55,6 @@
 #include "core/fullscreen/Fullscreen.h"
 #include "core/html/HTMLIFrameElement.h"
 #include "core/html/HTMLInputElement.h"
-#include "core/html/HTMLObjectElement.h"
 #include "core/html/HTMLTextAreaElement.h"
 #include "core/inspector/DevToolsEmulator.h"
 #include "core/layout/api/LayoutViewItem.h"
@@ -1680,28 +1678,37 @@ TEST_P(WebViewTest, HistoryResetScrollAndScaleState) {
   EXPECT_EQ(2.0f, main_frame_local->Loader()
                       .GetDocumentLoader()
                       ->GetHistoryItem()
-                      ->GetViewState()
-                      ->page_scale_factor_);
+                      ->PageScaleFactor());
   EXPECT_EQ(94, main_frame_local->Loader()
                     .GetDocumentLoader()
                     ->GetHistoryItem()
-                    ->GetViewState()
-                    ->scroll_offset_.Width());
+                    ->GetScrollOffset()
+                    .Width());
   EXPECT_EQ(111, main_frame_local->Loader()
                      .GetDocumentLoader()
                      ->GetHistoryItem()
-                     ->GetViewState()
-                     ->scroll_offset_.Height());
+                     ->GetScrollOffset()
+                     .Height());
 
   // Confirm that resetting the page state resets the saved scroll position.
   web_view_impl->ResetScrollAndScaleState();
   EXPECT_EQ(1.0f, web_view_impl->PageScaleFactor());
   EXPECT_EQ(0, web_view_impl->MainFrameImpl()->GetScrollOffset().width);
   EXPECT_EQ(0, web_view_impl->MainFrameImpl()->GetScrollOffset().height);
-  EXPECT_EQ(nullptr, main_frame_local->Loader()
-                         .GetDocumentLoader()
-                         ->GetHistoryItem()
-                         ->GetViewState());
+  EXPECT_EQ(1.0f, main_frame_local->Loader()
+                      .GetDocumentLoader()
+                      ->GetHistoryItem()
+                      ->PageScaleFactor());
+  EXPECT_EQ(0, main_frame_local->Loader()
+                   .GetDocumentLoader()
+                   ->GetHistoryItem()
+                   ->GetScrollOffset()
+                   .Width());
+  EXPECT_EQ(0, main_frame_local->Loader()
+                   .GetDocumentLoader()
+                   ->GetHistoryItem()
+                   ->GetScrollOffset()
+                   .Height());
 }
 
 TEST_P(WebViewTest, BackForwardRestoreScroll) {
@@ -2404,9 +2411,7 @@ TEST_P(WebViewTest, LongPressImageTextarea) {
   WebString image = WebString::FromUTF8("purpleimage");
 
   EXPECT_TRUE(TapElementById(WebInputEvent::kGestureLongPress, image));
-  WebRange range = web_view->MainFrameImpl()
-                       ->GetInputMethodController()
-                       ->GetSelectionOffsets();
+  WebRange range = web_view->CaretOrSelectionRange();
   EXPECT_FALSE(range.IsNull());
   EXPECT_EQ(0, range.StartOffset());
   EXPECT_EQ(1, range.length());
@@ -2475,9 +2480,7 @@ TEST_P(WebViewTest, SelectionOnReadOnlyInput) {
   WebLocalFrameBase* frame = web_view->MainFrameImpl();
   EXPECT_EQ(test_word, std::string(frame->SelectionAsText().Utf8().data()));
 
-  WebRange range = web_view->MainFrameImpl()
-                       ->GetInputMethodController()
-                       ->GetSelectionOffsets();
+  WebRange range = web_view->CaretOrSelectionRange();
   EXPECT_FALSE(range.IsNull());
   EXPECT_EQ(0, range.StartOffset());
   EXPECT_EQ(static_cast<int>(test_word.length()), range.length());
@@ -4399,39 +4402,6 @@ TEST_P(WebViewTest, DeviceEmulationResetScrollbars) {
   } else {
     EXPECT_NE(nullptr, frame_view->VerticalScrollbar());
   }
-}
-
-TEST_P(WebViewTest, SetZoomLevelWhilePluginFocused) {
-  class PluginCreatingWebFrameClient
-      : public FrameTestHelpers::TestWebFrameClient {
-   public:
-    // WebFrameClient overrides:
-    WebPlugin* CreatePlugin(const WebPluginParams& params) override {
-      return new FakeWebPlugin(params);
-    }
-  };
-  PluginCreatingWebFrameClient frame_client;
-  WebViewBase* web_view = web_view_helper_.Initialize(&frame_client);
-  WebURL base_url = URLTestHelpers::ToKURL("https://example.com/");
-  FrameTestHelpers::LoadHTMLString(
-      web_view->MainFrameImpl(),
-      "<!DOCTYPE html><html><body>"
-      "<object type='application/x-webkit-test-plugin'></object>"
-      "</body></html>",
-      base_url);
-  // Verify the plugin is loaded.
-  LocalFrame* main_frame = web_view->MainFrameImpl()->GetFrame();
-  HTMLObjectElement* plugin_element =
-      toHTMLObjectElement(main_frame->GetDocument()->body()->firstChild());
-  EXPECT_TRUE(plugin_element->OwnedPlugin());
-  // Focus the plugin element, and then change the zoom level on the WebView.
-  plugin_element->focus();
-  EXPECT_FLOAT_EQ(1.0f, main_frame->PageZoomFactor());
-  web_view->SetZoomLevel(-1.0);
-  // Even though the plugin is focused, the entire frame's zoom factor should
-  // still be updated.
-  EXPECT_FLOAT_EQ(5.0f / 6.0f, main_frame->PageZoomFactor());
-  web_view_helper_.Reset();  // Remove dependency on locally scoped client.
 }
 
 }  // namespace blink

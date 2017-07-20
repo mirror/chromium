@@ -5,6 +5,7 @@
 #ifndef CHROME_BROWSER_MEDIA_ANDROID_REMOTE_REMOTE_MEDIA_PLAYER_BRIDGE_H_
 #define CHROME_BROWSER_MEDIA_ANDROID_REMOTE_REMOTE_MEDIA_PLAYER_BRIDGE_H_
 
+#include <jni.h>
 #include <vector>
 
 #include "base/macros.h"
@@ -27,6 +28,8 @@ class RemoteMediaPlayerBridge : public media::MediaPlayerAndroid {
                           const std::string& user_agent,
                           RemoteMediaPlayerManager* manager);
   ~RemoteMediaPlayerBridge() override;
+
+  static bool RegisterRemoteMediaPlayerBridge(JNIEnv* env);
 
   // Initialize this object.
   virtual void Initialize();

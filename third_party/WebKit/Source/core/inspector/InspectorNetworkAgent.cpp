@@ -248,7 +248,7 @@ String ResourcePriorityJSON(ResourceLoadPriority priority) {
 
 String BuildBlockedReason(ResourceRequestBlockedReason reason) {
   switch (reason) {
-    case ResourceRequestBlockedReason::kCSP:
+    case ResourceRequestBlockedReason::CSP:
       return protocol::Network::BlockedReasonEnum::Csp;
     case ResourceRequestBlockedReason::kMixedContent:
       return protocol::Network::BlockedReasonEnum::MixedContent;

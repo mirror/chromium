@@ -3671,15 +3671,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="AuthPolicy.TimeToRunNetAdsGpo" units="ms">
-  <owner>ljusten@chromium.org</owner>
-  <summary>
-    Time in milliseconds to call 'net ads gpo list' (list Active Directory group
-    policy objects). The value is recorded no matter if the operation was
-    successful or not.
-  </summary>
-</histogram>
-
 <histogram name="AuthPolicy.TimeToRunNetAdsInfo" units="ms">
   <owner>ljusten@chromium.org</owner>
   <summary>
@@ -4096,19 +4087,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 <histogram name="Autofill.DaysSinceLastUse.Profile" units="days">
   <owner>sebsg@chromium.org</owner>
   <summary>
-    Logged at the time of autofill address use, this histogram captures the
-    number of days that have passed since the address was last used. I.e., the
-    distribution of time between uses of an &quot;active&quot; autofill address.
-  </summary>
-</histogram>
-
-<histogram name="Autofill.DaysSinceLastUse.StoredProfile" units="days">
-  <owner>rogerm@chromium.org</owner>
-  <summary>
-    This histogram captures the number of days that have passed since each
-    stored address profile belonging to a given Chrome Profile was last used.
-    This is logged for each Autofill address profile once per Chrome User
-    Profile load.
+    Logs the number of days that have passed since the profile was last used.
   </summary>
 </histogram>
 
@@ -4690,15 +4669,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     The number of Autofill addresses a user has stored, measured when an
     autofillable form is submitted.
-  </summary>
-</histogram>
-
-<histogram name="Autofill.StoredProfileDisusedCount">
-  <owner>rogerm@chromium.org</owner>
-  <summary>
-    The number of stored Autofill address profiles which have not been used in a
-    sufficiently long time for autofill to consider them disused. Measured once
-    per Chrome user profile launch.
   </summary>
 </histogram>
 
@@ -15436,11 +15406,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>The start result of download attempts.</summary>
 </histogram>
 
-<histogram base="true" name="Download.Service.StartUpStatus"
+<histogram name="Download.Service.StartUpStatus"
     enum="Download.Service.StartUpResult">
-<!-- Name completed by histogram_suffixes
-     name="Download.Service.StartUpStep" -->
-
   <owner>xingliu@chromium.org</owner>
   <summary>The start up result of the download service.</summary>
 </histogram>
@@ -30047,56 +30014,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram
-    name="Media.Engagement.SignificantPlayers.PlayerNotAdded.AfterFirstTime"
-    enum="InsignificantPlaybackReason">
-  <owner>beccahughes@chromium.org</owner>
-  <owner>media-dev@chromium.org</owner>
-  <summary>
-    Recorded when the Media Engagement service doesn't determine a player to be
-    significant. If a player is not significant the reasons why will be
-    individually recorded to this histogram each time except for the first time
-    which is recorded to a different histogram.
-
-    The significant state of a player is reevaluated any time the state of the
-    player changes (e.g. muted, playing/paused). If the player was not
-    considered signficiant and still is not then we will record the reasons why
-    in this histogram.
-  </summary>
-</histogram>
-
-<histogram name="Media.Engagement.SignificantPlayers.PlayerNotAdded.FirstTime"
-    enum="InsignificantPlaybackReason">
-  <owner>beccahughes@chromium.org</owner>
-  <owner>media-dev@chromium.org</owner>
-  <summary>
-    Recorded when the Media Engagement service doesn't determine a player to be
-    significant. If a player is not significant the reasons why will be
-    individually recorded to this histogram the first time only.
-
-    The significant state of a player is reevaluated any time the state of the
-    player changes (e.g. muted, playing/paused). If the player was not
-    considered signficiant and still is not then we will record the reasons why
-    in this histogram.
-  </summary>
-</histogram>
-
-<histogram name="Media.Engagement.SignificantPlayers.PlayerRemoved"
-    enum="InsignificantPlaybackReason">
-  <owner>beccahughes@chromium.org</owner>
-  <owner>media-dev@chromium.org</owner>
-  <summary>
-    Recorded when the Media Engagement service no longer determines a player to
-    be significant. If a player is no longer significant, the reasons why will
-    be individually recorded to this histogram.
-
-    The significant state of a player is re-evaluted any time the state of the
-    player changes (e.g. muted, playing/paused). If the player was previously
-    considered significant and is no longer considered that we will record the
-    reasons why in this histogram.
-  </summary>
-</histogram>
-
 <histogram name="Media.FallbackHardwareAudioBitsPerChannel">
   <owner>dalecurtis@chromium.org</owner>
   <summary>
@@ -32139,14 +32056,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="Memory.Browser.PrivateMemoryFootprint" units="MB">
-  <owner>erikchen@chromium.org</owner>
-  <summary>
-    A rough estimate of the private memory footprint of the browser process.
-    Recorded once per UMA ping.
-  </summary>
-</histogram>
-
 <histogram name="Memory.CachedFontAndDC">
   <owner>hajimehoshi@chromium.org</owner>
   <owner>kenjibaheux@google.com</owner>
@@ -32489,14 +32398,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="Memory.Gpu.PrivateMemoryFootprint" units="MB">
-  <owner>erikchen@chromium.org</owner>
-  <summary>
-    A rough estimate of the private memory footprint of the gpu process.
-    Recorded once per UMA ping.
-  </summary>
-</histogram>
-
 <histogram name="Memory.Graphics" units="MB">
   <owner>hajimehoshi@chromium.org</owner>
   <owner>jamescook@chromium.org</owner>
@@ -32787,14 +32688,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     The private working set used by each renderer process.  Each renderer
     process provides one sample.  Recorded once per UMA ping.
-  </summary>
-</histogram>
-
-<histogram name="Memory.Renderer.PrivateMemoryFootprint" units="MB">
-  <owner>erikchen@chromium.org</owner>
-  <summary>
-    A rough estimate of the private memory footprint of the renderer process.
-    Recorded once per UMA ping.
   </summary>
 </histogram>
 
@@ -33268,14 +33161,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     The sum of all processes. This is not aware of shared memory so it is just a
     rough estimate. Recorded once per UMA ping. See Memory.Total2 for the same
     metric with higher precision bucketing.
-  </summary>
-</histogram>
-
-<histogram name="Memory.Total.PrivateMemoryFootprint" units="MB">
-  <owner>erikchen@chromium.org</owner>
-  <summary>
-    A rough estimate of the private memory footprint of all processes. Recorded
-    once per UMA ping.
   </summary>
 </histogram>
 
@@ -36836,18 +36721,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="Net.CountOfBrokenAlternativeServices" units="services">
-  <owner>wangyix@chromium.org</owner>
-  <summary>
-    The number of broken alternative services loaded from the prefs file on
-    startup. Alternative services allow an origin server to specify additional
-    means of interacting with it on the network. A broken alternative service is
-    one whose most recent connection attempt failed and whose retry timeout
-    period has not yet expired. Recorded when broken alternative services are
-    loaded from the prefs file on startup.
-  </summary>
-</histogram>
-
 <histogram name="Net.CountOfPipelineCapableServers" units="servers">
   <obsolete>
     Deprecated 05/2014, related field trial already long expired.
@@ -36863,18 +36736,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>zhongyi@chromium.org</owner>
   <summary>
     This counts the number of server configs persisted in prefs file.
-  </summary>
-</histogram>
-
-<histogram name="Net.CountOfRecentlyBrokenAlternativeServices" units="services">
-  <owner>wangyix@chromium.org</owner>
-  <summary>
-    The number of recently broken alternative services loaded from the prefs
-    file on startup. Alternative services allow an origin server to specify
-    additional means of interacting with it on the network. A recently broken
-    alternative service is one whose most recent connection attempt failed.
-    Recorded when broken alternative services are loaded from the prefs file on
-    startup.
   </summary>
 </histogram>
 
@@ -37474,10 +37335,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Net.DNSNameCompliantIfValid" enum="Boolean">
-  <obsolete>
-    Deprecated 07/2017, not necessary to determine deprecation for invalid DNS
-    names.
-  </obsolete>
   <owner>palmer@chromium.org</owner>
   <summary>
     True if |net::IsCanonicalizedHostCompliant| returns true. Used to see if
@@ -42728,10 +42585,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Net.ValidDNSName" enum="Boolean">
-  <obsolete>
-    Deprecated 07/2017, not necessary to determine deprecation for invalid DNS
-    names.
-  </obsolete>
   <owner>palmer@chromium.org</owner>
   <summary>
     True if a DNS name contains only characters for which
@@ -53857,26 +53710,12 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram
-    name="PaymentRequest.UserDidNotHaveCompleteSuggestionsForEverything.EffectOnCompletion"
-    enum="PaymentRequestFlowCompletionStatus">
-  <owner>sebsg@chromium.org</owner>
-  <summary>
-    Whether the flow was completed when the user did not have a complete
-    suggestion offered for each requested information.
-  </summary>
-</histogram>
-
-<histogram
     name="PaymentRequest.UserDidNotHaveInitialFormOfPayment.EffectOnCompletion"
     enum="PaymentRequestFlowCompletionStatus">
-  <obsolete>
-    Replaced by PaymentRequest.NumberOfSuggestionsShown.PaymentMethod on July
-    19th 2017.
-  </obsolete>
   <owner>sebsg@chromium.org</owner>
   <summary>
-    Whether the flow was completed when the user did not have a a form of
-    payment on file when the Payment Request was shown.
+    Whether the flow was completed when the user did not have a form of payment
+    on file when the Payment Request was shown.
   </summary>
 </histogram>
 
@@ -53890,26 +53729,12 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram
-    name="PaymentRequest.UserHadCompleteSuggestionsForEverything.EffectOnCompletion"
-    enum="PaymentRequestFlowCompletionStatus">
-  <owner>sebsg@chromium.org</owner>
-  <summary>
-    Whether the flow was completed when the user had at least one complete
-    suggestion offered for each requested information.
-  </summary>
-</histogram>
-
 <histogram name="PaymentRequest.UserHadInitialFormOfPayment.EffectOnCompletion"
     enum="PaymentRequestFlowCompletionStatus">
-  <obsolete>
-    Replaced by PaymentRequest.NumberOfSuggestionsShown.PaymentMethod on July
-    19th 2017.
-  </obsolete>
   <owner>sebsg@chromium.org</owner>
   <summary>
-    Whether the flow was completed when the user had a form of payment on file
-    when the Payment Request was shown.
+    Whether the flow was completed when the user had an a form of payment on
+    file when the Payment Request was shown.
   </summary>
 </histogram>
 
@@ -54795,16 +54620,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Chrome OS KB in use in the /var filesystem tree. Logged once a day during
     log file cleanup.
-  </summary>
-</histogram>
-
-<histogram name="Platform.Emmc.LifeUsed" enum="EmmcLifeUsed">
-  <owner>gwendal@google.com</owner>
-  <summary>
-    eMMC [5.0] Device life time estimation for flash. This field provides an
-    estimated indication about the device life time that is reflected by the
-    averaged wear out of memory of a given type relative to its maximum
-    estimated lifetime.
   </summary>
 </histogram>
 
@@ -65120,25 +64935,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram base="true" name="SafeBrowsing.WebSocket.Elapsed" units="ms">
-  <owner>ricea@chromium.org</owner>
-  <summary>
-    Time spent on SafeBrowsing lookup. Since this includes any time spent on the
-    interstitial page the average may not be useful.
-  </summary>
-</histogram>
-
-<histogram name="SafeBrowsing.WebSocket.Result"
-    enum="SafeBrowsingWebSocketResult">
-  <owner>ricea@chromium.org</owner>
-  <summary>
-    Results of a SafeBrowsing lookup for a WebSocket handshake. All lookups are
-    counted. Note: the &quot;ABANDONED&quot; bucket contains both connections
-    that were abandoned before the check completed and those that were cancelled
-    when the user navigated away from the SafeBrowsing interstitial.
-  </summary>
-</histogram>
-
 <histogram name="SB.BloomFilter" units="ms">
   <obsolete>
     Has not been generated for years (7/8/14).
@@ -69203,16 +68999,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>twellington@chromium.org</owner>
   <summary>
     Whether results were seen for a Tap that was on a word considered long.
-    Recorded when the UX is hidden. Implemented for Android.
-  </summary>
-</histogram>
-
-<histogram name="Search.ContextualSearchTapOnWordMiddleSeen"
-    enum="ContextualSearchResultsSeen">
-  <owner>donnd@chromium.org</owner>
-  <owner>twellington@chromium.org</owner>
-  <summary>
-    Whether results were seen for a Tap that was on the middle part of a word.
     Recorded when the UX is hidden. Implemented for Android.
   </summary>
 </histogram>
@@ -80395,15 +80181,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="TouchAction.EffectiveTouchAction" enum="TouchActions">
-  <owner>hayleyferr@chromium.org</owner>
-  <owner>xidachen@chromium.org</owner>
-  <summary>
-    Tracks how often each touch action is allowed (AKA the frequency of each
-    effective touch action) at the end of each touch sequence.
-  </summary>
-</histogram>
-
 <histogram name="TouchBar.Default.Metrics" enum="DefaultTouchBarActions">
   <owner>spqchan@chromium.com</owner>
   <summary>Tracks the usage of the default touch bar buttons.</summary>
@@ -81030,22 +80807,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     case, Chrome ignore the CLD-determined language and instead uses the page
     language code. The page language code is decided by Content-Language and
     HTML lang attribute.
-  </summary>
-</histogram>
-
-<histogram name="Translate.SourceLanguage" enum="CLD3LanguageCode">
-  <owner>yyushkina@google.com</owner>
-  <summary>
-    The number of requests sent to the Translate server, grouped by source
-    language.
-  </summary>
-</histogram>
-
-<histogram name="Translate.TargetLanguage" enum="CLD3LanguageCode">
-  <owner>yyushkina@google.com</owner>
-  <summary>
-    The number of requests sent to the Translate server, grouped by target
-    language.
   </summary>
 </histogram>
 
@@ -84182,15 +83943,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="VirtualKeyboard.LingeringIntermediateState"
-    enum="VirtualKeyboardControllerState">
-  <owner>oka@chromium.org</owner>
-  <summary>
-    Records whenever an intermediate keyboard state has been active for longer
-    than a fixed timeout.
-  </summary>
-</histogram>
-
 <histogram name="VoiceInteraction.IllegalContextRequest" enum="BooleanHit">
   <owner>muyuanli@chromium.org</owner>
   <summary>
@@ -84211,13 +83963,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     We must exit VR mode when browsing in certain situations. This tracks which
     situations are encountered in practice.
-  </summary>
-</histogram>
-
-<histogram name="VRAutopresentedWebVR" enum="Boolean">
-  <owner>ymalik@chromium.org</owner>
-  <summary>
-    Whether we're auto-presenting the first time we enter WebVR mode.
   </summary>
 </histogram>
 
@@ -91441,12 +91186,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="Download.Service.Db.Records"/>
 </histogram_suffixes>
 
-<histogram_suffixes name="Download.Service.StartUpStep" separator=".">
-  <suffix name="Initialization" label="The initialization start up step."/>
-  <suffix name="Recovery" label="The recovery start up step."/>
-  <affected-histogram name="Download.Service.StartUpStatus"/>
-</histogram_suffixes>
-
 <histogram_suffixes name="Download.Service.TaskType" separator=".">
   <suffix name="DownloadTask" label="Download task."/>
   <suffix name="CleanUpTask" label="Clean up task."/>
@@ -96497,12 +96236,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="Platform.BootMode.FirmwareWriteProtect"/>
 </histogram_suffixes>
 
-<histogram_suffixes name="PlatformEmmcLifeUsed" separator=".">
-  <suffix name="TypeA" label="Memory Type A"/>
-  <suffix name="TypeB" label="Memory Type B"/>
-  <affected-histogram name="Platform.Emmc.LifeUsed"/>
-</histogram_suffixes>
-
 <histogram_suffixes name="PlatformMeminfoPercentage" separator="">
   <suffix name="infoActive" label="Active memory."/>
   <suffix name="infoActiveAnon"
@@ -97230,12 +96963,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
       label="Recorded 10 minutes after backgrounded."/>
   <suffix name="AfterBackgrounded.15min"
       label="Recorded 15 minutes after backgrounded."/>
-  <suffix name="PeakDuringLoad"
-      label="Polled each time CreateURLLoader is called, and the maximum
-             value is recorded when DidFinishLoad is called."/>
-  <suffix name="MainFrame.PeakDuringLoad"
-      label="In the main frame, polled each time CreateURLLoader is called,
-             and the maximum value is recorded when DidFinishLoad is called."/>
   <affected-histogram name="Memory.Experimental.Renderer.BlinkGC"/>
   <affected-histogram name="Memory.Experimental.Renderer.Discardable"/>
   <affected-histogram name="Memory.Experimental.Renderer.Malloc"/>
@@ -97672,17 +97399,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="SafeBrowsing.Pref.Scout.NoScoutGroup"/>
   <affected-histogram name="SafeBrowsing.Pref.Scout.ScoutGroup"/>
   <affected-histogram name="SafeBrowsing.Pref.Scout.SetPref"/>
-</histogram_suffixes>
-
-<histogram_suffixes name="SafeBrowsingWebSocketElapsed" separator=".">
-  <suffix name="Safe"
-      label="Passed SafeBrowsing check, or blocked and interstitial clicked
-             through"/>
-  <suffix name="Blocked" label="Failed SafeBrowsing check and blocked"/>
-  <suffix name="Abandoned"
-      label="Connection abandoned, or interstitial displayed and user did not
-             proceed to site"/>
-  <affected-histogram name="SafeBrowsing.WebSocket.Elapsed"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="SameVersionStartupCounts" separator=".">

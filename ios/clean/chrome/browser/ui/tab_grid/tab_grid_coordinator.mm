@@ -178,7 +178,6 @@
       self.browser->browser_state());
   std::unique_ptr<web::WebState> webState =
       web::WebState::Create(webStateCreateParams);
-  webState->SetWebUsageEnabled(true);
   self.webStateList.InsertWebState(self.webStateList.count(),
                                    std::move(webState));
   [self showTabGridTabAtIndex:self.webStateList.count() - 1];

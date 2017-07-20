@@ -76,6 +76,9 @@ using base::android::ScopedJavaLocalRef;
 
 namespace {
 
+// Always split NetLog events into 10 files.
+const int kNumNetLogEventFiles = 10;
+
 // This class wraps a NetLog that also contains network change events.
 class NetLogWithNetworkChangeEvents {
  public:
@@ -1049,16 +1052,12 @@ void CronetURLRequestContextAdapter::StartNetLogToBoundedFileOnNetworkThread(
   if (net_log_file_observer_)
     return;
 
-  // TODO(eroman): The cronet API passes a directory here. But it should now
-  // just pass a file path.
-  base::FilePath file_path =
-      base::FilePath(dir_path).AppendASCII("netlog.json");
-  if (!base::PathIsWritable(file_path)) {
-    LOG(ERROR) << "Path is not writable: " << file_path.value();
-  }
+  // Filepath for NetLog files must exist and be writable.
+  base::FilePath file_path(dir_path);
+  DCHECK(base::PathIsWritable(file_path));
 
   net_log_file_observer_ = net::FileNetLogObserver::CreateBounded(
-      file_path, size, /*constants=*/nullptr);
+      file_path, size, kNumNetLogEventFiles, /*constants=*/nullptr);
 
   CreateNetLogEntriesForActiveObjects({context_.get()},
                                       net_log_file_observer_.get());

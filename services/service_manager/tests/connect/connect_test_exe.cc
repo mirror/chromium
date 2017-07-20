@@ -33,10 +33,12 @@ class Target : public service_manager::Service,
   void OnBindInterface(const service_manager::BindSourceInfo& source_info,
                        const std::string& interface_name,
                        mojo::ScopedMessagePipeHandle interface_pipe) override {
-    registry_.BindInterface(interface_name, std::move(interface_pipe));
+    registry_.BindInterface(source_info, interface_name,
+                            std::move(interface_pipe));
   }
 
-  void Create(ConnectTestServiceRequest request) {
+  void Create(const service_manager::BindSourceInfo& source_info,
+              ConnectTestServiceRequest request) {
     bindings_.AddBinding(this, std::move(request));
   }
 

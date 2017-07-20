@@ -12,7 +12,6 @@
 #include "components/offline_pages/core/prefetch/prefetch_dispatcher.h"
 #include "components/offline_pages/core/prefetch/prefetch_downloader.h"
 #include "components/offline_pages/core/prefetch/prefetch_gcm_handler.h"
-#include "components/offline_pages/core/prefetch/prefetch_importer.h"
 #include "components/offline_pages/core/prefetch/prefetch_service_impl.h"
 #include "components/offline_pages/core/prefetch/store/prefetch_store.h"
 #include "components/offline_pages/core/prefetch/store/prefetch_store_test_util.h"
@@ -20,7 +19,6 @@
 #include "components/offline_pages/core/prefetch/test_offline_metrics_collector.h"
 #include "components/offline_pages/core/prefetch/test_prefetch_dispatcher.h"
 #include "components/offline_pages/core/prefetch/test_prefetch_gcm_handler.h"
-#include "components/offline_pages/core/prefetch/test_prefetch_importer.h"
 #include "components/offline_pages/core/prefetch/test_prefetch_network_request_factory.h"
 
 namespace offline_pages {
@@ -42,7 +40,6 @@ PrefetchServiceTestTaco::PrefetchServiceTestTaco() {
 
   suggested_articles_observer_ = base::MakeUnique<SuggestedArticlesObserver>();
   prefetch_downloader_ = base::WrapUnique(new PrefetchDownloader(kTestChannel));
-  prefetch_importer_ = base::MakeUnique<TestPrefetchImporter>();
   // This sets up the testing articles as an empty vector, we can ignore the
   // result here.  This allows us to not create a ContentSuggestionsService.
   suggested_articles_observer_->GetTestingArticles();
@@ -92,12 +89,6 @@ void PrefetchServiceTestTaco::SetPrefetchDownloader(
   prefetch_downloader_ = std::move(prefetch_downloader);
 }
 
-void PrefetchServiceTestTaco::SetPrefetchImporter(
-    std::unique_ptr<PrefetchImporter> prefetch_importer) {
-  CHECK(!prefetch_service_);
-  prefetch_importer_ = std::move(prefetch_importer);
-}
-
 void PrefetchServiceTestTaco::CreatePrefetchService() {
   CHECK(metrics_collector_ && dispatcher_ && gcm_handler_ &&
         network_request_factory_ && prefetch_store_sql_ &&
@@ -107,7 +98,7 @@ void PrefetchServiceTestTaco::CreatePrefetchService() {
       std::move(metrics_collector_), std::move(dispatcher_),
       std::move(gcm_handler_), std::move(network_request_factory_),
       std::move(prefetch_store_sql_), std::move(suggested_articles_observer_),
-      std::move(prefetch_downloader_), std::move(prefetch_importer_));
+      std::move(prefetch_downloader_));
 }
 
 std::unique_ptr<PrefetchService>

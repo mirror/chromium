@@ -116,10 +116,6 @@ ACTION_P(SaveToScopedPtr, scoped) { scoped->reset(arg0); }
 }  // namespace
 
 class PasswordManagerTest : public testing::Test {
- public:
-  PasswordManagerTest() : test_url_("https://www.example.com") {}
-  ~PasswordManagerTest() override = default;
-
  protected:
   void SetUp() override {
     store_ = new testing::StrictMock<MockPasswordStore>;
@@ -144,7 +140,8 @@ class PasswordManagerTest : public testing::Test {
     EXPECT_CALL(client_, DidLastPageLoadEncounterSSLErrors())
         .WillRepeatedly(Return(false));
 
-    ON_CALL(client_, GetMainFrameURL()).WillByDefault(ReturnRef(test_url_));
+    ON_CALL(client_, GetMainFrameURL())
+        .WillByDefault(ReturnRef(GURL::EmptyGURL()));
   }
 
   void TearDown() override {
@@ -238,7 +235,6 @@ class PasswordManagerTest : public testing::Test {
 
   void FormSubmitted(const PasswordForm& form) { submitted_form_ = form; }
 
-  const GURL test_url_;
   base::MessageLoop message_loop_;
   scoped_refptr<MockPasswordStore> store_;
   testing::NiceMock<MockPasswordManagerClient> client_;

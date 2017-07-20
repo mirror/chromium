@@ -242,13 +242,6 @@ class DBTracker {
   // DBTracker singleton instance.
   static DBTracker* GetInstance();
 
-  // Returns name of memory-infra dump for |tracked_db|. Can be used to attach
-  // additional info to the database dump, or to properly attribute memory
-  // usage in memory dump providers that also dump |tracked_db|.
-  // Note that |tracked_db| should be a live database instance produced by
-  // OpenDatabase() method or leveldb_env::OpenDB() function.
-  static std::string GetMemoryDumpName(leveldb::DB* tracked_db);
-
   // Provides extra information about a tracked database.
   class TrackedDB : public leveldb::DB {
    public:
@@ -259,8 +252,6 @@ class DBTracker {
   // Opens a database and starts tracking it. As long as the opened database
   // is alive (i.e. its instance is not destroyed) the database is exposed to
   // memory-infra and is enumerated by VisitDatabases() method.
-  // This function is an implementation detail of leveldb_env::OpenDB(), and
-  // has similar guarantees regarding |dbptr| argument.
   leveldb::Status OpenDatabase(const leveldb::Options& options,
                                const std::string& name,
                                TrackedDB** dbptr);
@@ -294,9 +285,7 @@ class DBTracker {
 };
 
 // Opens a database and exposes it to Chrome's tracing (see DBTracker for
-// details). The function guarantees that:
-//   1. |dbptr| is not touched on failure
-//   2. |dbptr| is not NULL on success
+// details). Note that |dbptr| is touched only when function succeeds.
 leveldb::Status OpenDB(const leveldb::Options& options,
                        const std::string& name,
                        std::unique_ptr<leveldb::DB>* dbptr);

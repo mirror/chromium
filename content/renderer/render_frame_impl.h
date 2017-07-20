@@ -48,7 +48,6 @@
 #include "content/public/renderer/render_frame.h"
 #include "content/renderer/frame_blame_context.h"
 #include "content/renderer/media/media_factory.h"
-#include "content/renderer/render_thread_impl.h"
 #include "content/renderer/renderer_webcookiejar_impl.h"
 #include "ipc/ipc_message.h"
 #include "ipc/ipc_platform_file.h"
@@ -663,9 +662,6 @@ class CONTENT_EXPORT RenderFrameImpl
   void DidChangeManifest() override;
   void EnterFullscreen() override;
   void ExitFullscreen() override;
-  void SuddenTerminationDisablerChanged(
-      bool present,
-      blink::WebSuddenTerminationDisablerType disabler_type) override;
   void RegisterProtocolHandler(const blink::WebString& scheme,
                                const blink::WebURL& url,
                                const blink::WebString& title) override;
@@ -816,31 +812,6 @@ class CONTENT_EXPORT RenderFrameImpl
     base::WeakPtr<RenderFrameImpl> render_frame_impl_;
 
     DISALLOW_COPY_AND_ASSIGN(JavaScriptIsolatedWorldRequest);
-  };
-
-  // Similar to base::AutoReset, but skips restoration of the original value if
-  // |this| is already destroyed.
-  template <typename T>
-  class AutoResetMember {
-   public:
-    AutoResetMember(RenderFrameImpl* frame,
-                    T RenderFrameImpl::*member,
-                    T new_value)
-        : weak_frame_(frame->weak_factory_.GetWeakPtr()),
-          scoped_variable_(&(frame->*member)),
-          original_value_(*scoped_variable_) {
-      *scoped_variable_ = new_value;
-    }
-
-    ~AutoResetMember() {
-      if (weak_frame_)
-        *scoped_variable_ = original_value_;
-    }
-
-   private:
-    base::WeakPtr<RenderFrameImpl> weak_frame_;
-    T* scoped_variable_;
-    T original_value_;
   };
 
   typedef std::map<GURL, double> HostZoomLevels;
@@ -1151,9 +1122,6 @@ class CONTENT_EXPORT RenderFrameImpl
 
   void SendUpdateFaviconURL(blink::WebIconURL::Type icon_types_mask);
 
-  void UpdatePeakMemoryStats();
-  void ReportPeakMemoryStats();
-
   // Stores the WebLocalFrame we are associated with.  This is null from the
   // constructor until BindToFrame() is called, and it is null after
   // FrameDetached() is called until destruction (which is asynchronous in the
@@ -1454,8 +1422,6 @@ class CONTENT_EXPORT RenderFrameImpl
 
   // Callbacks that we should call when we get a routing token.
   std::vector<media::RoutingTokenCallback> pending_routing_token_callbacks_;
-
-  RenderThreadImpl::RendererMemoryMetrics peak_memory_metrics_;
 
   base::WeakPtrFactory<RenderFrameImpl> weak_factory_;
 

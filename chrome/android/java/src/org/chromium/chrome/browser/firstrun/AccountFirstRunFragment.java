@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
-import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.signin.AccountSigninView;
 import org.chromium.chrome.browser.signin.SigninAccessPoint;
 import org.chromium.chrome.browser.signin.SigninManager;
@@ -40,9 +39,8 @@ public class AccountFirstRunFragment extends FirstRunPage implements AccountSign
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ProfileDataCache profileDataCache =
-                new ProfileDataCache(getActivity(), Profile.getLastUsedProfile());
-        mView.init(profileDataCache, getProperties().getBoolean(IS_CHILD_ACCOUNT),
+        mView.init(getPageDelegate().getProfileDataCache(),
+                getProperties().getBoolean(IS_CHILD_ACCOUNT),
                 getProperties().getString(FORCE_SIGNIN_ACCOUNT_TO), this,
                 new AccountSigninView.Listener() {
                     @Override

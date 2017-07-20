@@ -114,8 +114,6 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
       device::mojom::VRSubmitFrameClientPtrInfo submit_client_info,
       device::mojom::VRPresentationProviderRequest request);
 
-  void set_is_exiting(bool exiting) { is_exiting_ = exiting; }
-
  private:
   void GvrInit(gvr_context* gvr_api);
   void InitializeRenderer();
@@ -238,7 +236,6 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
   bool ready_to_draw_ = false;
   bool surfaceless_rendering_;
   bool daydream_support_;
-  bool is_exiting_ = false;
 
   std::unique_ptr<VrController> controller_;
 

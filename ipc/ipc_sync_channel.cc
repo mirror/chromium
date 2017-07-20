@@ -599,7 +599,7 @@ bool SyncChannel::Send(Message* message) {
                "line", IPC_MESSAGE_ID_LINE(message->type()));
 #endif
   if (!message->is_sync()) {
-    ChannelProxy::SendInternal(message);
+    ChannelProxy::Send(message);
     return true;
   }
 
@@ -614,7 +614,7 @@ bool SyncChannel::Send(Message* message) {
     return false;
   }
 
-  ChannelProxy::SendInternal(message);
+  ChannelProxy::Send(message);
 
   // Wait for reply, or for any other incoming synchronous messages.
   // |this| might get deleted, so only call static functions at this point.

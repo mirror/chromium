@@ -307,7 +307,8 @@ void TaskViewer::OnBindInterface(
     const service_manager::BindSourceInfo& source_info,
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle interface_pipe) {
-  registry_.BindInterface(interface_name, std::move(interface_pipe));
+  registry_.BindInterface(source_info, interface_name,
+                          std::move(interface_pipe));
 }
 
 void TaskViewer::Launch(uint32_t what, mojom::LaunchMode how) {
@@ -335,7 +336,8 @@ void TaskViewer::Launch(uint32_t what, mojom::LaunchMode how) {
   service_manager->AddListener(std::move(listener));
 }
 
-void TaskViewer::Create(::mash::mojom::LaunchableRequest request) {
+void TaskViewer::Create(const service_manager::BindSourceInfo& source_info,
+                        ::mash::mojom::LaunchableRequest request) {
   bindings_.AddBinding(this, std::move(request));
 }
 

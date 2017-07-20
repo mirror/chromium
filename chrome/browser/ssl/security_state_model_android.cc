@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "chrome/browser/ssl/security_state_model_android.h"
+
 #include "base/logging.h"
 #include "chrome/browser/ssl/security_state_tab_helper.h"
 #include "components/security_state/core/security_state.h"
@@ -9,6 +11,11 @@
 #include "jni/SecurityStateModel_jni.h"
 
 using base::android::JavaParamRef;
+
+// static
+bool RegisterSecurityStateModelAndroid(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
 
 // static
 jint GetSecurityLevelForWebContents(

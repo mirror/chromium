@@ -30,7 +30,7 @@
 #include "build/build_config.h"
 #include "cc/surfaces/surface.h"
 #include "cc/surfaces/surface_manager.h"
-#include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
+#include "components/viz/service/frame_sinks/frame_sink_manager.h"
 #include "content/browser/accessibility/browser_accessibility.h"
 #include "content/browser/accessibility/browser_accessibility_manager.h"
 #include "content/browser/browser_plugin/browser_plugin_guest.h"
@@ -137,13 +137,17 @@ bool ExecuteScriptHelper(RenderFrameHost* render_frame_host,
                          std::unique_ptr<base::Value>* result)
     WARN_UNUSED_RESULT;
 
-// Executes the passed |script| in the frame specified by |render_frame_host|.
-// If |result| is not NULL, stores the value that the evaluation of the script
-// in |result|.  Returns true on success.
+// Executes the passed |original_script| in the frame specified by
+// |render_frame_host|.  If |result| is not NULL, stores the value that the
+// evaluation of the script in |result|.  Returns true on success.
 bool ExecuteScriptHelper(RenderFrameHost* render_frame_host,
-                         const std::string& script,
+                         const std::string& original_script,
                          bool user_gesture,
                          std::unique_ptr<base::Value>* result) {
+  // TODO(jcampan): we should make the domAutomationController not require an
+  //                automation id.
+  std::string script =
+      "window.domAutomationController.setAutomationId(0);" + original_script;
   // TODO(lukasza): Only get messages from the specific |render_frame_host|.
   DOMMessageQueue dom_message_queue(
       WebContents::FromRenderFrameHost(render_frame_host));
@@ -212,8 +216,12 @@ bool ExecuteScriptInIsolatedWorldHelper(RenderFrameHost* render_frame_host,
 
 bool ExecuteScriptInIsolatedWorldHelper(RenderFrameHost* render_frame_host,
                                         const int world_id,
-                                        const std::string& script,
+                                        const std::string& original_script,
                                         std::unique_ptr<base::Value>* result) {
+  // TODO(jcampan): we should make the domAutomationController not require an
+  //                automation id.
+  std::string script =
+      "window.domAutomationController.setAutomationId(0);" + original_script;
   // TODO(lukasza): Only get messages from the specific |render_frame_host|.
   DOMMessageQueue dom_message_queue(
       WebContents::FromRenderFrameHost(render_frame_host));
@@ -1862,7 +1870,7 @@ TestNavigationManager::TestNavigationManager(WebContents* web_contents,
 
 TestNavigationManager::~TestNavigationManager() {
   if (navigation_paused_)
-    handle_->CallResumeForTesting();
+    handle_->Resume();
 }
 
 bool TestNavigationManager::WaitForRequestStart() {
@@ -1919,8 +1927,6 @@ void TestNavigationManager::OnWillProcessResponse() {
   OnNavigationStateChanged();
 }
 
-// TODO(csharrison): Remove CallResumeForTesting method calls in favor of doing
-// it through the throttle.
 bool TestNavigationManager::WaitForDesiredState() {
   // If the desired state has laready been reached, just return.
   if (current_state_ == desired_state_)
@@ -1928,7 +1934,7 @@ bool TestNavigationManager::WaitForDesiredState() {
 
   // Resume the navigation if it was paused.
   if (navigation_paused_)
-    handle_->CallResumeForTesting();
+     handle_->Resume();
 
   // Wait for the desired state if needed.
   if (current_state_ < desired_state_) {
@@ -1954,7 +1960,7 @@ void TestNavigationManager::OnNavigationStateChanged() {
 
   // Otherwise, the navigation should be resumed if it was previously paused.
   if (navigation_paused_)
-    handle_->CallResumeForTesting();
+    handle_->Resume();
 }
 
 bool TestNavigationManager::ShouldMonitorNavigation(NavigationHandle* handle) {

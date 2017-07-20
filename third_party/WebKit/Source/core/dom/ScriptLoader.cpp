@@ -116,7 +116,6 @@ DEFINE_TRACE(ScriptLoader) {
   visitor->Trace(resource_);
   visitor->Trace(pending_script_);
   visitor->Trace(module_tree_client_);
-  visitor->Trace(original_document_);
   PendingScriptClient::Trace(visitor);
 }
 
@@ -303,7 +302,6 @@ bool ScriptLoader::PrepareScript(const TextPosition& script_start_position,
   // document.
   Document& element_document = element_->GetDocument();
   Document* context_document = element_document.ContextDocument();
-  original_document_ = context_document;
   if (!element_document.ExecutingFrame())
     return false;
   if (!context_document || !context_document->ExecutingFrame())
@@ -734,10 +732,6 @@ bool ScriptLoader::FetchClassicScript(
   // "... integrity metadata, ..."
   params.SetIntegrityMetadata(integrity_metadata);
 
-  // "... integrity value, ..."
-  params.MutableResourceRequest().SetFetchIntegrity(
-      element_->IntegrityAttributeValue());
-
   // "... parser state, ..."
   params.SetParserDisposition(parser_state);
 
@@ -921,14 +915,6 @@ bool ScriptLoader::ExecuteScriptBlock(PendingScript* pending_script,
   const bool was_canceled = pending_script->WasCanceled();
   const bool is_external = pending_script->IsExternal();
   pending_script->Dispose();
-
-  // Do not execute module scripts if they are moved between documents.
-  // TODO(hiroshige): Also do not execute classic scripts. crbug.com/721914
-  Document* element_document = &(element_->GetDocument());
-  Document* context_document = element_document->ContextDocument();
-  if (original_document_ != context_document &&
-      script->GetScriptType() == ScriptType::kModule)
-    return false;
 
   // 2. "If the script's script is null, fire an event named error at the
   //     element, and abort these steps."

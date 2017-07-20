@@ -10,11 +10,9 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
-#include "base/strings/utf_string_conversions.h"
 #include "base/values.h"
 #include "content/browser/accessibility/accessibility_tree_formatter_blink.h"
 #include "content/browser/accessibility/browser_accessibility_manager.h"
-#include "ui/accessibility/ax_enums.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/transform.h"
 
@@ -45,83 +43,6 @@ BrowserAccessibility* AccessibilityTreeFormatterBlink::GetChild(
     return node.PlatformGetChild(i);
   else
     return node.InternalGetChild(i);
-}
-
-// TODO(aleventhal) Convert ax enums to friendly strings, e.g. AXCheckedState.
-std::string AccessibilityTreeFormatterBlink::IntAttrToString(
-    const BrowserAccessibility& node,
-    ui::AXIntAttribute attr,
-    int value) const {
-  if (ui::IsNodeIdIntAttribute(attr)) {
-    // Relation
-    BrowserAccessibility* target = node.manager()->GetFromID(value);
-    return target ? ui::ToString(target->GetData().role) : std::string("null");
-  }
-
-  switch (attr) {
-    case ui::AX_ATTR_ARIA_CURRENT_STATE:
-      return ui::ToString(static_cast<ui::AXAriaCurrentState>(value));
-    case ui::AX_ATTR_CHECKED_STATE:
-      return ui::ToString(static_cast<ui::AXCheckedState>(value));
-    case ui::AX_ATTR_DEFAULT_ACTION_VERB:
-      return ui::ToString(static_cast<ui::AXDefaultActionVerb>(value));
-    case ui::AX_ATTR_DESCRIPTION_FROM:
-      return ui::ToString(static_cast<ui::AXDescriptionFrom>(value));
-    case ui::AX_ATTR_INVALID_STATE:
-      return ui::ToString(static_cast<ui::AXInvalidState>(value));
-    case ui::AX_ATTR_NAME_FROM:
-      return ui::ToString(static_cast<ui::AXNameFrom>(value));
-    case ui::AX_ATTR_RESTRICTION:
-      return ui::ToString(static_cast<ui::AXRestriction>(value));
-    case ui::AX_ATTR_SORT_DIRECTION:
-      return ui::ToString(static_cast<ui::AXSortDirection>(value));
-    case ui::AX_ATTR_TEXT_DIRECTION:
-      return ui::ToString(static_cast<ui::AXTextDirection>(value));
-    // No pretty printing necessary for these:
-    case ui::AX_ATTR_ACTIVEDESCENDANT_ID:
-    case ui::AX_ATTR_ARIA_CELL_COLUMN_INDEX:
-    case ui::AX_ATTR_ARIA_CELL_ROW_INDEX:
-    case ui::AX_ATTR_ARIA_COLUMN_COUNT:
-    case ui::AX_ATTR_ARIA_ROW_COUNT:
-    case ui::AX_ATTR_BACKGROUND_COLOR:
-    case ui::AX_ATTR_CHILD_TREE_ID:
-    case ui::AX_ATTR_COLOR:
-    case ui::AX_ATTR_COLOR_VALUE:
-    case ui::AX_ATTR_DETAILS_ID:
-    case ui::AX_ATTR_ERRORMESSAGE_ID:
-    case ui::AX_ATTR_HIERARCHICAL_LEVEL:
-    case ui::AX_ATTR_IN_PAGE_LINK_TARGET_ID:
-    case ui::AX_ATTR_MEMBER_OF_ID:
-    case ui::AX_ATTR_NEXT_ON_LINE_ID:
-    case ui::AX_ATTR_POS_IN_SET:
-    case ui::AX_ATTR_PREVIOUS_ON_LINE_ID:
-    case ui::AX_ATTR_SCROLL_X:
-    case ui::AX_ATTR_SCROLL_X_MAX:
-    case ui::AX_ATTR_SCROLL_X_MIN:
-    case ui::AX_ATTR_SCROLL_Y:
-    case ui::AX_ATTR_SCROLL_Y_MAX:
-    case ui::AX_ATTR_SCROLL_Y_MIN:
-    case ui::AX_ATTR_SET_SIZE:
-    case ui::AX_ATTR_TABLE_CELL_COLUMN_INDEX:
-    case ui::AX_ATTR_TABLE_CELL_COLUMN_SPAN:
-    case ui::AX_ATTR_TABLE_CELL_ROW_INDEX:
-    case ui::AX_ATTR_TABLE_CELL_ROW_SPAN:
-    case ui::AX_ATTR_TABLE_COLUMN_COUNT:
-    case ui::AX_ATTR_TABLE_COLUMN_HEADER_ID:
-    case ui::AX_ATTR_TABLE_COLUMN_INDEX:
-    case ui::AX_ATTR_TABLE_HEADER_ID:
-    case ui::AX_ATTR_TABLE_ROW_COUNT:
-    case ui::AX_ATTR_TABLE_ROW_HEADER_ID:
-    case ui::AX_ATTR_TABLE_ROW_INDEX:
-    case ui::AX_ATTR_TEXT_SEL_END:
-    case ui::AX_ATTR_TEXT_SEL_START:
-    case ui::AX_ATTR_TEXT_STYLE:
-    case ui::AX_INT_ATTRIBUTE_NONE:
-      break;
-  }
-
-  // Just return the number
-  return std::to_string(value);
 }
 
 void AccessibilityTreeFormatterBlink::AddProperties(
@@ -170,7 +91,17 @@ void AccessibilityTreeFormatterBlink::AddProperties(
     auto attr = static_cast<ui::AXIntAttribute>(attr_index);
     if (node.HasIntAttribute(attr)) {
       int value = node.GetIntAttribute(attr);
-      dict->SetString(ui::ToString(attr), IntAttrToString(node, attr, value));
+      if (ui::IsNodeIdIntAttribute(attr)) {
+        BrowserAccessibility* target = node.manager()->GetFromID(value);
+        if (target) {
+          dict->SetString(ui::ToString(attr),
+                          ui::ToString(target->GetData().role));
+        } else {
+          dict->SetString(ui::ToString(attr), "null");
+        }
+      } else {
+        dict->SetInteger(ui::ToString(attr), value);
+      }
     }
   }
 
@@ -300,13 +231,27 @@ base::string16 AccessibilityTreeFormatterBlink::ToString(
        attr_index <= ui::AX_INT_ATTRIBUTE_LAST;
        ++attr_index) {
     auto attr = static_cast<ui::AXIntAttribute>(attr_index);
-    std::string string_value;
-    if (!dict.GetString(ui::ToString(attr), &string_value))
-      continue;
-    WriteAttribute(false,
-                   base::StringPrintf("%s=%s", ui::ToString(attr).c_str(),
-                                      string_value.c_str()),
-                   &line);
+    if (ui::IsNodeIdIntAttribute(attr)) {
+      std::string string_value;
+      if (!dict.GetString(ui::ToString(attr), &string_value))
+        continue;
+      WriteAttribute(false,
+                     base::StringPrintf(
+                         "%s=%s",
+                         ui::ToString(attr).c_str(),
+                         string_value.c_str()),
+                     &line);
+    } else {
+      int int_value;
+      if (!dict.GetInteger(ui::ToString(attr), &int_value))
+        continue;
+      WriteAttribute(false,
+                     base::StringPrintf(
+                         "%s=%d",
+                         ui::ToString(attr).c_str(),
+                         int_value),
+                     &line);
+    }
   }
 
   for (int attr_index = ui::AX_BOOL_ATTRIBUTE_NONE;

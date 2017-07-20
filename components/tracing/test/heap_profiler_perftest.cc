@@ -10,6 +10,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/time/time.h"
 #include "base/trace_event/heap_profiler_stack_frame_deduplicator.h"
+#include "base/trace_event/heap_profiler_string_deduplicator.h"
 #include "base/trace_event/trace_event_argument.h"
 #include "perf_test_helpers.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -124,7 +125,8 @@ class HeapProfilerPerfTest : public testing::Test {
 };
 
 TEST_F(HeapProfilerPerfTest, DeduplicateStackFrames) {
-  StackFrameDeduplicator deduplicator;
+  StringDeduplicator string_deduplicator;
+  StackFrameDeduplicator deduplicator(&string_deduplicator);
 
   auto variations = GetRandomBacktraceVariations();
 
@@ -135,15 +137,21 @@ TEST_F(HeapProfilerPerfTest, DeduplicateStackFrames) {
 }
 
 TEST_F(HeapProfilerPerfTest, AppendStackFramesAsTraceFormat) {
-  StackFrameDeduplicator deduplicator;
+  StringDeduplicator string_deduplicator;
+  StackFrameDeduplicator deduplicator(&string_deduplicator);
 
   auto variations = GetRandomBacktraceVariations();
   InsertRandomBacktraces(&deduplicator, variations, 1000000);
 
+  auto traced_value = base::MakeUnique<TracedValue>();
+  traced_value->BeginArray("nodes");
+  deduplicator.SerializeIncrementally(traced_value.get());
+  traced_value->EndArray();
+
   {
     ScopedStopwatch stopwatch("time_to_append");
     std::string json;
-    deduplicator.AppendAsTraceFormat(&json);
+    traced_value->AppendAsTraceFormat(&json);
   }
 }
 

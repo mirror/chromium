@@ -42,7 +42,7 @@ cr.define('extension_toolbar_tests', function() {
       setup(function() {
         toolbar = document.querySelector('extensions-manager').toolbar;
         mockDelegate = new MockDelegate();
-        toolbar.set('delegate', mockDelegate);
+        toolbar.setDelegate(mockDelegate);
       });
 
       test(assert(TestNames.Layout), function() {

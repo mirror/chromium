@@ -17,7 +17,7 @@
 #import "ios/chrome/browser/ui/alert_coordinator/alert_coordinator.h"
 #import "ios/chrome/browser/ui/authentication/authentication_ui_util.h"
 #import "ios/chrome/browser/ui/authentication/chrome_signin_view_controller.h"
-#import "ios/chrome/browser/ui/commands/application_commands.h"
+#import "ios/chrome/browser/ui/commands/UIKit+ChromeExecuteCommand.h"
 #import "ios/chrome/browser/ui/util/top_view_controller.h"
 #import "ios/public/provider/chrome/browser/chrome_browser_provider.h"
 #import "ios/public/provider/chrome/browser/signin/chrome_identity.h"
@@ -48,14 +48,9 @@ using signin_ui::CompletionCallback;
   ChromeIdentity* signInIdentity_;
   BOOL identityAdded_;
 }
-
-@property(nonatomic, weak, readonly) id<ApplicationSettingsCommands> dispatcher;
-
 @end
 
 @implementation SigninInteractionController
-
-@synthesize dispatcher = dispatcher_;
 
 - (id)init {
   NOTREACHED();
@@ -66,9 +61,7 @@ using signin_ui::CompletionCallback;
             presentingViewController:(UIViewController*)presentingViewController
                isPresentedOnSettings:(BOOL)isPresentedOnSettings
                          accessPoint:(signin_metrics::AccessPoint)accessPoint
-                         promoAction:(signin_metrics::PromoAction)promoAction
-                          dispatcher:
-                              (id<ApplicationSettingsCommands>)dispatcher {
+                         promoAction:(signin_metrics::PromoAction)promoAction {
   self = [super init];
   if (self) {
     DCHECK(browserState);
@@ -78,7 +71,6 @@ using signin_ui::CompletionCallback;
     isPresentedOnSettings_ = isPresentedOnSettings;
     accessPoint_ = accessPoint;
     promoAction_ = promoAction;
-    dispatcher_ = dispatcher;
   }
   return self;
 }
@@ -128,7 +120,7 @@ using signin_ui::CompletionCallback;
     if (!identityInteractionManager_) {
       // Abort sign-in if the ChromeIdentityInteractionManager returned is
       // nil (this can happen when the iOS internal provider is not used).
-      [self runCompletionCallbackWithSuccess:NO showAccountsSettings:NO];
+      [self runCompletionCallbackWithSuccess:NO executeCommand:nil];
       return;
     }
 
@@ -212,13 +204,13 @@ using signin_ui::CompletionCallback;
   if (error) {
     // Filter out cancel and errors handled internally by ChromeIdentity.
     if (!ShouldHandleSigninError(error)) {
-      [self runCompletionCallbackWithSuccess:NO showAccountsSettings:NO];
+      [self runCompletionCallbackWithSuccess:NO executeCommand:nil];
       return;
     }
 
     __weak SigninInteractionController* weakSelf = self;
     ProceduralBlock dismissAction = ^{
-      [weakSelf runCompletionCallbackWithSuccess:NO showAccountsSettings:NO];
+      [weakSelf runCompletionCallbackWithSuccess:NO executeCommand:nil];
     };
 
     alertCoordinator_ = ios_internal::ErrorCoordinator(
@@ -230,7 +222,7 @@ using signin_ui::CompletionCallback;
   if (shouldSignIn) {
     [self showSigninViewControllerWithIdentity:identity identityAdded:YES];
   } else {
-    [self runCompletionCallbackWithSuccess:YES showAccountsSettings:NO];
+    [self runCompletionCallbackWithSuccess:YES executeCommand:nil];
   }
 }
 
@@ -283,8 +275,7 @@ using signin_ui::CompletionCallback;
       isPresentedOnSettings:isPresentedOnSettings_
                 accessPoint:accessPoint_
                 promoAction:promoAction_
-             signInIdentity:signInIdentity
-                 dispatcher:self.dispatcher];
+             signInIdentity:signInIdentity];
   [signinViewController_ setDelegate:self];
   [signinViewController_
       setModalPresentationStyle:UIModalPresentationFormSheet];
@@ -311,18 +302,16 @@ using signin_ui::CompletionCallback;
 }
 
 - (void)dismissSigninViewControllerWithSignInSuccess:(BOOL)success
-                                showAccountsSettings:
-                                    (BOOL)showAccountsSettings {
+                                      executeCommand:
+                                          (GenericChromeCommand*)command {
   DCHECK(signinViewController_);
   if ((isCancelling_ && !isDismissing_) ||
       ![presentingViewController_ presentedViewController]) {
-    [self runCompletionCallbackWithSuccess:success
-                      showAccountsSettings:showAccountsSettings];
+    [self runCompletionCallbackWithSuccess:success executeCommand:command];
     return;
   }
   ProceduralBlock completion = ^{
-    [self runCompletionCallbackWithSuccess:success
-                      showAccountsSettings:showAccountsSettings];
+    [self runCompletionCallbackWithSuccess:success executeCommand:command];
   };
   [self dismissPresentedViewControllersAnimated:YES completion:completion];
 }
@@ -339,8 +328,7 @@ using signin_ui::CompletionCallback;
 
 - (void)didSkipSignIn:(ChromeSigninViewController*)controller {
   DCHECK_EQ(controller, signinViewController_);
-  [self dismissSigninViewControllerWithSignInSuccess:NO
-                                showAccountsSettings:NO];
+  [self dismissSigninViewControllerWithSignInSuccess:NO executeCommand:nil];
 }
 
 - (void)didSignIn:(ChromeSigninViewController*)controller {
@@ -361,28 +349,26 @@ using signin_ui::CompletionCallback;
           ->GetChromeIdentityService()
           ->ForgetIdentity(identity, nil);
     }
-    [self dismissSigninViewControllerWithSignInSuccess:NO
-                                  showAccountsSettings:NO];
+    [self dismissSigninViewControllerWithSignInSuccess:NO executeCommand:nil];
   }
 }
 
 - (void)didFailSignIn:(ChromeSigninViewController*)controller {
   DCHECK_EQ(controller, signinViewController_);
-  [self dismissSigninViewControllerWithSignInSuccess:NO
-                                showAccountsSettings:NO];
+  [self dismissSigninViewControllerWithSignInSuccess:NO executeCommand:nil];
 }
 
 - (void)didAcceptSignIn:(ChromeSigninViewController*)controller
-    showAccountsSettings:(BOOL)showAccountsSettings {
+         executeCommand:(GenericChromeCommand*)command {
   DCHECK_EQ(controller, signinViewController_);
   [self dismissSigninViewControllerWithSignInSuccess:YES
-                                showAccountsSettings:showAccountsSettings];
+                                      executeCommand:command];
 }
 
 #pragma mark - Utility methods
 
 - (void)runCompletionCallbackWithSuccess:(BOOL)success
-                    showAccountsSettings:(BOOL)showAccountsSettings {
+                          executeCommand:(GenericChromeCommand*)command {
   // In order to avoid awkward double transitions, |identityInteractionManager_|
   // is not dismissed when requested (except when canceling). However, in case
   // of errors, |identityInteractionManager_| needs to be directly dismissed,
@@ -393,6 +379,7 @@ using signin_ui::CompletionCallback;
 
   identityInteractionManager_ = nil;
   signinViewController_ = nil;
+  UIViewController* presentingViewController = presentingViewController_;
   // Ensure self is not destroyed in the callbacks.
   SigninInteractionController* strongSelf = self;
   if (completionCallback_) {
@@ -400,8 +387,8 @@ using signin_ui::CompletionCallback;
     completionCallback_ = nil;
   }
   strongSelf = nil;
-  if (showAccountsSettings) {
-    [self.dispatcher showAccountsSettings];
+  if (command) {
+    [presentingViewController chromeExecuteCommand:command];
   }
 }
 

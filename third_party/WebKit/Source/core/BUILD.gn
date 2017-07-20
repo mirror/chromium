@@ -81,7 +81,6 @@ source_set("generated") {
     ":prerequisites",
     "//gin",
     "//skia",
-    "//third_party/WebKit/Source/bindings/core/v8:bindings_core_conditional_features",
     "//third_party/WebKit/Source/bindings/core/v8:bindings_core_v8_generated",
     "//third_party/WebKit/Source/core/inspector:generated",
     "//third_party/WebKit/Source/core/probe:generated",
@@ -200,7 +199,6 @@ component("core") {
     "//third_party/WebKit/Source/core/paint",
     "//third_party/WebKit/Source/core/plugins",
     "//third_party/WebKit/Source/core/probe",
-    "//third_party/WebKit/Source/core/resize_observer",
     "//third_party/WebKit/Source/core/streams",
     "//third_party/WebKit/Source/core/style:rendering",
     "//third_party/WebKit/Source/core/style:svg_style",
@@ -236,7 +234,7 @@ component("core") {
   }
 }
 
-jumbo_source_set("testing") {
+source_set("testing") {
   configs += [
     ":blink_core_pch",
     "//third_party/WebKit/Source:config",
@@ -472,7 +470,6 @@ css_properties("make_core_generated_css_property_apis") {
     "$blink_core_output_dir/css/properties/CSSPropertyAPIAnimationIterationCount.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIAnimationName.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIAnimationPlayState.h",
-    "$blink_core_output_dir/css/properties/CSSPropertyAPIAutoOrString.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIBaselineShift.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIBorderColor.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIBorderImageOutset.h",
@@ -596,33 +593,19 @@ css_properties("make_core_generated_css_property_apis") {
     "$blink_core_output_dir/css/properties/CSSPropertyDescriptor.cpp",
     "$blink_core_output_dir/css/properties/CSSPropertyDescriptor.h",
     "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIAnimation.h",
-    "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIBackgroundPosition.h",
-    "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIBorderBottom.h",
-    "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIBorderColor.h",
     "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIBorderImage.h",
-    "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIBorderLeft.h",
     "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIBorderRadius.h",
-    "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIBorderRight.h",
     "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIBorderSpacing.h",
-    "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIBorderStyle.h",
-    "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIBorderTop.h",
-    "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIBorderWidth.h",
-    "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIColumnRule.h",
     "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIColumns.h",
     "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIFlex.h",
-    "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIFlexFlow.h",
     "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIFont.h",
     "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIFontVariant.h",
-    "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIListStyle.h",
     "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIMargin.h",
     "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIOutline.h",
     "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIOverflow.h",
     "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIOffset.h",
-    "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIPadding.h",
-    "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIScrollPadding.h",
     "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIScrollPaddingBlock.h",
     "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIScrollPaddingInline.h",
-    "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIScrollSnapMargin.h",
     "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIScrollSnapMarginBlock.h",
     "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIScrollSnapMarginInline.h",
     "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPITextDecoration.h",
@@ -633,7 +616,6 @@ css_properties("make_core_generated_css_property_apis") {
     "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIWebkitBorderStart.h",
     "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIWebkitMarginCollapse.h",
     "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIWebkitMaskBoxImage.h",
-    "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIWebkitMaskPosition.h",
     "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIWebkitTextEmphasis.h",
     "$blink_core_output_dir/css/properties/CSSShorthandPropertyAPIWebkitTextStroke.h",
   ]
@@ -1115,7 +1097,8 @@ group("all_generators") {
 }
 
 # Compiles the code generated by the targets above.
-target("jumbo_" + core_link_small_target_type, "core_generated") {
+jumbo_target("core_generated") {
+  target_type = core_link_small_target_type
   sources = bindings_core_v8_files
 
   # Add all sources generated by the targets above.
@@ -1191,7 +1174,7 @@ fuzzer_test("text_resource_decoder_fuzzer") {
   ]
 }
 
-jumbo_source_set("unit_tests") {
+source_set("unit_tests") {
   testonly = true
   sources = [
     "animation/AnimationClockTest.cpp",
@@ -1260,7 +1243,6 @@ jumbo_source_set("unit_tests") {
     "css/threaded/CSSToLengthConversionDataThreadedTest.cpp",
     "css/threaded/FilterOperationResolverThreadedTest.cpp",
     "css/threaded/FontObjectThreadedTest.cpp",
-    "css/threaded/TextRendererThreadedTest.cpp",
     "dom/AttrTest.cpp",
     "dom/CSSSelectorWatchTest.cpp",
     "dom/DOMImplementationTest.cpp",
@@ -1278,6 +1260,7 @@ jumbo_source_set("unit_tests") {
     "dom/NodeTest.cpp",
     "dom/NthIndexCacheTest.cpp",
     "dom/RangeTest.cpp",
+    "dom/ResizeObserverTest.cpp",
     "dom/ScriptModuleResolverImplTest.cpp",
     "dom/ScriptRunnerTest.cpp",
     "dom/ScriptedAnimationControllerTest.cpp",
@@ -1537,7 +1520,6 @@ jumbo_source_set("unit_tests") {
     "paint/TextPainterTest.cpp",
     "paint/TextSelectionRepaintTest.cpp",
     "paint/VideoPainterTest.cpp",
-    "resize_observer/ResizeObserverTest.cpp",
     "scheduler/ActiveConnectionThrottlingTest.cpp",
     "scheduler/FrameThrottlingTest.cpp",
     "scheduler/ThrottlingTest.cpp",

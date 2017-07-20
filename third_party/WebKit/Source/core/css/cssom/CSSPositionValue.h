@@ -12,28 +12,24 @@
 namespace blink {
 
 class CSSNumericValue;
-class ExceptionState;
 
 class CORE_EXPORT CSSPositionValue final : public CSSStyleValue {
   WTF_MAKE_NONCOPYABLE(CSSPositionValue);
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  // Constructor defined in the IDL.
-  static CSSPositionValue* Create(CSSNumericValue* x,
-                                  CSSNumericValue* y,
-                                  ExceptionState&);
+  static CSSPositionValue* Create(const CSSNumericValue* x,
+                                  const CSSNumericValue* y) {
+    return new CSSPositionValue(x, y);
+  }
 
-  // Getters and setters defined in the IDL.
-  CSSNumericValue* x() { return x_.Get(); }
-  CSSNumericValue* y() { return y_.Get(); }
-  void setX(CSSNumericValue* x, ExceptionState&);
-  void setY(CSSNumericValue* x, ExceptionState&);
+  // Bindings require a non const return value.
+  CSSNumericValue* x() const { return const_cast<CSSNumericValue*>(x_.Get()); }
+  CSSNumericValue* y() const { return const_cast<CSSNumericValue*>(y_.Get()); }
 
-  // Internal methods - from CSSStyleValue.
-  StyleValueType GetType() const final { return kPositionType; }
+  StyleValueType GetType() const override { return kPositionType; }
 
-  CSSValue* ToCSSValue() const final;
+  CSSValue* ToCSSValue() const override;
 
   DEFINE_INLINE_VIRTUAL_TRACE() {
     visitor->Trace(x_);
@@ -42,10 +38,11 @@ class CORE_EXPORT CSSPositionValue final : public CSSStyleValue {
   }
 
  protected:
-  CSSPositionValue(CSSNumericValue* x, CSSNumericValue* y) : x_(x), y_(y) {}
+  CSSPositionValue(const CSSNumericValue* x, const CSSNumericValue* y)
+      : x_(x), y_(y) {}
 
-  Member<CSSNumericValue> x_;
-  Member<CSSNumericValue> y_;
+  Member<const CSSNumericValue> x_;
+  Member<const CSSNumericValue> y_;
 };
 
 }  // namespace blink

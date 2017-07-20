@@ -123,6 +123,7 @@ function RPCWrapper() {
       for (var pname in params) {
         msg[pname] = params[pname];
       }
+      domAutomationController.setAutomationId(0);
       domAutomationController.send(JSON.stringify(msg));
     } else if (this_.rpc_available) {
       // Construct the URL for the RPC request.

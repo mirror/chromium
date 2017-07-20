@@ -43,7 +43,8 @@ class MEDIA_MOJO_EXPORT MediaService
                        mojo::ScopedMessagePipeHandle interface_pipe) override;
   bool OnServiceManagerConnectionLost() final;
 
-  void Create(mojom::MediaServiceRequest request);
+  void Create(const service_manager::BindSourceInfo& source_info,
+              mojom::MediaServiceRequest request);
 
   // mojom::MediaService implementation.
   void CreateInterfaceFactory(

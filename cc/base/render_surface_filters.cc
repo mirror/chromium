@@ -12,6 +12,7 @@
 #include "cc/base/filter_operations.h"
 #include "third_party/skia/include/core/SkImageFilter.h"
 #include "third_party/skia/include/effects/SkAlphaThresholdFilter.h"
+#include "third_party/skia/include/effects/SkBlurImageFilter.h"
 #include "third_party/skia/include/effects/SkColorFilterImageFilter.h"
 #include "third_party/skia/include/effects/SkColorMatrixFilter.h"
 #include "third_party/skia/include/effects/SkComposeImageFilter.h"
@@ -194,8 +195,7 @@ sk_sp<SkImageFilter> RenderSurfaceFilters::BuildImageFilter(
         break;
       case FilterOperation::BLUR:
         image_filter = SkBlurImageFilter::Make(op.amount(), op.amount(),
-                                               std::move(image_filter), nullptr,
-                                               op.blur_tile_mode());
+                                               std::move(image_filter));
         break;
       case FilterOperation::DROP_SHADOW:
         image_filter = SkDropShadowImageFilter::Make(

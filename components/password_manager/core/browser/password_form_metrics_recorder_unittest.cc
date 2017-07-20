@@ -22,12 +22,13 @@ namespace {
 constexpr char kTestUrl[] = "https://www.example.com/";
 
 // Create a UkmEntryBuilder with a SourceId that is initialized for kTestUrl.
-scoped_refptr<PasswordFormMetricsRecorder> CreatePasswordFormMetricsRecorder(
-    bool is_main_frame_secure,
+std::unique_ptr<ukm::UkmEntryBuilder> CreateUkmEntryBuilder(
     ukm::TestUkmRecorder* test_ukm_recorder) {
-  return base::MakeRefCounted<PasswordFormMetricsRecorder>(
-      is_main_frame_secure, test_ukm_recorder,
-      test_ukm_recorder->GetNewSourceID(), GURL(kTestUrl));
+  ukm::SourceId source_id = test_ukm_recorder->GetNewSourceID();
+  static_cast<ukm::UkmRecorder*>(test_ukm_recorder)
+      ->UpdateSourceURL(source_id, GURL(kTestUrl));
+  return PasswordFormMetricsRecorder::CreateUkmEntryBuilder(test_ukm_recorder,
+                                                            source_id);
 }
 
 // TODO(crbug.com/738921) Replace this with generalized infrastructure.
@@ -86,8 +87,9 @@ TEST(PasswordFormMetricsRecorder, Generation) {
     // Use a scoped PasswordFromMetricsRecorder because some metrics are recored
     // on destruction.
     {
-      auto recorder = CreatePasswordFormMetricsRecorder(
-          /*is_main_frame_secure*/ true, &test_ukm_recorder);
+      auto recorder = base::MakeRefCounted<PasswordFormMetricsRecorder>(
+          /*is_main_frame_secure*/ true,
+          CreateUkmEntryBuilder(&test_ukm_recorder));
       if (test.generation_available)
         recorder->MarkGenerationAvailable();
       recorder->SetHasGeneratedPassword(test.has_generated_password);
@@ -245,8 +247,8 @@ TEST(PasswordFormMetricsRecorder, Actions) {
     // Use a scoped PasswordFromMetricsRecorder because some metrics are recored
     // on destruction.
     {
-      auto recorder = CreatePasswordFormMetricsRecorder(
-          test.is_main_frame_secure, &test_ukm_recorder);
+      auto recorder = base::MakeRefCounted<PasswordFormMetricsRecorder>(
+          test.is_main_frame_secure, CreateUkmEntryBuilder(&test_ukm_recorder));
 
       recorder->SetManagerAction(test.manager_action);
       if (test.user_action != UserAction::kNone)
@@ -312,8 +314,9 @@ TEST(PasswordFormMetricsRecorder, ActionSequence) {
   // Use a scoped PasswordFromMetricsRecorder because some metrics are recored
   // on destruction.
   {
-    auto recorder = CreatePasswordFormMetricsRecorder(
-        true /*is_main_frame_secure*/, &test_ukm_recorder);
+    auto recorder = base::MakeRefCounted<PasswordFormMetricsRecorder>(
+        /*is_main_frame_secure*/ true,
+        CreateUkmEntryBuilder(&test_ukm_recorder));
     recorder->SetManagerAction(
         PasswordFormMetricsRecorder::kManagerActionAutofilled);
     recorder->SetUserAction(UserAction::kChoosePslMatch);
@@ -357,8 +360,8 @@ TEST(PasswordFormMetricsRecorder, SubmittedFormType) {
     // Use a scoped PasswordFromMetricsRecorder because some metrics are recored
     // on destruction.
     {
-      auto recorder = CreatePasswordFormMetricsRecorder(
-          test.is_main_frame_secure, &test_ukm_recorder);
+      auto recorder = base::MakeRefCounted<PasswordFormMetricsRecorder>(
+          test.is_main_frame_secure, CreateUkmEntryBuilder(&test_ukm_recorder));
       recorder->SetSubmittedFormType(test.form_type);
     }
 
@@ -444,8 +447,9 @@ TEST(PasswordFormMetricsRecorder, RecordPasswordBubbleShown) {
                  << ", display_disposition = " << test.display_disposition);
     ukm::TestUkmRecorder test_ukm_recorder;
     {
-      auto recorder = CreatePasswordFormMetricsRecorder(
-          true /*is_main_frame_secure*/, &test_ukm_recorder);
+      auto recorder = base::MakeRefCounted<PasswordFormMetricsRecorder>(
+          true /*is_main_frame_secure*/,
+          CreateUkmEntryBuilder(&test_ukm_recorder));
       recorder->RecordPasswordBubbleShown(test.credential_source_type,
                                           test.display_disposition);
     }
@@ -501,8 +505,9 @@ TEST(PasswordFormMetricsRecorder, RecordUIDismissalReason) {
                  << ", dismissal_reason = " << test.dismissal_reason);
     ukm::TestUkmRecorder test_ukm_recorder;
     {
-      auto recorder = CreatePasswordFormMetricsRecorder(
-          true /*is_main_frame_secure*/, &test_ukm_recorder);
+      auto recorder = base::MakeRefCounted<PasswordFormMetricsRecorder>(
+          true /*is_main_frame_secure*/,
+          CreateUkmEntryBuilder(&test_ukm_recorder));
       recorder->RecordPasswordBubbleShown(
           metrics_util::CredentialSourceType::kPasswordManager,
           test.display_disposition);
@@ -525,8 +530,9 @@ TEST(PasswordFormMetricsRecorder, SequencesOfBubbles) {
   using BubbleTrigger = PasswordFormMetricsRecorder::BubbleTrigger;
   ukm::TestUkmRecorder test_ukm_recorder;
   {
-    auto recorder = CreatePasswordFormMetricsRecorder(
-        true /*is_main_frame_secure*/, &test_ukm_recorder);
+    auto recorder = base::MakeRefCounted<PasswordFormMetricsRecorder>(
+        true /*is_main_frame_secure*/,
+        CreateUkmEntryBuilder(&test_ukm_recorder));
     // Open and confirm an automatically triggered saving prompt.
     recorder->RecordPasswordBubbleShown(
         metrics_util::CredentialSourceType::kPasswordManager,
@@ -557,30 +563,6 @@ TEST(PasswordFormMetricsRecorder, SequencesOfBubbles) {
   test_ukm_recorder.ExpectMetric(
       *source, "PasswordForm", kUkmUpdatingPromptTrigger,
       static_cast<int64_t>(BubbleTrigger::kPasswordManagerSuggestionManual));
-}
-
-// Verify that one-time actions are only recorded once per life-cycle of a
-// PasswordFormMetricsRecorder.
-TEST(PasswordFormMetricsRecorder, RecordDetailedUserAction) {
-  using DetailedUserAction = PasswordFormMetricsRecorder::DetailedUserAction;
-  const DetailedUserAction kOneTimeAction =
-      DetailedUserAction::kEditedUsernameInBubble;
-  const DetailedUserAction kRepeatedAction = DetailedUserAction::kUnknown;
-  ukm::TestUkmRecorder test_ukm_recorder;
-  {
-    auto recorder = CreatePasswordFormMetricsRecorder(
-        true /*is_main_frame_secure*/, &test_ukm_recorder);
-    recorder->RecordDetailedUserAction(kOneTimeAction);
-    recorder->RecordDetailedUserAction(kOneTimeAction);
-    recorder->RecordDetailedUserAction(kRepeatedAction);
-    recorder->RecordDetailedUserAction(kRepeatedAction);
-  }
-  const ukm::UkmSource* source = test_ukm_recorder.GetSourceForUrl(kTestUrl);
-  ASSERT_TRUE(source);
-  test_ukm_recorder.ExpectMetrics(*source, "PasswordForm", kUkmUserAction,
-                                  {static_cast<int64_t>(kOneTimeAction),
-                                   static_cast<int64_t>(kRepeatedAction),
-                                   static_cast<int64_t>(kRepeatedAction)});
 }
 
 }  // namespace password_manager

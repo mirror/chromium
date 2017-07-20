@@ -11,8 +11,8 @@
 
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
-#include "base/task/cancelable_task_tracker.h"
 #include "base/timer/timer.h"
 #include "net/base/ip_address.h"
 #include "net/log/net_log_source.h"
@@ -111,7 +111,13 @@ class DialServiceImpl : public DialService {
   // DialSocket lives on the IO thread.
   class DialSocket {
    public:
-    explicit DialSocket(DialServiceImpl* dial_service);
+    // TODO(imcheng): Consider writing a DialSocket::Delegate interface that
+    // declares methods for these callbacks, and taking a ptr to the delegate
+    // here.
+    DialSocket(
+        const base::Closure& discovery_request_cb,
+        const base::Callback<void(const DialDeviceData&)>& device_discovered_cb,
+        const base::Closure& on_error_cb);
     ~DialSocket();
 
     // Creates a socket using |net_log| and |net_log_source| and binds it to
@@ -129,11 +135,6 @@ class DialServiceImpl : public DialService {
     bool IsClosed();
 
    private:
-    FRIEND_TEST_ALL_PREFIXES(DialServiceTest, TestNotifyOnError);
-    FRIEND_TEST_ALL_PREFIXES(DialServiceTest, TestOnDeviceDiscovered);
-    FRIEND_TEST_ALL_PREFIXES(DialServiceTest, TestOnDiscoveryRequest);
-    FRIEND_TEST_ALL_PREFIXES(DialServiceTest, TestResponseParsing);
-
     // Checks the result of a socket operation.  The name of the socket
     // operation is given by |operation| and the result of the operation is
     // given by |result|. If the result is an error, closes the socket,
@@ -173,15 +174,25 @@ class DialServiceImpl : public DialService {
     // The source of of the last socket read.
     net::IPEndPoint recv_address_;
 
+    // The callback to be invoked when a discovery request was made.
+    base::Closure discovery_request_cb_;
+
+    // The callback to be invoked when a device has been discovered.
+    base::Callback<void(const DialDeviceData&)> device_discovered_cb_;
+
+    // The callback to be invoked when there is an error with socket operations.
+    base::Closure on_error_cb_;
+
     // Marks whether there is an active write callback.
     bool is_writing_;
 
     // Marks whether there is an active read callback.
     bool is_reading_;
 
-    // Pointer to the DialServiceImpl that owns this socket.
-    DialServiceImpl* const dial_service_;
-
+    FRIEND_TEST_ALL_PREFIXES(DialServiceTest, TestNotifyOnError);
+    FRIEND_TEST_ALL_PREFIXES(DialServiceTest, TestOnDeviceDiscovered);
+    FRIEND_TEST_ALL_PREFIXES(DialServiceTest, TestOnDiscoveryRequest);
+    FRIEND_TEST_ALL_PREFIXES(DialServiceTest, TestResponseParsing);
     DISALLOW_COPY_AND_ASSIGN(DialSocket);
   };
 
@@ -266,7 +277,7 @@ class DialServiceImpl : public DialService {
   // List of observers.
   base::ObserverList<Observer> observer_list_;
 
-  base::CancelableTaskTracker task_tracker_;
+  base::WeakPtrFactory<DialServiceImpl> weak_factory_;
 
   friend class DialServiceTest;
   FRIEND_TEST_ALL_PREFIXES(DialServiceTest, TestSendMultipleRequests);

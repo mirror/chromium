@@ -137,5 +137,5 @@ void DelayNavigationThrottle::OnDelayComplete() {
                                         actual_delay);
   }
 
-  Resume();
+  navigation_handle()->Resume();
 }

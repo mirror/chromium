@@ -34,8 +34,6 @@ class DisplaySynchronizer : public WindowTreeHostManager::Observer,
   void OnWindowTreeHostReusedForDisplay(
       AshWindowTreeHost* window_tree_host,
       const display::Display& display) override;
-  void OnWindowTreeHostsSwappedDisplays(AshWindowTreeHost* host1,
-                                        AshWindowTreeHost* host2) override;
 
   // display::DisplayObserver:
   void OnWillProcessDisplayChanges() override;

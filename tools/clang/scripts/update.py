@@ -490,7 +490,7 @@ def UpdateClang(args):
     EnsureDirExists(LLVM_BOOTSTRAP_DIR)
     os.chdir(LLVM_BOOTSTRAP_DIR)
     bootstrap_args = base_cmake_args + [
-        '-DLLVM_TARGETS_TO_BUILD=X86;ARM',
+        '-DLLVM_TARGETS_TO_BUILD=host',
         '-DCMAKE_INSTALL_PREFIX=' + LLVM_BOOTSTRAP_INSTALL_DIR,
         '-DCMAKE_C_FLAGS=' + ' '.join(cflags),
         '-DCMAKE_CXX_FLAGS=' + ' '.join(cxxflags),
@@ -850,11 +850,6 @@ def main():
   if (use_head_revision or args.llvm_force_head_revision or
       args.force_local_build):
     AddSvnToPathOnWin()
-
-  if use_head_revision:
-    # TODO(hans): Trunk was updated; remove after the next roll.
-    global VERSION
-    VERSION = '6.0.0'
 
   global CLANG_REVISION, PACKAGE_VERSION
   if args.print_revision:

@@ -15,6 +15,7 @@
 #include "net/log/file_net_log_observer.h"
 #include "net/log/net_log_util.h"
 #include "net/url_request/url_request_context_builder.h"
+#include "services/service_manager/public/cpp/bind_source_info.h"
 
 namespace content {
 
@@ -24,26 +25,23 @@ std::unique_ptr<NetworkService> NetworkService::Create() {
 
 class NetworkServiceImpl::MojoNetLog : public net::NetLog {
  public:
-  MojoNetLog() {}
+  MojoNetLog() {
+    const base::CommandLine* command_line =
+        base::CommandLine::ForCurrentProcess();
 
-  // If specified by the command line, stream network events (NetLog) to a
-  // file on disk. This will last for the duration of the process.
-  void ProcessCommandLine(const base::CommandLine& command_line) {
-    if (!command_line.HasSwitch(switches::kLogNetLog))
-      return;
+    // If specified by the command line, stream network events (NetLog) to a
+    // file on disk. This will last for the duration of the process.
+    if (command_line->HasSwitch(switches::kLogNetLog)) {
+      base::FilePath log_path =
+          command_line->GetSwitchValuePath(switches::kLogNetLog);
+      net::NetLogCaptureMode capture_mode =
+          net::NetLogCaptureMode::IncludeCookiesAndCredentials();
 
-    base::FilePath log_path =
-        command_line.GetSwitchValuePath(switches::kLogNetLog);
-
-    // TODO(eroman): Should get capture mode from the command line.
-    net::NetLogCaptureMode capture_mode =
-        net::NetLogCaptureMode::IncludeCookiesAndCredentials();
-
-    file_net_log_observer_ =
-        net::FileNetLogObserver::CreateUnbounded(log_path, nullptr);
-    file_net_log_observer_->StartObserving(this, capture_mode);
+      file_net_log_observer_ =
+          net::FileNetLogObserver::CreateUnbounded(log_path, nullptr);
+      file_net_log_observer_->StartObserving(this, capture_mode);
+    }
   }
-
   ~MojoNetLog() override {
     if (file_net_log_observer_)
       file_net_log_observer_->StopObserving(nullptr, base::OnceClosure());
@@ -64,11 +62,6 @@ NetworkServiceImpl::NetworkServiceImpl(
   if (registry_) {
     registry_->AddInterface<mojom::NetworkService>(
         base::Bind(&NetworkServiceImpl::Create, base::Unretained(this)));
-
-    // Note: The command line switches are only checked when running out of
-    // process, since in in-process mode other code may already be writing to
-    // the destination log file.
-    net_log_->ProcessCommandLine(*base::CommandLine::ForCurrentProcess());
   }
 }
 
@@ -121,10 +114,13 @@ void NetworkServiceImpl::OnBindInterface(
     const service_manager::BindSourceInfo& source_info,
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle interface_pipe) {
-  registry_->BindInterface(interface_name, std::move(interface_pipe));
+  registry_->BindInterface(source_info, interface_name,
+                           std::move(interface_pipe));
 }
 
-void NetworkServiceImpl::Create(mojom::NetworkServiceRequest request) {
+void NetworkServiceImpl::Create(
+    const service_manager::BindSourceInfo& source_info,
+    mojom::NetworkServiceRequest request) {
   DCHECK(!binding_.is_bound());
   binding_.Bind(std::move(request));
 }

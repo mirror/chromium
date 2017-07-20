@@ -28,6 +28,7 @@
 
 #include "net/base/net_errors.h"
 #include "platform/loader/fetch/ResourceRequest.h"
+#include "platform/weborigin/KURL.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebString.h"
 #include "public/platform/WebURL.h"
@@ -43,14 +44,15 @@ constexpr char kThrottledErrorDescription[] =
 
 const char kErrorDomainBlinkInternal[] = "BlinkInternal";
 
-ResourceError ResourceError::CancelledError(const KURL& url) {
-  return WebURLError(url, false, net::ERR_ABORTED);
+ResourceError ResourceError::CancelledError(const String& failing_url) {
+  return WebURLError(KURL(kParsedURLString, failing_url), false,
+                     net::ERR_ABORTED);
 }
 
 ResourceError ResourceError::CancelledDueToAccessCheckError(
-    const KURL& url,
+    const String& failing_url,
     ResourceRequestBlockedReason blocked_reason) {
-  ResourceError error = CancelledError(url);
+  ResourceError error = CancelledError(failing_url);
   error.SetIsAccessCheck(true);
   if (blocked_reason == ResourceRequestBlockedReason::kSubresourceFilter)
     error.SetShouldCollapseInitiator(true);
@@ -58,25 +60,28 @@ ResourceError ResourceError::CancelledDueToAccessCheckError(
 }
 
 ResourceError ResourceError::CancelledDueToAccessCheckError(
-    const KURL& url,
+    const String& failing_url,
     ResourceRequestBlockedReason blocked_reason,
     const String& localized_description) {
-  ResourceError error = CancelledDueToAccessCheckError(url, blocked_reason);
+  ResourceError error =
+      CancelledDueToAccessCheckError(failing_url, blocked_reason);
   error.localized_description_ = localized_description;
   return error;
 }
 
-ResourceError ResourceError::CacheMissError(const KURL& url) {
-  return WebURLError(url, false, net::ERR_CACHE_MISS);
+ResourceError ResourceError::CacheMissError(const String& failing_url) {
+  return WebURLError(KURL(kParsedURLString, failing_url), false,
+                     net::ERR_CACHE_MISS);
 }
 
 ResourceError ResourceError::Copy() const {
   ResourceError error_copy;
   error_copy.domain_ = domain_.IsolatedCopy();
   error_copy.error_code_ = error_code_;
-  error_copy.failing_url_ = failing_url_.Copy();
+  error_copy.failing_url_ = failing_url_.IsolatedCopy();
   error_copy.localized_description_ = localized_description_.IsolatedCopy();
   error_copy.is_null_ = is_null_;
+  error_copy.is_cancellation_ = is_cancellation_;
   error_copy.is_access_check_ = is_access_check_;
   error_copy.is_timeout_ = is_timeout_;
   error_copy.was_ignored_by_handler_ = was_ignored_by_handler_;
@@ -102,6 +107,9 @@ bool ResourceError::Compare(const ResourceError& a, const ResourceError& b) {
   if (a.LocalizedDescription() != b.LocalizedDescription())
     return false;
 
+  if (a.IsCancellation() != b.IsCancellation())
+    return false;
+
   if (a.IsAccessCheck() != b.IsAccessCheck())
     return false;
 
@@ -125,18 +133,15 @@ void ResourceError::InitializeWebURLError(WebURLError* error,
   error->reason = reason;
   error->stale_copy_in_cache = stale_copy_in_cache;
   error->unreachable_url = url;
-  if (reason == net::ERR_TEMPORARILY_THROTTLED) {
+  if (reason == net::ERR_ABORTED) {
+    error->is_cancellation = true;
+  } else if (reason == net::ERR_TEMPORARILY_THROTTLED) {
     error->localized_description =
         WebString::FromASCII(kThrottledErrorDescription);
   } else {
     error->localized_description =
         WebString::FromASCII(net::ErrorToString(reason));
   }
-}
-
-bool ResourceError::IsCancellation() const {
-  return domain_ == String(net::kErrorDomain) &&
-         error_code_ == net::ERR_ABORTED;
 }
 
 bool ResourceError::IsCacheMiss() const {

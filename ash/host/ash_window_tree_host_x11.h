@@ -26,6 +26,7 @@ class ASH_EXPORT AshWindowTreeHostX11 : public AshWindowTreeHost,
 
  private:
   // AshWindowTreeHost:
+  void ToggleFullScreen() override;
   bool ConfineCursorToRootWindow() override;
   void UnConfineCursor() override;
   void SetRootWindowTransformer(

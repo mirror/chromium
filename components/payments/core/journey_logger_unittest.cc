@@ -445,8 +445,7 @@ TEST(JourneyLoggerTest,
       /*requested_phone=*/false, /*requested_name=*/false);
 
   // Simulate that the user had suggestions for all the requested sections.
-  logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_PAYMENT_METHOD, 1,
-                                     /*has_complete_suggestion=*/false);
+  logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_CREDIT_CARDS, 1);
 
   // Simulate that the Payment Request was shown to the user.
   logger.SetShowCalled();
@@ -478,8 +477,7 @@ TEST(JourneyLoggerTest,
       /*requested_phone=*/false, /*requested_name=*/false);
 
   // Simulate that the user had suggestions for all the requested sections.
-  logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_PAYMENT_METHOD, 1,
-                                     /*has_complete_suggestion=*/false);
+  logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_CREDIT_CARDS, 1);
 
   // Simulate that the Payment Request was shown to the user.
   logger.SetShowCalled();
@@ -511,8 +509,7 @@ TEST(JourneyLoggerTest,
       /*requested_phone=*/false, /*requested_name=*/false);
 
   // Simulate that the user had suggestions for all the requested sections.
-  logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_PAYMENT_METHOD, 1,
-                                     /*has_complete_suggestion=*/false);
+  logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_CREDIT_CARDS, 1);
 
   // Simulate that the Payment Request was shown to the user.
   logger.SetShowCalled();
@@ -545,8 +542,7 @@ TEST(JourneyLoggerTest,
       /*requested_phone=*/false, /*requested_name=*/false);
 
   // Simulate that the user had suggestions for all the requested sections.
-  logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_PAYMENT_METHOD, 1,
-                                     /*has_complete_suggestion=*/false);
+  logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_CREDIT_CARDS, 1);
 
   // Simulate that the Payment Request was shown to the user.
   logger.SetShowCalled();
@@ -578,8 +574,7 @@ TEST(JourneyLoggerTest,
       /*requested_phone=*/false, /*requested_name=*/false);
 
   // Simulate that the user had suggestions for none of the requested sections.
-  logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_PAYMENT_METHOD, 0,
-                                     /*has_complete_suggestion=*/false);
+  logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_CREDIT_CARDS, 0);
 
   // Simulate that the Payment Request was shown to the user.
   logger.SetShowCalled();
@@ -612,8 +607,7 @@ TEST(JourneyLoggerTest,
       /*requested_phone=*/false, /*requested_name=*/false);
 
   // Simulate that the user had suggestions for none of the requested sections.
-  logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_PAYMENT_METHOD, 0,
-                                     /*has_complete_suggestion=*/false);
+  logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_CREDIT_CARDS, 0);
 
   // Simulate that the Payment Request was shown to the user.
   logger.SetShowCalled();
@@ -646,8 +640,7 @@ TEST(JourneyLoggerTest,
       /*requested_phone=*/false, /*requested_name=*/false);
 
   // Simulate that the user had suggestions for none of the requested sections.
-  logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_PAYMENT_METHOD, 0,
-                                     /*has_complete_suggestion=*/false);
+  logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_CREDIT_CARDS, 0);
 
   // Simulate that the Payment Request was shown to the user.
   logger.SetShowCalled();
@@ -681,8 +674,7 @@ TEST(JourneyLoggerTest,
       /*requested_phone=*/false, /*requested_name=*/false);
 
   // Simulate that the user had suggestions for none of the requested sections.
-  logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_PAYMENT_METHOD, 0,
-                                     /*has_complete_suggestion=*/false);
+  logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_CREDIT_CARDS, 0);
 
   // Simulate that the Payment Request was shown to the user.
   logger.SetShowCalled();
@@ -701,11 +693,9 @@ TEST(JourneyLoggerTest,
               testing::ContainerEq(base::HistogramTester::CountsMap()));
 }
 
-// Tests that the completion status metrics based on whether the user had
-// suggestions for all the requested sections are logged as correctly.
-TEST(
-    JourneyLoggerTest,
-    RecordJourneyStatsHistograms_NoCompleteSuggestionsForEverything_OtherAborted) {
+// Tests that the UserHadInitialFormOfPayment metric is correctly logged.
+TEST(JourneyLoggerTest,
+     RecordJourneyStatsHistograms_UserHadInitialFormOfPayment) {
   base::HistogramTester histogram_tester;
   JourneyLogger logger(/*is_incognito=*/false, /*url=*/GURL(""),
                        /*ukm_recorder=*/nullptr);
@@ -715,10 +705,8 @@ TEST(
       /*requested_shipping=*/false, /*requested_email=*/false,
       /*requested_phone=*/false, /*requested_name=*/false);
 
-  // Simulate that the user had incomplete suggestions for the requested
-  // sections.
-  logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_PAYMENT_METHOD, 2,
-                                     /*has_complete_suggestion=*/false);
+  // Simulate that the user had an inital form of payment.
+  logger.SetUserHadInitialFormOfPayment();
 
   // Simulate that the Payment Request was shown to the user.
   logger.SetShowCalled();
@@ -727,36 +715,24 @@ TEST(
   logger.SetAborted(JourneyLogger::ABORT_REASON_OTHER);
 
   histogram_tester.ExpectBucketCount(
-      "PaymentRequest.UserDidNotHaveCompleteSuggestionsForEverything."
-      "EffectOnCompletion",
+      "PaymentRequest.UserHadInitialFormOfPayment.EffectOnCompletion",
       JourneyLogger::COMPLETION_STATUS_OTHER_ABORTED, 1);
-
-  EXPECT_THAT(histogram_tester.GetTotalCountsForPrefix(
-                  "PaymentRequest.UserHadCompleteSuggestionsForEverything."
-                  "EffectOnCompletion"),
-              testing::ContainerEq(base::HistogramTester::CountsMap()));
+  histogram_tester.ExpectTotalCount(
+      "PaymentRequest.UserDidNotHaveInitialFormOfPayment.EffectOnCompletion",
+      0);
 }
 
-// Tests that the completion status metrics based on whether the user had
-// suggestions for all the requested sections are logged as correctly.
-TEST(
-    JourneyLoggerTest,
-    RecordJourneyStatsHistograms_NoCompleteSuggestionsForEverything_SomeComplete_OtherAborted) {
+// Tests that the UserDidNotHaveInitialFormOfPayment metric is correctly logged.
+TEST(JourneyLoggerTest,
+     RecordJourneyStatsHistograms_UserDidNotHaveInitialFormOfPayment) {
   base::HistogramTester histogram_tester;
   JourneyLogger logger(/*is_incognito=*/false, /*url=*/GURL(""),
                        /*ukm_recorder=*/nullptr);
 
   // The merchant only requests payment information.
   logger.SetRequestedInformation(
-      /*requested_shipping=*/true, /*requested_email=*/false,
+      /*requested_shipping=*/false, /*requested_email=*/false,
       /*requested_phone=*/false, /*requested_name=*/false);
-
-  // Simulate that the user had incomplete suggestions for one of the requested
-  // sections.
-  logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_PAYMENT_METHOD, 2,
-                                     /*has_complete_suggestion=*/false);
-  logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_SHIPPING_ADDRESS, 1,
-                                     /*has_complete_suggestion=*/true);
 
   // Simulate that the Payment Request was shown to the user.
   logger.SetShowCalled();
@@ -765,53 +741,35 @@ TEST(
   logger.SetAborted(JourneyLogger::ABORT_REASON_OTHER);
 
   histogram_tester.ExpectBucketCount(
-      "PaymentRequest.UserDidNotHaveCompleteSuggestionsForEverything."
-      "EffectOnCompletion",
+      "PaymentRequest.UserDidNotHaveInitialFormOfPayment.EffectOnCompletion",
       JourneyLogger::COMPLETION_STATUS_OTHER_ABORTED, 1);
-
-  EXPECT_THAT(histogram_tester.GetTotalCountsForPrefix(
-                  "PaymentRequest.UserHadCompleteSuggestionsForEverything."
-                  "EffectOnCompletion"),
-              testing::ContainerEq(base::HistogramTester::CountsMap()));
+  histogram_tester.ExpectTotalCount(
+      "PaymentRequest.UserHadInitialFormOfPayment.EffectOnCompletion", 0);
 }
 
-// Tests that the completion status metrics based on whether the user had
-// suggestions for all the requested sections are logged as correctly.
-TEST(
-    JourneyLoggerTest,
-    RecordJourneyStatsHistograms_CompleteSuggestionsForEverything_OtherAborted) {
+// Tests that the InitialFormOfPayment metrics are only logged if the Payment
+// Request is shown.
+TEST(JourneyLoggerTest,
+     RecordJourneyStatsHistograms_InitialFormOfPayment_NotShown) {
   base::HistogramTester histogram_tester;
-  JourneyLogger logger(/*is_incognito=*/false, /*url=*/GURL(""),
-                       /*ukm_recorder=*/nullptr);
+  JourneyLogger logger_with_fop(/*is_incognito=*/false, /*url=*/GURL(""),
+                                /*ukm_recorder=*/nullptr);
+  JourneyLogger logger_without_fop(/*is_incognito=*/false, /*url=*/GURL(""),
+                                   /*ukm_recorder=*/nullptr);
 
-  // The merchant only requests payment information.
-  logger.SetRequestedInformation(
-      /*requested_shipping=*/true, /*requested_email=*/false,
-      /*requested_phone=*/false, /*requested_name=*/false);
+  // Set that the user had an initial form of payment.
+  logger_with_fop.SetUserHadInitialFormOfPayment();
 
-  // Simulate that the user had incomplete suggestions for one of the requested
-  // sections.
-  logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_PAYMENT_METHOD, 2,
-                                     /*has_complete_suggestion=*/true);
-  logger.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_SHIPPING_ADDRESS, 1,
-                                     /*has_complete_suggestion=*/true);
+  // Simulate that the the checkouts are aborted.
+  logger_with_fop.SetAborted(JourneyLogger::ABORT_REASON_OTHER);
+  logger_without_fop.SetAborted(JourneyLogger::ABORT_REASON_ABORTED_BY_USER);
 
-  // Simulate that the Payment Request was shown to the user.
-  logger.SetShowCalled();
-
-  // Simulate that the the checkout is aborted.
-  logger.SetAborted(JourneyLogger::ABORT_REASON_OTHER);
-
-  histogram_tester.ExpectBucketCount(
-      "PaymentRequest.UserHadCompleteSuggestionsForEverything."
-      "EffectOnCompletion",
-      JourneyLogger::COMPLETION_STATUS_OTHER_ABORTED, 1);
-
-  EXPECT_THAT(
-      histogram_tester.GetTotalCountsForPrefix(
-          "PaymentRequest.UserDidNotHaveCompleteSuggestionsForEverything."
-          "EffectOnCompletion"),
-      testing::ContainerEq(base::HistogramTester::CountsMap()));
+  // There should be no logs for the two metrics.
+  histogram_tester.ExpectTotalCount(
+      "PaymentRequest.UserDidNotHaveInitialFormOfPayment.EffectOnCompletion",
+      0);
+  histogram_tester.ExpectTotalCount(
+      "PaymentRequest.UserHadInitialFormOfPayment.EffectOnCompletion", 0);
 }
 
 // Tests that the metrics are logged correctly for two simultaneous Payment
@@ -835,10 +793,8 @@ TEST(JourneyLoggerTest, RecordJourneyStatsHistograms_TwoPaymentRequests) {
 
   logger1.SetCanMakePaymentValue(true);
 
-  logger1.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_PAYMENT_METHOD, 1,
-                                      /*has_complete_suggestion=*/false);
-  logger2.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_PAYMENT_METHOD, 0,
-                                      /*has_complete_suggestion=*/false);
+  logger1.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_CREDIT_CARDS, 1);
+  logger2.SetNumberOfSuggestionsShown(JourneyLogger::SECTION_CREDIT_CARDS, 0);
 
   // Simulate that the user completes one checkout and aborts the other.
   logger1.SetCompleted();

@@ -14,9 +14,7 @@ import javax.annotation.Nullable;
  * method.
  */
 public class PaymentOption implements Completable {
-    // By default a payment option is complete. It is up to the subclass to update this value if the
-    // payment option is not complete.
-    protected boolean mIsComplete = true;
+    protected boolean mIsComplete;
     protected boolean mIsEditable;
     protected String mEditMessage;
     protected String mEditTitle;

@@ -121,8 +121,10 @@ QuicCryptoClientStream::crypto_negotiated_params() const {
   return handshaker_->crypto_negotiated_params();
 }
 
-CryptoMessageParser* QuicCryptoClientStream::crypto_message_parser() {
-  return handshaker_->crypto_message_parser();
+void QuicCryptoClientStream::OnHandshakeMessage(
+    const CryptoHandshakeMessage& message) {
+  QuicCryptoClientStreamBase::OnHandshakeMessage(message);
+  handshaker_->OnHandshakeMessage(message);
 }
 
 bool QuicCryptoClientStream::WasChannelIDSent() const {
@@ -144,8 +146,7 @@ QuicCryptoClientHandshaker::QuicCryptoClientHandshaker(
     ProofVerifyContext* verify_context,
     QuicCryptoClientConfig* crypto_config,
     QuicCryptoClientStream::ProofHandler* proof_handler)
-    : QuicCryptoHandshaker(stream, session),
-      stream_(stream),
+    : stream_(stream),
       session_(session),
       next_state_(STATE_IDLE),
       num_client_hellos_(0),
@@ -176,7 +177,6 @@ QuicCryptoClientHandshaker::~QuicCryptoClientHandshaker() {
 
 void QuicCryptoClientHandshaker::OnHandshakeMessage(
     const CryptoHandshakeMessage& message) {
-  QuicCryptoHandshaker::OnHandshakeMessage(message);
   if (message.tag() == kSCUP) {
     if (!handshake_confirmed()) {
       stream_->CloseConnectionWithDetails(
@@ -240,10 +240,6 @@ bool QuicCryptoClientHandshaker::handshake_confirmed() const {
 const QuicCryptoNegotiatedParameters&
 QuicCryptoClientHandshaker::crypto_negotiated_params() const {
   return *crypto_negotiated_params_;
-}
-
-CryptoMessageParser* QuicCryptoClientHandshaker::crypto_message_parser() {
-  return QuicCryptoHandshaker::crypto_message_parser();
 }
 
 void QuicCryptoClientHandshaker::HandleServerConfigUpdateMessage(
@@ -407,7 +403,7 @@ void QuicCryptoClientHandshaker::DoSendCHLO(
         static_cast<size_t>(max_packet_size - kFramingOverhead));
     next_state_ = STATE_RECV_REJ;
     CryptoUtils::HashHandshakeMessage(out, &chlo_hash_, Perspective::IS_CLIENT);
-    SendHandshakeMessage(out);
+    stream_->SendHandshakeMessage(out);
     return;
   }
 
@@ -441,7 +437,7 @@ void QuicCryptoClientHandshaker::DoSendCHLO(
         *cached->proof_verify_details());
   }
   next_state_ = STATE_RECV_SHLO;
-  SendHandshakeMessage(out);
+  stream_->SendHandshakeMessage(out);
   // Be prepared to decrypt with the new server write key.
   session()->connection()->SetAlternativeDecrypter(
       ENCRYPTION_INITIAL,

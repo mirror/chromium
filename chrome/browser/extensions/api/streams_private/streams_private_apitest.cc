@@ -322,17 +322,10 @@ IN_PROC_BROWSER_TEST_F(StreamsPrivateApiTest, NavigateCrossSite) {
   EXPECT_TRUE(catcher.GetNextResult());
 }
 
-// Flaky on ChromeOS: http://crbug.com/746526.
-#if defined(OS_CHROMEOS)
-#define MAYBE_NavigateToAnAttachment DISABLED_NavigateToAnAttachment
-#else
-#define MAYBE_NavigateToAnAttachment NavigateToAnAttachment
-#endif
-
 // Tests that navigation to an attachment starts a download, even if there is an
 // extension with a file browser handler that can handle the attachment's MIME
 // type.
-IN_PROC_BROWSER_TEST_F(StreamsPrivateApiTest, MAYBE_NavigateToAnAttachment) {
+IN_PROC_BROWSER_TEST_F(StreamsPrivateApiTest, NavigateToAnAttachment) {
   InitializeDownloadSettings();
 
   ASSERT_TRUE(LoadTestExtension()) << message_;
@@ -367,17 +360,10 @@ IN_PROC_BROWSER_TEST_F(StreamsPrivateApiTest, MAYBE_NavigateToAnAttachment) {
   EXPECT_TRUE(catcher.GetNextResult());
 }
 
-// Flaky on ChromeOS: http://crbug.com/746526.
-#if defined(OS_CHROMEOS)
-#define MAYBE_DirectDownload DISABLED_DirectDownload
-#else
-#define MAYBE_DirectDownload DirectDownload
-#endif
-
 // Tests that direct download requests don't get intercepted by
 // StreamsResourceThrottle, even if there is an extension with a file
 // browser handler that can handle the download's MIME type.
-IN_PROC_BROWSER_TEST_F(StreamsPrivateApiTest, MAYBE_DirectDownload) {
+IN_PROC_BROWSER_TEST_F(StreamsPrivateApiTest, DirectDownload) {
   InitializeDownloadSettings();
 
   ASSERT_TRUE(LoadTestExtension()) << message_;

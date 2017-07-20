@@ -18,7 +18,7 @@
 #include "components/viz/common/surfaces/surface_id.h"
 #include "components/viz/common/surfaces/surface_info.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support_client.h"
-#include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
+#include "components/viz/service/frame_sinks/frame_sink_manager.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -74,8 +74,6 @@ class FakeCompositorFrameSinkSupportClient
 
   void WillDrawSurface(const LocalSurfaceId& local_surface_id,
                        const gfx::Rect& damage_rect) override {}
-
-  void OnBeginFramePausedChanged(bool paused) override {}
 
   void clear_returned_resources() { returned_resources_.clear(); }
   const std::vector<cc::ReturnedResource>& returned_resources() {
@@ -172,7 +170,7 @@ class CompositorFrameSinkSupportTest : public testing::Test {
   }
 
  protected:
-  FrameSinkManagerImpl manager_;
+  FrameSinkManager manager_;
   FakeCompositorFrameSinkSupportClient fake_support_client_;
   std::unique_ptr<CompositorFrameSinkSupport> support_;
   cc::FakeExternalBeginFrameSource begin_frame_source_;
@@ -734,7 +732,7 @@ TEST_F(CompositorFrameSinkSupportTest, DuplicateCopyRequest) {
 
   bool called1 = false;
   auto request = cc::CopyOutputRequest::CreateRequest(
-      base::BindOnce(&CopyRequestTestCallback, &called1));
+      base::Bind(&CopyRequestTestCallback, &called1));
   request->set_source(kArbitrarySourceId1);
 
   support_->RequestCopyOfSurface(std::move(request));
@@ -742,7 +740,7 @@ TEST_F(CompositorFrameSinkSupportTest, DuplicateCopyRequest) {
 
   bool called2 = false;
   request = cc::CopyOutputRequest::CreateRequest(
-      base::BindOnce(&CopyRequestTestCallback, &called2));
+      base::Bind(&CopyRequestTestCallback, &called2));
   request->set_source(kArbitrarySourceId2);
 
   support_->RequestCopyOfSurface(std::move(request));
@@ -752,7 +750,7 @@ TEST_F(CompositorFrameSinkSupportTest, DuplicateCopyRequest) {
 
   bool called3 = false;
   request = cc::CopyOutputRequest::CreateRequest(
-      base::BindOnce(&CopyRequestTestCallback, &called3));
+      base::Bind(&CopyRequestTestCallback, &called3));
   request->set_source(kArbitrarySourceId1);
 
   support_->RequestCopyOfSurface(std::move(request));

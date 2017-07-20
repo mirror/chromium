@@ -41,7 +41,7 @@ void AuraDesktopCapturer::Start(webrtc::DesktopCapturer::Callback* callback) {
 
 void AuraDesktopCapturer::CaptureFrame() {
   std::unique_ptr<cc::CopyOutputRequest> request =
-      cc::CopyOutputRequest::CreateBitmapRequest(base::BindOnce(
+      cc::CopyOutputRequest::CreateBitmapRequest(base::Bind(
           &AuraDesktopCapturer::OnFrameCaptured, weak_factory_.GetWeakPtr()));
 
   gfx::Rect window_rect(desktop_window_->bounds().size());

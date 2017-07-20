@@ -25,7 +25,6 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/stringprintf.h"
 #include "base/time/time.h"
-#include "build/build_config.h"
 #include "crypto/sha2.h"
 #include "media/midi/midi_port_info.h"
 #include "media/midi/midi_service.h"
@@ -165,8 +164,6 @@ void SetStringIfNonEmpty(base::DictionaryValue* value,
 MidiManagerAlsa::MidiManagerAlsa(MidiService* service) : MidiManager(service) {}
 
 MidiManagerAlsa::~MidiManagerAlsa() {
-  base::AutoLock lock(lazy_init_member_lock_);
-
   // Extra CHECK to verify all members are already reset.
   CHECK(!in_client_);
   CHECK(!out_client_);
@@ -180,8 +177,6 @@ void MidiManagerAlsa::StartInitialization() {
     NOTREACHED();
     return CompleteInitialization(Result::INITIALIZATION_ERROR);
   }
-
-  base::AutoLock lock(lazy_init_member_lock_);
 
   // Create client handles.
   snd_seq_t* tmp_seq = nullptr;
@@ -301,19 +296,15 @@ void MidiManagerAlsa::StartInitialization() {
 }
 
 void MidiManagerAlsa::Finalize() {
-  {
-    base::AutoLock lock(out_client_lock_);
-    // Close the out client. This will trigger the event thread to stop,
-    // because of SND_SEQ_EVENT_CLIENT_EXIT.
-    out_client_.reset();
-  }
+  // Close the out client. This will trigger the event thread to stop,
+  // because of SND_SEQ_EVENT_CLIENT_EXIT.
+  out_client_.reset();
 
   // Ensure that no task is running any more.
   bool result = service()->task_service()->UnbindInstance();
   CHECK(result);
 
   // Destruct the other stuff we initialized in StartInitialization().
-  base::AutoLock lock(lazy_init_member_lock_);
   udev_monitor_.reset();
   udev_.reset();
   decoder_.reset();
@@ -866,9 +857,6 @@ void MidiManagerAlsa::SendMidiData(MidiManagerClient* client,
       base::AutoLock lock(out_ports_lock_);
       auto it = out_ports_.find(port_index);
       if (it != out_ports_.end()) {
-        base::AutoLock lock(out_client_lock_);
-        if (!out_client_)
-          return;
         snd_seq_ev_set_source(&event, it->second);
         snd_seq_ev_set_subs(&event);
         snd_seq_ev_set_direct(&event);
@@ -1389,10 +1377,8 @@ bool MidiManagerAlsa::Subscribe(uint32_t port_index,
   return true;
 }
 
-#if !defined(OS_CHROMEOS)
 MidiManager* MidiManager::Create(MidiService* service) {
   return new MidiManagerAlsa(service);
 }
-#endif
 
 }  // namespace midi

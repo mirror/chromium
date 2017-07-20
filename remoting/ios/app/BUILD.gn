@@ -2,7 +2,6 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-import("//remoting/build/config/remoting_build.gni")
 import("//remoting/ios/app/remoting_ios_tmpl.gni")
 
 group("all") {
@@ -13,26 +12,11 @@ group("all") {
   ]
 }
 
-foreach(locale, remoting_locales_with_underscores) {
-  bundle_data("locale_${locale}_bundle_data") {
-    sources = [
-      "$root_out_dir/remoting/resources/$locale.lproj/locale.pak",
-    ]
-    outputs = [
-      "{{bundle_resources_dir}}/$locale.lproj/{{source_file_part}}",
-    ]
-    public_deps = [
-      "//remoting/resources:copy_locales",
-    ]
-  }
-}
-
 # source set to be used by both external and internal app.
 source_set("common_source_set") {
   sources = [
     "app_delegate.h",
     "app_delegate.mm",
-    "app_initializer.h",
     "app_view_controller.h",
     "client_connection_view_controller.h",
     "client_connection_view_controller.mm",
@@ -42,8 +26,6 @@ source_set("common_source_set") {
     "first_launch_view_presenter.mm",
     "help_and_feedback.h",
     "help_and_feedback.mm",
-    "help_view_controller.h",
-    "help_view_controller.mm",
     "host_collection_header_view.h",
     "host_collection_header_view.mm",
     "host_collection_view_cell.h",
@@ -62,7 +44,6 @@ source_set("common_source_set") {
     "host_setup_view_controller.mm",
     "host_view_controller.h",
     "host_view_controller.mm",
-    "main.mm",
     "pin_entry_view.h",
     "pin_entry_view.mm",
     "remoting_theme.h",
@@ -93,15 +74,10 @@ source_set("common_source_set") {
     "//remoting/ios/mdc",
     "//remoting/ios/persistence",
     "//remoting/protocol",
-    "//remoting/resources",
     "//ui/base",
     "//ui/gfx",
     "//ui/resources",
   ]
-
-  foreach(locale, remoting_locales_with_underscores) {
-    deps += [ ":locale_${locale}_bundle_data" ]
-  }
 
   public_deps = [
     "//ios/third_party/material_components_ios",
@@ -110,10 +86,10 @@ source_set("common_source_set") {
   configs += [ "//build/config/compiler:enable_arc" ]
 }
 
-source_set("app_source_set") {
+source_set("main") {
   sources = [
-    "app_initializer_chromium.mm",
     "app_view_controller_chromium.mm",
+    "main.mm",
     "remoting_menu_view_controller.h",
     "remoting_menu_view_controller.mm",
   ]
@@ -129,7 +105,7 @@ ios_remoting_app_tmpl("ios_remoting_app") {
   info_plist_path = "resources/Info.plist"
   entitlements_path = "resources/Remoting.entitlements"
   deps = [
-    ":app_source_set",
+    ":main",
     "//remoting/ios/app/resources:launchscreen_assets",
     "//remoting/ios/app/resources:remoting_icons",
   ]

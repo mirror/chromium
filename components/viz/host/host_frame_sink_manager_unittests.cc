@@ -46,7 +46,6 @@ class StubCompositorFrameSinkClient
   void DidReceiveCompositorFrameAck(
       const std::vector<cc::ReturnedResource>& resources) override {}
   void OnBeginFrame(const cc::BeginFrameArgs& begin_frame_args) override {}
-  void OnBeginFramePausedChanged(bool paused) override {}
   void ReclaimResources(
       const std::vector<cc::ReturnedResource>& resources) override {}
 
@@ -58,7 +57,7 @@ class StubCompositorFrameSinkClient
 // A mock implementation of mojom::FrameSinkManager.
 class MockFrameSinkManagerImpl : public FrameSinkManagerImpl {
  public:
-  MockFrameSinkManagerImpl() = default;
+  MockFrameSinkManagerImpl() : FrameSinkManagerImpl(false, nullptr) {}
   ~MockFrameSinkManagerImpl() override = default;
 
   // cc::mojom::FrameSinkManager:

@@ -1,5 +1,5 @@
 (async function(testRunner) {
-  let {page, session, dp} = await testRunner.startBlank(`Tests Input.dispatchKeyEvent method.`);
+  let {page, session, dp} = await testRunner.startBlank(``);
 
   await session.evaluate(`
     window.addEventListener('keydown', logEvent);

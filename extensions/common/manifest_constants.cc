@@ -291,7 +291,6 @@ const char kCannotClaimAllURLsInExtent[] =
     "Cannot claim all URLs in an extent.";
 const char kCannotScriptGallery[] =
     "The extensions gallery cannot be scripted.";
-const char kCannotScriptNtp[] = "The New Tab Page cannot be scripted.";
 const char kCannotScriptSigninPage[] =
     "The sign-in page cannot be scripted.";
 const char kChromeVersionTooLow[] =

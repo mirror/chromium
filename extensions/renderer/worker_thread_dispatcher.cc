@@ -35,6 +35,14 @@ ServiceWorkerData* GetServiceWorkerData() {
   return data;
 }
 
+void SendEventListenersIPC(binding::EventListenersChanged changed,
+                           ScriptContext* context,
+                           const std::string& event_name,
+                           const base::DictionaryValue* filter,
+                           bool was_manual) {
+  // TODO(devlin/lazyboy): Wire this up once extension workers support events.
+}
+
 }  // namespace
 
 WorkerThreadDispatcher::WorkerThreadDispatcher() {}
@@ -60,11 +68,6 @@ ExtensionBindingsSystem* WorkerThreadDispatcher::GetBindingsSystem() {
 // static
 V8SchemaRegistry* WorkerThreadDispatcher::GetV8SchemaRegistry() {
   return GetServiceWorkerData()->v8_schema_registry();
-}
-
-// static
-ScriptContext* WorkerThreadDispatcher::GetScriptContext() {
-  return GetServiceWorkerData()->context();
 }
 
 // static
@@ -161,7 +164,7 @@ void WorkerThreadDispatcher::AddWorkerData(
       // The Unretained below is safe since the IPC message sender outlives the
       // bindings system.
       bindings_system = base::MakeUnique<NativeExtensionBindingsSystem>(
-          std::move(ipc_message_sender));
+          std::move(ipc_message_sender), base::Bind(&SendEventListenersIPC));
     } else {
       bindings_system = base::MakeUnique<JsExtensionBindingsSystem>(
           source_map, std::move(ipc_message_sender));

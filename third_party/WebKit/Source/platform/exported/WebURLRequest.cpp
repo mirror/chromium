@@ -31,7 +31,6 @@
 #include "public/platform/WebURLRequest.h"
 
 #include <memory>
-#include "platform/RuntimeEnabledFeatures.h"
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Noncopyable.h"
@@ -355,14 +354,6 @@ void WebURLRequest::SetFetchRedirectMode(
   return resource_request_->SetFetchRedirectMode(redirect);
 }
 
-WebString WebURLRequest::GetFetchIntegrity() const {
-  return resource_request_->GetFetchIntegrity();
-}
-
-void WebURLRequest::SetFetchIntegrity(const WebString& integrity) {
-  return resource_request_->SetFetchIntegrity(integrity);
-}
-
 WebURLRequest::PreviewsState WebURLRequest::GetPreviewsState() const {
   return resource_request_->GetPreviewsState();
 }
@@ -425,10 +416,6 @@ WebURLRequest::LoadingIPCType WebURLRequest::GetLoadingIPCType() const {
 
 void WebURLRequest::SetNavigationStartTime(double navigation_start_seconds) {
   resource_request_->SetNavigationStartTime(navigation_start_seconds);
-}
-
-bool WebURLRequest::ShouldProcessCORSOutOfBlink() const {
-  return RuntimeEnabledFeatures::OutOfBlinkCORSEnabled();
 }
 
 void WebURLRequest::SetIsSameDocumentNavigation(bool is_same_document) {

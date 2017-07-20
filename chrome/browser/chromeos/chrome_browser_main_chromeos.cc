@@ -553,6 +553,10 @@ void ChromeBrowserMainPartsChromeos::PreEarlyInitialization() {
     chrome::SetChannel(channel);
 #endif
 
+  // Start monitoring OOM kills.
+  memory_kills_monitor_ = base::MakeUnique<memory::MemoryKillsMonitor::Handle>(
+      memory::MemoryKillsMonitor::StartMonitoring());
+
   ChromeBrowserMainPartsLinux::PreEarlyInitialization();
 }
 
@@ -579,9 +583,6 @@ void ChromeBrowserMainPartsChromeos::PostMainMessageLoopStart() {
   }
 
   dbus_services_.reset(new internal::DBusServices(parameters()));
-
-  // Need to be done after LoginState has been initialized in DBusServices().
-  memory_kills_monitor_ = memory::MemoryKillsMonitor::Initialize();
 
   ChromeBrowserMainPartsLinux::PostMainMessageLoopStart();
 }
@@ -633,7 +634,8 @@ void ChromeBrowserMainPartsChromeos::PreMainMessageLoopRun() {
   network_throttling_observer_.reset(
       new NetworkThrottlingObserver(g_browser_process->local_state()));
 
-  arc_service_launcher_ = base::MakeUnique<arc::ArcServiceLauncher>();
+  arc_service_launcher_.reset(new arc::ArcServiceLauncher());
+  arc_service_launcher_->Initialize();
 
   chromeos::ResourceReporter::GetInstance()->StartMonitoring(
       task_manager::TaskManagerInterface::GetTaskManager());
@@ -1111,12 +1113,6 @@ void ChromeBrowserMainPartsChromeos::PostMainMessageLoopRun() {
   // Destroy ArcKioskAppManager after its observers are removed when Ash is
   // closed above.
   arc_kiosk_app_manager_.reset();
-
-  // All ARC related modules should have been shut down by this point, so
-  // destroy ARC.
-  // Specifically, this should be done after Profile destruction run in
-  // ChromeBrowserMainPartsLinux::PostMainMessageLoopRun().
-  arc_service_launcher_.reset();
 
   if (!ash_util::IsRunningInMash())
     AccessibilityManager::Shutdown();

@@ -31,7 +31,6 @@ class IOBuffer;
 class ProxyInfo;
 class SpdyHeaderBlock;
 struct BidirectionalStreamRequestInfo;
-struct NetErrorDetails;
 struct SSLConfig;
 
 // A class to do HTTP/2 bidirectional streaming. Note that at most one each of
@@ -170,11 +169,6 @@ class NET_EXPORT BidirectionalStream
 
   // Gets LoadTimingInfo of this stream.
   void GetLoadTimingInfo(LoadTimingInfo* load_timing_info) const;
-
-  // Get the network error details this stream is encountering.
-  // Fills in |details| if it is available; leaves |details| unchanged if it
-  // is unavailable.
-  void PopulateNetErrorDetails(NetErrorDetails* details);
 
  private:
   // BidirectionalStreamImpl::Delegate implementation:

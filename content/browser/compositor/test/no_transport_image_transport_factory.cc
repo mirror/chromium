@@ -19,7 +19,9 @@
 namespace content {
 
 NoTransportImageTransportFactory::NoTransportImageTransportFactory()
-    : context_factory_(&host_frame_sink_manager_, &frame_sink_manager_) {
+    : frame_sink_manager_(false /* use surface references */, nullptr),
+      context_factory_(&host_frame_sink_manager_,
+                       frame_sink_manager_.frame_sink_manager()) {
   surface_utils::ConnectWithLocalFrameSinkManager(&host_frame_sink_manager_,
                                                   &frame_sink_manager_);
 

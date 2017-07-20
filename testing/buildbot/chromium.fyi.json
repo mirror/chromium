@@ -127,26 +127,6 @@
           "can_use_on_swarming_builders": false
         },
         "test": "vr_common_unittests"
-      },
-      {
-        "args": [
-          "--shared-prefs-file=../../chrome/android/shared_preference_files/test/vr_ddview_skipdon_setupcomplete.json",
-          "--replace-system-package=com.google.vr.vrcore,../../third_party/gvr-android-sdk/test-apks/vr_services/vr_services_current.apk",
-          "--test-filter=WebViewWebVrTest#*"
-        ],
-        "name": "webview_instrumentation_test_apk-marlin-ddview-nougat",
-        "swarming": {
-          "can_use_on_swarming_builders": true,
-          "dimension_sets": [
-            {
-              "android_devices": "1",
-              "device_os": "NMF26U",
-              "device_type": "marlin"
-            }
-          ],
-          "hard_timeout": 960
-        },
-        "test": "webview_instrumentation_test_apk"
       }
     ],
     "instrumentation_tests": [
@@ -10029,8 +10009,11 @@
   },
   "Fuchsia": {
     "additional_compile_targets": [
+      "d8",
       "gl_unittests",
-      "media_unittests"
+      "net_unittests",
+      "skia_unittests",
+      "ui_base_unittests"
     ],
     "gtest_tests": [
       {
@@ -10041,12 +10024,6 @@
           "can_use_on_swarming_builders": false
         },
         "test": "base_unittests"
-      },
-      {
-        "swarming": {
-          "can_use_on_swarming_builders": false
-        },
-        "test": "crypto_unittests"
       },
       {
         "args": [
@@ -10092,37 +10069,16 @@
           "can_use_on_swarming_builders": false
         },
         "test": "mojo_system_unittests"
-      },
-      {
-        "args": [
-          "--test-launcher-filter-file=../../testing/buildbot/filters/fuchsia.net_unittests.filter"
-        ],
-        "swarming": {
-          "can_use_on_swarming_builders": false
-        },
-        "test": "net_unittests"
-      },
-      {
-        "swarming": {
-          "can_use_on_swarming_builders": false
-        },
-        "test": "skia_unittests"
-      },
-      {
-        "args": [
-          "--test-launcher-filter-file=../../testing/buildbot/filters/fuchsia.ui_base_unittests.filter"
-        ],
-        "swarming": {
-          "can_use_on_swarming_builders": false
-        },
-        "test": "ui_base_unittests"
       }
     ]
   },
   "Fuchsia (dbg)": {
     "additional_compile_targets": [
+      "d8",
       "gl_unittests",
-      "media_unittests"
+      "net_unittests",
+      "skia_unittests",
+      "ui_base_unittests"
     ],
     "gtest_tests": [
       {
@@ -10133,12 +10089,6 @@
           "can_use_on_swarming_builders": false
         },
         "test": "base_unittests"
-      },
-      {
-        "swarming": {
-          "can_use_on_swarming_builders": false
-        },
-        "test": "crypto_unittests"
       },
       {
         "args": [
@@ -10184,30 +10134,6 @@
           "can_use_on_swarming_builders": false
         },
         "test": "mojo_system_unittests"
-      },
-      {
-        "args": [
-          "--test-launcher-filter-file=../../testing/buildbot/filters/fuchsia.net_unittests.filter"
-        ],
-        "swarming": {
-          "can_use_on_swarming_builders": false
-        },
-        "test": "net_unittests"
-      },
-      {
-        "swarming": {
-          "can_use_on_swarming_builders": false
-        },
-        "test": "skia_unittests"
-      },
-      {
-        "args": [
-          "--test-launcher-filter-file=../../testing/buildbot/filters/fuchsia.ui_base_unittests.filter"
-        ],
-        "swarming": {
-          "can_use_on_swarming_builders": false
-        },
-        "test": "ui_base_unittests"
       }
     ]
   },

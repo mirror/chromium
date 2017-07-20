@@ -34,7 +34,8 @@ IPC_ENUM_TRAITS_MAX_VALUE(display::HDCPState, display::HDCP_STATE_LAST)
 
 IPC_ENUM_TRAITS_MAX_VALUE(gfx::OverlayTransform, gfx::OVERLAY_TRANSFORM_LAST)
 
-IPC_ENUM_TRAITS_MAX_VALUE(ui::OverlayStatus, ui::OVERLAY_STATUS_LAST)
+IPC_ENUM_TRAITS_MAX_VALUE(ui::OverlayCheckReturn_Params::Status,
+                          ui::OverlayCheckReturn_Params::Status::LAST)
 
 // clang-format off
 IPC_STRUCT_TRAITS_BEGIN(ui::DisplayMode_Params)

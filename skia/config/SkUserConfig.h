@@ -191,6 +191,10 @@ SK_API void SkDebugf_FileLine(const char* file, int line, bool fatal,
 // Remove these as we update our sites.
 //
 
+#ifndef SK_SUPPORT_LEGACY_HQ_SCALER
+#define SK_SUPPORT_LEGACY_HQ_SCALER
+#endif
+
 // Workaround for poor anisotropic mipmap quality,
 // pending Skia ripmap support.
 // (https://bugs.chromium.org/p/skia/issues/detail?id=4863)
@@ -204,10 +208,6 @@ SK_API void SkDebugf_FileLine(const char* file, int line, bool fatal,
 #   define SK_USE_LEGACY_DISTANCE_FIELDS
 #endif
 
-#ifndef SK_SUPPORT_LEGACY_RADIAL_GRADIENT
-#define SK_SUPPORT_LEGACY_RADIAL_GRADIENT
-#endif
-
 #ifndef SK_DISABLE_DEFERRED_PROXIES
 #define SK_DISABLE_DEFERRED_PROXIES
 #endif
@@ -216,8 +216,16 @@ SK_API void SkDebugf_FileLine(const char* file, int line, bool fatal,
 #define SK_SUPPORT_LEGACY_TILED_BITMAPS
 #endif
 
+#ifndef SK_SUPPORT_LEGACY_WIN32_JUMPER
+#define SK_SUPPORT_LEGACY_WIN32_JUMPER
+#endif
+
 #ifndef SK_SUPPORT_NONSTD_BLENDMODES
 #define SK_SUPPORT_NONSTD_BLENDMODES
+#endif
+
+#ifndef SK_SUPPORT_LEGACY_COLORTABLE
+#define SK_SUPPORT_LEGACY_COLORTABLE
 #endif
 
 ///////////////////////// Imported from BUILD.gn and skia_common.gypi

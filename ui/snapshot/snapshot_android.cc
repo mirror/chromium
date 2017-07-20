@@ -38,9 +38,9 @@ bool GrabWindowSnapshot(gfx::NativeWindow window,
 static void MakeAsyncCopyRequest(
     gfx::NativeWindow window,
     const gfx::Rect& source_rect,
-    cc::CopyOutputRequest::CopyOutputRequestCallback callback) {
+    const cc::CopyOutputRequest::CopyOutputRequestCallback& callback) {
   std::unique_ptr<cc::CopyOutputRequest> request =
-      cc::CopyOutputRequest::CreateBitmapRequest(std::move(callback));
+      cc::CopyOutputRequest::CreateBitmapRequest(callback);
 
   float scale = ui::GetScaleFactorForNativeView(window);
   request->set_area(gfx::ScaleToEnclosingRect(source_rect, scale));
@@ -53,10 +53,12 @@ void GrabWindowSnapshotAndScaleAsync(
     const gfx::Size& target_size,
     scoped_refptr<base::TaskRunner> background_task_runner,
     const GrabWindowSnapshotAsyncCallback& callback) {
-  MakeAsyncCopyRequest(
-      window, source_rect,
-      base::BindOnce(&SnapshotAsync::ScaleCopyOutputResult, callback,
-                     target_size, background_task_runner));
+  MakeAsyncCopyRequest(window,
+                       source_rect,
+                       base::Bind(&SnapshotAsync::ScaleCopyOutputResult,
+                                  callback,
+                                  target_size,
+                                  background_task_runner));
 }
 
 void GrabWindowSnapshotAsync(gfx::NativeWindow window,
@@ -64,8 +66,7 @@ void GrabWindowSnapshotAsync(gfx::NativeWindow window,
                              const GrabWindowSnapshotAsyncCallback& callback) {
   MakeAsyncCopyRequest(
       window, source_rect,
-      base::BindOnce(&SnapshotAsync::RunCallbackWithCopyOutputResult,
-                     callback));
+      base::Bind(&SnapshotAsync::RunCallbackWithCopyOutputResult, callback));
 }
 
 void GrabViewSnapshotAsync(gfx::NativeView view,
@@ -73,8 +74,7 @@ void GrabViewSnapshotAsync(gfx::NativeView view,
                            const GrabWindowSnapshotAsyncCallback& callback) {
   MakeAsyncCopyRequest(
       view->GetWindowAndroid(), source_rect,
-      base::BindOnce(&SnapshotAsync::RunCallbackWithCopyOutputResult,
-                     callback));
+      base::Bind(&SnapshotAsync::RunCallbackWithCopyOutputResult, callback));
 }
 
 }  // namespace ui

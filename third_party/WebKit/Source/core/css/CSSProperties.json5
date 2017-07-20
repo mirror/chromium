@@ -559,8 +559,6 @@
     },
     {
       name: "-webkit-locale",
-      api_class: "CSSPropertyAPIAutoOrString",
-      api_methods: ["parseSingleValue"],
       custom_value: true,
       font: true,
       inherited: true,
@@ -2111,22 +2109,6 @@
       default_generated_functions: ["getter", "setter"],
     },
     {
-      name: "scroll-boundary-behavior-x",
-      default_value: "auto",
-      field_template: "keyword",
-      keywords: ["auto", "contain", "none"],
-      type_name: "EScrollBoundaryBehavior",
-      runtime_flag: "CSSScrollBoundaryBehavior",
-    },
-    {
-      name: "scroll-boundary-behavior-y",
-      default_value: "auto",
-      field_template: "keyword",
-      keywords: ["auto", "contain", "none"],
-      type_name: "EScrollBoundaryBehavior",
-      runtime_flag: "CSSScrollBoundaryBehavior",
-    },
-    {
       name: "scroll-snap-type",
       api_class: true,
       api_methods: ["parseSingleValue"],
@@ -2532,6 +2514,12 @@
       field_group: "rare-inherited",
     },
     {
+      name: "text-decoration",
+      api_class: true,
+      longhands: ["text-decoration-line", "text-decoration-style", "text-decoration-color"],
+      use_handlers_for: "CSSPropertyTextDecorationLine",
+    },
+    {
       name: "text-decoration-color",
       api_class: true,
       api_methods: ["parseSingleValue"],
@@ -2548,6 +2536,7 @@
       name: "text-decoration-line",
       api_class: "CSSPropertyAPITextDecorationLine",
       api_methods: ["parseSingleValue"],
+      api_class: "CSSPropertyAPITextDecorationLine",
       converter: "ConvertFlags<TextDecoration>",
       name_for_methods: "TextDecoration",
       runtime_flag: "CSS3TextDecorations",
@@ -3048,8 +3037,6 @@
     },
     {
       name: "-webkit-hyphenate-character",
-      api_class: "CSSPropertyAPIAutoOrString",
-      api_methods: ["parseSingleValue"],
       converter: "ConvertString<CSSValueAuto>",
       inherited: true,
       name_for_methods: "HyphenationString",
@@ -3627,6 +3614,7 @@
       name: "-webkit-text-decorations-in-effect",
       api_class: "CSSPropertyAPITextDecorationLine",
       api_methods: ["parseSingleValue"],
+      api_class: "CSSPropertyAPITextDecorationLine",
       builder_skip: true,
       inherited: true,
     },
@@ -3685,8 +3673,6 @@
     {
       name: "background-position",
       longhands: ["background-position-x", "background-position-y"],
-      api_class: true,
-      api_methods: ["parseShorthand"],
     },
     {
       name: "background-repeat",
@@ -3699,14 +3685,10 @@
     {
       name: "border-bottom",
       longhands: ["border-bottom-width", "border-bottom-style", "border-bottom-color"],
-      api_class: true,
-      api_methods: ["parseShorthand"],
     },
     {
       name: "border-color",
       longhands: ["border-top-color", "border-right-color", "border-bottom-color", "border-left-color"],
-      api_class: true,
-      api_methods: ["parseShorthand"],
     },
     {
       name: "border-image",
@@ -3717,8 +3699,6 @@
     {
       name: "border-left",
       longhands: ["border-left-width", "border-left-style", "border-left-color"],
-      api_class: true,
-      api_methods: ["parseShorthand"],
     },
     {
       name: "border-radius",
@@ -3729,8 +3709,6 @@
     {
       name: "border-right",
       longhands: ["border-right-width", "border-right-style", "border-right-color"],
-      api_class: true,
-      api_methods: ["parseShorthand"],
     },
     {
       name: "border-spacing",
@@ -3741,22 +3719,16 @@
     {
       name: "border-style",
       longhands: ["border-top-style", "border-right-style", "border-bottom-style", "border-left-style"],
-      api_class: true,
-      api_methods: ["parseShorthand"],
       keywords: ["none"],
       typedom_types: ["Image"],
     },
     {
       name: "border-top",
       longhands: ["border-top-width", "border-top-style", "border-top-color"],
-      api_class: true,
-      api_methods: ["parseShorthand"],
     },
     {
       name: "border-width",
       longhands: ["border-top-width", "border-right-width", "border-bottom-width", "border-left-width"],
-      api_class: true,
-      api_methods: ["parseShorthand"],
     },
     {
       name: "flex",
@@ -3767,8 +3739,6 @@
     {
       name: "flex-flow",
       longhands: ["flex-direction", "flex-wrap"],
-      api_class: true,
-      api_methods: ["parseShorthand"],
     },
     {
       name: "font",
@@ -3831,8 +3801,6 @@
     {
       name: "list-style",
       longhands: ["list-style-type", "list-style-position", "list-style-image"],
-      api_class: true,
-      api_methods: ["parseShorthand"],
     },
     {
       name: "margin",
@@ -3863,15 +3831,8 @@
       api_methods: ["parseShorthand"],
     },
     {
-      name: "scroll-boundary-behavior",
-      longhands: ["scroll-boundary-behavior-x", "scroll-boundary-behavior-y"],
-      runtime_flag: "CSSScrollBoundaryBehavior",
-    },
-    {
       name: "padding",
       longhands: ["padding-top", "padding-right", "padding-bottom", "padding-left"],
-      api_class: true,
-      api_methods: ["parseShorthand"],
     },
     {
       name: "page-break-after",
@@ -3888,8 +3849,6 @@
     {
       name: "scroll-padding",
       longhands: ["scroll-padding-top", "scroll-padding-right", "scroll-padding-bottom", "scroll-padding-left"],
-      api_class: true,
-      api_methods: ["parseShorthand"],
       runtime_flag: "CSSScrollSnapPoints",
     },
     {
@@ -3909,8 +3868,6 @@
     {
       name: "scroll-snap-margin",
       longhands: ["scroll-snap-margin-top", "scroll-snap-margin-right", "scroll-snap-margin-bottom", "scroll-snap-margin-left"],
-      api_class: true,
-      api_methods: ["parseShorthand"],
       runtime_flag: "CSSScrollSnapPoints",
     },
     {
@@ -3926,13 +3883,6 @@
       api_class: true,
       api_methods: ["parseShorthand"],
       runtime_flag: "CSSScrollSnapPoints",
-    },
-    {
-      name: "text-decoration",
-      longhands: ["text-decoration-line", "text-decoration-style", "text-decoration-color"],
-      api_class: true,
-      api_methods: ["parseShorthand"],
-      use_handlers_for: "CSSPropertyTextDecorationLine",
     },
     {
       name: "transition",
@@ -3979,8 +3929,6 @@
     {
       name: "column-rule",
       longhands: ["column-rule-width", "column-rule-style", "column-rule-color"],
-      api_class: true,
-      api_methods: ["parseShorthand"],
     },
     {
       name: "columns",
@@ -4007,8 +3955,6 @@
     {
       name: "-webkit-mask-position",
       longhands: ["-webkit-mask-position-x", "-webkit-mask-position-y"],
-      api_class: true,
-      api_methods: ["parseShorthand"],
     },
     {
       name: "-webkit-mask-repeat",

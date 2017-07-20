@@ -69,8 +69,6 @@ const char kExternalClearKeyCrashKeySystem[] =
     "org.chromium.externalclearkey.crash";
 const char kExternalClearKeyVerifyCdmHostTestKeySystem[] =
     "org.chromium.externalclearkey.verifycdmhosttest";
-const char kExternalClearKeyStorageIdTestKeySystem[] =
-    "org.chromium.externalclearkey.storageidtest";
 
 const int64_t kSecondsPerMinute = 60;
 const int64_t kMsPerSecond = 1000;
@@ -237,8 +235,7 @@ void* CreateCdmInstance(int cdm_interface_version,
       key_system_string != kExternalClearKeyOutputProtectionTestKeySystem &&
       key_system_string != kExternalClearKeyPlatformVerificationTestKeySystem &&
       key_system_string != kExternalClearKeyCrashKeySystem &&
-      key_system_string != kExternalClearKeyVerifyCdmHostTestKeySystem &&
-      key_system_string != kExternalClearKeyStorageIdTestKeySystem) {
+      key_system_string != kExternalClearKeyVerifyCdmHostTestKeySystem) {
     DVLOG(1) << "Unsupported key system:" << key_system_string;
     return NULL;
   }
@@ -333,8 +330,7 @@ ClearKeyCdm::ClearKeyCdm(ClearKeyCdmHost* host,
       timer_delay_ms_(kInitialTimerDelayMs),
       renewal_timer_set_(false),
       is_running_output_protection_test_(false),
-      is_running_platform_verification_test_(false),
-      is_running_storage_id_test_(false) {
+      is_running_platform_verification_test_(false) {
 #if defined(CLEAR_KEY_CDM_USE_FAKE_AUDIO_DECODER)
   channel_count_ = 0;
   bits_per_channel_ = 0;
@@ -394,8 +390,6 @@ void ClearKeyCdm::CreateSessionAndGenerateRequest(
     StartPlatformVerificationTest();
   } else if (key_system_ == kExternalClearKeyVerifyCdmHostTestKeySystem) {
     VerifyCdmHostTest();
-  } else if (key_system_ == kExternalClearKeyStorageIdTestKeySystem) {
-    StartStorageIdTest();
   }
 }
 
@@ -799,21 +793,7 @@ void ClearKeyCdm::OnQueryOutputProtectionStatus(
 
 void ClearKeyCdm::OnStorageId(const uint8_t* storage_id,
                               uint32_t storage_id_size) {
-  if (!is_running_storage_id_test_) {
-    NOTREACHED() << "OnStorageId() called unexpectedly.";
-    return;
-  }
-
-  is_running_storage_id_test_ = false;
-
-  // TODO(jrummell): Needs to be updated when Storage ID is actually returned.
-  // See http://crbug.com/478960
-  if (storage_id_size != 0) {
-    OnUnitTestComplete(false);
-    return;
-  }
-
-  OnUnitTestComplete(true);
+  NOTREACHED() << "OnStorageId() called unexpectedly.";
 }
 
 void ClearKeyCdm::OnSessionMessage(const std::string& session_id,
@@ -976,12 +956,6 @@ void ClearKeyCdm::VerifyCdmHostTest() {
   // VerifyCdmHost() should have already been called and test result stored
   // in |g_verify_host_files_result|.
   OnUnitTestComplete(g_verify_host_files_result);
-}
-
-void ClearKeyCdm::StartStorageIdTest() {
-  DVLOG(1) << __func__;
-  is_running_storage_id_test_ = true;
-  host_->RequestStorageId();
 }
 
 }  // namespace media

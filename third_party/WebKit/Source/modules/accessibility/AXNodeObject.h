@@ -100,6 +100,7 @@ class MODULES_EXPORT AXNodeObject : public AXObject {
 
   // Check object role or purpose.
   bool IsAnchor() const final;
+  bool IsControl() const override;
   bool IsControllingVideoElement() const;
   bool IsMultiline() const override;
   bool IsEditable() const override { return IsNativeTextControl(); }
@@ -128,12 +129,16 @@ class MODULES_EXPORT AXNodeObject : public AXObject {
 
   // Check object state.
   bool IsClickable() const final;
+  bool IsEnabled() const override;
   AccessibilityExpanded IsExpanded() const override;
   bool IsModal() const final;
+  bool IsReadOnly() const override;
   bool IsRequired() const final;
-  bool IsControl() const;
-  bool CanSupportAriaReadOnly() const;
-  AXRestriction Restriction() const override;
+
+  // Check whether certain properties can be modified.
+  bool CanSetFocusAttribute() const override;
+  bool CanSetValueAttribute() const override;
+  bool CanSetSelectedAttribute() const override;
 
   // Properties of static elements.
   RGBA32 ColorValue() const final;

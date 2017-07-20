@@ -99,6 +99,8 @@ class TemplateUrlServiceAndroid : public TemplateURLServiceObserver {
       const base::android::JavaParamRef<jobject>& obj,
       const base::android::JavaParamRef<jstring>& jkeyword);
 
+  static bool Register(JNIEnv* env);
+
  private:
   ~TemplateUrlServiceAndroid() override;
 

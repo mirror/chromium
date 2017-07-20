@@ -164,7 +164,7 @@ viz::FrameSinkId AllocateFrameSinkId() {
 #endif
 }
 
-viz::FrameSinkManagerImpl* GetFrameSinkManager() {
+viz::FrameSinkManager* GetFrameSinkManager() {
 #if defined(OS_ANDROID)
   return CompositorImpl::GetFrameSinkManager();
 #else
@@ -221,7 +221,7 @@ void ConnectWithInProcessFrameSinkManager(
     viz::HostFrameSinkManager* host,
     viz::FrameSinkManagerImpl* manager,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
-  // A mojo pointer to |host| which is the FrameSinkManagerImpl's client.
+  // A mojo pointer to |host| which is the FrameSinkManager's client.
   cc::mojom::FrameSinkManagerClientPtr host_mojo;
   // A mojo pointer to |manager|.
   cc::mojom::FrameSinkManagerPtr manager_mojo;

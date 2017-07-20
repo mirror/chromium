@@ -76,7 +76,6 @@
 #include "core/html/HTMLMediaElement.h"
 #include "core/html/HTMLPlugInElement.h"
 #include "core/html/HTMLTextAreaElement.h"
-#include "core/html/PluginDocument.h"
 #include "core/input/ContextMenuAllowedScope.h"
 #include "core/input/EventHandler.h"
 #include "core/input/TouchActionUtil.h"
@@ -2454,6 +2453,20 @@ WebPagePopupImpl* WebViewImpl::GetPagePopup() const {
 
 // TODO(ekaramad):This method is almost duplicated in WebFrameWidgetImpl as
 // well. This code needs to be refactored  (http://crbug.com/629721).
+WebRange WebViewImpl::CaretOrSelectionRange() {
+  const LocalFrame* focused = FocusedLocalFrameInWidget();
+  if (!focused)
+    return WebRange();
+
+  // TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets
+  // needs to be audited.  See http://crbug.com/590369 for more details.
+  focused->GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
+
+  return focused->GetInputMethodController().GetSelectionOffsets();
+}
+
+// TODO(ekaramad):This method is almost duplicated in WebFrameWidgetImpl as
+// well. This code needs to be refactored  (http://crbug.com/629721).
 void WebViewImpl::SetTextDirection(WebTextDirection direction) {
   // The Editor::setBaseWritingDirection() function checks if we can change
   // the text direction of the selected node and updates its DOM "dir"
@@ -2841,12 +2854,8 @@ void WebViewImpl::PropagateZoomFactorToLocalFrameRoots(Frame* frame,
                                                        float zoom_factor) {
   if (frame->IsLocalRoot()) {
     LocalFrame* local_frame = ToLocalFrame(frame);
-    if (Document* document = local_frame->GetDocument()) {
-      if (!document->IsPluginDocument() ||
-          !ToPluginDocument(document)->GetPluginView()) {
-        local_frame->SetPageZoomFactor(zoom_factor);
-      }
-    }
+    if (!local_frame->GetWebPluginContainer())
+      local_frame->SetPageZoomFactor(zoom_factor);
   }
 
   for (Frame* child = frame->Tree().FirstChild(); child;
@@ -3277,7 +3286,7 @@ void WebViewImpl::ResetScrollAndScaleState() {
           ToLocalFrame(GetPage()->MainFrame())->GetDocument()) {
     if (DocumentLoader* loader = document->Loader()) {
       if (HistoryItem* item = loader->GetHistoryItem())
-        item->ClearViewState();
+        item->SetDidSaveScrollOrScaleState(false);
     }
   }
 

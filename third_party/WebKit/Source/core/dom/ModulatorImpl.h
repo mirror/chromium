@@ -18,7 +18,6 @@ class ExecutionContext;
 class ModuleMap;
 class ModuleScriptLoaderRegistry;
 class ModuleTreeLinkerRegistry;
-class ModuleTreeReachedUrlSet;
 class ResourceFetcher;
 class ScriptState;
 class WebTaskRunner;
@@ -52,7 +51,6 @@ class ModulatorImpl final : public Modulator {
   void FetchTreeInternal(const ModuleScriptFetchRequest&,
                          const AncestorList&,
                          ModuleGraphLevel,
-                         ModuleTreeReachedUrlSet*,
                          ModuleTreeClient*) override;
   void FetchSingle(const ModuleScriptFetchRequest&,
                    ModuleGraphLevel,

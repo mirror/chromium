@@ -11,7 +11,6 @@
 
 #include "base/macros.h"
 #include "services/metrics/public/cpp/ukm_recorder.h"
-#include "url/gurl.h"
 
 class GURL;
 
@@ -22,11 +21,7 @@ namespace password_manager {
 // Records a 1 for every page on which a user has modified the content of a
 // password field - regardless of how many password fields a page contains or
 // the user modifies.
-extern const char kUkmUserModifiedPasswordField[];
-
-// UKM that records a ProvisionalSaveFailure in case the password manager cannot
-// offer to save a credential.
-extern const char kUkmProvisionalSaveFailure[];
+constexpr char kUkmUserModifiedPasswordField[] = "UserModifiedPasswordField";
 
 class BrowserSavePasswordProgressLogger;
 
@@ -40,46 +35,35 @@ class PasswordManagerMetricsRecorder {
   // Reasons why the password manager failed to do a provisional saving and
   // therefore did not offer the user to save a password.
   enum ProvisionalSaveFailure {
-    // Password manager is disabled or user is in incognito mode.
     SAVING_DISABLED,
-    // Submitted form contains an empty password.
     EMPTY_PASSWORD,
-    // No PasswordFormManager exists for this form.
     NO_MATCHING_FORM,
-    // FormFetcher of PasswordFormManager is still loading.
     MATCHING_NOT_COMPLETE,
-    // Form is blacklisted for saving. Obsolete since M47.
     FORM_BLACKLISTED,
-    // <unknown purpose>. Obsolete since M48.
     INVALID_FORM,
-    // A Google credential cannot be saved by policy because it is the Chrome
-    // Sync credential and therefore acts as a master password that gives access
-    // to all other credentials on https://passwords.google.com.
     SYNC_CREDENTIAL,
-    // Credentials are not offered to be saved on HTTP pages if a credential is
-    // stored for the corresponding HTTPS page.
     SAVING_ON_HTTP_AFTER_HTTPS,
     MAX_FAILURE_VALUE
   };
 
-  // Records UKM metrics and reports them on destruction. The |source_id| is
-  // (re-)bound to |main_frame_url| shortly before reporting. As such it is
-  // crucial that the |source_id| is never bound to a different URL by another
-  // consumer.  The reason for this late binding is that metrics can be
-  // collected for a WebContents for a long period of time and by the time the
-  // reporting happens, the binding of |source_id| to |main_frame_url| is
-  // already purged.  |ukm_recorder| may be a nullptr, in which case no UKM
-  // metrics are recorded.
-  PasswordManagerMetricsRecorder(ukm::UkmRecorder* ukm_recorder,
-                                 ukm::SourceId source_id,
-                                 const GURL& main_frame_url);
-
-  PasswordManagerMetricsRecorder(
-      PasswordManagerMetricsRecorder&& that) noexcept;
+  // |ukm_entry_builder| is the destination into which UKM metrics are recorded.
+  // It may be nullptr, in which case no UKM metrics are recorded. This should
+  // be created via the static CreateUkmEntryBuilder() method of this class.
+  explicit PasswordManagerMetricsRecorder(
+      std::unique_ptr<ukm::UkmEntryBuilder> ukm_entry_builder);
+  explicit PasswordManagerMetricsRecorder(
+      PasswordManagerMetricsRecorder&& that);
   ~PasswordManagerMetricsRecorder();
 
   PasswordManagerMetricsRecorder& operator=(
       PasswordManagerMetricsRecorder&& that);
+
+  // Creates a UkmEntryBuilder that can be used to record metrics into the event
+  // "PageWithPassword". |source_id| should be bound the the correct URL in the
+  // |ukm_recorder| when this function is called.
+  static std::unique_ptr<ukm::UkmEntryBuilder> CreateUkmEntryBuilder(
+      ukm::UkmRecorder* ukm_recorder,
+      ukm::SourceId source_id);
 
   // Records that the user has modified a password field on a page. This may be
   // called multiple times but a single metric will be reported.
@@ -95,18 +79,6 @@ class PasswordManagerMetricsRecorder {
  private:
   // Records a metric into |ukm_entry_builder_| if it is not nullptr.
   void RecordUkmMetric(const char* metric_name, int64_t value);
-
-  // Recorder to which metrics are sent. Has to outlive this
-  // PasswordManagerMetircsRecorder.
-  ukm::UkmRecorder* ukm_recorder_;
-
-  // A SourceId of |ukm_recorder_|. This id gets bound to |main_frame_url_| on
-  // destruction. It can be shared across multiple metrics recorders as long as
-  // they all bind it to the same URL.
-  ukm::SourceId source_id_;
-
-  // URL for which UKMs are reported.
-  GURL main_frame_url_;
 
   // Records URL keyed metrics (UKMs) and submits them on its destruction. May
   // be a nullptr in which case no recording is expected.

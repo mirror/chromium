@@ -1378,17 +1378,18 @@ EVENT_TYPE(HTTP2_SESSION_SEND_HEADERS)
 //   }
 EVENT_TYPE(HTTP2_SESSION_RECV_HEADERS)
 
-// On sending an HTTP/2 SETTINGS frame without ACK flag.
+// On sending an HTTP/2 SETTINGS frame.
 // The following parameters are attached:
 //   {
-//     "settings": <The list of setting ids and values>,
+//     "settings": <The list of setting id, flags and value>,
 //   }
 EVENT_TYPE(HTTP2_SESSION_SEND_SETTINGS)
 
-// On sending an HTTP/2 SETTINGS frame with ACK flag.
-EVENT_TYPE(HTTP2_SESSION_SEND_SETTINGS_ACK)
-
-// Receipt of an HTTP/2 SETTINGS frame without ACK flag.
+// Receipt of an HTTP/2 SETTINGS frame.
+// The following parameters are attached:
+//   {
+//     "host": <The host-port string>,
+//   }
 EVENT_TYPE(HTTP2_SESSION_RECV_SETTINGS)
 
 // Receipt of an individual HTTP/2 setting.
@@ -1398,9 +1399,6 @@ EVENT_TYPE(HTTP2_SESSION_RECV_SETTINGS)
 //     "value": <The setting value>,
 //   }
 EVENT_TYPE(HTTP2_SESSION_RECV_SETTING)
-
-// Receipt of an HTTP/2 SETTINGS frame with ACK flag.
-EVENT_TYPE(HTTP2_SESSION_RECV_SETTINGS_ACK)
 
 // The receipt of a RST_STREAM frame.
 // The following parameters are attached:
@@ -1470,7 +1468,6 @@ EVENT_TYPE(HTTP2_SESSION_UPDATE_RECV_WINDOW)
 //   {
 //     "header_name": <The header name>,
 //     "header_value": <The header value>,
-//     "error": <Error message>,
 //   }
 EVENT_TYPE(HTTP2_SESSION_RECV_INVALID_HEADER)
 

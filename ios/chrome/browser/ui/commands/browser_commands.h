@@ -40,9 +40,6 @@
 // Opens a new tab as specified by |newTabCommand|.
 - (void)openNewTab:(OpenNewTabCommand*)newTabCommand;
 
-// Prints the currently active tab.
-- (void)printTab;
-
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_COMMANDS_BROWSER_COMMANDS_H_

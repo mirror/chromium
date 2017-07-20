@@ -11,9 +11,9 @@
             assert_unreached("Image should not have loaded.");
         };
 
-        var loadDeviceMemoryImage = function() {
+        var loadDeviceRAMImage = function() {
             var img = new Image();
-            img.src = 'resources/image-checks-for-device-memory.php';
+            img.src = 'resources/image-checks-for-device-ram.php';
             img.onload = t.step_func(unreached);
             img.onerror = t.step_func(function(){ t.done(); });
             document.body.appendChild(img);
@@ -22,7 +22,7 @@
             var img = new Image();
             img.src = 'resources/image-checks-for-rw.php';
             img.onload = t.step_func(unreached);
-            img.onerror = t.step_func(loadDeviceMemoryImage);
+            img.onerror = t.step_func(loadDeviceRAMImage);
             document.body.appendChild(img);
         };
         t.step(function() {

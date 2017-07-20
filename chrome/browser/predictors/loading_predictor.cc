@@ -29,14 +29,18 @@ LoadingPredictor::LoadingPredictor(const LoadingPredictorConfig& config,
           stats_collector_.get(),
           config)),
       observer_(nullptr),
-      weak_factory_(this) {}
+      weak_factory_(this) {
+  preconnect_manager_ = base::MakeUnique<PreconnectManager>(
+      GetWeakPtr(), profile_->GetRequestContext());
+}
 
 LoadingPredictor::~LoadingPredictor() {
-  DCHECK(shutdown_);
+  // Ensure that Shutdown() was called.
+  DCHECK(preconnect_manager_ == nullptr);
 }
 
 void LoadingPredictor::PrepareForPageLoad(const GURL& url, HintOrigin origin) {
-  if (shutdown_ || active_hints_.find(url) != active_hints_.end())
+  if (active_hints_.find(url) != active_hints_.end())
     return;
 
   bool has_prefetch_prediction = false;
@@ -74,16 +78,10 @@ void LoadingPredictor::PrepareForPageLoad(const GURL& url, HintOrigin origin) {
 }
 
 void LoadingPredictor::CancelPageLoadHint(const GURL& url) {
-  if (shutdown_)
-    return;
-
   CancelActiveHint(active_hints_.find(url));
 }
 
 void LoadingPredictor::StartInitialization() {
-  if (shutdown_)
-    return;
-
   resource_prefetch_predictor_->StartInitialization();
 }
 
@@ -96,7 +94,6 @@ ResourcePrefetchPredictor* LoadingPredictor::resource_prefetch_predictor() {
 }
 
 void LoadingPredictor::Shutdown() {
-  DCHECK(!shutdown_);
   resource_prefetch_predictor_->Shutdown();
 
   std::vector<std::unique_ptr<ResourcePrefetcher>> prefetchers;
@@ -109,13 +106,10 @@ void LoadingPredictor::Shutdown() {
       base::BindOnce([](std::vector<std::unique_ptr<ResourcePrefetcher>>,
                         std::unique_ptr<PreconnectManager>) {},
                      std::move(prefetchers), std::move(preconnect_manager_)));
-  shutdown_ = true;
 }
 
 void LoadingPredictor::OnMainFrameRequest(const URLRequestSummary& summary) {
   DCHECK(summary.resource_type == content::RESOURCE_TYPE_MAIN_FRAME);
-  if (shutdown_)
-    return;
 
   const NavigationID& navigation_id = summary.navigation_id;
   CleanupAbandonedHintsAndNavigations(navigation_id);
@@ -125,8 +119,6 @@ void LoadingPredictor::OnMainFrameRequest(const URLRequestSummary& summary) {
 
 void LoadingPredictor::OnMainFrameRedirect(const URLRequestSummary& summary) {
   DCHECK(summary.resource_type == content::RESOURCE_TYPE_MAIN_FRAME);
-  if (shutdown_)
-    return;
 
   auto it = active_navigations_.find(summary.navigation_id);
   if (it != active_navigations_.end()) {
@@ -141,8 +133,6 @@ void LoadingPredictor::OnMainFrameRedirect(const URLRequestSummary& summary) {
 
 void LoadingPredictor::OnMainFrameResponse(const URLRequestSummary& summary) {
   DCHECK(summary.resource_type == content::RESOURCE_TYPE_MAIN_FRAME);
-  if (shutdown_)
-    return;
 
   const NavigationID& navigation_id = summary.navigation_id;
   auto it = active_navigations_.find(navigation_id);
@@ -255,13 +245,12 @@ void LoadingPredictor::ResourcePrefetcherFinished(
     ResourcePrefetcher* prefetcher,
     std::unique_ptr<ResourcePrefetcher::PrefetcherStats> stats) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  if (shutdown_)
-    return;
-
   std::string host = prefetcher->main_frame_url().host();
   auto it = prefetches_.find(host);
+  // Can happen after Shutdown() has been called, since it purges |prefetches_|.
+  if (it == prefetches_.end())
+    return;
 
-  DCHECK(it != prefetches_.end());
   DCHECK(it->second.first.get() == prefetcher);
   stats_collector_->RecordPrefetcherStats(std::move(stats));
 
@@ -282,10 +271,9 @@ void LoadingPredictor::MaybeAddPreconnect(
     const std::vector<GURL>& preconnect_origins,
     const std::vector<GURL>& preresolve_hosts,
     HintOrigin origin) {
-  if (!preconnect_manager_) {
-    preconnect_manager_ = base::MakeUnique<PreconnectManager>(
-        GetWeakPtr(), profile_->GetRequestContext());
-  }
+  // In case Shutdown() has been already called.
+  if (!preconnect_manager_)
+    return;
 
   content::BrowserThread::PostTask(
       content::BrowserThread::IO, FROM_HERE,
@@ -295,6 +283,7 @@ void LoadingPredictor::MaybeAddPreconnect(
 }
 
 void LoadingPredictor::MaybeRemovePreconnect(const GURL& url) {
+  // In case Shutdown() has been already called.
   if (!preconnect_manager_)
     return;
 
@@ -306,9 +295,6 @@ void LoadingPredictor::MaybeRemovePreconnect(const GURL& url) {
 
 void LoadingPredictor::PreconnectFinished(const GURL& url) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  if (shutdown_)
-    return;
-
   NOTIMPLEMENTED();
 }
 

@@ -4,7 +4,6 @@
 
 #include <string>
 
-#include "base/command_line.h"
 #include "base/macros.h"
 #include "base/path_service.h"
 #include "chrome/browser/chrome_notification_types.h"
@@ -68,9 +67,6 @@ class BootstrapTest : public OobeBaseTest {
 
     base::CommandLine::ForCurrentProcess()->AppendSwitch(
         proximity_auth::switches::kForceLoadEasyUnlockAppInTests);
-
-    base::CommandLine::ForCurrentProcess()->AppendSwitch(
-        proximity_auth::switches::kDisableBluetoothLowEnergyDiscovery);
 
     const GURL& server_url = embedded_test_server()->base_url();
     GURL::Replacements replace_host;

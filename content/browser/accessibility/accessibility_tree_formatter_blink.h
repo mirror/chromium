@@ -27,9 +27,6 @@ class CONTENT_EXPORT AccessibilityTreeFormatterBlink
                                  uint32_t i) const override;
   void AddProperties(const BrowserAccessibility& node,
                      base::DictionaryValue* dict) override;
-  std::string IntAttrToString(const BrowserAccessibility& node,
-                              ui::AXIntAttribute attr,
-                              int value) const;
   base::string16 ToString(const base::DictionaryValue& node) override;
 };
 

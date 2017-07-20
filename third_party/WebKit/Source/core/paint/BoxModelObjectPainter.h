@@ -30,23 +30,15 @@ class BoxModelObjectPainter : public BoxPainterBase {
   BoxModelObjectPainter(const LayoutBoxModelObject& box_model)
       : box_model_(box_model) {}
 
-  void PaintFillLayers(const PaintInfo&,
-                       const Color&,
-                       const FillLayer&,
-                       const LayoutRect&,
-                       BackgroundImageGeometry&,
-                       BackgroundBleedAvoidance = kBackgroundBleedNone,
-                       SkBlendMode = SkBlendMode::kSrcOver);
-
   void PaintFillLayer(const PaintInfo&,
                       const Color&,
                       const FillLayer&,
                       const LayoutRect&,
                       BackgroundBleedAvoidance,
                       BackgroundImageGeometry&,
-                      SkBlendMode = SkBlendMode::kSrcOver,
                       const InlineFlowBox* = nullptr,
-                      const LayoutSize& = LayoutSize());
+                      const LayoutSize& = LayoutSize(),
+                      SkBlendMode = SkBlendMode::kSrcOver);
 
   static bool IsPaintingBackgroundOfPaintContainerIntoScrollingContentsLayer(
       const LayoutBoxModelObject*,

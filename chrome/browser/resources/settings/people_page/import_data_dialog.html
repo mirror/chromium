@@ -35,10 +35,9 @@
         width: 100%;
       }
     </style>
-    <dialog is="cr-dialog" id="dialog" close-text="$i18n{close}"
-        ignore-popstate>
-      <div class="title" slot="title">$i18n{importTitle}</div>
-      <div class="body" slot="body">
+    <dialog is="cr-dialog" id="dialog" close-text="$i18n{close}" ignore-popstate>
+      <div class="title">$i18n{importTitle}</div>
+      <div class="body">
         <div hidden$="[[!hasImportStatus_(
             importStatusEnum_.SUCCEEDED, importStatus_)]]">
           <iron-icon id="successIcon" icon="settings:check-circle">
@@ -92,7 +91,7 @@
           </settings-checkbox>
         </div>
       </div>
-      <div class="button-container" slot="button-container">
+      <div class="button-container">
         <paper-spinner
             active="[[hasImportStatus_(
                 importStatusEnum_.IN_PROGRESS, importStatus_)]]"
@@ -124,4 +123,4 @@
     </dialog>
   </template>
   <script src="import_data_dialog.js"></script>
-:</dom-module>
+</dom-module>

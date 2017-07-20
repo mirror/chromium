@@ -62,8 +62,8 @@ class KeyboardBrightnessView : public ShellObserver, public views::View {
   void SetKeyboardBrightnessPercent(double percent);
 
   // ShellObserver:
-  void OnTabletModeStarted() override;
-  void OnTabletModeEnded() override;
+  void OnMaximizeModeStarted() override;
+  void OnMaximizeModeEnded() override;
 
  private:
   // views::View:
@@ -102,11 +102,11 @@ void KeyboardBrightnessView::SetKeyboardBrightnessPercent(double percent) {
   slider_->SetValue(static_cast<float>(percent / 100.0));
 }
 
-void KeyboardBrightnessView::OnTabletModeStarted() {
+void KeyboardBrightnessView::OnMaximizeModeStarted() {
   SetVisible(true);
 }
 
-void KeyboardBrightnessView::OnTabletModeEnded() {
+void KeyboardBrightnessView::OnMaximizeModeEnded() {
   SetVisible(false);
 }
 

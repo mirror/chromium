@@ -7,8 +7,8 @@
 #include "cc/scheduler/begin_frame_source.h"
 #include "cc/test/begin_frame_source_test.h"
 #include "cc/test/fake_external_begin_frame_source.h"
+#include "components/viz/service/frame_sinks/frame_sink_manager.h"
 #include "components/viz/service/frame_sinks/frame_sink_manager_client.h"
-#include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace viz {
@@ -24,7 +24,7 @@ class FakeFrameSinkManagerClient : public FrameSinkManagerClient {
       : source_(nullptr), manager_(nullptr), frame_sink_id_(frame_sink_id) {}
 
   FakeFrameSinkManagerClient(const FrameSinkId& frame_sink_id,
-                             FrameSinkManagerImpl* manager)
+                             FrameSinkManager* manager)
       : source_(nullptr), manager_(nullptr), frame_sink_id_(frame_sink_id) {
     DCHECK(manager);
     Register(manager);
@@ -40,7 +40,7 @@ class FakeFrameSinkManagerClient : public FrameSinkManagerClient {
   cc::BeginFrameSource* source() { return source_; }
   const FrameSinkId& frame_sink_id() { return frame_sink_id_; }
 
-  void Register(FrameSinkManagerImpl* manager) {
+  void Register(FrameSinkManager* manager) {
     EXPECT_EQ(nullptr, manager_);
     manager_ = manager;
     manager_->RegisterFrameSinkManagerClient(frame_sink_id_, this);
@@ -60,7 +60,7 @@ class FakeFrameSinkManagerClient : public FrameSinkManagerClient {
 
  private:
   cc::BeginFrameSource* source_;
-  FrameSinkManagerImpl* manager_;
+  FrameSinkManager* manager_;
   FrameSinkId frame_sink_id_;
 };
 
@@ -71,7 +71,7 @@ class FrameSinkManagerTest : public testing::Test {
   ~FrameSinkManagerTest() override = default;
 
  protected:
-  FrameSinkManagerImpl manager_;
+  FrameSinkManager manager_;
 };
 
 TEST_F(FrameSinkManagerTest, SingleClients) {

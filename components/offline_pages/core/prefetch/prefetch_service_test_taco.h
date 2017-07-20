@@ -16,7 +16,6 @@ class OfflineMetricsCollector;
 class PrefetchDispatcher;
 class PrefetchDownloader;
 class PrefetchGCMHandler;
-class PrefetchImporter;
 class PrefetchService;
 class PrefetchNetworkRequestFactory;
 class PrefetchStore;
@@ -52,7 +51,6 @@ class PrefetchServiceTestTaco {
       std::unique_ptr<SuggestedArticlesObserver> suggested_articles_observer);
   void SetPrefetchDownloader(
       std::unique_ptr<PrefetchDownloader> prefetch_downloader);
-  void SetPrefetchImporter(std::unique_ptr<PrefetchImporter> prefetch_importer);
 
   // Creates and caches an instance of PrefetchService, using default or
   // overridden test dependencies.
@@ -77,7 +75,6 @@ class PrefetchServiceTestTaco {
   std::unique_ptr<PrefetchStore> prefetch_store_sql_;
   std::unique_ptr<SuggestedArticlesObserver> suggested_articles_observer_;
   std::unique_ptr<PrefetchDownloader> prefetch_downloader_;
-  std::unique_ptr<PrefetchImporter> prefetch_importer_;
 
   std::unique_ptr<PrefetchService> prefetch_service_;
 };

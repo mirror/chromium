@@ -453,20 +453,12 @@ cr.define('print_preview', function() {
     },
 
     /** Requests that the current pending print request be cancelled. */
-    cancelPendingPrintRequest: function() {
+    startCancelPendingPrint: function() {
       chrome.send('cancelPendingPrintRequest');
     },
 
-    /**
-     * Sends the app state to be saved in the sticky settings.
-     * @param {string} appStateStr JSON string of the app state to persist
-     */
-    saveAppState: function(appStateStr) {
-      chrome.send('saveAppState', [appStateStr]);
-    },
-
     /** Shows the system's native printing dialog. */
-    showSystemDialog: function() {
+    startShowSystemDialog: function() {
       assert(!cr.isWindows);
       chrome.send('showSystemDialog');
     },
@@ -478,14 +470,14 @@ cr.define('print_preview', function() {
      * @param {boolean} isCancel whether this was called due to the user
      *     closing the dialog without printing.
      */
-    dialogClose: function(isCancel) {
+    startCloseDialog: function(isCancel) {
       if (isCancel)
         chrome.send('closePrintPreviewDialog');
       chrome.send('dialogClose');
     },
 
     /** Hide the print preview dialog and allow the native layer to close it. */
-    hidePreview: function() {
+    startHideDialog: function() {
       chrome.send('hidePreview');
     },
 
@@ -502,7 +494,7 @@ cr.define('print_preview', function() {
     },
 
     /** Navigates the user to the system printer settings interface. */
-    manageLocalPrinters: function() {
+    startManageLocalDestinations: function() {
       chrome.send('manageLocalPrinters');
     },
 
@@ -512,12 +504,12 @@ cr.define('print_preview', function() {
      *     page for (user must be currently logged in, indeed) or {@code null}
      *     to open this page for the primary user.
      */
-    manageCloudPrinters: function(user) {
+    startManageCloudDestinations: function(user) {
       chrome.send('manageCloudPrinters', [user || '']);
     },
 
     /** Forces browser to open a new tab with the given URL address. */
-    forceOpenNewTab: function(url) {
+    startForceOpenNewTab: function(url) {
       chrome.send('forceOpenNewTab', [url]);
     },
 
@@ -526,7 +518,7 @@ cr.define('print_preview', function() {
      * option has been set to a particular value and that the change has
      * finished modifying the preview area.
      */
-    uiLoadedForTest: function() {
+    previewReadyForTest: function() {
       chrome.send('UILoadedForTest');
     },
 
@@ -534,28 +526,9 @@ cr.define('print_preview', function() {
      * Notifies the test that the option it tried to change
      * had not been changed successfully.
      */
-    uiFailedLoadingForTest: function() {
+    previewFailedForTest: function() {
       chrome.send('UIFailedLoadingForTest');
-    },
-
-    /**
-     * Notifies the metrics handler to record an action.
-     * @param {string} action The action to record.
-     */
-    recordAction: function(action) {
-      chrome.send('metricsHandler:recordAction', [action]);
-    },
-
-    /**
-     * Notifies the metrics handler to record a histogram value.
-     * @param {string} histogram The name of the histogram to record
-     * @param {number} bucket The bucket to record
-     * @param {number} maxBucket The maximum bucket value in the histogram.
-     */
-    recordInHistogram: function(histogram, bucket, maxBucket) {
-      chrome.send(
-          'metricsHandler:recordInHistogram', [histogram, bucket, maxBucket]);
-    },
+    }
   };
 
   /**

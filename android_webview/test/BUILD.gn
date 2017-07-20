@@ -3,7 +3,6 @@
 # found in the LICENSE file.
 
 import("//build/config/android/rules.gni")
-import("//device/vr/features/features.gni")
 import("//testing/test.gni")
 
 # Mark all targets as test only.
@@ -227,14 +226,6 @@ instrumentation_test_apk("webview_instrumentation_test_apk") {
   data = [
     "data/",
   ]
-
-  # We only want to bother including these on bots set up for VR testing
-  if (include_vr_data) {
-    data += [
-      "//chrome/android/shared_preference_files/test/",
-      "//third_party/gvr-android-sdk/test-apks/vr_services/vr_services_current.apk",
-    ]
-  }
   additional_apks = [
     "//android_webview/test/embedded_test_server:aw_net_test_support_apk",
     "//net/android:net_test_support_apk",
@@ -267,7 +258,6 @@ test("android_webview_unittests") {
     "../browser/aw_form_database_service_unittest.cc",
     "../browser/aw_media_url_interceptor_unittest.cc",
     "../browser/aw_permission_manager_unittest.cc",
-    "../browser/aw_safe_browsing_whitelist_manager_unittest.cc",
     "../browser/aw_static_cookie_policy_unittest.cc",
     "../browser/browser_view_renderer_unittest.cc",
     "../browser/command_line_helper_unittest.cc",

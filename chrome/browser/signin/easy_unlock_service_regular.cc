@@ -41,7 +41,6 @@
 #include "components/prefs/scoped_user_pref_update.h"
 #include "components/proximity_auth/logging/logging.h"
 #include "components/proximity_auth/proximity_auth_pref_manager.h"
-#include "components/proximity_auth/proximity_auth_pref_names.h"
 #include "components/proximity_auth/proximity_auth_system.h"
 #include "components/proximity_auth/screenlock_bridge.h"
 #include "components/proximity_auth/switches.h"
@@ -50,7 +49,6 @@
 #include "components/translate/core/browser/translate_download_manager.h"
 #include "components/version_info/version_info.h"
 #include "content/public/browser/browser_thread.h"
-#include "content/public/common/content_switches.h"
 #include "extensions/browser/event_router.h"
 #include "extensions/common/constants.h"
 #include "google_apis/gaia/gaia_auth_util.h"
@@ -193,12 +191,6 @@ AccountId EasyUnlockServiceRegular::GetAccountId() const {
 void EasyUnlockServiceRegular::LaunchSetup() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 #if defined(OS_CHROMEOS)
-  // TODO(tengs): To keep login working for existing EasyUnlock users, we need
-  // to explicitly disable login here for new users who set up EasyUnlock.
-  // After a sufficient number of releases, we should make the default value
-  // false.
-  pref_manager_->SetIsChromeOSLoginEnabled(false);
-
   // Force the user to reauthenticate by showing a modal overlay (similar to the
   // lock screen). The password obtained from the reauth is cached for a short
   // period of time and used to create the cryptohome keys for sign-in.
@@ -462,18 +454,12 @@ void EasyUnlockServiceRegular::InitializeInternal() {
       prefs::kEasyUnlockAllowed,
       base::Bind(&EasyUnlockServiceRegular::OnPrefsChanged,
                  base::Unretained(this)));
-  registrar_.Add(proximity_auth::prefs::kEasyUnlockProximityThreshold,
-                 base::Bind(&EasyUnlockServiceRegular::OnPrefsChanged,
-                            base::Unretained(this)));
 
   OnPrefsChanged();
 
 #if defined(OS_CHROMEOS)
-  // TODO(tengs): Due to badly configured browser_tests, Chrome crashes during
-  // shutdown. Revisit this condition after migration is fully completed.
-  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
-          proximity_auth::switches::kDisableBluetoothLowEnergyDiscovery) &&
-      !base::CommandLine::ForCurrentProcess()->HasSwitch(switches::kTestType)) {
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          proximity_auth::switches::kEnableBluetoothLowEnergyDiscovery)) {
     pref_manager_.reset(
         new proximity_auth::ProximityAuthPrefManager(profile()->GetPrefs()));
     GetCryptAuthDeviceManager()->AddObserver(this);
@@ -629,10 +615,6 @@ void EasyUnlockServiceRegular::SyncProfilePrefsToLocalState() {
   // items in the dictionary are the same profile prefs used for Easy Unlock.
   std::unique_ptr<base::DictionaryValue> user_prefs_dict(
       new base::DictionaryValue());
-  user_prefs_dict->SetIntegerWithoutPathExpansion(
-      proximity_auth::prefs::kEasyUnlockProximityThreshold,
-      profile_prefs->GetInteger(
-          proximity_auth::prefs::kEasyUnlockProximityThreshold));
 
   DictionaryPrefUpdate update(local_state,
                               prefs::kEasyUnlockLocalStateUserPrefs);

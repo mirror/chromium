@@ -33,7 +33,4 @@ void FakeCompositorFrameSinkSupportClient::WillDrawSurface(
   last_damage_rect_ = damage_rect;
 }
 
-void FakeCompositorFrameSinkSupportClient::OnBeginFramePausedChanged(
-    bool paused) {}
-
 };  // namespace cc

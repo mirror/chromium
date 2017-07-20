@@ -45,6 +45,10 @@ AshWindowTreeHostX11::~AshWindowTreeHostX11() {
   UnConfineCursor();
 }
 
+void AshWindowTreeHostX11::ToggleFullScreen() {
+  NOTIMPLEMENTED();
+}
+
 bool AshWindowTreeHostX11::ConfineCursorToRootWindow() {
 #if XFIXES_MAJOR >= 5
   DCHECK(!pointer_barriers_.get());

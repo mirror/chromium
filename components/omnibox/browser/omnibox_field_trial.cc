@@ -51,7 +51,7 @@ const base::Feature kOmniboxTailSuggestions{
 // suggestions of the URL in the user's clipboard (if any) upon omnibox focus.
 const base::Feature kEnableClipboardProvider {
   "OmniboxEnableClipboardProvider",
-#if defined(OS_IOS) || defined(OS_ANDROID)
+#if defined(OS_IOS)
       base::FEATURE_ENABLED_BY_DEFAULT
 #else
       base::FEATURE_DISABLED_BY_DEFAULT
@@ -76,20 +76,14 @@ const base::Feature kAndroidFakeboxDemotionOnPhones{
 // in memory allows the suggest server to respond more quickly with
 // personalized suggestions as the user types.
 const base::Feature kSearchProviderWarmUpOnFocus{
-  "OmniboxWarmUpSearchProviderOnFocus",
-#if defined(OS_IOS)
-      base::FEATURE_DISABLED_BY_DEFAULT
-#else
-      base::FEATURE_ENABLED_BY_DEFAULT
-#endif
-};
+    "OmniboxWarmUpSearchProviderOnFocus", base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Feature used to enable the transmission of HTTPS URLs as part of the
 // context to the suggest server (assuming SearchProvider is permitted to
 // transmit URLs for context in the first place).
 const base::Feature kSearchProviderContextAllowHttpsUrls{
     "OmniboixSearchProviderContextAllowHttpsUrls",
-    base::FEATURE_ENABLED_BY_DEFAULT};
+    base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Feature used for the Zero Suggest Redirect to Chrome Field Trial.
 const base::Feature kZeroSuggestRedirectToChrome{

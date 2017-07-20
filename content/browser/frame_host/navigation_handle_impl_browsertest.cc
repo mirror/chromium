@@ -55,14 +55,12 @@ class TestNavigationThrottle : public NavigationThrottle {
 
   const char* GetNameForLogging() override { return "TestNavigationThrottle"; }
 
-  RequestContextType request_context_type() { return request_context_type_; }
-
-  // Expose Resume and Cancel to the installer.
-  void ResumeNavigation() { Resume(); }
-
-  void CancelNavigation(NavigationThrottle::ThrottleCheckResult result) {
-    CancelDeferredNavigation(result);
+  void Resume() { navigation_handle()->Resume(); }
+  void Cancel(NavigationThrottle::ThrottleCheckResult result) {
+    navigation_handle()->CancelDeferredNavigation(result);
   }
+
+  RequestContextType request_context_type() { return request_context_type_; }
 
  private:
   // NavigationThrottle implementation.
@@ -157,9 +155,9 @@ class TestNavigationThrottleInstaller : public WebContentsObserver {
   void Continue(NavigationThrottle::ThrottleCheckResult result) {
     ASSERT_NE(NavigationThrottle::DEFER, result);
     if (result == NavigationThrottle::PROCEED)
-      navigation_throttle()->ResumeNavigation();
+      navigation_throttle()->Resume();
     else
-      navigation_throttle()->CancelNavigation(result);
+      navigation_throttle()->Cancel(result);
   }
 
   int will_start_called() { return will_start_called_; }
@@ -704,21 +702,21 @@ IN_PROC_BROWSER_TEST_F(NavigationHandleImplBrowserTest, ThrottleDefer) {
   EXPECT_EQ(1, installer.will_start_called());
   EXPECT_EQ(0, installer.will_redirect_called());
   EXPECT_EQ(0, installer.will_process_called());
-  installer.navigation_throttle()->ResumeNavigation();
+  installer.navigation_throttle()->Resume();
 
   // Wait for WillRedirectRequest.
   installer.WaitForThrottleWillRedirect();
   EXPECT_EQ(1, installer.will_start_called());
   EXPECT_EQ(1, installer.will_redirect_called());
   EXPECT_EQ(0, installer.will_process_called());
-  installer.navigation_throttle()->ResumeNavigation();
+  installer.navigation_throttle()->Resume();
 
   // Wait for WillProcessResponse.
   installer.WaitForThrottleWillProcess();
   EXPECT_EQ(1, installer.will_start_called());
   EXPECT_EQ(1, installer.will_redirect_called());
   EXPECT_EQ(1, installer.will_process_called());
-  installer.navigation_throttle()->ResumeNavigation();
+  installer.navigation_throttle()->Resume();
 
   // Wait for the end of the navigation.
   navigation_observer.Wait();

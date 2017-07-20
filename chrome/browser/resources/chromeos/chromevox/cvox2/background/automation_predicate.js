@@ -15,7 +15,6 @@ goog.require('constants');
 goog.scope(function() {
 var AutomationNode = chrome.automation.AutomationNode;
 var Dir = constants.Dir;
-var Restriction = chrome.automation.Restriction;
 var Role = chrome.automation.RoleType;
 var State = chrome.automation.StateType;
 
@@ -252,8 +251,7 @@ AutomationPredicate.container = function(node) {
       AutomationPredicate.landmark, AutomationPredicate.structuralContainer,
       function(node) {
         // For example, crosh.
-        return node.role == Role.TEXT_FIELD &&
-            node.restriction == Restriction.READ_ONLY;
+        return (node.role == Role.TEXT_FIELD && node.state.readOnly);
       },
       function(node) {
         return (

@@ -237,7 +237,8 @@ void DocumentThreadableLoader::Start(const ResourceRequest& request) {
                                                                  client_);
     ThreadableLoaderClient* client = client_;
     Clear();
-    client->DidFail(ResourceError(kErrorDomainBlinkInternal, 0, request.Url(),
+    client->DidFail(ResourceError(kErrorDomainBlinkInternal, 0,
+                                  request.Url().GetString(),
                                   "Cross origin requests are not supported."));
     return;
   }
@@ -516,7 +517,13 @@ void DocumentThreadableLoader::Cancel() {
     return;
   }
 
-  DispatchDidFail(ResourceError::CancelledError(GetResource()->Url()));
+  // FIXME: This error is sent to the client in didFail(), so it should not be
+  // an internal one. Use LocalFrameClient::cancelledError() instead.
+  ResourceError error(kErrorDomainBlinkInternal, 0, GetResource()->Url(),
+                      "Load cancelled");
+  error.SetIsCancellation(true);
+
+  DispatchDidFail(error);
 }
 
 void DocumentThreadableLoader::SetDefersLoading(bool value) {
@@ -552,7 +559,7 @@ bool DocumentThreadableLoader::RedirectReceived(
   if (!actual_request_.IsNull()) {
     ReportResponseReceived(resource->Identifier(), redirect_response);
 
-    HandlePreflightFailure(redirect_response.Url(),
+    HandlePreflightFailure(redirect_response.Url().GetString(),
                            "Response for preflight is invalid (redirect)");
 
     return false;
@@ -781,7 +788,7 @@ void DocumentThreadableLoader::HandlePreflightResponse(
         "control check: ");
     CrossOriginAccessControl::AccessControlErrorString(
         builder, cors_status, response, GetSecurityOrigin(), request_context_);
-    HandlePreflightFailure(response.Url(), builder.ToString());
+    HandlePreflightFailure(response.Url().GetString(), builder.ToString());
     return;
   }
 
@@ -791,7 +798,7 @@ void DocumentThreadableLoader::HandlePreflightResponse(
     StringBuilder builder;
     CrossOriginAccessControl::PreflightErrorString(builder, preflight_status,
                                                    response);
-    HandlePreflightFailure(response.Url(), builder.ToString());
+    HandlePreflightFailure(response.Url().GetString(), builder.ToString());
     return;
   }
 
@@ -803,7 +810,7 @@ void DocumentThreadableLoader::HandlePreflightResponse(
       StringBuilder builder;
       CrossOriginAccessControl::PreflightErrorString(
           builder, external_preflight_status, response);
-      HandlePreflightFailure(response.Url(), builder.ToString());
+      HandlePreflightFailure(response.Url().GetString(), builder.ToString());
       return;
     }
   }
@@ -817,7 +824,8 @@ void DocumentThreadableLoader::HandlePreflightResponse(
       !preflight_result->AllowsCrossOriginHeaders(
           actual_request_.HttpHeaderFields(),
           access_control_error_description)) {
-    HandlePreflightFailure(response.Url(), access_control_error_description);
+    HandlePreflightFailure(response.Url().GetString(),
+                           access_control_error_description);
     return;
   }
 
@@ -1044,7 +1052,7 @@ void DocumentThreadableLoader::LoadActualRequest() {
 }
 
 void DocumentThreadableLoader::HandlePreflightFailure(
-    const KURL& url,
+    const String& url,
     const String& error_description) {
   // Prevent handleSuccessfulFinish() from bypassing access check.
   actual_request_ = ResourceRequest();
@@ -1110,7 +1118,8 @@ void DocumentThreadableLoader::LoadRequestAsync(
     // notified and |client| is null.
     if (!client)
       return;
-    client->DidFail(ResourceError(kErrorDomainBlinkInternal, 0, request.Url(),
+    client->DidFail(ResourceError(kErrorDomainBlinkInternal, 0,
+                                  request.Url().GetString(),
                                   "Failed to start loading."));
     return;
   }

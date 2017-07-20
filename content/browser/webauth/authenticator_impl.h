@@ -15,6 +15,10 @@
 #include "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom.h"
 #include "url/origin.h"
 
+namespace service_manager {
+struct BindSourceInfo;
+}
+
 namespace content {
 
 class RenderFrameHost;
@@ -24,6 +28,7 @@ class CONTENT_EXPORT AuthenticatorImpl
     : public NON_EXPORTED_BASE(webauth::mojom::Authenticator) {
  public:
   static void Create(RenderFrameHost* render_frame_host,
+                     const service_manager::BindSourceInfo& source_info,
                      webauth::mojom::AuthenticatorRequest request);
   ~AuthenticatorImpl() override;
 

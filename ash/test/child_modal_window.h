@@ -25,8 +25,6 @@ namespace test {
 
 void CreateChildModalParent(aura::Window* context);
 
-// TODO(jamescook): Rename to TestChildModalParent, remove the test namespcae,
-// and move to //ash/wm.
 class ChildModalParent : public views::WidgetDelegateView,
                          public views::ButtonListener,
                          public views::WidgetObserver {

@@ -34,6 +34,7 @@ enum TextBoundaryType;
 
 namespace content {
 class BrowserAccessibilityWin;
+class BrowserAccessibilityRelation;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -102,13 +103,91 @@ class __declspec(uuid("562072fe-3390-43b1-9e2c-dd4118f5ac79"))
   // IAccessible methods.
   //
 
+  // Performs the default action on a given object.
+  CONTENT_EXPORT STDMETHODIMP accDoDefaultAction(VARIANT var_id) override;
+
+  // Retrieves the child element or child object at a given point on the screen.
+  CONTENT_EXPORT STDMETHODIMP accHitTest(LONG x_left,
+                                         LONG y_top,
+                                         VARIANT* child) override;
+
+  // Retrieves the specified object's current screen location.
+  CONTENT_EXPORT STDMETHODIMP accLocation(LONG* x_left,
+                                          LONG* y_top,
+                                          LONG* width,
+                                          LONG* height,
+                                          VARIANT var_id) override;
+
+  // Traverses to another UI element and retrieves the object.
+  CONTENT_EXPORT STDMETHODIMP accNavigate(LONG nav_dir,
+                                          VARIANT start,
+                                          VARIANT* end) override;
+
+  // Retrieves an IDispatch interface pointer for the specified child.
+  CONTENT_EXPORT STDMETHODIMP get_accChild(VARIANT var_child,
+                                           IDispatch** disp_child) override;
+
+  // Retrieves the number of accessible children.
+  CONTENT_EXPORT STDMETHODIMP get_accChildCount(LONG* child_count) override;
+
   // Retrieves a string that describes the object's default action.
   CONTENT_EXPORT STDMETHODIMP
   get_accDefaultAction(VARIANT var_id, BSTR* default_action) override;
 
+  // Retrieves the object's description.
+  CONTENT_EXPORT STDMETHODIMP get_accDescription(VARIANT var_id,
+                                                 BSTR* desc) override;
+
+  // Retrieves the object that has the keyboard focus.
+  CONTENT_EXPORT STDMETHODIMP get_accFocus(VARIANT* focus_child) override;
+
+  // Retrieves the help information associated with the object.
+  CONTENT_EXPORT STDMETHODIMP get_accHelp(VARIANT var_id, BSTR* heflp) override;
+
+  // Retrieves the specified object's shortcut.
+  CONTENT_EXPORT STDMETHODIMP
+  get_accKeyboardShortcut(VARIANT var_id, BSTR* access_key) override;
+
+  // Retrieves the name of the specified object.
+  CONTENT_EXPORT STDMETHODIMP get_accName(VARIANT var_id, BSTR* name) override;
+
+  // Retrieves the IDispatch interface of the object's parent.
+  CONTENT_EXPORT STDMETHODIMP get_accParent(IDispatch** disp_parent) override;
+
+  // Retrieves information describing the role of the specified object.
+  CONTENT_EXPORT STDMETHODIMP get_accRole(VARIANT var_id,
+                                          VARIANT* role) override;
+
+  // Retrieves the current state of the specified object.
+  CONTENT_EXPORT STDMETHODIMP get_accState(VARIANT var_id,
+                                           VARIANT* state) override;
+
+  // Returns the value associated with the object.
+  CONTENT_EXPORT STDMETHODIMP get_accValue(VARIANT var_id,
+                                           BSTR* value) override;
+
+  // Make an object take focus or extend the selection.
+  CONTENT_EXPORT STDMETHODIMP accSelect(LONG flags_sel,
+                                        VARIANT var_id) override;
+
+  CONTENT_EXPORT STDMETHODIMP get_accHelpTopic(BSTR* help_file,
+                                               VARIANT var_id,
+                                               LONG* topic_id) override;
+
+  CONTENT_EXPORT STDMETHODIMP get_accSelection(VARIANT* selected) override;
+
+  // Deprecated methods, not implemented.
+  CONTENT_EXPORT STDMETHODIMP put_accName(VARIANT var_id,
+                                          BSTR put_name) override;
+  CONTENT_EXPORT STDMETHODIMP put_accValue(VARIANT var_id,
+                                           BSTR put_val) override;
+
   //
   // IAccessible2 methods.
   //
+
+  // Returns role from a longer list of possible roles.
+  CONTENT_EXPORT STDMETHODIMP role(LONG* role) override;
 
   // Returns the state bitmask from a larger set of possible states.
   CONTENT_EXPORT STDMETHODIMP get_states(AccessibleStates* states) override;
@@ -150,6 +229,22 @@ class __declspec(uuid("562072fe-3390-43b1-9e2c-dd4118f5ac79"))
 
   CONTENT_EXPORT STDMETHODIMP
   get_localizedExtendedRole(BSTR* localized_extended_role) override;
+
+  //
+  // IAccessible2 methods not implemented.
+  //
+  CONTENT_EXPORT STDMETHODIMP get_extendedRole(BSTR* extended_role) override;
+  CONTENT_EXPORT STDMETHODIMP
+  get_nExtendedStates(LONG* n_extended_states) override;
+  CONTENT_EXPORT STDMETHODIMP
+  get_extendedStates(LONG max_extended_states,
+                     BSTR** extended_states,
+                     LONG* n_extended_states) override;
+  CONTENT_EXPORT STDMETHODIMP
+  get_localizedExtendedStates(LONG max_localized_extended_states,
+                              BSTR** localized_extended_states,
+                              LONG* n_localized_extended_states) override;
+  CONTENT_EXPORT STDMETHODIMP get_locale(IA2Locale* locale) override;
 
   //
   // IAccessibleApplication methods.
@@ -777,6 +872,25 @@ class __declspec(uuid("562072fe-3390-43b1-9e2c-dd4118f5ac79"))
   // or a menu list option with a parent of type menu list popup.
   bool IsListBoxOptionOrMenuListOption();
 
+  // For adding / removing IA2 relations.
+
+  void AddRelation(const base::string16& relation_type, int target_id);
+  void AddBidirectionalRelations(const base::string16& relation_type,
+                                 const base::string16& reverse_relation_type,
+                                 ui::AXIntListAttribute attribute);
+  void AddBidirectionalRelations(const base::string16& relation_type,
+                                 const base::string16& reverse_relation_type,
+                                 const std::vector<int32_t>& target_ids);
+  // Clears all the forward relations from this object to any other object and
+  // the associated  reverse relations on the other objects, but leaves any
+  // reverse relations on this object alone.
+  void ClearOwnRelations();
+  void RemoveBidirectionalRelationsOfType(
+      const base::string16& relation_type,
+      const base::string16& reverse_relation_type);
+  void RemoveTargetFromRelation(const base::string16& relation_type,
+                                int target_id);
+
   // Fire a Windows-specific accessibility event notification on this node.
   void FireNativeEvent(LONG win_event_type) const;
   struct WinAttributes {
@@ -825,6 +939,9 @@ class __declspec(uuid("562072fe-3390-43b1-9e2c-dd4118f5ac79"))
   // IA2_EVENT_TEXT_INSERTED event.
   std::unique_ptr<WinAttributes> old_win_attributes_;
 
+  // Relationships between this node and other nodes.
+  std::vector<BrowserAccessibilityRelation*> relations_;
+
   // The previous scroll position, so we can tell if this object scrolled.
   int previous_scroll_x_;
   int previous_scroll_y_;
@@ -832,6 +949,7 @@ class __declspec(uuid("562072fe-3390-43b1-9e2c-dd4118f5ac79"))
   // Give BrowserAccessibility::Create access to our constructor.
   friend class BrowserAccessibility;
   friend class BrowserAccessibilityWin;
+  friend class BrowserAccessibilityRelation;
 
   DISALLOW_COPY_AND_ASSIGN(BrowserAccessibilityComWin);
 };

@@ -248,6 +248,7 @@ WebMediaPlayerImpl::WebMediaPlayerImpl(
       surface_manager_(params->surface_manager()),
       overlay_surface_id_(SurfaceManager::kNoSurfaceID),
       suppress_destruction_errors_(false),
+      suspend_enabled_(params->allow_suspend()),
       is_encrypted_(false),
       preroll_attempt_pending_(false),
       observer_(params->media_observer()),
@@ -1750,12 +1751,11 @@ void WebMediaPlayerImpl::OnRemotePlaybackEnded() {
 void WebMediaPlayerImpl::OnDisconnectedFromRemoteDevice(double t) {
   DoSeek(base::TimeDelta::FromSecondsD(t), false);
 
-  // |client_| might destroy us in methods below.
-  UpdatePlayState();
-
   // We already told the delegate we're paused when remoting started.
   client_->PlaybackStateChanged();
   client_->DisconnectedFromRemoteDevice();
+
+  UpdatePlayState();
 }
 
 void WebMediaPlayerImpl::SuspendForRemote() {
@@ -2185,6 +2185,10 @@ void WebMediaPlayerImpl::SetMemoryReportingState(
 
 void WebMediaPlayerImpl::SetSuspendState(bool is_suspended) {
   DCHECK(main_task_runner_->BelongsToCurrentThread());
+  if (!suspend_enabled_) {
+    DCHECK(!pipeline_controller_.IsSuspended());
+    return;
+  }
 
   // Do not change the state after an error has occurred.
   // TODO(sandersd): Update PipelineController to remove the need for this.

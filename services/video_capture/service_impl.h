@@ -35,8 +35,11 @@ class ServiceImpl : public service_manager::Service {
 
  private:
   void OnDeviceFactoryProviderRequest(
+      const service_manager::BindSourceInfo& source_info,
       mojom::DeviceFactoryProviderRequest request);
-  void OnTestingControlsRequest(mojom::TestingControlsRequest request);
+  void OnTestingControlsRequest(
+      const service_manager::BindSourceInfo& source_info,
+      mojom::TestingControlsRequest request);
   void SetShutdownDelayInSeconds(float seconds);
   void MaybeRequestQuitDelayed();
   void MaybeRequestQuit();

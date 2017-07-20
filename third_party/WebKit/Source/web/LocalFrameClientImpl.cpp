@@ -164,10 +164,6 @@ DEFINE_TRACE(LocalFrameClientImpl) {
   LocalFrameClient::Trace(visitor);
 }
 
-WebLocalFrameBase* LocalFrameClientImpl::GetWebFrame() const {
-  return web_frame_.Get();
-}
-
 void LocalFrameClientImpl::DidCreateNewDocument() {
   if (web_frame_->Client())
     web_frame_->Client()->DidCreateNewDocument(web_frame_);
@@ -993,9 +989,11 @@ unsigned LocalFrameClientImpl::BackForwardLength() {
 
 void LocalFrameClientImpl::SuddenTerminationDisablerChanged(
     bool present,
-    WebSuddenTerminationDisablerType type) {
+    SuddenTerminationDisablerType type) {
   if (web_frame_->Client()) {
-    web_frame_->Client()->SuddenTerminationDisablerChanged(present, type);
+    web_frame_->Client()->SuddenTerminationDisablerChanged(
+        present,
+        static_cast<WebFrameClient::SuddenTerminationDisablerType>(type));
   }
 }
 

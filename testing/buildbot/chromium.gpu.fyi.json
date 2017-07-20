@@ -755,8 +755,7 @@
     "gtest_tests": [
       {
         "args": [
-          "--enable-xml-result-parsing",
-          "--shard-timeout=300"
+          "--enable-xml-result-parsing"
         ],
         "name": "angle_deqp_gles2_gles_tests",
         "swarming": {
@@ -770,7 +769,6 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
               "device_os": "M",
               "device_type": "bullhead",
               "os": "Android"
@@ -807,7 +805,6 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
               "device_os": "M",
               "device_type": "bullhead",
               "os": "Android"
@@ -822,8 +819,7 @@
               ],
               "name": "shard #${SHARD_INDEX} logcats"
             }
-          ],
-          "shards": 4
+          ]
         },
         "test": "angle_deqp_gles3_tests",
         "use_xvfb": false
@@ -840,7 +836,6 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
               "device_os": "M",
               "device_type": "bullhead",
               "os": "Android"
@@ -872,7 +867,6 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
               "device_os": "M",
               "device_type": "bullhead",
               "os": "Android"
@@ -904,7 +898,6 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
               "device_os": "M",
               "device_type": "bullhead",
               "os": "Android"
@@ -936,7 +929,6 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
               "device_os": "M",
               "device_type": "bullhead",
               "os": "Android"
@@ -976,7 +968,6 @@
           "can_use_on_swarming_builders": true,
           "dimension_sets": [
             {
-              "android_devices": "1",
               "device_os": "M",
               "device_type": "bullhead",
               "os": "Android"
@@ -1002,7 +993,6 @@
           "can_use_on_swarming_builders": true,
           "dimension_sets": [
             {
-              "android_devices": "1",
               "device_os": "M",
               "device_type": "bullhead",
               "os": "Android"
@@ -1028,7 +1018,6 @@
           "can_use_on_swarming_builders": true,
           "dimension_sets": [
             {
-              "android_devices": "1",
               "device_os": "M",
               "device_type": "bullhead",
               "os": "Android"
@@ -1054,7 +1043,6 @@
           "can_use_on_swarming_builders": true,
           "dimension_sets": [
             {
-              "android_devices": "1",
               "device_os": "M",
               "device_type": "bullhead",
               "os": "Android"
@@ -1084,7 +1072,6 @@
           "can_use_on_swarming_builders": true,
           "dimension_sets": [
             {
-              "android_devices": "1",
               "device_os": "M",
               "device_type": "bullhead",
               "os": "Android"
@@ -1116,7 +1103,6 @@
           "can_use_on_swarming_builders": true,
           "dimension_sets": [
             {
-              "android_devices": "1",
               "device_os": "M",
               "device_type": "bullhead",
               "os": "Android"
@@ -1156,7 +1142,6 @@
           "can_use_on_swarming_builders": true,
           "dimension_sets": [
             {
-              "android_devices": "1",
               "device_os": "M",
               "device_type": "bullhead",
               "os": "Android"
@@ -1182,7 +1167,6 @@
           "can_use_on_swarming_builders": true,
           "dimension_sets": [
             {
-              "android_devices": "1",
               "device_os": "M",
               "device_type": "bullhead",
               "os": "Android"
@@ -1208,7 +1192,6 @@
           "can_use_on_swarming_builders": true,
           "dimension_sets": [
             {
-              "android_devices": "1",
               "device_os": "M",
               "device_type": "bullhead",
               "os": "Android"
@@ -1234,7 +1217,6 @@
           "can_use_on_swarming_builders": true,
           "dimension_sets": [
             {
-              "android_devices": "1",
               "device_os": "M",
               "device_type": "bullhead",
               "os": "Android"

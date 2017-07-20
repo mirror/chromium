@@ -43,10 +43,12 @@ class PackagedApp : public service_manager::Service,
   void OnBindInterface(const service_manager::BindSourceInfo& source_info,
                        const std::string& interface_name,
                        mojo::ScopedMessagePipeHandle interface_pipe) override {
-    registry_.BindInterface(interface_name, std::move(interface_pipe));
+    registry_.BindInterface(source_info, interface_name,
+                            std::move(interface_pipe));
   }
 
-  void Create(service_manager::test::mojom::LifecycleControlRequest request) {
+  void Create(const service_manager::BindSourceInfo& source_info,
+              service_manager::test::mojom::LifecycleControlRequest request) {
     bindings_.AddBinding(this, std::move(request));
   }
 
@@ -105,13 +107,17 @@ class Package : public service_manager::ForwardingService,
   void OnBindInterface(const service_manager::BindSourceInfo& source_info,
                        const std::string& interface_name,
                        mojo::ScopedMessagePipeHandle interface_pipe) override {
-    if (!registry_.TryBindInterface(interface_name, &interface_pipe)) {
+    if (registry_.CanBindInterface(interface_name)) {
+      registry_.BindInterface(source_info, interface_name,
+                              std::move(interface_pipe));
+    } else {
       ForwardingService::OnBindInterface(source_info, interface_name,
                                          std::move(interface_pipe));
     }
   }
 
-  void Create(service_manager::mojom::ServiceFactoryRequest request) {
+  void Create(const service_manager::BindSourceInfo& source_info,
+              service_manager::mojom::ServiceFactoryRequest request) {
     bindings_.AddBinding(this, std::move(request));
   }
 

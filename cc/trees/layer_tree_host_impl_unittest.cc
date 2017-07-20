@@ -1425,120 +1425,6 @@ TEST_F(LayerTreeHostImplTest, ScrollByReturnsCorrectValue) {
           .did_scroll);
 }
 
-TEST_F(LayerTreeHostImplTest, ScrollBoundaryBehaviorPreventsPropagation) {
-  LayerImpl* scroll_layer = SetupScrollAndContentsLayers(gfx::Size(200, 200));
-  host_impl_->SetViewportSize(gfx::Size(100, 100));
-
-  gfx::Size overflow_size(400, 400);
-  ASSERT_EQ(1u, scroll_layer->test_properties()->children.size());
-  LayerImpl* overflow = scroll_layer->test_properties()->children[0];
-  overflow->SetBounds(overflow_size);
-  overflow->SetScrollable(gfx::Size(100, 100));
-  overflow->SetElementId(LayerIdToElementIdForTesting(overflow->id()));
-  overflow->layer_tree_impl()
-      ->property_trees()
-      ->scroll_tree.UpdateScrollOffsetBaseForTesting(overflow->element_id(),
-                                                     gfx::ScrollOffset());
-  overflow->SetPosition(gfx::PointF(40, 40));
-  host_impl_->active_tree()->BuildPropertyTreesForTesting();
-  scroll_layer->SetCurrentScrollOffset(gfx::ScrollOffset(30, 30));
-
-  DrawFrame();
-  gfx::Point scroll_position(50, 50);
-
-  // ScrollBoundaryBehaviorTypeAuto shouldn't prevent scroll propagation.
-  EXPECT_EQ(
-      InputHandler::SCROLL_ON_IMPL_THREAD,
-      host_impl_
-          ->ScrollBegin(BeginState(scroll_position).get(), InputHandler::WHEEL)
-          .thread);
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(30, 30), scroll_layer->CurrentScrollOffset());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(), overflow->CurrentScrollOffset());
-
-  gfx::Vector2dF x_dominant_delta(-10, -5);
-  gfx::Vector2dF y_dominant_delta(-5, -10);
-  host_impl_->ScrollBy(UpdateState(scroll_position, x_dominant_delta).get());
-  host_impl_->ScrollEnd(EndState().get());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(20, 25), scroll_layer->CurrentScrollOffset());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 0), overflow->CurrentScrollOffset());
-
-  overflow->test_properties()->scroll_boundary_behavior =
-      ScrollBoundaryBehavior(
-          ScrollBoundaryBehavior::kScrollBoundaryBehaviorTypeNone,
-          ScrollBoundaryBehavior::kScrollBoundaryBehaviorTypeAuto);
-  host_impl_->active_tree()->BuildPropertyTreesForTesting();
-
-  DrawFrame();
-
-  // ScrollBoundaryBehaviorNone on x should prevent x-dominant-scroll
-  // propagation.
-  EXPECT_EQ(
-      InputHandler::SCROLL_ON_IMPL_THREAD,
-      host_impl_
-          ->ScrollBegin(BeginState(scroll_position).get(), InputHandler::WHEEL)
-          .thread);
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(20, 25), scroll_layer->CurrentScrollOffset());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 0), overflow->CurrentScrollOffset());
-
-  host_impl_->ScrollBy(UpdateState(scroll_position, x_dominant_delta).get());
-  host_impl_->ScrollEnd(EndState().get());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(20, 25), scroll_layer->CurrentScrollOffset());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 0), overflow->CurrentScrollOffset());
-
-  // ScrollBoundaryBehaviorNone on x shouldn't prevent y-dominant-scroll
-  // propagation.
-  EXPECT_EQ(
-      InputHandler::SCROLL_ON_IMPL_THREAD,
-      host_impl_
-          ->ScrollBegin(BeginState(scroll_position).get(), InputHandler::WHEEL)
-          .thread);
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(20, 25), scroll_layer->CurrentScrollOffset());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 0), overflow->CurrentScrollOffset());
-
-  host_impl_->ScrollBy(UpdateState(scroll_position, y_dominant_delta).get());
-  host_impl_->ScrollEnd(EndState().get());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(15, 15), scroll_layer->CurrentScrollOffset());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 0), overflow->CurrentScrollOffset());
-
-  overflow->test_properties()->scroll_boundary_behavior =
-      ScrollBoundaryBehavior(
-          ScrollBoundaryBehavior::kScrollBoundaryBehaviorTypeAuto,
-          ScrollBoundaryBehavior::kScrollBoundaryBehaviorTypeNone);
-  host_impl_->active_tree()->BuildPropertyTreesForTesting();
-
-  DrawFrame();
-
-  // ScrollBoundaryBehaviorNone on y shouldn't prevent x-dominant-scroll
-  // propagation.
-  EXPECT_EQ(
-      InputHandler::SCROLL_ON_IMPL_THREAD,
-      host_impl_
-          ->ScrollBegin(BeginState(scroll_position).get(), InputHandler::WHEEL)
-          .thread);
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(15, 15), scroll_layer->CurrentScrollOffset());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 0), overflow->CurrentScrollOffset());
-
-  host_impl_->ScrollBy(UpdateState(scroll_position, x_dominant_delta).get());
-  host_impl_->ScrollEnd(EndState().get());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(5, 10), scroll_layer->CurrentScrollOffset());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 0), overflow->CurrentScrollOffset());
-
-  // ScrollBoundaryBehaviorNone on y should prevent y-dominant-scroll
-  // propagation.
-  EXPECT_EQ(
-      InputHandler::SCROLL_ON_IMPL_THREAD,
-      host_impl_
-          ->ScrollBegin(BeginState(scroll_position).get(), InputHandler::WHEEL)
-          .thread);
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(5, 10), scroll_layer->CurrentScrollOffset());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 0), overflow->CurrentScrollOffset());
-
-  host_impl_->ScrollBy(UpdateState(scroll_position, y_dominant_delta).get());
-  host_impl_->ScrollEnd(EndState().get());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(5, 10), scroll_layer->CurrentScrollOffset());
-  EXPECT_VECTOR_EQ(gfx::Vector2dF(0, 0), overflow->CurrentScrollOffset());
-}
-
 TEST_F(LayerTreeHostImplTest, ScrollWithUserUnscrollableLayers) {
   LayerImpl* scroll_layer = SetupScrollAndContentsLayers(gfx::Size(200, 200));
   host_impl_->SetViewportSize(gfx::Size(100, 100));
@@ -3871,7 +3757,7 @@ class DidDrawCheckLayer : public LayerImpl {
 
   void AddCopyRequest() {
     test_properties()->copy_requests.push_back(
-        CopyOutputRequest::CreateRequest(base::BindOnce(&IgnoreResult)));
+        CopyOutputRequest::CreateRequest(base::Bind(&IgnoreResult)));
   }
 
  protected:
@@ -8883,7 +8769,7 @@ TEST_F(LayerTreeHostImplTest, CreateETC1UIResource) {
   // correct width/height are passed directly to UIResourceBitmap.
   SkImageInfo info =
       SkImageInfo::Make(4, 2, kAlpha_8_SkColorType, kPremul_SkAlphaType);
-  sk_sp<SkPixelRef> pixel_ref(SkMallocPixelRef::MakeAllocate(info, 0));
+  sk_sp<SkPixelRef> pixel_ref(SkMallocPixelRef::MakeAllocate(info, 0, 0));
   pixel_ref->setImmutable();
   UIResourceBitmap bitmap(std::move(pixel_ref), size);
   UIResourceId ui_resource_id = 1;
@@ -8940,7 +8826,7 @@ TEST_F(LayerTreeHostImplTest, ShutdownReleasesContext) {
   LayerImpl* root = host_impl_->active_tree()->root_layer_for_testing();
   root->test_properties()->copy_requests.push_back(
       CopyOutputRequest::CreateRequest(
-          base::BindOnce(&ShutdownReleasesContext_Callback)));
+          base::Bind(&ShutdownReleasesContext_Callback)));
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
 
   TestFrameData frame;

@@ -22,6 +22,10 @@ using base::android::JavaRef;
 using base::android::RunCallbackAndroid;
 using base::android::ScopedJavaGlobalRef;
 
+bool RegisterChildAccountService(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
 void ListenForChildStatusReceived(JNIEnv* env,
                                   const JavaParamRef<jclass>& jcaller,
                                   const JavaParamRef<jobject>& callback) {

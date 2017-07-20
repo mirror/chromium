@@ -66,8 +66,8 @@ class ASH_EXPORT AppListPresenterDelegate
 
   // ShellObserver overrides:
   void OnOverviewModeStarting() override;
-  void OnTabletModeStarted() override;
-  void OnTabletModeEnded() override;
+  void OnMaximizeModeStarted() override;
+  void OnMaximizeModeEnded() override;
 
   // Whether the app list is visible (or in the process of being shown).
   bool is_visible_ = false;

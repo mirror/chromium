@@ -152,13 +152,6 @@ class NavigationHandleImplTest : public RenderViewHostImplTestHarness {
     return test_handle_->state() == NavigationHandleImpl::CANCELING;
   }
 
-  void Resume() { test_handle_->ResumeInternal(); }
-
-  void CancelDeferredNavigation(
-      NavigationThrottle::ThrottleCheckResult result) {
-    test_handle_->CancelDeferredNavigationInternal(result);
-  }
-
   // Helper function to call WillStartRequest on |handle|. If this function
   // returns DEFER, |callback_result_| will be set to the actual result of
   // the throttle checks when they are finished.
@@ -339,12 +332,14 @@ TEST_F(NavigationHandleImplTest, SimpleDataChecks) {
   EXPECT_EQ(net::HttpResponseInfo::CONNECTION_INFO_UNKNOWN,
             test_handle()->GetConnectionInfo());
 
+  test_handle()->Resume();
   SimulateWillRedirectRequest();
   EXPECT_EQ(REQUEST_CONTEXT_TYPE_LOCATION,
             test_handle()->request_context_type());
   EXPECT_EQ(net::HttpResponseInfo::CONNECTION_INFO_HTTP1_1,
             test_handle()->GetConnectionInfo());
 
+  test_handle()->Resume();
   SimulateWillProcessResponse();
   EXPECT_EQ(REQUEST_CONTEXT_TYPE_LOCATION,
             test_handle()->request_context_type());
@@ -357,6 +352,7 @@ TEST_F(NavigationHandleImplTest, SimpleDataCheckNoRedirect) {
   EXPECT_EQ(net::HttpResponseInfo::CONNECTION_INFO_UNKNOWN,
             test_handle()->GetConnectionInfo());
 
+  test_handle()->Resume();
   SimulateWillProcessResponse();
   EXPECT_EQ(net::HttpResponseInfo::CONNECTION_INFO_QUIC_35,
             test_handle()->GetConnectionInfo());
@@ -386,7 +382,7 @@ TEST_F(NavigationHandleImplTest, ResumeDeferred) {
 
   // Resume the request. It should no longer be deferred and the callback
   // should have been called.
-  Resume();
+  test_handle()->Resume();
   EXPECT_FALSE(IsDeferringStart());
   EXPECT_FALSE(IsDeferringRedirect());
   EXPECT_FALSE(IsDeferringResponse());
@@ -409,7 +405,7 @@ TEST_F(NavigationHandleImplTest, ResumeDeferred) {
 
   // Resume the request. It should no longer be deferred and the callback
   // should have been called.
-  Resume();
+  test_handle()->Resume();
   EXPECT_FALSE(IsDeferringStart());
   EXPECT_FALSE(IsDeferringRedirect());
   EXPECT_FALSE(IsDeferringResponse());
@@ -432,7 +428,7 @@ TEST_F(NavigationHandleImplTest, ResumeDeferred) {
 
   // Resume the request. It should no longer be deferred and the callback should
   // have been called.
-  Resume();
+  test_handle()->Resume();
   EXPECT_FALSE(IsDeferringStart());
   EXPECT_FALSE(IsDeferringRedirect());
   EXPECT_FALSE(IsDeferringResponse());
@@ -466,7 +462,8 @@ TEST_F(NavigationHandleImplTest, CancelDeferredWillStart) {
   EXPECT_EQ(0, test_throttle->will_process_response_calls());
 
   // Cancel the request. The callback should have been called.
-  CancelDeferredNavigation(NavigationThrottle::CANCEL_AND_IGNORE);
+  test_handle()->CancelDeferredNavigation(
+      NavigationThrottle::CANCEL_AND_IGNORE);
   EXPECT_FALSE(IsDeferringStart());
   EXPECT_FALSE(IsDeferringRedirect());
   EXPECT_TRUE(IsCanceling());
@@ -499,7 +496,8 @@ TEST_F(NavigationHandleImplTest, CancelDeferredWillRedirect) {
   EXPECT_EQ(0, test_throttle->will_process_response_calls());
 
   // Cancel the request. The callback should have been called.
-  CancelDeferredNavigation(NavigationThrottle::CANCEL_AND_IGNORE);
+  test_handle()->CancelDeferredNavigation(
+      NavigationThrottle::CANCEL_AND_IGNORE);
   EXPECT_FALSE(IsDeferringStart());
   EXPECT_FALSE(IsDeferringRedirect());
   EXPECT_TRUE(IsCanceling());
@@ -532,7 +530,7 @@ TEST_F(NavigationHandleImplTest, CancelDeferredNoIgnore) {
 
   // Cancel the request. The callback should have been called with CANCEL, and
   // not CANCEL_AND_IGNORE.
-  CancelDeferredNavigation(NavigationThrottle::CANCEL);
+  test_handle()->CancelDeferredNavigation(NavigationThrottle::CANCEL);
   EXPECT_FALSE(IsDeferringStart());
   EXPECT_FALSE(IsDeferringRedirect());
   EXPECT_TRUE(IsCanceling());
@@ -574,7 +572,7 @@ TEST_F(NavigationHandleImplTest, DeferThenProceed) {
 
   // Resume the request. It should no longer be deferred and the callback
   // should have been called. The second throttle should have been notified.
-  Resume();
+  test_handle()->Resume();
   EXPECT_FALSE(IsDeferringStart());
   EXPECT_FALSE(IsDeferringRedirect());
   EXPECT_TRUE(was_callback_called());
@@ -600,7 +598,7 @@ TEST_F(NavigationHandleImplTest, DeferThenProceed) {
 
   // Resume the request. It should no longer be deferred and the callback
   // should have been called. The second throttle should have been notified.
-  Resume();
+  test_handle()->Resume();
   EXPECT_FALSE(IsDeferringStart());
   EXPECT_FALSE(IsDeferringRedirect());
   EXPECT_TRUE(was_callback_called());
@@ -642,7 +640,7 @@ TEST_F(NavigationHandleImplTest, DeferThenCancelWillStartRequest) {
 
   // Resume the request. The callback should have been called. The second
   // throttle should have been notified.
-  Resume();
+  test_handle()->Resume();
   EXPECT_FALSE(IsDeferringStart());
   EXPECT_FALSE(IsDeferringRedirect());
   EXPECT_TRUE(IsCanceling());
@@ -685,7 +683,7 @@ TEST_F(NavigationHandleImplTest, DeferThenCancelWillRedirectRequest) {
 
   // Resume the request. The callback should have been called. The second
   // throttle should have been notified.
-  Resume();
+  test_handle()->Resume();
   EXPECT_FALSE(IsDeferringStart());
   EXPECT_FALSE(IsDeferringRedirect());
   EXPECT_TRUE(IsCanceling());
@@ -883,7 +881,7 @@ TEST_F(NavigationHandleImplTest, DeletionByNavigationThrottle) {
   AddDeletingNavigationThrottle();
   SimulateWillStartRequest();
   EXPECT_NE(nullptr, test_handle());
-  Resume();
+  test_handle()->Resume();
   EXPECT_EQ(nullptr, test_handle());
   if (IsBrowserSideNavigationEnabled()) {
     EXPECT_FALSE(was_callback_called());
@@ -910,7 +908,7 @@ TEST_F(NavigationHandleImplTest, DeletionByNavigationThrottle) {
   AddDeletingNavigationThrottle();
   SimulateWillRedirectRequest();
   EXPECT_NE(nullptr, test_handle());
-  Resume();
+  test_handle()->Resume();
   EXPECT_EQ(nullptr, test_handle());
   if (IsBrowserSideNavigationEnabled()) {
     EXPECT_FALSE(was_callback_called());
@@ -937,7 +935,7 @@ TEST_F(NavigationHandleImplTest, DeletionByNavigationThrottle) {
   AddDeletingNavigationThrottle();
   SimulateWillProcessResponse();
   EXPECT_NE(nullptr, test_handle());
-  Resume();
+  test_handle()->Resume();
   EXPECT_EQ(nullptr, test_handle());
   if (IsBrowserSideNavigationEnabled()) {
     EXPECT_FALSE(was_callback_called());

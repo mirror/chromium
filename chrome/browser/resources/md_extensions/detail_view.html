@@ -1,10 +1,7 @@
-<link rel="import" href="chrome://resources/html/polymer.html">
-
 <link rel="import" href="chrome://resources/cr_elements/hidden_style_css.html">
-<link rel="import" href="chrome://resources/html/action_link.html">
-<link rel="import" href="chrome://resources/html/action_link_css.html">
 <link rel="import" href="chrome://resources/html/cr.html">
 <link rel="import" href="chrome://resources/html/i18n_behavior.html">
+<link rel="import" href="chrome://resources/html/polymer.html">
 <link rel="import" href="chrome://resources/polymer/v1_0/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="chrome://resources/polymer/v1_0/iron-icons/iron-icons.html">
 <link rel="import" href="chrome://resources/polymer/v1_0/paper-icon-button/paper-icon-button-light.html">
@@ -16,7 +13,7 @@
 
 <dom-module id="extensions-detail-view">
   <template>
-    <style include="iron-flex cr-hidden-style action-link">
+    <style include="iron-flex cr-hidden-style">
       :host {
         display: flex;
         justify-content: center;
@@ -154,10 +151,10 @@
           <ul id="inspect-views">
             <template is="dom-repeat" items="[[data.views]]">
               <li>
-                <a is="action-link" class="inspectable-view"
-                    on-tap="onInspectTap_">
+                <button class="inspectable-view" on-tap="onInspectTap_"
+                    is="paper-icon-button-light">
                   [[computeInspectLabel_(item)]]
-                </a>
+                </button>
               </li>
             </template>
           </ul>

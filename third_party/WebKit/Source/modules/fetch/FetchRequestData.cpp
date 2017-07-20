@@ -48,7 +48,6 @@ FetchRequestData* FetchRequestData::Create(
   request->SetCacheMode(web_request.CacheMode());
   request->SetRedirect(web_request.RedirectMode());
   request->SetMIMEType(request->header_list_->ExtractMIMEType());
-  request->SetIntegrity(web_request.Integrity());
   return request;
 }
 

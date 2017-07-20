@@ -703,7 +703,6 @@ public class BottomToolbarPhone extends ToolbarPhone {
         if (mUrlFocusChangeInProgress) {
             if (visible) {
                 mHidingSomeToolbarButtons = false;
-                mShowMenuButtonWhenSheetOpen = false;
                 mToolbarButtonVisibilityPercent = 1.f;
 
                 mToolbarButtonsContainer.setAlpha(1.f);
@@ -784,7 +783,6 @@ public class BottomToolbarPhone extends ToolbarPhone {
         if (urlHasFocus()) {
             mHidingSomeToolbarButtons = true;
             mToolbarButtonVisibilityPercent = 0.f;
-            updateButtonsContainerVisibilityAndTranslation();
         }
         updateMenuButtonClickableState();
     }

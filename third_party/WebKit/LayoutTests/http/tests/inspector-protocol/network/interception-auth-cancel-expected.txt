@@ -1,4 +1,5 @@
 Tests canceling an HTTP auth challenge via DevTools protocol.
+
 Test started
 Network agent enabled
 Request interception enabled
@@ -12,6 +13,6 @@ allowRequest ID 2
 Auth required for ID 2
 ----- Cancel Auth -----
 Network.responseReceived unauthorised.pl 401 text/plain
-Network.loadingFailed unauthorised.pl net::ERR_ABORTED
+Network.loadingFailed unauthorised.pl 
 Page.frameStoppedLoading
 

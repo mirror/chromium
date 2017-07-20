@@ -179,7 +179,6 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
       const std::vector<cc::ReturnedResource>& resources) override;
   void WillDrawSurface(const viz::LocalSurfaceId& id,
                        const gfx::Rect& damage_rect) override {}
-  void OnBeginFramePausedChanged(bool paused) override;
 
   // Exposed for tests.
   bool IsChildFrameForTesting() const override;

@@ -17,14 +17,9 @@ class CORE_EXPORT SelectionAdjuster final {
   STATIC_ONLY(SelectionAdjuster);
 
  public:
-  static Position AdjustSelectionStartToAvoidCrossingShadowBoundaries(
-      const EphemeralRange&);
-  static Position AdjustSelectionEndToAvoidCrossingShadowBoundaries(
-      const EphemeralRange&);
-  static PositionInFlatTree AdjustSelectionStartToAvoidCrossingShadowBoundaries(
-      const EphemeralRangeInFlatTree&);
-  static PositionInFlatTree AdjustSelectionEndToAvoidCrossingShadowBoundaries(
-      const EphemeralRangeInFlatTree&);
+  static void AdjustSelectionToAvoidCrossingShadowBoundaries(VisibleSelection*);
+  static void AdjustSelectionToAvoidCrossingShadowBoundaries(
+      VisibleSelectionInFlatTree*);
 };
 
 }  // namespace blink
