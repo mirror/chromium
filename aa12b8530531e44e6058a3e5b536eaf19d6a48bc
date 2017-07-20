@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c5f17dda_4715326e",
+        "filename": "chrome/browser/ssl/insecure_sensitive_input_driver_factory.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-07-20T16:39:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68f66134_545a1ef4",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 35
+      },
+      "revId": "aa12b8530531e44e6058a3e5b536eaf19d6a48bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f83a9e09_9f9bef20",
         "filename": "chrome/browser/ssl/insecure_sensitive_input_driver_factory.h",
         "patchSetId": 11
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-20T15:25:03Z",
       "side": 1,
       "message": "no longer needed? comment belongs on constructor instead",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 50
+      },
+      "revId": "aa12b8530531e44e6058a3e5b536eaf19d6a48bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81f5767c_ce468f05",
+        "filename": "chrome/browser/ssl/insecure_sensitive_input_driver_factory.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-07-20T16:39:15Z",
+      "side": 1,
+      "message": "Gah. Fixed.",
+      "parentUuid": "f83a9e09_9f9bef20",
       "range": {
         "startLine": 27,
         "startChar": 0,

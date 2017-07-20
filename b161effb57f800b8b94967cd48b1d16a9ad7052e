@@ -449,6 +449,30 @@
     },
     {
       "key": {
+        "uuid": "a6336ac7_1d043df8",
+        "filename": "chrome/browser/ssl/insecure_sensitive_input_driver_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-07-20T16:39:15Z",
+      "side": 1,
+      "message": "Okay, that makes sense. \n\nI guess part of my confusion is just below here, where I ported over the\n\n  if (driver)\n\n... I don\u0027t know of any way that |driver| could be null, but it\u0027s also not clear whether a DCHECK would be an appropriate mechanism for learning of such cases.",
+      "parentUuid": "1c4dfd7f_7c194470",
+      "range": {
+        "startLine": 75,
+        "startChar": 2,
+        "endLine": 76,
+        "endChar": 11
+      },
+      "revId": "b161effb57f800b8b94967cd48b1d16a9ad7052e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc3c54cf_61692241",
         "filename": "chrome/browser/ssl/insecure_sensitive_input_driver_factory.h",
         "patchSetId": 6
