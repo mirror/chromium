@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d236aedd_e96c9d78",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1924,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-20T18:40:43Z",
+      "side": 1,
+      "message": "Can we actually add this check in:\nhttps://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarManager.java?q\u003dToolbarManager.java\u0026sq\u003dpackage:chromium\u0026l\u003d854\n\nI think we should just clear the focus anytime the menu is shown and avoid the headache of adding this in multiple places.",
+      "revId": "ffad61b25fb9d238babecdca7bb48efec0a562da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
