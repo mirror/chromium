@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26a1ba79_5746b045",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/privacy/ClearBrowsingDataPreferences.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-20T00:29:07Z",
+      "side": 0,
+      "message": "We should check with UX that it\u0027s okay to change the icon here too.",
+      "range": {
+        "startLine": 194,
+        "startChar": 67,
+        "endLine": 194,
+        "endChar": 90
+      },
+      "revId": "c8bf13e0def38c3b9971c3b49d8cc8d423d90519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
