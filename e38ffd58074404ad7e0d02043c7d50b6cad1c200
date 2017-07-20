@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae79e04b_18fd680b",
+        "filename": "components/arc/arc_session.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-20T05:13:20Z",
+      "side": 1,
+      "message": "i assume that \"the same\" refers to \"not for login screen\", but it\u0027s probably better to spell it out so it still makes sense if/when the code is refactored later.\n\ni think it may also be more common to put the full arg name in the comment, e.g.\n\n  false /* instance_is_for_login_screen */\n\n(might want to just rename it to for_login_screen above, too)",
+      "range": {
+        "startLine": 310,
+        "startChar": 56,
+        "endLine": 310,
+        "endChar": 64
+      },
+      "revId": "e38ffd58074404ad7e0d02043c7d50b6cad1c200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
