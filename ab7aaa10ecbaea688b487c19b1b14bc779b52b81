@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3456082f_826c1eac",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 884,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-20T16:21:04Z",
+      "side": 1,
+      "message": "you need {} in this construction",
+      "range": {
+        "startLine": 884,
+        "startChar": 0,
+        "endLine": 884,
+        "endChar": 26
+      },
+      "revId": "ab7aaa10ecbaea688b487c19b1b14bc779b52b81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d0837ee_bae51fee",
+        "filename": "ui/app_list/views/app_list_view.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-20T16:21:04Z",
+      "side": 1,
+      "message": "nit: could you please keep all getters in one place. This, at L97, 112 129",
+      "range": {
+        "startLine": 142,
+        "startChar": 17,
+        "endLine": 142,
+        "endChar": 47
+      },
+      "revId": "ab7aaa10ecbaea688b487c19b1b14bc779b52b81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e94c92f7_b5442a8b",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-20T16:21:04Z",
+      "side": 1,
+      "message": "testing::Test: is enough.",
+      "range": {
+        "startLine": 180,
+        "startChar": 19,
+        "endLine": 180,
+        "endChar": 28
+      },
+      "revId": "ab7aaa10ecbaea688b487c19b1b14bc779b52b81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bf55c0b_2bd001cd",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-20T16:21:04Z",
+      "side": 1,
+      "message": "nuke this line please. It refers to L 180.",
+      "range": {
+        "startLine": 187,
+        "startChar": 0,
+        "endLine": 187,
+        "endChar": 29
+      },
+      "revId": "ab7aaa10ecbaea688b487c19b1b14bc779b52b81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f939eb41_92bb0f35",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-20T16:21:04Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 205,
+        "startChar": 4,
+        "endLine": 205,
+        "endChar": 13
+      },
+      "revId": "ab7aaa10ecbaea688b487c19b1b14bc779b52b81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d79749d8_bc5bb659",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-20T16:21:04Z",
+      "side": 1,
+      "message": "nit: Can we validate state after this line (the same below)?",
+      "range": {
+        "startLine": 255,
+        "startChar": 0,
+        "endLine": 255,
+        "endChar": 59
+      },
+      "revId": "ab7aaa10ecbaea688b487c19b1b14bc779b52b81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
