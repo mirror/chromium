@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d1b6f59e_544a93f2",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/WebIDL/ecmascript-binding/legacy-platform-object.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-07-20T10:32:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "391dc6bb_269d112a",
+      "revId": "59588f033746ef35be84984082f495372cd83bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c1fc607_7e56bf0f",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/WebIDL/ecmascript-binding/legacy-platform-object.html",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-19T21:19:26Z",
       "side": 1,
       "message": "So, these arrays should be empty.",
+      "revId": "59588f033746ef35be84984082f495372cd83bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca3aa798_d832f404",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/WebIDL/ecmascript-binding/legacy-platform-object.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-07-20T10:32:26Z",
+      "side": 1,
+      "message": "Are you sure? Gecko also passes these two checks, and LegacyUnenumerableNamedProperties shouldn\u0027t affect the indexed properties (see how assert_prop_desc_equals(elementList, \"1\", ...) returns enumerable:true above).",
+      "parentUuid": "8c1fc607_7e56bf0f",
       "revId": "59588f033746ef35be84984082f495372cd83bcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "deee4d91_5bab90b8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/WebIDL/ecmascript-binding/legacy-platform-object.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-07-20T10:32:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15d65fa5_89fb5f6c",
+      "revId": "59588f033746ef35be84984082f495372cd83bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8341dc3_d50d7316",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/WebIDL/ecmascript-binding/legacy-platform-object.html",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "59588f033746ef35be84984082f495372cd83bcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c97168d2_52428b9a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/WebIDL/ecmascript-binding/legacy-platform-object.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-07-20T10:32:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8341dc3_d50d7316",
+      "revId": "59588f033746ef35be84984082f495372cd83bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "d5c74e7d_75a81540",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface.cpp.tmpl",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-07-20T10:32:26Z",
+      "side": 1,
+      "message": "While it\u0027s not possible to move everything out of the template, I can move most of the logic out of it and save some space in final binaries (a reduction of ~8.9kb in the Android APK compared to having the entirety of the code here when addressing Yuki\u0027s comment below).",
+      "parentUuid": "d7353287_dafdf64d",
+      "revId": "59588f033746ef35be84984082f495372cd83bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd398927_2c6ec418",
         "filename": "third_party/WebKit/Source/bindings/templates/interface.cpp.tmpl",
         "patchSetId": 2
@@ -125,6 +215,30 @@
       "revId": "59588f033746ef35be84984082f495372cd83bcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4c09256_4e288fd4",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface.cpp.tmpl",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-07-20T10:32:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd398927_2c6ec418",
+      "range": {
+        "startLine": 167,
+        "startChar": 2,
+        "endLine": 167,
+        "endChar": 23
+      },
+      "revId": "59588f033746ef35be84984082f495372cd83bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
