@@ -320,6 +320,30 @@
     },
     {
       "key": {
+        "uuid": "78dc5ab6_690c404b",
+        "filename": "components/ntp_tiles/most_visited_sites.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-20T11:59:29Z",
+      "side": 1,
+      "message": "Reverted introducing |sites|. But it returns now all sections because we need to pass them to the observer anyway.\n\n(Considering 1.: It also depends on top_sites_, icon_cacher_, and num_sites_...)",
+      "parentUuid": "8f588d59_aec243c5",
+      "range": {
+        "startLine": 202,
+        "startChar": 45,
+        "endLine": 202,
+        "endChar": 0
+      },
+      "revId": "c8cd42bf577b55a98177518085f682c103cd11b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2897f40e_421d4cfe",
         "filename": "components/ntp_tiles/most_visited_sites.h",
         "patchSetId": 5
