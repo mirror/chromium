@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b234e0bc_24788329",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-20T20:41:05Z",
+      "side": 1,
+      "message": "Could you put it in autofill_experiments.h instead?",
+      "range": {
+        "startLine": 55,
+        "startChar": 20,
+        "endLine": 55,
+        "endChar": 44
+      },
+      "revId": "f56db50993217520f74407828ccfe87cae4eacdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
