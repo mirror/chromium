@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af3ae297_b39b1e63",
+        "filename": "chrome/browser/android/vr_shell/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-20T15:53:09Z",
+      "side": 1,
+      "message": "With so many owners, do we maybe want to start offering some guidance on who to select as your reviewer? Not sure how/if we would do this right now, but as our codebase and team grows we might want to specialize a bit?\n\nCan probably take girard@ off too, don\u0027t think he wants to be reviewing VR code :P",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 7
+      },
+      "revId": "193fb40977e45cec8c07ba8142d2fa106d51b9eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
