@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "034336c3_718821f3",
+        "filename": "net/disk_cache/blockfile/backend_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000750
+      },
+      "writtenOn": "2017-07-20T21:37:43Z",
+      "side": 1,
+      "message": "\u003e Shouldn\u0027t introduce an assumption that there\u0027s only a network stack on one thread.\n\nYou kind of lost me here. The intent is to essentially provide a one-for-one replacement for the going-away BrowserThread::CACHE, just one scoped to the one place that actually needs it. \nThis is used entirely internally; I think using it with BackendImpl\u0027s bound to different threads should still work, too.\n\nThough not using the proper singleton/lazy instance would indeed be a problem for multi-thread creation.\n\n(I think some of the other things I have pending may assume a single I/O thread, though...)\n\n\n\u003e The way this is generally handled is by base::Singleton (which can be declared in the one method that provides access to them) or with base::LazyInstance\u003cbase::Thread\u003e::Leaky.\n\u003e \n\u003e Not sure about practical reasons to provide one over the other - I assume Singletons are also leaky, but not positive.\n\nThanks, will look those up.\n\n\u003e Actually, come to think of it, I don\u0027t think we want a thread that leaks on shutdown, since we\u0027re doing file I/O, it needs to shut down cleanly, right?\n\nIf ~BackendImpl gets run (and it really should if we want to shut down cleanly) then it\u0027ll actually flush this. I am unclear as to what would make things more broken if a backend leaks.",
+      "parentUuid": "b45535fd_38248e17",
+      "range": {
+        "startLine": 113,
+        "startChar": 40,
+        "endLine": 113,
+        "endChar": 47
+      },
+      "revId": "1988d19cc548e4ae3d1d99cf72a71c64de020751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48ff59a5_0885d7e8",
         "filename": "net/disk_cache/blockfile/backend_impl.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-20T20:54:34Z",
       "side": 1,
       "message": "Is there a reason not to grab one from the task_scheduler instead, and just hold onto that?",
+      "range": {
+        "startLine": 120,
+        "startChar": 22,
+        "endLine": 120,
+        "endChar": 29
+      },
+      "revId": "1988d19cc548e4ae3d1d99cf72a71c64de020751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18672ed1_8f63b9b5",
+        "filename": "net/disk_cache/blockfile/backend_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000750
+      },
+      "writtenOn": "2017-07-20T21:37:43Z",
+      "side": 1,
+      "message": "task_scheduler doesn\u0027t let one create things with TYPE_IO.",
+      "parentUuid": "48ff59a5_0885d7e8",
       "range": {
         "startLine": 120,
         "startChar": 22,
