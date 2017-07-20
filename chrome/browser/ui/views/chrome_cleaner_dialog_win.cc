@@ -30,8 +30,10 @@ namespace chrome {
 
 void ShowChromeCleanerPrompt(
     Browser* browser,
-    safe_browsing::ChromeCleanerDialogController* controller) {
-  ChromeCleanerDialog* dialog = new ChromeCleanerDialog(controller);
+    safe_browsing::ChromeCleanerDialogController* dialog_controller,
+    safe_browsing::ChromeCleanerController* cleaner_controller) {
+  ChromeCleanerDialog* dialog =
+      new ChromeCleanerDialog(dialog_controller, cleaner_controller);
   dialog->Show(browser);
 }
 
@@ -46,12 +48,15 @@ constexpr int kDialogWidth = 448;
 // ChromeCleanerDialog
 
 ChromeCleanerDialog::ChromeCleanerDialog(
-    safe_browsing::ChromeCleanerDialogController* controller)
+    safe_browsing::ChromeCleanerDialogController* dialog_controller,
+    safe_browsing::ChromeCleanerController* cleaner_controller)
     : browser_(nullptr),
-      controller_(controller),
+      dialog_controller_(dialog_controller),
+      cleaner_controller_(cleaner_controller),
       details_button_(nullptr),
       logs_permission_checkbox_(nullptr) {
-  DCHECK(controller_);
+  DCHECK(dialog_controller_);
+  DCHECK(cleaner_controller_);
 
   SetLayoutManager(
       new views::BoxLayout(views::BoxLayout::kVertical,
@@ -68,20 +73,30 @@ ChromeCleanerDialog::ChromeCleanerDialog(
 ChromeCleanerDialog::~ChromeCleanerDialog() {
   // Make sure the controller is correctly notified in case the dialog widget is
   // closed by some other means than the dialog buttons.
-  if (controller_)
-    controller_->Cancel();
+  if (dialog_controller_)
+    dialog_controller_->Cancel();
+
+  cleaner_controller_->RemoveObserver(this);
 }
 
 void ChromeCleanerDialog::Show(Browser* browser) {
   DCHECK(browser);
   DCHECK(!browser_);
-  DCHECK(controller_);
+  DCHECK(dialog_controller_);
+  DCHECK(cleaner_controller_);
+  DCHECK_EQ(safe_browsing::ChromeCleanerController::State::kInfected,
+            cleaner_controller_->state());
 
   browser_ = browser;
   constrained_window::CreateBrowserModalDialogViews(
       this, browser_->window()->GetNativeWindow())
       ->Show();
-  controller_->DialogShown();
+  dialog_controller_->DialogShown();
+
+  // Observe the ChromeCleanerController's state so that the dialog can be
+  // closed if the controller leaves the kInfected state before the user
+  // interacts with the dialog.
+  cleaner_controller_->AddObserver(this);
 }
 
 // WidgetDelegate overrides.
@@ -91,7 +106,7 @@ ui::ModalType ChromeCleanerDialog::GetModalType() const {
 }
 
 base::string16 ChromeCleanerDialog::GetWindowTitle() const {
-  DCHECK(controller_);
+  DCHECK(dialog_controller_);
   return l10n_util::GetStringUTF16(IDS_CHROME_CLEANUP_PROMPT_TITLE);
 }
 
@@ -106,7 +121,7 @@ views::View* ChromeCleanerDialog::GetInitiallyFocusedView() {
 
 views::View* ChromeCleanerDialog::CreateFootnoteView() {
   DCHECK(!logs_permission_checkbox_);
-  DCHECK(controller_);
+  DCHECK(dialog_controller_);
 
   views::View* footnote_view = new views::View();
   footnote_view->SetLayoutManager(new views::BoxLayout(
@@ -114,7 +129,7 @@ views::View* ChromeCleanerDialog::CreateFootnoteView() {
                                        views::INSETS_DIALOG_CONTENTS)));
   logs_permission_checkbox_ = new views::Checkbox(
       l10n_util::GetStringUTF16(IDS_CHROME_CLEANUP_LOGS_PERMISSION));
-  logs_permission_checkbox_->SetChecked(controller_->LogsEnabled());
+  logs_permission_checkbox_->SetChecked(dialog_controller_->LogsEnabled());
   logs_permission_checkbox_->set_listener(this);
   footnote_view->AddChildView(logs_permission_checkbox_);
   return footnote_view;
@@ -123,7 +138,7 @@ views::View* ChromeCleanerDialog::CreateFootnoteView() {
 base::string16 ChromeCleanerDialog::GetDialogButtonLabel(
     ui::DialogButton button) const {
   DCHECK(button == ui::DIALOG_BUTTON_OK || button == ui::DIALOG_BUTTON_CANCEL);
-  DCHECK(controller_);
+  DCHECK(dialog_controller_);
 
   return button == ui::DIALOG_BUTTON_OK
              ? l10n_util::GetStringUTF16(
@@ -141,25 +156,29 @@ views::View* ChromeCleanerDialog::CreateExtraView() {
 }
 
 bool ChromeCleanerDialog::Accept() {
-  if (controller_) {
-    controller_->Accept(/*logs_enabled=*/logs_permission_checkbox_->checked());
-    controller_ = nullptr;
+  cleaner_controller_->RemoveObserver(this);
+  if (dialog_controller_) {
+    dialog_controller_->Accept(
+        /*logs_enabled=*/logs_permission_checkbox_->checked());
+    dialog_controller_ = nullptr;
   }
   return true;
 }
 
 bool ChromeCleanerDialog::Cancel() {
-  if (controller_) {
-    controller_->Cancel();
-    controller_ = nullptr;
+  cleaner_controller_->RemoveObserver(this);
+  if (dialog_controller_) {
+    dialog_controller_->Cancel();
+    dialog_controller_ = nullptr;
   }
   return true;
 }
 
 bool ChromeCleanerDialog::Close() {
-  if (controller_) {
-    controller_->Close();
-    controller_ = nullptr;
+  cleaner_controller_->RemoveObserver(this);
+  if (dialog_controller_) {
+    dialog_controller_->Close();
+    dialog_controller_ = nullptr;
   }
   return true;
 }
@@ -177,10 +196,10 @@ void ChromeCleanerDialog::ButtonPressed(views::Button* sender,
   DCHECK(browser_);
 
   if (sender == details_button_) {
-    if (controller_) {
-      controller_->DetailsButtonClicked(
+    if (dialog_controller_) {
+      dialog_controller_->DetailsButtonClicked(
           /*logs_enabled=*/logs_permission_checkbox_->checked());
-      controller_ = nullptr;
+      dialog_controller_ = nullptr;
     }
     GetWidget()->Close();
     return;
@@ -188,6 +207,35 @@ void ChromeCleanerDialog::ButtonPressed(views::Button* sender,
 
   DCHECK_EQ(logs_permission_checkbox_, sender);
 
-  if (controller_)
-    controller_->SetLogsEnabled(logs_permission_checkbox_->checked());
+  if (dialog_controller_)
+    dialog_controller_->SetLogsEnabled(logs_permission_checkbox_->checked());
+}
+
+// safe_browsing::ChromeCleanerController::Observer overrides
+
+void ChromeCleanerDialog::OnIdle(
+    safe_browsing::ChromeCleanerController::IdleReason idle_reason) {
+  Abort();
+}
+
+void ChromeCleanerDialog::OnScanning() {
+  Abort();
+}
+
+void ChromeCleanerDialog::OnCleaning(
+    const std::set<base::FilePath>& files_to_delete) {
+  Abort();
+}
+
+void ChromeCleanerDialog::OnRebootRequired() {
+  Abort();
+}
+
+void ChromeCleanerDialog::Abort() {
+  cleaner_controller_->RemoveObserver(this);
+  if (dialog_controller_) {
+    dialog_controller_->ClosedWithoutUserInteraction();
+    dialog_controller_ = nullptr;
+  }
+  GetWidget()->Close();
 }
