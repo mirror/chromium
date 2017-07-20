@@ -34,6 +34,24 @@
       "revId": "7e6d85195f0b3655d4728f9086b1fca64146bc81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d66a5b5_2e86cca1",
+        "filename": "third_party/WebKit/Source/platform/wtf/ScopedLogger.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-07-20T01:03:41Z",
+      "side": 1,
+      "message": "I don\u0027t think ScopedLogger can use DLOG, because DLOG doesn\u0027t support newline suppression.\n\nIs there a problem with making vprintf_stderr_common external-linkage?",
+      "parentUuid": "daeded70_dbec9581",
+      "revId": "7e6d85195f0b3655d4728f9086b1fca64146bc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
