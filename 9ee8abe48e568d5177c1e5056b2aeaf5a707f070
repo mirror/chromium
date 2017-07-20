@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d94cff2_13089ae6",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/network-test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-20T01:33:19Z",
+      "side": 1,
+      "message": "Your method has a side effect of enabling the cache, otherwise all is good.",
+      "revId": "9ee8abe48e568d5177c1e5056b2aeaf5a707f070",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
