@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "622b7e4c_ad87d55c",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-07-20T09:42:59Z",
+      "side": 0,
+      "message": "Yes, I agree, that this looks wrong. But compare above at \"if(LIKELY(pos.x_advance...\", we need to make sure we advance in x or y direction.",
+      "revId": "455b325fa379d09b057c39947efa11524b0eec2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

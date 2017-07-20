@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3326e2d1_20c2fb1c",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-07-20T09:42:59Z",
+      "side": 1,
+      "message": "Could you explain this comment a bit more? \n\nI believe the GlyphBounds() we retrieve here, are generally the ink-bounds of the glyph. In the TrueType case they are stored in the glyph itself, in CFF they are computed from the path. \n\nDo you mean that for calculating the united bounds, we need to place the glyph bounds at the offset to compute them correctly?",
+      "revId": "18a7a5d0bcafd506e3acea71b435487961a34a74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0550f84_da89774e",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-07-20T09:42:59Z",
+      "side": 1,
+      "message": "I think this would need to be\nglyph_origin +\u003d FloatSize(HarfBuzzPositionToFloat(pos.x_advance), -HarfBuzzPositionToFloat(pos.y_advance));",
+      "revId": "18a7a5d0bcafd506e3acea71b435487961a34a74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
