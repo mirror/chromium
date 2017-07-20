@@ -22,6 +22,30 @@
       "revId": "cec39d16ba89dcffb09cde58416101614492f079",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "426a1912_432514d3",
+        "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-20T18:47:33Z",
+      "side": 1,
+      "message": "I\u0027m not completely sure.\nThe transition happens in PasswordDetailsCollectionViewController\u0027s deletePassword (dismissing the alert) and SavePasswordsCollectionViewController\u0027s deletePassword (dismissing the detail view with [self.navigationController popViewControllerAnimated:YES];\n\nAs I said, I am unable to verify that this place was where it needed spinning until I\u0027m able to run it on https://build.chromium.org/p/chromium.fyi/builders/EarlGreyiOS, the only bot I know to reproduce the flak reliably.",
+      "parentUuid": "21e16d2d_829c37dd",
+      "range": {
+        "startLine": 586,
+        "startChar": 41,
+        "endLine": 586,
+        "endChar": 55
+      },
+      "revId": "cec39d16ba89dcffb09cde58416101614492f079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
