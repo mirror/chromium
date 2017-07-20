@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "04252531_0867738f",
+        "filename": "chrome/browser/extensions/api/content_settings/content_settings_api.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-20T00:39:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1b12e0e_9440571a",
+      "revId": "5e7b848235cf20cb70e6a3b1c3643ead732a3f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a1150e3_b212b130",
         "filename": "chrome/browser/extensions/api/content_settings/content_settings_store.cc",
         "patchSetId": 10
@@ -78,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "935199cc_e7756482",
+        "filename": "chrome/browser/extensions/api/content_settings/content_settings_store.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-20T00:39:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a1150e3_b212b130",
+      "range": {
+        "startLine": 342,
+        "startChar": 14,
+        "endLine": 342,
+        "endChar": 37
+      },
+      "revId": "5e7b848235cf20cb70e6a3b1c3643ead732a3f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f251c6ad_c8039849",
         "filename": "chrome/browser/resources/settings/site_settings/site_details.js",
         "patchSetId": 10
@@ -95,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "58ce513f_b85f4c33",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-20T00:39:05Z",
+      "side": 1,
+      "message": "Oh, thank you for the link! I will keep that in mind. Fixed.",
+      "parentUuid": "f251c6ad_c8039849",
+      "revId": "5e7b848235cf20cb70e6a3b1c3643ead732a3f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8485fc24_148c2194",
         "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.html",
         "patchSetId": 10
@@ -109,6 +169,24 @@
       "revId": "5e7b848235cf20cb70e6a3b1c3643ead732a3f21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ded20e3c_cfbeed07",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-20T00:39:05Z",
+      "side": 1,
+      "message": "I actually forgot to rebase - will do that now.",
+      "parentUuid": "8485fc24_148c2194",
+      "revId": "5e7b848235cf20cb70e6a3b1c3643ead732a3f21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
