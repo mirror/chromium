@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2b81262_c4a50380",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-20T18:30:40Z",
+      "side": 1,
+      "message": "nit: This might be clearer as:\n\n\"Disable handling of SIGINT during sub-process creation, to prevent sub-processes from consuming Ctrl-C signals, rather than the parent process doing so.\"",
+      "revId": "a8f05f165eddf27d37eea02e5d02fa5a6693974c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
