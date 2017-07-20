@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc840941_3aa07992",
+        "filename": "content/browser/renderer_host/media/media_stream_dispatcher_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-20T02:57:43Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this trigger a StreamGenerationFailed message back to \nthe Renderer? Alternatively make OpenDevice \u003d\u003e (bool success)\nin the mojom.\n\nSince both ways change the existing protocol, a TODO()+bug could \nbe the best course of action.",
+      "range": {
+        "startLine": 144,
+        "startChar": 4,
+        "endLine": 144,
+        "endChar": 10
+      },
+      "revId": "d658dee9c7011e166e20a71d40d3569238af81d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03daa116_d3419fd0",
+        "filename": "content/browser/renderer_host/media/media_stream_dispatcher_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-20T02:57:43Z",
+      "side": 1,
+      "message": "nit: If you put the DVLOG() before DCHECK()s, you\u0027ll always\nsee the printout, even when and whether the program crashes.",
+      "range": {
+        "startLine": 161,
+        "startChar": 0,
+        "endLine": 161,
+        "endChar": 41
+      },
+      "revId": "d658dee9c7011e166e20a71d40d3569238af81d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c820f291_5fea54bf",
+        "filename": "content/renderer/media/media_stream_video_capturer_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-20T02:57:43Z",
+      "side": 1,
+      "message": "Using static objects/methods breaks encapsulation and, as you can\nsee, makes it hard to test the class.  Instead, you could consider\njust injecting on constructor a factory method of sorts:\n\nclass MediaStreamVideoCapturerSource :... {\n public:\n  using GetRemoteAssociatedInterfaceCallback \u003d \n    base::Callback\u003cvoid(mojom::MediaStreamDispatcherHostPtr)\u003e;\n\nand cache it upon constructor call in a const member e.g.\n|get_remote_associated_interface_callback_|, then\ncall it here like:\n  get_remote_associated_interface_callback_.Run(\u0026dispatcher_host_);\n\nOf course it changes a bit the _unittest.cc because you\u0027ll need to\nchange MockMojoMediaStreamDispatcherHost to be an impl of mojom::MSDH,\nthen make a StrongBinding to it inside the \"factory\" you inject:\n\n    mojo_msdhost_binding_ \u003d mojo::MakeStrongBinding(\n        base::MakeUnique\u003cMockMojoMediaStreamDispatcherHost\u003e(),\n        mojo::MakeRequest(\u0026mojo_msdhost));\n\nyou can access (for mocking) the created \nMockMojoMediaStreamDispatcherHost via mojo_msdhost_binding_-\u003eimpl()\n(with casting) like I\u0027m doing here:\nhttps://chromium-review.googlesource.com/c/566145/14/media/mojo/clients/mojo_video_encode_accelerator_unittest.cc",
+      "range": {
+        "startLine": 238,
+        "startChar": 4,
+        "endLine": 238,
+        "endChar": 30
+      },
+      "revId": "d658dee9c7011e166e20a71d40d3569238af81d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
