@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a929791a_a43ef611",
+        "filename": "content/common/loader_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-07-20T17:42:40Z",
+      "side": 1,
+      "message": "good question; I could have gotten mime_type instead from url_request-\u003eGetMimeType(), however that adds an implicit dependency on how the callers populate response-\u003ehead.mime_type which is not fixed. if that ever changed, then this method would be making a decision based on a mime type that\u0027s not what\u0027s being sent to the renderer.",
+      "parentUuid": "cfeed20f_5af162e4",
+      "range": {
+        "startLine": 15,
+        "startChar": 43,
+        "endLine": 15,
+        "endChar": 47
+      },
+      "revId": "081f87c88db0fe2fcd26b6da5853e982780fc967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "553cca42_254c21cd",
         "filename": "content/common/loader_util.cc",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "081f87c88db0fe2fcd26b6da5853e982780fc967",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08a1cdd4_8077518c",
+        "filename": "content/common/loader_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-07-20T17:42:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "553cca42_254c21cd",
+      "range": {
+        "startLine": 17,
+        "startChar": 14,
+        "endLine": 17,
+        "endChar": 34
+      },
+      "revId": "081f87c88db0fe2fcd26b6da5853e982780fc967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "c008fa43_6c495133",
+        "filename": "content/network/url_loader_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-07-20T17:42:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b1958b2_47510c1c",
+      "range": {
+        "startLine": 14,
+        "startChar": 25,
+        "endLine": 14,
+        "endChar": 31
+      },
+      "revId": "081f87c88db0fe2fcd26b6da5853e982780fc967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d87edbd6_ccbbcf7f",
         "filename": "content/network/url_loader_impl.h",
         "patchSetId": 9
@@ -128,6 +200,30 @@
       "writtenOn": "2017-07-20T16:46:05Z",
       "side": 1,
       "message": "Maybe SendResponseHeadersToClient or SendReceivedResponseToClient?",
+      "range": {
+        "startLine": 64,
+        "startChar": 27,
+        "endLine": 64,
+        "endChar": 28
+      },
+      "revId": "081f87c88db0fe2fcd26b6da5853e982780fc967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15bb208d_2991737b",
+        "filename": "content/network/url_loader_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-07-20T17:42:40Z",
+      "side": 1,
+      "message": "I kept the name vague because there are three different calls in that method to the client",
+      "parentUuid": "d87edbd6_ccbbcf7f",
       "range": {
         "startLine": 64,
         "startChar": 27,
@@ -163,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "f607e3c2_9862bd8f",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-07-20T17:42:40Z",
+      "side": 1,
+      "message": "Ack; imo this is fine since the callsites are right below.",
+      "parentUuid": "1f6d292f_b7a1ab9a",
+      "range": {
+        "startLine": 116,
+        "startChar": 36,
+        "endLine": 116,
+        "endChar": 40
+      },
+      "revId": "081f87c88db0fe2fcd26b6da5853e982780fc967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a718b509_1529762a",
         "filename": "content/network/url_loader_unittest.cc",
         "patchSetId": 9
@@ -186,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "6ab472a7_3c5b90e5",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-07-20T17:42:40Z",
+      "side": 1,
+      "message": "Yeah, the code in URLLoaderImpl isn\u0027t production quality because it doesn\u0027t buffer so that\u0027s why there\u0027s still the todo and i\u0027m leaving the bug open until that\u0027s fixed.\n\nfor this test, i\u0027ll monitor flakiness to see if this is actually impacted in practice.",
+      "parentUuid": "a718b509_1529762a",
+      "range": {
+        "startLine": 208,
+        "startChar": 26,
+        "endLine": 208,
+        "endChar": 44
+      },
+      "revId": "081f87c88db0fe2fcd26b6da5853e982780fc967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "435d4c2d_1a9e69ec",
         "filename": "content/network/url_loader_unittest.cc",
         "patchSetId": 9
@@ -197,6 +341,30 @@
       "writtenOn": "2017-07-20T16:46:05Z",
       "side": 1,
       "message": "Suggest a nosniff test, too, and a test where the response body is empty.",
+      "range": {
+        "startLine": 211,
+        "startChar": 1,
+        "endLine": 211,
+        "endChar": 0
+      },
+      "revId": "081f87c88db0fe2fcd26b6da5853e982780fc967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "476d3b46_acfb948b",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-07-20T17:42:40Z",
+      "side": 1,
+      "message": "I just wanted two basic tests to make sure the code in content is hooked up correctly. Note the various scenarios with headers are already tested with layout tests, i.e. third_party/WebKit/LayoutTests/external/wpt/fetch/nosniff and other layout tests",
+      "parentUuid": "435d4c2d_1a9e69ec",
       "range": {
         "startLine": 211,
         "startChar": 1,
