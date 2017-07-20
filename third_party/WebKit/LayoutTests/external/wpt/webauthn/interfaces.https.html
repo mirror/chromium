@@ -34,15 +34,6 @@ standardSetup(function() {
     function runIdlTests(idls) {
         return new Promise(function(resolve, reject) {
             var idlArray = new window.IdlArray();
-
-            // static IDL tests
-            idlArray.add_untested_idls("interface Navigator { };");
-            // TODO: change to "tested" for real browsers?
-            idlArray.add_untested_idls("partial interface Navigator { readonly attribute WebAuthentication authentication; };");
-            idlArray.add_objects({
-                WebAuthentication: ["navigator.authentication"]
-            });
-
             // run test WebIDL tests loaded from the idls file
             idlArray.add_idls(idls);
             return resolve(idlArray.test());
