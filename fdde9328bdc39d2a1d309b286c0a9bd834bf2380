@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56431f14_fc9889f5",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeReachedUrlSet.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-20T07:56:52Z",
+      "side": 1,
+      "message": "nit: by a -\u003e by an",
+      "revId": "fdde9328bdc39d2a1d309b286c0a9bd834bf2380",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "775ce823_d8f858eb",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeReachedUrlSet.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-20T07:56:52Z",
+      "side": 1,
+      "message": "a parent -\u003e the parent ?",
+      "revId": "fdde9328bdc39d2a1d309b286c0a9bd834bf2380",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
