@@ -34,6 +34,24 @@
       "revId": "940b7fb6e19c4003e83c7f7f7055001caac28125",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "980581aa_114ecc01",
+        "filename": "chrome/browser/ui/hung_plugin_tab_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-20T05:01:09Z",
+      "side": 1,
+      "message": "I don\u0027t know what you mean by \"there will be too many changes in the .cc file\".  The changes should all be very reviewable.  They will basically be purely mechanical.\n\nI think if you\u0027re going to the trouble of changing the type here, it should be changed to the type that makes the most sense.  I would go ahead and convert to the value type directly.",
+      "parentUuid": "1fb0470d_f020d499",
+      "revId": "940b7fb6e19c4003e83c7f7f7055001caac28125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
