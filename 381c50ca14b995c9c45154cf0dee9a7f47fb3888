@@ -16,6 +16,24 @@
       "revId": "381c50ca14b995c9c45154cf0dee9a7f47fb3888",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5631d06_ad32ca59",
+        "filename": "content/public/test/navigation_simulator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-07-20T14:01:11Z",
+      "side": 1,
+      "message": "I would prefer using the NaviagtionGesture instead of a boolean. Also, could you bundle this with the test that needs this change? Thanks!",
+      "parentUuid": "5cd4742e_1177277e",
+      "revId": "381c50ca14b995c9c45154cf0dee9a7f47fb3888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
