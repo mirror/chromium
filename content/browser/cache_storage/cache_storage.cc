@@ -31,6 +31,7 @@
 #include "content/browser/cache_storage/cache_storage_cache_handle.h"
 #include "content/browser/cache_storage/cache_storage_index.h"
 #include "content/browser/cache_storage/cache_storage_scheduler.h"
+#include "content/browser/devtools/protocol/storage_handler.h"
 #include "content/public/browser/browser_thread.h"
 #include "net/base/directory_lister.h"
 #include "net/base/net_errors.h"
@@ -56,6 +57,14 @@ void SizeRetrievedFromAllCaches(std::unique_ptr<int64_t> accumulator,
 }
 
 void DoNothingWithBool(bool success) {}
+
+void OnCacheStorageUpdatedOnUIThread(GURL& origin) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(protocol::StorageHandler::OnCacheStorageUpdated,
+                     std::move(origin)));
+}
 
 }  // namespace
 
@@ -794,6 +803,7 @@ void CacheStorage::CreateCacheDidCreateCache(
                      base::Passed(CreateCacheHandle(cache_ptr))));
 
   cache_loader_->NotifyCacheCreated(cache_name, CreateCacheHandle(cache_ptr));
+  OnCacheStorageUpdatedOnUIThread(origin_);
 }
 
 void CacheStorage::CreateCacheDidWriteIndex(
@@ -869,6 +879,7 @@ void CacheStorage::DeleteCacheDidWriteIndex(
 void CacheStorage::DeleteCacheFinalize(CacheStorageCache* doomed_cache) {
   doomed_cache->Size(base::BindOnce(&CacheStorage::DeleteCacheDidGetSize,
                                     weak_factory_.GetWeakPtr(), doomed_cache));
+  OnCacheStorageUpdatedOnUIThread(origin_);
 }
 
 void CacheStorage::DeleteCacheDidGetSize(CacheStorageCache* doomed_cache,

@@ -68,7 +68,7 @@
             },
             {
                 "domain": "Storage",
-                "async": ["getUsageAndQuota"]
+                "async": ["getUsageAndQuota", "waitForUpdateCacheStorage", "trackOrigin", "untrackOrigin"]
             },
             {
                 "domain": "SystemInfo",

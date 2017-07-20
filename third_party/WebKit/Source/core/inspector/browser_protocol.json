@@ -4692,6 +4692,24 @@
                     { "name": "usageBreakdown", "type": "array", "items": { "$ref": "UsageForType" }, "description": "Storage usage per type (bytes)." }
                 ],
                 "description": "Returns usage and quota in bytes."
+            },
+            {
+                "name": "waitForUpdateCacheStorage",
+                "description": "Returns when a cache has been added/deleted."
+            },
+            {
+                "name": "trackOrigin",
+                "parameters": [
+                    { "name": "origin", "type": "string", "description": "Security origin." }
+                ],
+                "description": "Adds handler to a list of handlers that will be notified when an update occurs for the origin's cache storage."
+            },
+            {
+                "name": "untrackOrigin",
+                "parameters": [
+                    { "name": "origin", "type": "string", "description": "Security origin." }
+                ],
+                "description": "Stops tracking handler for the origin."
             }
         ]
     },

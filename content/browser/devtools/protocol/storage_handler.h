@@ -11,6 +11,7 @@
 #include "base/macros.h"
 #include "content/browser/devtools/protocol/devtools_domain_handler.h"
 #include "content/browser/devtools/protocol/storage.h"
+#include "url/gurl.h"
 
 namespace content {
 
@@ -24,6 +25,8 @@ class StorageHandler : public DevToolsDomainHandler,
   StorageHandler();
   ~StorageHandler() override;
 
+  static void OnCacheStorageUpdated(const GURL& origin);
+
   void Wire(UberDispatcher* dispatcher) override;
   void SetRenderFrameHost(RenderFrameHostImpl* host) override;
 
@@ -33,9 +36,20 @@ class StorageHandler : public DevToolsDomainHandler,
   void GetUsageAndQuota(
       const String& origin,
       std::unique_ptr<GetUsageAndQuotaCallback> callback) override;
+  void TrackOrigin(const String& origin,
+                   std::unique_ptr<TrackOriginCallback> callback) override;
+  void UntrackOrigin(const String& origin,
+                     std::unique_ptr<UntrackOriginCallback> callback) override;
+  void WaitForUpdateCacheStorage(
+      std::unique_ptr<WaitForUpdateCacheStorageCallback> callback) override;
 
  private:
+  void NotifyCacheStorage();
+
   RenderFrameHostImpl* host_;
+  bool cache_storage_updated_ = false;
+  std::unique_ptr<WaitForUpdateCacheStorageCallback> cache_storage_callback_;
+  std::vector<std::string> tracked_origins_;
 
   DISALLOW_COPY_AND_ASSIGN(StorageHandler);
 };

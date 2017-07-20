@@ -8,6 +8,7 @@
 #include <utility>
 #include <vector>
 
+#include "base/lazy_instance.h"
 #include "base/strings/string_split.h"
 #include "content/browser/frame_host/render_frame_host_impl.h"
 #include "content/public/browser/render_process_host.h"
@@ -20,6 +21,10 @@ namespace content {
 namespace protocol {
 
 namespace {
+typedef HashMap<String, std::vector<StorageHandler*>> TrackedHandlers;
+base::LazyInstance<TrackedHandlers>::Leaky tracked_handlers =
+    LAZY_INSTANCE_INITIALIZER;
+
 Storage::StorageType GetTypeName(storage::QuotaClient::ID id) {
   switch (id) {
     case storage::QuotaClient::kFileSystem:
@@ -94,7 +99,26 @@ StorageHandler::StorageHandler()
       host_(nullptr) {
 }
 
-StorageHandler::~StorageHandler() = default;
+StorageHandler::~StorageHandler() {
+  for (auto& handlers : tracked_handlers.Get()) {
+    auto handler =
+        std::find(handlers.second.begin(), handlers.second.end(), this);
+    if (handler != handlers.second.end())
+      handlers.second.erase(handler);
+  }
+}
+
+void StorageHandler::OnCacheStorageUpdated(const GURL& origin) {
+  if (!origin.is_valid())
+    return;
+
+  String origin_str = origin.spec();
+  auto handlers = tracked_handlers.Get().find(origin_str);
+  if (handlers == tracked_handlers.Get().end())
+    return;
+  for (StorageHandler* handler : handlers->second)
+    handler->NotifyCacheStorage();
+}
 
 void StorageHandler::Wire(UberDispatcher* dispatcher) {
   Storage::Dispatcher::wire(dispatcher, this);
@@ -166,6 +190,80 @@ void StorageHandler::GetUsageAndQuota(
       BrowserThread::IO, FROM_HERE,
       base::Bind(&GetUsageAndQuotaOnIOThread, base::RetainedRef(manager),
                  origin_url, base::Passed(std::move(callback))));
+}
+
+void StorageHandler::TrackOrigin(
+    const String& origin,
+    std::unique_ptr<TrackOriginCallback> callback) {
+  GURL origin_url(origin);
+  if (!origin_url.is_valid()) {
+    return callback->sendFailure(
+        Response::Error(origin + " is not a valid URL"));
+  }
+
+  auto handlers = tracked_handlers.Get().find(origin_url.spec());
+  if (handlers == tracked_handlers.Get().end()) {
+    std::vector<StorageHandler*> handlers;
+    handlers.push_back(this);
+    tracked_handlers.Get()[origin_url.spec()] = std::move(handlers);
+  } else if (std::find(handlers->second.begin(), handlers->second.end(),
+                       this) == handlers->second.end()) {
+    handlers->second.push_back(this);
+  }
+
+  if (std::find(tracked_origins_.begin(), tracked_origins_.end(),
+                origin_url.spec()) == tracked_origins_.end())
+    tracked_origins_.push_back(origin);
+
+  callback->sendSuccess();
+}
+
+void StorageHandler::UntrackOrigin(
+    const String& origin,
+    std::unique_ptr<UntrackOriginCallback> callback) {
+  GURL origin_url(origin);
+  if (!origin_url.is_valid()) {
+    return callback->sendFailure(
+        Response::Error(origin + " is not a valid URL"));
+  }
+
+  auto handlers = tracked_handlers.Get().find(origin_url.spec());
+  if (handlers != tracked_handlers.Get().end()) {
+    auto handler =
+        std::find(handlers->second.begin(), handlers->second.end(), this);
+    if (handler != handlers->second.end())
+      handlers->second.erase(handler);
+    if (!handlers->second.empty())
+      tracked_handlers.Get().erase(handlers);
+  }
+
+  auto tracked_origin = std::find(tracked_origins_.begin(),
+                                  tracked_origins_.end(), origin_url.spec());
+  if (tracked_origin != tracked_origins_.end())
+    tracked_origins_.erase(tracked_origin);
+
+  callback->sendSuccess();
+}
+
+void StorageHandler::WaitForUpdateCacheStorage(
+    std::unique_ptr<WaitForUpdateCacheStorageCallback> callback) {
+  if (cache_storage_updated_) {
+    callback->sendFailure(Response::Error("Replaced by new callback"));
+    cache_storage_updated_ = false;
+  } else {
+    if (cache_storage_callback_)
+      cache_storage_callback_->sendFailure(Response::InternalError());
+    cache_storage_callback_ = std::move(callback);
+  }
+}
+
+void StorageHandler::NotifyCacheStorage() {
+  if (cache_storage_callback_) {
+    cache_storage_callback_->sendSuccess();
+    cache_storage_callback_ = nullptr;
+  } else {
+    cache_storage_updated_ = true;
+  }
 }
 
 }  // namespace protocol
