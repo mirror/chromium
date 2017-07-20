@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a971518_7e0f47dd",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-07-20T13:38:16Z",
+      "side": 1,
+      "message": "Is this way of assigning already used in the code?",
+      "revId": "142f3a165e624da462cb8eb08a7a0a4692291b63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
