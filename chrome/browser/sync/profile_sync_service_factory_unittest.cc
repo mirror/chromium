@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "base/command_line.h"
+#include "base/task_scheduler/task_scheduler.h"
 #include "build/build_config.h"
 #include "chrome/common/features.h"
 #include "chrome/test/base/testing_profile.h"
@@ -28,6 +29,16 @@ using browser_sync::ProfileSyncService;
 using syncer::DataTypeController;
 
 class ProfileSyncServiceFactoryTest : public testing::Test {
+ public:
+  void SetUp() override {
+    // Some services will only be created if there is a WebDataService.
+    profile_->CreateWebDataService();
+  }
+
+  void TearDown() override {
+    base::TaskScheduler::GetInstance()->FlushForTesting();
+  }
+
  protected:
   ProfileSyncServiceFactoryTest() : profile_(new TestingProfile()) {}
 
@@ -113,7 +124,7 @@ class ProfileSyncServiceFactoryTest : public testing::Test {
 
  private:
   content::TestBrowserThreadBundle thread_bundle_;
-  std::unique_ptr<Profile> profile_;
+  std::unique_ptr<TestingProfile> profile_;
 };
 
 // Verify that the disable sync flag disables creation of the sync service.

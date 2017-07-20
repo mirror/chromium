@@ -18,6 +18,10 @@ namespace autofill {
 class AutofillWebDataService;
 }
 
+namespace base {
+class SingleThreadTaskRunner;
+}
+
 namespace password_manager {
 class PasswordStore;
 }
@@ -94,6 +98,9 @@ class ChromeSyncClient : public syncer::SyncClient {
   // respective backend threads.
   scoped_refptr<autofill::AutofillWebDataService> web_data_service_;
   scoped_refptr<password_manager::PasswordStore> password_store_;
+
+  // The task runner for the |web_data_service_|, if any.
+  scoped_refptr<base::SingleThreadTaskRunner> db_thread_;
 
   std::unique_ptr<sync_sessions::SyncSessionsClient> sync_sessions_client_;
 
