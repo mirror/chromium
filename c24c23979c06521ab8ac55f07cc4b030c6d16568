@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ce55ada_3d40d42a",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2797,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-20T15:39:07Z",
+      "side": 1,
+      "message": "Are we able to put this behind a content feature flag?",
+      "range": {
+        "startLine": 2797,
+        "startChar": 8,
+        "endLine": 2797,
+        "endChar": 12
+      },
+      "revId": "c24c23979c06521ab8ac55f07cc4b030c6d16568",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
