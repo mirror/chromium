@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "9549d3d0_2aedd7ac",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-07-20T12:16:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0530afb5_33745e47",
+      "revId": "18a7a5d0bcafd506e3acea71b435487961a34a74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0550f84_da89774e",
         "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
         "patchSetId": 4
@@ -105,6 +123,24 @@
       "revId": "18a7a5d0bcafd506e3acea71b435487961a34a74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c46d82d_da9c3168",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-07-20T12:16:15Z",
+      "side": 1,
+      "message": "Yeah, and more. Other parts of layout code also assumes that baseline is a contiguous single line. I have a plan to support multiple different types of baseline in a single line, but this |offset| is not about moving baseline up or down.\n\nThank you for confirming only either x or y is non-zero.",
+      "parentUuid": "fd1aeb62_1a326b2d",
+      "revId": "18a7a5d0bcafd506e3acea71b435487961a34a74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
