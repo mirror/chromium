@@ -9,12 +9,14 @@
 #include <algorithm>
 #include <limits>
 
+#include "base/optional.h"
 #include "base/pickle.h"
 #include "base/strings/nullable_string16.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
+#include "content/common/unique_name_helper.h"
 #include "content/public/common/resource_request_body.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
@@ -197,12 +199,13 @@ struct SerializeObject {
 // 22: Add scroll restoration type.
 // 23: Remove frame sequence number, there are easier ways.
 // 24: Add did save scroll or scale state.
+// 25: Limit the max size of the frame target.
 //
 // NOTE: If the version is -1, then the pickle contains only a URL string.
 // See ReadPageState.
 //
 const int kMinVersion = 11;
-const int kCurrentVersion = 24;
+const int kCurrentVersion = 25;
 
 // A bunch of convenience functions to read/write to SerializeObjects.  The
 // de-serializers assume the input data will be in the correct format and fall
@@ -550,7 +553,9 @@ void WriteFrameState(
     WriteFrameState(children[i], obj, false);
 }
 
-void ReadFrameState(SerializeObject* obj, bool is_top,
+void ReadFrameState(SerializeObject* obj,
+                    bool is_top,
+                    const UniqueNameHelper::Replacement* target_replacement,
                     ExplodedFrameState* state) {
   if (obj->version < 14 && !is_top)
     ReadInteger(obj);  // Skip over redundant version field.
@@ -561,6 +566,17 @@ void ReadFrameState(SerializeObject* obj, bool is_top,
     ReadString(obj);  // Skip obsolete original url string field.
 
   state->target = ReadString(obj);
+  base::Optional<UniqueNameHelper::Replacement> new_target_replacement;
+  if (obj->version < 25 && !state->target.is_null()) {
+    std::string new_name;
+    if (UniqueNameHelper::AdjustLegacyNameForMaxSize(
+            base::UTF16ToUTF8(state->target.string()), target_replacement,
+            &new_name, &new_target_replacement)) {
+      state->target =
+          base::NullableString16(base::UTF8ToUTF16(new_name), false);
+    }
+  }
+
   if (obj->version < 15) {
     ReadString(obj);  // Skip obsolete parent field.
     ReadString(obj);  // Skip obsolete title field.
@@ -659,8 +675,12 @@ void ReadFrameState(SerializeObject* obj, bool is_top,
   size_t num_children =
       ReadAndValidateVectorSize(obj, sizeof(ExplodedFrameState));
   state->children.resize(num_children);
-  for (size_t i = 0; i < num_children; ++i)
-    ReadFrameState(obj, false, &state->children[i]);
+  for (size_t i = 0; i < num_children; ++i) {
+    ReadFrameState(
+        obj, false,
+        new_target_replacement ? &*new_target_replacement : target_replacement,
+        &state->children[i]);
+  }
 }
 
 void WritePageState(const ExplodedPageState& state, SerializeObject* obj) {
@@ -689,7 +709,7 @@ void ReadPageState(SerializeObject* obj, ExplodedPageState* state) {
   if (obj->version >= 14)
     ReadStringVector(obj, &state->referenced_files);
 
-  ReadFrameState(obj, true, &state->top);
+  ReadFrameState(obj, true, nullptr, &state->top);
 
   if (obj->version < 14)
     RecursivelyAppendReferencedFiles(state->top, &state->referenced_files);
@@ -764,8 +784,14 @@ bool DecodePageState(const std::string& encoded, ExplodedPageState* exploded) {
 }
 
 void EncodePageState(const ExplodedPageState& exploded, std::string* encoded) {
+  EncodePageStateForTest(exploded, kCurrentVersion, encoded);
+}
+
+void EncodePageStateForTest(const ExplodedPageState& exploded,
+                            int version,
+                            std::string* encoded) {
   SerializeObject obj;
-  obj.version = kCurrentVersion;
+  obj.version = version;
   WritePageState(exploded, &obj);
   *encoded = obj.GetAsString();
 }
