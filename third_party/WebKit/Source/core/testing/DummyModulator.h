@@ -41,6 +41,7 @@ class DummyModulator : public Modulator {
   void FetchTreeInternal(const ModuleScriptFetchRequest&,
                          const AncestorList&,
                          ModuleGraphLevel,
+                         ModuleTreeLinker*,
                          ModuleTreeClient*) override;
   void FetchSingle(const ModuleScriptFetchRequest&,
                    ModuleGraphLevel,

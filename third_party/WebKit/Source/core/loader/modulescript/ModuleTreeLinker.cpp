@@ -22,13 +22,15 @@ ModuleTreeLinker* ModuleTreeLinker::Fetch(
     const AncestorList& ancestor_list,
     ModuleGraphLevel level,
     Modulator* modulator,
+    ModuleTreeLinker* top_level_linker,
     ModuleTreeLinkerRegistry* registry,
     ModuleTreeClient* client) {
   AncestorList ancestor_list_with_url = ancestor_list;
   ancestor_list_with_url.insert(request.Url());
 
-  ModuleTreeLinker* fetcher = new ModuleTreeLinker(
-      ancestor_list_with_url, level, modulator, registry, client);
+  ModuleTreeLinker* fetcher =
+      new ModuleTreeLinker(ancestor_list_with_url, level, modulator,
+                           top_level_linker, registry, client);
   fetcher->FetchSelf(request);
   return fetcher;
 }
@@ -47,7 +49,7 @@ ModuleTreeLinker* ModuleTreeLinker::FetchDescendantsForInlineScript(
   // 4. "Fetch the descendants of script (using an empty ancestor list)."
   ModuleTreeLinker* fetcher = new ModuleTreeLinker(
       empty_ancestor_list, ModuleGraphLevel::kTopLevelModuleFetch, modulator,
-      registry, client);
+      nullptr, registry, client);
   fetcher->module_script_ = module_script;
   fetcher->AdvanceState(State::kFetchingSelf);
 
@@ -68,9 +70,13 @@ ModuleTreeLinker* ModuleTreeLinker::FetchDescendantsForInlineScript(
 ModuleTreeLinker::ModuleTreeLinker(const AncestorList& ancestor_list_with_url,
                                    ModuleGraphLevel level,
                                    Modulator* modulator,
+                                   ModuleTreeLinker* top_level_linker,
                                    ModuleTreeLinkerRegistry* registry,
                                    ModuleTreeClient* client)
     : modulator_(modulator),
+      top_level_linker_(level == ModuleGraphLevel::kTopLevelModuleFetch
+                            ? this
+                            : top_level_linker),
       registry_(registry),
       client_(client),
       ancestor_list_with_url_(ancestor_list_with_url),
@@ -79,10 +85,20 @@ ModuleTreeLinker::ModuleTreeLinker(const AncestorList& ancestor_list_with_url,
   CHECK(modulator);
   CHECK(registry);
   CHECK(client);
+
+  if (level == ModuleGraphLevel::kTopLevelModuleFetch) {
+    CHECK_LE(ancestor_list_with_url_.size(), 1u);
+    CHECK(!top_level_linker);
+    reached_url_set_ = ancestor_list_with_url;
+  } else {
+    CHECK_EQ(level, ModuleGraphLevel::kDependentModuleFetch);
+    CHECK(top_level_linker);
+  }
 }
 
 DEFINE_TRACE(ModuleTreeLinker) {
   visitor->Trace(modulator_);
+  visitor->Trace(top_level_linker_);
   visitor->Trace(registry_);
   visitor->Trace(client_);
   visitor->Trace(module_script_);
@@ -92,6 +108,15 @@ DEFINE_TRACE(ModuleTreeLinker) {
 
 DEFINE_TRACE_WRAPPERS(ModuleTreeLinker) {
   visitor->TraceWrappers(module_script_);
+}
+
+HashSet<KURL>& ModuleTreeLinker::ReachedUrlSet() {
+  if (level_ == ModuleGraphLevel::kTopLevelModuleFetch) {
+    return reached_url_set_;
+  }
+
+  CHECK(top_level_linker_);
+  return top_level_linker_->ReachedUrlSet();
 }
 
 #if DCHECK_IS_ON()
@@ -273,6 +298,7 @@ void ModuleTreeLinker::FetchDescendants() {
   Vector<TextPosition> positions;
 
   // Step 6. For each string requested of record.[[RequestedModules]],
+  HashSet<KURL>& reached_url_set = ReachedUrlSet();
   Vector<Modulator::ModuleRequest> module_requests =
       modulator_->ModuleRequestsFromScriptModule(record);
   for (const auto& module_request : module_requests) {
@@ -288,10 +314,17 @@ void ModuleTreeLinker::FetchDescendants() {
                             "return either a valid url or null.";
 
     // Step 6.3. if ancestor list does not contain url, append url to urls.
-    if (!ancestor_list_with_url_.Contains(url)) {
-      urls.push_back(url);
-      positions.push_back(module_request.position);
-    }
+    if (ancestor_list_with_url_.Contains(url))
+      continue;
+
+    // [unspec] If we already have started a sub-graph fetch for the |url| for
+    // this top-level module graph starting from |top_level_linker_|, we can
+    // safely rely on other module graph node ModuleTreeLinker to handle it.
+    if (reached_url_set.Contains(url))
+      continue;
+
+    urls.push_back(url);
+    positions.push_back(module_request.position);
   }
 
   // Step 7. For each url in urls, perform the internal module script graph
@@ -321,6 +354,8 @@ void ModuleTreeLinker::FetchDescendants() {
   for (size_t i = 0; i < urls.size(); ++i) {
     DependencyModuleClient* dependency_client =
         DependencyModuleClient::Create(this);
+    CHECK(!reached_url_set.Contains(urls[i]));
+    reached_url_set.insert(urls[i]);
     dependency_clients_.insert(dependency_client);
 
     ModuleScriptFetchRequest request(
@@ -329,7 +364,7 @@ void ModuleTreeLinker::FetchDescendants() {
         module_script_->BaseURL().GetString(), positions[i]);
     modulator_->FetchTreeInternal(request, ancestor_list_with_url_,
                                   ModuleGraphLevel::kDependentModuleFetch,
-                                  dependency_client);
+                                  top_level_linker_.Get(), dependency_client);
   }
 
   // Asynchronously continue processing after NotifyOneDescendantFinished() is

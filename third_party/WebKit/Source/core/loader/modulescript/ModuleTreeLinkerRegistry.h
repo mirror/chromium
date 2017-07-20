@@ -35,6 +35,7 @@ class CORE_EXPORT ModuleTreeLinkerRegistry
                           const AncestorList&,
                           ModuleGraphLevel,
                           Modulator*,
+                          ModuleTreeLinker*,
                           ModuleTreeClient*);
   ModuleTreeLinker* FetchDescendantsForInlineScript(ModuleScript*,
                                                     Modulator*,

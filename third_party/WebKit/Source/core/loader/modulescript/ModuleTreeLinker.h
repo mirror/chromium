@@ -27,6 +27,7 @@ class CORE_EXPORT ModuleTreeLinker final : public SingleModuleClient {
                                  const AncestorList&,
                                  ModuleGraphLevel,
                                  Modulator*,
+                                 ModuleTreeLinker*,
                                  ModuleTreeLinkerRegistry*,
                                  ModuleTreeClient*);
   static ModuleTreeLinker* FetchDescendantsForInlineScript(
@@ -48,8 +49,11 @@ class CORE_EXPORT ModuleTreeLinker final : public SingleModuleClient {
   ModuleTreeLinker(const AncestorList& ancestor_list_with_url,
                    ModuleGraphLevel,
                    Modulator*,
+                   ModuleTreeLinker*,
                    ModuleTreeLinkerRegistry*,
                    ModuleTreeClient*);
+
+  HashSet<KURL>& ReachedUrlSet();
 
   enum class State {
     kInitial,
@@ -79,9 +83,11 @@ class CORE_EXPORT ModuleTreeLinker final : public SingleModuleClient {
   friend class DependencyModuleClient;
 
   const Member<Modulator> modulator_;
+  const Member<ModuleTreeLinker> top_level_linker_;
   const Member<ModuleTreeLinkerRegistry> registry_;
   const Member<ModuleTreeClient> client_;
   const HashSet<KURL> ancestor_list_with_url_;
+  HashSet<KURL> reached_url_set_;
   const ModuleGraphLevel level_;
   State state_ = State::kInitial;
   // Correspond to _result_ in

@@ -24,9 +24,10 @@ ModuleTreeLinker* ModuleTreeLinkerRegistry::Fetch(
     const AncestorList& ancestor_list,
     ModuleGraphLevel level,
     Modulator* modulator,
+    ModuleTreeLinker* top_level_linker,
     ModuleTreeClient* client) {
   ModuleTreeLinker* fetcher = ModuleTreeLinker::Fetch(
-      request, ancestor_list, level, modulator, this, client);
+      request, ancestor_list, level, modulator, top_level_linker, this, client);
   DCHECK(fetcher->IsFetching());
   active_tree_linkers_.insert(
       TraceWrapperMember<ModuleTreeLinker>(this, fetcher));

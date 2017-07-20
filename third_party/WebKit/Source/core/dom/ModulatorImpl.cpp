@@ -63,7 +63,7 @@ void ModulatorImpl::FetchTree(const ModuleScriptFetchRequest& request,
 
   AncestorList empty_ancestor_list;
   FetchTreeInternal(request, empty_ancestor_list,
-                    ModuleGraphLevel::kTopLevelModuleFetch, client);
+                    ModuleGraphLevel::kTopLevelModuleFetch, nullptr, client);
 
   // Step 2. When the internal module script graph fetching procedure
   // asynchronously completes with result, asynchronously complete this
@@ -74,12 +74,14 @@ void ModulatorImpl::FetchTree(const ModuleScriptFetchRequest& request,
 void ModulatorImpl::FetchTreeInternal(const ModuleScriptFetchRequest& request,
                                       const AncestorList& ancestor_list,
                                       ModuleGraphLevel level,
+                                      ModuleTreeLinker* top_level_linker,
                                       ModuleTreeClient* client) {
   // We ensure module-related code is not executed without the flag.
   // https://crbug.com/715376
   CHECK(RuntimeEnabledFeatures::ModuleScriptsEnabled());
 
-  tree_linker_registry_->Fetch(request, ancestor_list, level, this, client);
+  tree_linker_registry_->Fetch(request, ancestor_list, level, this,
+                               top_level_linker, client);
 }
 
 void ModulatorImpl::FetchDescendantsForInlineScript(ModuleScript* module_script,
