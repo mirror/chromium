@@ -51,6 +51,7 @@ class Range;
 class SelectionEditor;
 class LayoutSelection;
 enum class SelectionModifyAlteration;
+enum class SelectionModifyDirection;
 class TextIteratorBehavior;
 struct PaintInvalidatorContext;
 
@@ -138,7 +139,7 @@ class CORE_EXPORT FrameSelection final
   bool Contains(const LayoutPoint&);
 
   bool Modify(SelectionModifyAlteration,
-              SelectionDirection,
+              SelectionModifyDirection,
               TextGranularity,
               EUserTriggered = kNotUserTriggered);
 
