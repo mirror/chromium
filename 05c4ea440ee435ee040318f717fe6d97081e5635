@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d143c31d_8c6ced24",
+        "filename": "services/viz/public/interfaces/compositing/resource_settings_struct_traits.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-20T20:47:21Z",
+      "side": 1,
+      "message": "This can be in the header right?",
+      "revId": "05c4ea440ee435ee040318f717fe6d97081e5635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d9c8897_3baa10bd",
+        "filename": "services/viz/public/interfaces/compositing/resource_settings_struct_traits.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-20T20:47:21Z",
+      "side": 1,
+      "message": "This can be in the header right?",
+      "revId": "05c4ea440ee435ee040318f717fe6d97081e5635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
