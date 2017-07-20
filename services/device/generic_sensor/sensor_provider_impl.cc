@@ -11,6 +11,7 @@
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "services/device/generic_sensor/platform_sensor_provider.h"
 #include "services/device/generic_sensor/sensor_impl.h"
+#include "services/device/generic_sensor/sensor_traits.h"
 
 namespace device {
 
@@ -95,8 +96,12 @@ void SensorProviderImpl::SensorCreated(
 
   double maximum_frequency = sensor->GetMaximumSupportedFrequency();
   DCHECK_GT(maximum_frequency, 0.0);
-  if (maximum_frequency > mojom::SensorConfiguration::kMaxAllowedFrequency)
-    maximum_frequency = mojom::SensorConfiguration::kMaxAllowedFrequency;
+
+  const double maximum_allowed_frequency = GetSensorMaxAllowedFrequency(type);
+  if (maximum_frequency > maximum_allowed_frequency)
+    maximum_frequency = maximum_allowed_frequency;
+  DCHECK_LE(maximum_frequency,
+            mojom::SensorConfiguration::kMaxAllowedFrequency);
 
   init_params->maximum_frequency = maximum_frequency;
   init_params->minimum_frequency = sensor->GetMinimumSupportedFrequency();
