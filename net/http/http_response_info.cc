@@ -127,7 +127,6 @@ HttpResponseInfo::HttpResponseInfo()
       network_accessed(false),
       was_fetched_via_spdy(false),
       was_alpn_negotiated(false),
-      was_fetched_via_proxy(false),
       did_use_http_auth(false),
       unused_since_prefetch(false),
       connection_info(CONNECTION_INFO_UNKNOWN) {}
@@ -139,7 +138,6 @@ HttpResponseInfo::HttpResponseInfo(const HttpResponseInfo& rhs)
       network_accessed(rhs.network_accessed),
       was_fetched_via_spdy(rhs.was_fetched_via_spdy),
       was_alpn_negotiated(rhs.was_alpn_negotiated),
-      was_fetched_via_proxy(rhs.was_fetched_via_proxy),
       proxy_server(rhs.proxy_server),
       did_use_http_auth(rhs.did_use_http_auth),
       unused_since_prefetch(rhs.unused_since_prefetch),
@@ -166,7 +164,6 @@ HttpResponseInfo& HttpResponseInfo::operator=(const HttpResponseInfo& rhs) {
   was_fetched_via_spdy = rhs.was_fetched_via_spdy;
   proxy_server = rhs.proxy_server;
   was_alpn_negotiated = rhs.was_alpn_negotiated;
-  was_fetched_via_proxy = rhs.was_fetched_via_proxy;
   did_use_http_auth = rhs.did_use_http_auth;
   unused_since_prefetch = rhs.unused_since_prefetch;
   socket_address = rhs.socket_address;
@@ -321,7 +318,9 @@ bool HttpResponseInfo::InitFromPickle(const base::Pickle& pickle,
 
   was_alpn_negotiated = (flags & RESPONSE_INFO_WAS_ALPN) != 0;
 
-  was_fetched_via_proxy = (flags & RESPONSE_INFO_WAS_PROXY) != 0;
+  if ((flags & RESPONSE_INFO_WAS_PROXY) != 0) {
+    proxy_server = ProxyServer();
+  }
 
   *response_truncated = (flags & RESPONSE_INFO_TRUNCATED) != 0;
 
@@ -358,7 +357,7 @@ void HttpResponseInfo::Persist(base::Pickle* pickle,
     flags |= RESPONSE_INFO_WAS_ALPN;
     flags |= RESPONSE_INFO_HAS_ALPN_NEGOTIATED_PROTOCOL;
   }
-  if (was_fetched_via_proxy)
+  if (was_fetched_via_proxy())
     flags |= RESPONSE_INFO_WAS_PROXY;
   if (connection_info != CONNECTION_INFO_UNKNOWN)
     flags |= RESPONSE_INFO_HAS_CONNECTION_INFO;
