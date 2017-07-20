@@ -378,7 +378,8 @@ NSImageRep* ImageRepForGFXImage(const gfx::Image& image) {
   return [image_reps objectAtIndex:0];
 }
 
-using ResourceIDToImage = std::map<int, gfx::Image>;
+// Map does not own the NSImageRep pointers.
+using ResourceIDToImage = std::map<int, NSImageRep*>;
 
 // Generates a map of gfx::Image used by SetWorkspaceIconOnFILEThread and
 // passes it to |io_task|. Since ui::ResourceBundle can be call only on UI
@@ -394,8 +395,10 @@ void GetImageResourcesOnUIThread(
   // These resource ID should match to the ones used by
   // SetWorkspaceIconOnFILEThread below.
   for (int id : {IDR_APPS_FOLDER_16, IDR_APPS_FOLDER_32,
-                 IDR_APPS_FOLDER_OVERLAY_128, IDR_APPS_FOLDER_OVERLAY_512})
-    (*result)[id] = resource_bundle.GetNativeImageNamed(id);
+                 IDR_APPS_FOLDER_OVERLAY_128, IDR_APPS_FOLDER_OVERLAY_512}) {
+    gfx::Image image = resource_bundle.GetNativeImageNamed(id);
+    (*result)[id] = ImageRepForGFXImage(image);
+  }
 
   base::PostTaskWithTraits(
       FROM_HERE,
@@ -417,7 +420,7 @@ void SetWorkspaceIconOnFILEThread(const base::FilePath& apps_directory,
   for (int id : {IDR_APPS_FOLDER_16, IDR_APPS_FOLDER_32}) {
     auto found = images->find(id);
     DCHECK(found != images->end());
-    [folder_icon_image addRepresentation:ImageRepForGFXImage(found->second)];
+    [folder_icon_image addRepresentation:found->second];
   }
 
   // Brand larger folder assets with an embossed app launcher logo to
@@ -428,8 +431,7 @@ void SetWorkspaceIconOnFILEThread(const base::FilePath& apps_directory,
   for (int id : {IDR_APPS_FOLDER_OVERLAY_128, IDR_APPS_FOLDER_OVERLAY_512}) {
     auto found = images->find(id);
     DCHECK(found != images->end());
-    NSImageRep* with_overlay =
-        OverlayImageRep(base_image, ImageRepForGFXImage(found->second));
+    NSImageRep* with_overlay = OverlayImageRep(base_image, found->second);
     DCHECK(with_overlay);
     if (with_overlay)
       [folder_icon_image addRepresentation:with_overlay];
@@ -438,9 +440,6 @@ void SetWorkspaceIconOnFILEThread(const base::FilePath& apps_directory,
       setIcon:folder_icon_image
       forFile:base::mac::FilePathToNSString(apps_directory)
       options:0];
-
-  content::BrowserThread::DeleteSoon(content::BrowserThread::UI, FROM_HERE,
-                                     images.release());
 }
 
 // Adds a localized strings file for the Chrome Apps directory using the current
