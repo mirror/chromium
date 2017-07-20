@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "715a4752_5bbd29f5",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-20T14:48:20Z",
+      "side": 1,
+      "message": "sorry this is still kinda worrying me. can you add a NOTIMPLEMENTED() here just to aid any potential debugging?\n\niiuc, NOTIMPLEMENTED() just prints an error but doesn\u0027t crash the process. or you can just say LOG(ERROR) \u003c\u003c \"OnAbortSendingScript is not implemented\" or something.",
+      "revId": "87d8097c2669b53d910413f9dfe523211f10c4c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9c53d53_e2c128de",
+        "filename": "content/renderer/service_worker/embedded_worker_instance_client_impl.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-20T14:48:20Z",
+      "side": 1,
+      "message": "\"launched for the checking the update\" is a subset of \"not installed\". Just say:\n\n// Even when script streaming is enabled, |installed_scripts_info| is null if the worker is not installed, in which case the scripts will be loaded from network.",
+      "revId": "87d8097c2669b53d910413f9dfe523211f10c4c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
