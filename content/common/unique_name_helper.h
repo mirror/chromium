@@ -9,7 +9,9 @@
 #include <vector>
 
 #include "base/macros.h"
+#include "base/optional.h"
 #include "base/strings/string_piece.h"
+#include "content/common/content_export.h"
 
 namespace content {
 
@@ -48,6 +50,22 @@ namespace content {
 //                   terminated on the first ancestor (if any) starting with
 //                   "<!--framePath"; each ancestor's unique name is
 //                   separated by "/" character
+//
+// If generatedName exceeds the max size limit, hashedGeneratedName is used as
+// the unique name instead:
+//
+// hashedName :== hexEncode(sha256(generatedName))
+// hashedGeneratedName :== "<!--framePath //<!--frameHash" hashedName "-->-->"
+//
+// The hashed name intentionally begins with "<!--framePath /", since it allows
+// the frame path of ancestors of the current frame to be ignored in future
+// calculations. This makes it simpler to calculate the hashes of descendant
+// frames, since updating unique names that exceed the max size limit won't
+// require a 'cascade' of hashes.
+//
+// Finally, if hashedGeneratedName is not unique, it is fed back as
+// generatedName until hashedGeneratedName is unique.
+//
 // Note: Two examples are provided below, with each portion of the name from a
 // distinct ancestor annotated.
 //
@@ -64,11 +82,11 @@ namespace content {
 //                   [ framePosition-forParent? ]
 //
 // retryNumber ::= smallest non-negative integer resulting in unique name
-class UniqueNameHelper {
+class CONTENT_EXPORT UniqueNameHelper {
  public:
   // Adapter class so UniqueNameHelper can be used with both RenderFrameImpl and
   // ExplodedFrameState.
-  class FrameAdapter {
+  class CONTENT_EXPORT FrameAdapter {
    public:
     FrameAdapter() {}
     virtual ~FrameAdapter();
@@ -106,7 +124,7 @@ class UniqueNameHelper {
     DISALLOW_COPY_AND_ASSIGN(FrameAdapter);
   };
 
-  explicit UniqueNameHelper(FrameAdapter* frame);
+  explicit UniqueNameHelper(const FrameAdapter* frame);
   ~UniqueNameHelper();
 
   // Returns the generated unique name.
@@ -134,8 +152,37 @@ class UniqueNameHelper {
   // history navigations. See https://crbug.com/607205.
   void UpdateName(const std::string& name);
 
+  static constexpr size_t kMaxSize = 512;
+
+  // Helper for adjusting serialized legacy uniaue nqmes. Returns true if
+  // the serialized unique name should be updated to |new_name|.
+  //
+  // |legacy_name|: the name read from ExplodedFrameState prior to v25.
+  // |last_replacement|: the replacement to use. This should be the replacement
+  //                     returned by the most recent invocation of
+  //                     AdjustNameForMaxSize() on an ancestor frame that
+  //                     returned true, or nullptr if there is no such
+  //                     replacement.
+  // |new_name|: the new name to use. Only valid if the function returns true.
+  // |new_replacement|: the replacement pattern to use when updating names for
+  //                    children of this frame.
+  //
+  // Note: |legacy_name| is intentionally passed by value to allow moves.
+  struct Replacement {
+    std::string original_path;
+    std::string hashed_path;
+  };
+  static bool AdjustLegacyNameForMaxSize(
+      std::string legacy_name,
+      const Replacement* last_replacement,
+      std::string* new_name,
+      base::Optional<Replacement>* new_replacement);
+
+  static std::string CalculateLegacyNameForTest(const FrameAdapter* frame,
+                                                const std::string& name);
+
  private:
-  FrameAdapter* const frame_;
+  const FrameAdapter* const frame_;
   std::string unique_name_;
 
   DISALLOW_COPY_AND_ASSIGN(UniqueNameHelper);
