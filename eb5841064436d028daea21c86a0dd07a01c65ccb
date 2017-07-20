@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "3fa8c521_d2a6a614",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-20T16:01:25Z",
+      "side": 1,
+      "message": "Friending it is possible and I did this in the previous PS, but hidehiko@ just shared a different opinion.\n\nHere are two choices and what we have to do:\n(1) Putting |Start| under protected:\n-\u003e We have to friend ArcPlayStoreSearchProviderTest class here.\n-\u003e We have to keep a method (like the |RunQuery| I put there) to call |Start| in ArcPlayStoreSearchProviderTest.\n-\u003e Then everything is fine.\n\n(2) Putting |Start| under public (hidehiko@\u0027s comment):\n-\u003e It\u0027s OK because it\u0027s under public in the base class.\n-\u003e Then we don\u0027t need the |RunQuery| method in ArcPlayStoreSearchProviderTest.\n and just call |Start| in the test body.",
+      "parentUuid": "7933543f_ce10f128",
+      "range": {
+        "startLine": 27,
+        "startChar": 7,
+        "endLine": 27,
+        "endChar": 12
+      },
+      "revId": "eb5841064436d028daea21c86a0dd07a01c65ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a39ad8c_baf4071c",
         "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
         "patchSetId": 6
