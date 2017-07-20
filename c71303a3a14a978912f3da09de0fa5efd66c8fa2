@@ -22,6 +22,30 @@
       "revId": "c71303a3a14a978912f3da09de0fa5efd66c8fa2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d01df349_910a1f48",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-20T19:23:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b8c80436_eeaa6e2d",
+      "range": {
+        "startLine": 421,
+        "startChar": 16,
+        "endLine": 421,
+        "endChar": 17
+      },
+      "revId": "c71303a3a14a978912f3da09de0fa5efd66c8fa2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
