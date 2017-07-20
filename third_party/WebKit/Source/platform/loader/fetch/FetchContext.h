@@ -154,23 +154,16 @@ class PLATFORM_EXPORT FetchContext
       const KURL&,
       const ResourceLoaderOptions&,
       SecurityViolationReportingPolicy,
-      FetchParameters::OriginRestriction) const {
+      FetchParameters::OriginRestriction,
+      ResourceRequest::RedirectStatus) const {
     return ResourceRequestBlockedReason::kOther;
   }
-  virtual ResourceRequestBlockedReason CanFollowRedirect(
-      Resource::Type,
+  virtual ResourceRequestBlockedReason CheckCSPForRequest(
       const ResourceRequest&,
       const KURL&,
       const ResourceLoaderOptions&,
       SecurityViolationReportingPolicy,
-      FetchParameters::OriginRestriction) const {
-    return ResourceRequestBlockedReason::kOther;
-  }
-  virtual ResourceRequestBlockedReason AllowResponse(
-      Resource::Type,
-      const ResourceRequest&,
-      const KURL&,
-      const ResourceLoaderOptions&) const {
+      ResourceRequest::RedirectStatus) const {
     return ResourceRequestBlockedReason::kOther;
   }
 
