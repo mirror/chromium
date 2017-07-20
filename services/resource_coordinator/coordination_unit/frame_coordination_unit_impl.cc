@@ -22,16 +22,10 @@ FrameCoordinationUnitImpl::GetAssociatedCoordinationUnitsOfType(
       // Processes and WebContents are only associated with a frame if
       // they are a direct parents of the frame.
       return GetParentCoordinationUnitsOfType(type);
-    case CoordinationUnitType::kFrame: {
+    case CoordinationUnitType::kFrame:
       // Frame association is recursive: any frame connected to a frame the
       // frame is connected to are all associated with one another.
-      auto frame_coordination_units = GetChildCoordinationUnitsOfType(type);
-      for (auto* frame_coordination_unit :
-           GetParentCoordinationUnitsOfType(type)) {
-        frame_coordination_units.insert(frame_coordination_unit);
-      }
-      return frame_coordination_units;
-    }
+      return GetChildCoordinationUnitsOfType(type);
     default:
       return std::set<CoordinationUnitImpl*>();
   }
