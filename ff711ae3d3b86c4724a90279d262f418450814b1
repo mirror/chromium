@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2bdc60ec_5ef300e1",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-20T01:40:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f72eab7d_c97b7abf",
+      "range": {
+        "startLine": 39,
+        "startChar": 8,
+        "endLine": 39,
+        "endChar": 11
+      },
+      "revId": "ff711ae3d3b86c4724a90279d262f418450814b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "971f2259_6010f51f",
         "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
         "patchSetId": 4
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "cb49d09b_9e4e158f",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-20T01:40:36Z",
+      "side": 1,
+      "message": "resolving this by using the settings.routes object and defining the suites in this file",
+      "parentUuid": "d1be04a5_418661e6",
+      "range": {
+        "startLine": 71,
+        "startChar": 4,
+        "endLine": 71,
+        "endChar": 10
+      },
+      "revId": "ff711ae3d3b86c4724a90279d262f418450814b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d8ff3fc_34607f3c",
         "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
         "patchSetId": 4
@@ -82,6 +130,30 @@
       "writtenOn": "2017-07-19T01:07:42Z",
       "side": 1,
       "message": "This filter may not be working, see trybot errors.",
+      "range": {
+        "startLine": 125,
+        "startChar": 4,
+        "endLine": 125,
+        "endChar": 40
+      },
+      "revId": "ff711ae3d3b86c4724a90279d262f418450814b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef11041c_e44e2ffa",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-20T01:40:36Z",
+      "side": 1,
+      "message": "I think the issue may have been based on the test definitions.",
+      "parentUuid": "9d8ff3fc_34607f3c",
       "range": {
         "startLine": 125,
         "startChar": 4,
@@ -114,6 +186,30 @@
       "revId": "ff711ae3d3b86c4724a90279d262f418450814b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "100a3a4c_851e5b00",
+        "filename": "chrome/test/data/webui/settings/settings_accessibility_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-20T01:40:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cefab0f_0c56e186",
+      "range": {
+        "startLine": 11,
+        "startChar": 12,
+        "endLine": 11,
+        "endChar": 18
+      },
+      "revId": "ff711ae3d3b86c4724a90279d262f418450814b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +276,72 @@
     },
     {
       "key": {
+        "uuid": "e2838f66_c4ef8206",
+        "filename": "chrome/test/data/webui/settings/settings_accessibility_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-20T01:40:36Z",
+      "side": 1,
+      "message": "revamped to use navigateTo and the settings.routes object to simplify this",
+      "parentUuid": "c2f44957_8c172bb6",
+      "range": {
+        "startLine": 16,
+        "startChar": 33,
+        "endLine": 16,
+        "endChar": 53
+      },
+      "revId": "ff711ae3d3b86c4724a90279d262f418450814b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3330bf8c_42888634",
+        "filename": "chrome/test/data/webui/settings/settings_accessibility_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-20T01:40:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4566bb53_17dc91ba",
+      "range": {
+        "startLine": 16,
+        "startChar": 53,
+        "endLine": 16,
+        "endChar": 59
+      },
+      "revId": "ff711ae3d3b86c4724a90279d262f418450814b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ec6c4226_27e9115f",
+        "filename": "chrome/test/data/webui/settings/settings_accessibility_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-20T01:40:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f05baf31_79dabff1",
+      "revId": "ff711ae3d3b86c4724a90279d262f418450814b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd367ad3_e49dc90d",
         "filename": "chrome/test/data/webui/settings/settings_accessibility_test.js",
         "patchSetId": 4
@@ -191,6 +353,30 @@
       "writtenOn": "2017-07-19T01:07:42Z",
       "side": 1,
       "message": "Avoid duplicate code by moving the IF to the return statement! :D\n\n    setup(function() {\n      // Reset the blank to be a blank page.\n      PolymerTest.clearBody();\n\n      // Set the URL of the page to render to load the correct view upon\n      // injecting settings-ui without attaching listeners.\n      window.history.pushState(\u0027object or string\u0027, \u0027Test\u0027, path);\n\n      var settingsUi \u003d document.createElement(\u0027settings-ui\u0027);\n      document.body.appendChild(settingsUi);\n\n      // Wait for section to expand.\n      if (isAdvancedSection) {\n        return new Promise(function(resolve, fail) {\n          settingsUi.addEventListener(\u0027settings-section-expanded\u0027, resolve);\n        });\n      }\n    });",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 5
+      },
+      "revId": "ff711ae3d3b86c4724a90279d262f418450814b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2f0b982_4ed0afb8",
+        "filename": "chrome/test/data/webui/settings/settings_accessibility_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-20T01:40:36Z",
+      "side": 1,
+      "message": "As discussed, using navigateTo instead.",
+      "parentUuid": "cd367ad3_e49dc90d",
       "range": {
         "startLine": 19,
         "startChar": 0,
@@ -226,6 +412,30 @@
     },
     {
       "key": {
+        "uuid": "84a15a82_8172fdac",
+        "filename": "chrome/test/data/webui/settings/settings_accessibility_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-20T01:40:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93062ec3_ecb7484d",
+      "range": {
+        "startLine": 57,
+        "startChar": 4,
+        "endLine": 57,
+        "endChar": 21
+      },
+      "revId": "ff711ae3d3b86c4724a90279d262f418450814b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1d1d507_20fc9f65",
         "filename": "chrome/test/data/webui/settings/settings_accessibility_test.js",
         "patchSetId": 4
@@ -246,6 +456,30 @@
       "revId": "ff711ae3d3b86c4724a90279d262f418450814b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79f2f659_e4152ca0",
+        "filename": "chrome/test/data/webui/settings/settings_accessibility_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-20T01:40:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1d1d507_20fc9f65",
+      "range": {
+        "startLine": 65,
+        "startChar": 2,
+        "endLine": 65,
+        "endChar": 25
+      },
+      "revId": "ff711ae3d3b86c4724a90279d262f418450814b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -272,6 +506,30 @@
     },
     {
       "key": {
+        "uuid": "65313844_3cee1762",
+        "filename": "chrome/test/data/webui/settings/settings_accessibility_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-20T01:40:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "207b2e5a_f44d5037",
+      "range": {
+        "startLine": 118,
+        "startChar": 40,
+        "endLine": 118,
+        "endChar": 41
+      },
+      "revId": "ff711ae3d3b86c4724a90279d262f418450814b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "608d3415_68762da3",
         "filename": "chrome/test/data/webui/settings/settings_accessibility_test.js",
         "patchSetId": 4
@@ -295,6 +553,30 @@
     },
     {
       "key": {
+        "uuid": "6ddcb942_be1c5ec2",
+        "filename": "chrome/test/data/webui/settings/settings_accessibility_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-20T01:40:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "608d3415_68762da3",
+      "range": {
+        "startLine": 125,
+        "startChar": 2,
+        "endLine": 125,
+        "endChar": 13
+      },
+      "revId": "ff711ae3d3b86c4724a90279d262f418450814b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81b88126_914bf1ca",
         "filename": "chrome/test/data/webui/settings/settings_accessibility_test.js",
         "patchSetId": 4
@@ -315,6 +597,30 @@
       "revId": "ff711ae3d3b86c4724a90279d262f418450814b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8476ffbd_2503b332",
+        "filename": "chrome/test/data/webui/settings/settings_accessibility_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-20T01:40:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81b88126_914bf1ca",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 3
+      },
+      "revId": "ff711ae3d3b86c4724a90279d262f418450814b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
