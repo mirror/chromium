@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c392138e_299f0214",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-20T11:51:10Z",
+      "side": 1,
+      "message": "Oh, interesting. Sorry for the fuss then.",
+      "parentUuid": "04461e29_0efc78d5",
+      "range": {
+        "startLine": 34,
+        "startChar": 40,
+        "endLine": 34,
+        "endChar": 41
+      },
+      "revId": "0ff469bec7eb8d4e86921560b5e0872488c8909d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4c42bf3_ccb228b2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
         "patchSetId": 8

@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d7b4299_0e6ec9a0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/SignInPreference.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-20T11:51:10Z",
+      "side": 1,
+      "message": "Account name should be updated even if mediator already exists. Also, since https://chromium-review.googlesource.com/c/574852/ has already landed, could you please replace AccountManagerHelper with AccountManagerFacade?",
+      "range": {
+        "startLine": 141,
+        "startChar": 12,
+        "endLine": 143,
+        "endChar": 68
+      },
+      "revId": "a75e87331c9f87a06af4e11759dda625486926f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9402f75b_97fa0622",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-20T11:51:10Z",
+      "side": 1,
+      "message": "To add Signin_ImpressionNoAccount_FromSettings and Signin_ImpressionWithAccount_FromSettings recording you\u0027ll need this function non-static. Could you please make it non-static now?",
+      "range": {
+        "startLine": 55,
+        "startChar": 11,
+        "endLine": 55,
+        "endChar": 17
+      },
+      "revId": "a75e87331c9f87a06af4e11759dda625486926f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1219fbb_02250f1e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-20T11:51:10Z",
+      "side": 1,
+      "message": "This line should probably be in setAccountName.",
+      "range": {
+        "startLine": 133,
+        "startChar": 0,
+        "endLine": 133,
+        "endChar": 74
+      },
+      "revId": "a75e87331c9f87a06af4e11759dda625486926f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
