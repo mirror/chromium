@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ede6bd54_45210d17",
+        "filename": "remoting/resources/remoting_strings.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-07-20T19:48:47Z",
+      "side": 1,
+      "message": "Still couldn\u0027t figure out how this file is organized X_X",
+      "range": {
+        "startLine": 589,
+        "startChar": 0,
+        "endLine": 589,
+        "endChar": 88
+      },
+      "revId": "a7c389c5676faa52e5d27153f6c76b438498dcc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
