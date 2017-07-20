@@ -22,6 +22,30 @@
       "revId": "95360d336c3dbceb3a601b301c59945f67559c18",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "844caeb5_644eb469",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1109584
+      },
+      "writtenOn": "2017-07-20T17:51:37Z",
+      "side": 1,
+      "message": "If I remember correctly RecordTouchViewUsageInterval updates the time internal for the mode just being exited.\n\nSo here it would calculate the time delta from the last mode switch, and record that as the time spent with touch view being inactive.\n\nConversely when exiting the mode, the time delta is recorded there to track the time spent in the mode.",
+      "parentUuid": "6f8c6a77_4ac38a77",
+      "range": {
+        "startLine": 181,
+        "startChar": 14,
+        "endLine": 181,
+        "endChar": 39
+      },
+      "revId": "95360d336c3dbceb3a601b301c59945f67559c18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
