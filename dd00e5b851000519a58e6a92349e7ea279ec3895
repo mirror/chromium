@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5410d22_f030c76e",
+        "filename": "components/webdata/common/web_data_request_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-20T15:53:39Z",
+      "side": 1,
+      "message": "Drive-by nit:\n\nscoped_refptr\u003cFoo\u003e is only defined if Foo is defined (scoped_refptr needs to know that Foo inherits from base::RefCounted). \n\nIWYU states that in order to take/return Bar  by value it must be fully defined. \n\nAs such foo.h needs to be explicitly included when taking/returning scoped_refptr\u003cFoo\u003e by value.",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 1
+      },
+      "revId": "dd00e5b851000519a58e6a92349e7ea279ec3895",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
