@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "media/gpu/vaapi_video_decode_accelerator.h"
+#include "media/gpu/vaapi/vaapi_video_decode_accelerator.h"
 
 #include <string.h>
 
@@ -21,10 +21,10 @@
 #include "gpu/ipc/service/gpu_channel.h"
 #include "media/base/bind_to_current_loop.h"
 #include "media/gpu/accelerated_video_decoder.h"
-#include "media/gpu/h264_decoder.h"
-#include "media/gpu/vaapi_picture.h"
-#include "media/gpu/vp8_decoder.h"
-#include "media/gpu/vp9_decoder.h"
+#include "media/gpu/vaapi/h264_decoder.h"
+#include "media/gpu/vaapi/vaapi_picture.h"
+#include "media/gpu/vaapi/vp8_decoder.h"
+#include "media/gpu/vaapi/vp9_decoder.h"
 #include "media/video/picture.h"
 #include "third_party/libva/va/va_dec_vp8.h"
 #include "ui/gl/gl_bindings.h"

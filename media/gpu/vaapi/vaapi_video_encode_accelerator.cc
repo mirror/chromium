@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "media/gpu/vaapi_video_encode_accelerator.h"
+#include "media/gpu/vaapi/vaapi_video_encode_accelerator.h"
 
 #include <string.h>
 
@@ -17,8 +17,8 @@
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "media/base/bind_to_current_loop.h"
-#include "media/gpu/h264_dpb.h"
 #include "media/gpu/shared_memory_region.h"
+#include "media/gpu/vaapi/h264_dpb.h"
 #include "third_party/libva/va/va_enc_h264.h"
 
 #define DVLOGF(level) DVLOG(level) << __func__ << "(): "

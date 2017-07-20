@@ -2,14 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "media/gpu/vp9_decoder.h"
+#include "media/gpu/vaapi/vp9_decoder.h"
 
 #include <memory>
 
 #include "base/bind.h"
 #include "base/logging.h"
 #include "media/base/limits.h"
-#include "media/gpu/vp9_decoder.h"
+#include "media/gpu/vaapi/vp9_decoder.h"
 
 namespace media {
 

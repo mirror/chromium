@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef MEDIA_GPU_H264_DECODER_H_
-#define MEDIA_GPU_H264_DECODER_H_
+#ifndef MEDIA_GPU_VAAPI_H264_DECODER_H_
+#define MEDIA_GPU_VAAPI_H264_DECODER_H_
 
 #include <stddef.h>
 #include <stdint.h>
@@ -16,8 +16,8 @@
 #include "media/base/limits.h"
 #include "media/filters/h264_parser.h"
 #include "media/gpu/accelerated_video_decoder.h"
-#include "media/gpu/h264_dpb.h"
 #include "media/gpu/media_gpu_export.h"
+#include "media/gpu/vaapi/h264_dpb.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/size.h"
 
@@ -280,4 +280,4 @@ class MEDIA_GPU_EXPORT H264Decoder : public AcceleratedVideoDecoder {
 
 }  // namespace media
 
-#endif  // MEDIA_GPU_H264_DECODER_H_
+#endif  // MEDIA_GPU_VAAPI_H264_DECODER_H_

@@ -8,7 +8,7 @@
 
 #include "base/logging.h"
 #include "base/stl_util.h"
-#include "media/gpu/h264_dpb.h"
+#include "media/gpu/vaapi/h264_dpb.h"
 
 namespace media {
 
