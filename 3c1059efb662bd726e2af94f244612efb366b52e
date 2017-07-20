@@ -191,6 +191,24 @@
     },
     {
       "key": {
+        "uuid": "e506993f_f67eab0c",
+        "filename": "base/process/process_metrics.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-07-20T04:33:46Z",
+      "side": 1,
+      "message": "I think these callers are really hard to modify since they do not have return value and do not handle the failure situations, add return value checking may have a lot thing to do.\nSo yes, I recommend just clear the |SwapInfo| on failure.",
+      "parentUuid": "5a087e04_a3a2cad7",
+      "revId": "3c1059efb662bd726e2af94f244612efb366b52e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8fb0c18_5aea27c1",
         "filename": "base/process/process_metrics_linux.cc",
         "patchSetId": 7
