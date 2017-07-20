@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "36ac3644_01dec076",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-20T15:39:15Z",
+      "side": 1,
+      "message": "Actually nvm, Sylvain is right. Gerrit is not automatically doing this.",
+      "parentUuid": "94f295ab_0f0ffa79",
+      "revId": "dba4155d61cb7d975fd98aecd5bd35017bb6c0f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "29973363_d736b334",
         "filename": "ios/chrome/app/strings/ios_strings.grd",
         "patchSetId": 4
