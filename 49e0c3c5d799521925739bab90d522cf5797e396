@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bda0c6b5_d54e3e54",
+        "filename": "chrome/browser/media/cast_remoting_connector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-20T21:30:57Z",
+      "side": 1,
+      "message": "nit: Comment is not necessary. Including build_config.h for this is common practice. :)",
+      "range": {
+        "startLine": 13,
+        "startChar": 31,
+        "endLine": 13,
+        "endChar": 57
+      },
+      "revId": "49e0c3c5d799521925739bab90d522cf5797e396",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
