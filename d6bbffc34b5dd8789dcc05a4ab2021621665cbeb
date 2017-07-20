@@ -22,6 +22,30 @@
       "revId": "d6bbffc34b5dd8789dcc05a4ab2021621665cbeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7afbbec7_336e9923",
+        "filename": "components/error_page/renderer/net_error_helper_core.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-20T02:23:00Z",
+      "side": 1,
+      "message": "I tried to do that, but it\u0027s used by ios/net/protocol_handler_util.mm. I don\u0027t understand objective-c or Chrome on iOS, so this CL doesn\u0027t contain anything that causes obj-c changes. This also leads to the awkward enum-string conversion in components/error_page.",
+      "parentUuid": "175f9cef_86b7d63c",
+      "range": {
+        "startLine": 132,
+        "startChar": 43,
+        "endLine": 132,
+        "endChar": 44
+      },
+      "revId": "d6bbffc34b5dd8789dcc05a4ab2021621665cbeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
