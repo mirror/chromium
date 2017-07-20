@@ -397,6 +397,10 @@ class TabManager : public TabStripModelObserver,
   bool ShouldDelayNavigation(
       content::NavigationHandle* navigation_handle) const;
 
+  // Start |force_load_timer_| to load the next background tab if the timer
+  // expires before the current tab loading is finished.
+  void StartForceLoadTimer();
+
   // Start loading the next background tab if needed.
   void LoadNextBackgroundTabIfNeeded();
 
@@ -486,6 +490,9 @@ class TabManager : public TabStripModelObserver,
 
   class TabManagerSessionRestoreObserver;
   std::unique_ptr<TabManagerSessionRestoreObserver> session_restore_observer_;
+
+  // When the timer fires, it forces loading the next background tab if needed.
+  base::OneShotTimer force_load_timer_;
 
   // The list of navigations that are delayed.
   std::vector<BackgroundTabNavigationThrottle*> pending_navigations_;

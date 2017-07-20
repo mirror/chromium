@@ -73,6 +73,12 @@ using content::WebContents;
 namespace resource_coordinator {
 namespace {
 
+// The timeout time after which the next background tab gets loaded if the
+// previous tab has not finished loading yet.
+// TODO(zhenw): Ignore this when under memory pressure. Or possibly make this
+// a dynamic threshold under different scenarios.
+const TimeDelta kBackgroundTabLoadTimeout = TimeDelta::FromSeconds(10);
+
 // The default interval in seconds after which to adjust the oom_score_adj
 // value.
 const int kAdjustmentIntervalSeconds = 10;
@@ -252,6 +258,7 @@ void TabManager::Start() {
 void TabManager::Stop() {
   update_timer_.Stop();
   recent_tab_discard_timer_.Stop();
+  force_load_timer_.Stop();
   memory_pressure_listener_.reset();
 }
 
@@ -1044,6 +1051,8 @@ TabManager::MaybeThrottleNavigation(BackgroundTabNavigationThrottle* throttle) {
   GetWebContentsData(navigation_handle->GetWebContents())
       ->SetTabLoadingState(TAB_IS_NOT_LOADING);
   pending_navigations_.push_back(throttle);
+
+  StartForceLoadTimer();
   return content::NavigationThrottle::DEFER;
 }
 
@@ -1081,10 +1090,17 @@ void TabManager::OnWebContentsDestroyed(content::WebContents* contents) {
   LoadNextBackgroundTabIfNeeded();
 }
 
+void TabManager::StartForceLoadTimer() {
+  force_load_timer_.Stop();
+  force_load_timer_.Start(FROM_HERE, kBackgroundTabLoadTimeout, this,
+                          &TabManager::LoadNextBackgroundTabIfNeeded);
+}
+
 void TabManager::LoadNextBackgroundTabIfNeeded() {
   // Do not load more background tabs until all currently loading tabs have
-  // finished.
-  if (!loading_contents_.empty())
+  // finished. Ignore this constraint if the timer fires to force loading the
+  // next background tab.
+  if (force_load_timer_.IsRunning() && !loading_contents_.empty())
     return;
 
   if (pending_navigations_.empty())
@@ -1093,6 +1109,8 @@ void TabManager::LoadNextBackgroundTabIfNeeded() {
   BackgroundTabNavigationThrottle* throttle = pending_navigations_.front();
   pending_navigations_.erase(pending_navigations_.begin());
   ResumeNavigation(throttle);
+
+  StartForceLoadTimer();
 }
 
 void TabManager::ResumeTabNavigationIfNeeded(content::WebContents* contents) {
