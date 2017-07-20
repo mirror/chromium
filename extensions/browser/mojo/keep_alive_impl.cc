@@ -7,15 +7,17 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "content/public/browser/browser_context.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/process_manager.h"
 
 namespace extensions {
 
 // static
-void KeepAliveImpl::Create(content::BrowserContext* context,
-                           const Extension* extension,
-                           KeepAliveRequest request) {
+void KeepAliveImpl::Create(const Extension* extension,
+                           content::BrowserContext* context,
+                           KeepAliveRequest request,
+                           content::RenderFrameHost* render_frame_host) {
   // Owns itself.
   new KeepAliveImpl(context, extension, std::move(request));
 }
