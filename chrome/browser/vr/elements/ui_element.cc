@@ -86,6 +86,10 @@ void UiElement::SetSize(float width, float height) {
                                        gfx::SizeF(width, height));
 }
 
+void UiElement::SetVisible(bool visible) {
+  animation_player_.TransitionVisibilityTo(last_frame_time_, visible_, visible);
+}
+
 void UiElement::SetTransformOperations(
     const cc::TransformOperations& operations) {
   DCHECK_EQ(3ul, operations.size());
@@ -199,6 +203,11 @@ void UiElement::NotifyClientTransformOperationsAnimated(
 void UiElement::NotifyClientBoundsAnimated(const gfx::SizeF& size,
                                            cc::Animation* animation) {
   size_ = size;
+}
+
+void UiElement::NotifyClientVisibilityAnimated(bool visible,
+                                               cc::Animation* animation) {
+  visible_ = visible;
 }
 
 }  // namespace vr
