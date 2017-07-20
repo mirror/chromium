@@ -22,6 +22,30 @@
       "revId": "ffb4d7e63bc9cabd82843b0f05f05a762e715ca4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0be869b_1e736bd6",
+        "filename": "chrome/profiling/backtrace_storage_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-20T23:35:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fa04d25_01645192",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 7
+      },
+      "revId": "ffb4d7e63bc9cabd82843b0f05f05a762e715ca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
