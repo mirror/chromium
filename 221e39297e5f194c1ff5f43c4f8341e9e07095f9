@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba7d2616_dfff91f5",
+        "filename": "chrome/gpu/gpu_arc_video_encode_accelerator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-07-20T06:18:42Z",
+      "side": 1,
+      "message": "1. Do you need to notify the client in error cases, like early returns above?\n2. How about rename DropSharedMemory and make it do notify? (But I am not sure whether this would be better or not)",
+      "revId": "221e39297e5f194c1ff5f43c4f8341e9e07095f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
