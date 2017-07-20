@@ -28,6 +28,9 @@
 
 namespace blink {
 
+BoxPainter::BoxPainter(const LayoutBox& layout_box)
+    : BoxModelObjectPainter(layout_box), layout_box_(layout_box) {}
+
 void BoxPainter::Paint(const PaintInfo& paint_info,
                        const LayoutPoint& paint_offset) {
   ObjectPainter(layout_box_).CheckPaintOffset(paint_info, paint_offset);
@@ -281,15 +284,6 @@ void BoxPainter::PaintClippingMask(const PaintInfo& paint_info,
   LayoutObjectDrawingRecorder drawing_recorder(paint_info.context, layout_box_,
                                                paint_info.phase, paint_rect);
   paint_info.context.FillRect(paint_rect, Color::kBlack);
-}
-
-Node* BoxPainter::GetNode() {
-  Node* node = nullptr;
-  const LayoutObject* layout_object = &layout_box_;
-  for (; layout_object && !node; layout_object = layout_object->Parent()) {
-    node = layout_object->GeneratingNode();
-  }
-  return node;
 }
 
 }  // namespace blink
