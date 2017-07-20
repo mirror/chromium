@@ -5,12 +5,13 @@
 #ifndef CHROME_INSTALLER_ZUCCHINI_BUFFER_SOURCE_H_
 #define CHROME_INSTALLER_ZUCCHINI_BUFFER_SOURCE_H_
 
-#include <algorithm>
-#include <cstddef>
-#include <cstdint>
+#include <stddef.h>
+#include <stdint.h>
+
 #include <initializer_list>
 #include <type_traits>
 
+#include "base/logging.h"
 #include "chrome/installer/zucchini/buffer_view.h"
 
 namespace zucchini {
@@ -30,10 +31,9 @@ class BufferSource : public ConstBufferView {
   BufferSource() = default;
   explicit BufferSource(ConstBufferView buffer);
   BufferSource(const BufferSource&) = default;
-
   BufferSource& operator=(BufferSource&&) = default;
 
-  // Moves cursor forward by |n| bytes, or until end if data is exhausted.
+  // Moves the cursor forward by |n| bytes, or to the end if data is exhausted.
   // Returns a reference to *this, to allow chaining, e.g.:
   //   if (!buffer_source.Skip(1024).GetValue<uint32_t>(&value)) {
   //      ... // Handle error.

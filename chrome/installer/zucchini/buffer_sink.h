@@ -5,9 +5,9 @@
 #ifndef CHROME_INSTALLER_ZUCCHINI_BUFFER_SINK_H_
 #define CHROME_INSTALLER_ZUCCHINI_BUFFER_SINK_H_
 
+#include <stdint.h>
+
 #include <algorithm>
-#include <cstddef>
-#include <cstdint>
 #include <iterator>
 
 #include "base/logging.h"
@@ -28,7 +28,6 @@ class BufferSink : public MutableBufferView {
   BufferSink() = default;
   explicit BufferSink(MutableBufferView buffer);
   BufferSink(const BufferSink&) = default;
-
   BufferSink& operator=(BufferSink&&) = default;
 
   // If sufficient space is available, writes the binary representation of
