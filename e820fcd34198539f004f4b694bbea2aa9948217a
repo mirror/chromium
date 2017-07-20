@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "e3174589_3f7f6ada",
+        "filename": "base/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 2596,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-07-20T19:27:53Z",
+      "side": 1,
+      "message": "Similarly, should this be in base_java_test_support?",
+      "revId": "e820fcd34198539f004f4b694bbea2aa9948217a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d62caa0b_459729d5",
+        "filename": "base/android/java/src/org/chromium/base/TestTraceEvent.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-07-20T19:27:53Z",
+      "side": 1,
+      "message": "Should this be in org.chromium.base.test instead?",
+      "revId": "e820fcd34198539f004f4b694bbea2aa9948217a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51b3ea7f_16b89ac4",
         "filename": "base/android/java/src/org/chromium/base/TestTraceEvent.java",
         "patchSetId": 2
