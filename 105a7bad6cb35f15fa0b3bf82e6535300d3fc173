@@ -16,6 +16,24 @@
       "revId": "105a7bad6cb35f15fa0b3bf82e6535300d3fc173",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e006164_e1ccd4ce",
+        "filename": "chrome/test/chromedriver/session_commands.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1225899
+      },
+      "writtenOn": "2017-07-20T17:56:53Z",
+      "side": 1,
+      "message": "Good point, if the if statement fails then there is no need for tmp_list. If the statement passes then shouldn\u0027t first_match_list still points to the correct thing outside the block since it was declared outside (even though tmp_list is now out of scope).",
+      "parentUuid": "c8ed53bd_957d3c3b",
+      "revId": "105a7bad6cb35f15fa0b3bf82e6535300d3fc173",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
