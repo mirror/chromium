@@ -1676,6 +1676,8 @@ bool Document::hidden() const {
 }
 
 void Document::DidChangeVisibilityState() {
+    fprintf(stderr, "\n\nDocument::DidChangeVisibilityState: %d for %s",
+            GetPageVisibilityState(), Url().GetString().Ascii().data());
   DispatchEvent(Event::CreateBubble(EventTypeNames::visibilitychange));
   // Also send out the deprecated version until it can be removed.
   DispatchEvent(Event::CreateBubble(EventTypeNames::webkitvisibilitychange));
