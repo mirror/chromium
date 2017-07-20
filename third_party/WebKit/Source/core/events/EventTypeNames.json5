@@ -16,6 +16,7 @@
     "DOMNodeRemovedFromDocument",
     "DOMSubtreeModified",
     "abort",
+    "accessibleclick",
     "activate",
     "active",
     "addsourcebuffer",
