@@ -158,6 +158,7 @@ class MODULES_EXPORT RTCPeerConnection final
   HeapVector<Member<RTCRtpReceiver>> getReceivers();
   RTCRtpSender* addTrack(MediaStreamTrack*, MediaStreamVector, ExceptionState&);
   void removeTrack(RTCRtpSender*, ExceptionState&);
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(track);
 
   RTCDataChannel* createDataChannel(ScriptState*,
                                     String label,
@@ -191,7 +192,9 @@ class MODULES_EXPORT RTCPeerConnection final
   void DidChangeSignalingState(SignalingState) override;
   void DidChangeICEGatheringState(ICEGatheringState) override;
   void DidChangeICEConnectionState(ICEConnectionState) override;
-  void DidAddRemoteStream(const WebMediaStream&) override;
+  void DidAddRemoteStream(
+      const WebMediaStream&,
+      WebVector<std::unique_ptr<WebRTCRtpReceiver>>*) override;
   void DidRemoveRemoteStream(const WebMediaStream&) override;
   void DidAddRemoteDataChannel(WebRTCDataChannelHandler*) override;
   void ReleasePeerConnectionHandler() override;
@@ -248,6 +251,8 @@ class MODULES_EXPORT RTCPeerConnection final
   void ScheduleDispatchEvent(Event*, std::unique_ptr<BoolFunction>);
   void DispatchScheduledEvent();
   MediaStreamTrack* GetTrack(const WebMediaStreamTrack&) const;
+  RTCRtpReceiver* GetOrCreateRTCRtpReceiver(
+      std::unique_ptr<WebRTCRtpReceiver> web_rtp_receiver);
 
   void ChangeSignalingState(WebRTCPeerConnectionHandlerClient::SignalingState);
   void ChangeIceGatheringState(

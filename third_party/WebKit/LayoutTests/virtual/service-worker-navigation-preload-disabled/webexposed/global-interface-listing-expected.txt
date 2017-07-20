@@ -5160,6 +5160,7 @@ interface RTCPeerConnection : EventTarget
     getter onnegotiationneeded
     getter onremovestream
     getter onsignalingstatechange
+    getter ontrack
     getter remoteDescription
     getter signalingState
     method addIceCandidate
@@ -5190,6 +5191,7 @@ interface RTCPeerConnection : EventTarget
     setter onnegotiationneeded
     setter onremovestream
     setter onsignalingstatechange
+    setter ontrack
 interface RTCPeerConnectionIceEvent : Event
     attribute @@toStringTag
     getter candidate
@@ -5227,6 +5229,12 @@ interface RTCStatsReport
     method has
     method keys
     method values
+interface RTCTrackEvent : Event
+    attribute @@toStringTag
+    getter receiver
+    getter streams
+    getter track
+    method constructor
 interface RadioNodeList : NodeList
     attribute @@toStringTag
     getter value
@@ -8806,6 +8814,7 @@ interface webkitRTCPeerConnection : EventTarget
     getter onnegotiationneeded
     getter onremovestream
     getter onsignalingstatechange
+    getter ontrack
     getter remoteDescription
     getter signalingState
     method addIceCandidate
@@ -8836,6 +8845,7 @@ interface webkitRTCPeerConnection : EventTarget
     setter onnegotiationneeded
     setter onremovestream
     setter onsignalingstatechange
+    setter ontrack
 interface webkitSpeechGrammar
     attribute @@toStringTag
     getter src
