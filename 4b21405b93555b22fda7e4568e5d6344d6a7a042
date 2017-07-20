@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b867393_25ea76dd",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 80251,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-20T18:07:27Z",
+      "side": 1,
+      "message": "Mention that this is Android specific. Same below.\n\nMaybe also mention when this is run? Once per thumbnail when they load? On startup? Something else?",
+      "range": {
+        "startLine": 80251,
+        "startChar": 42,
+        "endLine": 80251,
+        "endChar": 51
+      },
+      "revId": "4b21405b93555b22fda7e4568e5d6344d6a7a042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
