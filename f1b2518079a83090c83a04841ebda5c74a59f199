@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dc96ad8b_43f8716b",
+        "filename": "chrome/browser/ui/views/apps/shaped_app_window_targeter_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-07-20T22:12:40Z",
+      "side": 1,
+      "message": "I actually think your suggestion would be the best choice for those reasons:\n - It leaves the subsequent tests in the same shape as it was before\n - UpdateShape() installs a ShapedAppWindowTargeter on the window so it should not matter if the window is resizable (and we should not expect any change from ToT)",
+      "parentUuid": "9a517f1c_68ee50c1",
+      "revId": "f1b2518079a83090c83a04841ebda5c74a59f199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02bad3fd_6e9f085e",
         "filename": "chrome/browser/ui/views/apps/shaped_app_window_targeter_unittest.cc",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "08937059_0bd62b5d",
+        "filename": "chrome/browser/ui/views/apps/shaped_app_window_targeter_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-07-20T22:12:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02bad3fd_6e9f085e",
+      "revId": "f1b2518079a83090c83a04841ebda5c74a59f199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36eb7590_80c4e8bf",
         "filename": "chrome/browser/ui/views/apps/shaped_app_window_targeter_unittest.cc",
         "patchSetId": 7
@@ -50,6 +86,24 @@
       "revId": "f1b2518079a83090c83a04841ebda5c74a59f199",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a602a43_688a3aab",
+        "filename": "chrome/browser/ui/views/apps/shaped_app_window_targeter_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-07-20T22:12:40Z",
+      "side": 1,
+      "message": "Done (Even though we cannot use the same instance, we have a copy constructor that seems to do just the right thing).",
+      "parentUuid": "36eb7590_80c4e8bf",
+      "revId": "f1b2518079a83090c83a04841ebda5c74a59f199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
