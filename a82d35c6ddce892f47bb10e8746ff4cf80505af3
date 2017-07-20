@@ -46,6 +46,30 @@
       "revId": "a82d35c6ddce892f47bb10e8746ff4cf80505af3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36db5bd5_366d8cc7",
+        "filename": "gpu/command_buffer/service/feature_info.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-07-20T20:55:57Z",
+      "side": 1,
+      "message": "Ok, we should at least check that the extension string is present though instead of assuming that the extension exists based on swiftshader.  We can apply the hint if \"is_swiftshader \u0026\u0026 chromium_texture_filtering_hint\".",
+      "parentUuid": "c80bb66e_fedb5b59",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 32
+      },
+      "revId": "a82d35c6ddce892f47bb10e8746ff4cf80505af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
