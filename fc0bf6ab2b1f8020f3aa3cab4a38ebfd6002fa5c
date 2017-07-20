@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4320e777_2af5d0af",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlElementsHelper.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-07-20T20:19:27Z",
+      "side": 1,
+      "message": "I think we can just remove mousedown/up from here, right?",
+      "revId": "fc0bf6ab2b1f8020f3aa3cab4a38ebfd6002fa5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdd230b9_7589af0e",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlElementsHelper.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1125369
+      },
+      "writtenOn": "2017-07-20T20:19:27Z",
+      "side": 1,
+      "message": "Same here: let\u0027s drop mouse* events.",
+      "revId": "fc0bf6ab2b1f8020f3aa3cab4a38ebfd6002fa5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
