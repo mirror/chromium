@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5eba8de9_c15a5d76",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-20T21:22:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98e01c00_2507ba2f",
+      "range": {
+        "startLine": 13,
+        "startChar": 54,
+        "endLine": 13,
+        "endChar": 62
+      },
+      "revId": "efb0b1c937d6758341ca711a2c8bc389d038212c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "996a4322_9386feac",
         "filename": "ios/web/web_state/js/resources/context_menu.js",
         "patchSetId": 2
