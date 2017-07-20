@@ -265,11 +265,9 @@ public class ContextualSearchSelectionController {
         }
 
         if (shouldHandleSelection) {
-            if (mSelectedText != null) {
-                mX = posXPix;
-                mY = posYPix;
-                handleSelection(mSelectedText, SelectionType.LONG_PRESS);
-            }
+            mX = posXPix;
+            mY = posYPix;
+            handleSelection(mSelectedText, SelectionType.LONG_PRESS);
         }
     }
 
