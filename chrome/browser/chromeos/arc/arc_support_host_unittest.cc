@@ -22,7 +22,7 @@ namespace {
 
 class MockAuthDelegateNonStrict : public ArcSupportHost::AuthDelegate {
  public:
-  MOCK_METHOD1(OnAuthSucceeded, void(const std::string& auth_code));
+  MOCK_METHOD1(OnAuthSucceeded, void());
   MOCK_METHOD1(OnAuthFailed, void(const std::string& error_msg));
   MOCK_METHOD0(OnAuthRetryClicked, void());
 };
@@ -114,28 +114,6 @@ class ArcSupportHostTest : public testing::Test {
 
   DISALLOW_COPY_AND_ASSIGN(ArcSupportHostTest);
 };
-
-TEST_F(ArcSupportHostTest, AuthSucceeded) {
-  constexpr char kFakeCode[] = "fake_code";
-  MockAuthDelegate* auth_delegate = CreateMockAuthDelegate();
-  support_host()->SetAuthDelegate(auth_delegate);
-
-  support_host()->ShowLso();
-
-  EXPECT_CALL(*auth_delegate, OnAuthSucceeded(Eq(kFakeCode)));
-  fake_arc_support()->EmulateAuthSuccess(kFakeCode);
-}
-
-TEST_F(ArcSupportHostTest, AuthFailed) {
-  constexpr char kFakeError[] = "fake_error";
-  MockAuthDelegate* auth_delegate = CreateMockAuthDelegate();
-  support_host()->SetAuthDelegate(auth_delegate);
-
-  support_host()->ShowLso();
-
-  EXPECT_CALL(*auth_delegate, OnAuthFailed(kFakeError));
-  fake_arc_support()->EmulateAuthFailure(kFakeError);
-}
 
 TEST_F(ArcSupportHostTest, AuthRetryOnError) {
   // Auth error can only happen after terms accepted.
