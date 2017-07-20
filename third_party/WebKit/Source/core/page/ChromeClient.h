@@ -369,6 +369,9 @@ class CORE_EXPORT ChromeClient : public PlatformChromeClient {
     (*callback)(false);
   }
 
+  virtual void DidBlockFramebust(const KURL& destination_url,
+                                 const KURL& source_url) {}
+
   DECLARE_TRACE();
 
  protected:

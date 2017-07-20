@@ -236,6 +236,9 @@ class WEB_EXPORT ChromeClientImpl final : public ChromeClient {
       const PaintImage&,
       std::unique_ptr<WTF::Function<void(bool)>> callback) override;
 
+  void DidBlockFramebust(const KURL& destination_url,
+                         const KURL& source_url) override;
+
  private:
   explicit ChromeClientImpl(WebViewBase*);
 
