@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38c0e156_a6ac1a13",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-20T12:19:55Z",
+      "side": 1,
+      "message": "Nit: #include \u003cutility\u003e",
+      "revId": "8b4e922ac528e988f66bee04d67ece750a872d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7a494e2_eded8d18",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-20T12:19:55Z",
+      "side": 1,
+      "message": "Why does EnsurePolicyKeyLoaded() unconditionally retrieve the sanitized user name when you can do it only if required here?",
+      "revId": "8b4e922ac528e988f66bee04d67ece750a872d5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
