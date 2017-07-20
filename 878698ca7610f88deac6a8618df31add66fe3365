@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19207fb2_bb468e29",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-20T23:04:40Z",
+      "side": 1,
+      "message": "Hey, I think hardcoding the list of routes is not going to fly. Maybe a blacklist if you have to, but we should really iterate over everything in Routes (somehow)",
+      "range": {
+        "startLine": 165,
+        "startChar": 3,
+        "endLine": 165,
+        "endChar": 10
+      },
+      "revId": "878698ca7610f88deac6a8618df31add66fe3365",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
