@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8631f3f2_60603abc",
+        "filename": "third_party/WebKit/Source/platform/InstanceCountersMemoryDumpProvider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-20T06:20:34Z",
+      "side": 1,
+      "message": "DEFINE_STATIC_LOCAL ?",
+      "revId": "678ba7261a1d4eeb3561aea3c1ac818e3dc1ec45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
