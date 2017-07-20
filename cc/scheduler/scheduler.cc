@@ -277,7 +277,7 @@ bool Scheduler::OnBeginFrameDerivedImpl(const BeginFrameArgs& args) {
   // Trace this begin frame time through the Chrome stack
   TRACE_EVENT_FLOW_BEGIN0(
       TRACE_DISABLED_BY_DEFAULT("cc.debug.scheduler.frames"), "BeginFrameArgs",
-      args.frame_time.ToInternalValue());
+      (args.frame_time - base::TimeTicks()).InMicroseconds());
 
   if (settings_.using_synchronous_renderer_compositor) {
     BeginImplFrameSynchronous(args);

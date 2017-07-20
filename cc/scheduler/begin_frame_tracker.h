@@ -9,6 +9,7 @@
 #include <string>
 
 #include "base/location.h"
+#include "base/optional.h"
 #include "base/trace_event/trace_event.h"
 #include "base/trace_event/trace_event_argument.h"
 #include "cc/output/begin_frame_args.h"
@@ -72,9 +73,7 @@ class CC_EXPORT BeginFrameTracker {
 
   // The following methods violate principles of how BeginFrameArgs should be
   // used. These methods should only be used when there is no other choice.
-  bool DangerousMethodHasStarted() const {
-    return !current_updated_at_.is_null();
-  }
+  bool DangerousMethodHasStarted() const { return !!current_updated_at_; }
   bool DangerousMethodHasFinished() const { return HasFinished(); }
   const BeginFrameArgs& DangerousMethodCurrentOrLast() const;
 
@@ -82,14 +81,14 @@ class CC_EXPORT BeginFrameTracker {
   // Return if currently not between the start/end period. This method should
   // be used extremely sparingly and normal indicates incorrect management of
   // the BFA object. Can be called at any time.
-  bool HasFinished() const { return !current_finished_at_.is_null(); }
+  bool HasFinished() const { return !!current_finished_at_; }
 
   const tracked_objects::Location location_;
   const std::string location_string_;
 
-  base::TimeTicks current_updated_at_;
+  base::Optional<base::TimeTicks> current_updated_at_;
   BeginFrameArgs current_args_;
-  base::TimeTicks current_finished_at_;
+  base::Optional<base::TimeTicks> current_finished_at_;
 };
 
 }  // namespace cc

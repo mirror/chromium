@@ -1752,8 +1752,7 @@ class LayerTreeHostAnimationTestNotifyAnimationFinished
                               TargetProperty::Type target_property,
                               int group) override {
     called_animation_started_ = true;
-    layer_tree_host()->AnimateLayers(base::TimeTicks::FromInternalValue(
-        std::numeric_limits<int64_t>::max()));
+    layer_tree_host()->AnimateLayers(base::TimeTicks::Max());
     PostSetNeedsCommitToMainThread();
   }
 
