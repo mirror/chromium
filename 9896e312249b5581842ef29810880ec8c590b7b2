@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1d9fb64_b9c215a9",
+        "filename": "third_party/sqlite/README.chromium",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-20T19:20:29Z",
+      "side": 1,
+      "message": "https ?\n\n(prefer https where possible)",
+      "range": {
+        "startLine": 129,
+        "startChar": 5,
+        "endLine": 129,
+        "endChar": 9
+      },
+      "revId": "9896e312249b5581842ef29810880ec8c590b7b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
