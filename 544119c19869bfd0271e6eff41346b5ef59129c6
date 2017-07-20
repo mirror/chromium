@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4a1e647_d9615a76",
+        "filename": "extensions/browser/api/messaging/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-20T17:38:05Z",
+      "side": 1,
+      "message": "do we need this (given that crypto is a public dep of //net, and the main reason crypto/ is used in the API is to handle output from a //net method)?",
+      "range": {
+        "startLine": 22,
+        "startChar": 7,
+        "endLine": 22,
+        "endChar": 13
+      },
+      "revId": "544119c19869bfd0271e6eff41346b5ef59129c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
