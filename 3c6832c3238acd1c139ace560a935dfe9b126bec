@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1bfb520c_83df78e5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-07-20T16:32:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2188d3d8_61b526ca",
+      "revId": "3c6832c3238acd1c139ace560a935dfe9b126bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "778c01d4_b3de53b3",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabBottomBarDelegate.java",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "3c6832c3238acd1c139ace560a935dfe9b126bec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0210c80b_7829dda3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabBottomBarDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-07-20T16:32:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "778c01d4_b3de53b3",
+      "revId": "3c6832c3238acd1c139ace560a935dfe9b126bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "60c61524_2919334c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabsConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-07-20T16:32:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cc1cad2_917e485f",
+      "revId": "3c6832c3238acd1c139ace560a935dfe9b126bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3a40cfc_065b1f8f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabsConnection.java",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-20T11:41:41Z",
       "side": 1,
       "message": "Is it possible for the callback to be null if we have shouldSendBottomBarScrollStateForSession() to true?\nIIUC, callback is always non-null if we have a session, and we cannot have a non default behavior without a session.\n\nNot necessarily asking for removing the null check, just looking to check my understanding.",
+      "revId": "3c6832c3238acd1c139ace560a935dfe9b126bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08c034c4_698951d0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabsConnection.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-07-20T16:32:35Z",
+      "side": 1,
+      "message": "It is not actually. :)",
+      "parentUuid": "f3a40cfc_065b1f8f",
       "revId": "3c6832c3238acd1c139ace560a935dfe9b126bec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
