@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "d2ce09e5_d3443095",
+        "filename": "chrome/browser/chrome_navigation_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-07-20T22:45:27Z",
+      "side": 1,
+      "message": "It does seem a bit weird to create a browser test in which you are repeatedly changing FeatureList, which I believe does not normally change during a run of the browser.  IIUC, that\u0027s the cause of the race condition here?\n\nSince it seems like these are separate cases, it\u0027s probably best to split these into separate tests, as subclasses of SignInIsolationBrowserTest.",
+      "parentUuid": "0888a563_1858b639",
+      "range": {
+        "startLine": 580,
+        "startChar": 4,
+        "endLine": 580,
+        "endChar": 43
+      },
+      "revId": "7ced9b8128a851b58837dbc003d8014858c94532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "263d0151_8120f3dd",
         "filename": "chrome/browser/chrome_navigation_browsertest.cc",
         "patchSetId": 1
