@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcedcbd7_27028608",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-07-20T02:01:01Z",
+      "side": 1,
+      "message": "This causes incorrectly calling Instantiate() at Line 345 if the all descendants are in ReachedUrlSet() but some of them are not yet finished loading.",
+      "revId": "e797b4b021dae8b574e85d60f4221465c285b917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34d6ea8b_979e6506",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-07-20T02:01:01Z",
+      "side": 1,
+      "message": "How about moving this into a separate class?\nMaking all MLT to have |reached_url_set_| but only the one in the top-level MTL looks awkward, and also making this a separate class makes |ModuleTreeLinker*| parameters for top-level MTL (e.g. in Line 52) to more clearer type.",
+      "revId": "e797b4b021dae8b574e85d60f4221465c285b917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
