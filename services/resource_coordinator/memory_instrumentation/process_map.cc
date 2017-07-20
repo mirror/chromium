@@ -42,9 +42,7 @@ void ProcessMap::OnInit(std::vector<RunningServiceInfoPtr> instances) {
 void ProcessMap::OnServiceCreated(RunningServiceInfoPtr instance) {
 }
 
-void ProcessMap::OnServiceStarted(const service_manager::Identity& identity,
-                                  uint32_t pid) {
-}
+void ProcessMap::OnServiceStarted(const service_manager::Identity& identity) {}
 
 void ProcessMap::OnServiceFailedToStart(const service_manager::Identity&) {}
 
