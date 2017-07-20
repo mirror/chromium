@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39d0a025_b8df9b42",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-20T00:59:57Z",
+      "side": 1,
+      "message": "Istiaque: Should we validate for e.g. whether the domain is actually a valid domain (say by conversion to a URL). Or the url passed as url filter is actually a url? How much validation should we do?",
+      "range": {
+        "startLine": 208,
+        "startChar": 46,
+        "endLine": 208,
+        "endChar": 53
+      },
+      "revId": "17c3ec02498e0562aa3b196e5bd0aac042a2f732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "254db061_f57491bc",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-20T00:59:57Z",
+      "side": 1,
+      "message": "Pavel: Do we need to convert domains to lower case? (url_pattern_index.cc does this). What about the url filter? We get this directly from extensions, so do we need any more sanitization? For e.g. is it ok/not ok for domains/url filter to include scheme (\"http://\") etc.\n\nWe should document any such requirements within the url pattern index schema.",
+      "range": {
+        "startLine": 209,
+        "startChar": 25,
+        "endLine": 209,
+        "endChar": 50
+      },
+      "revId": "17c3ec02498e0562aa3b196e5bd0aac042a2f732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
