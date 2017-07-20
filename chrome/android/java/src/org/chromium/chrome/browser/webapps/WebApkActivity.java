@@ -141,7 +141,16 @@ public class WebApkActivity extends WebappActivity {
 
     @Override
     protected WebappInfo createWebappInfo(Intent intent) {
-        return (intent == null) ? WebApkInfo.createEmpty() : WebApkInfo.create(intent);
+        if (intent == null) return WebApkInfo.createEmpty();
+
+        String id = WebApkInfo.getIdFromIntent(intent);
+        WebappInfo webappInfo = WebappActivity.getWebappInfoFromCache(id);
+
+        if (webappInfo != null) return webappInfo;
+
+        webappInfo = WebApkInfo.create(intent);
+        WebappActivity.addWebappInfoToCache(id, webappInfo);
+        return webappInfo;
     }
 
     @Override

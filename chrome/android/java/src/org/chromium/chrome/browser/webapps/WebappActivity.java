@@ -49,6 +49,7 @@ import org.chromium.net.NetworkChangeNotifier;
 import org.chromium.ui.base.PageTransition;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -87,6 +88,9 @@ public class WebappActivity extends SingleTabActivity {
 
     private Runnable mSetImmersiveRunnable;
 
+    private static final HashMap<String, WebappInfo> sWebInfoMap =
+            new HashMap<String, WebappInfo>();
+
     /**
      * Construct all the variables that shouldn't change.  We do it here both to clarify when the
      * objects are created and to ensure that they exist throughout the parallelized initialization
@@ -122,7 +126,16 @@ public class WebappActivity extends SingleTabActivity {
     }
 
     protected WebappInfo createWebappInfo(Intent intent) {
-        return (intent == null) ? WebappInfo.createEmpty() : WebappInfo.create(intent);
+        if (intent == null) return WebappInfo.createEmpty();
+
+        String id = WebappInfo.getIdFromIntent(intent);
+        WebappInfo webappInfo = WebappActivity.getWebappInfoFromCache(id);
+
+        if (webappInfo != null) return webappInfo;
+
+        webappInfo = WebappInfo.create(intent);
+        WebappActivity.addWebappInfoToCache(id, webappInfo);
+        return webappInfo;
     }
 
     protected void initializeUI(Bundle savedInstanceState) {
@@ -359,6 +372,15 @@ public class WebappActivity extends SingleTabActivity {
      */
     public String getWebappScope() {
         return mWebappInfo.scopeUri().toString();
+    }
+
+    public static void addWebappInfoToCache(String id, WebappInfo info) {
+        sWebInfoMap.put(id, info);
+    }
+
+    public static WebappInfo getWebappInfoFromCache(String id) {
+        if (id == null) return null;
+        return sWebInfoMap.get(id);
     }
 
     private void initializeWebappData() {

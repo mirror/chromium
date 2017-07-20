@@ -58,8 +58,10 @@ public class WebappLauncherActivity extends Activity {
         WebappInfo webappInfo;
         if (validWebApk) {
             webappInfo = WebApkInfo.create(intent);
+            WebappActivity.addWebappInfoToCache(WebApkInfo.getIdFromIntent(intent), webappInfo);
         } else {
             webappInfo = WebappInfo.create(intent);
+            WebappActivity.addWebappInfoToCache(WebappInfo.getIdFromIntent(intent), webappInfo);
         }
 
         // {@link WebApkInfo#create()} and {@link WebappInfo#create()} return null if the intent

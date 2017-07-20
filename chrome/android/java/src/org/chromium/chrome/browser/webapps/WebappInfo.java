@@ -296,6 +296,11 @@ public class WebappInfo {
         return mIsIconGenerated;
     }
 
+    public static String getIdFromIntent(Intent intent) {
+        if (intent == null) return null;
+        return IntentUtils.safeGetStringExtra(intent, ShortcutHelper.EXTRA_ID);
+    }
+
     /**
      * Sets extras on an Intent that will launch a WebappActivity.
      * @param intent Intent that will be used to launch a WebappActivity.

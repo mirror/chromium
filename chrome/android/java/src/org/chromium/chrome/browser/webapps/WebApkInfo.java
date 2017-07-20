@@ -253,6 +253,14 @@ public class WebApkInfo extends WebappInfo {
         intent.putExtra(WebApkConstants.EXTRA_WEBAPK_FORCE_NAVIGATION, mForceNavigation);
     }
 
+    public static String getIdFromIntent(Intent intent) {
+        if (intent == null) return null;
+        String packageName =
+                IntentUtils.safeGetStringExtra(intent, WebApkConstants.EXTRA_WEBAPK_PACKAGE_NAME);
+        if (packageName == null) return null;
+        return WebApkConstants.WEBAPK_ID_PREFIX + packageName;
+    }
+
     /**
      * Extracts meta data from a WebAPK's Android Manifest.
      * @param webApkPackageName WebAPK's package name.
