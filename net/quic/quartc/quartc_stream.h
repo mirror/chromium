@@ -30,7 +30,7 @@ class QUIC_EXPORT_PRIVATE QuartcStream : public QuicStream,
   // QuartcStreamInterface overrides.
   uint32_t stream_id() override;
 
-  uint64_t buffered_amount() override;
+  uint64_t bytes_written() override;
 
   bool fin_sent() override;
 
