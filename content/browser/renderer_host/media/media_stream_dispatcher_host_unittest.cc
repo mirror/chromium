@@ -114,8 +114,8 @@ class MockMediaStreamDispatcherHost : public MediaStreamDispatcherHost,
                         const url::Origin& security_origin,
                         const base::Closure& quit_closure) {
     quit_closures_.push(quit_closure);
-    MediaStreamDispatcherHost::OnGenerateStream(
-        render_frame_id, page_request_id, controls, security_origin, false);
+    MediaStreamDispatcherHost::GenerateStream(render_frame_id, page_request_id,
+                                              controls, security_origin, false);
   }
 
   void OnStopStreamDevice(int render_frame_id,
