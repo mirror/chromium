@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bf509cdc_74771dec",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-07-20T17:46:27Z",
+      "side": 1,
+      "message": "I would add a DCHECK before the return, but not a CHECK(); We want users of the service to use the API correctly, but a CHECK could lead to compromised renderers being able to crash the browser process, for example.",
+      "parentUuid": "1d34ed38_3f451b51",
+      "revId": "91698745e887e810b7492fb6eed0fb2a3edd0656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce0167e9_950c7239",
         "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.cc",
         "patchSetId": 2
