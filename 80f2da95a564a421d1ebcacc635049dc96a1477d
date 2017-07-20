@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7cb20300_c7afca7a",
+        "filename": "ui/login/account_picker/md_user_pod_row.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1314,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-07-20T10:17:08Z",
+      "side": 1,
+      "message": "This is static attribute. Could you add it to html source?",
+      "revId": "80f2da95a564a421d1ebcacc635049dc96a1477d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c374e067_3c9b158e",
+        "filename": "ui/login/account_picker/md_user_pod_row.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1315,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-07-20T10:17:08Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "80f2da95a564a421d1ebcacc635049dc96a1477d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9107a8f9_c0a3350b",
+        "filename": "ui/login/account_picker/md_user_pod_row.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1318,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-07-20T10:17:08Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "80f2da95a564a421d1ebcacc635049dc96a1477d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "551d5ecd_1f76ffde",
+        "filename": "ui/login/account_picker/md_user_pod_row.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1319,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-07-20T10:17:08Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "80f2da95a564a421d1ebcacc635049dc96a1477d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb546217_e3e33812",
+        "filename": "ui/login/account_picker/md_user_pod_row.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1322,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-07-20T10:17:08Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "80f2da95a564a421d1ebcacc635049dc96a1477d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d8b24a9_58916f07",
+        "filename": "ui/login/account_picker/md_user_pod_row.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1324,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-07-20T10:17:08Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "80f2da95a564a421d1ebcacc635049dc96a1477d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
