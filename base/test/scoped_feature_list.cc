@@ -5,13 +5,15 @@
 #include "base/test/scoped_feature_list.h"
 
 #include <algorithm>
-#include <string>
 #include <utility>
 #include <vector>
 
+#include "base/memory/ptr_util.h"
+#include "base/metrics/field_trial.h"
 #include "base/stl_util.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
+#include "base/strings/stringprintf.h"
 
 namespace base {
 namespace test {
@@ -113,6 +115,29 @@ void ScopedFeatureList::InitFromCommandLine(
 void ScopedFeatureList::InitWithFeatures(
     const std::initializer_list<Feature>& enabled_features,
     const std::initializer_list<Feature>& disabled_features) {
+  InitWithFeaturesAndFieldTrials(enabled_features, {}, disabled_features);
+}
+
+void ScopedFeatureList::InitAndEnableFeature(const Feature& feature) {
+  InitWithFeaturesAndFieldTrials({feature}, {}, {});
+}
+
+void ScopedFeatureList::InitAndEnableFeatureWithFieldTrialOverride(
+    const Feature& feature,
+    FieldTrial* trial) {
+  InitWithFeaturesAndFieldTrials({feature}, {trial}, {});
+}
+
+void ScopedFeatureList::InitAndDisableFeature(const Feature& feature) {
+  InitWithFeaturesAndFieldTrials({}, {}, {feature});
+}
+
+void ScopedFeatureList::InitWithFeaturesAndFieldTrials(
+    const std::initializer_list<Feature>& enabled_features,
+    const std::initializer_list<FieldTrial*>& trials_for_enabled_features,
+    const std::initializer_list<Feature>& disabled_features) {
+  DCHECK_LE(trials_for_enabled_features.size(), enabled_features.size());
+
   Features merged_features;
   merged_features.enabled_feature_list = GetFeatureVector(enabled_features);
   merged_features.disabled_feature_list = GetFeatureVector(disabled_features);
@@ -136,17 +161,24 @@ void ScopedFeatureList::InitWithFeatures(
                      &merged_features);
   }
 
+  // Add the field trial overrides. This assumes that |enabled_features| are at
+  // the begining of |merged_features.enabled_feature_list|, in the same order.
+  FieldTrial* const* trial_it = trials_for_enabled_features.begin();
+  auto feature_it = merged_features.enabled_feature_list.begin();
+  std::vector<std::unique_ptr<std::string>> features_with_trial;
+  features_with_trial.reserve(trials_for_enabled_features.size());
+  while (trial_it != trials_for_enabled_features.end()) {
+    features_with_trial.push_back(MakeUnique<std::string>(
+        feature_it->as_string() + "<" + (*trial_it)->trial_name()));
+    // |features_with_trial| owns the string, and feature_it points to it.
+    *feature_it = *(features_with_trial.back());
+    ++trial_it;
+    ++feature_it;
+  }
+
   std::string enabled = JoinString(merged_features.enabled_feature_list, ",");
   std::string disabled = JoinString(merged_features.disabled_feature_list, ",");
   InitFromCommandLine(enabled, disabled);
-}
-
-void ScopedFeatureList::InitAndEnableFeature(const Feature& feature) {
-  InitWithFeatures({feature}, {});
-}
-
-void ScopedFeatureList::InitAndDisableFeature(const Feature& feature) {
-  InitWithFeatures({}, {feature});
 }
 
 }  // namespace test
