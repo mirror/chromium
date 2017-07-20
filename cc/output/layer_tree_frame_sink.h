@@ -26,11 +26,11 @@ class GpuMemoryBufferManager;
 namespace viz {
 class LocalSurfaceId;
 class SharedBitmapManager;
+struct BeginFrameAck;
 }
 
 namespace cc {
 
-struct BeginFrameAck;
 class CompositorFrame;
 class LayerTreeFrameSinkClient;
 
@@ -127,9 +127,9 @@ class CC_EXPORT LayerTreeFrameSink {
   // processed in order to unthrottle the next frame.
   virtual void SubmitCompositorFrame(CompositorFrame frame) = 0;
 
-  // Signals that a BeginFrame issued by the BeginFrameSource provided to the
-  // client did not lead to a CompositorFrame submission.
-  virtual void DidNotProduceFrame(const BeginFrameAck& ack) = 0;
+  // Signals that a BeginFrame issued by the viz::BeginFrameSource provided to
+  // the client did not lead to a CompositorFrame submission.
+  virtual void DidNotProduceFrame(const viz::BeginFrameAck& ack) = 0;
 
  protected:
   // Bound to the viz::ContextProvider to hear about when it is lost and inform

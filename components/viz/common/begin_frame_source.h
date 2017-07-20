@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CC_SCHEDULER_BEGIN_FRAME_SOURCE_H_
-#define CC_SCHEDULER_BEGIN_FRAME_SOURCE_H_
+#ifndef COMPONENTS_VIZ_COMMON_BEGIN_FRAME_SOURCE_H_
+#define COMPONENTS_VIZ_COMMON_BEGIN_FRAME_SOURCE_H_
 
 #include <stddef.h>
 #include <stdint.h>
@@ -14,14 +14,15 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/trace_event/trace_event.h"
-#include "cc/output/begin_frame_args.h"
-#include "cc/scheduler/delay_based_time_source.h"
+#include "components/viz/common/begin_frame_args.h"
+#include "components/viz/common/delay_based_time_source.h"
+#include "components/viz/common/viz_common_export.h"
 
-namespace cc {
+namespace viz {
 
 // (Pure) Interface for observing BeginFrame messages from BeginFrameSource
 // objects.
-class CC_EXPORT BeginFrameObserver {
+class VIZ_COMMON_EXPORT BeginFrameObserver {
  public:
   virtual ~BeginFrameObserver() {}
 
@@ -69,7 +70,7 @@ class CC_EXPORT BeginFrameObserver {
 //  - Recommended (but not required) to call
 //    BeginFrameObserverBase::OnValueInto in their overridden OnValueInto
 //    function.
-class CC_EXPORT BeginFrameObserverBase : public BeginFrameObserver {
+class VIZ_COMMON_EXPORT BeginFrameObserverBase : public BeginFrameObserver {
  public:
   BeginFrameObserverBase();
   ~BeginFrameObserverBase() override;
@@ -104,7 +105,7 @@ class CC_EXPORT BeginFrameObserverBase : public BeginFrameObserver {
 // plain made up (when no vsync signal is available or vsync throttling is
 // turned off). See the BeginFrameObserver for information about the guarantees
 // all BeginFrameSources *must* provide.
-class CC_EXPORT BeginFrameSource {
+class VIZ_COMMON_EXPORT BeginFrameSource {
  public:
   BeginFrameSource();
   virtual ~BeginFrameSource();
@@ -139,7 +140,7 @@ class CC_EXPORT BeginFrameSource {
 };
 
 // A BeginFrameSource that does nothing.
-class CC_EXPORT StubBeginFrameSource : public BeginFrameSource {
+class VIZ_COMMON_EXPORT StubBeginFrameSource : public BeginFrameSource {
  public:
   void DidFinishFrame(BeginFrameObserver* obs) override {}
   void AddObserver(BeginFrameObserver* obs) override {}
@@ -148,7 +149,7 @@ class CC_EXPORT StubBeginFrameSource : public BeginFrameSource {
 };
 
 // A frame source which ticks itself independently.
-class CC_EXPORT SyntheticBeginFrameSource : public BeginFrameSource {
+class VIZ_COMMON_EXPORT SyntheticBeginFrameSource : public BeginFrameSource {
  public:
   ~SyntheticBeginFrameSource() override;
 
@@ -160,8 +161,9 @@ class CC_EXPORT SyntheticBeginFrameSource : public BeginFrameSource {
 
 // A frame source which calls BeginFrame (at the next possible time) as soon as
 // an observer acknowledges the prior BeginFrame.
-class CC_EXPORT BackToBackBeginFrameSource : public SyntheticBeginFrameSource,
-                                             public DelayBasedTimeSourceClient {
+class VIZ_COMMON_EXPORT BackToBackBeginFrameSource
+    : public SyntheticBeginFrameSource,
+      public DelayBasedTimeSourceClient {
  public:
   explicit BackToBackBeginFrameSource(
       std::unique_ptr<DelayBasedTimeSource> time_source);
@@ -193,8 +195,9 @@ class CC_EXPORT BackToBackBeginFrameSource : public SyntheticBeginFrameSource,
 
 // A frame source which is locked to an external parameters provides from a
 // vsync source and generates BeginFrameArgs for it.
-class CC_EXPORT DelayBasedBeginFrameSource : public SyntheticBeginFrameSource,
-                                             public DelayBasedTimeSourceClient {
+class VIZ_COMMON_EXPORT DelayBasedBeginFrameSource
+    : public SyntheticBeginFrameSource,
+      public DelayBasedTimeSourceClient {
  public:
   explicit DelayBasedBeginFrameSource(
       std::unique_ptr<DelayBasedTimeSource> time_source);
@@ -228,7 +231,7 @@ class CC_EXPORT DelayBasedBeginFrameSource : public SyntheticBeginFrameSource,
   DISALLOW_COPY_AND_ASSIGN(DelayBasedBeginFrameSource);
 };
 
-class CC_EXPORT ExternalBeginFrameSourceClient {
+class VIZ_COMMON_EXPORT ExternalBeginFrameSourceClient {
  public:
   // Only called when changed.  Assumed false by default.
   virtual void OnNeedsBeginFrames(bool needs_begin_frames) = 0;
@@ -238,7 +241,7 @@ class CC_EXPORT ExternalBeginFrameSourceClient {
 // of messages from some other thread/process that send OnBeginFrame and
 // receive SetNeedsBeginFrame messages.  This turns such messages back into
 // an observable BeginFrameSource.
-class CC_EXPORT ExternalBeginFrameSource : public BeginFrameSource {
+class VIZ_COMMON_EXPORT ExternalBeginFrameSource : public BeginFrameSource {
  public:
   // Client lifetime must be preserved by owner past the lifetime of this class.
   explicit ExternalBeginFrameSource(ExternalBeginFrameSourceClient* client);
@@ -264,6 +267,6 @@ class CC_EXPORT ExternalBeginFrameSource : public BeginFrameSource {
   DISALLOW_COPY_AND_ASSIGN(ExternalBeginFrameSource);
 };
 
-}  // namespace cc
+}  // namespace viz
 
-#endif  // CC_SCHEDULER_BEGIN_FRAME_SOURCE_H_
+#endif  // COMPONENTS_VIZ_COMMON_BEGIN_FRAME_SOURCE_H_
