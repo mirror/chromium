@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8e876492_e8e2fd30",
+        "filename": "media/gpu/gpu_video_decode_accelerator_factory.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-07-20T08:33:15Z",
+      "side": 1,
+      "message": "You are correct - need to test against defined(OS_CHROMEOS) \u0026\u0026 defined(USE_V4L2_CODEC). Another good reason for cleaning up usage of v4l2_use_codec.",
+      "parentUuid": "dfd144ee_3dcd1704",
+      "revId": "d7345dec90f2cb9003e15862a44de1d85d8a6dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31cb8cfe_0cdacafb",
         "filename": "media/gpu/jpeg_decode_accelerator_unittest.cc",
         "patchSetId": 16
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-20T07:58:10Z",
       "side": 1,
       "message": "I think we could \u0026\u0026 both if conditions under one if now?",
+      "revId": "d7345dec90f2cb9003e15862a44de1d85d8a6dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "958a7919_7122b2fd",
+        "filename": "media/gpu/jpeg_decode_accelerator_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-07-20T08:33:15Z",
+      "side": 1,
+      "message": "That\u0027s true - I just thought the patch would be cleaner if we limit ourselves to removing lines without reorganizing too much. Besides the use_v4l2_codec cleanup CL that comes after this one will take care of these, so we would touch these lines once instead of twice.",
+      "parentUuid": "31cb8cfe_0cdacafb",
       "revId": "d7345dec90f2cb9003e15862a44de1d85d8a6dba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cd55cc81_9fd7cea4",
+        "filename": "media/gpu/jpeg_decode_accelerator_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-07-20T08:33:15Z",
+      "side": 1,
+      "message": "Created https://bugs.chromium.org/p/chromium/issues/detail?id\u003d746822\n\nI can see the difference in behavior for V4L2, but VAAPI looks identical to me?\n\nI will refrain from adding a TODO in this CL since it is not related to the change itself.",
+      "parentUuid": "8fd0c55e_15f70c91",
+      "revId": "d7345dec90f2cb9003e15862a44de1d85d8a6dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0734792_bd5bcf9d",
         "filename": "media/gpu/va_stub_header.fragment",
         "patchSetId": 16
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "a67066b7_06339dcd",
+        "filename": "media/gpu/va_stub_header.fragment",
+        "patchSetId": 16
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-07-20T08:33:15Z",
+      "side": 1,
+      "message": "Yes! Fixed, thanks.",
+      "parentUuid": "f0734792_bd5bcf9d",
+      "revId": "d7345dec90f2cb9003e15862a44de1d85d8a6dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81726522_6a1fdd11",
         "filename": "media/gpu/vaapi_wrapper.cc",
         "patchSetId": 16
@@ -81,6 +153,24 @@
       "writtenOn": "2017-07-20T07:58:10Z",
       "side": 1,
       "message": "va/drm/va_drm.h?",
+      "revId": "d7345dec90f2cb9003e15862a44de1d85d8a6dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3b780f4_d71a0cdb",
+        "filename": "media/gpu/vaapi_wrapper.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-07-20T08:33:15Z",
+      "side": 1,
+      "message": "I know this one is a bit weird. :) But the installation procedure of libva seems to move this file from va/drm into include/va.",
+      "parentUuid": "81726522_6a1fdd11",
       "revId": "d7345dec90f2cb9003e15862a44de1d85d8a6dba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "e6f624a3_2ecb847a",
+        "filename": "media/gpu/video_decode_accelerator_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-07-20T08:33:15Z",
+      "side": 1,
+      "message": "I\u0027d just remove this #error personally, as the problem can be reported at runtime and we could avoid this error-prone gymnastics (also, other video tests don\u0027t do that).\n\nI think your proposed fix would introduce another issue: if we have both VAAPI and V4L2_CODEC enabled, then only the V4L2 headers will be included even though VAAPI functions will be called later.\n\nI have fixed this by introducing an empty #elif defined(VAAPI) entry, and will rewrite this properly when addressing the use_v4l2_codec issue.",
+      "parentUuid": "1b962be8_37708824",
+      "revId": "d7345dec90f2cb9003e15862a44de1d85d8a6dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e79154a_9a790d99",
         "filename": "media/gpu/video_encode_accelerator_unittest.cc",
         "patchSetId": 16
@@ -118,6 +226,24 @@
       "revId": "d7345dec90f2cb9003e15862a44de1d85d8a6dba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cc905d4_0149ea19",
+        "filename": "media/gpu/video_encode_accelerator_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-07-20T08:33:15Z",
+      "side": 1,
+      "message": "Probably safer indeed. Done as you suggested, thanks!",
+      "parentUuid": "4e79154a_9a790d99",
+      "revId": "d7345dec90f2cb9003e15862a44de1d85d8a6dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ff69255b_37e2b856",
+        "filename": "media/gpu/vaapi_video_decode_accelerator.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-07-20T08:33:15Z",
+      "side": 0,
+      "message": "Added #include \u003cva/va.h\u003e at the beginning of this file.",
+      "parentUuid": "3dcf30fa_0713ca5b",
+      "revId": "7fe1ee469b93e142b7464856e9eda6af6f1ad578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1f4a0e7_3a08a11d",
         "filename": "media/gpu/vaapi_wrapper.h",
         "patchSetId": 16
@@ -33,6 +51,24 @@
       "revId": "7fe1ee469b93e142b7464856e9eda6af6f1ad578",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "551be57a_a0787b68",
+        "filename": "media/gpu/vaapi_wrapper.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-07-20T08:33:15Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "b1f4a0e7_3a08a11d",
+      "revId": "7fe1ee469b93e142b7464856e9eda6af6f1ad578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
