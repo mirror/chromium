@@ -389,17 +389,11 @@ bool EventHandler::ShouldShowIBeamForNode(const Node* node,
   }
 
   // If a drag may be starting or we're capturing mouse events for a particular
-  // node, don't treat this as a selection. Note calling
-  // ComputeVisibleSelectionInDOMTreeDeprecated may update layout.
-  const bool mouse_selection =
-      !capturing_mouse_events_node_ &&
-      mouse_event_manager_->MousePressed() &&
+  // node, don't treat this as a selection.
+  const bool mouse_selects_link =
+      !capturing_mouse_events_node_ && mouse_event_manager_->MousePressed() &&
       GetSelectionController().MouseDownMayStartSelect() &&
-      !mouse_event_manager_->MouseDownMayStartDrag() &&
-      !frame_->Selection()
-           .ComputeVisibleSelectionInDOMTreeDeprecated()
-           .IsNone();
-  const bool mouse_selects_link = mouse_selection && result.IsOverLink();
+      !mouse_event_manager_->MouseDownMayStartDrag() && result.IsOverLink();
 
   return mouse_selects_link || HasEditableStyle(*node);
 }
