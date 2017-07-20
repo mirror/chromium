@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7289891a_d42cb560",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-20T20:17:54Z",
+      "side": 1,
+      "message": "How is num_actual_tiles relevant for sections other than PERSONALIZED? Can you please make sure some unit test covers this scenario?",
+      "revId": "b434536e7487c8818cba04cbbfd21f8737250b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14d2e9f2_89a211f0",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-20T20:17:54Z",
+      "side": 1,
+      "message": "Same here: is this not specific to PERSONALIZED?",
+      "range": {
+        "startLine": 377,
+        "startChar": 52,
+        "endLine": 377,
+        "endChar": 0
+      },
+      "revId": "b434536e7487c8818cba04cbbfd21f8737250b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0349dc4_214d967d",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-20T20:17:54Z",
+      "side": 1,
+      "message": "It\u0027s not invalid but just empty. I don\u0027t think you need this line, and if the code relies on that you might want to add a DCHECK.",
+      "revId": "b434536e7487c8818cba04cbbfd21f8737250b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afae2db0_51c7b0b6",
+        "filename": "components/ntp_tiles/most_visited_sites.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-20T20:17:54Z",
+      "side": 1,
+      "message": "This comment is (should be inaccurate), since we\u0027d do this for the personalized section only. It does make me think there\u0027s a flaw in the function signature, and you probably also had this intuition in your earlier proposals, but I guess we can leave it like this.",
+      "revId": "b434536e7487c8818cba04cbbfd21f8737250b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18eb9f52_61591aed",
+        "filename": "components/ntp_tiles/popular_sites.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-20T20:17:54Z",
+      "side": 1,
+      "message": "Nit: add \"... and their tiles.\".",
+      "range": {
+        "startLine": 65,
+        "startChar": 51,
+        "endLine": 65,
+        "endChar": 0
+      },
+      "revId": "b434536e7487c8818cba04cbbfd21f8737250b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
