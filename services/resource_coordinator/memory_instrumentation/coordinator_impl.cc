@@ -89,6 +89,9 @@ CoordinatorImpl::CoordinatorImpl(service_manager::Connector* connector)
   g_coordinator_impl = this;
   base::trace_event::MemoryDumpManager::GetInstance()->set_tracing_process_id(
       mojom::kServiceTracingProcessId);
+
+  tracing_observer_ = base::MakeUnique<TracingObserver>(
+      base::trace_event::TraceLog::GetInstance(), nullptr);
 }
 
 CoordinatorImpl::~CoordinatorImpl() {
@@ -250,7 +253,7 @@ void CoordinatorImpl::PerformNextQueuedGlobalMemoryDump() {
     request->pending_responses.insert({client, ResponseType::kOSDump});
     auto os_callback = base::Bind(&CoordinatorImpl::OnOSMemoryDumpResponse,
                                   base::Unretained(this), client);
-    client->RequestOSMemoryDump({pid}, os_callback);
+    client->RequestOSMemoryDump({base::kNullProcessId}, os_callback);
 #endif  // !defined(OS_LINUX)
   }
 
@@ -404,12 +407,32 @@ void CoordinatorImpl::FinalizeGlobalMemoryDumpIfAllManagersReplied() {
       os_dumps[extra_pid] = std::move(extra_dump);
     }
 
-    for (auto& kv : response.second.os_dumps) {
+    // |response| accumulates the replies received by each client process.
+    // Depending on the OS each Client process might return 1 chrome + 1 OS
+    // dump each or, in the case of Linux, only 1 chrome dump each % the
+    // browser process which will provide all the OS dumps.
+    // In the former case (!OS_LINUX) we expect client processes to have
+    // exactly one OS dump in their |response|, % the case when they
+    // unexpectedly disconnect in the middle of a dump (e.g. because they
+    // crash). In the latter case (OS_LINUX) we epxect the full map to come
+    // from the browser process response.
+    OSMemDumpMap& extra_os_dumps = response.second.os_dumps;
+#if defined(OS_LINUX)
+    for (auto& kv : extra_os_dumps) {
       const base::ProcessId pid = kv.first;
       mojom::RawOSMemDumpPtr dump = std::move(kv.second);
       DCHECK_EQ(0u, os_dumps.count(pid));
       os_dumps[pid] = std::move(dump);
     }
+#else
+    // This can be empty if the client disconnects before providing both
+    // dumps. See UnregisterClientProcess().
+    DCHECK_LE(extra_os_dumps.size(), 1u);
+    if (extra_os_dumps.size() == 1u) {
+      DCHECK_EQ(base::kNullProcessId, extra_os_dumps.begin()->first);
+      os_dumps[pid] = std::move(extra_os_dumps.begin()->second);
+    }
+#endif
   }
 
   std::map<base::ProcessId, mojom::ProcessMemoryDumpPtr> finalized_pmds;
@@ -419,7 +442,7 @@ void CoordinatorImpl::FinalizeGlobalMemoryDumpIfAllManagersReplied() {
 
     // The dump might be nullptr if the client crashed / disconnected before
     // replying.
-    if (!response.second.dump_ptr || !os_dumps[pid])
+    if (!response.second.dump_ptr)
       continue;
 
     mojom::ProcessMemoryDumpPtr& pmd = finalized_pmds[pid];
@@ -427,6 +450,8 @@ void CoordinatorImpl::FinalizeGlobalMemoryDumpIfAllManagersReplied() {
     pmd->process_type = response.second.process_type;
     pmd->chrome_dump = std::move(response.second.dump_ptr->chrome_dump);
     pmd->os_dump = CreatePublicOSDump(*os_dumps[pid]);
+    tracing_observer_->AddOsDumpToTraceIfEnabled(
+        request->args, pid, pmd->os_dump.get(), &os_dumps[pid]->memory_maps);
   }
 
   mojom::GlobalMemoryDumpPtr global_dump(mojom::GlobalMemoryDump::New());
