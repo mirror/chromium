@@ -33,6 +33,24 @@
       "revId": "2f6599e85140811886a66063954a7c445676bce5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e3f0658_ffd1d1ae",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-07-20T02:28:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f77fc349_0af0c15f",
+      "revId": "2f6599e85140811886a66063954a7c445676bce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
