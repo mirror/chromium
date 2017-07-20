@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e41c52ad_f5ac78a0",
+        "filename": "chrome/installer/zucchini/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-20T20:40:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "148cecac_d4fd25a1",
+      "range": {
+        "startLine": 9,
+        "startChar": 13,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "463e8a08f8a19c7651106c9dd905b7c5c79ce6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a7336d9_a7e6527f",
         "filename": "chrome/installer/zucchini/address_translator.h",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d856090d_41da3bb9",
+        "filename": "chrome/installer/zucchini/address_translator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-20T20:40:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a7336d9_a7e6527f",
+      "range": {
+        "startLine": 21,
+        "startChar": 48,
+        "endLine": 21,
+        "endChar": 51
+      },
+      "revId": "463e8a08f8a19c7651106c9dd905b7c5c79ce6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a04a7e08_e5d59356",
         "filename": "chrome/installer/zucchini/address_translator.h",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-20T18:12:16Z",
       "side": 1,
       "message": "I think instances of RVAToOffsetTranslator should be |*_rva_to_offset|. Then this can just be operator()?",
+      "range": {
+        "startLine": 26,
+        "startChar": 19,
+        "endLine": 26,
+        "endChar": 30
+      },
+      "revId": "463e8a08f8a19c7651106c9dd905b7c5c79ce6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b382c66_f1629692",
+        "filename": "chrome/installer/zucchini/address_translator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-20T20:40:29Z",
+      "side": 1,
+      "message": "We can name instances *_rva_to_offset.\nHowever, there isn\u0027t much motivation for operator() anymore. It used to be convenient because we could use lambdas, but now we need to define the whole class anyway. Also, assuming that this is wrapped in a pointer,\n - (*rva_to_offset)(rva)\n - rva_to_offset-\u003eRVAToOffset(rva)\nThe former is a bit awkward.\nI\u0027m assuming we\u0027re trying to get rid of the redundancy, so I suggest renaming it Apply().",
+      "parentUuid": "a04a7e08_e5d59356",
       "range": {
         "startLine": 26,
         "startChar": 19,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "c09a2371_d651cb1e",
+        "filename": "chrome/installer/zucchini/address_translator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-20T20:40:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1493f4de_d2099f03",
+      "range": {
+        "startLine": 34,
+        "startChar": 16,
+        "endLine": 34,
+        "endChar": 27
+      },
+      "revId": "463e8a08f8a19c7651106c9dd905b7c5c79ce6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "464a6b51_46d88508",
         "filename": "chrome/installer/zucchini/address_translator.h",
         "patchSetId": 3
@@ -105,6 +201,30 @@
       "writtenOn": "2017-07-20T18:12:16Z",
       "side": 1,
       "message": "Perhaps rename to AddressTranslatorFactory?",
+      "range": {
+        "startLine": 38,
+        "startChar": 6,
+        "endLine": 38,
+        "endChar": 23
+      },
+      "revId": "463e8a08f8a19c7651106c9dd905b7c5c79ce6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fb0fb2a_602ab657",
+        "filename": "chrome/installer/zucchini/address_translator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-20T20:40:29Z",
+      "side": 1,
+      "message": "AddressTranslatorFactory sounds good.\nAlso, note that Disassembler does not derive from AddressTranslator: I don\u0027t think it\u0027s necessary, and actually bloats the interface more than necessary.",
+      "parentUuid": "464a6b51_46d88508",
       "range": {
         "startLine": 38,
         "startChar": 6,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "365fe50c_40a44894",
+        "filename": "chrome/installer/zucchini/buffer_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-20T20:40:29Z",
+      "side": 1,
+      "message": "CHECK was grt@ suggestion. I think we should stick to it here, because pos sometimes depends on input data.",
+      "parentUuid": "839c3641_d5515759",
+      "range": {
+        "startLine": 60,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 12
+      },
+      "revId": "463e8a08f8a19c7651106c9dd905b7c5c79ce6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f487bf4a_c926fd2f",
         "filename": "chrome/installer/zucchini/buffer_view.h",
         "patchSetId": 3
@@ -151,6 +295,30 @@
       "writtenOn": "2017-07-20T18:12:16Z",
       "side": 1,
       "message": "DCHECK_GT perhaps?",
+      "range": {
+        "startLine": 66,
+        "startChar": 4,
+        "endLine": 66,
+        "endChar": 12
+      },
+      "revId": "463e8a08f8a19c7651106c9dd905b7c5c79ce6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85845aa8_f4e59c8b",
+        "filename": "chrome/installer/zucchini/buffer_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-20T20:40:29Z",
+      "side": 1,
+      "message": "I think CHECK makes more sense to keep consistent with opertaor[].\nAlso, *_GE instead of *_GT, because we added sizeof(T) to pos (sentinels can align).\nNote that I swapped them to be more consistent with CHECK_LT",
+      "parentUuid": "f487bf4a_c926fd2f",
       "range": {
         "startLine": 66,
         "startChar": 4,
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "1d872a3c_7dec742e",
+        "filename": "chrome/installer/zucchini/buffer_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-20T20:40:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "91f0fb92_a8f5a4d1",
+      "range": {
+        "startLine": 72,
+        "startChar": 4,
+        "endLine": 72,
+        "endChar": 12
+      },
+      "revId": "463e8a08f8a19c7651106c9dd905b7c5c79ce6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "226ac395_83f5e4bb",
         "filename": "chrome/installer/zucchini/buffer_view_unittest.cc",
         "patchSetId": 3
@@ -206,6 +398,30 @@
       "revId": "463e8a08f8a19c7651106c9dd905b7c5c79ce6bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20b66296_ed293351",
+        "filename": "chrome/installer/zucchini/buffer_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-20T20:40:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "226ac395_83f5e4bb",
+      "range": {
+        "startLine": 97,
+        "startChar": 2,
+        "endLine": 97,
+        "endChar": 14
+      },
+      "revId": "463e8a08f8a19c7651106c9dd905b7c5c79ce6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "b0a58ada_700a43b1",
+        "filename": "chrome/installer/zucchini/image_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-20T20:40:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13af85f1_f609f623",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 79
+      },
+      "revId": "463e8a08f8a19c7651106c9dd905b7c5c79ce6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd6aac40_03078397",
         "filename": "chrome/installer/zucchini/rel32_utils.cc",
         "patchSetId": 3
@@ -243,6 +483,30 @@
       "writtenOn": "2017-07-20T18:12:16Z",
       "side": 1,
       "message": "DCHECK that |lo| and |hi| are in |image| (note that |hi| can be sentinel, but not |lo|). Initialize |current_| and |hi_| after check.",
+      "range": {
+        "startLine": 27,
+        "startChar": 32,
+        "endLine": 27,
+        "endChar": 34
+      },
+      "revId": "463e8a08f8a19c7651106c9dd905b7c5c79ce6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "724f4092_60009508",
+        "filename": "chrome/installer/zucchini/rel32_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-20T20:40:29Z",
+      "side": 1,
+      "message": "While we don\u0027t expect |lo| to be sentinel, I think that is a detail Rel32Reader is not concerned with. |lo| can be sentinel without problem here.\nAlso, hi_ is const, so needs to be initialized in the member initialization list.",
+      "parentUuid": "fd6aac40_03078397",
       "range": {
         "startLine": 27,
         "startChar": 32,
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "c98ced8f_eb04be78",
+        "filename": "chrome/installer/zucchini/rel32_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-20T20:40:29Z",
+      "side": 1,
+      "message": "Yep, doing the check upstream sounds good. I\u0027ll just add a DCHECK here to make sure.",
+      "parentUuid": "741a30f9_b49d6c54",
+      "range": {
+        "startLine": 39,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 27
+      },
+      "revId": "463e8a08f8a19c7651106c9dd905b7c5c79ce6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1de59d29_09c0ee01",
         "filename": "chrome/installer/zucchini/rel32_utils.h",
         "patchSetId": 3
@@ -292,6 +580,24 @@
       "revId": "463e8a08f8a19c7651106c9dd905b7c5c79ce6bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ff1cb92_79434da7",
+        "filename": "chrome/installer/zucchini/rel32_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-20T20:40:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1de59d29_09c0ee01",
+      "revId": "463e8a08f8a19c7651106c9dd905b7c5c79ce6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -318,6 +624,30 @@
     },
     {
       "key": {
+        "uuid": "19f8aa88_adf5c94e",
+        "filename": "chrome/installer/zucchini/rel32_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-20T20:40:29Z",
+      "side": 1,
+      "message": "Let\u0027s go for emit.",
+      "parentUuid": "ed18268e_934a798b",
+      "range": {
+        "startLine": 19,
+        "startChar": 3,
+        "endLine": 20,
+        "endChar": 22
+      },
+      "revId": "463e8a08f8a19c7651106c9dd905b7c5c79ce6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9870ed0d_ec598be4",
         "filename": "chrome/installer/zucchini/rel32_utils.h",
         "patchSetId": 3
@@ -338,6 +668,30 @@
       "revId": "463e8a08f8a19c7651106c9dd905b7c5c79ce6bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "099271f2_b2009e43",
+        "filename": "chrome/installer/zucchini/rel32_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-20T20:40:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9870ed0d_ec598be4",
+      "range": {
+        "startLine": 23,
+        "startChar": 5,
+        "endLine": 23,
+        "endChar": 73
+      },
+      "revId": "463e8a08f8a19c7651106c9dd905b7c5c79ce6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -364,6 +718,30 @@
     },
     {
       "key": {
+        "uuid": "62e46cf5_895373b2",
+        "filename": "chrome/installer/zucchini/rel32_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-20T20:40:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01dabd49_afb4f87e",
+      "range": {
+        "startLine": 29,
+        "startChar": 23,
+        "endLine": 29,
+        "endChar": 53
+      },
+      "revId": "463e8a08f8a19c7651106c9dd905b7c5c79ce6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "554c5a9a_8224c0fc",
         "filename": "chrome/installer/zucchini/rel32_utils.h",
         "patchSetId": 3
@@ -384,6 +762,30 @@
       "revId": "463e8a08f8a19c7651106c9dd905b7c5c79ce6bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5028a336_c49c6485",
+        "filename": "chrome/installer/zucchini/rel32_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-20T20:40:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "554c5a9a_8224c0fc",
+      "range": {
+        "startLine": 31,
+        "startChar": 17,
+        "endLine": 32,
+        "endChar": 37
+      },
+      "revId": "463e8a08f8a19c7651106c9dd905b7c5c79ce6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -410,6 +812,30 @@
     },
     {
       "key": {
+        "uuid": "8dd3a2d3_297ec819",
+        "filename": "chrome/installer/zucchini/rel32_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-20T20:40:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3481270e_d7dca448",
+      "range": {
+        "startLine": 39,
+        "startChar": 41,
+        "endLine": 39,
+        "endChar": 59
+      },
+      "revId": "463e8a08f8a19c7651106c9dd905b7c5c79ce6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b186e141_9dd0e119",
         "filename": "chrome/installer/zucchini/rel32_utils.h",
         "patchSetId": 3
@@ -430,6 +856,30 @@
       "revId": "463e8a08f8a19c7651106c9dd905b7c5c79ce6bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c101bbd_f80ed478",
+        "filename": "chrome/installer/zucchini/rel32_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-20T20:40:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b186e141_9dd0e119",
+      "range": {
+        "startLine": 40,
+        "startChar": 41,
+        "endLine": 40,
+        "endChar": 61
+      },
+      "revId": "463e8a08f8a19c7651106c9dd905b7c5c79ce6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -456,6 +906,30 @@
     },
     {
       "key": {
+        "uuid": "f24bc53b_935d60aa",
+        "filename": "chrome/installer/zucchini/rel32_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-20T20:40:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84315104_fa49e0e8",
+      "range": {
+        "startLine": 61,
+        "startChar": 41,
+        "endLine": 61,
+        "endChar": 59
+      },
+      "revId": "463e8a08f8a19c7651106c9dd905b7c5c79ce6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "297c6f2a_e0b09dfa",
         "filename": "chrome/installer/zucchini/rel32_utils.h",
         "patchSetId": 3
@@ -476,6 +950,30 @@
       "revId": "463e8a08f8a19c7651106c9dd905b7c5c79ce6bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8000845_1bf08f93",
+        "filename": "chrome/installer/zucchini/rel32_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-20T20:40:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "297c6f2a_e0b09dfa",
+      "range": {
+        "startLine": 62,
+        "startChar": 41,
+        "endLine": 62,
+        "endChar": 61
+      },
+      "revId": "463e8a08f8a19c7651106c9dd905b7c5c79ce6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -502,6 +1000,30 @@
     },
     {
       "key": {
+        "uuid": "b5ee863b_2ad50b78",
+        "filename": "chrome/installer/zucchini/rel32_utils_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-20T20:40:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9a4f7bb_59a4668c",
+      "range": {
+        "startLine": 7,
+        "startChar": 18,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "463e8a08f8a19c7651106c9dd905b7c5c79ce6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ee395e2_8181494c",
         "filename": "chrome/installer/zucchini/rel32_utils_unittest.cc",
         "patchSetId": 3
@@ -513,6 +1035,30 @@
       "writtenOn": "2017-07-20T18:12:16Z",
       "side": 1,
       "message": "Looks like these tests were adapted from the ARM test?\n\nThe data here are not valid x86 disassemblies - -jmp needs 0xE9. I\u0027ll send you a script to make life easier.",
+      "range": {
+        "startLine": 85,
+        "startChar": 6,
+        "endLine": 85,
+        "endChar": 11
+      },
+      "revId": "463e8a08f8a19c7651106c9dd905b7c5c79ce6bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e812c532_0722d44a",
+        "filename": "chrome/installer/zucchini/rel32_utils_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-20T20:40:29Z",
+      "side": 1,
+      "message": "It is intentional we don\u0027t have full machine code, for simplicity, because we don\u0027t need to parse instruction. I added comment about it.",
+      "parentUuid": "0ee395e2_8181494c",
       "range": {
         "startLine": 85,
         "startChar": 6,
