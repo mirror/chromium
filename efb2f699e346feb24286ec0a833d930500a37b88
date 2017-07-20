@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "d6219511_bc412587",
+        "filename": "components/previews/core/previews_io_data.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-07-20T20:48:17Z",
+      "side": 1,
+      "message": "We had separate types initially, but from a previews blacklisting perspective, we wanted to treat them as the same preview since they would share similar blacklisting logic. I\u0027m not sure at what level we should separate them logically. I am not opposed to the current approach, but at some point we may wish to have the various previews callers create a delegate to help with decisions such as enabled/disabled (if we want), ECT threshold, reload allowed, disallowed origins, etc. I had toyed with this before but ended up being too heavy weight for, at the time, 2 configurable settings. It might be a better follow-up clean up bug to add a PreviewsDeciderDelegate or similar abstraction; regardless of which option we choose, I think it should be seperate from this CL.",
+      "parentUuid": "ae0c77ee_ab773ead",
+      "range": {
+        "startLine": 132,
+        "startChar": 22,
+        "endLine": 132,
+        "endChar": 64
+      },
+      "revId": "efb2f699e346feb24286ec0a833d930500a37b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d8dee716_f86b02d6",
         "filename": "components/previews/core/previews_io_data.cc",
         "patchSetId": 1
@@ -226,6 +250,30 @@
       "side": 1,
       "message": "Fundamentally, checking ECT first seems \"better\" to me to more quickly decide are we even in a device state that makes checking any blacklists/whitelists. Potentially, we will end up adding a much larger server-provided blacklist. Making the switch now (and facing some offline pages eligibility reason blip), may be smoother than later wrt UMA - if there is agreement on this ordering. Ryan, what is your guidance here?",
       "parentUuid": "6a783473_5aacfde3",
+      "range": {
+        "startLine": 150,
+        "startChar": 6,
+        "endLine": 150,
+        "endChar": 44
+      },
+      "revId": "efb2f699e346feb24286ec0a833d930500a37b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b29cac1_013e46c7",
+        "filename": "components/previews/core/previews_io_data.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-07-20T20:48:17Z",
+      "side": 1,
+      "message": "I agree with the fact that synchronous checks should happen before asynchronous logic, and it might be worth changing that now. Since it seems like this will be replaced with an async check at some point, dougarnett@ is probably right that it should be last.",
+      "parentUuid": "4be190b7_f2017483",
       "range": {
         "startLine": 150,
         "startChar": 6,
