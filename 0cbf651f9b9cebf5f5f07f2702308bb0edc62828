@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9525c74d_109f7d3a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-07-20T08:31:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6c7677a_491a1ee0",
+      "range": {
+        "startLine": 209,
+        "startChar": 24,
+        "endLine": 209,
+        "endChar": 43
+      },
+      "revId": "0cbf651f9b9cebf5f5f07f2702308bb0edc62828",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37067821_dd21ee33",
         "filename": "chrome/browser/android/vr_shell/BUILD.gn",
         "patchSetId": 14
@@ -36,6 +60,24 @@
       "writtenOn": "2017-07-19T23:25:56Z",
       "side": 1,
       "message": "again, make sure this is removed",
+      "revId": "0cbf651f9b9cebf5f5f07f2702308bb0edc62828",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c67fd7f_ad8925fd",
+        "filename": "chrome/browser/android/vr_shell/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-07-20T08:31:35Z",
+      "side": 1,
+      "message": "Ah crept back in.... removed again.",
+      "parentUuid": "37067821_dd21ee33",
       "revId": "0cbf651f9b9cebf5f5f07f2702308bb0edc62828",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "499fb329_3f84d33f",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-07-20T08:31:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8bdcbf2_75f78dae",
+      "range": {
+        "startLine": 147,
+        "startChar": 2,
+        "endLine": 147,
+        "endChar": 32
+      },
+      "revId": "0cbf651f9b9cebf5f5f07f2702308bb0edc62828",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d177a7d8_6bf25464",
         "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
         "patchSetId": 14
@@ -85,6 +151,30 @@
       "revId": "0cbf651f9b9cebf5f5f07f2702308bb0edc62828",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc3b54a9_dd234295",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-07-20T08:31:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d177a7d8_6bf25464",
+      "range": {
+        "startLine": 157,
+        "startChar": 7,
+        "endLine": 157,
+        "endChar": 29
+      },
+      "revId": "0cbf651f9b9cebf5f5f07f2702308bb0edc62828",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "d2773097_18756f5f",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-07-20T08:31:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee6efc06_6acdb9e6",
+      "range": {
+        "startLine": 84,
+        "startChar": 64,
+        "endLine": 84,
+        "endChar": 77
+      },
+      "revId": "0cbf651f9b9cebf5f5f07f2702308bb0edc62828",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "904e5a01_051f11c8",
         "filename": "content/browser/android/synthetic_gesture_target_helper.h",
         "patchSetId": 14
@@ -122,6 +236,24 @@
       "writtenOn": "2017-07-19T23:25:56Z",
       "side": 1,
       "message": "this isn\u0027t really fixing the dependency rule though, should just whatever method is needed to RenderWidgetHostDelegate",
+      "revId": "0cbf651f9b9cebf5f5f07f2702308bb0edc62828",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a96518a_0f66aabf",
+        "filename": "content/browser/android/synthetic_gesture_target_helper.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-07-20T08:31:35Z",
+      "side": 1,
+      "message": "Added RenderWidgetHostDelegate::CreateSyntheticGestureTarget.",
+      "parentUuid": "904e5a01_051f11c8",
       "revId": "0cbf651f9b9cebf5f5f07f2702308bb0edc62828",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -145,6 +277,24 @@
     },
     {
       "key": {
+        "uuid": "0f1d024f_9d4abdf2",
+        "filename": "content/browser/renderer_host/input/synthetic_gesture_target_android.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-07-20T08:31:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05e6e7ab_7d5f085e",
+      "revId": "0cbf651f9b9cebf5f5f07f2702308bb0edc62828",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19b60cb4_6e19d6b1",
         "filename": "content/browser/web_contents/web_contents_android.cc",
         "patchSetId": 14
@@ -156,6 +306,24 @@
       "writtenOn": "2017-07-19T23:25:56Z",
       "side": 1,
       "message": "this may be null, need to check this appropriately",
+      "revId": "0cbf651f9b9cebf5f5f07f2702308bb0edc62828",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5d37f89_41df835b",
+        "filename": "content/browser/web_contents/web_contents_android.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-07-20T08:31:35Z",
+      "side": 1,
+      "message": "Container view can be null here when called after web contents gets destroyed. Added a check. DCHECK may be more appropriate if this should not happen in real life, but I don\u0027t know for sure if that\u0027s true.",
+      "parentUuid": "19b60cb4_6e19d6b1",
       "revId": "0cbf651f9b9cebf5f5f07f2702308bb0edc62828",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -179,6 +347,24 @@
     },
     {
       "key": {
+        "uuid": "31dacdfa_a0fb26be",
+        "filename": "content/browser/web_contents/web_contents_android.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-07-20T08:31:35Z",
+      "side": 1,
+      "message": "Makes sense - I noticed something wrong when I had to import android.view.View in WebContentsImpl java. \n\nGot curious whether MotionEventSynthesizer instances were managed ok before this patch. They were strongly held by SyntheticGestureTargetAndroid. Looks like this is not correct either, since that means MES\u0027s container views would also be held strongly. Could you confirm whether or not this was something to fix?\n\n\u003e perhaps we should make this one a weakref first..\n\nJava WebContentsImpl is owned later by CVC so this would be fine but still, aren\u0027t we getting ourselves into a same kind of problem (WebContentsImpl being gc\u0027ed anytime in theory) if this is turned to weakref?",
+      "parentUuid": "c9a6f603_fea67f61",
+      "revId": "0cbf651f9b9cebf5f5f07f2702308bb0edc62828",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9f93b0e_711be328",
         "filename": "content/public/android/java/src/org/chromium/content/browser/MotionEventSynthesizer.java",
         "patchSetId": 14
@@ -190,6 +376,24 @@
       "writtenOn": "2017-07-19T23:25:56Z",
       "side": 1,
       "message": "actually.. instead of component, maybe this should live somewhere under ui? I dunno which makes more sense, but either one is definitely better than internal content.",
+      "revId": "0cbf651f9b9cebf5f5f07f2702308bb0edc62828",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "228fc413_299de8c6",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/MotionEventSynthesizer.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-07-20T08:31:35Z",
+      "side": 1,
+      "message": "I also think it goes along well with other event stuff in ui/.\n\nDidn\u0027t move the class yet - will do in the next patch.",
+      "parentUuid": "c9f93b0e_711be328",
       "revId": "0cbf651f9b9cebf5f5f07f2702308bb0edc62828",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -213,6 +417,24 @@
     },
     {
       "key": {
+        "uuid": "784700f4_5c484ed7",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SyntheticGestureTarget.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-07-20T08:31:35Z",
+      "side": 1,
+      "message": "\u003e webview contents needs to create a new one if this ever happens.\n\nIt is called when the RenderWidgetHostImpl gets destroyed. I thought a new one (java + native) will be created and used by the new RWHI. Let me know if I\u0027m missing something.\n\n\u003e also thinking more, what if more than one client request this object for the same webcontents?\n\nYou\u0027re correct WebContentsImpl (or any owner of MES) should be able to manage multiple instances of MES. Will address that in the next patch.",
+      "parentUuid": "92ceb247_ea32ee0f",
+      "revId": "0cbf651f9b9cebf5f5f07f2702308bb0edc62828",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "551698bb_2e7b9154",
         "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
         "patchSetId": 14
@@ -230,6 +452,24 @@
     },
     {
       "key": {
+        "uuid": "42b44777_7764f7f6",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-07-20T08:31:35Z",
+      "side": 1,
+      "message": "WebContentsImpl owning a unique MES is wrong, and there will be multiple MES instances. Create would be more appropriate then, I guess?",
+      "parentUuid": "551698bb_2e7b9154",
+      "revId": "0cbf651f9b9cebf5f5f07f2702308bb0edc62828",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bdd59312_6098d471",
         "filename": "content/public/browser/android/motion_event_action.h",
         "patchSetId": 14
@@ -241,6 +481,24 @@
       "writtenOn": "2017-07-19T23:25:56Z",
       "side": 1,
       "message": "enums should be all caps, and start with the type, so this should be\nMOTION_EVENT_ACTION_INVALID\n\n(rule from https://www.chromium.org/developers/content-module/content-api)",
+      "revId": "0cbf651f9b9cebf5f5f07f2702308bb0edc62828",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb4a864a_eff319e2",
+        "filename": "content/public/browser/android/motion_event_action.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-07-20T08:31:35Z",
+      "side": 1,
+      "message": "Done. Thanks for the link.",
+      "parentUuid": "bdd59312_6098d471",
       "revId": "0cbf651f9b9cebf5f5f07f2702308bb0edc62828",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
