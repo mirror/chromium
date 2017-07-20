@@ -363,35 +363,50 @@ TEST(MimeSnifferTest, XMLTest) {
                           std::string(), "text/xml"));
 }
 
-// Test content which is >= 1024 bytes, and includes no open angle bracket.
+// Test content which is >= kMaxBytesToSniff bytes, and includes no open angle
+// bracket.
 // http://code.google.com/p/chromium/issues/detail?id=3521
 TEST(MimeSnifferTest, XMLTestLargeNoAngledBracket) {
-  // Make a large input, with 1024 bytes of "x".
+  // Make a large input, with kMaxBytesToSniff bytes of "x".
   std::string content;
-  content.resize(1024);
+  content.resize(kMaxBytesToSniff);
   std::fill(content.begin(), content.end(), 'x');
 
-  // content.size() >= 1024 so the sniff is unambiguous.
+  // content.size() >= kMaxBytesToSniff so the sniff is unambiguous.
   std::string mime_type;
   EXPECT_TRUE(SniffMimeType(content.data(), content.size(), GURL(),
                             "text/xml", &mime_type));
   EXPECT_EQ("text/xml", mime_type);
 }
 
-// Test content which is >= 1024 bytes, and includes a binary looking byte.
+// Test content which is >= kMaxBytesToSniff bytes, and includes a binary
+// looking byte.
 // http://code.google.com/p/chromium/issues/detail?id=15314
 TEST(MimeSnifferTest, LooksBinary) {
-  // Make a large input, with 1024 bytes of "x" and 1 byte of 0x01.
+  // Make a large input, with kMaxBytesToSniff bytes of "x" and 1 byte of 0x01.
   std::string content;
-  content.resize(1024);
+  content.resize(kMaxBytesToSniff);
   std::fill(content.begin(), content.end(), 'x');
   content[1000] = 0x01;
 
-  // content.size() >= 1024 so the sniff is unambiguous.
+  // content.size() >= kMaxBytesToSniff so the sniff is unambiguous.
   std::string mime_type;
   EXPECT_TRUE(SniffMimeType(content.data(), content.size(), GURL(),
                             "text/plain", &mime_type));
   EXPECT_EQ("application/octet-stream", mime_type);
+}
+
+TEST(MimeSnifferTest, SmallTextPlainCheckBinary) {
+  // Make a small input (<kMaxBytesToSniff) and check that mime sniffing
+  // code doesn't think it needs more data.
+  std::string content;
+  content.resize(kMaxBytesToSniff >> 2);
+  std::fill(content.begin(), content.end(), 'x');
+
+  std::string mime_type;
+  EXPECT_TRUE(SniffMimeType(content.data(), content.size(), GURL(),
+                            "text/plain", &mime_type));
+  EXPECT_EQ("text/plain", mime_type);
 }
 
 TEST(MimeSnifferTest, OfficeTest) {

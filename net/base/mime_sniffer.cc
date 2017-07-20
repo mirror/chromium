@@ -644,7 +644,7 @@ static bool SniffBinary(const char* content,
   // No evidence either way. Default to non-binary and, if truncated, clear
   // have_enough_content because there could be a binary looking byte in the
   // truncated data.
-  *have_enough_content &= is_truncated;
+  *have_enough_content &= !is_truncated;
   result->assign("text/plain");
   return false;
 }
