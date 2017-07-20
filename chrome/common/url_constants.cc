@@ -844,6 +844,11 @@ const char kBluetoothAdapterOffHelpURL[] =
     "https://support.google.com/chrome?p=bluetooth";
 #endif
 
+#if defined(OS_CHROMEOS)
+const char kGoogleNameserversLearnMoreURL[] =
+    "https://developers.google.com/speed/public-dns";
+#endif
+
 const char kChooserUsbOverviewURL[] =
     "https://support.google.com/chrome?p=webusb";
 

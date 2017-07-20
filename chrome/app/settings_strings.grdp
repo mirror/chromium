@@ -1159,8 +1159,11 @@
     <message name="IDS_SETTINGS_INTERNET_NETWORK_SECTION_ADVANCED_ACCESSIBILITY_LABEL" desc="Label for the button that toggles showing the advanced network properties. Only visible by screen reader software.">
       Show advanced network properties
     </message>
-    <message name="IDS_SETTINGS_INTERNET_NETWORK_SECTION_NAMESERVERS" desc="Settings > Internet > Network details: Name servers section label.">
-      Name servers
+    <message name="IDS_SETTINGS_INTERNET_NETWORK_NAMESERVERS_AUTOMATIC" desc="Settings > Internet > Network details: Label for setting automatic name servers.">
+      Automatic name servers
+    </message>
+    <message name="IDS_SETTINGS_INTERNET_NETWORK_NAMESERVERS_GOOGLE" desc="Settings > Internet > Network details: Label for setting Google name servers.">
+      Use Google name servers
     </message>
     <message name="IDS_SETTINGS_INTERNET_NETWORK_SECTION_NETWORK" desc="Settings > Internet > Network details: Network section label.">
       Network

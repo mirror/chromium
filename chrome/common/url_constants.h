@@ -636,6 +636,9 @@ extern const char kChooserBluetoothOverviewURL[];
 // The URL for providing help when the Bluetooth adapter is off.
 extern const char kBluetoothAdapterOffHelpURL[];
 
+// The URL for providing more information about Google nameservers.
+extern const char kGoogleNameserversLearnMoreURL[];
+
 // The URL for the WebUsb help center article.
 extern const char kChooserUsbOverviewURL[];
 
