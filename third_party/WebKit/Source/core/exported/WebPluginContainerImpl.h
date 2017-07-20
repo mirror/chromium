@@ -166,6 +166,9 @@ class CORE_EXPORT WebPluginContainerImpl final
   // Copy the selected text.
   void Copy();
 
+  // Cut the selected text.
+  void Cut();
+
   // Pass the edit command to the plugin.
   bool ExecuteEditCommand(const WebString& name);
   bool ExecuteEditCommand(const WebString& name, const WebString& value);
