@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c9e7e09_df595070",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 6479,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-20T16:23:31Z",
+      "side": 1,
+      "message": "Is the command line check so expensive that we need this DCHECK guard? It does make the code a bit less readable and this method isn\u0027t really called often.",
+      "range": {
+        "startLine": 6479,
+        "startChar": 4,
+        "endLine": 6479,
+        "endChar": 16
+      },
+      "revId": "b4eaa560d2d543e1a776470ec072faa1a80380a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53aace94_fbacc16d",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 6486,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-20T16:23:31Z",
+      "side": 1,
+      "message": "Is it feasible to make the RenderProcess have the right bindings even in single process mode?",
+      "revId": "b4eaa560d2d543e1a776470ec072faa1a80380a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
