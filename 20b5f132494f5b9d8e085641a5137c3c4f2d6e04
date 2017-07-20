@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2bedc896_a734dff0",
+        "filename": "media/gpu/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-07-20T05:20:57Z",
+      "side": 1,
+      "message": "Could we possibly have everything encapsulated in VideoFrameQualityValidator, including the functions in this .cc please?",
+      "revId": "20b5f132494f5b9d8e085641a5137c3c4f2d6e04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6e21973_f52d1be3",
+        "filename": "media/gpu/video_accelerator_unittest_helpers.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-07-20T05:20:57Z",
+      "side": 1,
+      "message": "We should preferably use stride please; it may not be equal to width.",
+      "revId": "20b5f132494f5b9d8e085641a5137c3c4f2d6e04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b2871f4_af2b6d02",
+        "filename": "media/gpu/video_accelerator_unittest_helpers.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-07-20T05:20:57Z",
+      "side": 1,
+      "message": "Please add documentation. This could possibly also be encapsulated in VFQV.",
+      "revId": "20b5f132494f5b9d8e085641a5137c3c4f2d6e04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75671766_ea2e150a",
+        "filename": "media/gpu/video_encode_accelerator_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-07-20T05:20:57Z",
+      "side": 1,
+      "message": "It may be confusing that stats enables verification, but not vice versa. Would it be possible to have the settings separate please?",
+      "revId": "20b5f132494f5b9d8e085641a5137c3c4f2d6e04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25f0f6f5_acc17394",
+        "filename": "media/gpu/video_encode_accelerator_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-07-20T05:20:57Z",
+      "side": 1,
+      "message": "Could this be called during flush from validator and be private?",
+      "revId": "20b5f132494f5b9d8e085641a5137c3c4f2d6e04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1218f08_1d13a5ab",
+        "filename": "media/gpu/video_encode_accelerator_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1264,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-07-20T05:20:57Z",
+      "side": 1,
+      "message": "Would it make sense to call this from VFQV::FlushDone?",
+      "revId": "20b5f132494f5b9d8e085641a5137c3c4f2d6e04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
