@@ -335,13 +335,6 @@ class NET_EXPORT URLRequestContextBuilder {
       std::unique_ptr<CookieStore> cookie_store,
       std::unique_ptr<ChannelIDService> channel_id_service);
 
-  // Sets the SingleThreadTaskRunner used to perform cache operations. If not
-  // set, one will be created via a TaskScheduler instead. Other file tasks will
-  // use the task scheduler, but the cache needs a SingleThreadTaskRunner, so
-  // best to keep that configurable by the consumer.
-  void SetCacheThreadTaskRunner(
-      scoped_refptr<base::SingleThreadTaskRunner> cache_thread_task_runner);
-
   // Note that if SDCH is enabled without a policy object observing
   // the SDCH manager and handling at least Get-Dictionary events, the
   // result will be "Content-Encoding: sdch" advertisements, but no
