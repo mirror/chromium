@@ -101,6 +101,7 @@ class PopularSitesImpl : public PopularSites, public net::URLFetcherDelegate {
   bool is_fallback_;
   std::map<SectionType, SitesVector> sections_;
   GURL pending_url_;
+  std::string version_;  // Version that was used for |pending_url_|.
 
   base::WeakPtrFactory<PopularSitesImpl> weak_ptr_factory_;
 

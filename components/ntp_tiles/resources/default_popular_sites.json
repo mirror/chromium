@@ -1,42 +1,131 @@
 [
     {
-        "large_icon_url": "https://www.chromium.org/_/rsrc/1484148948583/apple-touch-icon.png",
-        "title": "The Chromium Projects `",
-        "url": "https://www.chromium.org/"
+        "section": 0, // PERSONALIZED - 8 tiles
+        "sites": [{
+            "large_icon_url": "https://www.chromium.org/_/rsrc/1484148948583/apple-touch-icon.png",
+            "title": "The Chromium Projects `",
+            "url": "https://www.chromium.org/"
+        },
+        {
+            "favicon_url": "https://codereview.chromium.org/static/favicon.ico",
+            "title": "Chromium Code Reviews",
+            "url": "https://codereview.chromium.org/"
+        },
+        {
+            "large_icon_url": "https://www.chromium.org/_/rsrc/1484148948583/apple-touch-icon.png",
+            "title": "Git Repositories on chromium",
+            "url": "https://chromium.googlesource.com/"
+        },
+        {
+            "large_icon_url": "https://developers.google.com/_static/9bce7b6017/images/touch-icon.png",
+            "title": "Google Open Source Programs Office",
+            "url": "https://developers.google.com/open-source/"
+        },
+        {
+            "large_icon_url": "https://freenode.net/static/img/logos/coloured-alphabg-sq-120.png",
+            "title": "freenode",
+            "url": "https://freenode.net/"
+        },
+        {
+            "large_icon_url": "https://assets-cdn.github.com/pinned-octocat.svg",
+            "title": "Github Page of the Chromium Project",
+            "url": "https://github.com/chromium/"
+        },
+        {
+            "large_icon_url": "https://cdn2.iconfinder.com/data/icons/minimalism/512/Chromium.png",
+            "title": "Chrome Flags",
+            "url": "chrome://flags"
+        },
+        {
+            "large_icon_url": "https://cdn2.iconfinder.com/data/icons/minimalism/512/Chromium.png",
+            "title": "Chrome Version",
+            "url": "chrome://version/"
+        }]
+    },
+    // 1 and 2 come after 3. 4 intentionally skipped.
+    {
+        "section": 3,  // NEWS - 5 tiles
+        "sites": [{
+            "large_icon_url": "https://news.google.com/_/NewsUi/images/static/favicon.ico",
+            "title": "Google News",
+            "url": "https://news.google.com/"
+        },
+        {
+            "favicon_url": "https://news.google.com/_/NewsUi/images/static/favicon.ico",
+            "title": "Google News Germany",
+            "url": "https://news.google.de/"
+        },
+        {
+            "large_icon_url": "https://news.google.com/_/NewsUi/images/static/favicon.ico",
+            "title": "Google News France",
+            "url": "https://news.google.fr/"
+        },
+        {
+            "large_icon_url": "https://news.google.com/_/NewsUi/images/static/favicon.ico",
+            "title": "Google News UK",
+            "url": "https://news.google.co.uk/"
+        },
+        {
+            "large_icon_url": "https://news.google.com/_/NewsUi/images/static/favicon.ico",
+            "title": "Google News Russia",
+            "url": "https://news.google.ru/"
+        }]
     },
     {
-        "favicon_url": "https://codereview.chromium.org/static/favicon.ico",
-        "title": "Chromium Code Reviews",
-        "url": "https://codereview.chromium.org/"
+        "section": 1,  // SOCIAL - 8 tiles
+        "sites": [{
+            "large_icon_url": "https://ssl.gstatic.com/images/branding/product/1x/google_plus_192dp.png",
+            "title": "Google+",
+            "url": "https://plus.google.com/"
+        },
+        {
+            "favicon_url": "https://ssl.gstatic.com/images/branding/product/1x/google_plus_192dp.png",
+            "title": "Google+ Germany",
+            "url": "https://plus.google.de/"
+        },
+        {
+            "large_icon_url": "https://ssl.gstatic.com/images/branding/product/1x/google_plus_192dp.png",
+            "title": "Google+ France",
+            "url": "https://plus.google.fr/"
+        },
+        {
+            "large_icon_url": "https://ssl.gstatic.com/images/branding/product/1x/google_plus_192dp.png",
+            "title": "Google+ UK",
+            "url": "https://plus.google.co.uk/"
+        },
+        {
+            "large_icon_url": "https://ssl.gstatic.com/images/branding/product/1x/google_plus_192dp.png",
+            "title": "Google+ Russia",
+            "url": "https://plus.google.ru/"
+        },
+        {
+            "large_icon_url": "https://ssl.gstatic.com/images/branding/product/1x/google_plus_192dp.png",
+            "title": "Google+ Czech Republic",
+            "url": "https://plus.google.cz/"
+        },
+        {
+            "large_icon_url": "https://ssl.gstatic.com/images/branding/product/1x/google_plus_192dp.png",
+            "title": "Google+ Netherlands",
+            "url": "https://plus.google.nl/"
+        },
+        {
+            "large_icon_url": "https://ssl.gstatic.com/images/branding/product/1x/google_plus_192dp.png",
+            "title": "Google+ Poland",
+            "url": "https://plus.google.pl/"
+        }]
     },
     {
-        "large_icon_url": "https://www.chromium.org/_/rsrc/1484148948583/apple-touch-icon.png",
-        "title": "Git Repositories on chromium",
-        "url": "https://chromium.googlesource.com/"
+        "section": 2,  // ENTERTAINMENT
+        "sites": [
+            // Intentionally empty site list.
+        ]
     },
     {
-        "large_icon_url": "https://developers.google.com/_static/9bce7b6017/images/touch-icon.png",
-        "title": "Google Open Source Programs Office",
-        "url": "https://developers.google.com/open-source/"
-    },
-    {
-        "large_icon_url": "https://freenode.net/static/img/logos/coloured-alphabg-sq-120.png",
-        "title": "freenode",
-        "url": "https://freenode.net/"
-    },
-    {
-        "large_icon_url": "https://assets-cdn.github.com/pinned-octocat.svg",
-        "title": "Github Page of the Chromium Project",
-        "url": "https://github.com/chromium/"
-    },
-    {
-        "large_icon_url": "https://cdn2.iconfinder.com/data/icons/minimalism/512/Chromium.png",
-        "title": "Chrome Flags",
-        "url": "chrome://flags"
-    },
-    {
-        "large_icon_url": "https://cdn2.iconfinder.com/data/icons/minimalism/512/Chromium.png",
-        "title": "Chrome Version",
-        "url": "chrome://version/"
+        "section": 5,  // TRAVEL - Sample for 1 site.
+        "sites": [{
+            "favicon_url": "https://www.gstatic.com/flights/app/travel-favicon.ico",
+            "title": "Google Flights",
+            "url": "https://flights.google.com"
+        }]
     }
 ]
