@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "63c3bf1b_361a95c4",
+        "filename": "components/content_settings/core/browser/content_settings_registry.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-20T05:51:00Z",
+      "side": 1,
+      "message": "Actually, I want to store a list of integers.\n\nIn a separate CL patch (coming next), to store the list of integers in the prefs for client hints, I had to modify IsValueAllowedForType() to special case list of integers as an allowable content setting when the content setting type is CLIENT_HINTS.",
+      "parentUuid": "1e0f0ec9_91d7a9f3",
+      "range": {
+        "startLine": 324,
+        "startChar": 11,
+        "endLine": 324,
+        "endChar": 24
+      },
+      "revId": "68b6e694b0bbe1ec23cc6a3b4c4ff542b813f19c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a040be8_af19fe33",
         "filename": "components/content_settings/core/common/content_settings_types.h",
         "patchSetId": 4
@@ -60,6 +84,24 @@
       "writtenOn": "2017-07-20T03:17:31Z",
       "side": 1,
       "message": "nit: \"sent to the specific origin\" is a bit vague. Maybe clarify that they are sent to the specified origin for every resource load?\n\nIt may also be good to give examples of what client hints are here to make it clearer, or provide a link to a spec if it\u0027s easier.",
+      "revId": "68b6e694b0bbe1ec23cc6a3b4c4ff542b813f19c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89f76533_bdfc2c40",
+        "filename": "components/content_settings/core/common/content_settings_types.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-20T05:51:00Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "3a040be8_af19fe33",
       "revId": "68b6e694b0bbe1ec23cc6a3b4c4ff542b813f19c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
