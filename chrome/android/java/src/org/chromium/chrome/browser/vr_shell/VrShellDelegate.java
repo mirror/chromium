@@ -51,7 +51,6 @@ import org.chromium.chrome.browser.customtabs.CustomTabActivity;
 import org.chromium.chrome.browser.help.HelpAndFeedback;
 import org.chromium.chrome.browser.infobar.InfoBarIdentifier;
 import org.chromium.chrome.browser.infobar.SimpleConfirmInfoBarBuilder;
-import org.chromium.chrome.browser.page_info.PageInfoPopup;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.TabModelSelector;
 import org.chromium.chrome.browser.util.IntentUtils;
@@ -63,6 +62,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Manages interactions with the VR Shell.
@@ -151,9 +152,10 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
     private Boolean mInVrAtChromeLaunch;
     private boolean mShowingDaydreamDoff;
     private boolean mDoffOptional;
-    // Whether we should show the PageInfo UI. This is shown when we force exit the user
-    // out of VR when they attempt to view the PageInfo.
-    private boolean mShouldShowPageInfo;
+    // Listener to be called once we exited VR due to to an unsupported mode, e.g. the user clicked
+    // the URL bar security icon.
+    private List<OnExitVrRequestListener> mOnExitVrRequestListenersForUnsupportedMode =
+            new LinkedList<>();
     private boolean mExitingCct;
     private boolean mPaused;
     private int mRestoreSystemUiVisibilityFlag = -1;
@@ -375,6 +377,13 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
     public static void showDoffAndExitVr(boolean optional) {
         assert sInstance != null;
         sInstance.showDoffAndExitVrInternal(optional);
+    }
+
+    public static void requestToExitVr(
+            OnExitVrRequestListener onExitVrRequestListener, @UiUnsupportedMode int reason) {
+        assert sInstance != null;
+        assert sInstance.mInVr;
+        sInstance.mVrShell.requestToExitVr(onExitVrRequestListener, reason);
     }
 
     @CalledByNative
@@ -613,7 +622,7 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
             case ActivityState.RESUMED:
                 if (mInVr && activity != mActivity) {
                     if (mShowingDaydreamDoff) {
-                        mShouldShowPageInfo = false;
+                        mOnExitVrRequestListenersForUnsupportedMode.clear();
                         onExitVrResult(true);
                     } else {
                         shutdownVr(true /* disableVrMode */, false /* canReenter */,
@@ -778,7 +787,7 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
             mVrDaydreamApi.launchVrHomescreen();
             return;
         }
-        mShouldShowPageInfo = false;
+        mOnExitVrRequestListenersForUnsupportedMode.clear();
         shutdownNonPresentingNativeContext();
 
         // Lock orientation to landscape after enter VR.
@@ -1184,8 +1193,14 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
 
         mShowingDaydreamDoff = false;
         if (success) {
-            if (mShouldShowPageInfo) {
-                sInstance.showPageInfoPopup();
+            if (!mOnExitVrRequestListenersForUnsupportedMode.isEmpty()) {
+                for (OnExitVrRequestListener listener :
+                        mOnExitVrRequestListenersForUnsupportedMode) {
+                    listener.onExited();
+                }
+                // Note: we don't empty the mOnExitVrRequestListenersForUnsupportedMode list here
+                // because we don't want to show the feedback prompt when the user exits VR due to
+                // an unsupported mode. So this gets emptied in shutdownVr.
             }
             shutdownVr(true /* disableVrMode */, false /* canReenter */,
                     !mExitingCct /* stayingInChrome */);
@@ -1285,10 +1300,10 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
         promptForFeedbackIfNeeded(stayingInChrome);
         if (stayingInChrome) createNonPresentingNativeContext();
 
-        // We don't want to show the PageInfo prompt if we return to Chrome
+        // We don't want to call the exit listener if we return to Chrome
         // after shutting down for reasons other than a successful DOFF (e.g.
         // clicking the controller home button and returning to Chrome).
-        mShouldShowPageInfo = false;
+        mOnExitVrRequestListenersForUnsupportedMode.clear();
     }
 
     private void showDoffAndExitVrInternal(boolean optional) {
@@ -1297,9 +1312,11 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
         shutdownVr(true /* disableVrMode */, false /* canReenter */, true /* stayingInChrome */);
     }
 
-    /* package */ void onUnhandledPageInfo() {
-        mShouldShowPageInfo = true;
-        showDoffAndExitVrInternal(true);
+    /* package */ void exitVrDueToUnsupportedFeature(OnExitVrRequestListener listener) {
+        mOnExitVrRequestListenersForUnsupportedMode.add(listener);
+        if (mOnExitVrRequestListenersForUnsupportedMode.size() == 1) {
+            showDoffAndExitVrInternal(true);
+        }
     }
 
     /* package */ void exitCct() {
@@ -1314,15 +1331,6 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
                     true /* disableVrMode */, false /* canReenter */, false /* stayingInChrome */);
             ((CustomTabActivity) mActivity).finishAndClose(false);
         }
-    }
-
-    private void showPageInfoPopup() {
-        assert mShouldShowPageInfo;
-        // Note: we don't set mShouldShowPageInfo to false here because we don't
-        // want to show the feedback prompt when the user exits VR to view PageInfo. So this gets
-        // reset in shutdownVr.
-        PageInfoPopup.show(
-                mActivity, mActivity.getActivityTab(), null, PageInfoPopup.OPENED_FROM_VR);
     }
 
     private static void startFeedback(Tab tab) {
@@ -1373,7 +1381,7 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
         if (!stayingInChrome) return;
         if (VrFeedbackStatus.getFeedbackOptOut()) return;
         if (!mVrBrowserUsed) return;
-        if (mShouldShowPageInfo) return;
+        if (!mOnExitVrRequestListenersForUnsupportedMode.isEmpty()) return;
 
         int exitCount = VrFeedbackStatus.getUserExitedAndEntered2DCount();
         VrFeedbackStatus.setUserExitedAndEntered2DCount((exitCount + 1) % mFeedbackFrequency);

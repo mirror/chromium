@@ -34,6 +34,7 @@ import org.chromium.chrome.browser.ChromeTabbedActivity;
 import org.chromium.chrome.browser.NativePage;
 import org.chromium.chrome.browser.UrlConstants;
 import org.chromium.chrome.browser.ntp.NewTabPage;
+import org.chromium.chrome.browser.page_info.PageInfoPopup;
 import org.chromium.chrome.browser.tab.EmptyTabObserver;
 import org.chromium.chrome.browser.tab.InterceptNavigationDelegateImpl;
 import org.chromium.chrome.browser.tab.Tab;
@@ -58,6 +59,9 @@ import org.chromium.ui.UiUtils;
 import org.chromium.ui.base.WindowAndroid;
 import org.chromium.ui.display.DisplayAndroid;
 import org.chromium.ui.display.VirtualDisplayAndroid;
+
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * This view extends from GvrLayout which wraps a GLSurfaceView that renders VR shell.
@@ -120,6 +124,8 @@ public class VrShellImpl
     private Boolean mPaused;
 
     private MotionEventSynthesizer mMotionEventSynthesizer;
+
+    private Queue<OnExitVrRequestListener> mOnExitVrRequestListeners = new LinkedList<>();
 
     private OnDispatchTouchEventCallback mOnDispatchTouchEventForTesting;
 
@@ -451,7 +457,16 @@ public class VrShellImpl
     // the security icon in the URL bar.
     @CalledByNative
     public void onUnhandledPageInfo() {
-        mDelegate.onUnhandledPageInfo();
+        requestToExitVr(new OnExitVrRequestListener() {
+            @Override
+            public void onExited() {
+                PageInfoPopup.show(
+                        mActivity, mActivity.getActivityTab(), null, PageInfoPopup.OPENED_FROM_VR);
+            }
+
+            @Override
+            public void onStayed() {}
+        }, UiUnsupportedMode.UNHANDLED_PAGE_INFO);
     }
 
     // Exits CCT, returning to the app that opened it.
@@ -652,6 +667,24 @@ public class VrShellImpl
         return mDelegate.hasDaydreamSupport();
     }
 
+    @Override
+    public void requestToExitVr(OnExitVrRequestListener listener, @UiUnsupportedMode int reason) {
+        mOnExitVrRequestListeners.add(listener);
+        nativeRequestToExitVr(mNativeVrShell, reason);
+    }
+
+    @CalledByNative
+    private void onExitVrRequestResult(@UiUnsupportedMode int reason, boolean shouldExit) {
+        assert !mOnExitVrRequestListeners.isEmpty();
+        if (shouldExit) {
+            nativeLogUnsupportedModeUserMetric(mNativeVrShell, reason);
+            mDelegate.exitVrDueToUnsupportedFeature(mOnExitVrRequestListeners.element());
+        } else {
+            mOnExitVrRequestListeners.element().onStayed();
+        }
+        mOnExitVrRequestListeners.remove();
+    }
+
     @CalledByNative
     private void showTab(int id) {
         Tab tab = mActivity.getTabModelSelector().getTabById(id);
@@ -769,4 +802,7 @@ public class VrShellImpl
     private native void nativeRestoreContentSurface(long nativeVrShell);
     private native void nativeSetHistoryButtonsEnabled(
             long nativeVrShell, boolean canGoBack, boolean canGoForward);
+    private native void nativeRequestToExitVr(long nativeVrShell, @UiUnsupportedMode int reason);
+    private native void nativeLogUnsupportedModeUserMetric(
+            long nativeVrShell, @UiUnsupportedMode int mode);
 }
