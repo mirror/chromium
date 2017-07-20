@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d8ccb670_99124ed8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-20T16:02:15Z",
+      "side": 1,
+      "message": "Edit the title line too. It\u0027s not descriptive enough.",
+      "parentUuid": "05f363f3_c56420d7",
+      "range": {
+        "startLine": 7,
+        "startChar": 25,
+        "endLine": 7,
+        "endChar": 27
+      },
+      "revId": "1f907a1e0b3ca6da4ef570697205c4eb72adacaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec22bc5c_d46bd83e",
         "filename": "chrome/browser/ui/cocoa/passwords/pending_password_view_controller.mm",
         "patchSetId": 2
