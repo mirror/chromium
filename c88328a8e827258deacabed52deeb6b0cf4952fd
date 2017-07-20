@@ -16,6 +16,24 @@
       "revId": "c88328a8e827258deacabed52deeb6b0cf4952fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5982a90a_40acbce8",
+        "filename": "base/debug/stack_trace_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-20T19:15:10Z",
+      "side": 1,
+      "message": "This is consistent with the formatting of the Fuchsia system backtrace output.\n\nbt#00: pc 0xdeadbeef sp 0xdeadbeef (foo.so:0x1234)\nbt#01: ...\nbt#09: end",
+      "parentUuid": "41eb098c_e049f982",
+      "revId": "c88328a8e827258deacabed52deeb6b0cf4952fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
