@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24c02c27_c2d678c4",
+        "filename": "chrome/browser/browser_shutdown.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-20T22:24:09Z",
+      "side": 1,
+      "message": "(I don\u0027t think adding expr here has any effect?)",
+      "revId": "02a9725912f67557333c145f91eac34125ba3710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
