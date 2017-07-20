@@ -52,6 +52,24 @@
       "revId": "09d839ef36f336aa04c93d473f1496f6a2914b83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc366c84_1f460344",
+        "filename": "components/pdf/renderer/pepper_pdf_host.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-07-20T18:24:55Z",
+      "side": 1,
+      "message": "Done. Thanks for pointing that out, much nicer.",
+      "parentUuid": "6d08023c_d95585e7",
+      "revId": "09d839ef36f336aa04c93d473f1496f6a2914b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
