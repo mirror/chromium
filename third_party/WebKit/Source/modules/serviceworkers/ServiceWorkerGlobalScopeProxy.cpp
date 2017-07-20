@@ -36,6 +36,7 @@
 #include "bindings/core/v8/WorkerOrWorkletScriptController.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/dom/MessagePort.h"
+#include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/origin_trials/OriginTrials.h"
 #include "core/workers/ParentFrameTaskRunners.h"
@@ -545,7 +546,21 @@ void ServiceWorkerGlobalScopeProxy::DidInitializeWorkerContext() {
       WorkerGlobalScope()->ScriptController()->GetContext());
 }
 
-void ServiceWorkerGlobalScopeProxy::DidLoadInstalledScript() {
+void ServiceWorkerGlobalScopeProxy::DidLoadInstalledScript(
+    const ContentSecurityPolicyResponseHeaders& csp_headers_on_worker_thread,
+    const String& referrer_policy_on_worker_thread) {
+  DCHECK(embedded_worker_);
+
+  // The TaskType needs to be equal to or higher priority than loading tasks
+  // because this should be executed before any other loading tasks posted
+  // after this task.
+  parent_frame_task_runners_->Get(TaskType::kUnthrottled)
+      ->PostTask(
+          BLINK_FROM_HERE,
+          CrossThreadBind(&WebEmbeddedWorkerImpl::ReportInstalledMainScriptInfo,
+                          CrossThreadUnretained(embedded_worker_),
+                          csp_headers_on_worker_thread,
+                          referrer_policy_on_worker_thread));
   Client().WorkerScriptLoaded();
 }
 
