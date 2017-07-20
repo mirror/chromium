@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad79ffb4_c505aec0",
+        "filename": "chrome/browser/devtools/global_confirm_info_bar.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-20T22:54:26Z",
+      "side": 1,
+      "message": "As written, this isn\u0027t safe; you need to get the weak pointer before calling Initialize(), or |info_bar| is potentially dead below.",
+      "revId": "c0dbb1cdaa2b6a4122029dee169ea582e7119a8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
