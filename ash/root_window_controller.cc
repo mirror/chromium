@@ -254,7 +254,7 @@ aura::Window* CreateContainer(int window_id,
       new aura::Window(nullptr, aura::client::WINDOW_TYPE_UNKNOWN);
   window->Init(ui::LAYER_NOT_DRAWN);
   if (Shell::GetAshConfig() != Config::CLASSIC) {
-    aura::WindowPortMus::Get(window)->SetEventTargetingPolicy(
+    window->SetEventTargetingPolicy(
         ui::mojom::EventTargetingPolicy::DESCENDANTS_ONLY);
   }
   window->set_id(window_id);
