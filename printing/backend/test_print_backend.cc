@@ -31,8 +31,11 @@ std::string TestPrintBackend::GetDefaultPrinterName() {
 
 bool TestPrintBackend::GetPrinterBasicInfo(const std::string& printer_name,
                                            PrinterBasicInfo* printer_info) {
-  NOTREACHED() << "Not implemented";
-  return false;
+  printer_info->printer_name = printer_name;
+  printer_info->is_default = printer_name == default_printer_name_;
+  printer_info->printer_description = "Printer for test";
+
+  return true;
 }
 
 bool TestPrintBackend::GetPrinterSemanticCapsAndDefaults(

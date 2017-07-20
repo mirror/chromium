@@ -8,7 +8,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/test/values_test_util.h"
-#include "chrome/browser/ui/webui/print_preview/printer_capabilities.h"
+#include "chrome/browser/ui/webui/print_preview/printer_backend_proxy.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "printing/backend/test_print_backend.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -36,21 +36,20 @@ class PrinterCapabilitiesTest : public testing::Test {
   scoped_refptr<TestPrintBackend> test_backend_;
 };
 
-// Verify that we don't crash for a missing printer and a nullptr is never
+// Verify that we don't crash for a missing printer and a nullptr is
 // returned.
-TEST_F(PrinterCapabilitiesTest, NonNullForMissingPrinter) {
-  PrinterBasicInfo basic_info;
+TEST_F(PrinterCapabilitiesTest, NullForMissingPrinter) {
   std::string printer_name = "missing_printer";
 
+  // IsValidPrinter will return false, so this should return nullptr.
   std::unique_ptr<base::DictionaryValue> settings_dictionary =
-      GetSettingsOnBlockingPool(printer_name, basic_info);
+      FetchCapabilitiesAsync(printer_name);
 
-  ASSERT_TRUE(settings_dictionary);
+  ASSERT_FALSE(settings_dictionary);
 }
 
 TEST_F(PrinterCapabilitiesTest, ProvidedCapabilitiesUsed) {
   std::string printer_name = "test_printer";
-  PrinterBasicInfo basic_info;
   auto caps = base::MakeUnique<PrinterSemanticCapsAndDefaults>();
 
   // set a capability
@@ -59,7 +58,7 @@ TEST_F(PrinterCapabilitiesTest, ProvidedCapabilitiesUsed) {
   print_backend()->AddValidPrinter(printer_name, std::move(caps));
 
   std::unique_ptr<base::DictionaryValue> settings_dictionary =
-      GetSettingsOnBlockingPool(printer_name, basic_info);
+      FetchCapabilitiesAsync(printer_name);
 
   // verify settings were created
   ASSERT_TRUE(settings_dictionary);
@@ -78,13 +77,12 @@ TEST_F(PrinterCapabilitiesTest, ProvidedCapabilitiesUsed) {
 // doesn't return capabilities.
 TEST_F(PrinterCapabilitiesTest, NullCapabilitiesExcluded) {
   std::string printer_name = "test_printer";
-  PrinterBasicInfo basic_info;
 
   // return false when attempting to retrieve capabilities
   print_backend()->AddValidPrinter(printer_name, nullptr);
 
   std::unique_ptr<base::DictionaryValue> settings_dictionary =
-      GetSettingsOnBlockingPool(printer_name, basic_info);
+      FetchCapabilitiesAsync(printer_name);
 
   // verify settings were created
   ASSERT_TRUE(settings_dictionary);

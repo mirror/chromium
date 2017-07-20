@@ -18,6 +18,12 @@ class Profile;
 
 namespace printing {
 
+extern const char kPrinterId[];
+extern const char kPrinterCapabilities[];
+
+std::unique_ptr<base::DictionaryValue> FetchCapabilitiesAsync(
+    const std::string& device_name);
+
 using DefaultPrinterCallback =
     base::Callback<void(const std::string& printer_name)>;
 
@@ -33,6 +39,9 @@ class PrinterBackendProxy {
 #else
   static std::unique_ptr<PrinterBackendProxy> Create();
 #endif
+
+  static std::pair<std::string, std::string> GetPrinterNameAndDescription(
+      const PrinterBasicInfo& printer);
 
   virtual ~PrinterBackendProxy() = default;
 

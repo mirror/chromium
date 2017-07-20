@@ -51,7 +51,6 @@
 #include "chrome/browser/ui/scoped_tabbed_browser_displayer.h"
 #include "chrome/browser/ui/webui/print_preview/print_preview_ui.h"
 #include "chrome/browser/ui/webui/print_preview/printer_backend_proxy.h"
-#include "chrome/browser/ui/webui/print_preview/printer_capabilities.h"
 #include "chrome/browser/ui/webui/print_preview/printer_handler.h"
 #include "chrome/browser/ui/webui/print_preview/sticky_settings.h"
 #include "chrome/common/chrome_switches.h"
@@ -407,7 +406,7 @@ void PrintersToValues(const printing::PrinterList& printer_list,
     printer_info->SetString(printing::kSettingDeviceName, printer.printer_name);
 
     const auto printer_name_description =
-        printing::GetPrinterNameAndDescription(printer);
+        printing::PrinterBackendProxy::GetPrinterNameAndDescription(printer);
     const std::string& printer_name = printer_name_description.first;
     const std::string& printer_description = printer_name_description.second;
     printer_info->SetString(printing::kSettingPrinterName, printer_name);
