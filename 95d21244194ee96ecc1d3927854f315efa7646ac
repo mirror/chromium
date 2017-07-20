@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38f71984_423fce88",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobData.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-20T21:55:40Z",
+      "side": 1,
+      "message": "What about connection errors?\n\nIn general I think we ought to avoid exposing Connector outside of the bindings library (i.e. it should probably be in mojo::internal).\n\nIf we\u0027re going to introduce a thread-safe InterfacePtr type we should do it in the bindings library in a way that is reusable by other components.",
+      "revId": "95d21244194ee96ecc1d3927854f315efa7646ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
