@@ -424,6 +424,10 @@ split_static_library("browser") {
     "favicon/large_icon_service_factory.h",
     "feature_engagement_tracker/feature_engagement_tracker_factory.cc",
     "feature_engagement_tracker/feature_engagement_tracker_factory.h",
+    "feature_engagement_tracker/new_tab/new_tab_tracker.cc",
+    "feature_engagement_tracker/new_tab/new_tab_tracker.h",
+    "feature_engagement_tracker/new_tab/new_tab_tracker_factory.cc",
+    "feature_engagement_tracker/new_tab/new_tab_tracker_factory.h",
     "file_select_helper.cc",
     "file_select_helper.h",
     "file_select_helper_mac.mm",
@@ -3677,6 +3681,10 @@ split_static_library("browser") {
 
   if (is_linux || is_win) {
     sources += [
+      "feature_engagement_tracker/new_tab/new_tab_tracker.cc",
+      "feature_engagement_tracker/new_tab/new_tab_tracker.h",
+      "feature_engagement_tracker/new_tab/new_tab_tracker_factory.cc",
+      "feature_engagement_tracker/new_tab/new_tab_tracker_factory.h",
       "renderer_context_menu/spelling_options_submenu_observer.cc",
       "renderer_context_menu/spelling_options_submenu_observer.h",
       "webshare/share_service_impl.cc",
