@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "57511e25_4f631175",
+        "filename": "chrome/browser/ui/bubble_anchor_util.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-20T07:03:15Z",
+      "side": 1,
+      "message": "Done (naming is hard.. - I went with kNoToolbarLeftOffset after trying out some other things like kFullContentLeftOffset and not liking them)",
+      "parentUuid": "f2956236_6b9cccf9",
+      "range": {
+        "startLine": 16,
+        "startChar": 20,
+        "endLine": 16,
+        "endChar": 58
+      },
+      "revId": "cde281d661bb38e57864370d3d38832ab8ecfd30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66bb633b_4cb186e1",
         "filename": "chrome/browser/ui/bubble_anchor_util.h",
         "patchSetId": 10
@@ -36,6 +60,24 @@
       "writtenOn": "2017-07-19T19:02:58Z",
       "side": 1,
       "message": "Hmm, we should just anchor off of the fullscreen bubble as needed (like ChooserBubbleUi::GetAnchorView)... but I guess we can punt that fix for now.",
+      "revId": "cde281d661bb38e57864370d3d38832ab8ecfd30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c41cb136_6820b818",
+        "filename": "chrome/browser/ui/bubble_anchor_util.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-20T07:03:15Z",
+      "side": 1,
+      "message": "the fullscreen bubble isn\u0027t a reliable anchor. It usually hangs around until exiting fullscreen (we should probably delete the widget). But not always: going fullscreen, then triggering the \"[don\u0027t] press backspace to go back\" bubble will destroy the fullscreen bubble while remaining in fullscreen.\nThe fullscreen bubble is also a different Widget* - i.e. not a Browser* - using its view as an anchor sets up a different parent window which could lead to subtle bugs.\nWe\u0027ve also been trying to toy with the z-order of the fullscreen bubble. Currently menus (e.g. a \u003cselect\u003e menu triggered from Javascript), can pop over it, obscuring the bubble, which can lead to attempted abuse.",
+      "parentUuid": "66bb633b_4cb186e1",
       "revId": "cde281d661bb38e57864370d3d38832ab8ecfd30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "1c604fd6_9ef0fe3a",
+        "filename": "chrome/browser/ui/cocoa/bubble_anchor_helper.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-20T07:03:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21f548e8_46bc8da7",
+      "revId": "cde281d661bb38e57864370d3d38832ab8ecfd30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a896d56_2f3a50b6",
         "filename": "chrome/browser/ui/views/bubble_anchor_util_views.cc",
         "patchSetId": 10
@@ -73,6 +133,24 @@
       "revId": "cde281d661bb38e57864370d3d38832ab8ecfd30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21f5e975_dec7b20f",
+        "filename": "chrome/browser/ui/views/bubble_anchor_util_views.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-20T07:03:15Z",
+      "side": 1,
+      "message": "Done. This wasn\u0027t so easy because of code like\n\n  bubble_delegate_-\u003eUpdateAnchor(GetAnchorView(),\n                                 GetAnchorPoint(),\n                                 GetAnchorArrow());\n\n\nbut pulling that thread did reveal a lot of stale code doing nothing.",
+      "parentUuid": "3a896d56_2f3a50b6",
+      "revId": "cde281d661bb38e57864370d3d38832ab8ecfd30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "01a62607_40d0a5f0",
+        "filename": "chrome/browser/ui/views/bubble_anchor_util_views.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-20T07:03:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fdb4fa5_cf8aa007",
+      "range": {
+        "startLine": 27,
+        "startChar": 38,
+        "endLine": 27,
+        "endChar": 46
+      },
+      "revId": "cde281d661bb38e57864370d3d38832ab8ecfd30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b353754_1923828c",
         "filename": "chrome/browser/ui/views/bubble_anchor_util_views.cc",
         "patchSetId": 10
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "fbf42688_1e5ebc26",
+        "filename": "chrome/browser/ui/views/bubble_anchor_util_views.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-20T07:03:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b353754_1923828c",
+      "revId": "cde281d661bb38e57864370d3d38832ab8ecfd30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45302f75_e623f14c",
         "filename": "chrome/browser/ui/views/bubble_anchor_util_views.cc",
         "patchSetId": 10
@@ -127,6 +247,41 @@
       "writtenOn": "2017-07-19T19:02:58Z",
       "side": 1,
       "message": "Should we use a rect with the full width of the browser window and center the bubble horizontally below that rect? (I guess that would require anchoring off of the fullscreen bubble as needed, so maybe that\u0027s not easy to fix now?)",
+      "revId": "cde281d661bb38e57864370d3d38832ab8ecfd30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "317c180c_0724f356",
+        "filename": "chrome/browser/ui/views/bubble_anchor_util_views.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-20T07:03:15Z",
+      "side": 1,
+      "message": "Yeah, we\u0027d probably need security review to mess with the permission bubble anchoring (and as noted, the fullscreen bubble is maybe not a great anchor)",
+      "parentUuid": "45302f75_e623f14c",
+      "revId": "cde281d661bb38e57864370d3d38832ab8ecfd30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3bae6a5_5f944565",
+        "filename": "chrome/browser/ui/views/permission_bubble/permission_prompt_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-20T07:03:15Z",
+      "side": 1,
+      "message": "Adding/removing the arrow must have been necessary when the dialog would center itself when entering fullscreen, (and I guess BubbleDialogDelegate is missing logic to respond to set_arrow calls that should change the frame). \n\nBut this has been a constant TOP_LEFT anchor for a while, so was just repeating logic in BubbleDialogDelegateView::CreateNonClientFrameView() unnecessarily.",
       "revId": "cde281d661bb38e57864370d3d38832ab8ecfd30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
