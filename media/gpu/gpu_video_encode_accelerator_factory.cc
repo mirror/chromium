@@ -15,7 +15,7 @@
 #include "media/gpu/vaapi_video_encode_accelerator.h"
 #endif
 #elif defined(OS_ANDROID) && BUILDFLAG(ENABLE_WEBRTC)
-#include "media/gpu/android_video_encode_accelerator.h"
+#include "media/gpu/android/android_video_encode_accelerator.h"
 #elif defined(OS_MACOSX)
 #include "media/gpu/vt_video_encode_accelerator_mac.h"
 #elif defined(OS_WIN)
