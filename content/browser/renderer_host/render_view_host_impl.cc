@@ -725,6 +725,7 @@ bool RenderViewHostImpl::OnMessageReceived(const IPC::Message& msg) {
     IPC_MESSAGE_HANDLER(ViewHostMsg_TakeFocus, OnTakeFocus)
     IPC_MESSAGE_HANDLER(ViewHostMsg_ClosePage_ACK, OnClosePageACK)
     IPC_MESSAGE_HANDLER(ViewHostMsg_Focus, OnFocus)
+    IPC_MESSAGE_HANDLER(ViewHostMsg_DidBlockFramebust, OnDidBlockFramebust)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
 
@@ -841,6 +842,11 @@ void RenderViewHostImpl::OnFocus() {
   // Note: We allow focus and blur from swapped out RenderViewHosts, even when
   // the active RenderViewHost is in a different BrowsingInstance (e.g., WebUI).
   delegate_->Activate();
+}
+
+void RenderViewHostImpl::OnDidBlockFramebust(const GURL& destination_url,
+                                             const GURL& source_url) {
+  // TODO(dgn): Hook this up to UI.
 }
 
 void RenderViewHostImpl::RenderWidgetDidForwardMouseEvent(

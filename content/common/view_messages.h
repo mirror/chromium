@@ -866,6 +866,12 @@ IPC_MESSAGE_ROUTED3(ViewHostMsg_SelectWordAroundCaretAck,
                     int /* start_adjust */,
                     int /* end_adjust */)
 
+// An iframe at source url attempted to navigate the main frame to destination
+// url, even though the iframe never received a user gesture.
+IPC_MESSAGE_ROUTED2(ViewHostMsg_DidBlockFramebust,
+                    GURL /* destination url */,
+                    GURL /* source url */)
+
 #if defined(OS_ANDROID)
 // Notifies that an unhandled tap has occurred at the specified x,y position
 // and that the UI may need to be triggered.

@@ -1785,6 +1785,12 @@ blink::WebRect RenderViewImpl::RootWindowRect() {
   return RenderWidget::WindowRect();
 }
 
+void RenderViewImpl::DidBlockFramebust(const WebURL& destination_url,
+                                       const WebURL& source_url) {
+  Send(new ViewHostMsg_DidBlockFramebust(GetRoutingID(), destination_url,
+                                         source_url));
+}
+
 blink::WebScreenInfo RenderViewImpl::GetScreenInfo() {
   return RenderWidget::GetScreenInfo();
 }
