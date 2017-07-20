@@ -2,6 +2,121 @@
   "comments": [
     {
       "key": {
+        "uuid": "944c113f_64df231d",
+        "filename": "components/omnibox/browser/autocomplete_provider_client.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-20T04:23:43Z",
+      "side": 1,
+      "message": "Based on the try job compile failure, it looks like you need to create an iOS stub for this service.  (It can be an empty function; iOS doesn\u0027t have zero suggest provider enabled.)",
+      "range": {
+        "startLine": 64,
+        "startChar": 10,
+        "endLine": 64,
+        "endChar": 38
+      },
+      "revId": "497c14ef267fef4ca9b3966749c99c9ab869f203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdc61303_28f104af",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-20T04:23:43Z",
+      "side": 1,
+      "message": "nit: for clarity, parens around this binary operator",
+      "range": {
+        "startLine": 116,
+        "startChar": 6,
+        "endLine": 116,
+        "endChar": 24
+      },
+      "revId": "497c14ef267fef4ca9b3966749c99c9ab869f203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc11c8ec_42d273cc",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-20T04:23:43Z",
+      "side": 1,
+      "message": "I believe there\u0027s a reason Gheorghe discovered that you need to have an extra \"\u0026\" at the end of requests (or certain types of requests?)?  (Do you remember?  If so, is this logic right about when it needs to be at the end of the URL?)  If you need this, please comment the reason for this--it looks odd.  Otherwise remove it.",
+      "range": {
+        "startLine": 118,
+        "startChar": 12,
+        "endLine": 118,
+        "endChar": 15
+      },
+      "revId": "497c14ef267fef4ca9b3966749c99c9ab869f203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc3bec75_1520503c",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-20T04:23:43Z",
+      "side": 1,
+      "message": "You used to be passing additional parameters such as \"\u0026?key\u003dAIzaSyBITl...\"\nAre you sure you want to remove the ability to do so?",
+      "range": {
+        "startLine": 120,
+        "startChar": 14,
+        "endLine": 120,
+        "endChar": 35
+      },
+      "revId": "497c14ef267fef4ca9b3966749c99c9ab869f203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "668f63e0_2460dd03",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-20T04:23:43Z",
+      "side": 1,
+      "message": "I know I told you to put this here from lower in the file.  But now I see that in line 86 we call this function and in line 87 we check if (is_experimental).  It would be odd to create a request, sending it is_experimental\u003d\u003dtrue, have the request creator ignore that because current_url is empty, create a request, then have the next line in the calling function go down the path as if the created request was an experimental request.",
+      "range": {
+        "startLine": 148,
+        "startChar": 4,
+        "endLine": 148,
+        "endChar": 28
+      },
+      "revId": "497c14ef267fef4ca9b3966749c99c9ab869f203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1f949a77_63542d66",
         "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
         "patchSetId": 5
@@ -117,6 +232,30 @@
     },
     {
       "key": {
+        "uuid": "226049bf_0935bf4f",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-20T04:23:43Z",
+      "side": 1,
+      "message": "(I feel like we need something here)",
+      "parentUuid": "1ae671b2_ee080c58",
+      "range": {
+        "startLine": 39,
+        "startChar": 30,
+        "endLine": 39,
+        "endChar": 37
+      },
+      "revId": "497c14ef267fef4ca9b3966749c99c9ab869f203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1e4384e1_19a0983c",
         "filename": "components/omnibox/browser/contextual_suggestions_service.h",
         "patchSetId": 5
@@ -133,6 +272,29 @@
         "startChar": 18,
         "endLine": 47,
         "endChar": 27
+      },
+      "revId": "497c14ef267fef4ca9b3966749c99c9ab869f203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "106949c2_11bd0fb9",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-20T04:23:43Z",
+      "side": 1,
+      "message": "nit: omit \"as\"",
+      "range": {
+        "startLine": 48,
+        "startChar": 30,
+        "endLine": 48,
+        "endChar": 32
       },
       "revId": "497c14ef267fef4ca9b3966749c99c9ab869f203",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
