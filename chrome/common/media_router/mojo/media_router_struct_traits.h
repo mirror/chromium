@@ -255,14 +255,16 @@ struct EnumTraits<media_router::mojom::MediaSink::IconType,
     switch (icon_type) {
       case media_router::MediaSink::CAST:
         return media_router::mojom::MediaSink::IconType::CAST;
-      case media_router::MediaSink::CAST_AUDIO:
-        return media_router::mojom::MediaSink::IconType::CAST_AUDIO;
       case media_router::MediaSink::CAST_AUDIO_GROUP:
         return media_router::mojom::MediaSink::IconType::CAST_AUDIO_GROUP;
-      case media_router::MediaSink::HANGOUT:
-        return media_router::mojom::MediaSink::IconType::HANGOUT;
+      case media_router::MediaSink::CAST_AUDIO:
+        return media_router::mojom::MediaSink::IconType::CAST_AUDIO;
       case media_router::MediaSink::MEETING:
         return media_router::mojom::MediaSink::IconType::MEETING;
+      case media_router::MediaSink::HANGOUT:
+        return media_router::mojom::MediaSink::IconType::HANGOUT;
+      case media_router::MediaSink::EDUCATION:
+        return media_router::mojom::MediaSink::IconType::EDUCATION;
       case media_router::MediaSink::GENERIC:
         return media_router::mojom::MediaSink::IconType::GENERIC;
     }
@@ -276,17 +278,20 @@ struct EnumTraits<media_router::mojom::MediaSink::IconType,
       case media_router::mojom::MediaSink::IconType::CAST:
         *output = media_router::MediaSink::CAST;
         return true;
+      case media_router::mojom::MediaSink::IconType::CAST_AUDIO_GROUP:
+        *output = media_router::MediaSink::CAST_AUDIO_GROUP;
+        return true;
       case media_router::mojom::MediaSink::IconType::CAST_AUDIO:
         *output = media_router::MediaSink::CAST_AUDIO;
         return true;
-      case media_router::mojom::MediaSink::IconType::CAST_AUDIO_GROUP:
-        *output = media_router::MediaSink::CAST_AUDIO_GROUP;
+      case media_router::mojom::MediaSink::IconType::MEETING:
+        *output = media_router::MediaSink::MEETING;
         return true;
       case media_router::mojom::MediaSink::IconType::HANGOUT:
         *output = media_router::MediaSink::HANGOUT;
         return true;
-      case media_router::mojom::MediaSink::IconType::MEETING:
-        *output = media_router::MediaSink::MEETING;
+      case media_router::mojom::MediaSink::IconType::EDUCATION:
+        *output = media_router::MediaSink::EDUCATION;
         return true;
       case media_router::mojom::MediaSink::IconType::GENERIC:
         *output = media_router::MediaSink::GENERIC;
