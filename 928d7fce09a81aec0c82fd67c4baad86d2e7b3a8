@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "5f17e1f6_42988fde",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-20T22:21:08Z",
+      "side": 1,
+      "message": "This is a separate browsertest because it needs the axe.js library which the other doesn\u0027t right?",
+      "revId": "928d7fce09a81aec0c82fd67c4baad86d2e7b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bad4af6d_7effea84",
         "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
         "patchSetId": 9
@@ -88,6 +105,23 @@
         "endLine": 20,
         "endChar": 45
       },
+      "revId": "928d7fce09a81aec0c82fd67c4baad86d2e7b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bf32fa8_3f4cf00b",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-20T22:21:08Z",
+      "side": 1,
+      "message": "Does settings.navigateTo(settings.Routes.PASSWORDS) work?\n\nIf it doesn\u0027t (and explain why), you still want to reference the path in that object instead of hardcoding to \u0027/passwords\u0027.",
       "revId": "928d7fce09a81aec0c82fd67c4baad86d2e7b3a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
