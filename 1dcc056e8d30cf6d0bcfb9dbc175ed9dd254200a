@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0a526ff_2214c88a",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-07-20T09:58:46Z",
+      "side": 1,
+      "message": "Could you explain the code from here to the end of the function a bit more? What is the intended use of it, and in which cases should it be used? \n\nIs my understanding correct that CopyRange is used with sub indices only based on safe-to-break positions, and this code tries to determine a sub-bounding box for those indices?",
+      "revId": "1dcc056e8d30cf6d0bcfb9dbc175ed9dd254200a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
