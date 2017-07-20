@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea33ac7e_b57d2ec9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/SignInPreference.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-20T13:21:51Z",
+      "side": 1,
+      "message": "Nit: since now mShowingPromo is used inside setupOldPromo only, it would be more consistent to set it inside setupXXX methods the same way you set mSigninPromoMediator.",
+      "revId": "a720853cc50ef3751df30c886f6002b7b8932e3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa8827fb_9febe873",
+        "filename": "chrome/android/java_sources.gni",
+        "patchSetId": 13
+      },
+      "lineNbr": 1010,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-20T13:21:51Z",
+      "side": 1,
+      "message": "It looks like SigninPromoView line was erroneously removed while rebasing.",
+      "range": {
+        "startLine": 1010,
+        "startChar": 0,
+        "endLine": 1010,
+        "endChar": 69
+      },
+      "revId": "a720853cc50ef3751df30c886f6002b7b8932e3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
