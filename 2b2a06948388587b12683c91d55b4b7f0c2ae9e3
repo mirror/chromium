@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3d780b7_aad8ecec",
+        "filename": "net/http/http_response_info.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-20T23:29:39Z",
+      "side": 1,
+      "message": "why are we checking if |proxy_server| is valid?\n\nConsider the responses that are read from the cache and those which were served from a proxy originally: For such responses, at the time of deserialization, the proxy_server is set to ProxyServer() in http_response_info.cc. Thus, for those responses, it seems we would incorrectly return false here since an empty proxy server is an invalid proxy server.",
+      "range": {
+        "startLine": 138,
+        "startChar": 11,
+        "endLine": 138,
+        "endChar": 32
+      },
+      "revId": "2b2a06948388587b12683c91d55b4b7f0c2ae9e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
