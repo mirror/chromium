@@ -343,10 +343,6 @@ class WEB_EXPORT WebViewImpl final
   void PageScaleFactorChanged() override;
   void MainFrameScrollOffsetChanged() override;
 
-  // Returns true if popup menus should be rendered by the browser, false if
-  // they should be rendered by WebKit (which is the default).
-  static bool UseExternalPopupMenus();
-
   bool ShouldAutoResize() const override { return should_auto_resize_; }
 
   IntSize MinAutoSize() const override { return min_auto_size_; }
