@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21476355_cfbc6697",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_manager_commands.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-20T05:46:33Z",
+      "side": 1,
+      "message": "nit; Add function annotation.",
+      "revId": "b2cdd9c294f418153a146cae1bf045a1c3254bf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
