@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7323162_001446e7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1153089
+      },
+      "writtenOn": "2017-07-20T13:53:58Z",
+      "side": 1,
+      "message": "Looks like PrintTests assumes that each test that was added also has a location repored. IMHO, this is an incorrect assumption and PrintTests should only print information about tests that are run in the current shard.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 50
+      },
+      "revId": "46a910ce46c86ed71758d76a1b46acdcb2992588",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
