@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "60267ea6_42b841bd",
+        "filename": "device/usb/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-07-20T21:14:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6813c54_b961fd75",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 41
+      },
+      "revId": "a9bc23ca3407343a4e2bd5b318504bd865a7009b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8cec69b_668fe9d9",
         "filename": "device/usb/mojo/device_manager_impl.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "a9bc23ca3407343a4e2bd5b318504bd865a7009b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2693641_fd09ff16",
+        "filename": "device/usb/mojo/device_manager_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-07-20T21:14:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8cec69b_668fe9d9",
+      "range": {
+        "startLine": 29,
+        "startChar": 29,
+        "endLine": 29,
+        "endChar": 30
+      },
+      "revId": "a9bc23ca3407343a4e2bd5b318504bd865a7009b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
