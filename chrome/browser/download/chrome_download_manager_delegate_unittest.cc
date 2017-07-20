@@ -21,6 +21,7 @@
 #include "chrome/browser/download/download_item_model.h"
 #include "chrome/browser/download/download_prefs.h"
 #include "chrome/browser/download/download_target_info.h"
+#include "chrome/browser/safe_browsing/download_check_enums.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/features.h"
 #include "chrome/common/pref_names.h"
@@ -621,7 +622,7 @@ namespace {
 struct SafeBrowsingTestParameters {
   content::DownloadDangerType initial_danger_type;
   DownloadFileType::DangerLevel initial_danger_level;
-  safe_browsing::DownloadProtectionService::DownloadCheckResult verdict;
+  safe_browsing::DownloadCheckEnums::DownloadCheckResult verdict;
   DownloadPrefs::DownloadRestriction download_restriction;
 
   content::DownloadDangerType expected_danger_type;
@@ -638,7 +639,7 @@ class TestDownloadProtectionService
     callback.Run(MockCheckClientDownload());
   }
   MOCK_METHOD0(MockCheckClientDownload,
-               safe_browsing::DownloadProtectionService::DownloadCheckResult());
+               safe_browsing::DownloadCheckEnums::DownloadCheckResult());
 };
 
 class ChromeDownloadManagerDelegateTestWithSafeBrowsing
@@ -673,7 +674,7 @@ const SafeBrowsingTestParameters kSafeBrowsingTestCases[] = {
     // SAFE verdict for a safe file.
     {content::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS,
      DownloadFileType::NOT_DANGEROUS,
-     safe_browsing::DownloadProtectionService::SAFE,
+     safe_browsing::DownloadCheckEnums::SAFE,
      DownloadPrefs::DownloadRestriction::NONE,
 
      content::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS,
@@ -682,7 +683,7 @@ const SafeBrowsingTestParameters kSafeBrowsingTestCases[] = {
     // UNKNOWN verdict for a safe file.
     {content::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS,
      DownloadFileType::NOT_DANGEROUS,
-     safe_browsing::DownloadProtectionService::UNKNOWN,
+     safe_browsing::DownloadCheckEnums::UNKNOWN,
      DownloadPrefs::DownloadRestriction::NONE,
 
      content::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS,
@@ -691,7 +692,7 @@ const SafeBrowsingTestParameters kSafeBrowsingTestCases[] = {
     // DANGEROUS verdict for a safe file.
     {content::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS,
      DownloadFileType::NOT_DANGEROUS,
-     safe_browsing::DownloadProtectionService::DANGEROUS,
+     safe_browsing::DownloadCheckEnums::DANGEROUS,
      DownloadPrefs::DownloadRestriction::NONE,
 
      content::DOWNLOAD_DANGER_TYPE_DANGEROUS_CONTENT,
@@ -700,7 +701,7 @@ const SafeBrowsingTestParameters kSafeBrowsingTestCases[] = {
     // UNCOMMON verdict for a safe file.
     {content::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS,
      DownloadFileType::NOT_DANGEROUS,
-     safe_browsing::DownloadProtectionService::UNCOMMON,
+     safe_browsing::DownloadCheckEnums::UNCOMMON,
      DownloadPrefs::DownloadRestriction::NONE,
 
      content::DOWNLOAD_DANGER_TYPE_UNCOMMON_CONTENT,
@@ -709,7 +710,7 @@ const SafeBrowsingTestParameters kSafeBrowsingTestCases[] = {
     // POTENTIALLY_UNWANTED verdict for a safe file.
     {content::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS,
      DownloadFileType::NOT_DANGEROUS,
-     safe_browsing::DownloadProtectionService::POTENTIALLY_UNWANTED,
+     safe_browsing::DownloadCheckEnums::POTENTIALLY_UNWANTED,
      DownloadPrefs::DownloadRestriction::NONE,
 
      content::DOWNLOAD_DANGER_TYPE_POTENTIALLY_UNWANTED,
@@ -718,7 +719,7 @@ const SafeBrowsingTestParameters kSafeBrowsingTestCases[] = {
     // SAFE verdict for a potentially dangerous file.
     {content::DOWNLOAD_DANGER_TYPE_MAYBE_DANGEROUS_CONTENT,
      DownloadFileType::ALLOW_ON_USER_GESTURE,
-     safe_browsing::DownloadProtectionService::SAFE,
+     safe_browsing::DownloadCheckEnums::SAFE,
      DownloadPrefs::DownloadRestriction::NONE,
 
      content::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS,
@@ -727,7 +728,7 @@ const SafeBrowsingTestParameters kSafeBrowsingTestCases[] = {
     // UNKNOWN verdict for a potentially dangerous file.
     {content::DOWNLOAD_DANGER_TYPE_MAYBE_DANGEROUS_CONTENT,
      DownloadFileType::ALLOW_ON_USER_GESTURE,
-     safe_browsing::DownloadProtectionService::UNKNOWN,
+     safe_browsing::DownloadCheckEnums::UNKNOWN,
      DownloadPrefs::DownloadRestriction::NONE,
 
      content::DOWNLOAD_DANGER_TYPE_DANGEROUS_FILE,
@@ -736,7 +737,7 @@ const SafeBrowsingTestParameters kSafeBrowsingTestCases[] = {
     // UNKNOWN verdict for a potentially dangerous file blocked by policy.
     {content::DOWNLOAD_DANGER_TYPE_MAYBE_DANGEROUS_CONTENT,
      DownloadFileType::ALLOW_ON_USER_GESTURE,
-     safe_browsing::DownloadProtectionService::UNKNOWN,
+     safe_browsing::DownloadCheckEnums::UNKNOWN,
      DownloadPrefs::DownloadRestriction::DANGEROUS_FILES,
 
      content::DOWNLOAD_DANGER_TYPE_DANGEROUS_FILE,
@@ -745,7 +746,7 @@ const SafeBrowsingTestParameters kSafeBrowsingTestCases[] = {
     // DANGEROUS verdict for a potentially dangerous file.
     {content::DOWNLOAD_DANGER_TYPE_MAYBE_DANGEROUS_CONTENT,
      DownloadFileType::ALLOW_ON_USER_GESTURE,
-     safe_browsing::DownloadProtectionService::DANGEROUS,
+     safe_browsing::DownloadCheckEnums::DANGEROUS,
      DownloadPrefs::DownloadRestriction::NONE,
 
      content::DOWNLOAD_DANGER_TYPE_DANGEROUS_CONTENT,
@@ -754,7 +755,7 @@ const SafeBrowsingTestParameters kSafeBrowsingTestCases[] = {
     // UNCOMMON verdict for a potentially dangerous file.
     {content::DOWNLOAD_DANGER_TYPE_MAYBE_DANGEROUS_CONTENT,
      DownloadFileType::ALLOW_ON_USER_GESTURE,
-     safe_browsing::DownloadProtectionService::UNCOMMON,
+     safe_browsing::DownloadCheckEnums::UNCOMMON,
      DownloadPrefs::DownloadRestriction::NONE,
 
      content::DOWNLOAD_DANGER_TYPE_UNCOMMON_CONTENT,
@@ -763,7 +764,7 @@ const SafeBrowsingTestParameters kSafeBrowsingTestCases[] = {
     // POTENTIALLY_UNWANTED verdict for a potentially dangerous file.
     {content::DOWNLOAD_DANGER_TYPE_MAYBE_DANGEROUS_CONTENT,
      DownloadFileType::ALLOW_ON_USER_GESTURE,
-     safe_browsing::DownloadProtectionService::POTENTIALLY_UNWANTED,
+     safe_browsing::DownloadCheckEnums::POTENTIALLY_UNWANTED,
      DownloadPrefs::DownloadRestriction::NONE,
 
      content::DOWNLOAD_DANGER_TYPE_POTENTIALLY_UNWANTED,
@@ -773,7 +774,7 @@ const SafeBrowsingTestParameters kSafeBrowsingTestCases[] = {
     // policy.
     {content::DOWNLOAD_DANGER_TYPE_MAYBE_DANGEROUS_CONTENT,
      DownloadFileType::ALLOW_ON_USER_GESTURE,
-     safe_browsing::DownloadProtectionService::POTENTIALLY_UNWANTED,
+     safe_browsing::DownloadCheckEnums::POTENTIALLY_UNWANTED,
      DownloadPrefs::DownloadRestriction::POTENTIALLY_DANGEROUS_FILES,
 
      content::DOWNLOAD_DANGER_TYPE_POTENTIALLY_UNWANTED,
@@ -783,7 +784,7 @@ const SafeBrowsingTestParameters kSafeBrowsingTestCases[] = {
     // blocked by policy.
     {content::DOWNLOAD_DANGER_TYPE_MAYBE_DANGEROUS_CONTENT,
      DownloadFileType::ALLOW_ON_USER_GESTURE,
-     safe_browsing::DownloadProtectionService::POTENTIALLY_UNWANTED,
+     safe_browsing::DownloadCheckEnums::POTENTIALLY_UNWANTED,
      DownloadPrefs::DownloadRestriction::DANGEROUS_FILES,
 
      content::DOWNLOAD_DANGER_TYPE_POTENTIALLY_UNWANTED,
@@ -792,7 +793,7 @@ const SafeBrowsingTestParameters kSafeBrowsingTestCases[] = {
     // SAFE verdict for a dangerous file.
     {content::DOWNLOAD_DANGER_TYPE_MAYBE_DANGEROUS_CONTENT,
      DownloadFileType::DANGEROUS,
-     safe_browsing::DownloadProtectionService::SAFE,
+     safe_browsing::DownloadCheckEnums::SAFE,
      DownloadPrefs::DownloadRestriction::NONE,
 
      content::DOWNLOAD_DANGER_TYPE_DANGEROUS_FILE,
@@ -801,7 +802,7 @@ const SafeBrowsingTestParameters kSafeBrowsingTestCases[] = {
     // UNKNOWN verdict for a dangerous file.
     {content::DOWNLOAD_DANGER_TYPE_MAYBE_DANGEROUS_CONTENT,
      DownloadFileType::DANGEROUS,
-     safe_browsing::DownloadProtectionService::UNKNOWN,
+     safe_browsing::DownloadCheckEnums::UNKNOWN,
      DownloadPrefs::DownloadRestriction::NONE,
 
      content::DOWNLOAD_DANGER_TYPE_DANGEROUS_FILE,
@@ -810,7 +811,7 @@ const SafeBrowsingTestParameters kSafeBrowsingTestCases[] = {
     // DANGEROUS verdict for a dangerous file.
     {content::DOWNLOAD_DANGER_TYPE_MAYBE_DANGEROUS_CONTENT,
      DownloadFileType::DANGEROUS,
-     safe_browsing::DownloadProtectionService::DANGEROUS,
+     safe_browsing::DownloadCheckEnums::DANGEROUS,
      DownloadPrefs::DownloadRestriction::NONE,
 
      content::DOWNLOAD_DANGER_TYPE_DANGEROUS_CONTENT,
@@ -819,7 +820,7 @@ const SafeBrowsingTestParameters kSafeBrowsingTestCases[] = {
     // UNCOMMON verdict for a dangerous file.
     {content::DOWNLOAD_DANGER_TYPE_MAYBE_DANGEROUS_CONTENT,
      DownloadFileType::DANGEROUS,
-     safe_browsing::DownloadProtectionService::UNCOMMON,
+     safe_browsing::DownloadCheckEnums::UNCOMMON,
      DownloadPrefs::DownloadRestriction::NONE,
 
      content::DOWNLOAD_DANGER_TYPE_UNCOMMON_CONTENT,
@@ -828,7 +829,7 @@ const SafeBrowsingTestParameters kSafeBrowsingTestCases[] = {
     // POTENTIALLY_UNWANTED verdict for a dangerous file.
     {content::DOWNLOAD_DANGER_TYPE_MAYBE_DANGEROUS_CONTENT,
      DownloadFileType::DANGEROUS,
-     safe_browsing::DownloadProtectionService::POTENTIALLY_UNWANTED,
+     safe_browsing::DownloadCheckEnums::POTENTIALLY_UNWANTED,
      DownloadPrefs::DownloadRestriction::NONE,
 
      content::DOWNLOAD_DANGER_TYPE_POTENTIALLY_UNWANTED,
@@ -896,7 +897,7 @@ TEST_F(ChromeDownloadManagerDelegateTestWithSafeBrowsing,
 
   EXPECT_CALL(*delegate(), GetDownloadProtectionService());
   EXPECT_CALL(*download_protection_service(), MockCheckClientDownload())
-      .WillOnce(Return(safe_browsing::DownloadProtectionService::SAFE));
+      .WillOnce(Return(safe_browsing::DownloadCheckEnums::SAFE));
   EXPECT_CALL(*download_item, GetDangerType())
       .WillRepeatedly(Return(content::DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS));
 
