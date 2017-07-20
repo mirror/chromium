@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6813c54_b961fd75",
+        "filename": "device/usb/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-20T21:02:37Z",
+      "side": 1,
+      "message": "[libFuzzer]: /testing/libfuzzer/README.md",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 41
+      },
+      "revId": "a9bc23ca3407343a4e2bd5b318504bd865a7009b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8cec69b_668fe9d9",
+        "filename": "device/usb/mojo/device_manager_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-20T21:02:37Z",
+      "side": 1,
+      "message": "Just \"Mojo\"",
+      "range": {
+        "startLine": 29,
+        "startChar": 29,
+        "endLine": 29,
+        "endChar": 30
+      },
+      "revId": "a9bc23ca3407343a4e2bd5b318504bd865a7009b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
