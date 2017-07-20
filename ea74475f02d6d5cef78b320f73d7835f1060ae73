@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd6fd386_035851c9",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_page.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-07-20T15:40:13Z",
+      "side": 1,
+      "message": "please add comments for all fields",
+      "range": {
+        "startLine": 1,
+        "startChar": 2,
+        "endLine": 1,
+        "endChar": 3
+      },
+      "revId": "ea74475f02d6d5cef78b320f73d7835f1060ae73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90f3270d_3aa9905c",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_page.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-07-20T15:40:13Z",
+      "side": 1,
+      "message": "if it\u0027s a status shoudl it be an enum? Or of there\u0027s one in code, please refer to it in a comment here.",
+      "range": {
+        "startLine": 16,
+        "startChar": 19,
+        "endLine": 16,
+        "endChar": 45
+      },
+      "revId": "ea74475f02d6d5cef78b320f73d7835f1060ae73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "325f0116_04ea274f",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_page.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-07-20T15:40:13Z",
+      "side": 1,
+      "message": "move this comment to the StoreInfo message below",
+      "range": {
+        "startLine": 25,
+        "startChar": 26,
+        "endLine": 25,
+        "endChar": 35
+      },
+      "revId": "ea74475f02d6d5cef78b320f73d7835f1060ae73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b14f9909_99b91950",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_page.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-07-20T15:40:13Z",
+      "side": 1,
+      "message": "nit: maybe consider \"is_updated\" if it\u0027s a bool? Status in the name suggests there might be more  than two statuses.",
+      "range": {
+        "startLine": 35,
+        "startChar": 20,
+        "endLine": 35,
+        "endChar": 33
+      },
+      "revId": "ea74475f02d6d5cef78b320f73d7835f1060ae73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f7bdd1f_72f3a0a6",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_page.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-07-20T15:40:13Z",
+      "side": 1,
+      "message": "just \"store_info\" (drop the trailing s).",
+      "range": {
+        "startLine": 38,
+        "startChar": 23,
+        "endLine": 38,
+        "endChar": 34
+      },
+      "revId": "ea74475f02d6d5cef78b320f73d7835f1060ae73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
