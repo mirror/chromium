@@ -154,16 +154,6 @@ void ChromeOmniboxNavigationObserver::Observe(
         content::BrowserContext::GetDefaultStoragePartition(
             controller->GetBrowserContext())->GetURLRequestContext());
   }
-  WebContentsObserver::Observe(web_contents);
-  // DidStartNavigationToPendingEntry() will be called for this load as well.
-}
-
-void ChromeOmniboxNavigationObserver::DidStartNavigation(
-      content::NavigationHandle* navigation_handle) {
-  if (!navigation_handle->IsInMainFrame() ||
-      navigation_handle->IsSameDocument()) {
-    return;
-  }
 
   if (load_state_ == LOAD_NOT_SEEN) {
     load_state_ = LOAD_PENDING;
@@ -172,6 +162,8 @@ void ChromeOmniboxNavigationObserver::DidStartNavigation(
   } else {
     delete this;
   }
+
+  WebContentsObserver::Observe(web_contents);
 }
 
 void ChromeOmniboxNavigationObserver::DidFinishNavigation(
