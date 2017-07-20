@@ -16,6 +16,24 @@
       "revId": "c65b2f5b146bc4b263b9753549e6cb9bef4ce5c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af5ebf2f_8e581d5a",
+        "filename": "chrome/browser/chromeos/printing/usb_printer_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-07-20T20:53:00Z",
+      "side": 1,
+      "message": "I\u0027ll write a CL to do the i18n now.",
+      "parentUuid": "e6f2bb03_c63531a7",
+      "revId": "c65b2f5b146bc4b263b9753549e6cb9bef4ce5c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
