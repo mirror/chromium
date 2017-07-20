@@ -26,7 +26,10 @@ WebrtcDummyVideoEncoder::WebrtcDummyVideoEncoder(
       state_(kUninitialized),
       codec_type_(type),
       video_channel_state_observer_(video_channel_state_observer) {
-  DCHECK(type == webrtc::kVideoCodecVP8 || type == webrtc::kVideoCodecVP9);
+  // TODO(gusss): should the type==...H264 check be contingent on the
+  // enable-hardware-h264 flag being set?
+  DCHECK(type == webrtc::kVideoCodecVP8 || type == webrtc::kVideoCodecVP9 ||
+         type == webrtc::kVideoCodecH264);
 }
 
 WebrtcDummyVideoEncoder::~WebrtcDummyVideoEncoder() {}
@@ -171,6 +174,8 @@ WebrtcDummyVideoEncoderFactory::WebrtcDummyVideoEncoderFactory()
     : main_task_runner_(base::ThreadTaskRunnerHandle::Get()) {
   // TODO(isheriff): These do not really affect anything internally
   // in webrtc.
+  // TODO(gusss): the enable-hardware-h264 flag should affect this.
+  codecs_.push_back(cricket::VideoCodec("H264"));
   codecs_.push_back(cricket::VideoCodec("VP8"));
   codecs_.push_back(cricket::VideoCodec("VP9"));
 }
