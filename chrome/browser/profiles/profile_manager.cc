@@ -1525,7 +1525,7 @@ ProfileManager::ProfileInfo* ProfileManager::RegisterProfile(
   TRACE_EVENT0("browser", "ProfileManager::RegisterProfile");
   ProfileInfo* info = new ProfileInfo(profile, created);
   profiles_info_.insert(
-      std::make_pair(profile->GetPath(), linked_ptr<ProfileInfo>(info)));
+      std::make_pair(profile->GetPath(), std::unique_ptr<ProfileInfo>(info)));
   return info;
 }
 
