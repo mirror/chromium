@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "c92f3a14_2ac98877",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderDiskStorage.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-20T18:44:55Z",
+      "side": 1,
+      "message": "The SERIAL_EXECUTOR is used by default. If you don\u0027t need the tasks to be sequential, you can use the THREAD_POOL_EXECUTOR.",
+      "parentUuid": "5c284fcf_eb2322cc",
+      "revId": "289892fa49a638f4f919ab0e782f5ec04bbc03a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8acad9f_226713e8",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderDiskStorage.java",
         "patchSetId": 3
