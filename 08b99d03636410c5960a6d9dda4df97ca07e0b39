@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8dfd58e7_285e6167",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-20T22:17:49Z",
+      "side": 1,
+      "message": "I want to make sure that native knows about the tab list before we swap the contents.",
+      "revId": "08b99d03636410c5960a6d9dda4df97ca07e0b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
