@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b11a81e7_b6d01a10",
+        "filename": "base/values.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-20T06:10:14Z",
+      "side": 1,
+      "message": "I realized tonight after posting this that DictionaryValue::Set(StringPiece path, Value\u0026\u0026 in_value); may be problematic as it allows to call\ndict-\u003eSet(\"foobar\", some_other_dict-\u003eGet(\"foobar\"));\n\nThe workaround I came up with was non-trivial:\nHaving a \"class UnadoptableValue\" and \"class Value : public UnadopableValue\" which is just a wrapper around \"UnadoptableValue\". In this case DictionaryValue::Get() would return an UnadopatableValue and DictionaryValue::Set() would take a Value\u0026\u0026.\n\nWell this is a first idea. Maybe there is something more elegant that we could do... The point is that my initial proposal with DictionaryValue::Set(StringPiece path, Value\u0026\u0026 in_value); is problematic.",
+      "parentUuid": "9c1a8f8c_d9117ec8",
+      "revId": "39d838aa591d37a5c9bb4af72a3593c6abfdb6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc5dc17f_7aeba935",
         "filename": "base/values.h",
         "patchSetId": 6
