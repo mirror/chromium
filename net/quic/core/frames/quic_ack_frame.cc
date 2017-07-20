@@ -240,18 +240,25 @@ void PacketNumberQueue::RemoveSmallestInterval() {
 
 bool PacketNumberQueue::Contains(QuicPacketNumber packet_number) const {
   if (use_deque_) {
-    // TODO(lilika): Consider using std::binary_search based on profiles
-    // http://www.cplusplus.com/reference/algorithm/binary_search/
     if (packet_number_deque_.empty()) {
       return false;
     }
-    for (Interval<QuicPacketNumber> interval : packet_number_deque_) {
-      if (packet_number < interval.min()) {
-        return false;
+    int low = 0;
+    int high = packet_number_deque_.size() - 1;
+
+    while (low <= high) {
+      int mid = (low + high) / 2;
+      if (packet_number_deque_[mid].min() > packet_number) {
+        high = mid - 1;
+        continue;
       }
-      if (interval.min() <= packet_number && interval.max() > packet_number) {
-        return true;
+      if (packet_number_deque_[mid].max() <= packet_number) {
+        low = mid + 1;
+        continue;
       }
+      DCHECK(packet_number_deque_[mid].max() > packet_number);
+      DCHECK(packet_number_deque_[mid].min() <= packet_number);
+      return true;
     }
     return false;
   } else {
