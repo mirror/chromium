@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e1e5698e_d320ad93",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_page.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-07-20T20:52:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd6fd386_035851c9",
+      "range": {
+        "startLine": 1,
+        "startChar": 2,
+        "endLine": 1,
+        "endChar": 3
+      },
+      "revId": "ea74475f02d6d5cef78b320f73d7835f1060ae73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90f3270d_3aa9905c",
         "filename": "components/safe_browsing/web_ui/safe_browsing_page.proto",
         "patchSetId": 1
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "cd6e868f_5ede0c59",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_page.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-07-20T20:52:12Z",
+      "side": 1,
+      "message": "@Varun \u0026 @Luke\nI\u0027m saving the code, so following Varuns suggestion I renamed it to network_status_code.",
+      "parentUuid": "4062bb75_a19ef81f",
+      "range": {
+        "startLine": 16,
+        "startChar": 19,
+        "endLine": 16,
+        "endChar": 45
+      },
+      "revId": "ea74475f02d6d5cef78b320f73d7835f1060ae73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbfd9ee1_3c333d5b",
         "filename": "components/safe_browsing/web_ui/safe_browsing_page.proto",
         "patchSetId": 1
@@ -83,6 +131,30 @@
       "writtenOn": "2017-07-20T17:15:18Z",
       "side": 1,
       "message": "I don\u0027t see this message being used.",
+      "range": {
+        "startLine": 24,
+        "startChar": 10,
+        "endLine": 24,
+        "endChar": 23
+      },
+      "revId": "ea74475f02d6d5cef78b320f73d7835f1060ae73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab8726ca_5f238d90",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_page.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-07-20T20:52:12Z",
+      "side": 1,
+      "message": "Added the database_info message to be used by the V4Database.",
+      "parentUuid": "fbfd9ee1_3c333d5b",
       "range": {
         "startLine": 24,
         "startChar": 10,
@@ -118,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "2621c050_4b231290",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_page.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-07-20T20:52:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "325f0116_04ea274f",
+      "range": {
+        "startLine": 25,
+        "startChar": 26,
+        "endLine": 25,
+        "endChar": 35
+      },
+      "revId": "ea74475f02d6d5cef78b320f73d7835f1060ae73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "297b7dac_1225f277",
         "filename": "components/safe_browsing/web_ui/safe_browsing_page.proto",
         "patchSetId": 1
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "1bf16ec6_b0262b3c",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_page.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-07-20T20:52:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "297b7dac_1225f277",
+      "range": {
+        "startLine": 26,
+        "startChar": 18,
+        "endLine": 26,
+        "endChar": 43
+      },
+      "revId": "ea74475f02d6d5cef78b320f73d7835f1060ae73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b14f9909_99b91950",
         "filename": "components/safe_browsing/web_ui/safe_browsing_page.proto",
         "patchSetId": 1
@@ -152,6 +272,30 @@
       "writtenOn": "2017-07-20T15:40:13Z",
       "side": 1,
       "message": "nit: maybe consider \"is_updated\" if it\u0027s a bool? Status in the name suggests there might be more  than two statuses.",
+      "range": {
+        "startLine": 35,
+        "startChar": 20,
+        "endLine": 35,
+        "endChar": 33
+      },
+      "revId": "ea74475f02d6d5cef78b320f73d7835f1060ae73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3be2030_63a12865",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_page.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-07-20T20:52:12Z",
+      "side": 1,
+      "message": "Made it an int32 whose value corresponds to the enum ApplyUpdateResult in V4Store in order to help with debugging.",
+      "parentUuid": "b14f9909_99b91950",
       "range": {
         "startLine": 35,
         "startChar": 20,
@@ -184,6 +328,30 @@
       "revId": "ea74475f02d6d5cef78b320f73d7835f1060ae73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f61fe70_abeebdb0",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_page.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-07-20T20:52:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f7bdd1f_72f3a0a6",
+      "range": {
+        "startLine": 38,
+        "startChar": 23,
+        "endLine": 38,
+        "endChar": 34
+      },
+      "revId": "ea74475f02d6d5cef78b320f73d7835f1060ae73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
