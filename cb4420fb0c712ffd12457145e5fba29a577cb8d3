@@ -87,6 +87,24 @@
     },
     {
       "key": {
+        "uuid": "95b3422e_14087c69",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-20T18:35:08Z",
+      "side": 1,
+      "message": "This was my fault, I was being succinct in a previous suggestion and Ryan used my name :) FWIW it doesn\u0027t bother me but... *shrug*",
+      "parentUuid": "c8f4ef67_884e8455",
+      "revId": "cb4420fb0c712ffd12457145e5fba29a577cb8d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc363f4d_27dbd037",
         "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.js",
         "patchSetId": 6
