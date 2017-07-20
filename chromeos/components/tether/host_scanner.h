@@ -53,10 +53,6 @@ class HostScanner : public HostScannerOperation::Observer {
   // Returns true if a scan is currently in progress.
   virtual bool IsScanActive();
 
-  // Returns true if a scan has occurred recently within a timespan, determined
-  // by HostScanCache::kNumMinutesBeforeCacheEntryExpires.
-  virtual bool HasRecentlyScanned();
-
   // Starts a host scan if there is no current scan. If a scan is active, this
   // function is a no-op.
   virtual void StartScan();
@@ -101,7 +97,6 @@ class HostScanner : public HostScannerOperation::Observer {
 
   bool is_fetching_hosts_;
   std::unique_ptr<HostScannerOperation> host_scanner_operation_;
-  base::Time previous_scan_time_;
 
   base::ObserverList<Observer> observer_list_;
   base::WeakPtrFactory<HostScanner> weak_ptr_factory_;
