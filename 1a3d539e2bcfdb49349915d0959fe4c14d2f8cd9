@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abfff3ac_eb68f34b",
+        "filename": "chrome/browser/media/router/presentation_service_delegate_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-20T20:00:15Z",
+      "side": 0,
+      "message": "I got rid of this check since (1) only the main frame can call this, and the main frame of a tab does not change over time, (2) the default request will get wiped if origin changes (due to reset-on-navigation), (3) url check is already being done in PresentationServiceImpl.",
+      "range": {
+        "startLine": 711,
+        "startChar": 62,
+        "endLine": 711,
+        "endChar": 0
+      },
+      "revId": "1a3d539e2bcfdb49349915d0959fe4c14d2f8cd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
