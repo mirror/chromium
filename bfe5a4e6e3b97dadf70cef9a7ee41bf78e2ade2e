@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dc58d5a6_a171603e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/SignInPreference.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-07-20T12:59:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdf37148_044d68f9",
+      "range": {
+        "startLine": 140,
+        "startChar": 33,
+        "endLine": 140,
+        "endChar": 60
+      },
+      "revId": "bfe5a4e6e3b97dadf70cef9a7ee41bf78e2ade2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cd65edf_40471180",
         "filename": "chrome/browser/flag_descriptions.cc",
         "patchSetId": 11
@@ -45,6 +69,30 @@
       "revId": "bfe5a4e6e3b97dadf70cef9a7ee41bf78e2ade2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fcbd089_516373a5",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1380,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-07-20T12:59:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cd65edf_40471180",
+      "range": {
+        "startLine": 1380,
+        "startChar": 34,
+        "endLine": 1380,
+        "endChar": 71
+      },
+      "revId": "bfe5a4e6e3b97dadf70cef9a7ee41bf78e2ade2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
