@@ -121,6 +121,9 @@ CreateScopedDisableInternalMouseAndKeyboard() {
 
 }  // namespace
 
+const base::Feature kHideTitleBars{"HideTitleBarsInTabletMode",
+                                   base::FEATURE_DISABLED_BY_DEFAULT};
+
 TabletModeController::TabletModeController()
     : have_seen_accelerometer_data_(false),
       can_detect_lid_angle_(false),
@@ -128,6 +131,7 @@ TabletModeController::TabletModeController()
       tick_clock_(new base::DefaultTickClock()),
       tablet_mode_switch_is_on_(false),
       lid_is_closed_(false),
+      show_title_bars_(!base::FeatureList::IsEnabled(kHideTitleBars)),
       scoped_session_observer_(this),
       weak_factory_(this) {
   Shell::Get()->AddShellObserver(this);
@@ -175,7 +179,9 @@ void TabletModeController::EnableTabletModeWindowManager(bool should_enable) {
     return;
 
   if (should_enable) {
+    initializing_maximize_window_manager_ = true;
     tablet_mode_window_manager_.reset(new TabletModeWindowManager());
+    initializing_maximize_window_manager_ = false;
     // TODO(jonross): Move the tablet mode notifications from ShellObserver
     // to TabletModeController::Observer
     Shell::Get()->metrics()->RecordUserMetricsAction(UMA_MAXIMIZE_MODE_ENABLED);
