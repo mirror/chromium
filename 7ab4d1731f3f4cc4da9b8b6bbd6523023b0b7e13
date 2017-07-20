@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "024b04df_ed741e08",
+        "filename": "gpu/command_buffer/service/memory_program_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-07-20T03:49:14Z",
+      "side": 1,
+      "message": "Sorry, this was left in as test code. Removed this change.",
+      "parentUuid": "8b11a81a_1ba7dc6e",
+      "range": {
+        "startLine": 221,
+        "startChar": 9,
+        "endLine": 221,
+        "endChar": 13
+      },
+      "revId": "7ab4d1731f3f4cc4da9b8b6bbd6523023b0b7e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c56dd23a_a4e98c81",
         "filename": "gpu/command_buffer/service/memory_program_cache.cc",
         "patchSetId": 4
@@ -41,6 +65,53 @@
         "startChar": 40,
         "endLine": 229,
         "endChar": 41
+      },
+      "revId": "7ab4d1731f3f4cc4da9b8b6bbd6523023b0b7e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b4ec5ba_3d6c6a0a",
+        "filename": "gpu/command_buffer/service/memory_program_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-07-20T03:49:14Z",
+      "side": 1,
+      "message": "Added a comment.",
+      "parentUuid": "c56dd23a_a4e98c81",
+      "range": {
+        "startLine": 229,
+        "startChar": 40,
+        "endLine": 229,
+        "endChar": 41
+      },
+      "revId": "7ab4d1731f3f4cc4da9b8b6bbd6523023b0b7e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "481a7d87_43baad8c",
+        "filename": "gpu/command_buffer/service/memory_program_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-07-20T03:49:14Z",
+      "side": 1,
+      "message": "The runaway allocations I\u0027m trying to guard against are also only ever due to disk/memory corruption or a malicious IPC from the browser proc. I guess if the browser proc is compromised, we\u0027re already in trouble, so we probably don\u0027t need this.",
+      "range": {
+        "startLine": 245,
+        "startChar": 40,
+        "endLine": 245,
+        "endChar": 52
       },
       "revId": "7ab4d1731f3f4cc4da9b8b6bbd6523023b0b7e13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -71,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "a1b3ab66_ff0fc908",
+        "filename": "gpu/command_buffer/service/memory_program_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-07-20T03:49:14Z",
+      "side": 1,
+      "message": "Good point.",
+      "parentUuid": "1a9b21c5_7a70a785",
+      "range": {
+        "startLine": 257,
+        "startChar": 11,
+        "endLine": 257,
+        "endChar": 14
+      },
+      "revId": "7ab4d1731f3f4cc4da9b8b6bbd6523023b0b7e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad375d05_1a5c141c",
         "filename": "gpu/command_buffer/service/memory_program_cache.cc",
         "patchSetId": 4
@@ -82,6 +177,30 @@
       "writtenOn": "2017-07-19T20:31:00Z",
       "side": 1,
       "message": "Should we DCHECK here?",
+      "range": {
+        "startLine": 340,
+        "startChar": 11,
+        "endLine": 340,
+        "endChar": 31
+      },
+      "revId": "7ab4d1731f3f4cc4da9b8b6bbd6523023b0b7e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0646a0b_510379b4",
+        "filename": "gpu/command_buffer/service/memory_program_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-07-20T03:49:14Z",
+      "side": 1,
+      "message": "Ended up DCHECKING in the function itself, so removed this.",
+      "parentUuid": "ad375d05_1a5c141c",
       "range": {
         "startLine": 340,
         "startChar": 11,
