@@ -213,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "cc01a7ff_deeb8030",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_event_router.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-20T12:50:37Z",
+      "side": 1,
+      "message": "I would argue that this subtle distinction between Set and SetKey should be considered a bug in the API design.\n\nThe old Set/SetWithoutPathExpansion was much more explicit.",
+      "parentUuid": "5da76a24_1986870f",
+      "range": {
+        "startLine": 58,
+        "startChar": 27,
+        "endLine": 58,
+        "endChar": 28
+      },
+      "revId": "3ce4852da0ee9d867e9043586b1007c5e6e8b51f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75ccf0c8_abb61d1b",
         "filename": "chrome/browser/supervised_user/supervised_user_pref_store_unittest.cc",
         "patchSetId": 8
