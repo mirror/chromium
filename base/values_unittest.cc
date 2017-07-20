@@ -1875,5 +1875,4 @@ TEST(ValuesTest, SelfSwap) {
   std::swap(test, test);
   EXPECT_TRUE(test.GetInt() == 1);
 }
-
 }  // namespace base
