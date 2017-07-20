@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "53ecc5c9_c9fbc64e",
+        "filename": "components/arc/arc_service_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-20T09:57:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12bd019c_d39e1be4",
+      "revId": "97e34159f0a47217f1130566ee5f1e36afe20ad4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8609a54e_4445415c",
         "filename": "components/arc/arc_service_manager.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "97e34159f0a47217f1130566ee5f1e36afe20ad4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23ec8114_2e3caeab",
+        "filename": "components/arc/arc_service_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-20T09:57:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8609a54e_4445415c",
+      "revId": "97e34159f0a47217f1130566ee5f1e36afe20ad4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
