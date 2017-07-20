@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2b60776_faf3f0b3",
+        "filename": "content/browser/DEPS",
+        "patchSetId": 7
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-07-20T16:29:24Z",
+      "side": 1,
+      "message": "nit: common is different from the other includes because it doesn\u0027t use webkit types. so perhaps put that in a separate common section, and have the common there say that it\u0027s ok for content/browser to depend on webkit/common, which is shared code between browser \u0026 webkit which doesn\u0027t use WTF",
+      "revId": "85a16e05a4868f051626a76efb5259803d200652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "556b3bca_f6da233b",
+        "filename": "third_party/WebKit/common/README.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-07-20T16:29:24Z",
+      "side": 1,
+      "message": "nit: maybe also add that since this is used by the browser, WTF can\u0027t be used",
+      "revId": "85a16e05a4868f051626a76efb5259803d200652",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
