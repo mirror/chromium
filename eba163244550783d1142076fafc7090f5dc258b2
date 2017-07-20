@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f261c5ae_8ca69cc1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-07-20T02:02:52Z",
+      "side": 1,
+      "message": "Please add a TEST\u003d line with a description how this was tested.",
+      "revId": "eba163244550783d1142076fafc7090f5dc258b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1cbe6b5_e5970c17",
+        "filename": "media/gpu/args.gni",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-07-20T02:02:52Z",
+      "side": 1,
+      "message": "s/libva/VA-API-based hardware acceleration is to be used/\nI would also consider not mentioning cros explicitly, as this decision is made by build environment.",
+      "revId": "eba163244550783d1142076fafc7090f5dc258b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
