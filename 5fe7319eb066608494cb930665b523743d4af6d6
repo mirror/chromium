@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1ac1c897_ccce10dc",
+        "filename": "third_party/WebKit/LayoutTests/paint/input/textarea-crash.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-20T00:11:02Z",
+      "side": 1,
+      "message": "The testcase does not crash if this is specified.",
+      "parentUuid": "de81db50_849e393f",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 24
+      },
+      "revId": "5fe7319eb066608494cb930665b523743d4af6d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "059bcaa7_7a272fa1",
         "filename": "third_party/WebKit/LayoutTests/paint/input/textarea-crash.html",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "5fe7319eb066608494cb930665b523743d4af6d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95b1e4a7_adbeda2c",
+        "filename": "third_party/WebKit/LayoutTests/paint/input/textarea-crash.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-20T00:11:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "059bcaa7_7a272fa1",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 11
+      },
+      "revId": "5fe7319eb066608494cb930665b523743d4af6d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
