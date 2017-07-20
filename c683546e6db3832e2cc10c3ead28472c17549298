@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61d97a16_c29c9143",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-07-20T22:09:03Z",
+      "side": 1,
+      "message": "This is so much nicer, thank you!",
+      "revId": "c683546e6db3832e2cc10c3ead28472c17549298",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
