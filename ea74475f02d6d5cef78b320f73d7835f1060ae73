@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "4062bb75_a19ef81f",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_page.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-20T17:14:26Z",
+      "side": 1,
+      "message": "This is the network status code so let\u0027s call it that.\n[My bad, I suggested calling it status.]",
+      "parentUuid": "90f3270d_3aa9905c",
+      "range": {
+        "startLine": 16,
+        "startChar": 19,
+        "endLine": 16,
+        "endChar": 45
+      },
+      "revId": "ea74475f02d6d5cef78b320f73d7835f1060ae73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "325f0116_04ea274f",
         "filename": "components/safe_browsing/web_ui/safe_browsing_page.proto",
         "patchSetId": 1
@@ -64,6 +88,29 @@
         "startChar": 26,
         "endLine": 25,
         "endChar": 35
+      },
+      "revId": "ea74475f02d6d5cef78b320f73d7835f1060ae73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "297b7dac_1225f277",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_page.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-20T17:14:26Z",
+      "side": 1,
+      "message": "does this bool mean that the DB update attempt (irrespective of whether it was successful or failed) completed, or whether a successful update completed?\n\nIf it\u0027s the latter, let\u0027s make that explicit with the name. Such as: update_successful",
+      "range": {
+        "startLine": 26,
+        "startChar": 18,
+        "endLine": 26,
+        "endChar": 43
       },
       "revId": "ea74475f02d6d5cef78b320f73d7835f1060ae73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
