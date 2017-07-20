@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ceb1c72_1c2167f5",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/os_metrics.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-20T10:03:16Z",
+      "side": 1,
+      "message": "Never been a huge fan of overloads. They are make the code a bit too hard to read and in some crash reports they are indistinguishable (we have a bug open where crash reporting on Android spits out only the function name)\n\nCan you call this FillProcessMemoryMapsForSomething, or rename the old one to FillProcessMemoryMapsDeprecated or something?",
+      "range": {
+        "startLine": 20,
+        "startChar": 14,
+        "endLine": 20,
+        "endChar": 35
+      },
+      "revId": "a0529a988e2e4d178dc5aaf8f1b6f63bdc7789ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc878543_aaadb448",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/os_metrics_linux.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-20T10:03:16Z",
+      "side": 1,
+      "message": "maybe just put a\nusing mojom::VmRegion in the top of this file to avoid keep repeating mojom:: everywhere here?",
+      "range": {
+        "startLine": 56,
+        "startChar": 47,
+        "endLine": 56,
+        "endChar": 62
+      },
+      "revId": "a0529a988e2e4d178dc5aaf8f1b6f63bdc7789ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c864a73f_667a2d14",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/os_metrics_mac.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-20T10:03:16Z",
+      "side": 1,
+      "message": "I think this could be just maps-\u003epush_back(mojom::VmRegion::New(region));",
+      "range": {
+        "startLine": 291,
+        "startChar": 4,
+        "endLine": 293,
+        "endChar": 36
+      },
+      "revId": "a0529a988e2e4d178dc5aaf8f1b6f63bdc7789ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5268820_e200bfec",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/os_metrics_mac.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-20T10:03:16Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 297,
+        "startChar": 3,
+        "endLine": 299,
+        "endChar": 36
+      },
+      "revId": "a0529a988e2e4d178dc5aaf8f1b6f63bdc7789ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
