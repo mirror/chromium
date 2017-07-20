@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb5c82c0_362a83d1",
+        "filename": "chrome/browser/resources/media_router/elements/media_router_container/media_router_container.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 967,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-07-20T06:52:37Z",
+      "side": 1,
+      "message": "nit: please keep these all in the same order across all files for uniformity.",
+      "range": {
+        "startLine": 967,
+        "startChar": 37,
+        "endLine": 967,
+        "endChar": 46
+      },
+      "revId": "bb4c4051d7f814c29e2728f6e037b1a0a3d6cf2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "810b3944_4011a1e5",
+        "filename": "chrome/browser/resources/media_router/icons/media_router_icons.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-07-20T06:52:37Z",
+      "side": 1,
+      "message": "friendly reminder to also add this to src-internal",
+      "range": {
+        "startLine": 30,
+        "startChar": 1,
+        "endLine": 30,
+        "endChar": 2
+      },
+      "revId": "bb4c4051d7f814c29e2728f6e037b1a0a3d6cf2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
