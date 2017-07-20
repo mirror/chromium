@@ -74202,6 +74202,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="SoftwareReporter.Cleaner.CleaningTime" units="ms">
+  <owner>alito@chromium.org</owner>
+  <summary>
+    The time between sending the user's response to the Chrome Cleaner process
+    and the Cleaner process terminating.
+  </summary>
+</histogram>
+
 <histogram name="SoftwareReporter.Cleaner.CleanupResult"
     enum="SoftwareReporterCleanupResult">
   <owner>ftirelo@chromium.org</owner>
@@ -74251,6 +74259,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 <histogram name="SoftwareReporter.Cleaner.RunningTime" units="ms">
   <owner>mad@chromium.org</owner>
   <summary>How long it took to run the software reporter cleaner tool.</summary>
+</histogram>
+
+<histogram name="SoftwareReporter.Cleaner.ScanningTime" units="ms">
+  <owner>alito@chromium.org</owner>
+  <summary>
+    The time between launching the Chrome Cleaner process and the cleaner having
+    scanned the user's maching and Chrome receiving an IPC call with the
+    results.
+  </summary>
 </histogram>
 
 <histogram name="SoftwareReporter.Cleaner.Version">
@@ -74395,6 +74412,40 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     The number of profiles whose settings will be reset once a successful
     cleanup completes.
+  </summary>
+</histogram>
+
+<histogram name="SoftwareReporter.PromptDialog.TimeUntilAccepted" units="ms">
+  <owner>alito@chromium.org</owner>
+  <summary>
+    The time between the Chrome Cleaner dialog being shown and the user
+    accepting the prompt.
+  </summary>
+</histogram>
+
+<histogram name="SoftwareReporter.PromptDialog.TimeUntilCanceled" units="ms">
+  <owner>alito@chromium.org</owner>
+  <summary>
+    The time between the Chrome Cleaner dialog being shown and the user
+    declining the prompt by clicking the cancel button
+  </summary>
+</histogram>
+
+<histogram name="SoftwareReporter.PromptDialog.TimeUntilDetailsButtonClicked"
+    units="ms">
+  <owner>alito@chromium.org</owner>
+  <summary>
+    The time between the Chrome Cleaner dialog being shown and the user clicking
+    the details button.
+  </summary>
+</histogram>
+
+<histogram name="SoftwareReporter.PromptDialog.TimeUntilDismissed" units="ms">
+  <owner>alito@chromium.org</owner>
+  <summary>
+    The time between the Chrome Cleaner dialog being shown and the user
+    dismissing the prompt, for example by clicking on the 'x' in the dialog or
+    pressing the Escape key.
   </summary>
 </histogram>
 
