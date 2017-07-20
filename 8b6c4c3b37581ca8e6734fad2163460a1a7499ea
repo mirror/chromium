@@ -22,6 +22,30 @@
       "revId": "8b6c4c3b37581ca8e6734fad2163460a1a7499ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0c85a20_b3d89c05",
+        "filename": "content/renderer/media/media_stream_dispatcher.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-20T12:09:13Z",
+      "side": 1,
+      "message": "Removed this public method.",
+      "parentUuid": "f2a62e6c_3bce3b6c",
+      "range": {
+        "startLine": 92,
+        "startChar": 7,
+        "endLine": 92,
+        "endChar": 45
+      },
+      "revId": "8b6c4c3b37581ca8e6734fad2163460a1a7499ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

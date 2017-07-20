@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3225349e_aac8cb53",
+        "filename": "content/renderer/media/media_stream_dispatcher.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-20T12:09:13Z",
+      "side": 1,
+      "message": "Removing the above macros leads to compilation errors. May be because these test methods do not belong to MediaStreamDispatcherTest class?",
+      "range": {
+        "startLine": 102,
+        "startChar": 55,
+        "endLine": 102,
+        "endChar": 0
+      },
+      "revId": "02412cedde6856cbf39c34adbe3c5b442bde82db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9d6625c_bc40ee7f",
+        "filename": "content/renderer/media/media_stream_dispatcher.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-20T12:09:13Z",
+      "side": 1,
+      "message": "Shall remove the above 3 in a later CL when we remove MediaStreamDispatcherHost as a subclass of BrowserMessageFilter and BrowserAssociatedInterface. \nEventually, we will have only one field: mojom::MediaStreamDispatcherHostPtr dispatcher_host_;",
+      "range": {
+        "startLine": 135,
+        "startChar": 53,
+        "endLine": 135,
+        "endChar": 0
+      },
+      "revId": "02412cedde6856cbf39c34adbe3c5b442bde82db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
