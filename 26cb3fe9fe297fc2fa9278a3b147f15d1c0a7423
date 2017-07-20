@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af564d23_9342e9d8",
+        "filename": "components/history/core/browser/history_backend.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-20T23:25:17Z",
+      "side": 1,
+      "message": "This really needs a (probably long) comment explaining why this is here and how this whole system works.",
+      "range": {
+        "startLine": 493,
+        "startChar": 15,
+        "endLine": 493,
+        "endChar": 38
+      },
+      "revId": "26cb3fe9fe297fc2fa9278a3b147f15d1c0a7423",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
