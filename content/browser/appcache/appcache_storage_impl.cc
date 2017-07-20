@@ -1917,7 +1917,6 @@ AppCacheDiskCache* AppCacheStorageImpl::disk_cache() {
       rv = disk_cache_->InitWithDiskBackend(
           cache_directory_.Append(kDiskCacheDirectoryName),
           kMaxDiskCacheSize,
-          false,
           cache_thread_.get(),
           base::Bind(&AppCacheStorageImpl::OnDiskCacheInitialized,
                      base::Unretained(this)));
