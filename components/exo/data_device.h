@@ -10,6 +10,10 @@
 #include "base/macros.h"
 #include "ui/base/class_property.h"
 
+namespace ui {
+class DropTargetEvent;
+}
+
 namespace exo {
 
 class DataDeviceDelegate;
@@ -37,6 +41,11 @@ class DataDevice : public ui::PropertyHandler {
   // |source| is data source for the selection, or nullptr to unset the
   // selection. |serial| is a unique number of event which tigers SetSelection.
   void SetSelection(const DataSource* source, uint32_t serial);
+
+  void OnDragEntered(Surface* surface, const ui::DropTargetEvent& event);
+  int OnDragUpdated(const ui::DropTargetEvent& event);
+  void OnDragExited();
+  void OnPerformDrop(const ui::DropTargetEvent& event);
 
  private:
   DataDeviceDelegate* const delegate_;
