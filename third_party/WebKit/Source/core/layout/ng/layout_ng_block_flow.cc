@@ -5,6 +5,7 @@
 #include "core/layout/ng/layout_ng_block_flow.h"
 
 #include "core/layout/LayoutAnalyzer.h"
+#include "core/layout/ng/inline/ng_offset_mapping_result.h"
 #include "core/layout/ng/ng_constraint_space.h"
 #include "core/layout/ng/ng_fragment.h"
 #include "core/layout/ng/ng_layout_result.h"
