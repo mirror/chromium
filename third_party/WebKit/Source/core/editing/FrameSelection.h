@@ -49,14 +49,12 @@ class GranularityStrategy;
 class GraphicsContext;
 class Range;
 class SelectionEditor;
+class SetSelectionData;
 class LayoutSelection;
 enum class SelectionModifyAlteration;
+enum class SetSelectionBy;
 class TextIteratorBehavior;
 struct PaintInvalidatorContext;
-
-enum class CursorAlignOnScroll { kIfNeeded, kAlways };
-
-enum EUserTriggered { kNotUserTriggered = 0, kUserTriggered = 1 };
 
 enum RevealExtentOption { kRevealExtent, kDoNotRevealExtent };
 
@@ -78,20 +76,6 @@ class CORE_EXPORT FrameSelection final
   }
   ~FrameSelection();
 
-  enum SetSelectionOption {
-    // 1 << 0 is reserved for EUserTriggered
-    kCloseTyping = 1 << 1,
-    kClearTypingStyle = 1 << 2,
-    kDoNotSetFocus = 1 << 3,
-    kDoNotClearStrategy = 1 << 4,
-  };
-  // Union of values in SetSelectionOption and EUserTriggered
-  typedef unsigned SetSelectionOptions;
-  static inline EUserTriggered SelectionOptionsToUserTriggered(
-      SetSelectionOptions options) {
-    return static_cast<EUserTriggered>(options & kUserTriggered);
-  }
-
   bool IsAvailable() const { return LifecycleContext(); }
   // You should not call |document()| when |!isAvailable()|.
   Document& GetDocument() const;
@@ -110,11 +94,10 @@ class CORE_EXPORT FrameSelection final
   // layout.
   const VisibleSelection& ComputeVisibleSelectionInDOMTreeDeprecated() const;
 
-  void SetSelection(const SelectionInDOMTree&,
-                    SetSelectionOptions = kCloseTyping | kClearTypingStyle,
-                    CursorAlignOnScroll = CursorAlignOnScroll::kIfNeeded,
-                    TextGranularity = TextGranularity::kCharacter);
-  void SelectAll(EUserTriggered = kNotUserTriggered);
+  void SetSelection(const SetSelectionData&);
+  void SetSelection(const SelectionInDOMTree&);
+  void SelectAll(SetSelectionBy);
+  void SelectAll();
   void Clear();
   bool IsHidden() const;
 
@@ -123,13 +106,8 @@ class CORE_EXPORT FrameSelection final
   // functions.
   // setSelectionDeprecated() returns true if didSetSelectionDeprecated() should
   // be called.
-  bool SetSelectionDeprecated(const SelectionInDOMTree&,
-                              SetSelectionOptions = kCloseTyping |
-                                                    kClearTypingStyle,
-                              TextGranularity = TextGranularity::kCharacter);
-  void DidSetSelectionDeprecated(
-      SetSelectionOptions = kCloseTyping | kClearTypingStyle,
-      CursorAlignOnScroll = CursorAlignOnScroll::kIfNeeded);
+  bool SetSelectionDeprecated(const SetSelectionData&);
+  void DidSetSelectionDeprecated(const SetSelectionData&);
 
   // Call this after doing user-triggered selections to make it easy to delete
   // the frame you entirely selected.
@@ -140,7 +118,7 @@ class CORE_EXPORT FrameSelection final
   bool Modify(SelectionModifyAlteration,
               SelectionDirection,
               TextGranularity,
-              EUserTriggered = kNotUserTriggered);
+              SetSelectionBy);
   enum VerticalDirection { kDirectionUp, kDirectionDown };
 
   // Moves the selection extent based on the selection granularity strategy.
@@ -208,7 +186,7 @@ class CORE_EXPORT FrameSelection final
 #endif
 
   void SetFocusedNodeIfNeeded();
-  void NotifyTextControlOfSelectionChange(EUserTriggered);
+  void NotifyTextControlOfSelectionChange(SetSelectionBy);
 
   String SelectedHTMLForClipboard() const;
   String SelectedText(const TextIteratorBehavior&) const;
