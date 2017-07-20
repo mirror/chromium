@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e348006f_c2ba77b7",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 26977,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-20T15:13:13Z",
+      "side": 1,
+      "message": "I wouldn\u0027t use the term \"users\" here - the metric description should be related to a single instance of recording. I would think something like InstantTethering.Activated and have it be a boolean related to when it gets used.",
+      "revId": "18cd556ca28e35de592f70f60004003b2db91f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
