@@ -52,6 +52,40 @@
       "revId": "03949ddd5a676b0e78dc0b876f88a9963a8f15c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50f8b2f3_eeeec1b4",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1781,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-20T06:22:18Z",
+      "side": 1,
+      "message": "Needs updating.",
+      "revId": "03949ddd5a676b0e78dc0b876f88a9963a8f15c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a941409_b40f1f5e",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1787,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-20T06:22:18Z",
+      "side": 1,
+      "message": "So here we have: r \u003d (a \u0026 b) \u0026\u0026 (c \u003d\u003d d || (c \u003d\u003d e \u0026\u0026 a \u0026 f))\n\nAn alternative is to write: r \u003d HelperFunc(a, c);\n\nWhere the helper function can list out the cases and be less compact but more readable:\n\nif (a \u0026 b)\n  return false;\nif (c \u003d\u003d d)\n  return true;\nif (c \u003d\u003d e \u0026\u0026 a \u0026 f) \n  return true;\nreturn false;",
+      "revId": "03949ddd5a676b0e78dc0b876f88a9963a8f15c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
