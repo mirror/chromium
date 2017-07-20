@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3862849_7727d11c",
+        "filename": "third_party/sqlite/src/src/sqlite.h.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 3648,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-20T20:02:22Z",
+      "side": 1,
+      "message": "Typo upstream. :P",
+      "range": {
+        "startLine": 3648,
+        "startChar": 15,
+        "endLine": 3648,
+        "endChar": 24
+      },
+      "revId": "343815141a091bf4b4d287026f30c52a6ffc4aa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
