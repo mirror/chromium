@@ -22,6 +22,30 @@
       "revId": "343815141a091bf4b4d287026f30c52a6ffc4aa0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0995b8c_ad8fe1a8",
+        "filename": "third_party/sqlite/src/src/sqlite.h.in",
+        "patchSetId": 2
+      },
+      "lineNbr": 3648,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-07-20T20:37:29Z",
+      "side": 1,
+      "message": "Reported :)",
+      "parentUuid": "d3862849_7727d11c",
+      "range": {
+        "startLine": 3648,
+        "startChar": 15,
+        "endLine": 3648,
+        "endChar": 24
+      },
+      "revId": "343815141a091bf4b4d287026f30c52a6ffc4aa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
