@@ -1676,6 +1676,9 @@ bool Document::hidden() const {
 }
 
 void Document::DidChangeVisibilityState() {
+  fprintf(stderr, "\n\nDidChangeVisibilityState [visiblitychange]: %d for %s",
+          GetPageVisibilityState(),
+          Url().GetString().Ascii().data());
   DispatchEvent(Event::CreateBubble(EventTypeNames::visibilitychange));
   // Also send out the deprecated version until it can be removed.
   DispatchEvent(Event::CreateBubble(EventTypeNames::webkitvisibilitychange));
@@ -3244,6 +3247,8 @@ bool Document::DispatchBeforeUnloadEvent(ChromeClient& chrome_client,
   BeforeUnloadEvent* before_unload_event = BeforeUnloadEvent::Create();
   before_unload_event->initEvent(EventTypeNames::beforeunload, false, true);
   load_event_progress_ = kBeforeUnloadEventInProgress;
+  fprintf(stderr, "\n\nDispatchBeforeUnloadEvent {dom_window} [beforeunload] for %s",
+          Url().GetString().Ascii().data());
   dom_window_->DispatchEvent(before_unload_event, this);
   load_event_progress_ = kBeforeUnloadEventCompleted;
   if (!before_unload_event->defaultPrevented())
@@ -3290,9 +3295,12 @@ void Document::DispatchUnloadEvents() {
       toHTMLInputElement(*current_focused_element).EndEditing();
     if (load_event_progress_ < kPageHideInProgress) {
       load_event_progress_ = kPageHideInProgress;
-      if (LocalDOMWindow* window = domWindow())
+      if (LocalDOMWindow* window = domWindow()) {
+          //fprintf(stderr, "\n\nDispatchUnloadEvents {window} [pagehide] for %s",
+          //    Url().GetString().Ascii().data());
         window->DispatchEvent(
             PageTransitionEvent::Create(EventTypeNames::pagehide, false), this);
+      }
       if (!frame_)
         return;
 
@@ -3301,6 +3309,9 @@ void Document::DispatchUnloadEvents() {
       if (visibility_state != kPageVisibilityStateHidden) {
         // Dispatch visibilitychange event, but don't bother doing
         // other notifications as we're about to be unloaded.
+        fprintf(stderr, "\n\nDispatchUnloadEvents [visibilitychange]: %d for %s",
+            GetPageVisibilityState(),
+            Url().GetString().Ascii().data());
         DispatchEvent(Event::CreateBubble(EventTypeNames::visibilitychange));
         DispatchEvent(
             Event::CreateBubble(EventTypeNames::webkitvisibilitychange));
@@ -3317,9 +3328,14 @@ void Document::DispatchUnloadEvents() {
         DocumentLoadTiming& timing = document_loader->GetTiming();
         DCHECK(timing.NavigationStart());
         timing.MarkUnloadEventStart();
+        fprintf(stderr, "\n\nDispatchUnloadEvents {frame_->DomWindow()} [unload] for %s",
+              Url().GetString().Ascii().data());
+
         frame_->DomWindow()->DispatchEvent(unload_event, this);
         timing.MarkUnloadEventEnd();
       } else {
+        fprintf(stderr, "\n\nDispatchUnloadEvents {frame_->DomWindow()} [unload] for %s",
+              Url().GetString().Ascii().data());
         frame_->DomWindow()->DispatchEvent(unload_event, frame_->GetDocument());
       }
     }
