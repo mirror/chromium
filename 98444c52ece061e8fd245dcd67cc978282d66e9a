@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0f641566_417e63b1",
+        "filename": "chrome/browser/ui/views/permission_bubble/chooser_bubble_ui.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-20T23:36:15Z",
+      "side": 1,
+      "message": "yeah, I had considered that.. But these felt a bit more like \"configuration\" still. E.g. pulling the functions out makes it clear that the choice to use the PageInfo anchor is intentional (and there are a couple of callsites).",
+      "parentUuid": "9c03bcb3_cd255d72",
+      "revId": "98444c52ece061e8fd245dcd67cc978282d66e9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a386c790_4f95436a",
         "filename": "chrome/browser/ui/views/permission_bubble/permission_prompt_impl.cc",
         "patchSetId": 12

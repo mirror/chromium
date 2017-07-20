@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "fa880186_b8d8f0fa",
+        "filename": "chrome/browser/ui/bubble_anchor_util.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-20T23:36:15Z",
+      "side": 1,
+      "message": "(forgot to ack this earlier thread) - I had checked flipping on Windows (also after removing the redundant BubbleFrame stuff in permission bubbles) - it\u0027s all good :)",
+      "parentUuid": "8d9486bf_81bd70d2",
+      "range": {
+        "startLine": 22,
+        "startChar": 11,
+        "endLine": 22,
+        "endChar": 33
+      },
+      "revId": "491be378c91d78adac5dd0697ab677229a8036f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "131733ea_c0b671a0",
         "filename": "chrome/browser/ui/cocoa/browser_dialogs_views_mac.h",
         "patchSetId": 8
