@@ -684,6 +684,7 @@ void AppListView::SetStateFromSearchBoxView(bool search_box_is_empty) {
 
 void AppListView::OnTabletModeChanged(bool started) {
   is_tablet_mode_ = started;
+  search_box_view_->OnTabletModeChanged(started);
   if (is_tablet_mode_ && !is_fullscreen()) {
     // Set |app_list_state_| to a tablet mode friendly state.
     SetState(app_list_state_ == PEEKING ? FULLSCREEN_ALL_APPS
