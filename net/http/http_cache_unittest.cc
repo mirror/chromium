@@ -7205,12 +7205,8 @@ TEST(HttpCache, SetTruncatedFlag) {
   EXPECT_THAT(rv, IsError(ERR_IO_PENDING));
   EXPECT_FALSE(c->callback.have_result());
 
-  MockHttpCache::SetTestMode(TEST_MODE_SYNC_ALL);
-
   // Destroy the transaction.
   c->trans.reset();
-  MockHttpCache::SetTestMode(0);
-
 
   // Make sure that we don't invoke the callback. We may have an issue if the
   // UrlRequestJob is killed directly (without cancelling the UrlRequest) so we
@@ -7218,7 +7214,6 @@ TEST(HttpCache, SetTruncatedFlag) {
   // notification from the transaction destructor (see http://crbug.com/31723).
   EXPECT_FALSE(c->callback.have_result());
 
-  // Verify that the entry is marked as incomplete.
   VerifyTruncatedFlag(&cache, kSimpleGET_Transaction.url, true, 0);
 }
 
