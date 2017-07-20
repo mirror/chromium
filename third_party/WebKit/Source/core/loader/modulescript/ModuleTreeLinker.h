@@ -75,6 +75,8 @@ class CORE_EXPORT ModuleTreeLinker final : public SingleModuleClient {
 
   void Instantiate();
 
+  void AddWaitingLinker(ModuleTreeLinker*);
+
   class DependencyModuleClient;
   friend class DependencyModuleClient;
 
@@ -89,6 +91,8 @@ class CORE_EXPORT ModuleTreeLinker final : public SingleModuleClient {
   TraceWrapperMember<ModuleScript> module_script_;
   size_t num_incomplete_descendants_ = 0;
   HeapHashSet<Member<DependencyModuleClient>> dependency_clients_;
+
+  HeapVector<Member<ModuleTreeLinker>> waiting_linkers_;
 };
 
 }  // namespace blink

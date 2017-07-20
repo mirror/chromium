@@ -6,6 +6,7 @@
 
 #include "bindings/core/v8/ScriptValue.h"
 #include "core/dom/ScriptModuleResolver.h"
+#include "core/loader/modulescript/ModuleTreeLinker.h"
 #include "platform/bindings/ScriptState.h"
 #include "v8/include/v8.h"
 
@@ -243,6 +244,7 @@ void ModuleScript::SetErrorAndClearRecord(ScriptValue error) {
 
 DEFINE_TRACE(ModuleScript) {
   visitor->Trace(settings_object_);
+  visitor->Trace(current_loading_linker_);
   Script::Trace(visitor);
 }
 DEFINE_TRACE_WRAPPERS(ModuleScript) {

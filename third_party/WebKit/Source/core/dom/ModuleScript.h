@@ -20,6 +20,8 @@
 
 namespace blink {
 
+class ModuleTreeLinker;
+
 // https://html.spec.whatwg.org/multipage/webappapis.html#concept-module-script-state
 enum class ModuleInstantiationState {
   kUninstantiated,
@@ -84,6 +86,11 @@ class CORE_EXPORT ModuleScript final : public Script, public TraceWrapperBase {
   const String& Nonce() const { return nonce_; }
 
   const TextPosition& StartPosition() const { return start_position_; }
+
+  ModuleTreeLinker* CurrentLoadingLinker() { return current_loading_linker_; }
+  void SetCurrentLoadingLinker(ModuleTreeLinker* linker) {
+    current_loading_linker_ = linker;
+  }
 
   DECLARE_TRACE();
   DECLARE_TRACE_WRAPPERS();
@@ -170,6 +177,8 @@ class CORE_EXPORT ModuleScript final : public Script, public TraceWrapperBase {
   const String source_text_;
 
   const TextPosition start_position_;
+
+  Member<ModuleTreeLinker> current_loading_linker_;
 };
 
 CORE_EXPORT std::ostream& operator<<(std::ostream&, const ModuleScript&);

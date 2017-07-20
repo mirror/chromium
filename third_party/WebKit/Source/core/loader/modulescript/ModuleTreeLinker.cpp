@@ -87,6 +87,7 @@ DEFINE_TRACE(ModuleTreeLinker) {
   visitor->Trace(client_);
   visitor->Trace(module_script_);
   visitor->Trace(dependency_clients_);
+  visitor->Trace(waiting_linkers_);
   SingleModuleClient::Trace(visitor);
 }
 
@@ -146,6 +147,9 @@ void ModuleTreeLinker::AdvanceState(State new_state) {
 
   if (state_ == State::kFinished) {
     if (module_script_) {
+      if (module_script_->CurrentLoadingLinker() == this) {
+        module_script_->SetCurrentLoadingLinker(nullptr);
+      }
       RESOURCE_LOADING_DVLOG(1)
           << "ModuleTreeLinker[" << this << "] finished with final result "
           << *module_script_;
@@ -160,6 +164,10 @@ void ModuleTreeLinker::AdvanceState(State new_state) {
     // Step 6. When the appropriate algorithm asynchronously completes with
     // final result, asynchronously complete this algorithm with final result.
     client_->NotifyModuleTreeLoadFinished(module_script_);
+
+    for (ModuleTreeLinker* linker : waiting_linkers_) {
+      linker->FetchDescendants();
+    }
   }
 }
 
@@ -207,6 +215,10 @@ void ModuleTreeLinker::NotifyModuleLoadFinished(ModuleScript* result) {
   FetchDescendants();
 }
 
+void ModuleTreeLinker::AddWaitingLinker(ModuleTreeLinker* linker) {
+  waiting_linkers_.push_back(linker);
+}
+
 class ModuleTreeLinker::DependencyModuleClient : public ModuleTreeClient {
  public:
   static DependencyModuleClient* Create(ModuleTreeLinker* module_tree_linker) {
@@ -237,6 +249,14 @@ class ModuleTreeLinker::DependencyModuleClient : public ModuleTreeClient {
 
 void ModuleTreeLinker::FetchDescendants() {
   CHECK(module_script_);
+
+  if (ModuleTreeLinker* existing_linker =
+          module_script_->CurrentLoadingLinker()) {
+    existing_linker->AddWaitingLinker(this);
+    return;
+  }
+
+  module_script_->SetCurrentLoadingLinker(this);
   AdvanceState(State::kFetchingDependencies);
 
   // [nospec] Abort the steps if the browsing context is discarded.
@@ -286,6 +306,9 @@ void ModuleTreeLinker::FetchDescendants() {
     // arguments.
     CHECK(url.IsValid()) << "Modulator::resolveModuleSpecifier() impl must "
                             "return either a valid url or null.";
+
+    if (modulator_->GetFetchedModuleScript(url))
+      continue;
 
     // Step 6.3. if ancestor list does not contain url, append url to urls.
     if (!ancestor_list_with_url_.Contains(url)) {
