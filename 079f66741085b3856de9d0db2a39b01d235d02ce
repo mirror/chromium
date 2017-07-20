@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3962459b_49e17ba0",
+        "filename": "third_party/WebKit/LayoutTests/fast/css/sticky/sticky-input-box-position.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-20T16:00:53Z",
+      "side": 1,
+      "message": "We should probably not silently pass the test if eventSender doesn\u0027t exist, maybe add a check for window.eventSender which writes a message like in https://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/fast/events/script-tests/mouse-click-events.js?type\u003dcs\u0026q\u003deventSender+file:webkit%5C/layouttests%5C/.*%5C.js\u0026sq\u003dpackage:chromium\u0026l\u003d34",
+      "revId": "079f66741085b3856de9d0db2a39b01d235d02ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
