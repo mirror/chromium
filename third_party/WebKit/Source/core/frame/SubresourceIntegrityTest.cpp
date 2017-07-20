@@ -69,7 +69,7 @@ class SubresourceIntegrityTest : public ::testing::Test {
 
  protected:
   virtual void SetUp() {
-    document = Document::Create();
+    document = Document::CreateForTest();
     script_element = HTMLScriptElement::Create(*document, true);
     context =
         MockFetchContext::Create(MockFetchContext::kShouldLoadNewResource);
