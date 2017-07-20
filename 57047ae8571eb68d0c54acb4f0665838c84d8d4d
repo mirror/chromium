@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dc4bd7ae_5f33502a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/layer_viewer/LayerDetailsView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-07-20T19:58:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23f79232_0c343b05",
+      "revId": "57047ae8571eb68d0c54acb4f0665838c84d8d4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7cd7df5_81d72415",
         "filename": "third_party/WebKit/Source/devtools/front_end/layer_viewer/LayerDetailsView.js",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "57047ae8571eb68d0c54acb4f0665838c84d8d4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5e0534a_e2e1fe45",
+        "filename": "third_party/WebKit/Source/devtools/front_end/layer_viewer/LayerDetailsView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-07-20T19:58:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7cd7df5_81d72415",
+      "revId": "57047ae8571eb68d0c54acb4f0665838c84d8d4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e1b078df_c01e8286",
+        "filename": "third_party/WebKit/Source/devtools/front_end/layer_viewer/LayerDetailsView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-07-20T19:58:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52ba7f55_04b4b8c6",
+      "revId": "57047ae8571eb68d0c54acb4f0665838c84d8d4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52975784_abbaee1c",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/StickyPositionConstraint.js",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "47e5d31c_3d275d05",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/StickyPositionConstraint.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-07-20T19:58:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52975784_abbaee1c",
+      "revId": "57047ae8571eb68d0c54acb4f0665838c84d8d4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2182b6a8_513b00a3",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/module.json",
         "patchSetId": 2
@@ -84,6 +156,24 @@
       "revId": "57047ae8571eb68d0c54acb4f0665838c84d8d4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9552f1a8_21c58552",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/module.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-07-20T19:58:02Z",
+      "side": 1,
+      "message": "Eek! Done.",
+      "parentUuid": "2182b6a8_513b00a3",
+      "revId": "57047ae8571eb68d0c54acb4f0665838c84d8d4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
