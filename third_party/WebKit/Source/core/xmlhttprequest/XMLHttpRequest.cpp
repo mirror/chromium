@@ -363,8 +363,8 @@ void XMLHttpRequest::InitResponseDocument() {
     return;
   }
 
-  DocumentInit init = DocumentInit::FromContext(
-      GetDocument()->ContextDocument(), response_.Url());
+  DocumentInit init = DocumentInit::Create(
+      nullptr, GetDocument()->ContextDocument(), response_.Url(), nullptr);
   if (is_html)
     response_document_ = HTMLDocument::Create(init);
   else
