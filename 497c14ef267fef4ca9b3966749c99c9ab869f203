@@ -140,6 +140,30 @@
     },
     {
       "key": {
+        "uuid": "7a267370_e508a164",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-20T04:41:41Z",
+      "side": 1,
+      "message": "I prefer without the comment as well. Anybody familiar with std::unique_ptr\u003cT\u003e knows what this does.",
+      "parentUuid": "1f949a77_63542d66",
+      "range": {
+        "startLine": 245,
+        "startChar": 30,
+        "endLine": 245,
+        "endChar": 36
+      },
+      "revId": "497c14ef267fef4ca9b3966749c99c9ab869f203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6798cc5a_e4ce1103",
         "filename": "components/omnibox/browser/contextual_suggestions_service.h",
         "patchSetId": 5
@@ -160,6 +184,30 @@
       "revId": "497c14ef267fef4ca9b3966749c99c9ab869f203",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bdbeb37_954b073d",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-20T04:41:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6798cc5a_e4ce1103",
+      "range": {
+        "startLine": 20,
+        "startChar": 65,
+        "endLine": 20,
+        "endChar": 68
+      },
+      "revId": "497c14ef267fef4ca9b3966749c99c9ab869f203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +234,30 @@
     },
     {
       "key": {
+        "uuid": "7fb2f97c_869537e3",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-20T04:41:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "288e7fff_a4015375",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 23,
+        "endChar": 20
+      },
+      "revId": "497c14ef267fef4ca9b3966749c99c9ab869f203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53088182_b6fed42f",
         "filename": "components/omnibox/browser/contextual_suggestions_service.h",
         "patchSetId": 5
@@ -206,6 +278,30 @@
       "revId": "497c14ef267fef4ca9b3966749c99c9ab869f203",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9d738a0_47e45fa2",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-20T04:41:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53088182_b6fed42f",
+      "range": {
+        "startLine": 35,
+        "startChar": 67,
+        "endLine": 35,
+        "endChar": 68
+      },
+      "revId": "497c14ef267fef4ca9b3966749c99c9ab869f203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -256,6 +352,30 @@
     },
     {
       "key": {
+        "uuid": "4a8163d6_15e454e6",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-20T04:41:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ae671b2_ee080c58",
+      "range": {
+        "startLine": 39,
+        "startChar": 30,
+        "endLine": 39,
+        "endChar": 37
+      },
+      "revId": "497c14ef267fef4ca9b3966749c99c9ab869f203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e4384e1_19a0983c",
         "filename": "components/omnibox/browser/contextual_suggestions_service.h",
         "patchSetId": 5
@@ -276,6 +396,30 @@
       "revId": "497c14ef267fef4ca9b3966749c99c9ab869f203",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3b32298_92291ae4",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-20T04:41:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e4384e1_19a0983c",
+      "range": {
+        "startLine": 47,
+        "startChar": 18,
+        "endLine": 47,
+        "endChar": 27
+      },
+      "revId": "497c14ef267fef4ca9b3966749c99c9ab869f203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -316,6 +460,24 @@
       "revId": "497c14ef267fef4ca9b3966749c99c9ab869f203",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc786e79_ff29224d",
+        "filename": "components/omnibox/browser/zero_suggest_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-20T04:41:41Z",
+      "side": 1,
+      "message": "Done. Yeah, I like how it reads now.",
+      "parentUuid": "57850e80_c708bbb9",
+      "revId": "497c14ef267fef4ca9b3966749c99c9ab869f203",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
