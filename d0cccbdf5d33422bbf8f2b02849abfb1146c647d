@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0f08cae0_67521fc3",
+        "filename": "ash/system/tray/tray_info_label.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1206355
+      },
+      "writtenOn": "2017-07-20T21:49:55Z",
+      "side": 1,
+      "message": "I added a function-- VerifyLabel-- that checks the label text and the accessible name. It seemed a little cleaner and more comprehensive.",
+      "parentUuid": "9bb08676_859fc2ea",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 19
+      },
+      "revId": "d0cccbdf5d33422bbf8f2b02849abfb1146c647d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c8338603_2e5cee59",
         "filename": "ash/system/tray/tray_info_label.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "d0cccbdf5d33422bbf8f2b02849abfb1146c647d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ad250bc_301d2dbd",
+        "filename": "ash/system/tray/tray_info_label.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1206355
+      },
+      "writtenOn": "2017-07-20T21:49:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8338603_2e5cee59",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 41
+      },
+      "revId": "d0cccbdf5d33422bbf8f2b02849abfb1146c647d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
