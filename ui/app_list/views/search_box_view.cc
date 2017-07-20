@@ -247,6 +247,7 @@ void SearchBoxView::ClearSearch() {
   NotifyQueryChanged();
   if (is_fullscreen_app_list_enabled_)
     SetSearchBoxActive(false);
+  app_list_view_->SetStateFromSearchBoxView(search_box_->text().empty());
 }
 
 void SearchBoxView::SetShadow(const gfx::ShadowValue& shadow) {

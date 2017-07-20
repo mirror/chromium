@@ -139,6 +139,10 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
   // Changes |app_list_state_| from |PEEKING| to |FULLSCREEN_ALL_APPS|.
   bool HandleScroll(const ui::Event* event);
 
+  views::Widget* get_fullscreen_widget_for_test() const {
+    return fullscreen_widget_;
+  }
+
  private:
   friend class test::AppListViewTestApi;
 
