@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d8cf5c2_2dd3be11",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncherHelper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-20T21:46:21Z",
+      "side": 1,
+      "message": "curious, does ChildProcesslauncherHelper.this work here..?",
+      "revId": "5606f8cf51f6ee572b98649701894c842a554601",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "951c0df8_3673a8c3",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/ChildProcessLauncherHelperTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-20T21:46:21Z",
+      "side": 1,
+      "message": "Hmm, can this go one step further, also check getConnectionService is not null like above. That also makes sure the connection setup was successful.",
+      "revId": "5606f8cf51f6ee572b98649701894c842a554601",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
