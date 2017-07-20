@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eed1e004_e7319d31",
+        "filename": "ash/metrics/user_metrics_action.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-20T19:28:46Z",
+      "side": 1,
+      "message": "The UMA_STATUS_AREA_* metrics naming seems to be used only for the system tray (quick settings). I think UMA_TRAY_* would be a more appropriate naming here. (Admittedly though any naming we choose isn\u0027t going to be perfect, since terminology isn\u0027t 100% consistent throughout Ash UI code and documentation.)\n\nI think it would be a bit more clear what the metrics actually meaure if we used the words \"successful\" and \"unsuccessful\". So here is what I would propose for naming:\n\nUMA_TRAY_SWIPE_TO_OPEN_SUCCESSFUL\nUMA_TRAY_SWIPE_TO_OPEN_UNSUCCESSFUL\nUMA_TRAY_SWIPE_TO_CLOSE_SUCCESSFUL\nUMA_TRAY_SWIPE_TO_CLOSE_UNSUCCESSFUL\n\nPlease be sure to re-name the \"StatusArea_*\" strings accordingly.",
+      "range": {
+        "startLine": 90,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 44
+      },
+      "revId": "315502407d4a220d7713dfb7b5661c8c6b2e73ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74e40fc7_f07a2870",
+        "filename": "ash/system/tray_drag_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-20T19:28:46Z",
+      "side": 1,
+      "message": "Consider condensing lines 98-104 to a single line:\n\nmetrics-\u003eRecordUserMetricsAction(hide_bubble ? ... : ...);\n\nAnd similarly for lines 106-113.",
+      "range": {
+        "startLine": 98,
+        "startChar": 8,
+        "endLine": 98,
+        "endChar": 19
+      },
+      "revId": "315502407d4a220d7713dfb7b5661c8c6b2e73ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4fa85e9_0534e656",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 16621,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-20T19:28:46Z",
+      "side": 1,
+      "message": "For these new metrics, it is always a good idea to add a second \u003cowner\u003e line for the PM who requested them.",
+      "revId": "315502407d4a220d7713dfb7b5661c8c6b2e73ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
