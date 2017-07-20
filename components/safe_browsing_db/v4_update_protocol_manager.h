@@ -22,6 +22,7 @@
 #include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "components/safe_browsing/common/safe_browsing_prefs.h"
+#include "components/safe_browsing/web_ui/safe_browsing_page.pb.h"
 #include "components/safe_browsing_db/safebrowsing.pb.h"
 #include "components/safe_browsing_db/util.h"
 #include "components/safe_browsing_db/v4_protocol_manager_util.h"
@@ -69,6 +70,14 @@ class V4UpdateProtocolManager : public net::URLFetcherDelegate {
 
   // Schedule the next update without backoff.
   void ScheduleNextUpdate(std::unique_ptr<StoreStateMap> store_state_map);
+
+  // Saves the network response code of the last update
+  int response_code = 0;
+
+  base::Time last_response_time_;
+  // Populates the UpdateInfo message of the safe_browsing_page proto.
+  void SetUpdateProtocolManagerFields(
+      DatabaseManagerInfo::UpdateInfo* database_info);
 
  protected:
   // Constructs a V4UpdateProtocolManager that issues network requests using
@@ -182,8 +191,6 @@ class V4UpdateProtocolManager : public net::URLFetcherDelegate {
 
   // Timer to setup the next update request.
   base::OneShotTimer update_timer_;
-
-  base::Time last_response_time_;
 
   // Used to interrupt and re-schedule update requests that take too long to
   // complete.

@@ -16,6 +16,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/sequenced_task_runner.h"
 #include "base/single_thread_task_runner.h"
+#include "components/safe_browsing/web_ui/safe_browsing_page.pb.h"
 #include "components/safe_browsing_db/v4_protocol_manager_util.h"
 #include "components/safe_browsing_db/v4_store.h"
 
@@ -162,6 +163,13 @@ class V4Database {
   // Records the size of each of the stores managed by this database, along
   // with the combined size of all the stores.
   void RecordFileSizeHistograms();
+
+  // Populates the DatabaseInfo message of the safe_browsing_page proto and
+  // returns the size of each store file to the V4Database.
+  void SetDatabaseFields(DatabaseManagerInfo::DatabaseInfo* database_info);
+
+  // Record if all updates are applied successfully to the database.
+  bool all_updates_applied = false;
 
  protected:
   V4Database(const scoped_refptr<base::SequencedTaskRunner>& db_task_runner,

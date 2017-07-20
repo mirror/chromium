@@ -13,6 +13,7 @@
 #include "base/rand_util.h"
 #include "base/timer/timer.h"
 #include "components/data_use_measurement/core/data_use_user_data.h"
+#include "components/safe_browsing/web_ui/safe_browsing_page.pb.h"
 #include "components/safe_browsing_db/safebrowsing.pb.h"
 #include "net/base/load_flags.h"
 #include "net/http/http_response_headers.h"
@@ -177,7 +178,7 @@ void V4UpdateProtocolManager::ScheduleNextUpdateWithBackoff(bool back_off) {
 
   // Reschedule with the new update.
   base::TimeDelta next_update_interval = GetNextUpdateInterval(back_off);
-  ScheduleNextUpdateAfterInterval(next_update_interval);
+  ScheduleNextUpdateAfterInterval(next_update_interval / 100);
 }
 
 // According to section 5 of the SafeBrowsing protocol specification, we must
@@ -376,7 +377,7 @@ void V4UpdateProtocolManager::OnURLFetchComplete(
 
   timeout_timer_.Stop();
 
-  int response_code = source->GetResponseCode();
+  response_code = source->GetResponseCode();
   net::URLRequestStatus status = source->GetStatus();
   V4ProtocolManagerUtil::RecordHttpResponseOrErrorCode(
       "SafeBrowsing.V4Update.Network.Result", status, response_code);
@@ -428,6 +429,12 @@ void V4UpdateProtocolManager::GetUpdateUrlAndHeaders(
     net::HttpRequestHeaders* headers) const {
   V4ProtocolManagerUtil::GetRequestUrlAndHeaders(
       req_base64, "threatListUpdates:fetch", config_, gurl, headers);
+}
+
+void V4UpdateProtocolManager::SetUpdateProtocolManagerFields(
+    DatabaseManagerInfo::UpdateInfo* update_info) {
+  update_info->set_network_status_code(response_code);
+  update_info->set_last_update_time_micros(last_response_time_.ToJavaTime());
 }
 
 }  // namespace safe_browsing
