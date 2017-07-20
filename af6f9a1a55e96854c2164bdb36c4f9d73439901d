@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "c01626f2_dd01edd8",
+        "filename": "components/payments/core/BUILD.gn",
+        "patchSetId": 34
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-07-20T19:12:40Z",
+      "side": 1,
+      "message": "Is this thread relevant?\n\nhttps://groups.google.com/a/chromium.org/d/msg/chromium-dev/ZTngHCSby-k/qLJUJqUhZcoJ\n\nIt talks about content dependencies for tests, using file specific deps, and ThreadBundle vs roll your own.",
+      "parentUuid": "e0a94fa3_3895f22e",
+      "revId": "af6f9a1a55e96854c2164bdb36c4f9d73439901d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "feb8e22a_77bde4c2",
         "filename": "components/payments/core/DEPS",
         "patchSetId": 34
