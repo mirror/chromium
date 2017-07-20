@@ -86,7 +86,7 @@ constexpr net::NetworkTrafficAnnotationTag kTrafficAnnotation =
         destination: WEBSITE
       }
       policy {
-        cookies_allowed: true
+        cookies_allowed: YES
         cookies_store: "user"
         setting:
           "Users can control this feature via the 'Cookies' setting under "
