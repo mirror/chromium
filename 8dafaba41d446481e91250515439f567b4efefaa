@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45162cbd_956ae304",
+        "filename": "chrome/browser/extensions/api/terminal/terminal_private_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-20T00:34:06Z",
+      "side": 1,
+      "message": "nit: rename these to ...OnTaskRunner",
+      "range": {
+        "startLine": 189,
+        "startChar": 56,
+        "endLine": 189,
+        "endChar": 77
+      },
+      "revId": "8dafaba41d446481e91250515439f567b4efefaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
