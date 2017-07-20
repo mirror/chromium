@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "37387dce_cb8d345e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-20T15:41:10Z",
+      "side": 1,
+      "message": "\"in order to the WebAudio-specific\"?  Please clarify.",
+      "revId": "3192fcb0f0f44ffd6078e1b6d5acf155511ee59d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fef7f051_3246f4a3",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-20T15:41:10Z",
+      "side": 1,
+      "message": "Will this change?  If so, make the comment a TODO.  If not, remove the \"At the moment\" part.",
+      "revId": "3192fcb0f0f44ffd6078e1b6d5acf155511ee59d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be07da93_5a983428",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.h",
         "patchSetId": 2
