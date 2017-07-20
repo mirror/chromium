@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d7e435a_9475c63c",
+        "filename": "content/renderer/device_sensors/device_motion_event_pump.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-07-20T17:57:23Z",
+      "side": 1,
+      "message": "When can this fail? and should the sensors be suspended in that case?",
+      "range": {
+        "startLine": 121,
+        "startChar": 19,
+        "endLine": 121,
+        "endChar": 0
+      },
+      "revId": "6e6c625a43f186dc6d5e48a92fc435b5598ff958",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
