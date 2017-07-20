@@ -233,7 +233,7 @@ UI.Toolbar = class {
    * @param {boolean} enabled
    */
   setEnabled(enabled) {
-    this._enabled = enabled;
+    this._enabled = !!enabled;
     for (var item of this._items)
       item._applyEnabledState(this._enabled && item._enabled);
   }
@@ -433,10 +433,10 @@ UI.ToolbarItem = class extends Common.Object {
    * @param {boolean} x
    */
   setVisible(x) {
-    if (this._visible === x)
+    if (this._visible === !!x)
       return;
     this.element.classList.toggle('hidden', !x);
-    this._visible = x;
+    this._visible = !!x;
     if (this._toolbar && !(this instanceof UI.ToolbarSeparator))
       this._toolbar._hideSeparatorDupes();
   }
