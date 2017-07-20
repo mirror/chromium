@@ -18,6 +18,26 @@ class ValidationContext;
 
 class MOJO_CPP_BINDINGS_EXPORT NativeStruct_Data {
  public:
+  class BufferWriter {
+   public:
+    BufferWriter() = default;
+    BufferWriter(size_t num_bytes, Buffer* buffer)
+        : array_writer_(num_bytes, buffer) {}
+    ~BufferWriter() = default;
+
+    Array_Data<uint8_t>::BufferWriter& array_writer() { return array_writer_; }
+
+    bool is_null() const { return array_writer_.is_null(); }
+
+    NativeStruct_Data* data() {
+      return reinterpret_cast<NativeStruct_Data*>(array_writer_.data());
+    }
+    NativeStruct_Data* operator->() { return data(); }
+
+   private:
+    Array_Data<uint8_t>::BufferWriter array_writer_;
+  };
+
   static bool Validate(const void* data, ValidationContext* validation_context);
 
   // Unlike normal structs, the memory layout is exactly the same as an array

@@ -268,17 +268,33 @@ class Array_Data {
           std::is_same<T, Handle_Data>::value>;
   using Element = T;
 
-  // Returns null if |num_elements| or the corresponding storage size cannot be
-  // stored in uint32_t.
-  static Array_Data<T>* New(size_t num_elements, Buffer* buf) {
-    if (num_elements > Traits::kMaxNumElements)
-      return nullptr;
+  class BufferWriter {
+   public:
+    BufferWriter() = default;
+    BufferWriter(size_t num_elements, Buffer* buffer) {
+      if (num_elements > Traits::kMaxNumElements)
+        return;
 
-    uint32_t num_bytes =
-        Traits::GetStorageSize(static_cast<uint32_t>(num_elements));
-    return new (buf->Allocate(num_bytes))
-        Array_Data<T>(num_bytes, static_cast<uint32_t>(num_elements));
-  }
+      uint32_t num_bytes =
+          Traits::GetStorageSize(static_cast<uint32_t>(num_elements));
+      buffer_ = buffer;
+      index_ = buffer_->Allocate(num_bytes);
+      new (data())
+          Array_Data<T>(num_bytes, static_cast<uint32_t>(num_elements));
+    }
+    ~BufferWriter() = default;
+
+    bool is_null() const { return !buffer_; }
+
+    Array_Data<T>* data() {
+      return buffer_ ? buffer_->Get<Array_Data<T>>(index_) : nullptr;
+    }
+    Array_Data<T>* operator->() { return data(); }
+
+   private:
+    Buffer* buffer_ = nullptr;
+    size_t index_ = 0;
+  };
 
   static bool Validate(const void* data,
                        ValidationContext* validation_context,

@@ -2,7 +2,25 @@
 
 class {{export_attribute}} {{class_name}} {
  public:
-  static {{class_name}}* New(mojo::internal::Buffer* buf);
+  class BufferWriter {
+   public:
+    BufferWriter() = default;
+    explicit BufferWriter(mojo::internal::Buffer* buffer)
+        : buffer_(buffer), index_(buffer_->Allocate(sizeof({{class_name}}))) {
+      new (data()) {{class_name}}();
+    }
+    ~BufferWriter() = default;
+
+    bool is_null() const { return !buffer_; }
+    {{class_name}}* data() {
+      return buffer_ ? buffer_->Get<{{class_name}}>(index_) : nullptr;
+    }
+    {{class_name}}* operator->() { return data(); }
+
+   private:
+    mojo::internal::Buffer* buffer_ = nullptr;
+    size_t index_ = 0;
+  };
 
   static bool Validate(const void* data,
                        mojo::internal::ValidationContext* validation_context);
