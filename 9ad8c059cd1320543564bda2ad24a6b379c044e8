@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fc765f9_4e56ccf9",
+        "filename": "chrome/browser/media_galleries/gallery_watch_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-20T14:25:13Z",
+      "side": 1,
+      "message": "auto",
+      "range": {
+        "startLine": 119,
+        "startChar": 2,
+        "endLine": 119,
+        "endChar": 40
+      },
+      "revId": "9ad8c059cd1320543564bda2ad24a6b379c044e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
