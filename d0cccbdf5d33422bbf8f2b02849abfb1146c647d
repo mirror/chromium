@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bb08676_859fc2ea",
+        "filename": "ash/system/tray/tray_info_label.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T21:28:27Z",
+      "side": 1,
+      "message": "Verify this in your tests. After you call Update(), call accessible_name() to grab the name.\n\nExample:\nlabel_-\u003eUpdate(IDS_ASH_STATUS_TRAY_BLUETOOTH_DISABLED);\nEXPECT_EQ(l10n_util::GetStringUTF16(IDS_ASH_STATUS_TRAY_BLUETOOTH_DISABLED),\n          label_-\u003eaccessible_name());",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 19
+      },
+      "revId": "d0cccbdf5d33422bbf8f2b02849abfb1146c647d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8338603_2e5cee59",
+        "filename": "ash/system/tray/tray_info_label.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T21:28:27Z",
+      "side": 1,
+      "message": "ActionableView::GetAccessibleNodeData() already sets this, so we only need to cover the !IsClickable() part:\n\nif (!IsClickable())\n  node_data-\u003erole \u003d ui::AX_ROLE_LABEL_TEXT;",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 41
+      },
+      "revId": "d0cccbdf5d33422bbf8f2b02849abfb1146c647d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
