@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d22c9407_51aff416",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/OnExitVrRequestListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-20T14:36:57Z",
+      "side": 1,
+      "message": "nit: onExitedVr()",
+      "range": {
+        "startLine": 14,
+        "startChar": 9,
+        "endLine": 14,
+        "endChar": 17
+      },
+      "revId": "69e000bc419d8490ff807d2865ba55f6b076f173",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84964b56_619484e8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/OnExitVrRequestListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-20T14:36:57Z",
+      "side": 1,
+      "message": "nit: onStayedInVr()",
+      "range": {
+        "startLine": 20,
+        "startChar": 9,
+        "endLine": 20,
+        "endChar": 17
+      },
+      "revId": "69e000bc419d8490ff807d2865ba55f6b076f173",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f48912db_e8d20329",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1201,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-20T14:36:57Z",
+      "side": 1,
+      "message": "I think we should add a new variable for this. We don\u0027t want to end up in a situation where we accidentally double notify, or fail to notify about vr exit, so we should clear the callbacks as soon as we fire them, and if the list isn\u0027t empty when we try to clear it, we need to fire the callbacks.",
+      "range": {
+        "startLine": 1201,
+        "startChar": 16,
+        "endLine": 1201,
+        "endChar": 97
+      },
+      "revId": "69e000bc419d8490ff807d2865ba55f6b076f173",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9613504_9f9054ca",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1303,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-20T14:36:57Z",
+      "side": 1,
+      "message": "I think we need to fire either way to let callers make a decision about what they want to do after asking for a VR exit. We should expose to them somehow the information they need to make the correct decision. Possibly add a boolean value for whether the exit was a \u0027successful\u0027 exit in the onExitedVr() callback.",
+      "range": {
+        "startLine": 1303,
+        "startChar": 11,
+        "endLine": 1303,
+        "endChar": 50
+      },
+      "revId": "69e000bc419d8490ff807d2865ba55f6b076f173",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e1f9d78_c86736c8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-20T14:36:57Z",
+      "side": 1,
+      "message": "Why do we have multiple lists of OnExitVrRequestListeners? Only one exit request can actually happen at a time, right? Shouldn\u0027t we have just one list?",
+      "range": {
+        "startLine": 128,
+        "startChar": 43,
+        "endLine": 128,
+        "endChar": 68
+      },
+      "revId": "69e000bc419d8490ff807d2865ba55f6b076f173",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
