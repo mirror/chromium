@@ -15,6 +15,7 @@ import static org.chromium.chrome.browser.payments.PaymentRequestTestRule.IMMEDI
 
 import android.support.test.filters.MediumTest;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,39 +43,38 @@ import java.util.concurrent.TimeoutException;
         ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
         ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG, ENABLE_WEB_PAYMENTS_MODIFIERS,
 })
-public class PaymentRequestPaymentAppAndBasicCardWithModifiersTest
-        implements PaymentRequestTestRule.MainActivityStartCallback {
+public class PaymentRequestPaymentAppAndBasicCardWithModifiersTest {
     @Rule
     public PaymentRequestTestRule mPaymentRequestTestRule = new PaymentRequestTestRule(
-            "payment_request_bobpay_and_basic_card_with_modifiers_test.html", this);
+            "payment_request_bobpay_and_basic_card_with_modifiers_test.html");
 
-    @Override
-    public void onMainActivityStarted()
-            throws InterruptedException, ExecutionException, TimeoutException {
-        AutofillTestHelper helper = new AutofillTestHelper();
-        String billingAddressId = helper.setProfile(new AutofillProfile("", "https://example.com",
-                true, "Jon Doe", "Google", "340 Main St", "CA", "Los Angeles", "", "90291", "",
-                "US", "310-310-6000", "jon.doe@gmail.com", "en-US"));
-        // Mastercard card without a billing address.
-        helper.setCreditCard(new CreditCard("", "https://example.com", true, true, "Jon Doe",
-                "5454545454545454", "", "12", "2050", "mastercard", R.drawable.mc_card,
-                CardType.UNKNOWN, "" /* billingAddressId */, "" /* serverId */));
-        // Visa card with complete set of information.
-        helper.setCreditCard(new CreditCard("", "https://example.com", true, true, "Jon Doe",
-                "4111111111111111", "", "12", "2050", "visa", R.drawable.visa_card,
-                CardType.UNKNOWN, billingAddressId, "" /* serverId */));
+    AutofillTestHelper mHelper;
+    String mBillingAddressId;
+
+    @Before
+    public void setUp() throws Throwable {
+        mHelper = new AutofillTestHelper();
+        mBillingAddressId = mHelper.setProfile(new AutofillProfile("", "https://example.com", true,
+                "Jon Doe", "Google", "340 Main St", "CA", "Los Angeles", "", "90291", "", "US",
+                "310-310-6000", "jon.doe@gmail.com", "en-US"));
     }
 
     /**
      * Verify modifier for Bobpay is only applied for Bobpay.
      */
     @Test
+    @CommandLineFlags.Add("enable-experimental-web-platform-features")
     @MediumTest
     @Feature({"Payments"})
-    public void testUpdateTotalAndInstrumentLabelWithModifiers()
+    public void testUpdateTotalAndInstrumentLabelWithBobPayModifiers()
             throws InterruptedException, ExecutionException, TimeoutException {
+        // Mastercard card with complete set of information and unknown type.
+        mHelper.setCreditCard(new CreditCard("", "https://example.com", true, true, "Jon Doe",
+                "5555555555554444", "", "12", "2050", "mastercard", R.drawable.mc_card,
+                CardType.UNKNOWN, mBillingAddressId, "" /* serverId */));
         mPaymentRequestTestRule.installPaymentApp(HAVE_INSTRUMENTS, IMMEDIATE_RESPONSE);
-        mPaymentRequestTestRule.triggerUIAndWait(mPaymentRequestTestRule.getReadyToPay());
+        mPaymentRequestTestRule.triggerUIAndWait(
+                "buy_with_bobpay_discount", mPaymentRequestTestRule.getReadyToPay());
 
         assertTrue(mPaymentRequestTestRule.getSelectedPaymentInstrumentLabel().startsWith(
                 "https://bobpay.com"));
@@ -89,15 +89,151 @@ public class PaymentRequestPaymentAppAndBasicCardWithModifiersTest
     }
 
     /**
+     * Verify modifier for credit card is only applied for credit card.
+     */
+    @Test
+    @CommandLineFlags.Add("enable-experimental-web-platform-features")
+    @MediumTest
+    @Feature({"Payments"})
+    public void testUpdateTotalAndInstrumentLabelWithCreditModifiers()
+            throws InterruptedException, ExecutionException, TimeoutException {
+        // Credit mastercard card with complete set of information.
+        mHelper.addServerCreditCard(new CreditCard("guid_1", "https://example.com", false, true,
+                "Jon Doe", "5454545454545454", "", "12", "2050", "mastercard", R.drawable.mc_card,
+                CardType.CREDIT, mBillingAddressId, "server-id-1"));
+        mHelper.setCreditCardUseStatsForTesting("guid_1", 100, 5000);
+        // Mastercard card with complete set of information and unknown type.
+        mHelper.addServerCreditCard(new CreditCard("guid_2", "https://example.com", false, true,
+                "Jon Doe", "5555555555554444", "", "12", "2050", "mastercard", R.drawable.mc_card,
+                CardType.UNKNOWN, mBillingAddressId, "server-id-2"));
+        mHelper.setCreditCardUseStatsForTesting("guid_2", 1, 5000);
+        mPaymentRequestTestRule.triggerUIAndWait(
+                "credit_supported_type", mPaymentRequestTestRule.getReadyToPay());
+
+        assertTrue(mPaymentRequestTestRule.getSelectedPaymentInstrumentLabel().startsWith(
+                "Mastercard"));
+        assertEquals("USD $4.00", mPaymentRequestTestRule.getOrderSummaryTotal());
+
+        // select the master card with unknown type and verify modifier is not applied.
+        mPaymentRequestTestRule.clickOnPaymentMethodSuggestionOptionAndWait(
+                1, mPaymentRequestTestRule.getReadyForInput());
+        assertTrue(mPaymentRequestTestRule.getSelectedPaymentInstrumentLabel().startsWith(
+                "Mastercard"));
+        assertEquals("USD $5.00", mPaymentRequestTestRule.getOrderSummaryTotal());
+    }
+
+    /**
+     * Verify modifier for debit card is only applied for debit card.
+     */
+    @Test
+    @CommandLineFlags.Add("enable-experimental-web-platform-features")
+    @MediumTest
+    @Feature({"Payments"})
+    public void testUpdateTotalAndInstrumentLabelWithDebitModifiers()
+            throws InterruptedException, ExecutionException, TimeoutException {
+        // Debit mastercard card with complete set of information.
+        mHelper.addServerCreditCard(new CreditCard("guid_1", "https://example.com", false, true,
+                "Jon Doe", "5200828282828210", "", "12", "2050", "mastercard", R.drawable.mc_card,
+                CardType.DEBIT, mBillingAddressId, "server-id-1"));
+        mHelper.setCreditCardUseStatsForTesting("guid_1", 100, 5000);
+        // Credit mastercard card with complete set of information.
+        mHelper.addServerCreditCard(new CreditCard("guid_2", "https://example.com", false, true,
+                "Jon Doe", "5454545454545454", "", "12", "2050", "mastercard", R.drawable.mc_card,
+                CardType.CREDIT, mBillingAddressId, "server-id-2"));
+        mHelper.setCreditCardUseStatsForTesting("guid_2", 1, 5000);
+        mPaymentRequestTestRule.triggerUIAndWait(
+                "debit_supported_type", mPaymentRequestTestRule.getReadyToPay());
+
+        assertTrue(mPaymentRequestTestRule.getSelectedPaymentInstrumentLabel().startsWith(
+                "Mastercard"));
+        assertEquals("USD $4.00", mPaymentRequestTestRule.getOrderSummaryTotal());
+
+        // select the credit mastercard and verify modifier is not applied.
+        mPaymentRequestTestRule.clickOnPaymentMethodSuggestionOptionAndWait(
+                1, mPaymentRequestTestRule.getReadyForInput());
+        assertTrue(mPaymentRequestTestRule.getSelectedPaymentInstrumentLabel().startsWith(
+                "Mastercard"));
+        assertEquals("USD $5.00", mPaymentRequestTestRule.getOrderSummaryTotal());
+    }
+
+    /**
+     * Verify modifier for credit visa card is only applied for credit visa card.
+     */
+    @Test
+    @CommandLineFlags.Add("enable-experimental-web-platform-features")
+    @MediumTest
+    @Feature({"Payments"})
+    public void testUpdateTotalAndInstrumentLabelWithCreditVisaModifiers()
+            throws InterruptedException, ExecutionException, TimeoutException {
+        // Credit visa card with complete set of information.
+        mHelper.addServerCreditCard(new CreditCard("guid_1", "https://example.com", false, true,
+                "Jon Doe", "4111111111111111", "", "12", "2050", "mastercard", R.drawable.mc_card,
+                CardType.CREDIT, mBillingAddressId, "server-id-1"));
+        mHelper.setCreditCardUseStatsForTesting("guid_1", 100, 5000);
+        // Credit mastercard with complete set of information.
+        mHelper.addServerCreditCard(new CreditCard("guid_2", "https://example.com", false, true,
+                "Jon Doe", "5200828282828210", "", "12", "2050", "mastercard", R.drawable.mc_card,
+                CardType.CREDIT, mBillingAddressId, "server-id-2"));
+        mHelper.setCreditCardUseStatsForTesting("guid_2", 1, 5000);
+        mPaymentRequestTestRule.triggerUIAndWait(
+                "visa_supported_network", mPaymentRequestTestRule.getReadyToPay());
+
+        assertTrue(mPaymentRequestTestRule.getSelectedPaymentInstrumentLabel().startsWith("Visa"));
+        assertEquals("USD $4.00", mPaymentRequestTestRule.getOrderSummaryTotal());
+
+        // select the other credit mastercard and verify modifier is not applied.
+        mPaymentRequestTestRule.clickOnPaymentMethodSuggestionOptionAndWait(
+                1, mPaymentRequestTestRule.getReadyForInput());
+        assertTrue(mPaymentRequestTestRule.getSelectedPaymentInstrumentLabel().startsWith(
+                "Mastercard"));
+        assertEquals("USD $5.00", mPaymentRequestTestRule.getOrderSummaryTotal());
+    }
+
+    /**
+     * Verify modifier for credit mastercard is only applied for credit mastercard.
+     */
+    @Test
+    @CommandLineFlags.Add("enable-experimental-web-platform-features")
+    @MediumTest
+    @Feature({"Payments"})
+    public void testUpdateTotalAndInstrumentLabelWithMasterCreditModifiers()
+            throws InterruptedException, ExecutionException, TimeoutException {
+        // Credit mastercard with complete set of information.
+        mHelper.addServerCreditCard(new CreditCard("guid_1", "https://example.com", false, true,
+                "Jon Doe", "5200828282828210", "", "12", "2050", "mastercard", R.drawable.mc_card,
+                CardType.CREDIT, mBillingAddressId, "server-id-1"));
+        mHelper.setCreditCardUseStatsForTesting("guid_1", 100, 5000);
+        // Visa card with complete set of information and unknown type.
+        mHelper.addServerCreditCard(new CreditCard("guid_2", "https://example.com", false, true,
+                "Jon Doe", "4111111111111111", "", "12", "2050", "mastercard", R.drawable.mc_card,
+                CardType.UNKNOWN, mBillingAddressId, "server-id-2"));
+        mHelper.setCreditCardUseStatsForTesting("guid_2", 1, 5000);
+        mPaymentRequestTestRule.triggerUIAndWait(
+                "mastercard_supported_network", mPaymentRequestTestRule.getReadyToPay());
+
+        assertTrue(mPaymentRequestTestRule.getSelectedPaymentInstrumentLabel().startsWith(
+                "Mastercard"));
+        assertEquals("USD $4.00", mPaymentRequestTestRule.getOrderSummaryTotal());
+
+        // select the other visa card with unknow type and verify modifier is not applied.
+        mPaymentRequestTestRule.clickOnPaymentMethodSuggestionOptionAndWait(
+                1, mPaymentRequestTestRule.getReadyForInput());
+        assertTrue(mPaymentRequestTestRule.getSelectedPaymentInstrumentLabel().startsWith("Visa"));
+        assertEquals("USD $5.00", mPaymentRequestTestRule.getOrderSummaryTotal());
+    }
+
+    /**
      * Verify native app can pay as expected when modifier is applied.
      */
     @Test
+    @CommandLineFlags.Add("enable-experimental-web-platform-features")
     @MediumTest
     @Feature({"Payments"})
     public void testPaymentAppCanPayWithModifiers()
             throws InterruptedException, ExecutionException, TimeoutException {
         mPaymentRequestTestRule.installPaymentApp(HAVE_INSTRUMENTS, DELAYED_RESPONSE);
-        mPaymentRequestTestRule.triggerUIAndWait(mPaymentRequestTestRule.getReadyToPay());
+        mPaymentRequestTestRule.triggerUIAndWait(
+                "buy_with_bobpay_discount", mPaymentRequestTestRule.getReadyToPay());
 
         assertTrue(mPaymentRequestTestRule.getSelectedPaymentInstrumentLabel().startsWith(
                 "https://bobpay.com"));
