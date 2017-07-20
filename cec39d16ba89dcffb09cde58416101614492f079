@@ -46,6 +46,30 @@
       "revId": "cec39d16ba89dcffb09cde58416101614492f079",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d4f7694_711b9e88",
+        "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-20T20:11:15Z",
+      "side": 1,
+      "message": "Okay, given the situation, I think it\u0027s fine to land. Could you maybe update the comment to provide a little more details, especially that this is a speculative fix? (just so the next person reading it doesn\u0027t think it is WAI).",
+      "parentUuid": "426a1912_432514d3",
+      "range": {
+        "startLine": 586,
+        "startChar": 41,
+        "endLine": 586,
+        "endChar": 55
+      },
+      "revId": "cec39d16ba89dcffb09cde58416101614492f079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
