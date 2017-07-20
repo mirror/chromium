@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "602149c8_f7f4b5d6",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 74269,
+      "author": {
+        "id": 1116013
+      },
+      "writtenOn": "2017-07-20T21:14:58Z",
+      "side": 1,
+      "message": "machine",
+      "range": {
+        "startLine": 74269,
+        "startChar": 30,
+        "endLine": 74269,
+        "endChar": 31
+      },
+      "revId": "dbff57dc7d15bc9ae6444aa6073fe6fdfdca9cdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88c8a43f_c6232dd6",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 74431,
+      "author": {
+        "id": 1116013
+      },
+      "writtenOn": "2017-07-20T21:14:58Z",
+      "side": 1,
+      "message": "period?",
+      "range": {
+        "startLine": 74431,
+        "startChar": 54,
+        "endLine": 74431,
+        "endChar": 0
+      },
+      "revId": "dbff57dc7d15bc9ae6444aa6073fe6fdfdca9cdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
