@@ -22,6 +22,30 @@
       "revId": "e38ffd58074404ad7e0d02043c7d50b6cad1c200",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef73f116_3c62d151",
+        "filename": "components/arc/arc_session.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-20T07:31:25Z",
+      "side": 1,
+      "message": "Thanks, done.",
+      "parentUuid": "ae79e04b_18fd680b",
+      "range": {
+        "startLine": 310,
+        "startChar": 56,
+        "endLine": 310,
+        "endChar": 64
+      },
+      "revId": "e38ffd58074404ad7e0d02043c7d50b6cad1c200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
