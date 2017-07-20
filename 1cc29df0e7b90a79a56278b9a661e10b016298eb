@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17e315fe_59cd71e4",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 743,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-20T23:54:33Z",
+      "side": 1,
+      "message": "newline after this",
+      "revId": "1cc29df0e7b90a79a56278b9a661e10b016298eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecda784b_33101d5f",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 984,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-20T23:54:33Z",
+      "side": 1,
+      "message": "I don\u0027t really like these two entrypoints to |full_card_request_|, but I can live with it for now...",
+      "revId": "1cc29df0e7b90a79a56278b9a661e10b016298eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d12f8f3_cee68a67",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 1748,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-20T23:54:33Z",
+      "side": 1,
+      "message": "It\u0027s hard to be a fan of a function with 9 arguments :) We should look at fixing this soon.",
+      "range": {
+        "startLine": 1748,
+        "startChar": 22,
+        "endLine": 1748,
+        "endChar": 48
+      },
+      "revId": "1cc29df0e7b90a79a56278b9a661e10b016298eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "61e3234b_5112c09b",
+        "filename": "components/autofill/core/browser/autofill_manager.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-20T23:54:33Z",
+      "side": 1,
+      "message": "Format for TODO is TODO(crbug.com/xxxxxx): \u003cexplain the problem\u003e. Using bugs helps up keep track of the work!",
+      "range": {
+        "startLine": 358,
+        "startChar": 5,
+        "endLine": 358,
+        "endChar": 16
+      },
+      "revId": "1cc29df0e7b90a79a56278b9a661e10b016298eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fc53ad5_e908236c",
+        "filename": "components/autofill/core/browser/autofill_metrics.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 1426,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-20T23:54:33Z",
+      "side": 1,
+      "message": "TODO(crbug.com/xxxxxx)",
+      "revId": "1cc29df0e7b90a79a56278b9a661e10b016298eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b86a14e_b42d43f0",
+        "filename": "components/payments/core/autofill_payment_instrument_unittest.cc",
+        "patchSetId": 36
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-20T23:54:33Z",
+      "side": 1,
+      "message": "It\u0027s a lot to add, all for a test. Let\u0027s work on something better soon.",
+      "revId": "1cc29df0e7b90a79a56278b9a661e10b016298eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0f49da40_c7f0ad88",
+        "filename": "components/payments/core/test_payment_request_delegate.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-20T23:54:33Z",
+      "side": 1,
+      "message": "This should live in its own file, close to payments_client.h/cc. Feel free to do in the next change.",
+      "revId": "1cc29df0e7b90a79a56278b9a661e10b016298eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cfab221_9b131861",
+        "filename": "components/payments/core/test_payment_request_delegate.h",
+        "patchSetId": 36
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-20T23:54:33Z",
+      "side": 1,
+      "message": "typo",
+      "revId": "1cc29df0e7b90a79a56278b9a661e10b016298eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
