@@ -38,6 +38,7 @@ INSTANTIATE_TEST_CASE_P(All, PaintInvalidationTest, ::testing::Bool());
 // Changing style in a way that changes overflow without layout should cause
 // the layout view to possibly need a paint invalidation since we may have
 // revealed additional background that can be scrolled into view.
+// TODO(mstensho): This is no longer true; we'll get layout here!
 TEST_P(PaintInvalidationTest, RecalcOverflowInvalidatesBackground) {
   GetDocument().GetPage()->GetSettings().SetViewportEnabled(true);
   SetBodyInnerHTML(
@@ -64,10 +65,9 @@ TEST_P(PaintInvalidationTest, RecalcOverflowInvalidatesBackground) {
   Element* container = GetDocument().getElementById("container");
   container->setAttribute(HTMLNames::styleAttr,
                           "transform: translateY(1000px);");
-  GetDocument().UpdateStyleAndLayoutTree();
+  GetDocument().View()->UpdateAllLifecyclePhases();
 
   EXPECT_EQ(scrollable_area->MaximumScrollOffset().Height(), 1000);
-  EXPECT_TRUE(GetDocument().GetLayoutView()->MayNeedPaintInvalidation());
 }
 
 TEST_P(PaintInvalidationTest, UpdateVisualRectOnFrameBorderWidthChange) {
