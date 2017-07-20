@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef MEDIA_GPU_AVDA_CODEC_ALLOCATOR_H_
-#define MEDIA_GPU_AVDA_CODEC_ALLOCATOR_H_
+#ifndef MEDIA_GPU_ANDROID_AVDA_CODEC_ALLOCATOR_H_
+#define MEDIA_GPU_ANDROID_AVDA_CODEC_ALLOCATOR_H_
 
 #include <stddef.h>
 
@@ -26,7 +26,7 @@
 #include "media/base/media.h"
 #include "media/base/surface_manager.h"
 #include "media/base/video_codecs.h"
-#include "media/gpu/avda_surface_bundle.h"
+#include "media/gpu/android/avda_surface_bundle.h"
 #include "media/gpu/media_gpu_export.h"
 #include "ui/gfx/geometry/size.h"
 #include "ui/gl/android/scoped_java_surface.h"
@@ -245,4 +245,4 @@ class MEDIA_GPU_EXPORT AVDACodecAllocator {
 
 }  // namespace media
 
-#endif  // MEDIA_GPU_AVDA_CODEC_ALLOCATOR_H_
+#endif  // MEDIA_GPU_ANDROID_AVDA_CODEC_ALLOCATOR_H_

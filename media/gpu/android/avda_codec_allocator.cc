@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "media/gpu/avda_codec_allocator.h"
+#include "media/gpu/android/avda_codec_allocator.h"
 
 #include <stddef.h>
 
@@ -21,7 +21,7 @@
 #include "media/base/limits.h"
 #include "media/base/media.h"
 #include "media/base/timestamp_constants.h"
-#include "media/gpu/android_video_decode_accelerator.h"
+#include "media/gpu/android/android_video_decode_accelerator.h"
 
 namespace media {
 

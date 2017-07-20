@@ -2,17 +2,17 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef MEDIA_GPU_AVDA_SHARED_STATE_H_
-#define MEDIA_GPU_AVDA_SHARED_STATE_H_
+#ifndef MEDIA_GPU_ANDROID_AVDA_SHARED_STATE_H_
+#define MEDIA_GPU_ANDROID_AVDA_SHARED_STATE_H_
 
 #include "base/memory/weak_ptr.h"
 #include "base/synchronization/waitable_event.h"
 #include "gpu/command_buffer/service/gles2_cmd_decoder.h"
 #include "media/base/android/android_overlay.h"
 #include "media/base/android/media_codec_bridge.h"
+#include "media/gpu/android/avda_shared_state.h"
+#include "media/gpu/android/avda_surface_bundle.h"
 #include "media/gpu/android/promotion_hint_aggregator.h"
-#include "media/gpu/avda_shared_state.h"
-#include "media/gpu/avda_surface_bundle.h"
 #include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_context.h"
 #include "ui/gl/gl_image.h"
@@ -110,4 +110,4 @@ class AVDASharedState : public base::RefCounted<AVDASharedState> {
 
 }  // namespace media
 
-#endif  // MEDIA_GPU_AVDA_SHARED_STATE_H_
+#endif  // MEDIA_GPU_ANDROID_AVDA_SHARED_STATE_H_

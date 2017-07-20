@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef MEDIA_GPU_ANDROID_VIDEO_SURFACE_CHOOSER_H_
-#define MEDIA_GPU_ANDROID_VIDEO_SURFACE_CHOOSER_H_
+#ifndef MEDIA_GPU_ANDROID_ANDROID_VIDEO_SURFACE_CHOOSER_H_
+#define MEDIA_GPU_ANDROID_ANDROID_VIDEO_SURFACE_CHOOSER_H_
 
 #include "base/bind.h"
 #include "base/macros.h"
@@ -66,4 +66,4 @@ class MEDIA_GPU_EXPORT AndroidVideoSurfaceChooser {
 
 }  // namespace media
 
-#endif  // MEDIA_GPU_ANDROID_VIDEO_SURFACE_CHOOSER_H_
+#endif  // MEDIA_GPU_ANDROID_ANDROID_VIDEO_SURFACE_CHOOSER_H_

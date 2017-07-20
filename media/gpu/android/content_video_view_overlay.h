@@ -2,14 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef MEDIA_GPU_CONTENT_VIDEO_VIEW_OVERLAY_H_
-#define MEDIA_GPU_CONTENT_VIDEO_VIEW_OVERLAY_H_
+#ifndef MEDIA_GPU_ANDROID_CONTENT_VIDEO_VIEW_OVERLAY_H_
+#define MEDIA_GPU_ANDROID_CONTENT_VIDEO_VIEW_OVERLAY_H_
 
 #include <memory>
 
 #include "base/memory/weak_ptr.h"
 #include "media/base/android/android_overlay.h"
-#include "media/gpu/content_video_view_overlay_allocator.h"
+#include "media/gpu/android/content_video_view_overlay_allocator.h"
 #include "ui/gl/android/scoped_java_surface.h"
 
 namespace media {

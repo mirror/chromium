@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef MEDIA_GPU_ANDROID_VIDEO_ENCODE_ACCELERATOR_H_
-#define MEDIA_GPU_ANDROID_VIDEO_ENCODE_ACCELERATOR_H_
+#ifndef MEDIA_GPU_ANDROID_ANDROID_VIDEO_ENCODE_ACCELERATOR_H_
+#define MEDIA_GPU_ANDROID_ANDROID_VIDEO_ENCODE_ACCELERATOR_H_
 
 #include <stddef.h>
 #include <stdint.h>
@@ -112,4 +112,4 @@ class MEDIA_GPU_EXPORT AndroidVideoEncodeAccelerator
 
 }  // namespace media
 
-#endif  // MEDIA_GPU_ANDROID_VIDEO_ENCODE_ACCELERATOR_H_
+#endif  // MEDIA_GPU_ANDROID_ANDROID_VIDEO_ENCODE_ACCELERATOR_H_

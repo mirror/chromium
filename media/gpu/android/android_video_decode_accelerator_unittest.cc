@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "media/gpu/android_video_decode_accelerator.h"
+#include "media/gpu/android/android_video_decode_accelerator.h"
 
 #include <stdint.h>
 
@@ -23,12 +23,12 @@
 #include "media/base/android/media_jni_registrar.h"
 #include "media/base/android/mock_android_overlay.h"
 #include "media/base/android/mock_media_codec_bridge.h"
+#include "media/gpu/android/android_video_decode_accelerator.h"
+#include "media/gpu/android/android_video_surface_chooser.h"
+#include "media/gpu/android/avda_codec_allocator.h"
+#include "media/gpu/android/fake_android_video_surface_chooser.h"
 #include "media/gpu/android/fake_codec_allocator.h"
 #include "media/gpu/android/mock_device_info.h"
-#include "media/gpu/android_video_decode_accelerator.h"
-#include "media/gpu/android_video_surface_chooser.h"
-#include "media/gpu/avda_codec_allocator.h"
-#include "media/gpu/fake_android_video_surface_chooser.h"
 #include "media/video/picture.h"
 #include "media/video/video_decode_accelerator.h"
 #include "testing/gmock/include/gmock/gmock.h"

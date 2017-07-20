@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "media/gpu/android_video_decode_accelerator.h"
+#include "media/gpu/android/android_video_decode_accelerator.h"
 
 #include <stddef.h>
 
@@ -34,11 +34,11 @@
 #include "media/base/media.h"
 #include "media/base/timestamp_constants.h"
 #include "media/base/video_decoder_config.h"
+#include "media/gpu/android/android_video_surface_chooser_impl.h"
+#include "media/gpu/android/avda_picture_buffer_manager.h"
+#include "media/gpu/android/content_video_view_overlay.h"
 #include "media/gpu/android/device_info.h"
 #include "media/gpu/android/promotion_hint_aggregator_impl.h"
-#include "media/gpu/android_video_surface_chooser_impl.h"
-#include "media/gpu/avda_picture_buffer_manager.h"
-#include "media/gpu/content_video_view_overlay.h"
 #include "media/gpu/shared_memory_region.h"
 #include "media/mojo/features.h"
 #include "media/video/picture.h"

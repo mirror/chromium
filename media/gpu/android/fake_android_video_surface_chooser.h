@@ -5,7 +5,7 @@
 #ifndef MEDIA_GPU_MOCK_ANDROID_VIDEO_SURFACE_CHOOSER_H_
 #define MEDIA_GPU_MOCK_ANDROID_VIDEO_SURFACE_CHOOSER_H_
 
-#include "media/gpu/android_video_surface_chooser.h"
+#include "media/gpu/android/android_video_surface_chooser.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 

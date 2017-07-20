@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef MEDIA_GPU_ANDROID_VIDEO_SURFACE_CHOOSER_IMPL_H_
-#define MEDIA_GPU_ANDROID_VIDEO_SURFACE_CHOOSER_IMPL_H_
+#ifndef MEDIA_GPU_ANDROID_ANDROID_VIDEO_SURFACE_CHOOSER_IMPL_H_
+#define MEDIA_GPU_ANDROID_ANDROID_VIDEO_SURFACE_CHOOSER_IMPL_H_
 
 #include "base/bind.h"
 #include "base/macros.h"
@@ -11,7 +11,7 @@
 #include "base/time/tick_clock.h"
 #include "base/time/time.h"
 #include "media/base/android/android_overlay.h"
-#include "media/gpu/android_video_surface_chooser.h"
+#include "media/gpu/android/android_video_surface_chooser.h"
 #include "media/gpu/media_gpu_export.h"
 
 namespace media {
@@ -95,4 +95,4 @@ class MEDIA_GPU_EXPORT AndroidVideoSurfaceChooserImpl
 
 }  // namespace media
 
-#endif  // MEDIA_GPU_ANDROID_VIDEO_SURFACE_CHOOSER_IMPL_H_
+#endif  // MEDIA_GPU_ANDROID_ANDROID_VIDEO_SURFACE_CHOOSER_IMPL_H_

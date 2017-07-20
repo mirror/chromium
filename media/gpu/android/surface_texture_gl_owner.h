@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef MEDIA_GPU_SURFACE_TEXTURE_GL_OWNER_H_
-#define MEDIA_GPU_SURFACE_TEXTURE_GL_OWNER_H_
+#ifndef MEDIA_GPU_ANDROID_SURFACE_TEXTURE_GL_OWNER_H_
+#define MEDIA_GPU_ANDROID_SURFACE_TEXTURE_GL_OWNER_H_
 
 #include "base/memory/ref_counted.h"
 #include "base/memory/ref_counted_delete_on_sequence.h"
@@ -126,4 +126,4 @@ class MEDIA_GPU_EXPORT SurfaceTextureGLOwnerImpl
 
 }  // namespace media
 
-#endif  // MEDIA_GPU_SURFACE_TEXTURE_GL_OWNER_H_
+#endif  // MEDIA_GPU_ANDROID_SURFACE_TEXTURE_GL_OWNER_H_
