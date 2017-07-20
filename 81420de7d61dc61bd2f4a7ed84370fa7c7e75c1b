@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "744d1449_cbab3923",
+        "filename": "third_party/WebKit/Source/core/CoreInitializer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-20T07:41:01Z",
+      "side": 1,
+      "message": "Can we use the singleton pattern?\n\nCoreInitializer\u0026 CoreInitializer::GetInstance() {\n  DEFINE_STATIC_LOCAL(CoreInitializer, ...);\n  return coreInitializer;\n}\n\nThen the caller site can call CoreInitializer::GetInstance().Initialize() etc.",
+      "revId": "81420de7d61dc61bd2f4a7ed84370fa7c7e75c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d8f1e45_0097d67e",
+        "filename": "third_party/WebKit/Source/core/CoreInitializer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-20T07:41:01Z",
+      "side": 1,
+      "message": "Can we add a comment and explain something like \"Add these callbacks to CoreInitializer to bypass the inverted dependency from core/ to modules/ ...\"?",
+      "revId": "81420de7d61dc61bd2f4a7ed84370fa7c7e75c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0def1ef_810b22bf",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-20T07:41:01Z",
+      "side": 1,
+      "message": "Can we move the dcheck into CoreInitializer::GetLocalFrameInitCallback?\n\nThe same comment for other files in this CL.",
+      "revId": "81420de7d61dc61bd2f4a7ed84370fa7c7e75c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
