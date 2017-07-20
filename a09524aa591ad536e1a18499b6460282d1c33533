@@ -22,6 +22,23 @@
       "revId": "a09524aa591ad536e1a18499b6460282d1c33533",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "392ea446_c3125683",
+        "filename": "components/signin/core/browser/signin_metrics.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-20T17:40:32Z",
+      "side": 1,
+      "message": "nit: Avoid abbreviations in identifiers",
+      "revId": "a09524aa591ad536e1a18499b6460282d1c33533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
