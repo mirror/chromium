@@ -126,9 +126,7 @@ class MockQuartcStreamDelegate : public QuartcStreamInterface::Delegate {
   MockQuartcStreamDelegate(int id, std::string* read_buffer)
       : id_(id), read_buffer_(read_buffer) {}
 
-  void OnBufferedAmountDecrease(QuartcStreamInterface* stream) override {
-    queued_bytes_amount_ = stream->buffered_amount();
-  }
+  void OnCanWrite(QuartcStreamInterface* stream) override {}
 
   void OnReceived(QuartcStreamInterface* stream,
                   const char* data,
@@ -141,15 +139,12 @@ class MockQuartcStreamDelegate : public QuartcStreamInterface::Delegate {
 
   bool closed() { return closed_; }
 
-  int queued_bytes_amount() { return queued_bytes_amount_; }
-
  protected:
   uint32_t id_;
   // Data read by the QuicStream.
   std::string* read_buffer_;
   // Whether the QuicStream is closed.
   bool closed_ = false;
-  int queued_bytes_amount_ = -1;
 };
 
 class QuartcStreamTest : public ::testing::Test,
@@ -223,25 +218,27 @@ TEST_F(QuartcStreamTest, WriteDataPartial) {
   EXPECT_EQ("Foo b", write_buffer_);
 }
 
-// Test that strings are buffered correctly.
-TEST_F(QuartcStreamTest, BufferData) {
+// Test that strings are not buffered.
+TEST_F(QuartcStreamTest, NoBuffer) {
   CreateReliableQuicStream();
 
   session_->set_writable(false);
   stream_->Write("Foo bar", 7, kDefaultParam);
-  // The data will be buffered.
+  // The data will not be buffered.
   EXPECT_EQ(0ul, write_buffer_.size());
-  EXPECT_TRUE(stream_->HasBufferedData());
-  EXPECT_EQ(-1, mock_stream_delegate_->queued_bytes_amount());
-  // The session is writable and the buffered data amount will change.
+  EXPECT_FALSE(stream_->HasBufferedData());
+  EXPECT_EQ(0u, stream_->bytes_written());
+  // The stream is writable, but there's nothing to send.
   session_->set_writable(true);
   stream_->OnCanWrite();
-  EXPECT_EQ(0, mock_stream_delegate_->queued_bytes_amount());
+  EXPECT_EQ(0u, stream_->bytes_written());
   EXPECT_FALSE(stream_->HasBufferedData());
-  EXPECT_EQ("Foo bar", write_buffer_);
+  EXPECT_EQ(0ul, write_buffer_.size());
 
+  // The stream threw away the previous data.  It only sends this.
   stream_->Write("xyzzy", 5, kDefaultParam);
-  EXPECT_EQ("Foo barxyzzy", write_buffer_);
+  EXPECT_EQ("xyzzy", write_buffer_);
+  EXPECT_EQ(5u, stream_->bytes_written());
 }
 
 // Read an entire string.

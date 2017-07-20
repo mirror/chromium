@@ -336,7 +336,7 @@ class FakeQuartcStreamDelegate : public QuartcStreamInterface::Delegate {
 
   void OnClose(QuartcStreamInterface* stream) override {}
 
-  void OnBufferedAmountDecrease(QuartcStreamInterface* stream) override {}
+  void OnCanWrite(QuartcStreamInterface* stream) override {}
 
   string data() { return last_received_data_; }
 
