@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af72d5a4_3130360d",
+        "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1284,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-07-20T15:04:47Z",
+      "side": 1,
+      "message": "nit: use auto? same below.",
+      "revId": "36e4781468b1cb67eeedacfaa5b1333dc86b1d23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e013ac9d_82c2b09a",
+        "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1291,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-07-20T15:04:47Z",
+      "side": 1,
+      "message": "nit: can you phrase this as a sentence? Like:\n// The delegate should have been notified twice: once for the loading state change, and once for the url change.\n\nSame below.",
+      "revId": "36e4781468b1cb67eeedacfaa5b1333dc86b1d23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
