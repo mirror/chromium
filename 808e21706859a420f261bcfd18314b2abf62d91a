@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ec44c0a9_0d7f03cb",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-20T23:16:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "919c1223_5c599264",
+      "range": {
+        "startLine": 64,
+        "startChar": 5,
+        "endLine": 64,
+        "endChar": 12
+      },
+      "revId": "808e21706859a420f261bcfd18314b2abf62d91a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "690d49bf_62f96fe0",
         "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
         "patchSetId": 2
@@ -95,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d2947a36_546957f7",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-20T23:16:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b46458de_694f5a96",
+      "range": {
+        "startLine": 42,
+        "startChar": 8,
+        "endLine": 42,
+        "endChar": 17
+      },
+      "revId": "808e21706859a420f261bcfd18314b2abf62d91a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e748d197_0b74637b",
         "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_result.cc",
         "patchSetId": 2
@@ -115,6 +163,30 @@
       "revId": "808e21706859a420f261bcfd18314b2abf62d91a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "438ca97e_c01ef9c7",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_result.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-20T23:16:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e748d197_0b74637b",
+      "range": {
+        "startLine": 183,
+        "startChar": 5,
+        "endLine": 183,
+        "endChar": 10
+      },
+      "revId": "808e21706859a420f261bcfd18314b2abf62d91a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -141,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "518db809_50fd50b5",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_result.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-20T23:16:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de34c96d_1d7df834",
+      "range": {
+        "startLine": 188,
+        "startChar": 37,
+        "endLine": 188,
+        "endChar": 69
+      },
+      "revId": "808e21706859a420f261bcfd18314b2abf62d91a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b53f262_bcd21698",
         "filename": "chrome/browser/ui/app_list/search/search_util.h",
         "patchSetId": 2
@@ -161,6 +257,30 @@
       "revId": "808e21706859a420f261bcfd18314b2abf62d91a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bbb2f49_45476d58",
+        "filename": "chrome/browser/ui/app_list/search/search_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-20T23:16:04Z",
+      "side": 1,
+      "message": "In the new PS, I explicitly describes it\u0027s from a Play Store app search.\nWondering if that\u0027s better.",
+      "parentUuid": "9b53f262_bcd21698",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 53
+      },
+      "revId": "808e21706859a420f261bcfd18314b2abf62d91a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
