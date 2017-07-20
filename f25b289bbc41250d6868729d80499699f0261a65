@@ -133,6 +133,30 @@
       "revId": "f25b289bbc41250d6868729d80499699f0261a65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f3c3b48_57f12c2a",
+        "filename": "ui/events/ozone/evdev/touch_event_converter_evdev_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1218,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2017-07-20T22:39:19Z",
+      "side": 1,
+      "message": "It should be fine, each move event should be understood to mean\n\n\"at time T, the position of the finger is X,Y with pressure P .. etc .. and barrel button state B\"\n\nWhich, given the device report containing only a button change, is a true statement and won\u0027t break any sane event handling code.",
+      "parentUuid": "9d1e730f_9800d73f",
+      "range": {
+        "startLine": 1218,
+        "startChar": 16,
+        "endLine": 1218,
+        "endChar": 20
+      },
+      "revId": "f25b289bbc41250d6868729d80499699f0261a65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
