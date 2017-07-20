@@ -52,7 +52,8 @@ class APP_LIST_EXPORT SearchBoxView : public views::View,
  public:
   SearchBoxView(SearchBoxViewDelegate* delegate,
                 AppListViewDelegate* view_delegate,
-                AppListView* app_list_view = nullptr);
+                AppListView* app_list_view = nullptr,
+                bool is_maximize_mode = false);
   ~SearchBoxView() override;
 
   void ModelChanged();
@@ -121,6 +122,9 @@ class APP_LIST_EXPORT SearchBoxView : public views::View,
                         AppListModel::State current_state,
                         AppListModel::State target_state);
 
+  // Called when maximize mode starts and ends.
+  void OnTabletModeChanged(bool started);
+
   // Used only in the tests to get the current search icon.
   views::ImageView* get_search_icon_for_test() { return search_icon_; }
 
@@ -188,6 +192,8 @@ class APP_LIST_EXPORT SearchBoxView : public views::View,
   const bool is_fullscreen_app_list_enabled_;
   // Whether the search box is active.
   bool is_search_box_active_ = false;
+  // Whether maximize mode is active.
+  bool is_tablet_mode_ = false;
   // The current background color.
   SkColor background_color_ = kSearchBoxBackgroundDefault;
   // The current search box color.
