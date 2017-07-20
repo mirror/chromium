@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "285c9079_67654378",
+        "filename": "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-20T23:01:10Z",
+      "side": 1,
+      "message": "Since this only recurses downward to children now (instead of both upward to parents and downwards to children), can you update the comment?\n\nIs it worth discussing what it means for a frame associated to another frame means?",
+      "revId": "cd862f8f5857de2514f375677c23f65674a30530",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
