@@ -46,6 +46,30 @@
       "revId": "e4663469c6fe70b8476b8ec0988d454cc99ed454",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cbd0e92_77225dfe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-20T00:27:24Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s exactly why we want to get rid of this scenario altogether (ultimately we want to TerminateProcess() after TaskScheduler::Shutdown() so there wouldn\u0027t be this whole running-after-static-uninitialization thing). You can leave it like this for now, it won\u0027t really matter unless your task takes forever and appears in shutdown hang reports.\n\nWe currently mitigate this somewhat by having AssertSingletonAllowed() fire in CONTINUE_ON_SHUTDOWN contexts: https://cs.chromium.org/chromium/src/base/task_scheduler/task_tracker.cc?rcl\u003da1efdc3eec28f62fab81f4d9f6c224302675a7d5\u0026l\u003d289",
+      "parentUuid": "0201dc1d_dec62da8",
+      "range": {
+        "startLine": 13,
+        "startChar": 3,
+        "endLine": 15,
+        "endChar": 38
+      },
+      "revId": "e4663469c6fe70b8476b8ec0988d454cc99ed454",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
