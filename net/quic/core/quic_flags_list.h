@@ -61,11 +61,6 @@ QUIC_FLAG(bool,
           FLAGS_quic_reloadable_flag_quic_limit_num_new_sessions_per_epoll_loop,
           true)
 
-// If true, QUIC server push will enabled by default.
-QUIC_FLAG(bool,
-          FLAGS_quic_reloadable_flag_quic_enable_server_push_by_default,
-          true)
-
 // If true, release QuicCryptoStream\'s read buffer when stream are less
 // frequently used.
 QUIC_FLAG(bool,

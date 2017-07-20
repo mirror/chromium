@@ -178,8 +178,7 @@ class QuicSpdySession::SpdyFramerVisitor
         session_->UpdateHeaderEncoderTableSize(value);
         break;
       case SETTINGS_ENABLE_PUSH:
-        if (FLAGS_quic_reloadable_flag_quic_enable_server_push_by_default &&
-            session_->perspective() == Perspective::IS_SERVER) {
+        if (session_->perspective() == Perspective::IS_SERVER) {
           // See rfc7540, Section 6.5.2.
           if (value > 1) {
             CloseConnection(
@@ -336,7 +335,7 @@ QuicSpdySession::QuicSpdySession(QuicConnection* connection,
                                  const QuicConfig& config)
     : QuicSession(connection, visitor, config),
       force_hol_blocking_(false),
-      server_push_enabled_(false),
+      server_push_enabled_(true),
       stream_id_(kInvalidStreamId),
       promised_stream_id_(kInvalidStreamId),
       fin_(false),
@@ -639,9 +638,6 @@ void QuicSpdySession::OnConfigNegotiated() {
     headers_stream_->flow_controller()->UpdateSendWindowOffset(
         kStreamReceiveWindowLimit);
   }
-
-  server_push_enabled_ =
-      FLAGS_quic_reloadable_flag_quic_enable_server_push_by_default;
 }
 
 void QuicSpdySession::OnStreamFrameData(QuicStreamId stream_id,

@@ -14,6 +14,10 @@
 
 namespace net {
 
+namespace test {
+class QuicChromiumClientSessionPeer;
+}  // namespace test
+
 // An implementation of QuicCryptoClientStream::HandshakerDelegate which uses
 // QUIC crypto as the crypto handshake protocol.
 class QUIC_EXPORT_PRIVATE QuicCryptoClientHandshaker

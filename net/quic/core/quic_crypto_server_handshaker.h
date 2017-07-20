@@ -12,6 +12,10 @@
 
 namespace net {
 
+namespace test {
+class QuicCryptoServerStreamPeer;
+}  // namespace test
+
 class QUIC_EXPORT_PRIVATE QuicCryptoServerHandshaker
     : public QuicCryptoServerStream::HandshakerDelegate,
       public QuicCryptoHandshaker {
