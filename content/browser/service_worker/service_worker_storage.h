@@ -29,7 +29,6 @@
 
 namespace base {
 class SequencedTaskRunner;
-class SingleThreadTaskRunner;
 }
 
 namespace storage {
@@ -83,7 +82,6 @@ class CONTENT_EXPORT ServiceWorkerStorage
       const base::FilePath& path,
       const base::WeakPtr<ServiceWorkerContextCore>& context,
       std::unique_ptr<ServiceWorkerDatabaseTaskManager> database_task_manager,
-      const scoped_refptr<base::SingleThreadTaskRunner>& disk_cache_thread,
       storage::QuotaManagerProxy* quota_manager_proxy,
       storage::SpecialStoragePolicy* special_storage_policy);
 
@@ -354,7 +352,6 @@ class CONTENT_EXPORT ServiceWorkerStorage
       const base::FilePath& path,
       base::WeakPtr<ServiceWorkerContextCore> context,
       std::unique_ptr<ServiceWorkerDatabaseTaskManager> database_task_manager,
-      const scoped_refptr<base::SingleThreadTaskRunner>& disk_cache_thread,
       storage::QuotaManagerProxy* quota_manager_proxy,
       storage::SpecialStoragePolicy* special_storage_policy);
 
@@ -537,6 +534,10 @@ class CONTENT_EXPORT ServiceWorkerStorage
       const StatusCallback& callback,
       bool result);
 
+  // Sequences to run disk operation that won't conflict with the last known
+  // backend.  If we never had a backend, will run them independently.
+  scoped_refptr<base::SequencedTaskRunner> GetCacheTaskRunner();
+
   // For finding registrations being installed or uninstalled.
   RegistrationRefsById installing_registrations_;
   RegistrationRefsById uninstalling_registrations_;
@@ -569,11 +570,11 @@ class CONTENT_EXPORT ServiceWorkerStorage
   std::unique_ptr<ServiceWorkerDatabase> database_;
 
   std::unique_ptr<ServiceWorkerDatabaseTaskManager> database_task_manager_;
-  scoped_refptr<base::SingleThreadTaskRunner> disk_cache_thread_;
   scoped_refptr<storage::QuotaManagerProxy> quota_manager_proxy_;
   scoped_refptr<storage::SpecialStoragePolicy> special_storage_policy_;
 
   std::unique_ptr<ServiceWorkerDiskCache> disk_cache_;
+  scoped_refptr<base::SequencedTaskRunner> disk_cache_task_runner_;
 
   std::deque<int64_t> purgeable_resource_ids_;
   bool is_purge_pending_;

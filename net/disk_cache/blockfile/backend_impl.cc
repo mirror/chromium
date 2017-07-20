@@ -22,6 +22,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/sys_info.h"
+#include "base/threading/thread.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
@@ -36,6 +37,7 @@
 #include "net/disk_cache/blockfile/histogram_macros.h"
 #include "net/disk_cache/blockfile/webfonts_histogram.h"
 #include "net/disk_cache/cache_util.h"
+#include "net/disk_cache/cleanup_context.h"
 
 // Provide a BackendImpl object to macros from histogram_macros.h.
 #define CACHE_UMA_BACKEND_IMPL_OBJ this
@@ -80,6 +82,18 @@ size_t GetIndexSize(int table_len) {
   return sizeof(disk_cache::IndexHeader) + table_size;
 }
 
+base::Thread* cache_thread = nullptr;
+
+scoped_refptr<base::SingleThreadTaskRunner> CacheThread() {
+  if (!cache_thread) {
+    cache_thread = new base::Thread("CacheThread_Internal");
+    CHECK(cache_thread->StartWithOptions(
+        base::Thread::Options(base::MessageLoop::TYPE_IO, 0)));
+    CHECK(cache_thread->message_loop());
+  }
+  return cache_thread->task_runner();
+}
+
 // ------------------------------------------------------------------------
 
 // Sets group for the current experiment. Returns false if the files should be
@@ -115,31 +129,17 @@ void FinalCleanupCallback(disk_cache::BackendImpl* backend) {
 
 namespace disk_cache {
 
-BackendImpl::BackendImpl(
-    const base::FilePath& path,
-    const scoped_refptr<base::SingleThreadTaskRunner>& cache_thread,
-    net::NetLog* net_log)
-    : background_queue_(this, cache_thread),
-      path_(path),
-      block_files_(path),
-      mask_(0),
-      max_size_(0),
-      up_ticks_(0),
-      cache_type_(net::DISK_CACHE),
-      uma_report_(0),
-      user_flags_(0),
-      init_(false),
-      restarted_(false),
-      unit_test_(false),
-      read_only_(false),
-      disabled_(false),
-      new_eviction_(false),
-      first_timer_(true),
-      user_load_(false),
-      net_log_(net_log),
-      done_(base::WaitableEvent::ResetPolicy::MANUAL,
-            base::WaitableEvent::InitialState::NOT_SIGNALED),
-      ptr_factory_(this) {}
+BackendImpl::BackendImpl(const base::FilePath& path,
+                         CleanupContext* cleanup_context,
+                         net::NetLog* net_log)
+    : BackendImpl(path, 0, CacheThread(), net_log) {
+  cleanup_context_ = cleanup_context;
+}
+
+BackendImpl::BackendImpl(const base::FilePath& path,
+                         uint32_t mask,
+                         net::NetLog* net_log)
+    : BackendImpl(path, mask, CacheThread(), net_log) {}
 
 BackendImpl::BackendImpl(
     const base::FilePath& path,
@@ -154,7 +154,7 @@ BackendImpl::BackendImpl(
       up_ticks_(0),
       cache_type_(net::DISK_CACHE),
       uma_report_(0),
-      user_flags_(kMask),
+      user_flags_(mask_ != 0 ? kMask : 0),
       init_(false),
       restarted_(false),
       unit_test_(false),
@@ -298,6 +298,7 @@ int BackendImpl::SyncInit() {
   if (!disabled_ && should_create_timer) {
     // Create a recurrent timer of 30 secs.
     int timer_delay = unit_test_ ? 1000 : 30000;
+    DCHECK(background_queue_.BackgroundIsCurrentSequence());
     timer_.reset(new base::RepeatingTimer());
     timer_->Start(FROM_HERE, TimeDelta::FromMilliseconds(timer_delay), this,
                   &BackendImpl::OnStatsTimer);
@@ -308,6 +309,7 @@ int BackendImpl::SyncInit() {
 
 void BackendImpl::CleanupCache() {
   Trace("Backend Cleanup");
+  DCHECK(background_queue_.BackgroundIsCurrentSequence());
   eviction_.Stop();
   timer_.reset();
 
@@ -1328,6 +1330,10 @@ size_t BackendImpl::DumpMemoryStats(
   return 0u;
 }
 
+scoped_refptr<base::SequencedTaskRunner> BackendImpl::GetCacheTaskRunner() {
+  return background_queue_.background_thread();
+}
+
 // ------------------------------------------------------------------------
 
 // We just created a new file so we're going to write the header and set the
@@ -2098,6 +2104,11 @@ int BackendImpl::MaxBuffersSize() {
   }
 
   return static_cast<int>(total_memory);
+}
+
+void BackendImpl::FlushForTesting() {
+  if (cache_thread)
+    cache_thread->FlushForTesting();
 }
 
 }  // namespace disk_cache
