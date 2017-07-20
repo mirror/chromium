@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a69d99ac_f81dba78",
+        "filename": "cc/animation/animation_target.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-20T16:42:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9fba957_8c5e7a84",
+      "revId": "2844a169ca7fdec934888290aa7e6f1076cf7064",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "504399b1_d7b91902",
         "filename": "cc/animation/keyframed_animation_curve_unittest.cc",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "2844a169ca7fdec934888290aa7e6f1076cf7064",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8280a057_a5f90533",
+        "filename": "cc/animation/keyframed_animation_curve_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1079,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-20T16:42:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "504399b1_d7b91902",
+      "range": {
+        "startLine": 1079,
+        "startChar": 16,
+        "endLine": 1079,
+        "endChar": 20
+      },
+      "revId": "2844a169ca7fdec934888290aa7e6f1076cf7064",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
