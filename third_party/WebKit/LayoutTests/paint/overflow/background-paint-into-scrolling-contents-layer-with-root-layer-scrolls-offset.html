@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<style>
+  body {
+    height: 10000px;
+  }
+</style>
+
+<body>
+</body>
+
+<script>
+function forceRepaint() {
+  document.body.style.background = "none";
+  document.body.style.background = "url('../../images/resources/lenna.png')";
+}
+window.scrollTo(0, 100);
+forceRepaint();
+</script>
