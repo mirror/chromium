@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "ecb4d92f_15574690",
+        "filename": "net/http/http_response_info.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-20T23:45:41Z",
+      "side": 1,
+      "message": "This seems unnecessary. If we are initializing the HttpResponseInfo object, then proxy_server should be un-initialized at this point.\n\nIt seems what we should be doing is to set the proxy_server to Direct() if flags \u0026 RESPONSE_INFO_WAS_PROXY is 0.",
+      "range": {
+        "startLine": 322,
+        "startChar": 19,
+        "endLine": 322,
+        "endChar": 30
+      },
+      "revId": "2b2a06948388587b12683c91d55b4b7f0c2ae9e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3d780b7_aad8ecec",
         "filename": "net/http/http_response_info.h",
         "patchSetId": 15
