@@ -287,6 +287,18 @@ bool H264Parser::FindStartCode(const uint8_t* data,
   off_t bytes_left = data_size;
 
   while (bytes_left >= 3) {
+    // Ones are more unusual than zeroes, so let's look for it first.
+    const uint8_t* tmp =
+        reinterpret_cast<const uint8_t*>(memchr(data + 2, 1, bytes_left));
+    if (!tmp) {
+      data += bytes_left - 2;
+      bytes_left = 2;
+      break;
+    }
+    tmp -= 2;
+    bytes_left -= tmp - data;
+    data = tmp;
+
     if (IsStartCode(data)) {
       // Found three-byte start code, set pointer at its beginning.
       *offset = data_size - bytes_left;
