@@ -24,6 +24,7 @@
 #include "ash/wm/fullscreen_window_finder.h"
 #include "ash/wm/mru_window_tracker.h"
 #include "ash/wm/screen_pinning_controller.h"
+#include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "ash/wm/window_state.h"
 #include "base/auto_reset.h"
 #include "base/command_line.h"
@@ -258,6 +259,19 @@ void ShelfLayoutManager::UpdateVisibilityState() {
 
     switch (window_state) {
       case wm::WORKSPACE_WINDOW_STATE_FULL_SCREEN: {
+        // If we get a full screen event as a result of maximize mode, do not
+        // change the visibility state.
+        if (Shell::Get()->tablet_mode_controller()->ShouldHideTitlebars()) {
+          if (Shell::Get()
+                  ->tablet_mode_controller()
+                  ->IsTabletModeWindowManagerEnabled() ||
+              Shell::Get()
+                  ->tablet_mode_controller()
+                  ->initializing_maximize_window_manager()) {
+            return;
+          }
+        }
+
         if (IsShelfAutoHideForFullscreenMaximized()) {
           SetState(SHELF_AUTO_HIDE);
         } else if (IsShelfHiddenForFullscreen()) {
@@ -494,6 +508,18 @@ ShelfBackgroundType ShelfLayoutManager::GetShelfBackgroundType() const {
   if (state_.visibility_state != SHELF_AUTO_HIDE &&
       state_.window_state == wm::WORKSPACE_WINDOW_STATE_MAXIMIZED) {
     return SHELF_BACKGROUND_MAXIMIZED;
+  }
+
+  if (state_.window_state == wm::WORKSPACE_WINDOW_STATE_FULL_SCREEN &&
+      Shell::Get()->tablet_mode_controller()->ShouldHideTitlebars()) {
+    if (Shell::Get()
+            ->tablet_mode_controller()
+            ->IsTabletModeWindowManagerEnabled() ||
+        Shell::Get()
+            ->tablet_mode_controller()
+            ->initializing_maximize_window_manager()) {
+      return SHELF_BACKGROUND_MAXIMIZED;
+    }
   }
 
   if (gesture_drag_status_ == GESTURE_DRAG_IN_PROGRESS ||
