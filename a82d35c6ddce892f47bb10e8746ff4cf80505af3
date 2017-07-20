@@ -70,6 +70,29 @@
       "revId": "a82d35c6ddce892f47bb10e8746ff4cf80505af3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "432863b4_8eae44b0",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3683,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-07-20T21:15:01Z",
+      "side": 1,
+      "message": "I wish this could be done in the client code for content_shell, but to be honest it would probably involve a lot of plumbing and exposure via the content/ APIs.",
+      "range": {
+        "startLine": 3683,
+        "startChar": 20,
+        "endLine": 3683,
+        "endChar": 21
+      },
+      "revId": "a82d35c6ddce892f47bb10e8746ff4cf80505af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
