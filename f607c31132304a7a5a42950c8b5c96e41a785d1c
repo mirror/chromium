@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "4819dbc9_ffc1ee56",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 8768,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-20T09:28:08Z",
+      "side": 1,
+      "message": "I had to change the strings again and the new version does not have a semicolon.",
+      "parentUuid": "5ae0a982_e5d9d420",
+      "revId": "f607c31132304a7a5a42950c8b5c96e41a785d1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ebf39412_998d45c7",
         "filename": "chrome/app/generated_resources.grd",
         "patchSetId": 1
@@ -57,6 +75,30 @@
       "revId": "f607c31132304a7a5a42950c8b5c96e41a785d1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dd4c425_0e15e83e",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 8788,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-20T09:28:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebf39412_998d45c7",
+      "range": {
+        "startLine": 8788,
+        "startChar": 64,
+        "endLine": 8788,
+        "endChar": 70
+      },
+      "revId": "f607c31132304a7a5a42950c8b5c96e41a785d1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
