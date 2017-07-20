@@ -70,6 +70,30 @@
       "revId": "ae541c909145101606ae4d41c3d41e051f333a2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4c0e1f1_4369734e",
+        "filename": "base/process/launch_posix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 808,
+      "author": {
+        "id": 1000985
+      },
+      "writtenOn": "2017-07-20T18:03:55Z",
+      "side": 1,
+      "message": "It wasn\u0027t working for Thomas but he was doing it in base::LaunchProcess, so maybe that\u0027s the difference.\n\nWhere does the Zygote enter the new user namespace?",
+      "parentUuid": "c9d5926d_0bd5476a",
+      "range": {
+        "startLine": 808,
+        "startChar": 31,
+        "endLine": 808,
+        "endChar": 38
+      },
+      "revId": "ae541c909145101606ae4d41c3d41e051f333a2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
