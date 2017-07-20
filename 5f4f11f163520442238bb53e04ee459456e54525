@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "542d80a4_f0798571",
+        "filename": "content/public/common/url_loader_factory.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-07-20T22:18:29Z",
+      "side": 1,
+      "message": "Great, the default is no sniffing (rather than the other way around).",
+      "range": {
+        "startLine": 17,
+        "startChar": 13,
+        "endLine": 17,
+        "endChar": 40
+      },
+      "revId": "5f4f11f163520442238bb53e04ee459456e54525",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
