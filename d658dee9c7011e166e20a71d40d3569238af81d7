@@ -68,6 +68,30 @@
       "revId": "d658dee9c7011e166e20a71d40d3569238af81d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04d5227f_ee54166c",
+        "filename": "content/renderer/media/media_stream_video_capturer_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-20T06:16:47Z",
+      "side": 1,
+      "message": "We need |dispatcher_host_| internal to MediaStreamVideoCapturerSource class as well. Please see MediaStreamVideoCapturerSource::OnCapturingLinkSecured above at l.199. How do we get a |dispatcher_host_| without using this static method?\n\nCan we not follow a pattern similar to what we are doing in MediaStreamDispatcher(part 1 CL) and VideoCaptureImpl for now?\n\nEventually, when MediaStreamDispatcherHost no longer inherits BrowserMessageFilter and BrowserAssociatedInterface, I wanted to do something similar as below.\nhttps://cs.chromium.org/chromium/src/content/renderer/media/media_devices_event_dispatcher_unittest.cc?dr\u003dCSs\u0026l\u003d78\nhttps://cs.chromium.org/chromium/src/content/renderer/media/user_media_client_impl_unittest.cc?dr\u003dCSs\u0026l\u003d402.",
+      "parentUuid": "c820f291_5fea54bf",
+      "range": {
+        "startLine": 238,
+        "startChar": 4,
+        "endLine": 238,
+        "endChar": 30
+      },
+      "revId": "d658dee9c7011e166e20a71d40d3569238af81d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
