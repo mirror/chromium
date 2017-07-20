@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "04461e29_0efc78d5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-07-20T09:58:35Z",
+      "side": 1,
+      "message": "\u0027git cl format\u0027 removes the added newline in this case.",
+      "parentUuid": "b5238722_3fdb55de",
+      "range": {
+        "startLine": 34,
+        "startChar": 40,
+        "endLine": 34,
+        "endChar": 41
+      },
+      "revId": "0ff469bec7eb8d4e86921560b5e0872488c8909d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4c42bf3_ccb228b2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b7d118e8_ab68f80f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-07-20T09:58:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4c42bf3_ccb228b2",
+      "range": {
+        "startLine": 36,
+        "startChar": 48,
+        "endLine": 36,
+        "endChar": 60
+      },
+      "revId": "0ff469bec7eb8d4e86921560b5e0872488c8909d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "495cd62a_9ff51502",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
         "patchSetId": 8
@@ -68,6 +116,30 @@
       "revId": "0ff469bec7eb8d4e86921560b5e0872488c8909d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59430b91_ff97d298",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-07-20T09:58:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "495cd62a_9ff51502",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 168,
+        "endChar": 88
+      },
+      "revId": "0ff469bec7eb8d4e86921560b5e0872488c8909d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
