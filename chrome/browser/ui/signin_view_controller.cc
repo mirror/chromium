@@ -24,6 +24,13 @@ void SigninViewController::ShowModalSignin(
   signin_view_controller_delegate_ =
       SigninViewControllerDelegate::CreateModalSigninDelegate(
           this, mode, browser, access_point);
+
+  // The sign-in dialog displays a Gaia sign-in webpage. An HTTP login dialog
+  // needs to be displayed when the load of the Gaia webpage goes through a
+  // proxy that requires HTTP authentication. Ensure that such a dialog can be
+  // displayed on top of the sign-in dialog.
+  // (see http://crbug.com/629529)
+  signin_view_controller_delegate_->AttachDialogManager();
   chrome::RecordDialogCreation(chrome::DialogIdentifier::SIGN_IN);
 }
 
