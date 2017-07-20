@@ -21,11 +21,11 @@
 #include "base/synchronization/waitable_event.h"
 #include "base/threading/thread.h"
 #include "media/gpu/gpu_video_decode_accelerator_helpers.h"
-#include "media/gpu/h264_decoder.h"
 #include "media/gpu/media_gpu_export.h"
 #include "media/gpu/v4l2_device.h"
-#include "media/gpu/vp8_decoder.h"
-#include "media/gpu/vp9_decoder.h"
+#include "media/gpu/vaapi/h264_decoder.h"
+#include "media/gpu/vaapi/vp8_decoder.h"
+#include "media/gpu/vaapi/vp9_decoder.h"
 #include "media/video/video_decode_accelerator.h"
 
 namespace media {

@@ -143,12 +143,12 @@ component("gpu") {
     "gpu_video_decode_accelerator_helpers.h",
     "gpu_video_encode_accelerator_factory.cc",
     "gpu_video_encode_accelerator_factory.h",
-    "h264_decoder.cc",
-    "h264_decoder.h",
-    "h264_dpb.cc",
-    "h264_dpb.h",
     "shared_memory_region.cc",
     "shared_memory_region.h",
+    "vaapi/h264_decoder.cc",
+    "vaapi/h264_decoder.h",
+    "vaapi/h264_dpb.cc",
+    "vaapi/h264_dpb.h",
   ]
 
   public_deps = [
@@ -198,23 +198,23 @@ component("gpu") {
       "android_video_surface_chooser.h",
       "android_video_surface_chooser_impl.cc",
       "android_video_surface_chooser_impl.h",
-      "avda_codec_allocator.cc",
-      "avda_codec_allocator.h",
-      "avda_codec_image.cc",
-      "avda_codec_image.h",
-      "avda_picture_buffer_manager.cc",
-      "avda_picture_buffer_manager.h",
-      "avda_shared_state.cc",
-      "avda_shared_state.h",
-      "avda_state_provider.h",
-      "avda_surface_bundle.cc",
-      "avda_surface_bundle.h",
       "content_video_view_overlay.cc",
       "content_video_view_overlay.h",
       "content_video_view_overlay_allocator.cc",
       "content_video_view_overlay_allocator.h",
       "surface_texture_gl_owner.cc",
       "surface_texture_gl_owner.h",
+      "vaapi/avda_codec_allocator.cc",
+      "vaapi/avda_codec_allocator.h",
+      "vaapi/avda_codec_image.cc",
+      "vaapi/avda_codec_image.h",
+      "vaapi/avda_picture_buffer_manager.cc",
+      "vaapi/avda_picture_buffer_manager.h",
+      "vaapi/avda_shared_state.cc",
+      "vaapi/avda_shared_state.h",
+      "vaapi/avda_state_provider.h",
+      "vaapi/avda_surface_bundle.cc",
+      "vaapi/avda_surface_bundle.h",
     ]
 
     deps += [ "//media/mojo:features" ]
@@ -252,14 +252,14 @@ component("gpu") {
 
   if (is_chromeos) {
     sources += [
-      "vp8_decoder.cc",
-      "vp8_decoder.h",
-      "vp8_picture.cc",
-      "vp8_picture.h",
-      "vp9_decoder.cc",
-      "vp9_decoder.h",
-      "vp9_picture.cc",
-      "vp9_picture.h",
+      "vaapi/vp8_decoder.cc",
+      "vaapi/vp8_decoder.h",
+      "vaapi/vp8_picture.cc",
+      "vaapi/vp8_picture.h",
+      "vaapi/vp9_decoder.cc",
+      "vaapi/vp9_decoder.h",
+      "vaapi/vp9_picture.cc",
+      "vaapi/vp9_picture.h",
     ]
     if (use_v4lplugin) {
       sources += get_target_outputs(":libv4l2_generate_stubs")
@@ -296,19 +296,19 @@ component("gpu") {
     }
     if (current_cpu != "arm") {
       sources += [
-                   "va_surface.h",
-                   "vaapi_jpeg_decode_accelerator.cc",
-                   "vaapi_jpeg_decode_accelerator.h",
-                   "vaapi_jpeg_decoder.cc",
-                   "vaapi_jpeg_decoder.h",
-                   "vaapi_picture.cc",
-                   "vaapi_picture.h",
-                   "vaapi_video_decode_accelerator.cc",
-                   "vaapi_video_decode_accelerator.h",
-                   "vaapi_video_encode_accelerator.cc",
-                   "vaapi_video_encode_accelerator.h",
-                   "vaapi_wrapper.cc",
-                   "vaapi_wrapper.h",
+                   "vaapi/va_surface.h",
+                   "vaapi/vaapi_jpeg_decode_accelerator.cc",
+                   "vaapi/vaapi_jpeg_decode_accelerator.h",
+                   "vaapi/vaapi_jpeg_decoder.cc",
+                   "vaapi/vaapi_jpeg_decoder.h",
+                   "vaapi/vaapi_picture.cc",
+                   "vaapi/vaapi_picture.h",
+                   "vaapi/vaapi_video_decode_accelerator.cc",
+                   "vaapi/vaapi_video_decode_accelerator.h",
+                   "vaapi/vaapi_video_encode_accelerator.cc",
+                   "vaapi/vaapi_video_encode_accelerator.h",
+                   "vaapi/vaapi_wrapper.cc",
+                   "vaapi/vaapi_wrapper.h",
                  ] + get_target_outputs(":libva_generate_stubs")
       configs += [
         "//third_party/libva:libva_config",
@@ -323,15 +323,15 @@ component("gpu") {
         configs += [ "//build/config/linux:x11" ]
         deps += [ "//ui/gfx/x" ]
         sources += [
-          "vaapi_tfp_picture.cc",
-          "vaapi_tfp_picture.h",
+          "vaapi/vaapi_tfp_picture.cc",
+          "vaapi/vaapi_tfp_picture.h",
         ]
       }
       if (use_ozone) {
         deps += [ "//ui/ozone" ]
         sources += [
-          "vaapi_drm_picture.cc",
-          "vaapi_drm_picture.h",
+          "vaapi/vaapi_drm_picture.cc",
+          "vaapi/vaapi_drm_picture.h",
         ]
       }
     }
@@ -469,13 +469,13 @@ source_set("android_video_decode_accelerator_unittests") {
       "android/promotion_hint_aggregator_impl_unittest.cc",
       "android_video_decode_accelerator_unittest.cc",
       "android_video_surface_chooser_impl_unittest.cc",
-      "avda_codec_allocator_unittest.cc",
       "content_video_view_overlay_allocator_unittest.cc",
       "fake_android_video_surface_chooser.cc",
       "fake_android_video_surface_chooser.h",
       "mock_surface_texture_gl_owner.cc",
       "mock_surface_texture_gl_owner.h",
       "surface_texture_gl_owner_unittest.cc",
+      "vaapi/avda_codec_allocator_unittest.cc",
     ]
     if (enable_media_codec_video_decoder) {
       sources += [
@@ -574,7 +574,7 @@ source_set("unit_tests") {
     "//testing/gtest",
   ]
   sources = [
-    "h264_decoder_unittest.cc",
+    "vaapi/h264_decoder_unittest.cc",
   ]
 }
 

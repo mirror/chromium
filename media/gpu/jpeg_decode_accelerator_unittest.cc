@@ -37,8 +37,8 @@
 #include "media/gpu/v4l2_jpeg_decode_accelerator.h"
 #endif
 #if defined(ARCH_CPU_X86_FAMILY)
-#include "media/gpu/vaapi_jpeg_decode_accelerator.h"
-#include "media/gpu/vaapi_wrapper.h"
+#include "media/gpu/vaapi/vaapi_jpeg_decode_accelerator.h"
+#include "media/gpu/vaapi/vaapi_wrapper.h"
 #endif
 #endif
 

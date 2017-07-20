@@ -4,7 +4,7 @@
 
 #include "media/gpu/content_video_view_overlay_allocator.h"
 
-#include "media/gpu/avda_codec_allocator.h"
+#include "media/gpu/vaapi/avda_codec_allocator.h"
 
 namespace media {
 

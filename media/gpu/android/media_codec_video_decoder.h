@@ -17,8 +17,8 @@
 #include "media/gpu/android/device_info.h"
 #include "media/gpu/android/video_frame_factory.h"
 #include "media/gpu/android_video_surface_chooser.h"
-#include "media/gpu/avda_codec_allocator.h"
 #include "media/gpu/media_gpu_export.h"
+#include "media/gpu/vaapi/avda_codec_allocator.h"
 
 namespace media {
 
