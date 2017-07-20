@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47702d4d_844cc174",
+        "filename": "content/common/view_messages.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 871,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-07-20T22:53:29Z",
+      "side": 1,
+      "message": "Is this sufficient state? We know the target frame and its url, because framebusting always targets the main frame. This drops the state of which frame requested the framebust, instead just provided the url of that frame. I think that\u0027s enough, but it\u0027s possible I\u0027m missing something.",
+      "revId": "e706d77f980b1b59b1ba1d28c2078f970bfb5f79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d91f500_8f91be8f",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-07-20T22:53:29Z",
+      "side": 1,
+      "message": "I don\u0027t like the default argument here, but destination_url is nonsensical for at least 2 of the 4 CanNavigate callers. I guess alternatelly I could move the framebusting logic in its entirety to Location.cpp?",
+      "revId": "e706d77f980b1b59b1ba1d28c2078f970bfb5f79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
