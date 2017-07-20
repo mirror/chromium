@@ -998,9 +998,9 @@ int ChromeBrowserMainParts::PreCreateThreadsImpl() {
 #endif  // !defined(OS_ANDROID)
 
   scoped_refptr<base::SequencedTaskRunner> local_state_task_runner =
-      JsonPrefStore::GetTaskRunnerForFile(
-          base::FilePath(chrome::kLocalStorePoolName),
-          BrowserThread::GetBlockingPool());
+      base::CreateSequencedTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskPriority::BACKGROUND,
+           base::TaskShutdownBehavior::BLOCK_SHUTDOWN});
 
   {
     TRACE_EVENT0("startup",
