@@ -8,6 +8,7 @@
 #include "base/metrics/histogram_macros.h"
 #include "build/build_config.h"
 #include "chrome/browser/media/media_engagement_service.h"
+#include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/web_contents.h"
 #include "services/metrics/public/cpp/ukm_entry_builder.h"
@@ -93,8 +94,9 @@ void MediaEngagementContentsObserver::RecordUkmMetrics() {
   if (!service_->ShouldRecordEngagement(url))
     return;
 
-  ukm::SourceId source_id = ukm_recorder->GetNewSourceID();
-  ukm_recorder->UpdateSourceURL(source_id, url);
+  ukm::SourceId source_id = ukm::UkmRecorder::ConvertSourceId(
+      web_contents()->GetController().GetLastCommittedEntry()->GetUniqueID(),
+      ukm::UkmRecorder::SourceIdType::NAVIGATION_ENTRY);
 
   std::unique_ptr<ukm::UkmEntryBuilder> builder = ukm_recorder->GetEntryBuilder(
       source_id, MediaEngagementContentsObserver::kUkmEntryName);
