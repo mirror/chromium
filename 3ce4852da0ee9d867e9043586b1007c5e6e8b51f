@@ -1,0 +1,210 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9001c68e_6ba5619b",
+        "filename": "base/values.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-20T09:56:55Z",
+      "side": 1,
+      "message": "nit: drop {}?",
+      "revId": "3ce4852da0ee9d867e9043586b1007c5e6e8b51f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ff9ab4c_25d91a4f",
+        "filename": "base/values.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-20T09:56:55Z",
+      "side": 1,
+      "message": "This allows \"DictionaryValue dict(Value(5));\" right?",
+      "revId": "3ce4852da0ee9d867e9043586b1007c5e6e8b51f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73430f9a_aa5d0c79",
+        "filename": "base/values_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1370,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-20T09:56:55Z",
+      "side": 1,
+      "message": "SetKey?",
+      "range": {
+        "startLine": 1370,
+        "startChar": 20,
+        "endLine": 1370,
+        "endChar": 23
+      },
+      "revId": "3ce4852da0ee9d867e9043586b1007c5e6e8b51f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc52f1aa_af4e1419",
+        "filename": "chrome/browser/devtools/devtools_targets_ui.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-20T09:56:55Z",
+      "side": 1,
+      "message": "I guess Serialize could return a value instead of pointer alternatively?",
+      "range": {
+        "startLine": 245,
+        "startChar": 66,
+        "endLine": 245,
+        "endChar": 75
+      },
+      "revId": "3ce4852da0ee9d867e9043586b1007c5e6e8b51f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f83e4fa_e26c1599",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_event_router.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-20T09:56:55Z",
+      "side": 1,
+      "message": "SetKey?",
+      "range": {
+        "startLine": 58,
+        "startChar": 27,
+        "endLine": 58,
+        "endChar": 28
+      },
+      "revId": "3ce4852da0ee9d867e9043586b1007c5e6e8b51f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75ccf0c8_abb61d1b",
+        "filename": "chrome/browser/supervised_user/supervised_user_pref_store_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-20T09:56:55Z",
+      "side": 1,
+      "message": "SetKey?",
+      "revId": "3ce4852da0ee9d867e9043586b1007c5e6e8b51f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "978ba0b7_9b43df8b",
+        "filename": "chrome/browser/supervised_user/supervised_user_settings_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-20T09:56:55Z",
+      "side": 1,
+      "message": "SetKey? also below?",
+      "range": {
+        "startLine": 478,
+        "startChar": 14,
+        "endLine": 478,
+        "endChar": 17
+      },
+      "revId": "3ce4852da0ee9d867e9043586b1007c5e6e8b51f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0441dc40_417915ca",
+        "filename": "chrome/common/extensions/api/storage/storage_schema_manifest_handler_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-20T09:56:55Z",
+      "side": 1,
+      "message": "SetKey?",
+      "range": {
+        "startLine": 92,
+        "startChar": 12,
+        "endLine": 92,
+        "endChar": 15
+      },
+      "revId": "3ce4852da0ee9d867e9043586b1007c5e6e8b51f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3bab08e_39d32bea",
+        "filename": "chrome/test/chromedriver/capabilities_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-20T09:56:55Z",
+      "side": 1,
+      "message": "SetKey, also below",
+      "range": {
+        "startLine": 143,
+        "startChar": 7,
+        "endLine": 143,
+        "endChar": 10
+      },
+      "revId": "3ce4852da0ee9d867e9043586b1007c5e6e8b51f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e40f657d_54f4278f",
+        "filename": "content/browser/renderer_host/input/mouse_latency_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-07-20T09:56:55Z",
+      "side": 1,
+      "message": "const\u0026 instead of Clone?",
+      "revId": "3ce4852da0ee9d867e9043586b1007c5e6e8b51f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
