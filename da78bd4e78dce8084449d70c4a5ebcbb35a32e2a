@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfd11501_64797b3a",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-20T09:27:52Z",
+      "side": 1,
+      "message": "After this, I think we just need\n\nLabelButton::SetTextColor(Button::STATE_DISABLED, style::GetColor(label()-\u003etext_context(), style::STYLE_DISABLED, theme));\n\n(In a way this is a bug that MdTextButton has always had..)",
+      "revId": "da78bd4e78dce8084449d70c4a5ebcbb35a32e2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ca0eec7_04908b79",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-20T09:27:52Z",
+      "side": 1,
+      "message": "And IMO, just delete BlendTowardOppositeLuma. Instead \n(state() \u003d\u003d STATE_DISABLED \u0026\u0026 !is_prominent_) just needs SkColorSetA with 0x41 instead of 0x5f (similar to my earlier review suggestion, but I said 0x40 there - 0x41 is what gets 0xe6e6e6 for me.)",
+      "range": {
+        "startLine": 290,
+        "startChar": 32,
+        "endLine": 290,
+        "endChar": 55
+      },
+      "revId": "da78bd4e78dce8084449d70c4a5ebcbb35a32e2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
