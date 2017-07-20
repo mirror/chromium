@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6f2bb03_c63531a7",
+        "filename": "chrome/browser/chromeos/printing/usb_printer_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-20T20:32:46Z",
+      "side": 1,
+      "message": "Are we intending to ship this for 61? It really should have the localization strings before the branch. It\u0027s just 4 strings...",
+      "revId": "c65b2f5b146bc4b263b9753549e6cb9bef4ce5c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
