@@ -1445,6 +1445,8 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   } else {
     [self focusOmnibox];
     [_omniBox insertTextWhileEditing:result];
+    [_omniBox setText:result];
+
     // Notify the accessibility system to start reading the new contents of the
     // Omnibox.
     UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification,
