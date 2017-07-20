@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c3cb99c_80fa7c0d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 80240,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-20T15:29:52Z",
+      "side": 1,
+      "message": "Please re-use an existing prefix - such as Thumbnails.",
+      "range": {
+        "startLine": 80240,
+        "startChar": 17,
+        "endLine": 80240,
+        "endChar": 34
+      },
+      "revId": "1a2783c6b329470be17af3bb81986ccb46a941e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
