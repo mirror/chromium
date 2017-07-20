@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea3a7774_845638ae",
+        "filename": "cc/input/scroll_boundary_behavior.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002110
+      },
+      "writtenOn": "2017-07-20T13:21:19Z",
+      "side": 1,
+      "message": "High-level question: how do we make sure this doesn\u0027t break in the future, say if a new enum value gets added. Are there ways to test for this? Or can we add compile-time asserts about this enum matching the order in the CSSProperties enum, along the lines of STATIC_ASSERT_MATCHING_ENUM, which we use in a few places? (the asserts would have to go somewhere in Blink, since code in cc can\u0027t use the CSSProperties enum)",
+      "revId": "c0bc89edb1c546ac881f577694ec7b1b128bfc2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bad955c_265e453e",
+        "filename": "cc/input/scroll_boundary_behavior.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002110
+      },
+      "writtenOn": "2017-07-20T13:21:19Z",
+      "side": 1,
+      "message": "nit: whitespace line can be removed",
+      "revId": "c0bc89edb1c546ac881f577694ec7b1b128bfc2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
