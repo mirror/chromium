@@ -45,7 +45,7 @@ public class PaymentRequestPaymentAppAndBasicCardWithModifiersTest
         implements PaymentRequestTestRule.MainActivityStartCallback {
     @Rule
     public PaymentRequestTestRule mPaymentRequestTestRule = new PaymentRequestTestRule(
-            "payment_request_bobpay_and_basic_card_with_modifiers_test.html", this);
+            "payment_request_bobpay_and_basic_card_with_basic_card_modifiers_test.html", this);
 
     @Override
     public void onMainActivityStarted()
@@ -73,7 +73,8 @@ public class PaymentRequestPaymentAppAndBasicCardWithModifiersTest
     public void testUpdateTotalAndInstrumentLabelWithModifiers()
             throws InterruptedException, ExecutionException, TimeoutException {
         mPaymentRequestTestRule.installPaymentApp(HAVE_INSTRUMENTS, IMMEDIATE_RESPONSE);
-        mPaymentRequestTestRule.triggerUIAndWait(mPaymentRequestTestRule.getReadyToPay());
+        mPaymentRequestTestRule.triggerUIAndWait(
+                "buy_with_bobpay_discount", mPaymentRequestTestRule.getReadyToPay());
 
         assertTrue(mPaymentRequestTestRule.getSelectedPaymentInstrumentLabel().startsWith(
                 "https://bobpay.com"));
@@ -96,7 +97,8 @@ public class PaymentRequestPaymentAppAndBasicCardWithModifiersTest
     public void testPaymentAppCanPayWithModifiers()
             throws InterruptedException, ExecutionException, TimeoutException {
         mPaymentRequestTestRule.installPaymentApp(HAVE_INSTRUMENTS, DELAYED_RESPONSE);
-        mPaymentRequestTestRule.triggerUIAndWait(mPaymentRequestTestRule.getReadyToPay());
+        mPaymentRequestTestRule.triggerUIAndWait(
+                "buy_with_bobpay_discount", mPaymentRequestTestRule.getReadyToPay());
 
         assertTrue(mPaymentRequestTestRule.getSelectedPaymentInstrumentLabel().startsWith(
                 "https://bobpay.com"));
