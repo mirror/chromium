@@ -354,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "fab0d53f_51a7d680",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-07-20T20:41:15Z",
+      "side": 1,
+      "message": "ah, I didn\u0027t realize URLLoaderImpl could be used this soon.\n\nI\u0027ll land this cl now, since we need this change to green up the layout tests (due to quirks in the shared layout test runner harness (wpt), we can\u0027t even disable these tests in the expectations file.\n\nI wonder if we should UMA the code path, to see if the first read ever isn\u0027t enough? I ask because the required buffer size for sniffing is 1K, and I wonder if in practice we ever get a first read smaller than that.",
+      "parentUuid": "2a22fa62_7d7cd7fe",
+      "range": {
+        "startLine": 208,
+        "startChar": 26,
+        "endLine": 208,
+        "endChar": 44
+      },
+      "revId": "081f87c88db0fe2fcd26b6da5853e982780fc967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "435d4c2d_1a9e69ec",
         "filename": "content/network/url_loader_unittest.cc",
         "patchSetId": 9
@@ -413,6 +437,30 @@
       "side": 1,
       "message": "Are LayoutTests run on every change to content/network?\n\nMy general feeling is LayoutTests are much harder to debug than unit tests, particularly if you don\u0027t work in blink/ (Which covers basically the entire network stack team), and cost of unit tests here are minimal.\n\nIt also doesn\u0027t look like there\u0027s an empty body test there - not surprising, since such a test is more about testing the flow of a special case in URLLoader, rather than a case that\u0027s magical form a web platform standpoint.  We\u0027ve run into issues in that case (And in the case the type couldn\u0027t be sniffed until the entire body was received) before, so I\u0027d rather we get ahead of the curve there.",
       "parentUuid": "476d3b46_acfb948b",
+      "range": {
+        "startLine": 211,
+        "startChar": 1,
+        "endLine": 211,
+        "endChar": 0
+      },
+      "revId": "081f87c88db0fe2fcd26b6da5853e982780fc967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ed81d01_cce77fd3",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-07-20T20:41:15Z",
+      "side": 1,
+      "message": "layout tests for network service are only run on our FYI bot.\n\nI agree layout tests are harder to debug than unit tests, but I want to point out that this is a slippery slope since in general we wouldn\u0027t want to duplicate layout tests in unit tests. in this case though, i just saw we have a bunch of RDH browser tests that test sniffing, so in the interest of not decreasing test coverage once we switch to network service \u0026 remove RDH, I\u0027ve run them with URLLoaderImpl. Also added an empty test.",
+      "parentUuid": "4dc84fdf_2420e2f0",
       "range": {
         "startLine": 211,
         "startChar": 1,
