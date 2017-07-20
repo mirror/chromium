@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0f3ce166_0d04cf26",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-07-20T17:30:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d0109b4_e8da5669",
+      "range": {
+        "startLine": 206,
+        "startChar": 7,
+        "endLine": 206,
+        "endChar": 0
+      },
+      "revId": "2f99a33d786ece56bc80d7593970b21124e79c61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d28e7652_42a07380",
         "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-20T14:42:46Z",
       "side": 1,
       "message": "why not in ChromePreferenceManager? (I really don\u0027t know if it is a good place, just asking)",
+      "range": {
+        "startLine": 207,
+        "startChar": 23,
+        "endLine": 207,
+        "endChar": 57
+      },
+      "revId": "2f99a33d786ece56bc80d7593970b21124e79c61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2b4fc98_78e924b1",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-07-20T17:30:08Z",
+      "side": 1,
+      "message": "ChromePreferenceManager lives in //chrome, while this file is in //base, i.e. it just doesn\u0027t compile if I use ChromePreferenceManager (I tried).",
+      "parentUuid": "d28e7652_42a07380",
       "range": {
         "startLine": 207,
         "startChar": 23,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "230a67a5_80d36ed3",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-07-20T17:30:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57eba5df_eb4c8913",
+      "range": {
+        "startLine": 208,
+        "startChar": 4,
+        "endLine": 211,
+        "endChar": 23
+      },
+      "revId": "2f99a33d786ece56bc80d7593970b21124e79c61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42b61b2e_defcb7cf",
         "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "a1ce9171_2b96e40f",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-07-20T17:30:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42b61b2e_defcb7cf",
+      "range": {
+        "startLine": 216,
+        "startChar": 7,
+        "endLine": 216,
+        "endChar": 0
+      },
+      "revId": "2f99a33d786ece56bc80d7593970b21124e79c61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0dbb740d_67f08794",
         "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
         "patchSetId": 1
@@ -105,6 +201,24 @@
       "writtenOn": "2017-07-20T11:49:18Z",
       "side": 1,
       "message": "Note: it might be the first time in the app lifetime that a SharedPrereference is requested. In this case this will load the SharedPreferences XML file from disk, potentially delaying startup.\n\nI think it\u0027s fine, but nevertheless something to keep in mind when comparing the control group and the population outside the experiment.",
+      "revId": "2f99a33d786ece56bc80d7593970b21124e79c61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbef0daf_241ea388",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-07-20T17:30:08Z",
+      "side": 1,
+      "message": "Good catch! I\u0027ll add StrictPolicy relaxation to isNotPrefetchingLibraries() just in case.",
+      "parentUuid": "0dbb740d_67f08794",
       "revId": "2f99a33d786ece56bc80d7593970b21124e79c61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "de5e9f92_76f08984",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-07-20T17:30:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef1ec99b_0c465dc9",
+      "range": {
+        "startLine": 233,
+        "startChar": 8,
+        "endLine": 233,
+        "endChar": 13
+      },
+      "revId": "2f99a33d786ece56bc80d7593970b21124e79c61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d94eddd_95913253",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
         "patchSetId": 1
@@ -145,6 +283,30 @@
       "writtenOn": "2017-07-20T14:42:46Z",
       "side": 1,
       "message": "will this cause another strictmode violation (or even a small startup regression)? Strictmode violations might be suppressed already during this initialization phase - I cannot remember. We could do an asynctask or just set the pref later .. just before prefetch happens.",
+      "range": {
+        "startLine": 196,
+        "startChar": 22,
+        "endLine": 196,
+        "endChar": 56
+      },
+      "revId": "2f99a33d786ece56bc80d7593970b21124e79c61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7816a8a4_478fa935",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-07-20T17:30:08Z",
+      "side": 1,
+      "message": "Actually, all other invocations in this function do exactly the same - they get values from finch and push them to ChromePreferenceManager (which writes to ContextUtils.getAppSharedPreferences(), as LibraryLoader does). I don\u0027t see any relaxing of thread policy up the chain though.",
+      "parentUuid": "7d94eddd_95913253",
       "range": {
         "startLine": 196,
         "startChar": 22,
@@ -177,6 +339,30 @@
       "revId": "2f99a33d786ece56bc80d7593970b21124e79c61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43c4c695_a918b3e8",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3223,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-07-20T17:30:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e656baae_7ac14559",
+      "range": {
+        "startLine": 3223,
+        "startChar": 11,
+        "endLine": 3223,
+        "endChar": 21
+      },
+      "revId": "2f99a33d786ece56bc80d7593970b21124e79c61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
