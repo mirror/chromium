@@ -12,17 +12,13 @@
 #include "base/run_loop.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
-#include "base/test/histogram_tester.h"
 #include "base/test/test_message_loop.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
-#include "components/ukm/test_ukm_recorder.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "media/base/audio_parameters.h"
 #include "media/base/channel_layout.h"
 #include "media/base/media_log.h"
-#include "media/base/watch_time_keys.h"
-#include "media/blink/watch_time_reporter.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/gfx/geometry/size.h"
@@ -30,7 +26,6 @@
 namespace {
 const int kTestComponentID = 0;
 const char kTestDeviceID[] = "test-device-id";
-const char kTestOrigin[] = "https://test.google.com/";
 
 // This class encapsulates a MediaInternals reference. It also has some useful
 // methods to receive a callback, deserialize its associated data and expect
@@ -344,7 +339,7 @@ class MediaInternalsWatchTimeTest : public testing::Test,
         internals_(content::MediaInternals::GetInstance()),
         media_log_(new DirectMediaLog(render_process_id_)),
         histogram_tester_(new base::HistogramTester()),
-        test_recorder_(new ukm::TestAutoSetUkmRecorder()),
+        test_recorder_(new ukm::TestUkmRecorder()),
         watch_time_keys_(media::GetWatchTimeKeys()),
         watch_time_power_keys_(media::GetWatchTimePowerKeys()),
         mtbr_keys_({media::kMeanTimeBetweenRebuffersAudioSrc,

@@ -25,6 +25,7 @@
 #include "media/base/test_helpers.h"
 #include "media/blink/webmediaplayer_delegate.h"
 #include "media/blink/webmediaplayer_params.h"
+#include "media/mojo/services/watch_time_recorder.h"
 #include "media/renderers/default_renderer_factory.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -233,6 +234,9 @@ class WebMediaPlayerImplTest : public testing::Test {
     factory_selector->SetBaseFactoryType(
         RendererFactorySelector::FactoryType::DEFAULT);
 
+    WatchTimeRecorder::CreateWatchTimeRecorderProvider(
+        service_manager::BindSourceInfo(), mojo::MakeRequest(&provider_));
+
     wmpi_ = base::MakeUnique<WebMediaPlayerImpl>(
         web_local_frame_, &client_, nullptr, &delegate_,
         std::move(factory_selector), url_index_,
@@ -244,7 +248,8 @@ class WebMediaPlayerImplTest : public testing::Test {
             base::Bind(&OnAdjustAllocatedMemory), nullptr, nullptr,
             RequestRoutingTokenCallback(), nullptr,
             kMaxKeyframeDistanceToDisableBackgroundVideo,
-            kMaxKeyframeDistanceToDisableBackgroundVideoMSE, false, false));
+            kMaxKeyframeDistanceToDisableBackgroundVideoMSE, false, false,
+            provider_.get()));
   }
 
   ~WebMediaPlayerImplTest() override {
@@ -388,6 +393,8 @@ class WebMediaPlayerImplTest : public testing::Test {
   DummyWebMediaPlayerClient client_;
 
   testing::NiceMock<MockWebMediaPlayerDelegate> delegate_;
+
+  mojom::WatchTimeRecorderProviderPtr provider_;
 
   // The WebMediaPlayerImpl instance under test.
   std::unique_ptr<WebMediaPlayerImpl> wmpi_;
