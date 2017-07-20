@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5b0047c_d9e9ebe0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-20T15:22:05Z",
+      "side": 1,
+      "message": "Can we have a bug with at least some description?",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 3
+      },
+      "revId": "91fe7054ff2c440f888227723001f8e6cff429a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82232fee_5cbca9c9",
+        "filename": "components/password_manager/core/browser/login_database.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-20T15:22:05Z",
+      "side": 1,
+      "message": "If this is a warning for developers then I prefer static_assert instead.",
+      "range": {
+        "startLine": 179,
+        "startChar": 4,
+        "endLine": 179,
+        "endChar": 13
+      },
+      "revId": "91fe7054ff2c440f888227723001f8e6cff429a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2031e50_c368f3ce",
+        "filename": "components/password_manager/core/browser/login_database.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-20T15:22:05Z",
+      "side": 1,
+      "message": "I don\u0027t see below if we reopen the connection. Is the database supposed to work only after Chrome restart?",
+      "range": {
+        "startLine": 185,
+        "startChar": 14,
+        "endLine": 185,
+        "endChar": 20
+      },
+      "revId": "91fe7054ff2c440f888227723001f8e6cff429a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6440a659_9ae4e802",
+        "filename": "components/password_manager/core/browser/login_database.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-20T15:22:05Z",
+      "side": 1,
+      "message": "If it\u0027s in the line 199 then I\u0027d put the comment there.",
+      "range": {
+        "startLine": 188,
+        "startChar": 11,
+        "endLine": 188,
+        "endChar": 28
+      },
+      "revId": "91fe7054ff2c440f888227723001f8e6cff429a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "212cda3a_62725851",
+        "filename": "components/password_manager/core/browser/login_database.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-20T15:22:05Z",
+      "side": 1,
+      "message": "ignore_result documentation says that it\u0027s only prevent the compilation error.",
+      "range": {
+        "startLine": 191,
+        "startChar": 55,
+        "endLine": 191,
+        "endChar": 67
+      },
+      "revId": "91fe7054ff2c440f888227723001f8e6cff429a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f98e7a72_1024f589",
+        "filename": "components/password_manager/core/browser/login_database.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-20T15:22:05Z",
+      "side": 1,
+      "message": "What is the point in this line? I don\u0027t see that we use Connection::ErrorExpecterCallback",
+      "range": {
+        "startLine": 193,
+        "startChar": 35,
+        "endLine": 193,
+        "endChar": 56
+      },
+      "revId": "91fe7054ff2c440f888227723001f8e6cff429a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf0f5361_70155636",
+        "filename": "components/password_manager/core/browser/login_database.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-20T15:22:05Z",
+      "side": 1,
+      "message": "What\u0027s so special about LoginDatabase::AddLogin that you add the callback again?",
+      "range": {
+        "startLine": 862,
+        "startChar": 6,
+        "endLine": 862,
+        "endChar": 24
+      },
+      "revId": "91fe7054ff2c440f888227723001f8e6cff429a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d7830ea_56531a26",
+        "filename": "components/password_manager/core/browser/login_database_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1758,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-20T15:22:05Z",
+      "side": 1,
+      "message": "Why won\u0027t you overwrite the whole file at once?",
+      "range": {
+        "startLine": 1758,
+        "startChar": 9,
+        "endLine": 1758,
+        "endChar": 16
+      },
+      "revId": "91fe7054ff2c440f888227723001f8e6cff429a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
