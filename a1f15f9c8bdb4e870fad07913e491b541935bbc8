@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17522391_5b38bcf5",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_handset_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-07-20T01:26:11Z",
+      "side": 1,
+      "message": "Restore scroll position only when contentPosition is reset to 0.\nIf I skip the if-checking here, contentPosition will be shifted slightly every time when the screen is rotated.",
+      "range": {
+        "startLine": 697,
+        "startChar": 2,
+        "endLine": 700,
+        "endChar": 3
+      },
+      "revId": "a1f15f9c8bdb4e870fad07913e491b541935bbc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

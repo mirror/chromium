@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33ca888c_787e7887",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_handset_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-07-20T01:26:11Z",
+      "side": 0,
+      "message": "I moved this part of code to viewWillLayoutSubviews.\n\nBecause in home_tablet_ntp_controller, restoring cacheContentPosition here doesn\u0027t work.\nAs primaryView will always be nil here in home_tablet_ntp_controller.\n\nTo fix this in a consistent way in both home_tablet_ntp_controller and handset_view_controller,\nI moved this to viewWillLayoutSubviews which will work for both controller.",
+      "revId": "4eca3b25f42e96ab59dfc0e8c4811ae7d7fad404",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
