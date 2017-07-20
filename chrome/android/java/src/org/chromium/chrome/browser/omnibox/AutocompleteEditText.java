@@ -6,7 +6,9 @@ package org.chromium.chrome.browser.omnibox;
 
 import android.content.Context;
 import android.graphics.Rect;
+import android.os.Build;
 import android.os.StrictMode;
+import android.provider.Settings;
 import android.support.annotation.CallSuper;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -17,12 +19,18 @@ import android.view.accessibility.AccessibilityManager;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
+import android.view.inputmethod.InputMethodManager;
+import android.view.inputmethod.InputMethodSubtype;
 import android.widget.EditText;
 
 import org.chromium.base.Log;
 import org.chromium.base.VisibleForTesting;
+import org.chromium.base.library_loader.LibraryLoader;
 import org.chromium.chrome.browser.ChromeFeatureList;
+import org.chromium.chrome.browser.rappor.RapporServiceBridge;
 import org.chromium.chrome.browser.widget.VerticallyFixedEditText;
+
+import java.util.Locale;
 
 /**
  * An {@link EditText} that shows autocomplete text at the end.
@@ -46,6 +54,8 @@ public class AutocompleteEditText
     private boolean mDisableTextScrollingFromAutocomplete;
 
     private boolean mIgnoreImeForTest;
+
+    private String mLastReportedImeLanguage = "";
 
     public AutocompleteEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -128,6 +138,51 @@ public class AutocompleteEditText
     protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect) {
         if (mModel != null) mModel.onFocusChanged(focused);
         super.onFocusChanged(focused, direction, previouslyFocusedRect);
+    }
+
+    // Note that return value may not represent the language being typed correctly in case of a dual
+    // language case. For example, Google Korean Keyboard supports both Korean and English, but it
+    // returns 'ko'. And Samsung keyboard seems to switch to English when touching the omnibox which
+    // is not captured at focus gain, so you need to call this in onCreateInputConnection() to get
+    // the correct language value for Samsung keyboard.
+    @SuppressWarnings("NewApi")
+    private String getInputMethodLanguage() {
+        InputMethodManager imm =
+                (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodSubtype subtype = imm.getCurrentInputMethodSubtype();
+        if (subtype == null) return "";
+        // getLanguageTag() normally returns an empty string, so try getLocale() even for API >= 24.
+        String localeString = subtype.getLocale();
+        if (localeString != null) {
+            Locale locale = new Locale(localeString);
+            if (locale != null) {
+                String localeLanguage = locale.getLanguage();
+                if (!TextUtils.isEmpty(localeLanguage)) {
+                    return localeLanguage;
+                }
+            }
+        }
+        if (Build.VERSION.SDK_INT >= 24) {
+            String languageTag = subtype.getLanguageTag();
+            if (!TextUtils.isEmpty(languageTag)) {
+                return languageTag;
+            }
+        }
+        // As a last resort, return the system language.
+        return Locale.getDefault().getLanguage();
+    }
+
+    private void logKeyboardApp() {
+        // RapportServiceBridge is a native code.
+        if (!LibraryLoader.isInitialized()) return;
+        String defaultIme = Settings.Secure.getString(
+                getContext().getContentResolver(), Settings.Secure.DEFAULT_INPUT_METHOD);
+        if (defaultIme == null) defaultIme = "";
+        String imeLanguage = defaultIme + "," + getInputMethodLanguage();
+        if (imeLanguage.equals(mLastReportedImeLanguage)) return;
+        mLastReportedImeLanguage = imeLanguage;
+        if (DEBUG) Log.i(TAG, "Logging keyboard app: [%s]", imeLanguage);
+        RapporServiceBridge.sampleString("Omnibox.Android.ImeLanguage", imeLanguage);
     }
 
     @Override
@@ -252,6 +307,7 @@ public class AutocompleteEditText
         if (DEBUG) Log.i(TAG, "onCreateInputConnection: " + target);
         ensureModel();
         InputConnection retVal = mModel.onCreateInputConnection(target);
+        if (retVal != null) logKeyboardApp();
         if (mIgnoreImeForTest) return null;
         return retVal;
     }
