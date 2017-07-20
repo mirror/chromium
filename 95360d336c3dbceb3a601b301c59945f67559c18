@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f8c6a77_4ac38a77",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-20T17:29:19Z",
+      "side": 1,
+      "message": "This looks the same as the existing code, but are you sure this is right? I would expect to use TOUCH_VIEW_INTERVAL_ACTIVE here and INACTIVE below.",
+      "range": {
+        "startLine": 181,
+        "startChar": 14,
+        "endLine": 181,
+        "endChar": 39
+      },
+      "revId": "95360d336c3dbceb3a601b301c59945f67559c18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
