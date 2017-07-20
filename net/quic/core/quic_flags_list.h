@@ -208,3 +208,6 @@ QUIC_FLAG(bool,
 
 // If true, enable QUIC v41.
 QUIC_FLAG(bool, FLAGS_quic_enable_version_41, false)
+
+// Small optimization for QuicSentPacketManager::HandleAckForSentPackets.
+QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_handle_acks, false)
