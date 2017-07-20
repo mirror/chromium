@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9dd27d1a_9753f597",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-20T10:22:33Z",
+      "side": 1,
+      "message": "https://stackoverflow.com/questions/14870819/what-is-the-difference-between-collections-emptylist-and-collections-empty-list\n\n:)\n\nDoesn\u0027t this raise a warning?",
+      "range": {
+        "startLine": 85,
+        "startChar": 44,
+        "endLine": 85,
+        "endChar": 54
+      },
+      "revId": "febe96450393929ad8fd52d0263dcc53605c3fb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
