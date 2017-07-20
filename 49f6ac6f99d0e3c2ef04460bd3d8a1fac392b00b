@@ -16,6 +16,24 @@
       "revId": "49f6ac6f99d0e3c2ef04460bd3d8a1fac392b00b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c80798a_d852b55b",
+        "filename": "chrome/test/chromedriver/server/http_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1225899
+      },
+      "writtenOn": "2017-07-20T17:41:06Z",
+      "side": 1,
+      "message": "Automatic. They are from git cl format",
+      "parentUuid": "e92131e3_e308f5b0",
+      "revId": "49f6ac6f99d0e3c2ef04460bd3d8a1fac392b00b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
