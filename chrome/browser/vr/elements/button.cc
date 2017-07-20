@@ -19,10 +19,14 @@ Button::Button(base::Callback<void()> click_handler,
 Button::~Button() = default;
 
 void Button::OnHoverEnter(const gfx::PointF& position) {
+  SetScale(1.2, 1.2, 1.2);
+  SetOpacity(1.0f);
   OnStateUpdated(position);
 }
 
 void Button::OnHoverLeave() {
+  SetScale(1, 1, 1);
+  SetOpacity(0.95f);
   OnStateUpdated(gfx::PointF(std::numeric_limits<float>::max(),
                              std::numeric_limits<float>::max()));
 }

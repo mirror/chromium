@@ -28,6 +28,7 @@
 #include "ui/gfx/transform_util.h"
 
 using cc::TargetProperty::BOUNDS;
+using cc::TargetProperty::OPACITY;
 using cc::TargetProperty::TRANSFORM;
 
 namespace vr {
@@ -285,6 +286,7 @@ void UiSceneManager::CreateContentQuad() {
   element->set_debug_id(kBackplane);
   element->set_id(AllocateId());
   element->set_fill(vr::Fill::NONE);
+  element->SetOpacity(0.001f);
   element->SetSize(kBackplaneSize, kBackplaneSize);
   element->SetTranslate(0, 0, -kTextureOffset);
   element->set_parent_id(main_content_->id());
@@ -401,6 +403,7 @@ void UiSceneManager::CreateCloseButton() {
   element->SetTranslate(0, kContentVerticalOffset - (kContentHeight / 2) - 0.3,
                         -kCloseButtonDistance);
   element->SetSize(kCloseButtonWidth, kCloseButtonHeight);
+  element->animation_player().SetTransitionedProperties({OPACITY, TRANSFORM});
   close_button_ = element.get();
   scene_->AddUiElement(std::move(element));
 }
@@ -535,6 +538,7 @@ void UiSceneManager::ConfigureScene() {
         -kCloseButtonFullscreenDistance);
     close_button_->SetSize(kCloseButtonFullscreenWidth,
                            kCloseButtonFullscreenHeight);
+    close_button_->SetOpacity(0.95);
   } else {
     // Note that main_content_ is already visible in this case.
     main_content_->SetTranslate(0, kContentVerticalOffset, -kContentDistance);
@@ -543,6 +547,7 @@ void UiSceneManager::ConfigureScene() {
         0, kContentVerticalOffset - (kContentHeight / 2) - 0.3,
         -kCloseButtonDistance);
     close_button_->SetSize(kCloseButtonWidth, kCloseButtonHeight);
+    close_button_->SetOpacity(0.001f);
   }
 
   scene_->SetMode(mode());
