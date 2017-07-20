@@ -32,7 +32,7 @@ class TerminalPrivateOpenTerminalProcessFunction
                           const std::string& output)>;
   using OpenProcessCallback = base::Callback<void(int terminal_id)>;
 
-  void OpenOnFileThread(const ProcessOutputCallback& output_callback,
+  void OpenOnTaskRunner(const ProcessOutputCallback& output_callback,
                         const OpenProcessCallback& callback);
   void RespondOnUIThread(int terminal_id);
 
@@ -52,7 +52,7 @@ class TerminalPrivateSendInputFunction : public UIThreadExtensionFunction {
   ExtensionFunction::ResponseAction Run() override;
 
  private:
-  void SendInputOnFileThread(int terminal_id, const std::string& input);
+  void SendInputOnTaskRunner(int terminal_id, const std::string& input);
   void RespondOnUIThread(bool success);
 };
 
@@ -69,7 +69,7 @@ class TerminalPrivateCloseTerminalProcessFunction
   ExtensionFunction::ResponseAction Run() override;
 
  private:
-  void CloseOnFileThread(int terminal_id);
+  void CloseOnTaskRunner(int terminal_id);
   void RespondOnUIThread(bool success);
 };
 
@@ -86,7 +86,7 @@ class TerminalPrivateOnTerminalResizeFunction
   ExtensionFunction::ResponseAction Run() override;
 
  private:
-  void OnResizeOnFileThread(int terminal_id, int width, int height);
+  void OnResizeOnTaskRunner(int terminal_id, int width, int height);
   void RespondOnUIThread(bool success);
 };
 
@@ -101,7 +101,7 @@ class TerminalPrivateAckOutputFunction : public UIThreadExtensionFunction {
   ExtensionFunction::ResponseAction Run() override;
 
  private:
-  void AckOutputOnFileThread(int terminal_id);
+  void AckOutputOnTaskRunner(int terminal_id);
 };
 
 }  // namespace extensions
