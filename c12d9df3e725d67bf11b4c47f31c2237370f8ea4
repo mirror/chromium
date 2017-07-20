@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "31cf5822_bd6276bf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuPropertiesDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-20T15:35:55Z",
+      "side": 1,
+      "message": "This is asserting only one of the above is true, right?\n\nHow about:\n\nassert isPageMenu ^ isOverviewMenu ^ isTabletEmptyModeMenu ^ isBottomSheetNtpMenu",
+      "range": {
+        "startLine": 98,
+        "startChar": 21,
+        "endLine": 98,
+        "endChar": 0
+      },
+      "revId": "c12d9df3e725d67bf11b4c47f31c2237370f8ea4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "889311bf_51f31906",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabIntentDataProvider.java",
         "patchSetId": 1
