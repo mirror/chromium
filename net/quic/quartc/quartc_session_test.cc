@@ -636,6 +636,16 @@ TEST_F(QuartcSessionTest, CancelQuartcStream) {
   EXPECT_TRUE(client_peer_->IsClosedStream(id));
 }
 
+TEST_F(QuartcSessionTest, GetStats) {
+  CreateClientAndServerSessions();
+  StartHandshake();
+  ASSERT_TRUE(client_peer_->IsCryptoHandshakeConfirmed());
+  ASSERT_TRUE(server_peer_->IsCryptoHandshakeConfirmed());
+
+  QuartcSessionStats stats = client_peer_->GetStats();
+  EXPECT_GT(stats.bandwidth_estimate_bits_per_second, 0);
+}
+
 }  // namespace
 
 }  // namespace net

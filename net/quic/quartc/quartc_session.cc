@@ -189,6 +189,14 @@ void QuartcSession::ResetStream(QuicStreamId stream_id,
   }
 }
 
+QuartcSessionStats QuartcSession::GetStats() {
+  QuartcSessionStats stats;
+  const QuicConnectionStats& connection_stats = connection_->GetStats();
+  stats.bandwidth_estimate_bits_per_second =
+      connection_stats.estimated_bandwidth.ToBitsPerSecond();
+  return stats;
+}
+
 void QuartcSession::OnConnectionClosed(QuicErrorCode error,
                                        const string& error_details,
                                        ConnectionCloseSource source) {
