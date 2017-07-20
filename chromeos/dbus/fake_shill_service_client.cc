@@ -217,10 +217,11 @@ void FakeShillServiceClient::Disconnect(const dbus::ObjectPath& service_path,
   // Set Idle after a delay
   base::Value idle_value(shill::kStateIdle);
   base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-      FROM_HERE, base::Bind(&FakeShillServiceClient::SetProperty,
-                            weak_ptr_factory_.GetWeakPtr(), service_path,
-                            shill::kStateProperty, idle_value,
-                            base::Bind(&base::DoNothing), error_callback),
+      FROM_HERE,
+      base::Bind(&FakeShillServiceClient::SetProperty,
+                 weak_ptr_factory_.GetWeakPtr(), service_path,
+                 shill::kStateProperty, idle_value.Clone(),
+                 base::Bind(&base::DoNothing), error_callback),
       base::TimeDelta::FromSeconds(GetInteractiveDelay()));
   callback.Run();
 }
@@ -418,8 +419,7 @@ bool FakeShillServiceClient::SetServiceProperty(const std::string& service_path,
         new_properties.SetDictionaryWithoutPathExpansion(
             shill::kProviderProperty,
             base::MakeUnique<base::DictionaryValue>());
-    provider->SetWithoutPathExpansion(key,
-                                      base::MakeUnique<base::Value>(value));
+    provider->SetKey(key, value.Clone());
     changed_property = shill::kProviderProperty;
   } else if (value.GetType() == base::Value::Type::DICTIONARY) {
     const base::DictionaryValue* new_dict = NULL;
@@ -433,13 +433,11 @@ bool FakeShillServiceClient::SetServiceProperty(const std::string& service_path,
       cur_dict->MergeDictionary(new_dict);
       new_properties.SetWithoutPathExpansion(property, std::move(cur_value));
     } else {
-      new_properties.SetWithoutPathExpansion(
-          property, base::MakeUnique<base::Value>(value));
+      new_properties.SetKey(property, value.Clone());
     }
     changed_property = property;
   } else {
-    new_properties.SetWithoutPathExpansion(
-        property, base::MakeUnique<base::Value>(value));
+    new_properties.SetKey(property, value.Clone());
     changed_property = property;
   }
 

@@ -215,7 +215,7 @@ std::unique_ptr<base::Value> CoreChromeOSOptionsHandler::FetchPref(
   if (pref_name == kAccountsPrefUsers)
     dict->Set("value", CreateUsersWhitelist(pref_value));
   else
-    dict->Set("value", base::MakeUnique<base::Value>(*pref_value));
+    dict->SetKey("value", pref_value->Clone());
 
   std::string controlled_by;
   if (IsSettingPrivileged(pref_name)) {
@@ -305,7 +305,7 @@ std::unique_ptr<base::Value> CoreChromeOSOptionsHandler::CreateValueForPref(
         // preferences. Show the user's value in the checkbox, but indicate
         // that the password requirement is enabled by some other user.
         auto dict = base::MakeUnique<base::DictionaryValue>();
-        dict->Set("value", base::MakeUnique<base::Value>(*pref->GetValue()));
+        dict->SetKey("value", pref->GetValue()->Clone());
         dict->SetString("controlledBy", "shared");
         return std::move(dict);
       }
