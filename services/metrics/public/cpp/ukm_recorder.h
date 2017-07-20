@@ -74,6 +74,11 @@ typedef int64_t SourceId;
 // Interface for recording UKM
 class METRICS_EXPORT UkmRecorder {
  public:
+  enum class SourceIdType : int64_t {
+    UKM = 0,
+    NAVIGATION_ENTRY = 1,
+  };
+
   UkmRecorder();
   virtual ~UkmRecorder();
 
@@ -90,6 +95,9 @@ class METRICS_EXPORT UkmRecorder {
   // Get the new source ID, which is unique for the duration of a browser
   // session.
   static SourceId GetNewSourceID();
+
+  // Utility for converting other unique ids to source ids.
+  static SourceId ConvertSourceId(int64_t other_id, SourceIdType id_type);
 
   // Update the URL on the source keyed to the given source ID. If the source
   // does not exist, it will create a new UkmSource object.
