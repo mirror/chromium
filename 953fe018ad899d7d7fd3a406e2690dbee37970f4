@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ff75230_b039c289",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-20T22:50:20Z",
+      "side": 1,
+      "message": "Trailing whitespace.  Maybe \"to \" is unnecessary?",
+      "revId": "953fe018ad899d7d7fd3a406e2690dbee37970f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e73f070_8dd4777e",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-20T22:50:20Z",
+      "side": 1,
+      "message": "We should introduce a function ToSetSelectionOptions(SetSelectionBy) ?",
+      "revId": "953fe018ad899d7d7fd3a406e2690dbee37970f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f18757da_3ec2f71c",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-20T22:50:20Z",
+      "side": 1,
+      "message": "SelectionOptionsToUserTriggered -\u003e SelectionOptionsToSetSelectionBy, or ToSetSelectionBy ?",
+      "revId": "953fe018ad899d7d7fd3a406e2690dbee37970f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71b57418_b7bd295f",
+        "filename": "third_party/WebKit/Source/web/WebLocalFrameImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1218,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-20T22:50:20Z",
+      "side": 1,
+      "message": "We should introduce a function ToSetSelectionOptions(SetSelectionBy) ?",
+      "revId": "953fe018ad899d7d7fd3a406e2690dbee37970f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
