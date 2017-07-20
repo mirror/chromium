@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfeed20f_5af162e4",
+        "filename": "content/common/loader_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-20T16:46:05Z",
+      "side": 1,
+      "message": "Wonder if it\u0027s worth delaying creation of ResourceResponse until we\u0027ve sniffed the mime type, if needed.  Anyhow, this is fine for now, at least.",
+      "range": {
+        "startLine": 15,
+        "startChar": 43,
+        "endLine": 15,
+        "endChar": 47
+      },
+      "revId": "081f87c88db0fe2fcd26b6da5853e982780fc967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "553cca42_254c21cd",
+        "filename": "content/common/loader_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-20T16:46:05Z",
+      "side": 1,
+      "message": "include \u003cstring\u003e",
+      "range": {
+        "startLine": 17,
+        "startChar": 14,
+        "endLine": 17,
+        "endChar": 34
+      },
+      "revId": "081f87c88db0fe2fcd26b6da5853e982780fc967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e9447f1_89e335c2",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-20T16:46:05Z",
+      "side": 1,
+      "message": "nit:  Add braces?",
+      "range": {
+        "startLine": 276,
+        "startChar": 27,
+        "endLine": 276,
+        "endChar": 0
+      },
+      "revId": "081f87c88db0fe2fcd26b6da5853e982780fc967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f261f7d0_f8bba9b7",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-20T16:46:05Z",
+      "side": 1,
+      "message": "Maybe:\n\n// This should only happen when the MIME type still needs to be sniffed.\nDCHECK(options_ \u0026 mojom::kURLLoadOptionSniffMimeType);\nDCHECK(ShouldSniffContent(url_request_.get(), response_.get());",
+      "range": {
+        "startLine": 322,
+        "startChar": 36,
+        "endLine": 322,
+        "endChar": 0
+      },
+      "revId": "081f87c88db0fe2fcd26b6da5853e982780fc967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b1958b2_47510c1c",
+        "filename": "content/network/url_loader_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-20T16:46:05Z",
+      "side": 1,
+      "message": "nit:  Think this can be forward declared, even though it\u0027s stored in a refptr.",
+      "range": {
+        "startLine": 14,
+        "startChar": 25,
+        "endLine": 14,
+        "endChar": 31
+      },
+      "revId": "081f87c88db0fe2fcd26b6da5853e982780fc967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d87edbd6_ccbbcf7f",
+        "filename": "content/network/url_loader_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-20T16:46:05Z",
+      "side": 1,
+      "message": "Maybe SendResponseHeadersToClient or SendReceivedResponseToClient?",
+      "range": {
+        "startLine": 64,
+        "startChar": 27,
+        "endLine": 64,
+        "endChar": 28
+      },
+      "revId": "081f87c88db0fe2fcd26b6da5853e982780fc967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f6d292f_b7a1ab9a",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-20T16:46:05Z",
+      "side": 1,
+      "message": "Optional:  May want to make options instead of a bool - it makes the call sites a little clearer.",
+      "range": {
+        "startLine": 116,
+        "startChar": 36,
+        "endLine": 116,
+        "endChar": 40
+      },
+      "revId": "081f87c88db0fe2fcd26b6da5853e982780fc967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a718b509_1529762a",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-20T16:46:05Z",
+      "side": 1,
+      "message": "I don\u0027t think there\u0027s any hard guarantee that we\u0027ll get enough bytes in the first read?  Sure, it seems like in practice, it\u0027s unlikely to happen, but doesn\u0027t seem great to rely on implicit assumptions about the behavior of platform APIs, particularly when we\u0027re quite a number of layers removed from our code that calls those APIs.",
+      "range": {
+        "startLine": 208,
+        "startChar": 26,
+        "endLine": 208,
+        "endChar": 44
+      },
+      "revId": "081f87c88db0fe2fcd26b6da5853e982780fc967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "435d4c2d_1a9e69ec",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-20T16:46:05Z",
+      "side": 1,
+      "message": "Suggest a nosniff test, too, and a test where the response body is empty.",
+      "range": {
+        "startLine": 211,
+        "startChar": 1,
+        "endLine": 211,
+        "endChar": 0
+      },
+      "revId": "081f87c88db0fe2fcd26b6da5853e982780fc967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
