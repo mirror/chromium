@@ -49,12 +49,13 @@ scoped_refptr<GpuChannelHost> GpuChannelHost::Create(
     GpuChannelHostFactory* factory,
     int channel_id,
     const gpu::GPUInfo& gpu_info,
+    const gpu::GpuWebPreferences& gpu_web_prefs,
     const IPC::ChannelHandle& channel_handle,
     base::WaitableEvent* shutdown_event,
     gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager) {
   DCHECK(factory->IsMainThread());
   scoped_refptr<GpuChannelHost> host = new GpuChannelHost(
-      factory, channel_id, gpu_info, gpu_memory_buffer_manager);
+      factory, channel_id, gpu_info, gpu_web_prefs, gpu_memory_buffer_manager);
   host->Connect(channel_handle, shutdown_event);
   return host;
 }
@@ -63,10 +64,12 @@ GpuChannelHost::GpuChannelHost(
     GpuChannelHostFactory* factory,
     int channel_id,
     const gpu::GPUInfo& gpu_info,
+    const gpu::GpuWebPreferences& gpu_web_prefs,
     gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager)
     : factory_(factory),
       channel_id_(channel_id),
       gpu_info_(gpu_info),
+      gpu_web_preferences_(gpu_web_prefs),
       gpu_memory_buffer_manager_(gpu_memory_buffer_manager) {
   next_image_id_.GetNext();
   next_route_id_.GetNext();

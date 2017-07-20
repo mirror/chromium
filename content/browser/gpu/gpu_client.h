@@ -25,6 +25,7 @@ class GpuClient : public ui::mojom::Gpu {
   void OnEstablishGpuChannel(const EstablishGpuChannelCallback& callback,
                              const IPC::ChannelHandle& channel,
                              const gpu::GPUInfo& gpu_info,
+			     const gpu::GpuWebPreferences& gpu_web_prefs,
                              GpuProcessHost::EstablishChannelStatus status);
   void OnCreateGpuMemoryBuffer(const CreateGpuMemoryBufferCallback& callback,
                                const gfx::GpuMemoryBufferHandle& handle);

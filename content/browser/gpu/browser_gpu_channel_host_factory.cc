@@ -53,6 +53,7 @@ class BrowserGpuChannelHostFactory::EstablishRequest
   void EstablishOnIO();
   void OnEstablishedOnIO(const IPC::ChannelHandle& channel_handle,
                          const gpu::GPUInfo& gpu_info,
+			 const gpu::GpuWebPreferences&,
                          GpuProcessHost::EstablishChannelStatus status);
   void FinishOnIO();
   void FinishOnMain();
@@ -119,6 +120,7 @@ void BrowserGpuChannelHostFactory::EstablishRequest::EstablishOnIO() {
 void BrowserGpuChannelHostFactory::EstablishRequest::OnEstablishedOnIO(
     const IPC::ChannelHandle& channel_handle,
     const gpu::GPUInfo& gpu_info,
+    const gpu::GpuWebPreferences&,
     GpuProcessHost::EstablishChannelStatus status) {
   if (!channel_handle.mojo_handle.is_valid() &&
       status == GpuProcessHost::EstablishChannelStatus::GPU_HOST_INVALID) {
@@ -317,6 +319,7 @@ void BrowserGpuChannelHostFactory::GpuChannelEstablished() {
     GetContentClient()->SetGpuInfo(pending_request_->gpu_info());
     gpu_channel_ = gpu::GpuChannelHost::Create(
         this, gpu_client_id_, pending_request_->gpu_info(),
+	gpu::GpuWebPreferences(),
         pending_request_->channel_handle(), shutdown_event_.get(),
         gpu_memory_buffer_manager_.get());
   }

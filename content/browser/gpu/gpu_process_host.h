@@ -27,6 +27,7 @@
 #include "gpu/command_buffer/common/constants.h"
 #include "gpu/config/gpu_feature_info.h"
 #include "gpu/config/gpu_info.h"
+#include "gpu/config/gpu_web_preferences.h"
 #include "gpu/ipc/common/surface_handle.h"
 #include "ipc/ipc_sender.h"
 #include "ipc/message_filter.h"
@@ -75,6 +76,7 @@ class GpuProcessHost : public BrowserChildProcessHostDelegate,
   using EstablishChannelCallback =
       base::Callback<void(const IPC::ChannelHandle&,
                           const gpu::GPUInfo&,
+			  const gpu::GpuWebPreferences&,
                           EstablishChannelStatus status)>;
 
   enum class BufferCreationStatus {

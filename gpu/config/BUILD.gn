@@ -111,6 +111,7 @@ source_set("config_sources") {
     "gpu_test_expectations_parser.h",
     "gpu_util.cc",
     "gpu_util.h",
+    "gpu_web_preferences.h",
   ]
 
   sources += process_json_outputs

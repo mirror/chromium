@@ -140,6 +140,7 @@ mojom("interfaces") {
     "gpu_feature_info.mojom",
     "gpu_info.mojom",
     "gpu_preferences.mojom",
+    "gpu_web_preferences.mojom",
     "mailbox.mojom",
     "mailbox_holder.mojom",
     "memory_stats.mojom",

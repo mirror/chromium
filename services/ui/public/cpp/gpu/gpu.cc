@@ -137,12 +137,17 @@ scoped_refptr<gpu::GpuChannelHost> Gpu::EstablishGpuChannelSync() {
   int client_id = 0;
   mojo::ScopedMessagePipeHandle channel_handle;
   gpu::GPUInfo gpu_info;
+  gpu::GpuWebPreferences gpu_web_preferences;
   mojo::SyncCallRestrictions::ScopedAllowSyncCall allow_sync_call;
-  if (!gpu_->EstablishGpuChannel(&client_id, &channel_handle, &gpu_info)) {
+  if (!gpu_->EstablishGpuChannel(&client_id,
+				 &channel_handle,
+				 &gpu_info,
+				 &gpu_web_preferences)) {
     DLOG(WARNING) << "Encountered error while establishing gpu channel.";
     return nullptr;
   }
-  OnEstablishedGpuChannel(client_id, std::move(channel_handle), gpu_info);
+  OnEstablishedGpuChannel(
+      client_id, std::move(channel_handle), gpu_info, gpu_web_preferences);
 
   return gpu_channel_;
 }
@@ -162,14 +167,16 @@ scoped_refptr<gpu::GpuChannelHost> Gpu::GetGpuChannel() {
 
 void Gpu::OnEstablishedGpuChannel(int client_id,
                                   mojo::ScopedMessagePipeHandle channel_handle,
-                                  const gpu::GPUInfo& gpu_info) {
+                                  const gpu::GPUInfo& gpu_info,
+				  const gpu::GpuWebPreferences& gpu_web_prefs) {
   DCHECK(IsMainThread());
   DCHECK(gpu_.get());
   DCHECK(!gpu_channel_);
 
   if (client_id && channel_handle.is_valid()) {
     gpu_channel_ = gpu::GpuChannelHost::Create(
-        this, client_id, gpu_info, IPC::ChannelHandle(channel_handle.release()),
+	this, client_id, gpu_info, gpu_web_prefs,
+        IPC::ChannelHandle(channel_handle.release()),
         &shutdown_event_, gpu_memory_buffer_manager_.get());
   }
 
