@@ -25,7 +25,6 @@
 #include "ui/gfx/path.h"
 #include "ui/gfx/skia_util.h"
 #include "ui/views/bubble/bubble_frame_view.h"
-#include "ui/views/bubble/bubble_window_targeter.h"
 #include "ui/views/layout/box_layout.h"
 #include "ui/views/widget/widget.h"
 #include "ui/wm/core/shadow_types.h"
@@ -254,8 +253,6 @@ void TrayBubbleView::InitializeAndShowBubble() {
   layer()->parent()->SetMaskLayer(bubble_content_mask_->layer());
 
   GetWidget()->Show();
-  GetWidget()->GetNativeWindow()->SetEventTargeter(
-      std::unique_ptr<ui::EventTargeter>(new BubbleWindowTargeter(this)));
   UpdateBubble();
 
   ++g_current_tray_bubble_showing_count_;
