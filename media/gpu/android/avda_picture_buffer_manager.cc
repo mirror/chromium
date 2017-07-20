@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "media/gpu/avda_picture_buffer_manager.h"
+#include "media/gpu/android/avda_picture_buffer_manager.h"
 
 #include <EGL/egl.h>
 #include <EGL/eglext.h>
@@ -18,8 +18,8 @@
 #include "gpu/command_buffer/service/texture_manager.h"
 #include "gpu/ipc/service/gpu_channel.h"
 #include "media/base/android/media_codec_bridge_impl.h"
-#include "media/gpu/avda_codec_image.h"
-#include "media/gpu/avda_shared_state.h"
+#include "media/gpu/android/avda_codec_image.h"
+#include "media/gpu/android/avda_shared_state.h"
 #include "ui/gl/android/scoped_java_surface.h"
 #include "ui/gl/android/surface_texture.h"
 #include "ui/gl/egl_util.h"

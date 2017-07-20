@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef MEDIA_GPU_AVDA_STATE_PROVIDER_H_
-#define MEDIA_GPU_AVDA_STATE_PROVIDER_H_
+#ifndef MEDIA_GPU_ANDROID_AVDA_STATE_PROVIDER_H_
+#define MEDIA_GPU_ANDROID_AVDA_STATE_PROVIDER_H_
 
 #include "base/compiler_specific.h"
 #include "base/threading/thread_checker.h"
@@ -41,4 +41,4 @@ class AVDAStateProvider {
 
 }  // namespace media
 
-#endif  // MEDIA_GPU_AVDA_STATE_PROVIDER_H_
+#endif  // MEDIA_GPU_ANDROID_AVDA_STATE_PROVIDER_H_

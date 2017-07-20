@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef MEDIA_GPU_AVDA_CODEC_IMAGE_H_
-#define MEDIA_GPU_AVDA_CODEC_IMAGE_H_
+#ifndef MEDIA_GPU_ANDROID_AVDA_CODEC_IMAGE_H_
+#define MEDIA_GPU_ANDROID_AVDA_CODEC_IMAGE_H_
 
 #include <stdint.h>
 
@@ -11,7 +11,7 @@
 
 #include "base/macros.h"
 #include "gpu/command_buffer/service/gl_stream_texture_image.h"
-#include "media/gpu/avda_shared_state.h"
+#include "media/gpu/android/avda_shared_state.h"
 
 namespace ui {
 class ScopedMakeCurrent;
@@ -159,4 +159,4 @@ class AVDACodecImage : public gpu::gles2::GLStreamTextureImage {
 
 }  // namespace media
 
-#endif  // MEDIA_GPU_AVDA_CODEC_IMAGE_H_
+#endif  // MEDIA_GPU_ANDROID_AVDA_CODEC_IMAGE_H_

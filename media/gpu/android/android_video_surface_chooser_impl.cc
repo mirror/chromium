@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "media/gpu/android_video_surface_chooser_impl.h"
+#include "media/gpu/android/android_video_surface_chooser_impl.h"
 
 #include "base/memory/ptr_util.h"
 #include "base/time/default_tick_clock.h"

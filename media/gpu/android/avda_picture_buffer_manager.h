@@ -2,17 +2,17 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef MEDIA_GPU_AVDA_PICTURE_BUFFER_MANAGER_H_
-#define MEDIA_GPU_AVDA_PICTURE_BUFFER_MANAGER_H_
+#ifndef MEDIA_GPU_ANDROID_AVDA_PICTURE_BUFFER_MANAGER_H_
+#define MEDIA_GPU_ANDROID_AVDA_PICTURE_BUFFER_MANAGER_H_
 
 #include <stdint.h>
 #include <vector>
 
 #include "base/macros.h"
-#include "media/gpu/avda_state_provider.h"
-#include "media/gpu/avda_surface_bundle.h"
+#include "media/gpu/android/avda_state_provider.h"
+#include "media/gpu/android/avda_surface_bundle.h"
+#include "media/gpu/android/surface_texture_gl_owner.h"
 #include "media/gpu/media_gpu_export.h"
-#include "media/gpu/surface_texture_gl_owner.h"
 
 namespace gpu {
 namespace gles2 {
@@ -134,4 +134,4 @@ class MEDIA_GPU_EXPORT AVDAPictureBufferManager {
 
 }  // namespace media
 
-#endif  // MEDIA_GPU_AVDA_PICTURE_BUFFER_MANAGER_H_
+#endif  // MEDIA_GPU_ANDROID_AVDA_PICTURE_BUFFER_MANAGER_H_

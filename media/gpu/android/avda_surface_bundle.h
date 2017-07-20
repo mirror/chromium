@@ -2,14 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef MEDIA_GPU_AVDA_SURFACE_BUNDLE_H_
-#define MEDIA_GPU_AVDA_SURFACE_BUNDLE_H_
+#ifndef MEDIA_GPU_ANDROID_AVDA_SURFACE_BUNDLE_H_
+#define MEDIA_GPU_ANDROID_AVDA_SURFACE_BUNDLE_H_
 
 #include "base/memory/ref_counted.h"
 #include "media/base/android/android_overlay.h"
 #include "media/base/surface_manager.h"
+#include "media/gpu/android/surface_texture_gl_owner.h"
 #include "media/gpu/media_gpu_export.h"
-#include "media/gpu/surface_texture_gl_owner.h"
 #include "ui/gl/android/scoped_java_surface.h"
 
 namespace media {
@@ -48,4 +48,4 @@ struct MEDIA_GPU_EXPORT AVDASurfaceBundle
 
 }  // namespace media
 
-#endif  // MEDIA_GPU_AVDA_SURFACE_BUNDLE_H_
+#endif  // MEDIA_GPU_ANDROID_AVDA_SURFACE_BUNDLE_H_

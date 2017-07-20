@@ -5,7 +5,7 @@
 #ifndef MEDIA_GPU_MOCK_SURFACE_TEXTURE_GL_OWNER_H_
 #define MEDIA_GPU_MOCK_SURFACE_TEXTURE_GL_OWNER_H_
 
-#include "media/gpu/surface_texture_gl_owner.h"
+#include "media/gpu/android/surface_texture_gl_owner.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/gl/gl_bindings.h"
