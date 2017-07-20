@@ -22,6 +22,30 @@
       "revId": "be655ea1a14529727e948938be1f41db80624d36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54721a85_87580eb9",
+        "filename": "components/sync_bookmarks/bookmark_model_associator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 966,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-07-20T23:48:28Z",
+      "side": 1,
+      "message": "The goal is to use enum for all UMA_HISTOGRAM_ENUMERATION(). Is it possible to specify the values in ModelType so that we don\u0027t need a translation table in kModelTypeInfoMap[]?",
+      "parentUuid": "6b5be4f3_2deb0327",
+      "range": {
+        "startLine": 966,
+        "startChar": 0,
+        "endLine": 966,
+        "endChar": 74
+      },
+      "revId": "be655ea1a14529727e948938be1f41db80624d36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
