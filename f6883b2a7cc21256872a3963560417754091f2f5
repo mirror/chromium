@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "092b4a81_0367d769",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-07-20T15:00:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a96528db_cb0f859a",
+      "range": {
+        "startLine": 214,
+        "startChar": 59,
+        "endLine": 214,
+        "endChar": 95
+      },
+      "revId": "f6883b2a7cc21256872a3963560417754091f2f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38b84c66_dd46ab1f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
         "patchSetId": 2
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "359bdcb9_2077ba2c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ThumbnailGradient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-07-20T15:00:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99cb3bc6_7d03b3f5",
+      "range": {
+        "startLine": 32,
+        "startChar": 29,
+        "endLine": 32,
+        "endChar": 43
+      },
+      "revId": "f6883b2a7cc21256872a3963560417754091f2f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72fdd143_e9e2ace1",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ThumbnailGradient.java",
         "patchSetId": 2
@@ -85,6 +133,24 @@
       "revId": "f6883b2a7cc21256872a3963560417754091f2f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16cd091c_ab7f834d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ThumbnailGradient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-07-20T15:00:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72fdd143_e9e2ace1",
+      "revId": "f6883b2a7cc21256872a3963560417754091f2f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "a385c09d_1d9c0555",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ThumbnailGradient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-07-20T15:00:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97c89d98_9f2080ec",
+      "range": {
+        "startLine": 57,
+        "startChar": 19,
+        "endLine": 57,
+        "endChar": 32
+      },
+      "revId": "f6883b2a7cc21256872a3963560417754091f2f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "178c8268_f35e9397",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ThumbnailGradient.java",
         "patchSetId": 2
@@ -131,6 +221,30 @@
       "revId": "f6883b2a7cc21256872a3963560417754091f2f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b1bdbc8_38a6632f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ThumbnailGradient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-07-20T15:00:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "178c8268_f35e9397",
+      "range": {
+        "startLine": 60,
+        "startChar": 27,
+        "endLine": 60,
+        "endChar": 53
+      },
+      "revId": "f6883b2a7cc21256872a3963560417754091f2f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "c6101628_2c773a03",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ThumbnailGradient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-07-20T15:00:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9af3fa9_ecfc0ae5",
+      "range": {
+        "startLine": 68,
+        "startChar": 27,
+        "endLine": 68,
+        "endChar": 41
+      },
+      "revId": "f6883b2a7cc21256872a3963560417754091f2f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f01c839_a66d23d1",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ThumbnailGradient.java",
         "patchSetId": 2
@@ -180,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "1f873595_774acca7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ThumbnailGradient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-07-20T15:00:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f01c839_a66d23d1",
+      "range": {
+        "startLine": 71,
+        "startChar": 28,
+        "endLine": 71,
+        "endChar": 45
+      },
+      "revId": "f6883b2a7cc21256872a3963560417754091f2f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c55cb255_7b3dd0a5",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ThumbnailGradient.java",
         "patchSetId": 2
@@ -200,6 +362,30 @@
       "revId": "f6883b2a7cc21256872a3963560417754091f2f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdad525f_db757bdc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ThumbnailGradient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-07-20T15:00:06Z",
+      "side": 1,
+      "message": "Good catch! Thanks",
+      "parentUuid": "c55cb255_7b3dd0a5",
+      "range": {
+        "startLine": 82,
+        "startChar": 47,
+        "endLine": 82,
+        "endChar": 55
+      },
+      "revId": "f6883b2a7cc21256872a3963560417754091f2f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
