@@ -22,6 +22,30 @@
       "revId": "0e0ca1fb4928d46c05ef444b376b3ab1c0db02b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02381b5b_26236307",
+        "filename": "ios/chrome/browser/ui/authentication/signin_interaction_controller_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-07-20T22:33:25Z",
+      "side": 0,
+      "message": "This has been discussed in previous patches, and the original author isn\u0027t sure if this is necessary. EarlGrey should be able to handle the synchronization, and I\u0027ve sent the patch to try jobs twice (twoside.py), both got green builds. However, if it turns out to be a real flake, I can add it back with necessary comments.",
+      "parentUuid": "5e8b91a4_abf9ba5e",
+      "range": {
+        "startLine": 419,
+        "startChar": 17,
+        "endLine": 419,
+        "endChar": 36
+      },
+      "revId": "0e0ca1fb4928d46c05ef444b376b3ab1c0db02b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
