@@ -213,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "d1bfad29_db66baa8",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 6
+      },
+      "lineNbr": 3339,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-20T12:55:51Z",
+      "side": 1,
+      "message": "Sounds good, please add the spec link to the commit message.\n\nDespite the fact that we\u0027re aligning with the spec (yay!), this could change how existing content behaves, right? In this case, I think it\u0027s just what kind of cursors show so I don\u0027t think it\u0027s a huge deal. An argument could be made we don\u0027t need a PSA but it\u0027s also 0 cost so might be better to err to the side of over-communication.",
+      "parentUuid": "b038bdd4_da76b7d4",
+      "range": {
+        "startLine": 3339,
+        "startChar": 18,
+        "endLine": 3339,
+        "endChar": 22
+      },
+      "revId": "eadda01a2d354b22b63d9a622178b59ee011c37a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45028c2b_ff55cada",
         "filename": "third_party/WebKit/Source/core/dom/Node.cpp",
         "patchSetId": 6
