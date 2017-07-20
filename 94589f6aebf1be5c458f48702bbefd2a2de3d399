@@ -16,6 +16,24 @@
       "revId": "94589f6aebf1be5c458f48702bbefd2a2de3d399",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a567e04_9f4e0f03",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/inspect-headers.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-20T03:36:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be40ad86_5ca17d94",
+      "revId": "94589f6aebf1be5c458f48702bbefd2a2de3d399",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
