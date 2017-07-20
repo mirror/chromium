@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e054ee1c_8ff5665c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/photo_picker/DecoderService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-20T01:06:29Z",
+      "side": 1,
+      "message": "don\u0027t explicitly initialize this. It actually results in more bytecode than if you leave it default-initialized.",
+      "range": {
+        "startLine": 40,
+        "startChar": 58,
+        "endLine": 40,
+        "endChar": 63
+      },
+      "revId": "d9ef7c7ff6ed35c416d9d668c59d6b8037cb2f64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "777053b9_af361d54",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/photo_picker/DecoderService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-20T01:06:29Z",
+      "side": 1,
+      "message": "Use format placeholder. Log.e(TAG, \"Decode failed %s...\", filePath, ...)",
+      "revId": "d9ef7c7ff6ed35c416d9d668c59d6b8037cb2f64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8140d7f1_f4f9b725",
+        "filename": "chrome/browser/android/photo_picker_sandbox_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-20T01:06:29Z",
+      "side": 1,
+      "message": "I\u0027m curious if you\u0027ve look at how UMA worked for a sandboxed process? Will this make its way back to the browser process to be logged?",
+      "revId": "d9ef7c7ff6ed35c416d9d668c59d6b8037cb2f64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
