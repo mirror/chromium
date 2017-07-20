@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "0d789f4c_7d7fe5a0",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-20T18:40:14Z",
+      "side": 1,
+      "message": "Update this comment to remove |anchorPoint|.",
+      "revId": "ff7e9812327fce2b68518e2ef502007eefbe447f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c3f6991_eecdae83",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-20T18:40:14Z",
+      "side": 1,
+      "message": "I think you only need the anchorX coordinate.",
+      "revId": "ff7e9812327fce2b68518e2ef502007eefbe447f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a730cbf_1be737ee",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-20T18:40:14Z",
+      "side": 1,
+      "message": "I think we should defer RTL calculations\nas much as we can. So this should return \na LayoutRectPosition, which is essentially\nan RTL-agnostic CGPoint.",
+      "revId": "ff7e9812327fce2b68518e2ef502007eefbe447f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b921835_c8310a58",
         "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
         "patchSetId": 6
@@ -13,6 +64,40 @@
       "writtenOn": "2017-07-19T23:02:57Z",
       "side": 1,
       "message": "Comments would be helpful in these cases to explain intent of the code.",
+      "revId": "ff7e9812327fce2b68518e2ef502007eefbe447f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90eb4689_061210d4",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-20T18:40:14Z",
+      "side": 1,
+      "message": "I think a width is conceptually \nindependent of RTL/LTR.",
+      "revId": "ff7e9812327fce2b68518e2ef502007eefbe447f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1beffb6b_fa5461da",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-20T18:40:14Z",
+      "side": 1,
+      "message": "Please comment and make this const. \nAnd put this above the enums (not sure if this is in the style guide).",
       "revId": "ff7e9812327fce2b68518e2ef502007eefbe447f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -47,6 +132,40 @@
       "writtenOn": "2017-07-19T23:02:57Z",
       "side": 1,
       "message": "Cannot use using to import whole namespace. Have to import each name individually:\nhttps://engdoc.corp.google.com/eng/doc/devguide/cpp/styleguide.shtml?cl\u003dhead#Namespaces\n\nAlso, if you only use the name once, you might consider not including a using directive and just including the namespace at its use.",
+      "revId": "ff7e9812327fce2b68518e2ef502007eefbe447f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d6a8382_5303406a",
+        "filename": "ios/showcase/bubble/sc_bubble_coordinator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-20T18:40:14Z",
+      "side": 1,
+      "message": "We should aim for small methods. Consider whether you can extract pieces of this logic into private helper methods. It will make it much easier to read as well.",
+      "revId": "ff7e9812327fce2b68518e2ef502007eefbe447f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "894455b9_a2275f72",
+        "filename": "ios/showcase/bubble/sc_bubble_coordinator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-20T18:40:14Z",
+      "side": 1,
+      "message": "Can you put this at about 2/3 of the screen width? This will help to showcase the maxWidth code as well.",
       "revId": "ff7e9812327fce2b68518e2ef502007eefbe447f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
