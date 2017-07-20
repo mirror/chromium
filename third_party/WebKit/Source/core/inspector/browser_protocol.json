@@ -4883,5 +4883,38 @@
                 ]
             }
         ]
+    },
+    {
+        "domain": "PasswordManager",
+        "description": "The SystemInfo domain defines events for being notified of the Password Manager's inferences regarding possible sign-in and sign-up forms.",
+        "dependencies": ["DOM"],
+        "experimental": true,
+        "types": [],
+        "commands": [
+          {
+              "name": "enable",
+              "description": "Enables password manager domain notifications."
+          },
+          {
+              "name": "disable",
+              "description": "Disables password manager domain notifications."
+          }
+        ],
+        "events": [
+            {
+                "name": "fieldInferred",
+                "description": "Issued when the Password Manager infers the intended use of an input element with a high certainty.",
+                "parameters": [
+                    { "name": "nodeId", "$ref": "DOM.NodeId", "description": "Id of the input element node." },
+                    { "name": "usage", "type": "string", "description": "A possible usage of the element, as could be used in the input's 'autocomplete' attribute." }
+                ]
+            },
+            {
+                "name": "trivialPasswordManagerEvent",
+                "parameters": [
+                    { "name": "timestamp", "type": "number" }
+                ]
+            }
+        ]
     }]
 }

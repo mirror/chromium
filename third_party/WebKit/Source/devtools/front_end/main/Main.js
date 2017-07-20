@@ -594,11 +594,18 @@ Main.Main.SearchActionDelegate = class {
  * @unrestricted
  */
 Main.Main.WarningErrorCounter = class {
-  constructor() {
+  /**
+   * @param {function():int} errorCount
+   * @param {function():int} warningCount
+   * @param {object} listeners
+   * @param {function(!Event)} onclick
+   */
+  constructor(errorCount, warningCount, listeners, onclick) {
     Main.Main.WarningErrorCounter._instanceForTest = this;
 
     this._counter = createElement('div');
-    this._counter.addEventListener('click', Common.console.show.bind(Common.console), false);
+    if (onclick)
+      this._counter.addEventListener('click', onclick, false);
     this._toolbarItem = new UI.ToolbarItem(this._counter);
     var shadowRoot = UI.createShadowRootWithCoreStyles(this._counter, 'main/errorWarningCounter.css');
 
@@ -606,9 +613,16 @@ Main.Main.WarningErrorCounter = class {
     this._warnings = this._createItem(shadowRoot, 'smallicon-warning');
     this._titles = [];
 
-    ConsoleModel.consoleModel.addEventListener(ConsoleModel.ConsoleModel.Events.ConsoleCleared, this._update, this);
-    ConsoleModel.consoleModel.addEventListener(ConsoleModel.ConsoleModel.Events.MessageAdded, this._update, this);
-    ConsoleModel.consoleModel.addEventListener(ConsoleModel.ConsoleModel.Events.MessageUpdated, this._update, this);
+    this._errorCount = errorCount;
+    this._warningCount = warningCount;
+
+    if (listeners) {
+      for (var listener of listeners) {
+        for (var event of listener.events) {
+          listener.model.addEventListener(event, this._update, this);
+        }
+      }
+    }
     this._update();
   }
 
@@ -629,26 +643,24 @@ Main.Main.WarningErrorCounter = class {
   /**
    * @param {!{item: !Element, text: !Element}} item
    * @param {number} count
-   * @param {boolean} first
    * @param {string} title
    */
-  _updateItem(item, count, first, title) {
+  _updateItem(item, count, title) {
     item.item.classList.toggle('hidden', !count);
-    item.item.classList.toggle('counter-item-first', first);
     item.text.textContent = count;
     if (count)
       this._titles.push(title);
   }
 
   _update() {
-    var errors = ConsoleModel.consoleModel.errors();
-    var warnings = ConsoleModel.consoleModel.warnings();
+    var errors = this._errorCount();
+    var warnings = this._warningCount();
 
     this._titles = [];
     this._toolbarItem.setVisible(!!(errors || warnings));
-    this._updateItem(this._errors, errors, false, Common.UIString(errors === 1 ? '%d error' : '%d errors', errors));
+    this._updateItem(this._errors, errors, Common.UIString(errors === 1 ? '%d error' : '%d errors', errors));
     this._updateItem(
-        this._warnings, warnings, !errors, Common.UIString(warnings === 1 ? '%d warning' : '%d warnings', warnings));
+        this._warnings, warnings, Common.UIString(warnings === 1 ? '%d warning' : '%d warnings', warnings));
     this._counter.title = this._titles.join(', ');
     UI.inspectorView.toolbarItemResized();
   }
@@ -659,6 +671,26 @@ Main.Main.WarningErrorCounter = class {
    */
   item() {
     return this._toolbarItem;
+  }
+};
+
+/**
+ * @implements {UI.ToolbarItem.Provider}
+ * @unrestricted
+ */
+Main.Main.ConsoleWarningErrorCounter = class extends Main.Main.WarningErrorCounter {
+  constructor() {
+    super(ConsoleModel.consoleModel.errors.bind(ConsoleModel.consoleModel),
+      ConsoleModel.consoleModel.warnings.bind(ConsoleModel.consoleModel), [
+      {
+        model: ConsoleModel.consoleModel,
+        events: [
+          ConsoleModel.ConsoleModel.Events.ConsoleCleared,
+          ConsoleModel.ConsoleModel.Events.MessageAdded,
+          ConsoleModel.ConsoleModel.Events.MessageUpdated
+        ]
+      }
+    ], Common.console.show.bind(Common.console));
   }
 };
 

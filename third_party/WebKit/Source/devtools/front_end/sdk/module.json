@@ -252,6 +252,7 @@
         "DOMDebuggerModel.js",
         "DOMModel.js",
         "DebuggerModel.js",
+        "AnalysisModel.js",
         "EmulationModel.js",
         "LayerTreeBase.js",
         "LogModel.js",
@@ -272,6 +273,7 @@
         "NetworkManager.js",
         "NetworkRequest.js",
         "PaintProfiler.js",
+        "PasswordManagerModel.js",
         "HeapProfilerModel.js",
         "../SupportedCSSProperties.js",
         "FilmStripModel.js"
