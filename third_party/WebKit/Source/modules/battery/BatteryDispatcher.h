@@ -9,25 +9,30 @@
 #include "modules/ModulesExport.h"
 #include "modules/battery/BatteryManager.h"
 #include "modules/battery/battery_status.h"
+#include "platform/Supplementable.h"
 #include "services/device/public/interfaces/battery_monitor.mojom-blink.h"
 
 namespace blink {
 
 class MODULES_EXPORT BatteryDispatcher final
     : public GarbageCollectedFinalized<BatteryDispatcher>,
+      public Supplement<LocalFrame>,
       public PlatformEventDispatcher {
   USING_GARBAGE_COLLECTED_MIXIN(BatteryDispatcher);
   WTF_MAKE_NONCOPYABLE(BatteryDispatcher);
 
  public:
-  static BatteryDispatcher& Instance();
+  static BatteryDispatcher* From(LocalFrame&);
 
   const BatteryStatus* LatestData() const {
     return has_latest_data_ ? &battery_status_ : nullptr;
   }
 
+  DECLARE_TRACE();
+
  private:
-  BatteryDispatcher();
+  BatteryDispatcher(LocalFrame&);
+  static const char* SupplementName();
 
   void QueryNextStatus();
   void OnDidChange(device::mojom::blink::BatteryStatusPtr);
