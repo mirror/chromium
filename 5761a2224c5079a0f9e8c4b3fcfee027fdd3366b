@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "80c4a6a0_d6adc225",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-07-20T02:18:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba950923_18134cd4",
+      "revId": "5761a2224c5079a0f9e8c4b3fcfee027fdd3366b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af38f08f_4f7c78ea",
         "filename": "ash/shelf/shelf_layout_manager.cc",
         "patchSetId": 22
@@ -33,6 +51,24 @@
       "revId": "5761a2224c5079a0f9e8c4b3fcfee027fdd3366b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ac6f77f_2d0adfec",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1110,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-07-20T02:18:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af38f08f_4f7c78ea",
+      "revId": "5761a2224c5079a0f9e8c4b3fcfee027fdd3366b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f0d7d29f_bcf0c9bb",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1165,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-07-20T02:18:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45b31ac5_d78531c9",
+      "revId": "5761a2224c5079a0f9e8c4b3fcfee027fdd3366b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "506d02c3_c6b4fdb5",
         "filename": "ash/shelf/shelf_layout_manager.h",
         "patchSetId": 22
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "9e0c4bf4_f3fa969d",
+        "filename": "ash/shelf/shelf_layout_manager.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-07-20T02:18:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "506d02c3_c6b4fdb5",
+      "revId": "5761a2224c5079a0f9e8c4b3fcfee027fdd3366b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93ea6331_066618d1",
         "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
         "patchSetId": 22
@@ -81,6 +153,24 @@
       "writtenOn": "2017-07-19T23:39:39Z",
       "side": 1,
       "message": "nit: Is it possible to reset the values of show_count() and dismiss_count() so you can compare with 1u and 0u?",
+      "revId": "5761a2224c5079a0f9e8c4b3fcfee027fdd3366b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79845f11_1712f74a",
+        "filename": "ash/shelf/shelf_layout_manager_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-07-20T02:18:50Z",
+      "side": 1,
+      "message": "I am not quite sure about this. But I found that there are no setters in TestAppListPresenter for these variables. It works if we create new TestAppListPresenter instance for each test case here. I guess maybe keep this as-is looks better?",
+      "parentUuid": "93ea6331_066618d1",
       "revId": "5761a2224c5079a0f9e8c4b3fcfee027fdd3366b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "af724253_63b420bb",
+        "filename": "ash/shelf/shelf_view.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1484,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-07-20T02:18:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7c95b2f_42090787",
+      "revId": "5761a2224c5079a0f9e8c4b3fcfee027fdd3366b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8a1adef_4422d832",
         "filename": "ui/app_list/presenter/app_list_presenter.mojom",
         "patchSetId": 22
@@ -135,6 +243,24 @@
       "revId": "5761a2224c5079a0f9e8c4b3fcfee027fdd3366b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a699bc3_1bee296f",
+        "filename": "ui/app_list/presenter/app_list_presenter.mojom",
+        "patchSetId": 22
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-07-20T02:18:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8a1adef_4422d832",
+      "revId": "5761a2224c5079a0f9e8c4b3fcfee027fdd3366b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "ea234ca3_a9d4e94d",
+        "filename": "ui/app_list/presenter/test/test_app_list_presenter.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-07-20T02:18:50Z",
+      "side": 1,
+      "message": "NO. But it seems that we need to implement the func defined in mojom. Since it is pure virtual func?",
+      "parentUuid": "cb04bd45_5f6680c0",
+      "revId": "5761a2224c5079a0f9e8c4b3fcfee027fdd3366b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56d7478b_114c84d7",
         "filename": "ui/app_list/views/app_list_view.cc",
         "patchSetId": 22
@@ -169,6 +313,24 @@
       "revId": "5761a2224c5079a0f9e8c4b3fcfee027fdd3366b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d77c4b1_4662b375",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-07-20T02:18:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56d7478b_114c84d7",
+      "revId": "5761a2224c5079a0f9e8c4b3fcfee027fdd3366b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
