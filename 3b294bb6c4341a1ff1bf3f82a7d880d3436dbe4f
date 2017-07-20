@@ -22,6 +22,30 @@
       "revId": "3b294bb6c4341a1ff1bf3f82a7d880d3436dbe4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dbe5a57_a029b1df",
+        "filename": "components/metrics/field_trials_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-20T01:55:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5d5561f_1a066d7e",
+      "range": {
+        "startLine": 36,
+        "startChar": 42,
+        "endLine": 36,
+        "endChar": 61
+      },
+      "revId": "3b294bb6c4341a1ff1bf3f82a7d880d3436dbe4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
