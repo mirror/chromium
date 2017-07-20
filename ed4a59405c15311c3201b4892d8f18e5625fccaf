@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9934b07_fa22a65e",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-20T10:28:47Z",
+      "side": 1,
+      "message": "Nit 1: All these Closuers should be OnceClosures.\nNit 2: Pass a copy, not a reference.",
+      "revId": "ed4a59405c15311c3201b4892d8f18e5625fccaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea2d09ef_d993fb96",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-20T10:28:47Z",
+      "side": 1,
+      "message": "You can invalidate weak pointers and immediately trigger a new policy fetch at this point, rather than setting an extra flag.",
+      "revId": "ed4a59405c15311c3201b4892d8f18e5625fccaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "523491bc_b8399728",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-20T10:28:47Z",
+      "side": 1,
+      "message": "What if one of the callbacks triggers another fetch, modifying |key_loaded_callbacks_| while you are iterating through it? You should use a copy of |key_loaded_callbacks_|.",
+      "revId": "ed4a59405c15311c3201b4892d8f18e5625fccaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3d3763e_8176ee27",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-20T10:28:47Z",
+      "side": 1,
+      "message": "Nit: s/task_runner/task_runner_/",
+      "revId": "ed4a59405c15311c3201b4892d8f18e5625fccaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2aedea9_5ce7dc1d",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-20T10:28:47Z",
+      "side": 1,
+      "message": "Nit: Where is this used?",
+      "revId": "ed4a59405c15311c3201b4892d8f18e5625fccaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0e50d18_04756147",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-20T10:28:47Z",
+      "side": 1,
+      "message": "Nit: Where is this used?",
+      "revId": "ed4a59405c15311c3201b4892d8f18e5625fccaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4c329f8_e17067fc",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-20T10:28:47Z",
+      "side": 1,
+      "message": "Nit: #include \"chromeos/dbus/cryptohome_client.h\"",
+      "revId": "ed4a59405c15311c3201b4892d8f18e5625fccaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fe14f16_6dec1cf8",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-20T10:28:47Z",
+      "side": 1,
+      "message": "Nit: #include \"chromeos/cryptohome/cryptohome_parameters.h\"",
+      "revId": "ed4a59405c15311c3201b4892d8f18e5625fccaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed859d74_e97a82d5",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-07-20T10:28:47Z",
+      "side": 1,
+      "message": "Nit: #include \u003cmemory\u003e",
+      "revId": "ed4a59405c15311c3201b4892d8f18e5625fccaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
