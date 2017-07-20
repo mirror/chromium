@@ -35,6 +35,7 @@
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/Editor.h"
 #include "core/editing/FrameSelection.h"
+#include "core/editing/SetSelectionData.h"
 #include "core/editing/commands/TypingCommand.h"
 #include "core/editing/markers/DocumentMarkerController.h"
 #include "core/editing/state_machines/BackwardCodePointStateMachine.h"
@@ -342,7 +343,12 @@ void InputMethodController::SelectComposition() const {
   // The composition can start inside a composed character sequence, so we have
   // to override checks. See <http://bugs.webkit.org/show_bug.cgi?id=15781>
   GetFrame().Selection().SetSelection(
-      SelectionInDOMTree::Builder().SetBaseAndExtent(range).Build(), 0);
+      SetSelectionData::Builder()
+          .SetSelection(
+              SelectionInDOMTree::Builder().SetBaseAndExtent(range).Build())
+          .SetShouldCloseTyping(false)
+          .SetShouldClearTypingStyle(false)
+          .Build());
 }
 
 bool IsCompositionTooLong(const Element& element) {
@@ -393,8 +399,10 @@ bool InputMethodController::FinishComposingText(
             .SetBaseAndExtent(old_selection_range)
             .SetIsHandleVisible(is_handle_visible)
             .Build();
-    GetFrame().Selection().SetSelection(selection,
-                                        FrameSelection::kCloseTyping);
+    GetFrame().Selection().SetSelection(SetSelectionData::Builder()
+                                            .SetSelection(selection)
+                                            .SetShouldClearTypingStyle(true)
+                                            .Build());
     return true;
   }
 
@@ -833,10 +841,12 @@ bool InputMethodController::SetSelectionOffsets(
     return false;
 
   GetFrame().Selection().SetSelection(
-      SelectionInDOMTree::Builder().SetBaseAndExtent(range).Build(),
-      Typing_continuation == TypingContinuation::kEnd
-          ? FrameSelection::kCloseTyping
-          : 0);
+      SetSelectionData::Builder()
+          .SetSelection(
+              SelectionInDOMTree::Builder().SetBaseAndExtent(range).Build())
+          .SetShouldCloseTyping(Typing_continuation == TypingContinuation::kEnd)
+          .SetShouldClearTypingStyle(false)
+          .Build());
   return true;
 }
 

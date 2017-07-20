@@ -43,6 +43,7 @@
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/FrameSelection.h"
 #include "core/editing/SelectionModifier.h"
+#include "core/editing/SetSelectionData.h"
 #include "core/editing/commands/CreateLinkCommand.h"
 #include "core/editing/commands/EditorCommandNames.h"
 #include "core/editing/commands/FormatBlockCommand.h"
@@ -409,8 +410,11 @@ static bool ExpandSelectionToGranularity(LocalFrame& frame,
   if (new_range.IsCollapsed())
     return false;
   frame.Selection().SetSelection(
-      SelectionInDOMTree::Builder().SetBaseAndExtent(new_range).Build(),
-      FrameSelection::kCloseTyping);
+      SetSelectionData::Builder()
+          .SetSelection(
+              SelectionInDOMTree::Builder().SetBaseAndExtent(new_range).Build())
+          .SetShouldClearTypingStyle(false)
+          .Build());
   return true;
 }
 
@@ -813,11 +817,13 @@ static bool ExecuteDeleteToMark(LocalFrame& frame,
       frame.GetEditor().Mark().ToNormalizedEphemeralRange();
   if (mark.IsNotNull()) {
     frame.Selection().SetSelection(
-        SelectionInDOMTree::Builder()
-            .SetBaseAndExtent(
-                UnionEphemeralRanges(mark, frame.GetEditor().SelectedRange()))
-            .Build(),
-        FrameSelection::kCloseTyping);
+        SetSelectionData::Builder()
+            .SetSelection(SelectionInDOMTree::Builder()
+                              .SetBaseAndExtent(UnionEphemeralRanges(
+                                  mark, frame.GetEditor().SelectedRange()))
+                              .Build())
+            .SetShouldClearTypingStyle(false)
+            .Build());
   }
   frame.GetEditor().PerformDelete();
   frame.GetEditor().SetMark(
@@ -1156,7 +1162,7 @@ static bool ExecuteMoveBackward(LocalFrame& frame,
                                 EditorCommandSource,
                                 const String&) {
   frame.Selection().Modify(SelectionModifyAlteration::kMove, kDirectionBackward,
-                           TextGranularity::kCharacter, kUserTriggered);
+                           TextGranularity::kCharacter, SetSelectionBy::kUser);
   return true;
 }
 
@@ -1166,7 +1172,7 @@ static bool ExecuteMoveBackwardAndModifySelection(LocalFrame& frame,
                                                   const String&) {
   frame.Selection().Modify(SelectionModifyAlteration::kExtend,
                            kDirectionBackward, TextGranularity::kCharacter,
-                           kUserTriggered);
+                           SetSelectionBy::kUser);
   return true;
 }
 
@@ -1176,7 +1182,7 @@ static bool ExecuteMoveDown(LocalFrame& frame,
                             const String&) {
   return frame.Selection().Modify(SelectionModifyAlteration::kMove,
                                   kDirectionForward, TextGranularity::kLine,
-                                  kUserTriggered);
+                                  SetSelectionBy::kUser);
 }
 
 static bool ExecuteMoveDownAndModifySelection(LocalFrame& frame,
@@ -1185,7 +1191,7 @@ static bool ExecuteMoveDownAndModifySelection(LocalFrame& frame,
                                               const String&) {
   frame.Selection().Modify(SelectionModifyAlteration::kExtend,
                            kDirectionForward, TextGranularity::kLine,
-                           kUserTriggered);
+                           SetSelectionBy::kUser);
   return true;
 }
 
@@ -1194,7 +1200,7 @@ static bool ExecuteMoveForward(LocalFrame& frame,
                                EditorCommandSource,
                                const String&) {
   frame.Selection().Modify(SelectionModifyAlteration::kMove, kDirectionForward,
-                           TextGranularity::kCharacter, kUserTriggered);
+                           TextGranularity::kCharacter, SetSelectionBy::kUser);
   return true;
 }
 
@@ -1204,7 +1210,7 @@ static bool ExecuteMoveForwardAndModifySelection(LocalFrame& frame,
                                                  const String&) {
   frame.Selection().Modify(SelectionModifyAlteration::kExtend,
                            kDirectionForward, TextGranularity::kCharacter,
-                           kUserTriggered);
+                           SetSelectionBy::kUser);
   return true;
 }
 
@@ -1214,7 +1220,7 @@ static bool ExecuteMoveLeft(LocalFrame& frame,
                             const String&) {
   return frame.Selection().Modify(SelectionModifyAlteration::kMove,
                                   kDirectionLeft, TextGranularity::kCharacter,
-                                  kUserTriggered);
+                                  SetSelectionBy::kUser);
 }
 
 static bool ExecuteMoveLeftAndModifySelection(LocalFrame& frame,
@@ -1222,7 +1228,7 @@ static bool ExecuteMoveLeftAndModifySelection(LocalFrame& frame,
                                               EditorCommandSource,
                                               const String&) {
   frame.Selection().Modify(SelectionModifyAlteration::kExtend, kDirectionLeft,
-                           TextGranularity::kCharacter, kUserTriggered);
+                           TextGranularity::kCharacter, SetSelectionBy::kUser);
   return true;
 }
 
@@ -1239,13 +1245,14 @@ bool ModifySelectionyWithPageGranularity(
     return false;
   }
 
-  frame.Selection().SetSelection(selection_modifier.Selection().AsSelection(),
-                                 FrameSelection::kCloseTyping |
-                                     FrameSelection::kClearTypingStyle |
-                                     kUserTriggered,
-                                 alter == SelectionModifyAlteration::kMove
-                                     ? CursorAlignOnScroll::kAlways
-                                     : CursorAlignOnScroll::kIfNeeded);
+  frame.Selection().SetSelection(
+      SetSelectionData::Builder()
+          .SetSelection(selection_modifier.Selection().AsSelection())
+          .SetSetSelectionBy(SetSelectionBy::kUser)
+          .SetCursorAlignOnScroll(alter == SelectionModifyAlteration::kMove
+                                      ? CursorAlignOnScroll::kAlways
+                                      : CursorAlignOnScroll::kIfNeeded)
+          .Build());
   return true;
 }
 
@@ -1303,7 +1310,7 @@ static bool ExecuteMoveRight(LocalFrame& frame,
                              const String&) {
   return frame.Selection().Modify(SelectionModifyAlteration::kMove,
                                   kDirectionRight, TextGranularity::kCharacter,
-                                  kUserTriggered);
+                                  SetSelectionBy::kUser);
 }
 
 static bool ExecuteMoveRightAndModifySelection(LocalFrame& frame,
@@ -1311,7 +1318,7 @@ static bool ExecuteMoveRightAndModifySelection(LocalFrame& frame,
                                                EditorCommandSource,
                                                const String&) {
   frame.Selection().Modify(SelectionModifyAlteration::kExtend, kDirectionRight,
-                           TextGranularity::kCharacter, kUserTriggered);
+                           TextGranularity::kCharacter, SetSelectionBy::kUser);
   return true;
 }
 
@@ -1320,7 +1327,8 @@ static bool ExecuteMoveToBeginningOfDocument(LocalFrame& frame,
                                              EditorCommandSource,
                                              const String&) {
   frame.Selection().Modify(SelectionModifyAlteration::kMove, kDirectionBackward,
-                           TextGranularity::kDocumentBoundary, kUserTriggered);
+                           TextGranularity::kDocumentBoundary,
+                           SetSelectionBy::kUser);
   return true;
 }
 
@@ -1329,9 +1337,9 @@ static bool ExecuteMoveToBeginningOfDocumentAndModifySelection(
     Event*,
     EditorCommandSource,
     const String&) {
-  frame.Selection().Modify(SelectionModifyAlteration::kExtend,
-                           kDirectionBackward,
-                           TextGranularity::kDocumentBoundary, kUserTriggered);
+  frame.Selection().Modify(
+      SelectionModifyAlteration::kExtend, kDirectionBackward,
+      TextGranularity::kDocumentBoundary, SetSelectionBy::kUser);
   return true;
 }
 
@@ -1340,7 +1348,8 @@ static bool ExecuteMoveToBeginningOfLine(LocalFrame& frame,
                                          EditorCommandSource,
                                          const String&) {
   frame.Selection().Modify(SelectionModifyAlteration::kMove, kDirectionBackward,
-                           TextGranularity::kLineBoundary, kUserTriggered);
+                           TextGranularity::kLineBoundary,
+                           SetSelectionBy::kUser);
   return true;
 }
 
@@ -1350,7 +1359,7 @@ static bool ExecuteMoveToBeginningOfLineAndModifySelection(LocalFrame& frame,
                                                            const String&) {
   frame.Selection().Modify(SelectionModifyAlteration::kExtend,
                            kDirectionBackward, TextGranularity::kLineBoundary,
-                           kUserTriggered);
+                           SetSelectionBy::kUser);
   return true;
 }
 
@@ -1359,7 +1368,8 @@ static bool ExecuteMoveToBeginningOfParagraph(LocalFrame& frame,
                                               EditorCommandSource,
                                               const String&) {
   frame.Selection().Modify(SelectionModifyAlteration::kMove, kDirectionBackward,
-                           TextGranularity::kParagraphBoundary, kUserTriggered);
+                           TextGranularity::kParagraphBoundary,
+                           SetSelectionBy::kUser);
   return true;
 }
 
@@ -1368,9 +1378,9 @@ static bool ExecuteMoveToBeginningOfParagraphAndModifySelection(
     Event*,
     EditorCommandSource,
     const String&) {
-  frame.Selection().Modify(SelectionModifyAlteration::kExtend,
-                           kDirectionBackward,
-                           TextGranularity::kParagraphBoundary, kUserTriggered);
+  frame.Selection().Modify(
+      SelectionModifyAlteration::kExtend, kDirectionBackward,
+      TextGranularity::kParagraphBoundary, SetSelectionBy::kUser);
   return true;
 }
 
@@ -1379,7 +1389,8 @@ static bool ExecuteMoveToBeginningOfSentence(LocalFrame& frame,
                                              EditorCommandSource,
                                              const String&) {
   frame.Selection().Modify(SelectionModifyAlteration::kMove, kDirectionBackward,
-                           TextGranularity::kSentenceBoundary, kUserTriggered);
+                           TextGranularity::kSentenceBoundary,
+                           SetSelectionBy::kUser);
   return true;
 }
 
@@ -1388,9 +1399,9 @@ static bool ExecuteMoveToBeginningOfSentenceAndModifySelection(
     Event*,
     EditorCommandSource,
     const String&) {
-  frame.Selection().Modify(SelectionModifyAlteration::kExtend,
-                           kDirectionBackward,
-                           TextGranularity::kSentenceBoundary, kUserTriggered);
+  frame.Selection().Modify(
+      SelectionModifyAlteration::kExtend, kDirectionBackward,
+      TextGranularity::kSentenceBoundary, SetSelectionBy::kUser);
   return true;
 }
 
@@ -1399,7 +1410,8 @@ static bool ExecuteMoveToEndOfDocument(LocalFrame& frame,
                                        EditorCommandSource,
                                        const String&) {
   frame.Selection().Modify(SelectionModifyAlteration::kMove, kDirectionForward,
-                           TextGranularity::kDocumentBoundary, kUserTriggered);
+                           TextGranularity::kDocumentBoundary,
+                           SetSelectionBy::kUser);
   return true;
 }
 
@@ -1407,9 +1419,9 @@ static bool ExecuteMoveToEndOfDocumentAndModifySelection(LocalFrame& frame,
                                                          Event*,
                                                          EditorCommandSource,
                                                          const String&) {
-  frame.Selection().Modify(SelectionModifyAlteration::kExtend,
-                           kDirectionForward,
-                           TextGranularity::kDocumentBoundary, kUserTriggered);
+  frame.Selection().Modify(
+      SelectionModifyAlteration::kExtend, kDirectionForward,
+      TextGranularity::kDocumentBoundary, SetSelectionBy::kUser);
   return true;
 }
 
@@ -1418,7 +1430,8 @@ static bool ExecuteMoveToEndOfSentence(LocalFrame& frame,
                                        EditorCommandSource,
                                        const String&) {
   frame.Selection().Modify(SelectionModifyAlteration::kMove, kDirectionForward,
-                           TextGranularity::kSentenceBoundary, kUserTriggered);
+                           TextGranularity::kSentenceBoundary,
+                           SetSelectionBy::kUser);
   return true;
 }
 
@@ -1426,9 +1439,9 @@ static bool ExecuteMoveToEndOfSentenceAndModifySelection(LocalFrame& frame,
                                                          Event*,
                                                          EditorCommandSource,
                                                          const String&) {
-  frame.Selection().Modify(SelectionModifyAlteration::kExtend,
-                           kDirectionForward,
-                           TextGranularity::kSentenceBoundary, kUserTriggered);
+  frame.Selection().Modify(
+      SelectionModifyAlteration::kExtend, kDirectionForward,
+      TextGranularity::kSentenceBoundary, SetSelectionBy::kUser);
   return true;
 }
 
@@ -1437,7 +1450,8 @@ static bool ExecuteMoveToEndOfLine(LocalFrame& frame,
                                    EditorCommandSource,
                                    const String&) {
   frame.Selection().Modify(SelectionModifyAlteration::kMove, kDirectionForward,
-                           TextGranularity::kLineBoundary, kUserTriggered);
+                           TextGranularity::kLineBoundary,
+                           SetSelectionBy::kUser);
   return true;
 }
 
@@ -1447,7 +1461,7 @@ static bool ExecuteMoveToEndOfLineAndModifySelection(LocalFrame& frame,
                                                      const String&) {
   frame.Selection().Modify(SelectionModifyAlteration::kExtend,
                            kDirectionForward, TextGranularity::kLineBoundary,
-                           kUserTriggered);
+                           SetSelectionBy::kUser);
   return true;
 }
 
@@ -1456,7 +1470,8 @@ static bool ExecuteMoveToEndOfParagraph(LocalFrame& frame,
                                         EditorCommandSource,
                                         const String&) {
   frame.Selection().Modify(SelectionModifyAlteration::kMove, kDirectionForward,
-                           TextGranularity::kParagraphBoundary, kUserTriggered);
+                           TextGranularity::kParagraphBoundary,
+                           SetSelectionBy::kUser);
   return true;
 }
 
@@ -1464,9 +1479,9 @@ static bool ExecuteMoveToEndOfParagraphAndModifySelection(LocalFrame& frame,
                                                           Event*,
                                                           EditorCommandSource,
                                                           const String&) {
-  frame.Selection().Modify(SelectionModifyAlteration::kExtend,
-                           kDirectionForward,
-                           TextGranularity::kParagraphBoundary, kUserTriggered);
+  frame.Selection().Modify(
+      SelectionModifyAlteration::kExtend, kDirectionForward,
+      TextGranularity::kParagraphBoundary, SetSelectionBy::kUser);
   return true;
 }
 
@@ -1475,7 +1490,7 @@ static bool ExecuteMoveParagraphBackward(LocalFrame& frame,
                                          EditorCommandSource,
                                          const String&) {
   frame.Selection().Modify(SelectionModifyAlteration::kMove, kDirectionBackward,
-                           TextGranularity::kParagraph, kUserTriggered);
+                           TextGranularity::kParagraph, SetSelectionBy::kUser);
   return true;
 }
 
@@ -1485,7 +1500,7 @@ static bool ExecuteMoveParagraphBackwardAndModifySelection(LocalFrame& frame,
                                                            const String&) {
   frame.Selection().Modify(SelectionModifyAlteration::kExtend,
                            kDirectionBackward, TextGranularity::kParagraph,
-                           kUserTriggered);
+                           SetSelectionBy::kUser);
   return true;
 }
 
@@ -1494,7 +1509,7 @@ static bool ExecuteMoveParagraphForward(LocalFrame& frame,
                                         EditorCommandSource,
                                         const String&) {
   frame.Selection().Modify(SelectionModifyAlteration::kMove, kDirectionForward,
-                           TextGranularity::kParagraph, kUserTriggered);
+                           TextGranularity::kParagraph, SetSelectionBy::kUser);
   return true;
 }
 
@@ -1504,7 +1519,7 @@ static bool ExecuteMoveParagraphForwardAndModifySelection(LocalFrame& frame,
                                                           const String&) {
   frame.Selection().Modify(SelectionModifyAlteration::kExtend,
                            kDirectionForward, TextGranularity::kParagraph,
-                           kUserTriggered);
+                           SetSelectionBy::kUser);
   return true;
 }
 
@@ -1514,7 +1529,7 @@ static bool ExecuteMoveUp(LocalFrame& frame,
                           const String&) {
   return frame.Selection().Modify(SelectionModifyAlteration::kMove,
                                   kDirectionBackward, TextGranularity::kLine,
-                                  kUserTriggered);
+                                  SetSelectionBy::kUser);
 }
 
 static bool ExecuteMoveUpAndModifySelection(LocalFrame& frame,
@@ -1523,7 +1538,7 @@ static bool ExecuteMoveUpAndModifySelection(LocalFrame& frame,
                                             const String&) {
   frame.Selection().Modify(SelectionModifyAlteration::kExtend,
                            kDirectionBackward, TextGranularity::kLine,
-                           kUserTriggered);
+                           SetSelectionBy::kUser);
   return true;
 }
 
@@ -1532,7 +1547,7 @@ static bool ExecuteMoveWordBackward(LocalFrame& frame,
                                     EditorCommandSource,
                                     const String&) {
   frame.Selection().Modify(SelectionModifyAlteration::kMove, kDirectionBackward,
-                           TextGranularity::kWord, kUserTriggered);
+                           TextGranularity::kWord, SetSelectionBy::kUser);
   return true;
 }
 
@@ -1542,7 +1557,7 @@ static bool ExecuteMoveWordBackwardAndModifySelection(LocalFrame& frame,
                                                       const String&) {
   frame.Selection().Modify(SelectionModifyAlteration::kExtend,
                            kDirectionBackward, TextGranularity::kWord,
-                           kUserTriggered);
+                           SetSelectionBy::kUser);
   return true;
 }
 
@@ -1551,7 +1566,7 @@ static bool ExecuteMoveWordForward(LocalFrame& frame,
                                    EditorCommandSource,
                                    const String&) {
   frame.Selection().Modify(SelectionModifyAlteration::kMove, kDirectionForward,
-                           TextGranularity::kWord, kUserTriggered);
+                           TextGranularity::kWord, SetSelectionBy::kUser);
   return true;
 }
 
@@ -1561,7 +1576,7 @@ static bool ExecuteMoveWordForwardAndModifySelection(LocalFrame& frame,
                                                      const String&) {
   frame.Selection().Modify(SelectionModifyAlteration::kExtend,
                            kDirectionForward, TextGranularity::kWord,
-                           kUserTriggered);
+                           SetSelectionBy::kUser);
   return true;
 }
 
@@ -1570,7 +1585,7 @@ static bool ExecuteMoveWordLeft(LocalFrame& frame,
                                 EditorCommandSource,
                                 const String&) {
   frame.Selection().Modify(SelectionModifyAlteration::kMove, kDirectionLeft,
-                           TextGranularity::kWord, kUserTriggered);
+                           TextGranularity::kWord, SetSelectionBy::kUser);
   return true;
 }
 
@@ -1579,7 +1594,7 @@ static bool ExecuteMoveWordLeftAndModifySelection(LocalFrame& frame,
                                                   EditorCommandSource,
                                                   const String&) {
   frame.Selection().Modify(SelectionModifyAlteration::kExtend, kDirectionLeft,
-                           TextGranularity::kWord, kUserTriggered);
+                           TextGranularity::kWord, SetSelectionBy::kUser);
   return true;
 }
 
@@ -1588,7 +1603,7 @@ static bool ExecuteMoveWordRight(LocalFrame& frame,
                                  EditorCommandSource,
                                  const String&) {
   frame.Selection().Modify(SelectionModifyAlteration::kMove, kDirectionRight,
-                           TextGranularity::kWord, kUserTriggered);
+                           TextGranularity::kWord, SetSelectionBy::kUser);
   return true;
 }
 
@@ -1597,7 +1612,7 @@ static bool ExecuteMoveWordRightAndModifySelection(LocalFrame& frame,
                                                    EditorCommandSource,
                                                    const String&) {
   frame.Selection().Modify(SelectionModifyAlteration::kExtend, kDirectionRight,
-                           TextGranularity::kWord, kUserTriggered);
+                           TextGranularity::kWord, SetSelectionBy::kUser);
   return true;
 }
 
@@ -1606,7 +1621,8 @@ static bool ExecuteMoveToLeftEndOfLine(LocalFrame& frame,
                                        EditorCommandSource,
                                        const String&) {
   frame.Selection().Modify(SelectionModifyAlteration::kMove, kDirectionLeft,
-                           TextGranularity::kLineBoundary, kUserTriggered);
+                           TextGranularity::kLineBoundary,
+                           SetSelectionBy::kUser);
   return true;
 }
 
@@ -1615,7 +1631,8 @@ static bool ExecuteMoveToLeftEndOfLineAndModifySelection(LocalFrame& frame,
                                                          EditorCommandSource,
                                                          const String&) {
   frame.Selection().Modify(SelectionModifyAlteration::kExtend, kDirectionLeft,
-                           TextGranularity::kLineBoundary, kUserTriggered);
+                           TextGranularity::kLineBoundary,
+                           SetSelectionBy::kUser);
   return true;
 }
 
@@ -1624,7 +1641,8 @@ static bool ExecuteMoveToRightEndOfLine(LocalFrame& frame,
                                         EditorCommandSource,
                                         const String&) {
   frame.Selection().Modify(SelectionModifyAlteration::kMove, kDirectionRight,
-                           TextGranularity::kLineBoundary, kUserTriggered);
+                           TextGranularity::kLineBoundary,
+                           SetSelectionBy::kUser);
   return true;
 }
 
@@ -1633,7 +1651,8 @@ static bool ExecuteMoveToRightEndOfLineAndModifySelection(LocalFrame& frame,
                                                           EditorCommandSource,
                                                           const String&) {
   frame.Selection().Modify(SelectionModifyAlteration::kExtend, kDirectionRight,
-                           TextGranularity::kLineBoundary, kUserTriggered);
+                           TextGranularity::kLineBoundary,
+                           SetSelectionBy::kUser);
   return true;
 }
 
@@ -1788,10 +1807,10 @@ static bool ExecuteSelectAll(LocalFrame& frame,
                              Event*,
                              EditorCommandSource source,
                              const String&) {
-  const EUserTriggered user_triggered = source == kCommandFromMenuOrKeyBinding
-                                            ? kUserTriggered
-                                            : kNotUserTriggered;
-  frame.Selection().SelectAll(user_triggered);
+  const SetSelectionBy set_selection_by = source == kCommandFromMenuOrKeyBinding
+                                              ? SetSelectionBy::kUser
+                                              : SetSelectionBy::kSystem;
+  frame.Selection().SelectAll(set_selection_by);
   return true;
 }
 
@@ -1826,10 +1845,13 @@ static bool ExecuteSelectToMark(LocalFrame& frame,
   if (mark.IsNull() || selection.IsNull())
     return false;
   frame.Selection().SetSelection(
-      SelectionInDOMTree::Builder()
-          .SetBaseAndExtent(UnionEphemeralRanges(mark, selection))
-          .Build(),
-      FrameSelection::kCloseTyping);
+      SetSelectionData::Builder()
+          .SetSelection(
+              SelectionInDOMTree::Builder()
+                  .SetBaseAndExtent(UnionEphemeralRanges(mark, selection))
+                  .Build())
+          .SetShouldClearTypingStyle(false)
+          .Build());
   return true;
 }
 
