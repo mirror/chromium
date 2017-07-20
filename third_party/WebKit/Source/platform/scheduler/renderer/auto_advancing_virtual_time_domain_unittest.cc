@@ -6,7 +6,7 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/test/simple_test_tick_clock.h"
-#include "cc/test/ordered_simple_task_runner.h"
+#include "components/viz/test/ordered_simple_task_runner.h"
 #include "platform/scheduler/base/task_queue_manager.h"
 #include "platform/scheduler/base/test_task_time_observer.h"
 #include "platform/scheduler/base/test_time_source.h"
@@ -29,7 +29,7 @@ class AutoAdvancingVirtualTimeDomainTest : public ::testing::Test {
 
     test_time_source_.reset(new TestTimeSource(clock_.get()));
     mock_task_runner_ = make_scoped_refptr(
-        new cc::OrderedSimpleTaskRunner(clock_.get(), false));
+        new viz::OrderedSimpleTaskRunner(clock_.get(), false));
     main_task_runner_ = SchedulerTqmDelegateForTest::Create(
         mock_task_runner_, base::MakeUnique<TestTimeSource>(clock_.get()));
 
@@ -52,7 +52,7 @@ class AutoAdvancingVirtualTimeDomainTest : public ::testing::Test {
   base::TimeTicks initial_time_;
   std::unique_ptr<base::SimpleTestTickClock> clock_;
   std::unique_ptr<TestTimeSource> test_time_source_;
-  scoped_refptr<cc::OrderedSimpleTaskRunner> mock_task_runner_;
+  scoped_refptr<viz::OrderedSimpleTaskRunner> mock_task_runner_;
   scoped_refptr<SchedulerTqmDelegate> main_task_runner_;
   std::unique_ptr<TaskQueueManager> manager_;
   scoped_refptr<TaskQueue> task_queue_;

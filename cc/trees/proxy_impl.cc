@@ -20,12 +20,12 @@
 #include "cc/input/browser_controls_offset_manager.h"
 #include "cc/output/layer_tree_frame_sink.h"
 #include "cc/scheduler/compositor_timing_history.h"
-#include "cc/scheduler/delay_based_time_source.h"
 #include "cc/trees/layer_tree_host.h"
 #include "cc/trees/layer_tree_impl.h"
 #include "cc/trees/mutator_host.h"
 #include "cc/trees/proxy_main.h"
 #include "cc/trees/task_runner_provider.h"
+#include "components/viz/common/delay_based_time_source.h"
 #include "components/viz/common/gpu/context_provider.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 
@@ -307,9 +307,9 @@ void ProxyImpl::DidLoseLayerTreeFrameSinkOnImplThread() {
   scheduler_->DidLoseLayerTreeFrameSink();
 }
 
-void ProxyImpl::SetBeginFrameSource(BeginFrameSource* source) {
+void ProxyImpl::SetBeginFrameSource(viz::BeginFrameSource* source) {
   // During shutdown, destroying the LayerTreeFrameSink may unset the
-  // BeginFrameSource.
+  // viz::BeginFrameSource.
   if (scheduler_) {
     // TODO(enne): this overrides any preexisting begin frame source.  Those
     // other sources will eventually be removed and this will be the only path.
@@ -485,7 +485,7 @@ void ProxyImpl::NotifyImageDecodeRequestFinished() {
   SetNeedsCommitOnImplThread();
 }
 
-void ProxyImpl::WillBeginImplFrame(const BeginFrameArgs& args) {
+void ProxyImpl::WillBeginImplFrame(const viz::BeginFrameArgs& args) {
   DCHECK(IsImplThread());
   layer_tree_host_impl_->WillBeginImplFrame(args);
 }
@@ -495,12 +495,13 @@ void ProxyImpl::DidFinishImplFrame() {
   layer_tree_host_impl_->DidFinishImplFrame();
 }
 
-void ProxyImpl::DidNotProduceFrame(const BeginFrameAck& ack) {
+void ProxyImpl::DidNotProduceFrame(const viz::BeginFrameAck& ack) {
   DCHECK(IsImplThread());
   layer_tree_host_impl_->DidNotProduceFrame(ack);
 }
 
-void ProxyImpl::ScheduledActionSendBeginMainFrame(const BeginFrameArgs& args) {
+void ProxyImpl::ScheduledActionSendBeginMainFrame(
+    const viz::BeginFrameArgs& args) {
   DCHECK(IsImplThread());
   unsigned int begin_frame_id = nextBeginFrameId++;
   benchmark_instrumentation::ScopedBeginFrameTask begin_frame_task(

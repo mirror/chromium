@@ -2,15 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "cc/scheduler/delay_based_time_source.h"
+#include "components/viz/common/delay_based_time_source.h"
 
 #include <stdint.h>
 
 #include "base/test/test_simple_task_runner.h"
-#include "cc/test/scheduler_test_common.h"
+#include "components/viz/test/fake_delay_based_time_source.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-namespace cc {
+namespace viz {
 namespace {
 
 base::TimeDelta Interval() {
@@ -276,7 +276,7 @@ TEST(DelayBasedTimeSourceTest, JitteryRuntimeWithFutureTimebases) {
   EXPECT_EQ(16, task_runner->NextPendingTaskDelay().InMilliseconds());
 
   // 15 ms jitter
-  base::TimeDelta jitter15  = base::TimeDelta::FromMilliseconds(15);
+  base::TimeDelta jitter15 = base::TimeDelta::FromMilliseconds(15);
 
   // Tick with +15ms jitter
   future_timebase += Interval();
@@ -404,4 +404,4 @@ TEST(DelayBasedTimeSourceTest, TestDeactivateAndReactivateAfterNextTickTime) {
 }
 
 }  // namespace
-}  // namespace cc
+}  // namespace viz

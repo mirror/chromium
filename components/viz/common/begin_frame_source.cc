@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "cc/scheduler/begin_frame_source.h"
+#include "components/viz/common/begin_frame_source.h"
 
 #include <stddef.h>
 
@@ -15,16 +15,15 @@
 #include "base/strings/stringprintf.h"
 #include "base/trace_event/trace_event.h"
 #include "base/trace_event/trace_event_argument.h"
-#include "cc/scheduler/delay_based_time_source.h"
-#include "cc/scheduler/scheduler.h"
+#include "components/viz/common/delay_based_time_source.h"
 
-namespace cc {
+namespace viz {
 
 namespace {
 // kDoubleTickDivisor prevents the SyntheticBFS from sending BeginFrames too
 // often to an observer.
 static const double kDoubleTickDivisor = 2.0;
-}
+}  // namespace
 
 // BeginFrameObserverBase -------------------------------------------------
 BeginFrameObserverBase::BeginFrameObserverBase() = default;
@@ -341,4 +340,4 @@ void ExternalBeginFrameSource::OnBeginFrame(const BeginFrameArgs& args) {
   }
 }
 
-}  // namespace cc
+}  // namespace viz
