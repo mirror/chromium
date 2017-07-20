@@ -625,7 +625,6 @@ void QuicSpdySession::OnConfigNegotiated() {
   }
   const QuicVersion version = connection()->version();
   if (!use_stream_notifier() &&
-      FLAGS_quic_reloadable_flag_quic_enable_force_hol_blocking &&
       version == QUIC_VERSION_36 && config()->ForceHolBlocking(perspective())) {
     force_hol_blocking_ = true;
     // Since all streams are tunneled through the headers stream, it
