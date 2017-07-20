@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "91aff559_bffed350",
+        "filename": "third_party/WebKit/LayoutTests/fast/multicol/dynamic/add-will-change-transform.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-07-20T18:22:35Z",
+      "side": 1,
+      "message": "I don\u0027t really understand this test.  What happens to all the other squares?",
+      "range": {
+        "startLine": 18,
+        "startChar": 12,
+        "endLine": 18,
+        "endChar": 20
+      },
+      "revId": "9b39da81316027d83093560d281c76442208a4ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b05036d_ebdc36e2",
         "filename": "third_party/WebKit/Source/core/paint/PaintInvalidationTest.cpp",
         "patchSetId": 5
@@ -13,6 +36,24 @@
       "writtenOn": "2017-07-20T11:37:06Z",
       "side": 1,
       "message": "I suspect that this CL makes this test irrelevant. Should it be removed? What about https://codereview.chromium.org/2685883004 - still need that one?",
+      "revId": "9b39da81316027d83093560d281c76442208a4ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce502079_86c65c72",
+        "filename": "third_party/WebKit/Source/core/paint/PaintInvalidationTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-07-20T18:22:35Z",
+      "side": 1,
+      "message": "I think you\u0027ve eliminated one way of changing overflow without layout, but not every way.  For example, I can update transform on something that already had a layer.  That will still change overflow without causing layout, right?\n\nSo, perhaps this test should be modified to expect paint invalidation in that case.  The simplest way to do that may be to set \"position: relative\" on #container, so that it has a PaintLayer from the start...",
+      "parentUuid": "2b05036d_ebdc36e2",
       "revId": "9b39da81316027d83093560d281c76442208a4ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
