@@ -52,33 +52,14 @@ class FakeMemoryAllocatorDumpProvider : public MemoryDumpProvider {
   }
 };
 
-std::unique_ptr<Value> CheckAttribute(const MemoryAllocatorDump* dump,
-                                      const std::string& name,
-                                      const char* expected_type,
-                                      const char* expected_units) {
-  std::unique_ptr<Value> raw_attrs =
-      dump->attributes_for_testing()->ToBaseValue();
-  DictionaryValue* args = nullptr;
-  DictionaryValue* arg = nullptr;
-  std::string arg_value;
-  const Value* out_value = nullptr;
-  EXPECT_TRUE(raw_attrs->GetAsDictionary(&args));
-  EXPECT_TRUE(args->GetDictionary(name, &arg));
-  EXPECT_TRUE(arg->GetString("type", &arg_value));
-  EXPECT_EQ(expected_type, arg_value);
-  EXPECT_TRUE(arg->GetString("units", &arg_value));
-  EXPECT_EQ(expected_units, arg_value);
-  EXPECT_TRUE(arg->Get("value", &out_value));
-  return out_value ? out_value->CreateDeepCopy() : std::unique_ptr<Value>();
-}
-
 void CheckString(const MemoryAllocatorDump* dump,
                  const std::string& name,
                  const char* expected_type,
                  const char* expected_units,
                  const std::string& expected_value) {
   std::string attr_str_value;
-  auto attr_value = CheckAttribute(dump, name, expected_type, expected_units);
+  auto attr_value =
+      CheckExpectedAttributeInDump(dump, name, expected_type, expected_units);
   EXPECT_TRUE(attr_value->GetAsString(&attr_str_value));
   EXPECT_EQ(expected_value, attr_str_value);
 }
@@ -95,8 +76,8 @@ void CheckScalarF(const MemoryAllocatorDump* dump,
                   const std::string& name,
                   const char* expected_units,
                   double expected_value) {
-  auto attr_value = CheckAttribute(dump, name, MemoryAllocatorDump::kTypeScalar,
-                                   expected_units);
+  auto attr_value = CheckExpectedAttributeInDump(
+      dump, name, MemoryAllocatorDump::kTypeScalar, expected_units);
   double attr_double_value;
   EXPECT_TRUE(attr_value->GetAsDouble(&attr_double_value));
   EXPECT_EQ(expected_value, attr_double_value);
