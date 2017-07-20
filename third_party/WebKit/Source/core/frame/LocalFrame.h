@@ -233,10 +233,8 @@ class CORE_EXPORT LocalFrame final : public Frame,
   LocalFrameClient* Client() const;
 
   ContentSettingsClient* GetContentSettingsClient();
-  FrameResourceCoordinator* GetFrameResourceCoordinator() {
-    // can be null
-    return frame_resource_coordinator_;
-  }
+  // can be nullptr.
+  FrameResourceCoordinator* GetFrameResourceCoordinator();
 
   PluginData* GetPluginData() const;
 
