@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1b6cf642_e79a9a71",
+        "filename": "chrome/browser/content_settings/host_content_settings_map_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1887,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-20T12:12:15Z",
+      "side": 1,
+      "message": "Done. Added some clarifying comments too.",
+      "parentUuid": "fe70351c_665a24a2",
+      "revId": "418138d359064fa6b487be1096b26ea5466eb002",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28526128_52d3722e",
         "filename": "components/content_settings/core/browser/content_settings_pref_provider.h",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1ec09f54_bca1e9d7",
+        "filename": "components/content_settings/core/browser/content_settings_pref_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-20T12:12:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28526128_52d3722e",
+      "revId": "418138d359064fa6b487be1096b26ea5466eb002",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c16e5ad_bf49bcf2",
         "filename": "components/content_settings/core/browser/host_content_settings_map.cc",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-20T05:00:16Z",
       "side": 1,
       "message": "nit: I\u0027m not sure I understand why this bit is necessary?",
+      "revId": "418138d359064fa6b487be1096b26ea5466eb002",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e0b1fd2_4612c598",
+        "filename": "components/content_settings/core/browser/host_content_settings_map.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-20T12:12:15Z",
+      "side": 1,
+      "message": "Without this my new test crashes due to a DCHECK, because the HCSM adds itself as an observer to the mock provider, but the mock provider doesn\u0027t remove all observers in shutdown, unlike the real observers. This causes an unexpected list size in observer_list on destruction.\n\nI guess a better fix might be to add a default implementation of ShutDownOnUIThread to ObservableProvider which removes all observers. Wdyt?",
+      "parentUuid": "6c16e5ad_bf49bcf2",
       "revId": "418138d359064fa6b487be1096b26ea5466eb002",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "ad18859d_8c268b83",
+        "filename": "components/content_settings/core/browser/user_modifiable_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-20T12:12:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31a792ca_ae0bab3f",
+      "revId": "418138d359064fa6b487be1096b26ea5466eb002",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88867531_9ecf5c2f",
         "filename": "components/content_settings/core/browser/user_modifiable_provider.h",
         "patchSetId": 2
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "cf7deaf9_4f88bc20",
+        "filename": "components/content_settings/core/browser/user_modifiable_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-20T12:12:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88867531_9ecf5c2f",
+      "revId": "418138d359064fa6b487be1096b26ea5466eb002",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7488b0a_155d75a7",
         "filename": "components/content_settings/core/browser/user_modifiable_provider.h",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "418138d359064fa6b487be1096b26ea5466eb002",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df0d719b_bcc32281",
+        "filename": "components/content_settings/core/browser/user_modifiable_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-20T12:12:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7488b0a_155d75a7",
+      "revId": "418138d359064fa6b487be1096b26ea5466eb002",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
