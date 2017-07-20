@@ -33,11 +33,10 @@ void {{v8_class}}::toImpl(v8::Isolate* isolate, v8::Local<v8::Value> v8Value, {{
   if (!v8Value->IsObject()) {
     {% if use_permissive_dictionary_conversion %}
     // Do nothing.
-    return;
     {% else %}
     exceptionState.ThrowTypeError("cannot convert to dictionary.");
-    return;
     {% endif %}
+    return;
   }
   v8::Local<v8::Object> v8Object = v8Value.As<v8::Object>();
   ALLOW_UNUSED_LOCAL(v8Object);

@@ -199,3 +199,42 @@ source_set("generated") {
     "//v8",
   ]
 }
+
+generate_idl_definition("modules_idl_definition") {
+  sources = modules_definition_idl_files + modules_dependency_idl_files
+  output = "IdlDefinitionForModules.pickle"
+  output_dir = bindings_modules_output_dir
+}
+
+action("idl_information") {
+  script = "${bindings_scripts_dir}/generate_idl_information.py"
+
+  pickle_files = [
+    "${bindings_core_output_dir}/IdlDefinitionForCore.pickle",
+    "${bindings_modules_output_dir}/IdlDefinitionForModules.pickle",
+  ]
+  output_path = "${bindings_modules_output_dir}/IdlInformation.pickle"
+
+  # File-base dependencies
+  inputs = [
+    "${bindings_scripts_dir}/idl_information.py",
+  ] + pickle_files
+  outputs = [
+    output_path,
+  ]
+
+  # List input file names in a temporary file.
+  response_file_contents = rebase_path(pickle_files, root_build_dir)
+
+  args = [
+    "--idl-definitions-list",
+    "{{response_file_name}}",
+    "--output",
+    rebase_path(output_path, root_build_dir),
+  ]
+
+  deps = [
+    ":modules_idl_definition",
+    "//third_party/WebKit/Source/bindings/core:core_idl_definition",
+  ]
+}
