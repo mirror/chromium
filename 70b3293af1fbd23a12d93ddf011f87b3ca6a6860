@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c7c6d35_92b75020",
+        "filename": "chrome/browser/tab_contents/navigation_metrics_recorder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-20T23:35:36Z",
+      "side": 1,
+      "message": "Let\u0027s include a TODO to remove this after the field trial, just to be clear that it\u0027s not permanent.",
+      "revId": "70b3293af1fbd23a12d93ddf011f87b3ca6a6860",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
