@@ -91,9 +91,10 @@ void MediaCodecAudioDecoder::Initialize(const AudioDecoderConfig& config,
   // attempting to create one to determine whether the codec is supported.
   const bool is_codec_supported =
       config.codec() == kCodecVorbis || config.codec() == kCodecAAC ||
-      config.codec() == kCodecOpus || is_passthrough_;
+      config.codec() == kCodecOpus || config.codec() == kCodecFLAC ||
+      is_passthrough_;
   if (!is_codec_supported) {
-    DVLOG(1) << "Unsuported codec " << GetCodecName(config.codec());
+    DVLOG(1) << "Unsupported codec " << GetCodecName(config.codec());
     bound_init_cb.Run(false);
     return;
   }

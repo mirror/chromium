@@ -12,6 +12,7 @@ import android.media.MediaCodecInfo.CodecCapabilities;
 import android.media.MediaCodecInfo.CodecProfileLevel;
 import android.media.MediaCodecInfo.VideoCapabilities;
 import android.media.MediaCodecList;
+import android.media.MediaExtractor; // BIG TODO: REMOVE
 import android.media.MediaFormat;
 import android.os.Build;
 
@@ -292,6 +293,35 @@ class MediaCodecUtil {
             Log.e(TAG, "Decoder for type %s is not supported on this device", mime);
             return result;
         }
+
+        // BIG TODO REMOVE this...
+        MediaExtractor extractor = new MediaExtractor();
+        try {
+            // File file = new File("/sdcard/chromium_tests_root/media/test/data/sfx.flac");
+            String sd = "/"
+                    + "s"
+                    + "d"; // workaround warning...
+            String testfile = sd + "card/chromium_tests_root/media/test/data/sfx.flac";
+            Log.d(TAG, "BIG TODO testfile: %s", testfile);
+            extractor.setDataSource(testfile);
+        } catch (Exception e) {
+            Log.e(TAG, "BIG TODO setDataSource failed: ", e);
+        }
+        int tracks = extractor.getTrackCount();
+        Log.d(TAG, "BIG TODO track count %s", Integer.toString(tracks));
+        extractor.selectTrack(0);
+        MediaFormat format = extractor.getTrackFormat(0);
+        String m = format.getString(MediaFormat.KEY_MIME);
+        Log.d(TAG, "BIG TODO mime %s", m);
+        MediaCodec codec = null;
+        try {
+            codec = MediaCodec.createDecoderByType(m);
+        } catch (Exception e) {
+            Log.e(TAG, "BIG TODO createDecoderByType failed: ", e);
+        }
+        codec.configure(format, null, null, 0);
+        codec.start();
+        // BIG TODO REMOVE above this...
 
         try {
             // "SECURE" only applies to video decoders.
