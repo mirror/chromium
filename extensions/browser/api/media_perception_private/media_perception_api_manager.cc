@@ -79,17 +79,30 @@ void MediaPerceptionAPIManager::SetState(const media_perception::State& state,
                                          const APIStateCallback& callback) {
   mri::State state_proto = StateIdlToProto(state);
   DCHECK(state_proto.status() == mri::State::RUNNING ||
-         state_proto.status() == mri::State::SUSPENDED)
-      << "Cannot set state to something other than RUNNING or SUSPENDED.";
-
-  if (analytics_process_state_ == AnalyticsProcessState::RUNNING) {
-    SetStateInternal(callback, state_proto);
-    return;
-  }
+         state_proto.status() == mri::State::SUSPENDED ||
+         state_proto.status() == mri::State::RESTARTED)
+      << "Cannot set state to something other than RUNNING, SUSPENDED "
+         "or RESTARTED.";
 
   if (analytics_process_state_ == AnalyticsProcessState::LAUNCHING) {
     callback.Run(CallbackStatus::PROCESS_LAUNCHING_ERROR,
                  media_perception::State());
+    return;
+  }
+
+  // Regardless of the current state of the media analytics process, if restart
+  // is requested then send restart upstart command.
+  if (state_proto.status() == mri::State::RESTARTED) {
+    analytics_process_state_ = AnalyticsProcessState::LAUNCHING;
+    chromeos::UpstartClient* dbus_client =
+        chromeos::DBusThreadManager::Get()->GetUpstartClient();
+    dbus_client->RestartMediaAnalytics(
+        base::Bind(&MediaPerceptionAPIManager::UpstartCallback,
+                   weak_ptr_factory_.GetWeakPtr(), callback, state_proto));
+  }
+
+  if (analytics_process_state_ == AnalyticsProcessState::RUNNING) {
+    SetStateInternal(callback, state_proto);
     return;
   }
 
