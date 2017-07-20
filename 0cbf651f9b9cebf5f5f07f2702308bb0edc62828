@@ -330,6 +330,24 @@
     },
     {
       "key": {
+        "uuid": "dc07234c_9bbb31ac",
+        "filename": "content/browser/web_contents/web_contents_android.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 747,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-20T22:28:23Z",
+      "side": 1,
+      "message": "\u003e Container view can be null here when called after web contents gets destroyed. Added a check. DCHECK may be more appropriate if this should not happen in real life, but I don\u0027t know for sure if that\u0027s true.\n\n(assuming no bugs) it will only be null in webview after webview java side is already gc-ed, but before the native side is deleted. At that point, native side should be considered effectively dead as well and waiting to be deleted. So it\u0027s fine as long as nothing crashes.",
+      "parentUuid": "d5d37f89_41df835b",
+      "revId": "0cbf651f9b9cebf5f5f07f2702308bb0edc62828",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9a6f603_fea67f61",
         "filename": "content/browser/web_contents/web_contents_android.h",
         "patchSetId": 14
@@ -359,6 +377,24 @@
       "side": 1,
       "message": "Makes sense - I noticed something wrong when I had to import android.view.View in WebContentsImpl java. \n\nGot curious whether MotionEventSynthesizer instances were managed ok before this patch. They were strongly held by SyntheticGestureTargetAndroid. Looks like this is not correct either, since that means MES\u0027s container views would also be held strongly. Could you confirm whether or not this was something to fix?\n\n\u003e perhaps we should make this one a weakref first..\n\nJava WebContentsImpl is owned later by CVC so this would be fine but still, aren\u0027t we getting ourselves into a same kind of problem (WebContentsImpl being gc\u0027ed anytime in theory) if this is turned to weakref?",
       "parentUuid": "c9a6f603_fea67f61",
+      "revId": "0cbf651f9b9cebf5f5f07f2702308bb0edc62828",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "552f7fff_46c87447",
+        "filename": "content/browser/web_contents/web_contents_android.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-20T22:28:23Z",
+      "side": 1,
+      "message": "\u003e Makes sense - I noticed something wrong when I had to import android.view.View in WebContentsImpl java. \n\u003e \n\u003e Got curious whether MotionEventSynthesizer instances were managed ok before this patch. They were strongly held by SyntheticGestureTargetAndroid. Looks like this is not correct either, since that means MES\u0027s container views would also be held strongly. Could you confirm whether or not this was something to fix?\n\nThe webview would leak while SyntheticGestureTargetAndroid is alive. But presumably SyntheticGestureTargetAndroid is destroyed when say devtools is closed. So possibly not as bad as the behavior in this CL right now.\n\nActually, maybe we should just keep the old behavior for now, instead of having it be per WebContents, and held by WebContents? Still need some way to get the container view though, but you can get that directly from ViewAndroid, right?\n\n\u003e \n\u003e \u003e perhaps we should make this one a weakref first..\n\u003e \n\u003e Java WebContentsImpl is owned later by CVC so this would be fine but still, aren\u0027t we getting ourselves into a same kind of problem (WebContentsImpl being gc\u0027ed anytime in theory) if this is turned to weakref?\n\nWebContents (after CVC is gone) is the one java object that doesn\u0027t have that problem. That\u0027s object that embedder creates and holds strongly. Eg in webview, they are held by AwContents, and as long as AwContents is alive, then WebContents/CVC won\u0027t be gc-ed.",
+      "parentUuid": "31dacdfa_a0fb26be",
       "revId": "0cbf651f9b9cebf5f5f07f2702308bb0edc62828",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -429,6 +465,24 @@
       "side": 1,
       "message": "\u003e webview contents needs to create a new one if this ever happens.\n\nIt is called when the RenderWidgetHostImpl gets destroyed. I thought a new one (java + native) will be created and used by the new RWHI. Let me know if I\u0027m missing something.\n\n\u003e also thinking more, what if more than one client request this object for the same webcontents?\n\nYou\u0027re correct WebContentsImpl (or any owner of MES) should be able to manage multiple instances of MES. Will address that in the next patch.",
       "parentUuid": "92ceb247_ea32ee0f",
+      "revId": "0cbf651f9b9cebf5f5f07f2702308bb0edc62828",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6016e4f_b3d843e9",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SyntheticGestureTarget.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-20T22:28:23Z",
+      "side": 1,
+      "message": "\u003e \u003e webview contents needs to create a new one if this ever happens.\n\u003e \n\u003e It is called when the RenderWidgetHostImpl gets destroyed. I thought a new one (java + native) will be created and used by the new RWHI. Let me know if I\u0027m missing something.\n\nJava one won\u0027t be recreated? WebContentsImpl holds on and re-uses the old java object.\n\n\u003e \n\u003e \u003e also thinking more, what if more than one client request this object for the same webcontents?\n\u003e \n\u003e You\u0027re correct WebContentsImpl (or any owner of MES) should be able to manage multiple instances of MES. Will address that in the next patch.",
+      "parentUuid": "784700f4_5c484ed7",
       "revId": "0cbf651f9b9cebf5f5f07f2702308bb0edc62828",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
