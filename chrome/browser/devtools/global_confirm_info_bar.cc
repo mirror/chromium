@@ -4,10 +4,12 @@
 
 #include "chrome/browser/devtools/global_confirm_info_bar.h"
 
+#include <memory>
 #include <utility>
 
 #include "base/macros.h"
 #include "base/stl_util.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "components/infobars/core/infobar.h"
@@ -160,7 +162,10 @@ GlobalConfirmInfoBar::GlobalConfirmInfoBar(
     : delegate_(std::move(delegate)),
       browser_tab_strip_tracker_(this, nullptr, nullptr),
       weak_factory_(this) {
-  browser_tab_strip_tracker_.Init();
+  // Init asynchronously because it may cause delete this.
+  base::SequencedTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::Bind(&GlobalConfirmInfoBar::Initialize,
+                            weak_factory_.GetWeakPtr()));
 }
 
 GlobalConfirmInfoBar::~GlobalConfirmInfoBar() {
@@ -171,6 +176,10 @@ GlobalConfirmInfoBar::~GlobalConfirmInfoBar() {
     it->first->RemoveInfoBar(it->second->info_bar_);
     proxies_.erase(it);
   }
+}
+
+void GlobalConfirmInfoBar::Initialize() {
+  browser_tab_strip_tracker_.Init();
 }
 
 void GlobalConfirmInfoBar::TabInsertedAt(TabStripModel* tab_strip_model,
@@ -217,8 +226,15 @@ void GlobalConfirmInfoBar::MaybeAddInfoBar(content::WebContents* web_contents) {
   infobars::InfoBar* added_bar = infobar_service->AddInfoBar(
       infobar_service->CreateConfirmInfoBar(std::move(proxy)));
 
+  // Usually, the GlobalConfirmInfoBar is freed when an action is taken by the
+  // user. In the case where it is not possible to add an infobar, call Close()
+  // here to get rid of the current instance.
+  if (!added_bar) {
+    Close();
+    return;
+  }
+
   proxy_ptr->info_bar_ = added_bar;
-  DCHECK(added_bar);
   proxies_[infobar_service] = proxy_ptr;
   infobar_service->AddObserver(this);
 }

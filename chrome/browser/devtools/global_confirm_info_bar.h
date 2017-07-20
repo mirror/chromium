@@ -27,6 +27,8 @@ class GlobalConfirmInfoBar : public TabStripModelObserver,
  public:
   static base::WeakPtr<GlobalConfirmInfoBar> Show(
       std::unique_ptr<ConfirmInfoBarDelegate> delegate);
+
+  // Asynchronously closes all infobars.
   void Close();
 
   // infobars::InfoBarManager::Observer:
@@ -38,6 +40,9 @@ class GlobalConfirmInfoBar : public TabStripModelObserver,
       std::unique_ptr<ConfirmInfoBarDelegate> delegate);
   ~GlobalConfirmInfoBar() override;
   class DelegateProxy;
+
+  // Initializes the |browser_tab_strip_tracker_|.
+  void Initialize();
 
   // TabStripModelObserver:
   void TabInsertedAt(TabStripModel* tab_strip_model,
