@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc70cef0_faef1854",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/page/frameScheduledNavigationTypes-expected.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-20T17:53:53Z",
+      "side": 1,
+      "message": "I think the tests itself is missing. I\u0027d rather adjust existing test though.",
+      "revId": "5d2f99f29965717edd788d9a5e6c4eecffabc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c86317fd_f25b9fb9",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-20T17:53:53Z",
+      "side": 1,
+      "message": "I think we usually do camelCase for enums, although it varies...",
+      "range": {
+        "startLine": 645,
+        "startChar": 90,
+        "endLine": 645,
+        "endChar": 104
+      },
+      "revId": "5d2f99f29965717edd788d9a5e6c4eecffabc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3d3ec38_f39a5b03",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-20T17:53:53Z",
+      "side": 1,
+      "message": "What does PageBlock mean? Which type is window.location \u003d \u0027...\u0027? Which type is iframe.src \u003d \u0027...\u0027?",
+      "range": {
+        "startLine": 645,
+        "startChar": 165,
+        "endLine": 645,
+        "endChar": 174
+      },
+      "revId": "5d2f99f29965717edd788d9a5e6c4eecffabc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c7dd1da_b153f93a",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-20T17:53:53Z",
+      "side": 1,
+      "message": "Unquote.",
+      "range": {
+        "startLine": 645,
+        "startChar": 73,
+        "endLine": 645,
+        "endChar": 77
+      },
+      "revId": "5d2f99f29965717edd788d9a5e6c4eecffabc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dcbedf9_cf601daf",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-20T17:53:53Z",
+      "side": 1,
+      "message": "This is more of a \"reason\" than \"type\".",
+      "range": {
+        "startLine": 645,
+        "startChar": 31,
+        "endLine": 645,
+        "endChar": 35
+      },
+      "revId": "5d2f99f29965717edd788d9a5e6c4eecffabc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65318147_e74a6dd0",
+        "filename": "third_party/WebKit/Source/core/loader/NavigationScheduler.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-20T17:53:53Z",
+      "side": 1,
+      "message": "I\u0027d rather pass type in constructor (similar to delay, origin_document, etc.).",
+      "revId": "5d2f99f29965717edd788d9a5e6c4eecffabc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "005f46f3_711e6198",
+        "filename": "third_party/WebKit/Source/core/loader/ScheduledNavigation.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-20T17:53:53Z",
+      "side": 1,
+      "message": "This is superseded by GetType now.",
+      "revId": "5d2f99f29965717edd788d9a5e6c4eecffabc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
