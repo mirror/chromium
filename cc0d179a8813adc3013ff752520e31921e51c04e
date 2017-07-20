@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80cad8e3_91860710",
+        "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-20T19:37:55Z",
+      "side": 1,
+      "message": "With 0.45 seconds timeout 10% of context menu gestures are not recognized (crbug.com/542933). With 0.3 the failure rate will probably skyrocket. Can we improve the recognition performance first before decreasing the timeout?",
+      "range": {
+        "startLine": 35,
+        "startChar": 31,
+        "endLine": 35,
+        "endChar": 38
+      },
+      "revId": "cc0d179a8813adc3013ff752520e31921e51c04e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97abf793_73cd77b3",
+        "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-20T19:37:55Z",
+      "side": 1,
+      "message": "How about creating longPressDurationSeconds method instead of constants? This will help to avoid code duplication.",
+      "range": {
+        "startLine": 116,
+        "startChar": 10,
+        "endLine": 116,
+        "endChar": 59
+      },
+      "revId": "cc0d179a8813adc3013ff752520e31921e51c04e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
