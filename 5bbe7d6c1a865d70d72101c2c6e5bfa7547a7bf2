@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca6a2b12_651ac786",
+        "filename": "services/device/generic_sensor/sensor_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-20T17:23:33Z",
+      "side": 1,
+      "message": "This seems like it should be in public/cpp so that we can remove kMaxAllowedFrequency from the mojom and use the per-sensor-type maximums in Blink instead.",
+      "revId": "5bbe7d6c1a865d70d72101c2c6e5bfa7547a7bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
