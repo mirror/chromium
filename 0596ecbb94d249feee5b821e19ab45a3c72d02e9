@@ -16,6 +16,24 @@
       "revId": "0596ecbb94d249feee5b821e19ab45a3c72d02e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac29de78_68b204a1",
+        "filename": "media/gpu/gpu_video_encode_accelerator_factory.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-07-20T04:01:20Z",
+      "side": 1,
+      "message": "Here I\u0027d say the correct fix is the remove the includes from the #if defined(OS_CHROMEOS), so that we are consistent with the intent of use_vaapi. Do you agree?",
+      "parentUuid": "2593d492_5a31f2d3",
+      "revId": "0596ecbb94d249feee5b821e19ab45a3c72d02e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
