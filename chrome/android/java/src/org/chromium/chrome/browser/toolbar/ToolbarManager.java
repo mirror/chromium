@@ -856,6 +856,9 @@ public class ToolbarManager implements ToolbarTabController, UrlFocusChangeListe
                     mFullscreenMenuToken =
                             mControlsVisibilityDelegate.showControlsPersistentAndClearOldToken(
                                     mFullscreenMenuToken);
+                    // Defocus here to avoid handling focus in multiple places, e.g., when the
+                    // forward button is pressed. (see crbug.com/414219)
+                    setUrlBarFocus(false);
                 } else {
                     mControlsVisibilityDelegate.hideControlsPersistent(mFullscreenMenuToken);
                     mFullscreenMenuToken = FullscreenManager.INVALID_TOKEN;
