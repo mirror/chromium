@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d0109b4_e8da5669",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2017-07-20T09:30:14Z",
+      "side": 1,
+      "message": "@param ...",
+      "range": {
+        "startLine": 206,
+        "startChar": 7,
+        "endLine": 206,
+        "endChar": 0
+      },
+      "revId": "2f99a33d786ece56bc80d7593970b21124e79c61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57eba5df_eb4c8913",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2017-07-20T09:30:14Z",
+      "side": 1,
+      "message": "nit - just chain this together?\n       ContextUtils.getAppSharedPreferences()\n                .edit()\n                .putBoolean(DONT_PREFETCH_LIBRARIES_KEY, dontPrefetch)\n                .apply();",
+      "range": {
+        "startLine": 208,
+        "startChar": 4,
+        "endLine": 211,
+        "endChar": 23
+      },
+      "revId": "2f99a33d786ece56bc80d7593970b21124e79c61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42b61b2e_defcb7cf",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2017-07-20T09:30:14Z",
+      "side": 1,
+      "message": "@return ...",
+      "range": {
+        "startLine": 216,
+        "startChar": 7,
+        "endLine": 216,
+        "endChar": 0
+      },
+      "revId": "2f99a33d786ece56bc80d7593970b21124e79c61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef1ec99b_0c465dc9",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2017-07-20T09:30:14Z",
+      "side": 1,
+      "message": "nit - newline above",
+      "range": {
+        "startLine": 233,
+        "startChar": 8,
+        "endLine": 233,
+        "endChar": 13
+      },
+      "revId": "2f99a33d786ece56bc80d7593970b21124e79c61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
