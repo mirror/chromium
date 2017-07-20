@@ -7,10 +7,13 @@ package org.chromium.android_webview;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.webkit.ValueCallback;
 
 import org.chromium.base.CommandLine;
 import org.chromium.base.Log;
 import org.chromium.base.annotations.JNINamespace;
+
+import java.lang.reflect.Method;
 
 /**
  * Helper class for getting the configuration settings related to safebrowsing in WebView.
@@ -21,16 +24,28 @@ public class AwSafeBrowsingConfigHelper {
 
     private static final String OPT_IN_META_DATA_STR = "android.webkit.WebView.EnableSafeBrowsing";
 
-    private static boolean sSafeBrowsingUserOptIn;
+    private static Boolean sSafeBrowsingUserOptIn;
 
     public static void maybeInitSafeBrowsingFromSettings(final Context appContext) {
         AwContentsStatics.setSafeBrowsingEnabledByManifest(
                 CommandLine.getInstance().hasSwitch(AwSwitches.WEBVIEW_ENABLE_SAFEBROWSING_SUPPORT)
                 || appHasOptedIn(appContext));
-        // Assume safebrowsing on by default initially. If GMS is available, we later use
-        // isVerifyAppsEnabled() to check if "Scan device for security threats" has been checked by
-        // the user.
-        setSafeBrowsingUserOptIn(true);
+        // If GMS is available, we will figure out if the user has opted-in to Safe Browsing and set
+        // the correct value for sSafeBrowsingUserOptIn.
+        try {
+            Class awSafeBrowsingApiHelperClass =
+                    Class.forName("com.android.webview.chromium.AwSafeBrowsingApiHandler");
+            Method getUserOptInPreference = awSafeBrowsingApiHelperClass.getDeclaredMethod(
+                    "getUserOptInPreference", Context.class, ValueCallback.class);
+            getUserOptInPreference.invoke(null, appContext, new ValueCallback<Boolean>() {
+                @Override
+                public void onReceiveValue(Boolean optin) {
+                    setSafeBrowsingUserOptIn(optin == null ? false : optin);
+                }
+            });
+        } catch (ReflectiveOperationException e) {
+            // This is not an error; it just means this device doesn't have specialized services.
+        }
     }
 
     private static boolean appHasOptedIn(Context appContext) {
@@ -51,8 +66,9 @@ public class AwSafeBrowsingConfigHelper {
         }
     }
 
-    // Can be called from any thread.
-    public static boolean getSafeBrowsingUserOptIn() {
+    // Can be called from any thread. This returns true or false, depending on user opt-in
+    // preference. This returns null if we don't know yet what the user's preference is.
+    public static Boolean getSafeBrowsingUserOptIn() {
         return sSafeBrowsingUserOptIn;
     }
 
