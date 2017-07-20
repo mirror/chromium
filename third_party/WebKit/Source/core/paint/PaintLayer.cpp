@@ -1069,8 +1069,10 @@ void PaintLayer::SetNeedsCompositingInputsUpdateInternal() {
 void PaintLayer::UpdateAncestorDependentCompositingInputs(
     const AncestorDependentCompositingInputs& compositing_inputs,
     bool has_ancestor_with_clip_path) {
-  ancestor_dependent_compositing_inputs_ =
-      WTF::MakeUnique<AncestorDependentCompositingInputs>(compositing_inputs);
+  if (Compositor() && Compositor()->HasAcceleratedCompositing()) {
+    ancestor_dependent_compositing_inputs_ =
+        WTF::MakeUnique<AncestorDependentCompositingInputs>(compositing_inputs);
+  }
   has_ancestor_with_clip_path_ = has_ancestor_with_clip_path;
   needs_ancestor_dependent_compositing_inputs_update_ = false;
 }
