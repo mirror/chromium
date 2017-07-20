@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02955914_e47161ee",
+        "filename": "chrome/browser/vr/exit_vr_prompt_choice.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-07-20T15:06:30Z",
+      "side": 1,
+      "message": "What do you think about ExitVrPromptResponse?",
+      "range": {
+        "startLine": 11,
+        "startChar": 5,
+        "endLine": 11,
+        "endChar": 23
+      },
+      "revId": "96737b7d6f7a04437869ea080ad9290970c12b5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3b349cb_e82b5571",
+        "filename": "chrome/browser/vr/exit_vr_prompt_choice.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-07-20T15:06:30Z",
+      "side": 1,
+      "message": "nit: given",
+      "range": {
+        "startLine": 12,
+        "startChar": 29,
+        "endLine": 12,
+        "endChar": 33
+      },
+      "revId": "96737b7d6f7a04437869ea080ad9290970c12b5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b23879cd_464dddca",
+        "filename": "chrome/browser/vr/exit_vr_prompt_choice.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-07-20T15:06:30Z",
+      "side": 1,
+      "message": "We don\u0027t need CHOICE in the name since its already in the enum.",
+      "range": {
+        "startLine": 12,
+        "startChar": 2,
+        "endLine": 12,
+        "endChar": 13
+      },
+      "revId": "96737b7d6f7a04437869ea080ad9290970c12b5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b033b01_f6bae0f9",
+        "filename": "chrome/browser/vr/exit_vr_prompt_choice.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-07-20T15:06:30Z",
+      "side": 1,
+      "message": "nit: wants",
+      "range": {
+        "startLine": 15,
+        "startChar": 24,
+        "endLine": 15,
+        "endChar": 28
+      },
+      "revId": "96737b7d6f7a04437869ea080ad9290970c12b5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
