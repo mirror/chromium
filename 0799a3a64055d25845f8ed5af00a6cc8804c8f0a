@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fc26c2e_408f23f4",
+        "filename": "ios/web/web_state/ui/wk_web_view_configuration_provider_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-07-20T12:33:28Z",
+      "side": 1,
+      "message": "You might well have the same problem with |router| in the future, should a copy be returned. Consider using a strongRouter temp inside the @autoreleasepool too.",
+      "range": {
+        "startLine": 127,
+        "startChar": 4,
+        "endLine": 127,
+        "endChar": 10
+      },
+      "revId": "0799a3a64055d25845f8ed5af00a6cc8804c8f0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
