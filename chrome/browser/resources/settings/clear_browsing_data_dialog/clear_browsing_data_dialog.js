@@ -196,7 +196,17 @@ Polymer({
   clearBrowsingData_: function() {
     this.clearingInProgress_ = true;
 
-    this.browserProxy_.clearBrowsingData(this.importantSites_)
+    checkboxes = this.root.querySelectorAll('.browsing-data-checkbox');
+    var dataTypes = [];
+    checkboxes.forEach((checkbox) => {
+      if (checkbox.checked)
+        dataTypes.push(checkbox.pref.key);
+    });
+
+    var timePeriod = this.$.clearFrom.pref.value;
+
+    this.browserProxy_
+        .clearBrowsingData(dataTypes, timePeriod, this.importantSites_)
         .then(
             /**
              * @param {boolean} shouldShowNotice Whether we should show the
