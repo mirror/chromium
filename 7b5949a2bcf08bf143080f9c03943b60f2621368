@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b084642_8171f88c",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1178,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-20T01:46:35Z",
+      "side": 1,
+      "message": "Wouldn\u0027t this deny all urls in incognito, as opposed to webui ones?\ne.g. if the page called tabs.update(..., http://www.google.com), we should allow that right?",
+      "range": {
+        "startLine": 1178,
+        "startChar": 7,
+        "endLine": 1178,
+        "endChar": 8
+      },
+      "revId": "7b5949a2bcf08bf143080f9c03943b60f2621368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
