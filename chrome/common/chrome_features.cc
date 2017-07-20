@@ -210,6 +210,11 @@ const base::Feature kLsdPermissionPrompt{"LsdPermissionPrompt",
                                          base::FEATURE_DISABLED_BY_DEFAULT};
 
 #if defined(OS_MACOSX)
+// Uses an NSThemeFrame subclass to position the window buttons instead of
+// moving them whenever AppKit moves them. This is a temporary kill switch, it
+// can be removed once we feel okay about leaving it on.
+const base::Feature kMacCustomThemeFrame{"MacCustomThemeFrame",
+                                         base::FEATURE_ENABLED_BY_DEFAULT};
 // Enables RTL layout in macOS top chrome.
 const base::Feature kMacRTL{"MacRTL", base::FEATURE_DISABLED_BY_DEFAULT};
 

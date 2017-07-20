@@ -12,6 +12,7 @@
 #include "base/logging.h"
 #include "base/mac/mac_util.h"
 #include "base/mac/scoped_nsautorelease_pool.h"
+#include "chrome/common/chrome_features.h"
 
 @interface NSView (Swizzles)
 - (NSPoint)_fullScreenButtonOriginOriginal;
@@ -31,9 +32,9 @@
 
 @end
 
-@implementation CustomFrameView
+@implementation NSView (CustomFrameViewAdditions)
 
-+ (void)load {
++ (void)cr_hookFullScreenButtonOrigin {
   // Swizzling should only happen in the browser process. Interacting with
   // AppKit will run +[borderViewClass initialize] in the renderer, which
   // may establish Mach IPC with com.apple.windowserver.
@@ -63,8 +64,8 @@
 
   // Swizzle the method that sets the origin for the Lion fullscreen button.
   // Do nothing if it cannot be found.
-  Method m0 = class_getInstanceMethod([self class],
-                               @selector(_fullScreenButtonOrigin));
+  Method m0 = class_getInstanceMethod([CustomFrameView class],
+                                      @selector(_fullScreenButtonOrigin));
   if (m0) {
     BOOL didAdd = class_addMethod(borderViewClass,
                                   @selector(_fullScreenButtonOriginOriginal),
@@ -81,6 +82,10 @@
     }
   }
 }
+
+@end
+
+@implementation CustomFrameView
 
 - (id)initWithFrame:(NSRect)frame {
   // This class is not for instantiating.

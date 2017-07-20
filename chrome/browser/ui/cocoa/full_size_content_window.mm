@@ -11,6 +11,7 @@
 #include "base/mac/foundation_util.h"
 #include "base/mac/scoped_objc_class_swizzler.h"
 #import "chrome/browser/ui/cocoa/browser_window_layout.h"
+#include "chrome/common/chrome_features.h"
 
 @interface FullSizeContentWindow ()
 
@@ -140,7 +141,8 @@ static IMP g_original_callstacksymbols_implementation;
       [self setContentView:chromeWindowView_];
       [chromeWindowView_ setFrame:[[chromeWindowView_ superview] bounds]];
 
-      if (!chrome::ShouldUseFullSizeContentView()) {
+      if (!base::FeatureList::IsEnabled(features::kMacCustomThemeFrame) &&
+          !chrome::ShouldUseFullSizeContentView()) {
         // Chrome content view overlaps the window control buttons. Adding
         // subview above the window's content view ensures that content view is
         // positioned below the buttons.

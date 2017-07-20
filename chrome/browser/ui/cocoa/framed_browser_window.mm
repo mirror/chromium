@@ -9,6 +9,7 @@
 #include <stddef.h>
 
 #include "base/logging.h"
+#import "base/mac/availability.h"
 #include "base/mac/foundation_util.h"
 #include "base/mac/sdk_forward_declarations.h"
 #include "chrome/browser/global_keyboard_shortcuts_mac.h"
@@ -19,9 +20,11 @@
 #import "chrome/browser/ui/cocoa/browser_window_layout.h"
 #import "chrome/browser/ui/cocoa/browser_window_touch_bar.h"
 #import "chrome/browser/ui/cocoa/browser_window_utils.h"
+#import "chrome/browser/ui/cocoa/custom_frame_view.h"
 #include "chrome/browser/ui/cocoa/l10n_util.h"
 #import "chrome/browser/ui/cocoa/tabs/tab_strip_controller.h"
 #import "chrome/browser/ui/cocoa/themed_window.h"
+#include "chrome/common/chrome_features.h"
 #include "chrome/grit/theme_resources.h"
 #include "ui/base/cocoa/cocoa_base_utils.h"
 #include "ui/base/cocoa/nsgraphics_context_additions.h"
@@ -84,10 +87,105 @@ const CGFloat kWindowGradientHeight = 24.0;
 - (void)adjustButton:(NSButton*)button
               ofKind:(NSWindowButton)kind;
 - (void)childWindowsDidChange;
+- (BOOL)hasTabStrip;
+
+@end
+
+// Weak lets Chrome launch if a future macOS removes NSThemeFrame. Subclasses
+// will be nil.
+WEAK_IMPORT_ATTRIBUTE
+@interface NSThemeFrame : NSView
+- (CGFloat)_minXTitlebarWidgetInset;
+- (CGFloat)_minYTitlebarButtonsOffset;
+- (CGFloat)_titlebarHeight;
+- (NSPoint)_fullScreenButtonOrigin;
+@end
+
+@interface NSWindow (Private)
++ (Class)frameViewClassForStyleMask:(NSUInteger)windowStyle;
+@end
+
+@interface NSWindow (TenTwelveSDK)
+@property(readonly)
+    NSUserInterfaceLayoutDirection windowTitlebarLayoutDirection API_AVAILABLE(
+        macos(10.12));
+@end
+
+@interface FramedBrowserWindowFrame : NSThemeFrame
+@end
+
+@implementation FramedBrowserWindowFrame
+
+- (FramedBrowserWindow*)framedWindow {
+  return static_cast<FramedBrowserWindow*>([self window]);
+}
+
+// NSThemeFrame overrides.
+
+- (CGFloat)_minXTitlebarWidgetInset {
+  return [self framedWindow].hasTabStrip
+             ? kFramedWindowButtonsWithTabStripOffsetFromLeft
+             : [super _minXTitlebarWidgetInset];
+}
+
+- (CGFloat)_minYTitlebarButtonsOffset {
+  return [self framedWindow].hasTabStrip
+             ? -kFramedWindowButtonsWithTabStripOffsetFromBottom
+             : [super _minYTitlebarButtonsOffset];
+}
+
+- (CGFloat)_titlebarHeight {
+  return [[self framedWindow] hasTabStrip] ? chrome::kTabStripHeight
+                                           : [super _titlebarHeight];
+}
+
+// AppKit's implementation requires that [self class] == [NSThemeFrame class].
+- (BOOL)_shouldFlipTrafficLightsForRTL API_AVAILABLE(macos(10.12)) {
+  return self.window.windowTitlebarLayoutDirection ==
+         NSUserInterfaceLayoutDirectionRightToLeft;
+}
+
+// NSObject overrides.
+
+// -[NSWindow _usesCustomDrawing] uses -isMemberOfClass: with a whitelist.
+- (BOOL)isMemberOfClass:(Class)aClass {
+  return aClass == [NSThemeFrame class] || [super isMemberOfClass:aClass];
+}
+
+@end
+
+@interface MavericksFramedBrowserWindowFrame : FramedBrowserWindowFrame
+@end
+
+@implementation MavericksFramedBrowserWindowFrame
+
+// 10.9 has a separate fullscreen button.
+- (NSPoint)_fullScreenButtonOrigin {
+  NSPoint origin = [super _fullScreenButtonOrigin];
+  NSPoint adjustment = [[self framedWindow] fullScreenButtonOriginAdjustment];
+  return NSMakePoint(origin.x + adjustment.x, origin.y + adjustment.y);
+}
+
+// macOS >10.9 inserts the content view below the window controls by default.
+- (void)_setContentView:(NSView*)contentView {
+  [self addSubview:contentView positioned:NSWindowBelow relativeTo:nil];
+}
 
 @end
 
 @implementation FramedBrowserWindow
+
++ (Class)frameViewClassForStyleMask:(NSUInteger)windowStyle {
+  if (base::FeatureList::IsEnabled(features::kMacCustomThemeFrame) &&
+      [FramedBrowserWindowFrame class]) {
+    if (@available(macos 10.10, *)) {
+      return [FramedBrowserWindowFrame class];
+    } else {
+      return [MavericksFramedBrowserWindowFrame class];
+    }
+  }
+  return [super frameViewClassForStyleMask:windowStyle];
+}
 
 + (CGFloat)browserFrameViewPaintHeight {
   return chrome::ShouldUseFullSizeContentView() ? chrome::kTabStripHeight
@@ -133,6 +231,18 @@ const CGFloat kWindowGradientHeight = 24.0;
     [self setContentBorderThickness:kWindowGradientHeight forEdge:NSMaxYEdge];
 
     hasTabStrip_ = hasTabStrip;
+    [self hookWindowControls];
+  }
+  return self;
+}
+
+- (void)hookWindowControls {
+  if (!base::FeatureList::IsEnabled(features::kMacCustomThemeFrame)) {
+    static dispatch_once_t fullScreenButtonOnceToken;
+    dispatch_once(&fullScreenButtonOnceToken, ^{
+      [NSView cr_hookFullScreenButtonOrigin];
+    });
+
     closeButton_ = [self standardWindowButton:NSWindowCloseButton];
     miniaturizeButton_ = [self standardWindowButton:NSWindowMiniaturizeButton];
     zoomButton_ = [self standardWindowButton:NSWindowZoomButton];
@@ -145,6 +255,11 @@ const CGFloat kWindowGradientHeight = 24.0;
           NSMinX([miniaturizeButton_ frame]) - NSMaxX([zoomButton_ frame]);
 
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    bool shouldUseFullSizeContentView = [&] {
+      if (@available(macos 10.10, *))
+        return (self.styleMask & NSFullSizeContentViewWindowMask) != 0;
+      return false;
+    }();
     if (shouldUseFullSizeContentView) {
       // If Chrome uses full sized content view then window buttons are placed
       // inside titlebar (which height is 22 points). In order to move window
@@ -188,8 +303,6 @@ const CGFloat kWindowGradientHeight = 24.0;
                    object:zoomButton_];
     }
   }
-
-  return self;
 }
 
 - (void)dealloc {
@@ -412,6 +525,11 @@ const CGFloat kWindowGradientHeight = 24.0;
   // Vertically center the button.
   NSPoint origin = NSMakePoint(0, -6);
 
+  // The custom theme frame's title bar is the height of the tab strip.
+  if (base::FeatureList::IsEnabled(features::kMacCustomThemeFrame)) {
+    origin.y += 7;
+  }
+
   // If there is a profile avatar icon present, shift the button over by its
   // width and some padding. The new avatar button is displayed to the right
   // of the fullscreen icon, so it doesn't need to be shifted.
@@ -549,6 +667,10 @@ const CGFloat kWindowGradientHeight = 24.0;
   id delegate = [self delegate];
   if ([delegate respondsToSelector:@selector(childWindowsDidChange)])
     [delegate childWindowsDidChange];
+}
+
+- (BOOL)hasTabStrip {
+  return hasTabStrip_;
 }
 
 @end

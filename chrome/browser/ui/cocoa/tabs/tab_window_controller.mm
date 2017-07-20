@@ -422,7 +422,7 @@
 - (void)insertTabStripBackgroundViewIntoWindow:(NSWindow*)window
                                       titleBar:(BOOL)hasTitleBar {
   DCHECK(tabStripBackgroundView_);
-  NSView* rootView = [[window contentView] superview];
+  NSView* backgroundView = tabStripBackgroundView_;
 
   // In Material Design on 10.10 and higher, the top portion of the window is
   // blurred using an NSVisualEffectView.
@@ -466,21 +466,15 @@
 
     [visualEffectWrapperView addSubview:visualEffectView_];
 
-    [chrome::ShouldUseFullSizeContentView() ? [window contentView] : rootView
-        addSubview:visualEffectWrapperView
-        positioned:NSWindowBelow
-        relativeTo:nil];
-
     // Make the |tabStripBackgroundView_| a child of the NSVisualEffectView.
     [tabStripBackgroundView_ setFrame:[visualEffectView_ bounds]];
     [visualEffectView_ addSubview:tabStripBackgroundView_];
-  } else {
-    DCHECK(!chrome::ShouldUseFullSizeContentView());
-    [rootView addSubview:tabStripBackgroundView_
-              positioned:NSWindowBelow
-              relativeTo:nil];
-    return;
+    backgroundView = visualEffectWrapperView;
   }
+
+  [[window contentView] addSubview:backgroundView
+                        positioned:NSWindowBelow
+                        relativeTo:nil];
 }
 
 // Called when the size of the window content area has changed. Override to

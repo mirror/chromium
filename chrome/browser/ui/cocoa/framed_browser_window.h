@@ -12,6 +12,7 @@
 // Offsets from the top/left of the window frame to the top of the window
 // controls (zoom, close, miniaturize) for a window with a tabstrip.
 const NSInteger kFramedWindowButtonsWithTabStripOffsetFromTop = 11;
+const NSInteger kFramedWindowButtonsWithTabStripOffsetFromBottom = 9;
 const NSInteger kFramedWindowButtonsWithTabStripOffsetFromLeft = 11;
 
 // Offsets from the top/left of the window frame to the top of the window

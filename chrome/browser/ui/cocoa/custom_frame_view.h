@@ -12,6 +12,10 @@
 // support custom frame drawing.
 // This class is never to be instantiated on its own.
 
+@interface NSView (CustomFrameViewAdditions)
++ (void)cr_hookFullScreenButtonOrigin;
+@end
+
 @interface NSView (CustomFrameView)
 
 // Returns where the fullscreen button's origin should be positioned in window
