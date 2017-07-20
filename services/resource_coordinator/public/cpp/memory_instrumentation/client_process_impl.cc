@@ -205,6 +205,7 @@ void ClientProcessImpl::RequestGlobalMemoryDump_NoCallback(
 }
 
 void ClientProcessImpl::RequestOSMemoryDump(
+    bool want_mmaps,
     const std::vector<base::ProcessId>& ids,
     const RequestOSMemoryDumpCallback& callback) {
   std::unordered_map<base::ProcessId, mojom::RawOSMemDumpPtr> results;
