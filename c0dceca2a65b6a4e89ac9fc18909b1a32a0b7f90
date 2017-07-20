@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a74fbf2_e14060f6",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-20T15:32:38Z",
+      "side": 1,
+      "message": "I\u0027m guessing this need to completely reset is why you changed model_ to unique_ptr?",
+      "revId": "c0dceca2a65b6a4e89ac9fc18909b1a32a0b7f90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
