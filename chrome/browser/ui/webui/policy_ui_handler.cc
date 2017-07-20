@@ -6,6 +6,7 @@
 
 #include <stddef.h>
 
+#include <fstream>
 #include <utility>
 
 #include "base/bind.h"
@@ -22,11 +23,13 @@
 #include "base/values.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/download/download_prefs.h"
 #include "chrome/browser/policy/profile_policy_connector.h"
 #include "chrome/browser/policy/profile_policy_connector_factory.h"
 #include "chrome/browser/policy/schema_registry_service.h"
 #include "chrome/browser/policy/schema_registry_service_factory.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/ui/chrome_select_file_policy.h"
 #include "components/policy/core/browser/browser_policy_connector.h"
 #include "components/policy/core/browser/cloud/message_util.h"
 #include "components/policy/core/browser/configuration_policy_handler_list.h"
@@ -594,6 +597,9 @@ void PolicyUIHandler::RegisterMessages() {
       "reloadPolicies",
       base::Bind(&PolicyUIHandler::HandleReloadPolicies,
                  base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
+      "savePoliciesJSON", base::Bind(&PolicyUIHandler::HandleSavePoliciesJSON,
+                                     base::Unretained(this)));
 }
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
@@ -684,7 +690,8 @@ void PolicyUIHandler::SendPolicyNames() const {
   web_ui()->CallJavascriptFunctionUnsafe("policy.Page.setPolicyNames", names);
 }
 
-void PolicyUIHandler::SendPolicyValues() const {
+std::unique_ptr<base::DictionaryValue> PolicyUIHandler::GetAllPolicyValues()
+    const {
   base::DictionaryValue all_policies;
 
   // Add Chrome policy values.
@@ -714,8 +721,13 @@ void PolicyUIHandler::SendPolicyValues() const {
   }
   all_policies.Set("extensionPolicies", std::move(extension_values));
 #endif
+  return base::MakeUnique<base::DictionaryValue>(all_policies);
+}
+
+void PolicyUIHandler::SendPolicyValues() const {
+  std::unique_ptr<base::DictionaryValue> all_policies = GetAllPolicyValues();
   web_ui()->CallJavascriptFunctionUnsafe("policy.Page.setPolicyValues",
-                                         all_policies);
+                                         *all_policies);
 }
 
 void PolicyUIHandler::GetPolicyValues(const policy::PolicyMap& map,
@@ -810,6 +822,66 @@ void PolicyUIHandler::HandleReloadPolicies(const base::ListValue* args) {
 #endif
   GetPolicyService()->RefreshPolicies(base::Bind(
       &PolicyUIHandler::OnRefreshPoliciesDone, weak_factory_.GetWeakPtr()));
+}
+
+void PolicyUIHandler::WritePoliciesToJSONFile(
+    const base::FilePath& path) const {
+  std::unique_ptr<base::DictionaryValue> all_policies = GetAllPolicyValues();
+  std::string json_policies =
+      DictionaryToJSONString(*all_policies)->GetString();
+
+  std::ofstream out(path.value());
+  out << json_policies;
+  out.close();
+}
+
+void PolicyUIHandler::FileSelected(const base::FilePath& path,
+                                   int index,
+                                   void* params) {
+  DCHECK(select_file_dialog_);
+
+  WritePoliciesToJSONFile(path);
+
+  select_file_dialog_ = nullptr;
+}
+
+void PolicyUIHandler::FileSelectionCanceled(void* params) {
+  DCHECK(select_file_dialog_);
+  select_file_dialog_ = nullptr;
+}
+
+void PolicyUIHandler::HandleSavePoliciesJSON(const base::ListValue* args) {
+  content::WebContents* webcontents = web_ui()->GetWebContents();
+
+  // Building initial path based on download preferences.
+  base::FilePath initial_dir =
+      DownloadPrefs::FromBrowserContext(webcontents->GetBrowserContext())
+          ->DownloadPath();
+  base::FilePath initial_path =
+      initial_dir.Append(FILE_PATH_LITERAL("policies.json"));
+
+  // If the user opted not to prompt to download, we don't need
+  // to open "select file" dialog. Instead, we just write the file
+  // with policies to the default location.
+  if (!DownloadPrefs::FromBrowserContext(webcontents->GetBrowserContext())
+           ->PromptForDownload()) {
+    WritePoliciesToJSONFile(initial_path);
+    return;
+  }
+
+  // If the "select file" dialog window is already opened,
+  // we don't want to open it again.
+  if (select_file_dialog_)
+    return;
+
+  select_file_dialog_ = ui::SelectFileDialog::Create(
+      this, new ChromeSelectFilePolicy(webcontents));
+  ui::SelectFileDialog::FileTypeInfo file_type_info;
+  file_type_info.extensions = {{FILE_PATH_LITERAL("json")}};
+  gfx::NativeWindow owning_window = webcontents->GetTopLevelNativeWindow();
+  select_file_dialog_->SelectFile(
+      ui::SelectFileDialog::SELECT_SAVEAS_FILE, base::string16(), initial_path,
+      &file_type_info, 0, base::FilePath::StringType(), owning_window, nullptr);
 }
 
 void PolicyUIHandler::OnRefreshPoliciesDone() const {
