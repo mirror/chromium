@@ -22,6 +22,30 @@
       "revId": "1a0ae07cbe4d4691aea0414d42754997181a1a68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "564251aa_5d8ff2a6",
+        "filename": "chrome/browser/resources/gaia_auth_host/authenticator.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-07-20T14:40:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03b7a7ef_2ecd0685",
+      "range": {
+        "startLine": 314,
+        "startChar": 15,
+        "endLine": 314,
+        "endChar": 38
+      },
+      "revId": "1a0ae07cbe4d4691aea0414d42754997181a1a68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
