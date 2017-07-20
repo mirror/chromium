@@ -695,6 +695,7 @@ class CORE_EXPORT Element : public ContainerNode {
   virtual bool IsOutOfRange() const { return false; }
   virtual bool IsClearButtonElement() const { return false; }
   virtual bool IsScriptElement() const { return false; }
+  virtual bool IsInputElement() const { return false; }
 
   bool CanContainRangeEndPoint() const override { return true; }
 

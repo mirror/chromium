@@ -296,6 +296,7 @@ class CORE_EXPORT HTMLInputElement
   void SetPlaceholderVisibility(bool) override;
 
   unsigned SizeOfRadioGroup() const;
+  bool IsInputElement() const override { return true; }
 
  protected:
   HTMLInputElement(Document&, bool created_by_parser);
