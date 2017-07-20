@@ -9,8 +9,10 @@
 #include "ash/login/ui/lock_window.h"
 #include "ash/login/ui/login_data_dispatcher.h"
 #include "ash/public/interfaces/session_controller.mojom.h"
+#include "ash/root_window_controller.h"
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
+#include "ash/wallpaper/wallpaper_widget_controller.h"
 #include "base/command_line.h"
 #include "base/memory/ptr_util.h"
 #include "chromeos/chromeos_switches.h"
@@ -26,6 +28,15 @@ views::View* BuildContentsView(LoginDataDispatcher* data_dispatcher) {
     return new LockDebugView(data_dispatcher);
   }
   return new LockContentsView(data_dispatcher);
+}
+
+// We should blur all wallpaper layers for every |root_window|. I will leave it
+// to jdufault@ for future implementation.
+ui::Layer* GetWallpaperLayerForLockWindow(LockWindow* window) {
+  return RootWindowController::ForWindow(window->GetNativeWindow())
+      ->wallpaper_widget_controller()
+      ->widget()
+      ->GetLayer();
 }
 
 // Global lock screen instance. There can only ever be on lock screen at a
@@ -72,17 +83,19 @@ void LockScreen::Show() {
 
 void LockScreen::Destroy() {
   CHECK_EQ(instance_, this);
+
+  GetWallpaperLayerForLockWindow(window_)->SetLayerBlur(0.0f);
   window_->Close();
   delete instance_;
   instance_ = nullptr;
 }
 
 void LockScreen::ToggleBlur() {
-  if (instance_->window_->GetLayer()->background_blur() == 0) {
-    // TODO(jdufault): Use correct blur amount.
-    instance_->window_->GetLayer()->SetBackgroundBlur(20);
+  if (GetWallpaperLayerForLockWindow(instance_->window_)->layer_blur()) {
+    GetWallpaperLayerForLockWindow(instance_->window_)->SetLayerBlur(0.0f);
   } else {
-    instance_->window_->GetLayer()->SetBackgroundBlur(0);
+    // TODO(jdufault): Use correct blur amount.
+    GetWallpaperLayerForLockWindow(instance_->window_)->SetLayerBlur(20.0f);
   }
 }
 
