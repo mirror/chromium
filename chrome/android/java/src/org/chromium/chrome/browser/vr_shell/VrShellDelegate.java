@@ -1458,6 +1458,7 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
     }
 
     private void removeVrViews() {
+        mVrShell.cleanupViewState();
         mActivity.onExitVr();
         FrameLayout decor = (FrameLayout) mActivity.getWindow().getDecorView();
         decor.removeView(mVrShell.getContainer());

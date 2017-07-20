@@ -54,4 +54,10 @@ public interface VrShell {
      * Returns the GVRLayout as a FrameLayout.
      */
     FrameLayout getContainer();
+
+    /**
+     * Gives VrShell a chance to clean up any view-dependent state before removing
+     * VrShell from the view hierarchy.
+     */
+    void cleanupViewState();
 }
