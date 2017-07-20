@@ -70,6 +70,57 @@
       "revId": "7ced9b8128a851b58837dbc003d8014858c94532",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "263d0151_8120f3dd",
+        "filename": "chrome/browser/chrome_navigation_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-20T22:36:13Z",
+      "side": 1,
+      "message": "Is there any way to ensure that IsInSyntheticTrialGroup returns false before the navigation(s)?",
+      "revId": "7ced9b8128a851b58837dbc003d8014858c94532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db662b74_57a9e53b",
+        "filename": "chrome/browser/tab_contents/navigation_metrics_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-20T22:36:13Z",
+      "side": 1,
+      "message": "I\u0027m curious why this CL\u0027s change belongs here, rather than somewhere related to signin?  I don\u0027t have a good sense for whether it\u0027s out of place here, so maybe we can get an owner\u0027s opinion?",
+      "revId": "7ced9b8128a851b58837dbc003d8014858c94532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "924058e9_e174ae75",
+        "filename": "chrome/browser/tab_contents/navigation_metrics_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-20T22:36:13Z",
+      "side": 1,
+      "message": "If we keep this here, be sure to include a comment saying why this needs to go between the HasCommitted and IsInMainFrame checks (i.e., since we want to register subframe navigations to the signin URL as well, unlike the metrics below).",
+      "revId": "7ced9b8128a851b58837dbc003d8014858c94532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
