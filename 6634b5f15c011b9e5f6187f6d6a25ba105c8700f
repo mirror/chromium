@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c6eaea7e_2cae2cfb",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2726,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-07-20T15:34:35Z",
+      "side": 1,
+      "message": "With the variable names more descriptives + header documentation the comment is redundant, removing.",
+      "parentUuid": "3605142d_0397588b",
+      "revId": "6634b5f15c011b9e5f6187f6d6a25ba105c8700f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aaad8f88_b2cc6ba5",
         "filename": "content/browser/renderer_host/render_process_host_impl.cc",
         "patchSetId": 13
@@ -30,6 +48,30 @@
       "writtenOn": "2017-07-20T05:43:32Z",
       "side": 1,
       "message": "ditto",
+      "range": {
+        "startLine": 2743,
+        "startChar": 15,
+        "endLine": 2743,
+        "endChar": 20
+      },
+      "revId": "6634b5f15c011b9e5f6187f6d6a25ba105c8700f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43526914_55da554f",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2743,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-07-20T15:34:35Z",
+      "side": 1,
+      "message": "With the more descriptive variable name and the header documentation, the comment is redundant, removing.",
+      "parentUuid": "aaad8f88_b2cc6ba5",
       "range": {
         "startLine": 2743,
         "startChar": 15,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "d9e03d5b_8c762553",
+        "filename": "content/public/browser/memory_coordinator_delegate.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-07-20T15:34:35Z",
+      "side": 1,
+      "message": "Fixed, and removed everywhere.",
+      "parentUuid": "4bf95f6a_dc336876",
+      "revId": "6634b5f15c011b9e5f6187f6d6a25ba105c8700f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa628e5b_6d4ad538",
         "filename": "content/public/browser/render_process_host.h",
         "patchSetId": 13
@@ -79,6 +139,30 @@
       "revId": "6634b5f15c011b9e5f6187f6d6a25ba105c8700f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c9a0f5b_ead7ec43",
+        "filename": "content/public/browser/render_process_host.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-07-20T15:34:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa628e5b_6d4ad538",
+      "range": {
+        "startLine": 162,
+        "startChar": 43,
+        "endLine": 162,
+        "endChar": 55
+      },
+      "revId": "6634b5f15c011b9e5f6187f6d6a25ba105c8700f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
