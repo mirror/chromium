@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33aedbd3_9f81f05a",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-07-20T17:48:12Z",
+      "side": 1,
+      "message": "rephrase comment to not use zero-suggest... the term has too much baggage.",
+      "revId": "6992e59ae0eb71d98dae408dd6f9ccbf4695506b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
