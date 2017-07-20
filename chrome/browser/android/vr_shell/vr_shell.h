@@ -15,6 +15,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/single_thread_task_runner.h"
 #include "chrome/browser/ui/toolbar/chrome_toolbar_model_delegate.h"
+#include "chrome/browser/vr/exit_vr_prompt_choice.h"
 #include "chrome/browser/vr/ui_interface.h"
 #include "chrome/browser/vr/ui_unsupported_mode.h"
 #include "content/public/browser/web_contents_observer.h"
@@ -137,6 +138,13 @@ class VrShell : public device::GvrDelegate,
                                 const base::android::JavaParamRef<jobject>& obj,
                                 jboolean can_go_back,
                                 jboolean can_go_forward);
+  void RequestToExitVr(JNIEnv* env,
+                       const base::android::JavaParamRef<jobject>& obj,
+                       int reason);
+  void LogUnsupportedModeUserMetric(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& obj,
+      int mode);
 
   void ContentWebContentsDestroyed();
   // Called when our WebContents have been hidden. Usually a sign that something
@@ -172,7 +180,10 @@ class VrShell : public device::GvrDelegate,
   void ForceExitVr();
   void ExitPresent();
   void ExitFullscreen();
-  void ExitVrDueToUnsupportedMode(vr::UiUnsupportedMode mode);
+  void LogUnsupportedModeUserMetric(vr::UiUnsupportedMode mode);
+  void OnUnsupportedMode(vr::UiUnsupportedMode mode);
+  void OnExitVrPromptResult(vr::UiUnsupportedMode reason,
+                            vr::ExitVrPromptChoice choice);
 
   void ProcessContentGesture(std::unique_ptr<blink::WebInputEvent> event);
 
@@ -211,6 +222,8 @@ class VrShell : public device::GvrDelegate,
   void PollMediaAccessFlag();
 
   bool HasDaydreamSupport(JNIEnv* env);
+
+  void ExitVrDueToUnsupportedMode(vr::UiUnsupportedMode mode);
 
   bool vr_shell_enabled_;
 
