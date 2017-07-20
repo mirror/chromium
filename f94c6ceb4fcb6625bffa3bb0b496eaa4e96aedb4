@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa32a4ad_3596e7f1",
+        "filename": "chrome/browser/extensions/api/music_manager_private/device_id_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-20T20:35:26Z",
+      "side": 1,
+      "message": "Is the reply of this never important to user visible things? If so that\u0027s fine. Otherwise you\u0027ll want USER_VISIBLE.\n\nOr you could just not specify a TaskPriority in which case it will be inherited from the caller.",
+      "range": {
+        "startLine": 200,
+        "startChar": 36,
+        "endLine": 200,
+        "endChar": 66
+      },
+      "revId": "f94c6ceb4fcb6625bffa3bb0b496eaa4e96aedb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
