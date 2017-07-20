@@ -300,15 +300,17 @@ void ChromeRestartRequest::Start() {
       FROM_HERE, base::TimeDelta::FromSeconds(3), this,
       &ChromeRestartRequest::RestartJob);
 
-  // Post a task to local state task runner thus it occurs last on the task
-  // queue, so it would be executed after committing pending write on that
-  // thread.
-  scoped_refptr<base::SequencedTaskRunner> local_state_task_runner =
-      JsonPrefStore::GetTaskRunnerForFile(
-          base::FilePath(chrome::kLocalStorePoolName),
-          BrowserThread::GetBlockingPool());
-  local_state_task_runner->PostTaskAndReply(
-      FROM_HERE, base::BindOnce(&EnsureLocalStateIsWritten),
+  // Shutting down the TaskScheduler will bump priority of
+  // BACKGROUND+BLOCK_SHUTDOWN work, resulting in a best effort at letting
+  // |local_state| commit before restart. Shutting down the TaskScheduler from
+  // a TaskScheduler driven task works because the task performing the shutdown
+  // is flagged as CONTINUE_ON_SHUTDOWN.
+  base::PostTaskWithTraitsAndReply(
+      FROM_HERE,
+      {base::TaskPriority::USER_BLOCKING, base::WithBaseSyncPrimitives(),
+       base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
+      base::BindOnce(&base::TaskScheduler::Shutdown,
+                     base::Unretained(base::TaskScheduler::GetInstance())),
       base::BindOnce(&ChromeRestartRequest::RestartJob, AsWeakPtr()));
 }
 
