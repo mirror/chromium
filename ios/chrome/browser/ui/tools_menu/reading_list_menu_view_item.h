@@ -11,6 +11,8 @@
 
 @class NumberBadgeView;
 
+extern NSString* const kReadingListNewFeatureBadgeAccessibilityIdentifier;
+
 // Specialization of a ToolsMenuViewItem for the reading list.
 @interface ReadingListMenuViewItem : ToolsMenuViewItem
 @end
@@ -26,6 +28,11 @@
 // Update the seen state according to |hasUnseenItems|. Can be animated or
 // not.
 - (void)updateSeenState:(BOOL)hasUnseenItems animated:(BOOL)animated;
+
+// Update whether or not the new feature badge should be displayed. Can be
+// animated or not.
+- (void)updateShowNewFeatureBadge:(BOOL)showNewFeatureBadge
+                         animated:(BOOL)animated;
 
 @end
 

@@ -113,6 +113,7 @@ NS_INLINE void AnimateInViews(NSArray* views,
   // for the reading list badge.
   __weak ReadingListMenuNotifier* _readingListMenuNotifier;
 }
+@property(nonatomic) BOOL showReadingListNewBadge;
 @property(nonatomic, strong) ToolsMenuCollectionView* menuView;
 @property(nonatomic, strong) MDCInkView* touchFeedbackView;
 @property(nonatomic, assign) ToolbarType toolbarType;
@@ -127,6 +128,7 @@ NS_INLINE void AnimateInViews(NSArray* views,
 
 @implementation ToolsMenuViewController
 
+@synthesize showReadingListNewBadge = _showReadingListNewBadge;
 @synthesize menuView = _menuView;
 @synthesize isCurrentPageBookmarked = _isCurrentPageBookmarked;
 @synthesize touchFeedbackView = _touchFeedbackView;
@@ -217,6 +219,7 @@ NS_INLINE void AnimateInViews(NSArray* views,
 
 - (void)initializeMenuWithConfiguration:(ToolsMenuConfiguration*)configuration {
   self.requestStartTime = configuration.requestStartTime;
+  self.showReadingListNewBadge = configuration.showReadingListNewBadge;
 
   if (configuration.readingListMenuNotifier) {
     _readingListMenuNotifier = configuration.readingListMenuNotifier;
@@ -444,6 +447,12 @@ NS_INLINE void AnimateInViews(NSArray* views,
   AnimateInViews(visibleCells, 0, -10);
   [CATransaction commit];
 
+  // The number badge should be prioritized over the new feature badge, so only
+  // show the new feature badge if number badge will not be shown.
+  if (_readingListMenuNotifier.readingListUnreadCount == 0) {
+    [[self readingListCell] updateShowNewFeatureBadge:_showReadingListNewBadge
+                                             animated:YES];
+  }
   [[self readingListCell]
       updateBadgeCount:_readingListMenuNotifier.readingListUnreadCount
               animated:YES];
