@@ -36,6 +36,7 @@
 #include "printing/metafile_skia_wrapper.h"
 #include "printing/pdf_metafile_skia.h"
 #include "printing/units.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 #include "third_party/WebKit/public/platform/Platform.h"
 #include "third_party/WebKit/public/platform/WebDoubleSize.h"
 #include "third_party/WebKit/public/platform/WebSize.h"
@@ -583,11 +584,21 @@ void PrintWebViewHelper::PrintHeaderAndFooter(
 
   class HeaderAndFooterClient final : public blink::WebFrameClient {
    public:
+    HeaderAndFooterClient() {
+      interface_provider_.Forward(
+          base::Bind([](const std::string&, mojo::ScopedMessagePipeHandle) {}));
+    }
     void FrameDetached(blink::WebLocalFrame* frame,
                        DetachType detach_type) override {
       frame->FrameWidget()->Close();
       frame->Close();
     }
+    service_manager::InterfaceProvider* GetInterfaceProvider() override {
+      return &interface_provider_;
+    }
+
+   private:
+    service_manager::InterfaceProvider interface_provider_;
   };
   HeaderAndFooterClient frame_client;
   blink::WebLocalFrame* frame = blink::WebLocalFrame::CreateMainFrame(
@@ -692,6 +703,7 @@ class PrepareFrameAndViewForPrint : public blink::WebViewClient,
   std::unique_ptr<blink::WebURLLoader> CreateURLLoader(
       const blink::WebURLRequest& request,
       base::SingleThreadTaskRunner* task_runner) override;
+  service_manager::InterfaceProvider* GetInterfaceProvider() override;
 
   void CallOnReady();
   void ResizeForPrinting();
@@ -709,6 +721,7 @@ class PrepareFrameAndViewForPrint : public blink::WebViewClient,
   bool should_print_backgrounds_;
   bool should_print_selection_only_;
   bool is_printing_started_;
+  service_manager::InterfaceProvider interface_provider_;
 
   base::WeakPtrFactory<PrepareFrameAndViewForPrint> weak_ptr_factory_;
 
@@ -743,6 +756,8 @@ PrepareFrameAndViewForPrint::PrepareFrameAndViewForPrint(
     frame->PrintEnd();
   }
   ComputeWebKitPrintParamsInDesiredDpi(print_params, &web_print_params_);
+  interface_provider_.Forward(
+      base::Bind([](const std::string&, mojo::ScopedMessagePipeHandle) {}));
 }
 
 PrepareFrameAndViewForPrint::~PrepareFrameAndViewForPrint() {
@@ -870,6 +885,11 @@ PrepareFrameAndViewForPrint::CreateURLLoader(
     base::SingleThreadTaskRunner* task_runner) {
   // TODO(yhirano): Stop using Platform::CreateURLLoader() here.
   return blink::Platform::Current()->CreateURLLoader(request, task_runner);
+}
+
+service_manager::InterfaceProvider*
+PrepareFrameAndViewForPrint::GetInterfaceProvider() {
+  return &interface_provider_;
 }
 
 void PrepareFrameAndViewForPrint::CallOnReady() {
