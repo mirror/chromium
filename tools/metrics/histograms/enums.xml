@@ -30436,6 +30436,7 @@ from previous Chrome versions.
   <int value="8"
       label="The page was being reloaded and the preview type can not be
              shown on a reload."/>
+  <int value="9" label="Host blacklisted by server rules."/>
 </enum>
 
 <enum name="PreviewsInfoBarAction">
