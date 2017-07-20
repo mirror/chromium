@@ -81,9 +81,18 @@ class FlexItem {
 
 class FlexLine {
  public:
-  FlexLine() {
-    total_flex_grow = total_flex_shrink = total_weighted_flex_shrink = 0;
-  }
+  FlexLine(Vector<FlexItem>&& line_items,
+           LayoutUnit sum_flex_base_size,
+           double total_flex_grow,
+           double total_flex_shrink,
+           double total_weighted_flex_shrink,
+           LayoutUnit sum_hypothetical_main_size)
+      : line_items(line_items),
+        sum_flex_base_size(sum_flex_base_size),
+        total_flex_grow(total_flex_grow),
+        total_flex_shrink(total_flex_shrink),
+        total_weighted_flex_shrink(total_weighted_flex_shrink),
+        sum_hypothetical_main_size(sum_hypothetical_main_size) {}
 
   FlexSign Sign() const {
     return sum_hypothetical_main_size < container_main_inner_size
@@ -100,16 +109,14 @@ class FlexLine {
   // This modifies remaining_free_space.
   void FreezeViolations(Vector<FlexItem*>& violations);
 
-  // These fields get filled in by ComputeNextFlexLine.
-  // TODO(cbiesinger): Consider moving to a constructor.
   Vector<FlexItem> line_items;
-  LayoutUnit sum_flex_base_size;
+  const LayoutUnit sum_flex_base_size;
   double total_flex_grow;
   double total_flex_shrink;
   double total_weighted_flex_shrink;
   // The hypothetical main size of an item is the flex base size clamped
   // according to its min and max main size properties
-  LayoutUnit sum_hypothetical_main_size;
+  const LayoutUnit sum_hypothetical_main_size;
 
   // This gets set by SetContainerMainInnerSize
   LayoutUnit container_main_inner_size;
