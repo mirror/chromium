@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "634589b2_f86c4e00",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-20T14:13:17Z",
+      "side": 1,
+      "message": "Yes, and also nothing listens to OnWebContentsLostFocus currently.",
+      "parentUuid": "54d742e8_ccdb2723",
+      "range": {
+        "startLine": 285,
+        "startChar": 38,
+        "endLine": 285,
+        "endChar": 42
+      },
+      "revId": "736cfdeb8f3ffeaec238e6df434581a9242c1d3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "051119e3_9f06cd1e",
         "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "736cfdeb8f3ffeaec238e6df434581a9242c1d3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4979223_d413fce9",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 1627,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-20T14:13:17Z",
+      "side": 1,
+      "message": "Currently nothing other than the code I\u0027ve added in this CL listens to OnWebContentsLostFocus, so it\u0027s fine for two reasons. The one you mention, and the fact that nobody expects anything from OnWebContentsLostFocus currently :P",
+      "parentUuid": "051119e3_9f06cd1e",
+      "range": {
+        "startLine": 1627,
+        "startChar": 27,
+        "endLine": 1627,
+        "endChar": 31
+      },
+      "revId": "736cfdeb8f3ffeaec238e6df434581a9242c1d3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
