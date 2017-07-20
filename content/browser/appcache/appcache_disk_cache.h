@@ -34,7 +34,6 @@ class CONTENT_EXPORT AppCacheDiskCache
   int InitWithDiskBackend(
       const base::FilePath& disk_cache_directory,
       int disk_cache_size,
-      bool force,
       const scoped_refptr<base::SingleThreadTaskRunner>& cache_thread,
       const net::CompletionCallback& callback);
 
@@ -106,7 +105,6 @@ class CONTENT_EXPORT AppCacheDiskCache
   int Init(net::CacheType cache_type,
            const base::FilePath& directory,
            int cache_size,
-           bool force,
            const scoped_refptr<base::SingleThreadTaskRunner>& cache_thread,
            const net::CompletionCallback& callback);
   void OnCreateBackendComplete(int rv);

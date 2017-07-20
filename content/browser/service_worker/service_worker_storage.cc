@@ -1469,7 +1469,7 @@ ServiceWorkerDiskCache* ServiceWorkerStorage::disk_cache() {
 void ServiceWorkerStorage::InitializeDiskCache() {
   disk_cache_->set_is_waiting_to_initialize(false);
   int rv = disk_cache_->InitWithDiskBackend(
-      GetDiskCachePath(), kMaxDiskCacheSize, false, disk_cache_thread_,
+      GetDiskCachePath(), kMaxDiskCacheSize, disk_cache_thread_,
       base::Bind(&ServiceWorkerStorage::OnDiskCacheInitialized,
                  weak_factory_.GetWeakPtr()));
   if (rv != net::ERR_IO_PENDING)
