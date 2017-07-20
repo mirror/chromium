@@ -14,7 +14,7 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "chrome/browser/extensions/api/messaging/message_property_provider.h"
+#include "extensions/browser/api/messaging/message_property_provider.h"
 #include "extensions/browser/api/messaging/native_message_host.h"
 #include "extensions/browser/browser_context_keyed_api_factory.h"
 #include "extensions/common/api/messaging/message.h"
