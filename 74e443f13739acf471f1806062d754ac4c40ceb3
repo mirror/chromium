@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09bbc26c_363099b4",
+        "filename": "chrome/browser/media/router/media_router_metrics.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-20T17:26:51Z",
+      "side": 1,
+      "message": "Error encountered while ...",
+      "revId": "74e443f13739acf471f1806062d754ac4c40ceb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adf8033f_1b34c659",
+        "filename": "chrome/utility/media_router/dial_device_description_parser_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-20T17:26:51Z",
+      "side": 1,
+      "message": "If some fields can\u0027t be parsed, I would prefer that it return nullptr rather than a partially constructed object. My suggestion would be to add a ErrorReason in the return value of ParseDialDeviceDescription Mojo API. Of course, you will still need to validate the result on the browser side.",
+      "range": {
+        "startLine": 73,
+        "startChar": 14,
+        "endLine": 73,
+        "endChar": 0
+      },
+      "revId": "74e443f13739acf471f1806062d754ac4c40ceb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9f3bbe1_3bc505eb",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 31905,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-20T17:26:51Z",
+      "side": 1,
+      "message": "encountered while",
+      "range": {
+        "startLine": 31905,
+        "startChar": 10,
+        "endLine": 31905,
+        "endChar": 24
+      },
+      "revId": "74e443f13739acf471f1806062d754ac4c40ceb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
