@@ -695,6 +695,24 @@
     },
     {
       "key": {
+        "uuid": "447469ed_1800b579",
+        "filename": "chrome/android/java_sources.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 1436,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-07-20T21:42:24Z",
+      "side": 1,
+      "message": "Right. Robolectric is not great for threaded tests. Guess we have to run it on device then.",
+      "parentUuid": "524fe7bf_89eb2dfc",
+      "revId": "2430d3349912fd34d9b19d738375aef1c9f9c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc777c54_1602b832",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/customtabs/CustomTabsConnectionTest.java",
         "patchSetId": 4
