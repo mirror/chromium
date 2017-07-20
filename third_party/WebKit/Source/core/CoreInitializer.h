@@ -36,24 +36,68 @@
 
 namespace blink {
 
+class HTMLMediaElement;
+class InspectedFrames;
+class InspectorDOMAgent;
+class InspectorSession;
+class LocalFrame;
+class MediaControls;
+class Page;
+class ShadowRoot;
+class WorkerClients;
+
 class CORE_EXPORT CoreInitializer {
   USING_FAST_MALLOC(CoreInitializer);
   WTF_MAKE_NONCOPYABLE(CoreInitializer);
 
  public:
-  CoreInitializer() : is_initialized_(false) {}
+  CoreInitializer() {}
   virtual ~CoreInitializer() {}
 
   // Should be called by clients before trying to create Frames.
   virtual void Initialize();
 
+  // Callbacks set by ModulesInitializer.
+  using LocalFrameCallback = void (*)(LocalFrame&);
+  static LocalFrameCallback GetLocalFrameInitCallback() {
+    return instance_->local_frame_init_callback_;
+  }
+  static LocalFrameCallback GetChromeClientSupplementInstallCallback() {
+    return instance_->chrome_client_supplement_install_callback_;
+  }
+  using WorkerClientsCallback = void (*)(WorkerClients&);
+  static WorkerClientsCallback GetWorkerClientsLocalFileSystemCallback() {
+    return instance_->worker_clients_local_file_system_callback_;
+  }
+  static WorkerClientsCallback GetWorkerClientsIndexedDBCallback() {
+    return instance_->worker_clients_indexed_db_callback_;
+  }
+  using MediaControlsFactory = MediaControls* (*)(HTMLMediaElement&,
+                                                  ShadowRoot&);
+  static MediaControlsFactory GetMediaControlsFactory() {
+    return instance_->media_controls_factory_;
+  }
+  using InspectorAgentSessionInitCallback = void (*)(InspectorSession*,
+                                                     bool,
+                                                     InspectorDOMAgent*,
+                                                     InspectedFrames*,
+                                                     Page*);
+  static InspectorAgentSessionInitCallback
+  GetInspectorAgentSessionInitCallback() {
+    return instance_->inspector_agent_session_init_callback_;
+  }
+
  protected:
-  bool IsInitialized() const { return is_initialized_; }
+  LocalFrameCallback local_frame_init_callback_;
+  LocalFrameCallback chrome_client_supplement_install_callback_;
+  WorkerClientsCallback worker_clients_local_file_system_callback_;
+  WorkerClientsCallback worker_clients_indexed_db_callback_;
+  MediaControlsFactory media_controls_factory_;
+  InspectorAgentSessionInitCallback inspector_agent_session_init_callback_;
 
  private:
+  static CoreInitializer* instance_;
   void RegisterEventFactory();
-
-  bool is_initialized_;
 };
 
 }  // namespace blink
