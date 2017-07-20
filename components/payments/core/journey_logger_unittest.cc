@@ -1066,7 +1066,7 @@ TEST(JourneyLoggerTest,
 // completes the Payment Request.
 TEST(JourneyLoggerTest,
      RecordJourneyStatsHistograms_CheckoutFunnelUkm_Completed) {
-  ukm::TestAutoSetUkmRecorder ukm_recorder;
+  ukm::TestUkmRecorder ukm_recorder;
   char test_url[] = "http://www.google.com/";
 
   base::HistogramTester histogram_tester;
