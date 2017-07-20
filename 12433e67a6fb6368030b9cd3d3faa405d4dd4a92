@@ -34,6 +34,24 @@
       "revId": "12433e67a6fb6368030b9cd3d3faa405d4dd4a92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9f1c1342_d839b03d",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 30439,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-07-20T20:36:20Z",
+      "side": 1,
+      "message": "dougarnett@, do you think this bucket contain those sorts of rules in the future?",
+      "parentUuid": "4adb3563_6cc52ad7",
+      "revId": "12433e67a6fb6368030b9cd3d3faa405d4dd4a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
