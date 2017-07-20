@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b4e3a4d_6b8276a5",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 30439,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-07-20T20:20:06Z",
+      "side": 1,
+      "message": "Does this bucket include the server blacklist rules like country blacklist?",
+      "revId": "12433e67a6fb6368030b9cd3d3faa405d4dd4a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
