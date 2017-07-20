@@ -147,8 +147,6 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   // Returns true if keyboard is SHOWN or SHOWING state.
   bool keyboard_visible();
 
-  bool show_on_resize() const { return show_on_resize_; }
-
   // Returns true if keyboard window has been created.
   bool IsKeyboardWindowCreated();
 
@@ -166,6 +164,8 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
 
   // For access to SetContainerBounds.
   friend class KeyboardLayoutManager;
+
+  bool show_on_resize() const { return show_on_resize_; }
 
   // aura::WindowObserver overrides
   void OnWindowHierarchyChanged(const HierarchyChangeParams& params) override;
@@ -201,6 +201,8 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   // is aborted, it won't be called.
   void ShowAnimationFinished();
   void HideAnimationFinished();
+
+  void NotifyKeyboardBoundsChangingAndEnsrueCaretInWorkArea();
 
   // Called when the keyboard mode is set or the keyboard is moved to another
   // display.
