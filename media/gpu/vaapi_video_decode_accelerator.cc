@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "media/gpu/vaapi_video_decode_accelerator.h"
+#include <va/va.h>
 
 #include <string.h>
 
@@ -26,7 +27,6 @@
 #include "media/gpu/vp8_decoder.h"
 #include "media/gpu/vp9_decoder.h"
 #include "media/video/picture.h"
-#include "third_party/libva/va/va_dec_vp8.h"
 #include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_image.h"
 
