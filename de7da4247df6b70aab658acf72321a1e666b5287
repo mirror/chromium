@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7521afe7_d7c703cf",
+        "filename": "third_party/WebKit/Source/core/html/HTMLTableCellElement.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-07-20T01:55:22Z",
+      "side": 1,
+      "message": "How about moving these constants to header\u0027s public section?\nEven though these does not necessarily have to be public, having related\nconstants in one place would make readability and maintainability much\nbetter.\n\nOr maybe you can add a separate file (e.g. TableConstants.h) and put these\nconstants there, so that HTMLTableColElement do not have to depend on\nHTMLTableCellElement.h, which is not a parent class.",
+      "revId": "de7da4247df6b70aab658acf72321a1e666b5287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fce70b1_3c472510",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLParserIdioms.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-07-20T01:55:22Z",
+      "side": 1,
+      "message": "It\u0027s unfortunate to repeat L308-317 here just for checking kOverflowMax return value.\n\nCan ParseHTMLNonNegativeIntegerInternal() do accept String as input and return\nNumberparsingState, and then ParseHTMLNonNegativeInteger() become just\n{ return Parse...Internal(input, value) \u003d\u003d ...kSuccess; } ?",
+      "revId": "de7da4247df6b70aab658acf72321a1e666b5287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ecd9213_a82929fd",
+        "filename": "third_party/WebKit/Source/platform/wtf/text/StringToNumberTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-07-20T01:55:22Z",
+      "side": 1,
+      "message": "How about adding ParseUInt(\"-0\") returns kError?",
+      "revId": "de7da4247df6b70aab658acf72321a1e666b5287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
