@@ -21,12 +21,14 @@
 #include "cc/surfaces/surface.h"
 #include "cc/surfaces/surface_manager.h"
 #include "components/exo/buffer.h"
+#include "components/exo/data_device_manager.h"
 #include "components/exo/pointer.h"
 #include "components/exo/surface_delegate.h"
 #include "components/exo/surface_observer.h"
 #include "components/viz/common/surfaces/sequence_surface_reference_factory.h"
 #include "third_party/khronos/GLES2/gl2.h"
 #include "ui/aura/client/aura_constants.h"
+#include "ui/aura/client/drag_drop_delegate.h"
 #include "ui/aura/env.h"
 #include "ui/aura/window_delegate.h"
 #include "ui/aura/window_targeter.h"
@@ -193,6 +195,7 @@ Surface::Surface() : window_(new aura::Window(new CustomWindowDelegate(this))) {
   window_->SetEventTargeter(base::WrapUnique(new CustomWindowTargeter));
   window_->set_owned_by_parent(false);
   window_->AddObserver(this);
+  aura::client::SetDragDropDelegate(window_.get(), this);
   aura::Env::GetInstance()->context_factory()->AddObserver(this);
   layer_tree_frame_sink_holder_ = base::MakeUnique<LayerTreeFrameSinkHolder>(
       this, window_->CreateLayerTreeFrameSink());
@@ -204,6 +207,7 @@ Surface::~Surface() {
     observer.OnSurfaceDestroying(this);
 
   window_->RemoveObserver(this);
+  aura::client::SetDragDropDelegate(window_.get(), nullptr);
   if (window_->layer()->GetCompositor())
     window_->layer()->GetCompositor()->vsync_manager()->RemoveObserver(this);
   window_->layer()->SetShowSolidColorContent();
@@ -692,6 +696,35 @@ void Surface::OnUpdateVSyncParameters(base::TimeTicks timebase,
   // time for the previous frame.
   swapped_presentation_callbacks_.splice(swapped_presentation_callbacks_.end(),
                                          swapping_presentation_callbacks_);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// aura::client::DragDropDelegate overrides:
+
+void Surface::OnDragEntered(const ui::DropTargetEvent& event) {
+  DataDeviceManager* data_device_manager = DataDeviceManager::GetInstance();
+  if (data_device_manager)
+    data_device_manager->OnDragEntered(this, event);
+}
+
+int Surface::OnDragUpdated(const ui::DropTargetEvent& event) {
+  DataDeviceManager* data_device_manager = DataDeviceManager::GetInstance();
+  if (data_device_manager)
+    return data_device_manager->OnDragUpdated(this, event);
+  return ui::DragDropTypes::DRAG_NONE;
+}
+
+void Surface::OnDragExited() {
+  DataDeviceManager* data_device_manager = DataDeviceManager::GetInstance();
+  if (data_device_manager)
+    data_device_manager->OnDragExited(this);
+}
+
+int Surface::OnPerformDrop(const ui::DropTargetEvent& event) {
+  DataDeviceManager* data_device_manager = DataDeviceManager::GetInstance();
+  if (data_device_manager)
+    return data_device_manager->OnPerformDrop(this, event);
+  return 0;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
