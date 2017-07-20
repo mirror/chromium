@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d57cb14_959c6ecd",
+        "filename": "components/content_settings/core/browser/host_content_settings_map.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-07-20T12:58:16Z",
+      "side": 1,
+      "message": "I think this condition can be removed if most_recent_time is initialized with base::Time()?",
+      "revId": "e6101b77243c541a81bb806a75f41181c468a96a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
