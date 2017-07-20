@@ -33,7 +33,7 @@ bool RenderFrameHostDelegate::DidAddMessageToConsole(
 }
 
 WebContents* RenderFrameHostDelegate::GetAsWebContents() {
-  return NULL;
+  return nullptr;
 }
 
 InterstitialPage* RenderFrameHostDelegate::GetAsInterstitialPage() {
@@ -69,7 +69,7 @@ AccessibilityMode RenderFrameHostDelegate::GetAccessibilityMode() const {
 RenderFrameHost* RenderFrameHostDelegate::GetGuestByInstanceID(
     RenderFrameHost* render_frame_host,
     int browser_plugin_instance_id) {
-  return NULL;
+  return nullptr;
 }
 
 device::GeolocationContext* RenderFrameHostDelegate::GetGeolocationContext() {

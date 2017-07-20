@@ -119,11 +119,11 @@
           "content::mojom::BrowserTarget",
 
           "content::mojom::RendererAudioOutputStreamFactory",
-          "device::mojom::VRService",
-          "device::mojom::Geolocation",
+          "device::mojom::GeolocationService",
           "device::mojom::NFC",
           "device::mojom::SensorProvider",
           "device::mojom::WakeLock",
+          "device::mojom::VRService",
           "device::usb::DeviceManager",
           "discardable_memory::mojom::DiscardableSharedMemoryManager",
           "media::mojom::ImageCapture",
