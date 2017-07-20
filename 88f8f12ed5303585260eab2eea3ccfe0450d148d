@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fd4759a_fbd729aa",
+        "filename": "chrome/browser/ui/webui/settings/settings_clear_browsing_data_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-20T06:50:55Z",
+      "side": 1,
+      "message": "I\u0027m not convinced that this is a CHECK, although an error here could indicate some security-critical issue in communication between the renderer and browser. Do we use CHECK in similar situations in the rest of webui?",
+      "range": {
+        "startLine": 114,
+        "startChar": 2,
+        "endLine": 114,
+        "endChar": 10
+      },
+      "revId": "88f8f12ed5303585260eab2eea3ccfe0450d148d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1797714f_efb1dbd9",
+        "filename": "chrome/browser/ui/webui/settings/settings_clear_browsing_data_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-20T06:50:55Z",
+      "side": 1,
+      "message": "base::ContainsValue() ?\n\ncount() is not really semantic here. Also below.",
+      "range": {
+        "startLine": 177,
+        "startChar": 17,
+        "endLine": 177,
+        "endChar": 22
+      },
+      "revId": "88f8f12ed5303585260eab2eea3ccfe0450d148d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23f2e90c_dddcbcb9",
+        "filename": "chrome/test/data/webui/settings/privacy_page_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-20T06:50:55Z",
+      "side": 1,
+      "message": "Forgotten.",
+      "revId": "88f8f12ed5303585260eab2eea3ccfe0450d148d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb074ac5_8887e415",
+        "filename": "components/browsing_data/core/browsing_data_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-20T06:50:55Z",
+      "side": 1,
+      "message": "Static global initializers are not allowed. If you must use a non-POD static structure, use a base::LazyInstance.\n\nAlternatively, since there is just one function using this, consider declaring it as CR_DEFINE_STATIC_LOCAL inside that function.",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 12
+      },
+      "revId": "88f8f12ed5303585260eab2eea3ccfe0450d148d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75fde078_febf5e61",
+        "filename": "components/browsing_data/core/browsing_data_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-20T06:50:55Z",
+      "side": 1,
+      "message": "style: kPreferenceToDatatype",
+      "range": {
+        "startLine": 20,
+        "startChar": 59,
+        "endLine": 20,
+        "endChar": 79
+      },
+      "revId": "88f8f12ed5303585260eab2eea3ccfe0450d148d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bb13aca_2e1c6c47",
+        "filename": "components/browsing_data/core/browsing_data_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-20T06:50:55Z",
+      "side": 1,
+      "message": "This would be also simplified by not having the #ifdef.",
+      "range": {
+        "startLine": 259,
+        "startChar": 0,
+        "endLine": 259,
+        "endChar": 23
+      },
+      "revId": "88f8f12ed5303585260eab2eea3ccfe0450d148d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ef09553_e492674e",
+        "filename": "components/browsing_data/core/browsing_data_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-20T06:50:55Z",
+      "side": 1,
+      "message": "Who is \"I\"? There is no name in TODO.",
+      "range": {
+        "startLine": 17,
+        "startChar": 9,
+        "endLine": 17,
+        "endChar": 10
+      },
+      "revId": "88f8f12ed5303585260eab2eea3ccfe0450d148d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0c4d478_30b863fe",
+        "filename": "components/browsing_data/core/browsing_data_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-20T06:50:55Z",
+      "side": 1,
+      "message": "What will break without the #ifdef? We chatted about this offline, no? Both UIs add elements manually (XML in Java, HTML on Desktop), so there should be no problem with superfluous entries?",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 23
+      },
+      "revId": "88f8f12ed5303585260eab2eea3ccfe0450d148d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03ab54de_a68eed3c",
+        "filename": "components/browsing_data/core/browsing_data_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-20T06:50:55Z",
+      "side": 1,
+      "message": "This is not really helpful, since we\u0027re in the Android #ifdef.",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 22
+      },
+      "revId": "88f8f12ed5303585260eab2eea3ccfe0450d148d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
