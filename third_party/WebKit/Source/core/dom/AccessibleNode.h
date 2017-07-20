@@ -329,6 +329,7 @@ class CORE_EXPORT AccessibleNode
   void OnRelationListChanged(AOMRelationListProperty);
 
  private:
+  static bool IsStringTokenProperty(AOMStringProperty);
   void SetStringProperty(AOMStringProperty, const AtomicString&);
   void SetRelationProperty(AOMRelationProperty, AccessibleNode*);
   void SetRelationListProperty(AOMRelationListProperty, AccessibleNodeList*);
