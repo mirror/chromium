@@ -52,6 +52,24 @@
       "revId": "fecf6a231f4a3c00186a1237443001edf07f2f66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be6c05c9_c5587639",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-20T12:55:35Z",
+      "side": 1,
+      "message": "Great, thanks! AccountManagerFacade.get() is ought to always return the same instance, so it shouldn\u0027t be a problem.",
+      "parentUuid": "b7d41353_fbd67f64",
+      "revId": "fecf6a231f4a3c00186a1237443001edf07f2f66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
