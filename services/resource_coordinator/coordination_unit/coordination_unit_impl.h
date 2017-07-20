@@ -100,8 +100,8 @@ class CoordinationUnitImpl : public mojom::CoordinationUnit {
   bool RemoveChild(CoordinationUnitImpl* child);
   void AddParent(CoordinationUnitImpl* parent);
   void RemoveParent(CoordinationUnitImpl* parent);
-  bool HasParent(CoordinationUnitImpl* unit);
-  bool HasChild(CoordinationUnitImpl* unit);
+  bool IsAncestor(CoordinationUnitImpl* unit);
+  bool IsDescendant(CoordinationUnitImpl* unit);
   bool SelfOrParentHasFlagSet(StateFlags state);
   // TODO(crbug.com/691886) Consider removing these.
   void RecalcCoordinationPolicy();
