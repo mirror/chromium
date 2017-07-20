@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25ad61bf_69fa79bc",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-20T20:57:27Z",
+      "side": 1,
+      "message": "Should we use the same value as session restore, which is 1.5 sec?",
+      "range": {
+        "startLine": 80,
+        "startChar": 67,
+        "endLine": 80,
+        "endChar": 69
+      },
+      "revId": "1362a29b70619ebcef8c2ba26f753b9a464b21f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
