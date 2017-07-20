@@ -22,6 +22,30 @@
       "revId": "865c9cf85c3b248af71291a3e86cefa140db800e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "240a830a_4eed461d",
+        "filename": "content/gpu/gpu_main.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-07-20T15:22:23Z",
+      "side": 1,
+      "message": "This is defined in media/gpu/BUILD.gn, and propagated via the change in content/gpu/BUILD.gn. It is basically a more explicit form of the previous #if defined(OS_CHROMEOS) \u0026\u0026 defined(ARCH_CPU_X86_FAMILY)",
+      "parentUuid": "c1fc580e_e34ceaf9",
+      "range": {
+        "startLine": 87,
+        "startChar": 12,
+        "endLine": 87,
+        "endChar": 21
+      },
+      "revId": "865c9cf85c3b248af71291a3e86cefa140db800e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
