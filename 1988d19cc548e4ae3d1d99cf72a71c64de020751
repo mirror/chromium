@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "e5efdf91_50571347",
+        "filename": "net/disk_cache/blockfile/backend_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000750
+      },
+      "writtenOn": "2017-07-20T22:10:07Z",
+      "side": 1,
+      "message": "Can\u0027t say I am a fan either, but this doesn\u0027t seem like the place to address that.",
+      "parentUuid": "efca2bb6_30e17496",
+      "range": {
+        "startLine": 113,
+        "startChar": 40,
+        "endLine": 113,
+        "endChar": 47
+      },
+      "revId": "1988d19cc548e4ae3d1d99cf72a71c64de020751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48ff59a5_0885d7e8",
         "filename": "net/disk_cache/blockfile/backend_impl.cc",
         "patchSetId": 4
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "Isn\u0027t that what base::MayBlock() is for?  Plenty of other things are doing file I/O on TaskScheduler-created threads.",
       "parentUuid": "18672ed1_8f63b9b5",
+      "range": {
+        "startLine": 120,
+        "startChar": 22,
+        "endLine": 120,
+        "endChar": 29
+      },
+      "revId": "1988d19cc548e4ae3d1d99cf72a71c64de020751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d93a6915_bea12329",
+        "filename": "net/disk_cache/blockfile/backend_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000750
+      },
+      "writtenOn": "2017-07-20T22:10:07Z",
+      "side": 1,
+      "message": "TYPE_IO is for non-blocking/async I/O (which this backend uses) -- it adds support in the event loop for that. MayBlock is for plain ol\u0027 blocking stuff, that doesn\u0027t need message loop support.",
+      "parentUuid": "8a9fa629_472f6629",
       "range": {
         "startLine": 120,
         "startChar": 22,
