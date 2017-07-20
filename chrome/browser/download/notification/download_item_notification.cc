@@ -192,9 +192,10 @@ DownloadItemNotification::DownloadItemNotification(
       gfx::Image(),      // icon
       message_center::NotifierId(message_center::NotifierId::SYSTEM_COMPONENT,
                                  kDownloadNotificationNotifierId),
-      base::string16(),                    // display_source
-      GURL(kDownloadNotificationOrigin),   // origin_url
-      base::UintToString(item_->GetId()),  // tag
+      l10n_util::GetStringUTF16(
+          IDS_DOWNLOAD_NOTIFICATION_DISPLAY_SOURCE),  // display_source
+      GURL(kDownloadNotificationOrigin),              // origin_url
+      base::UintToString(item_->GetId()),             // tag
       rich_notification_data, watcher()));
 
   notification_->set_progress(0);
@@ -368,7 +369,11 @@ void DownloadItemNotification::UpdateNotificationData(
   DownloadCommands command(item_);
 
   notification_->set_title(GetTitle());
-  notification_->set_message(GetStatusString());
+  base::string16 status_text;
+  base::string16 sub_status_text;
+  notification_->set_message(GetStatusString(status_text, sub_status_text));
+  notification_->set_status_text(status_text);
+  notification_->set_sub_status_text(sub_status_text);
 
   if (item_->IsDangerous()) {
     notification_->set_type(message_center::NOTIFICATION_TYPE_BASE_FORMAT);
@@ -832,7 +837,9 @@ base::string16 DownloadItemNotification::GetInProgressSubStatusString() const {
   return l10n_util::GetStringUTF16(IDS_DOWNLOAD_STATUS_STARTING);
 }
 
-base::string16 DownloadItemNotification::GetStatusString() const {
+base::string16 DownloadItemNotification::GetStatusString(
+    base::string16& short_status_text,
+    base::string16& sub_status_text) const {
   if (item_->IsDangerous())
     return GetWarningStatusString();
 
@@ -841,7 +848,6 @@ base::string16 DownloadItemNotification::GetStatusString() const {
       item_->GetURL(), url_formatter::SchemeDisplay::OMIT_HTTP_AND_HTTPS);
 
   DownloadItemModel model(item_);
-  base::string16 sub_status_text;
   bool show_size_ratio = true;
   switch (item_->GetState()) {
     case content::DownloadItem::IN_PROGRESS:
@@ -899,6 +905,9 @@ base::string16 DownloadItemNotification::GetStatusString() const {
   base::string16 size =
       show_size_ratio ? model.GetProgressSizesString() :
                         ui::FormatBytes(item_->GetReceivedBytes());
+
+  short_status_text = l10n_util::GetStringFUTF16(
+      IDS_DOWNLOAD_NOTIFICATION_STATUS_SHORT, size, host_name);
 
   // Download is not completed yet: "3.4/5.6 MB, <SUB STATUS>\nFrom example.com"
   return l10n_util::GetStringFUTF16(
