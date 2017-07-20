@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d58f7228_10cce0cd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-20T15:33:51Z",
+      "side": 1,
+      "message": "\u003e The native side of ThumbnailProviderImpl _always_ loads files from disk. (And even the suggestions service stores its thumbnails in a database on disk, so there wouldn\u0027t be additional data usage. There will be more disk accesses if we skip caching, but presumably that\u0027s a tradeoff we\u0027re willing to make on low-memory devices.) \n\nAh, okay. That definitely alleviates my concerns. It would be interesting to test this on a low-end device, e.g. scrolling through a LOT of downloads quickly, to see how the UI responds.\n\n\nWe can move ThumbnailProviderImpl.java in a followup CL. I\u0027d rather do a clean move w/ no functionality change :)",
+      "parentUuid": "7dd60833_7543bd3f",
+      "range": {
+        "startLine": 148,
+        "startChar": 17,
+        "endLine": 148,
+        "endChar": 42
+      },
+      "revId": "02fb99173f4580ab86236e7f9bb09df6da826d39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42a1c1ab_6ae93aef",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
         "patchSetId": 1
