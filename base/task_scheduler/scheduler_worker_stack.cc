@@ -44,5 +44,12 @@ void SchedulerWorkerStack::Remove(const SchedulerWorker* worker) {
     stack_.erase(it);
 }
 
+int SchedulerWorkerStack::Find(const SchedulerWorker* worker) const {
+  auto worker_iter = std::find(stack_.begin(), stack_.end(), worker);
+  if (worker_iter == stack_.end())
+    return -1;
+  return worker_iter - stack_.begin();
+}
+
 }  // namespace internal
 }  // namespace base
