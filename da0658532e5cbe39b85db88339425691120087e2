@@ -16,6 +16,24 @@
       "revId": "da0658532e5cbe39b85db88339425691120087e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d544e0a_67566b7b",
+        "filename": "third_party/WebKit/Source/core/exported/WebViewBase.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-07-20T07:31:41Z",
+      "side": 1,
+      "message": "I\u0027ll just rebase my CL on top of these changes.",
+      "parentUuid": "9f2d584e_d9068aff",
+      "revId": "da0658532e5cbe39b85db88339425691120087e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
