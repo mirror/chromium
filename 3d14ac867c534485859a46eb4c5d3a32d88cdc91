@@ -16,6 +16,24 @@
       "revId": "3d14ac867c534485859a46eb4c5d3a32d88cdc91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db51d4a4_a0995445",
+        "filename": "chrome/browser/vr/elements/transient_url_bar.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-07-20T19:58:19Z",
+      "side": 1,
+      "message": "Spoke to you offline.\n\nWe put this here and not the scene manager so that we only animate on exit and not on entry. That case is already covered by our unit tests.",
+      "parentUuid": "516ace66_75e50078",
+      "revId": "3d14ac867c534485859a46eb4c5d3a32d88cdc91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
