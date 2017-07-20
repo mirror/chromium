@@ -52,6 +52,24 @@
       "revId": "105a7bad6cb35f15fa0b3bf82e6535300d3fc173",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4778e7a1_7a8c92c3",
+        "filename": "chrome/test/chromedriver/session_commands.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-07-20T18:18:28Z",
+      "side": 1,
+      "message": "Yes, when the |if| block below is entered, |first_match_list| will end up containing a pointer to |tmp_list|, and thus |tmp_list| must remain valid for as long as |first_match_list| is valid. Thus the declaration of |tmp_list| must be before the |if| block. However, it doesn\u0027t need to allocate memory at the point of declaration. Something like the following would work:\n   std::unique_ptr\u003cbase::ListValue\u003e tmp_list;\n   if (...) {\n      tmp_list \u003d new base::ListValue();\n      ...\n   }",
+      "parentUuid": "57333eb7_0a6d2b92",
+      "revId": "105a7bad6cb35f15fa0b3bf82e6535300d3fc173",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
