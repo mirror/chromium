@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "f26727f6_413e1806",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-20T01:07:23Z",
+      "side": 1,
+      "message": "How about just: \"Click to Open PDF: Update PDF placeholder UI.\"",
+      "revId": "c821b60ebf9668d53b8399036f690e8615bdc91e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7412d23f_ddf07fde",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-20T01:07:23Z",
+      "side": 1,
+      "message": "If the first line is too long, try to write a shorter summary line. If that\u0027s not possible, don\u0027t wrap. i.e. Always leave line 2 blank.",
+      "revId": "c821b60ebf9668d53b8399036f690e8615bdc91e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01532002_976593fa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-20T01:07:23Z",
+      "side": 1,
+      "message": "On the placeholder page, add a PDF icon ...",
+      "revId": "c821b60ebf9668d53b8399036f690e8615bdc91e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "677e48ca_1acfa111",
         "filename": "chrome/renderer/resources/plugins/pdf_plugin.html",
         "patchSetId": 6
