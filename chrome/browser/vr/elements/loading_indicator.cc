@@ -17,7 +17,7 @@ static constexpr int kVisibilityTimeoutMs = 200;
 LoadingIndicator::LoadingIndicator(int preferred_width)
     : TexturedElement(preferred_width),
       texture_(base::MakeUnique<LoadingIndicatorTexture>()) {
-  set_visible(false);
+  SetVisible(false);
 }
 
 LoadingIndicator::~LoadingIndicator() = default;
@@ -58,7 +58,7 @@ void LoadingIndicator::ResetVisibilityTimer() {
 }
 
 void LoadingIndicator::SetVisibility() {
-  set_visible(enabled_ && (loading_ || visibility_timer_.IsRunning()));
+  SetVisible(enabled_ && (loading_ || visibility_timer_.IsRunning()));
 }
 
 }  // namespace vr
