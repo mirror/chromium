@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cab4d16a_77a38282",
+        "filename": "content/browser/frame_host/navigator_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-07-20T15:49:39Z",
+      "side": 1,
+      "message": "Does it make sense for you?\nIt looks like |is_loading| is true between \u0027CommitNavigation\u0027 and \u0027DidStopNavigation\u0027 but not before.",
+      "range": {
+        "startLine": 202,
+        "startChar": 46,
+        "endLine": 202,
+        "endChar": 0
+      },
+      "revId": "0dc13b85893217e81f063f38f529d1a96b577645",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
