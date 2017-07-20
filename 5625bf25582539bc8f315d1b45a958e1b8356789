@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "b96d8bc2_67abbe05",
+        "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-20T06:36:16Z",
+      "side": 1,
+      "message": "If Copy() checks web_plugin_-\u003eHasSelection() internally and sees there\u0027s no selection, then is there a point in calling this?",
+      "revId": "5625bf25582539bc8f315d1b45a958e1b8356789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c9ca78d_5649abc5",
+        "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 829,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-20T06:36:16Z",
+      "side": 1,
+      "message": "Does this mean this code will try to cut twice when the user presses ctrl + x? (ctrl keydown, x keydown, x char)",
+      "revId": "5625bf25582539bc8f315d1b45a958e1b8356789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "03317224_75ac8a86",
         "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerImpl.cpp",
         "patchSetId": 3
@@ -13,6 +47,41 @@
       "writtenOn": "2017-07-20T02:55:10Z",
       "side": 1,
       "message": "Should we handle Backspace and Delete here to trigger a DeleteSelectedText() call?",
+      "revId": "5625bf25582539bc8f315d1b45a958e1b8356789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15f75ef8_b6852889",
+        "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-20T06:36:16Z",
+      "side": 1,
+      "message": "Those work already without this CL. I suspect the PDF plugin gets those events and handles them internally, but... if we always call event-\u003eSetDefaultHandled() on the next line...",
+      "parentUuid": "03317224_75ac8a86",
+      "revId": "5625bf25582539bc8f315d1b45a958e1b8356789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c23e27cc_a22c7084",
+        "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 853,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-20T06:36:16Z",
+      "side": 1,
+      "message": "This means if there is a selection and the ctrl key is pressed, then the plugin would not get any ctrl + foo_key keydown/onchar events. Do PDF Viewer shortcuts like ctrl + g or ctrl + [ still work?",
       "revId": "5625bf25582539bc8f315d1b45a958e1b8356789",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
