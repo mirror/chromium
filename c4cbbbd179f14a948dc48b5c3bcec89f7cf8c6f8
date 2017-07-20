@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "beaa391b_4e1905b6",
+        "filename": "net/url_request/network_error_logging_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-07-20T22:20:00Z",
+      "side": 1,
+      "message": "I know there was a long discussion about where NEL goes, but I wasn\u0027t reading it. Why in net/url_request/?",
+      "revId": "c4cbbbd179f14a948dc48b5c3bcec89f7cf8c6f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c2cb2d4_dc225f90",
+        "filename": "net/url_request/network_error_logging_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-07-20T22:20:00Z",
+      "side": 1,
+      "message": "I assume \u0027age\u0027 gets added later, but should this struct have a timestamp or something so it can be easily filled later?",
+      "revId": "c4cbbbd179f14a948dc48b5c3bcec89f7cf8c6f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "945ea5a4_c37b62cf",
+        "filename": "net/url_request/network_error_logging_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-07-20T22:20:00Z",
+      "side": 1,
+      "message": "The name sounds a lot like NetErrorDetails, which is confusing since that one is part of domain reliability but isn\u0027t the entire thing. But it fits way better here. Maybe we should rename that one?",
+      "revId": "c4cbbbd179f14a948dc48b5c3bcec89f7cf8c6f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3aa56a0_22bb5b75",
+        "filename": "net/url_request/network_error_logging_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-07-20T22:20:00Z",
+      "side": 1,
+      "message": "It looks like this doesn\u0027t include the port, so it can be an IPAddress.",
+      "revId": "c4cbbbd179f14a948dc48b5c3bcec89f7cf8c6f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26d9a0b5_85985a73",
+        "filename": "net/url_request/network_error_logging_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-07-20T22:20:00Z",
+      "side": 1,
+      "message": "Style guide says this should be OnNelHeader. Even though it looks weird.",
+      "revId": "c4cbbbd179f14a948dc48b5c3bcec89f7cf8c6f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
