@@ -122,6 +122,24 @@
       "revId": "36d4ad311f7d857c11079d06facf7d6fb961c5dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2051436f_d2aa3cd7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadUpdate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-20T17:11:56Z",
+      "side": 1,
+      "message": "Good point! Added these default values and preconditions checks in the code :)",
+      "parentUuid": "93d69995_ce3f32f5",
+      "revId": "36d4ad311f7d857c11079d06facf7d6fb961c5dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
