@@ -57,6 +57,24 @@
       "revId": "9b39da81316027d83093560d281c76442208a4ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ee9b680_8053459a",
+        "filename": "third_party/WebKit/Source/core/paint/PaintInvalidationTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-20T18:49:57Z",
+      "side": 1,
+      "message": "Right, `position: relative` or `will-change: transform` on the original HTML will create a layer so that the paint invalidation is independent of layout.",
+      "parentUuid": "ce502079_86c65c72",
+      "revId": "9b39da81316027d83093560d281c76442208a4ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
