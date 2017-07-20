@@ -22,6 +22,30 @@
       "revId": "287337b10e11d108b06e735e0bc60bc1d11abf45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "831ca5bf_3ea5684f",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-07-20T11:28:34Z",
+      "side": 1,
+      "message": "erikchen@, I believed that only one call of GetTopInfo is needed for one (shared) mmaped region, but is this correct?",
+      "parentUuid": "6035afc2_6850a639",
+      "range": {
+        "startLine": 179,
+        "startChar": 6,
+        "endLine": 179,
+        "endChar": 16
+      },
+      "revId": "287337b10e11d108b06e735e0bc60bc1d11abf45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
