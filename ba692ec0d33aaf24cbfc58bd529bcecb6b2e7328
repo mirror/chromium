@@ -22,6 +22,30 @@
       "revId": "ba692ec0d33aaf24cbfc58bd529bcecb6b2e7328",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff055330_90e4f249",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1189473
+      },
+      "writtenOn": "2017-07-20T18:30:30Z",
+      "side": 1,
+      "message": "The problem is that VrShellDelegate calls removeVrViews before destroyVrShell.  destroyVrShell calls shudown(), but since we are no-longer hosted, getViewTreeObserver() seemed to be a different object.  If I cached the object, it gave an error that it was no-longer valid.\n\nI could reorder, so destroyVrShell is called before removeVrViews, with a comment saying this order is necessary, but it seemed more fragile.",
+      "parentUuid": "c7419589_63ac71b4",
+      "range": {
+        "startLine": 553,
+        "startChar": 16,
+        "endLine": 553,
+        "endChar": 32
+      },
+      "revId": "ba692ec0d33aaf24cbfc58bd529bcecb6b2e7328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
