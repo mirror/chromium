@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "97e02e20_e5e54ca7",
+        "filename": "chrome/browser/content_settings/chrome_content_settings_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-20T14:28:59Z",
+      "side": 1,
+      "message": "nit:\n```\nif (!pair.second)\n  continue;\n```",
+      "revId": "5f82ed19ab5844b575c9a43d0f1a6b2f02464225",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4cb8f908_ea4314eb",
         "filename": "chrome/browser/content_settings/chrome_content_settings_utils.cc",
         "patchSetId": 3
@@ -13,6 +30,75 @@
       "writtenOn": "2017-07-20T00:24:45Z",
       "side": 1,
       "message": "Do we need to send every origin to every renderer? It looks like only the top level origin is queried? Could we just send the top-level origin for each page upon navigation?\n\nAlso I\u0027m not sure if using a set of ContentSettingsPattern here is needed. A vector of (origin, bool) may be simpler?",
+      "revId": "5f82ed19ab5844b575c9a43d0f1a6b2f02464225",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f8d51c4_2f0c81e4",
+        "filename": "chrome/browser/content_settings/chrome_content_settings_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-20T14:28:59Z",
+      "side": 1,
+      "message": "I understand your concerns but I\u0027m not sure there is a reasonable alternative here. If we want the data to be available synchronously, we need to eagerly send it to the renderer processes at creation time or start to deal with navigation timing leading to potential bugs. I\u0027m not sure it\u0027s worth making the code more complex. Unless there is already a known pattern for that kind of things? Is your concern that the data isn\u0027t truly a ALLOW/BLOCK content setting? Would you prefer if the raw data was sent over?",
+      "parentUuid": "4cb8f908_ea4314eb",
+      "revId": "5f82ed19ab5844b575c9a43d0f1a6b2f02464225",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a67c9dd_0486faaf",
+        "filename": "chrome/browser/content_settings/tab_specific_content_settings.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-20T14:28:59Z",
+      "side": 1,
+      "message": "Why did you need to move this?",
+      "revId": "5f82ed19ab5844b575c9a43d0f1a6b2f02464225",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "576f5c5c_279b5b3f",
+        "filename": "chrome/browser/media/media_engagement_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-20T14:28:59Z",
+      "side": 1,
+      "message": "We have to be careful with this. If we have a Finch experiment to turn on/off the feature, renaming the flag would break it. Maybe we could rename the flag now on trunk for M61?",
+      "revId": "5f82ed19ab5844b575c9a43d0f1a6b2f02464225",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb1cb932_88942bf5",
+        "filename": "chrome/browser/media/media_engagement_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-20T14:28:59Z",
+      "side": 1,
+      "message": "Alternatively, you could pass this as a RuntimeEnabledFeature to Blink and have Blink use or not the information. I have a slight preference with moving the flag to Blink as it would allow easier writing of LayoutTests.",
       "revId": "5f82ed19ab5844b575c9a43d0f1a6b2f02464225",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
