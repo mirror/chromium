@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "f41c6885_be56c8d7",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-20T16:07:01Z",
+      "side": 1,
+      "message": "So views has a visible() method, so I don\u0027t think we even need IsPromoVisible(), as it would only return visible().",
+      "parentUuid": "0c2886e3_ceac2a68",
+      "range": {
+        "startLine": 42,
+        "startChar": 9,
+        "endLine": 42,
+        "endChar": 33
+      },
+      "revId": "f7ce53b535a9feaebc5c6d56cd780a6d6bcb7eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50d0740d_757a6786",
         "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
         "patchSetId": 16
@@ -282,6 +306,30 @@
       "revId": "f7ce53b535a9feaebc5c6d56cd780a6d6bcb7eba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c751176_af84c7d3",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-20T16:07:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b32f7ce_1f29c638",
+      "range": {
+        "startLine": 25,
+        "startChar": 58,
+        "endLine": 25,
+        "endChar": 73
+      },
+      "revId": "f7ce53b535a9feaebc5c6d56cd780a6d6bcb7eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
