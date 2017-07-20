@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3605142d_0397588b",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2726,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-07-20T05:43:32Z",
+      "side": 1,
+      "message": "nit: no need to repeat the documentation from the header and describe what the code is doing",
+      "revId": "6634b5f15c011b9e5f6187f6d6a25ba105c8700f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaad8f88_b2cc6ba5",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2743,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-07-20T05:43:32Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 2743,
+        "startChar": 15,
+        "endLine": 2743,
+        "endChar": 20
+      },
+      "revId": "6634b5f15c011b9e5f6187f6d6a25ba105c8700f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bf95f6a_dc336876",
+        "filename": "content/public/browser/memory_coordinator_delegate.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-07-20T05:43:32Z",
+      "side": 1,
+      "message": "nit: can this also be |skip_unload_handlers| to make it clear (as opposed to \"urgent\" which is vague)",
+      "revId": "6634b5f15c011b9e5f6187f6d6a25ba105c8700f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa628e5b_6d4ad538",
+        "filename": "content/public/browser/render_process_host.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-07-20T05:43:32Z",
+      "side": 1,
+      "message": "nit: i think allow_unsafe would be clear if it\u0027s |skip_unload_handlers|. this is what the code is doing, so it\u0027s better to use the same terminology as opposed to \"unsafe\" which is vague.",
+      "range": {
+        "startLine": 162,
+        "startChar": 43,
+        "endLine": 162,
+        "endChar": 55
+      },
+      "revId": "6634b5f15c011b9e5f6187f6d6a25ba105c8700f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
