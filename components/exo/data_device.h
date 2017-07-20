@@ -8,6 +8,7 @@
 #include <cstdint>
 
 #include "base/macros.h"
+#include "ui/base/class_property.h"
 
 namespace exo {
 
@@ -15,11 +16,9 @@ class DataDeviceDelegate;
 class DataSource;
 class Surface;
 
-enum class DndAction { kNone, kCopy, kMove, kAsk };
-
 // Data transfer device providing access to inter-client data transfer
 // mechanisms such as copy-and-paste and drag-and-drop.
-class DataDevice {
+class DataDevice : public ui::PropertyHandler {
  public:
   explicit DataDevice(DataDeviceDelegate* delegate);
   ~DataDevice();
