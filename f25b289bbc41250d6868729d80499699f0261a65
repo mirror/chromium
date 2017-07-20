@@ -71,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "73a02dab_9325c361",
+        "filename": "ui/events/ozone/evdev/touch_event_converter_evdev_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1190,
+      "author": {
+        "id": 1001563
+      },
+      "writtenOn": "2017-07-20T19:40:45Z",
+      "side": 1,
+      "message": "We do not report hover states right now as they are not supported by our TouchEvent types. The consequence is that the button state will only be reported when the pen is touching the screen, which is good enough for our use cases (The button is going to invoke functionality in Chrome UI and is not exposed to APIs).",
+      "parentUuid": "d6cf4d07_3c991cd6",
+      "revId": "f25b289bbc41250d6868729d80499699f0261a65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c3f5905_fc28549b",
         "filename": "ui/events/ozone/evdev/touch_event_converter_evdev_unittest.cc",
         "patchSetId": 1
@@ -82,6 +100,30 @@
       "writtenOn": "2017-07-19T16:57:33Z",
       "side": 1,
       "message": "I think this should be 4, or 6 if hovers can be reported via touchevent. Since this is reported through touch events now, please dirty the touch slot state whenever the button state changes so that an event goes out at the end of the report.",
+      "range": {
+        "startLine": 1218,
+        "startChar": 16,
+        "endLine": 1218,
+        "endChar": 20
+      },
+      "revId": "f25b289bbc41250d6868729d80499699f0261a65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d1e730f_9800d73f",
+        "filename": "ui/events/ozone/evdev/touch_event_converter_evdev_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1218,
+      "author": {
+        "id": 1001563
+      },
+      "writtenOn": "2017-07-20T19:40:45Z",
+      "side": 1,
+      "message": "I am afraid that this would break things somewhere higher up since we would be reporting \u0027empty\u0027 touch events. We currently don\u0027t have even types for hover. \n\nWe could add those and add full support for hover events in ozone, but I am afraid that would come with quite the rats tail that goes beyond the scope of reporting the button state with touch events.",
+      "parentUuid": "2c3f5905_fc28549b",
       "range": {
         "startLine": 1218,
         "startChar": 16,
