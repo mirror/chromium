@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7dd60833_7543bd3f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-20T15:19:53Z",
+      "side": 1,
+      "message": "\u003e For downloads, the files used to create these bitmaps are already on device so we\u0027re not incurring extra overhead by skipping caching. I think it\u0027s possible that for other clients these are bitmaps that need to be fetched from a URL, and eliminating caching may incur additional data usage as the user scrolls.\n\nIf you\u0027re thinking of article suggestions, these use a different mechanism to get their thumbnails. The native side of ThumbnailProviderImpl _always_ loads files from disk.\n\n(And even the suggestions service stores its thumbnails in a database on disk, so there wouldn\u0027t be additional data usage. There will be more disk accesses if we skip caching, but presumably that\u0027s a tradeoff we\u0027re willing to make on low-memory devices.)\n\n\u003e \n\u003e What if we save low-res bitmaps instead? The cache size should already be tuned to the available device memory.\n\nThe cache already indexes by requested size, so we could have its client make that decision.\n\n\u003e \n\u003e \n\u003e Orthogonally, it\u0027s probably time to move ThumbnailProviderImpl.java to the widgets/ package since it\u0027s being used for things other than downloads.\n\nYeah, good idea. Should I do that in this CL, or should we do it in a followup?",
+      "parentUuid": "98e683c4_f5fa826b",
+      "range": {
+        "startLine": 148,
+        "startChar": 17,
+        "endLine": 148,
+        "endChar": 42
+      },
+      "revId": "02fb99173f4580ab86236e7f9bb09df6da826d39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "42a1c1ab_6ae93aef",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
         "patchSetId": 1
