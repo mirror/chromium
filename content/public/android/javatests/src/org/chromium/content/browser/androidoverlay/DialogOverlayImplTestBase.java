@@ -43,7 +43,7 @@ public abstract class DialogOverlayImplTestBase extends ContentShellTestBase {
      * AndroidOverlay client that supports waiting operations for callbacks.  One may call
      * nextEvent() to get the next callback, waiting if needed.
      */
-    public static class Client implements AndroidOverlayClient {
+    public static class Client implements AndroidOverlayClient, AndroidOverlayModeManager.Listener {
         // AndroidOverlayClient
         public static final int SURFACE_READY = 0;
         public static final int DESTROYED = 1;
@@ -75,6 +75,9 @@ public abstract class DialogOverlayImplTestBase extends ContentShellTestBase {
             public long surfaceKey;
         }
 
+        private boolean mHasReceivedOverlayModeChange = false;
+        private boolean mUseOverlayMode = false;
+
         private ArrayBlockingQueue<Event> mPending;
 
         public Client() {
@@ -99,6 +102,20 @@ public abstract class DialogOverlayImplTestBase extends ContentShellTestBase {
         @Override
         public void onConnectionError(MojoException exception) {
             mPending.add(new Event(CONNECTION_ERROR, exception));
+        }
+
+        @Override
+        public void onOverlayModeChanged(boolean useOverlayMode) {
+            mHasReceivedOverlayModeChange = true;
+            mUseOverlayMode = useOverlayMode;
+        }
+
+        public boolean hasReceivedOverlayModeChange() {
+            return mHasReceivedOverlayModeChange;
+        }
+
+        public boolean isUsingOverlayMode() {
+            return mUseOverlayMode;
         }
 
         // This isn't part of the overlay client.  It's called by the overlay to indicate that it
@@ -176,6 +193,8 @@ public abstract class DialogOverlayImplTestBase extends ContentShellTestBase {
                 mClient.notifyReleased();
             }
         };
+
+        getActivityForTestCommon().getShellManager().getOverlayModeManager().addListener(mClient);
     }
 
     // Create an overlay with the given parameters and return it.

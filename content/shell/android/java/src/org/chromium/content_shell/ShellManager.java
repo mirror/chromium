@@ -14,6 +14,7 @@ import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.browser.ContentViewRenderView;
+import org.chromium.content.browser.androidoverlay.AndroidOverlayModeManager;
 import org.chromium.ui.base.WindowAndroid;
 
 /**
@@ -31,6 +32,8 @@ public class ShellManager extends FrameLayout {
     // The target for all content rendering.
     private ContentViewRenderView mContentViewRenderView;
 
+    private AndroidOverlayModeManager mOverlayModeManager = new AndroidOverlayModeManager();
+
     /**
      * Constructor for inflating via XML.
      */
@@ -47,6 +50,7 @@ public class ShellManager extends FrameLayout {
         mWindow = window;
         mContentViewRenderView = new ContentViewRenderView(getContext());
         mContentViewRenderView.onNativeLibraryLoaded(window);
+        mContentViewRenderView.setOverlayModeManager(mOverlayModeManager);
     }
 
     /**
@@ -61,6 +65,13 @@ public class ShellManager extends FrameLayout {
      */
     public ContentViewRenderView getContentViewRenderView() {
         return mContentViewRenderView;
+    }
+
+    /**
+     * Get the AndroidOverlayModeManager.
+     */
+    public AndroidOverlayModeManager getOverlayModeManager() {
+        return mOverlayModeManager;
     }
 
     /**
@@ -88,15 +99,6 @@ public class ShellManager extends FrameLayout {
         if (previousShell != null) previousShell.close();
     }
 
-    /**
-     * Enter or leave overlay video mode.
-     * @param enabled Whether overlay mode is enabled.
-     */
-    public void setOverlayVideoMode(boolean enabled) {
-        if (mContentViewRenderView == null) return;
-        mContentViewRenderView.setOverlayVideoMode(enabled);
-    }
-
     @SuppressWarnings("unused")
     @CalledByNative
     private Object createShell(long nativeShellPtr) {
@@ -104,7 +106,7 @@ public class ShellManager extends FrameLayout {
         LayoutInflater inflater =
                 (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         Shell shellView = (Shell) inflater.inflate(R.layout.shell_view, null);
-        shellView.initialize(nativeShellPtr, mWindow);
+        shellView.initialize(nativeShellPtr, mWindow, mOverlayModeManager);
 
         // TODO(tedchoc): Allow switching back to these inactive shells.
         if (mActiveShell != null) removeShell(mActiveShell);

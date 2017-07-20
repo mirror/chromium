@@ -14,6 +14,7 @@ import android.widget.FrameLayout;
 
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
+import org.chromium.content.browser.androidoverlay.AndroidOverlayModeManager;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.ui.base.WindowAndroid;
 
@@ -24,13 +25,16 @@ import org.chromium.ui.base.WindowAndroid;
  * Note that only one ContentViewCore can be shown at a time.
  */
 @JNINamespace("content")
-public class ContentViewRenderView extends FrameLayout {
+public class ContentViewRenderView
+        extends FrameLayout implements AndroidOverlayModeManager.Listener {
     // The native side of this object.
     private long mNativeContentViewRenderView;
     private SurfaceHolder.Callback mSurfaceCallback;
 
     private final SurfaceView mSurfaceView;
     protected ContentViewCore mContentViewCore;
+
+    private AndroidOverlayModeManager mOverlayModeManager;
 
     /**
      * Constructs a new ContentViewRenderView.
@@ -133,6 +137,8 @@ public class ContentViewRenderView extends FrameLayout {
                     mNativeContentViewRenderView, webContents, getWidth(), getHeight());
         }
         nativeSetCurrentWebContents(mNativeContentViewRenderView, webContents);
+
+        if (mOverlayModeManager != null) mOverlayModeManager.removeListener(this);
     }
 
     /**
@@ -167,6 +173,16 @@ public class ContentViewRenderView extends FrameLayout {
         int format = enabled ? PixelFormat.TRANSLUCENT : PixelFormat.OPAQUE;
         mSurfaceView.getHolder().setFormat(format);
         nativeSetOverlayVideoMode(mNativeContentViewRenderView, enabled);
+    }
+
+    public void setOverlayModeManager(AndroidOverlayModeManager manager) {
+        mOverlayModeManager = manager;
+        if (mOverlayModeManager != null) mOverlayModeManager.addListener(this);
+    }
+
+    @Override
+    public void onOverlayModeChanged(boolean useOverlayMode) {
+        setOverlayVideoMode(useOverlayMode);
     }
 
     @CalledByNative

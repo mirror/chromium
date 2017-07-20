@@ -31,6 +31,7 @@ import org.chromium.content.browser.ContentVideoViewEmbedder;
 import org.chromium.content.browser.ContentView;
 import org.chromium.content.browser.ContentViewCore;
 import org.chromium.content.browser.ContentViewRenderView;
+import org.chromium.content.browser.androidoverlay.AndroidOverlayModeManager;
 import org.chromium.content_public.browser.ActionModeCallbackHelper;
 import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.content_public.browser.NavigationController;
@@ -66,6 +67,7 @@ public class Shell extends LinearLayout {
     private ContentViewRenderView mContentViewRenderView;
     private WindowAndroid mWindow;
     private ShellViewAndroidDelegate mViewAndroidDelegate;
+    private AndroidOverlayModeManager mOverlayModeManager;
 
     private boolean mLoading;
     private boolean mIsFullscreen;
@@ -100,10 +102,13 @@ public class Shell extends LinearLayout {
      *
      * @param nativeShell The pointer to the native Shell object.
      * @param window The owning window for this shell.
+     * @param manager The AndroidOverlayManager to signal when entering overlay mode.
      */
-    public void initialize(long nativeShell, WindowAndroid window) {
+    public void initialize(
+            long nativeShell, WindowAndroid window, AndroidOverlayModeManager manager) {
         mNativeShell = nativeShell;
         mWindow = window;
+        mOverlayModeManager = manager;
     }
 
     /**
@@ -363,6 +368,13 @@ public class Shell extends LinearLayout {
                 }
             }
         };
+    }
+
+    @CalledByNative
+    public void setOverlayMode(boolean useOverlayMode) {
+        if (mOverlayModeManager != null) {
+            mOverlayModeManager.setOverlayMode(useOverlayMode);
+        }
     }
 
     /**
