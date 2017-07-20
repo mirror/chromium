@@ -50,6 +50,9 @@ class WebWorkerFetchContext {
   virtual void SetDataSaverEnabled(bool) = 0;
   virtual bool IsDataSaverEnabled() const = 0;
 
+  virtual void SetIsDedicatedWorkerOnSubframe(bool) {}
+  virtual bool IsDedicatedWorkerOnSubframe() const { return false; }
+
   // The URL that should be consulted for the third-party cookie blocking
   // policy, as defined in Section 2.1.1 and 2.1.2 of
   // https://tools.ietf.org/html/draft-west-first-party-cookies.
@@ -59,6 +62,9 @@ class WebWorkerFetchContext {
   // Reports the certificate error to the browser process.
   virtual void DidRunContentWithCertificateErrors(const WebURL& url) {}
   virtual void DidDisplayContentWithCertificateErrors(const WebURL& url) {}
+
+  virtual void DidRunInsecureContent(const WebSecurityOrigin&,
+                                     const WebURL& insecure_url) {}
 
   virtual void SetApplicationCacheHostID(int id) {}
   virtual int ApplicationCacheHostID() const {
