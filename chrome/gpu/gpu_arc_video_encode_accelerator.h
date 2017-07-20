@@ -54,7 +54,8 @@ class GpuArcVideoEncodeAccelerator
                   uint32_t initial_bitrate,
                   VideoEncodeClientPtr client,
                   const InitializeCallback& callback) override;
-  void Encode(mojo::ScopedHandle fd,
+  void Encode(uint32_t frame_id,
+              mojo::ScopedHandle fd,
               std::vector<::arc::VideoFramePlane> planes,
               int64_t timestamp,
               bool force_keyframe) override;

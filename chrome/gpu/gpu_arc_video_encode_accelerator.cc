@@ -92,6 +92,7 @@ static void DropSharedMemory(std::unique_ptr<base::SharedMemory> shm) {
 }
 
 void GpuArcVideoEncodeAccelerator::Encode(
+    uint32_t frame_id,
     mojo::ScopedHandle handle,
     std::vector<::arc::VideoFramePlane> planes,
     int64_t timestamp,
@@ -152,6 +153,13 @@ void GpuArcVideoEncodeAccelerator::Encode(
   // stays alive and mapped until |frame| goes out of scope.
   frame->AddDestructionObserver(
       base::Bind(&DropSharedMemory, base::Passed(&shm)));
+
+  // The |frame| will be released before |accelerator_| getting destroyed.
+  // Therefore, it is safe to unretained |client_| as it lives as long as
+  // |accelerator_|.
+  frame->AddDestructionObserver(
+      base::Bind(&::arc::mojom::VideoEncodeClient::NotifyVideoFrameDone,
+                 base::Unretained(client_.get()), frame_id));
   accelerator_->Encode(frame, force_keyframe);
 }
 
