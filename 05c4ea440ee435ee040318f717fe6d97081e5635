@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4f5baea4_4e268536",
+        "filename": "services/viz/public/interfaces/compositing/resource_settings_struct_traits.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-20T21:00:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d143c31d_8c6ced24",
+      "revId": "05c4ea440ee435ee040318f717fe6d97081e5635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d9c8897_3baa10bd",
         "filename": "services/viz/public/interfaces/compositing/resource_settings_struct_traits.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "05c4ea440ee435ee040318f717fe6d97081e5635",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b2f35fb_12c905b3",
+        "filename": "services/viz/public/interfaces/compositing/resource_settings_struct_traits.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-20T21:00:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d9c8897_3baa10bd",
+      "revId": "05c4ea440ee435ee040318f717fe6d97081e5635",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
