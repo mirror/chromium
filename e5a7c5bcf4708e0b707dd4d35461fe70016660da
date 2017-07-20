@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "774e5f77_26d59ca1",
+        "filename": "content/browser/renderer_host/media/service_video_capture_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-07-20T17:14:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b376aab7_f91aeeef",
+      "range": {
+        "startLine": 138,
+        "startChar": 26,
+        "endLine": 138,
+        "endChar": 0
+      },
+      "revId": "e5a7c5bcf4708e0b707dd4d35461fe70016660da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73296940_a9bc5691",
         "filename": "content/browser/renderer_host/media/service_video_capture_provider.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-20T01:27:01Z",
       "side": 1,
       "message": "We can add a grace period here to be safe. I am not clear on JS usage patterns but there might be a gap between enumerate and launching a device where this would be unnecessary. We can PostDelayedTask() and CancelableCallback. WDYT?",
+      "range": {
+        "startLine": 139,
+        "startChar": 56,
+        "endLine": 139,
+        "endChar": 57
+      },
+      "revId": "e5a7c5bcf4708e0b707dd4d35461fe70016660da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6495127c_fa33cf7c",
+        "filename": "content/browser/renderer_host/media/service_video_capture_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-07-20T17:14:30Z",
+      "side": 1,
+      "message": "That\u0027s a good idea, and I thought about it as well. It indeed happens that when GetDeviceInfos() is followed by CreateDeviceLauncher(), the ServiceVideoCaptureProvider will uninitialize in-between. \n\nI ended up deciding against adding a grace period here, because:\n1.) It is simpler (getting timeouts and cancellation right can be tricky)\n2.) There is already a grace period on the service side, see [1]. This means the service process itself will already stay alive between requests if they happen within 5 seconds of each other. This makes the disconnect and reconnect to the service relatively cheap, since all it needs to do is a lookup with the service manager.\n\n[1] https://cs.chromium.org/chromium/src/services/video_capture/service_impl.cc?dr\u0026l\u003d86",
+      "parentUuid": "73296940_a9bc5691",
       "range": {
         "startLine": 139,
         "startChar": 56,
