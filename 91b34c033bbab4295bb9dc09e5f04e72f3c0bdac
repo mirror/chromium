@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "374613f4_43d3d99a",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1000313
+      },
+      "writtenOn": "2017-07-20T20:21:20Z",
+      "side": 1,
+      "message": "That sentence doesn\u0027t parse... is it supposed to be \"with webgl contexts\"?",
+      "revId": "91b34c033bbab4295bb9dc09e5f04e72f3c0bdac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "db2efccf_27a7d8a8",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1000313
+      },
+      "writtenOn": "2017-07-20T20:21:20Z",
+      "side": 1,
+      "message": "why does it need glTexStorage2D?",
+      "revId": "91b34c033bbab4295bb9dc09e5f04e72f3c0bdac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
