@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2689b52_439763ab",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-20T19:07:04Z",
+      "side": 1,
+      "message": "These are all excellent class descriptions (and should probably be moved to the class headers), but I worry they don\u0027t help understand animation worklet at a high level. We should probably use this file to explain how AnimationWorklet is an animation and how it gets updated, maybe have sections for the lifetime / interaction / creation of objects / how the compositor gets the client with which to get updates from the animators.\n\nFor example, if you look at the layout README https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/layout/README.md?q\u003dwebkit%5C/Source%5C/.*%5C/README%5C.md\u0026sq\u003dpackage:chromium\u0026dr it talks about how layout works and explains various layout concepts.",
+      "revId": "ee46fc0b4c2ca540c1dae087964d9085b0d7dfec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
