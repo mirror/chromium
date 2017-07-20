@@ -1,0 +1,209 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "022660eb_79069855",
+        "filename": "content/renderer/sandbox_mac_v2_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-07-20T18:42:31Z",
+      "side": 1,
+      "message": "Probably something like “com.google.Chrome.test.sandbox”",
+      "revId": "65b71e9fafcddd6e9b35a193ef157e0de382fd5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3119b5d2_5bdee185",
+        "filename": "content/renderer/sandbox_mac_v2_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-07-20T18:42:31Z",
+      "side": 1,
+      "message": "#include \u003cunistd.h\u003e",
+      "revId": "65b71e9fafcddd6e9b35a193ef157e0de382fd5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "984a3c34_f7b09181",
+        "filename": "content/renderer/sandbox_mac_v2_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-07-20T18:42:31Z",
+      "side": 1,
+      "message": "Re-spell",
+      "range": {
+        "startLine": 75,
+        "startChar": 51,
+        "endLine": 75,
+        "endChar": 63
+      },
+      "revId": "65b71e9fafcddd6e9b35a193ef157e0de382fd5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e500f4b_c0449814",
+        "filename": "content/renderer/sandbox_mac_v2_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-07-20T18:42:31Z",
+      "side": 1,
+      "message": "developers’",
+      "range": {
+        "startLine": 78,
+        "startChar": 69,
+        "endLine": 78,
+        "endChar": 79
+      },
+      "revId": "65b71e9fafcddd6e9b35a193ef157e0de382fd5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5bb52a1_4035f21f",
+        "filename": "content/renderer/sandbox_mac_v2_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-07-20T18:42:31Z",
+      "side": 1,
+      "message": "???\n\nFiles? Filesystem?",
+      "range": {
+        "startLine": 78,
+        "startChar": 27,
+        "endLine": 78,
+        "endChar": 48
+      },
+      "revId": "65b71e9fafcddd6e9b35a193ef157e0de382fd5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eadc197_4b140645",
+        "filename": "content/renderer/sandbox_mac_v2_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-07-20T18:42:31Z",
+      "side": 1,
+      "message": "If you’re more comfortable writing these naturally as in EQ(ReadFile(…), -1), you can do that.\n\nAfter a recent update, gtest no longer expresses an opinion over whether it’s (actual, expected) or (expected, actual). They’re just two values that are either equal or not.\n\nBut these are logging.h CHECKs (should they be?), and logging.h never distinguished between the two parameters.",
+      "revId": "65b71e9fafcddd6e9b35a193ef157e0de382fd5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0001bb9b_c653e13f",
+        "filename": "content/renderer/sandbox_mac_v2_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-07-20T18:42:31Z",
+      "side": 1,
+      "message": "Why not just\n\n  CHECK_EQ(status, BOOTSTRAP_SUCCESS) \u003c\u003c bootstrap_strerror(status)",
+      "revId": "65b71e9fafcddd6e9b35a193ef157e0de382fd5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5de6e5d_194fbb16",
+        "filename": "content/renderer/sandbox_mac_v2_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-07-20T18:42:31Z",
+      "side": 1,
+      "message": "You can send the bootstrap_strerror() over here too.",
+      "revId": "65b71e9fafcddd6e9b35a193ef157e0de382fd5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b932a765_1d0b08df",
+        "filename": "content/renderer/sandbox_mac_v2_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-07-20T18:42:31Z",
+      "side": 1,
+      "message": "I dunno, this file might not exist. If someone or something removed it, I don’t know if anything will recreate it.",
+      "revId": "65b71e9fafcddd6e9b35a193ef157e0de382fd5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3607020_d6248209",
+        "filename": "content/renderer/sandbox_mac_v2_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-07-20T18:42:31Z",
+      "side": 1,
+      "message": "“Check that not all sysctls are allowed”, but are there any sysctls that you want to make sure are allowed?",
+      "revId": "65b71e9fafcddd6e9b35a193ef157e0de382fd5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00776d2b_2d4bc0f8",
+        "filename": "sandbox/mac/sandbox_mac_compiler_v2_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-07-20T18:42:31Z",
+      "side": 1,
+      "message": "Should these change to bootstrap_look_up() too?",
+      "revId": "65b71e9fafcddd6e9b35a193ef157e0de382fd5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
