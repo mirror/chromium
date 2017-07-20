@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c24b35c_5bd80efc",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/androidoverlay/DialogOverlayImplTestBase.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-07-20T20:03:36Z",
+      "side": 1,
+      "message": "Is it ok to let this be leaky for test purposes?",
+      "range": {
+        "startLine": 197,
+        "startChar": 77,
+        "endLine": 197,
+        "endChar": 88
+      },
+      "revId": "4a3eff324b5e520ff6ab2a92b70d2fceb38403e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

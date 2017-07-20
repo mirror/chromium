@@ -16,6 +16,47 @@
       "revId": "dc7567f60ea5f7ebf9e05c04859a144fe56d675e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89d9564d_56116266",
+        "filename": "content/public/browser/web_contents_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-07-20T20:03:36Z",
+      "side": 1,
+      "message": "I was thinking of this comment:\nhttps://codereview.chromium.org/2910153005/#msg27\n\n\"RFH/WebContents changes don\u0027t really need to be behind OS defines.\"\n\nBut I moved it back into the OS defines, because it seems slightly cleaner on the shell.cc + shell_android.cc side of things. I will leave this up for owners to decide.",
+      "parentUuid": "0d608bd2_cd634177",
+      "revId": "dc7567f60ea5f7ebf9e05c04859a144fe56d675e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d92c0915_a190e737",
+        "filename": "content/shell/android/java/src/org/chromium/content_shell/ShellManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-07-20T20:03:36Z",
+      "side": 1,
+      "message": "This was unused.",
+      "range": {
+        "startLine": 95,
+        "startChar": 16,
+        "endLine": 95,
+        "endChar": 35
+      },
+      "revId": "dc7567f60ea5f7ebf9e05c04859a144fe56d675e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

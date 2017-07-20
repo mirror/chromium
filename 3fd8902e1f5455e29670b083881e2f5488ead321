@@ -158,6 +158,30 @@
       "revId": "3fd8902e1f5455e29670b083881e2f5488ead321",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cccee56_62c179fa",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/androidoverlay/AndroidOverlayModeManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-07-20T20:03:36Z",
+      "side": 1,
+      "message": "Done. I could have had Shell.java set the ContentViewRenderView\u0027s overlay mode directly, but it was hard to listen for notifications. I ended up using an AOMM even thought it wasn\u0027t strictly necessary, because it\u0027s easy to hook up extra listeners.",
+      "parentUuid": "19c7bc23_45b42aaa",
+      "range": {
+        "startLine": 36,
+        "startChar": 16,
+        "endLine": 36,
+        "endChar": 27
+      },
+      "revId": "3fd8902e1f5455e29670b083881e2f5488ead321",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
