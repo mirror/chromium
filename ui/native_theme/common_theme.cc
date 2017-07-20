@@ -47,7 +47,6 @@ SkColor GetAuraColor(NativeTheme::ColorId color_id,
         return SkColorSetA(base_theme->GetSystemColor(
                                NativeTheme::kColorId_TextfieldDefaultColor),
                            gfx::kDisabledControlAlpha);
-
       default:
         break;
     }
