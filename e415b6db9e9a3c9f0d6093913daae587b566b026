@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cf3f834_8ff89e32",
+        "filename": "chrome/browser/ui/views/apps/shaped_app_window_targeter_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-20T22:34:07Z",
+      "side": 1,
+      "message": "nit: maybe this isn\u0027t needed? (per line 170)",
+      "revId": "e415b6db9e9a3c9f0d6093913daae587b566b026",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a95a8ff3_e55e8e02",
+        "filename": "chrome/browser/ui/views/apps/shaped_app_window_targeter_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-20T22:34:07Z",
+      "side": 1,
+      "message": "nit: maybe add a blank line above",
+      "revId": "e415b6db9e9a3c9f0d6093913daae587b566b026",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
