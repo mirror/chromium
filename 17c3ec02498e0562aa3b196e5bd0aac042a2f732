@@ -2,6 +2,125 @@
   "comments": [
     {
       "key": {
+        "uuid": "02319013_9ff18dd2",
+        "filename": "extensions/common/api/declarative_net_request/constants.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-07-20T16:10:07Z",
+      "side": 1,
+      "message": "optional: Would it be more future-proof to make this at least 1? I can imagine some situations when you\u0027d need zero as a nullptr replacement for rule IDs. Another thing is that flatbuffers can return 0 as a default if the value is not present, so making sure 0 is not a valid ID could be less error-prone.",
+      "revId": "17c3ec02498e0562aa3b196e5bd0aac042a2f732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64e78183_824fa2c8",
+        "filename": "extensions/common/api/declarative_net_request/constants.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-07-20T16:10:07Z",
+      "side": 1,
+      "message": "nit: s/where/when/",
+      "revId": "17c3ec02498e0562aa3b196e5bd0aac042a2f732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60256ed5_20f2a643",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-07-20T16:10:07Z",
+      "side": 1,
+      "message": "If you prefer to rename the urlFilter to urlPattern, please don\u0027t forget to rename this class accordingly.",
+      "revId": "17c3ec02498e0562aa3b196e5bd0aac042a2f732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99b7fc83_c71ce5e0",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-07-20T16:10:07Z",
+      "side": 1,
+      "message": "optional: You could remove this, because ParseLeftAnchor does this check already. Or, even better, remove this from ParseLeftAnchor (note that other Parse* methods don\u0027t precheck the position as well).",
+      "revId": "17c3ec02498e0562aa3b196e5bd0aac042a2f732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b70f6267_f36c8619",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-07-20T16:10:07Z",
+      "side": 1,
+      "message": "optional nitty nit: s/index_++/++index_/g (I know there\u0027s no difference for the compiler in this context).",
+      "revId": "17c3ec02498e0562aa3b196e5bd0aac042a2f732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94cc74b9_3d7f7732",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-07-20T16:10:07Z",
+      "side": 1,
+      "message": "nit: You could move this check to the loop condition:\n  while (index_ \u003c url_filter_len_ \u0026\u0026 !IsAtRightAnchor()) { ... }",
+      "revId": "17c3ec02498e0562aa3b196e5bd0aac042a2f732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9310e78d_58a637e9",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-07-20T16:10:07Z",
+      "side": 1,
+      "message": "Should this be a TODO?",
+      "revId": "17c3ec02498e0562aa3b196e5bd0aac042a2f732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "39d0a025_b8df9b42",
         "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
         "patchSetId": 5
@@ -42,6 +161,149 @@
         "endLine": 209,
         "endChar": 50
       },
+      "revId": "17c3ec02498e0562aa3b196e5bd0aac042a2f732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5cf1669_1c7f51f1",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-07-20T16:10:07Z",
+      "side": 1,
+      "message": "Capital letters in a domain pattern effectively change its intended semantics, because on the matching phase it is compared (always unsuccessfully) to a GURL which is canonicalized (thus, lower-cased). You can either enforce rule creators to use lower-cased domains (otherwise return a parse error - I would recommend this), or lower-case it in the code. Other than that, it should be a responsibility of the rule creators to make their rules right - Chrome does not break if these strings are meaningless, it just doesn\u0027t match for them as intended.\n\nIt is ok for a url filter to have a scheme, but not for the domains.",
+      "parentUuid": "254db061_f57491bc",
+      "range": {
+        "startLine": 209,
+        "startChar": 25,
+        "endLine": 209,
+        "endChar": 50
+      },
+      "revId": "17c3ec02498e0562aa3b196e5bd0aac042a2f732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aba90148_949d7f1f",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-07-20T16:10:07Z",
+      "side": 1,
+      "message": "I am not sure the compiler can understand here that the returned vector can be moved because the unique_ptr holding it is destroyed (I can only hope for that). Would \"return *domains.release()\" be more explicit in this regard?\n\nAlternative: return unique_ptr\u003cvector\u003e instead of vector, this way the default construction above is also not necessary.",
+      "revId": "17c3ec02498e0562aa3b196e5bd0aac042a2f732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41980131_c6629e07",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-07-20T16:10:07Z",
+      "side": 1,
+      "message": "What is the purpose of this restriction? There is still a way to bypass it by using the \"*\" pattern, right?\n\nAlthough, I can buy that the intent to match any substring should be expressed explicitly with \"*\". In this context, how about forcing non-empty URL patterns always, not just when the domain list is empty?",
+      "revId": "17c3ec02498e0562aa3b196e5bd0aac042a2f732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b65448b9_2f8369fe",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-07-20T16:10:07Z",
+      "side": 1,
+      "message": "Have you considered validating the URL here as well? Then could be another type of error (INVALID_REDIRECT_URL), or it could also be merged with the emptiness case.",
+      "revId": "17c3ec02498e0562aa3b196e5bd0aac042a2f732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58d8f9ae_78a4160f",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-07-20T16:10:07Z",
+      "side": 1,
+      "message": "// namespace declarative_net_request",
+      "revId": "17c3ec02498e0562aa3b196e5bd0aac042a2f732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "681fb1a1_82cca32f",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-07-20T16:10:07Z",
+      "side": 1,
+      "message": "nit: I\u0027d put a blank line above.",
+      "revId": "17c3ec02498e0562aa3b196e5bd0aac042a2f732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c90aba69_ab4b4efb",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-07-20T16:10:07Z",
+      "side": 1,
+      "message": "nit: How about being on the safe side and initializing these fields with default values (all zeros)?",
+      "revId": "17c3ec02498e0562aa3b196e5bd0aac042a2f732",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c794f8e8_1692e74b",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-07-20T16:10:07Z",
+      "side": 1,
+      "message": "nit: Please remove one space between the words.",
       "revId": "17c3ec02498e0562aa3b196e5bd0aac042a2f732",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
