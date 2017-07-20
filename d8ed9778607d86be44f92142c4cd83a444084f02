@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "5d3e0f1e_ededc01f",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000258
+      },
+      "writtenOn": "2017-07-20T23:36:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f3eaa60_96b3121a",
+      "revId": "d8ed9778607d86be44f92142c4cd83a444084f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "045deabc_c194315f",
         "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.js",
         "patchSetId": 8
@@ -121,6 +139,24 @@
       "revId": "d8ed9778607d86be44f92142c4cd83a444084f02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c7bccbf_df5d520a",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000258
+      },
+      "writtenOn": "2017-07-20T23:36:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "045deabc_c194315f",
+      "revId": "d8ed9778607d86be44f92142c4cd83a444084f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
