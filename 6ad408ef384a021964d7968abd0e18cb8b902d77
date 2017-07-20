@@ -22,6 +22,30 @@
       "revId": "6ad408ef384a021964d7968abd0e18cb8b902d77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc165cd1_d2eeea06",
+        "filename": "media/base/renderer_factory_selector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-07-20T00:59:31Z",
+      "side": 0,
+      "message": "Well, on Android both factories will be used after this change (behind the feature flag).\nMEDIA_PLAYER factory will be used for local HLS playback while COURIER will be used to fling the HLS manifest URL to Chromecast. The order of conditions below is correct though: if it\u0027s an HLS stream it will be played using media player renderer unless it\u0027s played remotely.\nI asked Thomas to take a look though.",
+      "parentUuid": "92f57a64_65eceb49",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 62
+      },
+      "revId": "6ad408ef384a021964d7968abd0e18cb8b902d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
