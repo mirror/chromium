@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "480cc161_5c6858d5",
+        "filename": "chrome/browser/resources/media_router/icons/media_router_icons.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-07-20T17:54:35Z",
+      "side": 1,
+      "message": "Thanks, I missed it since I was still on reitveld. :)",
+      "parentUuid": "1b1aba62_3aaa20ec",
+      "range": {
+        "startLine": 30,
+        "startChar": 1,
+        "endLine": 30,
+        "endChar": 2
+      },
+      "revId": "bb4c4051d7f814c29e2728f6e037b1a0a3d6cf2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c298dd44_c5611364",
         "filename": "chrome/browser/resources/media_router/media_router_data.js",
         "patchSetId": 3
