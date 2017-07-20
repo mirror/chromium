@@ -92,6 +92,7 @@ public class VrShellImpl
     private final TabModelSelectorObserver mTabModelSelectorObserver;
     private final View.OnTouchListener mTouchListener;
     private TabModelSelectorTabObserver mTabModelSelectorTabObserver;
+    private OnPreDrawListener mPredrawListener;
 
     private long mNativeVrShell;
 
@@ -310,7 +311,7 @@ public class VrShellImpl
         mRenderToSurfaceLayout.setVisibility(View.VISIBLE);
         // We need a pre-draw listener to invalidate the native page because scrolling usually
         // doesn't trigger an onDraw call, so our texture won't get updated.
-        mRenderToSurfaceLayout.getViewTreeObserver().addOnPreDrawListener(new OnPreDrawListener() {
+        mPredrawListener = new OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
                 if (mRenderToSurfaceLayout.isDirty()) {
@@ -319,7 +320,8 @@ public class VrShellImpl
                 }
                 return true;
             }
-        });
+        };
+        mRenderToSurfaceLayout.getViewTreeObserver().addOnPreDrawListener(mPredrawListener);
         mRenderToSurfaceLayoutParent.addView(mRenderToSurfaceLayout);
         addView(mRenderToSurfaceLayoutParent);
     }
@@ -542,6 +544,11 @@ public class VrShellImpl
         if (mNativeVrShell != 0) {
             nativeOnPause(mNativeVrShell);
         }
+    }
+
+    @Override
+    public void onBeforeWindowDetached() {
+        mRenderToSurfaceLayout.getViewTreeObserver().removeOnPreDrawListener(mPredrawListener);
     }
 
     @Override

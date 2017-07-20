@@ -1474,6 +1474,7 @@ public class VrShellDelegate
     }
 
     private void removeVrViews() {
+        mVrShell.onBeforeWindowDetached();
         mActivity.onExitVr();
         FrameLayout decor = (FrameLayout) mActivity.getWindow().getDecorView();
         decor.removeView(mVrShell.getContainer());

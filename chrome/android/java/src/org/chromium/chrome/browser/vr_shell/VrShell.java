@@ -59,4 +59,10 @@ public interface VrShell {
      * Returns whether the back button is enabled.
      */
     Boolean isBackButtonEnabled();
+
+    /**
+     * Gives VrShell a chance to clean up any view-dependent state before removing
+     * VrShell from the view hierarchy.
+     */
+    void onBeforeWindowDetached();
 }
