@@ -5,7 +5,7 @@
 #ifndef CC_RESOURCES_RELEASE_CALLBACK_H_
 #define CC_RESOURCES_RELEASE_CALLBACK_H_
 
-#include "base/callback.h"
+#include "base/callback_forward.h"
 
 namespace gpu {
 struct SyncToken;
@@ -13,8 +13,8 @@ struct SyncToken;
 
 namespace cc {
 
-typedef base::Callback<void(const gpu::SyncToken& sync_token, bool is_lost)>
-    ReleaseCallback;
+using ReleaseCallback =
+    base::Callback<void(const gpu::SyncToken& sync_token, bool is_lost)>;
 
 }  // namespace cc
 

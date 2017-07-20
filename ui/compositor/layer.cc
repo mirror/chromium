@@ -158,7 +158,7 @@ Layer::~Layer() {
 
   cc_layer_->RemoveFromParent();
   if (mailbox_release_callback_)
-    mailbox_release_callback_->Run(gpu::SyncToken(), false);
+    std::move(mailbox_release_callback_).Run(gpu::SyncToken(), false);
 }
 
 std::unique_ptr<Layer> Layer::Clone() const {
@@ -642,10 +642,9 @@ void Layer::SwitchCCLayerForTest() {
   content_layer_ = new_layer;
 }
 
-void Layer::SetTextureMailbox(
-    const viz::TextureMailbox& mailbox,
-    std::unique_ptr<cc::SingleReleaseCallback> release_callback,
-    gfx::Size texture_size_in_dip) {
+void Layer::SetTextureMailbox(const viz::TextureMailbox& mailbox,
+                              cc::SingleReleaseCallback release_callback,
+                              gfx::Size texture_size_in_dip) {
   DCHECK(type_ == LAYER_TEXTURED || type_ == LAYER_SOLID_COLOR);
   DCHECK(mailbox.IsValid());
   DCHECK(release_callback);
@@ -660,7 +659,7 @@ void Layer::SetTextureMailbox(
     frame_size_in_dip_ = gfx::Size();
   }
   if (mailbox_release_callback_)
-    mailbox_release_callback_->Run(gpu::SyncToken(), false);
+    std::move(mailbox_release_callback_).Run(gpu::SyncToken(), false);
   mailbox_release_callback_ = std::move(release_callback);
   mailbox_ = mailbox;
   SetTextureSize(texture_size_in_dip);
@@ -735,10 +734,8 @@ void Layer::SetShowSolidColorContent() {
   solid_color_layer_ = new_layer;
 
   mailbox_ = viz::TextureMailbox();
-  if (mailbox_release_callback_) {
-    mailbox_release_callback_->Run(gpu::SyncToken(), false);
-    mailbox_release_callback_.reset();
-  }
+  if (mailbox_release_callback_)
+    std::move(mailbox_release_callback_).Run(gpu::SyncToken(), false);
   RecomputeDrawsContentAndUVRect();
 }
 
@@ -939,9 +936,8 @@ size_t Layer::GetApproximateUnsharedMemoryUsage() const {
   return 0;
 }
 
-bool Layer::PrepareTextureMailbox(
-    viz::TextureMailbox* mailbox,
-    std::unique_ptr<cc::SingleReleaseCallback>* release_callback) {
+bool Layer::PrepareTextureMailbox(viz::TextureMailbox* mailbox,
+                                  cc::SingleReleaseCallback* release_callback) {
   if (!mailbox_release_callback_)
     return false;
   *mailbox = mailbox_;

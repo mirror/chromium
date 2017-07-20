@@ -116,14 +116,14 @@ class LayerTreeHostReadbackPixelTest
     EXPECT_TRUE(result->HasTexture());
 
     viz::TextureMailbox texture_mailbox;
-    std::unique_ptr<SingleReleaseCallback> release_callback;
+    SingleReleaseCallback release_callback;
     result->TakeTexture(&texture_mailbox, &release_callback);
     EXPECT_TRUE(texture_mailbox.IsValid());
     EXPECT_TRUE(texture_mailbox.IsTexture());
 
     std::unique_ptr<SkBitmap> bitmap =
         CopyTextureMailboxToBitmap(result->size(), texture_mailbox);
-    release_callback->Run(gpu::SyncToken(), false);
+    std::move(release_callback).Run(gpu::SyncToken(), false);
 
     ReadbackResultAsBitmap(
         CopyOutputResult::CreateBitmapResult(std::move(bitmap)));
