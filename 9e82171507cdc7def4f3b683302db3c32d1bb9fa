@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96be82d5_ebb572c9",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-07-20T20:38:58Z",
+      "side": 1,
+      "message": "nit: It\u0027s a little clearer and slightly faster if you obtain the handle outside the loop.",
+      "range": {
+        "startLine": 793,
+        "startChar": 6,
+        "endLine": 793,
+        "endChar": 44
+      },
+      "revId": "9e82171507cdc7def4f3b683302db3c32d1bb9fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
