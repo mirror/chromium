@@ -27,6 +27,10 @@ enum class DndAction;
 // Handles events on data devices in context-specific ways.
 class DataDeviceDelegate {
  public:
+  // Called at the top of the data device's constructor, to give observers a
+  // chance to initialize |data device|.
+  virtual void OnDataDeviceCreating(DataDevice* data_device) = 0;
+
   // Called at the top of the data device's destructor, to give observers a
   // chance to remove themselves.
   virtual void OnDataDeviceDestroying(DataDevice* data_device) = 0;
