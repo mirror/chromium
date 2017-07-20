@@ -5,7 +5,7 @@
 #ifndef CC_RESOURCES_RELEASE_CALLBACK_IMPL_H_
 #define CC_RESOURCES_RELEASE_CALLBACK_IMPL_H_
 
-#include "base/callback.h"
+#include "base/callback_forward.h"
 
 namespace gpu {
 struct SyncToken;
@@ -14,10 +14,10 @@ struct SyncToken;
 namespace cc {
 class BlockingTaskRunner;
 
-typedef base::Callback<void(const gpu::SyncToken& sync_token,
-                            bool is_lost,
-                            BlockingTaskRunner* main_thread_task_runner)>
-    ReleaseCallbackImpl;
+using ReleaseCallbackImpl =
+    base::Callback<void(const gpu::SyncToken& sync_token,
+                        bool is_lost,
+                        BlockingTaskRunner* main_thread_task_runner)>;
 
 }  // namespace cc
 

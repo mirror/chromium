@@ -5,11 +5,13 @@
 #ifndef CC_OUTPUT_TEXTURE_MAILBOX_DELETER_H_
 #define CC_OUTPUT_TEXTURE_MAILBOX_DELETER_H_
 
+#include <map>
 #include <memory>
-#include <vector>
 
+#include "base/callback.h"
 #include "base/memory/weak_ptr.h"
 #include "cc/cc_export.h"
+#include "cc/resources/single_release_callback.h"
 
 namespace base {
 class SingleThreadTaskRunner;
@@ -24,7 +26,6 @@ class ContextProvider;
 }
 
 namespace cc {
-class SingleReleaseCallback;
 
 class CC_EXPORT TextureMailboxDeleter {
  public:
@@ -41,19 +42,22 @@ class CC_EXPORT TextureMailboxDeleter {
   // due to the compositor shutting down, then the ReleaseCallback will
   // become a no-op and the texture will be deleted immediately on the
   // impl thread, along with dropping the reference to the viz::ContextProvider.
-  std::unique_ptr<SingleReleaseCallback> GetReleaseCallback(
+  SingleReleaseCallback GetReleaseCallback(
       scoped_refptr<viz::ContextProvider> context_provider,
       unsigned texture_id);
 
  private:
   // Runs the |impl_callback| to delete the texture and removes the callback
   // from the |impl_callbacks_| list.
-  void RunDeleteTextureOnImplThread(SingleReleaseCallback* impl_callback,
+  void RunDeleteTextureOnImplThread(int32_t id,
                                     const gpu::SyncToken& sync_token,
                                     bool is_lost);
 
   scoped_refptr<base::SingleThreadTaskRunner> impl_task_runner_;
-  std::vector<std::unique_ptr<SingleReleaseCallback>> impl_callbacks_;
+
+  int32_t next_id_ = 0;
+  std::map<int32_t, SingleReleaseCallback> impl_callbacks_;
+
   base::WeakPtrFactory<TextureMailboxDeleter> weak_ptr_factory_;
 };
 

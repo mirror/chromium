@@ -551,8 +551,8 @@ TEST_F(StructTraitsTest, CopyOutputResult_Texture) {
                             71234838);
   bool is_lost = true;
   base::RunLoop run_loop;
-  auto callback = SingleReleaseCallback::Create(base::Bind(
-      CopyOutputResultCallback, run_loop.QuitClosure(), sync_token, is_lost));
+  auto callback = base::BindOnce(CopyOutputResultCallback,
+                                 run_loop.QuitClosure(), sync_token, is_lost);
   gpu::Mailbox mailbox;
   mailbox.SetName(mailbox_name);
   viz::TextureMailbox texture_mailbox(mailbox, gpu::SyncToken(), target);
@@ -569,10 +569,10 @@ TEST_F(StructTraitsTest, CopyOutputResult_Texture) {
   EXPECT_EQ(size, output->size());
 
   viz::TextureMailbox out_mailbox;
-  std::unique_ptr<SingleReleaseCallback> out_callback;
+  SingleReleaseCallback out_callback;
   output->TakeTexture(&out_mailbox, &out_callback);
   EXPECT_EQ(mailbox, out_mailbox.mailbox());
-  out_callback->Run(sync_token, is_lost);
+  std::move(out_callback).Run(sync_token, is_lost);
   // If CopyOutputResultCallback is called (which is the intended behaviour),
   // this will exit. Otherwise, this test will time out and fail.
   // In CopyOutputResultCallback we verify that the given sync_token and is_lost

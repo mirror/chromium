@@ -7,6 +7,7 @@
 
 #include <memory>
 
+#include "base/callback.h"
 #include "base/memory/ptr_util.h"
 #include "cc/cc_export.h"
 #include "cc/resources/single_release_callback.h"
@@ -39,7 +40,7 @@ class CC_EXPORT CopyOutputResult {
   static std::unique_ptr<CopyOutputResult> CreateTextureResult(
       const gfx::Size& size,
       const viz::TextureMailbox& texture_mailbox,
-      std::unique_ptr<SingleReleaseCallback> release_callback) {
+      SingleReleaseCallback release_callback) {
     return base::WrapUnique(new CopyOutputResult(size, texture_mailbox,
                                                  std::move(release_callback)));
   }
@@ -53,7 +54,7 @@ class CC_EXPORT CopyOutputResult {
   gfx::Size size() const { return size_; }
   std::unique_ptr<SkBitmap> TakeBitmap();
   void TakeTexture(viz::TextureMailbox* texture_mailbox,
-                   std::unique_ptr<SingleReleaseCallback>* release_callback);
+                   SingleReleaseCallback* release_callback);
 
  private:
   friend struct mojo::StructTraits<mojom::CopyOutputResultDataView,
@@ -61,15 +62,14 @@ class CC_EXPORT CopyOutputResult {
 
   CopyOutputResult();
   explicit CopyOutputResult(std::unique_ptr<SkBitmap> bitmap);
-  explicit CopyOutputResult(
-      const gfx::Size& size,
-      const viz::TextureMailbox& texture_mailbox,
-      std::unique_ptr<SingleReleaseCallback> release_callback);
+  explicit CopyOutputResult(const gfx::Size& size,
+                            const viz::TextureMailbox& texture_mailbox,
+                            SingleReleaseCallback release_callback);
 
   gfx::Size size_;
   std::unique_ptr<SkBitmap> bitmap_;
   viz::TextureMailbox texture_mailbox_;
-  std::unique_ptr<SingleReleaseCallback> release_callback_;
+  SingleReleaseCallback release_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(CopyOutputResult);
 };

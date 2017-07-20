@@ -2794,7 +2794,7 @@ void GLRenderer::GetFramebufferPixelsAsync(
 
     viz::TextureMailbox texture_mailbox(mailbox, sync_token, GL_TEXTURE_2D);
 
-    std::unique_ptr<SingleReleaseCallback> release_callback;
+    SingleReleaseCallback release_callback;
     if (own_mailbox) {
       gl_->BindTexture(GL_TEXTURE_2D, 0);
       release_callback = texture_mailbox_deleter_->GetReleaseCallback(
