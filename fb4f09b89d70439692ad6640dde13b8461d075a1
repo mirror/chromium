@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a0ff3f4_d2935274",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGridLayout.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-20T10:05:38Z",
+      "side": 1,
+      "message": "nit: units? Helps making obvious when pixels and dps are getting mixed.",
+      "range": {
+        "startLine": 54,
+        "startChar": 12,
+        "endLine": 54,
+        "endChar": 20
+      },
+      "revId": "fb4f09b89d70439692ad6640dde13b8461d075a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e64db3d0_1b8fae78",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/TileGridLayoutTest.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-20T10:05:38Z",
+      "side": 1,
+      "message": "nit: add a comment that this is for safety checking the assumptions in calculateNumColumns?",
+      "range": {
+        "startLine": 123,
+        "startChar": 16,
+        "endLine": 123,
+        "endChar": 51
+      },
+      "revId": "fb4f09b89d70439692ad6640dde13b8461d075a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
