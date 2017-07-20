@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "26cab795_109cdb5a",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-20T02:15:08Z",
+      "side": 1,
+      "message": "It makes sense. Renamed.",
+      "parentUuid": "8ec70673_cf87d369",
+      "revId": "95cd90ff207e5dc2c85e020b4ec62f4730bbd6cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2130e82c_ca93b007",
         "filename": "content/renderer/service_worker/service_worker_context_client.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "95cd90ff207e5dc2c85e020b4ec62f4730bbd6cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07931c21_b67553ef",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-20T02:15:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2130e82c_ca93b007",
+      "revId": "95cd90ff207e5dc2c85e020b4ec62f4730bbd6cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
