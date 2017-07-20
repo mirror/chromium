@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "86715338_79ec29cf",
+        "filename": "base/test/scoped_feature_list.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-07-20T11:42:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "346e1274_2cd38ef3",
+      "range": {
+        "startLine": 139,
+        "startChar": 2,
+        "endLine": 139,
+        "endChar": 8
+      },
+      "revId": "c0d7fdee634e8f819c9f3c563cef1263781b6575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48299cee_bfa15369",
         "filename": "base/test/scoped_feature_list.cc",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-19T20:24:09Z",
       "side": 1,
       "message": "Can we avoid this assumption?  If |merged_features.enabled_feature_list| is changed to own the strings, then we might be able to move/fold the loop below into GetFeatureVector (taking an optional vector of field trials) - this would avoid the assumption, right?",
+      "range": {
+        "startLine": 164,
+        "startChar": 36,
+        "endLine": 165,
+        "endChar": 79
+      },
+      "revId": "c0d7fdee634e8f819c9f3c563cef1263781b6575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1751a38a_88360091",
+        "filename": "base/test/scoped_feature_list.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-07-20T11:42:17Z",
+      "side": 1,
+      "message": "There are a couple ways to remove this assumption.\n\nWhat you suggest would work (at the cost of some memory/speed). Another way would be to add a loop to find the enabled feature in the merged feature list (no memory cost, but some speed cost).\n\nThese cost should be negligible though, especially since this is test code and performance does not matter here.",
+      "parentUuid": "48299cee_bfa15369",
       "range": {
         "startLine": 164,
         "startChar": 36,
@@ -142,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "b41e011a_329cfff2",
+        "filename": "base/test/scoped_feature_list.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-07-20T11:42:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f3e61ae_80c54fbb",
+      "range": {
+        "startLine": 78,
+        "startChar": 69,
+        "endLine": 78,
+        "endChar": 0
+      },
+      "revId": "c0d7fdee634e8f819c9f3c563cef1263781b6575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7449a866_d44b300b",
         "filename": "base/test/scoped_feature_list_unittest.cc",
         "patchSetId": 7
@@ -189,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "b558de82_e48f3352",
+        "filename": "base/test/scoped_feature_list_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-07-20T11:42:17Z",
+      "side": 1,
+      "message": "I think these are questions more related to FeatureList than ScopedFeatureList.\n\nLooking at the code, FeatureList already DCHECKs if a feature or a trial name has such a character:\nhttps://cs.chromium.org/chromium/src/base/feature_list.cc?rcl\u003d371065d24ec1d737d69949568c5320dcba27e49c\u0026l\u003d73\n\nThat said, I\u0027m not convinced that this is checked enough. In particular in FeatureList::InitializeFromCommandLine() does some validation but maybe not enough ; I think it would accept a feature called **MyFeature or My*Feature.",
+      "parentUuid": "14f72174_e0a8705f",
+      "range": {
+        "startLine": 84,
+        "startChar": 18,
+        "endLine": 84,
+        "endChar": 40
+      },
+      "revId": "c0d7fdee634e8f819c9f3c563cef1263781b6575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "28e9301c_c2381547",
         "filename": "base/test/scoped_feature_list_unittest.cc",
         "patchSetId": 7
@@ -200,6 +296,30 @@
       "writtenOn": "2017-07-20T00:02:18Z",
       "side": 1,
       "message": "Please also test that the field trial is active and has the correct group selected.  (Applies to all of the tests you\u0027re adding.)",
+      "range": {
+        "startLine": 85,
+        "startChar": 53,
+        "endLine": 85,
+        "endChar": 0
+      },
+      "revId": "c0d7fdee634e8f819c9f3c563cef1263781b6575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b00172e0_e36e6c04",
+        "filename": "base/test/scoped_feature_list_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-07-20T11:42:17Z",
+      "side": 1,
+      "message": "Added test that the trial can be retrieved.\nNot sure about the group though, I feel this is not related to this code (none of the code in FeatureList or ScopedFeatureList touches FieldTrial groups).",
+      "parentUuid": "28e9301c_c2381547",
       "range": {
         "startLine": 85,
         "startChar": 53,
