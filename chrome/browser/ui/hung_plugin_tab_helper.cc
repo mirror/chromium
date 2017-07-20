@@ -265,9 +265,9 @@ void HungPluginTabHelper::PluginHungStatusChanged(
       content::PluginService::GetInstance()->GetPluginDisplayNameByPath(
           plugin_path);
 
-  linked_ptr<PluginState> state(new PluginState(plugin_path, plugin_name));
+  PluginState* state = new PluginState(plugin_path, plugin_name);
   hung_plugins_[plugin_child_id] = state;
-  ShowBar(plugin_child_id, state.get());
+  ShowBar(plugin_child_id, state);
 }
 
 void HungPluginTabHelper::Observe(
@@ -279,7 +279,7 @@ void HungPluginTabHelper::Observe(
       content::Details<infobars::InfoBar::RemovedDetails>(details)->first;
   for (PluginStateMap::iterator i = hung_plugins_.begin();
        i != hung_plugins_.end(); ++i) {
-    PluginState* state = i->second.get();
+    PluginState* state = i->second;
     if (state->infobar == infobar) {
       state->infobar = NULL;
 
@@ -304,7 +304,7 @@ void HungPluginTabHelper::KillPlugin(int child_id) {
   content::BrowserThread::PostTask(
       content::BrowserThread::IO, FROM_HERE,
       base::BindOnce(&KillPluginOnIOThread, child_id));
-  CloseBar(found->second.get());
+  CloseBar(found->second);
 }
 
 void HungPluginTabHelper::OnReshowTimer(int child_id) {
@@ -313,7 +313,7 @@ void HungPluginTabHelper::OnReshowTimer(int child_id) {
   PluginStateMap::iterator found = hung_plugins_.find(child_id);
   DCHECK(found != hung_plugins_.end());
   DCHECK(!found->second->infobar);
-  ShowBar(child_id, found->second.get());
+  ShowBar(child_id, found->second);
 }
 
 void HungPluginTabHelper::ShowBar(int child_id, PluginState* state) {
