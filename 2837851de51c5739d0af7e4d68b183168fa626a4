@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "d5dab814_8c67abc6",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-07-20T15:56:16Z",
+      "side": 1,
+      "message": "Alright, after a lot of clicking through code step-by-step, I found that there is an icon_cacher in the ntp_tiles component which caches the popular/mostlikely icons (as soon as you clear browsing data they get downloaded again). This icon_cacher calls the favicon_service (in the favicon component) which calls the history_service in the history component which calls the history_backend which has a favicon db. (With a few extra steps.) And then the favicons are fetched from this DB. So there is no excess favicon fetching!",
+      "parentUuid": "447798b9_cae30b8b",
+      "revId": "2837851de51c5739d0af7e4d68b183168fa626a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "247ed3d6_45ecbdbb",
         "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.h",
         "patchSetId": 3
