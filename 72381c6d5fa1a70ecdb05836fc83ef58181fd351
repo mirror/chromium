@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ab4deae_06f9716c",
+        "filename": "ash/system/tray/tray_info_label_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T23:58:07Z",
+      "side": 1,
+      "message": "nit: You should probably just inline this below instead of writing your own function for it, since you\u0027re essentially only encapsulating a single line of code once you remove the label_-\u003elabel_ access below.",
+      "range": {
+        "startLine": 69,
+        "startChar": 7,
+        "endLine": 69,
+        "endChar": 18
+      },
+      "revId": "72381c6d5fa1a70ecdb05836fc83ef58181fd351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ef8f914_c7a71ede",
+        "filename": "ash/system/tray/tray_info_label_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T23:58:07Z",
+      "side": 1,
+      "message": "If someone touches this class later on and changes the name label_ or changes the type of label_, this test would fail even if the TrayInfoLabel still worked correctly.\n\nIn general, we should only test the public API of a class, so please remove this line.",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 59
+      },
+      "revId": "72381c6d5fa1a70ecdb05836fc83ef58181fd351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
