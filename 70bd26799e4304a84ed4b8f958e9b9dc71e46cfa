@@ -16,6 +16,24 @@
       "revId": "70bd26799e4304a84ed4b8f958e9b9dc71e46cfa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5736db7_a6ba7278",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-20T18:22:46Z",
+      "side": 0,
+      "message": "Done - I\u0027ve restricted this CL to just removing the calls to SwappedOutMessages::Can...WhileSwappedOut.  I\u0027ve pushed the removal of SwappedOutMessage class to a separate CL - https://chromium-review.googlesource.com/580108",
+      "parentUuid": "1e025f88_7507f503",
+      "revId": "70bd26799e4304a84ed4b8f958e9b9dc71e46cfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
