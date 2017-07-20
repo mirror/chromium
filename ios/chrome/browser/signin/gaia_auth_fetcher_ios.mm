@@ -6,6 +6,7 @@
 
 #import <WebKit/WebKit.h>
 
+#include "base/ios/ios_util.h"
 #include "base/json/string_escape.h"
 #include "base/logging.h"
 #import "base/mac/foundation_util.h"
@@ -260,14 +261,15 @@ void GaiaAuthFetcherIOSBridge::URLFetchFailure(bool is_cancelled) {
 }
 
 void GaiaAuthFetcherIOSBridge::FetchPendingRequest() {
+  // test
   if (!request_.pending)
     return;
-  if (!request_.body.empty()) {
+  if (!request_.body.empty() && !base::ios::IsRunningOnIOS110OrLater()) {
     DoPostRequest(GetWKWebView(), request_.body, request_.headers,
                   request_.url);
   } else {
-  [GetWKWebView()
-      loadRequest:GetRequest(request_.body, request_.headers, request_.url)];
+    [GetWKWebView()
+        loadRequest:GetRequest(request_.body, request_.headers, request_.url)];
   }
 }
 
