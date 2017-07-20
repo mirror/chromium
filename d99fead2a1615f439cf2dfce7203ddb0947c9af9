@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6edfb93_2440585c",
+        "filename": "net/http/http_response_info.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-20T18:34:49Z",
+      "side": 1,
+      "message": "Set to default-constructed ProxyServer() ?\n(i.e invalid)",
+      "revId": "d99fead2a1615f439cf2dfce7203ddb0947c9af9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
