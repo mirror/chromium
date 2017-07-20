@@ -14,9 +14,12 @@
 #include "base/macros.h"
 #import "ios/web/navigation/navigation_item_impl.h"
 #import "ios/web/navigation/navigation_manager_impl.h"
+#include "ios/web/navigation/time_smoother.h"
 #include "ios/web/public/reload_type.h"
 #include "ui/base/page_transition_types.h"
 #include "url/gurl.h"
+
+@class WKBackForwardListItem;
 
 namespace web {
 class BrowserState;
@@ -33,6 +36,7 @@ class SessionStorageBuilder;
 //   - goBack
 //   - goForward
 //   - goToBackForwardListItem:
+// NOTE(danyao): document difference between main frame vs. all frame APIs
 class WKBasedNavigationManagerImpl : public NavigationManagerImpl {
  public:
   WKBasedNavigationManagerImpl();
@@ -59,6 +63,7 @@ class WKBasedNavigationManagerImpl : public NavigationManagerImpl {
   GetTransientURLRewriters() override;
   void RemoveTransientURLRewriters() override;
   int GetIndexForOffset(int offset) const override;
+  // Returns the previous navigation item in the main frame.
   int GetPreviousItemIndex() const override;
 
   // NavigationManager:
@@ -66,6 +71,7 @@ class WKBasedNavigationManagerImpl : public NavigationManagerImpl {
   WebState* GetWebState() const override;
   NavigationItem* GetVisibleItem() const override;
   NavigationItem* GetLastCommittedItem() const override;
+  // Returns the pending navigation item in the main frame.
   NavigationItem* GetPendingItem() const override;
   NavigationItem* GetTransientItem() const override;
   void DiscardNonCommittedItems() override;
@@ -97,11 +103,57 @@ class WKBasedNavigationManagerImpl : public NavigationManagerImpl {
   // NavigationManagerImpl methods used by SessionStorageBuilder.
   NavigationItemImpl* GetNavigationItemImplAtIndex(size_t index) const override;
 
+  // Rebuild NavigationItemImpl objects to sync to WKBackForwardList.
+  void SyncNavigationItemsToWKBackForwardList();
 
+  // Returns the absolute index of WKBackForwardList's |currentItem|. Returns -1
+  // if |currentItem| is nil.
+  int GetWKCurrentItemIndex() const;
+
+  // Returns the WKNavigationItem object at the absolute index. Returns nil if
+  // |index| is out of range.
+  const WKBackForwardListItem* GetWKItemAtIndex(int index) const;
+
+  NavigationItemImpl* InternalGetItemAtIndex(int index) const;
+
+  // Creates a new NavigationItemImpl object using the given parameters.
+  std::unique_ptr<NavigationItemImpl> CreateNavigationItem(
+      const GURL& url,
+      const Referrer& referrer,
+      ui::PageTransition transition,
+      NavigationInitiationType initiation_type) const;
 
   // List of transient url rewriters added by |AddTransientURLRewriter()|.
   std::unique_ptr<std::vector<BrowserURLRewriter::URLRewriter>>
       transient_url_rewriters_;
+
+  // The pending main frame navigation item. Returns nullptr if there is no
+  // pending item.
+  std::unique_ptr<NavigationItemImpl> pending_item_;
+
+  // -1 if pending_item_ represents a new navigation. Otherwise, this is the
+  // index of the pending_item in the back-forward list.
+  int pending_item_index_;
+
+  // Index of the previous navigation item in the main frame. If there is none,
+  // this field will have value -1.
+  int previous_item_index_;
+
+  // Index of the last committed item in the main frame. If there is none, this
+  // field will equal to -1.
+  int last_committed_item_index_;
+
+  // The transient item in main frame.
+  std::unique_ptr<NavigationItemImpl> transient_item_;
+
+  // NavigationItemImpl objects associated with the WKBackForwardList items.
+  // Note that this list is updated lazily on access. All accessor methods must
+  // perform equivalence check before accessing these items.
+  std::vector<std::unique_ptr<NavigationItemImpl>> navigation_item_impls_;
+
+  // Time smoother for navigation item timestamps. See comment in
+  // navigation_controller_impl.h.
+  TimeSmoother time_smoother_;
 
   DISALLOW_COPY_AND_ASSIGN(WKBasedNavigationManagerImpl);
 };
