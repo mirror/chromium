@@ -37,6 +37,7 @@
 #include "platform/weborigin/KURL.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/ThreadSafeRefCounted.h"
+#include "platform/wtf/ThreadingPrimitives.h"
 #include "platform/wtf/text/WTFString.h"
 #include "storage/public/interfaces/blobs.mojom-blink.h"
 
@@ -219,6 +220,71 @@ class PLATFORM_EXPORT BlobData {
   BlobDataItemList items_;
 };
 
+// Like an interface ptr, but doesn't support assciate interfaces, or async
+// replies, or connection error handling. In return this class can be used from
+// multiple threads.
+template <typename Interface>
+class OutboundOnlyInterfacePtr {
+ public:
+  Interface* get() const {
+    ConfigureProxyIfNecessary();
+    return proxy_.get();
+  }
+
+  Interface* operator->() const { return get(); }
+  Interface& operator*() const { return *get(); }
+
+  void Bind(mojo::InterfacePtrInfo<Interface> info) {
+    DCHECK(!proxy_);
+    DCHECK(!client_);
+    client_ = base::MakeUnique<ConnectionClient>(info.PassHandle());
+  }
+
+ private:
+  using Proxy = typename Interface::Proxy_;
+
+  class ConnectionClient : public mojo::Connector,
+                           public mojo::MessageReceiverWithResponder {
+   public:
+    explicit ConnectionClient(mojo::ScopedMessagePipeHandle message_pipe)
+        : mojo::Connector(std::move(message_pipe),
+                          mojo::Connector::MULTI_THREADED_SEND,
+                          base::SequencedTaskRunnerHandle::Get()) {}
+
+    bool AcceptWithResponder(
+        mojo::Message* message,
+        std::unique_ptr<mojo::MessageReceiver> responder) override {
+      NOTREACHED();
+      return false;
+    }
+
+    bool Accept(mojo::Message* message) override {
+      return mojo::Connector::Accept(message);
+    }
+  };
+
+  void ConfigureProxyIfNecessary() const {
+    if (proxy_) {
+      DCHECK(client_);
+      return;
+    }
+
+    if (client_)
+      proxy_ = base::MakeUnique<Proxy>(client_.get());
+  }
+
+  std::unique_ptr<ConnectionClient> client_;
+  mutable std::unique_ptr<Proxy> proxy_;
+};
+
+template <typename Interface>
+mojo::InterfaceRequest<Interface> MakeRequest(
+    OutboundOnlyInterfacePtr<Interface>* ptr) {
+  mojo::MessagePipe pipe;
+  ptr->Bind(mojo::InterfacePtrInfo<Interface>(std::move(pipe.handle0), 0u));
+  return mojo::InterfaceRequest<Interface>(std::move(pipe.handle1));
+}
+
 class PLATFORM_EXPORT BlobDataHandle
     : public ThreadSafeRefCounted<BlobDataHandle> {
  public:
@@ -253,11 +319,13 @@ class PLATFORM_EXPORT BlobDataHandle
   BlobDataHandle(std::unique_ptr<BlobData>, long long size);
   BlobDataHandle(const String& uuid, const String& type, long long size);
 
+  storage::mojom::blink::BlobPtr CloneBlobPtr();
+
   const String uuid_;
   const String type_;
   const long long size_;
   const bool is_single_unknown_size_file_;
-  storage::mojom::blink::BlobPtr blob_;
+  OutboundOnlyInterfacePtr<storage::mojom::blink::Blob> blob_ptr_;
 };
 
 }  // namespace blink
