@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7c6930ca_95c6d0b8",
+        "filename": "chrome/browser/ui/views/extensions/extension_popup.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-20T15:35:37Z",
+      "side": 1,
+      "message": "I don\u0027t believe so. We need the actual layer of the WebContents, not a parent layer. Parent layers will mask their contents but only by their rectangular bounds. The layer mask of a parent layer has no effect on child layers.",
+      "parentUuid": "fcb5f1ea_8df331d6",
+      "revId": "e27c9d9dc68998aaf95d2a5231fb37972d432f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f30eccf9_88a9331f",
         "filename": "chrome/browser/ui/views/extensions/extension_popup.h",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "aa424954_5339434c",
+        "filename": "chrome/browser/ui/views/extensions/extension_popup.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-20T15:35:37Z",
+      "side": 1,
+      "message": "oops, I guess I accidentally deleted that part when I was cleaning the patch up. Restored.",
+      "parentUuid": "f30eccf9_88a9331f",
+      "range": {
+        "startLine": 115,
+        "startChar": 9,
+        "endLine": 115,
+        "endChar": 26
+      },
+      "revId": "e27c9d9dc68998aaf95d2a5231fb37972d432f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a47ec5a_8a9df6ff",
         "filename": "chrome/browser/ui/views/extensions/extension_popup.h",
         "patchSetId": 2
@@ -53,6 +95,24 @@
       "writtenOn": "2017-07-20T01:49:14Z",
       "side": 1,
       "message": "Can we use GetWidget()-\u003enon_client_view()-\u003eGetWindowMask() ?",
+      "revId": "e27c9d9dc68998aaf95d2a5231fb37972d432f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7085fd9d_647abde8",
+        "filename": "chrome/browser/ui/views/extensions/extension_popup.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-20T15:35:37Z",
+      "side": 1,
+      "message": "I don\u0027t think so. For one thing, the border can (does) have an arrow, and also the widget mask includes the border.",
+      "parentUuid": "5a47ec5a_8a9df6ff",
       "revId": "e27c9d9dc68998aaf95d2a5231fb37972d432f94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
