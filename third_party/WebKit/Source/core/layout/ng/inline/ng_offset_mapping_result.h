@@ -54,7 +54,7 @@ struct NGOffsetMappingUnit {
 // the node is also stored.
 // See design doc https://goo.gl/CJbxky for details.
 struct NGOffsetMappingResult {
-  DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
+  NGOffsetMappingResult() = default;
 
   Vector<NGOffsetMappingUnit> units;
   HashMap<const LayoutText*, std::pair<unsigned, unsigned>> ranges;
