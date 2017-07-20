@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac93ec92_3fe98746",
+        "filename": "chrome/browser/extensions/api/messaging/extension_message_port.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-20T18:04:44Z",
+      "side": 1,
+      "message": "this is used only to invoke CloseChannel, right?\nCan we pass a CloseCallback \u003d Callback\u003cvoid(port_id, error_message)\u003e instead (and have message_service bind it to its weak ptr), thus removing direct dependency on MessageService here?\n(or observer/delegate interface, given that NativeMessagePort uses more that one callback).\n\nI know t\u0027s existing state of things, but IMHO MessagePort not being part of MessageService class makes the dependency on (weak) message service here less desirable design.",
+      "range": {
+        "startLine": 121,
+        "startChar": 6,
+        "endLine": 121,
+        "endChar": 27
+      },
+      "revId": "81ed7cb571818d81cdba74d840d3e6279f860bd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62637442_186e827e",
+        "filename": "chrome/browser/extensions/api/messaging/message_port.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-20T18:04:44Z",
+      "side": 1,
+      "message": "can you make make the way you define default implementation consistent with DispatchOnConnect, DispatchOnMesssage etc (which are defined here, rather than message_port.cc).",
+      "range": {
+        "startLine": 31,
+        "startChar": 15,
+        "endLine": 31,
+        "endChar": 33
+      },
+      "revId": "81ed7cb571818d81cdba74d840d3e6279f860bd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
