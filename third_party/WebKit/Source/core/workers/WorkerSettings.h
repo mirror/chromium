@@ -15,6 +15,15 @@ class CORE_EXPORT WorkerSettings {
   explicit WorkerSettings(Settings*);
 
   bool DisableReadingFromCanvas() const { return disable_reading_from_canvas_; }
+  bool GetStrictMixedContentChecking() const {
+    return strict_mixed_content_checking_;
+  }
+  bool GetAllowRunningOfInsecureContent() const {
+    return allow_running_of_insecure_content_;
+  }
+  bool GetStrictlyBlockBlockableMixedContent() const {
+    return strictly_block_blockable_mixed_content_;
+  }
 
  private:
   void CopyFlagValuesFromSettings(Settings*);
@@ -25,6 +34,9 @@ class CORE_EXPORT WorkerSettings {
   // lifecycle.
   // We hard-code the flags as there're very few flags at this moment.
   bool disable_reading_from_canvas_;
+  bool strict_mixed_content_checking_;
+  bool allow_running_of_insecure_content_;
+  bool strictly_block_blockable_mixed_content_;
 };
 
 }  // namespace blink
