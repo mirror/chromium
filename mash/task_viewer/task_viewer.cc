@@ -178,11 +178,10 @@ class TaskViewerContents
                          base::Bind(&TaskViewerContents::OnGotCatalogEntries,
                                     weak_ptr_factory_.GetWeakPtr()));
   }
-  void OnServiceStarted(const service_manager::Identity& identity,
-                        uint32_t pid) override {
+  void OnServiceStarted(const service_manager::Identity& identity) override {
     for (auto it = instances_.begin(); it != instances_.end(); ++it) {
       if ((*it)->identity == identity) {
-        (*it)->pid = pid;
+        (*it)->pid = base::kNullProcessId;
         observer_->OnItemsChanged(
           static_cast<int>(it - instances_.begin()), 1);
         return;
@@ -204,7 +203,15 @@ class TaskViewerContents
     NOTREACHED();
   }
   void OnServicePIDReceived(const service_manager::Identity& identity,
-                            uint32_t pid) override {}
+                            uint32_t pid) override {
+    for (auto it = instances_.begin(); it != instances_.end(); ++it) {
+      if ((*it)->identity == identity) {
+        (*it)->pid = pid;
+        observer_->OnItemsChanged(static_cast<int>(it - instances_.begin()), 1);
+        return;
+      }
+    }
+  }
 
   bool ContainsIdentity(const service_manager::Identity& identity) const {
     for (auto& it : instances_) {
