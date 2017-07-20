@@ -15,7 +15,8 @@ SDK.ServiceWorkerCacheModel = class extends SDK.SDKModel {
     /** @type {!Map<string, !SDK.ServiceWorkerCacheModel.Cache>} */
     this._caches = new Map();
 
-    this._agent = target.cacheStorageAgent();
+    this._cacheAgent = target.cacheStorageAgent();
+    this._storageAgent = target.storageAgent();
 
     this._securityOriginManager = target.model(SDK.SecurityOriginManager);
 
@@ -35,6 +36,7 @@ SDK.ServiceWorkerCacheModel = class extends SDK.SDKModel {
     for (var securityOrigin of this._securityOriginManager.securityOrigins())
       this._addOrigin(securityOrigin);
     this._enabled = true;
+    this._liveUpdate();
   }
 
   /**
@@ -54,11 +56,18 @@ SDK.ServiceWorkerCacheModel = class extends SDK.SDKModel {
       this._loadCacheNames(securityOrigin);
   }
 
+  async _liveUpdate() {
+    while (this._enabled) {
+      await this._storageAgent.waitForUpdateCacheStorage();
+      this.refreshCacheNames();
+    }
+  }
+
   /**
    * @param {!SDK.ServiceWorkerCacheModel.Cache} cache
    */
   async deleteCache(cache) {
-    var response = await this._agent.invoke_deleteCache({cacheId: cache.cacheId});
+    var response = await this._cacheAgent.invoke_deleteCache({cacheId: cache.cacheId});
     if (response[Protocol.Error]) {
       console.error(`ServiceWorkerCacheAgent error deleting cache ${cache.toString()}: ${response[Protocol.Error]}`);
       return;
@@ -73,7 +82,7 @@ SDK.ServiceWorkerCacheModel = class extends SDK.SDKModel {
    * @return {!Promise}
    */
   async deleteCacheEntry(cache, request) {
-    var response = await this._agent.invoke_deleteEntry({cacheId: cache.cacheId, request});
+    var response = await this._cacheAgent.invoke_deleteEntry({cacheId: cache.cacheId, request});
     if (!response[Protocol.Error])
       return;
     Common.console.error(Common.UIString(
@@ -118,6 +127,7 @@ SDK.ServiceWorkerCacheModel = class extends SDK.SDKModel {
 
   _addOrigin(securityOrigin) {
     this._loadCacheNames(securityOrigin);
+    this._storageAgent.trackOrigin(securityOrigin);
   }
 
   /**
@@ -131,13 +141,14 @@ SDK.ServiceWorkerCacheModel = class extends SDK.SDKModel {
         this._cacheRemoved(cache);
       }
     }
+    this._storageAgent.untrackOrigin(securityOrigin);
   }
 
   /**
    * @param {string} securityOrigin
    */
   async _loadCacheNames(securityOrigin) {
-    var caches = await this._agent.requestCacheNames(securityOrigin);
+    var caches = await this._cacheAgent.requestCacheNames(securityOrigin);
     if (!caches)
       return;
     this._updateCacheNames(securityOrigin, caches);
@@ -217,7 +228,7 @@ SDK.ServiceWorkerCacheModel = class extends SDK.SDKModel {
    * @param {function(!Array<!SDK.ServiceWorkerCacheModel.Entry>, boolean)} callback
    */
   async _requestEntries(cache, skipCount, pageSize, callback) {
-    var response = await this._agent.invoke_requestEntries({cacheId: cache.cacheId, skipCount, pageSize});
+    var response = await this._cacheAgent.invoke_requestEntries({cacheId: cache.cacheId, skipCount, pageSize});
     if (response[Protocol.Error]) {
       console.error('ServiceWorkerCacheAgent error while requesting entries: ', response[Protocol.Error]);
       return;
