@@ -876,6 +876,15 @@ int GetMobileUninitializedMsg() {
   static int s_uninitialized_msg(0);
 
   NetworkStateHandler* handler = NetworkHandler::Get()->network_state_handler();
+  if (!handler->IsTechnologyAvailable(NetworkTypePattern::Cellular()))
+    return 0;
+
+  NetworkStateHandler::NetworkStateList mobile_networks;
+  handler->GetVisibleNetworkListByType(chromeos::NetworkTypePattern::Mobile(),
+                                       &mobile_networks);
+  if (!mobile_networks.empty())
+    return 0;
+
   if (handler->GetTechnologyState(NetworkTypePattern::Mobile()) ==
       NetworkStateHandler::TECHNOLOGY_UNINITIALIZED) {
     // TODO (lesliewatkins): Add a more descriptive message (e.g. "Enable
