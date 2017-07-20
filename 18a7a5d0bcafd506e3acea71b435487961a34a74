@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3ac7561f_adeca4f5",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-07-20T09:54:50Z",
+      "side": 1,
+      "message": "Yes, because we render glyphs at (offset_x, offset_y), as set at 5 lines above (SetGlyphAndPositions). Bounds we get is from the glyph origin, so if we move glyph origin, we should offset bounds.",
+      "parentUuid": "3326e2d1_20c2fb1c",
+      "revId": "18a7a5d0bcafd506e3acea71b435487961a34a74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a0550f84_da89774e",
         "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-20T09:42:59Z",
       "side": 1,
       "message": "I think this would need to be\nglyph_origin +\u003d FloatSize(HarfBuzzPositionToFloat(pos.x_advance), -HarfBuzzPositionToFloat(pos.y_advance));",
+      "revId": "18a7a5d0bcafd506e3acea71b435487961a34a74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38ad4191_fa9eb6a9",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-07-20T09:54:50Z",
+      "side": 1,
+      "message": "Is there a case where both x and y advance be non-zero? From the code above, I thought it doesn\u0027t happen, no?\n\nOut paint code makes the same assumption; only offsets can be x+y, but advance is always on the baseline.",
+      "parentUuid": "a0550f84_da89774e",
       "revId": "18a7a5d0bcafd506e3acea71b435487961a34a74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

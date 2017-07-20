@@ -16,6 +16,24 @@
       "revId": "455b325fa379d09b057c39947efa11524b0eec2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a193624_54a08d8b",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-07-20T09:54:50Z",
+      "side": 0,
+      "message": "Interestingly, I was misunderstanding until I investigated this, but glyph_bounding_box is logical, so advance is always X. The bound we get for a glyph is physical, and this needs to be fixed. This is #3, but until then, I think X is good. I actually tried Y, which breaks more severely, because layout code assumes that ShapeResult::glyph_bounding_box_ is logical.",
+      "parentUuid": "622b7e4c_ad87d55c",
+      "revId": "455b325fa379d09b057c39947efa11524b0eec2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
