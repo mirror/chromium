@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fd32026_a182b1d7",
+        "filename": "remoting/client/software_video_renderer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-20T23:33:40Z",
+      "side": 1,
+      "message": "I think you can remove this comment since the error message sums it up.",
+      "range": {
+        "startLine": 88,
+        "startChar": 21,
+        "endLine": 88,
+        "endChar": 76
+      },
+      "revId": "d26c1cf59ae5a28926803e072dccc69c65d9700a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37a1b6a8_13f789f1",
+        "filename": "remoting/protocol/webrtc_video_stream.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-20T23:33:40Z",
+      "side": 1,
+      "message": "this \u003d\u003d WebrtcVideoEncoderGpu::CreateForH264() ?",
+      "range": {
+        "startLine": 259,
+        "startChar": 20,
+        "endLine": 259,
+        "endChar": 72
+      },
+      "revId": "d26c1cf59ae5a28926803e072dccc69c65d9700a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b89321e_7e900770",
+        "filename": "remoting/protocol/webrtc_video_stream.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-20T23:33:40Z",
+      "side": 1,
+      "message": "\u003c ?",
+      "range": {
+        "startLine": 260,
+        "startChar": 34,
+        "endLine": 260,
+        "endChar": 35
+      },
+      "revId": "d26c1cf59ae5a28926803e072dccc69c65d9700a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
