@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "99ca6934_c876fb43",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 24
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-20T18:16:26Z",
+      "side": 1,
+      "message": "Use the full git revision hash to avoid collisions\nhttp://crrev.com/7d54c1b52c11ef28e9a19f3c6a5a7a41a25fbf5d\n\nChange \"CL.\" to \"CL:\"",
+      "parentUuid": "2663696b_322e1cea",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 49
+      },
+      "revId": "d2ea8151322b8bc07a3a0b577c6ba116b79b5a5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c1e6412_1469ea82",
         "filename": "/COMMIT_MSG",
         "patchSetId": 24

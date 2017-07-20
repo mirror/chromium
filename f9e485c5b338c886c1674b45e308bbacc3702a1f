@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "403552eb_b9f020f9",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-20T18:16:26Z",
+      "side": 1,
+      "message": "This still restates the code. How does programmatic creation by extensions affect the ordering here?\n\nI think what you mean to say is that this code is not in NewTab to avoid that case.",
+      "range": {
+        "startLine": 355,
+        "startChar": 6,
+        "endLine": 357,
+        "endChar": 23
+      },
+      "revId": "f9e485c5b338c886c1674b45e308bbacc3702a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64dbdb6d_8cc74819",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 911,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-20T18:16:26Z",
+      "side": 1,
+      "message": "This also restates the code. It might be better to remove this instead if there isn\u0027t any explanation necessary.",
+      "range": {
+        "startLine": 911,
+        "startChar": 6,
+        "endLine": 911,
+        "endChar": 75
+      },
+      "revId": "f9e485c5b338c886c1674b45e308bbacc3702a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e40c538_230ee1dc",
+        "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-20T18:16:26Z",
+      "side": 1,
+      "message": "See previous comment in this vein.",
+      "range": {
+        "startLine": 363,
+        "startChar": 2,
+        "endLine": 363,
+        "endChar": 69
+      },
+      "revId": "f9e485c5b338c886c1674b45e308bbacc3702a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
