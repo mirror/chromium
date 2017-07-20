@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7610d524_fc64e11d",
+        "filename": "chrome/browser/ui/webui/settings/settings_clear_browsing_data_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-07-20T10:51:40Z",
+      "side": 1,
+      "message": "CHECK was already used previously (line 190, left side). I guess it is used because we don\u0027t have compile time checks for the javascript interfaces and a user could execute any js from the command line.",
+      "parentUuid": "2fd4759a_fbd729aa",
+      "range": {
+        "startLine": 114,
+        "startChar": 2,
+        "endLine": 114,
+        "endChar": 10
+      },
+      "revId": "88f8f12ed5303585260eab2eea3ccfe0450d148d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1797714f_efb1dbd9",
         "filename": "chrome/browser/ui/webui/settings/settings_clear_browsing_data_handler.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "130c40a6_8302fde9",
+        "filename": "chrome/browser/ui/webui/settings/settings_clear_browsing_data_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-07-20T10:51:40Z",
+      "side": 1,
+      "message": "base::ContainsValue uses std::find, is that specialized for flat_set? It would be a waste to use a set but then iterate it to determine the existence of something. I agree that .count() seems wrong but I like that it is so short and easy to read. I changed it to data_types.find(value) !\u003d data_types.end().",
+      "parentUuid": "1797714f_efb1dbd9",
+      "range": {
+        "startLine": 177,
+        "startChar": 17,
+        "endLine": 177,
+        "endChar": 22
+      },
+      "revId": "88f8f12ed5303585260eab2eea3ccfe0450d148d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23f2e90c_dddcbcb9",
         "filename": "chrome/test/data/webui/settings/privacy_page_test.js",
         "patchSetId": 2
@@ -62,6 +110,24 @@
       "revId": "88f8f12ed5303585260eab2eea3ccfe0450d148d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "671d5b65_5cb15804",
+        "filename": "chrome/test/data/webui/settings/privacy_page_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-07-20T10:51:40Z",
+      "side": 1,
+      "message": "thanks",
+      "parentUuid": "23f2e90c_dddcbcb9",
+      "revId": "88f8f12ed5303585260eab2eea3ccfe0450d148d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +177,54 @@
     },
     {
       "key": {
+        "uuid": "39394358_687ba724",
+        "filename": "components/browsing_data/core/browsing_data_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-07-20T10:51:40Z",
+      "side": 1,
+      "message": "Thanks. Now that it is a CR_DEFINE_STATIC_LOCAL \"prefence_to_datatype\" should be the right style?",
+      "parentUuid": "75fde078_febf5e61",
+      "range": {
+        "startLine": 20,
+        "startChar": 59,
+        "endLine": 20,
+        "endChar": 79
+      },
+      "revId": "88f8f12ed5303585260eab2eea3ccfe0450d148d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0534fea2_8b1150fb",
+        "filename": "components/browsing_data/core/browsing_data_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-07-20T10:51:40Z",
+      "side": 1,
+      "message": "I used a map because I can\u0027t define a switch statement on strings. I changed to CR_DEFINE_STATIC_LOCAL and removed the ifdefs",
+      "parentUuid": "fb074ac5_8887e415",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 12
+      },
+      "revId": "88f8f12ed5303585260eab2eea3ccfe0450d148d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6bb13aca_2e1c6c47",
         "filename": "components/browsing_data/core/browsing_data_utils.cc",
         "patchSetId": 2
@@ -131,6 +245,30 @@
       "revId": "88f8f12ed5303585260eab2eea3ccfe0450d148d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e057fd3_c9e9b1d4",
+        "filename": "components/browsing_data/core/browsing_data_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-07-20T10:51:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bb13aca_2e1c6c47",
+      "range": {
+        "startLine": 259,
+        "startChar": 0,
+        "endLine": 259,
+        "endChar": 23
+      },
+      "revId": "88f8f12ed5303585260eab2eea3ccfe0450d148d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "34896727_668e3b31",
+        "filename": "components/browsing_data/core/browsing_data_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-07-20T10:51:40Z",
+      "side": 1,
+      "message": "that was just a comment that I wanted to fix before I submit the cl",
+      "parentUuid": "0ef09553_e492674e",
+      "range": {
+        "startLine": 17,
+        "startChar": 9,
+        "endLine": 17,
+        "endChar": 10
+      },
+      "revId": "88f8f12ed5303585260eab2eea3ccfe0450d148d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0c4d478_30b863fe",
         "filename": "components/browsing_data/core/browsing_data_utils.h",
         "patchSetId": 2
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "450d192e_5ae766c2",
+        "filename": "components/browsing_data/core/browsing_data_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-07-20T10:51:40Z",
+      "side": 1,
+      "message": "I tried to use this to avoid empty conditions in platform specific switch statements but it is probably simpler to remove all the ifdefs",
+      "parentUuid": "d0c4d478_30b863fe",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 23
+      },
+      "revId": "88f8f12ed5303585260eab2eea3ccfe0450d148d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03ab54de_a68eed3c",
         "filename": "components/browsing_data/core/browsing_data_utils.h",
         "patchSetId": 2
@@ -200,6 +386,30 @@
       "revId": "88f8f12ed5303585260eab2eea3ccfe0450d148d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e1bacc7_6dea1f04",
+        "filename": "components/browsing_data/core/browsing_data_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-07-20T10:51:40Z",
+      "side": 1,
+      "message": "I merged them now",
+      "parentUuid": "03ab54de_a68eed3c",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 22
+      },
+      "revId": "88f8f12ed5303585260eab2eea3ccfe0450d148d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
