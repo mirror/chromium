@@ -121,6 +121,8 @@ WebEmbeddedWorkerImpl::WebEmbeddedWorkerImpl(
         WTF::MakeUnique<ServiceWorkerInstalledScriptsManager>(
             std::move(installed_scripts_manager));
   }
+  interface_provider_.Forward(ConvertToBaseCallback(
+      WTF::Bind([](const std::string&, mojo::ScopedMessagePipeHandle) {})));
 }
 
 WebEmbeddedWorkerImpl::~WebEmbeddedWorkerImpl() {
@@ -363,6 +365,11 @@ void WebEmbeddedWorkerImpl::DidFinishDocumentLoad() {
            WTF::Unretained(this)));
   // Do nothing here since onScriptLoaderFinished() might have been already
   // invoked and |this| might have been deleted at this point.
+}
+
+service_manager::InterfaceProvider*
+WebEmbeddedWorkerImpl::GetInterfaceProvider() {
+  return &interface_provider_;
 }
 
 void WebEmbeddedWorkerImpl::SendProtocolMessage(int session_id,
