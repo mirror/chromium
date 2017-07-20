@@ -289,6 +289,9 @@ class DragStartWaiter : public aura::client::DragDropClient {
 
   bool IsDragDropInProgress() override { return drag_started_; }
 
+  void AddObserver(aura::client::DragDropClientObserver* observer) {}
+  void RemoveObserver(aura::client::DragDropClientObserver* observer) {}
+
  private:
   content::WebContents* web_contents_;
   scoped_refptr<content::MessageLoopRunner> message_loop_runner_;
