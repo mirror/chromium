@@ -16,6 +16,24 @@
       "revId": "09d839ef36f336aa04c93d473f1496f6a2914b83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b2e4c0b_f90fa2d7",
+        "filename": "components/pdf/renderer/pepper_pdf_host.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-07-20T15:06:41Z",
+      "side": 1,
+      "message": "I tried it, it didn\u0027t work initially and this way did (to be fair, I didn\u0027t know what I was doing and was making things up so it\u0027s quite possible it was a different issue keeping it from working).\n\nI didn\u0027t know if it should work the other way so I went with this.  Should I try to move the mojom::PdfListener to the PepperPDFHost?",
+      "parentUuid": "1a8debd4_bb50cd5e",
+      "revId": "09d839ef36f336aa04c93d473f1496f6a2914b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
