@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "media/gpu/vp8_decoder.h"
 #include "media/base/limits.h"
+#include "media/gpu/vp8_decoder.h"
 
 namespace media {
 

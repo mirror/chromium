@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "media/gpu/vaapi_jpeg_decode_accelerator.h"
+#include "media/gpu/vaapi/vaapi_jpeg_decode_accelerator.h"
 
 #include <stddef.h>
 #include <string.h>
@@ -19,7 +19,7 @@
 #include "media/base/video_frame.h"
 #include "media/filters/jpeg_parser.h"
 #include "media/gpu/shared_memory_region.h"
-#include "media/gpu/vaapi_picture.h"
+#include "media/gpu/vaapi/vaapi_picture.h"
 #include "third_party/libyuv/include/libyuv.h"
 
 namespace media {

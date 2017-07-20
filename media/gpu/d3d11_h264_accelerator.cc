@@ -4,9 +4,9 @@
 
 #include "media/gpu/d3d11_h264_accelerator.h"
 
+#include <windows.h>
 #include <d3d11.h>
 #include <dxva.h>
-#include <windows.h>
 
 #include "base/memory/ptr_util.h"
 #include "base/trace_event/trace_event.h"
