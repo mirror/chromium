@@ -48,8 +48,7 @@ bool TetherService::IsFeatureFlagEnabled() {
 
 void TetherService::InitializerDelegate::InitializeTether(
     cryptauth::CryptAuthService* cryptauth_service,
-    std::unique_ptr<chromeos::tether::NotificationPresenter>
-        notification_presenter,
+    chromeos::tether::NotificationPresenter* notification_presenter,
     PrefService* pref_service,
     ProfileOAuth2TokenService* token_service,
     chromeos::NetworkStateHandler* network_state_handler,
@@ -80,6 +79,11 @@ TetherService::TetherService(
       cryptauth_service_(cryptauth_service),
       network_state_handler_(network_state_handler),
       initializer_delegate_(base::MakeUnique<InitializerDelegate>()),
+      notification_presenter_(
+          chromeos::tether::TetherNotificationPresenter::Factory::NewInstance(
+              profile_,
+              message_center::MessageCenter::Get(),
+              chromeos::NetworkConnect::Get())),
       weak_ptr_factory_(this) {
   power_manager_client_->AddObserver(this);
   session_manager_client_->AddObserver(this);
@@ -111,13 +115,8 @@ void TetherService::StartTetherIfEnabled() {
     return;
   }
 
-  auto notification_presenter =
-      base::MakeUnique<chromeos::tether::TetherNotificationPresenter>(
-          profile_, message_center::MessageCenter::Get(),
-          chromeos::NetworkConnect::Get());
   initializer_delegate_->InitializeTether(
-      cryptauth_service_, std::move(notification_presenter),
-      profile_->GetPrefs(),
+      cryptauth_service_, notification_presenter_.get(), profile_->GetPrefs(),
       ProfileOAuth2TokenServiceFactory::GetForProfile(profile_),
       network_state_handler_,
       chromeos::NetworkHandler::Get()->managed_network_configuration_handler(),
@@ -186,6 +185,18 @@ void TetherService::AdapterPoweredChanged(device::BluetoothAdapter* adapter,
   UpdateTetherTechnologyState();
 }
 
+void TetherService::DefaultNetworkChanged(
+    const chromeos::NetworkState* network) {
+  if (CanEnableBluetoothNotificationBeShown()) {
+    // If the device has just been disconnected from the Internet, the user may
+    // be looking for a way to find a connection. If Bluetooth is disabled and
+    // is preventing Tether connections from being found, alert the user.
+    notification_presenter_->NotifyEnableBluetooth();
+  } else {
+    notification_presenter_->RemoveEnableBluetoothNotification();
+  }
+}
+
 void TetherService::DeviceListChanged() {
   bool was_pref_enabled = IsEnabledbyPreference();
   chromeos::NetworkStateHandler::TechnologyState tether_technology_state =
@@ -237,6 +248,9 @@ void TetherService::UpdateTetherTechnologyState() {
   } else {
     StopTether();
   }
+
+  if (!CanEnableBluetoothNotificationBeShown())
+    notification_presenter_->RemoveEnableBluetoothNotification();
 }
 
 chromeos::NetworkStateHandler::TechnologyState
@@ -269,9 +283,17 @@ void TetherService::OnBluetoothAdapterFetched(
     scoped_refptr<device::BluetoothAdapter> adapter) {
   if (shut_down_)
     return;
+
   adapter_ = adapter;
   adapter_->AddObserver(this);
+
   UpdateTetherTechnologyState();
+
+  // The user has just logged in and may not have an Internet connection. If
+  // Bluetooth being disabled is preventing the user from scanning for Tether
+  // hosts, display the "enable Bluetooth" notification.
+  if (CanEnableBluetoothNotificationBeShown())
+    notification_presenter_->NotifyEnableBluetooth();
 }
 
 bool TetherService::IsBluetoothAvailable() const {
@@ -291,6 +313,39 @@ bool TetherService::IsAllowedByPolicy() const {
 
 bool TetherService::IsEnabledbyPreference() const {
   return profile_->GetPrefs()->GetBoolean(prefs::kInstantTetheringEnabled);
+}
+
+bool TetherService::CanEnableBluetoothNotificationBeShown() {
+  if (IsBluetoothAvailable()) {
+    // If Bluetooth is enabled, there is no need to show a notification which
+    // tells the user to enable Bluetooth.
+    return false;
+  }
+
+  const chromeos::NetworkState* network =
+      network_state_handler_->DefaultNetwork();
+  if (network &&
+      (network->IsConnectingState() || network->IsConnectedState())) {
+    // If an Internet connection is available, there is no need to show a
+    // notification which helps the user find an Internet connection.
+    return false;
+  }
+
+  if (chromeos::NetworkStateHandler::TechnologyState::
+          TECHNOLOGY_UNINITIALIZED != GetTetherTechnologyState()) {
+    // If the Tether component is not enabled for another reason (e.g., no
+    // synced tether hosts), there is no need to show the notification, since
+    // the Tether DeviceState will still not be ENABLED even if Bluetooth were
+    // enabled.
+    return false;
+  }
+
+  if (!IsEnabledbyPreference()) {
+    // The notification should not be shown if the feature is disabled.
+    return false;
+  }
+
+  return true;
 }
 
 void TetherService::SetInitializerDelegateForTest(

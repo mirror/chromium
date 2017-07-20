@@ -12,13 +12,16 @@
 #include "base/run_loop.h"
 #include "base/test/scoped_feature_list.h"
 #include "base/test/scoped_task_environment.h"
+#include "chrome/browser/chromeos/net/tether_notification_presenter.h"
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/test/base/testing_profile.h"
 #include "chromeos/chromeos_switches.h"
+#include "chromeos/components/tether/fake_notification_presenter.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/fake_power_manager_client.h"
 #include "chromeos/dbus/fake_session_manager_client.h"
+#include "chromeos/dbus/fake_shill_manager_client.h"
 #include "chromeos/dbus/power_manager_client.h"
 #include "chromeos/dbus/session_manager_client.h"
 #include "chromeos/network/network_connect.h"
@@ -37,6 +40,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/message_center/message_center.h"
 
+using testing::Invoke;
 using testing::NiceMock;
 using testing::Return;
 
@@ -75,6 +79,7 @@ class TestTetherService : public TetherService {
                       session_manager_client,
                       cryptauth_service,
                       network_state_handler) {}
+  ~TestTetherService() override {}
 
   int updated_technology_state_count() {
     return updated_technology_state_count_;
@@ -97,8 +102,7 @@ class TestInitializerDelegate : public TetherService::InitializerDelegate {
   // TetherService::InitializerDelegate:
   void InitializeTether(
       cryptauth::CryptAuthService* cryptauth_service,
-      std::unique_ptr<chromeos::tether::NotificationPresenter>
-          notification_presenter,
+      chromeos::tether::NotificationPresenter* notification_presenter,
       PrefService* pref_service,
       ProfileOAuth2TokenService* token_service,
       chromeos::NetworkStateHandler* network_state_handler,
@@ -113,6 +117,27 @@ class TestInitializerDelegate : public TetherService::InitializerDelegate {
 
  private:
   bool is_tether_running_ = false;
+};
+
+class FakeNotificationPresenterFactory
+    : public chromeos::tether::TetherNotificationPresenter::Factory {
+ public:
+  FakeNotificationPresenterFactory() {}
+
+  chromeos::tether::FakeNotificationPresenter* last_created() {
+    return last_created_;
+  }
+
+  std::unique_ptr<chromeos::tether::NotificationPresenter> BuildInstance(
+      Profile* profile,
+      message_center::MessageCenter* message_center,
+      chromeos::NetworkConnect* network_connect) override {
+    last_created_ = new chromeos::tether::FakeNotificationPresenter();
+    return base::WrapUnique(last_created_);
+  }
+
+ private:
+  chromeos::tether::FakeNotificationPresenter* last_created_;
 };
 
 }  // namespace
@@ -133,6 +158,11 @@ class TetherServiceTest : public chromeos::NetworkStateTest {
     TestingProfile::Builder builder;
     profile_ = builder.Build();
 
+    fake_notification_presenter_factory_ =
+        base::WrapUnique(new FakeNotificationPresenterFactory());
+    chromeos::tether::TetherNotificationPresenter::Factory::
+        SetInstanceForTesting(fake_notification_presenter_factory_.get());
+
     fake_power_manager_client_ =
         base::MakeUnique<chromeos::FakePowerManagerClient>();
     fake_session_manager_client_ =
@@ -152,8 +182,10 @@ class TetherServiceTest : public chromeos::NetworkStateTest {
 
     mock_adapter_ =
         make_scoped_refptr(new NiceMock<device::MockBluetoothAdapter>());
+    is_adapter_powered_ = true;
     ON_CALL(*mock_adapter_, IsPresent()).WillByDefault(Return(true));
-    ON_CALL(*mock_adapter_, IsPowered()).WillByDefault(Return(true));
+    ON_CALL(*mock_adapter_, IsPowered())
+        .WillByDefault(Invoke(this, &TetherServiceTest::IsBluetoothPowered));
     device::BluetoothAdapterFactory::SetAdapterForTesting(mock_adapter_);
   }
 
@@ -170,14 +202,19 @@ class TetherServiceTest : public chromeos::NetworkStateTest {
   }
 
   void CreateTetherService() {
-    test_initializer_delegate_ = new TestInitializerDelegate();
-
     tether_service_ = base::WrapUnique(new TestTetherService(
         profile_.get(), fake_power_manager_client_.get(),
         fake_session_manager_client_.get(), fake_cryptauth_service_.get(),
         network_state_handler()));
+
+    test_initializer_delegate_ = new TestInitializerDelegate();
     tether_service_->SetInitializerDelegateForTest(
         base::WrapUnique(test_initializer_delegate_));
+
+    fake_notification_presenter_ =
+        fake_notification_presenter_factory_->last_created();
+    EXPECT_TRUE(fake_notification_presenter_);
+
     base::RunLoop().RunUntilIdle();
   }
 
@@ -209,7 +246,17 @@ class TetherServiceTest : public chromeos::NetworkStateTest {
     base::RunLoop().RunUntilIdle();
   }
 
-  content::TestBrowserThreadBundle thread_bundle_;
+  bool IsBluetoothPowered() { return is_adapter_powered_; }
+
+  void DisconnectDefaultShillNetworks() {
+    const chromeos::NetworkState* default_state;
+    while ((default_state = network_state_handler()->DefaultNetwork())) {
+      SetServiceProperty(default_state->path(), shill::kStateProperty,
+                         base::Value(shill::kStateIdle));
+    }
+  }
+
+  const content::TestBrowserThreadBundle thread_bundle_;
 
   std::unique_ptr<TestingProfile> profile_;
   std::unique_ptr<chromeos::FakePowerManagerClient> fake_power_manager_client_;
@@ -219,8 +266,14 @@ class TetherServiceTest : public chromeos::NetworkStateTest {
   std::unique_ptr<NiceMock<MockCryptAuthDeviceManager>>
       mock_cryptauth_device_manager_;
   TestInitializerDelegate* test_initializer_delegate_;
+  std::unique_ptr<FakeNotificationPresenterFactory>
+      fake_notification_presenter_factory_;
+  chromeos::tether::FakeNotificationPresenter* fake_notification_presenter_;
   std::unique_ptr<cryptauth::FakeCryptAuthService> fake_cryptauth_service_;
+
   scoped_refptr<device::MockBluetoothAdapter> mock_adapter_;
+  bool is_adapter_powered_;
+
   std::unique_ptr<TestTetherService> tether_service_;
 
  private:
@@ -292,6 +345,7 @@ TEST_F(TetherServiceTest, TestFeatureFlagEnabled) {
 
   TetherService* tether_service = TetherService::Get(profile_.get());
   ASSERT_TRUE(tether_service);
+
   base::RunLoop().RunUntilIdle();
   tether_service->Shutdown();
 }
@@ -322,7 +376,7 @@ TEST_F(TetherServiceTest, TestProhibitedByPolicy) {
 }
 
 TEST_F(TetherServiceTest, TestBluetoothIsNotPowered) {
-  ON_CALL(*mock_adapter_, IsPowered()).WillByDefault(Return(false));
+  is_adapter_powered_ = false;
 
   CreateTetherService();
 
@@ -459,4 +513,60 @@ TEST_F(TetherServiceTest, TestEnabledMultipleChanges) {
   updated_technology_state_count++;
   EXPECT_EQ(updated_technology_state_count,
             tether_service_->updated_technology_state_count());
+}
+
+TEST_F(TetherServiceTest, TestBluetoothNotification) {
+  is_adapter_powered_ = false;
+
+  CreateTetherService();
+  DisconnectDefaultShillNetworks();
+
+  // The notification should be visible since there is no active network and
+  // Bluetooth is disabled when the service started up.
+  EXPECT_TRUE(
+      fake_notification_presenter_->is_enable_bluetooth_notification_shown());
+
+  // Now, simulate the adapter being turned off. The notification should no
+  // longer be visible.
+  is_adapter_powered_ = true;
+  tether_service_->AdapterPoweredChanged(mock_adapter_.get(),
+                                         true /* powered */);
+  EXPECT_FALSE(
+      fake_notification_presenter_->is_enable_bluetooth_notification_shown());
+
+  // Now, simulate the adapter being turned back on. The notification should
+  // still *not* be available. It should only be shown when the service starts
+  // up or when the network has been disconnected.
+  is_adapter_powered_ = false;
+  tether_service_->AdapterPoweredChanged(mock_adapter_.get(),
+                                         false /* powered */);
+  EXPECT_FALSE(
+      fake_notification_presenter_->is_enable_bluetooth_notification_shown());
+
+  // Now, connect to the default Ethernet network. The notification still should
+  // not be shown.
+  SetServiceProperty(
+      network_state_handler()
+          ->GetNetworkStateFromGuid(
+              chromeos::FakeShillManagerClient::kFakeEthernetNetworkGuid)
+          ->path(),
+      shill::kStateProperty, base::Value(shill::kStateOnline));
+  EXPECT_FALSE(
+      fake_notification_presenter_->is_enable_bluetooth_notification_shown());
+
+  // Now, disconnect. The notification should be shown again.
+  SetServiceProperty(
+      network_state_handler()
+          ->GetNetworkStateFromGuid(
+              chromeos::FakeShillManagerClient::kFakeEthernetNetworkGuid)
+          ->path(),
+      shill::kStateProperty, base::Value(shill::kStateIdle));
+  EXPECT_TRUE(
+      fake_notification_presenter_->is_enable_bluetooth_notification_shown());
+
+  // Now, disable the Tether preference. The notification should be hidden
+  // again.
+  SetTetherTechnologyStateEnabled(false);
+  EXPECT_FALSE(
+      fake_notification_presenter_->is_enable_bluetooth_notification_shown());
 }

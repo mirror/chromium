@@ -37,6 +37,25 @@ class TetherNotificationPresenter
     : public NotificationPresenter,
       public message_center::MessageCenterObserver {
  public:
+  class Factory {
+   public:
+    static std::unique_ptr<NotificationPresenter> NewInstance(
+        Profile* profile,
+        message_center::MessageCenter* message_center,
+        NetworkConnect* network_connect);
+
+    static void SetInstanceForTesting(Factory* factory);
+
+   protected:
+    virtual std::unique_ptr<NotificationPresenter> BuildInstance(
+        Profile* profile,
+        message_center::MessageCenter* message_center,
+        NetworkConnect* network_connect);
+
+   private:
+    static Factory* factory_instance_;
+  };
+
   // Caller must ensure that |profile|, |message_center|, and |network_connect|
   // outlive this instance.
   TetherNotificationPresenter(Profile* profile,
@@ -102,6 +121,7 @@ class TetherNotificationPresenter
       std::unique_ptr<message_center::Notification> notification);
   void OpenSettingsAndRemoveNotification(const std::string& settings_subpage,
                                          const std::string& notification_id);
+  void RemoveNotificationIfVisible(const std::string& notification_id);
 
   Profile* profile_;
   message_center::MessageCenter* message_center_;
