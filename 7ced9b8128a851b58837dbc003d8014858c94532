@@ -46,6 +46,30 @@
       "revId": "7ced9b8128a851b58837dbc003d8014858c94532",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0888a563_1858b639",
+        "filename": "chrome/browser/chrome_navigation_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-07-20T18:35:16Z",
+      "side": 1,
+      "message": "We\u0027ve chatted offline, that the race is not limited to checking the state of a *specific* feature (e.g. kSignInProcessIsolation) - the race is with *all* the other feature checks - g_instance from base/feature_list.cc can be\n\n1. written to by FeatureList::SetInstance (called indirectly by initialization of ScopedFeatureList)\n\n2. read from by FeatureList::IsEnabled\n\nTSAN rightfully points out that this is racey when 1 and 2 happen on 2 separate threads (there is no mutex or other cross-thread-sychronization happening).\n\n\nThat said - I am not sure if this should affect the current CL:\n1. I think if the new test passes (and if it passes the TSAN bot),\n   then things are probably fine (the racey initialization is already\n   happening in a few other tests - see https://crbug.com/722409#c9).\n2. I defer to asvitkine@\u0027s judgement here.  LGTM from my side.",
+      "parentUuid": "256f041d_68ced4e8",
+      "range": {
+        "startLine": 580,
+        "startChar": 4,
+        "endLine": 580,
+        "endChar": 43
+      },
+      "revId": "7ced9b8128a851b58837dbc003d8014858c94532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
