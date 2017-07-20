@@ -34,6 +34,8 @@ class CoordinationUnitImpl : public mojom::CoordinationUnit {
 
   static const FrameCoordinationUnitImpl* ToFrameCoordinationUnit(
       const CoordinationUnitImpl* coordination_unit);
+  static std::vector<CoordinationUnitImpl*> GetCoordinationUnitsOfType(
+      CoordinationUnitType type);
 
   // Overridden from mojom::CoordinationUnit:
   void SendEvent(mojom::EventPtr event) override;
