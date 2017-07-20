@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c80a717c_78470d0f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/perf_ui/FlameChart.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-20T01:39:35Z",
+      "side": 1,
+      "message": "This would potentially invoke some callbacks from a half-constructed object, which I find somewhat scary. Perhaps just invoke this._chartViewport.setWindowTimes() instead?",
+      "revId": "382622665f7d41a3979f69b4cc6fcb7268aec837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
