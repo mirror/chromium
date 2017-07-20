@@ -96,6 +96,11 @@
       showcase::kClassForInstantiationKey : @"SCTextBadgeViewController",
       showcase::kUseCaseKey : @"Text badge view",
     },
+    @{
+      showcase::kClassForDisplayKey : @"BubbleViewController",
+      showcase::kClassForInstantiationKey : @"SCBubbleCoordinator",
+      showcase::kUseCaseKey : @"Bubble",
+    },
   ];
 }
 
