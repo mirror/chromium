@@ -24,6 +24,7 @@ const char kUkmUpdatingPromptShown[] = "Updating.Prompt.Shown";
 const char kUkmUpdatingPromptTrigger[] = "Updating.Prompt.Trigger";
 const char kUkmUpdatingPromptInteraction[] = "Updating.Prompt.Interaction";
 const char kUkmSavingPromptShown[] = "Saving.Prompt.Shown";
+const char kUkmSavingPromptSuppressed[] = "Saving.Prompt.Suppressed";
 const char kUkmSavingPromptTrigger[] = "Saving.Prompt.Trigger";
 const char kUkmSavingPromptInteraction[] = "Saving.Prompt.Interaction";
 const char kUkmManagerFillEvent[] = "ManagerFill.Action";
@@ -321,6 +322,12 @@ void PasswordFormMetricsRecorder::RecordPasswordBubbleShown(
       NOTREACHED();
       return;
   }
+}
+
+void PasswordFormMetricsRecorder::RecordPasswordSaveBubbleSuppressed(
+    PasswordFormMetricsRecorder::BubbleSuppression suppression) {
+  RecordUkmMetric(kUkmSavingPromptSuppressed,
+                  static_cast<uint64_t>(suppression));
 }
 
 void PasswordFormMetricsRecorder::RecordUIDismissalReason(

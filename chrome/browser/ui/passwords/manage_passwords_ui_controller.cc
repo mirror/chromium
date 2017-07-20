@@ -70,18 +70,26 @@ ManagePasswordsUIController::~ManagePasswordsUIController() {}
 
 void ManagePasswordsUIController::OnPasswordSubmitted(
     std::unique_ptr<PasswordFormManager> form_manager) {
-  bool show_bubble = !form_manager->IsBlacklisted();
+  using BubbleSuppression =
+      password_manager::PasswordFormMetricsRecorder::BubbleSuppression;
+  BubbleSuppression bubble_suppression =
+      form_manager->IsBlacklisted() ? BubbleSuppression::kBlacklisted
+                                    : BubbleSuppression::kNotSuppressed;
   DestroyAccountChooser();
   passwords_data_.OnPendingPassword(std::move(form_manager));
-  if (show_bubble) {
+  if (bubble_suppression == BubbleSuppression::kNotSuppressed) {
     const password_manager::InteractionsStats* stats =
         GetCurrentInteractionStats();
     const int show_threshold =
         password_bubble_experiment::GetSmartBubbleDismissalThreshold();
     if (stats && show_threshold > 0 && stats->dismissal_count >= show_threshold)
-      show_bubble = false;
+      bubble_suppression = BubbleSuppression::kDismissalThresholdReached;
   }
-  if (show_bubble)
+  password_manager::PasswordFormMetricsRecorder* metrics_recorder =
+      passwords_data_.form_manager()->metrics_recorder();
+  if (metrics_recorder)
+    metrics_recorder->RecordPasswordSaveBubbleSuppressed(bubble_suppression);
+  if (bubble_suppression == BubbleSuppression::kNotSuppressed)
     bubble_status_ = SHOULD_POP_UP;
   UpdateBubbleAndIconVisibility();
 }

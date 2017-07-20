@@ -55,6 +55,10 @@ extern const char kUkmUpdatingPromptInteraction[];
 // credential.
 extern const char kUkmSavingPromptShown[];
 
+// This metric records whether a password save prompt was suppressed. The values
+// correspond to PasswordFormMetricsRecorder::BubbleSuppression.
+extern const char kUkmSavingPromptSuppressed[];
+
 // This metric records the reason why a password save prompt was shown to ask
 // the user for permission to save a new credential. The values correspond to
 // PasswordFormMetricsRecorder::BubbleTrigger.
@@ -206,6 +210,18 @@ class PasswordFormMetricsRecorder
     kIgnored = 3
   };
 
+  enum class BubbleSuppression {
+    // Default value for Protobuf.
+    kUnknown = 0,
+    // No suppression of a bubble happened.
+    kNotSuppressed = 1,
+    // A bubble was suppressed because the user blacklisted a page.
+    kBlacklisted = 2,
+    // A bubble was suppressed because the user dismissed the bubble frequently
+    // enough to not show it anymore.
+    kDismissalThresholdReached = 3,
+  };
+
   // This enum is a designed to be able to collect all kinds of potentially
   // interesting user interactions with sites and password manager UI in
   // relation to a given form. In contrast to UserAction, it is intended to be
@@ -268,6 +284,9 @@ class PasswordFormMetricsRecorder
   void RecordPasswordBubbleShown(
       metrics_util::CredentialSourceType credential_source_type,
       metrics_util::UIDisplayDisposition display_disposition);
+
+  // Record whether a save password bubble was suppressed.
+  void RecordPasswordSaveBubbleSuppressed(BubbleSuppression suppression);
 
   // Records the dismissal of a password bubble.
   void RecordUIDismissalReason(
