@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "fa44a454_9dae80de",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-20T15:40:29Z",
+      "side": 1,
+      "message": "I have now moved the parameter so that it is the last parameter in WebappInfo#create() and WebApkInfo#create()",
+      "parentUuid": "1f11a0a6_56d47295",
+      "range": {
+        "startLine": 60,
+        "startChar": 20,
+        "endLine": 60,
+        "endChar": 36
+      },
+      "revId": "6322016950bfd1a53cfda0e92c3bcbd44855e6f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e016022c_3044fbc5",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/webapps/WebApkInfoTest.java",
         "patchSetId": 1
