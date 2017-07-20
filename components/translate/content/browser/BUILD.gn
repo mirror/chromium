@@ -20,5 +20,6 @@ static_library("browser") {
     "//content/public/browser",
     "//content/public/common",
     "//net",
+    "//third_party/s2lite:s2cellid",
   ]
 }
