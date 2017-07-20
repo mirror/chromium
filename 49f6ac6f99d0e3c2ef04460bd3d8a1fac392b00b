@@ -34,6 +34,24 @@
       "revId": "49f6ac6f99d0e3c2ef04460bd3d8a1fac392b00b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d291463f_7f2f5719",
+        "filename": "chrome/test/chromedriver/server/http_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-07-20T17:44:21Z",
+      "side": 1,
+      "message": "Hrm, ok. Wonder why this didn\u0027t hit presubmit issues in previous revisions of this file.",
+      "parentUuid": "4c80798a_d852b55b",
+      "revId": "49f6ac6f99d0e3c2ef04460bd3d8a1fac392b00b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
