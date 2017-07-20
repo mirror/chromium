@@ -6,17 +6,21 @@
 
 #include <utility>
 
+#include "base/strings/string_number_conversions.h"
+#include "chrome/browser/browser_process.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/service_names.mojom.h"
+#include "services/metrics/public/cpp/ukm_recorder.h"
 #include "services/metrics/public/interfaces/ukm_interface.mojom.h"
 #include "services/resource_coordinator/public/cpp/resource_coordinator_features.h"
 #include "services/resource_coordinator/public/interfaces/coordination_unit.mojom.h"
 #include "services/resource_coordinator/public/interfaces/service_callbacks.mojom.h"
 #include "services/resource_coordinator/public/interfaces/service_constants.mojom.h"
 #include "services/service_manager/public/cpp/connector.h"
+#include "url/gurl.h"
 
 DEFINE_WEB_CONTENTS_USER_DATA_KEY(ResourceCoordinatorWebContentsObserver);
 
@@ -106,6 +110,11 @@ void ResourceCoordinatorWebContentsObserver::DidFinishNavigation(
     return;
   }
 
+  if (navigation_handle->IsInMainFrame()) {
+    url_ = navigation_handle->GetURL().spec();
+    UpdateUkmRecorder();
+  }
+
   content::RenderFrameHost* render_frame_host =
       navigation_handle->GetRenderFrameHost();
 
@@ -116,4 +125,17 @@ void ResourceCoordinatorWebContentsObserver::DidFinishNavigation(
   auto* process_resource_coordinator =
       render_frame_host->GetProcess()->GetProcessResourceCoordinator();
   process_resource_coordinator->AddChild(*frame_resource_coordinator);
+}
+
+void ResourceCoordinatorWebContentsObserver::UpdateUkmRecorder() {
+  ukm_source_id_ = ukm::UkmRecorder::GetNewSourceID();
+  g_browser_process->ukm_recorder()->UpdateSourceURL(ukm_source_id_,
+                                                     GURL(url_));
+  // ukm::SourceId types need to be converted to a string because base::Value
+  // does not guarrantee that its int type will be 64 bits. Instead
+  // std:string is used as a canonical format. base::Int64ToString
+  // and base::StringToInt64 are used for encoding/decoding respectively.
+  tab_resource_coordinator_->SetProperty(
+      resource_coordinator::mojom::PropertyType::kUkmSourceId,
+      base::MakeUnique<base::Value>(base::Int64ToString(ukm_source_id_)));
 }
