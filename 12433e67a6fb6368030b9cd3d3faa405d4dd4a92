@@ -52,6 +52,24 @@
       "revId": "12433e67a6fb6368030b9cd3d3faa405d4dd4a92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7f8f605c_82c020d4",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 30439,
+      "author": {
+        "id": 1147716
+      },
+      "writtenOn": "2017-07-20T21:00:16Z",
+      "side": 1,
+      "message": "as discussed, maybe just appending \" provided to the client\" would be more clear. But I can live with this as is as well.",
+      "parentUuid": "9f1c1342_d839b03d",
+      "revId": "12433e67a6fb6368030b9cd3d3faa405d4dd4a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
