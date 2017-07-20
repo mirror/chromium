@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "865260aa_fda1fad3",
+        "filename": "chrome/browser/ui/views/apps/shaped_app_window_targeter_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-07-20T23:21:02Z",
+      "side": 1,
+      "message": "No this is still necessary. I will check why in a bit but something in UpdateShape() call resets the kResizeBehaviorCanResize bit in kResizeBehaviorKey.",
+      "parentUuid": "5cf3f834_8ff89e32",
+      "revId": "e415b6db9e9a3c9f0d6093913daae587b566b026",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a95a8ff3_e55e8e02",
         "filename": "chrome/browser/ui/views/apps/shaped_app_window_targeter_unittest.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "e415b6db9e9a3c9f0d6093913daae587b566b026",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be1bf875_8032eda8",
+        "filename": "chrome/browser/ui/views/apps/shaped_app_window_targeter_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-07-20T23:21:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a95a8ff3_e55e8e02",
+      "revId": "e415b6db9e9a3c9f0d6093913daae587b566b026",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
