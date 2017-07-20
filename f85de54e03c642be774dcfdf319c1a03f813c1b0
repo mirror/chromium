@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4468121e_636255d8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 22
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-20T09:04:41Z",
+      "side": 1,
+      "message": "s/scope/scopes",
+      "revId": "f85de54e03c642be774dcfdf319c1a03f813c1b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e23b7e39_e4da5acc",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/worklet/webexposed/global-interface-listing-paint-worklet-expected.txt",
+        "patchSetId": 22
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-20T09:04:41Z",
+      "side": 1,
+      "message": "I\u0027m not sure how/why this change exposes more APIs. Is this necessary for supporting multiple global scopes?",
+      "revId": "f85de54e03c642be774dcfdf319c1a03f813c1b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76afbccb_7678ec27",
+        "filename": "third_party/WebKit/Source/modules/csspaint/DocumentPaintDefinition.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-20T09:04:41Z",
+      "side": 1,
+      "message": "Can you add a class-level comment?",
+      "revId": "f85de54e03c642be774dcfdf319c1a03f813c1b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4928d150_97bfa005",
+        "filename": "third_party/WebKit/Source/modules/csspaint/DocumentPaintDefinition.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-20T09:04:41Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "f85de54e03c642be774dcfdf319c1a03f813c1b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e44ccae0_f263bb4a",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-20T09:04:41Z",
+      "side": 1,
+      "message": "Can you move this to PaintWorkletGlobalScope.cpp?",
+      "revId": "f85de54e03c642be774dcfdf319c1a03f813c1b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
