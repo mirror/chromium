@@ -35,6 +35,7 @@ struct HostMessageContext;
 namespace pdf {
 
 class PdfAccessibilityTree;
+class PdfListenerImpl;
 
 class PepperPDFHost : public ppapi::host::ResourceHost {
  public:
@@ -71,6 +72,10 @@ class PepperPDFHost : public ppapi::host::ResourceHost {
       const IPC::Message& msg,
       ppapi::host::HostMessageContext* context) override;
 
+  void SetCaretPosition(const gfx::PointF& position);
+  void MoveRangeSelectionExtent(const gfx::PointF& extent);
+  void SetSelectionBounds(const gfx::PointF& base, const gfx::PointF& extent);
+
  private:
   int32_t OnHostMsgDidStartLoading(ppapi::host::HostMessageContext* context);
   int32_t OnHostMsgDidStopLoading(ppapi::host::HostMessageContext* context);
@@ -99,6 +104,11 @@ class PepperPDFHost : public ppapi::host::ResourceHost {
       const PP_PrivateAccessibilityPageInfo& page_info,
       const std::vector<PP_PrivateAccessibilityTextRunInfo>& text_runs,
       const std::vector<PP_PrivateAccessibilityCharInfo>& chars);
+  int32_t OnHostMsgSelectionChanged(ppapi::host::HostMessageContext* context,
+                                    const PP_FloatPoint& left,
+                                    int32_t left_height,
+                                    const PP_FloatPoint& right,
+                                    int32_t right_height);
 
   void CreatePdfAccessibilityTreeIfNeeded();
 
@@ -109,6 +119,7 @@ class PepperPDFHost : public ppapi::host::ResourceHost {
   std::unique_ptr<PdfAccessibilityTree> pdf_accessibility_tree_;
   content::RendererPpapiHost* const host_;
   mojom::PdfServiceAssociatedPtr remote_pdf_service_;
+  std::unique_ptr<PdfListenerImpl> listener_impl_;
 
   DISALLOW_COPY_AND_ASSIGN(PepperPDFHost);
 };
