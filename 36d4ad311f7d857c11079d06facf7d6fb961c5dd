@@ -104,6 +104,24 @@
       "revId": "36d4ad311f7d857c11079d06facf7d6fb961c5dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "93d69995_ce3f32f5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadUpdate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-07-20T16:52:47Z",
+      "side": 1,
+      "message": "the issue is that all the fields are populated to DownloadUpdate. So if the caller only calls Builder.setContentId(), DownloadUpdate.getNotificationId() will return a 0, which is valid notification id since we use -1 to indicate an invalid notification.\n\nAlthough using the java default values makes sense for most of the fields here, notificationId, systemDownloadId all needs to be initialized to -1.",
+      "parentUuid": "c0909a92_0947a089",
+      "revId": "36d4ad311f7d857c11079d06facf7d6fb961c5dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
