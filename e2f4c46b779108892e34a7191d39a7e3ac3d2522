@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d12db0e6_0f672109",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-20T15:54:48Z",
+      "side": 1,
+      "message": "If there\u0027s a failure, it\u0027s not valid to sum private_pages_resident and shared_pages_resident.\n\nAnd you don\u0027t want to return the sum either.",
+      "revId": "e2f4c46b779108892e34a7191d39a7e3ac3d2522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d5996d9_ab651f96",
+        "filename": "base/trace_event/process_memory_dump_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-20T15:54:48Z",
+      "side": 1,
+      "message": "Can you also make a shared memory region, only write to half of it, and confirm that half the bytes are resident?",
+      "revId": "e2f4c46b779108892e34a7191d39a7e3ac3d2522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
