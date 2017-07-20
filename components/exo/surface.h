@@ -19,6 +19,7 @@
 #include "components/exo/layer_tree_frame_sink_holder.h"
 #include "third_party/skia/include/core/SkBlendMode.h"
 #include "third_party/skia/include/core/SkRegion.h"
+#include "ui/aura/client/drag_drop_delegate.h"
 #include "ui/aura/window.h"
 #include "ui/aura/window_observer.h"
 #include "ui/compositor/compositor_vsync_manager.h"
@@ -56,7 +57,8 @@ class Surface : public ui::ContextFactoryObserver,
                 public aura::WindowObserver,
                 public ui::PropertyHandler,
                 public ui::CompositorVSyncManager::Observer,
-                public cc::BeginFrameObserverBase {
+                public cc::BeginFrameObserverBase,
+                public aura::client::DragDropDelegate {
  public:
   using PropertyDeallocator = void (*)(int64_t value);
 
@@ -221,6 +223,12 @@ class Surface : public ui::ContextFactoryObserver,
   // Overridden from cc::BeginFrameObserverBase:
   bool OnBeginFrameDerivedImpl(const cc::BeginFrameArgs& args) override;
   void OnBeginFrameSourcePausedChanged(bool paused) override {}
+
+  // Overriden from aura::client::DragDropDelegate:
+  void OnDragEntered(const ui::DropTargetEvent& event) override;
+  int OnDragUpdated(const ui::DropTargetEvent& event) override;
+  void OnDragExited() override;
+  int OnPerformDrop(const ui::DropTargetEvent& event) override;
 
  private:
   struct State {
