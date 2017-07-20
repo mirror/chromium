@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9756471b_2634215c",
+        "filename": "chrome/browser/resources/media_router/elements/media_router_container/media_router_container.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 967,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-07-20T17:52:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb5c82c0_362a83d1",
+      "range": {
+        "startLine": 967,
+        "startChar": 37,
+        "endLine": 967,
+        "endChar": 46
+      },
+      "revId": "bb4c4051d7f814c29e2728f6e037b1a0a3d6cf2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "810b3944_4011a1e5",
         "filename": "chrome/browser/resources/media_router/icons/media_router_icons.html",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1b1aba62_3aaa20ec",
+        "filename": "chrome/browser/resources/media_router/icons/media_router_icons.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-07-20T17:52:32Z",
+      "side": 1,
+      "message": "Yup, this is just a dummy icon, and I sent you the CL to add the actual icon on chrome-internal-review.",
+      "parentUuid": "810b3944_4011a1e5",
+      "range": {
+        "startLine": 30,
+        "startChar": 1,
+        "endLine": 30,
+        "endChar": 2
+      },
+      "revId": "bb4c4051d7f814c29e2728f6e037b1a0a3d6cf2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c298dd44_c5611364",
         "filename": "chrome/browser/resources/media_router/media_router_data.js",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-20T07:33:50Z",
       "side": 1,
       "message": "I find it surprising that we\u0027re not using the generated enum from the Mojo JS bindings.",
+      "range": {
+        "startLine": 109,
+        "startChar": 2,
+        "endLine": 109,
+        "endChar": 14
+      },
+      "revId": "bb4c4051d7f814c29e2728f6e037b1a0a3d6cf2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dab55ded_9df2d545",
+        "filename": "chrome/browser/resources/media_router/media_router_data.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-07-20T17:52:32Z",
+      "side": 1,
+      "message": "The communication between the dialog WebUI and the browser process isn\u0027t done over Mojo, so the WebUI doesn\u0027t know about the Mojo stuff.",
+      "parentUuid": "c298dd44_c5611364",
       "range": {
         "startLine": 109,
         "startChar": 2,
