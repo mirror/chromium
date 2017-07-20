@@ -16,6 +16,24 @@
       "revId": "fecf6a231f4a3c00186a1237443001edf07f2f66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fce3d0f0_ede0b326",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-20T12:33:36Z",
+      "side": 1,
+      "message": "Since you brought it up - I actually see no reason for having mAccountManagerFacade as a field. I can remove it in this CL if you agree that it is redundant.",
+      "parentUuid": "62f755ca_a440ae94",
+      "revId": "fecf6a231f4a3c00186a1237443001edf07f2f66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
