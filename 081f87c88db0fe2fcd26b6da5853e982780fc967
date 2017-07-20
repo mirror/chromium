@@ -378,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "347ff38e_274b99b5",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-20T21:02:42Z",
+      "side": 1,
+      "message": "In production, it\u0027s uncommon, but it\u0027s not always enough - we\u0027ve run into crashes because the other path wasn\u0027t handled correctly (Rare crashes, admittedly).  Particularly in the case where we encounter the end of the file before we\u0027ve finished sniffing, and the resource is sniffed as a download (rarer still).",
+      "parentUuid": "fab0d53f_51a7d680",
+      "range": {
+        "startLine": 208,
+        "startChar": 26,
+        "endLine": 208,
+        "endChar": 44
+      },
+      "revId": "081f87c88db0fe2fcd26b6da5853e982780fc967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "435d4c2d_1a9e69ec",
         "filename": "content/network/url_loader_unittest.cc",
         "patchSetId": 9
@@ -461,6 +485,29 @@
       "side": 1,
       "message": "layout tests for network service are only run on our FYI bot.\n\nI agree layout tests are harder to debug than unit tests, but I want to point out that this is a slippery slope since in general we wouldn\u0027t want to duplicate layout tests in unit tests. in this case though, i just saw we have a bunch of RDH browser tests that test sniffing, so in the interest of not decreasing test coverage once we switch to network service \u0026 remove RDH, I\u0027ve run them with URLLoaderImpl. Also added an empty test.",
       "parentUuid": "4dc84fdf_2420e2f0",
+      "range": {
+        "startLine": 211,
+        "startChar": 1,
+        "endLine": 211,
+        "endChar": 0
+      },
+      "revId": "081f87c88db0fe2fcd26b6da5853e982780fc967",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4296407e_f0093e3f",
+        "filename": "content/network/url_loader_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-20T21:02:42Z",
+      "side": 1,
+      "message": "Great!  Thanks (And I agree we don\u0027t want to go overboard on tests, I\u0027ve just run into a lot of obscure corner cases in the past where the old loading stack could fall over)",
       "range": {
         "startLine": 211,
         "startChar": 1,
