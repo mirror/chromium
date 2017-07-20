@@ -6,13 +6,22 @@
 
 #include "base/logging.h"
 #include "components/exo/data_device_delegate.h"
+#include "components/exo/data_device_manager.h"
 
 namespace exo {
 
-DataDevice::DataDevice(DataDeviceDelegate* delegate) : delegate_(delegate) {}
+DataDevice::DataDevice(DataDeviceDelegate* delegate) : delegate_(delegate) {
+  delegate_->OnDataDeviceCreating(this);
+  DataDeviceManager* manager = DataDeviceManager::GetInstance();
+  if (manager)
+    manager->AddDataDevice(this);
+}
 
 DataDevice::~DataDevice() {
   delegate_->OnDataDeviceDestroying(this);
+  DataDeviceManager* manager = DataDeviceManager::GetInstance();
+  if (manager)
+    manager->RemoveDataDevice(this);
 }
 
 void DataDevice::StartDrag(const DataSource* source_resource,

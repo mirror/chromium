@@ -50,6 +50,8 @@
 #include "components/exo/buffer.h"
 #include "components/exo/data_device.h"
 #include "components/exo/data_device_delegate.h"
+#include "components/exo/data_device_manager.h"
+#include "components/exo/data_device_manager_delegate.h"
 #include "components/exo/data_offer.h"
 #include "components/exo/data_offer_delegate.h"
 #include "components/exo/data_source.h"
@@ -232,11 +234,19 @@ DEFINE_UI_CLASS_PROPERTY_KEY(bool, kIgnoreWindowActivated, true);
 DEFINE_UI_CLASS_PROPERTY_KEY(bool, kSurfaceHasStylusToolKey, false);
 
 // A property key containing the data offer resource that is associated with
+// data device object.
+DEFINE_UI_CLASS_PROPERTY_KEY(wl_resource*, kDataDeviceResourceKey, nullptr);
+
+// A property key containing the data offer resource that is associated with
 // data offer object.
 DEFINE_UI_CLASS_PROPERTY_KEY(wl_resource*, kDataOfferResourceKey, nullptr);
 
 wl_resource* GetSurfaceResource(Surface* surface) {
   return surface->GetProperty(kSurfaceResourceKey);
+}
+
+wl_resource* GetDataDeviceResource(const DataDevice* data_device) {
+  return data_device->GetProperty(kDataDeviceResourceKey);
 }
 
 wl_resource* GetDataOfferResource(const DataOffer* data_offer) {
@@ -2825,13 +2835,15 @@ const struct wl_data_offer_interface data_offer_implementation = {
 
 ////////////////////////////////////////////////////////////////////////////////
 // wl_data_device_interface:
-
 class WaylandDataDeviceDelegate : public DataDeviceDelegate {
  public:
   WaylandDataDeviceDelegate(wl_client* client, wl_resource* device_resource)
       : client_(client), data_device_resource_(device_resource) {}
 
   // Overridden from DataDeviceDelegate:
+  void OnDataDeviceCreating(DataDevice* device) override {
+    device->SetProperty(kDataDeviceResourceKey, data_device_resource_);
+  }
   void OnDataDeviceDestroying(DataDevice* device) override { delete this; }
   class DataOffer* OnDataOffer(const std::vector<std::string>& mime_types,
                                const base::flat_set<DndAction>& source_actions,
@@ -2905,6 +2917,41 @@ const struct wl_data_device_interface data_device_implementation = {
 
 ////////////////////////////////////////////////////////////////////////////////
 // wl_data_device_manager_interface:
+class WaylandDataDeviceManagerDelegate : public DataDeviceManagerDelegate {
+ public:
+  void OnDataDeviceManagerDestroying(DataDeviceManager* data_device) override {
+    delete this;
+  }
+
+  void AddDataDevice(DataDevice* data_device) override {
+    wl_resource* data_device_resource = GetDataDeviceResource(data_device);
+    wl_client* client_resource = wl_resource_get_client(data_device_resource);
+    if (devices_.count(client_resource) == 0)
+      devices_.emplace(client_resource, base::flat_set<DataDevice*>());
+    devices_.find(client_resource)->second.insert(data_device);
+  }
+
+  void RemoveDataDevice(DataDevice* data_device) override {
+    wl_resource* data_device_resource = GetDataDeviceResource(data_device);
+    wl_client* client_resource = wl_resource_get_client(data_device_resource);
+    devices_.find(client_resource)->second.erase(data_device);
+    if (devices_.count(client_resource) == 0)
+      devices_.erase(client_resource);
+  }
+
+  base::flat_set<DataDevice*> GetDataDevicesForSurface(Surface* surface) {
+    wl_resource* surface_resource = GetSurfaceResource(surface);
+    wl_client* client_resource = wl_resource_get_client(surface_resource);
+    auto it = devices_.find(client_resource);
+    if (it != devices_.end())
+      return it->second;
+    else
+      return base::flat_set<DataDevice*>();
+  }
+
+ private:
+  std::map<wl_client*, base::flat_set<DataDevice*>> devices_;
+};
 
 void data_device_manager_create_data_source(wl_client* client,
                                             wl_resource* resource,
@@ -2938,8 +2985,9 @@ void bind_data_device_manager(wl_client* client,
                               uint32_t id) {
   wl_resource* resource =
       wl_resource_create(client, &wl_data_device_manager_interface, 1, id);
-  wl_resource_set_implementation(resource, &data_device_manager_implementation,
-                                 nullptr, nullptr);
+  SetImplementation(resource, &data_device_manager_implementation,
+                    base::MakeUnique<DataDeviceManager>(
+                        new WaylandDataDeviceManagerDelegate()));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
