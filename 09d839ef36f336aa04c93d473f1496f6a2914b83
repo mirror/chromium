@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a8debd4_bb50cd5e",
+        "filename": "components/pdf/renderer/pepper_pdf_host.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-07-20T15:02:50Z",
+      "side": 1,
+      "message": "Is there a reason why PepperPDFHost doesn\u0027t implement mojom::PdfListener itself instead of having this extra class?",
+      "revId": "09d839ef36f336aa04c93d473f1496f6a2914b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
