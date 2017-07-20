@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "b5d01f1a_eea26be4",
+        "filename": "components/error_page/common/net_error_info.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-20T02:28:23Z",
+      "side": 1,
+      "message": "DNS",
+      "revId": "d6bbffc34b5dd8789dcc05a4ab2021621665cbeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bdaf6c3_0671c929",
+        "filename": "components/error_page/common/net_error_info.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-20T02:28:23Z",
+      "side": 1,
+      "message": "HTTP",
+      "revId": "d6bbffc34b5dd8789dcc05a4ab2021621665cbeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d24b14f_d991dacb",
+        "filename": "components/error_page/common/net_error_info.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-20T02:28:23Z",
+      "side": 1,
+      "message": "kErro -\u003e kError",
+      "revId": "d6bbffc34b5dd8789dcc05a4ab2021621665cbeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "175f9cef_86b7d63c",
         "filename": "components/error_page/renderer/net_error_helper_core.cc",
         "patchSetId": 16
