@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45c2257d_95c54fdf",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceError.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-20T05:49:24Z",
+      "side": 1,
+      "message": "Currently this check is needed to be correct, but if we disallow passing the empty domain to the ctor, this is just an optimization. So, optionally we could remove this check.",
+      "revId": "4163a0cd368598b2e62213a22de6b6265b06b7c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9913fdb_65d735ef",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceError.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-07-20T05:49:24Z",
+      "side": 1,
+      "message": "Is it possible to disallow passing Domain::kEmpty to this constructor by adding DCHECK?\nIsNull() looks better to return true only when the ResourceError is constructed via default ctor.\n\nAnother option is to have something informative in WebURLError.",
+      "revId": "4163a0cd368598b2e62213a22de6b6265b06b7c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
