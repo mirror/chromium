@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8c4f987_c105ebb7",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-20T05:14:37Z",
+      "side": 1,
+      "message": "FYI, you can just pass the RHS of these assignments as arguments to New() on line 428-429.",
+      "range": {
+        "startLine": 430,
+        "startChar": 2,
+        "endLine": 431,
+        "endChar": 43
+      },
+      "revId": "e3a4444f3d2c7c54a2bfe50a86472223a54e5081",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
