@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "bd943a37_967f26c7",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-20T16:33:43Z",
+      "side": 1,
+      "message": "nit: \u0027app_list::\u0027 and \u0027 overrides\u0027 here and below is not required.\nI would prefer to keep overridden Start,Stop in one place.",
+      "range": {
+        "startLine": 26,
+        "startChar": 30,
+        "endLine": 26,
+        "endChar": 39
+      },
+      "revId": "eb5841064436d028daea21c86a0dd07a01c65ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7933543f_ce10f128",
         "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.h",
         "patchSetId": 6
@@ -66,6 +89,29 @@
         "startChar": 7,
         "endLine": 27,
         "endChar": 12
+      },
+      "revId": "eb5841064436d028daea21c86a0dd07a01c65ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "451981e1_a56add85",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-20T16:33:43Z",
+      "side": 1,
+      "message": "not required.",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 21
       },
       "revId": "eb5841064436d028daea21c86a0dd07a01c65ccb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
