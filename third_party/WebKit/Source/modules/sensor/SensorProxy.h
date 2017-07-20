@@ -61,7 +61,7 @@ class SensorProxy final : public GarbageCollectedFinalized<SensorProxy>,
   bool IsInitialized() const { return state_ == kInitialized; }
 
   void AddConfiguration(device::mojom::blink::SensorConfigurationPtr,
-                        std::unique_ptr<Function<void(bool)>>);
+                        Function<void(bool)>);
 
   void RemoveConfiguration(device::mojom::blink::SensorConfigurationPtr);
 
@@ -107,10 +107,9 @@ class SensorProxy final : public GarbageCollectedFinalized<SensorProxy>,
   // mojo call callbacks.
   void OnSensorCreated(device::mojom::blink::SensorInitParamsPtr,
                        device::mojom::blink::SensorClientRequest);
-  void OnAddConfigurationCompleted(
-      double frequency,
-      std::unique_ptr<Function<void(bool)>> callback,
-      bool result);
+  void OnAddConfigurationCompleted(double frequency,
+                                   Function<void(bool)> callback,
+                                   bool result);
   void OnRemoveConfigurationCompleted(double frequency, bool result);
 
   void OnPollingTimer(TimerBase*);
