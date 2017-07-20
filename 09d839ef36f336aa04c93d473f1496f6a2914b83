@@ -34,6 +34,24 @@
       "revId": "09d839ef36f336aa04c93d473f1496f6a2914b83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d08023c_d95585e7",
+        "filename": "components/pdf/renderer/pepper_pdf_host.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-07-20T16:03:24Z",
+      "side": 1,
+      "message": "Yep no need for a separate class, if you have any issues feel free to IM me.",
+      "parentUuid": "4b2e4c0b_f90fa2d7",
+      "revId": "09d839ef36f336aa04c93d473f1496f6a2914b83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
