@@ -468,7 +468,7 @@ IN_PROC_BROWSER_TEST_F(BackgroundSyncBrowserTest, WaitUntilReject) {
   EXPECT_FALSE(HasTag("delay"));
 }
 
-IN_PROC_BROWSER_TEST_F(BackgroundSyncBrowserTest, Incognito) {
+IN_PROC_BROWSER_TEST_F(BackgroundSyncBrowserTest, DISABLED_Incognito) {
   EXPECT_TRUE(RegisterServiceWorker());
   EXPECT_TRUE(LoadTestPage(kDefaultTestURL));  // Control the page.
 

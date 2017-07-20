@@ -1415,8 +1415,8 @@ AppCacheStorageImpl::AppCacheStorageImpl(AppCacheServiceImpl* service)
       last_deletable_response_rowid_(0),
       database_(NULL),
       is_disabled_(false),
-      weak_factory_(this) {
-}
+      delete_and_start_over_pending_(false),
+      weak_factory_(this) {}
 
 AppCacheStorageImpl::~AppCacheStorageImpl() {
   for (auto* task : pending_quota_queries_)
@@ -1437,8 +1437,7 @@ AppCacheStorageImpl::~AppCacheStorageImpl() {
 
 void AppCacheStorageImpl::Initialize(
     const base::FilePath& cache_directory,
-    const scoped_refptr<base::SequencedTaskRunner>& db_task_runner,
-    const scoped_refptr<base::SingleThreadTaskRunner>& cache_thread) {
+    const scoped_refptr<base::SequencedTaskRunner>& db_task_runner) {
   cache_directory_ = cache_directory;
   is_incognito_ = cache_directory_.empty();
 
@@ -1448,7 +1447,6 @@ void AppCacheStorageImpl::Initialize(
   database_ = new AppCacheDatabase(db_file_path);
 
   db_task_runner_ = db_task_runner;
-  cache_thread_ = cache_thread;
 
   scoped_refptr<InitTask> task(new InitTask(this));
   task->Schedule();
@@ -1915,10 +1913,10 @@ AppCacheDiskCache* AppCacheStorageImpl::disk_cache() {
                      base::Unretained(this)));
     } else {
       rv = disk_cache_->InitWithDiskBackend(
-          cache_directory_.Append(kDiskCacheDirectoryName),
-          kMaxDiskCacheSize,
+          cache_directory_.Append(kDiskCacheDirectoryName), kMaxDiskCacheSize,
           false,
-          cache_thread_.get(),
+          base::BindRepeating(&AppCacheStorageImpl::OnDiskCacheCleanupComplete,
+                              weak_factory_.GetWeakPtr()),
           base::Bind(&AppCacheStorageImpl::OnDiskCacheInitialized,
                      base::Unretained(this)));
     }
@@ -1947,23 +1945,26 @@ void AppCacheStorageImpl::DeleteAndStartOver() {
   DCHECK(is_disabled_);
   if (!is_incognito_) {
     VLOG(1) << "Deleting existing appcache data and starting over.";
+
     // We can have tasks in flight to close file handles on both the db
     // and cache threads, we need to allow those tasks to cycle thru
-    // prior to deleting the files and calling reinit.
-    cache_thread_->PostTaskAndReply(
-        FROM_HERE,
-        base::Bind(&base::DoNothing),
-        base::Bind(&AppCacheStorageImpl::DeleteAndStartOverPart2,
-                   weak_factory_.GetWeakPtr()));
+    // prior to deleting the files and calling reinit.  We will know that the
+    // cache ones will be finished once we get into OnDiskCacheCleanupComplete,
+    // so let that known to synchronize with the DB thread.
+    delete_and_start_over_pending_ = true;
   }
 }
 
-void AppCacheStorageImpl::DeleteAndStartOverPart2() {
-  db_task_runner_->PostTaskAndReply(
-      FROM_HERE,
-      base::Bind(base::IgnoreResult(&base::DeleteFile), cache_directory_, true),
-      base::Bind(&AppCacheStorageImpl::CallScheduleReinitialize,
-                 weak_factory_.GetWeakPtr()));
+void AppCacheStorageImpl::OnDiskCacheCleanupComplete() {
+  if (delete_and_start_over_pending_) {
+    delete_and_start_over_pending_ = false;
+    db_task_runner_->PostTaskAndReply(
+        FROM_HERE,
+        base::Bind(base::IgnoreResult(&base::DeleteFile), cache_directory_,
+                   true),
+        base::Bind(&AppCacheStorageImpl::CallScheduleReinitialize,
+                   weak_factory_.GetWeakPtr()));
+  }
 }
 
 void AppCacheStorageImpl::CallScheduleReinitialize() {
