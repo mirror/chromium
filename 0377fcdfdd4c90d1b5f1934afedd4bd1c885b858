@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5dd7c600_73d6ccab",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T20:41:39Z",
+      "side": 1,
+      "message": "Removed and used test setter.",
+      "parentUuid": "adedb8ee_f0737e60",
+      "revId": "0377fcdfdd4c90d1b5f1934afedd4bd1c885b858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e535eb2_edf1ec38",
         "filename": "chrome/browser/chromeos/net/tether_notification_presenter.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-20T20:17:20Z",
       "side": 1,
       "message": "If you want to use this pattern this should be a separate class in a separate file.",
+      "revId": "0377fcdfdd4c90d1b5f1934afedd4bd1c885b858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79bbe2b3_5ced750d",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T20:41:39Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "7e535eb2_edf1ec38",
       "revId": "0377fcdfdd4c90d1b5f1934afedd4bd1c885b858",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9d6495a9_fdb5f849",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T20:41:39Z",
+      "side": 1,
+      "message": "No, it should be CanEnableBluetoothNotificationBeShown(). When this function returns true, it does not necessarily mean that the notification *should* be shown. It should only be shown when the user logs in and when the user disconnects from the Internet.\n\nFor example, if the user is already disconnected, then flips Bluetooth on then off again, we should *not* show the notification, even though CanEnableBluetoothNotificationBeShown() returns true.",
+      "parentUuid": "32d965fe_1321a35b",
+      "revId": "0377fcdfdd4c90d1b5f1934afedd4bd1c885b858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c515eba_544bbfdd",
         "filename": "chrome/browser/chromeos/tether/tether_service.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "0377fcdfdd4c90d1b5f1934afedd4bd1c885b858",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "253bfdc7_d0de21aa",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T20:41:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0c515eba_544bbfdd",
+      "revId": "0377fcdfdd4c90d1b5f1934afedd4bd1c885b858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "37ec37d6_89e69456",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T20:41:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1783be26_01dbf980",
+      "range": {
+        "startLine": 335,
+        "startChar": 64,
+        "endLine": 335,
+        "endChar": 65
+      },
+      "revId": "0377fcdfdd4c90d1b5f1934afedd4bd1c885b858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5268a67d_b08bb95c",
         "filename": "chrome/browser/chromeos/tether/tether_service.cc",
         "patchSetId": 1
@@ -107,6 +203,24 @@
       "revId": "0377fcdfdd4c90d1b5f1934afedd4bd1c885b858",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "051f1330_28151dc7",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T20:41:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5268a67d_b08bb95c",
+      "revId": "0377fcdfdd4c90d1b5f1934afedd4bd1c885b858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
