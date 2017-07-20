@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a517f1c_68ee50c1",
+        "filename": "chrome/browser/ui/views/apps/shaped_app_window_targeter_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-20T17:48:05Z",
+      "side": 1,
+      "message": "nit: should this new case come before the case with SetWindowResizable(true);? (I\u0027m wondering if the next case testing a custom shape should be resizable or not... maybe test both?)",
+      "revId": "f1b2518079a83090c83a04841ebda5c74a59f199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02bad3fd_6e9f085e",
+        "filename": "chrome/browser/ui/views/apps/shaped_app_window_targeter_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-20T17:48:05Z",
+      "side": 1,
+      "message": "nit: \u0027the window\u0027",
+      "revId": "f1b2518079a83090c83a04841ebda5c74a59f199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36eb7590_80c4e8bf",
+        "filename": "chrome/browser/ui/views/apps/shaped_app_window_targeter_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-20T17:48:05Z",
+      "side": 1,
+      "message": "optional nit: It\u0027d be nice to cache and reuse some event objects.",
+      "revId": "f1b2518079a83090c83a04841ebda5c74a59f199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
