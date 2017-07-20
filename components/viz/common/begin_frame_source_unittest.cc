@@ -2,21 +2,22 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "cc/scheduler/begin_frame_source.h"
+#include "components/viz/common/begin_frame_source.h"
 
 #include <stdint.h>
 
 #include "base/memory/ptr_util.h"
 #include "base/test/test_simple_task_runner.h"
-#include "cc/test/begin_frame_args_test.h"
-#include "cc/test/begin_frame_source_test.h"
-#include "cc/test/scheduler_test_common.h"
+#include "components/viz/test/begin_frame_args_test.h"
+#include "components/viz/test/begin_frame_source_test.h"
+#include "components/viz/test/ordered_simple_task_runner.h"
+#include "components/viz/test/test_delay_based_time_source.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 using testing::NiceMock;
 
-namespace cc {
+namespace viz {
 namespace {
 
 // BeginFrameSource testing ----------------------------------------------------
@@ -574,4 +575,4 @@ TEST_F(ExternalBeginFrameSourceTest, OnBeginFrameChecksBeginFrameContinuity) {
 }
 
 }  // namespace
-}  // namespace cc
+}  // namespace viz

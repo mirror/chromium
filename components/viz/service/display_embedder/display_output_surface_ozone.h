@@ -39,7 +39,7 @@ class DisplayOutputSurfaceOzone : public DisplayOutputSurface {
   DisplayOutputSurfaceOzone(
       scoped_refptr<InProcessContextProvider> context_provider,
       gfx::AcceleratedWidget widget,
-      cc::SyntheticBeginFrameSource* synthetic_begin_frame_source,
+      SyntheticBeginFrameSource* synthetic_begin_frame_source,
       gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
       uint32_t target,
       uint32_t internalformat);
