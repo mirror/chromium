@@ -16,6 +16,41 @@
       "revId": "95d21244194ee96ecc1d3927854f315efa7646ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1530657e_1dc40499",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobData.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-20T22:45:09Z",
+      "side": 1,
+      "message": "\u003e What about connection errors?\n\nIt seemed simplest/least confusing to just completely ignore anything that would require dispatching messages. Of course exposing the connectors set_connection_error_handler would be pretty straight forward, with the API contract that connection errors are always dispatched on the sequence that bound this OutboundOnlyInterfacePtr. I don\u0027t really need connection error handling for this particular base though (and even if I did I wouldn\u0027t be able to rely on the original task runner always being around).\n\n\u003e In general I think we ought to avoid exposing Connector outside of the bindings library (i.e. it should probably be in mojo::internal).\n\nYeah, I was kind of surprised to find that Connector is exposed in the first place, it doesn\u0027t seem like a good idea for non-mojo code to try to use it directly ...\n \n\u003e If we\u0027re going to introduce a thread-safe InterfacePtr type we should do it in the bindings library in a way that is reusable by other components.\n\n... so this class would definitely belong somewhere in mojo if this is really the way to go. I\u0027m not quite convinced yet that this isn\u0027t too specialized a use case to be worth it to have an API in mojo for (and https://chromium-review.googlesource.com/c/580150/ would address the blob use case just as well, with maybe slightly higher overhead from repeatedly binding/unbinding InterfacePtrs).\n\nSo yeah, the main question is probably is having something like this OutboundOnlyInterfacePtr class (with the contract that you can only call methods that don\u0027t have a reply, and can\u0027t use associated interfaces, and (if error handlers are supported at all) errors are always reported on the originating task scheduler) useful in general, or is it too specialized to be a mojo thing?",
+      "parentUuid": "38f71984_423fce88",
+      "revId": "95d21244194ee96ecc1d3927854f315efa7646ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ad8c429_6ac8015a",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobData.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-20T22:45:09Z",
+      "side": 1,
+      "message": "note-to-self: lazy creating of the Proxy is of course breaking all the thread-safety I was trying to provide...",
+      "revId": "95d21244194ee96ecc1d3927854f315efa7646ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
