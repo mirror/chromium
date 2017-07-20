@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4d6f308_653ead88",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1128,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-20T17:40:01Z",
+      "side": 1,
+      "message": "Do you know why we skip recording 0? Do we get 0 sometimes? Is that representative of some invalid state? Maybe the check should be if there are picture layers in the active tree or something like that instead? For example, I could imagine if we had a tree of entirely solid color layers we might use no GPU memory and should record that we are using none.",
+      "revId": "d0bc58b7c8166d787445ce1534d2f1d26b0f13c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8841cecc_168df8b6",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 8575,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-20T17:40:01Z",
+      "side": 1,
+      "message": "I think this should be threaded-rendering-dev@chromium.org, I don\u0027t think threaded-rendering@chromium.org exists.",
+      "revId": "d0bc58b7c8166d787445ce1534d2f1d26b0f13c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
