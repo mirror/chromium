@@ -34,6 +34,24 @@
       "revId": "c88328a8e827258deacabed52deeb6b0cf4952fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4d04978_e5e21a9d",
+        "filename": "base/debug/stack_trace_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-20T22:10:15Z",
+      "side": 1,
+      "message": "Is that desirable for base::StackTrace::Print()?  It seems preferable for it to be roughly consistent with the layout on the other platforms.\n\nOr is the idea that this output still needs to be symbolized, and it\u0027s just pre-calculating the module \u0026 offset for us, to drive the symbolizer post-processing?  If so then I\u0027d suggest explaining that up-front with a comment to clarify why we\u0027re not e.g. doing more to output real symbols!",
+      "parentUuid": "5982a90a_40acbce8",
+      "revId": "c88328a8e827258deacabed52deeb6b0cf4952fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
