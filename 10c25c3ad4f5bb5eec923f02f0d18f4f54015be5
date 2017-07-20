@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d7ddf78_5e939aeb",
+        "filename": "third_party/WebKit/LayoutTests/paint/overflow/background-paint-into-scrolling-contents-layer-with-root-layer-scrolls-offset-expected.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-07-20T22:41:01Z",
+      "side": 1,
+      "message": "I suspect this test is not working as intended, as both the test body and the reference paint background with a scroll offset.\n\nIf I understand correctly, you want the reference to paint first then scroll, this can be done instead:\n\u003cscript src\u003d\"../../resources/run-after-layout-and-paint.js\"\u003e\n\u003cscript\u003e\nrunAfterLayoutAndPaint(function(){\n    scrollTo(0, 100);\n}, true);\n\u003c/script\u003e\n\nBut that\u0027s still not ideal. I would do this instead to avoid the subtleties:\n\u003c!DOCTYPE html\u003e\n\u003cbody style\u003d\"height:10000px;\"\u003e\n  \u003cdiv style\u003d\"position:absolute; left:0; top:0; width:100%; height:10000px; background:url(\u0027../../images/resources/lenna.png\u0027);\"\u003e\u003c/div\u003e\n\u003c/body\u003e\n\u003cscript\u003e\nscrollTo(0, 100);\n\u003c/script\u003e",
+      "revId": "10c25c3ad4f5bb5eec923f02f0d18f4f54015be5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd748031_38d5c8f9",
+        "filename": "third_party/WebKit/LayoutTests/paint/overflow/background-paint-into-scrolling-contents-layer-with-root-layer-scrolls-offset.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-07-20T22:41:01Z",
+      "side": 1,
+      "message": "nit: I usually add text description here to explain what the test tests. e.g.\n\"This tests verifies document backgrounds are painted at correct location when scroll offset is present.\"",
+      "revId": "10c25c3ad4f5bb5eec923f02f0d18f4f54015be5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5f498c6_e051f346",
+        "filename": "third_party/WebKit/LayoutTests/paint/overflow/background-paint-into-scrolling-contents-layer-with-root-layer-scrolls-offset.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-07-20T22:41:01Z",
+      "side": 1,
+      "message": "This line is no-op. Computed styles and style-based invalidation are updated lazily.",
+      "revId": "10c25c3ad4f5bb5eec923f02f0d18f4f54015be5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e21f2c1e_629f70f9",
+        "filename": "third_party/WebKit/LayoutTests/paint/overflow/background-paint-into-scrolling-contents-layer-with-root-layer-scrolls-offset.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-07-20T22:41:01Z",
+      "side": 1,
+      "message": "Just do document.body.style.background \u003d \"url(\u0027../../images/resources/lenna.png\u0027)\"; here.\nThis guarantees background image is observed by the engine after new scroll offset is observed.",
+      "revId": "10c25c3ad4f5bb5eec923f02f0d18f4f54015be5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2152f76c_b4dadc28",
+        "filename": "third_party/WebKit/Source/core/paint/ViewPainter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-07-20T22:41:01Z",
+      "side": 1,
+      "message": "nits: Please move this block to line 137, because we are doing space conversion in the following order:\n\nLayoutView scrolled contents space \u003c--- LayoutView border box space \u003c--- documentElement layout space \u003c--- documentElement visual (transformed) space\n\nAlthough it\u0027s technically correct because translation commutes, it is easier to read if written in canonical order. :)\n\nAlso please update the comments on line #126~130 to explain that background_rect and context may be in LayoutView border box space or scrolled contents space depends on the flag, and the purpose of the code is to switch both to documentElement visual space.",
+      "revId": "10c25c3ad4f5bb5eec923f02f0d18f4f54015be5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
