@@ -79,6 +79,7 @@
 #include "ash/system/power/power_status.h"
 #include "ash/system/power/video_activity_notifier.h"
 #include "ash/system/screen_layout_observer.h"
+#include "ash/system/session/logout_button_tray.h"
 #include "ash/system/session/logout_confirmation_controller.h"
 #include "ash/system/status_area_widget.h"
 #include "ash/system/toast/toast_manager.h"
@@ -326,8 +327,9 @@ bool Shell::ShouldUseIMEService() {
 }
 
 // static
-void Shell::RegisterPrefs(PrefRegistrySimple* registry) {
-  NightLightController::RegisterPrefs(registry);
+void Shell::RegisterProfilePrefs(PrefRegistrySimple* registry) {
+  NightLightController::RegisterProfilePrefs(registry);
+  LogoutButtonTray::RegisterProfilePrefs(registry);
 }
 
 views::NonClientFrameView* Shell::CreateDefaultNonClientFrameView(
@@ -859,7 +861,7 @@ void Shell::Init(const ShellInitParams& init_params) {
   // Can be null in tests.
   if (config == Config::MASH && shell_delegate_->GetShellConnector()) {
     auto pref_registry = base::MakeRefCounted<PrefRegistrySimple>();
-    Shell::RegisterPrefs(pref_registry.get());
+    Shell::RegisterProfilePrefs(pref_registry.get());
     prefs::ConnectToPrefService(shell_delegate_->GetShellConnector(),
                                 std::move(pref_registry),
                                 base::Bind(&Shell::OnPrefServiceInitialized,

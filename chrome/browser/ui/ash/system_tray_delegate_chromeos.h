@@ -56,7 +56,7 @@ class SystemTrayDelegateChromeOS
 
   void UpdateShowLogoutButtonInTray();
 
-  void UpdateLogoutDialogDuration();
+  // void UpdateLogoutDialogDuration();
 
   void UpdateSessionStartTime();
 

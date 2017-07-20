@@ -252,8 +252,8 @@ class ASH_EXPORT Shell : public SessionObserver,
   static Config GetAshConfig();
   static bool ShouldUseIMEService();
 
-  // Registers all ash related prefs to the given |registry|.
-  static void RegisterPrefs(PrefRegistrySimple* registry);
+  // Registers all ash related user profile prefs to the given |registry|.
+  static void RegisterProfilePrefs(PrefRegistrySimple* registry);
 
   // Creates a default views::NonClientFrameView for use by windows in the
   // Ash environment.

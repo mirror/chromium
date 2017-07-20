@@ -78,7 +78,7 @@ class ASH_EXPORT NightLightController
   // Returns true if the NightLight feature is enabled in the flags.
   static bool IsFeatureEnabled();
 
-  static void RegisterPrefs(PrefRegistrySimple* registry);
+  static void RegisterProfilePrefs(PrefRegistrySimple* registry);
 
   AnimationDuration animation_duration() const { return animation_duration_; }
   AnimationDuration last_animation_duration() const {
