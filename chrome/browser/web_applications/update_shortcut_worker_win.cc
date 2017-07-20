@@ -27,6 +27,7 @@
 #include "content/public/browser/notification_source.h"
 #include "content/public/browser/web_contents.h"
 #include "ui/gfx/icon_util.h"
+#include "ui/gfx/image/image_skia.h"
 #include "url/gurl.h"
 
 using content::BrowserThread;
@@ -34,6 +35,23 @@ using content::NavigationController;
 using content::WebContents;
 
 namespace web_app {
+
+namespace {
+
+// Shallow-copies Images from |source| into |dest|. The images in |dest| do not
+// share storage with those in |source| so it is safe to access |source| and
+// |dest| from different threads (as long as the ImageSkias are thread-safe).
+// This will convert the images in |source| to ImageSkia representation if they
+// are not already in it.
+void ShallowCopyImageFamily(gfx::ImageFamily* dest,
+                            const gfx::ImageFamily& source) {
+  for (const auto& source_image : source) {
+    gfx::Image dest_image(source_image.AsImageSkia());
+    dest->Add(dest_image);
+  }
+}
+
+}  // namespace
 
 UpdateShortcutWorker::UpdateShortcutWorker(WebContents* web_contents)
     : web_contents_(web_contents),
@@ -85,7 +103,9 @@ void UpdateShortcutWorker::DownloadIcon() {
   }
 
   if (unprocessed_icons_.empty()) {
-    // No app icon. Just use the favicon from WebContents.
+    // No app icon. Just use the favicon from WebContents. Shallow-copy the
+    // favicon so that it can be safely used from the FILE thread.
+    ShallowCopyImageFamily(&favicon_for_file_thread_, shortcut_info_->favicon);
     UpdateShortcuts();
     return;
   }
@@ -130,7 +150,8 @@ void UpdateShortcutWorker::DidDownloadFavicon(
 
   if (!bitmap.isNull()) {
     // Update icon with download image and update shortcut.
-    shortcut_info_->favicon.Add(gfx::Image::CreateFrom1xBitmap(bitmap));
+    gfx::Image icon = gfx::Image::CreateFrom1xBitmap(bitmap);
+    favicon_for_file_thread_.Add(icon);
     extensions::TabHelper* extensions_tab_helper =
         extensions::TabHelper::FromWebContents(web_contents_);
     extensions_tab_helper->SetAppIcon(bitmap);
@@ -202,7 +223,7 @@ void UpdateShortcutWorker::UpdateShortcutsOnFileThread() {
 
   base::FilePath icon_file =
       web_app::internals::GetIconFilePath(web_app_path, shortcut_info_->title);
-  web_app::internals::CheckAndSaveIcon(icon_file, shortcut_info_->favicon,
+  web_app::internals::CheckAndSaveIcon(icon_file, favicon_for_file_thread_,
                                        true);
 
   // Update existing shortcuts' description, icon and app id.
