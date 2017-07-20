@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c03bcb3_cd255d72",
+        "filename": "chrome/browser/ui/views/permission_bubble/chooser_bubble_ui.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-20T16:49:21Z",
+      "side": 1,
+      "message": "optional nit: inline these consts and helpers.",
+      "revId": "98444c52ece061e8fd245dcd67cc978282d66e9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a386c790_4f95436a",
+        "filename": "chrome/browser/ui/views/permission_bubble/permission_prompt_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-20T16:49:21Z",
+      "side": 1,
+      "message": "optional nit: inline these consts and helpers.",
+      "revId": "98444c52ece061e8fd245dcd67cc978282d66e9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
