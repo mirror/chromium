@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "889311bf_51f31906",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabIntentDataProvider.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-07-20T02:37:01Z",
+      "side": 1,
+      "message": "I don\u0027t particularly like what \"git cl format\" did here.",
+      "range": {
+        "startLine": 56,
+        "startChar": 12,
+        "endLine": 56,
+        "endChar": 43
+      },
+      "revId": "c12d9df3e725d67bf11b4c47f31c2237370f8ea4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
