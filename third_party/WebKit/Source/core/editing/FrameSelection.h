@@ -56,7 +56,7 @@ struct PaintInvalidatorContext;
 
 enum class CursorAlignOnScroll { kIfNeeded, kAlways };
 
-enum EUserTriggered { kNotUserTriggered = 0, kUserTriggered = 1 };
+enum class SetSelectionBy { kSystem = 0, kUser = 1 };
 
 enum RevealExtentOption { kRevealExtent, kDoNotRevealExtent };
 
@@ -79,17 +79,21 @@ class CORE_EXPORT FrameSelection final
   ~FrameSelection();
 
   enum SetSelectionOption {
-    // 1 << 0 is reserved for EUserTriggered
+    kUserTriggered = 1,
     kCloseTyping = 1 << 1,
     kClearTypingStyle = 1 << 2,
     kDoNotSetFocus = 1 << 3,
     kDoNotClearStrategy = 1 << 4,
   };
-  // Union of values in SetSelectionOption and EUserTriggered
+  static_assert(kUserTriggered == static_cast<int>(SetSelectionBy::kUser),
+                "|kUserTriggered| should equal to |SetSelectionBy::kUser|");
+
+  // Union of values in SetSelectionOption and SetSelectionBy
   typedef unsigned SetSelectionOptions;
-  static inline EUserTriggered SelectionOptionsToUserTriggered(
+  static inline SetSelectionBy SelectionOptionsToUserTriggered(
       SetSelectionOptions options) {
-    return static_cast<EUserTriggered>(options & kUserTriggered);
+    return static_cast<SetSelectionBy>(options &
+                                       static_cast<int>(SetSelectionBy::kUser));
   }
 
   bool IsAvailable() const { return LifecycleContext(); }
@@ -114,7 +118,7 @@ class CORE_EXPORT FrameSelection final
                     SetSelectionOptions = kCloseTyping | kClearTypingStyle,
                     CursorAlignOnScroll = CursorAlignOnScroll::kIfNeeded,
                     TextGranularity = TextGranularity::kCharacter);
-  void SelectAll(EUserTriggered = kNotUserTriggered);
+  void SelectAll(SetSelectionBy = SetSelectionBy::kSystem);
   void Clear();
   bool IsHidden() const;
 
@@ -140,7 +144,7 @@ class CORE_EXPORT FrameSelection final
   bool Modify(SelectionModifyAlteration,
               SelectionDirection,
               TextGranularity,
-              EUserTriggered = kNotUserTriggered);
+              SetSelectionBy = SetSelectionBy::kSystem);
   enum VerticalDirection { kDirectionUp, kDirectionDown };
 
   // Moves the selection extent based on the selection granularity strategy.
@@ -208,7 +212,7 @@ class CORE_EXPORT FrameSelection final
 #endif
 
   void SetFocusedNodeIfNeeded();
-  void NotifyTextControlOfSelectionChange(EUserTriggered);
+  void NotifyTextControlOfSelectionChange(SetSelectionBy);
 
   String SelectedHTMLForClipboard() const;
   String SelectedText(const TextIteratorBehavior&) const;
