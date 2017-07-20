@@ -53810,6 +53810,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="PaymentRequest.Events">
+  <owner>sebsg@chromium.org</owner>
+  <summary>
+    A bitfiled representing the different events that happened during the
+    Payment Request.
+  </summary>
+</histogram>
+
 <histogram name="PaymentRequest.NumberOfSelectionAdds">
   <owner>sebsg@chromium.org</owner>
   <summary>
