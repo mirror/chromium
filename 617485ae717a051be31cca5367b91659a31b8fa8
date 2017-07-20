@@ -52,6 +52,24 @@
       "revId": "617485ae717a051be31cca5367b91659a31b8fa8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f884349_bf391fd4",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-20T20:41:26Z",
+      "side": 1,
+      "message": "Because of your other comments (making if statements specific to Cellular) I\u0027ve since removed returning 0 is Cellular is unavailable. Given that, and that this method considers Tether technology state, I think we should keep the method name. Let me know what you think.",
+      "parentUuid": "a83f2994_17ab85e8",
+      "revId": "617485ae717a051be31cca5367b91659a31b8fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
