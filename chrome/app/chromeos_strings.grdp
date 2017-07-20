@@ -6230,4 +6230,16 @@ All users must sign out to continue.
     PUK
   </message>
 
+  <message name="IDS_USB_PRINTER_UNKNOWN_DISPLAY_NAME" desc="In Title Case: Display string used for USB printers where we have not identified the correct manufactuer and model strings. USB stands for Universal Serial Bus, it indicates how the printer is attached to the computer.">
+    Unknown Printer (USB)
+  </message>
+
+  <message name="IDS_USB_PRINTER_DISPLAY_NAME" desc="In Title Case: The display name assigned to USB printers which were automatically configured for the user. USB stands for Universal Serial Bus, it indicates how the printer is attached to the computer.">
+    <ph name="PRINTER_MANUFACTURER">$1<ex>Hewlett Packard</ex></ph> <ph name="PRINTER_MODEL">$2<ex>OfficeJet 8710</ex></ph> (USB)
+  </message>
+
+  <message name="IDS_USB_PRINTER_DISPLAY_NAME_SINGLE" desc="In Title Case: The display name assigned to USB printers which were automatically configured for the user. USB stands for Universal Serial Bus, it indicates how the printer is attached to the computer.">
+    <ph name="PRINTER_MODEL">$2<ex>OfficeJet 8710</ex></ph> (USB)
+  </message>
+
 </grit-part>
