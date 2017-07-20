@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "e99e5f7c_db67adbe",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-20T18:56:56Z",
+      "side": 1,
+      "message": "Try this:\nfinal ViewTreeObserver observer \u003d mRenderToSurfaceLayout.getViewTreeObserver();",
+      "revId": "ba692ec0d33aaf24cbfc58bd529bcecb6b2e7328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "871cf751_44e74985",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-20T18:56:56Z",
+      "side": 1,
+      "message": "if (!treeObserver.isAlive()) {\n  observer.removeOnPreDrawListener(this);\n  return true;\n}",
+      "range": {
+        "startLine": 319,
+        "startChar": 16,
+        "endLine": 319,
+        "endChar": 55
+      },
+      "revId": "ba692ec0d33aaf24cbfc58bd529bcecb6b2e7328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7419589_63ac71b4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
         "patchSetId": 1
@@ -37,6 +77,30 @@
       "side": 1,
       "message": "The problem is that VrShellDelegate calls removeVrViews before destroyVrShell.  destroyVrShell calls shudown(), but since we are no-longer hosted, getViewTreeObserver() seemed to be a different object.  If I cached the object, it gave an error that it was no-longer valid.\n\nI could reorder, so destroyVrShell is called before removeVrViews, with a comment saying this order is necessary, but it seemed more fragile.",
       "parentUuid": "c7419589_63ac71b4",
+      "range": {
+        "startLine": 553,
+        "startChar": 16,
+        "endLine": 553,
+        "endChar": 32
+      },
+      "revId": "ba692ec0d33aaf24cbfc58bd529bcecb6b2e7328",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41b7b933_51aa84b7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-20T18:56:56Z",
+      "side": 1,
+      "message": "Try the suggestion above, and if that doesn\u0027t work, your current approach sgtm.\n\nWe should probably give this a better name though, maybe onPreWindowDetach? onBeforeWindowDetached?",
+      "parentUuid": "ff055330_90e4f249",
       "range": {
         "startLine": 553,
         "startChar": 16,
