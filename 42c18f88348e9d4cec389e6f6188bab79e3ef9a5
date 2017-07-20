@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6930cb3f_f6f093f2",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-20T07:38:37Z",
+      "side": 1,
+      "message": "|ancestor_list_with_url| will not be always empty, as L30.\nI\u0027d like to refactor AncestorList/ReachedUrlSet creation later, but I\u0027d like to keep as is for now.",
+      "parentUuid": "c4970b9d_a2743b2f",
+      "revId": "42c18f88348e9d4cec389e6f6188bab79e3ef9a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aceb60b8_8beb3b41",
         "filename": "third_party/WebKit/Source/core/loader/modulescript/ReachedUrlSet.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "42c18f88348e9d4cec389e6f6188bab79e3ef9a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8841fa3b_b14f73a8",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ReachedUrlSet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-20T07:38:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aceb60b8_8beb3b41",
+      "revId": "42c18f88348e9d4cec389e6f6188bab79e3ef9a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
