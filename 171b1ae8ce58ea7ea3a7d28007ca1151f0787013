@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d4c6dedf_20088091",
+        "filename": "third_party/WebKit/Source/platform/mac/ScrollAnimatorMac.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-07-20T22:56:07Z",
+      "side": 1,
+      "message": "\u003e Commenting here in the Mac one as I am reading it first, but some additions probably make sense to add in non-Mac classes.\n\u003e \n\u003e Are these the same as, related to, or different from, smooth scrolling? Are they their own wholly contained type of animation or do they build on top of or otherwise make use of the more base set of transform, opacity, filter animations?\n\nAdded comments in ScrollAnimator.h about the use of compositor animation machinery.  Tried to clarify terminology throughout.  (\"Smooth scrolling\" is synonymous with \"scroll offset animation\" which can be input-driven or programmatic.)\n\n\u003e Subsequent prose reads as if it builds atop but it\u0027s phrased in such a way that I think what it\u0027s saying is that other totally Mac specific logic handles scroll offset animations, rather than using other cc animation(s) to effect them.\n\nAdded comments in ScrollAnimatorMac.h clarifying that Mac is a special snowflake.\n\n\u003e Re: scroll offset animation type/property, there are for example:\n\u003e \n\u003e TargetProperty:\n\u003e https://cs.chromium.org/chromium/src/cc/trees/target_property.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d17\n\u003e \n\u003e AnimationCurve:\n\u003e https://cs.chromium.org/chromium/src/cc/animation/animation_curve.h?q\u003dSCROLL_OFFSET+animation\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d34\n\nYes, non-Mac compositor-serviced smooth scrolls use these.  Expanded description of compositor animations in ScrollAnimator.h.\n\n\u003e LayerAnimationElement::AnimatableProperty which I think is wholly unrelated but am not sure:\n\u003e https://cs.chromium.org/chromium/src/ui/compositor/layer_animation_element.h?type\u003dcs\u0026q\u003dLayerAnimationElement::AnimatableProperty\u0026sq\u003dpackage:chromium\u0026l\u003d39\n\nNothing in ui/compositor is related.  That\u0027s the browser compositor which is a different world.",
+      "parentUuid": "78a26ca3_45451146",
+      "range": {
+        "startLine": 49,
+        "startChar": 53,
+        "endLine": 49,
+        "endChar": 77
+      },
+      "revId": "171b1ae8ce58ea7ea3a7d28007ca1151f0787013",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48df568a_18faf5c8",
         "filename": "third_party/WebKit/Source/platform/mac/ScrollAnimatorMac.h",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-20T18:20:27Z",
       "side": 1,
       "message": "If we have even a rough guess as to what some of these are, could be useful to mention them briefly so that folks have a starting point for whatever future research is required?",
+      "range": {
+        "startLine": 76,
+        "startChar": 2,
+        "endLine": 77,
+        "endChar": 14
+      },
+      "revId": "171b1ae8ce58ea7ea3a7d28007ca1151f0787013",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1f6567b_9148786c",
+        "filename": "third_party/WebKit/Source/platform/mac/ScrollAnimatorMac.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-07-20T22:56:07Z",
+      "side": 1,
+      "message": "Changed to TODO listing things I didn\u0027t talk about.",
+      "parentUuid": "48df568a_18faf5c8",
       "range": {
         "startLine": 76,
         "startChar": 2,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "11c586ed_46b70c8a",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollAnimator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-07-20T22:56:07Z",
+      "side": 1,
+      "message": "Added a comment in ScrollAnimatorMac.h with links to bugs tracking convergence.",
+      "parentUuid": "80e737c5_bf07f358",
+      "range": {
+        "startLine": 83,
+        "startChar": 8,
+        "endLine": 83,
+        "endChar": 21
+      },
+      "revId": "171b1ae8ce58ea7ea3a7d28007ca1151f0787013",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "39de129f_92a51857",
         "filename": "third_party/WebKit/Source/platform/scroll/ScrollAnimatorCompositorCoordinator.h",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-20T18:20:27Z",
       "side": 1,
       "message": "The Smooth Scrolling bitly doc notes that smooth scrolling does not involve programmatic scroll. But based on this it looks like some logic is shared. Just wanted to clarify my understanding. Perhaps worth explaining a bit further here or in ScrollAnimator header?",
+      "range": {
+        "startLine": 29,
+        "startChar": 17,
+        "endLine": 29,
+        "endChar": 46
+      },
+      "revId": "171b1ae8ce58ea7ea3a7d28007ca1151f0787013",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "321793f1_07752493",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollAnimatorCompositorCoordinator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-07-20T22:56:07Z",
+      "side": 1,
+      "message": "The bitly doc was written for the launch of input-driven smooth scrolling on Aura platforms and tried to be clear about what we were actually launching.  But the term \"smooth scroll\" is also used in reference to programmatic scroll animations.  Expanded comments throughout.",
+      "parentUuid": "39de129f_92a51857",
       "range": {
         "startLine": 29,
         "startChar": 17,
