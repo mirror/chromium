@@ -95,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "524f3103_6e08c6e8",
+        "filename": "base/test/scoped_feature_list.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-07-20T09:29:44Z",
+      "side": 1,
+      "message": "Ilya: vector can in theory move the objects in memory (for example during resizes). In this case there is no resize, and we don\u0027t need the pointer in practice, but I felt this was relying on an implementation detail. Using a pointer is cleaner and clearer in my opinion.\n\nLukasz: yes this would definitely simplify things. I did not do it to keep my change small, and keep the benefit of StringPiece for the existing use cases, but I am ok going that way if it is better.",
+      "parentUuid": "c72a9a9e_a73fac03",
+      "range": {
+        "startLine": 168,
+        "startChar": 14,
+        "endLine": 168,
+        "endChar": 29
+      },
+      "revId": "c0d7fdee634e8f819c9f3c563cef1263781b6575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f3e61ae_80c54fbb",
         "filename": "base/test/scoped_feature_list.h",
         "patchSetId": 7
@@ -235,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "10d08c1d_121d52f6",
+        "filename": "base/test/scoped_feature_list_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-07-20T09:29:44Z",
+      "side": 1,
+      "message": "This is already tested line 181 below (from another entry point, but ultimately this is calling into the same code). Do we need to test that for all entry points?",
+      "parentUuid": "99d7b815_7c20b5f7",
+      "range": {
+        "startLine": 130,
+        "startChar": 49,
+        "endLine": 130,
+        "endChar": 51
+      },
+      "revId": "c0d7fdee634e8f819c9f3c563cef1263781b6575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a15b3e71_e2e29766",
         "filename": "components/signin/core/browser/about_signin_internals.cc",
         "patchSetId": 7
@@ -317,6 +365,30 @@
       "side": 1,
       "message": "BTW: In this comment I probably should also be mentioning variations::testing::VariationsParamsManager which theoretically already provides the functionality for enabling features and setting field trial params from tests.  I said theoretically, because of one problem I\u0027ve run into when trying to do this from //chrome-layer tests - see my 1st reply at https://codereview.chromium.org/2946113002/diff/200001/content/public/test/test_utils.cc#newcode213 for more details (about a DCHECK(!global_) I\u0027ve been hitting in base::FieldTrialList::FieldTrialList).",
       "parentUuid": "ee1c9237_9c0a9b63",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 51
+      },
+      "revId": "c0d7fdee634e8f819c9f3c563cef1263781b6575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "433d40f8_6e1e692d",
+        "filename": "components/signin/core/browser/scoped_account_consistency.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-07-20T09:29:44Z",
+      "side": 1,
+      "message": "This is right: my only motivation is to associate params with features.\nI find the Feature API very hard to use in practice, because it is binary in nature (enabled/disabled), but in most cases we need more. Either because we are testing multiple variations of the feature or because we want to rollout the feature gradually.\n\nI guess we could make an API that takes feature parameters instead of field trial, but I am not sure it belongs to ScopedFeatureList (because ScopedFeatureList should be tightly coupled to FeatureList, which takes FieldTrials). Maybe we could have another wrapper around ScopedFeatureList, something like ScopedFeatureParameters which internally uses a ScopedFeatureList?\n\nIf we go this way, maybe it\u0027s better to keep it for another CL.",
+      "parentUuid": "0242356f_0ac23dee",
       "range": {
         "startLine": 64,
         "startChar": 0,
