@@ -8,6 +8,7 @@
 #include "ios/chrome/browser/web_state_list/fake_web_state_list_delegate.h"
 #include "ios/chrome/browser/web_state_list/web_state_list.h"
 #import "ios/chrome/browser/web_state_list/web_state_list_observer_bridge.h"
+#import "ios/chrome/browser/web_state_list/web_state_opener.h"
 #import "ios/clean/chrome/browser/ui/toolbar/toolbar_consumer.h"
 #import "ios/shared/chrome/browser/ui/toolbar/toolbar_test_util.h"
 #import "ios/web/public/test/fakes/test_navigation_manager.h"
@@ -53,15 +54,16 @@ class ToolbarMediatorTest : public PlatformTest {
   void SetUpWebStateList() {
     web_state_list_ = base::MakeUnique<WebStateList>(&web_state_list_delegate_);
     for (int i = 0; i < kNumberOfWebStates; i++) {
-      InsertWebState(i);
+      InsertNewWebState(i);
     }
   }
 
-  void InsertWebState(int index) {
+  void InsertNewWebState(int index) {
     auto web_state = base::MakeUnique<web::TestWebState>();
     GURL url("http://test/" + std::to_string(index));
     web_state->SetCurrentURL(url);
-    web_state_list_->InsertWebState(index, std::move(web_state));
+    web_state_list_->InsertWebState(index, WebStateList::INSERT_FORCE_INDEX,
+                                    std::move(web_state), WebStateOpener());
   }
 
   TestToolbarMediator* mediator_;
@@ -208,7 +210,7 @@ TEST_F(ToolbarMediatorTest, TestIncreaseNumberOfWebstates) {
   mediator_.webStateList = web_state_list_.get();
   mediator_.consumer = consumer_;
 
-  InsertWebState(0);
+  InsertNewWebState(0);
   [[consumer_ verify] setTabCount:kNumberOfWebStates + 1];
 }
 

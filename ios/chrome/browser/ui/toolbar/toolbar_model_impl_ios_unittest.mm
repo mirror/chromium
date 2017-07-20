@@ -18,6 +18,7 @@
 #include "ios/chrome/browser/ui/toolbar/toolbar_model_impl_ios.h"
 #include "ios/chrome/browser/web_state_list/fake_web_state_list_delegate.h"
 #include "ios/chrome/browser/web_state_list/web_state_list.h"
+#import "ios/chrome/browser/web_state_list/web_state_opener.h"
 #import "ios/shared/chrome/browser/ui/toolbar/toolbar_test_util.h"
 #import "ios/testing/ocmock_complex_type_helper.h"
 #import "ios/web/public/test/fakes/test_navigation_manager.h"
@@ -56,8 +57,9 @@ class ToolbarModelImplIOSTest : public PlatformTest {
         base::MakeUnique<ToolbarTestWebState>();
     web_state->SetBrowserState(chrome_browser_state_.get());
     web_state_ = web_state.get();
-    web_state_list_->InsertWebState(0, std::move(web_state));
-    web_state_list_->ActivateWebStateAt(0);
+    web_state_list_->InsertWebState(
+        0, WebStateList::INSERT_FORCE_INDEX | WebStateList::INSERT_ACTIVATE,
+        std::move(web_state), WebStateOpener());
 
     toolbarModelDelegate_.reset(
         new ToolbarModelDelegateIOS(web_state_list_.get()));
