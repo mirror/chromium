@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1c38e328_89705f43",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncherHelper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-07-20T22:02:12Z",
+      "side": 1,
+      "message": "No, it complains:\n non-static variable this cannot be referenced from a static context\neven though I wouldn\u0027t think it\u0027s a static context.",
+      "parentUuid": "6d8cf5c2_2dd3be11",
+      "revId": "5606f8cf51f6ee572b98649701894c842a554601",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "951c0df8_3673a8c3",
         "filename": "content/public/android/javatests/src/org/chromium/content/browser/ChildProcessLauncherHelperTest.java",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-20T21:46:21Z",
       "side": 1,
       "message": "Hmm, can this go one step further, also check getConnectionService is not null like above. That also makes sure the connection setup was successful.",
+      "revId": "5606f8cf51f6ee572b98649701894c842a554601",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99219f42_1d4fc264",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/ChildProcessLauncherHelperTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-07-20T22:02:12Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s needed. We create the launcher with BLOCK_UNTIL_SETUP which means it will fails if the service is not bound and setup.",
+      "parentUuid": "951c0df8_3673a8c3",
       "revId": "5606f8cf51f6ee572b98649701894c842a554601",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
