@@ -195,11 +195,6 @@ void StartPageView::UpdateForTesting() {
   suggestions_container_->Update();
 }
 
-const std::vector<SearchResultTileItemView*>& StartPageView::tile_views()
-    const {
-  return suggestions_container_->tile_views();
-}
-
 TileItemView* StartPageView::all_apps_button() const {
   return suggestions_container_->all_apps_button();
 }
