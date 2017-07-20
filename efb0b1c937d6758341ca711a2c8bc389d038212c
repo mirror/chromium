@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "996a4322_9386feac",
+        "filename": "ios/web/web_state/js/resources/context_menu.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-07-20T17:29:26Z",
+      "side": 1,
+      "message": "Optional: I find large if blocks can be hard to read because it\u0027s not clear at a glance what\u0027s inside and what\u0027s out. Would you consider changing this to if(cond \u003d\u003d\u003d \u0027none\u0027) { continue; }?",
+      "range": {
+        "startLine": 95,
+        "startChar": 64,
+        "endLine": 95,
+        "endChar": 0
+      },
+      "revId": "efb0b1c937d6758341ca711a2c8bc389d038212c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
