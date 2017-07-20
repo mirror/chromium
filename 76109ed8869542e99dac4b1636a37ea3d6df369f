@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b761859_7fad37b2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-20T00:53:35Z",
+      "side": 1,
+      "message": "There\u0027s lots of articles on how to write good commit messages. I would:\n\n1) Add a line break here.\n2) Below that, write:\n\nAlso add validation to make sure \u0027ios\u0027 platform does not appear in\npolicy_templates.json.",
+      "revId": "76109ed8869542e99dac4b1636a37ea3d6df369f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "101e0449_9968e5c3",
+        "filename": "components/policy/tools/generate_policy_source.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-20T00:53:35Z",
+      "side": 1,
+      "message": "How about:\n\n\u0027Platform \"%s\" is not supported\u0027 % platform",
+      "range": {
+        "startLine": 94,
+        "startChar": 27,
+        "endLine": 94,
+        "endChar": 54
+      },
+      "revId": "76109ed8869542e99dac4b1636a37ea3d6df369f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
