@@ -17,9 +17,12 @@ class SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT OSMetrics {
   static bool FillOSMemoryDump(base::ProcessId pid, mojom::RawOSMemDump* dump);
   static bool FillProcessMemoryMaps(base::ProcessId,
                                     base::trace_event::ProcessMemoryDump*);
+  static bool FillProcessMemoryMaps(base::ProcessId, mojom::RawOSMemDump*);
 
  private:
   FRIEND_TEST_ALL_PREFIXES(OSMetricsTest, ParseProcSmaps);
+  static std::unique_ptr<std::vector<mojom::VmRegionPtr>> GetProcessMemoryMaps(
+      base::ProcessId);
 
 #if defined(OS_LINUX) || defined(OS_ANDROID)
   static void SetProcSmapsForTesting(FILE*);
