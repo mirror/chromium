@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f256720c_14cccb58",
+        "filename": "device/hid/hid_connection_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-20T14:20:44Z",
+      "side": 1,
+      "message": "ASSERT_FALSE(device_guid_.empty());",
+      "range": {
+        "startLine": 172,
+        "startChar": 4,
+        "endLine": 172,
+        "endChar": 39
+      },
+      "revId": "a6392bd9fe3cede9542372e8f4d7e3c703e0e706",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
