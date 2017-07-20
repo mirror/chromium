@@ -49,6 +49,7 @@
 #include "modules/webaudio/AudioListener.h"
 #include "modules/webaudio/AudioNodeInput.h"
 #include "modules/webaudio/AudioNodeOutput.h"
+#include "modules/webaudio/AudioWorklet.h"
 #include "modules/webaudio/BiquadFilterNode.h"
 #include "modules/webaudio/ChannelMergerNode.h"
 #include "modules/webaudio/ChannelSplitterNode.h"
@@ -71,6 +72,7 @@
 #include "modules/webaudio/ScriptProcessorNode.h"
 #include "modules/webaudio/StereoPannerNode.h"
 #include "modules/webaudio/WaveShaperNode.h"
+#include "modules/webaudio/WindowAudioWorklet.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/Histogram.h"
 #include "platform/audio/IIRFilter.h"
@@ -168,6 +170,8 @@ void BaseAudioContext::Initialize() {
     // only create the listener if the destination node exists.
     listener_ = AudioListener::Create(*this);
   }
+
+  WindowAudioWorklet::audioWorklet(this)->RegisterContext(this);
 }
 
 void BaseAudioContext::Clear() {
@@ -180,6 +184,11 @@ void BaseAudioContext::Clear() {
 
 void BaseAudioContext::Uninitialize() {
   DCHECK(IsMainThread());
+
+  // AudioWorklet may be destroyed before the context goes away.
+  AudioWorklet* audioWorklet = WindowAudioWorklet::audioWorklet(this);
+  if (audioWorklet)
+    audioWorklet->UnregisterContext(this);
 
   if (!IsDestinationInitialized())
     return;
