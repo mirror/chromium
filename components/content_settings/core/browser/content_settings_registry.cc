@@ -317,6 +317,14 @@ void ContentSettingsRegistry::Init() {
            WebsiteSettingsRegistry::DESKTOP |
                WebsiteSettingsRegistry::PLATFORM_ANDROID,
            ContentSettingsInfo::INHERIT_IF_LESS_PERMISSIVE);
+
+  Register(CONTENT_SETTINGS_TYPE_CLIENT_HINTS, "client-hints",
+           CONTENT_SETTING_DEFAULT, WebsiteSettingsInfo::UNSYNCABLE,
+           WhitelistedSchemes(), ValidSettings(),
+           WebsiteSettingsInfo::REQUESTING_ORIGIN_ONLY_SCOPE,
+           WebsiteSettingsRegistry::DESKTOP |
+               WebsiteSettingsRegistry::PLATFORM_ANDROID,
+           ContentSettingsInfo::INHERIT_IF_LESS_PERMISSIVE);
 }
 
 void ContentSettingsRegistry::Register(
