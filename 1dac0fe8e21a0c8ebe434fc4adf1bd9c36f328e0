@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7918284a_6c40c2a3",
+        "filename": "base/sequence_checker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-20T20:10:00Z",
+      "side": 1,
+      "message": "\u003d default;",
+      "range": {
+        "startLine": 70,
+        "startChar": 29,
+        "endLine": 70,
+        "endChar": 31
+      },
+      "revId": "1dac0fe8e21a0c8ebe434fc4adf1bd9c36f328e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf87da47_3c81788a",
+        "filename": "base/threading/thread_checker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-20T20:10:00Z",
+      "side": 1,
+      "message": "\u003d default;",
+      "range": {
+        "startLine": 81,
+        "startChar": 27,
+        "endLine": 81,
+        "endChar": 29
+      },
+      "revId": "1dac0fe8e21a0c8ebe434fc4adf1bd9c36f328e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
