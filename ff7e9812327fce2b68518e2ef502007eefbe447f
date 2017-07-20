@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c1394762_3100db2c",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-07-20T23:57:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d789f4c_7d7fe5a0",
+      "revId": "ff7e9812327fce2b68518e2ef502007eefbe447f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c3f6991_eecdae83",
         "filename": "ios/chrome/browser/ui/bubble/bubble_util.h",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a3cd3293_0b707804",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-07-20T23:57:32Z",
+      "side": 1,
+      "message": "You\u0027re right, but I thought it might be more appropriate for the util method to calculate anchorX than for the parent to be responsible. Happy to change it if you disagree, though.",
+      "parentUuid": "6c3f6991_eecdae83",
+      "revId": "ff7e9812327fce2b68518e2ef502007eefbe447f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a730cbf_1be737ee",
         "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-20T18:40:14Z",
       "side": 1,
       "message": "I think we should defer RTL calculations\nas much as we can. So this should return \na LayoutRectPosition, which is essentially\nan RTL-agnostic CGPoint.",
+      "revId": "ff7e9812327fce2b68518e2ef502007eefbe447f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8682d2f_0cb115be",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-07-20T23:57:32Z",
+      "side": 1,
+      "message": "It looks like LayoutRectPosition returns the correct origin for LTR only: https://cs.chromium.org/chromium/src/ios/chrome/browser/ui/rtl_geometry.mm?l\u003d30\n\nThe calculations that mirror the position for RTL seem to be done in LayoutRectGetRect:\nhttps://cs.chromium.org/chromium/src/ios/chrome/browser/ui/rtl_geometry.mm?l\u003d64\n\nSo I think calls to LayoutRect belong in BubbleVC\u0027s parent. I\u0027ve broken this up into two methods to separate the x and y coordinates, and changed the name of the x-coordinate method to |LeadingDistance| so it\u0027s clear that it is not the origin\u0027s x in RTL.",
+      "parentUuid": "8a730cbf_1be737ee",
       "revId": "ff7e9812327fce2b68518e2ef502007eefbe447f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -81,6 +135,24 @@
       "writtenOn": "2017-07-20T18:40:14Z",
       "side": 1,
       "message": "I think a width is conceptually \nindependent of RTL/LTR.",
+      "revId": "ff7e9812327fce2b68518e2ef502007eefbe447f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c2ec9f3_2acb2a19",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-07-20T23:57:32Z",
+      "side": 1,
+      "message": "I see what you\u0027re saying. I think the difference here is that elementFrame may or may not be RTL; we need to check if RTL so we know whether the bubble is aligned to the right or left of the anchor.\n\nI added comments as per Greg\u0027s feedback.",
+      "parentUuid": "90eb4689_061210d4",
       "revId": "ff7e9812327fce2b68518e2ef502007eefbe447f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -122,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "2b1a612b_0821b8ab",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-07-20T23:57:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1beffb6b_fa5461da",
+      "revId": "ff7e9812327fce2b68518e2ef502007eefbe447f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67aa268b_74bf2971",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view.h",
         "patchSetId": 6
@@ -136,6 +226,24 @@
       "revId": "ff7e9812327fce2b68518e2ef502007eefbe447f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92798eeb_87e0efa9",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-07-20T23:57:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67aa268b_74bf2971",
+      "revId": "ff7e9812327fce2b68518e2ef502007eefbe447f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "936e1cc4_904317e7",
+        "filename": "ios/showcase/bubble/sc_bubble_coordinator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-07-20T23:57:32Z",
+      "side": 1,
+      "message": "I\u0027ve changed it so the namespace is included during use.",
+      "parentUuid": "26232e4a_00190f28",
+      "revId": "ff7e9812327fce2b68518e2ef502007eefbe447f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d6a8382_5303406a",
         "filename": "ios/showcase/bubble/sc_bubble_coordinator.mm",
         "patchSetId": 6
@@ -170,6 +296,24 @@
       "revId": "ff7e9812327fce2b68518e2ef502007eefbe447f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26e8a752_6c32572e",
+        "filename": "ios/showcase/bubble/sc_bubble_coordinator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-07-20T23:57:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d6a8382_5303406a",
+      "revId": "ff7e9812327fce2b68518e2ef502007eefbe447f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -190,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "15877464_943cbb75",
+        "filename": "ios/showcase/bubble/sc_bubble_coordinator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-07-20T23:57:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "894455b9_a2275f72",
+      "revId": "ff7e9812327fce2b68518e2ef502007eefbe447f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aaf5fde8_be889244",
         "filename": "ios/showcase/bubble/sc_bubble_coordinator.mm",
         "patchSetId": 6
@@ -201,6 +363,24 @@
       "writtenOn": "2017-07-19T23:02:57Z",
       "side": 1,
       "message": "The spacing of this line seems off. I would expect |CGRectGetMaxY...| to align with the parentheses or be indented by 4. Is that the result of git cl format?",
+      "revId": "ff7e9812327fce2b68518e2ef502007eefbe447f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f504cb8_aee189f1",
+        "filename": "ios/showcase/bubble/sc_bubble_coordinator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-07-20T23:57:32Z",
+      "side": 1,
+      "message": "It is the result of git cl format, oddly enough...I tried fixing the spacing and git cl format changed it back to this.",
+      "parentUuid": "aaf5fde8_be889244",
       "revId": "ff7e9812327fce2b68518e2ef502007eefbe447f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
