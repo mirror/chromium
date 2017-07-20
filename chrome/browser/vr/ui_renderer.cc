@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#define _USE_MATH_DEFINES  // For M_PI in MSVC.
+
 #include "chrome/browser/vr/ui_renderer.h"
 
 #include "base/trace_event/trace_event.h"
