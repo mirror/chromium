@@ -213,6 +213,41 @@ bool WebHistoryItem::DidSaveScrollOrScaleState() const {
   return private_->GetViewState();
 }
 
+WebString WebHistoryItem::ScrollAnchorSelector() const {
+  HistoryItem::ViewState* scroll_and_view_state = private_->GetViewState();
+  WebString selector = scroll_and_view_state
+                           ? scroll_and_view_state->scroll_anchor_selector_
+                           : "";
+  return selector;
+}
+
+void WebHistoryItem::SetScrollAnchorSelector(const WebString& selector) {
+  private_->SetScrollAnchorSelector(selector);
+}
+
+WebFloatPoint WebHistoryItem::ScrollAnchorOffset() const {
+  HistoryItem::ViewState* scroll_and_view_state = private_->GetViewState();
+  LayoutPoint offset = scroll_and_view_state
+                           ? scroll_and_view_state->scroll_anchor_offset_
+                           : LayoutPoint();
+  return WebFloatPoint(offset.X(), offset.Y());
+}
+
+void WebHistoryItem::SetScrollAnchorOffset(const WebFloatPoint& offset) {
+  private_->SetScrollAnchorOffset(LayoutPoint(offset.x, offset.y));
+}
+
+uint64_t WebHistoryItem::ScrollAnchorSimhash() const {
+  HistoryItem::ViewState* scroll_and_view_state = private_->GetViewState();
+  uint64_t hash =
+      scroll_and_view_state ? scroll_and_view_state->scroll_anchor_simhash_ : 0;
+  return hash;
+}
+
+void WebHistoryItem::SetScrollAnchorSimhash(const uint64_t hash) {
+  private_->SetScrollAnchorSimhash(hash);
+}
+
 WebHistoryItem::WebHistoryItem(HistoryItem* item) : private_(item) {}
 
 WebHistoryItem& WebHistoryItem::operator=(HistoryItem* item) {
