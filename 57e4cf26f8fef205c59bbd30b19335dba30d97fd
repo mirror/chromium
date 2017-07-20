@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "80299d1c_223a5dc7",
+        "filename": "device/hid/hid_device_info.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-07-20T10:09:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39fa9dc6_6bde58f7",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 32
+      },
+      "revId": "57e4cf26f8fef205c59bbd30b19335dba30d97fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1cef62f_319e1b37",
         "filename": "device/hid/hid_device_info.h",
         "patchSetId": 11
@@ -39,6 +63,24 @@
       "revId": "57e4cf26f8fef205c59bbd30b19335dba30d97fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f84c496_81725d80",
+        "filename": "device/hid/hid_device_info.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-07-20T10:09:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1cef62f_319e1b37",
+      "revId": "57e4cf26f8fef205c59bbd30b19335dba30d97fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "ba47edfd_85a899be",
+        "filename": "device/hid/hid_device_info.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-07-20T10:09:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45cad74b_6a3dea4b",
+      "revId": "57e4cf26f8fef205c59bbd30b19335dba30d97fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a5f373e_d1a33c07",
         "filename": "device/hid/hid_service.cc",
         "patchSetId": 11
@@ -70,6 +130,30 @@
       "writtenOn": "2017-07-18T17:59:38Z",
       "side": 1,
       "message": "This condition should always be true so instead I would add the following DCHECK:\n\nDCHECK(FindDeviceIdByPlatformDeviceId(device_info-\u003eplatform_device_id()).empty());",
+      "range": {
+        "startLine": 98,
+        "startChar": 2,
+        "endLine": 98,
+        "endChar": 41
+      },
+      "revId": "57e4cf26f8fef205c59bbd30b19335dba30d97fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cd54a1f_9c13ad2d",
+        "filename": "device/hid/hid_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-07-20T10:09:41Z",
+      "side": 1,
+      "message": "That condition is not always be true.\n\nThe original code uses \"if (!base::ContainsKey(devices_, device_info-\u003edevice_id()))\" to\nprevent inserting duplicated platform_device_id.\n\nSo I followed the original logic that we should never insert two HidDeviceInfo for the\nsame platform_device_id.",
+      "parentUuid": "6a5f373e_d1a33c07",
       "range": {
         "startLine": 98,
         "startChar": 2,
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "4a2f0dcc_4b46aabb",
+        "filename": "device/hid/hid_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-07-20T10:09:41Z",
+      "side": 1,
+      "message": "The device_guid is returned by FindDeviceIdByPlatformDeviceId() in which we go through the map and do searching. I feel it is still safe without the DCHECK()?\nAnyway, I\u0027ll add the DCHECK() first:) \n\nDone.",
+      "parentUuid": "3bd8f384_63500281",
+      "range": {
+        "startLine": 124,
+        "startChar": 42,
+        "endLine": 124,
+        "endChar": 63
+      },
+      "revId": "57e4cf26f8fef205c59bbd30b19335dba30d97fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71e4aa30_8319e5df",
         "filename": "device/hid/hid_service.cc",
         "patchSetId": 11
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "ecf7e054_ff0df6e0",
+        "filename": "device/hid/hid_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-07-20T10:09:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71e4aa30_8319e5df",
+      "range": {
+        "startLine": 155,
+        "startChar": 7,
+        "endLine": 155,
+        "endChar": 61
+      },
+      "revId": "57e4cf26f8fef205c59bbd30b19335dba30d97fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5775ac20_bee884b1",
         "filename": "device/hid/hid_service.h",
         "patchSetId": 11
@@ -139,6 +271,30 @@
       "writtenOn": "2017-07-18T17:59:38Z",
       "side": 1,
       "message": "This comment is out of date. It doesn\u0027t \"fill in\" anything anymore. It just returns the HidDeviceInfo object.",
+      "range": {
+        "startLine": 66,
+        "startChar": 5,
+        "endLine": 66,
+        "endChar": 57
+      },
+      "revId": "57e4cf26f8fef205c59bbd30b19335dba30d97fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5db5a9c2_2188cbb9",
+        "filename": "device/hid/hid_service.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-07-20T10:09:41Z",
+      "side": 1,
+      "message": "Yep, delete this comment. Done.",
+      "parentUuid": "5775ac20_bee884b1",
       "range": {
         "startLine": 66,
         "startChar": 5,
