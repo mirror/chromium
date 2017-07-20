@@ -252,9 +252,9 @@ void WebViewPlugin::DidFailLoading(const WebURLError& error) {
   error_.reset(new WebURLError(error));
 }
 
-WebViewPlugin::WebViewHelper::WebViewHelper(
-    WebViewPlugin* plugin,
-    const WebPreferences& preferences) : plugin_(plugin) {
+WebViewPlugin::WebViewHelper::WebViewHelper(WebViewPlugin* plugin,
+                                            const WebPreferences& preferences)
+    : plugin_(plugin) {
   web_view_ = WebView::Create(this, blink::kWebPageVisibilityStateVisible);
   // ApplyWebPreferences before making a WebLocalFrame so that the frame sees a
   // consistent view of our preferences.
@@ -262,6 +262,8 @@ WebViewPlugin::WebViewHelper::WebViewHelper(
   WebLocalFrame* web_frame =
       WebLocalFrame::CreateMainFrame(web_view_, this, nullptr, nullptr);
   WebFrameWidget::Create(this, web_frame);
+  interface_provider_.Forward(
+      base::Bind([](const std::string&, mojo::ScopedMessagePipeHandle) {}));
 }
 
 WebViewPlugin::WebViewHelper::~WebViewHelper() {
@@ -363,6 +365,11 @@ void WebViewPlugin::WebViewHelper::FrameDetached(blink::WebLocalFrame* frame,
     frame->FrameWidget()->Close();
 
   frame->Close();
+}
+
+service_manager::InterfaceProvider*
+WebViewPlugin::WebViewHelper::GetInterfaceProvider() {
+  return &interface_provider_;
 }
 
 void WebViewPlugin::OnZoomLevelChanged() {
