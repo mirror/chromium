@@ -189,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "d446ad42_56451fe9",
+        "filename": "chrome/browser/vr/elements/linear_layout_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-20T17:34:16Z",
+      "side": 1,
+      "message": "Not actually done?",
+      "parentUuid": "ecbd70bf_f88e51cb",
+      "range": {
+        "startLine": 63,
+        "startChar": 57,
+        "endLine": 63,
+        "endChar": 58
+      },
+      "revId": "63441397fb7858797984acc21571134ecbf1fb86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8caa47f_942c2381",
         "filename": "chrome/browser/vr/elements/ui_element.cc",
         "patchSetId": 6
@@ -265,6 +289,24 @@
       "side": 1,
       "message": "Done, though I don\u0027t want to convert the existing SetFOO methods on UiElement. (See class level comment)",
       "parentUuid": "96e2eb05_354d6f61",
+      "revId": "63441397fb7858797984acc21571134ecbf1fb86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e9da5765_dc2ed419",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-20T17:34:16Z",
+      "side": 1,
+      "message": "Right.  Yeah, this looks awesome as you did it.",
+      "parentUuid": "8c3571c1_78110134",
       "revId": "63441397fb7858797984acc21571134ecbf1fb86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
