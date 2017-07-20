@@ -997,6 +997,13 @@ void TestLauncher::RunTests() {
         continue;
     }
 
+    // Content test launcher can return false from ShouldRunTest for some tests
+    // and run them internally (tests with "PRE_" prefixes).
+    // Report test locations of all tests (even for those tests that were not
+    // run as part of this shard) to prevent test-launcher crash when content
+    // test launcher reports PRE_ test as failed.
+    results_tracker_.AddTestLocation(test_name, tests_[i].file, tests_[i].line);
+
     if (!launcher_delegate_->ShouldRunTest(tests_[i].test_case_name,
                                            tests_[i].test_name)) {
       continue;
@@ -1038,10 +1045,6 @@ void TestLauncher::RunTests() {
 
     if (Hash(test_name) % total_shards_ != static_cast<uint32_t>(shard_index_))
       continue;
-
-    // Report test locations after applying all filters, so that we report test
-    // locations only for those tests that were run as part of this shard.
-    results_tracker_.AddTestLocation(test_name, tests_[i].file, tests_[i].line);
 
     test_names.push_back(test_name);
   }
