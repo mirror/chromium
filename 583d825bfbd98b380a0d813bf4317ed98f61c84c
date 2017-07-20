@@ -52,6 +52,24 @@
       "revId": "583d825bfbd98b380a0d813bf4317ed98f61c84c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "898d8eed_99a8d99d",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-07-20T23:05:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00d8eb80_29b6eccb",
+      "revId": "583d825bfbd98b380a0d813bf4317ed98f61c84c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
