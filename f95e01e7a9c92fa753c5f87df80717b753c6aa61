@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49947d9d_6789aa9e",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBoxModelObject.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-07-20T14:11:01Z",
+      "side": 1,
+      "message": "It looks like this struct is empty now, and was added only for sticky anyway. If the sticky variable is no longer used, we should remove the entire struct.",
+      "revId": "f95e01e7a9c92fa753c5f87df80717b753c6aa61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
