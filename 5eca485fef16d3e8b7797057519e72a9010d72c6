@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "60f534bd_805731eb",
+        "filename": "chrome/browser/ui/android/infobars/permission_infobar.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-07-20T14:59:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "928a4abb_a81469a6",
+      "range": {
+        "startLine": 36,
+        "startChar": 25,
+        "endLine": 36,
+        "endChar": 43
+      },
+      "revId": "5eca485fef16d3e8b7797057519e72a9010d72c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "daf378b0_7b354a25",
         "filename": "chrome/browser/ui/android/infobars/permission_infobar.h",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "5eca485fef16d3e8b7797057519e72a9010d72c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb745d76_4a21676d",
+        "filename": "chrome/browser/ui/android/infobars/permission_infobar.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-07-20T14:59:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "daf378b0_7b354a25",
+      "revId": "5eca485fef16d3e8b7797057519e72a9010d72c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
