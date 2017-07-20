@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "577e1f4d_0c1735e0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuPropertiesDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-07-20T15:57:28Z",
+      "side": 1,
+      "message": "\u003e This is asserting only one of the above is true, right?\n\nYes.\n\n\u003e How about:\n\u003e \n\u003e assert isPageMenu ^ isOverviewMenu ^ isTabletEmptyModeMenu ^ isBottomSheetNtpMenu\n\nBut this asserts odd number of them are true, so if 3 of them are true, this wouldn\u0027t be what we want.",
+      "parentUuid": "31cf5822_bd6276bf",
+      "range": {
+        "startLine": 98,
+        "startChar": 21,
+        "endLine": 98,
+        "endChar": 0
+      },
+      "revId": "c12d9df3e725d67bf11b4c47f31c2237370f8ea4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "889311bf_51f31906",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabIntentDataProvider.java",
         "patchSetId": 1
