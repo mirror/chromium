@@ -22,6 +22,30 @@
       "revId": "dc4be7194b92109a8f832fab1f9a403134d8ec1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e641c665_86fedd5d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentManifestVerifier.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-20T19:38:34Z",
+      "side": 1,
+      "message": "I don\u0027t think other users of UrlConstants would benefit from this constant.",
+      "parentUuid": "f5dba6f5_1f2f8489",
+      "range": {
+        "startLine": 145,
+        "startChar": 21,
+        "endLine": 145,
+        "endChar": 30
+      },
+      "revId": "dc4be7194b92109a8f832fab1f9a403134d8ec1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
