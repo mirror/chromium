@@ -1,0 +1,970 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5dfe3407_8520aefc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T00:21:56Z",
+      "side": 1,
+      "message": "Please add a more descriptive CL message (and change \"CrOS cryptauth\" to \"CrOS MultiDevice\"). How about:\n\n[CrOS MultiDevice] Create RemoteDeviceProvider, which synchronously provides RemoteDevice objects.\n\nThis class encapsulates the creation of RemoteDevice objects, which are created asynchronously by RemoteDeviceLoader.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 53
+      },
+      "revId": "6c4e5620ee0e73f83451ab58af75edc4c86f6e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5718021_9d9672dd",
+        "filename": "components/cryptauth/remote_device_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T00:21:56Z",
+      "side": 1,
+      "message": "You need to call Load().",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 23
+      },
+      "revId": "6c4e5620ee0e73f83451ab58af75edc4c86f6e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc7936fa_37fc6d38",
+        "filename": "components/cryptauth/remote_device_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T00:21:56Z",
+      "side": 1,
+      "message": "No cast necessary here (or other places in this file).\n\nAlso, if a cast were necessary, please use a C++-style cast (static_cast, reinterpret_cast, or const_cast).",
+      "range": {
+        "startLine": 25,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 52
+      },
+      "revId": "6c4e5620ee0e73f83451ab58af75edc4c86f6e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81e5bbf8_549da7f9",
+        "filename": "components/cryptauth/remote_device_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T00:21:56Z",
+      "side": 1,
+      "message": "Only regenerate if |device_change_result| indicates that the device list changed.",
+      "range": {
+        "startLine": 55,
+        "startChar": 6,
+        "endLine": 55,
+        "endChar": 64
+      },
+      "revId": "6c4e5620ee0e73f83451ab58af75edc4c86f6e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0964775_c963efd8",
+        "filename": "components/cryptauth/remote_device_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T00:21:56Z",
+      "side": 1,
+      "message": "nit: Don\u0027t need this comment or the one below either.",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 42
+      },
+      "revId": "6c4e5620ee0e73f83451ab58af75edc4c86f6e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3836e85c_727807c3",
+        "filename": "components/cryptauth/remote_device_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T00:21:56Z",
+      "side": 1,
+      "message": "nit: Newline before this.",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 1
+      },
+      "revId": "6c4e5620ee0e73f83451ab58af75edc4c86f6e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0d47a3d_13acad28",
+        "filename": "components/cryptauth/remote_device_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T00:21:56Z",
+      "side": 1,
+      "message": "Forward-declare RemoteDeviceLoader in this file and move this #include to the .cc.\n\nYou always want to #include the minimum number of files possible.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 54
+      },
+      "revId": "6c4e5620ee0e73f83451ab58af75edc4c86f6e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c84bf09_49429562",
+        "filename": "components/cryptauth/remote_device_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T00:21:56Z",
+      "side": 1,
+      "message": "Move to .cc.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 57
+      },
+      "revId": "6c4e5620ee0e73f83451ab58af75edc4c86f6e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c79b45f_bb48bcb2",
+        "filename": "components/cryptauth/remote_device_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T00:21:56Z",
+      "side": 1,
+      "message": "Please add a TODO for me to move this to another file.",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 34
+      },
+      "revId": "6c4e5620ee0e73f83451ab58af75edc4c86f6e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94a6f05f_6cdb5525",
+        "filename": "components/cryptauth/remote_device_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T00:21:56Z",
+      "side": 1,
+      "message": "Comment needs to be updated.",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 45
+      },
+      "revId": "6c4e5620ee0e73f83451ab58af75edc4c86f6e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbefe067_26a1ca29",
+        "filename": "components/cryptauth/remote_device_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T00:21:56Z",
+      "side": 1,
+      "message": "nit: No comment necessary for this and RemoveObserver(). It\u0027s obvious already from the function name.\n\nAlso, you can remove the newline between these two function prototypes.",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 22
+      },
+      "revId": "6c4e5620ee0e73f83451ab58af75edc4c86f6e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d267636_d236ea8a",
+        "filename": "components/cryptauth/remote_device_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T00:21:56Z",
+      "side": 1,
+      "message": "No need for this comment since anyone interested can just look at the function that\u0027s overridden.\n\nInstead, please replace with this comment:\n// CryptAuthDeviceManager::Observer:",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 75
+      },
+      "revId": "6c4e5620ee0e73f83451ab58af75edc4c86f6e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aabcb7b9_df889066",
+        "filename": "components/cryptauth/remote_device_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T00:21:56Z",
+      "side": 1,
+      "message": "RemoteDevices",
+      "range": {
+        "startLine": 53,
+        "startChar": 27,
+        "endLine": 53,
+        "endChar": 41
+      },
+      "revId": "6c4e5620ee0e73f83451ab58af75edc4c86f6e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80313650_7e9dbd07",
+        "filename": "components/cryptauth/remote_device_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T00:21:56Z",
+      "side": 1,
+      "message": "You\u0027ll need to #include remote_device.h to use this (previously, it was transitively included since you included remote_device_loader.h).",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 18
+      },
+      "revId": "6c4e5620ee0e73f83451ab58af75edc4c86f6e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5be49a4_e513b283",
+        "filename": "components/cryptauth/remote_device_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T00:21:56Z",
+      "side": 1,
+      "message": "Move this function to above the overrides (below RemoveObserver()).",
+      "range": {
+        "startLine": 54,
+        "startChar": 19,
+        "endLine": 54,
+        "endChar": 35
+      },
+      "revId": "6c4e5620ee0e73f83451ab58af75edc4c86f6e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ce21caa_7a58b60e",
+        "filename": "components/cryptauth/remote_device_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T00:21:56Z",
+      "side": 1,
+      "message": "The account ID of the current user.",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 64
+      },
+      "revId": "6c4e5620ee0e73f83451ab58af75edc4c86f6e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c486ada_6dc4bd27",
+        "filename": "components/cryptauth/remote_device_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T00:21:56Z",
+      "side": 1,
+      "message": "The private key used to generate RemoteDevices.",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 73
+      },
+      "revId": "6c4e5620ee0e73f83451ab58af75edc4c86f6e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a914b6c_15f6547c",
+        "filename": "components/cryptauth/remote_device_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T00:21:56Z",
+      "side": 1,
+      "message": "No comment necessary for this, remote_device_list_, observers_, OnRemoteDevicesLoaded(), secure_message_delegate_factory_, weak_ptr_factory_. You only need a comment if it\u0027s unclear what the field means.",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 36
+      },
+      "revId": "6c4e5620ee0e73f83451ab58af75edc4c86f6e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92e00bf5_37c0aed9",
+        "filename": "components/cryptauth/remote_device_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T00:21:56Z",
+      "side": 1,
+      "message": "Move this below user_private_key_. All parameters received in the constructor should go together, in order of the constructor parameters, and before other fields.",
+      "range": {
+        "startLine": 66,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 65
+      },
+      "revId": "6c4e5620ee0e73f83451ab58af75edc4c86f6e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c96981b_3f5c863c",
+        "filename": "components/cryptauth/remote_device_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T00:21:56Z",
+      "side": 1,
+      "message": "Functions should be listed before fields.",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 73
+      },
+      "revId": "6c4e5620ee0e73f83451ab58af75edc4c86f6e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55655636_c1003848",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T00:21:56Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 25
+      },
+      "revId": "6c4e5620ee0e73f83451ab58af75edc4c86f6e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "402fa1af_766f0d36",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T00:21:56Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 52
+      },
+      "revId": "6c4e5620ee0e73f83451ab58af75edc4c86f6e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d82e328_1a843abf",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T00:21:56Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 62
+      },
+      "revId": "6c4e5620ee0e73f83451ab58af75edc4c86f6e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2efdc5e4_9a1ac560",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T00:21:56Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 60
+      },
+      "revId": "6c4e5620ee0e73f83451ab58af75edc4c86f6e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2553bc67_2eef326e",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T00:21:56Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 56
+      },
+      "revId": "6c4e5620ee0e73f83451ab58af75edc4c86f6e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c18767db_29f15027",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T00:21:56Z",
+      "side": 1,
+      "message": "nit: Newline before this.",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 1
+      },
+      "revId": "6c4e5620ee0e73f83451ab58af75edc4c86f6e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30569e8c_9a30dd73",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T00:21:56Z",
+      "side": 1,
+      "message": "Currently, your test doesn\u0027t actually rely on the fact that RemoteDeviceProvider is an observer of CryptAuthDeviceManager. Your tests would still pass even if we removed the AddObserver(this) call.\n\nTo rectify this, please edit CryptAuthDeviceManager and add two protected methods:\n\nvoid NotifySyncStarted() {\n  for (auto\u0026 observer : observers_) {\n    observer.OnSyncStarted();\n  }\n}\n\nvoid NotifySyncFinished(\n    SyncResult sync_result,\n    DeviceChangeResult device_change_result) {\n  for (auto\u0026 observer : observers_) {\n    observer.OnSyncFinished(sync_result, device_change_result);\n  }\n}\n\nThen, change CryptAuthDeviceManager itself to use these functions.\n\nThen, in your test, instead of calling OnSyncFinished() directly, call mock_device_manager_-\u003eNotifySyncFinished().",
+      "range": {
+        "startLine": 35,
+        "startChar": 6,
+        "endLine": 35,
+        "endChar": 32
+      },
+      "revId": "6c4e5620ee0e73f83451ab58af75edc4c86f6e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a6fe540_65cf32e4",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T00:21:56Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 44,
+        "startChar": 13,
+        "endLine": 44,
+        "endChar": 15
+      },
+      "revId": "6c4e5620ee0e73f83451ab58af75edc4c86f6e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b85a6934_9d3d2b68",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T00:21:56Z",
+      "side": 1,
+      "message": "// cryptauth::SecureMessageDelegateFactory:",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 26
+      },
+      "revId": "6c4e5620ee0e73f83451ab58af75edc4c86f6e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6211d131_08b6e3ed",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T00:21:56Z",
+      "side": 1,
+      "message": "TestObserver",
+      "range": {
+        "startLine": 93,
+        "startChar": 6,
+        "endLine": 93,
+        "endChar": 18
+      },
+      "revId": "6c4e5620ee0e73f83451ab58af75edc4c86f6e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7e526ba_6cd77dd6",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T00:21:56Z",
+      "side": 1,
+      "message": "We only need to be an observer of RemoteDeviceProvider.",
+      "range": {
+        "startLine": 94,
+        "startChar": 21,
+        "endLine": 94,
+        "endChar": 71
+      },
+      "revId": "6c4e5620ee0e73f83451ab58af75edc4c86f6e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6cb4069_698c1ba2",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T00:21:56Z",
+      "side": 1,
+      "message": "Just set \u003d 0 when you declare it - initializer list not necessary.",
+      "range": {
+        "startLine": 96,
+        "startChar": 19,
+        "endLine": 96,
+        "endChar": 59
+      },
+      "revId": "6c4e5620ee0e73f83451ab58af75edc4c86f6e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90162760_b0d2f6e7",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T00:21:56Z",
+      "side": 1,
+      "message": "Before this:\n\n// RemoteDeviceProvider::Observer:",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 1
+      },
+      "revId": "6c4e5620ee0e73f83451ab58af75edc4c86f6e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a429451_81b92f74",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T00:21:56Z",
+      "side": 1,
+      "message": "This should go under the constructor.",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 98,
+        "endChar": 29
+      },
+      "revId": "6c4e5620ee0e73f83451ab58af75edc4c86f6e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a866b5a_15e53dd9",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T00:21:56Z",
+      "side": 1,
+      "message": "Should be private. Add a getter:\n\nint num_times_device_list_changed() {\n  return num_times_device_list_changed_;\n}",
+      "range": {
+        "startLine": 99,
+        "startChar": 2,
+        "endLine": 99,
+        "endChar": 5
+      },
+      "revId": "6c4e5620ee0e73f83451ab58af75edc4c86f6e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8c9d70f_bcb645c2",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T00:21:56Z",
+      "side": 1,
+      "message": "num_times_device_list_changed_",
+      "range": {
+        "startLine": 99,
+        "startChar": 6,
+        "endLine": 99,
+        "endChar": 43
+      },
+      "revId": "6c4e5620ee0e73f83451ab58af75edc4c86f6e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae563e4a_20fb2164",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T00:21:56Z",
+      "side": 1,
+      "message": "Implement this inline.",
+      "range": {
+        "startLine": 102,
+        "startChar": 19,
+        "endLine": 102,
+        "endChar": 42
+      },
+      "revId": "6c4e5620ee0e73f83451ab58af75edc4c86f6e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f46f52d_c12a979e",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T00:21:56Z",
+      "side": 1,
+      "message": "For tests, don\u0027t DCHECK(), use EXPECT_TRUE().",
+      "range": {
+        "startLine": 144,
+        "startChar": 6,
+        "endLine": 144,
+        "endChar": 12
+      },
+      "revId": "6c4e5620ee0e73f83451ab58af75edc4c86f6e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cbd75da_b440c04a",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T00:21:56Z",
+      "side": 1,
+      "message": "For this test, you\u0027ll need to simulate syncs which end up returning different synced devices. Thus, you can\u0027t just return a static value for GetSyncedDevices().\n\nChange this Return() into an Invoke(), then add a function which allows you to determine exactly what is returned. You can look above at the TestRemoteDeviceLoaderFactory for an example of how to use Invoke().",
+      "range": {
+        "startLine": 162,
+        "startChar": 23,
+        "endLine": 162,
+        "endChar": 49
+      },
+      "revId": "6c4e5620ee0e73f83451ab58af75edc4c86f6e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "657dd37a_105040a6",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T00:21:56Z",
+      "side": 1,
+      "message": "Likewise, no need for these descriptions unless it is hard to understand without them.",
+      "range": {
+        "startLine": 193,
+        "startChar": 0,
+        "endLine": 193,
+        "endChar": 76
+      },
+      "revId": "6c4e5620ee0e73f83451ab58af75edc4c86f6e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "854c39fe_74576188",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T00:21:56Z",
+      "side": 1,
+      "message": "Add test_observer_ as an instance field (std::unique_ptr\u003cTestObserver\u003e). At the end of SetUp(), create it and add it as an observer of |remote_device_provider_|. Then, you don\u0027t have to create it and set it up in every test.\n\nAlso, please call base::RunLoop().RunUntilIdle() at the end of SetUp().",
+      "range": {
+        "startLine": 195,
+        "startChar": 7,
+        "endLine": 195,
+        "endChar": 20
+      },
+      "revId": "6c4e5620ee0e73f83451ab58af75edc4c86f6e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7b72cde_4b3c7c60",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-20T00:21:56Z",
+      "side": 1,
+      "message": "Instead of writing several tests which each test a semi-related part, write tests which test an entire flow.\n\nTest 1: Create a RemoteDeviceProvider and verify that the original devices are loaded.\nTest 2: Create a RemoteDeviceProvider with initial devices, then simulate a sync and verify that observers are notified of the change and that the next time the getter is called, the devices are different.\nTest 3: Create a RemoteDeviceProvider, simulate a sync, then when the RemoteDeviceLoader is in progress, simulate another sync. Make sure the end result is the second sync\u0027s results.",
+      "range": {
+        "startLine": 194,
+        "startChar": 0,
+        "endLine": 240,
+        "endChar": 0
+      },
+      "revId": "6c4e5620ee0e73f83451ab58af75edc4c86f6e44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
