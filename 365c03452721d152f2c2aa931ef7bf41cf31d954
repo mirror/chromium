@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "135efc08_0220e935",
+        "filename": "dbus/object_proxy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-20T15:53:37Z",
+      "side": 1,
+      "message": "Clarification: so is this callback always posted to the caller thread (i.e. can we assume OnPendingCallIsCompleteThunk is called in any case?)\n\nbackground: crbug.com/746463.\n\nIf so, how about DCHECK(callback.is_null()) in dtor?\nAlso, just in case of non-null, can we post it to the caller thread in dtor, and destroy on the thread?\nIn case of PostTask failure, probably we need to leak it intentionally, then.\n(This is not the main focus of this CL, so can be TODO. Please feel free to assign it to me, if you\u0027d like defer the work, or of course, I\u0027d really appreciate if you\u0027re willing to look into it.)",
+      "revId": "365c03452721d152f2c2aa931ef7bf41cf31d954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d488006_9adab272",
+        "filename": "dbus/object_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-20T15:53:37Z",
+      "side": 1,
+      "message": "Optional: how about using \"using\"? (Ditto for below).",
+      "revId": "365c03452721d152f2c2aa931ef7bf41cf31d954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
