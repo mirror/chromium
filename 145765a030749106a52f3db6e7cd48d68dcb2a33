@@ -560,6 +560,24 @@
     },
     {
       "key": {
+        "uuid": "475aa220_3ac85a9a",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-20T20:12:33Z",
+      "side": 1,
+      "message": "Marking as resolved because I reposted this comment on patch set 12.",
+      "parentUuid": "c1ff19c8_71d7b9c5",
+      "revId": "145765a030749106a52f3db6e7cd48d68dcb2a33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c036f0b5_6a0313b4",
         "filename": "components/omnibox/browser/contextual_suggestions_service.h",
         "patchSetId": 4

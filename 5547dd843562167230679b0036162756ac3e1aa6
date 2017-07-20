@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f756f75b_8c4e91a5",
+        "filename": "components/omnibox/browser/base_search_provider_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-20T20:12:33Z",
+      "side": 1,
+      "message": "I\u0027m confused why this is necessary if we\u0027re using the default value (\"The main thread doesn\u0027t pump system messages.\").\n\nditto other five unittest files",
+      "range": {
+        "startLine": 86,
+        "startChar": 61,
+        "endLine": 86,
+        "endChar": 0
+      },
+      "revId": "5547dd843562167230679b0036162756ac3e1aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9873a630_2e6d1198",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-20T20:12:33Z",
+      "side": 1,
+      "message": "nit: order in .cc should match order in .h",
+      "range": {
+        "startLine": 47,
+        "startChar": 35,
+        "endLine": 47,
+        "endChar": 72
+      },
+      "revId": "5547dd843562167230679b0036162756ac3e1aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbc54fe2_e5f05271",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-20T20:12:33Z",
+      "side": 1,
+      "message": "nit: before \"it\", add \"as in the else case here, \"\n\n(Otherwise the comment looks good.)",
+      "range": {
+        "startLine": 120,
+        "startChar": 5,
+        "endLine": 120,
+        "endChar": 7
+      },
+      "revId": "5547dd843562167230679b0036162756ac3e1aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e7bd305_dcb6ef49",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-20T20:12:33Z",
+      "side": 1,
+      "message": "This seems odd, as the base_suggest_url you\u0027re handed already comes from a template_url_service.  Why does the template URL service in zero suggest provider exist and the one here does not?\n\nAlso, lines 140-149 here duplicate the code in ZeroSuggestProvider::GetContextualSuggestionsUrl().  This seems like not the best approach.  This code should only live in one place.",
+      "range": {
+        "startLine": 137,
+        "startChar": 2,
+        "endLine": 137,
+        "endChar": 39
+      },
+      "revId": "5547dd843562167230679b0036162756ac3e1aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "433892a8_ddaf08d6",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-20T20:12:33Z",
+      "side": 1,
+      "message": "Please  refactor this to remove this weirdness.\n\nGheorghe took this function from zero_suggest_provider.cc (look at the base of that) and then added this current_url test to the top of it.  I don\u0027t think it conceptually fits within it.  Please do the test outside of UseExperimentalZeroSuggestSuggestions.  Or leave it there.  Regardless, where-ever it remains, it should be justified.\n\nRight now it\u0027s clearly weird because in some part of the code path, current_url empty causes use to override is_experimental but in other parts we blindly continue on thinking is_experimental is true.\n\nAlso, where-ever this test goes, you can justify it with a comment like this (feel free to rewrite):\n// Query the standard service if |current_url| is empty.  The experimental service will not provide contextual suggestions in this case.  The standard service will not either, but queries it causes the standard servers to load per-user models into the server\u0027s memory.  Having a per-user model in memory allows the standard server to respond more quickly with personalized suggestions as the user types.\n// TODO(mpearson): remove when warm-up psuggest launches fully.",
+      "range": {
+        "startLine": 162,
+        "startChar": 2,
+        "endLine": 163,
+        "endChar": 28
+      },
+      "revId": "5547dd843562167230679b0036162756ac3e1aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "313291bf_a386ebee",
+        "filename": "components/omnibox/browser/mock_autocomplete_provider_client.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-20T20:12:33Z",
+      "side": 1,
+      "message": "What the presubmit DEPS complaint from this big chunk of includes?\n\nI would guess that to eliminate these includes, we\u0027d just need to make the Mock client go down the regular (non-experimental) flow whenever the signin-manager, oauth token service, etc. are unavailable.  That means removing the DCHECK(signin_manager_) on line 83 of contextual_suggestions_service.cc and make UseExperimentalZeroSuggestSuggestions() return false if those things are null.  That might be it.",
+      "range": {
+        "startLine": 17,
+        "startChar": 67,
+        "endLine": 17,
+        "endChar": 0
+      },
+      "revId": "5547dd843562167230679b0036162756ac3e1aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
