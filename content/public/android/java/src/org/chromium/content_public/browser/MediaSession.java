@@ -46,6 +46,16 @@ public abstract class MediaSession {
     public abstract void stop();
 
     /**
+     * Seeks the media session forward by the specified number of seconds.
+     */
+    public abstract void seekForward(double seconds);
+
+    /**
+     * Seeks the media session backward by the specified number of seconds.
+     */
+    public abstract void seekBackward(double seconds);
+
+    /**
      * Notify the media session that an action has been performed.
      */
     public abstract void didReceiveAction(int action);

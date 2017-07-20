@@ -20,6 +20,8 @@ class MockMediaSessionPlayerObserver : public MediaSessionPlayerObserver {
   // Implements MediaSessionPlayerObserver.
   void OnSuspend(int player_id) override;
   void OnResume(int player_id) override;
+  void OnSeekForward(int player_id, double seconds) override;
+  void OnSeekBackward(int player_id, double seconds) override;
   void OnSetVolumeMultiplier(int player_id, double volume_multiplier) override;
   RenderFrameHost* render_frame_host() const override;
 
@@ -38,6 +40,8 @@ class MockMediaSessionPlayerObserver : public MediaSessionPlayerObserver {
 
   int received_suspend_calls() const;
   int received_resume_calls() const;
+  int received_seek_forward_calls() const;
+  int received_seek_backward_calls() const;
 
  private:
   // Internal representation of the players to keep track of their statuses.
@@ -57,6 +61,8 @@ class MockMediaSessionPlayerObserver : public MediaSessionPlayerObserver {
 
   int received_resume_calls_ = 0;
   int received_suspend_calls_ = 0;
+  int received_seek_forward_calls_ = 0;
+  int received_seek_backward_calls_ = 0;
 };
 
 }  // namespace content

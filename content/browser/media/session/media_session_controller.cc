@@ -87,6 +87,18 @@ void MediaSessionController::OnResume(int player_id) {
       new MediaPlayerDelegateMsg_Play(id_.first->GetRoutingID(), id_.second));
 }
 
+void MediaSessionController::OnSeekForward(int player_id, double seconds) {
+  DCHECK_EQ(player_id_, player_id);
+  media_web_contents_observer_->Send(new MediaPlayerDelegateMsg_SeekForward(
+      id_.first->GetRoutingID(), id_.second, seconds));
+}
+
+void MediaSessionController::OnSeekBackward(int player_id, double seconds) {
+  DCHECK_EQ(player_id_, player_id);
+  media_web_contents_observer_->Send(new MediaPlayerDelegateMsg_SeekBackward(
+      id_.first->GetRoutingID(), id_.second, seconds));
+}
+
 void MediaSessionController::OnSetVolumeMultiplier(int player_id,
                                                    double volume_multiplier) {
   DCHECK_EQ(player_id_, player_id);

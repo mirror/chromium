@@ -141,6 +141,10 @@ class MediaSessionImplBrowserTest : public content::ContentBrowserTest {
                                           : MediaSessionImpl::State::INACTIVE);
   }
 
+  void UISeekForward() { media_session_->OnSeekForwardInternal(1.0); }
+
+  void UISeekBackward() { media_session_->OnSeekBackwardInternal(1.0); }
+
   void SystemStartDucking() { media_session_->StartDucking(); }
 
   void SystemStopDucking() { media_session_->StopDucking(); }
@@ -414,7 +418,7 @@ IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest, ResumePlayGivesAudioFocus) {
 }
 
 IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
-                       ResumeSuspendAreSentOnlyOncePerPlayers) {
+                       ResumeSuspendSeekAreSentOnlyOncePerPlayers) {
   auto player_observer = base::MakeUnique<MockMediaSessionPlayerObserver>();
 
   StartNewPlayer(player_observer.get(), media::MediaContentType::Persistent);
@@ -423,16 +427,24 @@ IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
 
   EXPECT_EQ(0, player_observer->received_suspend_calls());
   EXPECT_EQ(0, player_observer->received_resume_calls());
+  EXPECT_EQ(0, player_observer->received_seek_forward_calls());
+  EXPECT_EQ(0, player_observer->received_seek_backward_calls());
 
   SystemSuspend(true);
   EXPECT_EQ(3, player_observer->received_suspend_calls());
 
   SystemResume();
   EXPECT_EQ(3, player_observer->received_resume_calls());
+
+  UISeekForward();
+  EXPECT_EQ(3, player_observer->received_seek_forward_calls());
+
+  UISeekBackward();
+  EXPECT_EQ(3, player_observer->received_seek_backward_calls());
 }
 
 IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
-                       ResumeSuspendAreSentOnlyOncePerPlayersAddedTwice) {
+                       ResumeSuspendSeekAreSentOnlyOncePerPlayersAddedTwice) {
   auto player_observer = base::MakeUnique<MockMediaSessionPlayerObserver>();
 
   StartNewPlayer(player_observer.get(), media::MediaContentType::Persistent);
@@ -449,12 +461,20 @@ IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
 
   EXPECT_EQ(0, player_observer->received_suspend_calls());
   EXPECT_EQ(0, player_observer->received_resume_calls());
+  EXPECT_EQ(0, player_observer->received_seek_forward_calls());
+  EXPECT_EQ(0, player_observer->received_seek_backward_calls());
 
   SystemSuspend(true);
   EXPECT_EQ(3, player_observer->received_suspend_calls());
 
   SystemResume();
   EXPECT_EQ(3, player_observer->received_resume_calls());
+
+  UISeekForward();
+  EXPECT_EQ(3, player_observer->received_seek_forward_calls());
+
+  UISeekBackward();
+  EXPECT_EQ(3, player_observer->received_seek_backward_calls());
 }
 
 IN_PROC_BROWSER_TEST_F(MediaSessionImplBrowserTest,
