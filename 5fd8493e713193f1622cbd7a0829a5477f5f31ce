@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12c75d32_11624156",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleSelection.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-07-20T01:47:37Z",
+      "side": 1,
+      "message": "nit: declare as static function",
+      "revId": "5fd8493e713193f1622cbd7a0829a5477f5f31ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
