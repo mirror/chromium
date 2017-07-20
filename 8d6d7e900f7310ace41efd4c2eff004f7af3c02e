@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "6349a781_bcccf534",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-20T20:23:07Z",
+      "side": 1,
+      "message": "What\u0027s the \"File thread\"? BrowserThread::FILE is deprecated.",
+      "range": {
+        "startLine": 7,
+        "startChar": 23,
+        "endLine": 7,
+        "endChar": 41
+      },
+      "revId": "8d6d7e900f7310ace41efd4c2eff004f7af3c02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fba5f51_9150aa73",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-20T20:23:07Z",
+      "side": 1,
+      "message": "off?",
+      "range": {
+        "startLine": 9,
+        "startChar": 8,
+        "endLine": 9,
+        "endChar": 11
+      },
+      "revId": "8d6d7e900f7310ace41efd4c2eff004f7af3c02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "29c1358c_910e5940",
         "filename": "content/renderer/render_thread_impl.cc",
         "patchSetId": 5
@@ -31,6 +77,41 @@
       "side": 1,
       "message": "I personally think that exposing only WebTaskRunner is a good idea. However, gab@ is in the best position to make this kind of judgements.\n\nGab, WDYT?",
       "parentUuid": "29c1358c_910e5940",
+      "revId": "8d6d7e900f7310ace41efd4c2eff004f7af3c02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb1faa58_0aa9fe33",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-20T20:23:07Z",
+      "side": 1,
+      "message": "Yes please only expose runner interfaces, this makes it so much easier to migrate to something else later.\n\nEven better would be to only expose something like RenderThreadImpl::CreateFileTaskRunner() which would return a scoped_refptr\u003cbase::SequencedTaskRunner\u003e. Currently this could always be the same underlying task runner which happens to be a single thread but the API should be clear that these can be independent which will allow you to later do a simple switch where those sequences are actually sharing a pool (a la TaskScheduler + post_task.h).\n\nI\u0027m saying this because the hardest part of migrating to TaskScheduler in the browser is sharding BrowserThread::FILE\u0027s users into individual sequences and figuring out all the implicit dependencies. If your API asks users to make this decision from the get go (before the impl actually shards the work) then you at least have the proper labelling from the callers which is by far the hardest part.",
+      "parentUuid": "d6d5b5c5_fe6872e9",
+      "revId": "8d6d7e900f7310ace41efd4c2eff004f7af3c02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f3bb2f5_490c5f80",
+        "filename": "third_party/WebKit/public/platform/Platform.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-20T20:23:07Z",
+      "side": 1,
+      "message": "Don\u0027t expose threads if you can help it.",
       "revId": "8d6d7e900f7310ace41efd4c2eff004f7af3c02e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
