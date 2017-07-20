@@ -441,7 +441,7 @@ UpdateCheckDriver::~UpdateCheckDriver() {
 
 void UpdateCheckDriver::AddDelegate(
     const base::WeakPtr<UpdateCheckDelegate>& delegate) {
-    DCHECK(result_runner_->RunsTasksInCurrentSequence());
+  DCHECK(result_runner_->RunsTasksInCurrentSequence());
   delegates_.push_back(delegate);
 }
 

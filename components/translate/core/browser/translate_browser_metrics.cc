@@ -30,10 +30,8 @@ const char kTranslateUndisplayableLanguage[] =
     "Translate.UndisplayableLanguage";
 const char kTranslateUnsupportedLanguageAtInitiation[] =
     "Translate.UnsupportedLanguageAtInitiation";
-const char kTranslateSourceLanguage[] =
-    "Translate.SourceLanguage";
-const char kTranslateTargetLanguage[] =
-    "Translate.TargetLanguage";
+const char kTranslateSourceLanguage[] = "Translate.SourceLanguage";
+const char kTranslateTargetLanguage[] = "Translate.TargetLanguage";
 
 struct MetricsEntry {
   TranslateBrowserMetrics::MetricsNameIndex index;
@@ -42,20 +40,20 @@ struct MetricsEntry {
 
 // This entry table should be updated when new UMA items are added.
 const MetricsEntry kMetricsEntries[] = {
-  { TranslateBrowserMetrics::UMA_INITIATION_STATUS,
-    kTranslateInitiationStatus },
-  { TranslateBrowserMetrics::UMA_LANGUAGE_DETECTION_ERROR,
-    kTranslateReportLanguageDetectionError },
-  { TranslateBrowserMetrics::UMA_LOCALES_ON_DISABLED_BY_PREFS,
-    kTranslateLocalesOnDisabledByPrefs },
-  { TranslateBrowserMetrics::UMA_UNDISPLAYABLE_LANGUAGE,
-    kTranslateUndisplayableLanguage },
-  { TranslateBrowserMetrics::UMA_UNSUPPORTED_LANGUAGE_AT_INITIATION,
-    kTranslateUnsupportedLanguageAtInitiation },
-  { TranslateBrowserMetrics::UMA_TRANSLATE_SOURCE_LANGUAGE,
-    kTranslateSourceLanguage },
-  { TranslateBrowserMetrics::UMA_TRANSLATE_TARGET_LANGUAGE,
-    kTranslateTargetLanguage },
+    {TranslateBrowserMetrics::UMA_INITIATION_STATUS,
+     kTranslateInitiationStatus},
+    {TranslateBrowserMetrics::UMA_LANGUAGE_DETECTION_ERROR,
+     kTranslateReportLanguageDetectionError},
+    {TranslateBrowserMetrics::UMA_LOCALES_ON_DISABLED_BY_PREFS,
+     kTranslateLocalesOnDisabledByPrefs},
+    {TranslateBrowserMetrics::UMA_UNDISPLAYABLE_LANGUAGE,
+     kTranslateUndisplayableLanguage},
+    {TranslateBrowserMetrics::UMA_UNSUPPORTED_LANGUAGE_AT_INITIATION,
+     kTranslateUnsupportedLanguageAtInitiation},
+    {TranslateBrowserMetrics::UMA_TRANSLATE_SOURCE_LANGUAGE,
+     kTranslateSourceLanguage},
+    {TranslateBrowserMetrics::UMA_TRANSLATE_TARGET_LANGUAGE,
+     kTranslateTargetLanguage},
 };
 
 static_assert(arraysize(kMetricsEntries) == TranslateBrowserMetrics::UMA_MAX,
