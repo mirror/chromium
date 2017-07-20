@@ -738,35 +738,35 @@ void AnimationPlayer::TickAnimation(base::TimeTicks monotonic_time,
   base::TimeDelta trimmed =
       animation->TrimTimeToCurrentIteration(monotonic_time);
 
-  switch (animation->target_property()) {
-    case TargetProperty::TRANSFORM:
+  switch (curve->Type()) {
+    case AnimationCurve::TRANSFORM:
       target->NotifyClientTransformOperationsAnimated(
           curve->ToTransformAnimationCurve()->GetValue(trimmed), animation);
       break;
-    case TargetProperty::OPACITY:
-      target->NotifyClientOpacityAnimated(
+    case AnimationCurve::FLOAT:
+      target->NotifyClientFloatAnimated(
           MathUtil::ClampToRange(
               curve->ToFloatAnimationCurve()->GetValue(trimmed), 0.0f, 1.0f),
           animation);
       break;
-    case TargetProperty::FILTER:
+    case AnimationCurve::FILTER:
       target->NotifyClientFilterAnimated(
           curve->ToFilterAnimationCurve()->GetValue(trimmed), animation);
       break;
-    case TargetProperty::BACKGROUND_COLOR:
-      target->NotifyClientBackgroundColorAnimated(
+    case AnimationCurve::COLOR:
+      target->NotifyClientColorAnimated(
           curve->ToColorAnimationCurve()->GetValue(trimmed), animation);
       break;
-    case TargetProperty::SCROLL_OFFSET:
+    case AnimationCurve::SCROLL_OFFSET:
       target->NotifyClientScrollOffsetAnimated(
           curve->ToScrollOffsetAnimationCurve()->GetValue(trimmed), animation);
       break;
-    case TargetProperty::BOUNDS:
-      target->NotifyClientBoundsAnimated(
+    case AnimationCurve::SIZE:
+      target->NotifyClientSizeAnimated(
           curve->ToSizeAnimationCurve()->GetValue(trimmed), animation);
       break;
-    case TargetProperty::VISIBILITY:
-      target->NotifyClientVisibilityAnimated(
+    case AnimationCurve::BOOLEAN:
+      target->NotifyClientBooleanAnimated(
           curve->ToBooleanAnimationCurve()->GetValue(trimmed), animation);
       break;
   }
@@ -1063,7 +1063,7 @@ void AnimationPlayer::GetPropertyAnimationState(
       bool in_effect = animation->InEffect(last_tick_time_);
       bool active = animation->affects_active_elements();
       bool pending = animation->affects_pending_elements();
-      TargetProperty::Type property = animation->target_property();
+      int property = animation->target_property();
 
       if (pending)
         pending_state->potentially_animating[property] = true;
