@@ -336,6 +336,8 @@ void NTPResourceCache::CreateNewTabGuestHTML() {
 
   policy::BrowserPolicyConnectorChromeOS* connector =
       g_browser_process->platform_part()->browser_policy_connector_chromeos();
+  std::string enterprise_display_domain =
+      connector->GetEnterpriseDisplayDomain();
 
   if (connector->IsEnterpriseManaged()) {
     localized_strings.SetString("enterpriseInfoVisible", "true");
@@ -345,10 +347,11 @@ void NTPResourceCache::CreateNewTabGuestHTML() {
                                 chrome::kLearnMoreEnterpriseURL);
     base::string16 enterprise_info;
     if (connector->IsCloudManaged()) {
-      const std::string enterprise_domain = connector->GetEnterpriseDomain();
-      enterprise_info =
-          l10n_util::GetStringFUTF16(IDS_ASH_ENTERPRISE_DEVICE_MANAGED_BY,
-                                     base::UTF8ToUTF16(enterprise_domain));
+      const std::string enterprise_display_domain =
+          connector->GetEnterpriseDisplayDomain();
+      enterprise_info = l10n_util::GetStringFUTF16(
+          IDS_ASH_ENTERPRISE_DEVICE_MANAGED_BY,
+          base::UTF8ToUTF16(enterprise_display_domain));
     } else if (connector->IsActiveDirectoryManaged()) {
       enterprise_info =
           l10n_util::GetStringUTF16(IDS_ASH_ENTERPRISE_DEVICE_MANAGED);
