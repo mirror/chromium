@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "fff25bfa_048070ba",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-20T08:40:11Z",
+      "side": 1,
+      "message": "Would it make sense to add a comment for nullptr\u0027s like\n\nnullptr /* frame */, ...\n\nor would it make the line too long?  (\u0027nullptr\u0027 doesn\u0027t give much hints about what params are, like boolean params)",
+      "revId": "959443f12dab917ae8cd5c49a2a8705833216a35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f461825_814785e0",
         "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
         "patchSetId": 16
@@ -13,6 +30,23 @@
       "writtenOn": "2017-07-19T15:31:05Z",
       "side": 1,
       "message": "dcheng@: Is this comment still accurate?\n\nI think that we reuse the LocalWindow when we navigate from an initial empty document to a document from the same origin.",
+      "revId": "959443f12dab917ae8cd5c49a2a8705833216a35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d2b230a_ad489bb8",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 1068,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-20T08:40:11Z",
+      "side": 1,
+      "message": "SecurityContext::isSecureTransitionTo -\u003e Document::IsSecureTransitionTo",
       "revId": "959443f12dab917ae8cd5c49a2a8705833216a35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
