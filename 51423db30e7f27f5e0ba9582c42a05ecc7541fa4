@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec32284c_652a1c05",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_dialog_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-20T17:44:53Z",
+      "side": 1,
+      "message": "Given you have nearly the exact same code in 4 places wdyt of either of the following:\n. a single function that takes an enum so it knows which function to call on dialog_controller_ or\n. a cleanup function that nulls out dialog_controller_ and the RemoveObserver? In this case the individual calls to dialog_controller_ would remain in the code.",
+      "range": {
+        "startLine": 235,
+        "startChar": 2,
+        "endLine": 235,
+        "endChar": 21
+      },
+      "revId": "51423db30e7f27f5e0ba9582c42a05ecc7541fa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "169a01e6_205328ef",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_dialog_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-20T17:44:53Z",
+      "side": 1,
+      "message": "remove explicit",
+      "range": {
+        "startLine": 44,
+        "startChar": 11,
+        "endLine": 44,
+        "endChar": 30
+      },
+      "revId": "51423db30e7f27f5e0ba9582c42a05ecc7541fa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
