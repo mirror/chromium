@@ -1,0 +1,214 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c05c290_f8223bd8",
+        "filename": "components/autofill/core/browser/payments/full_card_request.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-20T18:57:36Z",
+      "side": 1,
+      "message": "nit: form_parsed_timestamp",
+      "revId": "af6f9a1a55e96854c2164bdb36c4f9d73439901d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71fdece1_f051937d",
+        "filename": "components/autofill/core/browser/payments/full_card_request_unittest.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-20T18:57:36Z",
+      "side": 1,
+      "message": "Could we have just\n\nFullCardRequest* request() { return \u0026request_; }",
+      "revId": "af6f9a1a55e96854c2164bdb36c4f9d73439901d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0a94fa3_3895f22e",
+        "filename": "components/payments/core/BUILD.gn",
+        "patchSetId": 34
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-20T18:57:36Z",
+      "side": 1,
+      "message": "Can\u0027t depend on //content within components/payments/core",
+      "revId": "af6f9a1a55e96854c2164bdb36c4f9d73439901d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feb8e22a_77bde4c2",
+        "filename": "components/payments/core/DEPS",
+        "patchSetId": 34
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-20T18:57:36Z",
+      "side": 1,
+      "message": "Not allowed",
+      "revId": "af6f9a1a55e96854c2164bdb36c4f9d73439901d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f590be39_28c0f010",
+        "filename": "components/payments/core/autofill_payment_instrument_unittest.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-20T18:57:36Z",
+      "side": 1,
+      "message": "can we use full_card_request_ here and remove FullCardRequest?",
+      "revId": "af6f9a1a55e96854c2164bdb36c4f9d73439901d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "286c99bc_677f3ddc",
+        "filename": "components/payments/core/autofill_payment_instrument_unittest.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-20T18:57:36Z",
+      "side": 1,
+      "message": "include the headers for this and below?",
+      "revId": "af6f9a1a55e96854c2164bdb36c4f9d73439901d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "284fa4b1_e478d8bb",
+        "filename": "components/payments/core/autofill_payment_instrument_unittest.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-20T18:57:36Z",
+      "side": 1,
+      "message": "The TestPaymentRequestDelegate does not take ownership of the PersonalDataManager pointer. Therefore it will leak.\n\nYou can do\n\nauto personal_data_manager \u003d base::MakeUnique\u003cTestPersonalDataManager\u003e(\"en-US\");\nTestPaymentRequestDelegate delegate(personal_data_manager.get());",
+      "revId": "af6f9a1a55e96854c2164bdb36c4f9d73439901d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a4a18a4_a1fef6af",
+        "filename": "components/payments/core/autofill_payment_instrument_unittest.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-20T18:57:36Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 382,
+        "startChar": 28,
+        "endLine": 383,
+        "endChar": 28
+      },
+      "revId": "af6f9a1a55e96854c2164bdb36c4f9d73439901d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6992a51_8d03feb8",
+        "filename": "components/payments/core/test_payment_request_delegate.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-20T18:57:36Z",
+      "side": 1,
+      "message": "can we just use full_card_request_?",
+      "revId": "af6f9a1a55e96854c2164bdb36c4f9d73439901d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae431a6d_65de6194",
+        "filename": "components/payments/core/test_payment_request_delegate.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-20T18:57:36Z",
+      "side": 1,
+      "message": "same",
+      "revId": "af6f9a1a55e96854c2164bdb36c4f9d73439901d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78aec712_a1cbd6f2",
+        "filename": "components/payments/core/test_payment_request_delegate.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-20T18:57:36Z",
+      "side": 1,
+      "message": "We should have a separate TestPaymentsClientDelegate",
+      "revId": "af6f9a1a55e96854c2164bdb36c4f9d73439901d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3c14a84_59ec9a99",
+        "filename": "components/payments/core/test_payment_request_delegate.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-20T18:57:36Z",
+      "side": 1,
+      "message": "Do we need this function?",
+      "revId": "af6f9a1a55e96854c2164bdb36c4f9d73439901d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
