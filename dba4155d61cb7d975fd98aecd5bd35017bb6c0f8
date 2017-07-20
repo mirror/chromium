@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "94f295ab_0f0ffa79",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-20T15:32:08Z",
+      "side": 1,
+      "message": "Note that gerrit automatically adds R\u003d when sending cl for review, and removes it when landing.",
+      "parentUuid": "f33849a1_d861a6c1",
+      "revId": "dba4155d61cb7d975fd98aecd5bd35017bb6c0f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "29973363_d736b334",
         "filename": "ios/chrome/app/strings/ios_strings.grd",
         "patchSetId": 4
