@@ -346,4 +346,9 @@ blink_core_sources("dom") {
     # TODO(jschuh): crbug.com/167187 fix size_t to int truncations.
     "//build/config/compiler:no_size_t_to_int_warning",
   ]
+
+  deps = [
+    "//services/metrics/public/interfaces",
+    "//services/metrics/public/cpp:metrics_cpp",
+  ]
 }

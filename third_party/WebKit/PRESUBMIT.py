@@ -193,11 +193,11 @@ def _CheckForInvalidPreferenceError(input_api, output_api):
     return results
 
 
-def _CheckForForbiddenNamespace(input_api, output_api):
-    """Checks that Blink uses Chromium namespaces only in permitted code."""
+def _CheckForForbiddenChromiumCode(input_api, output_api):
+    """Checks that Blink uses Chromium classes and namespaces only in permitted code."""
     # This list is not exhaustive, but covers likely ones.
     chromium_namespaces = ["base", "cc", "content", "gfx", "net", "ui"]
-    chromium_forbidden_classes = ["scoped_refptr"]
+    chromium_forbidden_classes = ["scoped_refptr", "GURL"]
     chromium_allowed_classes = ["gfx::ColorSpace", "gfx::CubicBezier"]
 
     def source_file_filter(path):
@@ -247,7 +247,7 @@ def CheckChangeOnUpload(input_api, output_api):
     results.extend(_CheckForPrintfDebugging(input_api, output_api))
     results.extend(_CheckForJSTest(input_api, output_api))
     results.extend(_CheckForInvalidPreferenceError(input_api, output_api))
-    results.extend(_CheckForForbiddenNamespace(input_api, output_api))
+    results.extend(_CheckForForbiddenChromiumCode(input_api, output_api))
     return results
 
 
