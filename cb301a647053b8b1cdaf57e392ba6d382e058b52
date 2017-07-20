@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e487ea51_e705fd13",
+        "filename": "components/cast_channel/cast_auth_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1229024
+      },
+      "writtenOn": "2017-07-20T18:23:10Z",
+      "side": 1,
+      "message": "Fixed. Good point.",
+      "parentUuid": "374305a2_bf2fb25e",
+      "revId": "cb301a647053b8b1cdaf57e392ba6d382e058b52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da7485fc_02bb175a",
         "filename": "components/cast_channel/cast_auth_util.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-20T17:28:22Z",
       "side": 1,
       "message": "What if crl is nullptr?",
+      "revId": "cb301a647053b8b1cdaf57e392ba6d382e058b52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b30f5197_df10fb2c",
+        "filename": "components/cast_channel/cast_auth_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1229024
+      },
+      "writtenOn": "2017-07-20T18:23:10Z",
+      "side": 1,
+      "message": "The nullptr gets passed in as a parameter. If the crl_policy is CRL_OPTIONAL, then a nullptr CRL is ignored.\nIf crl_policy is CRL_REQUIRED, then ERROR_CRL_INVALID is returned.",
+      "parentUuid": "da7485fc_02bb175a",
       "revId": "cb301a647053b8b1cdaf57e392ba6d382e058b52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "56241862_4c1ed5e4",
+        "filename": "components/cast_channel/cast_auth_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1229024
+      },
+      "writtenOn": "2017-07-20T18:23:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b83c59b_ce6f5bd6",
+      "revId": "cb301a647053b8b1cdaf57e392ba6d382e058b52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de84e29d_e312fca8",
         "filename": "components/cast_channel/cast_auth_util.cc",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "94efff1e_84077b14",
+        "filename": "components/cast_channel/cast_auth_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1229024
+      },
+      "writtenOn": "2017-07-20T18:23:10Z",
+      "side": 1,
+      "message": "This result (ERROR_CRL_INVALID) is returned if the crl is empty but the crl policy is set to CRL_REQUIRED.",
+      "parentUuid": "de84e29d_e312fca8",
+      "revId": "cb301a647053b8b1cdaf57e392ba6d382e058b52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "048c91f7_82994a2d",
         "filename": "components/cast_channel/cast_auth_util.cc",
         "patchSetId": 4
@@ -81,6 +153,24 @@
       "writtenOn": "2017-07-20T17:28:22Z",
       "side": 1,
       "message": "ISTM it could be useful to have a metric as well for failures of signature verification.  Up to you though :)",
+      "revId": "cb301a647053b8b1cdaf57e392ba6d382e058b52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "917c085c_dcb29467",
+        "filename": "components/cast_channel/cast_auth_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1229024
+      },
+      "writtenOn": "2017-07-20T18:23:10Z",
+      "side": 1,
+      "message": "I agree. I will add another histogram for this in a follow up CL.\n\nI was debating whether to add this error into the existing histogram (for cert errors) but it seems like verifying the auth challenge signature is separate from verifying the certificate.",
+      "parentUuid": "048c91f7_82994a2d",
       "revId": "cb301a647053b8b1cdaf57e392ba6d382e058b52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
