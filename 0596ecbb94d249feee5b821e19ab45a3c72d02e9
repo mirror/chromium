@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2593d492_5a31f2d3",
+        "filename": "media/gpu/gpu_video_encode_accelerator_factory.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-07-20T03:57:49Z",
+      "side": 1,
+      "message": "It looks like we need to keep OS_CHROMEOS here, as if it\u0027s not defined, this will fail on missing headers, which are only included above if OS_CHROMEOS.\n\nThis is actually an issue in some other places in this CL, could you recheck other files for this please?",
+      "revId": "0596ecbb94d249feee5b821e19ab45a3c72d02e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
