@@ -46,6 +46,30 @@
       "revId": "be655ea1a14529727e948938be1f41db80624d36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8279c24e_c71dab18",
+        "filename": "components/sync_bookmarks/bookmark_model_associator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 966,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-07-20T23:58:29Z",
+      "side": 1,
+      "message": "The problem with that, and the reason we have kModelTypeInfoMap, is that we may want to reorder the enum without wanting to break the histogram. As such, we defined a separate mapping for the histogram values.\n\nI suppose we could create a separate enum, ModelTypeUMA or something, that encodes those static values?",
+      "parentUuid": "54721a85_87580eb9",
+      "range": {
+        "startLine": 966,
+        "startChar": 0,
+        "endLine": 966,
+        "endChar": 74
+      },
+      "revId": "be655ea1a14529727e948938be1f41db80624d36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
