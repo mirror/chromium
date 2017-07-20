@@ -10,7 +10,7 @@
 #include "base/message_loop/message_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/test/simple_test_tick_clock.h"
-#include "cc/test/ordered_simple_task_runner.h"
+#include "components/viz/test/ordered_simple_task_runner.h"
 #include "platform/scheduler/base/lazy_now.h"
 #include "platform/scheduler/base/task_queue.h"
 #include "platform/scheduler/base/test_time_source.h"
@@ -52,7 +52,8 @@ class SchedulerHelperTest : public ::testing::Test {
  public:
   SchedulerHelperTest()
       : clock_(new base::SimpleTestTickClock()),
-        mock_task_runner_(new cc::OrderedSimpleTaskRunner(clock_.get(), false)),
+        mock_task_runner_(
+            new viz::OrderedSimpleTaskRunner(clock_.get(), false)),
         main_task_runner_(SchedulerTqmDelegateForTest::Create(
             mock_task_runner_,
             base::WrapUnique(new TestTimeSource(clock_.get())))),
@@ -84,7 +85,7 @@ class SchedulerHelperTest : public ::testing::Test {
 
  protected:
   std::unique_ptr<base::SimpleTestTickClock> clock_;
-  scoped_refptr<cc::OrderedSimpleTaskRunner> mock_task_runner_;
+  scoped_refptr<viz::OrderedSimpleTaskRunner> mock_task_runner_;
 
   scoped_refptr<SchedulerTqmDelegateForTest> main_task_runner_;
   std::unique_ptr<WorkerSchedulerHelper> scheduler_helper_;

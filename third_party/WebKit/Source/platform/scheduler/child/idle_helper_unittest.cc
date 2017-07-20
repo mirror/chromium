@@ -13,7 +13,7 @@
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/test/simple_test_tick_clock.h"
-#include "cc/test/ordered_simple_task_runner.h"
+#include "components/viz/test/ordered_simple_task_runner.h"
 #include "platform/scheduler/base/real_time_domain.h"
 #include "platform/scheduler/base/task_queue.h"
 #include "platform/scheduler/base/task_queue_manager.h"
@@ -136,7 +136,7 @@ void EndIdlePeriodIdleTask(IdleHelper* idle_helper, base::TimeTicks deadline) {
 
 scoped_refptr<SchedulerTqmDelegate> CreateTaskRunnerDelegate(
     base::MessageLoop* message_loop,
-    scoped_refptr<cc::OrderedSimpleTaskRunner> mock_task_runner,
+    scoped_refptr<viz::OrderedSimpleTaskRunner> mock_task_runner,
     std::unique_ptr<TestTimeSource> test_time_source) {
   if (message_loop)
     return SchedulerTqmDelegateImpl::Create(message_loop,
@@ -158,7 +158,7 @@ void ShutdownIdleTask(IdleHelper* helper,
 class ScopedAutoAdvanceNowEnabler {
  public:
   ScopedAutoAdvanceNowEnabler(
-      scoped_refptr<cc::OrderedSimpleTaskRunner> task_runner)
+      scoped_refptr<viz::OrderedSimpleTaskRunner> task_runner)
       : task_runner_(task_runner) {
     if (task_runner_)
       task_runner_->SetAutoAdvanceNowToPendingTasks(true);
@@ -170,7 +170,7 @@ class ScopedAutoAdvanceNowEnabler {
   }
 
  private:
-  scoped_refptr<cc::OrderedSimpleTaskRunner> task_runner_;
+  scoped_refptr<viz::OrderedSimpleTaskRunner> task_runner_;
 
   DISALLOW_COPY_AND_ASSIGN(ScopedAutoAdvanceNowEnabler);
 };
@@ -211,7 +211,7 @@ class BaseIdleHelperTest : public ::testing::Test {
         mock_task_runner_(
             message_loop
                 ? nullptr
-                : new cc::OrderedSimpleTaskRunner(clock_.get(), false)),
+                : new viz::OrderedSimpleTaskRunner(clock_.get(), false)),
         message_loop_(message_loop),
         main_task_runner_(CreateTaskRunnerDelegate(
             message_loop,
@@ -315,7 +315,7 @@ class BaseIdleHelperTest : public ::testing::Test {
 
   std::unique_ptr<base::SimpleTestTickClock> clock_;
   // Only one of mock_task_runner_ or message_loop_ will be set.
-  scoped_refptr<cc::OrderedSimpleTaskRunner> mock_task_runner_;
+  scoped_refptr<viz::OrderedSimpleTaskRunner> mock_task_runner_;
   std::unique_ptr<base::MessageLoop> message_loop_;
 
   scoped_refptr<SchedulerTqmDelegate> main_task_runner_;

@@ -16,7 +16,7 @@
 #include "cc/output/texture_mailbox_deleter.h"
 #include "cc/quads/solid_color_draw_quad.h"
 #include "cc/quads/surface_draw_quad.h"
-#include "cc/scheduler/begin_frame_source.h"
+#include "components/viz/common/begin_frame_source.h"
 #include "components/viz/common/surfaces/local_surface_id_allocator.h"
 #include "components/viz/service/display/display.h"
 #include "components/viz/service/display/display_scheduler.h"
@@ -64,7 +64,7 @@ SurfacesInstance::SurfacesInstance()
       this, frame_sink_manager_.get(), frame_sink_id_, is_root,
       handles_frame_sink_id_invalidation, needs_sync_points);
 
-  begin_frame_source_.reset(new cc::StubBeginFrameSource);
+  begin_frame_source_.reset(new viz::StubBeginFrameSource);
   std::unique_ptr<cc::TextureMailboxDeleter> texture_mailbox_deleter(
       new cc::TextureMailboxDeleter(nullptr));
   std::unique_ptr<ParentOutputSurface> output_surface_holder(
@@ -148,7 +148,7 @@ void SurfacesInstance::DrawAndSwap(const gfx::Size& viewport,
   cc::CompositorFrame frame;
   // We draw synchronously, so acknowledge a manual BeginFrame.
   frame.metadata.begin_frame_ack =
-      cc::BeginFrameAck::CreateManualAckWithDamage();
+      viz::BeginFrameAck::CreateManualAckWithDamage();
   frame.render_pass_list.push_back(std::move(render_pass));
   frame.metadata.device_scale_factor = 1.f;
   frame.metadata.referenced_surfaces = child_ids_;
@@ -197,7 +197,7 @@ void SurfacesInstance::SetSolidColorRootFrame() {
   frame.render_pass_list.push_back(std::move(render_pass));
   // We draw synchronously, so acknowledge a manual BeginFrame.
   frame.metadata.begin_frame_ack =
-      cc::BeginFrameAck::CreateManualAckWithDamage();
+      viz::BeginFrameAck::CreateManualAckWithDamage();
   frame.metadata.referenced_surfaces = child_ids_;
   frame.metadata.device_scale_factor = 1;
   bool result = support_->SubmitCompositorFrame(root_id_, std::move(frame));
@@ -209,7 +209,7 @@ void SurfacesInstance::DidReceiveCompositorFrameAck(
   ReclaimResources(resources);
 }
 
-void SurfacesInstance::OnBeginFrame(const cc::BeginFrameArgs& args) {}
+void SurfacesInstance::OnBeginFrame(const viz::BeginFrameArgs& args) {}
 
 void SurfacesInstance::WillDrawSurface(
     const viz::LocalSurfaceId& local_surface_id,

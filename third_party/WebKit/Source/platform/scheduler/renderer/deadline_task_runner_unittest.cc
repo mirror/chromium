@@ -7,7 +7,7 @@
 #include <memory>
 
 #include "base/test/simple_test_tick_clock.h"
-#include "cc/test/ordered_simple_task_runner.h"
+#include "components/viz/test/ordered_simple_task_runner.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -22,7 +22,7 @@ class DeadlineTaskRunnerTest : public ::testing::Test {
   void SetUp() override {
     clock_.reset(new base::SimpleTestTickClock());
     clock_->Advance(base::TimeDelta::FromMicroseconds(5000));
-    mock_task_runner_ = new cc::OrderedSimpleTaskRunner(clock_.get(), true);
+    mock_task_runner_ = new viz::OrderedSimpleTaskRunner(clock_.get(), true);
     deadline_task_runner_.reset(new DeadlineTaskRunner(
         base::Bind(&DeadlineTaskRunnerTest::TestTask, base::Unretained(this)),
         mock_task_runner_));
@@ -34,7 +34,7 @@ class DeadlineTaskRunnerTest : public ::testing::Test {
   void TestTask() { run_times_.push_back(clock_->NowTicks()); }
 
   std::unique_ptr<base::SimpleTestTickClock> clock_;
-  scoped_refptr<cc::OrderedSimpleTaskRunner> mock_task_runner_;
+  scoped_refptr<viz::OrderedSimpleTaskRunner> mock_task_runner_;
   std::unique_ptr<DeadlineTaskRunner> deadline_task_runner_;
   std::vector<base::TimeTicks> run_times_;
 };

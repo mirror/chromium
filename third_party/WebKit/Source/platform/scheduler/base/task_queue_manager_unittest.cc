@@ -20,7 +20,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/blame_context.h"
 #include "base/trace_event/trace_buffer.h"
-#include "cc/test/ordered_simple_task_runner.h"
+#include "components/viz/test/ordered_simple_task_runner.h"
 #include "platform/scheduler/base/real_time_domain.h"
 #include "platform/scheduler/base/task_queue_impl.h"
 #include "platform/scheduler/base/task_queue_manager_delegate_for_test.h"
@@ -106,7 +106,7 @@ class TaskQueueManagerTest : public ::testing::Test {
   void InitializeWithClock(size_t num_queues,
                            std::unique_ptr<base::TickClock> test_time_source) {
     test_task_runner_ = make_scoped_refptr(
-        new cc::OrderedSimpleTaskRunner(now_src_.get(), false));
+        new viz::OrderedSimpleTaskRunner(now_src_.get(), false));
     main_task_runner_ = TaskQueueManagerDelegateForTest::Create(
         test_task_runner_.get(),
         base::MakeUnique<TestTimeSource>(now_src_.get()));
@@ -197,7 +197,7 @@ class TaskQueueManagerTest : public ::testing::Test {
   std::unique_ptr<base::MessageLoop> message_loop_;
   std::unique_ptr<base::SimpleTestTickClock> now_src_;
   scoped_refptr<TaskQueueManagerDelegateForTest> main_task_runner_;
-  scoped_refptr<cc::OrderedSimpleTaskRunner> test_task_runner_;
+  scoped_refptr<viz::OrderedSimpleTaskRunner> test_task_runner_;
   std::unique_ptr<TaskQueueManagerForTest> manager_;
   std::vector<scoped_refptr<TestTaskQueue>> runners_;
   TestTaskTimeObserver test_task_time_observer_;
@@ -1867,7 +1867,7 @@ TEST_F(TaskQueueManagerTest, TaskQueueObserver_SweepCanceledDelayedTasks) {
 
 namespace {
 void ChromiumRunloopInspectionTask(
-    scoped_refptr<cc::OrderedSimpleTaskRunner> test_task_runner) {
+    scoped_refptr<viz::OrderedSimpleTaskRunner> test_task_runner) {
   EXPECT_EQ(1u, test_task_runner->NumPendingTasks());
 }
 }  // namespace

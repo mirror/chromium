@@ -6,7 +6,7 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/test/simple_test_tick_clock.h"
-#include "cc/test/ordered_simple_task_runner.h"
+#include "components/viz/test/ordered_simple_task_runner.h"
 #include "platform/scheduler/base/lazy_now.h"
 #include "platform/scheduler/base/task_queue.h"
 #include "platform/scheduler/base/test_time_source.h"
@@ -33,7 +33,7 @@ class IdleCanceledDelayedTaskSweeperTest : public ::testing::Test,
  public:
   IdleCanceledDelayedTaskSweeperTest()
       : clock_(new base::SimpleTestTickClock()),
-        mock_task_runner_(new cc::OrderedSimpleTaskRunner(clock_.get(), true)),
+        mock_task_runner_(new viz::OrderedSimpleTaskRunner(clock_.get(), true)),
         delegate_(SchedulerTqmDelegateForTest::Create(
             mock_task_runner_,
             base::WrapUnique(new TestTimeSource(clock_.get())))),
@@ -75,7 +75,7 @@ class IdleCanceledDelayedTaskSweeperTest : public ::testing::Test,
 
  protected:
   std::unique_ptr<base::SimpleTestTickClock> clock_;
-  scoped_refptr<cc::OrderedSimpleTaskRunner> mock_task_runner_;
+  scoped_refptr<viz::OrderedSimpleTaskRunner> mock_task_runner_;
 
   scoped_refptr<SchedulerTqmDelegateForTest> delegate_;
   std::unique_ptr<MainThreadSchedulerHelper> scheduler_helper_;

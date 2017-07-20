@@ -9,7 +9,7 @@
 #include "base/callback.h"
 #include "base/memory/ptr_util.h"
 #include "base/test/simple_test_tick_clock.h"
-#include "cc/test/ordered_simple_task_runner.h"
+#include "components/viz/test/ordered_simple_task_runner.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/WebTaskRunner.h"
 #include "platform/scheduler/base/test_time_source.h"
@@ -30,8 +30,8 @@ class WebFrameSchedulerImplTest : public ::testing::Test {
   void SetUp() override {
     clock_.reset(new base::SimpleTestTickClock());
     clock_->Advance(base::TimeDelta::FromMicroseconds(5000));
-    mock_task_runner_ =
-        make_scoped_refptr(new cc::OrderedSimpleTaskRunner(clock_.get(), true));
+    mock_task_runner_ = make_scoped_refptr(
+        new viz::OrderedSimpleTaskRunner(clock_.get(), true));
     delegate_ = SchedulerTqmDelegateForTest::Create(
         mock_task_runner_, base::WrapUnique(new TestTimeSource(clock_.get())));
     scheduler_.reset(new RendererSchedulerImpl(delegate_));
@@ -49,7 +49,7 @@ class WebFrameSchedulerImplTest : public ::testing::Test {
   }
 
   std::unique_ptr<base::SimpleTestTickClock> clock_;
-  scoped_refptr<cc::OrderedSimpleTaskRunner> mock_task_runner_;
+  scoped_refptr<viz::OrderedSimpleTaskRunner> mock_task_runner_;
   scoped_refptr<SchedulerTqmDelegate> delegate_;
   std::unique_ptr<RendererSchedulerImpl> scheduler_;
   std::unique_ptr<WebViewSchedulerImpl> web_view_scheduler_;
