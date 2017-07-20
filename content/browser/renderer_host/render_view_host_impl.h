@@ -241,6 +241,8 @@ class CONTENT_EXPORT RenderViewHostImpl : public RenderViewHost,
   void OnClosePageACK();
   void OnDidZoomURL(double zoom_level, const GURL& url);
   void OnFocus();
+  void OnDidBlockFramebust(const GURL& destionation_url,
+                           const GURL& source_url);
 
  private:
   // TODO(nasko): Temporarily friend RenderFrameHostImpl, so we don't duplicate
