@@ -68,6 +68,12 @@ class CORE_EXPORT NGPhysicalTextFragment final : public NGPhysicalFragment {
   bool IsHorizontal() const {
     return LineOrientation() == NGLineOrientation::kHorizontal;
   }
+  FontBaseline BaselineType() const {
+    return IsHorizontal() ? kAlphabeticBaseline : kIdeographicBaseline;
+  }
+
+  // Compute visual overflow for this fragment.
+  void ComputeVisualOverflow() const;
 
   RefPtr<NGPhysicalFragment> CloneWithoutOffset() const {
     return AdoptRef(new NGPhysicalTextFragment(
