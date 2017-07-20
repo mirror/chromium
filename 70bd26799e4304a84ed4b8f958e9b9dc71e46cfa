@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e025f88_7507f503",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-20T16:18:44Z",
+      "side": 0,
+      "message": "Given the request that we should avoid bigger refactors in M62, I wonder if this should be the only part we land initially. This way we can easily revert if we find issues and can remove the actual supporting code (the rest of the CL) once we are a bit more comfortable and possibly in M63. What do you think?",
+      "revId": "70bd26799e4304a84ed4b8f958e9b9dc71e46cfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
