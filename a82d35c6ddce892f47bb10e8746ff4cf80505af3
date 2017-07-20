@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "4cba4e08_769fe771",
+        "filename": "gpu/command_buffer/service/feature_info.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002745
+      },
+      "writtenOn": "2017-07-20T21:30:21Z",
+      "side": 1,
+      "message": "Done. Turns out the extension string is properly exposed and queried.",
+      "parentUuid": "36db5bd5_366d8cc7",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 32
+      },
+      "revId": "a82d35c6ddce892f47bb10e8746ff4cf80505af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "432863b4_8eae44b0",
         "filename": "gpu/command_buffer/service/gles2_cmd_decoder.cc",
         "patchSetId": 1
