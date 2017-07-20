@@ -1334,9 +1334,11 @@ bool QuicFramer::ProcessRstStreamFrame(QuicDataReader* reader,
     return false;
   }
 
-  if (!reader->ReadUInt64(&frame->byte_offset)) {
-    set_detailed_error("Unable to read rst stream sent byte offset.");
-    return false;
+  if (quic_version_ <= QUIC_VERSION_39) {
+    if (!reader->ReadUInt64(&frame->byte_offset)) {
+      set_detailed_error("Unable to read rst stream sent byte offset.");
+      return false;
+    }
   }
 
   uint32_t error_code;
@@ -1351,6 +1353,14 @@ bool QuicFramer::ProcessRstStreamFrame(QuicDataReader* reader,
   }
 
   frame->error_code = static_cast<QuicRstStreamErrorCode>(error_code);
+
+  if (quic_version_ > QUIC_VERSION_39) {
+    if (!reader->ReadUInt64(&frame->byte_offset)) {
+      set_detailed_error("Unable to read rst stream sent byte offset.");
+      return false;
+    }
+  }
+
   return true;
 }
 
@@ -2081,13 +2091,21 @@ bool QuicFramer::AppendRstStreamFrame(const QuicRstStreamFrame& frame,
     return false;
   }
 
-  if (!writer->WriteUInt64(frame.byte_offset)) {
-    return false;
+  if (quic_version_ <= QUIC_VERSION_39) {
+    if (!writer->WriteUInt64(frame.byte_offset)) {
+      return false;
+    }
   }
 
   uint32_t error_code = static_cast<uint32_t>(frame.error_code);
   if (!writer->WriteUInt32(error_code)) {
     return false;
+  }
+
+  if (quic_version_ > QUIC_VERSION_39) {
+    if (!writer->WriteUInt64(frame.byte_offset)) {
+      return false;
+    }
   }
 
   return true;

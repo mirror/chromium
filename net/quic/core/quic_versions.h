@@ -33,11 +33,7 @@ enum QuicVersion {
                          // endian. Dot not ack acks. Send a connection level
                          // WINDOW_UPDATE every 20 sent packets which do not
                          // contain retransmittable frames.
-  QUIC_VERSION_40 = 40,  // Initial packet number is randomly chosen from
-                         // [0:2^31], WINDOW_UPDATE for connection flow control
-                         // advertises value in 1024-byte units, WINDOW_UPDATE
-                         // splits into MAX_DATA and MAX_STREAM_DATA, BLOCKED
-                         // frame split into BLOCKED and STREAM_BLOCKED frames
+  QUIC_VERSION_40 = 40,  // RST_STREAM frame matches IETF format.
 
   // IMPORTANT: if you are adding to this list, follow the instructions at
   // http://sites/quic/adding-and-removing-versions

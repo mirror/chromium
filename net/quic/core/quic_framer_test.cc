@@ -2165,11 +2165,37 @@ TEST_P(QuicFramerTest, RstStreamFrameQuic) {
     // error code
     0x00, 0x00, 0x00, 0x01,
   };
+
+  unsigned char packet40[] = {
+    // public flags (8 byte connection_id)
+    0x38,
+    // connection_id
+    0xFE, 0xDC, 0xBA, 0x98, 0x76, 0x54, 0x32, 0x10,
+    // packet number
+    0x12, 0x34, 0x56, 0x78,
+    0x9A, 0xBC,
+
+    // frame type (rst stream frame)
+    0x01,
+    // stream id
+    0x01, 0x02, 0x03, 0x04,
+
+    // error code
+    0x00, 0x00, 0x00, 0x01,
+
+    // sent byte offset
+    0xBA, 0x98, 0xFE, 0xDC,
+    0x32, 0x10, 0x76, 0x54,
+  };
   // clang-format on
 
-  QuicEncryptedPacket encrypted(
-      AsChars(framer_.version() <= QUIC_VERSION_38 ? packet : packet39),
-      arraysize(packet), false);
+  unsigned char* p = packet;
+  if (framer_.version() > QUIC_VERSION_39) {
+    p = packet40;
+  } else if (framer_.version() > QUIC_VERSION_38) {
+    p = packet39;
+  }
+  QuicEncryptedPacket encrypted(AsChars(p), arraysize(packet), false);
   EXPECT_TRUE(framer_.ProcessPacket(encrypted));
 
   EXPECT_EQ(QUIC_NO_ERROR, framer_.error());
@@ -2185,17 +2211,29 @@ TEST_P(QuicFramerTest, RstStreamFrameQuic) {
   for (size_t i = kQuicFrameTypeSize; i < QuicFramer::GetRstStreamFrameSize();
        ++i) {
     string expected_error;
-    if (i < kQuicFrameTypeSize + kQuicMaxStreamIdSize) {
-      expected_error = "Unable to read stream_id.";
-    } else if (i < kQuicFrameTypeSize + kQuicMaxStreamIdSize +
-                       kQuicMaxStreamOffsetSize) {
-      expected_error = "Unable to read rst stream sent byte offset.";
-    } else if (i < kQuicFrameTypeSize + kQuicMaxStreamIdSize +
-                       kQuicMaxStreamOffsetSize + kQuicErrorCodeSize) {
-      expected_error = "Unable to read rst stream error code.";
+    if (framer_.version() <= QUIC_VERSION_39) {
+      if (i < kQuicFrameTypeSize + kQuicMaxStreamIdSize) {
+        expected_error = "Unable to read stream_id.";
+      } else if (i < kQuicFrameTypeSize + kQuicMaxStreamIdSize +
+                         kQuicMaxStreamOffsetSize) {
+        expected_error = "Unable to read rst stream sent byte offset.";
+      } else if (i < kQuicFrameTypeSize + kQuicMaxStreamIdSize +
+                         kQuicMaxStreamOffsetSize + kQuicErrorCodeSize) {
+        expected_error = "Unable to read rst stream error code.";
+      }
+    } else {
+      if (i < kQuicFrameTypeSize + kQuicMaxStreamIdSize) {
+        expected_error = "Unable to read stream_id.";
+      } else if (i < kQuicFrameTypeSize + kQuicMaxStreamIdSize +
+                         kQuicErrorCodeSize) {
+        expected_error = "Unable to read rst stream error code.";
+      } else if (i < kQuicFrameTypeSize + kQuicMaxStreamIdSize +
+                         kQuicMaxStreamOffsetSize + kQuicMaxStreamOffsetSize) {
+        expected_error = "Unable to read rst stream sent byte offset.";
+      }
     }
     CheckProcessingFails(
-        framer_.version() <= QUIC_VERSION_38 ? packet : packet39,
+        p,
         i + GetPacketHeaderSize(framer_.version(), PACKET_8BYTE_CONNECTION_ID,
                                 !kIncludeVersion, !kIncludeDiversificationNonce,
                                 PACKET_6BYTE_PACKET_NUMBER),
@@ -3781,6 +3819,26 @@ TEST_P(QuicFramerTest, BuildRstFramePacketQuic) {
     // error code
     0x05, 0x06, 0x07, 0x08,
   };
+
+  unsigned char packet40[] = {
+    // public flags (8 byte connection_id)
+    0x38,
+    // connection_id
+    0xFE, 0xDC, 0xBA, 0x98, 0x76, 0x54, 0x32, 0x10,
+    // packet number
+    0x12, 0x34, 0x56, 0x78,
+    0x9A, 0xBC,
+
+    // frame type (rst stream frame)
+    0x01,
+    // stream id
+    0x01, 0x02, 0x03, 0x04,
+    // error code
+    0x05, 0x06, 0x07, 0x08,
+    // sent byte offset
+    0x08, 0x07, 0x06, 0x05,
+    0x04, 0x03, 0x02, 0x01,
+  };
   // clang-format on
 
   QuicFrames frames = {QuicFrame(&rst_frame)};
@@ -3788,10 +3846,17 @@ TEST_P(QuicFramerTest, BuildRstFramePacketQuic) {
   std::unique_ptr<QuicPacket> data(BuildDataPacket(header, frames));
   ASSERT_TRUE(data != nullptr);
 
-  test::CompareCharArraysWithHexError(
-      "constructed packet", data->data(), data->length(),
-      AsChars(framer_.version() <= QUIC_VERSION_38 ? packet : packet39),
-      arraysize(packet));
+  unsigned char* p = packet;
+  if (framer_.version() > QUIC_VERSION_39) {
+    p = packet40;
+  } else if (framer_.version() > QUIC_VERSION_38) {
+    p = packet39;
+  }
+  QuicEncryptedPacket encrypted(AsChars(p), arraysize(packet), false);
+
+  test::CompareCharArraysWithHexError("constructed packet", data->data(),
+                                      data->length(), AsChars(p),
+                                      arraysize(packet));
 }
 
 TEST_P(QuicFramerTest, BuildCloseFramePacket) {
