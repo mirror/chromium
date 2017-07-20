@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42ace815_eaeb78c4",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_content_file_system_async_file_util_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-20T15:16:19Z",
+      "side": 1,
+      "message": "Do we need a TearDown() override where we explicitly call arc_service_manager_-\u003eShutdown()?\n\nSame in the rest of the tests.",
+      "range": {
+        "startLine": 62,
+        "startChar": 3,
+        "endLine": 62,
+        "endChar": 0
+      },
+      "revId": "c4239670d23a31d20f7c9f4f3557047cb6ae851f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
