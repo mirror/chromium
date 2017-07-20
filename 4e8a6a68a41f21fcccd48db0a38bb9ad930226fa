@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "ec7edbee_10e5814e",
+        "filename": "base/process/process_metrics_mac.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-07-20T07:09:03Z",
+      "side": 1,
+      "message": "Yeah, I agree that GetMemoryBytesInRegion is overkill for shared memory regions. Just calling GetTopInfo is enough in CountResidentBytes. As CountResidentBytes doesn\u0027t assume shared memory but general memory regions, I thought we needed this complex implementation.\n\nOn second thought, introducing a new function like CountResidentBytesInSharedMemory and implementing with GetTopInfo on macOS (and CountResidentBytes on other platforms) seems a better idea.",
+      "parentUuid": "ecd4e3a3_64534739",
+      "revId": "4e8a6a68a41f21fcccd48db0a38bb9ad930226fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9469452a_75cb426e",
         "filename": "base/trace_event/process_memory_dump.cc",
         "patchSetId": 3
