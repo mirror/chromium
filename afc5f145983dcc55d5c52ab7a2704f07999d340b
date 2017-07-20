@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "406e814f_c5efcaaa",
+        "filename": "third_party/WebKit/Source/devtools/front_end/timeline/TimelinePanel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-20T01:29:58Z",
+      "side": 1,
+      "message": "Let\u0027s keep it visible!",
+      "revId": "afc5f145983dcc55d5c52ab7a2704f07999d340b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afe730af_c0f60710",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/Toolbar.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-20T01:29:58Z",
+      "side": 1,
+      "message": "We don\u0027t do this when it\u0027s annotated as boolean.",
+      "revId": "afc5f145983dcc55d5c52ab7a2704f07999d340b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6122512_138c905f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/Toolbar.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-20T01:29:58Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "afc5f145983dcc55d5c52ab7a2704f07999d340b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "607255ac_93ce7199",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/Toolbar.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-20T01:29:58Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "afc5f145983dcc55d5c52ab7a2704f07999d340b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
