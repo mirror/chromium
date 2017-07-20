@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4057e58d_fac68689",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-20T14:15:39Z",
+      "side": 1,
+      "message": "If you split the mojo implementation, could you make ArcFileSystemHostImpl a standalone KeyedService?\nSo, it should implement mojo interface, KeyedService, and InstanceHolder\u003c\u003e::Observer. Also it should have mojo::Binder\u003c\u003e. etc. etc.\n\nArcFileSystemHostImpl can provide Observer, so that ArcFileSystemOperationRunner can observe any events needed.",
+      "revId": "6df67fa052553fad61b7fa9aa027ec664e330952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "254f8e5b_915cac02",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_system_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-20T14:15:39Z",
+      "side": 1,
+      "message": "Often, security review requests you a real implementation to see how those APIs are actually used.",
+      "revId": "6df67fa052553fad61b7fa9aa027ec664e330952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a59c4c86_c5781275",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_system_host_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-20T14:15:39Z",
+      "side": 1,
+      "message": "Could you add class comment?\n\nPlease name this ArcFileSystemHostImpl (Arc prefix), for consistency.",
+      "revId": "6df67fa052553fad61b7fa9aa027ec664e330952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4ad1c8f_d9772b36",
+        "filename": "components/arc/common/file_system.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-20T14:15:39Z",
+      "side": 1,
+      "message": "nit: please update.",
+      "revId": "6df67fa052553fad61b7fa9aa027ec664e330952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b090efb9_71b5efde",
+        "filename": "components/arc/common/file_system.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-20T14:15:39Z",
+      "side": 1,
+      "message": "nit: MinVersion\u003d5",
+      "revId": "6df67fa052553fad61b7fa9aa027ec664e330952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
