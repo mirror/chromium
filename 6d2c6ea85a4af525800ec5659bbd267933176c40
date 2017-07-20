@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bfe0e88_1ff5b61d",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2121,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-20T00:35:19Z",
+      "side": 1,
+      "message": "What does Process::Current() return here? Is it the render process this RenderProcessHost represents? or it will always return browser process?",
+      "range": {
+        "startLine": 2121,
+        "startChar": 12,
+        "endLine": 2121,
+        "endChar": 36
+      },
+      "revId": "6d2c6ea85a4af525800ec5659bbd267933176c40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dabcdeb7_d3b60144",
+        "filename": "services/resource_coordinator/public/interfaces/coordination_unit.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-20T00:35:19Z",
+      "side": 1,
+      "message": "kURL",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 11
+      },
+      "revId": "6d2c6ea85a4af525800ec5659bbd267933176c40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
