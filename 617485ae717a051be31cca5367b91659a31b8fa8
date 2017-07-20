@@ -34,6 +34,24 @@
       "revId": "617485ae717a051be31cca5367b91659a31b8fa8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a83f2994_17ab85e8",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-20T19:49:38Z",
+      "side": 1,
+      "message": "In this patch it returned 0 if Cellular is not available. The name makes more sense with the updated logic.",
+      "parentUuid": "c7fa5e01_1b442f19",
+      "revId": "617485ae717a051be31cca5367b91659a31b8fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

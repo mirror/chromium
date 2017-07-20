@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c83f58d_d3c509e8",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 901,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-20T19:49:38Z",
+      "side": 1,
+      "message": "Since we check for Tether uninitialized above, this would be more clear as specifically checking Cellular.",
+      "revId": "052bb819497a7a9c306deeaa82dcd83c74a4802b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3a2c338_501eec95",
+        "filename": "ash/system/network/network_icon.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 908,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-20T19:49:38Z",
+      "side": 1,
+      "message": "Would also be more clear now as just Cellular.",
+      "revId": "052bb819497a7a9c306deeaa82dcd83c74a4802b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
