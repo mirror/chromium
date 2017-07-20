@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3ab45eda_a2269b60",
+        "filename": "third_party/WebKit/Source/core/html/HTMLTableCellElement.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-20T03:13:57Z",
+      "side": 1,
+      "message": "That\u0027s a good idea.  Added TableConstants.h.",
+      "parentUuid": "7521afe7_d7c703cf",
+      "revId": "de7da4247df6b70aab658acf72321a1e666b5287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7fce70b1_3c472510",
         "filename": "third_party/WebKit/Source/core/html/parser/HTMLParserIdioms.cpp",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-20T01:55:22Z",
       "side": 1,
       "message": "It\u0027s unfortunate to repeat L308-317 here just for checking kOverflowMax return value.\n\nCan ParseHTMLNonNegativeIntegerInternal() do accept String as input and return\nNumberparsingState, and then ParseHTMLNonNegativeInteger() become just\n{ return Parse...Internal(input, value) \u003d\u003d ...kSuccess; } ?",
+      "revId": "de7da4247df6b70aab658acf72321a1e666b5287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98327619_6b9a1ea5",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLParserIdioms.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-20T03:13:57Z",
+      "side": 1,
+      "message": "Added ParseHTMLNonNegativeIntegerInternal(String) overload.",
+      "parentUuid": "7fce70b1_3c472510",
       "revId": "de7da4247df6b70aab658acf72321a1e666b5287",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "de7da4247df6b70aab658acf72321a1e666b5287",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36950932_28e870cd",
+        "filename": "third_party/WebKit/Source/platform/wtf/text/StringToNumberTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-20T03:13:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ecd9213_a82929fd",
+      "revId": "de7da4247df6b70aab658acf72321a1e666b5287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
