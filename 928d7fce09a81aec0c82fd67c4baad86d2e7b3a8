@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9edec3a2_1a642a22",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 1716,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-20T21:47:46Z",
+      "side": 1,
+      "message": "Would it make sense to move this to the other BUILD.gn file since it\u0027s only needed by the test?",
+      "range": {
+        "startLine": 1716,
+        "startChar": 6,
+        "endLine": 1716,
+        "endChar": 38
+      },
+      "revId": "928d7fce09a81aec0c82fd67c4baad86d2e7b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bad4af6d_7effea84",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-20T21:47:46Z",
+      "side": 1,
+      "message": "Let\u0027s split this object to context and options for readability and better type checking:\n\n@param {!HTMLElement|!{exclude: Array\u003cstring\u003e}} context\n@param {!{...what\u0027s this?...}} options",
+      "range": {
+        "startLine": 28,
+        "startChar": 46,
+        "endLine": 28,
+        "endChar": 60
+      },
+      "revId": "928d7fce09a81aec0c82fd67c4baad86d2e7b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da7d8f9c_a8068487",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-20T21:47:46Z",
+      "side": 1,
+      "message": "nit: // TODO",
+      "range": {
+        "startLine": 11,
+        "startChar": 2,
+        "endLine": 11,
+        "endChar": 8
+      },
+      "revId": "928d7fce09a81aec0c82fd67c4baad86d2e7b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8943ea93_bdfe98bf",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-20T21:47:46Z",
+      "side": 1,
+      "message": "remove unused param",
+      "range": {
+        "startLine": 20,
+        "startChar": 41,
+        "endLine": 20,
+        "endChar": 45
+      },
+      "revId": "928d7fce09a81aec0c82fd67c4baad86d2e7b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78edf60f_e231ef8c",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-20T21:47:46Z",
+      "side": 1,
+      "message": "nit: one line",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 64
+      },
+      "revId": "928d7fce09a81aec0c82fd67c4baad86d2e7b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
