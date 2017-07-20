@@ -82,6 +82,12 @@ AutocompleteProviderClientImpl::GetTemplateURLService() const {
   return ios::TemplateURLServiceFactory::GetForBrowserState(browser_state_);
 }
 
+ContextualSuggestionsService*
+AutocompleteProviderClientImpl::GetContextualSuggestionsService()
+    const override {
+  return nullptr;
+}
+
 const SearchTermsData& AutocompleteProviderClientImpl::GetSearchTermsData()
     const {
   return search_terms_data_;
