@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d558cb07_ce44ca34",
+        "filename": "chrome/browser/ui/views/apps/shaped_app_window_targeter_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-07-20T23:27:49Z",
+      "side": 1,
+      "message": "This is where it gets reset (called from ChromeNativeAppWindowViews::UpdateShape()):\nhttps://cs.chromium.org/chromium/src/ui/views/widget/native_widget_aura.cc?type\u003dcs\u0026q\u003d%22SetProperty(aura::client::kResizeBehaviorKey%22\u0026sq\u003dpackage:chromium\u0026l\u003d770",
+      "parentUuid": "865260aa_fda1fad3",
+      "revId": "e415b6db9e9a3c9f0d6093913daae587b566b026",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a95a8ff3_e55e8e02",
         "filename": "chrome/browser/ui/views/apps/shaped_app_window_targeter_unittest.cc",
         "patchSetId": 8
