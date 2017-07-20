@@ -79,6 +79,7 @@
 #include "content/public/common/content_features.h"
 #include "media/base/mime_util.h"
 #include "net/base/escape.h"
+#include "services/metrics/public/cpp/ukm_recorder.h"
 #include "skia/ext/platform_canvas.h"
 #include "url/url_constants.h"
 
@@ -999,6 +1000,14 @@ bool NavigationControllerImpl::RendererDidNavigate(
   details->http_status_code = params.http_status_code;
 
   NotifyNavigationEntryCommitted(details);
+
+  ukm::UkmRecorder* recorder = ukm::UkmRecorder::Get();
+  if (recorder) {
+    ukm::SourceId source_id = ukm::UkmRecorder::ConvertSourceId(
+        active_entry->GetUniqueID(),
+        ukm::UkmRecorder::SourceIdType::NAVIGATION_ENTRY);
+    recorder->UpdateSourceURL(source_id, active_entry->GetURL());
+  }
 
   if (active_entry->GetURL().SchemeIs(url::kHttpsScheme)) {
     UMA_HISTOGRAM_BOOLEAN("Navigation.SecureSchemeHasSSLStatus",
