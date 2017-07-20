@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "67e8b102_b1f711db",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuPropertiesDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-20T17:18:34Z",
+      "side": 1,
+      "message": "Ah, I see. This is really hard to read with how git cl formatted it. Can you try extracting the logic summing all of the items:\n\ne.g.\n\nint visibleMenus \u003d\n    (isPageMenu ? 1 : 0) + ....;\nassert visibleMenus \u003d\u003d 1;",
+      "parentUuid": "577e1f4d_0c1735e0",
+      "range": {
+        "startLine": 98,
+        "startChar": 21,
+        "endLine": 98,
+        "endChar": 0
+      },
+      "revId": "c12d9df3e725d67bf11b4c47f31c2237370f8ea4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "889311bf_51f31906",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabIntentDataProvider.java",
         "patchSetId": 1
