@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb79608e_3affc826",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2858,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-20T14:36:06Z",
+      "side": 0,
+      "message": "don\u0027t delete this part of the comment. in general, every base::Unretained should have a comment explaining why it\u0027s safe. (actually reading this comment, I\u0027m not entirely sure it\u0027s safe, Unretained is a raw pointer, not a weak pointer, but that\u0027s an existing bug if not, I guess..)",
+      "revId": "6933fe8a1b1d14e0d36a69cb27ef026217595d95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

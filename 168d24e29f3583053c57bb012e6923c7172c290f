@@ -52,6 +52,109 @@
       "revId": "168d24e29f3583053c57bb012e6923c7172c290f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "404ae6d4_5d8d4d7e",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2861,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-20T14:36:06Z",
+      "side": 1,
+      "message": "nit: any reason not to put this next to new GeolocationServiceImpl? easier to read",
+      "revId": "168d24e29f3583053c57bb012e6923c7172c290f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e91c848_997279c3",
+        "filename": "content/browser/geolocation/geolocation_service_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-20T14:36:06Z",
+      "side": 1,
+      "message": "comment to explain why this is safe (ie binding_set_ is owned by this)",
+      "range": {
+        "startLine": 25,
+        "startChar": 56,
+        "endLine": 25,
+        "endChar": 66
+      },
+      "revId": "168d24e29f3583053c57bb012e6923c7172c290f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd5079e8_9b49dcb6",
+        "filename": "content/browser/geolocation/geolocation_service_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-20T14:36:06Z",
+      "side": 1,
+      "message": "nit: should be a space before this.. did clang-format not complain about this?",
+      "range": {
+        "startLine": 28,
+        "startChar": 49,
+        "endLine": 28,
+        "endChar": 50
+      },
+      "revId": "168d24e29f3583053c57bb012e6923c7172c290f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "089685cd_c22d833d",
+        "filename": "content/browser/geolocation/geolocation_service_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-20T14:36:06Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 49,
+        "startChar": 23,
+        "endLine": 49,
+        "endChar": 33
+      },
+      "revId": "168d24e29f3583053c57bb012e6923c7172c290f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae47abb0_7fdade25",
+        "filename": "content/browser/web_contents/web_contents_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-20T14:36:06Z",
+      "side": 1,
+      "message": "this is in the wrong section, it\u0027s not a webcontents override",
+      "revId": "168d24e29f3583053c57bb012e6923c7172c290f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
