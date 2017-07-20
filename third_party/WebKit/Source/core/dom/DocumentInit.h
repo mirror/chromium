@@ -49,15 +49,22 @@ class CORE_EXPORT DocumentInit final {
   STACK_ALLOCATED();
 
  public:
-  DocumentInit(const KURL& = KURL(),
-               LocalFrame* = nullptr,
-               Document* context_document = nullptr,
-               HTMLImportsController* = nullptr);
-  DocumentInit(Document* owner_document,
-               const KURL&,
-               LocalFrame*,
-               Document* context_document = nullptr,
-               HTMLImportsController* = nullptr);
+  // |context_document| is used by the DOMImplementation and DOMParser to pass
+  // their parent Document so that the created Document will return the
+  // Document when the ContextDocument() method is called.
+  //
+  // |owner_document| is used to inherit security configurations.
+  static DocumentInit Create(LocalFrame*,
+                             Document* context_document,
+                             const KURL&,
+                             Document* owner_document);
+
+  // Creates a DocumentInit with an HTMLImportsController.
+  static DocumentInit CreateWithImportsController(HTMLImportsController*,
+                                                  const KURL&);
+
+  DocumentInit();
+
   DocumentInit(const DocumentInit&);
   ~DocumentInit();
 
@@ -71,14 +78,12 @@ class CORE_EXPORT DocumentInit final {
   bool ShouldTreatURLAsSrcdocDocument() const;
   bool ShouldSetURL() const;
   bool IsSeamlessAllowedFor(Document* child) const;
-  bool ShouldReuseDefaultView() const { return should_reuse_default_view_; }
   SandboxFlags GetSandboxFlags() const;
   bool IsHostedInReservedIPRange() const;
   WebInsecureRequestPolicy GetInsecureRequestPolicy() const;
   SecurityContext::InsecureNavigationsSet* InsecureNavigationsToUpgrade() const;
 
-  Document* Parent() const { return parent_.Get(); }
-  Document* Owner() const { return owner_.Get(); }
+  Document* OwnerDocument() const { return owner_document_.Get(); }
   KURL ParentBaseURL() const;
   LocalFrame* OwnerFrame() const;
   Settings* GetSettings() const;
@@ -88,31 +93,26 @@ class CORE_EXPORT DocumentInit final {
   V0CustomElementRegistrationContext* RegistrationContext(Document*) const;
   Document* ContextDocument() const;
 
-  static DocumentInit FromContext(Document* context_document,
-                                  const KURL& = KURL());
-
  private:
+  DocumentInit(LocalFrame*,
+               HTMLImportsController*,
+               Document* context_document,
+               const KURL&,
+               Document* owner_document);
+
   LocalFrame* FrameForSecurityContext() const;
 
-  KURL url_;
   Member<LocalFrame> frame_;
-  Member<Document> parent_;
-  Member<Document> owner_;
-  Member<Document> context_document_;
+  Member<Document> parent_document_;
+
   Member<HTMLImportsController> imports_controller_;
+
+  Member<Document> context_document_;
+  KURL url_;
+  Member<Document> owner_document_;
+
   Member<V0CustomElementRegistrationContext> registration_context_;
   bool create_new_registration_context_;
-
-  // In some rare cases, we'll re-use a LocalDOMWindow for a new Document. For
-  // example, when a script calls window.open("..."), the browser gives
-  // JavaScript a window synchronously but kicks off the load in the window
-  // asynchronously. Web sites expect that modifications that they make to the
-  // window object synchronously won't be blown away when the network load
-  // commits. To make that happen, we "securely transition" the existing
-  // LocalDOMWindow to the Document that results from the network load. See also
-  // SecurityContext::isSecureTransitionTo.
-  // FIXME: This is for DocumentWriter creation, not for one of Document.
-  bool should_reuse_default_view_;
 };
 
 }  // namespace blink
