@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "928a4abb_a81469a6",
+        "filename": "chrome/browser/ui/android/infobars/permission_infobar.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-20T02:08:16Z",
+      "side": 1,
+      "message": "I think you\u0027re supposed to use JavaParamRef\u003c\u003e for parameters, but even better would be to have these all as StringPiece16, and do the native-\u003ejstring conversion in the helper.",
+      "range": {
+        "startLine": 36,
+        "startChar": 25,
+        "endLine": 36,
+        "endChar": 43
+      },
+      "revId": "5eca485fef16d3e8b7797057519e72a9010d72c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daf378b0_7b354a25",
+        "filename": "chrome/browser/ui/android/infobars/permission_infobar.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-20T02:08:16Z",
+      "side": 1,
+      "message": "Not sure why, but this class is not in a namespace. Could you prefix both of these methods with \"PermissionInfoBar\", or make them static functions within PermissionInfoBar.",
+      "revId": "5eca485fef16d3e8b7797057519e72a9010d72c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
