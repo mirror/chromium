@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7979148c_4c8285cb",
+        "filename": "ui/android/java/res/values-v21/styles.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-20T00:36:00Z",
+      "side": 1,
+      "message": "nit: blank line above this one",
+      "range": {
+        "startLine": 14,
+        "startChar": 5,
+        "endLine": 14,
+        "endChar": 10
+      },
+      "revId": "761c788d7f6c573824b805e4ba3614187ecf3b6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
