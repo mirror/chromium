@@ -71,6 +71,23 @@
     },
     {
       "key": {
+        "uuid": "0dbb740d_67f08794",
+        "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-20T11:49:18Z",
+      "side": 1,
+      "message": "Note: it might be the first time in the app lifetime that a SharedPrereference is requested. In this case this will load the SharedPreferences XML file from disk, potentially delaying startup.\n\nI think it\u0027s fine, but nevertheless something to keep in mind when comparing the control group and the population outside the experiment.",
+      "revId": "2f99a33d786ece56bc80d7593970b21124e79c61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef1ec99b_0c465dc9",
         "filename": "base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java",
         "patchSetId": 1
@@ -87,6 +104,29 @@
         "startChar": 8,
         "endLine": 233,
         "endChar": 13
+      },
+      "revId": "2f99a33d786ece56bc80d7593970b21124e79c61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e656baae_7ac14559",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3223,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-20T11:49:18Z",
+      "side": 1,
+      "message": "nit: defined(OS_ANDROID)",
+      "range": {
+        "startLine": 3223,
+        "startChar": 11,
+        "endLine": 3223,
+        "endChar": 21
       },
       "revId": "2f99a33d786ece56bc80d7593970b21124e79c61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
