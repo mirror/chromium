@@ -16,6 +16,24 @@
       "revId": "c0dbb1cdaa2b6a4122029dee169ea582e7119a8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1038925f_6a9613b8",
+        "filename": "chrome/browser/devtools/global_confirm_info_bar.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-07-20T23:29:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ad79ffb4_c505aec0",
+      "revId": "c0dbb1cdaa2b6a4122029dee169ea582e7119a8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
