@@ -1,0 +1,192 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4187dbb_56cbe1df",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-07-20T04:48:03Z",
+      "side": 1,
+      "message": "Some general comments:\n\nFirstly, we should definitely comment to document why we\u0027re bothering with the internal drag vs native drag. I think it would also be good to document the expected flow of events, which IIUC looks something like\n\n  mousedown -\u003e mousemove -\u003e mouseup\n                   |\n                   v\n          dragstart/dragleave (depending on if the drag leaves the browser window)\n                   |\n                   v\n  external drag -\u003e bookmarkManagerPrivate.onDragEnter -\u003e dragover -\u003e drop\n\nSecondly, I noticed a bug where if I drag from the bookmark manager immediately onto another browser content area, then back onto the BMM, the drag breaks. I can reproduce this on master, though, so maybe we should just file a bug and get back to it.",
+      "revId": "b5ace1d591712efaa7dc9ed37ebedc8155127ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d18aa7ec_dd3f8d78",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-07-20T04:48:03Z",
+      "side": 1,
+      "message": "I find it confusing that this function is all the way up here, separated from the rest of the event handlers.\n\nMaybe rename this to `setDragData`, then call it from a new event listener that is grouped with the rest of the drag listeners?",
+      "revId": "b5ace1d591712efaa7dc9ed37ebedc8155127ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fa68e31_15b97de9",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-07-20T04:48:03Z",
+      "side": 1,
+      "message": "Interestingly, the autoexpander has lost some of its functionality. When we\u0027re using native drag, dragover events fire at a regular rate even when the mouse is still. However, mousemove events only fire when the mouse is actually moving. This means that when you hover over a closed node, it won\u0027t actually open until you move the mouse. It\u0027s a bit of a weird experience.\n\nMaybe we can fix this by changing the AutoExpander to use setTimeout internally?",
+      "range": {
+        "startLine": 153,
+        "startChar": 11,
+        "endLine": 153,
+        "endChar": 23
+      },
+      "revId": "b5ace1d591712efaa7dc9ed37ebedc8155127ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08d255c9_f4a30d80",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-07-20T04:48:03Z",
+      "side": 1,
+      "message": "nit: \"allow the native drag\"",
+      "range": {
+        "startLine": 390,
+        "startChar": 50,
+        "endLine": 390,
+        "endChar": 64
+      },
+      "revId": "b5ace1d591712efaa7dc9ed37ebedc8155127ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad281ed3_0e9ef7de",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-07-20T04:48:03Z",
+      "side": 1,
+      "message": "Comment that this event fires when the mouse leaves the browser window (not the content area)",
+      "revId": "b5ace1d591712efaa7dc9ed37ebedc8155127ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70642fdb_ade1c9ef",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-07-20T04:48:03Z",
+      "side": 1,
+      "message": "FYI: This conflicts with my select and scroll CL 😢. We\u0027re going to need to do something fancy with the callbacks here to achieve the same thing as what we\u0027ll be doing in onDrop",
+      "revId": "b5ace1d591712efaa7dc9ed37ebedc8155127ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6597d45_3fff631a",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-07-20T04:48:03Z",
+      "side": 1,
+      "message": "Comment here that this should only fire when a move goes from the content area to the browser chrome.",
+      "revId": "b5ace1d591712efaa7dc9ed37ebedc8155127ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "981091bc_d319bfb9",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-07-20T04:48:03Z",
+      "side": 1,
+      "message": "@return",
+      "revId": "b5ace1d591712efaa7dc9ed37ebedc8155127ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29ea34fd_b12378ba",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-07-20T04:48:03Z",
+      "side": 1,
+      "message": "Nit: Let\u0027s be consistent with naming, and call this \u0027startNativeDrag\u0027 (since shell doesn\u0027t appear anywhere else right now).",
+      "range": {
+        "startLine": 570,
+        "startChar": 4,
+        "endLine": 570,
+        "endChar": 19
+      },
+      "revId": "b5ace1d591712efaa7dc9ed37ebedc8155127ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "457d4bcb_4c137656",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-07-20T04:48:03Z",
+      "side": 1,
+      "message": "@return here too",
+      "revId": "b5ace1d591712efaa7dc9ed37ebedc8155127ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
