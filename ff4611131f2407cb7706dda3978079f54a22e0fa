@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b203dbf_2250a886",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-07-20T10:16:06Z",
+      "side": 1,
+      "message": "nit: s/fore/for/",
+      "revId": "ff4611131f2407cb7706dda3978079f54a22e0fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
