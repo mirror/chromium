@@ -1,0 +1,198 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50c8ed2e_2efb0b72",
+        "filename": "chrome/browser/search/suggestions/suggestions_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-20T11:54:19Z",
+      "side": 1,
+      "message": "I think the profile_ member isn\u0027t needed?",
+      "range": {
+        "startLine": 37,
+        "startChar": 26,
+        "endLine": 37,
+        "endChar": 0
+      },
+      "revId": "1592ea1a4a1565c33d027dfe4a36b59e40a43ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ad4cb14_5a680557",
+        "filename": "chrome/browser/search/suggestions/suggestions_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-20T11:54:19Z",
+      "side": 1,
+      "message": "optional: Could just pass in the SuggestionsService directly, in the spirit of dependency injection.",
+      "revId": "1592ea1a4a1565c33d027dfe4a36b59e40a43ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff646871_7aa9cf20",
+        "filename": "components/suggestions/suggestions_ui_internals.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-20T11:54:19Z",
+      "side": 1,
+      "message": "Should this file be called suggestions_source.h, to match the class it defines? (Optionally in a subfolder suggestions_ui or suggestions_internals or something along those lines.)",
+      "revId": "1592ea1a4a1565c33d027dfe4a36b59e40a43ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a23c0eda_d4fe34c9",
+        "filename": "components/suggestions/suggestions_ui_internals.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-20T11:54:19Z",
+      "side": 1,
+      "message": "\u003cstring\u003e, \u003cmap\u003e",
+      "revId": "1592ea1a4a1565c33d027dfe4a36b59e40a43ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a6c31ba_7ed1a5d1",
+        "filename": "components/suggestions/suggestions_ui_internals.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-20T11:54:19Z",
+      "side": 1,
+      "message": "I think this include can move to the .cc",
+      "range": {
+        "startLine": 8,
+        "startChar": 33,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "1592ea1a4a1565c33d027dfe4a36b59e40a43ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20a0025d_5c43789a",
+        "filename": "components/suggestions/suggestions_ui_internals.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-20T11:54:19Z",
+      "side": 1,
+      "message": "This too",
+      "range": {
+        "startLine": 14,
+        "startChar": 35,
+        "endLine": 14,
+        "endChar": 0
+      },
+      "revId": "1592ea1a4a1565c33d027dfe4a36b59e40a43ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "015a6912_13925154",
+        "filename": "components/suggestions/suggestions_ui_internals.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-20T11:54:19Z",
+      "side": 1,
+      "message": "And this",
+      "revId": "1592ea1a4a1565c33d027dfe4a36b59e40a43ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7427772_3d028e69",
+        "filename": "components/suggestions/suggestions_ui_internals.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-20T11:54:19Z",
+      "side": 1,
+      "message": "nit: I prefer\nusing GotDataCallback \u003d ...;\n(IMO easier to read)",
+      "revId": "1592ea1a4a1565c33d027dfe4a36b59e40a43ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a57f1ae_4397f970",
+        "filename": "components/suggestions/suggestions_ui_internals.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-20T11:54:19Z",
+      "side": 1,
+      "message": "Should this be passed by const ref?",
+      "range": {
+        "startLine": 52,
+        "startChar": 50,
+        "endLine": 52,
+        "endChar": 0
+      },
+      "revId": "1592ea1a4a1565c33d027dfe4a36b59e40a43ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95fdac70_ec7bd18a",
+        "filename": "components/suggestions/suggestions_ui_internals.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-20T11:54:19Z",
+      "side": 1,
+      "message": "nit: const?",
+      "revId": "1592ea1a4a1565c33d027dfe4a36b59e40a43ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
