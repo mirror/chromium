@@ -489,8 +489,9 @@ def UpdateClang(args):
     print 'Building bootstrap compiler'
     EnsureDirExists(LLVM_BOOTSTRAP_DIR)
     os.chdir(LLVM_BOOTSTRAP_DIR)
+    bootstrap_targets = 'host' if sys.platform != 'darwin' else 'X86;ARM'
     bootstrap_args = base_cmake_args + [
-        '-DLLVM_TARGETS_TO_BUILD=host',
+        '-DLLVM_TARGETS_TO_BUILD=' + bootstrap_targets,
         '-DCMAKE_INSTALL_PREFIX=' + LLVM_BOOTSTRAP_INSTALL_DIR,
         '-DCMAKE_C_FLAGS=' + ' '.join(cflags),
         '-DCMAKE_CXX_FLAGS=' + ' '.join(cxxflags),
