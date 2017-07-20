@@ -21,6 +21,8 @@
 #include "chrome/browser/bookmarks/bookmark_stats.h"
 #include "chrome/browser/command_updater.h"
 #include "chrome/browser/extensions/api/omnibox/omnibox_api.h"
+#include "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker.h"
+#include "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker_factory.h"
 #include "chrome/browser/net/predictor.h"
 #include "chrome/browser/predictors/autocomplete_action_predictor.h"
 #include "chrome/browser/predictors/autocomplete_action_predictor_factory.h"
@@ -45,6 +47,7 @@
 #include "components/prefs/pref_service.h"
 #include "components/search/search.h"
 #include "components/search_engines/template_url_service.h"
+#include "components/toolbar/toolbar_model.h"
 #include "content/public/browser/navigation_controller.h"
 #include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/web_contents.h"
@@ -181,12 +184,12 @@ bool ChromeOmniboxClient::IsPasteAndGoEnabled() const {
   return controller_->command_updater()->IsCommandEnabled(IDC_OPEN_CURRENT_URL);
 }
 
-bool ChromeOmniboxClient::IsNewTabPage(const std::string& url) const {
-  return url == chrome::kChromeUINewTabURL;
+bool ChromeOmniboxClient::IsNewTabPage(const GURL& url) const {
+  return url.spec() == chrome::kChromeUINewTabURL;
 }
 
-bool ChromeOmniboxClient::IsHomePage(const std::string& url) const {
-  return url == profile_->GetPrefs()->GetString(prefs::kHomePage);
+bool ChromeOmniboxClient::IsHomePage(const GURL& url) const {
+  return url.spec() == profile_->GetPrefs()->GetString(prefs::kHomePage);
 }
 
 const SessionID& ChromeOmniboxClient::GetSessionID() const {
@@ -441,6 +444,18 @@ void ChromeOmniboxClient::OnRevert() {
 }
 
 void ChromeOmniboxClient::OnURLOpenedFromOmnibox(OmniboxLog* log) {
+  // The new tab tracker tracks when a user starts a session in the same
+  // tab as a previous one. If ShouldDisplayURL() is true, that's a good
+  // signal that the previous page was part of some other session.
+  // We could go further to try to analyze the difference between the previous
+  // and current URLs, but users edit URLs rarely enough that this is a
+  // reasonable approximation.
+  if (controller_->GetToolbarModel()->ShouldDisplayURL()) {
+    feature_engagement_tracker::NewTabTrackerFactory::GetInstance()
+        ->GetForProfile(profile_)
+        ->OnOmniboxNavigation();
+  }
+
   predictors::AutocompleteActionPredictorFactory::GetForProfile(profile_)
       ->OnOmniboxOpenedUrl(*log);
 }
