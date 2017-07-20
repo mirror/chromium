@@ -118,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "d25ffae0_6ca8d2db",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-20T23:31:45Z",
+      "side": 1,
+      "message": "Thanks! You are right!",
+      "parentUuid": "39aff854_3adc6e6a",
+      "range": {
+        "startLine": 493,
+        "startChar": 0,
+        "endLine": 493,
+        "endChar": 80
+      },
+      "revId": "09efb5d74a3138367a065a15b2619f5cb55a4c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6defb106_71cae116",
         "filename": "ui/app_list/views/app_list_view_unittest.cc",
         "patchSetId": 2
