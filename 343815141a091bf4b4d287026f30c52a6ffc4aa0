@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "17af015c_6d04da1e",
+        "filename": "third_party/sqlite/src/main.mk",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-07-20T21:19:36Z",
+      "side": 1,
+      "message": "Fixed. Thanks for noticing!",
+      "parentUuid": "4ef98463_688cd915",
+      "range": {
+        "startLine": 79,
+        "startChar": 37,
+        "endLine": 79,
+        "endChar": 46
+      },
+      "revId": "343815141a091bf4b4d287026f30c52a6ffc4aa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3862849_7727d11c",
         "filename": "third_party/sqlite/src/src/sqlite.h.in",
         "patchSetId": 2
