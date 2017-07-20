@@ -117,6 +117,7 @@ class RootInlineBox : public InlineFlowBox {
                            LayoutUnit ellipsis_width,
                            LayoutUnit logical_left_offset,
                            bool found_box,
+                           InlineBox*& box_truncation_starts_at,
                            ForceEllipsisOnLine = DoNotForceEllipsis);
   // Return the position of the EllipsisBox or -1.
   LayoutUnit PlaceEllipsisBox(bool ltr,
@@ -125,7 +126,8 @@ class RootInlineBox : public InlineFlowBox {
                               LayoutUnit ellipsis_width,
                               LayoutUnit& truncated_width,
                               bool& found_box,
-                              LayoutUnit logical_left_offset) final;
+                              LayoutUnit logical_left_offset,
+                              InlineBox*& box_truncation_starts_at) final;
 
   using InlineBox::HasEllipsisBox;
   EllipsisBox* GetEllipsisBox() const;

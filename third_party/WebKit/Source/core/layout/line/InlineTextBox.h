@@ -194,7 +194,8 @@ class CORE_EXPORT InlineTextBox : public InlineBox {
                               LayoutUnit ellipsis_width,
                               LayoutUnit& truncated_width,
                               bool& found_box,
-                              LayoutUnit logical_left_offset) final;
+                              LayoutUnit logical_left_offset,
+                              InlineBox*&) final;
 
  public:
   bool IsLineBreak() const final;

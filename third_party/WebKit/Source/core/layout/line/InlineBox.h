@@ -346,7 +346,8 @@ class CORE_EXPORT InlineBox : public DisplayItemClient {
                                       LayoutUnit ellipsis_width,
                                       LayoutUnit& truncated_width,
                                       bool&,
-                                      LayoutUnit logical_left_offset);
+                                      LayoutUnit logical_left_offset,
+                                      InlineBox*&);
 
 #if DCHECK_IS_ON()
   void SetHasBadParent();

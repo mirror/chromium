@@ -314,7 +314,8 @@ LayoutUnit InlineBox::PlaceEllipsisBox(bool,
                                        LayoutUnit,
                                        LayoutUnit& truncated_width,
                                        bool&,
-                                       LayoutUnit) {
+                                       LayoutUnit,
+                                       InlineBox*&) {
   // Use -1 to mean "we didn't set the position."
   truncated_width += LogicalWidth();
   return LayoutUnit(-1);

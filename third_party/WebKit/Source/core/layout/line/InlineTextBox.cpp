@@ -372,7 +372,8 @@ LayoutUnit InlineTextBox::PlaceEllipsisBox(bool flow_is_ltr,
                                            LayoutUnit ellipsis_width,
                                            LayoutUnit& truncated_width,
                                            bool& found_box,
-                                           LayoutUnit logical_left_offset) {
+                                           LayoutUnit logical_left_offset,
+                                           InlineBox*&) {
   if (found_box) {
     SetTruncation(kCFullTruncation);
     return LayoutUnit(-1);

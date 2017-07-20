@@ -1451,13 +1451,15 @@ bool InlineFlowBox::CanAccommodateEllipsis(bool ltr,
   return true;
 }
 
-LayoutUnit InlineFlowBox::PlaceEllipsisBox(bool ltr,
-                                           LayoutUnit block_left_edge,
-                                           LayoutUnit block_right_edge,
-                                           LayoutUnit ellipsis_width,
-                                           LayoutUnit& truncated_width,
-                                           bool& found_box,
-                                           LayoutUnit logical_left_offset) {
+LayoutUnit InlineFlowBox::PlaceEllipsisBox(
+    bool ltr,
+    LayoutUnit block_left_edge,
+    LayoutUnit block_right_edge,
+    LayoutUnit ellipsis_width,
+    LayoutUnit& truncated_width,
+    bool& found_box,
+    LayoutUnit logical_left_offset,
+    InlineBox*& box_truncation_starts_at) {
   LayoutUnit result(-1);
   // We iterate over all children, the foundBox variable tells us when we've
   // found the box containing the ellipsis.  All boxes after that one in the
@@ -1475,9 +1477,13 @@ LayoutUnit InlineFlowBox::PlaceEllipsisBox(bool ltr,
   LayoutUnit visible_right_edge = block_right_edge;
 
   while (box) {
-    LayoutUnit curr_result = box->PlaceEllipsisBox(
-        ltr, visible_left_edge, visible_right_edge, ellipsis_width,
-        truncated_width, found_box, logical_left_offset);
+    bool had_found_box = found_box;
+    LayoutUnit curr_result =
+        box->PlaceEllipsisBox(ltr, visible_left_edge, visible_right_edge,
+                              ellipsis_width, truncated_width, found_box,
+                              logical_left_offset, box_truncation_starts_at);
+    if (IsRootInlineBox() && found_box && !had_found_box)
+      box_truncation_starts_at = box;
     if (curr_result != -1 && result == -1)
       result = curr_result;
 

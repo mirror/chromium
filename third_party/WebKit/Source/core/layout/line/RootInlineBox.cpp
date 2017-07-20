@@ -115,6 +115,7 @@ LayoutUnit RootInlineBox::PlaceEllipsis(const AtomicString& ellipsis_str,
                                         LayoutUnit ellipsis_width,
                                         LayoutUnit logical_left_offset,
                                         bool found_box,
+                                        InlineBox*& box_truncation_starts_at,
                                         ForceEllipsisOnLine force_ellipsis) {
   // Create an ellipsis box if we don't already have one. If we already have one
   // we're just here to blank out (truncate) the text boxes.
@@ -143,24 +144,26 @@ LayoutUnit RootInlineBox::PlaceEllipsis(const AtomicString& ellipsis_str,
   // right (or left in RTL) of that glyph.  Mark all of the objects that
   // intersect the ellipsis box as not painting (as being truncated).
   LayoutUnit truncated_width;
-  LayoutUnit position =
-      PlaceEllipsisBox(ltr, block_left_edge, block_right_edge, ellipsis_width,
-                       truncated_width, found_box, logical_left_offset);
+  LayoutUnit position = PlaceEllipsisBox(
+      ltr, block_left_edge, block_right_edge, ellipsis_width, truncated_width,
+      found_box, logical_left_offset, box_truncation_starts_at);
   if (HasEllipsisBox())
     GetEllipsisBox()->SetLogicalLeft(position);
   return truncated_width;
 }
 
-LayoutUnit RootInlineBox::PlaceEllipsisBox(bool ltr,
-                                           LayoutUnit block_left_edge,
-                                           LayoutUnit block_right_edge,
-                                           LayoutUnit ellipsis_width,
-                                           LayoutUnit& truncated_width,
-                                           bool& found_box,
-                                           LayoutUnit logical_left_offset) {
+LayoutUnit RootInlineBox::PlaceEllipsisBox(
+    bool ltr,
+    LayoutUnit block_left_edge,
+    LayoutUnit block_right_edge,
+    LayoutUnit ellipsis_width,
+    LayoutUnit& truncated_width,
+    bool& found_box,
+    LayoutUnit logical_left_offset,
+    InlineBox*& box_truncation_starts_at) {
   LayoutUnit result = InlineFlowBox::PlaceEllipsisBox(
       ltr, block_left_edge, block_right_edge, ellipsis_width, truncated_width,
-      found_box, logical_left_offset);
+      found_box, logical_left_offset, box_truncation_starts_at);
   if (result == -1) {
     result = ltr ? std::max<LayoutUnit>(
                        LayoutUnit(),
