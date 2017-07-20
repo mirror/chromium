@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b08e6253_51c77f9e",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2585,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-20T19:02:59Z",
+      "side": 1,
+      "message": "Yes, they can, the local ID is just a monotonically increasing number from 0.",
+      "parentUuid": "8e3875f1_6eef30ab",
+      "revId": "48012a1927f0c7b1ce37d3a844147536489a1015",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1dc2d33_03ef0089",
         "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
         "patchSetId": 9
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Maybe I misunderstood. I thought this is resending a saved_frame? Maybe I don\u0027t need the tracing here?",
       "parentUuid": "a1dc2d33_03ef0089",
+      "revId": "48012a1927f0c7b1ce37d3a844147536489a1015",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d978b1b5_f5d28c22",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2736,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-20T19:02:59Z",
+      "side": 1,
+      "message": "What do you want to track exactly? When the frame is received or when it is processed?",
+      "parentUuid": "b80b8eb1_dc0da277",
       "revId": "48012a1927f0c7b1ce37d3a844147536489a1015",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
