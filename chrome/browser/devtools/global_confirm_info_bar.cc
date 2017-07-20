@@ -4,10 +4,12 @@
 
 #include "chrome/browser/devtools/global_confirm_info_bar.h"
 
+#include <memory>
 #include <utility>
 
 #include "base/macros.h"
 #include "base/stl_util.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "components/infobars/core/infobar.h"
@@ -152,13 +154,23 @@ base::WeakPtr<GlobalConfirmInfoBar> GlobalConfirmInfoBar::Show(
 }
 
 void GlobalConfirmInfoBar::Close() {
-  delete this;
+  if (is_closing_)
+    return;
+
+  is_closing_ = true;
+
+  // The pointer is unretained because this should only be called exactly once,
+  // and the callback is responsible for deleting the instance.
+  base::SequencedTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::Bind(&GlobalConfirmInfoBar::DeleteGlobalConfirmInfoBar,
+                            base::Unretained(this)));
 }
 
 GlobalConfirmInfoBar::GlobalConfirmInfoBar(
     std::unique_ptr<ConfirmInfoBarDelegate> delegate)
     : delegate_(std::move(delegate)),
       browser_tab_strip_tracker_(this, nullptr, nullptr),
+      is_closing_(false),
       weak_factory_(this) {
   browser_tab_strip_tracker_.Init();
 }
@@ -171,6 +183,11 @@ GlobalConfirmInfoBar::~GlobalConfirmInfoBar() {
     it->first->RemoveInfoBar(it->second->info_bar_);
     proxies_.erase(it);
   }
+}
+
+void GlobalConfirmInfoBar::DeleteGlobalConfirmInfoBar() {
+  DCHECK(is_closing_);
+  delete this;
 }
 
 void GlobalConfirmInfoBar::TabInsertedAt(TabStripModel* tab_strip_model,
@@ -217,8 +234,15 @@ void GlobalConfirmInfoBar::MaybeAddInfoBar(content::WebContents* web_contents) {
   infobars::InfoBar* added_bar = infobar_service->AddInfoBar(
       infobar_service->CreateConfirmInfoBar(std::move(proxy)));
 
+  // Usually, the GlobalConfirmInfoBar is freed when an action is taken by the
+  // user. In the case where it is not possible to add an infobar, call Close()
+  // here to get rid of the current instance.
+  if (!added_bar) {
+    Close();
+    return;
+  }
+
   proxy_ptr->info_bar_ = added_bar;
-  DCHECK(added_bar);
   proxies_[infobar_service] = proxy_ptr;
   infobar_service->AddObserver(this);
 }
