@@ -458,6 +458,32 @@ TEST(ProcessMemoryDumpTest, CountResidentBytes) {
   ASSERT_EQ(res2, kVeryLargeMemorySize);
   Unmap(memory2, kVeryLargeMemorySize);
 }
+
+TEST(ProcessMemoryDumpTest, CountResidentBytesInSharedMemory) {
+  const size_t page_size = ProcessMemoryDump::GetSystemPageSize();
+
+  // Allocate few page of dirty memory and check if it is resident.
+  const size_t size1 = 5 * page_size;
+  SharedMemory shared_memory1;
+  shared_memory1.CreateAndMapAnonymous(size1);
+  memset(shared_memory1.memory(), 0, size1);
+  size_t res1 =
+      ProcessMemoryDump::CountResidentBytesInSharedMemory(shared_memory1);
+  ASSERT_EQ(res1, size1);
+  shared_memory1.Unmap();
+  shared_memory1.Close();
+
+  // Allocate a large memory segment (> 8Mib).
+  const size_t kVeryLargeMemorySize = 15 * 1024 * 1024;
+  SharedMemory shared_memory2;
+  shared_memory2.CreateAndMapAnonymous(kVeryLargeMemorySize);
+  memset(shared_memory2.memory(), 0, kVeryLargeMemorySize);
+  size_t res2 =
+      ProcessMemoryDump::CountResidentBytesInSharedMemory(shared_memory2);
+  ASSERT_EQ(res2, kVeryLargeMemorySize);
+  shared_memory2.Unmap();
+  shared_memory2.Close();
+}
 #endif  // defined(COUNT_RESIDENT_BYTES_SUPPORTED)
 
 }  // namespace trace_event
