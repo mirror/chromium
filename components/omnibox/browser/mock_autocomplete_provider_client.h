@@ -11,8 +11,15 @@
 #include "base/macros.h"
 #include "components/omnibox/browser/autocomplete_provider_client.h"
 #include "components/omnibox/browser/autocomplete_scheme_classifier.h"
+#include "components/omnibox/browser/contextual_suggestions_service.h"
 #include "components/search_engines/search_terms_data.h"
 #include "components/search_engines/template_url_service.h"
+#include "components/signin/core/browser/account_tracker_service.h"
+#include "components/signin/core/browser/signin_manager_base.h"
+#include "components/signin/core/browser/test_signin_client.h"
+#include "components/sync_preferences/testing_pref_service_syncable.h"
+#include "google_apis/gaia/oauth2_token_service.h"
+#include "net/url_request/url_request_context_getter.h"
 #include "testing/gmock/include/gmock/gmock.h"
 
 struct AutocompleteMatch;
@@ -43,6 +50,11 @@ class MockAutocompleteProviderClient : public AutocompleteProviderClient {
   const TemplateURLService* GetTemplateURLService() const override {
     return template_url_service_.get();
   }
+  ContextualSuggestionsService* GetContextualSuggestionsService()
+      const override {
+    return contextual_suggestions_service_.get();
+  }
+
   std::unique_ptr<KeywordExtensionsDelegate> GetKeywordExtensionsDelegate(
       KeywordProvider* keyword_provider) override {
     return nullptr;
@@ -85,7 +97,16 @@ class MockAutocompleteProviderClient : public AutocompleteProviderClient {
   }
 
  private:
+  sync_preferences::TestingPrefServiceSyncable pref_service_;
+  TestSigninClient signin_client_;
+  SigninManagerBase signin_manager_;
+  AccountTrackerService account_tracker_;
+  scoped_refptr<net::URLRequestContextGetter> request_context_getter_;
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
+
+  std::unique_ptr<ContextualSuggestionsService> contextual_suggestions_service_;
   std::unique_ptr<TemplateURLService> template_url_service_;
+  std::unique_ptr<OAuth2TokenService> token_service_;
 
   DISALLOW_COPY_AND_ASSIGN(MockAutocompleteProviderClient);
 };
