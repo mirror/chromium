@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2e82684_62462b15",
+        "filename": "third_party/WebKit/LayoutTests/W3CImportExpectations",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-20T20:46:59Z",
+      "side": 1,
+      "message": "This is correct assuming that kojii is owner (which I think he is given that his GitHub account is in the wpt owners file:\nhttps://github.com/w3c/web-platform-tests/blob/master/css/css-scoping-1/OWNERS",
+      "revId": "669ac27a2b5f0b0a8dbaa68647a5f19737fff71d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
