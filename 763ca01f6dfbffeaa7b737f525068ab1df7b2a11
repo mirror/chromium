@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f31f88f_36969aa9",
+        "filename": "ash/login/ui/lock_screen.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-20T19:19:33Z",
+      "side": 1,
+      "message": "TODO(crbug.com/xxxxx): Support multiple displays.\n\nI think this is simple to do though - just iterate the results of Shell::GetAllRootWindows(). I\u0027d strongly prefer you include that in this CL instead of a TODO.",
+      "revId": "763ca01f6dfbffeaa7b737f525068ab1df7b2a11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
