@@ -33,6 +33,24 @@
       "revId": "91b34c033bbab4295bb9dc09e5f04e72f3c0bdac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f89f4cee_d865dc87",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-07-20T20:56:15Z",
+      "side": 1,
+      "message": "Dongseong probably means that it exposes glTexStorage2D.\n\nCould we say \"In WebGL contexts, ... WebGL 2.0 exposes glTexStorage2D. WebGL never uses...\"",
+      "parentUuid": "db2efccf_27a7d8a8",
+      "revId": "91b34c033bbab4295bb9dc09e5f04e72f3c0bdac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
