@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "997ce1fb_69bb9c3b",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-07-20T20:50:41Z",
+      "side": 1,
+      "message": "You are right, moving IsValidResponse (renamed to IsValidResponseForWriter) to only be checked for writer since it doesn\u0027t govern restarting of transactions, but only truncation of the entry. We shouldn\u0027t attempt to truncate and preserve the entry if it doesn\u0027t have response code 200 for a writer (This will change to also include 304 when shared writing is enabled).\nNote that the other transactions will restart in any case.\n\nAdded test which is the same as SetTruncatedFlag except in this case, entry will be destroyed and not marked as truncated.",
+      "parentUuid": "094ab896_7fcea580",
+      "range": {
+        "startLine": 878,
+        "startChar": 24,
+        "endLine": 878,
+        "endChar": 39
+      },
+      "revId": "3e144c3fb6df55c31c8cdb7c775d04201f23c67b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "333f1142_5e8d812e",
         "filename": "net/http/http_cache.cc",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "3e144c3fb6df55c31c8cdb7c775d04201f23c67b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcd10e06_9cb5ee55",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-07-20T20:50:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "333f1142_5e8d812e",
+      "range": {
+        "startLine": 906,
+        "startChar": 8,
+        "endLine": 906,
+        "endChar": 22
+      },
+      "revId": "3e144c3fb6df55c31c8cdb7c775d04201f23c67b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "600ada4c_e1570e10",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1152,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-07-20T20:50:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30fae170_94c9c8e8",
+      "range": {
+        "startLine": 1152,
+        "startChar": 78,
+        "endLine": 1152,
+        "endChar": 80
+      },
+      "revId": "3e144c3fb6df55c31c8cdb7c775d04201f23c67b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99956e2e_c08cf88d",
         "filename": "net/http/http_cache.cc",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "3e144c3fb6df55c31c8cdb7c775d04201f23c67b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1583e7c7_415f4721",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1157,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-07-20T20:50:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99956e2e_c08cf88d",
+      "range": {
+        "startLine": 1157,
+        "startChar": 69,
+        "endLine": 1157,
+        "endChar": 70
+      },
+      "revId": "3e144c3fb6df55c31c8cdb7c775d04201f23c67b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
