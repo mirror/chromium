@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ff2148b4_14a17977",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/OnExitVrRequestListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-20T18:14:04Z",
+      "side": 1,
+      "message": "Called onSucceeded now.",
+      "parentUuid": "d22c9407_51aff416",
+      "range": {
+        "startLine": 14,
+        "startChar": 9,
+        "endLine": 14,
+        "endChar": 17
+      },
+      "revId": "69e000bc419d8490ff807d2865ba55f6b076f173",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84964b56_619484e8",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/OnExitVrRequestListener.java",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "69e000bc419d8490ff807d2865ba55f6b076f173",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c82c9580_e28940a5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/OnExitVrRequestListener.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-20T18:14:04Z",
+      "side": 1,
+      "message": "Called onDenied now.",
+      "parentUuid": "84964b56_619484e8",
+      "range": {
+        "startLine": 20,
+        "startChar": 9,
+        "endLine": 20,
+        "endChar": 17
+      },
+      "revId": "69e000bc419d8490ff807d2865ba55f6b076f173",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "360e563b_6fb01bfd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1201,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-20T18:14:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f48912db_e8d20329",
+      "range": {
+        "startLine": 1201,
+        "startChar": 16,
+        "endLine": 1201,
+        "endChar": 97
+      },
+      "revId": "69e000bc419d8490ff807d2865ba55f6b076f173",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9613504_9f9054ca",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
         "patchSetId": 4
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "78559928_4f5f8e17",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1303,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-20T18:14:04Z",
+      "side": 1,
+      "message": "I\u0027m telling the listener that the request was denied since we exited VR for another reason than the successful request.",
+      "parentUuid": "b9613504_9f9054ca",
+      "range": {
+        "startLine": 1303,
+        "startChar": 11,
+        "endLine": 1303,
+        "endChar": 50
+      },
+      "revId": "69e000bc419d8490ff807d2865ba55f6b076f173",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e1f9d78_c86736c8",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
         "patchSetId": 4
@@ -114,6 +210,30 @@
       "revId": "69e000bc419d8490ff807d2865ba55f6b076f173",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dacfc913_62976484",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-20T18:14:04Z",
+      "side": 1,
+      "message": "We don\u0027t keep a list of listeners anymore.",
+      "parentUuid": "9e1f9d78_c86736c8",
+      "range": {
+        "startLine": 128,
+        "startChar": 43,
+        "endLine": 128,
+        "endChar": 68
+      },
+      "revId": "69e000bc419d8490ff807d2865ba55f6b076f173",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

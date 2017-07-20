@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "bed15ad8_0399659a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 622,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-20T18:14:04Z",
+      "side": 1,
+      "message": "Listener is not cleared here.",
+      "parentUuid": "ae040870_2c898250",
+      "range": {
+        "startLine": 622,
+        "startChar": 24,
+        "endLine": 622,
+        "endChar": 59
+      },
+      "revId": "d941eb2e99ee2d332498a383761d0c7f1333fc2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a9577c2_e5f606f6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
         "patchSetId": 3
