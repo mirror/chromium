@@ -118,12 +118,11 @@ std::unique_ptr<Response> ObjectProxy::CallMethodAndBlock(
 void ObjectProxy::CallMethod(MethodCall* method_call,
                              int timeout_ms,
                              ResponseCallback callback) {
-  CallMethodWithErrorCallback(method_call, timeout_ms, callback,
-                              base::Bind(&ObjectProxy::OnCallMethodError,
-                                         this,
-                                         method_call->GetInterface(),
-                                         method_call->GetMember(),
-                                         callback));
+  CallMethodWithErrorCallback(
+      method_call, timeout_ms, std::move(callback),
+      base::BindOnce(&ObjectProxy::OnCallMethodError, this,
+                     method_call->GetInterface(), method_call->GetMember(),
+                     std::move(callback)));  // XXX
 }
 
 void ObjectProxy::CallMethodWithErrorCallback(MethodCall* method_call,
@@ -137,10 +136,10 @@ void ObjectProxy::CallMethodWithErrorCallback(MethodCall* method_call,
   if (!method_call->SetDestination(service_name_) ||
       !method_call->SetPath(object_path_)) {
     // In case of a failure, run the error callback with nullptr.
-    base::Closure task =
-        base::Bind(&ObjectProxy::RunResponseCallback, this, callback,
-                   error_callback, start_time, nullptr /* response_message */);
-    bus_->GetOriginTaskRunner()->PostTask(FROM_HERE, task);
+    base::OnceClosure task = base::BindOnce(
+        &ObjectProxy::RunResponseCallback, this, std::move(callback),
+        std::move(error_callback), start_time, nullptr /* response_message */);
+    bus_->GetOriginTaskRunner()->PostTask(FROM_HERE, std::move(task));
     return;
   }
 
@@ -150,19 +149,15 @@ void ObjectProxy::CallMethodWithErrorCallback(MethodCall* method_call,
   DBusMessage* request_message = method_call->raw_message();
   dbus_message_ref(request_message);
 
-  base::Closure task = base::Bind(&ObjectProxy::StartAsyncMethodCall,
-                                  this,
-                                  timeout_ms,
-                                  request_message,
-                                  callback,
-                                  error_callback,
-                                  start_time);
+  base::OnceClosure task = base::BindOnce(
+      &ObjectProxy::StartAsyncMethodCall, this, timeout_ms, request_message,
+      std::move(callback), std::move(error_callback), start_time);
   statistics::AddSentMethodCall(service_name_,
                                 method_call->GetInterface(),
                                 method_call->GetMember());
 
   // Wait for the response in the D-Bus thread.
-  bus_->GetDBusTaskRunner()->PostTask(FROM_HERE, task);
+  bus_->GetDBusTaskRunner()->PostTask(FROM_HERE, std::move(task));
 }
 
 void ObjectProxy::ConnectToSignal(const std::string& interface_name,
@@ -238,10 +233,9 @@ ObjectProxy::OnPendingCallIsCompleteData::OnPendingCallIsCompleteData(
     ErrorCallback in_error_callback,
     base::TimeTicks in_start_time)
     : object_proxy(in_object_proxy),
-      response_callback(in_response_callback),
-      error_callback(in_error_callback),
-      start_time(in_start_time) {
-}
+      response_callback(std::move(in_response_callback)),
+      error_callback(std::move(in_error_callback)),
+      start_time(in_start_time) {}
 
 ObjectProxy::OnPendingCallIsCompleteData::~OnPendingCallIsCompleteData() =
     default;
@@ -255,10 +249,10 @@ void ObjectProxy::StartAsyncMethodCall(int timeout_ms,
 
   if (!bus_->Connect() || !bus_->SetUpAsyncOperations()) {
     // In case of a failure, run the error callback with nullptr.
-    base::Closure task =
-        base::Bind(&ObjectProxy::RunResponseCallback, this, response_callback,
-                   error_callback, start_time, nullptr /* response_message */);
-    bus_->GetOriginTaskRunner()->PostTask(FROM_HERE, task);
+    base::OnceClosure task = base::BindOnce(
+        &ObjectProxy::RunResponseCallback, this, std::move(response_callback),
+        std::move(error_callback), start_time, nullptr /* response_message */);
+    bus_->GetOriginTaskRunner()->PostTask(FROM_HERE, std::move(task));
 
     dbus_message_unref(request_message);
     return;
@@ -270,8 +264,8 @@ void ObjectProxy::StartAsyncMethodCall(int timeout_ms,
   // Prepare the data we'll be passing to OnPendingCallIsCompleteThunk().
   // The data will be deleted in OnPendingCallIsCompleteThunk().
   OnPendingCallIsCompleteData* data =
-      new OnPendingCallIsCompleteData(this, response_callback, error_callback,
-                                      start_time);
+      new OnPendingCallIsCompleteData(this, std::move(response_callback),
+                                      std::move(error_callback), start_time);
 
   // This returns false only when unable to allocate memory.
   const bool success = dbus_pending_call_set_notify(
@@ -293,13 +287,10 @@ void ObjectProxy::OnPendingCallIsComplete(DBusPendingCall* pending_call,
   bus_->AssertOnDBusThread();
 
   DBusMessage* response_message = dbus_pending_call_steal_reply(pending_call);
-  base::Closure task = base::Bind(&ObjectProxy::RunResponseCallback,
-                                  this,
-                                  response_callback,
-                                  error_callback,
-                                  start_time,
-                                  response_message);
-  bus_->GetOriginTaskRunner()->PostTask(FROM_HERE, task);
+  base::OnceClosure task = base::BindOnce(
+      &ObjectProxy::RunResponseCallback, this, std::move(response_callback),
+      std::move(error_callback), start_time, response_message);
+  bus_->GetOriginTaskRunner()->PostTask(FROM_HERE, std::move(task));
 
   // Remove the pending call from the set.
   pending_calls_.erase(pending_call);
@@ -315,13 +306,13 @@ void ObjectProxy::RunResponseCallback(ResponseCallback response_callback,
   bool method_call_successful = false;
   if (!response_message) {
     // The response is not received.
-    error_callback.Run(nullptr);
+    std::move(error_callback).Run(nullptr);
   } else if (dbus_message_get_type(response_message) ==
              DBUS_MESSAGE_TYPE_ERROR) {
     // This will take |response_message| and release (unref) it.
     std::unique_ptr<ErrorResponse> error_response(
         ErrorResponse::FromRawMessage(response_message));
-    error_callback.Run(error_response.get());
+    std::move(error_callback).Run(error_response.get());
     // Delete the message  on the D-Bus thread. See below for why.
     bus_->GetDBusTaskRunner()->PostTask(
         FROM_HERE,
@@ -332,7 +323,7 @@ void ObjectProxy::RunResponseCallback(ResponseCallback response_callback,
     std::unique_ptr<Response> response(
         Response::FromRawMessage(response_message));
     // The response is successfully received.
-    response_callback.Run(response.get());
+    std::move(response_callback).Run(response.get());
     // The message should be deleted on the D-Bus thread for a complicated
     // reason:
     //
@@ -371,10 +362,9 @@ void ObjectProxy::OnPendingCallIsCompleteThunk(DBusPendingCall* pending_call,
   OnPendingCallIsCompleteData* data =
       reinterpret_cast<OnPendingCallIsCompleteData*>(user_data);
   ObjectProxy* self = data->object_proxy;
-  self->OnPendingCallIsComplete(pending_call,
-                                data->response_callback,
-                                data->error_callback,
-                                data->start_time);
+  self->OnPendingCallIsComplete(
+      pending_call, std::move(data->response_callback),
+      std::move(data->error_callback), data->start_time);
 }
 
 bool ObjectProxy::ConnectToNameOwnerChangedSignal() {
@@ -589,7 +579,7 @@ void ObjectProxy::OnCallMethodError(const std::string& interface_name,
   }
   LogMethodCallFailure(interface_name, method_name, error_name, error_message);
 
-  response_callback.Run(nullptr);
+  std::move(response_callback).Run(nullptr);
 }
 
 bool ObjectProxy::AddMatchRuleWithCallback(

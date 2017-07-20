@@ -68,10 +68,10 @@ class CHROME_DBUS_EXPORT ObjectProxy
 
   // Called when an error response is returned or no response is returned.
   // Used for CallMethodWithErrorCallback().
-  typedef base::Callback<void(ErrorResponse*)> ErrorCallback;
+  typedef base::OnceCallback<void(ErrorResponse*)> ErrorCallback;
 
   // Called when the response is returned. Used for CallMethod().
-  typedef base::Callback<void(Response*)> ResponseCallback;
+  typedef base::OnceCallback<void(Response*)> ResponseCallback;
 
   // Called when a signal is received. Signal* is the incoming signal.
   typedef base::Callback<void (Signal*)> SignalCallback;
