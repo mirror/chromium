@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4afe822c_7e7f5c5b",
+        "filename": "components/sync/engine_impl/model_type_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1150300
+      },
+      "writtenOn": "2017-07-20T23:03:04Z",
+      "side": 1,
+      "message": "Can you explain why?",
+      "range": {
+        "startLine": 284,
+        "startChar": 31,
+        "endLine": 284,
+        "endChar": 37
+      },
+      "revId": "0d8e5e6f7f9e376558642f633718ae22046bdddc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "306068f8_d9347b2b",
+        "filename": "components/sync/engine_impl/model_type_worker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1150300
+      },
+      "writtenOn": "2017-07-20T23:03:04Z",
+      "side": 1,
+      "message": "I think DCHECKing !cancelation_signal_-\u003eIsSignalled() here would give a more informative error if someone forgets to check WasCancelled()",
+      "revId": "0d8e5e6f7f9e376558642f633718ae22046bdddc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "370bce73_3f2499e2",
+        "filename": "components/sync/engine_impl/model_type_worker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1150300
+      },
+      "writtenOn": "2017-07-20T23:03:04Z",
+      "side": 1,
+      "message": "I\u0027m not sure what this comment is saying. SetResponse is called on the model thread via a callback? Why is that important to know here?",
+      "revId": "0d8e5e6f7f9e376558642f633718ae22046bdddc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ec6bd35_607004eb",
+        "filename": "components/sync/engine_impl/model_type_worker_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1255,
+      "author": {
+        "id": 1150300
+      },
+      "writtenOn": "2017-07-20T23:03:04Z",
+      "side": 1,
+      "message": "Is this supposed to be capitalized that way? (\"BL\")",
+      "revId": "0d8e5e6f7f9e376558642f633718ae22046bdddc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
