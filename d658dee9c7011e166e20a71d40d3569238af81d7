@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e5cc6673_f48cb8f6",
+        "filename": "content/browser/renderer_host/media/media_stream_dispatcher_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-20T16:12:41Z",
+      "side": 1,
+      "message": "Added a TODO here. May be we can use DeviceOpenFailed IPC message(unused currently) to report this failure to renderer.",
+      "parentUuid": "dc840941_3aa07992",
+      "range": {
+        "startLine": 144,
+        "startChar": 4,
+        "endLine": 144,
+        "endChar": 10
+      },
+      "revId": "d658dee9c7011e166e20a71d40d3569238af81d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "03daa116_d3419fd0",
         "filename": "content/browser/renderer_host/media/media_stream_dispatcher_host.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "d658dee9c7011e166e20a71d40d3569238af81d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca70f63a_eadae060",
+        "filename": "content/browser/renderer_host/media/media_stream_dispatcher_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-20T16:12:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03daa116_d3419fd0",
+      "range": {
+        "startLine": 161,
+        "startChar": 0,
+        "endLine": 161,
+        "endChar": 41
+      },
+      "revId": "d658dee9c7011e166e20a71d40d3569238af81d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -107,6 +155,30 @@
       "side": 1,
       "message": "Sure, we can leave it as is and add a TODO+bug. My suggestion wasn\u0027t \nremoving |dispatcher_host_|, but changing these lines to:\n\nif (!dispatcher_host_.get())\n  get_remote_associated_interface_callback_.Run(\u0026dispatcher_host_);\n\nand let the object constructing MediaStreamDispatcherHost\nto pass to it a (partially) bound base::Callback pointing to\nChildThreadImpl::current()-\u003echannel()-\u003eGetRemoteAssociatedInterface().",
       "parentUuid": "04d5227f_ee54166c",
+      "range": {
+        "startLine": 238,
+        "startChar": 4,
+        "endLine": 238,
+        "endChar": 30
+      },
+      "revId": "d658dee9c7011e166e20a71d40d3569238af81d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c760a991_0c10e6dc",
+        "filename": "content/renderer/media/media_stream_video_capturer_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-07-20T16:12:41Z",
+      "side": 1,
+      "message": "Made changes similar to part 1 CL, based on emircan@\u0027s friend class suggestion.\nNot adding a TODO as I am anyway taking this up in one of my next CL.",
+      "parentUuid": "9f7978bc_5e60862c",
       "range": {
         "startLine": 238,
         "startChar": 4,
