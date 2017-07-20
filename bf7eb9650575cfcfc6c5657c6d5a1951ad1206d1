@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c368ca60_771a89d6",
+        "filename": "ash/drag_drop/drag_drop_controller.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-20T17:34:02Z",
+      "side": 1,
+      "message": "If you\u0027re going to change this I would prefer you friend a TestApi class so that this isn\u0027t part of the public api.",
+      "range": {
+        "startLine": 46,
+        "startChar": 10,
+        "endLine": 46,
+        "endChar": 27
+      },
+      "revId": "bf7eb9650575cfcfc6c5657c6d5a1951ad1206d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "448674e9_d0ce9db2",
+        "filename": "ash/drag_drop/drag_drop_controller_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1119,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-20T17:34:02Z",
+      "side": 1,
+      "message": "Members end in \u0027_\u0027. Style guide allows for protected members in tests, but not public members.",
+      "range": {
+        "startLine": 1119,
+        "startChar": 32,
+        "endLine": 1119,
+        "endChar": 47
+      },
+      "revId": "bf7eb9650575cfcfc6c5657c6d5a1951ad1206d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b109495c_34abc650",
+        "filename": "ash/drag_drop/drag_drop_controller_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1139,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-20T17:34:02Z",
+      "side": 1,
+      "message": "Move this above where you use it (around line 1145).",
+      "range": {
+        "startLine": 1139,
+        "startChar": 4,
+        "endLine": 1139,
+        "endChar": 18
+      },
+      "revId": "bf7eb9650575cfcfc6c5657c6d5a1951ad1206d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ea32e57_b8885a11",
+        "filename": "ui/aura/client/drag_drop_client_observer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-20T17:34:02Z",
+      "side": 1,
+      "message": "Why do you need to pass the drag data to the observer?",
+      "range": {
+        "startLine": 18,
+        "startChar": 11,
+        "endLine": 18,
+        "endChar": 26
+      },
+      "revId": "bf7eb9650575cfcfc6c5657c6d5a1951ad1206d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "335fec50_1f05a519",
+        "filename": "ui/aura/mus/drag_drop_controller_mus.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-20T17:34:02Z",
+      "side": 1,
+      "message": "You only call these functions once and the implementation is trivial. Move it to where you call it.",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 16
+      },
+      "revId": "bf7eb9650575cfcfc6c5657c6d5a1951ad1206d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f5015e8_d1826cf7",
+        "filename": "ui/aura/mus/drag_drop_controller_mus.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-20T17:34:02Z",
+      "side": 1,
+      "message": "Is it possible to simulate the quite rather than this special case?",
+      "range": {
+        "startLine": 185,
+        "startChar": 5,
+        "endLine": 185,
+        "endChar": 23
+      },
+      "revId": "bf7eb9650575cfcfc6c5657c6d5a1951ad1206d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01d5367f_5aaa5113",
+        "filename": "ui/aura/mus/drag_drop_controller_mus.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-20T17:34:02Z",
+      "side": 1,
+      "message": "Might this have been deleted by the time you get here?",
+      "range": {
+        "startLine": 188,
+        "startChar": 3,
+        "endLine": 188,
+        "endChar": 26
+      },
+      "revId": "bf7eb9650575cfcfc6c5657c6d5a1951ad1206d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edc23c53_1c52626e",
+        "filename": "ui/aura/mus/drag_drop_controller_mus.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-20T17:34:02Z",
+      "side": 1,
+      "message": "Same comment here about friending a test helper (or the test).",
+      "range": {
+        "startLine": 42,
+        "startChar": 10,
+        "endLine": 42,
+        "endChar": 28
+      },
+      "revId": "bf7eb9650575cfcfc6c5657c6d5a1951ad1206d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
