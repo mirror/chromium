@@ -78,8 +78,8 @@
 #include "media/gpu/v4l2_video_decode_accelerator.h"
 #endif
 #if defined(ARCH_CPU_X86_FAMILY)
-#include "media/gpu/vaapi_video_decode_accelerator.h"
-#include "media/gpu/vaapi_wrapper.h"
+#include "media/gpu/vaapi/vaapi_video_decode_accelerator.h"
+#include "media/gpu/vaapi/vaapi_wrapper.h"
 #endif  // defined(ARCH_CPU_X86_FAMILY)
 #else
 #error The VideoAccelerator tests are not supported on this platform.

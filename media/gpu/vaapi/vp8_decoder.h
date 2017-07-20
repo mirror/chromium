@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef MEDIA_GPU_VP8_DECODER_H_
-#define MEDIA_GPU_VP8_DECODER_H_
+#ifndef MEDIA_GPU_VAAPI_VP8_DECODER_H_
+#define MEDIA_GPU_VAAPI_VP8_DECODER_H_
 
 #include <stddef.h>
 #include <stdint.h>
@@ -14,7 +14,7 @@
 #include "base/memory/ref_counted.h"
 #include "media/filters/vp8_parser.h"
 #include "media/gpu/accelerated_video_decoder.h"
-#include "media/gpu/vp8_picture.h"
+#include "media/gpu/vaapi/vp8_picture.h"
 
 namespace media {
 
@@ -109,4 +109,4 @@ class MEDIA_GPU_EXPORT VP8Decoder : public AcceleratedVideoDecoder {
 
 }  // namespace media
 
-#endif  // MEDIA_GPU_VP8_DECODER_H_
+#endif  // MEDIA_GPU_VAAPI_VP8_DECODER_H_

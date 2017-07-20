@@ -5,8 +5,8 @@
 // This file contains an implementation of an H.264 Decoded Picture Buffer
 // used in H264 decoders.
 
-#ifndef MEDIA_GPU_H264_DPB_H_
-#define MEDIA_GPU_H264_DPB_H_
+#ifndef MEDIA_GPU_VAAPI_H264_DPB_H_
+#define MEDIA_GPU_VAAPI_H264_DPB_H_
 
 #include <stddef.h>
 
@@ -180,4 +180,4 @@ class H264DPB {
 
 }  // namespace media
 
-#endif  // MEDIA_GPU_H264_DPB_H_
+#endif  // MEDIA_GPU_VAAPI_H264_DPB_H_

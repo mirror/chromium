@@ -85,7 +85,7 @@
 #endif
 
 #if defined(OS_CHROMEOS) && defined(ARCH_CPU_X86_FAMILY)
-#include "media/gpu/vaapi_wrapper.h"
+#include "media/gpu/vaapi/vaapi_wrapper.h"
 #endif
 
 namespace content {

@@ -13,7 +13,7 @@
 #include "base/files/file_util.h"
 #include "base/logging.h"
 #include "media/base/test_data_util.h"
-#include "media/gpu/h264_decoder.h"
+#include "media/gpu/vaapi/h264_decoder.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 

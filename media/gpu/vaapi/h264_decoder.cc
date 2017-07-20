@@ -12,7 +12,7 @@
 #include "base/numerics/safe_conversions.h"
 #include "base/optional.h"
 #include "base/stl_util.h"
-#include "media/gpu/h264_decoder.h"
+#include "media/gpu/vaapi/h264_decoder.h"
 
 namespace media {
 
