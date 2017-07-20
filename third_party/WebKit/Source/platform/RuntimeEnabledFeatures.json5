@@ -355,6 +355,10 @@
       status: "experimental",
     },
     {
+      name: "DeprecationReporting",
+      status: "experimental",
+    },
+    {
       name: "DesktopCaptureDisableLocalEchoControl",
       status: "experimental",
     },
@@ -882,6 +886,10 @@
     {
       name: "RenderUnicodeControlCharacters",
       status: "stable",
+    },
+    {
+      name: "ReportingObserver",
+      status: "experimental",
     },
     {
       name: "ResizeObserver",
