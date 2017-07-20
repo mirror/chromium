@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03317224_75ac8a86",
+        "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-07-20T02:55:10Z",
+      "side": 1,
+      "message": "Should we handle Backspace and Delete here to trigger a DeleteSelectedText() call?",
+      "revId": "5625bf25582539bc8f315d1b45a958e1b8356789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
