@@ -32,6 +32,10 @@ const char kAllowNaclSocketApiDescription[] =
     "Allows applications to use NaCl Socket API. Use only to test NaCl "
     "plugins.";
 
+const char kAndroidSigninPromosName[] = "Signin promos for Android.";
+const char kAndroidSigninPromosDescription[] =
+    "New signin promos for Android which will be displayed in Settings.";
+
 const char kAppBannersName[] = "App Banners";
 const char kAppBannersDescription[] =
     "Enable the display of Progressive Web App banners, which prompt a user to "

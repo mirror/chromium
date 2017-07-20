@@ -46,6 +46,9 @@ extern const char kAllowInsecureLocalhostDescription[];
 extern const char kAllowNaclSocketApiName[];
 extern const char kAllowNaclSocketApiDescription[];
 
+extern const char kAndroidSigninPromosName[];
+extern const char kAndroidSigninPromosDescription[];
+
 extern const char kAppBannersName[];
 extern const char kAppBannersDescription[];
 
