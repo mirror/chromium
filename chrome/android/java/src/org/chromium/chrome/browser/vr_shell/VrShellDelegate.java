@@ -1532,6 +1532,17 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
         mFeedbackFrequency = frequency;
     }
 
+    @VisibleForTesting
+    public boolean isListeningForWebVrActivate() {
+        return mListeningForWebVrActivate;
+    }
+
+    @VisibleForTesting
+    public boolean isClearActivatePending() {
+        assert mNativeVrShellDelegate != 0;
+        return nativeIsClearActivatePending(mNativeVrShellDelegate);
+    }
+
     /**
      * @return Pointer to the native VrShellDelegate object.
      */
@@ -1565,5 +1576,6 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
     private native void nativeOnPause(long nativeVrShellDelegate);
     private native void nativeOnResume(long nativeVrShellDelegate);
     private native void nativeUpdateNonPresentingContext(long nativeVrShellDelegate, long context);
+    private native boolean nativeIsClearActivatePending(long nativeVrShellDelegate);
     private native void nativeDestroy(long nativeVrShellDelegate);
 }
