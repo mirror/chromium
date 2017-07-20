@@ -1644,8 +1644,6 @@ TEST_P(WebViewTest, ExitingDeviceEmulationResetsPageScale) {
   WebDeviceEmulationParams params;
   params.screen_position = WebDeviceEmulationParams::kDesktop;
   params.device_scale_factor = 0;
-  params.fit_to_view = false;
-  params.offset = WebFloatPoint();
   params.scale = 1;
 
   web_view_impl->EnableDeviceEmulation(params);
@@ -4150,10 +4148,9 @@ TEST_P(WebViewTest, ViewportOverrideIntegratesDeviceMetricsOffsetAndScale) {
             web_view_impl->GetDeviceEmulationTransformForTesting());
 
   WebDeviceEmulationParams emulation_params;
-  emulation_params.offset = WebFloatPoint(50, 50);
   emulation_params.scale = 2.f;
   web_view_impl->EnableDeviceEmulation(emulation_params);
-  expected_matrix.MakeIdentity().Translate(50, 50).Scale(2.f);
+  expected_matrix.MakeIdentity().Scale(2.f);
   EXPECT_EQ(expected_matrix,
             web_view_impl->GetDeviceEmulationTransformForTesting());
 
@@ -4163,7 +4160,6 @@ TEST_P(WebViewTest, ViewportOverrideIntegratesDeviceMetricsOffsetAndScale) {
   expected_matrix.MakeIdentity()
       .Scale(1.5f)
       .Translate(-5, -10)
-      .Translate(50, 50)
       .Scale(2.f);
   EXPECT_EQ(expected_matrix,
             web_view_impl->GetDeviceEmulationTransformForTesting());
@@ -4373,8 +4369,6 @@ TEST_P(WebViewTest, DeviceEmulationResetScrollbars) {
   WebDeviceEmulationParams params;
   params.screen_position = WebDeviceEmulationParams::kMobile;
   params.device_scale_factor = 0;
-  params.fit_to_view = false;
-  params.offset = WebFloatPoint();
   params.scale = 1;
 
   web_view->EnableDeviceEmulation(params);
