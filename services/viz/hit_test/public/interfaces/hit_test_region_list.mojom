@@ -20,8 +20,11 @@ const uint32 kHitTestChildSurface = 0x04;
 // Irregular boundary - send HitTestRequest to resolve.
 const uint32 kHitTestAsk = 0x08;
 
-// Touch event handler exists.
-const uint32 kHitTestTouchEventHandler = 0x10;
+// Hit-testing for mouse events.
+const uint32 kHitTestMouse = 0x10;
+
+// Hit-testing for touch events.
+const uint32 kHitTestTouch = 0x20;
 
 struct HitTestRegion {
   // Flags to indicate the type of HitTestRegion.
@@ -29,6 +32,9 @@ struct HitTestRegion {
 
   // SurfaceId is required when flags = kHitTestChildSurface.
   cc.mojom.SurfaceId surface_id;
+
+  // Window's server ID.
+  uint32 window_id;
 
   // The rect of the region in the coordinate space of the embedder.
   gfx.mojom.Rect rect;
