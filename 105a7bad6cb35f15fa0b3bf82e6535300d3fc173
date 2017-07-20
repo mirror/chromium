@@ -34,6 +34,24 @@
       "revId": "105a7bad6cb35f15fa0b3bf82e6535300d3fc173",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57333eb7_0a6d2b92",
+        "filename": "chrome/test/chromedriver/session_commands.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-07-20T18:00:30Z",
+      "side": 1,
+      "message": "oh wait, now I see what\u0027s going on. tmp_list maintains ownership throughout. Hrm.",
+      "parentUuid": "2e006164_e1ccd4ce",
+      "revId": "105a7bad6cb35f15fa0b3bf82e6535300d3fc173",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
