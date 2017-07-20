@@ -30,6 +30,14 @@ void ModelTypeProcessorProxy::DisconnectSync() {
       FROM_HERE, base::Bind(&ModelTypeProcessor::DisconnectSync, processor_));
 }
 
+void ModelTypeProcessorProxy::GetLocalChanges(
+    size_t max_entries,
+    const GetLocalChangesCallback& callback) {
+  task_runner_->PostTask(
+      FROM_HERE, base::Bind(&ModelTypeProcessor::GetLocalChanges, processor_,
+                            max_entries, callback));
+}
+
 void ModelTypeProcessorProxy::OnCommitCompleted(
     const sync_pb::ModelTypeState& type_state,
     const CommitResponseDataList& response_list) {
