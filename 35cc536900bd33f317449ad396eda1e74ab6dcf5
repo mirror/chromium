@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "619f5754_e904839e",
+        "filename": "ash/public/interfaces/system_tray.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-07-20T17:37:38Z",
+      "side": 1,
+      "message": "I\u0027m not sure, this was basically a cosmetic UI change where instead of EnterpriseEnrollmentDomain we now display EnterpriseDisplayDomain in UI elements.\n\nI\u0027d prefer to keep it this way if possible since someone already approved it like this. Maybe this crrev gives some context to it (review of previous version) https://codereview.chromium.org/2839043004/diff/1/ash/public/interfaces/system_tray.mojom#newcode29",
+      "parentUuid": "2fa9b854_cd32f54a",
+      "revId": "35cc536900bd33f317449ad396eda1e74ab6dcf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc1cfa31_c3766c4a",
         "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.cc",
         "patchSetId": 9
