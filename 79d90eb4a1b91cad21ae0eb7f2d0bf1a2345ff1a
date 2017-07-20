@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "ca0521d3_3aca9630",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/mixedContent/insecure-fetch-on-dedicated-worker-allowed.https.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-07-20T08:03:26Z",
+      "side": 1,
+      "message": "Sounds good!\nDone.",
+      "parentUuid": "c3d1af5c_364ceedc",
+      "revId": "79d90eb4a1b91cad21ae0eb7f2d0bf1a2345ff1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5506fd04_fe50b2bc",
         "filename": "third_party/WebKit/LayoutTests/http/tests/security/mixedContent/insecure-fetch-on-dedicated-worker-blocked.https.html",
         "patchSetId": 2
@@ -154,6 +172,24 @@
       "side": 1,
       "message": "I\u0027m fine with that rename (with the tiny nit that I\u0027d use \"in\" rather than \"on\". :)",
       "parentUuid": "923bc30b_3ebded30",
+      "revId": "79d90eb4a1b91cad21ae0eb7f2d0bf1a2345ff1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e935951d_28a5f112",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/mixedContent/resources/fetch-on-dedicated-worker.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-07-20T08:03:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59875967_1b8ab6a6",
       "revId": "79d90eb4a1b91cad21ae0eb7f2d0bf1a2345ff1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
