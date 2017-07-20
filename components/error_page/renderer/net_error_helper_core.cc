@@ -129,7 +129,7 @@ base::TimeDelta GetAutoReloadTime(size_t reload_count) {
 // Returns whether |error| is a DNS-related error (and therefore whether
 // the tab helper should start a DNS probe after receiving it).
 bool IsBlinkDnsError(const blink::WebURLError& error) {
-  return (error.domain.Utf8() == net::kErrorDomain) &&
+  return error.domain == blink::WebURLError::Domain::kNet &&
          net::IsDnsError(error.reason);
 }
 
@@ -167,8 +167,8 @@ bool ShouldUseFixUrlServiceForError(const blink::WebURLError& error,
   if (GURL(unreachable_url).SchemeIsCryptographic())
     return false;
 
-  std::string domain = error.domain.Utf8();
-  if (domain == url::kHttpScheme && error.reason == 404) {
+  const auto& domain = error.domain;
+  if (domain == blink::WebURLError::Domain::kHttp && error.reason == 404) {
     *error_param = "http404";
     return true;
   }
@@ -176,7 +176,7 @@ bool ShouldUseFixUrlServiceForError(const blink::WebURLError& error,
     *error_param = "dnserror";
     return true;
   }
-  if (domain == net::kErrorDomain &&
+  if (domain == blink::WebURLError::Domain::kNet &&
       (error.reason == net::ERR_CONNECTION_FAILED ||
        error.reason == net::ERR_CONNECTION_REFUSED ||
        error.reason == net::ERR_ADDRESS_UNREACHABLE ||
@@ -368,7 +368,7 @@ std::unique_ptr<ErrorPageParams> CreateErrorPageParams(
 }
 
 void ReportAutoReloadSuccess(const blink::WebURLError& error, size_t count) {
-  if (error.domain.Utf8() != net::kErrorDomain)
+  if (error.domain != blink::WebURLError::Domain::kNet)
     return;
   UMA_HISTOGRAM_SPARSE_SLOWLY("Net.AutoReload.ErrorAtSuccess", -error.reason);
   UMA_HISTOGRAM_COUNTS("Net.AutoReload.CountAtSuccess",
@@ -380,7 +380,7 @@ void ReportAutoReloadSuccess(const blink::WebURLError& error, size_t count) {
 }
 
 void ReportAutoReloadFailure(const blink::WebURLError& error, size_t count) {
-  if (error.domain.Utf8() != net::kErrorDomain)
+  if (error.domain != blink::WebURLError::Domain::kNet)
     return;
   UMA_HISTOGRAM_SPARSE_SLOWLY("Net.AutoReload.ErrorAtStop", -error.reason);
   UMA_HISTOGRAM_COUNTS("Net.AutoReload.CountAtStop",
@@ -484,7 +484,7 @@ NetErrorHelperCore::NavigationCorrectionParams::~NavigationCorrectionParams() {
 bool NetErrorHelperCore::IsReloadableError(
     const NetErrorHelperCore::ErrorPageInfo& info) {
   GURL url = info.error.unreachable_url;
-  return info.error.domain.Utf8() == net::kErrorDomain &&
+  return info.error.domain == blink::WebURLError::Domain::kNet &&
          info.error.reason != net::ERR_ABORTED &&
          // For now, net::ERR_UNKNOWN_URL_SCHEME is only being displayed on
          // Chrome for Android.
@@ -865,7 +865,7 @@ blink::WebURLError NetErrorHelperCore::GetUpdatedError(
   }
 
   blink::WebURLError updated_error;
-  updated_error.domain = blink::WebString::FromUTF8(kDnsProbeErrorDomain);
+  updated_error.domain = blink::WebURLError::Domain::kDnsProbe;
   updated_error.reason = last_probe_status_;
   updated_error.unreachable_url = error.unreachable_url;
   updated_error.stale_copy_in_cache = error.stale_copy_in_cache;

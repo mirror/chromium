@@ -1347,7 +1347,7 @@ TEST_F(RenderViewImplTest, OnSetTextDirection) {
 TEST_F(RenderViewImplTest, DISABLED_DidFailProvisionalLoadWithErrorForError) {
   GetMainFrame()->EnableViewSourceMode(true);
   WebURLError error;
-  error.domain = WebString::FromUTF8(net::kErrorDomain);
+  error.domain = WebURLError::Domain::kNet;
   error.reason = net::ERR_FILE_NOT_FOUND;
   error.unreachable_url = GURL("http://foo");
   WebLocalFrame* web_frame = GetMainFrame();
@@ -1370,7 +1370,7 @@ TEST_F(RenderViewImplTest, DISABLED_DidFailProvisionalLoadWithErrorForError) {
 TEST_F(RenderViewImplTest, DidFailProvisionalLoadWithErrorForCancellation) {
   GetMainFrame()->EnableViewSourceMode(true);
   WebURLError error;
-  error.domain = WebString::FromUTF8(net::kErrorDomain);
+  error.domain = WebURLError::Domain::kNet;
   error.reason = net::ERR_ABORTED;
   error.unreachable_url = GURL("http://foo");
   WebLocalFrame* web_frame = GetMainFrame();
@@ -1795,10 +1795,7 @@ class RendererErrorPageTest : public RenderViewImplTest {
         *error_html = "A suffusion of yellow.";
     }
 
-    bool HasErrorPage(int http_status_code,
-                      std::string* error_domain) override {
-      return true;
-    }
+    bool HasErrorPage(int http_status_code) override { return true; }
   };
 };
 
@@ -1811,7 +1808,7 @@ class RendererErrorPageTest : public RenderViewImplTest {
 
 TEST_F(RendererErrorPageTest, MAYBE_Suppresses) {
   WebURLError error;
-  error.domain = WebString::FromUTF8(net::kErrorDomain);
+  error.domain = WebURLError::Domain::kNet;
   error.reason = net::ERR_FILE_NOT_FOUND;
   error.unreachable_url = GURL("http://example.com/suppress");
 
@@ -1841,7 +1838,7 @@ TEST_F(RendererErrorPageTest, MAYBE_Suppresses) {
 
 TEST_F(RendererErrorPageTest, MAYBE_DoesNotSuppress) {
   WebURLError error;
-  error.domain = WebString::FromUTF8(net::kErrorDomain);
+  error.domain = WebURLError::Domain::kNet;
   error.reason = net::ERR_FILE_NOT_FOUND;
   error.unreachable_url = GURL("http://example.com/dont-suppress");
 
