@@ -16,6 +16,7 @@
 #include "chrome/browser/ui/browser_dialogs.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/permission_bubble/chooser_bubble_delegate.h"
+#include "chrome/browser/ui/views/bubble_anchor_util_views.h"
 #include "chrome/browser/ui/views/device_chooser_content_view.h"
 #include "components/bubble/bubble_controller.h"
 #include "ui/views/bubble/bubble_dialog_delegate.h"
@@ -220,4 +221,16 @@ void ChooserBubbleUi::UpdateAnchorPosition() {
 void ChooserBubbleUi::OnWidgetClosing(views::Widget* widget) {
   widget->RemoveObserver(this);
   chooser_bubble_ui_view_delegate_ = nullptr;
+}
+
+views::View* ChooserBubbleUi::GetAnchorView() {
+  return bubble_anchor_util::GetPageInfoAnchorView(browser_);
+}
+
+gfx::Point ChooserBubbleUi::GetAnchorPoint() {
+  return bubble_anchor_util::GetPageInfoAnchorRect(browser_).origin();
+}
+
+views::BubbleBorder::Arrow ChooserBubbleUi::GetAnchorArrow() {
+  return views::BubbleBorder::TOP_LEFT;
 }
