@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "d48b9b53_9ad97eef",
+        "filename": "components/download/internal/test/test_download_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-07-20T00:04:59Z",
+      "side": 1,
+      "message": "Yea, I think the base/time/time.h mentions that the time objects are preferred to be passed by value over reference.\nhttps://cs.chromium.org/chromium/src/base/time/time.h?rcl\u003d0881de779ae366a78c5256592c48bfef69b580b3\u0026l\u003d24\n\nSo you can change this interface to \nbase::TimeDelta GetFileKeepAliveTime() const;",
+      "parentUuid": "f088c48b_14f0c3b4",
+      "revId": "86f390bdf5f0e524d94bd4e827213139410b658e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53fed3b0_b708dfc1",
         "filename": "components/download/internal/test/test_download_service.cc",
         "patchSetId": 10
