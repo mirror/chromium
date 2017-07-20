@@ -405,6 +405,24 @@
     },
     {
       "key": {
+        "uuid": "5bbf75c9_af64abf0",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1033,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-07-20T08:01:10Z",
+      "side": 1,
+      "message": "Whoops, I lost that change somehow. Redone.",
+      "parentUuid": "f144e1eb_6a0d33fb",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f2b2e86_f9ae6e81",
         "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
         "patchSetId": 11
@@ -452,6 +470,24 @@
       "side": 1,
       "message": "This does not look done in patch set 17.",
       "parentUuid": "de17d5f3_54e465b7",
+      "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a74d70aa_3f98f431",
+        "filename": "chrome/browser/chromeos/login/existing_user_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1038,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-07-20T08:01:10Z",
+      "side": 1,
+      "message": "Done now.",
+      "parentUuid": "5bccc92d_8244a36b",
       "revId": "1911885198505b509cc8a626bcad2dbd8fdd0a4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

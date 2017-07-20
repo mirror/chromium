@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "30b2d132_6a31fa48",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-07-20T08:01:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c773eabf_627e244c",
+      "revId": "7987785fdb20a64a9ffe220df823f2b736ab68b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f676fe4d_0e1dd342",
         "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.cc",
         "patchSetId": 17
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "fcd0ddbe_ff3b85e1",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-07-20T08:01:10Z",
+      "side": 1,
+      "message": "This was intended to keep it simple, but agree that it\u0027s a better idea to have proper semantics for this.\n\nChanged to notify all callbacks.",
+      "parentUuid": "f676fe4d_0e1dd342",
+      "revId": "7987785fdb20a64a9ffe220df823f2b736ab68b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b8ff7e6_23d9b0ef",
         "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.h",
         "patchSetId": 17
@@ -50,6 +86,24 @@
       "revId": "7987785fdb20a64a9ffe220df823f2b736ab68b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a623b7a7_2cece5d8",
+        "filename": "chrome/browser/chromeos/policy/cached_policy_key_loader_chromeos.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-07-20T08:01:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b8ff7e6_23d9b0ef",
+      "revId": "7987785fdb20a64a9ffe220df823f2b736ab68b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
