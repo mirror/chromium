@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea653e72_a23b38c0",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-20T21:43:35Z",
+      "side": 1,
+      "message": "can you do std::unordered_map?",
+      "range": {
+        "startLine": 24,
+        "startChar": 8,
+        "endLine": 24,
+        "endChar": 15
+      },
+      "revId": "4386f019b8c9366096d13702a39ab6e02a24d41f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bda7008_58842657",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-20T21:43:35Z",
+      "side": 1,
+      "message": "please comment that you expect this to be used only on the UI thread.",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 61
+      },
+      "revId": "4386f019b8c9366096d13702a39ab6e02a24d41f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc81373e_dc27ba07",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-20T21:43:35Z",
+      "side": 1,
+      "message": "so you can probably do a loop over tracked_origins_ instead, as you know that this handler is registered in those.",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 49
+      },
+      "revId": "4386f019b8c9366096d13702a39ab6e02a24d41f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf4973d2_8bb93ee3",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-20T21:43:35Z",
+      "side": 1,
+      "message": "first check if handlers is empty - that should be a nice early exit for common case.",
+      "revId": "4386f019b8c9366096d13702a39ab6e02a24d41f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3c81f81_c339966c",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-20T21:43:35Z",
+      "side": 1,
+      "message": "so I\u0027m guessing we might want to support multiple callbacks here? I think we can avoid this if we just go the notification route instead of this callback route.\n\nIf we go this route we should have the callback return the cache names. But based on our convo with Pavel you shouldn\u0027t need this part.",
+      "range": {
+        "startLine": 256,
+        "startChar": 4,
+        "endLine": 256,
+        "endChar": 27
+      },
+      "revId": "4386f019b8c9366096d13702a39ab6e02a24d41f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8092137d_73b57427",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/ServiceWorkerCacheModel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-20T21:43:35Z",
+      "side": 1,
+      "message": "Unless I\u0027m wrong, this will pause the javascript forever? I\u0027ll defer to Dmitri on this part. I\u0027m guessing we just listen to the notifications instead?",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 59
+      },
+      "revId": "4386f019b8c9366096d13702a39ab6e02a24d41f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
