@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54ae1158_787da068",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-20T18:37:56Z",
+      "side": 1,
+      "message": "Don\u0027t think we need a name this verbose :P mOnExitVrRequestListener should be just fine.",
+      "range": {
+        "startLine": 155,
+        "startChar": 36,
+        "endLine": 155,
+        "endChar": 78
+      },
+      "revId": "b2a605ba1a983a7fb3c09ef1b8c019a6d027b644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b94a83f_5356e3b6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-20T18:37:56Z",
+      "side": 1,
+      "message": "nit: I prefer to keep the static functions small and call into the instance ASAP, we could move most of the logic here into a non-static member.",
+      "range": {
+        "startLine": 380,
+        "startChar": 23,
+        "endLine": 380,
+        "endChar": 38
+      },
+      "revId": "b2a605ba1a983a7fb3c09ef1b8c019a6d027b644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dabffb6a_dec5bcab",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1298,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-20T18:37:56Z",
+      "side": 1,
+      "message": "This is unreached, effectively. onExitVrResult(true) will have already fired above.",
+      "range": {
+        "startLine": 1298,
+        "startChar": 8,
+        "endLine": 1298,
+        "endChar": 53
+      },
+      "revId": "b2a605ba1a983a7fb3c09ef1b8c019a6d027b644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c478c0ef_6afa42f6",
+        "filename": "chrome/browser/vr/exit_vr_prompt_choice.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-20T18:37:56Z",
+      "side": 1,
+      "message": "nit: given",
+      "range": {
+        "startLine": 12,
+        "startChar": 29,
+        "endLine": 12,
+        "endChar": 33
+      },
+      "revId": "b2a605ba1a983a7fb3c09ef1b8c019a6d027b644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e085089_eb964dd8",
+        "filename": "chrome/browser/vr/exit_vr_prompt_choice.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-20T18:37:56Z",
+      "side": 1,
+      "message": "Comment needs updating? Can\u0027t open multiple requests right?",
+      "range": {
+        "startLine": 12,
+        "startChar": 70,
+        "endLine": 13,
+        "endChar": 43
+      },
+      "revId": "b2a605ba1a983a7fb3c09ef1b8c019a6d027b644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
