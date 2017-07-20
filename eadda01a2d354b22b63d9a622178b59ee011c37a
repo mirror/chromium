@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4965b50d_0862b835",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/mouse/overidden_user_select_in_dom_tree.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1207755
+      },
+      "writtenOn": "2017-07-20T08:13:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "feff1c4a_640f0aa7",
+      "revId": "eadda01a2d354b22b63d9a622178b59ee011c37a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "badc6140_515ed69b",
         "filename": "third_party/WebKit/LayoutTests/editing/selection/mouse/overidden_user_select_in_dom_tree.html",
         "patchSetId": 6
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "7f75e279_70125d31",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/mouse/overidden_user_select_in_dom_tree.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1207755
+      },
+      "writtenOn": "2017-07-20T08:13:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "badc6140_515ed69b",
+      "range": {
+        "startLine": 28,
+        "startChar": 39,
+        "endLine": 28,
+        "endChar": 46
+      },
+      "revId": "eadda01a2d354b22b63d9a622178b59ee011c37a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83558e75_fbb2407e",
         "filename": "third_party/WebKit/LayoutTests/editing/selection/mouse/overriden_user_select_in_shadow_tree.html",
         "patchSetId": 6
@@ -56,6 +98,24 @@
       "revId": "eadda01a2d354b22b63d9a622178b59ee011c37a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45ad7d8e_e1675722",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/mouse/overriden_user_select_in_shadow_tree.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1207755
+      },
+      "writtenOn": "2017-07-20T08:13:35Z",
+      "side": 1,
+      "message": "In this case, I think above assert_equals is simpler and easier to read :/ When reading this statement I think it is very clear that we want an empty selection here.",
+      "parentUuid": "83558e75_fbb2407e",
+      "revId": "eadda01a2d354b22b63d9a622178b59ee011c37a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "eeb5b5ae_0ae16a09",
+        "filename": "third_party/WebKit/LayoutTests/editing/selection/mouse/overriden_user_select_in_shadow_tree.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1207755
+      },
+      "writtenOn": "2017-07-20T08:13:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c818cec_4637bb41",
+      "range": {
+        "startLine": 39,
+        "startChar": 6,
+        "endLine": 39,
+        "endChar": 9
+      },
+      "revId": "eadda01a2d354b22b63d9a622178b59ee011c37a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1892c9d_4aebc0e9",
         "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
         "patchSetId": 6
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "b038bdd4_da76b7d4",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 6
+      },
+      "lineNbr": 3339,
+      "author": {
+        "id": 1207755
+      },
+      "writtenOn": "2017-07-20T08:13:35Z",
+      "side": 1,
+      "message": "We\u0027re aligning to https://drafts.csswg.org/css-ui-4/#propdef-user-select that says:\nInitial: auto \n\n [css-ui-4] Initial draft of user-select, with lots of issues\n a0fa7ffe31 (Florian Rivoal  2015-03-27 22:45:35 +0100  885) Initial: auto\n\nI will let this bake a few days on master, and if no regressions are reported I could send a PSA. Maybe;\n\n  PSA: user-select now defaults to \u0027auto\u0027 (as in spec)\n\nBut that sounds more like a bugfix...?",
+      "parentUuid": "d1892c9d_4aebc0e9",
+      "range": {
+        "startLine": 3339,
+        "startChar": 18,
+        "endLine": 3339,
+        "endChar": 22
+      },
+      "revId": "eadda01a2d354b22b63d9a622178b59ee011c37a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45028c2b_ff55cada",
         "filename": "third_party/WebKit/Source/core/dom/Node.cpp",
         "patchSetId": 6
@@ -119,6 +227,24 @@
       "revId": "eadda01a2d354b22b63d9a622178b59ee011c37a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c44f65b6_0d96892e",
+        "filename": "third_party/WebKit/Source/core/dom/Node.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1076,
+      "author": {
+        "id": 1207755
+      },
+      "writtenOn": "2017-07-20T08:13:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "45028c2b_ff55cada",
+      "revId": "eadda01a2d354b22b63d9a622178b59ee011c37a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
