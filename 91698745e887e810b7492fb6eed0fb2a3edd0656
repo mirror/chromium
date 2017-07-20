@@ -126,6 +126,30 @@
     },
     {
       "key": {
+        "uuid": "2db6f100_b2fc9ec7",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-20T19:58:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6e31ec0_3726ecc8",
+      "range": {
+        "startLine": 230,
+        "startChar": 27,
+        "endLine": 230,
+        "endChar": 37
+      },
+      "revId": "91698745e887e810b7492fb6eed0fb2a3edd0656",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec9f503c_be69cc02",
         "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.cc",
         "patchSetId": 2
