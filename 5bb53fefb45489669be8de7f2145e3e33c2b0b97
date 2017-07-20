@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62ce06dc_6f2e98a4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-20T15:30:56Z",
+      "side": 1,
+      "message": "Please keep the change title and all lines in the description under 72 characters long.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 86
+      },
+      "revId": "5bb53fefb45489669be8de7f2145e3e33c2b0b97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa2b3d2e_a8a931e5",
+        "filename": "services/device/generic_sensor/platform_sensor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-20T15:30:56Z",
+      "side": 1,
+      "message": "This should be part of the state that a PlatformSensorFusion keeps about its source sensors.",
+      "revId": "5bb53fefb45489669be8de7f2145e3e33c2b0b97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7ac6656_3f10f502",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-20T15:30:56Z",
+      "side": 1,
+      "message": "It would be nice to know which sensor had a reading change. Fusion sensor algorithms may update different parts of their internal state depending on which sensor has changed.",
+      "revId": "5bb53fefb45489669be8de7f2145e3e33c2b0b97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d1b7a94_0ac8e863",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-20T15:30:56Z",
+      "side": 1,
+      "message": "if (callback_)\n  std::move(callback_).Run(nullptr);",
+      "range": {
+        "startLine": 126,
+        "startChar": 0,
+        "endLine": 129,
+        "endChar": 5
+      },
+      "revId": "5bb53fefb45489669be8de7f2145e3e33c2b0b97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39c48101_67c7132e",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-20T15:30:56Z",
+      "side": 1,
+      "message": "// Implementation of a platform sensor using sensor fusion. There will be a\n// instance of this fusion sensor per browser process which is created by\n// the PlatformSensorProvider. If there are no clients, this instance is not\n// created.\n//\n// This class implements the generic concept of sensor fusion. It implements\n// a new sensor using data from one or more existing sensors. For example,\n// it can implements a *_EULER_ANGLES orientation sensor using a\n// *_QUATERNION orientation sensor, or vice a versa.\n//\n// It can also implement an orientation sensor using an ACCELEROMETER, etc.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 78
+      },
+      "revId": "5bb53fefb45489669be8de7f2145e3e33c2b0b97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
