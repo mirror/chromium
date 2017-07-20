@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22a2aa84_595a28e8",
+        "filename": "content/browser/media/session/pepper_player_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-20T16:51:55Z",
+      "side": 1,
+      "message": "Do we expect this method to ever be called? If not, adding NOTREACHED() is a good way to document that.",
+      "revId": "c1a1c3642c3db750b08d1197b11e6056b84545a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6e41552_48dc9e58",
+        "filename": "content/public/browser/media_session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-20T16:51:55Z",
+      "side": 1,
+      "message": "Am I correct in assuming that no code in Chromium currently will use that API, but other products building on top of content/ will? If so, could you please add a note to that in the CL description, as we usually don\u0027t expose public content/ APIs without the corresponding code using it.",
+      "revId": "c1a1c3642c3db750b08d1197b11e6056b84545a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2e5a09f_160da1c7",
+        "filename": "content/renderer/media/renderer_webmediaplayer_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-20T16:51:55Z",
+      "side": 1,
+      "message": "nit: No need for {} on one line if statements. Also will be consistent with other code in this file.",
+      "range": {
+        "startLine": 289,
+        "startChar": 16,
+        "endLine": 289,
+        "endChar": 17
+      },
+      "revId": "c1a1c3642c3db750b08d1197b11e6056b84545a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45142b02_e25a2bc1",
+        "filename": "content/renderer/media/renderer_webmediaplayer_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-20T16:51:55Z",
+      "side": 1,
+      "message": "nit: Same as above.",
+      "range": {
+        "startLine": 300,
+        "startChar": 16,
+        "endLine": 300,
+        "endChar": 17
+      },
+      "revId": "c1a1c3642c3db750b08d1197b11e6056b84545a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
