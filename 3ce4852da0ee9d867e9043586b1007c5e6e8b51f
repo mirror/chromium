@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "0559c533_dbcef58a",
+        "filename": "chrome/browser/extensions/api/tabs/tabs_event_router.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-20T13:07:09Z",
+      "side": 1,
+      "message": "It was a deliberate choice to not make path expansion the default anymore, but I agree that sometimes it is desired and we probably want to support it with the API. I suggest adding \"SetExpandedKey / FindExpandedKey\" for this. See also the comment below.",
+      "parentUuid": "cc01a7ff_deeb8030",
+      "range": {
+        "startLine": 58,
+        "startChar": 27,
+        "endLine": 58,
+        "endChar": 28
+      },
+      "revId": "3ce4852da0ee9d867e9043586b1007c5e6e8b51f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75ccf0c8_abb61d1b",
         "filename": "chrome/browser/supervised_user/supervised_user_pref_store_unittest.cc",
         "patchSetId": 8
