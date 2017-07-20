@@ -308,11 +308,6 @@ std::unique_ptr<QuartcStream> QuartcSession::CreateDataStream(
       DCHECK(session_delegate_);
       // Incoming streams need to be registered with the session_delegate_.
       session_delegate_->OnIncomingStream(stream.get());
-      // Quartc doesn't send on incoming streams.
-      stream->set_fin_sent(true);
-    } else {
-      // Quartc doesn't receive on outgoing streams.
-      stream->set_fin_received(true);
     }
   }
   return stream;

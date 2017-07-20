@@ -42,6 +42,10 @@ class QUIC_EXPORT_PRIVATE QuartcStream : public QuicStream,
              size_t size,
              const WriteParameters& param) override;
 
+  void FinishWriting() override;
+
+  void FinishReading() override;
+
   void Close() override;
 
   void SetDelegate(QuartcStreamInterface::Delegate* delegate) override;

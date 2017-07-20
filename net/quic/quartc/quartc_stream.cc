@@ -24,6 +24,7 @@ void QuartcStream::OnDataAvailable() {
   // Notify the delegate by calling the callback function one more time with
   // iov_len = 0.
   if (sequencer()->IsClosed()) {
+    OnFinRead();
     delegate_->OnReceived(this, reinterpret_cast<const char*>(iov.iov_base), 0);
   }
 }
@@ -37,7 +38,11 @@ void QuartcStream::OnClose() {
 void QuartcStream::OnCanWrite() {
   QuicStream::OnCanWrite();
   DCHECK(delegate_);
-  delegate_->OnCanWrite(this);
+  // Don't call the delegate if the write-side is closed or a fin is buffered.
+  // It is already done with this stream.
+  if (!write_side_closed() && !fin_buffered()) {
+    delegate_->OnCanWrite(this);
+  }
 }
 
 uint32_t QuartcStream::stream_id() {
@@ -65,6 +70,14 @@ void QuartcStream::Write(const char* data,
                          const WriteParameters& param) {
   struct iovec iov = {const_cast<char*>(data), size};
   WritevData(&iov, 1, param.fin, nullptr);
+}
+
+void QuartcStream::FinishWriting() {
+  WriteOrBufferData(QuicStringPiece(nullptr, 0), true, nullptr);
+}
+
+void QuartcStream::FinishReading() {
+  QuicStream::StopReading();
 }
 
 void QuartcStream::Close() {
