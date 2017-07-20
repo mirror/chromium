@@ -22,6 +22,30 @@
       "revId": "3b06655abacb1ec9afa3df42e859f9bc0031c8b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b6b1c81_48dade88",
+        "filename": "url/url_canon.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-20T15:34:28Z",
+      "side": 1,
+      "message": "Did u poke at CRTP instead?",
+      "parentUuid": "dc91fe0c_de24196c",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 32
+      },
+      "revId": "3b06655abacb1ec9afa3df42e859f9bc0031c8b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
