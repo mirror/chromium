@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64bdb7aa_912c2c11",
+        "filename": "chrome/browser/flag_descriptions.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-20T19:16:43Z",
+      "side": 1,
+      "message": "Make this chromeos specific. Also, it would be good to enforce that in the name too. Maybe kAshUiMode (I don\u0027t think the force is needed here). Similarly name the constants to match, e.g. kAshUiModeTablet, kAshUiModeClamshell...",
+      "range": {
+        "startLine": 364,
+        "startChar": 16,
+        "endLine": 364,
+        "endChar": 30
+      },
+      "revId": "c164d21cc5a4f4b5681090c7e71737a5fae7338a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "310cccd7_d9b3e5ff",
+        "filename": "chrome/browser/ui/views/touch_events_interactive_uitest_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-20T19:16:43Z",
+      "side": 1,
+      "message": "I would expect this name to be an enum, but it\u0027s a view. Maybe table_mode_view_?",
+      "range": {
+        "startLine": 110,
+        "startChar": 16,
+        "endLine": 110,
+        "endChar": 25
+      },
+      "revId": "c164d21cc5a4f4b5681090c7e71737a5fae7338a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
