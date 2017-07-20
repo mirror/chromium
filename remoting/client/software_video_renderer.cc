@@ -84,6 +84,11 @@ void SoftwareVideoRenderer::OnSessionConfig(
     decoder_ = VideoDecoderVpx::CreateForVP8();
   } else if (codec == ChannelConfig::CODEC_VP9) {
     decoder_ = VideoDecoderVpx::CreateForVP9();
+  } else if (codec == ChannelConfig::CODEC_H264) {
+    // TODO(gusss): construct decoder, if and when this is ever implemented.
+    // it likely won't be, because of licensing (and because we'll be using
+    // chromoting.com going forward)
+    NOTIMPLEMENTED() << "H264 software decoding is not supported.";
   } else {
     NOTREACHED() << "Invalid Encoding found: " << codec;
   }
