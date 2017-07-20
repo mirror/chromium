@@ -20,12 +20,13 @@
       <paper-toolbar id="toolbar">
         <div>[[filePath]]</div>
         <div id="buttons">
-           <paper-button id="open-button" on-tap="onOpenInNewButtonTap" hidden$="[[!hasTask]]" i18n-values="aria-label:QUICK_VIEW_OPEN_IN_NEW_BUTTON_LABEL" tabindex="0" has-tooltip>
+           <paper-button id="open-button" on-tap="onOpenInNewButtonTap" hidden$="[[!hasTask]]" i18n-values="aria-label:QUICK_VIEW_OPEN_IN_NEW_BUTTON_LABEL" tabindex="-1" has-tooltip>
              <iron-icon icon="files:open-in-new"></iron-icon>
            </paper-button>
-           <files-icon-button toggles id="metadata-button" on-tap="onMetadataButtonTap_" active="{{metadataBoxActive}}" i18n-values="aria-label:QUICK_VIEW_TOGGLE_METADATA_BOX_BUTTON_LABEL" tabindex="0" has-tooltip>
+           <files-icon-button toggles id="metadata-button" on-tap="onMetadataButtonTap_" active="{{metadataBoxActive}}" i18n-values="aria-label:QUICK_VIEW_TOGGLE_METADATA_BOX_BUTTON_LABEL" tabindex="-1" has-tooltip>
            </files-icon-button>
         </div>
+	<files-tooltip></files-tooltip>
       </paper-toolbar>
       <div id="mainPanel">
         <div id="contentPanel" metadata-box-active$="[[metadataBoxActive]]" on-tap="onContentPanelTap_">
@@ -77,7 +78,6 @@
         <files-metadata-box id="metadata-box" hidden$="[[!metadataBoxActive]]"></file-metadata-box>
       </div> <!-- mainPanel -->
     </dialog>
-    <files-tooltip></files-tooltip>
   </template>
 </dom-module>
 
