@@ -16,6 +16,24 @@
       "revId": "7e6d85195f0b3655d4728f9086b1fca64146bc81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daeded70_dbec9581",
+        "filename": "third_party/WebKit/Source/platform/wtf/ScopedLogger.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-20T00:55:53Z",
+      "side": 1,
+      "message": "ScopedLogger should use DLOG() instead of vprintf_stderr_common.\nHowever, ScopedLogger\u0027s EOL handling is not simple. I have no clear idea how to switch to DLOG().",
+      "parentUuid": "c8bcdf2e_e3376cc0",
+      "revId": "7e6d85195f0b3655d4728f9086b1fca64146bc81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
