@@ -34,6 +34,24 @@
       "revId": "0596ecbb94d249feee5b821e19ab45a3c72d02e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df3c0e67_16313335",
+        "filename": "media/gpu/gpu_video_encode_accelerator_factory.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-07-20T04:16:06Z",
+      "side": 1,
+      "message": "I think the simplest solution could possibly be to:\n- add is_chromeos to media/gpu/BUILD.gn for USE_VAAPI as well\n- check for USE_VAAPI only and consistently across all files and keep that outside of arch/os-specific conditionals.\n- and similarly, since USE_V4L2_CODEC is already under is_chromeos in media/gpu/BUILD.gn, there should be no need to check for OS_CHROMEOS \u0026\u0026 USE_V4L2_CODEC, just the latter.",
+      "parentUuid": "ac29de78_68b204a1",
+      "revId": "0596ecbb94d249feee5b821e19ab45a3c72d02e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
