@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e20c8f12_e57a55c0",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_introspector_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-20T17:36:14Z",
+      "side": 1,
+      "message": "It seems like we only use urls when there is only one url, do I understand correctly? Is it because what we want is just the url from main frame? What if there\u0027s only 1 url and it\u0027s from child frame? Is it still valid?",
+      "range": {
+        "startLine": 40,
+        "startChar": 4,
+        "endLine": 40,
+        "endChar": 41
+      },
+      "revId": "ac72a80e54bc4e0f962b6a4b28510b7c1401f8dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
