@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a065952_99d38fea",
+        "filename": "net/disk_cache/simple/simple_index_file_posix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-07-20T13:01:48Z",
+      "side": 1,
+      "message": "We should handle the error case as well, and log it with PERROR. Is errno.h available on Fuchsia?\n\nAlso note: this was tried before and was reverted due to flake on Android: http://crrev.com/428934 (DCHECK in SimpleIndex::MergeInitializingSet).\n\nThe easiest would be to handle directory read failure there (I think early return would be fine, since directory read failures should not happen often - curious what morlovich@ would say).\n\nAlternatively we can swallow the error here, but then there is no reason to return boolean.\n\nThe reason why we used readdir_r here was heap fragmentation: http://crrev.com/219023, so yet another alternative would be to make the FileEnumerator more efficient.",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 14
+      },
+      "revId": "93718078bb8821775c2a0ad3ab5de145c257ea0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
