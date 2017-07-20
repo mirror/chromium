@@ -16,6 +16,24 @@
       "revId": "4b72246d9fc6a3498e8ab3d23b1556d675b51da7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06f66e4c_01dcbfde",
+        "filename": "chrome/browser/chromeos/arc/arc_service_launcher.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-20T01:05:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47db63e8_8558b091",
+      "revId": "4b72246d9fc6a3498e8ab3d23b1556d675b51da7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
