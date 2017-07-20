@@ -110,6 +110,11 @@ SDK.Layer.prototype = {
   scrollRects() {},
 
   /**
+   * @return {?SDK.StickyPositionConstraint}
+   */
+  stickyPositionConstraint() {},
+
+  /**
    * @return {number}
    */
   gpuMemoryUsage() {},

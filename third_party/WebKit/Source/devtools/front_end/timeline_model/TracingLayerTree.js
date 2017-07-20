@@ -355,6 +355,15 @@ TimelineModel.TracingLayer = class {
 
   /**
    * @override
+   * @return {?SDK.StickyPositionConstraint}
+   */
+  stickyPositionConstraint() {
+    // TODO(smcgruer): Determine how this works & implement properly
+    return null;
+  }
+
+  /**
+   * @override
    * @return {number}
    */
   gpuMemoryUsage() {
