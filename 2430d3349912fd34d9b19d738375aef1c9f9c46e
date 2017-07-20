@@ -677,6 +677,24 @@
     },
     {
       "key": {
+        "uuid": "524fe7bf_89eb2dfc",
+        "filename": "chrome/android/java_sources.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 1436,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-20T18:51:05Z",
+      "side": 1,
+      "message": "Oops, forgot to reply to this comment.\n\nI tried, but the unittest run on the UI thread according to ThreadUtils, so the tests deadlock. Since we want to run several tasks on the same thread on which the tests are running, it makes posting tasks hard.\nSo it seems actually better to keep it as an instrumentation test.\nwdyt?",
+      "parentUuid": "c4048f99_568b7375",
+      "revId": "2430d3349912fd34d9b19d738375aef1c9f9c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc777c54_1602b832",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/customtabs/CustomTabsConnectionTest.java",
         "patchSetId": 4
