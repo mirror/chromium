@@ -91,8 +91,8 @@ public class WebappModeTest {
             intent.putExtra(ShortcutHelper.EXTRA_MAC, mac);
         }
 
-        WebappInfo webappInfo = WebappInfo.create(id, url, null, new WebappInfo.Icon(icon), title,
-                null, WebDisplayMode.STANDALONE, ScreenOrientationValues.PORTRAIT,
+        WebappInfo webappInfo = WebappInfo.create(id, url, false, null, new WebappInfo.Icon(icon),
+                title, null, WebDisplayMode.STANDALONE, ScreenOrientationValues.PORTRAIT,
                 ShortcutSource.UNKNOWN, ShortcutHelper.MANIFEST_COLOR_INVALID_OR_MISSING,
                 ShortcutHelper.MANIFEST_COLOR_INVALID_OR_MISSING, false);
         webappInfo.setWebappIntentExtras(intent);

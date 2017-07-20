@@ -264,7 +264,8 @@ BASE_EXPORT bool GetAppOutputAndError(const CommandLine& cl,
 // this is the case the exit code of the application is available in
 // |*exit_code|.
 BASE_EXPORT bool GetAppOutputWithExitCode(const CommandLine& cl,
-                                          std::string* output, int* exit_code);
+                                          std::string* output,
+                                          int* exit_code);
 
 #if defined(OS_WIN)
 // A Windows-specific version of GetAppOutput that takes a command line string
