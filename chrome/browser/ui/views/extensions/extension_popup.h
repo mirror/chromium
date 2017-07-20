@@ -99,6 +99,31 @@ class ExtensionPopup : public views::BubbleDialogDelegateView,
   void OnAnchorWindowActivation();
 
  private:
+  // Owns and draws a roundrect layer mask that is installed on the web contents
+  // to give it rounded corners.
+  class ContentsMask : public ui::LayerDelegate {
+   public:
+    ContentsMask();
+    ~ContentsMask() override;
+
+    void OnPaintLayer(const ui::PaintContext& context) override;
+    void OnDelegatedFrameDamage(const gfx::Rect& damage_rect_in_dip) override;
+    void OnDeviceScaleFactorChanged(float device_scale_factor) override;
+
+    ui::Layer* layer() { return &layer_; }
+
+    void set_corner_radius(int corner_radius) {
+      corner_radius_ = corner_radius;
+    }
+
+   private:
+    ui::Layer layer_;
+
+    int corner_radius_ = 0;
+
+    DISALLOW_COPY_AND_ASSIGN(ContentsMask);
+  };
+
   static ExtensionPopup* Create(extensions::ExtensionViewHost* host,
                                 views::View* anchor_view,
                                 views::BubbleBorder::Arrow arrow,
@@ -122,7 +147,11 @@ class ExtensionPopup : public views::BubbleDialogDelegateView,
 
   content::NotificationRegistrar registrar_;
 
-  bool widget_initialized_;
+  bool widget_initialized_ = false;
+
+#if defined(USE_AURA)
+  ContentsMask mask_;
+#endif
 
   DISALLOW_COPY_AND_ASSIGN(ExtensionPopup);
 };
