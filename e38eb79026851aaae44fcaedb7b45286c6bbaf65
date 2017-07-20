@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cb64729_2b7b2906",
+        "filename": "cc/animation/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-07-20T20:16:57Z",
+      "side": 1,
+      "message": "Hey there, I\u0027d be happy to help add to this document. I have a series of notes from my work on SPv2 related composited animation changes. Some of them include things like researched lifecycle, other relevant areas of code built atop this, etc.\n\nLet me know if you\u0027d like to land this and I can edit, or otherwise approach. I\u0027ll forward you a sample email.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 27
+      },
+      "revId": "e38eb79026851aaae44fcaedb7b45286c6bbaf65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
