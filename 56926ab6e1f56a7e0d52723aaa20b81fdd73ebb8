@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4cf3c983_07e192c3",
+        "filename": "chrome/browser/chromeos/policy/browser_policy_connector_chromeos_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-07-20T14:19:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16d30ab8_cda62b5d",
+      "range": {
+        "startLine": 45,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 22
+      },
+      "revId": "56926ab6e1f56a7e0d52723aaa20b81fdd73ebb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31d1b46a_83bfd4dc",
         "filename": "chrome/browser/chromeos/policy/browser_policy_connector_chromeos_browsertest.cc",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "56926ab6e1f56a7e0d52723aaa20b81fdd73ebb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04580764_bc871abd",
+        "filename": "chrome/browser/chromeos/policy/browser_policy_connector_chromeos_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-07-20T14:19:48Z",
+      "side": 1,
+      "message": "I had this one and then removed it when cleaning the headers guess by accident. Heh xD",
+      "parentUuid": "31d1b46a_83bfd4dc",
+      "range": {
+        "startLine": 46,
+        "startChar": 33,
+        "endLine": 46,
+        "endChar": 51
+      },
+      "revId": "56926ab6e1f56a7e0d52723aaa20b81fdd73ebb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,54 @@
     },
     {
       "key": {
+        "uuid": "ac32a2fd_9aa6f6b5",
+        "filename": "chrome/browser/chromeos/policy/browser_policy_connector_chromeos_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-07-20T14:19:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b228675b_52e38896",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 75
+      },
+      "revId": "56926ab6e1f56a7e0d52723aaa20b81fdd73ebb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b306466c_71d382d4",
+        "filename": "chrome/browser/chromeos/policy/browser_policy_connector_chromeos_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-07-20T14:19:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "426dc013_3d16d502",
+      "range": {
+        "startLine": 51,
+        "startChar": 45,
+        "endLine": 51,
+        "endChar": 71
+      },
+      "revId": "56926ab6e1f56a7e0d52723aaa20b81fdd73ebb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b058311_861af3e6",
         "filename": "chrome/browser/resources/chromeos/login/screen_device_disabled.js",
         "patchSetId": 7
@@ -114,6 +210,30 @@
       "revId": "56926ab6e1f56a7e0d52723aaa20b81fdd73ebb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89686fea_3ef5fa1d",
+        "filename": "chrome/browser/resources/chromeos/login/screen_device_disabled.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-07-20T14:19:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b058311_861af3e6",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 30
+      },
+      "revId": "56926ab6e1f56a7e0d52723aaa20b81fdd73ebb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "7586f5e4_f239e7f6",
+        "filename": "chrome/browser/resources/chromeos/login/screen_gaia_signin.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-07-20T14:19:48Z",
+      "side": 1,
+      "message": "Tested, works.",
+      "parentUuid": "d8f206ca_e09e36d4",
+      "range": {
+        "startLine": 685,
+        "startChar": 10,
+        "endLine": 685,
+        "endChar": 39
+      },
+      "revId": "56926ab6e1f56a7e0d52723aaa20b81fdd73ebb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e317a74_cb4247f2",
         "filename": "chrome/browser/resources/gaia_auth_host/authenticator.js",
         "patchSetId": 7
@@ -154,6 +298,24 @@
       "revId": "56926ab6e1f56a7e0d52723aaa20b81fdd73ebb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75f866dc_c87d53a6",
+        "filename": "chrome/browser/resources/gaia_auth_host/authenticator.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-07-20T14:19:48Z",
+      "side": 1,
+      "message": "Good catch, done.",
+      "parentUuid": "2e317a74_cb4247f2",
+      "revId": "56926ab6e1f56a7e0d52723aaa20b81fdd73ebb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -177,6 +339,30 @@
       "revId": "56926ab6e1f56a7e0d52723aaa20b81fdd73ebb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27b35b0d_04300138",
+        "filename": "chrome/browser/resources/gaia_auth_host/authenticator.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-07-20T14:19:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32fee8e7_8d187fe3",
+      "range": {
+        "startLine": 315,
+        "startChar": 53,
+        "endLine": 315,
+        "endChar": 76
+      },
+      "revId": "56926ab6e1f56a7e0d52723aaa20b81fdd73ebb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
