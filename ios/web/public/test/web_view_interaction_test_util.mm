@@ -181,5 +181,30 @@ bool SubmitWebViewFormWithId(web::WebState* web_state,
                                          ELEMENT_ACTION_SUBMIT);
 }
 
+bool WaitForWebViewContainingTextOrTimeout(web::WebState* web_state,
+                                           NSString* text) {
+  CRWWebController* web_controller =
+      static_cast<WebStateImpl*>(web_state)->GetWebController();
+  NSString* script = [NSString
+      stringWithFormat:@"document.body ? document.body.textContent : null"];
+  __block bool did_complete = false;
+  __block bool contains_text = false;
+  // |executeUserJavaScript:completionHandler:| is no-op for app-specific URLs,
+  // so simulate a user gesture by calling TouchTracking method.
+  [web_controller touched:YES];
+  [web_controller executeJavaScript:script
+                  completionHandler:^(id result, NSError*) {
+                    did_complete = true;
+                    contains_text = [result isKindOfClass:[NSString class]] &&
+                                    [result containsString:text];
+                  }];
+
+  testing::WaitUntilConditionOrTimeout(testing::kWaitForUIElementTimeout, ^{
+    return did_complete;
+  });
+
+  return contains_text;
+}
+
 }  // namespace test
 }  // namespace web

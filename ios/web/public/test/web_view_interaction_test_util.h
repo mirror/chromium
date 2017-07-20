@@ -44,6 +44,11 @@ bool FocusWebViewElementWithId(web::WebState* web_state,
 // submitted using a JavaScript submit() event.
 bool SubmitWebViewFormWithId(web::WebState* web_state,
                              const std::string& form_id);
+
+// Waits for the passed |web_state| to contain |text|. Returns false if the
+// condition is not met within a reasonable timeout.
+bool WaitForWebViewContainingTextOrTimeout(web::WebState* web_state,
+                                           NSString* text);
 }  // namespace test
 }  // namespace web
 

@@ -221,7 +221,10 @@ source_set("eg_tests") {
   configs += [ "//build/config/compiler:enable_arc" ]
   testonly = true
   sources = [
-    "payments_accessibility_egtest.mm",
+    "payment_request_accessibility_egtest.mm",
+    "payment_request_egtest.mm",
+    "payment_request_egtest_base.h",
+    "payment_request_egtest_base.mm",
   ]
 
   deps = [
@@ -238,9 +241,12 @@ source_set("eg_tests") {
     "//ios/chrome/browser/ui/tools_menu",
     "//ios/chrome/test/app:test_support",
     "//ios/chrome/test/earl_grey:test_support",
+    "//ios/testing:ios_test_support",
     "//ios/testing/earl_grey:earl_grey_support",
     "//ios/third_party/material_components_ios",
+    "//ios/web/public/test",
     "//ios/web/public/test/http_server",
+    "//testing/gtest",
   ]
   libs = [
     "UIKit.framework",

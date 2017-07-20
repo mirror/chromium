@@ -77,8 +77,8 @@ const NSTimeInterval kNoopInterval = 0.1;
 // PaymentResponse.complete().
 const NSTimeInterval kTimeoutInterval = 60.0;
 
-NSString* kAbortMessage = @"The payment request was aborted.";
-NSString* kCancelMessage = @"The payment request was canceled.";
+NSString* kAbortMessage = @"The website has aborted the payment";
+NSString* kCancelMessage = @"Request cancelled";
 
 struct PendingPaymentResponse {
   std::string methodName;
