@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59f65f00_9b6d703b",
+        "filename": "components/variations/service/variations_field_trial_creator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-20T14:26:36Z",
+      "side": 1,
+      "message": "It\u0027s messy to always reach into seed_store_ for local state. Suggest making a private helper getter instead - i.e. local_state() - so the places that use it stay simpler.",
+      "range": {
+        "startLine": 322,
+        "startChar": 14,
+        "endLine": 322,
+        "endChar": 25
+      },
+      "revId": "6ccd060eb3197a9d01a42198125d4c8d39eb8a94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dab221b_68c148e0",
+        "filename": "components/variations/service/variations_service.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-20T14:26:36Z",
+      "side": 1,
+      "message": "Add a comment.",
+      "range": {
+        "startLine": 170,
+        "startChar": 7,
+        "endLine": 170,
+        "endChar": 57
+      },
+      "revId": "6ccd060eb3197a9d01a42198125d4c8d39eb8a94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0b8b62c_4e09130e",
+        "filename": "components/variations/service/variations_service_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 930,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-20T14:26:36Z",
+      "side": 1,
+      "message": "Nit: Grammar.\n\nI think you\u0027re missing an \"if\" after field_trial_creator. Also, use FieldTrialCreator since field_trial_creator looks like a variable name - but the actual member has a trailing _ and if you\u0027re referring to a variable then you should also surround it with |\u0027s.",
+      "revId": "6ccd060eb3197a9d01a42198125d4c8d39eb8a94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a3c6d28_095df057",
+        "filename": "components/variations/service/variations_service_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 931,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-20T14:26:36Z",
+      "side": 1,
+      "message": "Nit: End the sentence with a .",
+      "range": {
+        "startLine": 931,
+        "startChar": 14,
+        "endLine": 931,
+        "endChar": 0
+      },
+      "revId": "6ccd060eb3197a9d01a42198125d4c8d39eb8a94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
