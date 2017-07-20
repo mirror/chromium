@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "611cf924_d9647410",
+        "filename": "ash/highlighter/highlighter_result_view.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-20T21:08:21Z",
+      "side": 1,
+      "message": "nit: nuke {}",
+      "revId": "8fc516408b2ccaeb700cde7ce1542542f279ce08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7f524cb_fa339e92",
+        "filename": "ash/highlighter/highlighter_selection_observer.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-20T21:08:21Z",
+      "side": 1,
+      "message": "nit: newline",
+      "revId": "8fc516408b2ccaeb700cde7ce1542542f279ce08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "646436c5_76a8c4e3",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-20T21:08:21Z",
+      "side": 1,
+      "message": "Just noticed this. Looks wrong?",
+      "revId": "8fc516408b2ccaeb700cde7ce1542542f279ce08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

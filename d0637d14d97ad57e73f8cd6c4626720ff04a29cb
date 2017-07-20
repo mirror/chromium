@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66e0faad_1130b4ab",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-20T21:08:21Z",
+      "side": 0,
+      "message": "optional: you can add dev (or debug) shortcuts. check accelerator_table.h",
+      "revId": "d0637d14d97ad57e73f8cd6c4626720ff04a29cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
