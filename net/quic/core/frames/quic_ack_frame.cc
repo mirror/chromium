@@ -203,12 +203,13 @@ bool PacketNumberQueue::RemoveUpTo(QuicPacketNumber higher) {
   const QuicPacketNumber old_min = Min();
   if (use_deque_) {
     while (!packet_number_deque_.empty()) {
-      if (packet_number_deque_[0].max() < higher) {
+      if (packet_number_deque_.front().max() < higher) {
         packet_number_deque_.pop_front();
-      } else if (packet_number_deque_[0].min() < higher &&
-                 packet_number_deque_[0].max() >= higher) {
-        packet_number_deque_[0].SetMin(higher);
-        if (packet_number_deque_[0].max() == packet_number_deque_[0].min()) {
+      } else if (packet_number_deque_.front().min() < higher &&
+                 packet_number_deque_.front().max() >= higher) {
+        packet_number_deque_.front().SetMin(higher);
+        if (packet_number_deque_.front().max() ==
+            packet_number_deque_.front().min()) {
           packet_number_deque_.pop_front();
         }
         break;
