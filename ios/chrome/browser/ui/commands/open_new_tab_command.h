@@ -38,6 +38,10 @@
 
 @property(nonatomic, readonly) CGPoint originPoint;
 
+// Whether the FeatureEngagementTracker should record new tab events represented
+// by this object. Defaults to |YES|.
+@property(nonatomic, readwrite) BOOL recordEngagement;
+
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_COMMANDS_OPEN_NEW_TAB_COMMAND_H_
