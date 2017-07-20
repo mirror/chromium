@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "374305a2_bf2fb25e",
+        "filename": "components/cast_channel/cast_auth_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-20T17:28:22Z",
+      "side": 1,
+      "message": "If this is empty, does it make any sense to call ParseAndVerifyCRLUsingCustomTrustStore with it?",
+      "revId": "cb301a647053b8b1cdaf57e392ba6d382e058b52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da7485fc_02bb175a",
+        "filename": "components/cast_channel/cast_auth_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-20T17:28:22Z",
+      "side": 1,
+      "message": "What if crl is nullptr?",
+      "revId": "cb301a647053b8b1cdaf57e392ba6d382e058b52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b83c59b_ce6f5bd6",
+        "filename": "components/cast_channel/cast_auth_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-20T17:28:22Z",
+      "side": 1,
+      "message": "Perhaps MapToAuthResult should take care of the logic that considers crl_policy to return the true AuthResult; this would simplify this function slightly.  I don\u0027t feel strongly about this though.",
+      "revId": "cb301a647053b8b1cdaf57e392ba6d382e058b52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de84e29d_e312fca8",
+        "filename": "components/cast_channel/cast_auth_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-20T17:28:22Z",
+      "side": 1,
+      "message": "It appears that CRL verification already happpened at L352.  When would VerifyDeviceCertUsingCustomTrustStore return this result?",
+      "revId": "cb301a647053b8b1cdaf57e392ba6d382e058b52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "048c91f7_82994a2d",
+        "filename": "components/cast_channel/cast_auth_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-20T17:28:22Z",
+      "side": 1,
+      "message": "ISTM it could be useful to have a metric as well for failures of signature verification.  Up to you though :)",
+      "revId": "cb301a647053b8b1cdaf57e392ba6d382e058b52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
