@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6c46b27_b1e0b6d4",
+        "filename": "chrome/common/extensions/api/storage/storage_schema_manifest_handler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-20T17:12:36Z",
+      "side": 1,
+      "message": "nit/question: This ends up with permissions being empty right? That\u0027s fine here since we don\u0027t actually use permissions below, but it seems like it would be easy to accidentally do so with unexpected results, maybe a Clone or using a scoped_ptr for permissions would be better?",
+      "revId": "9d92feaae9a7bdbb0abd8eac1773cd011c5395dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5da09344_c154e803",
+        "filename": "chromeos/dbus/fake_shill_service_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-20T17:12:36Z",
+      "side": 1,
+      "message": "Question: can this be inlined instead, i.e. \u0027base::Value(shill::kStateIdle)\u0027 ?",
+      "revId": "9d92feaae9a7bdbb0abd8eac1773cd011c5395dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
