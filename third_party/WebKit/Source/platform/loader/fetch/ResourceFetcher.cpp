@@ -538,11 +538,17 @@ ResourceFetcher::PrepareRequestResult ResourceFetcher::PrepareRequest(
       params.IsSpeculativePreload()
           ? SecurityViolationReportingPolicy::kSuppressReporting
           : SecurityViolationReportingPolicy::kReport;
-  Context().PopulateResourceRequest(
+  // Before modifying the request for CSP, evaluate report-only headers. This
+  // allows site owners to learn about requests that are being modified
+  // (e.g. mixed content that is being upgraded by upgrade-insecure-requests).
+  Context().CheckCSPForRequest(
+      resource_request,
       MemoryCache::RemoveFragmentIdentifierIfNeeded(params.Url()),
+      params.Options(), reporting_policy, resource_request.GetRedirectStatus());
+
+  Context().PopulateResourceRequest(
       factory.GetType(), params.GetClientHintsPreferences(),
-      params.GetResourceWidth(), params.Options(), reporting_policy,
-      resource_request);
+      params.GetResourceWidth(), resource_request);
 
   if (!params.Url().IsValid())
     return kAbort;
@@ -561,7 +567,8 @@ ResourceFetcher::PrepareRequestResult ResourceFetcher::PrepareRequest(
       MemoryCache::RemoveFragmentIdentifierIfNeeded(params.Url()),
       params.Options(),
       /* Don't send security violation reports for speculative preloads */
-      reporting_policy, params.GetOriginRestriction());
+      reporting_policy, params.GetOriginRestriction(),
+      resource_request.GetRedirectStatus());
   if (blocked_reason != ResourceRequestBlockedReason::kNone) {
     DCHECK(!substitute_data.ForceSynchronousLoad());
     return kBlock;
@@ -1667,7 +1674,8 @@ void ResourceFetcher::EmulateLoadStartedForInspector(
   Context().CanRequest(resource->GetType(), resource->LastResourceRequest(),
                        resource->LastResourceRequest().Url(), params.Options(),
                        SecurityViolationReportingPolicy::kReport,
-                       params.GetOriginRestriction());
+                       params.GetOriginRestriction(),
+                       resource->LastResourceRequest().GetRedirectStatus());
   RequestLoadStarted(resource->Identifier(), resource, params, kUse);
 }
 
