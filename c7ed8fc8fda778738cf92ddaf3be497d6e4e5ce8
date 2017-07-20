@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63b1f265_6be5f278",
+        "filename": "ash/shell.cc",
+        "patchSetId": 30
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-07-20T18:39:59Z",
+      "side": 1,
+      "message": "Same here, int32_t.",
+      "range": {
+        "startLine": 495,
+        "startChar": 32,
+        "endLine": 495,
+        "endChar": 35
+      },
+      "revId": "c7ed8fc8fda778738cf92ddaf3be497d6e4e5ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5abbe0ce_6d95b68a",
+        "filename": "ash/shell.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-07-20T18:39:59Z",
+      "side": 1,
+      "message": "Should this be int32_t instead?",
+      "range": {
+        "startLine": 543,
+        "startChar": 27,
+        "endLine": 543,
+        "endChar": 30
+      },
+      "revId": "c7ed8fc8fda778738cf92ddaf3be497d6e4e5ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
