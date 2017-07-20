@@ -16,6 +16,24 @@
       "revId": "476018c0c5b9bf8ad80f503b87321cc8fcc1ceaa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13381e8b_61c76a48",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/TabularContextMenuListAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-07-20T18:33:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c285e248_fe9eaec2",
+      "revId": "476018c0c5b9bf8ad80f503b87321cc8fcc1ceaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
