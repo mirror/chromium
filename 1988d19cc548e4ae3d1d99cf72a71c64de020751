@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b45535fd_38248e17",
+        "filename": "net/disk_cache/blockfile/backend_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-20T20:54:34Z",
+      "side": 1,
+      "message": "Shouldn\u0027t introduce an assumption that there\u0027s only a network stack on one thread.\n\nThe way this is generally handled is by base::Singleton (which can be declared in the one method that provides access to them) or with base::LazyInstance\u003cbase::Thread\u003e::Leaky.\n\nNot sure about practical reasons to provide one over the other - I assume Singletons are also leaky, but not positive.\n\nActually, come to think of it, I don\u0027t think we want a thread that leaks on shutdown, since we\u0027re doing file I/O, it needs to shut down cleanly, right?",
+      "range": {
+        "startLine": 113,
+        "startChar": 40,
+        "endLine": 113,
+        "endChar": 47
+      },
+      "revId": "1988d19cc548e4ae3d1d99cf72a71c64de020751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48ff59a5_0885d7e8",
+        "filename": "net/disk_cache/blockfile/backend_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-20T20:54:34Z",
+      "side": 1,
+      "message": "Is there a reason not to grab one from the task_scheduler instead, and just hold onto that?",
+      "range": {
+        "startLine": 120,
+        "startChar": 22,
+        "endLine": 120,
+        "endChar": 29
+      },
+      "revId": "1988d19cc548e4ae3d1d99cf72a71c64de020751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
