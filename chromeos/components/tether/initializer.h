@@ -16,6 +16,7 @@
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
 #include "device/bluetooth/bluetooth_adapter.h"
 #include "device/bluetooth/bluetooth_advertisement.h"
+#include "chromeos/components/tether/ble_scanner.h"
 
 class PrefService;
 
@@ -121,6 +122,7 @@ class Initializer : public OAuth2TokenService::Observer {
   std::unique_ptr<TetherHostFetcher> tether_host_fetcher_;
   std::unique_ptr<cryptauth::LocalDeviceDataProvider>
       local_device_data_provider_;
+  std::unique_ptr<BleScanner> ble_scanner_;
   std::unique_ptr<cryptauth::RemoteBeaconSeedFetcher>
       remote_beacon_seed_fetcher_;
   std::unique_ptr<BleConnectionManager> ble_connection_manager_;
