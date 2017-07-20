@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b7f5e6df_afcc32b6",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-20T01:31:40Z",
+      "side": 1,
+      "message": "(optional): I think it is ok to make Start() and Stop() public, because\n- Those are public in base class.\n- You can remove friend declaration\n- You can remove unnecessary proxy method in test.\n\nActually it does not look to have much benefit to use protected, because this class is not designed to be inherited.\n\nSo, it has enough benefit.",
+      "parentUuid": "2806166f_1354397b",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 8
+      },
+      "revId": "823ba5baa7281d2a07e5851daf04ed90da3426c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4895f6e2_f0dba760",
         "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
         "patchSetId": 5
@@ -42,6 +66,47 @@
         "endLine": 69,
         "endChar": 45
       },
+      "revId": "823ba5baa7281d2a07e5851daf04ed90da3426c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9742d1a0_5ef73e14",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-20T01:31:40Z",
+      "side": 1,
+      "message": "I think, Yury meant ASSERT_EQ.",
+      "parentUuid": "4895f6e2_f0dba760",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 45
+      },
+      "revId": "823ba5baa7281d2a07e5851daf04ed90da3426c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c713e46_b35945bd",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-20T01:31:40Z",
+      "side": 1,
+      "message": "nit/optional:\n\nNow this is just a iterating vector by index. So,\n\nfor (size_t i \u003d 0; i \u003c result.size(); ++i) {\n  ...\n}\n\nis more idiomatic.",
       "revId": "823ba5baa7281d2a07e5851daf04ed90da3426c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
