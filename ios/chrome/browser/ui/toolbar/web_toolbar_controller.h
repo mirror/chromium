@@ -8,7 +8,7 @@
 #import <UIKit/UIKit.h>
 
 #include "ios/chrome/browser/ui/omnibox/omnibox_popup_positioner.h"
-#include "ios/chrome/browser/ui/qr_scanner/qr_scanner_view_controller.h"
+#include "ios/chrome/browser/ui/qr_scanner/requirements/qr_scanner_result_loading.h"
 #import "ios/chrome/browser/ui/toolbar/toolbar_controller.h"
 #include "ios/public/provider/chrome/browser/voice/voice_search_controller_delegate.h"
 #include "ios/web/public/navigation_item_list.h"
@@ -83,7 +83,7 @@ extern const CGFloat kiPhoneOmniboxPlaceholderColorBrightness;
 // omnibox, etc.
 @interface WebToolbarController
     : ToolbarController<OmniboxFocuser,
-                        QRScannerViewControllerDelegate,
+                        QRScannerResultLoading,
                         VoiceSearchControllerDelegate>
 
 @property(nonatomic, weak) id<WebToolbarDelegate> delegate;

@@ -1864,7 +1864,7 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
     [self.currentBVC startVoiceSearch];
   } else if (self.startQRScannerAfterTabSwitcherDismissal) {
     self.startQRScannerAfterTabSwitcherDismissal = NO;
-    [self.currentBVC showQRScanner];
+    [self.currentBVC.dispatcher showQRScanner];
   } else if (self.startFocusOmniboxAfterTabSwitcherDismissal) {
     self.startFocusOmniboxAfterTabSwitcherDismissal = NO;
     [self.currentBVC focusOmnibox];
@@ -2264,7 +2264,7 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
       // dismissing the modal view if QR Scanner is started from the
       // Notification center.
       dispatch_async(dispatch_get_main_queue(), ^{
-        [self.currentBVC showQRScanner];
+        [self.currentBVC.dispatcher showQRScanner];
       });
     }
   } else if ([_startupParameters launchFocusOmnibox]) {

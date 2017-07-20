@@ -37,6 +37,23 @@ source_set("qr_scanner") {
   ]
 }
 
+source_set("coordinator") {
+  configs += [ "//build/config/compiler:enable_arc" ]
+  sources = [
+    "qr_scanner_coordinator.h",
+    "qr_scanner_coordinator.mm",
+  ]
+  deps = [
+    ":qr_scanner",
+    "//ios/chrome/browser",
+    "//ios/chrome/browser/browser_state",
+    "//ios/chrome/browser/tabs",
+    "//ios/chrome/browser/ui/commands",
+    "//ios/chrome/browser/ui/qr_scanner/requirements",
+    "//ios/shared/chrome/browser/ui/commands",
+  ]
+}
+
 source_set("eg_tests") {
   configs += [ "//build/config/compiler:enable_arc" ]
   testonly = true

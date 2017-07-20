@@ -126,7 +126,8 @@
 #import "ios/chrome/browser/ui/preload_controller.h"
 #import "ios/chrome/browser/ui/preload_controller_delegate.h"
 #import "ios/chrome/browser/ui/print/print_controller.h"
-#import "ios/chrome/browser/ui/qr_scanner/qr_scanner_view_controller.h"
+#import "ios/chrome/browser/ui/qr_scanner/qr_scanner_coordinator.h"
+#import "ios/chrome/browser/ui/qr_scanner/requirements/qr_scanner_presenting.h"
 #import "ios/chrome/browser/ui/reading_list/offline_page_native_content.h"
 #import "ios/chrome/browser/ui/reading_list/reading_list_coordinator.h"
 #import "ios/chrome/browser/ui/reading_list/reading_list_menu_notifier.h"
@@ -349,6 +350,7 @@ NSString* const kNativeControllerTemporaryKey = @"NativeControllerTemporaryKey";
                                     OverscrollActionsControllerDelegate,
                                     PassKitDialogProvider,
                                     PreloadControllerDelegate,
+                                    QRScannerPresenting,
                                     ShareToDelegate,
                                     SKStoreProductViewControllerDelegate,
                                     SnapshotOverlayProvider,
@@ -420,9 +422,6 @@ NSString* const kNativeControllerTemporaryKey = @"NativeControllerTemporaryKey";
 
   // Used to display the Voice Search UI.  Nil if not visible.
   scoped_refptr<VoiceSearchController> _voiceSearchController;
-
-  // Used to display the QR Scanner UI. Nil if not visible.
-  QRScannerViewController* _qrScannerViewController;
 
   // Used to display the Reading List.
   ReadingListCoordinator* _readingListCoordinator;
@@ -518,6 +517,9 @@ NSString* const kNativeControllerTemporaryKey = @"NativeControllerTemporaryKey";
 
   // Coordinator for displaying alerts.
   AlertCoordinator* _alertCoordinator;
+
+  // Coordinator for the QR scanner.
+  QRScannerCoordinator* _qrScannerCoordinator;
 }
 
 // The browser's side swipe controller.  Lazily instantiated on the first call.
@@ -1311,7 +1313,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
     self.typingShield = nil;
     if (_voiceSearchController)
       _voiceSearchController->SetDelegate(nil);
-    _qrScannerViewController = nil;
     _readingListCoordinator = nil;
     _toolbarController = nil;
     _toolbarModelDelegate = nil;
@@ -1695,6 +1696,10 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   [_model browserStateDestroyed];
   [_preloadController browserStateDestroyed];
   _preloadController = nil;
+
+  // Disconnect child coordinators.
+  [_qrScannerCoordinator disconnect];
+
   // The file remover needs the browser state, so needs to be destroyed now.
   _externalFileRemover = nil;
   _browserState = nullptr;
@@ -1782,6 +1787,13 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   infobars::InfoBarManager* infoBarManager =
       [[_model currentTab] infoBarManager];
   _infoBarContainer->ChangeInfoBarManager(infoBarManager);
+
+  // Create child coordinators.
+  _qrScannerCoordinator =
+      [[QRScannerCoordinator alloc] initWithBaseViewController:self];
+  _qrScannerCoordinator.dispatcher = _dispatcher;
+  _qrScannerCoordinator.loadProvider = _toolbarController;
+  _qrScannerCoordinator.presentationProvider = self;
 
   if (base::FeatureList::IsEnabled(payments::features::kWebPayments)) {
     _paymentRequestManager = [[PaymentRequestManager alloc]
@@ -4161,7 +4173,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
       [super chromeExecuteCommand:sender];
       break;
     case IDC_SHOW_QR_SCANNER:
-      [self showQRScanner];
+      [self.dispatcher showQRScanner];
       break;
     default:
       // Unknown commands get sent up the responder chain.
@@ -4389,15 +4401,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
                           loader:self];
 
   [_readingListCoordinator start];
-}
-
-- (void)showQRScanner {
-  _qrScannerViewController =
-      [[QRScannerViewController alloc] initWithDelegate:_toolbarController];
-  [self presentViewController:[_qrScannerViewController
-                                  getViewControllerToPresent]
-                     animated:YES
-                   completion:nil];
 }
 
 - (void)showNTPPanel:(NewTabPage::PanelIdentifier)panel {
@@ -5011,6 +5014,18 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 
 - (id<LogoAnimationControllerOwner>)logoAnimationControllerOwner {
   return [self currentLogoAnimationControllerOwner];
+}
+
+#pragma mark - QRScanner Requirements
+
+- (void)presentQRScannerViewController:(UIViewController*)controller {
+  [self presentViewController:controller animated:YES completion:nil];
+}
+
+- (void)dismissQRScannerViewController:(UIViewController*)controller
+                            completion:(void (^)(void))completion {
+  DCHECK_EQ(controller, self.presentedViewController);
+  [self dismissViewControllerAnimated:YES completion:completion];
 }
 
 @end

@@ -9,9 +9,15 @@
 
 @class OpenNewTabCommand;
 
+@protocol QRScannerCommands<NSObject>
+
+- (void)showQRScanner;
+
+@end
+
 // Protocol for commands that will generally be handled by the "current tab",
 // which in practice is the BrowserViewController instance displaying the tab.
-@protocol BrowserCommands<NSObject>
+@protocol BrowserCommands<QRScannerCommands>
 
 // Closes the current tab.
 - (void)closeCurrentTab;
