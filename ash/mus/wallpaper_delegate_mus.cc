@@ -4,7 +4,7 @@
 
 #include "ash/mus/wallpaper_delegate_mus.h"
 
-#include "components/wallpaper/wallpaper_layout.h"
+#include "components/wallpaper/wallpaper_info.h"
 #include "ui/wm/core/window_animations.h"
 
 namespace ash {
