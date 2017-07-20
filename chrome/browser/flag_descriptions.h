@@ -361,11 +361,11 @@ extern const char kEffectiveConnectionType4GDescription[];
 extern const char kFillOnAccountSelectName[];
 extern const char kFillOnAccountSelectDescription[];
 
-extern const char kForceTabletModeName[];
-extern const char kForceTabletModeDescription[];
-extern const char kForceTabletModeTouchview[];
-extern const char kForceTabletModeClamshell[];
-extern const char kForceTabletModeAuto[];
+extern const char kForceUiModeName[];
+extern const char kForceUiModeDescription[];
+extern const char kForceUiModeTabletMode[];
+extern const char kForceUiModeClamshell[];
+extern const char kForceUiModeAuto[];
 
 extern const char kForceTextDirectionName[];
 extern const char kForceTextDirectionDescription[];
