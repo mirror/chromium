@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72985758_53e02989",
+        "filename": "pdf/out_of_process_instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1443,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-07-20T18:07:35Z",
+      "side": 1,
+      "message": "\"Even if\"?",
+      "range": {
+        "startLine": 1443,
+        "startChar": 5,
+        "endLine": 1443,
+        "endChar": 9
+      },
+      "revId": "fe4e5de85b00fc1cc01b4a0070ee4c84aca81dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d5e3e23_1add1b1f",
+        "filename": "pdf/out_of_process_instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1585,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-07-20T18:07:35Z",
+      "side": 1,
+      "message": "The description of this function in out_of_process_instance.h says that we are appending |print_preview_page_count_| - 1 blank pages while this seems to still be appending |print_preview_page_count_|.",
+      "range": {
+        "startLine": 1585,
+        "startChar": 0,
+        "endLine": 1585,
+        "endChar": 55
+      },
+      "revId": "fe4e5de85b00fc1cc01b4a0070ee4c84aca81dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58b7668a_f624cd57",
+        "filename": "pdf/out_of_process_instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1588,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-07-20T18:07:35Z",
+      "side": 1,
+      "message": "If preview_pages_info_ is non-empty here and the print preview page count is 1, it looks like that would trigger the DCHECK on line 1645. Or is this function guaranteed to not be called for a page count of 1?",
+      "revId": "fe4e5de85b00fc1cc01b4a0070ee4c84aca81dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
