@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1f11a0a6_56d47295",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-20T04:46:58Z",
+      "side": 1,
+      "message": "Hmmm, I thought you added it entirely in this CL, but now I see it\u0027s the third argument in WebApkInfo as well from before. Yuck.\n\nI\u0027ll make this an optional nit to move it everywhere to the end (including in WebApkInfo). Having the boolean at the end would be consistent with how mIcon/mIsIconGenerated behaves. But optional, I won\u0027t block.",
+      "parentUuid": "59350249_4d5597d4",
+      "range": {
+        "startLine": 60,
+        "startChar": 20,
+        "endLine": 60,
+        "endChar": 36
+      },
+      "revId": "6322016950bfd1a53cfda0e92c3bcbd44855e6f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e016022c_3044fbc5",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/webapps/WebApkInfoTest.java",
         "patchSetId": 1
