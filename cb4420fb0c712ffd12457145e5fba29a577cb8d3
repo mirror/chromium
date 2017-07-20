@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "217b2145_b1dd9e6d",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/compiled_resources2.gyp",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-20T18:00:08Z",
+      "side": 1,
+      "message": "I don\u0027t see this being used google_assistant_page.js?",
+      "revId": "cb4420fb0c712ffd12457145e5fba29a577cb8d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d1e9b87_d93420b6",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/compiled_resources2.gyp",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-20T18:00:08Z",
+      "side": 1,
+      "message": "Is this used in google_assistant_page.js? I don\u0027t see any calls to cr.ui.focusWithoutInk()",
+      "revId": "cb4420fb0c712ffd12457145e5fba29a577cb8d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b4f5cf2_f76adb26",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-20T18:00:08Z",
+      "side": 1,
+      "message": "Where is this used?",
+      "revId": "cb4420fb0c712ffd12457145e5fba29a577cb8d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee63df44_680d494f",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-20T18:00:08Z",
+      "side": 1,
+      "message": "There are no \u003cselect\u003e instances on this page. Can you remove md-select from the style include? Same for action-link.",
+      "revId": "cb4420fb0c712ffd12457145e5fba29a577cb8d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8f4ef67_884e8455",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-20T18:00:08Z",
+      "side": 1,
+      "message": "Is \"hilight\" an abbreviation of \"highlight\"? I don\u0027t recognize it as a word of its own, neither as an established abbreviation, so it looks like a typo (here and elsewhere). https://en.wiktionary.org/wiki/hilight also verifies that this is a mispelling for \"highlight\".",
+      "revId": "cb4420fb0c712ffd12457145e5fba29a577cb8d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc363f4d_27dbd037",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-20T18:00:08Z",
+      "side": 1,
+      "message": "Changing the label of a toggle when the state of the toogle changes has been discussed before in MD Settings, and per my understanding, we are moving away from that direction (it is confusing to the user).\n\nAdding @dschuyler to verify if that\u0027s indeed the case, or if I am mis-remembering.",
+      "revId": "cb4420fb0c712ffd12457145e5fba29a577cb8d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a2c619e_fb9ff28e",
+        "filename": "chrome/browser/resources/settings/route.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-20T18:00:08Z",
+      "side": 1,
+      "message": "Need to also update this typedef to include the new route.",
+      "revId": "cb4420fb0c712ffd12457145e5fba29a577cb8d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b5ba6e2_f8eff1ee",
+        "filename": "chrome/browser/resources/settings/search_page/search_page.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-20T18:00:08Z",
+      "side": 1,
+      "message": "Can you move those after all non-conditional imports? This is consistent with other files in MD Settintgs, for example see https://cs.chromium.org/chromium/src/chrome/browser/resources/settings/basic_page/basic_page.html?q\u003dbasic_page.html\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d3-31.",
+      "revId": "cb4420fb0c712ffd12457145e5fba29a577cb8d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f14cb917_5506879d",
+        "filename": "chrome/browser/resources/settings/search_page/search_page.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-20T18:00:08Z",
+      "side": 1,
+      "message": "indent off by 1",
+      "revId": "cb4420fb0c712ffd12457145e5fba29a577cb8d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7c5fd8e_f65415af",
+        "filename": "chrome/browser/resources/settings/search_page/search_page.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-20T18:00:08Z",
+      "side": 1,
+      "message": "indent off by 2",
+      "revId": "cb4420fb0c712ffd12457145e5fba29a577cb8d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e247de9_acbf2b48",
+        "filename": "chrome/browser/resources/settings/search_page/search_page.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-20T18:00:08Z",
+      "side": 1,
+      "message": "Is \"notify: true\" needed? I don\u0027t see voiceInteractionFeatureEnabled_ property involved in a two-way binding.\n\nhttps://www.polymer-project.org/1.0/docs/devguide/data-binding#two-way-bindings",
+      "revId": "cb4420fb0c712ffd12457145e5fba29a577cb8d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
