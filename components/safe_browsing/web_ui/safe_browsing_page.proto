@@ -1,0 +1,40 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+syntax = "proto2";
+
+package safe_browsing;
+
+option optimize_for = LITE_RUNTIME;
+
+// The message that's passed to SafeBrowsing WebUI with the
+// database manager parameters to be shown on chrome://safe-browsing.
+message DatabaseManagerInfo {
+  // An instance of UpdateInfo is passed to the UpdateManager to populate it.
+  message UpdateInfo {
+    optional int32 last_update_network_status = 1;
+
+    optional int64 time_since_last_update_micros = 2;
+  }
+
+  optional UpdateInfo update_info = 1;
+
+  // An instance of DatabaseInfo is passed to the Database to populate it.
+  message DatabaseInfo {
+    // An instance of the StoreInfo is passed to the Database to populate it.
+    optional bool database_update_completed = 1;
+
+    optional int64 database_size = 2;
+
+    message StoreInfo {
+      optional string file_name = 1;
+
+      optional int64 file_size = 2;
+
+      optional bool update_status = 3;
+    }
+
+    repeated StoreInfo store_infos = 3;
+  }
+}
