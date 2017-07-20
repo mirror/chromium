@@ -1,0 +1,181 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31f1d69a_490dced5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabsConnection.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-20T00:23:30Z",
+      "side": 1,
+      "message": "this used to be set at the end and now it is set early, is that an issue?",
+      "range": {
+        "startLine": 322,
+        "startChar": 20,
+        "endLine": 322,
+        "endChar": 42
+      },
+      "revId": "2430d3349912fd34d9b19d738375aef1c9f9c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "181c6811_917962a2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabsConnection.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-20T00:23:30Z",
+      "side": 1,
+      "message": "is mSpeculation only set as a result of the above?, I\u0027m wondering if we should not queue this task if we can check both of these beforehand.",
+      "revId": "2430d3349912fd34d9b19d738375aef1c9f9c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5561fe45_b027adfe",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabsConnection.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-20T00:23:30Z",
+      "side": 1,
+      "message": "we\u0027ve deleted (1) and (2), so these are a bit out of place",
+      "range": {
+        "startLine": 354,
+        "startChar": 25,
+        "endLine": 354,
+        "endChar": 26
+      },
+      "revId": "2430d3349912fd34d9b19d738375aef1c9f9c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eee6bf5_dace2356",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/ChainedTasks.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-20T00:23:30Z",
+      "side": 1,
+      "message": "MOST IMPORTANT NIT EVER!!!!\n\nFor javadocs that don\u0027t all fit on a single line, I think\n\n/**\n * Stuff and things\n */\n\nLooks nicer.\n\nUnless it can be\n/** Stuff and things */",
+      "revId": "2430d3349912fd34d9b19d738375aef1c9f9c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b112b28_730e1357",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/ChainedTasks.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-20T00:23:30Z",
+      "side": 1,
+      "message": "private?",
+      "revId": "2430d3349912fd34d9b19d738375aef1c9f9c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01521fcc_22877e4c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/ChainedTasks.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-20T00:23:30Z",
+      "side": 1,
+      "message": "private, and not need for \u003d false since it is the default",
+      "revId": "2430d3349912fd34d9b19d738375aef1c9f9c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbd30ab4_0024b83d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/ChainedTasks.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-20T00:23:30Z",
+      "side": 1,
+      "message": "is there a malicious case where you could call start, then cancel, then add?\n\nThe first start would add mRunAndPost to the handler queue, cancel would clear the tasks and mark it as not running, then add would add something to the queue.  At this point, mRunAndPost would be in the handler queue and would execute the task when it ran.\n\nI see two possible solutions.\n\n1.) Check mIsRunning in mRunAndPost\n2.) Add a method to ThreadUtils that is removeCallback, that would allow you to remove mRunAndPost from the handler queue.\n\nI\u0027d personally like #2 only because I had a temp patch that added something like it but I hadn\u0027t sent it for review, so you\u0027d be doing work for me :-P.",
+      "revId": "2430d3349912fd34d9b19d738375aef1c9f9c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25fa53ab_5005d8d2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/ChainedTasks.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-20T00:23:30Z",
+      "side": 1,
+      "message": "singl[e]",
+      "range": {
+        "startLine": 52,
+        "startChar": 70,
+        "endLine": 52,
+        "endChar": 75
+      },
+      "revId": "2430d3349912fd34d9b19d738375aef1c9f9c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d29fad17_eed2e31c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/ChainedTasks.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-20T00:23:30Z",
+      "side": 1,
+      "message": "should this runOnUiThreadBlocking?",
+      "range": {
+        "startLine": 58,
+        "startChar": 24,
+        "endLine": 58,
+        "endChar": 37
+      },
+      "revId": "2430d3349912fd34d9b19d738375aef1c9f9c46e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
