@@ -22,6 +22,30 @@
       "revId": "a0529a988e2e4d178dc5aaf8f1b6f63bdc7789ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a80d674_5f7f84a6",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/tracing_integration_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-20T14:24:11Z",
+      "side": 0,
+      "message": "It no longer passes. These tests bypass the service (they directly call RequestProcessDump on the service_client and look at the result) after this change we won\u0027t set resident_set_kb and soon we\u0027ll remove os_dump from mojom::RawProcessMemoryDumpPtr. If we want to test this at this level we\u0027ll need a new test which calls RequestOSDump on the service client.",
+      "parentUuid": "d8e2c02a_5eca7ecc",
+      "range": {
+        "startLine": 575,
+        "startChar": 8,
+        "endLine": 575,
+        "endChar": 62
+      },
+      "revId": "a0529a988e2e4d178dc5aaf8f1b6f63bdc7789ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

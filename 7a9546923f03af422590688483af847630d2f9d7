@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "81df22c3_7ae3f490",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-20T14:24:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5e1d674_c7a2c603",
+      "revId": "7a9546923f03af422590688483af847630d2f9d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d18cf1b4_5fc13bd3",
         "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
         "patchSetId": 11
@@ -39,6 +57,30 @@
       "revId": "7a9546923f03af422590688483af847630d2f9d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb043809_0e43a95d",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-20T14:24:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d18cf1b4_5fc13bd3",
+      "range": {
+        "startLine": 411,
+        "startChar": 0,
+        "endLine": 411,
+        "endChar": 21
+      },
+      "revId": "7a9546923f03af422590688483af847630d2f9d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "e87b5c5d_36695ee9",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-20T14:24:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88152d1a_b884d603",
+      "range": {
+        "startLine": 419,
+        "startChar": 4,
+        "endLine": 419,
+        "endChar": 60
+      },
+      "revId": "7a9546923f03af422590688483af847630d2f9d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20426593_b45dac3b",
         "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
         "patchSetId": 11
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "b84b0040_2aec4f29",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-20T14:24:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20426593_b45dac3b",
+      "range": {
+        "startLine": 421,
+        "startChar": 3,
+        "endLine": 421,
+        "endChar": 38
+      },
+      "revId": "7a9546923f03af422590688483af847630d2f9d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2517df93_5379fc1d",
         "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
         "patchSetId": 11
@@ -99,6 +189,30 @@
       "writtenOn": "2017-07-20T10:34:52Z",
       "side": 1,
       "message": "just checking, do we heave any test covering this case?",
+      "range": {
+        "startLine": 435,
+        "startChar": 4,
+        "endLine": 436,
+        "endChar": 15
+      },
+      "revId": "7a9546923f03af422590688483af847630d2f9d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2564a6d3_3d0929cd",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-20T14:24:11Z",
+      "side": 1,
+      "message": "We had a test that covered it incidentally, I\u0027ve added two more specific test cases for missing chrome/os dumps.",
+      "parentUuid": "2517df93_5379fc1d",
       "range": {
         "startLine": 435,
         "startChar": 4,
@@ -131,6 +245,30 @@
       "revId": "7a9546923f03af422590688483af847630d2f9d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbf4d595_f19c1af7",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-20T14:24:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e584043_a6da5cef",
+      "range": {
+        "startLine": 443,
+        "startChar": 22,
+        "endLine": 443,
+        "endChar": 23
+      },
+      "revId": "7a9546923f03af422590688483af847630d2f9d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "025f1482_1794ae92",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/tracing_observer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-20T14:24:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42c465cb_6b321725",
+      "range": {
+        "startLine": 134,
+        "startChar": 39,
+        "endLine": 134,
+        "endChar": 51
+      },
+      "revId": "7a9546923f03af422590688483af847630d2f9d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3cbfabf_00f62c2f",
         "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/tracing_observer.cc",
         "patchSetId": 11
@@ -191,6 +353,30 @@
       "writtenOn": "2017-07-20T10:34:52Z",
       "side": 1,
       "message": "can this be a function only defined in the anonymous namespace up here?",
+      "range": {
+        "startLine": 169,
+        "startChar": 0,
+        "endLine": 169,
+        "endChar": 46
+      },
+      "revId": "7a9546923f03af422590688483af847630d2f9d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bbf78ab_68686a51",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/tracing_observer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-20T14:24:11Z",
+      "side": 1,
+      "message": "I don\u0027t think so? It has to be visible since it is called by client impl and it can\u0027t be static since it calls AddToTraceIfEnabled which calls IsDumpModeAllowed which uses a member.",
+      "parentUuid": "c3cbfabf_00f62c2f",
       "range": {
         "startLine": 169,
         "startChar": 0,
@@ -226,6 +412,30 @@
     },
     {
       "key": {
+        "uuid": "c83cd4e3_3f515ae4",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/tracing_observer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-20T14:24:11Z",
+      "side": 1,
+      "message": "I thought I would just leave that there in case anyone needed it :P",
+      "parentUuid": "a497642a_3f48e340",
+      "range": {
+        "startLine": 182,
+        "startChar": 0,
+        "endLine": 218,
+        "endChar": 3
+      },
+      "revId": "7a9546923f03af422590688483af847630d2f9d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "648bbb3a_1dbc13b9",
         "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/tracing_observer.h",
         "patchSetId": 11
@@ -249,6 +459,30 @@
     },
     {
       "key": {
+        "uuid": "04418416_40555633",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/tracing_observer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-20T14:24:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "648bbb3a_1dbc13b9",
+      "range": {
+        "startLine": 44,
+        "startChar": 53,
+        "endLine": 44,
+        "endChar": 58
+      },
+      "revId": "7a9546923f03af422590688483af847630d2f9d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d786a630_37df0f82",
         "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/tracing_observer.h",
         "patchSetId": 11
@@ -269,6 +503,30 @@
       "revId": "7a9546923f03af422590688483af847630d2f9d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08e2e4f1_d16f782c",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/tracing_observer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-20T14:24:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d786a630_37df0f82",
+      "range": {
+        "startLine": 46,
+        "startChar": 60,
+        "endLine": 46,
+        "endChar": 72
+      },
+      "revId": "7a9546923f03af422590688483af847630d2f9d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
