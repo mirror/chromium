@@ -26,8 +26,8 @@ namespace usb {
 
 class PermissionProvider;
 
-// Implementation of the public DeviceManager interface. This interface can be
-// requested from the devices app located at "devices", if available.
+// Implements the public Mojom UsbDeviceManager interface by wrapping the
+// UsbService instance.
 class DeviceManagerImpl : public mojom::UsbDeviceManager,
                           public UsbService::Observer {
  public:
