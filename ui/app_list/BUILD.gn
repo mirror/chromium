@@ -89,6 +89,7 @@ component("app_list") {
     "//ui/events",
     "//ui/gfx",
     "//ui/gfx/geometry",
+    "//ui/keyboard/",
     "//ui/resources",
     "//ui/strings",
   ]
