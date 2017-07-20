@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc6df20d_fa01abad",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-07-20T18:18:54Z",
+      "side": 1,
+      "message": "Should the type be ProcessId instead?",
+      "revId": "693de7d3536572f344ac1dfe8d983fb57284b146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa086182_52e9a380",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1308,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-07-20T18:18:54Z",
+      "side": 1,
+      "message": "Mind moving the IsResourceCoordinatorEnabled() check inside GetFrameResourceCoordinator()? Since with the below changes that function can now return null, ideally we just check for that and not for IsResourceCoordinatorEnabled() in addition, at every callsite.",
+      "revId": "693de7d3536572f344ac1dfe8d983fb57284b146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3449191_066490a3",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_introspector_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-07-20T18:18:54Z",
+      "side": 1,
+      "message": "why not \u003d default; here?",
+      "revId": "693de7d3536572f344ac1dfe8d983fb57284b146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1400fe9_16956ad8",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_introspector_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-07-20T18:18:54Z",
+      "side": 1,
+      "message": "Can we DCHECK for pid !\u003d 0 and within the valid numeric range of ProcessId? Checking for a valid PID here would probably be racy and not work well, but it feels like it\u0027d be nice to have *some* kind of check that this still holds. A range check would at least catch situations where we have randomly generated IDs.",
+      "revId": "693de7d3536572f344ac1dfe8d983fb57284b146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd985c7f_b3346abb",
+        "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-07-20T18:18:54Z",
+      "side": 1,
+      "message": "ProcessId looks like it should be a usable Mojo type.",
+      "revId": "693de7d3536572f344ac1dfe8d983fb57284b146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
