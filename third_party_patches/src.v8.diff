@@ -1,0 +1,122 @@
+diff --git a/src/api-arguments-inl.h b/src/api-arguments-inl.h
+index 91ac253396..e474c04670 100644
+--- a/src/api-arguments-inl.h
++++ b/src/api-arguments-inl.h
+@@ -68,6 +68,7 @@ FOR_EACH_CALLBACK_TABLE_MAPPING_1_INDEX(WRITE_CALL_1_INDEX)
+ #undef FOR_EACH_CALLBACK_TABLE_MAPPING_1_INDEX
+ #undef WRITE_CALL_1_INDEX
+ 
++__attribute__((no_sanitize("cfi-icall")))
+ Handle<Object> PropertyCallbackArguments::Call(
+     GenericNamedPropertySetterCallback f, Handle<Name> name,
+     Handle<Object> value) {
+diff --git a/src/base/lazy-instance.h b/src/base/lazy-instance.h
+index 4c0a3f897b..a0d200e366 100644
+--- a/src/base/lazy-instance.h
++++ b/src/base/lazy-instance.h
+@@ -170,17 +170,13 @@ struct LazyInstanceImpl {
+   typedef typename AllocationTrait::StorageType StorageType;
+ 
+  private:
+-  static void InitInstance(StorageType* storage) {
+-    AllocationTrait::template InitStorageUsingTrait<CreateTrait>(storage);
++  static void InitInstance(void* storage) {
++    AllocationTrait::template InitStorageUsingTrait<CreateTrait>(
++        static_cast<StorageType*>(storage));
+   }
+ 
+   void Init() const {
+-    InitOnceTrait::Init(
+-        &once_,
+-        // Casts to void* are needed here to avoid breaking strict aliasing
+-        // rules.
+-        reinterpret_cast<void(*)(void*)>(&InitInstance),  // NOLINT
+-        reinterpret_cast<void*>(&storage_));
++    InitOnceTrait::Init(&once_, InitInstance, static_cast<void*>(&storage_));
+   }
+ 
+  public:
+diff --git a/src/base/once.cc b/src/base/once.cc
+index 818a9f2e84..09416703b7 100644
+--- a/src/base/once.cc
++++ b/src/base/once.cc
+@@ -15,13 +15,7 @@
+ namespace v8 {
+ namespace base {
+ 
+-void CallOnceImpl(OnceType* once, PointerArgFunction init_func, void* arg) {
+-  AtomicWord state = Acquire_Load(once);
+-  // Fast path. The provided function was already executed.
+-  if (state == ONCE_STATE_DONE) {
+-    return;
+-  }
+-
++void CallOnceImpl(OnceType* once, std::function<void()> init_func) {
+   // The function execution did not complete yet. The once object can be in one
+   // of the two following states:
+   //   - UNINITIALIZED: We are the first thread calling this function.
+@@ -29,12 +23,12 @@ void CallOnceImpl(OnceType* once, PointerArgFunction init_func, void* arg) {
+   //
+   // First, try to change the state from UNINITIALIZED to EXECUTING_FUNCTION
+   // atomically.
+-  state = Acquire_CompareAndSwap(
++  AtomicWord state = Acquire_CompareAndSwap(
+       once, ONCE_STATE_UNINITIALIZED, ONCE_STATE_EXECUTING_FUNCTION);
+   if (state == ONCE_STATE_UNINITIALIZED) {
+     // We are the first thread to call this function, so we have to call the
+     // function.
+-    init_func(arg);
++    init_func();
+     Release_Store(once, ONCE_STATE_DONE);
+   } else {
+     // Another thread has already started executing the function. We need to
+diff --git a/src/base/once.h b/src/base/once.h
+index 8008812d75..f355ef52ae 100644
+--- a/src/base/once.h
++++ b/src/base/once.h
+@@ -53,6 +53,7 @@
+ #define V8_BASE_ONCE_H_
+ 
+ #include <stddef.h>
++#include <functional>
+ 
+ #include "src/base/atomicops.h"
+ #include "src/base/base-export.h"
+@@ -80,12 +81,12 @@ struct OneArgFunction {
+   typedef void (*type)(T);
+ };
+ 
+-V8_BASE_EXPORT void CallOnceImpl(OnceType* once, PointerArgFunction init_func,
+-                                 void* arg);
++V8_BASE_EXPORT void CallOnceImpl(OnceType* once,
++                                 std::function<void()> init_func);
+ 
+ inline void CallOnce(OnceType* once, NoArgFunction init_func) {
+   if (Acquire_Load(once) != ONCE_STATE_DONE) {
+-    CallOnceImpl(once, reinterpret_cast<PointerArgFunction>(init_func), NULL);
++    CallOnceImpl(once, init_func);
+   }
+ }
+ 
+@@ -94,8 +95,7 @@ template <typename Arg>
+ inline void CallOnce(OnceType* once,
+     typename OneArgFunction<Arg*>::type init_func, Arg* arg) {
+   if (Acquire_Load(once) != ONCE_STATE_DONE) {
+-    CallOnceImpl(once, reinterpret_cast<PointerArgFunction>(init_func),
+-        static_cast<void*>(arg));
++    CallOnceImpl(once, [=]() { init_func(arg); });
+   }
+ }
+ 
+diff --git a/src/execution.cc b/src/execution.cc
+index 17e63ff83b..05eb877e1a 100644
+--- a/src/execution.cc
++++ b/src/execution.cc
+@@ -55,6 +55,7 @@ static void PrintDeserializedCodeInfo(Handle<JSFunction> function) {
+ 
+ namespace {
+ 
++__attribute__((no_sanitize("cfi-icall")))
+ MUST_USE_RESULT MaybeHandle<Object> Invoke(
+     Isolate* isolate, bool is_construct, Handle<Object> target,
+     Handle<Object> receiver, int argc, Handle<Object> args[],

@@ -37,7 +37,7 @@ PPP_Graphics3D_Proxy::PPP_Graphics3D_Proxy(Dispatcher* dispatcher)
       ppp_graphics_3d_impl_(NULL) {
   if (dispatcher->IsPlugin()) {
     ppp_graphics_3d_impl_ = static_cast<const PPP_Graphics3D*>(
-        dispatcher->local_get_interface()(PPP_GRAPHICS_3D_INTERFACE));
+        dispatcher->local_get_interface(PPP_GRAPHICS_3D_INTERFACE));
   }
 }
 

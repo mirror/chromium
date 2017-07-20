@@ -113,7 +113,7 @@ PPP_Printing_Proxy::PPP_Printing_Proxy(Dispatcher* dispatcher)
       ppp_printing_impl_(NULL) {
   if (dispatcher->IsPlugin()) {
     ppp_printing_impl_ = static_cast<const PPP_Printing_Dev*>(
-        dispatcher->local_get_interface()(PPP_PRINTING_DEV_INTERFACE));
+        dispatcher->local_get_interface(PPP_PRINTING_DEV_INTERFACE));
   }
 }
 

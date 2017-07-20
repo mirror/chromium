@@ -59,7 +59,7 @@ PPP_Pdf_Proxy::PPP_Pdf_Proxy(Dispatcher* dispatcher)
       ppp_pdf_(NULL) {
   if (dispatcher->IsPlugin()) {
     ppp_pdf_ = static_cast<const PPP_Pdf*>(
-        dispatcher->local_get_interface()(PPP_PDF_INTERFACE));
+        dispatcher->local_get_interface(PPP_PDF_INTERFACE));
   }
 }
 

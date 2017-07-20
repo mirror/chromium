@@ -30,7 +30,7 @@ VideoCaptureResource::VideoCaptureResource(
   SendCreate(RENDERER, PpapiHostMsg_VideoCapture_Create());
 
   ppp_video_capture_impl_ = static_cast<const PPP_VideoCapture_Dev*>(
-      dispatcher->local_get_interface()(PPP_VIDEO_CAPTURE_DEV_INTERFACE));
+      dispatcher->local_get_interface(PPP_VIDEO_CAPTURE_DEV_INTERFACE));
 }
 
 VideoCaptureResource::~VideoCaptureResource() {

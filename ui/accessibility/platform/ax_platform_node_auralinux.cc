@@ -143,6 +143,7 @@ static AtkObject* ax_platform_node_auralinux_ref_child(
   return result;
 }
 
+__attribute__((no_sanitize("cfi-icall")))
 static AtkRelationSet* ax_platform_node_auralinux_ref_relation_set(
     AtkObject* atk_object) {
   ui::AXPlatformNodeAuraLinux* obj =
@@ -171,6 +172,7 @@ static AtkRole ax_platform_node_auralinux_get_role(AtkObject* atk_object) {
   return obj->GetAtkRole();
 }
 
+__attribute__((no_sanitize("cfi-icall")))
 static AtkStateSet* ax_platform_node_auralinux_ref_state_set(
     AtkObject* atk_object) {
   ui::AXPlatformNodeAuraLinux* obj =
@@ -282,6 +284,7 @@ static const GInterfaceInfo ComponentInfo = {
 // of the Atk* interfaces.
 //
 
+__attribute__((no_sanitize("cfi-icall")))
 static void ax_platform_node_auralinux_init(AtkObject* atk_object,
                                             gpointer data) {
   if (ATK_OBJECT_CLASS(ax_platform_node_auralinux_parent_class)->initialize) {
@@ -293,6 +296,7 @@ static void ax_platform_node_auralinux_init(AtkObject* atk_object,
       reinterpret_cast<ui::AXPlatformNodeAuraLinux*>(data);
 }
 
+__attribute__((no_sanitize("cfi-icall")))
 static void ax_platform_node_auralinux_finalize(GObject* atk_object) {
   G_OBJECT_CLASS(ax_platform_node_auralinux_parent_class)->finalize(atk_object);
 }

@@ -458,7 +458,7 @@ PPP_ContentDecryptor_Private_Proxy::PPP_ContentDecryptor_Private_Proxy(
       ppp_decryptor_impl_(NULL) {
   if (dispatcher->IsPlugin()) {
     ppp_decryptor_impl_ = static_cast<const PPP_ContentDecryptor_Private*>(
-        dispatcher->local_get_interface()(
+        dispatcher->local_get_interface(
             PPP_CONTENTDECRYPTOR_PRIVATE_INTERFACE));
   }
 }

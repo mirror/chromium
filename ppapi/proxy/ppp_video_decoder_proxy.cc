@@ -93,7 +93,7 @@ PPP_VideoDecoder_Proxy::PPP_VideoDecoder_Proxy(Dispatcher* dispatcher)
       ppp_video_decoder_impl_(NULL) {
   if (dispatcher->IsPlugin()) {
     ppp_video_decoder_impl_ = static_cast<const PPP_VideoDecoder_Dev*>(
-        dispatcher->local_get_interface()(PPP_VIDEODECODER_DEV_INTERFACE));
+        dispatcher->local_get_interface(PPP_VIDEODECODER_DEV_INTERFACE));
   }
 }
 
