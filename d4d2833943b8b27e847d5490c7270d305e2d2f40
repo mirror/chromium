@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cb8a2b4_62043efb",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3005,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-21T00:25:16Z",
+      "side": 1,
+      "message": "nit: \"on the lock screen\"",
+      "range": {
+        "startLine": 3005,
+        "startChar": 269,
+        "endLine": 3005,
+        "endChar": 283
+      },
+      "revId": "d4d2833943b8b27e847d5490c7270d305e2d2f40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db20ed49_f80ca5f8",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3005,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-21T00:25:16Z",
+      "side": 1,
+      "message": "nit: \"on the lock screen\"",
+      "range": {
+        "startLine": 3005,
+        "startChar": 206,
+        "endLine": 3005,
+        "endChar": 207
+      },
+      "revId": "d4d2833943b8b27e847d5490c7270d305e2d2f40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ea08cac_46ae8663",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3005,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-21T00:25:16Z",
+      "side": 1,
+      "message": "nit: \"note-taking\", as above",
+      "range": {
+        "startLine": 3005,
+        "startChar": 144,
+        "endLine": 3005,
+        "endChar": 145
+      },
+      "revId": "d4d2833943b8b27e847d5490c7270d305e2d2f40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da8cd9f0_add974e2",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3005,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-21T00:25:16Z",
+      "side": 1,
+      "message": "available",
+      "range": {
+        "startLine": 3005,
+        "startChar": 219,
+        "endLine": 3005,
+        "endChar": 228
+      },
+      "revId": "d4d2833943b8b27e847d5490c7270d305e2d2f40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d27abb13_deb67bcf",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3005,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-21T00:25:16Z",
+      "side": 1,
+      "message": "does it only apply to the latest note taken on the lock screen? eg, if the user takes a note while signed in, would nothing show up in the app?",
+      "range": {
+        "startLine": 3005,
+        "startChar": 198,
+        "endLine": 3005,
+        "endChar": 218
+      },
+      "revId": "d4d2833943b8b27e847d5490c7270d305e2d2f40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
