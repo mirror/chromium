@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99b81376_f07369a7",
+        "filename": "chromecast/base/chromecast_switches.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1125569
+      },
+      "writtenOn": "2017-07-21T20:18:59Z",
+      "side": 1,
+      "message": "same?",
+      "range": {
+        "startLine": 113,
+        "startChar": 11,
+        "endLine": 116,
+        "endChar": 27
+      },
+      "revId": "5eee7d00f1d25554b4c0ef6cba659e2e960eecc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b92606fe_a12926dc",
+        "filename": "chromecast/base/chromecast_switches.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1125569
+      },
+      "writtenOn": "2017-07-21T20:18:59Z",
+      "side": 1,
+      "message": "sort",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 34
+      },
+      "revId": "5eee7d00f1d25554b4c0ef6cba659e2e960eecc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f13eeb6b_72d1eb28",
+        "filename": "chromecast/media/cma/backend/android/loopback_audio_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1125569
+      },
+      "writtenOn": "2017-07-21T20:18:59Z",
+      "side": 1,
+      "message": "Please delete commented out code here and below?",
+      "range": {
+        "startLine": 100,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 26
+      },
+      "revId": "5eee7d00f1d25554b4c0ef6cba659e2e960eecc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05148b3e_0ea5a43b",
+        "filename": "chromecast/media/cma/backend/android/loopback_audio_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1125569
+      },
+      "writtenOn": "2017-07-21T20:18:59Z",
+      "side": 1,
+      "message": "Why is this not 3 if it\u0027s packed?",
+      "range": {
+        "startLine": 150,
+        "startChar": 26,
+        "endLine": 150,
+        "endChar": 27
+      },
+      "revId": "5eee7d00f1d25554b4c0ef6cba659e2e960eecc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89d105b3_84ba263e",
+        "filename": "chromecast/media/cma/backend/android/loopback_audio_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1125569
+      },
+      "writtenOn": "2017-07-21T20:18:59Z",
+      "side": 1,
+      "message": "Please make these constants and define them somewhere.",
+      "range": {
+        "startLine": 169,
+        "startChar": 54,
+        "endLine": 169,
+        "endChar": 63
+      },
+      "revId": "5eee7d00f1d25554b4c0ef6cba659e2e960eecc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
