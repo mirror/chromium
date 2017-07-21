@@ -296,8 +296,9 @@ void ElementAnimations::SetNeedsUpdateImplClientState() {
   SetNeedsPushProperties();
 }
 
-void ElementAnimations::NotifyClientOpacityAnimated(float opacity,
-                                                    Animation* animation) {
+void ElementAnimations::NotifyClientFloatAnimated(float opacity,
+                                                  Animation* animation) {
+  DCHECK(animation->target_property_id() == TargetProperty::OPACITY);
   if (AnimationAffectsActiveElements(animation))
     OnOpacityAnimated(ElementListType::ACTIVE, opacity);
   if (AnimationAffectsPendingElements(animation))
