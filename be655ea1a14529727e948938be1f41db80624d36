@@ -70,6 +70,30 @@
       "revId": "be655ea1a14529727e948938be1f41db80624d36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b2b1be2_12dfe6b2",
+        "filename": "components/sync_bookmarks/bookmark_model_associator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 966,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-07-21T00:05:44Z",
+      "side": 1,
+      "message": "By reordering the enum, did you mean changing the order of the items in the code? As long as we specify the value, we can reorder them without changing their values, right? Like:\n\nenum EnumType {\n  B \u003d 2,\n  A \u003d 1\n}\n\nkModelTypeInfoMap gives us a lot of flexibility, but it also looks quite error prone.\n\nEither specifying the value inline inside ModelType like above or creating a new type called ModelTypeUMA should improve the current situation. ModelTypeUMA also makes kModelTypeInfoMap less error prone since it replaces the magic numbers by readable names.\n\nDoes this sound reasonable?",
+      "parentUuid": "8279c24e_c71dab18",
+      "range": {
+        "startLine": 966,
+        "startChar": 0,
+        "endLine": 966,
+        "endChar": 74
+      },
+      "revId": "be655ea1a14529727e948938be1f41db80624d36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
