@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "87fee2b2_e6fd5d24",
+        "filename": "dbus/object_proxy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-21T03:50:36Z",
+      "side": 1,
+      "message": "I don\u0027t think OnPendingCallIsComplete() gets called when the object proxy is destroyed, so I think it\u0027s possible that the callback is still non-null when this struct is destroyed.",
+      "parentUuid": "135efc08_0220e935",
+      "revId": "365c03452721d152f2c2aa931ef7bf41cf31d954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "585c011b_4b82eac0",
         "filename": "dbus/object_proxy.cc",
         "patchSetId": 3
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "c817781d_265f1f35",
+        "filename": "dbus/object_proxy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-21T03:50:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "585c011b_4b82eac0",
+      "range": {
+        "startLine": 312,
+        "startChar": 18,
+        "endLine": 312,
+        "endChar": 37
+      },
+      "revId": "365c03452721d152f2c2aa931ef7bf41cf31d954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d488006_9adab272",
         "filename": "dbus/object_proxy.h",
         "patchSetId": 3
@@ -56,6 +98,24 @@
       "revId": "365c03452721d152f2c2aa931ef7bf41cf31d954",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64d83201_81018b7b",
+        "filename": "dbus/object_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-21T03:50:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d488006_9adab272",
+      "revId": "365c03452721d152f2c2aa931ef7bf41cf31d954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -79,6 +139,30 @@
       "revId": "365c03452721d152f2c2aa931ef7bf41cf31d954",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcf40ab0_40ecc1c3",
+        "filename": "dbus/object_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-21T03:50:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3aa7a5bb_3b96330c",
+      "range": {
+        "startLine": 278,
+        "startChar": 13,
+        "endLine": 278,
+        "endChar": 39
+      },
+      "revId": "365c03452721d152f2c2aa931ef7bf41cf31d954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
