@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "c77403b8_2150f3b7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-07-21T20:13:56Z",
+      "side": 1,
+      "message": "I still don\u0027t think this commit message is explicit enough about what it does. Perhaps something like the following?\n\nIn order to favor reducing peak memory over performance on low devices, we now decode directly into the compositor\u0027s memory (rather than into ImageDecoder\u0027s cache followed by a copy) even if only part of of the (single-frame) image is available. This means future decodes will have to start over, but we avoid the extra memory in ImageFrameGenerator.\n\nAlso, rename ImageDecoder::FrameBufferAtIndex to ImageDecoder::DecodeFrameBufferAtIndex.\n\n(Although the latter part seems like it could be a separate CL.)",
+      "range": {
+        "startLine": 15,
+        "startChar": 17,
+        "endLine": 15,
+        "endChar": 70
+      },
+      "revId": "11f83906ee8c866df3c2c91bfb2ae61dd1f246be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98b76600_583b40c2",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-07-21T20:13:56Z",
+      "side": 1,
+      "message": "nit: The header called this \"used\", and this one calls it \"using\". Probably better to be consistent.",
+      "range": {
+        "startLine": 226,
+        "startChar": 7,
+        "endLine": 226,
+        "endChar": 31
+      },
+      "revId": "11f83906ee8c866df3c2c91bfb2ae61dd1f246be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85aaf39f_dc06d637",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-07-21T20:13:56Z",
+      "side": 1,
+      "message": "nit: new_decoder",
+      "range": {
+        "startLine": 343,
+        "startChar": 45,
+        "endLine": 343,
+        "endChar": 56
+      },
+      "revId": "11f83906ee8c866df3c2c91bfb2ae61dd1f246be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b747af4_f947998a",
         "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
         "patchSetId": 9
@@ -18,6 +87,29 @@
         "startChar": 17,
         "endLine": 348,
         "endChar": 24
+      },
+      "revId": "11f83906ee8c866df3c2c91bfb2ae61dd1f246be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f97e0d1c_778f4c80",
+        "filename": "third_party/WebKit/Source/platform/graphics/test/MockImageDecoder.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-07-21T20:13:56Z",
+      "side": 1,
+      "message": "nit: No need for this name, since you don\u0027t use the variable.",
+      "range": {
+        "startLine": 106,
+        "startChar": 47,
+        "endLine": 106,
+        "endChar": 56
       },
       "revId": "11f83906ee8c866df3c2c91bfb2ae61dd1f246be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
