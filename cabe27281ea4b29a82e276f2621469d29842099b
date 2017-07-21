@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "d215aad8_f95fa5a2",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-21T19:05:03Z",
+      "side": 1,
+      "message": "We try to make the context current before destroying the command buffer (see GpuCommandBufferStub::Destroy). Note that it can fail (e.g. lost context), and that\u0027s why we signal it as the \"bool have_context\" parameter in GLES2Decoder(Passthrough)Impl::Destroy, but the intent is that no other decoder is considered current - at worst another GL context is still current, but we don\u0027t want to use it, and we\u0027ll call GLES2DecoderPassthroughImpl::MakeCurrent on the corresponding decoder if we want to use that one again anyway.\n\nMy suggestion is to reset the callback to null in GLES2DecoderPassthroughImpl::Destroy.",
+      "parentUuid": "21d2cbf2_f88eef36",
+      "revId": "cabe27281ea4b29a82e276f2621469d29842099b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "46ff0f81_674b9755",
         "filename": "gpu/command_buffer/service/passthrough_program_cache.cc",
         "patchSetId": 1
