@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "083c26a3_7c353e11",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-21T21:34:59Z",
+      "side": 1,
+      "message": "nit: Might be clearer to express this as:\n\n\"Now that the Fuchsia SDK includes the \"bootstrap\" service, migrate to launching the test binary via that, rather than launching it directly as an \"initial app\". This makes the system services launched by the default bootstrap configuration available to the test binary.\"",
+      "revId": "cb8779a9f4223700f8d640e18b40536264d1fe10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
