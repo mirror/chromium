@@ -217,6 +217,7 @@ class CORE_EXPORT InspectorNetworkAgent final
       double download_throughput,
       double upload_throughput,
       Maybe<String> connection_type) override;
+  protocol::Response clearBrowserCache() override;
   protocol::Response setCacheDisabled(bool) override;
   protocol::Response setBypassServiceWorker(bool) override;
   protocol::Response setDataSizeLimitsForTest(int max_total_size,
