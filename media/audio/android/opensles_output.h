@@ -147,6 +147,8 @@ class OpenSLESOutputStream : public MuteableAudioOutputStream {
   int bytes_per_frame_;
   size_t buffer_size_bytes_;
 
+  const bool use_high_latency_;
+
   // Used to calculate the delay value for each OnMoreData() call.
   AudioTimestampHelper delay_calculator_;
 
