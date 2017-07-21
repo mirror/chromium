@@ -15,7 +15,7 @@
 
 // Initializes the bubble with the given text, arrow direction, and alignment.
 - (instancetype)initWithText:(NSString*)text
-                   direction:(BubbleArrowDirection)arrowDirection
+              arrowDirection:(BubbleArrowDirection)direction
                    alignment:(BubbleAlignment)alignment
     NS_DESIGNATED_INITIALIZER;
 
