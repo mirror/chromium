@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "46109f25_d9a9fb41",
+        "filename": "remoting/host/remoting_me2me_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-21T04:38:26Z",
+      "side": 1,
+      "message": "Do you want to plumb this through for Windows as well?  If so, check out this code here which copies the switch from the Daemon process to the Network process:\nhttps://cs.chromium.org/chromium/src/remoting/host/daemon_process_win.cc?rcl\u003d26ffad3ad7dede34c8bd8a42707565da30e53533\u0026l\u003d66",
+      "range": {
+        "startLine": 181,
+        "startChar": 11,
+        "endLine": 181,
+        "endChar": 32
+      },
+      "revId": "d26c1cf59ae5a28926803e072dccc69c65d9700a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37a1b6a8_13f789f1",
         "filename": "remoting/protocol/webrtc_video_stream.cc",
         "patchSetId": 9
