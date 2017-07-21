@@ -861,6 +861,10 @@
       status: "stable",
     },
     {
+      name: "RasterInducedScrolling",
+      status: "test",
+    },
+    {
       name: "ReducedReferrerGranularity",
     },
     {
