@@ -61,8 +61,10 @@ class SchedulerWorkerDefaultDelegate : public SchedulerWorker::Delegate {
     ADD_FAILURE() << "Unexpected call to ReEnqueueSequence()";
   }
   TimeDelta GetSleepTimeout() override { return TimeDelta::Max(); }
-  bool CanDetach(SchedulerWorker* worker) override { return false; }
-  void OnDetach() override { ADD_FAILURE() << "Unexpected call to OnDetach()"; }
+  bool CanTimeout(SchedulerWorker* worker) override { return false; }
+  void OnTimeout() override {
+    ADD_FAILURE() << "Unexpected call to OnTimeout()";
+  }
 
  private:
   DISALLOW_COPY_AND_ASSIGN(SchedulerWorkerDefaultDelegate);
@@ -360,7 +362,7 @@ INSTANTIATE_TEST_CASE_P(TwoTasksPerSequence,
 
 namespace {
 
-class ControllableDetachDelegate : public SchedulerWorkerDefaultDelegate {
+class ControllableTimeoutDelegate : public SchedulerWorkerDefaultDelegate {
  public:
   class Controls : public RefCountedThreadSafe<Controls> {
    public:
@@ -369,12 +371,12 @@ class ControllableDetachDelegate : public SchedulerWorkerDefaultDelegate {
                         WaitableEvent::InitialState::SIGNALED),
           work_processed_(WaitableEvent::ResetPolicy::MANUAL,
                           WaitableEvent::InitialState::NOT_SIGNALED),
-          detach_requested_(WaitableEvent::ResetPolicy::MANUAL,
-                            WaitableEvent::InitialState::NOT_SIGNALED),
-          detached_(WaitableEvent::ResetPolicy::MANUAL,
+          timeout_requested_(WaitableEvent::ResetPolicy::MANUAL,
+                             WaitableEvent::InitialState::NOT_SIGNALED),
+          timedout_(WaitableEvent::ResetPolicy::MANUAL,
                     WaitableEvent::InitialState::NOT_SIGNALED),
-          can_detach_block_(WaitableEvent::ResetPolicy::MANUAL,
-                            WaitableEvent::InitialState::SIGNALED),
+          can_timeout_block_(WaitableEvent::ResetPolicy::MANUAL,
+                             WaitableEvent::InitialState::SIGNALED),
           destroyed_(WaitableEvent::ResetPolicy::MANUAL,
                      WaitableEvent::InitialState::NOT_SIGNALED) {}
 
@@ -382,15 +384,15 @@ class ControllableDetachDelegate : public SchedulerWorkerDefaultDelegate {
 
     void UnblockWork() { work_running_.Signal(); }
 
-    void MakeCanDetachBlock() { can_detach_block_.Reset(); }
+    void MakeCanTimeoutBlock() { can_timeout_block_.Reset(); }
 
-    void UnblockCanDetach() { can_detach_block_.Signal(); }
+    void UnblockCanTimeout() { can_timeout_block_.Signal(); }
 
     void WaitForWorkToRun() { work_processed_.Wait(); }
 
-    void WaitForDetachRequest() { detach_requested_.Wait(); }
+    void WaitForTimeoutRequest() { timeout_requested_.Wait(); }
 
-    void WaitForDetach() { detached_.Wait(); }
+    void WaitForTimeout() { timedout_.Wait(); }
 
     void WaitForDelegateDestroy() { destroyed_.Wait(); }
 
@@ -401,36 +403,36 @@ class ControllableDetachDelegate : public SchedulerWorkerDefaultDelegate {
     void ResetState() {
       work_running_.Signal();
       work_processed_.Reset();
-      detach_requested_.Reset();
-      can_detach_block_.Signal();
+      timeout_requested_.Reset();
+      can_timeout_block_.Signal();
       work_requested_ = false;
     }
 
-    void set_can_detach(bool can_detach) { can_detach_ = can_detach; }
+    void set_can_timeout(bool can_timeout) { can_timeout_ = can_timeout; }
 
    private:
-    friend class ControllableDetachDelegate;
+    friend class ControllableTimeoutDelegate;
     friend class RefCountedThreadSafe<Controls>;
     ~Controls() = default;
 
     WaitableEvent work_running_;
     WaitableEvent work_processed_;
-    WaitableEvent detach_requested_;
-    WaitableEvent detached_;
-    WaitableEvent can_detach_block_;
+    WaitableEvent timeout_requested_;
+    WaitableEvent timedout_;
+    WaitableEvent can_timeout_block_;
     WaitableEvent destroyed_;
 
     bool expect_get_work_ = true;
-    bool can_detach_ = false;
+    bool can_timeout_ = false;
     bool work_requested_ = false;
 
     DISALLOW_COPY_AND_ASSIGN(Controls);
   };
 
-  ControllableDetachDelegate(TaskTracker* task_tracker)
+  ControllableTimeoutDelegate(TaskTracker* task_tracker)
       : task_tracker_(task_tracker), controls_(new Controls()) {}
 
-  ~ControllableDetachDelegate() override { controls_->destroyed_.Signal(); }
+  ~ControllableTimeoutDelegate() override { controls_->destroyed_.Signal(); }
 
   scoped_refptr<Sequence> GetWork(SchedulerWorker* worker)
       override {
@@ -461,22 +463,22 @@ class ControllableDetachDelegate : public SchedulerWorkerDefaultDelegate {
 
   void DidRunTask() override {}
 
-  bool CanDetach(SchedulerWorker* worker) override {
-    // Saving |can_detach_| now so that callers waiting on |detach_requested_|
-    // have the thread go to sleep and then allow detachment.
-    bool can_detach = controls_->can_detach_;
-    controls_->detach_requested_.Signal();
-    controls_->can_detach_block_.Wait();
-    return can_detach;
+  bool CanTimeout(SchedulerWorker* worker) override {
+    // Saving |can_timeout_| now so that callers waiting on |timeout_requested_|
+    // have the thread go to sleep and then allow timing out.
+    bool can_timeout = controls_->can_timeout_;
+    controls_->timeout_requested_.Signal();
+    controls_->can_timeout_block_.Wait();
+    return can_timeout;
   }
 
-  void OnDetach() override {
-    EXPECT_TRUE(controls_->can_detach_);
-    EXPECT_TRUE(controls_->detach_requested_.IsSignaled());
-    controls_->detached_.Signal();
+  void OnTimeout() override {
+    EXPECT_TRUE(controls_->can_timeout_);
+    EXPECT_TRUE(controls_->timeout_requested_.IsSignaled());
+    controls_->timedout_.Signal();
   }
 
-  // ControllableDetachDelegate:
+  // ControllableTimeoutDelegate:
   scoped_refptr<Controls> controls() { return controls_; }
 
  private:
@@ -484,32 +486,32 @@ class ControllableDetachDelegate : public SchedulerWorkerDefaultDelegate {
   TaskTracker* const task_tracker_;
   scoped_refptr<Controls> controls_;
 
-  DISALLOW_COPY_AND_ASSIGN(ControllableDetachDelegate);
+  DISALLOW_COPY_AND_ASSIGN(ControllableTimeoutDelegate);
 };
 
-class MockedControllableDetachDelegate : public ControllableDetachDelegate {
+class MockedControllableTimeoutDelegate : public ControllableTimeoutDelegate {
  public:
-  MockedControllableDetachDelegate(TaskTracker* task_tracker)
-      : ControllableDetachDelegate(task_tracker){};
-  ~MockedControllableDetachDelegate() = default;
+  MockedControllableTimeoutDelegate(TaskTracker* task_tracker)
+      : ControllableTimeoutDelegate(task_tracker){};
+  ~MockedControllableTimeoutDelegate() = default;
 
   // SchedulerWorker::Delegate:
   MOCK_METHOD1(OnMainEntry, void(SchedulerWorker* worker));
 
  private:
-  DISALLOW_COPY_AND_ASSIGN(MockedControllableDetachDelegate);
+  DISALLOW_COPY_AND_ASSIGN(MockedControllableTimeoutDelegate);
 };
 
 }  // namespace
 
-TEST(TaskSchedulerWorkerTest, WorkerDetaches) {
+TEST(TaskSchedulerWorkerTest, WorkerRemoval) {
   TaskTracker task_tracker;
   // Will be owned by SchedulerWorker.
-  MockedControllableDetachDelegate* delegate =
-      new StrictMock<MockedControllableDetachDelegate>(&task_tracker);
-  scoped_refptr<ControllableDetachDelegate::Controls> controls =
+  MockedControllableTimeoutDelegate* delegate =
+      new StrictMock<MockedControllableTimeoutDelegate>(&task_tracker);
+  scoped_refptr<ControllableTimeoutDelegate::Controls> controls =
       delegate->controls();
-  controls->set_can_detach(true);
+  controls->set_can_timeout(true);
   EXPECT_CALL(*delegate, OnMainEntry(_));
   auto worker = make_scoped_refptr(new SchedulerWorker(
       ThreadPriority::NORMAL, WrapUnique(delegate), &task_tracker));
@@ -517,54 +519,54 @@ TEST(TaskSchedulerWorkerTest, WorkerDetaches) {
   worker->WakeUp();
   controls->WaitForWorkToRun();
   Mock::VerifyAndClear(delegate);
-  controls->WaitForDetachRequest();
-  controls->WaitForDetach();
+  controls->WaitForTimeoutRequest();
+  controls->WaitForTimeout();
   ASSERT_FALSE(worker->ThreadAliveForTesting());
 }
 
-TEST(TaskSchedulerWorkerTest, WorkerCleanupBeforeDetach) {
+TEST(TaskSchedulerWorkerTest, WorkerCleanupBeforeRemoval) {
   TaskTracker task_tracker;
   // Will be owned by SchedulerWorker.
   // No mock here as that's reasonably covered by other tests and the delegate
   // may destroy on a different thread. Mocks aren't designed with that in mind.
-  std::unique_ptr<ControllableDetachDelegate> delegate =
-      MakeUnique<ControllableDetachDelegate>(&task_tracker);
-  scoped_refptr<ControllableDetachDelegate::Controls> controls =
+  std::unique_ptr<ControllableTimeoutDelegate> delegate =
+      MakeUnique<ControllableTimeoutDelegate>(&task_tracker);
+  scoped_refptr<ControllableTimeoutDelegate::Controls> controls =
       delegate->controls();
 
-  controls->set_can_detach(true);
-  controls->MakeCanDetachBlock();
+  controls->set_can_timeout(true);
+  controls->MakeCanTimeoutBlock();
 
   auto worker = make_scoped_refptr(new SchedulerWorker(
       ThreadPriority::NORMAL, std::move(delegate), &task_tracker));
   worker->Start();
   worker->WakeUp();
 
-  controls->WaitForDetachRequest();
+  controls->WaitForTimeoutRequest();
   worker->Cleanup();
   worker = nullptr;
-  controls->UnblockCanDetach();
+  controls->UnblockCanTimeout();
   controls->WaitForDelegateDestroy();
 }
 
-TEST(TaskSchedulerWorkerTest, WorkerCleanupAfterDetach) {
+TEST(TaskSchedulerWorkerTest, WorkerCleanupAfterRemoval) {
   TaskTracker task_tracker;
   // Will be owned by SchedulerWorker.
   // No mock here as that's reasonably covered by other tests and the delegate
   // may destroy on a different thread. Mocks aren't designed with that in mind.
-  std::unique_ptr<ControllableDetachDelegate> delegate =
-      MakeUnique<ControllableDetachDelegate>(&task_tracker);
-  scoped_refptr<ControllableDetachDelegate::Controls> controls =
+  std::unique_ptr<ControllableTimeoutDelegate> delegate =
+      MakeUnique<ControllableTimeoutDelegate>(&task_tracker);
+  scoped_refptr<ControllableTimeoutDelegate::Controls> controls =
       delegate->controls();
 
-  controls->set_can_detach(true);
+  controls->set_can_timeout(true);
 
   auto worker = make_scoped_refptr(new SchedulerWorker(
       ThreadPriority::NORMAL, std::move(delegate), &task_tracker));
   worker->Start();
   worker->WakeUp();
 
-  controls->WaitForDetach();
+  controls->WaitForTimeout();
   worker->Cleanup();
   worker = nullptr;
   controls->WaitForDelegateDestroy();
@@ -575,9 +577,9 @@ TEST(TaskSchedulerWorkerTest, WorkerCleanupDuringWork) {
   // Will be owned by SchedulerWorker.
   // No mock here as that's reasonably covered by other tests and the delegate
   // may destroy on a different thread. Mocks aren't designed with that in mind.
-  std::unique_ptr<ControllableDetachDelegate> delegate =
-      MakeUnique<ControllableDetachDelegate>(&task_tracker);
-  scoped_refptr<ControllableDetachDelegate::Controls> controls =
+  std::unique_ptr<ControllableTimeoutDelegate> delegate =
+      MakeUnique<ControllableTimeoutDelegate>(&task_tracker);
+  scoped_refptr<ControllableTimeoutDelegate::Controls> controls =
       delegate->controls();
 
   controls->HaveWorkBlock();
@@ -599,9 +601,9 @@ TEST(TaskSchedulerWorkerTest, WorkerCleanupDuringWait) {
   // Will be owned by SchedulerWorker.
   // No mock here as that's reasonably covered by other tests and the delegate
   // may destroy on a different thread. Mocks aren't designed with that in mind.
-  std::unique_ptr<ControllableDetachDelegate> delegate =
-      MakeUnique<ControllableDetachDelegate>(&task_tracker);
-  scoped_refptr<ControllableDetachDelegate::Controls> controls =
+  std::unique_ptr<ControllableTimeoutDelegate> delegate =
+      MakeUnique<ControllableTimeoutDelegate>(&task_tracker);
+  scoped_refptr<ControllableTimeoutDelegate::Controls> controls =
       delegate->controls();
 
   auto worker = make_scoped_refptr(new SchedulerWorker(
@@ -609,7 +611,7 @@ TEST(TaskSchedulerWorkerTest, WorkerCleanupDuringWait) {
   worker->Start();
   worker->WakeUp();
 
-  controls->WaitForDetachRequest();
+  controls->WaitForTimeoutRequest();
   worker->Cleanup();
   worker = nullptr;
   controls->WaitForDelegateDestroy();
@@ -620,9 +622,9 @@ TEST(TaskSchedulerWorkerTest, WorkerCleanupDuringShutdown) {
   // Will be owned by SchedulerWorker.
   // No mock here as that's reasonably covered by other tests and the delegate
   // may destroy on a different thread. Mocks aren't designed with that in mind.
-  std::unique_ptr<ControllableDetachDelegate> delegate =
-      MakeUnique<ControllableDetachDelegate>(&task_tracker);
-  scoped_refptr<ControllableDetachDelegate::Controls> controls =
+  std::unique_ptr<ControllableTimeoutDelegate> delegate =
+      MakeUnique<ControllableTimeoutDelegate>(&task_tracker);
+  scoped_refptr<ControllableTimeoutDelegate::Controls> controls =
       delegate->controls();
 
   controls->HaveWorkBlock();
@@ -646,9 +648,9 @@ TEST(TaskSchedulerWorkerTest, CleanupBeforeStart) {
   // Will be owned by SchedulerWorker.
   // No mock here as that's reasonably covered by other tests and the delegate
   // may destroy on a different thread. Mocks aren't designed with that in mind.
-  std::unique_ptr<ControllableDetachDelegate> delegate =
-      MakeUnique<ControllableDetachDelegate>(&task_tracker);
-  scoped_refptr<ControllableDetachDelegate::Controls> controls =
+  std::unique_ptr<ControllableTimeoutDelegate> delegate =
+      MakeUnique<ControllableTimeoutDelegate>(&task_tracker);
+  scoped_refptr<ControllableTimeoutDelegate::Controls> controls =
       delegate->controls();
   controls->set_expect_get_work(false);
 
@@ -696,9 +698,9 @@ TEST(TaskSchedulerWorkerTest, WorkerCleanupDuringJoin) {
   // No mock here as that's reasonably covered by other tests and the
   // delegate may destroy on a different thread. Mocks aren't designed with that
   // in mind.
-  std::unique_ptr<ControllableDetachDelegate> delegate =
-      MakeUnique<ControllableDetachDelegate>(&task_tracker);
-  scoped_refptr<ControllableDetachDelegate::Controls> controls =
+  std::unique_ptr<ControllableTimeoutDelegate> delegate =
+      MakeUnique<ControllableTimeoutDelegate>(&task_tracker);
+  scoped_refptr<ControllableTimeoutDelegate::Controls> controls =
       delegate->controls();
 
   controls->HaveWorkBlock();
@@ -722,62 +724,6 @@ TEST(TaskSchedulerWorkerTest, WorkerCleanupDuringJoin) {
   controls->UnblockWork();
   controls->WaitForDelegateDestroy();
   join_from_different_thread.Join();
-}
-
-TEST(TaskSchedulerWorkerTest, WorkerDetachesAndWakes) {
-  TaskTracker task_tracker;
-  // Will be owned by SchedulerWorker.
-  MockedControllableDetachDelegate* delegate =
-      new StrictMock<MockedControllableDetachDelegate>(&task_tracker);
-  scoped_refptr<ControllableDetachDelegate::Controls> controls =
-      delegate->controls();
-
-  controls->set_can_detach(true);
-  EXPECT_CALL(*delegate, OnMainEntry(_));
-  auto worker = make_scoped_refptr(new SchedulerWorker(
-      ThreadPriority::NORMAL, WrapUnique(delegate), &task_tracker));
-  worker->Start();
-  worker->WakeUp();
-  controls->WaitForWorkToRun();
-  Mock::VerifyAndClear(delegate);
-  controls->WaitForDetachRequest();
-  controls->WaitForDetach();
-  ASSERT_FALSE(worker->ThreadAliveForTesting());
-
-  controls->ResetState();
-  controls->set_can_detach(false);
-  // Expect OnMainEntry() to be called when SchedulerWorker recreates its
-  // thread.
-  EXPECT_CALL(*delegate, OnMainEntry(worker.get()));
-  worker->WakeUp();
-  controls->WaitForWorkToRun();
-  Mock::VerifyAndClear(delegate);
-  controls->WaitForDetachRequest();
-  controls->WaitForDetach();
-  ASSERT_TRUE(worker->ThreadAliveForTesting());
-  worker->JoinForTesting();
-}
-
-TEST(TaskSchedulerWorkerTest, StartDetached) {
-  TaskTracker task_tracker;
-  // Will be owned by SchedulerWorker.
-  MockedControllableDetachDelegate* delegate =
-      new StrictMock<MockedControllableDetachDelegate>(&task_tracker);
-  scoped_refptr<ControllableDetachDelegate::Controls> controls =
-      delegate->controls();
-  auto worker = make_scoped_refptr(new SchedulerWorker(
-      ThreadPriority::NORMAL, WrapUnique(delegate), &task_tracker, nullptr,
-      SchedulerBackwardCompatibility::DISABLED,
-      SchedulerWorker::InitialState::DETACHED));
-  worker->Start();
-  ASSERT_FALSE(worker->ThreadAliveForTesting());
-  EXPECT_CALL(*delegate, OnMainEntry(worker.get()));
-  worker->WakeUp();
-  controls->WaitForWorkToRun();
-  Mock::VerifyAndClear(delegate);
-  controls->WaitForDetachRequest();
-  ASSERT_TRUE(worker->ThreadAliveForTesting());
-  worker->JoinForTesting();
 }
 
 namespace {
@@ -850,32 +796,6 @@ TEST(TaskSchedulerWorkerTest, BumpPriorityOfAliveThreadDuringShutdown) {
   // Verify that the thread priority is bumped to NORMAL during shutdown.
   delegate_raw->SetExpectedThreadPriority(ThreadPriority::NORMAL);
   task_tracker.SetHasShutdownStartedForTesting();
-  worker->WakeUp();
-  delegate_raw->WaitForPriorityVerifiedInGetWork();
-
-  worker->JoinForTesting();
-}
-
-TEST(TaskSchedulerWorkerTest, BumpPriorityOfDetachedThreadDuringShutdown) {
-  TaskTracker task_tracker;
-
-  std::unique_ptr<ExpectThreadPriorityDelegate> delegate(
-      new ExpectThreadPriorityDelegate);
-  ExpectThreadPriorityDelegate* delegate_raw = delegate.get();
-  delegate_raw->SetExpectedThreadPriority(ThreadPriority::NORMAL);
-
-  // Create a DETACHED thread.
-  auto worker = make_scoped_refptr(new SchedulerWorker(
-      ThreadPriority::BACKGROUND, std::move(delegate), &task_tracker, nullptr,
-      SchedulerBackwardCompatibility::DISABLED,
-      SchedulerWorker::InitialState::DETACHED));
-  worker->Start();
-
-  // Pretend that shutdown has started.
-  task_tracker.SetHasShutdownStartedForTesting();
-
-  // Wake up the thread and verify that its priority is NORMAL when
-  // OnMainEntry() and GetWork() are called.
   worker->WakeUp();
   delegate_raw->WaitForPriorityVerifiedInGetWork();
 
