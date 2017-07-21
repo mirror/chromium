@@ -13,13 +13,22 @@ namespace events {
 
 #if defined(OS_WIN) || defined(OS_LINUX)
 // All the events declared below are the string names
+// of deferred onboarding events for the Bookmarks.
+
+// The user has added a Bookmark (one-off event).
+extern const char kBookmarkAdded[];
+
+// The user has visited a URL more than once.
+extern const char kVisitedKnownURL[];
+
+// All the events declared below are the string names
 // of deferred onboarding events for the New Tab.
 
 // The user has interacted with the omnibox.
 extern const char kOmniboxInteraction[];
 
 // All the events declared below are the string names
-// of deferred onboarding events for the Incognito Window
+// of deferred onboarding events for the Incognito Window.
 
 // The user has deleted browsing history.
 extern const char kHistoryDeleted[];
@@ -27,7 +36,7 @@ extern const char kHistoryDeleted[];
 extern const char kIncognitoWindowOpened[];
 
 // All the events declared below are the string names
-// of common deferred onboarding events
+// of common deferred onboarding events.
 
 // The user has accumulated 2 hours of active session time (one-off event).
 extern const char kSessionTime[];

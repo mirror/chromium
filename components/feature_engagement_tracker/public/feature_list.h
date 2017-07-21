@@ -53,6 +53,7 @@ DEFINE_VARIATION_PARAM(kIPHDownloadPageScreenshotFeature,
                        "IPH_DownloadPageScreenshot");
 #endif  // defined(OS_ANDROID)
 #if defined(OS_WIN) || defined(OS_LINUX)
+DEFINE_VARIATION_PARAM(kIPHBookmarkFeature, "IPH_Bookmark");
 DEFINE_VARIATION_PARAM(kIPHIncognitoWindowFeature, "IPH_IncognitoWindow");
 DEFINE_VARIATION_PARAM(kIPHNewTabFeature, "IPH_NewTab");
 #endif  // defined(OS_WIN) || defined(OS_LINUX)
@@ -76,6 +77,7 @@ constexpr flags_ui::FeatureEntry::FeatureVariation
         VARIATION_ENTRY(kIPHDownloadPageFeature),
         VARIATION_ENTRY(kIPHDownloadPageScreenshotFeature),
 #elif defined(OS_WIN) || defined(OS_LINUX)
+        VARIATION_ENTRY(kIPHBookmarkFeature),
         VARIATION_ENTRY(kIPHIncognitoWindowFeature),
         VARIATION_ENTRY(kIPHNewTabFeature),
 #elif defined(OS_IOS)
