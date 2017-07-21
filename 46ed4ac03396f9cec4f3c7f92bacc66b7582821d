@@ -34,6 +34,24 @@
       "revId": "46ed4ac03396f9cec4f3c7f92bacc66b7582821d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d3aae97b_101cb989",
+        "filename": "base/numerics/checked_math.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-21T17:36:52Z",
+      "side": 1,
+      "message": "still lgtm.",
+      "parentUuid": "6351b933_6b5bf940",
+      "revId": "46ed4ac03396f9cec4f3c7f92bacc66b7582821d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
