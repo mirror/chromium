@@ -73,6 +73,24 @@
       "revId": "4d3e3ed170f3e2fcfc6672208318fd6e40700c72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa7f4bbe_d182fce9",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-21T05:47:27Z",
+      "side": 1,
+      "message": "I don\u0027t like that we use kDisabledControlAlpha in a variety of places in the codebase, including still elsewhere in this file, but here we changed to never use it (not even in non-Harmony).\n\nDoes this still have a similar effect to the old value in non-Harmony with the default theme?  Can we use a similar tactic to this in the places that use kDisabledControlAlpha today, and then just swap out the value there?\n\nThis is all a big mess, and I\u0027m trying to find a way that isn\u0027t \"solve all the theme coloring issues\" but also isn\u0027t \"do a random one-off swap here that neither fixes the other uses for Harmony (that we\u0027ll need to fix) nor preserves the existing non-Harmony behavior\".",
+      "parentUuid": "5b10764e_2ed1f396",
+      "revId": "4d3e3ed170f3e2fcfc6672208318fd6e40700c72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
