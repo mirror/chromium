@@ -1813,6 +1813,9 @@ bool CookieMonster::SetCanonicalCookie(std::unique_ptr<CanonicalCookie> cc,
   if (cc->IsSecure() && !secure_source)
     return false;
 
+  if (cc->IsHttpOnly() && !modify_http_only)
+    return false;
+
   const std::string key(GetKey(cc->Domain()));
 
   // TODO(mmenke): This class assumes each cookie to have a unique creation
