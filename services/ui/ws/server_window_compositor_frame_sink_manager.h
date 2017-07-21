@@ -7,11 +7,11 @@
 
 #include "base/macros.h"
 #include "cc/ipc/compositor_frame.mojom.h"
-#include "cc/ipc/frame_sink_manager.mojom.h"
 #include "cc/output/context_provider.h"
 #include "components/viz/common/surfaces/surface_id.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "services/ui/public/interfaces/window_tree.mojom.h"
+#include "services/viz/public/interfaces/frame_sinks/frame_sink_manager.mojom.h"
 
 namespace ui {
 namespace ws {
@@ -29,13 +29,13 @@ class ServerWindowCompositorFrameSinkManager {
   // existing one of the specified type.
   void CreateRootCompositorFrameSink(
       gfx::AcceleratedWidget widget,
-      cc::mojom::CompositorFrameSinkAssociatedRequest sink_request,
-      cc::mojom::CompositorFrameSinkClientPtr client,
-      cc::mojom::DisplayPrivateAssociatedRequest display_request);
+      viz::mojom::CompositorFrameSinkAssociatedRequest sink_request,
+      viz::mojom::CompositorFrameSinkClientPtr client,
+      viz::mojom::DisplayPrivateAssociatedRequest display_request);
 
   void CreateCompositorFrameSink(
-      cc::mojom::CompositorFrameSinkRequest request,
-      cc::mojom::CompositorFrameSinkClientPtr client);
+      viz::mojom::CompositorFrameSinkRequest request,
+      viz::mojom::CompositorFrameSinkClientPtr client);
 
   // Claims this FrameSinkId will embed |surface_id| so it should own the
   // temporary reference to |surface_id|.
@@ -43,8 +43,8 @@ class ServerWindowCompositorFrameSinkManager {
 
  private:
   ServerWindow* const window_;
-  cc::mojom::CompositorFrameSinkPrivatePtr compositor_frame_sink_;
-  cc::mojom::CompositorFrameSinkPrivateRequest
+  viz::mojom::CompositorFrameSinkPrivatePtr compositor_frame_sink_;
+  viz::mojom::CompositorFrameSinkPrivateRequest
       pending_compositor_frame_sink_request_;
 
   DISALLOW_COPY_AND_ASSIGN(ServerWindowCompositorFrameSinkManager);

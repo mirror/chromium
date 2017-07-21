@@ -34,9 +34,9 @@ FrameSinkManagerImpl::~FrameSinkManagerImpl() {
 }
 
 void FrameSinkManagerImpl::BindAndSetClient(
-    cc::mojom::FrameSinkManagerRequest request,
+    mojom::FrameSinkManagerRequest request,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-    cc::mojom::FrameSinkManagerClientPtr client) {
+    mojom::FrameSinkManagerClientPtr client) {
   DCHECK(!client_);
   DCHECK(!binding_.is_bound());
   binding_.Bind(std::move(request), std::move(task_runner));
@@ -46,7 +46,7 @@ void FrameSinkManagerImpl::BindAndSetClient(
 }
 
 void FrameSinkManagerImpl::SetLocalClient(
-    cc::mojom::FrameSinkManagerClient* client) {
+    mojom::FrameSinkManagerClient* client) {
   DCHECK(!client_ptr_);
 
   client_ = client;
@@ -55,10 +55,10 @@ void FrameSinkManagerImpl::SetLocalClient(
 void FrameSinkManagerImpl::CreateRootCompositorFrameSink(
     const FrameSinkId& frame_sink_id,
     gpu::SurfaceHandle surface_handle,
-    cc::mojom::CompositorFrameSinkAssociatedRequest request,
-    cc::mojom::CompositorFrameSinkPrivateRequest private_request,
-    cc::mojom::CompositorFrameSinkClientPtr client,
-    cc::mojom::DisplayPrivateAssociatedRequest display_private_request) {
+    mojom::CompositorFrameSinkAssociatedRequest request,
+    mojom::CompositorFrameSinkPrivateRequest private_request,
+    mojom::CompositorFrameSinkClientPtr client,
+    mojom::DisplayPrivateAssociatedRequest display_private_request) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK_NE(surface_handle, gpu::kNullSurfaceHandle);
   DCHECK_EQ(0u, compositor_frame_sinks_.count(frame_sink_id));
@@ -78,9 +78,9 @@ void FrameSinkManagerImpl::CreateRootCompositorFrameSink(
 
 void FrameSinkManagerImpl::CreateCompositorFrameSink(
     const FrameSinkId& frame_sink_id,
-    cc::mojom::CompositorFrameSinkRequest request,
-    cc::mojom::CompositorFrameSinkPrivateRequest private_request,
-    cc::mojom::CompositorFrameSinkClientPtr client) {
+    mojom::CompositorFrameSinkRequest request,
+    mojom::CompositorFrameSinkPrivateRequest private_request,
+    mojom::CompositorFrameSinkClientPtr client) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK_EQ(0u, compositor_frame_sinks_.count(frame_sink_id));
 

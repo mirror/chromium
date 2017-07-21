@@ -6,4 +6,5 @@ include_rules = [
   "+components/viz/display_embedder",
   "+gpu/ipc/common",
   "+mojo/public/cpp/bindings",
+  "+services/viz/public/interfaces/frame_sinks",
 ]

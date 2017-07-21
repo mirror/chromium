@@ -85,6 +85,7 @@ viz_component("service") {
     "//gpu/command_buffer/client:gles2_interface",
     "//gpu/ipc:command_buffer",
     "//services/viz/hit_test/public/interfaces",
+    "//services/viz/public/interfaces/frame_sinks:interfaces",
     "//ui/gfx",
     "//ui/gfx/geometry",
     "//ui/latency",
