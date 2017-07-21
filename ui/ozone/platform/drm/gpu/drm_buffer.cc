@@ -97,14 +97,6 @@ uint32_t DrmBuffer::GetFramebufferPixelFormat() const {
   return fb_pixel_format_;
 }
 
-uint32_t DrmBuffer::GetOpaqueFramebufferId() const {
-  return framebuffer_;
-}
-
-uint32_t DrmBuffer::GetOpaqueFramebufferPixelFormat() const {
-  return fb_pixel_format_;
-}
-
 uint64_t DrmBuffer::GetFormatModifier() const {
   return DRM_FORMAT_MOD_NONE;
 }

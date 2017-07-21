@@ -46,8 +46,6 @@ GbmBuffer::GbmBuffer(const scoped_refptr<GbmDevice>& gbm,
   if (flags & GBM_BO_USE_SCANOUT) {
     DCHECK(bo_);
     framebuffer_pixel_format_ = format;
-    opaque_framebuffer_pixel_format_ = GetFourCCFormatForOpaqueFramebuffer(
-        GetBufferFormatFromFourCCFormat(format));
     format_modifier_ = modifier;
 
     uint32_t handles[4] = {0};
@@ -71,22 +69,12 @@ GbmBuffer::GbmBuffer(const scoped_refptr<GbmDevice>& gbm,
         handles, strides, offsets, modifiers, &framebuffer_, addfb_flags);
     PLOG_IF(ERROR, !ret) << "AddFramebuffer2 failed";
     DCHECK(ret);
-    if (opaque_framebuffer_pixel_format_ != framebuffer_pixel_format_) {
-      ret = drm_->AddFramebuffer2(gbm_bo_get_width(bo), gbm_bo_get_height(bo),
-                                  opaque_framebuffer_pixel_format_, handles,
-                                  strides, offsets, modifiers,
-                                  &opaque_framebuffer_, addfb_flags);
-      PLOG_IF(ERROR, !ret) << "AddFramebuffer2 failed";
-      DCHECK(ret);
-    }
   }
 }
 
 GbmBuffer::~GbmBuffer() {
   if (framebuffer_)
     drm_->RemoveFramebuffer(framebuffer_);
-  if (opaque_framebuffer_)
-    drm_->RemoveFramebuffer(opaque_framebuffer_);
   if (bo())
     gbm_bo_destroy(bo());
 }
@@ -130,10 +118,6 @@ uint32_t GbmBuffer::GetFramebufferId() const {
   return framebuffer_;
 }
 
-uint32_t GbmBuffer::GetOpaqueFramebufferId() const {
-  return opaque_framebuffer_ ? opaque_framebuffer_ : framebuffer_;
-}
-
 uint32_t GbmBuffer::GetHandle() const {
   return gbm_bo_get_handle(bo_).u32;
 }
@@ -147,11 +131,6 @@ gfx::Size GbmBuffer::GetSize() const {
 uint32_t GbmBuffer::GetFramebufferPixelFormat() const {
   DCHECK(framebuffer_);
   return framebuffer_pixel_format_;
-}
-
-uint32_t GbmBuffer::GetOpaqueFramebufferPixelFormat() const {
-  DCHECK(framebuffer_);
-  return opaque_framebuffer_pixel_format_;
 }
 
 uint64_t GbmBuffer::GetFormatModifier() const {
