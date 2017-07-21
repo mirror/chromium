@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ea40b753_92a124bd",
+        "filename": "ios/chrome/browser/ui/tools_menu/reading_list_menu_view_item.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-07-21T22:27:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4acf4f3c_d9ca8143",
+      "revId": "43d7eb9baca3354d8a47af0fa20f000f953ea61d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1eab8364_52e70480",
         "filename": "ios/chrome/browser/ui/tools_menu/reading_list_menu_view_item.mm",
         "patchSetId": 8
@@ -68,6 +86,24 @@
       "revId": "43d7eb9baca3354d8a47af0fa20f000f953ea61d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58c7cff1_16e00e25",
+        "filename": "ios/chrome/browser/ui/tools_menu/reading_list_menu_view_item.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-07-21T22:27:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1eab8364_52e70480",
+      "revId": "43d7eb9baca3354d8a47af0fa20f000f953ea61d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -91,6 +127,30 @@
       "revId": "43d7eb9baca3354d8a47af0fa20f000f953ea61d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15d763fe_e88f77c3",
+        "filename": "ios/shared/chrome/browser/ui/tools_menu/tools_menu_configuration.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-07-21T22:27:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "230a4925_2c046fb2",
+      "range": {
+        "startLine": 30,
+        "startChar": 25,
+        "endLine": 30,
+        "endChar": 29
+      },
+      "revId": "43d7eb9baca3354d8a47af0fa20f000f953ea61d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
