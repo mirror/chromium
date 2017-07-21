@@ -1250,6 +1250,23 @@ void Shell::OnWindowActivated(
     root_window_for_new_windows_ = gained_active->GetRootWindow();
 }
 
+void Shell::OnActiveUserSessionChanged(const AccountId& account_id) {
+  if (shell_port_->GetAshConfig() == Config::MASH &&
+      shell_delegate_->GetShellConnector()) {
+    // XXX: This relies on observer execution order. Add an observer method on
+    // ShellObserver for PrefService about to be deleted.
+    base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE,
+                                                    pref_service_.release());
+    auto pref_registry = base::MakeRefCounted<PrefRegistrySimple>();
+    Shell::RegisterProfilePrefs(pref_registry.get());
+    prefs::ConnectToPrefService(shell_delegate_->GetShellConnector(),
+                                std::move(pref_registry),
+                                base::Bind(&Shell::OnPrefServiceInitialized,
+                                           weak_factory_.GetWeakPtr()),
+                                prefs::mojom::kForwarderServiceName);
+  }
+}
+
 void Shell::OnSessionStateChanged(session_manager::SessionState state) {
   // Initialize the shelf when a session becomes active. It's safe to do this
   // multiple times (e.g. initial login vs. multiprofile add session).
@@ -1308,6 +1325,10 @@ void Shell::OnPrefServiceInitialized(
   // |pref_service_| is null if can't connect to Chrome (as happens when
   // running mash outside of chrome --mash and chrome isn't built).
   pref_service_ = std::move(pref_service);
+  if (pref_service_) {
+    for (auto& observer : shell_observers_)
+      observer.OnPrefServiceReady();
+  }
 }
 
 void Shell::OnLocalStatePrefServiceInitialized(
