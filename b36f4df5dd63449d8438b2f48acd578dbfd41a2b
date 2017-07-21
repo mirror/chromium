@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b834929e_4817775f",
+        "filename": "content/public/common/url_constants.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-21T15:41:46Z",
+      "side": 1,
+      "message": "You probably want to git grep chromewebdata and update all instances it finds.",
+      "revId": "b36f4df5dd63449d8438b2f48acd578dbfd41a2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
