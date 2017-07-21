@@ -12,11 +12,25 @@
 #include "net/cert/cert_verify_proc.h"
 #include "net/cert/cert_verify_result.h"
 #include "net/cert/nss_cert_database_chromeos.h"
+#include "net/cert/x509_util_nss.h"
 #include "net/test/cert_test_util.h"
 #include "net/test/test_data_directory.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace chromeos {
+
+namespace {
+
+std::string GetSubjectCN(net::X509Certificate::OSCertHandle cert_handle) {
+  scoped_refptr<net::X509Certificate> cert =
+      net::X509Certificate::CreateFromHandle(
+          cert_handle, net::X509Certificate::OSCertHandles());
+  if (!cert)
+    return std::string();
+  return cert->subject().common_name;
+}
+
+}  // namespace
 
 class CertVerifyProcChromeOSTest : public testing::Test {
  public:
@@ -68,11 +82,18 @@ class CertVerifyProcChromeOSTest : public testing::Test {
     ASSERT_EQ("C CA - Multi-root", certs_1_[2]->subject().common_name);
     ASSERT_EQ("C CA - Multi-root", certs_2_[2]->subject().common_name);
 
-    root_1_.push_back(certs_1_.back());
-    root_2_.push_back(certs_2_.back());
-
-    ASSERT_EQ("D Root CA - Multi-root", root_1_[0]->subject().common_name);
-    ASSERT_EQ("E Root CA - Multi-root", root_2_[0]->subject().common_name);
+    // XXX remove these??
+    ASSERT_EQ("D Root CA - Multi-root", certs_1_.back()->subject().common_name);
+    ASSERT_EQ("E Root CA - Multi-root", certs_2_.back()->subject().common_name);
+    root_1_.push_back(net::x509_util::CreateCERTCertificateFromX509Certificate(
+        certs_1_.back().get()));
+    ASSERT_TRUE(root_1_.back());
+    root_2_.push_back(net::x509_util::CreateCERTCertificateFromX509Certificate(
+        certs_2_.back().get()));
+    ASSERT_TRUE(root_2_.back());
+    // XXX these work?
+    ASSERT_STREQ("D Root CA - Multi-root", root_1_[0]->subjectName);
+    ASSERT_STREQ("E Root CA - Multi-root", root_2_[0]->subjectName);
   }
 
   int VerifyWithAdditionalTrustAnchors(
@@ -88,7 +109,7 @@ class CertVerifyProcChromeOSTest : public testing::Test {
     if (!verify_result.verified_cert->GetIntermediateCertificates().empty()) {
       net::X509Certificate::OSCertHandle root =
           verify_result.verified_cert->GetIntermediateCertificates().back();
-      root_subject_name->assign(root->subjectName);
+      root_subject_name->assign(GetSubjectCN(root));
     } else {
       root_subject_name->clear();
     }
@@ -113,8 +134,8 @@ class CertVerifyProcChromeOSTest : public testing::Test {
   scoped_refptr<net::CertVerifyProc> verify_proc_2_;
   net::CertificateList certs_1_;
   net::CertificateList certs_2_;
-  net::CertificateList root_1_;
-  net::CertificateList root_2_;
+  net::ScopedCERTCertificateVector root_1_;
+  net::ScopedCERTCertificateVector root_2_;
 };
 
 // Test that the CertVerifyProcChromeOS doesn't trusts roots that are in other
@@ -212,7 +233,7 @@ TEST_F(CertVerifyProcChromeOSTest, TestAdditionalTrustAnchors) {
                                              &verify_root));
 
   // Use D Root CA as additional trust anchor. Verifications should succeed now.
-  additional_trust_anchors.push_back(root_1_[0]);
+  additional_trust_anchors.push_back(certs_1_.back());
   EXPECT_EQ(net::OK,
             VerifyWithAdditionalTrustAnchors(verify_proc_default_.get(),
                                              additional_trust_anchors,
@@ -246,16 +267,14 @@ TEST_F(CertVerifyProcChromeOSTest, TestAdditionalTrustAnchors) {
                                              &verify_root));
 
   // Import and trust the D Root CA for user 2.
-  net::CertificateList roots;
-  roots.push_back(root_1_[0]);
   net::NSSCertDatabase::ImportCertFailureList failed;
-  EXPECT_TRUE(
-      db_2_->ImportCACerts(roots, net::NSSCertDatabase::TRUSTED_SSL, &failed));
+  EXPECT_TRUE(db_2_->ImportCACerts(root_1_, net::NSSCertDatabase::TRUSTED_SSL,
+                                   &failed));
   EXPECT_EQ(0U, failed.size());
 
   // Use D Root CA as additional trust anchor. Verifications should still
   // succeed even if the cert is trusted by a different profile.
-  additional_trust_anchors.push_back(root_1_[0]);
+  additional_trust_anchors.push_back(certs_1_.back());
   EXPECT_EQ(net::OK,
             VerifyWithAdditionalTrustAnchors(verify_proc_default_.get(),
                                              additional_trust_anchors,
@@ -320,7 +339,7 @@ TEST_P(CertVerifyProcChromeOSOrderingTest, DISABLED_TrustThenVerify) {
     EXPECT_EQ(0U, failed.size());
     for (size_t i = 0; i < failed.size(); ++i) {
       LOG(ERROR) << "import fail " << failed[i].net_error << " for "
-                 << failed[i].certificate->subject().GetDisplayName();
+                 << failed[i].certificate->subjectName;
     }
   }
 
@@ -333,7 +352,7 @@ TEST_P(CertVerifyProcChromeOSOrderingTest, DISABLED_TrustThenVerify) {
     EXPECT_EQ(0U, failed.size());
     for (size_t i = 0; i < failed.size(); ++i) {
       LOG(ERROR) << "import fail " << failed[i].net_error << " for "
-                 << failed[i].certificate->subject().GetDisplayName();
+                 << failed[i].certificate->subjectName;
     }
   }
 
