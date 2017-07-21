@@ -157,6 +157,24 @@
       "revId": "c28695338355ae5452940384d35607178f1ad385",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec98ce93_8b3f4986",
+        "filename": "chromecast/media/cma/backend/android/loopback_audio_observer_android.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1210554
+      },
+      "writtenOn": "2017-07-21T20:03:50Z",
+      "side": 1,
+      "message": "Ahh, good catch.  I\u0027ve added a comment for values calculated from flags, and defaulted the timestamp and frame position variables to reasonable values in the constructor.",
+      "parentUuid": "ae5b1532_16ac3f86",
+      "revId": "c28695338355ae5452940384d35607178f1ad385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
