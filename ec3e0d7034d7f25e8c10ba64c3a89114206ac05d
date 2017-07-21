@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0128e80_be5c3fbc",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-21T17:01:29Z",
+      "side": 1,
+      "message": "nit: CreateSearch may be protected.",
+      "range": {
+        "startLine": 39,
+        "startChar": 46,
+        "endLine": 39,
+        "endChar": 58
+      },
+      "revId": "ec3e0d7034d7f25e8c10ba64c3a89114206ac05d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
