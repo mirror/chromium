@@ -1,0 +1,395 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ccb1759a_45ef24e0",
+        "filename": "android_webview/browser/aw_safe_browsing_resource_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-21T19:40:42Z",
+      "side": 1,
+      "message": "Cast isn\u0027t needed here. Pointers decay to const void* without a cast. Delete cast rather than \u0027fixing\u0027 it.",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d81c9262_a4c1f446",
+        "filename": "android_webview/browser/aw_web_ui_controller_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-21T19:40:42Z",
+      "side": 1,
+      "message": "Cast shouldn\u0027t be needed here, as in the other cases.",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eab45cec_77497998",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-21T19:40:42Z",
+      "side": 1,
+      "message": "This line of code will in some cases cause a static initializer to be generated. It looks like one of the Windows DLLs actually ends up with an initializer for this constant. That is undesirable and also prevents it from being put in the global data segment. There is not a single best fix for this problem but one solution is to make this constant a non-static constexpr type that is fully defined in the header file.\n\nWith VC++ 2017 you could just tag the definition here as constexpr but VC++ 2015 doesn\u0027t like that - it complains that is inconsistent with the declaration.\n\nOr, just add const - your change isn\u0027t making it any worse it just doesn\u0027t necessarily solve it for all builds.",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faa59243_a9ea02aa",
+        "filename": "chrome/browser/data_usage/tab_id_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-21T19:40:42Z",
+      "side": 1,
+      "message": "Cast is unneeded - delete it rather than \"fixing\" it. I wonder why it was put there in the first place?",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8215542a_ba95ff4b",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-21T19:40:42Z",
+      "side": 1,
+      "message": "Consider this syntax instead:\n\nstatic const char kHistogramSignificantNotAddedAfterFirstTimeName[];\n\nIt is slightly more efficient because it avoids the size/indirection cost of a pointer, and it avoids the messy need to have double const qualifiers. That is, the only thing better than moving a pointer from the read-write data segment to the read-only data segment is making it evaporate entirely.",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fe8c299_4db24f36",
+        "filename": "components/domain_reliability/google_configs.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-21T19:40:42Z",
+      "side": 1,
+      "message": "Should be a const char [] instead of const char* const.",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "649a1784_da7cba09",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-21T19:40:42Z",
+      "side": 1,
+      "message": "These two could/should be arrays instead of pointers.",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef2b7a10_ef31ec10",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-21T19:40:42Z",
+      "side": 1,
+      "message": "Consider making it const auto* for clarity.",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b8e0d6b_203a743e",
+        "filename": "components/search_engines/template_url_prepopulate_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-21T19:40:42Z",
+      "side": 1,
+      "message": "Can we mark these as const also? That would be a nice win.",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd4f1af9_1041fdb3",
+        "filename": "components/signin/core/browser/gaia_cookie_manager_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-21T19:40:42Z",
+      "side": 1,
+      "message": "Should be array instead of pointer.",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb219282_3cb39fdb",
+        "filename": "components/sync/driver/sync_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-21T19:40:42Z",
+      "side": 1,
+      "message": "These two should be array instead of pointer.",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d462ee05_a7294eb1",
+        "filename": "components/sync/engine_impl/cycle/nudge_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-21T19:40:42Z",
+      "side": 1,
+      "message": "Make this constexpr and define it in the header file? That\u0027s a good tradeoff for integral types with simple construction.",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85fe5bb5_d93f2be1",
+        "filename": "components/translate/core/common/translate_metrics.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-21T19:40:42Z",
+      "side": 1,
+      "message": "You could make this an array of 5-byte arrays - it\u0027s a net size win.",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0415421f_54466f7d",
+        "filename": "components/update_client/request_sender.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-21T19:40:42Z",
+      "side": 1,
+      "message": "Should be constexpr and defined here - this can give better code-gen and avoids the need for any storage (not that this advice only applies for integral types with simple constructors).",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c38d178_38350698",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-21T19:40:42Z",
+      "side": 1,
+      "message": "Note that \u0027static\u0027 is unneeded for global scope (non-class non-local) const declarations because const implies static. But, feel free to leave it because not everyone realizes that.\n\nAlso, maybe mark these as constexpr \u0027cause why not? Could do that for the string arrays as well.",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03b28ebf_4343432b",
+        "filename": "content/browser/frame_host/navigation_entry_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-21T19:40:42Z",
+      "side": 1,
+      "message": "Could be constexpr and defined here, no definition in the .cc file needed then.",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a1b6fbe_466f59e5",
+        "filename": "content/common/net/url_request_service_worker_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-21T19:40:42Z",
+      "side": 1,
+      "message": "Delete this cast - it isn\u0027t needed.",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7c08b09_25d01c34",
+        "filename": "content/common/net/url_request_user_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-21T19:40:42Z",
+      "side": 1,
+      "message": "Delete this cast.",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f28e7a7_c0d8fd25",
+        "filename": "content/public/common/child_process_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-21T19:40:42Z",
+      "side": 1,
+      "message": "constexpr definition here and remove definition in .cc file?",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b30c4635_c806b129",
+        "filename": "google_apis/gaia/gaia_auth_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-21T19:40:42Z",
+      "side": 1,
+      "message": "Delete cast.",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66db892a_bad9393a",
+        "filename": "gpu/command_buffer/service/gpu_tracer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-21T19:40:42Z",
+      "side": 1,
+      "message": "static is unnecessary/meaningless here.\n\nCould also be:\n    constexpr const char* kGpuTraceSourceNames[] \u003d {\n\nThis allows some additional optimizations (maybe) but may also confuse people.",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0165e66b_6b2c96c9",
+        "filename": "sql/meta_table.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-21T19:40:42Z",
+      "side": 1,
+      "message": "Consider constexpr definition here and delete definition in .cc file?",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7822616f_db76b2d6",
+        "filename": "storage/browser/fileapi/sandbox_prioritized_origin_database.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-21T19:40:42Z",
+      "side": 1,
+      "message": "Make array instead of pointer?",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
