@@ -357,15 +357,22 @@ class ImageStorage : public base::RefCounted<ImageStorage> {
   }
 
   Image::RepresentationType default_representation_type() {
+    DCHECK(AccessIsThreadSafe());
     return default_representation_type_;
   }
-  Image::RepresentationMap& representations() { return representations_; }
+
+  Image::RepresentationMap& representations() {
+    DCHECK(AccessIsThreadSafe());
+    return representations_;
+  }
 
 #if defined(OS_MACOSX) && !defined(OS_IOS)
   void set_default_representation_color_space(CGColorSpaceRef color_space) {
+    DCHECK(AccessIsThreadSafe());
     default_representation_color_space_ = color_space;
   }
   CGColorSpaceRef default_representation_color_space() {
+    DCHECK(AccessIsThreadSafe());
     return default_representation_color_space_;
   }
 #endif  // defined(OS_MACOSX) && !defined(OS_IOS)
