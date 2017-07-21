@@ -59,6 +59,8 @@ if (enable_extensions) {
       "api/declarative/declarative_manifest_handler.cc",
       "api/declarative/declarative_manifest_handler.h",
       "api/declarative_net_request/constants.h",
+      "api/declarative_net_request/indexed_rule.cc",
+      "api/declarative_net_request/indexed_rule.h",
       "api/declarative_net_request/rules_manifest_info.cc",
       "api/declarative_net_request/rules_manifest_info.h",
       "api/messaging/message.h",
@@ -278,6 +280,7 @@ if (enable_extensions) {
     public_deps = [
       ":common_constants",
       ":mojo",
+      "//components/url_pattern_index",
       "//content/public/common",
       "//ipc",
       "//skia",
@@ -331,6 +334,7 @@ if (enable_extensions) {
     testonly = true
     sources = [
       "api/declarative/declarative_manifest_unittest.cc",
+      "api/declarative_net_request/indexed_rule_unittest.cc",
       "api/declarative_net_request/rules_manifest_unittest.cc",
       "api/printer_provider/usb_printer_manifest_unittest.cc",
       "api/sockets/sockets_manifest_permission_unittest.cc",
@@ -382,6 +386,7 @@ if (enable_extensions) {
       "//device/usb",
       "//device/usb:test_support",
       "//extensions:extensions_resources",
+      "//extensions/common/api",
 
       # TODO(brettw) these tests should not be including headers from browser.
       "//extensions:test_support",
