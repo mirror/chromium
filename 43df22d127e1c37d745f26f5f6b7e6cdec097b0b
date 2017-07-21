@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e52e29a6_26b33ee7",
+        "filename": "components/exo/compositor_rotation_lock.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-21T04:15:51Z",
+      "side": 1,
+      "message": "do we need a separate file for this? can we just make it a subclass of ShellSurface which I assume is the only class that needs this?",
+      "revId": "43df22d127e1c37d745f26f5f6b7e6cdec097b0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c540648c_26532938",
+        "filename": "components/exo/compositor_rotation_lock.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-21T04:15:51Z",
+      "side": 1,
+      "message": "Should we use a serial instead for acks? What if the orientation changes multiple times without the client having a chance to ack it?",
+      "revId": "43df22d127e1c37d745f26f5f6b7e6cdec097b0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82ec1626_e4d1aacb",
+        "filename": "components/exo/compositor_rotation_lock.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-21T04:15:51Z",
+      "side": 1,
+      "message": "why do we need this in addition to compositor_lock_?",
+      "revId": "43df22d127e1c37d745f26f5f6b7e6cdec097b0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ff481a9_cea871e1",
+        "filename": "third_party/wayland-protocols/unstable/remote-shell/remote-shell-unstable-v1.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-21T04:15:51Z",
+      "side": 1,
+      "message": "why is this changing?",
+      "revId": "43df22d127e1c37d745f26f5f6b7e6cdec097b0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37735140_32e2803f",
+        "filename": "third_party/wayland-protocols/unstable/remote-shell/remote-shell-unstable-v1.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-21T04:15:51Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "43df22d127e1c37d745f26f5f6b7e6cdec097b0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
