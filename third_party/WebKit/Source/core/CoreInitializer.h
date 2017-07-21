@@ -36,10 +36,12 @@
 
 namespace blink {
 
+class HTMLLinkElement;
 class HTMLMediaElement;
 class InspectedFrames;
 class InspectorDOMAgent;
 class InspectorSession;
+class LinkResource;
 class LocalFrame;
 class MediaControls;
 class Page;
@@ -69,17 +71,21 @@ class CORE_EXPORT CoreInitializer {
   void CallModulesInstallSupplements(LocalFrame& frame) const {
     chrome_client_install_supplements_callback_(frame);
   }
+
   void CallModulesProvideLocalFileSystem(WorkerClients& worker_clients) const {
     worker_clients_local_file_system_callback_(worker_clients);
   }
+
   void CallModulesProvideIndexedDB(WorkerClients& worker_clients) const {
     worker_clients_indexed_db_callback_(worker_clients);
   }
+
   MediaControls* CallModulesMediaControlsFactory(
       HTMLMediaElement& media_element,
       ShadowRoot& shadow_root) const {
     return media_controls_factory_(media_element, shadow_root);
   }
+
   void CallModulesInspectorAgentSessionInitCallback(
       InspectorSession* session,
       bool allow_view_agents,
@@ -88,6 +94,11 @@ class CORE_EXPORT CoreInitializer {
       Page* page) const {
     inspector_agent_session_init_callback_(session, allow_view_agents,
                                            dom_agent, inspected_frames, page);
+  }
+
+  LinkResource* CallModulesServiceWorkerLinkResourceFactory(
+      HTMLLinkElement* owner) const {
+    return service_worker_link_resource_factory_(owner);
   }
 
  protected:
@@ -103,6 +114,7 @@ class CORE_EXPORT CoreInitializer {
                                                      InspectorDOMAgent*,
                                                      InspectedFrames*,
                                                      Page*);
+  using LinkResourceCallback = LinkResource* (*)(HTMLLinkElement*);
 
   LocalFrameCallback local_frame_init_callback_;
   LocalFrameCallback chrome_client_install_supplements_callback_;
@@ -110,6 +122,7 @@ class CORE_EXPORT CoreInitializer {
   WorkerClientsCallback worker_clients_indexed_db_callback_;
   MediaControlsFactory media_controls_factory_;
   InspectorAgentSessionInitCallback inspector_agent_session_init_callback_;
+  LinkResourceCallback service_worker_link_resource_factory_;
 
  private:
   static CoreInitializer* instance_;
