@@ -10,6 +10,7 @@
 #include <memory>
 #include <string>
 
+#include "base/containers/flat_set.h"
 #include "base/macros.h"
 #include "base/memory/shared_memory_handle.h"
 
@@ -25,6 +26,7 @@ class Point;
 }
 
 namespace exo {
+class DataDevice;
 class NotificationSurface;
 class NotificationSurfaceManager;
 class SharedMemory;
@@ -88,8 +90,16 @@ class Display {
       Surface* surface,
       const std::string& notification_key);
 
+  // Adds |data_device| to the display.
+  void AddDataDevice(DataDevice* data_device);
+
+  // Removes |data_device| from the display.
+  void RemoveDataDevice(DataDevice* data_device);
+
  private:
   NotificationSurfaceManager* const notification_surface_manager_;
+
+  base::flat_set<DataDevice*> data_devices_;
 
 #if defined(USE_OZONE)
   std::vector<gfx::BufferFormat> overlay_formats_;

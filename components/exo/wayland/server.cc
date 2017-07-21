@@ -2825,7 +2825,6 @@ const struct wl_data_offer_interface data_offer_implementation = {
 
 ////////////////////////////////////////////////////////////////////////////////
 // wl_data_device_interface:
-
 class WaylandDataDeviceDelegate : public DataDeviceDelegate {
  public:
   WaylandDataDeviceDelegate(wl_client* client, wl_resource* device_resource)
@@ -2867,6 +2866,12 @@ class WaylandDataDeviceDelegate : public DataDeviceDelegate {
   void OnSelection(const class DataOffer& data_offer) override {
     wl_data_device_send_selection(data_device_resource_,
                                   GetDataOfferResource(&data_offer));
+  }
+
+  bool CanAcceptDataEventsForSurface(Surface* surface) const override {
+    wl_resource* surface_resource = GetSurfaceResource(surface);
+    return surface_resource &&
+           wl_resource_get_client(surface_resource) == client_;
   }
 
  private:
@@ -2922,9 +2927,11 @@ void data_device_manager_get_data_device(wl_client* client,
                                          wl_resource* seat_resource) {
   wl_resource* data_device_resource =
       wl_resource_create(client, &wl_data_device_interface, 1, id);
-  SetImplementation(data_device_resource, &data_device_implementation,
-                    base::MakeUnique<DataDevice>(new WaylandDataDeviceDelegate(
-                        client, data_device_resource)));
+  SetImplementation(
+      data_device_resource, &data_device_implementation,
+      base::MakeUnique<DataDevice>(
+          GetUserDataAs<Display>(resource),
+          new WaylandDataDeviceDelegate(client, data_device_resource)));
 }
 
 const struct wl_data_device_manager_interface
@@ -2939,7 +2946,7 @@ void bind_data_device_manager(wl_client* client,
   wl_resource* resource =
       wl_resource_create(client, &wl_data_device_manager_interface, 1, id);
   wl_resource_set_implementation(resource, &data_device_manager_implementation,
-                                 nullptr, nullptr);
+                                 data, nullptr);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
