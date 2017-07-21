@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "17adf011_3ecde764",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-21T18:33:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee75afc8_d513eb8b",
+      "range": {
+        "startLine": 10,
+        "startChar": 58,
+        "endLine": 10,
+        "endChar": 62
+      },
+      "revId": "356183a3f81c45ef2827305a5a4d468f5fa8aaaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83c0b39d_fbbe30b4",
         "filename": "/COMMIT_MSG",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "356183a3f81c45ef2827305a5a4d468f5fa8aaaf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81059f6d_a558e969",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-21T18:33:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83c0b39d_fbbe30b4",
+      "range": {
+        "startLine": 12,
+        "startChar": 39,
+        "endLine": 12,
+        "endChar": 47
+      },
+      "revId": "356183a3f81c45ef2827305a5a4d468f5fa8aaaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "aadd33fd_9c04f20f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-21T18:33:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e73292bb_073ac603",
+      "range": {
+        "startLine": 13,
+        "startChar": 11,
+        "endLine": 13,
+        "endChar": 71
+      },
+      "revId": "356183a3f81c45ef2827305a5a4d468f5fa8aaaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18446544_4c1ea5c8",
         "filename": "base/task_scheduler/scheduler_worker.cc",
         "patchSetId": 8
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "6605e179_5dc889f0",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-21T18:33:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18446544_4c1ea5c8",
+      "range": {
+        "startLine": 120,
+        "startChar": 25,
+        "endLine": 120,
+        "endChar": 32
+      },
+      "revId": "356183a3f81c45ef2827305a5a4d468f5fa8aaaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b75cc6a_8fac86eb",
         "filename": "base/task_scheduler/scheduler_worker.cc",
         "patchSetId": 8
@@ -105,6 +201,30 @@
       "writtenOn": "2017-07-21T17:14:03Z",
       "side": 1,
       "message": "What is the purpose of this check? SchedulerWorkers generally shouldn\u0027t care about the shutdown state of the task tracker.",
+      "range": {
+        "startLine": 123,
+        "startChar": 30,
+        "endLine": 123,
+        "endChar": 73
+      },
+      "revId": "356183a3f81c45ef2827305a5a4d468f5fa8aaaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "305bfeaf_22d3bd6a",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-21T18:33:21Z",
+      "side": 1,
+      "message": "Previously, PlatformThread::Detach only got called for workers who detach after the timeout.\n\nHere, I\u0027ve changed it to so that detachment also gets called when Cleanup occurs. (it seems that it was an oversight that it didn\u0027t get called before on Cleanup. I guess calling it on Cleanup doesn\u0027t really have to be in this CL, but since I was changing things here anyways, I made that change).\n\nI have that check there because there\u0027s really no need to call Detach if shutdown\u0027s happening (since that means the process is about to exit, right?) (and also because I didn\u0027t want to change existing behavior too much).\n\nSchedulerWorkers do already check the shutdown state in SchedulerWorker::ShouldExit(). (not saying it\u0027s good design because I see your point about it being odd, but just pointing it out)",
+      "parentUuid": "4b75cc6a_8fac86eb",
       "range": {
         "startLine": 123,
         "startChar": 30,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "ac77e6a7_31b9197f",
+        "filename": "base/task_scheduler/scheduler_worker.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-21T18:33:21Z",
+      "side": 1,
+      "message": "Good point. I\u0027ve put this functionality into SchedulerWorkerDelegateImpl::OnMainExit() and changed OnMainExit\u0027s signature to include a SchedulerWorker* as a param.",
+      "parentUuid": "c39f246b_8fa157a0",
+      "range": {
+        "startLine": 88,
+        "startChar": 4,
+        "endLine": 89,
+        "endChar": 59
+      },
+      "revId": "356183a3f81c45ef2827305a5a4d468f5fa8aaaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ba5ed10_65594855",
         "filename": "base/task_scheduler/scheduler_worker.h",
         "patchSetId": 8
@@ -151,6 +295,30 @@
       "writtenOn": "2017-07-21T17:14:03Z",
       "side": 1,
       "message": "Preserve the previous order.",
+      "range": {
+        "startLine": 182,
+        "startChar": 2,
+        "endLine": 182,
+        "endChar": 35
+      },
+      "revId": "356183a3f81c45ef2827305a5a4d468f5fa8aaaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f915914_6cb97753",
+        "filename": "base/task_scheduler/scheduler_worker.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-21T18:33:21Z",
+      "side": 1,
+      "message": "In the .cc file, that would mean in SchedulerWorker::SchedulerWorker(...) that the member initializer list would have to look like something like this:\n\n: thread_lock_(predecessor_lock),\n      priority_hint_(priority_hint),\n      delegate_(std::move(delegate)),\n      task_tracker_(task_tracker)\n#if defined(OS_WIN) \u0026\u0026 !defined(COM_INIT_CHECK_HOOK_ENABLED)\n      ,backward_compatibility_(backward_compatibility)\n#endif\n\n(note the comma in \",backward_compatibility_\")\n(otherwise, I get an error on one a few of the try-jobs about the initialization not happening in the same order as in the declaration)\n\nSwitching the order is preferable to the odd comma placement, right? (or is the comma being there no big deal?)\n\n(also, there\u0027s no nicer way to go about doing this that I don\u0027t know about, right?)",
+      "parentUuid": "4ba5ed10_65594855",
       "range": {
         "startLine": 182,
         "startChar": 2,
