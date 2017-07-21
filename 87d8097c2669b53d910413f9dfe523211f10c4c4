@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ea4d115f_416b2539",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-21T02:03:24Z",
+      "side": 1,
+      "message": "Ah, thanks. NOTIMPLEMENTED() seems good. It looks just the same with LOG(ERROR) by default.\nhttps://cs.chromium.org/chromium/src/base/logging.h?type\u003dcs\u0026q\u003dNOTIMPLEMENTED\u0026sq\u003dpackage:chromium\u0026l\u003d1130",
+      "parentUuid": "715a4752_5bbd29f5",
+      "revId": "87d8097c2669b53d910413f9dfe523211f10c4c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9c53d53_e2c128de",
         "filename": "content/renderer/service_worker/embedded_worker_instance_client_impl.cc",
         "patchSetId": 21
