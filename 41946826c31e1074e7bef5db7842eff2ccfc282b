@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38ed1fd7_43f5b811",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentManifestVerifier.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-21T15:17:53Z",
+      "side": 1,
+      "message": "nit: Flattens a list of arrays into a single array?",
+      "range": {
+        "startLine": 373,
+        "startChar": 0,
+        "endLine": 373,
+        "endChar": 51
+      },
+      "revId": "41946826c31e1074e7bef5db7842eff2ccfc282b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaf5f68b_1914566c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentManifestVerifier.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-21T15:17:53Z",
+      "side": 1,
+      "message": "nit: flattenListOfArrays?",
+      "range": {
+        "startLine": 378,
+        "startChar": 43,
+        "endLine": 378,
+        "endChar": 61
+      },
+      "revId": "41946826c31e1074e7bef5db7842eff2ccfc282b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe61d9af_d77001bf",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/payments/AndroidPaymentAppFinderTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-21T15:17:53Z",
+      "side": 1,
+      "message": "nit: might be better to have comments for all above tests as below even though the test name is descriptive.",
+      "range": {
+        "startLine": 389,
+        "startChar": 0,
+        "endLine": 389,
+        "endChar": 66
+      },
+      "revId": "41946826c31e1074e7bef5db7842eff2ccfc282b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "562dc290_c61ca60e",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/payments/AndroidPaymentAppFinderTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-21T15:17:53Z",
+      "side": 1,
+      "message": "nit: it might be better to use different signatures for different apps as in real world.",
+      "range": {
+        "startLine": 434,
+        "startChar": 17,
+        "endLine": 434,
+        "endChar": 37
+      },
+      "revId": "41946826c31e1074e7bef5db7842eff2ccfc282b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad3337eb_99cab9a2",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/payments/AndroidPaymentAppFinderTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-21T15:17:53Z",
+      "side": 1,
+      "message": "nit: ditto",
+      "range": {
+        "startLine": 468,
+        "startChar": 17,
+        "endLine": 468,
+        "endChar": 37
+      },
+      "revId": "41946826c31e1074e7bef5db7842eff2ccfc282b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
