@@ -105,9 +105,6 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
       gfx::NativeView child,
       const gfx::Point& location) override;
 
-  // Gets the PaginationModel owned by this view's apps grid.
-  PaginationModel* GetAppsPaginationModel();
-
   // Overridden from views::View:
   bool AcceleratorPressed(const ui::Accelerator& accelerator) override;
   void Layout() override;
@@ -127,18 +124,23 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
   // Called when tablet mode starts and ends.
   void OnTabletModeChanged(bool started);
 
+  // Changes |app_list_state_| from |PEEKING| to |FULLSCREEN_ALL_APPS|.
+  bool HandleScroll(const ui::Event* event);
+
+  // Gets the PaginationModel owned by this view's apps grid.
+  PaginationModel* GetAppsPaginationModel();
+
   bool is_fullscreen() const {
     return app_list_state_ == FULLSCREEN_ALL_APPS ||
            app_list_state_ == FULLSCREEN_SEARCH;
   }
-
   AppListState app_list_state() const { return app_list_state_; }
   AppListMainView* app_list_main_view() const { return app_list_main_view_; }
   views::Widget* search_box_widget() const { return search_box_widget_; }
   SearchBoxView* search_box_view() const { return search_box_view_; }
-
-  // Changes |app_list_state_| from |PEEKING| to |FULLSCREEN_ALL_APPS|.
-  bool HandleScroll(const ui::Event* event);
+  views::Widget* get_fullscreen_widget_for_test() const {
+    return fullscreen_widget_;
+  }
 
  private:
   friend class test::AppListViewTestApi;
