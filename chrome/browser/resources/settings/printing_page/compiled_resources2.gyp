@@ -22,15 +22,14 @@
     {
       'target_name': 'cups_add_printer_dialog_util',
       'dependencies': [
+        '<(DEPTH)/ui/webui/resources/cr_elements/compiled_resources2.gyp:cr_scrollable_behavior',
         'cups_printers_browser_proxy',
       ],
       'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
     },
     {
-      'target_name': 'cups_printer_details_page',
+      'target_name': 'cups_edit_printer_dialog',
       'dependencies': [
-        '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:load_time_data',
-        '../settings_page/compiled_resources2.gyp:settings_animated_pages',
         'cups_printers_browser_proxy',
       ],
       'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
@@ -71,7 +70,7 @@
         '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:load_time_data',
         '../compiled_resources2.gyp:route',
         '../settings_page/compiled_resources2.gyp:settings_animated_pages',
-        'cups_printer_details_page',
+        'cups_printers_browser_proxy',
       ],
       'includes': ['../../../../../third_party/closure_compiler/compile_js2.gypi'],
     },
