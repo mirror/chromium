@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "1eb875ca_87fb3011",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 3791,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-21T08:16:08Z",
+      "side": 1,
+      "message": "Note that this version of the method doesn\u0027t forward to the version with |inIncognito|, so any callers that invoke this function won\u0027t register with the FeatureEngagementTracker.  Is that ok?",
+      "revId": "8782748a3627b88267f6066fc3c4340cf2ff34da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8361a7a_a0fd4a66",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 3820,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-21T08:16:08Z",
+      "side": 1,
+      "message": "webPageOrderedOpen is probably also called in cases where tapping on a link happens to open a new tab, even without the user\u0027s explicit direction.  For example, news.google.com is set up to automatically open articles in new tabs.\n\nWhat should the FeatureEngagementTracker do when a new tab is opened by the webpage, but technically not directly by the user?",
+      "revId": "8782748a3627b88267f6066fc3c4340cf2ff34da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "889c164b_c42e59b8",
+        "filename": "ios/chrome/browser/ui/commands/open_new_tab_command.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-21T08:16:08Z",
+      "side": 1,
+      "message": "Consider naming this property based on how it\u0027s set (userInitiated) rather than what it\u0027s used for.",
+      "revId": "8782748a3627b88267f6066fc3c4340cf2ff34da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c8bc3153_5a42781c",
         "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
         "patchSetId": 7
