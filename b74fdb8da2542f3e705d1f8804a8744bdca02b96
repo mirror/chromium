@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bbe8393_9952aad9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/Layout.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1098,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-07-21T20:14:41Z",
+      "side": 1,
+      "message": "nit: Rather than nesting, short circuit. i.e.:\n\nif (mTabModelSelector \u003d\u003d null) return null;\n\netc.",
+      "range": {
+        "startLine": 1098,
+        "startChar": 8,
+        "endLine": 1098,
+        "endChar": 38
+      },
+      "revId": "b74fdb8da2542f3e705d1f8804a8744bdca02b96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
