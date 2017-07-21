@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0982344_55e8f4ae",
+        "filename": "content/common/view_messages.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 871,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-21T23:48:22Z",
+      "side": 1,
+      "message": "Can we plumb this via WebFrameClient/RenderFrameImpl/frame_messages.h/RenderFrameHost instead? It\u0027d be nice to avoid passing URLs from the renderer, since we should already have it on the RFH in the form of GetLastCommittedURL().",
+      "range": {
+        "startLine": 867,
+        "startChar": 0,
+        "endLine": 871,
+        "endChar": 42
+      },
+      "revId": "9e3dbb0b283a5ad746ca74130d9cecd4846b155b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
