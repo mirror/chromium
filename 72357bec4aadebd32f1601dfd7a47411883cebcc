@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "5c30a808_ef37ece6",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-21T06:30:48Z",
+      "side": 1,
+      "message": "Nit: While here: Please fix spelling of \"navigations\"",
+      "revId": "72357bec4aadebd32f1601dfd7a47411883cebcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "301d4dac_79f2fd62",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-21T06:30:48Z",
+      "side": 1,
+      "message": "This should go inside the conditional above, since we definitely don\u0027t want to call it in the \"delete this\" case.\n\nThe safest way to do this: reorder the above code as follows:\n\n  ...\n  if (match_.destination_url !\u003d\n      content::Details\u003ccontent::NavigationEntry\u003e(details)-\u003eGetVirtualURL())\n    return;\n\n  // If we\u0027ve already observed one load, this tab is getting reloaded, so this\n  // is no longer the navigation we wanted to look at.\n  if (load_state_ !\u003d LOAD_NOT_SEEN) {\n    delete this;\n    return;\n  }\n\n  // We\u0027ve seen a pending load; update our state accordingly and begin watching\n  // for future state changes.\n  registrar_.Remove(this, content::NOTIFICATION_NAV_ENTRY_PENDING,\n                    content::NotificationService::AllSources());\n  load_state_ \u003d LOAD_PENDING;\n  WebContentsObserver::Observe(web_contents);\n\n  // Start the alternate nav fetcher if need be.\n  if (fetcher_) {\n    fetcher_-\u003eSetRequestContext(\n        content::BrowserContext::GetDefaultStoragePartition(\n            controller-\u003eGetBrowserContext())-\u003eGetURLRequestContext());\n    fetcher_-\u003eStart();\n  }\n}",
+      "revId": "72357bec4aadebd32f1601dfd7a47411883cebcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a89a5f49_17c6b71a",
         "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer.cc",
         "patchSetId": 1
@@ -13,6 +47,30 @@
       "writtenOn": "2017-07-20T21:03:05Z",
       "side": 1,
       "message": "This is a partial revert to how things were before these changes: https://codereview.chromium.org/2636183004/diff/40001/chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer.cc?context\u003d10\u0026column_width\u003d80\u0026tab_spaces\u003d8\n\nHowever, I\u0027m not sure they are exactly equivalent. The NOTIFICATION_NAV_ENTRY_PENDING is still synchronous, so that\u0027s good.\n\nThis is the callback we used to use: https://cs.chromium.org/chromium/src/content/public/browser/web_contents_observer.h?type\u003dcs\u0026q\u003dweb_contents_observer\u0026sq\u003dpackage:chromium\u0026l\u003d206",
+      "range": {
+        "startLine": 167,
+        "startChar": 1,
+        "endLine": 167,
+        "endChar": 0
+      },
+      "revId": "72357bec4aadebd32f1601dfd7a47411883cebcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2541a5b_ec0634e4",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-21T06:30:48Z",
+      "side": 1,
+      "message": "Honestly, it\u0027s more of a revert of part of the refactoring in https://codereview.chromium.org/26515007/ .\n\nI think it\u0027s OK overall to make this change.  AFAICT that change was more of a \"if we\u0027re doing most things off WebContentsObserver, try to move as much as possible there\" than something that had a functional/necessity-based reason.",
+      "parentUuid": "a89a5f49_17c6b71a",
       "range": {
         "startLine": 167,
         "startChar": 1,
