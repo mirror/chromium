@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "558f4da3_fae995a4",
+        "filename": "chrome/browser/vr/elements/transience_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-21T18:16:09Z",
+      "side": 1,
+      "message": "Post-commit question:  Why set opacity only here, to fully opaque?  This could fiddle with any element\u0027s use of opacity, unrelated to transience, no?",
+      "revId": "4c139158cd78a53dbb042b1cf2ccc01328b3be82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
