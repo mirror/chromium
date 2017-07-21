@@ -48,9 +48,19 @@ class ChromeScreenshotGrabber : public ash::ScreenshotDelegate,
  private:
   friend class ash::ChromeScreenshotGrabberTest;
 
+  void ReadScreenshotFileForPreview(
+      ui::ScreenshotGrabberObserver::Result result,
+      const base::FilePath& screenshot_path);
+
+  void OnReadScreenshotFileForPreviewCompleted(
+      ui::ScreenshotGrabberObserver::Result result,
+      const base::FilePath& screenshot_path,
+      gfx::Image image);
+
   Notification* CreateNotification(
       ui::ScreenshotGrabberObserver::Result screenshot_result,
-      const base::FilePath& screenshot_path);
+      const base::FilePath& screenshot_path,
+      gfx::Image image);
 
   void SetProfileForTest(Profile* profile);
   Profile* GetProfile();
