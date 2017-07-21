@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "e3f0c035_973b2a99",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-21T15:21:47Z",
+      "side": 1,
+      "message": "You\u0027re guaranteed to have 5% of the distribution in the last bucket. I\u0027d suggest doubling and using a custom histogram up to 48 hours, or even longer.",
+      "range": {
+        "startLine": 18,
+        "startChar": 46,
+        "endLine": 18,
+        "endChar": 55
+      },
+      "revId": "38e9ba502613a455913cd8018798ea15f42fdb57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfaef682_435e1f95",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-21T15:21:47Z",
+      "side": 1,
+      "message": "No need for braces.",
+      "range": {
+        "startLine": 53,
+        "startChar": 3,
+        "endLine": 53,
+        "endChar": 0
+      },
+      "revId": "38e9ba502613a455913cd8018798ea15f42fdb57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee9e6998_8de96190",
         "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
         "patchSetId": 7
@@ -13,6 +59,47 @@
       "writtenOn": "2017-07-19T18:49:54Z",
       "side": 1,
       "message": "I would still remove this is_bool check and make sure visibility is passed in when a tab is created. How about adding in ResourceCoordinatorWebContentsObserver\u0027s constructor\n\n// GRC needs to be updated when WebContents is initially invisible.\nif (!web_contents-\u003eIsVisible())\n  WasHidden();\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.cc?l\u003d25",
+      "revId": "38e9ba502613a455913cd8018798ea15f42fdb57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "385018d1_0f6b49cd",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-21T15:21:47Z",
+      "side": 1,
+      "message": "+1, this seems cleaner.",
+      "parentUuid": "ee9e6998_8de96190",
+      "revId": "38e9ba502613a455913cd8018798ea15f42fdb57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd720d3a_1db222fa",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-21T15:21:47Z",
+      "side": 1,
+      "message": "What\u0027s the purpose of this?",
+      "range": {
+        "startLine": 25,
+        "startChar": 48,
+        "endLine": 25,
+        "endChar": 55
+      },
       "revId": "38e9ba502613a455913cd8018798ea15f42fdb57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
