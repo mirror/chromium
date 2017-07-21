@@ -3,6 +3,7 @@
 # found in the LICENSE file.
 
 import contextlib
+import json
 import logging
 import os
 import posixpath
@@ -64,6 +65,9 @@ EXTRA_SCREENSHOT_FILE = (
 EXTRA_UI_CAPTURE_DIR = (
     'org.chromium.base.test.util.Screenshooter.ScreenshotDir')
 
+_EXTRA_TEST_LIST = (
+    'org.chromium.base.test.BaseChromiumAndroidJUnitRunner.TestList')
+
 UI_CAPTURE_DIRS = ['chromium_tests_root', 'UiCapture']
 
 FEATURE_ANNOTATION = 'Feature'
@@ -88,8 +92,8 @@ def _LogTestEndpoints(device, test_name):
         ['log', '-p', 'i', '-t', _TAG, 'END %s' % test_name],
         check_return=True)
 
-# TODO(jbudorick): Make this private once the instrumentation test_runner is
-# deprecated.
+# TODO(jbudorick): Make this private once the instrumentation test_runner
+# is deprecated.
 def DidPackageCrashOnDevice(package_name, device):
   # Dismiss any error dialogs. Limit the number in case we have an error
   # loop or we are failing to dismiss.
@@ -306,6 +310,8 @@ class LocalDeviceInstrumentationTestRun(
 
   #override
   def _GetTests(self):
+    if self._test_instance.junit4_runner_class:
+      self._SaveTestsFromRunner()
     tests = self._test_instance.GetTests()
     tests = self._ApplyExternalSharding(
         tests, self._test_instance.external_shard_index,
@@ -371,10 +377,11 @@ class LocalDeviceInstrumentationTestRun(
       if test['is_junit4']:
         target = '%s/%s' % (
             self._test_instance.test_package,
-            self._test_instance.test_runner_junit4)
+            self._test_instance.junit4_runner_class)
       else:
         target = '%s/%s' % (
-            self._test_instance.test_package, self._test_instance.test_runner)
+            self._test_instance.test_package,
+            self._test_instance.junit3_runner_class)
       extras['class'] = test_name
       if 'flags' in test and test['flags']:
         flags_to_add.extend(test['flags'])
@@ -550,6 +557,40 @@ class LocalDeviceInstrumentationTestRun(
     if self._env.concurrent_adb:
       post_test_step_thread_group.JoinAll()
     return results, None
+
+  def _SaveTestsFromRunner(self):
+    try:
+      raw_tests = self._test_instance.GetAllTestsFromRunnerPickle()
+      self._test_instance.SetTestsFromRunner(raw_tests)
+    except instrumentation_test_instance.TestListPickleException as e:
+      junit4_runner_class = self._test_instance.junit4_runner_class
+      test_package = self._test_instance.test_package
+      logging.info('Could not get tests from pickle: %s', e)
+      logging.info('Getting tests by having %s list them.',
+                   self._test_instance.junit4_runner_class)
+      device = self._env.devices[0]
+      with device_temp_file.DeviceTempFile(
+          device.adb, suffix='.json',
+          dir=device.GetExternalStoragePath()) as device_test_list_json:
+        extras = {}
+        extras[_EXTRA_TEST_LIST] = device_test_list_json.name
+        extras['log'] = 'true'
+        extras['package'] = '.'.join(
+            self._test_instance.test_package.split('.')[:2])
+        target = '%s/%s' % (test_package, junit4_runner_class)
+        output_string = ''.join(device.StartInstrumentation(
+            target, extras=extras))
+        if output_string:
+          raise Exception('Test listing through %s failed on device:\n%s' % (
+              junit4_runner_class, output_string))
+        with tempfile_ext.NamedTemporaryDirectory() as host_dir:
+          host_file = os.path.join(host_dir, 'list_tests.json')
+          device.PullFile(device_test_list_json.name, host_file)
+          with open(host_file, 'r') as host_file:
+            json_string = host_file.read()
+            raw_tests = json.loads(json_string)
+            self._test_instance.SaveTestsToPickle(raw_tests)
+            self._test_instance.SetTestsFromRunner(raw_tests)
 
   def _SaveScreenshot(self, device, screenshot_host_dir, screenshot_device_file,
                       test_name, results):
