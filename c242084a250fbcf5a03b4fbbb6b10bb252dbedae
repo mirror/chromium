@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "77560233_e9a688c8",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-07-21T05:49:22Z",
+      "side": 1,
+      "message": "Destructor will be called on some other thread which can\u0027t use this pointer, so I think the pointer must be created and destructed on each method call.",
+      "parentUuid": "0281c248_7cbf8e22",
+      "revId": "c242084a250fbcf5a03b4fbbb6b10bb252dbedae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5967e039_8d8622f8",
         "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.h",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "c242084a250fbcf5a03b4fbbb6b10bb252dbedae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9b3d0c8_45213457",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-07-21T05:49:22Z",
+      "side": 1,
+      "message": "I\u0027m sorry, this is mistake.",
+      "parentUuid": "5967e039_8d8622f8",
+      "revId": "c242084a250fbcf5a03b4fbbb6b10bb252dbedae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
