@@ -130,6 +130,7 @@
           "media::mojom::InterfaceFactory",
           "media::mojom::RemoterFactory",
           "media::mojom::Renderer",
+          "media::mojom::MediaCapabilitiesRecorder",
           "mojom::MediaDevicesDispatcherHost",
           "payments::mojom::PaymentManager",
           "payments::mojom::PaymentRequest",
