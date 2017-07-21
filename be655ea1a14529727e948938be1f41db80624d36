@@ -94,6 +94,30 @@
       "revId": "be655ea1a14529727e948938be1f41db80624d36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81c92e9d_555007aa",
+        "filename": "components/sync_bookmarks/bookmark_model_associator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 966,
+      "author": {
+        "id": 1002186
+      },
+      "writtenOn": "2017-07-21T00:16:40Z",
+      "side": 1,
+      "message": "I mean changing the actual enum value.\n\nAgreed that kModelTypeInfoMap is prone to errors, although we have unit tests to prevent that. But yeah, I\u0027m open to ModelTypeUMA. Is that something you\u0027d like to take on, or do you want to open a bug against us for that?",
+      "parentUuid": "5b2b1be2_12dfe6b2",
+      "range": {
+        "startLine": 966,
+        "startChar": 0,
+        "endLine": 966,
+        "endChar": 74
+      },
+      "revId": "be655ea1a14529727e948938be1f41db80624d36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
