@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b72852ec_a5321222",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-21T20:16:11Z",
+      "side": 1,
+      "message": "No, you can\u0027t trigger this via a shortcut, so I think we don\u0027t need to reveal the tabstrip as it would already be revealed via mouse cursor.",
+      "parentUuid": "51aa4b6a_3cb10d58",
+      "revId": "f7a42bf9bd55f284cea6205cbf9cb2e579722647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2027f0bf_30c1751d",
         "filename": "chrome/browser/ui/cocoa/browser_window_cocoa.mm",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-21T06:37:55Z",
       "side": 1,
       "message": "Honestly, I\u0027d think we\u0027d want some kind of implementation on Mac, since it has a top toolbar that animates down from offscreen when in fullscreen mode, doesn\u0027t it?",
+      "revId": "f7a42bf9bd55f284cea6205cbf9cb2e579722647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6386c3e4_b37b01f6",
+        "filename": "chrome/browser/ui/cocoa/browser_window_cocoa.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-21T20:16:11Z",
+      "side": 1,
+      "message": "Sorry, I don\u0027t know anything about Macs. \nI checked this file to see if the ImmersiveRevealedLock was used anywhere here, and I couldn\u0027t find any. Maybe +tapted@ can advise?",
+      "parentUuid": "2027f0bf_30c1751d",
       "revId": "f7a42bf9bd55f284cea6205cbf9cb2e579722647",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "967831d6_5a453f07",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-21T20:16:11Z",
+      "side": 1,
+      "message": "It seems that WaitableEvent is used when one thread wants to wait for something happening on another thread. In our case here everything is happening on the UI thread, so we cannot really put it to sleep. Is my understanding wrong?",
+      "parentUuid": "6517d64f_6b28df50",
+      "revId": "f7a42bf9bd55f284cea6205cbf9cb2e579722647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bdd9aac7_f01086b0",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "f7a42bf9bd55f284cea6205cbf9cb2e579722647",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ba25c52_878add86",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-21T20:16:11Z",
+      "side": 1,
+      "message": "This tests that we\u0027re in fullscreen mode, regardless of the status of the tabstrip whether it\u0027s revealed or not.\n\nI changed the order and added another EXPECT for the revealed state. Done.",
+      "parentUuid": "bdd9aac7_f01086b0",
+      "revId": "f7a42bf9bd55f284cea6205cbf9cb2e579722647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "a2289d7b_d4776b2b",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-21T20:16:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "098a6b52_eb7efb3a",
+      "revId": "f7a42bf9bd55f284cea6205cbf9cb2e579722647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32e31e11_0cbe4fc6",
         "filename": "chrome/browser/ui/views/frame/browser_view.cc",
         "patchSetId": 3
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "4c0adec8_d7e656b7",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-21T20:16:11Z",
+      "side": 1,
+      "message": "unique_ptr ctor is marked explicit so I had to use base::WrapUnique instead.",
+      "parentUuid": "32e31e11_0cbe4fc6",
+      "revId": "f7a42bf9bd55f284cea6205cbf9cb2e579722647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00c91637_4fa08af2",
         "filename": "chrome/browser/ui/views/frame/browser_view.cc",
         "patchSetId": 3
@@ -118,6 +226,24 @@
       "revId": "f7a42bf9bd55f284cea6205cbf9cb2e579722647",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "900c5ed0_98dbb2f2",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-07-21T20:16:11Z",
+      "side": 1,
+      "message": "The ash::ImmersiveFullscreenControllerTestApi::SetupForTest() (which we call in PreRunTestOnMainThread() should disable all revealer animations).\n\nI also added a way to turn off the revealer delay and added waiter to wait for the reveal start.",
+      "parentUuid": "00c91637_4fa08af2",
+      "revId": "f7a42bf9bd55f284cea6205cbf9cb2e579722647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
