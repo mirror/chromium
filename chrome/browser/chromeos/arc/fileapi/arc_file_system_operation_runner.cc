@@ -83,7 +83,8 @@ ArcFileSystemOperationRunner::ArcFileSystemOperationRunner(
     : context_(context),
       arc_bridge_service_(bridge_service),
       set_should_defer_by_events_(set_should_defer_by_events),
-      binding_(this),
+      host_(this),
+      binding_(&host_),
       weak_ptr_factory_(this) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
