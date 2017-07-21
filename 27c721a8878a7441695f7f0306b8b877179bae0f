@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9a9c7e9_6f6e2384",
+        "filename": "chrome/test/chromedriver/window_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-07-21T23:44:08Z",
+      "side": 1,
+      "message": "ChromeDriver uses single quotes to delimit variable names in error messages. Vertical bars are only used in comments.",
+      "range": {
+        "startLine": 753,
+        "startChar": 37,
+        "endLine": 753,
+        "endChar": 46
+      },
+      "revId": "27c721a8878a7441695f7f0306b8b877179bae0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
