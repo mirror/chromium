@@ -16,6 +16,24 @@
       "revId": "5415b0cdfe4314646e184ba6b50bedae94d3b3ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bf24e35_37ab2f26",
+        "filename": "content/browser/web_contents/aura/overscroll_window_animation.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-07-21T18:49:03Z",
+      "side": 1,
+      "message": "Added one that returns content size (rather than width).",
+      "parentUuid": "d45367e5_d5487a93",
+      "revId": "5415b0cdfe4314646e184ba6b50bedae94d3b3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
