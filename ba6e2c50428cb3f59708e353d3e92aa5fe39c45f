@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "336134f8_d21e56cd",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-21T18:00:43Z",
+      "side": 1,
+      "message": "I thought we had determined that a static global in the process did not necessarily get reset? Doesn\u0027t this need to be a member of PaintWorklet so that we have a counter per document which may own 2 global scopes?",
+      "revId": "ba6e2c50428cb3f59708e353d3e92aa5fe39c45f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdbac785_f2076682",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-21T18:00:43Z",
+      "side": 1,
+      "message": "Please share the constant from PaintWorklet, i.e. move it from the anonymous namespace to a class constant.",
+      "revId": "ba6e2c50428cb3f59708e353d3e92aa5fe39c45f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a2c8654_b8b49a52",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
+        "patchSetId": 27
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-21T18:00:43Z",
+      "side": 1,
+      "message": "Why did you remove the check of the number? This shouldn\u0027t grow past the kMaxInstanceCount should it?",
+      "revId": "ba6e2c50428cb3f59708e353d3e92aa5fe39c45f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
