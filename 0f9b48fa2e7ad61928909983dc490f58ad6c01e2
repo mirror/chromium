@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "821d995d_5224248a",
+        "filename": "components/offline_pages/core/page_renovation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-21T18:35:54Z",
+      "side": 1,
+      "message": "\u0027class\u0027 -\u003e \u0027interface\u0027\n\nBTW, is there a need for an abstract interface? Or will this be a single concrete class? In other words, do you plan to have at least 2 different implementations?",
+      "revId": "0f9b48fa2e7ad61928909983dc490f58ad6c01e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34164b13_8089e32f",
         "filename": "components/offline_pages/core/page_renovation.h",
         "patchSetId": 2
@@ -18,6 +35,63 @@
         "startChar": 47,
         "endLine": 18,
         "endChar": 53
+      },
+      "revId": "0f9b48fa2e7ad61928909983dc490f58ad6c01e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64a8e426_befd7d51",
+        "filename": "components/offline_pages/core/page_renovation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-21T18:35:54Z",
+      "side": 1,
+      "message": "missed part of phrase here... Also, usual style for comments does not use \"This method\"\nMaybe \"Returns |true| if the renovation represented by this object should be executed for a page with given |url|.",
+      "revId": "0f9b48fa2e7ad61928909983dc490f58ad6c01e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "035f830c_819c7431",
+        "filename": "components/offline_pages/core/page_renovation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-21T18:35:54Z",
+      "side": 1,
+      "message": "Naming suggestion: \u0027request\u0027 -\u003e \u0027url\u0027?",
+      "revId": "0f9b48fa2e7ad61928909983dc490f58ad6c01e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ec70de4_5958ba70",
+        "filename": "components/offline_pages/core/page_renovation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-21T18:35:54Z",
+      "side": 1,
+      "message": "\"Key\" is usually associated with a map or something like that. The string that uniquely identifies an object is usually named \"id\". If the operation to retrieve that id is not expensive, it is usually exposed as a simple getter.",
+      "range": {
+        "startLine": 21,
+        "startChar": 27,
+        "endLine": 21,
+        "endChar": 30
       },
       "revId": "0f9b48fa2e7ad61928909983dc490f58ad6c01e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -71,6 +145,40 @@
     },
     {
       "key": {
+        "uuid": "eeeeedc9_7bb1f089",
+        "filename": "components/offline_pages/core/page_renovation_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-21T18:35:54Z",
+      "side": 1,
+      "message": "Will this list be built from the loaded source or is it just a table in the code?",
+      "revId": "0f9b48fa2e7ad61928909983dc490f58ad6c01e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d37c482a_1b7b7a87",
+        "filename": "components/offline_pages/core/page_renovation_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-21T18:35:54Z",
+      "side": 1,
+      "message": "If this implies loading scripts form disk, then it is an async operation and requires a callback, because the script may not be ready to return synchronously.",
+      "revId": "0f9b48fa2e7ad61928909983dc490f58ad6c01e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ba86865_a0639a78",
         "filename": "components/offline_pages/core/page_renovation_loader.cc",
         "patchSetId": 2
@@ -82,6 +190,30 @@
       "writtenOn": "2017-07-21T18:26:58Z",
       "side": 1,
       "message": "renovations might be better named renovation_name, or renovation_function_name.  These aren\u0027t renovation objects, but the names of renovation functions to call.",
+      "range": {
+        "startLine": 36,
+        "startChar": 36,
+        "endLine": 36,
+        "endChar": 47
+      },
+      "revId": "0f9b48fa2e7ad61928909983dc490f58ad6c01e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c2e946f_d9952830",
+        "filename": "components/offline_pages/core/page_renovation_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-21T18:35:54Z",
+      "side": 1,
+      "message": "I\u0027d propose following the idea that each renovation has an Id, so this would be renovation_ids then.",
+      "parentUuid": "0ba86865_a0639a78",
       "range": {
         "startLine": 36,
         "startChar": 36,
@@ -134,6 +266,23 @@
         "endLine": 27,
         "endChar": 49
       },
+      "revId": "0f9b48fa2e7ad61928909983dc490f58ad6c01e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9758449a_ec8d41db",
+        "filename": "components/offline_pages/core/page_renovation_loader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-21T18:35:54Z",
+      "side": 1,
+      "message": "Add DISALLOW_COPY_AND_ASSIGN",
       "revId": "0f9b48fa2e7ad61928909983dc490f58ad6c01e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
