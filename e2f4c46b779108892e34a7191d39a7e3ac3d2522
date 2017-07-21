@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2034f495_06af6826",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-21T10:17:01Z",
+      "side": 1,
+      "message": "Given that we now have base::optional, I think a good choice is to make this\nbase::Optional\u003csize\u003e and return nullopt_t in case of failure.",
+      "parentUuid": "60ca24f6_b55c10d5",
+      "revId": "e2f4c46b779108892e34a7191d39a7e3ac3d2522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d5996d9_ab651f96",
         "filename": "base/trace_event/process_memory_dump_unittest.cc",
         "patchSetId": 7
