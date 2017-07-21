@@ -12,6 +12,7 @@
 #include "ash/wm/mru_window_tracker.h"
 #include "ash/wm/overview/window_selector_controller.h"
 #include "ash/wm/tablet_mode/tablet_mode_backdrop_delegate_impl.h"
+#include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "ash/wm/tablet_mode/tablet_mode_event_handler.h"
 #include "ash/wm/tablet_mode/tablet_mode_window_state.h"
 #include "ash/wm/window_state.h"
@@ -266,9 +267,12 @@ bool TabletModeWindowManager::ShouldHandleWindow(aura::Window* window) {
     return false;
 
   // If the changing bounds in the maximized/fullscreen is allowed, then
-  // let the client manage it even in tablet mode.
-  if (wm::GetWindowState(window)->allow_set_bounds_direct())
+  // let the client manage it even in tablet mode, except if we want to hide
+  // title bars in tablet mode.
+  if (wm::GetWindowState(window)->allow_set_bounds_direct() &&
+      !Shell::Get()->tablet_mode_controller()->ShouldHideTitlebars()) {
     return false;
+  }
 
   return window->type() == aura::client::WINDOW_TYPE_NORMAL;
 }
