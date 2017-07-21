@@ -969,7 +969,7 @@ bool FormatFileToString(Setup* setup,
       setup->scheduler().input_file_manager()->SyncLoadFile(
           LocationRange(), &setup->build_settings(), file, &err);
   if (err.has_error()) {
-    err.PrintToStdout();
+    err.Report();
     return false;
   }
   DoFormat(parse_node, dump_tree, output);
@@ -986,14 +986,14 @@ bool FormatStringToString(const std::string& input,
   // Tokenize.
   std::vector<Token> tokens = Tokenizer::Tokenize(&file, &err);
   if (err.has_error()) {
-    err.PrintToStdout();
+    err.Report();
     return false;
   }
 
   // Parse.
   std::unique_ptr<ParseNode> parse_node = Parser::Parse(tokens, &err);
   if (err.has_error()) {
-    err.PrintToStdout();
+    err.Report();
     return false;
   }
 
@@ -1017,7 +1017,7 @@ int RunFormat(const std::vector<std::string>& args) {
   if (from_stdin) {
     if (args.size() != 0) {
       Err(Location(), "Expecting no arguments when reading from stdin.\n")
-          .PrintToStdout();
+          .Report();
       return 1;
     }
     std::string input = ReadStdin();
@@ -1033,7 +1033,7 @@ int RunFormat(const std::vector<std::string>& args) {
   // should all be done in parallel.
   if (args.size() != 1) {
     Err(Location(), "Expecting exactly one argument, see `gn help format`.\n")
-        .PrintToStdout();
+        .Report();
     return 1;
   }
 
@@ -1045,7 +1045,7 @@ int RunFormat(const std::vector<std::string>& args) {
   SourceFile file = source_dir.ResolveRelativeFile(Value(nullptr, args[0]),
                                                    &err);
   if (err.has_error()) {
-    err.PrintToStdout();
+    err.Report();
     return 1;
   }
 
@@ -1058,7 +1058,8 @@ int RunFormat(const std::vector<std::string>& args) {
       if (!base::ReadFileToString(to_write, &original_contents)) {
         Err(Location(), std::string("Couldn't read \"") +
                             to_write.AsUTF8Unsafe() +
-                            std::string("\" for comparison.")).PrintToStdout();
+                            std::string("\" for comparison."))
+            .Report();
         return 1;
       }
       if (dry_run)
@@ -1069,7 +1070,8 @@ int RunFormat(const std::vector<std::string>& args) {
                             static_cast<int>(output_string.size())) == -1) {
           Err(Location(),
               std::string("Failed to write formatted output back to \"") +
-                  to_write.AsUTF8Unsafe() + std::string("\".")).PrintToStdout();
+                  to_write.AsUTF8Unsafe() + std::string("\"."))
+              .Report();
           return 1;
         }
         printf("Wrote formatted to '%s'.\n", to_write.AsUTF8Unsafe().c_str());

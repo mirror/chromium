@@ -160,8 +160,10 @@ int ListArgs(const std::string& build_dir) {
     auto found = args.find(list_value);
     if (found == args.end()) {
       Err(Location(), "Unknown build argument.",
-          "You asked for \"" + list_value + "\" which I didn't find in any "
-          "build file\nassociated with this build.").PrintToStdout();
+          "You asked for \"" + list_value +
+              "\" which I didn't find in any "
+              "build file\nassociated with this build.")
+          .Report();
       return 1;
     }
 
@@ -206,8 +208,8 @@ bool RunEditor(const base::FilePath& file_to_edit) {
   info.lpClass = L".txt";
   if (!::ShellExecuteEx(&info)) {
     Err(Location(), "Couldn't run editor.",
-        "Just edit \"" + FilePathToUTF8(file_to_edit) +
-        "\" manually instead.").PrintToStdout();
+        "Just edit \"" + FilePathToUTF8(file_to_edit) + "\" manually instead.")
+        .Report();
     return false;
   }
 
@@ -286,7 +288,7 @@ int EditArgsFile(const std::string& build_dir) {
           Err err =
               Err(Location(), std::string("Can't load arg_file_template:\n  ") +
                                   template_path.value());
-          err.PrintToStdout();
+          err.Report();
           return 1;
         }
 
@@ -381,7 +383,8 @@ int RunArgs(const std::vector<std::string>& args) {
   if (args.size() != 1) {
     Err(Location(), "Exactly one build dir needed.",
         "Usage: \"gn args <out_dir>\"\n"
-        "Or see \"gn help args\" for more variants.").PrintToStdout();
+        "Or see \"gn help args\" for more variants.")
+        .Report();
     return 1;
   }
 

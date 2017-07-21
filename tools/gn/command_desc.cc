@@ -423,7 +423,7 @@ int RunDesc(const std::vector<std::string>& args) {
   if (args.size() != 2 && args.size() != 3) {
     Err(Location(), "You're holding it wrong.",
         "Usage: \"gn desc <out_dir> <target_name> [<what to display>]\"")
-        .PrintToStdout();
+        .Report();
     return 1;
   }
   const base::CommandLine* cmdline = base::CommandLine::ForCurrentProcess();

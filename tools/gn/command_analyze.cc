@@ -95,14 +95,14 @@ int RunAnalyze(const std::vector<std::string>& args) {
   if (args.size() != 3) {
     Err(Location(), "You're holding it wrong.",
         "Usage: \"gn analyze <out_dir> <input_path> <output_path>")
-        .PrintToStdout();
+        .Report();
     return 1;
   }
 
   std::string input;
   bool ret = base::ReadFileToString(UTF8ToFilePath(args[1]), &input);
   if (!ret) {
-    Err(Location(), "Input file " + args[1] + " not found.").PrintToStdout();
+    Err(Location(), "Input file " + args[1] + " not found.").Report();
     return 1;
   }
 
@@ -116,13 +116,13 @@ int RunAnalyze(const std::vector<std::string>& args) {
                     setup->dotfile_input_file()->name());
   std::string output = analyzer.Analyze(input, &err);
   if (err.has_error()) {
-    err.PrintToStdout();
+    err.Report();
     return 1;
   }
 
   WriteFile(UTF8ToFilePath(args[2]), output, &err);
   if (err.has_error()) {
-    err.PrintToStdout();
+    err.Report();
     return 1;
   }
 

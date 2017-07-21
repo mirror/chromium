@@ -29,8 +29,17 @@ bool initialized = false;
 
 #if defined(OS_WIN)
 HANDLE hstdout;
+HANDLE hstderr;
 WORD default_attributes;
+
+using stream_t = HANDLE;
+#else
+using stream_t = FILE*;
 #endif
+
+stream_t g_stdout;
+stream_t g_stderr;
+
 bool is_console = false;
 
 bool is_markdown = false;
@@ -56,53 +65,48 @@ void EnsureInitialized() {
   // On Windows, we can't force the color on. If the output handle isn't a
   // console, there's nothing we can do about it.
   hstdout = ::GetStdHandle(STD_OUTPUT_HANDLE);
+  hstderr = ::GetStdHandle(STD_ERROR_HANDLE);
   CONSOLE_SCREEN_BUFFER_INFO info;
   is_console = !!::GetConsoleScreenBufferInfo(hstdout, &info);
   default_attributes = info.wAttributes;
+  g_stdout = hstdout;
+  g_stderr = hstderr;
 #else
   if (cmdline->HasSwitch(switches::kColor))
     is_console = true;
   else
     is_console = isatty(fileno(stdout));
+
+  g_stdout = stdout;
+  g_stderr = stderr;
 #endif
 }
 
-#if !defined(OS_WIN)
-void WriteToStdOut(const std::string& output) {
-  size_t written_bytes = fwrite(output.data(), 1, output.size(), stdout);
+void WriteTo(stream_t stream, const std::string& output) {
+#if defined(OS_WIN)
+  DWORD written_bytes = 0;
+  ::WriteFile(stream, output.data(), output.size(), &written, nullptr);
+#else
+  size_t written_bytes = fwrite(output.data(), 1, output.size(), stream);
+#endif
   DCHECK_EQ(output.size(), written_bytes);
 }
-#endif  // !defined(OS_WIN)
 
-void OutputMarkdownDec(TextDecoration dec) {
+void OutputMarkdownDec(stream_t stream, TextDecoration dec) {
   // The markdown rendering turns "dim" text to italics and any
   // other colored text to bold.
 
-#if defined(OS_WIN)
-  DWORD written = 0;
   if (dec == DECORATION_DIM)
-    ::WriteFile(hstdout, "*", 1, &written, nullptr);
+    WriteTo(stream, "*");
   else if (dec != DECORATION_NONE)
-    ::WriteFile(hstdout, "**", 2, &written, nullptr);
-#else
-  if (dec == DECORATION_DIM)
-    WriteToStdOut("*");
-  else if (dec != DECORATION_NONE)
-    WriteToStdOut("**");
-#endif
+    WriteTo(stream, "**");
 }
 
-}  // namespace
-
-#if defined(OS_WIN)
-
-void OutputString(const std::string& output, TextDecoration dec) {
-  EnsureInitialized();
-  DWORD written = 0;
-
+void ApplyDec(stream_t stream, TextDecoration dec) {
   if (is_markdown) {
-    OutputMarkdownDec(dec);
+    OutputMarkdownDec(stream, dec);
   } else if (is_console) {
+#if defined(OS_WIN)
     switch (dec) {
       case DECORATION_NONE:
         break;
@@ -126,53 +130,46 @@ void OutputString(const std::string& output, TextDecoration dec) {
                                   FOREGROUND_RED | FOREGROUND_GREEN);
         break;
     }
-  }
-
-  std::string tmpstr = output;
-  if (is_markdown && dec == DECORATION_YELLOW) {
-    // https://code.google.com/p/gitiles/issues/detail?id=77
-    // Gitiles will replace "--" with an em dash in non-code text.
-    // Figuring out all instances of this might be difficult, but we can
-    // at least escape the instances where this shows up in a heading.
-    base::ReplaceSubstringsAfterOffset(&tmpstr, 0, "--", "\\--");
-  }
-  ::WriteFile(hstdout, tmpstr.c_str(), static_cast<DWORD>(tmpstr.size()),
-              &written, nullptr);
-
-  if (is_markdown) {
-    OutputMarkdownDec(dec);
-  } else if (is_console) {
-    ::SetConsoleTextAttribute(hstdout, default_attributes);
-  }
-}
-
 #else
-
-void OutputString(const std::string& output, TextDecoration dec) {
-  EnsureInitialized();
-  if (is_markdown) {
-    OutputMarkdownDec(dec);
-  } else if (is_console) {
     switch (dec) {
       case DECORATION_NONE:
         break;
       case DECORATION_DIM:
-        WriteToStdOut("\e[2m");
+        WriteTo(stream, "\e[2m");
         break;
       case DECORATION_RED:
-        WriteToStdOut("\e[31m\e[1m");
+        WriteTo(stream, "\e[31m\e[1m");
         break;
       case DECORATION_GREEN:
-        WriteToStdOut("\e[32m");
+        WriteTo(stream, "\e[32m");
         break;
       case DECORATION_BLUE:
-        WriteToStdOut("\e[34m\e[1m");
+        WriteTo(stream, "\e[34m\e[1m");
         break;
       case DECORATION_YELLOW:
-        WriteToStdOut("\e[33m\e[1m");
+        WriteTo(stream, "\e[33m\e[1m");
         break;
     }
+#endif
   }
+}
+
+void ResetDec(stream_t stream, TextDecoration dec) {
+  if (is_markdown) {
+    OutputMarkdownDec(stream, dec);
+  } else if (is_console) {
+#if defined(OS_WIN)
+    ::SetConsoleTextAttribute(hstdout, default_attributes);
+#else
+    WriteTo(stream, "\e[0m");
+#endif
+  }
+}
+
+void OutputStringTo(stream_t stream,
+                    const std::string& output,
+                    TextDecoration dec) {
+  ApplyDec(stream, dec);
 
   std::string tmpstr = output;
   if (is_markdown && dec == DECORATION_YELLOW) {
@@ -182,16 +179,22 @@ void OutputString(const std::string& output, TextDecoration dec) {
     // at least escape the instances where this shows up in a heading.
     base::ReplaceSubstringsAfterOffset(&tmpstr, 0, "--", "\\--");
   }
-  WriteToStdOut(tmpstr.data());
+  WriteTo(stream, tmpstr);
 
-  if (is_markdown) {
-    OutputMarkdownDec(dec);
-  } else if (is_console && dec != DECORATION_NONE) {
-    WriteToStdOut("\e[0m");
-  }
+  ResetDec(stream, dec);
 }
 
-#endif
+}  // namespace
+
+void OutputString(const std::string& output, TextDecoration dec) {
+  EnsureInitialized();
+  OutputStringTo(g_stdout, output, dec);
+}
+
+void OutputErrorString(const std::string& output, TextDecoration dec) {
+  EnsureInitialized();
+  OutputStringTo(g_stderr, output, dec);
+}
 
 void PrintSectionHelp(const std::string& line,
                       const std::string& topic,

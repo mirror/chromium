@@ -337,7 +337,7 @@ bool Setup::DoSetup(const std::string& build_dir, bool force_create) {
   // Check for unused variables in the .gn file.
   Err err;
   if (!dotfile_scope_.CheckForUnusedVars(&err)) {
-    err.PrintToStdout();
+    err.Report();
     return false;
   }
 
@@ -366,7 +366,7 @@ void Setup::RunPreMessageLoop() {
 bool Setup::RunPostMessageLoop() {
   Err err;
   if (!builder_.CheckForBadItems(&err)) {
-    err.PrintToStdout();
+    err.Report();
     return false;
   }
 
@@ -374,7 +374,7 @@ bool Setup::RunPostMessageLoop() {
     // TODO(brettw) implement a system to have a different marker for
     // warnings. Until we have a better system, print the error but don't
     // return failure unless requested on the command line.
-    err.PrintToStdout();
+    err.Report();
     if (base::CommandLine::ForCurrentProcess()->HasSwitch(
             switches::kFailOnUnusedArgs))
       return false;
@@ -461,13 +461,13 @@ bool Setup::FillArgsFromArgsInputFile() {
   Err err;
   args_tokens_ = Tokenizer::Tokenize(args_input_file_.get(), &err);
   if (err.has_error()) {
-    err.PrintToStdout();
+    err.Report();
     return false;
   }
 
   args_root_ = Parser::Parse(args_tokens_, &err);
   if (err.has_error()) {
-    err.PrintToStdout();
+    err.Report();
     return false;
   }
 
@@ -478,7 +478,7 @@ bool Setup::FillArgsFromArgsInputFile() {
   arg_scope.set_source_dir(root_source_dir);
   args_root_->Execute(&arg_scope, &err);
   if (err.has_error()) {
-    err.PrintToStdout();
+    err.Report();
     return false;
   }
 
@@ -509,8 +509,8 @@ bool Setup::SaveArgsToFile() {
   if (base::WriteFile(build_arg_file, contents.c_str(),
       static_cast<int>(contents.size())) == -1) {
     Err(Location(), "Args file could not be written.",
-      "The file is \"" + FilePathToUTF8(build_arg_file) +
-        "\"").PrintToStdout();
+        "The file is \"" + FilePathToUTF8(build_arg_file) + "\"")
+        .Report();
     return false;
   }
 
@@ -533,7 +533,8 @@ bool Setup::FillSourceDir(const base::CommandLine& cmdline) {
     if (root_path.empty()) {
       Err(Location(), "Root source path not found.",
           "The path \"" + FilePathToUTF8(relative_root_path) +
-          "\" doesn't exist.").PrintToStdout();
+              "\" doesn't exist.")
+          .Report();
       return false;
     }
 
@@ -549,7 +550,8 @@ bool Setup::FillSourceDir(const base::CommandLine& cmdline) {
       if (dotfile_name_.empty()) {
         Err(Location(), "Could not load dotfile.",
             "The file \"" + FilePathToUTF8(dot_file_path) +
-            "\" couldn't be loaded.").PrintToStdout();
+                "\" couldn't be loaded.")
+            .Report();
         return false;
       }
     }
@@ -563,7 +565,7 @@ bool Setup::FillSourceDir(const base::CommandLine& cmdline) {
       Err(Location(), "Can't find source root.",
           "I could not find a \".gn\" file in the current directory or any "
           "parent,\nand the --root command-line argument was not specified.")
-          .PrintToStdout();
+          .Report();
       return false;
     }
     root_path = dotfile_name_.DirName();
@@ -573,7 +575,8 @@ bool Setup::FillSourceDir(const base::CommandLine& cmdline) {
   if (root_realpath.empty()) {
     Err(Location(), "Can't get the real root path.",
         "I could not get the real path of \"" + FilePathToUTF8(root_path) +
-        "\".").PrintToStdout();
+            "\".")
+        .Report();
     return false;
   }
   if (scheduler_.verbose_logging())
@@ -590,7 +593,7 @@ bool Setup::FillBuildDir(const std::string& build_dir, bool require_exists) {
     ResolveRelativeDir(Value(nullptr, build_dir), &err,
         build_settings_.root_path_utf8());
   if (err.has_error()) {
-    err.PrintToStdout();
+    err.Report();
     return false;
   }
 
@@ -598,7 +601,8 @@ bool Setup::FillBuildDir(const std::string& build_dir, bool require_exists) {
   if (!base::CreateDirectory(build_dir_path)) {
     Err(Location(), "Can't create the build dir.",
         "I could not create the build dir \"" + FilePathToUTF8(build_dir_path) +
-        "\".").PrintToStdout();
+            "\".")
+        .Report();
     return false;
   }
   base::FilePath build_dir_realpath =
@@ -606,7 +610,8 @@ bool Setup::FillBuildDir(const std::string& build_dir, bool require_exists) {
   if (build_dir_realpath.empty()) {
     Err(Location(), "Can't get the real build dir path.",
         "I could not get the real path of \"" + FilePathToUTF8(build_dir_path) +
-        "\".").PrintToStdout();
+            "\".")
+        .Report();
     return false;
   }
   resolved = SourceDirForPath(build_settings_.root_path(),
@@ -620,10 +625,10 @@ bool Setup::FillBuildDir(const std::string& build_dir, bool require_exists) {
             FILE_PATH_LITERAL("build.ninja")))) {
       Err(Location(), "Not a build directory.",
           "This command requires an existing build directory. I interpreted "
-          "your input\n\"" + build_dir + "\" as:\n  " +
-          FilePathToUTF8(build_dir_path) +
-          "\nwhich doesn't seem to contain a previously-generated build.")
-          .PrintToStdout();
+          "your input\n\"" +
+              build_dir + "\" as:\n  " + FilePathToUTF8(build_dir_path) +
+              "\nwhich doesn't seem to contain a previously-generated build.")
+          .Report();
       return false;
     }
   }
@@ -642,7 +647,7 @@ bool Setup::FillPythonPath(const base::CommandLine& cmdline) {
   } else if (value) {
     Err err;
     if (!value->VerifyTypeIs(Value::STRING, &err)) {
-      err.PrintToStdout();
+      err.Report();
       return false;
     }
     build_settings_.set_python_path(
@@ -672,26 +677,26 @@ bool Setup::RunConfigFile() {
   if (!dotfile_input_file_->Load(dotfile_name_)) {
     Err(Location(), "Could not load dotfile.",
         "The file \"" + FilePathToUTF8(dotfile_name_) + "\" couldn't be loaded")
-        .PrintToStdout();
+        .Report();
     return false;
   }
 
   Err err;
   dotfile_tokens_ = Tokenizer::Tokenize(dotfile_input_file_.get(), &err);
   if (err.has_error()) {
-    err.PrintToStdout();
+    err.Report();
     return false;
   }
 
   dotfile_root_ = Parser::Parse(dotfile_tokens_, &err);
   if (err.has_error()) {
-    err.PrintToStdout();
+    err.Report();
     return false;
   }
 
   dotfile_root_->Execute(&dotfile_scope_, &err);
   if (err.has_error()) {
-    err.PrintToStdout();
+    err.Report();
     return false;
   }
 
@@ -709,7 +714,7 @@ bool Setup::FillOtherConfig(const base::CommandLine& cmdline) {
       dotfile_scope_.GetValue("secondary_source", true);
   if (secondary_value) {
     if (!secondary_value->VerifyTypeIs(Value::STRING, &err)) {
-      err.PrintToStdout();
+      err.Report();
       return false;
     }
     build_settings_.SetSecondarySourcePath(
@@ -720,13 +725,13 @@ bool Setup::FillOtherConfig(const base::CommandLine& cmdline) {
   const Value* root_value = dotfile_scope_.GetValue("root", true);
   if (root_value) {
     if (!root_value->VerifyTypeIs(Value::STRING, &err)) {
-      err.PrintToStdout();
+      err.Report();
       return false;
     }
 
     root_target_label = Label::Resolve(current_dir, Label(), *root_value, &err);
     if (err.has_error()) {
-      err.PrintToStdout();
+      err.Report();
       return false;
     }
 
@@ -739,11 +744,13 @@ bool Setup::FillOtherConfig(const base::CommandLine& cmdline) {
       dotfile_scope_.GetValue("buildconfig", true);
   if (!build_config_value) {
     Err(Location(), "No build config file.",
-        "Your .gn file (\"" + FilePathToUTF8(dotfile_name_) + "\")\n"
-        "didn't specify a \"buildconfig\" value.").PrintToStdout();
+        "Your .gn file (\"" + FilePathToUTF8(dotfile_name_) +
+            "\")\n"
+            "didn't specify a \"buildconfig\" value.")
+        .Report();
     return false;
   } else if (!build_config_value->VerifyTypeIs(Value::STRING, &err)) {
-    err.PrintToStdout();
+    err.Report();
     return false;
   }
   build_settings_.set_build_config_file(
@@ -757,7 +764,7 @@ bool Setup::FillOtherConfig(const base::CommandLine& cmdline) {
     ExtractListOfLabelPatterns(*check_targets_value, current_dir,
                                check_patterns_.get(), &err);
     if (err.has_error()) {
-      err.PrintToStdout();
+      err.Report();
       return false;
     }
   }
@@ -768,18 +775,18 @@ bool Setup::FillOtherConfig(const base::CommandLine& cmdline) {
   if (exec_script_whitelist_value) {
     // Fill the list of targets to check.
     if (!exec_script_whitelist_value->VerifyTypeIs(Value::LIST, &err)) {
-      err.PrintToStdout();
+      err.Report();
       return false;
     }
     std::unique_ptr<std::set<SourceFile>> whitelist(new std::set<SourceFile>);
     for (const auto& item : exec_script_whitelist_value->list_value()) {
       if (!item.VerifyTypeIs(Value::STRING, &err)) {
-        err.PrintToStdout();
+        err.Report();
         return false;
       }
       whitelist->insert(current_dir.ResolveRelativeFile(item, &err));
       if (err.has_error()) {
-        err.PrintToStdout();
+        err.Report();
         return false;
       }
     }
@@ -791,7 +798,7 @@ bool Setup::FillOtherConfig(const base::CommandLine& cmdline) {
       dotfile_scope_.GetValue("default_args", true);
   if (default_args_value) {
     if (!default_args_value->VerifyTypeIs(Value::SCOPE, &err)) {
-      err.PrintToStdout();
+      err.Report();
       return false;
     }
 
@@ -802,7 +809,7 @@ bool Setup::FillOtherConfig(const base::CommandLine& cmdline) {
       dotfile_scope_.GetValue("arg_file_template", true);
   if (arg_file_template_value) {
     if (!arg_file_template_value->VerifyTypeIs(Value::STRING, &err)) {
-      err.PrintToStdout();
+      err.Report();
       return false;
     }
     SourceFile path(arg_file_template_value->string_value());

@@ -28,7 +28,7 @@ void DoParserPrintTest(const char* input, const char* expected) {
   Err err;
   std::unique_ptr<ParseNode> result = Parser::Parse(tokens, &err);
   if (!result)
-    err.PrintToStdout();
+    err.Report();
   ASSERT_TRUE(result);
 
   std::ostringstream collector;

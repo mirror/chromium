@@ -69,6 +69,8 @@ static_library("gn_lib") {
     "eclipse_writer.h",
     "err.cc",
     "err.h",
+    "errors_tracker.cc",
+    "errors_tracker.h",
     "escape.cc",
     "escape.h",
     "exec_process.cc",

@@ -301,7 +301,7 @@ int RunHelp(const std::vector<std::string>& args) {
     all_help_topics.push_back(entry.first);
 
   // No help on this.
-  Err(Location(), "No help on \"" + what + "\".").PrintToStdout();
+  Err(Location(), "No help on \"" + what + "\".").Report();
   base::StringPiece suggestion = SpellcheckString(what, all_help_topics);
   if (suggestion.empty()) {
     OutputString("Run `gn help` for a list of available topics.\n",

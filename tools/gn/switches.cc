@@ -180,6 +180,40 @@ Runtime deps output file
   "bar.so").
 )";
 
+const char kSerializeDiagnostics[] = "serialize-diagnostics";
+const char kSerializeDiagnostics_HelpShort[] =
+    "--serialize-diagnostics: Save gn errors in json file";
+const char kSerializeDiagnostics_Help[] =
+    R"(--serialize-diagnostics: Save gn errors in json file
+
+  --serialize-diagnostics=<filename>
+
+  Where <filename> is a path to ouput json file. File will be owerriden if
+  it already exists.
+
+  File contains a list of error objects.
+
+  Each error object has:
+
+   - "message": Contains string with error message.
+   - "help_text": Contains help message for this error.
+   - "location": Contains location object for error (can be null).
+   - "range": Contains list of location ranges, associated with this error.
+   - "sub_errors": Containts list of subsequent errors objects.
+
+  Location range object has next attributes:
+
+   - "begin": Location object for begin of range.
+   - "end": Location object for end of range.
+
+  Location object has next attributes:
+
+   - "file": Contains string with path to the file with error.
+   - "line": Contains line number.
+   - "column": Contains column number.
+
+)";
+
 const char kThreads[] = "threads";
 const char kThreads_HelpShort[] =
     "--threads: Specify number of worker threads.";
@@ -276,6 +310,7 @@ const SwitchInfoMap& GetSwitches() {
     INSERT_VARIABLE(Quiet)
     INSERT_VARIABLE(RuntimeDepsListFile)
     INSERT_VARIABLE(ScriptExecutable)
+    INSERT_VARIABLE(SerializeDiagnostics)
     INSERT_VARIABLE(Threads)
     INSERT_VARIABLE(Time)
     INSERT_VARIABLE(Tracelog)

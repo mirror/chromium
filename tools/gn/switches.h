@@ -76,6 +76,10 @@ extern const char kTime[];
 extern const char kTime_HelpShort[];
 extern const char kTime_Help[];
 
+extern const char kSerializeDiagnostics[];
+extern const char kSerializeDiagnostics_HelpShort[];
+extern const char kSerializeDiagnostics_Help[];
+
 extern const char kTracelog[];
 extern const char kTracelog_HelpShort[];
 extern const char kTracelog_Help[];

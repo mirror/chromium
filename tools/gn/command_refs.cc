@@ -393,7 +393,7 @@ int RunRefs(const std::vector<std::string>& args) {
   if (args.size() <= 1) {
     Err(Location(), "You're holding it wrong.",
         "Usage: \"gn refs <out_dir> (<label_pattern>|<file>)*\"")
-        .PrintToStdout();
+        .Report();
     return 1;
   }
 
@@ -416,7 +416,7 @@ int RunRefs(const std::vector<std::string>& args) {
                                         &contents);
       if (!ret) {
         Err(Location(), "Response file " + args[i].substr(1) + " not found.")
-            .PrintToStdout();
+            .Report();
         return 1;
       }
       for (const std::string& line : base::SplitString(

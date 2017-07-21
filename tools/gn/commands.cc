@@ -40,7 +40,7 @@ bool ResolveTargetsFromCommandLinePattern(
       pattern_value,
       &err);
   if (err.has_error()) {
-    err.PrintToStdout();
+    err.Report();
     return false;
   }
 
@@ -96,7 +96,7 @@ bool ResolveStringFromCommandLineInput(
     file_matches->push_back(current_dir.ResolveRelativeFile(
         Value(nullptr, input), &err, setup->build_settings().root_path_utf8()));
     if (err.has_error()) {
-      err.PrintToStdout();
+      err.Report();
       return false;
     }
     return true;
@@ -115,7 +115,7 @@ bool ResolveStringFromCommandLineInput(
     file_matches->push_back(current_dir.ResolveRelativeFile(
         Value(nullptr, input), &err, setup->build_settings().root_path_utf8()));
     if (err.has_error()) {
-      err.PrintToStdout();
+      err.Report();
       return false;
     }
   }
@@ -158,7 +158,9 @@ bool GetTargetPrintingMode(TargetPrintingMode* mode) {
 
   Err(Location(), "Invalid value for \"--as\".",
       "I was expecting \"buildfile\", \"label\", or \"output\" but you\n"
-      "said \"" + value + "\".").PrintToStdout();
+      "said \"" +
+          value + "\".")
+      .Report();
   return false;
 }
 
@@ -213,7 +215,7 @@ bool GetTargetTypeFilter(Target::OutputType* type) {
     return true;
   }
 
-  Err(Location(), "Invalid value for \"--type\".").PrintToStdout();
+  Err(Location(), "Invalid value for \"--type\".").Report();
   return false;
 }
 
@@ -234,7 +236,7 @@ bool ApplyTestonlyFilter(std::vector<const Target*>* targets) {
   } else if (testonly_value != "false") {
     Err(Location(), "Bad value for --testonly.",
         "I was expecting --testonly=true or --testonly=false.")
-        .PrintToStdout();
+        .Report();
     return false;
   }
 
@@ -388,23 +390,27 @@ const Target* ResolveTargetFromCommandLineString(
                                    setup->build_settings().root_path()),
                                default_toolchain, arg_value, &err);
   if (err.has_error()) {
-    err.PrintToStdout();
+    err.Report();
     return nullptr;
   }
 
   const Item* item = setup->builder().GetItem(label);
   if (!item) {
     Err(Location(), "Label not found.",
-        label.GetUserVisibleName(false) + " not found.").PrintToStdout();
+        label.GetUserVisibleName(false) + " not found.")
+        .Report();
     return nullptr;
   }
 
   const Target* target = item->AsTarget();
   if (!target) {
     Err(Location(), "Not a target.",
-        "The \"" + label.GetUserVisibleName(false) + "\" thing\n"
-        "is not a target. Somebody should probably implement this command for "
-        "other\nitem types.").PrintToStdout();
+        "The \"" + label.GetUserVisibleName(false) +
+            "\" thing\n"
+            "is not a target. Somebody should probably implement this command "
+            "for "
+            "other\nitem types.")
+        .Report();
     return nullptr;
   }
 
@@ -420,8 +426,7 @@ bool ResolveFromCommandLineInput(
     UniqueVector<const Toolchain*>* toolchain_matches,
     UniqueVector<SourceFile>* file_matches) {
   if (input.empty()) {
-    Err(Location(), "You need to specify a label, file, or pattern.")
-        .PrintToStdout();
+    Err(Location(), "You need to specify a label, file, or pattern.").Report();
     return false;
   }
 

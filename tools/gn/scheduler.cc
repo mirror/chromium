@@ -226,7 +226,7 @@ void Scheduler::LogOnMainThread(const std::string& verb,
 }
 
 void Scheduler::FailWithErrorOnMainThread(const Err& err) {
-  err.PrintToStdout();
+  err.Report();
   runner_.Quit();
 }
 

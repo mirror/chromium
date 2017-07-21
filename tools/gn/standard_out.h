@@ -19,6 +19,9 @@ enum TextDecoration {
 void OutputString(const std::string& output,
                   TextDecoration dec = DECORATION_NONE);
 
+void OutputErrorString(const std::string& output,
+                       TextDecoration dec = DECORATION_NONE);
+
 // If printing markdown, this generates table-of-contents entries with
 // links to the actual help; otherwise, prints a one-line description.
 void PrintSectionHelp(const std::string& line,

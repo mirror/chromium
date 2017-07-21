@@ -8,6 +8,7 @@
 #include "build/build_config.h"
 #include "tools/gn/commands.h"
 #include "tools/gn/err.h"
+#include "tools/gn/errors_tracker.h"
 #include "tools/gn/location.h"
 #include "tools/gn/standard_out.h"
 #include "tools/gn/switches.h"
@@ -58,7 +59,8 @@ int main(int argc, char** argv) {
     // No command, print error and exit.
     Err(Location(), "No command specified.",
         "Most commonly you want \"gn gen <out_dir>\" to make a build dir.\n"
-        "Or try \"gn help\" for more commands.").PrintToStdout();
+        "Or try \"gn help\" for more commands.")
+        .Report();
     return 1;
   } else {
     command = args[0];
@@ -73,12 +75,16 @@ int main(int argc, char** argv) {
   if (found_command != command_map.end()) {
     retval = found_command->second.runner(args);
   } else {
-    Err(Location(), "Command \"" + command + "\" unknown.").PrintToStdout();
-    OutputString(
-        "Available commands (type \"gn help <command>\" for more details):\n");
+    Err(Location(), "Command \"" + command + "\" unknown.",
+        "Available commands (type \"gn help <command>\" for more details):\n")
+        .Report();
     for (const auto& cmd : commands::GetCommands())
       PrintShortHelp(cmd.second.help_short);
 
+    retval = 1;
+  }
+
+  if (!ErrorsTracker::GetInstance()->SerializeDiagnostics()) {
     retval = 1;
   }
 

@@ -63,15 +63,17 @@ class Err {
   const std::string& message() const { return message_; }
   const std::string& help_text() const { return help_text_; }
 
+  const std::vector<Err>& sub_errs() const { return sub_errs_; }
+
   void AppendRange(const LocationRange& range) { ranges_.push_back(range); }
   const RangeList& ranges() const { return ranges_; }
 
   void AppendSubErr(const Err& err);
 
-  void PrintToStdout() const;
+  void Report() const;
 
  private:
-  void InternalPrintToStdout(bool is_sub_err) const;
+  void InternalPrintToStderr(bool is_sub_err) const;
 
   bool has_error_;
   Location location_;

@@ -321,7 +321,7 @@ int RunPath(const std::vector<std::string>& args) {
   if (args.size() != 3) {
     Err(Location(), "You're holding it wrong.",
         "Usage: \"gn path <out_dir> <target_one> <target_two>\"")
-        .PrintToStdout();
+        .Report();
     return 1;
   }
 
@@ -348,7 +348,8 @@ int RunPath(const std::vector<std::string>& args) {
   if (options.public_only && options.with_data) {
     Err(Location(), "Can't use --public with --with-data for 'gn path'.",
         "Your zealous over-use of arguments has inevitably resulted in an "
-        "invalid\ncombination of flags.").PrintToStdout();
+        "invalid\ncombination of flags.")
+        .Report();
     return 1;
   }
 

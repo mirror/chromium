@@ -168,7 +168,8 @@ Examples
 int RunCheck(const std::vector<std::string>& args) {
   if (args.size() != 1 && args.size() != 2) {
     Err(Location(), "You're holding it wrong.",
-        "Usage: \"gn check <out_dir> [<target_label>]\"").PrintToStdout();
+        "Usage: \"gn check <out_dir> [<target_label>]\"")
+        .Report();
     return 1;
   }
 
@@ -250,7 +251,7 @@ bool CheckPublicHeaders(const BuildSettings* build_settings,
   for (size_t i = 0; i < header_errors.size(); i++) {
     if (i > 0)
       OutputString("___________________\n", DECORATION_YELLOW);
-    header_errors[i].PrintToStdout();
+    header_errors[i].Report();
   }
   return header_errors.empty();
 }

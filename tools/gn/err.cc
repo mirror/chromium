@@ -8,6 +8,7 @@
 
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
+#include "tools/gn/errors_tracker.h"
 #include "tools/gn/filesystem_utils.h"
 #include "tools/gn/input_file.h"
 #include "tools/gn/parse_tree.h"
@@ -80,7 +81,7 @@ void OutputHighlighedPosition(const Location& location,
     highlight.resize(highlight.size() - 1);
 
   highlight += "\n";
-  OutputString(highlight, DECORATION_BLUE);
+  OutputErrorString(highlight, DECORATION_BLUE);
 }
 
 }  // namespace
@@ -149,19 +150,20 @@ Err::Err(const Err& other) = default;
 Err::~Err() {
 }
 
-void Err::PrintToStdout() const {
-  InternalPrintToStdout(false);
+void Err::Report() const {
+  InternalPrintToStderr(false);
+  ErrorsTracker::GetInstance()->AddError(*this);
 }
 
 void Err::AppendSubErr(const Err& err) {
   sub_errs_.push_back(err);
 }
 
-void Err::InternalPrintToStdout(bool is_sub_err) const {
+void Err::InternalPrintToStderr(bool is_sub_err) const {
   DCHECK(has_error_);
 
   if (!is_sub_err)
-    OutputString("ERROR ", DECORATION_RED);
+    OutputErrorString("ERROR ", DECORATION_RED);
 
   // File name and location.
   const InputFile* input_file = location_.file();
@@ -173,23 +175,23 @@ void Err::InternalPrintToStdout(bool is_sub_err) const {
       loc_str.insert(0, "at ");
     loc_str.append(": ");
   }
-  OutputString(loc_str + message_ + "\n");
+  OutputErrorString(loc_str + message_ + "\n");
 
   // Quoted line.
   if (input_file) {
     std::string line = GetNthLine(input_file->contents(),
                                   location_.line_number());
     if (!base::ContainsOnlyChars(line, base::kWhitespaceASCII)) {
-      OutputString(line + "\n", DECORATION_DIM);
+      OutputErrorString(line + "\n", DECORATION_DIM);
       OutputHighlighedPosition(location_, ranges_, line.size());
     }
   }
 
   // Optional help text.
   if (!help_text_.empty())
-    OutputString(help_text_ + "\n");
+    OutputErrorString(help_text_ + "\n");
 
   // Sub errors.
   for (const auto& sub_err : sub_errs_)
-    sub_err.InternalPrintToStdout(true);
+    sub_err.InternalPrintToStderr(true);
 }

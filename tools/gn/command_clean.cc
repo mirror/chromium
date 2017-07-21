@@ -68,8 +68,8 @@ const char kClean_Help[] =
 
 int RunClean(const std::vector<std::string>& args) {
   if (args.size() != 1) {
-    Err(Location(), "You're holding it wrong.",
-        "Usage: \"gn clean <out_dir>\"").PrintToStdout();
+    Err(Location(), "You're holding it wrong.", "Usage: \"gn clean <out_dir>\"")
+        .Report();
     return 1;
   }
 
@@ -88,7 +88,7 @@ int RunClean(const std::vector<std::string>& args) {
         base::StringPrintf(
             "%s does not look like a build directory.\n",
             FilePathToUTF8(build_ninja_d_file.DirName().value()).c_str()))
-        .PrintToStdout();
+        .Report();
     return 1;
   }
 
@@ -109,7 +109,7 @@ int RunClean(const std::vector<std::string>& args) {
   if (!args_contents.empty()) {
     if (base::WriteFile(gn_args_file, args_contents.data(),
                         static_cast<int>(args_contents.size())) == -1) {
-      Err(Location(), std::string("Failed to write args.gn.")).PrintToStdout();
+      Err(Location(), std::string("Failed to write args.gn.")).Report();
       return 1;
     }
   }
@@ -118,8 +118,7 @@ int RunClean(const std::vector<std::string>& args) {
   if (!build_commands.empty()) {
     if (base::WriteFile(build_ninja_file, build_commands.data(),
                         static_cast<int>(build_commands.size())) == -1) {
-      Err(Location(), std::string("Failed to write build.ninja."))
-          .PrintToStdout();
+      Err(Location(), std::string("Failed to write build.ninja.")).Report();
       return 1;
     }
   } else {
@@ -130,8 +129,7 @@ int RunClean(const std::vector<std::string>& args) {
         kDefaultNinjaFile, components[components.size() - 2].c_str());
     if (base::WriteFile(build_ninja_file, default_build_file.data(),
                         static_cast<int>(default_build_file.size())) == -1) {
-      Err(Location(), std::string("Failed to write build.ninja."))
-          .PrintToStdout();
+      Err(Location(), std::string("Failed to write build.ninja.")).Report();
       return 1;
     }
   }
@@ -141,8 +139,7 @@ int RunClean(const std::vector<std::string>& args) {
   std::string dummy_content("build.ninja: nonexistant_file.gn\n");
   if (base::WriteFile(build_ninja_d_file, dummy_content.data(),
                       static_cast<int>(dummy_content.size())) == -1) {
-    Err(Location(), std::string("Failed to write build.ninja.d."))
-        .PrintToStdout();
+    Err(Location(), std::string("Failed to write build.ninja.d.")).Report();
     return 1;
   }
 
