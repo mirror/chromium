@@ -66,3 +66,6 @@ class Top25StoryExpectations(story.expectations.StoryExpectations):
   def SetExpectations(self):
     self.DisableStory(
         'http://www.cnn.com', [story.expectations.ALL], 'crbug.com/528472')
+    self.DisableStory(
+        'https://mail.google.com/mail/', [story.expectations.ALL_LINUX],
+        'crbug.com/747021')
