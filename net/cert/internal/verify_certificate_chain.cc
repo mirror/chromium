@@ -15,7 +15,6 @@
 #include "net/cert/internal/name_constraints.h"
 #include "net/cert/internal/parse_certificate.h"
 #include "net/cert/internal/signature_algorithm.h"
-#include "net/cert/internal/signature_policy.h"
 #include "net/cert/internal/trust_store.h"
 #include "net/cert/internal/verify_signed_data.h"
 #include "net/der/input.h"
@@ -437,7 +436,7 @@ class PathVerifier {
   // Same parameters and meaning as VerifyCertificateChain().
   void Run(const ParsedCertificateList& certs,
            const CertificateTrust& last_cert_trust,
-           const SignaturePolicy* signature_policy,
+           const CertificateSignatureVerifier* signature_verifier,
            const der::GeneralizedTime& time,
            KeyPurpose required_key_purpose,
            InitialExplicitPolicy initial_explicit_policy,
@@ -460,12 +459,13 @@ class PathVerifier {
 
   // This function corresponds to RFC 5280 section 6.1.3's "Basic Certificate
   // Processing" procedure.
-  void BasicCertificateProcessing(const ParsedCertificate& cert,
-                                  bool is_target_cert,
-                                  const SignaturePolicy* signature_policy,
-                                  const der::GeneralizedTime& time,
-                                  KeyPurpose required_key_purpose,
-                                  CertErrors* errors);
+  void BasicCertificateProcessing(
+      const ParsedCertificate& cert,
+      bool is_target_cert,
+      const CertificateSignatureVerifier* signature_verifier,
+      const der::GeneralizedTime& time,
+      KeyPurpose required_key_purpose,
+      CertErrors* errors);
 
   // This function corresponds to RFC 5280 section 6.1.4's "Preparation for
   // Certificate i+1" procedure. |cert| is expected to be an intermediate.
@@ -779,7 +779,7 @@ void PathVerifier::VerifyPolicyMappings(const ParsedCertificate& cert,
 void PathVerifier::BasicCertificateProcessing(
     const ParsedCertificate& cert,
     bool is_target_cert,
-    const SignaturePolicy* signature_policy,
+    const CertificateSignatureVerifier* signature_verifier,
     const der::GeneralizedTime& time,
     KeyPurpose required_key_purpose,
     CertErrors* errors) {
@@ -790,9 +790,9 @@ void PathVerifier::BasicCertificateProcessing(
 
   // Verify the digital signature using the previous certificate's key (RFC
   // 5280 section 6.1.3 step a.1).
-  if (!VerifySignedData(cert.signature_algorithm(), cert.tbs_certificate_tlv(),
-                        cert.signature_value(), working_spki_, signature_policy,
-                        errors)) {
+  if (!signature_verifier->VerifyCertificateSignature(
+          cert.signature_algorithm(), cert.tbs_certificate_tlv(),
+          cert.signature_value(), working_spki_, errors)) {
     errors->AddError(kVerifySignedDataFailed);
   }
 
@@ -1126,7 +1126,7 @@ void PathVerifier::ProcessRootCertificate(const ParsedCertificate& cert,
 void PathVerifier::Run(
     const ParsedCertificateList& certs,
     const CertificateTrust& last_cert_trust,
-    const SignaturePolicy* signature_policy,
+    const CertificateSignatureVerifier* signature_verifier,
     const der::GeneralizedTime& time,
     KeyPurpose required_key_purpose,
     InitialExplicitPolicy initial_explicit_policy,
@@ -1137,7 +1137,7 @@ void PathVerifier::Run(
     CertPathErrors* errors) {
   // This implementation is structured to mimic the description of certificate
   // path verification given by RFC 5280 section 6.1.
-  DCHECK(signature_policy);
+  DCHECK(signature_verifier);
   DCHECK(errors);
 
   // An empty chain is necessarily invalid.
@@ -1223,7 +1223,7 @@ void PathVerifier::Run(
     //  * If it is the last certificate in the path (target certificate)
     //     - Then run "Wrap up"
     //     - Otherwise run "Prepare for Next cert"
-    BasicCertificateProcessing(cert, is_target_cert, signature_policy, time,
+    BasicCertificateProcessing(cert, is_target_cert, signature_verifier, time,
                                required_key_purpose, cert_errors);
     if (!is_target_cert) {
       PrepareForNextCertificate(cert, cert_errors);
@@ -1249,7 +1249,7 @@ void PathVerifier::Run(
 void VerifyCertificateChain(
     const ParsedCertificateList& certs,
     const CertificateTrust& last_cert_trust,
-    const SignaturePolicy* signature_policy,
+    const CertificateSignatureVerifier* signature_verifier,
     const der::GeneralizedTime& time,
     KeyPurpose required_key_purpose,
     InitialExplicitPolicy initial_explicit_policy,
@@ -1259,7 +1259,7 @@ void VerifyCertificateChain(
     std::set<der::Input>* user_constrained_policy_set,
     CertPathErrors* errors) {
   PathVerifier verifier;
-  verifier.Run(certs, last_cert_trust, signature_policy, time,
+  verifier.Run(certs, last_cert_trust, signature_verifier, time,
                required_key_purpose, initial_explicit_policy,
                user_initial_policy_set, initial_policy_mapping_inhibit,
                initial_any_policy_inhibit, user_constrained_policy_set, errors);

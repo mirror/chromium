@@ -5,7 +5,6 @@
 #include "net/cert/internal/path_builder.h"
 
 #include "net/cert/internal/cert_issuer_source_static.h"
-#include "net/cert/internal/signature_policy.h"
 #include "net/cert/internal/trust_store_in_memory.h"
 #include "net/cert/internal/verify_certificate_chain_typed_unittest.h"
 
@@ -47,7 +46,7 @@ class PathBuilderDelegate {
         test.chain.front(), &trust_store, &signature_policy, test.time,
         test.key_purpose, test.initial_explicit_policy,
         test.user_initial_policy_set, test.initial_policy_mapping_inhibit,
-        test.initial_any_policy_inhibit, &result);
+        test.initial_any_policy_inhibit, nullptr, &result);
     path_builder.AddCertIssuerSource(&intermediate_cert_issuer_source);
 
     path_builder.Run();

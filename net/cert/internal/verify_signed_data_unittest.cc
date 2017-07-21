@@ -9,7 +9,6 @@
 
 #include "net/cert/internal/cert_errors.h"
 #include "net/cert/internal/signature_algorithm.h"
-#include "net/cert/internal/signature_policy.h"
 #include "net/cert/internal/test_helpers.h"
 #include "net/der/input.h"
 #include "net/der/parse_values.h"

@@ -8,7 +8,6 @@
 #include "net/cert/internal/cert_issuer_source_static.h"
 #include "net/cert/internal/parse_certificate.h"
 #include "net/cert/internal/parsed_certificate.h"
-#include "net/cert/internal/signature_policy.h"
 #include "net/cert/internal/trust_store_in_memory.h"
 #include "net/cert/internal/verify_certificate_chain.h"
 #include "net/der/input.h"
@@ -63,7 +62,7 @@ class PathBuilderPkitsTestDelegate {
         std::move(target_cert), &trust_store, &signature_policy, info.time,
         KeyPurpose::ANY_EKU, info.initial_explicit_policy,
         info.initial_policy_set, info.initial_policy_mapping_inhibit,
-        info.initial_inhibit_any_policy, &result);
+        info.initial_inhibit_any_policy, nullptr, &result);
     path_builder.AddCertIssuerSource(&cert_issuer_source);
 
     path_builder.Run();

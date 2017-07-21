@@ -5,7 +5,6 @@
 #include "net/cert/internal/verify_certificate_chain.h"
 
 #include "net/cert/internal/parsed_certificate.h"
-#include "net/cert/internal/signature_policy.h"
 #include "net/cert/internal/trust_store.h"
 #include "net/der/input.h"
 #include "third_party/boringssl/src/include/openssl/pool.h"

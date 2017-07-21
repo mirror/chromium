@@ -10,30 +10,17 @@
 #include "crypto/openssl_util.h"
 #include "net/cert/internal/cert_errors.h"
 #include "net/cert/internal/signature_algorithm.h"
-#include "net/cert/internal/signature_policy.h"
 #include "net/der/input.h"
 #include "net/der/parse_values.h"
 #include "net/der/parser.h"
-#include "third_party/boringssl/src/include/openssl/bn.h"
 #include "third_party/boringssl/src/include/openssl/bytestring.h"
 #include "third_party/boringssl/src/include/openssl/digest.h"
-#include "third_party/boringssl/src/include/openssl/ec.h"
-#include "third_party/boringssl/src/include/openssl/ec_key.h"
 #include "third_party/boringssl/src/include/openssl/evp.h"
 #include "third_party/boringssl/src/include/openssl/rsa.h"
 
 namespace net {
 
 namespace {
-
-DEFINE_CERT_ERROR_ID(kUnacceptableSignatureAlgorithm,
-                     "Unacceptable signature algorithm");
-DEFINE_CERT_ERROR_ID(kUnacceptableRsaModulusLength,
-                     "Unacceptable modulus length for RSA key");
-DEFINE_CERT_ERROR_ID(kUnacceptableEcdsaCurve,
-                     "Unacceptable curve for ECDSA key");
-DEFINE_CERT_ERROR_ID(kSignatureVerificationFailed,
-                     "Signature verification failed");
 
 // Converts a DigestAlgorithm to an equivalent EVP_MD*.
 WARN_UNUSED_RESULT bool GetDigest(DigestAlgorithm digest, const EVP_MD** out) {
@@ -101,9 +88,10 @@ WARN_UNUSED_RESULT bool ImportPkeyFromSpki(const der::Input& spki,
   return true;
 }
 
-// Parses an RSA public key from SPKI to an EVP_PKEY.
-//
-// Returns true on success.
+}  // namespace
+
+// Parses an RSA public key or EC public key from SPKI to an EVP_PKEY. Returns
+// true on success.
 //
 // There are two flavors of RSA public key that this function should recognize
 // from RFC 5912 (however note that pk-rsaSSA-PSS is not supported in the
@@ -157,33 +145,73 @@ WARN_UNUSED_RESULT bool ImportPkeyFromSpki(const der::Input& spki,
 //     have ASN.1 type NULL for this algorithm identifier.
 //
 // Following RFC 3279 in this case.
-WARN_UNUSED_RESULT bool ParseRsaKeyFromSpki(const der::Input& public_key_spki,
-                                            bssl::UniquePtr<EVP_PKEY>* pkey,
-                                            const SignaturePolicy* policy,
-                                            CertErrors* errors) {
-  // TODO(crbug.com/634443): Add more specific errors.
-  if (!ImportPkeyFromSpki(public_key_spki, EVP_PKEY_RSA, pkey))
-    return false;
-
-  // Extract the modulus length from the key.
-  RSA* rsa = EVP_PKEY_get0_RSA(pkey->get());
-  if (!rsa)
-    return false;
-  unsigned int modulus_length_bits = BN_num_bits(rsa->n);
-
-  if (!policy->IsAcceptableModulusLengthForRsa(modulus_length_bits, errors)) {
-    errors->AddError(kUnacceptableRsaModulusLength);
-    return false;
+//
+// In the case of parsing EC keys, RFC 5912 describes all the ECDSA
+// signature algorithms as requiring a public key of type "pk-ec":
+//
+//     pk-ec PUBLIC-KEY ::= {
+//      IDENTIFIER id-ecPublicKey
+//      KEY ECPoint
+//      PARAMS TYPE ECParameters ARE required
+//      -- Private key format not in this module --
+//      CERT-KEY-USAGE { digitalSignature, nonRepudiation, keyAgreement,
+//                           keyCertSign, cRLSign }
+//     }
+//
+// Moreover RFC 5912 stipulates what curves are allowed. The ECParameters
+// MUST NOT use an implicitCurve or specificCurve for PKIX:
+//
+//     ECParameters ::= CHOICE {
+//      namedCurve      CURVE.&id({NamedCurve})
+//      -- implicitCurve   NULL
+//        -- implicitCurve MUST NOT be used in PKIX
+//      -- specifiedCurve  SpecifiedCurve
+//        -- specifiedCurve MUST NOT be used in PKIX
+//        -- Details for specifiedCurve can be found in [X9.62]
+//        -- Any future additions to this CHOICE should be coordinated
+//        -- with ANSI X.9.
+//     }
+//     -- If you need to be able to decode ANSI X.9 parameter structures,
+//     -- uncomment the implicitCurve and specifiedCurve above, and also
+//     -- uncomment the following:
+//     --(WITH COMPONENTS {namedCurve PRESENT})
+//
+// The namedCurves are extensible. The ones described by RFC 5912 are:
+//
+//     NamedCurve CURVE ::= {
+//     { ID secp192r1 } | { ID sect163k1 } | { ID sect163r2 } |
+//     { ID secp224r1 } | { ID sect233k1 } | { ID sect233r1 } |
+//     { ID secp256r1 } | { ID sect283k1 } | { ID sect283r1 } |
+//     { ID secp384r1 } | { ID sect409k1 } | { ID sect409r1 } |
+//     { ID secp521r1 } | { ID sect571k1 } | { ID sect571r1 },
+//     ... -- Extensible
+//     }
+bool ParsePublicKey(const SignatureAlgorithm& signature_algorithm,
+                    const der::Input& public_key_spki,
+                    bssl::UniquePtr<EVP_PKEY>* public_key,
+                    CertErrors* errors) {
+  // Parse the SPKI to an EVP_PKEY appropriate for the signature algorithm.
+  switch (signature_algorithm.algorithm()) {
+    case SignatureAlgorithmId::Dsa:
+      return false;
+    case SignatureAlgorithmId::RsaPkcs1:
+    case SignatureAlgorithmId::RsaPss:
+      if (!ImportPkeyFromSpki(public_key_spki, EVP_PKEY_RSA, public_key))
+        return false;
+      break;
+    case SignatureAlgorithmId::Ecdsa:
+      if (!ImportPkeyFromSpki(public_key_spki, EVP_PKEY_EC, public_key))
+        return false;
+      break;
   }
 
-  return true;
+  return false;
 }
 
-// Does signature verification using either RSA or ECDSA.
-WARN_UNUSED_RESULT bool DoVerify(const SignatureAlgorithm& algorithm,
-                                 const der::Input& signed_data,
-                                 const der::BitString& signature_value,
-                                 EVP_PKEY* public_key) {
+bool VerifySignedData(const SignatureAlgorithm& algorithm,
+                      const der::Input& signed_data,
+                      const der::BitString& signature_value,
+                      EVP_PKEY* public_key) {
   switch (algorithm.algorithm()) {
     case SignatureAlgorithmId::Dsa:
       return false;
@@ -226,112 +254,6 @@ WARN_UNUSED_RESULT bool DoVerify(const SignatureAlgorithm& algorithm,
   }
 
   return false;
-}
-
-// Parses an EC public key from SPKI to an EVP_PKEY.
-//
-// Returns true on success.
-//
-// RFC 5912 describes all the ECDSA signature algorithms as requiring a public
-// key of type "pk-ec":
-//
-//     pk-ec PUBLIC-KEY ::= {
-//      IDENTIFIER id-ecPublicKey
-//      KEY ECPoint
-//      PARAMS TYPE ECParameters ARE required
-//      -- Private key format not in this module --
-//      CERT-KEY-USAGE { digitalSignature, nonRepudiation, keyAgreement,
-//                           keyCertSign, cRLSign }
-//     }
-//
-// Moreover RFC 5912 stipulates what curves are allowed. The ECParameters
-// MUST NOT use an implicitCurve or specificCurve for PKIX:
-//
-//     ECParameters ::= CHOICE {
-//      namedCurve      CURVE.&id({NamedCurve})
-//      -- implicitCurve   NULL
-//        -- implicitCurve MUST NOT be used in PKIX
-//      -- specifiedCurve  SpecifiedCurve
-//        -- specifiedCurve MUST NOT be used in PKIX
-//        -- Details for specifiedCurve can be found in [X9.62]
-//        -- Any future additions to this CHOICE should be coordinated
-//        -- with ANSI X.9.
-//     }
-//     -- If you need to be able to decode ANSI X.9 parameter structures,
-//     -- uncomment the implicitCurve and specifiedCurve above, and also
-//     -- uncomment the following:
-//     --(WITH COMPONENTS {namedCurve PRESENT})
-//
-// The namedCurves are extensible. The ones described by RFC 5912 are:
-//
-//     NamedCurve CURVE ::= {
-//     { ID secp192r1 } | { ID sect163k1 } | { ID sect163r2 } |
-//     { ID secp224r1 } | { ID sect233k1 } | { ID sect233r1 } |
-//     { ID secp256r1 } | { ID sect283k1 } | { ID sect283r1 } |
-//     { ID secp384r1 } | { ID sect409k1 } | { ID sect409r1 } |
-//     { ID secp521r1 } | { ID sect571k1 } | { ID sect571r1 },
-//     ... -- Extensible
-//     }
-WARN_UNUSED_RESULT bool ParseEcKeyFromSpki(const der::Input& public_key_spki,
-                                           bssl::UniquePtr<EVP_PKEY>* pkey,
-                                           const SignaturePolicy* policy,
-                                           CertErrors* errors) {
-  // TODO(crbug.com/634443): Add more specific errors.
-  if (!ImportPkeyFromSpki(public_key_spki, EVP_PKEY_EC, pkey))
-    return false;
-
-  // Extract the curve name.
-  EC_KEY* ec = EVP_PKEY_get0_EC_KEY(pkey->get());
-  if (!ec)
-    return false;  // Unexpected.
-  int curve_nid = EC_GROUP_get_curve_name(EC_KEY_get0_group(ec));
-
-  if (!policy->IsAcceptableCurveForEcdsa(curve_nid, errors)) {
-    errors->AddError(kUnacceptableEcdsaCurve);
-    return false;
-  }
-
-  return true;
-}
-
-}  // namespace
-
-bool VerifySignedData(const SignatureAlgorithm& signature_algorithm,
-                      const der::Input& signed_data,
-                      const der::BitString& signature_value,
-                      const der::Input& public_key_spki,
-                      const SignaturePolicy* policy,
-                      CertErrors* errors) {
-  if (!policy->IsAcceptableSignatureAlgorithm(signature_algorithm, errors)) {
-    // TODO(crbug.com/634443): Include the DER for the AlgorithmIdentifier
-    errors->AddError(kUnacceptableSignatureAlgorithm);
-    return false;
-  }
-
-  bssl::UniquePtr<EVP_PKEY> public_key;
-
-  // Parse the SPKI to an EVP_PKEY appropriate for the signature algorithm.
-  switch (signature_algorithm.algorithm()) {
-    case SignatureAlgorithmId::Dsa:
-      return false;
-    case SignatureAlgorithmId::RsaPkcs1:
-    case SignatureAlgorithmId::RsaPss:
-      if (!ParseRsaKeyFromSpki(public_key_spki, &public_key, policy, errors))
-        return false;
-      break;
-    case SignatureAlgorithmId::Ecdsa:
-      if (!ParseEcKeyFromSpki(public_key_spki, &public_key, policy, errors))
-        return false;
-      break;
-  }
-
-  if (!DoVerify(signature_algorithm, signed_data, signature_value,
-                public_key.get())) {
-    errors->AddError(kSignatureVerificationFailed);
-    return false;
-  }
-
-  return true;
 }
 
 }  // namespace net

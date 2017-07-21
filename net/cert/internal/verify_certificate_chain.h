@@ -20,7 +20,6 @@ namespace der {
 struct GeneralizedTime;
 }
 
-class SignaturePolicy;
 struct CertificateTrust;
 
 // The key purpose (extended key usage) to check for during verification.
@@ -43,6 +42,29 @@ enum class InitialPolicyMappingInhibit {
 enum class InitialAnyPolicyInhibit {
   kFalse,
   kTrue,
+};
+
+class NET_EXPORT CertificateSignatureVerifier {
+ public:
+  // This method is called to verify that |signature_value| is a valid signature
+  // of |tbs_certificate_tlv| using the algorithm |signature_algorithm| and the
+  // public key |public_key_spki|. Implementations must return true if the
+  // signature is valid, false otherwise. In the case of failure additional
+  // errors may be added to |errors|.
+  //
+  //   |signature_algorithm| - The parsed AlgorithmIdentifier
+  //   |tbs_certificate_tlv| - The blob of data to verify
+  //   |signature_value| - The BIT STRING for the signature's value
+  //   |public_key_spki| - A DER-encoded SubjectPublicKeyInfo.
+  //   |errors| - Non-null destination for errors/warnings information.
+  virtual bool VerifyCertificateSignature(
+      const SignatureAlgorithm& signature_algorithm,
+      const der::Input& tbs_certificate_tlv,
+      const der::BitString& signature_value,
+      const der::Input& public_key_spki,
+      CertErrors* errors) const = 0;
+
+  virtual ~CertificateSignatureVerifier();
 };
 
 // VerifyCertificateChain() verifies an ordered certificate path in accordance
@@ -98,9 +120,8 @@ enum class InitialAnyPolicyInhibit {
 //     similar role to "trust anchor information" defined in RFC 5280
 //     section 6.1.1.d.
 //
-//   signature_policy:
-//     The policy to use when verifying signatures (what hash algorithms are
-//     allowed, what length keys, what named curves, etc).
+//   signature_verifier:
+//     TODO
 //
 //   time:
 //     The UTC time to use for expiration checks. This is equivalent to
@@ -201,7 +222,7 @@ enum class InitialAnyPolicyInhibit {
 NET_EXPORT void VerifyCertificateChain(
     const ParsedCertificateList& certs,
     const CertificateTrust& last_cert_trust,
-    const SignaturePolicy* signature_policy,
+    const CertificateSignatureVerifier* signature_verifier,
     const der::GeneralizedTime& time,
     KeyPurpose required_key_purpose,
     InitialExplicitPolicy initial_explicit_policy,

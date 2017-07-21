@@ -4,7 +4,6 @@
 
 #include "net/cert/internal/verify_certificate_chain.h"
 
-#include "net/cert/internal/signature_policy.h"
 #include "net/cert/internal/test_helpers.h"
 #include "net/cert/internal/trust_store.h"
 #include "net/cert/internal/verify_certificate_chain_typed_unittest.h"

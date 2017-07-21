@@ -25,7 +25,6 @@ struct GeneralizedTime;
 
 class CertPathIter;
 class CertIssuerSource;
-class SignaturePolicy;
 
 // CertPath describes a chain of certificates in the "forward" direction.
 //
@@ -55,6 +54,17 @@ struct NET_EXPORT CertPath {
   // Returns the chain's root certificate or nullptr if the chain doesn't chain
   // to a trust anchor.
   const ParsedCertificate* GetTrustedCert() const;
+};
+
+class NET_EXPORT CertPathBuilderDelegate : public CertificateSignatureVerifier {
+ public:
+  // This is called during path building on candidate paths which have already
+  // passed certificate verification (RFC 5280 verification including signature
+  // checks). The delegate can choose to add errors to the path for things like
+  // revocation checking, which will cause path building to keep searching for a
+  // valid path.
+  virtual void CheckPathAfterVerification(const CertPath& path,
+                                          CertPathErrors* errors) const = 0;
 };
 
 // Checks whether a certificate is trusted by building candidate paths to trust
@@ -115,27 +125,30 @@ class NET_EXPORT CertPathBuilder {
     DISALLOW_COPY_AND_ASSIGN(Result);
   };
 
-  // TODO(mattm): allow caller specified hook/callback to extend path
-  // verification.
-  //
   // Creates a CertPathBuilder that attempts to find a path from |cert| to a
-  // trust anchor in |trust_store|, which satisfies |signature_policy| and is
-  // valid at |time|.  Details of attempted path(s) are stored in |*result|.
+  // trust anchor in |trust_store| and is valid at |time|. Details of attempted
+  // path(s) are stored in |*result|.
   //
-  // The caller must keep |trust_store|, |signature_policy|, and |*result| valid
-  // for the lifetime of the CertPathBuilder.
+  // The caller must keep |trust_store|, |delegate| and |*result| valid for the
+  // lifetime of the CertPathBuilder.
   //
   // See VerifyCertificateChain() for a more detailed explanation of the
-  // same-named parameters.
+  // same-named parameters not defined below.
+  //
+  // * |result|: Storage for the result of path building.
+  // * |delegate|: Must be non-null. The delegate is called at various points in
+  //               path building to verify specific parts of certificates or the
+  //               final chain. See CertPathBuilderDelegate for more
+  //               information.
   CertPathBuilder(scoped_refptr<ParsedCertificate> cert,
                   TrustStore* trust_store,
-                  const SignaturePolicy* signature_policy,
                   const der::GeneralizedTime& time,
                   KeyPurpose key_purpose,
                   InitialExplicitPolicy initial_explicit_policy,
                   const std::set<der::Input>& user_initial_policy_set,
                   InitialPolicyMappingInhibit initial_policy_mapping_inhibit,
                   InitialAnyPolicyInhibit initial_any_policy_inhibit,
+                  CertPathBuilderDelegate* delegate,
                   Result* result);
   ~CertPathBuilder();
 
@@ -168,7 +181,7 @@ class NET_EXPORT CertPathBuilder {
   void AddResultPath(std::unique_ptr<ResultPath> result_path);
 
   std::unique_ptr<CertPathIter> cert_path_iter_;
-  const SignaturePolicy* signature_policy_;
+  const CertPathBuilderDelegate* delegate_;
   const der::GeneralizedTime time_;
   const KeyPurpose key_purpose_;
   const InitialExplicitPolicy initial_explicit_policy_;

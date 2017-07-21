@@ -14,7 +14,6 @@
 #include "net/cert/internal/certificate_policies.h"
 #include "net/cert/internal/parse_certificate.h"
 #include "net/cert/internal/parse_name.h"  // For CertDebugString.
-#include "net/cert/internal/signature_policy.h"
 #include "net/cert/internal/trust_store.h"
 #include "net/cert/internal/verify_certificate_chain.h"
 #include "net/cert/internal/verify_name_match.h"
@@ -548,16 +547,16 @@ void CertPathBuilder::Result::Clear() {
 CertPathBuilder::CertPathBuilder(
     scoped_refptr<ParsedCertificate> cert,
     TrustStore* trust_store,
-    const SignaturePolicy* signature_policy,
     const der::GeneralizedTime& time,
     KeyPurpose key_purpose,
     InitialExplicitPolicy initial_explicit_policy,
     const std::set<der::Input>& user_initial_policy_set,
     InitialPolicyMappingInhibit initial_policy_mapping_inhibit,
     InitialAnyPolicyInhibit initial_any_policy_inhibit,
+    CertPathBuilderDelegate* delegate,
     Result* result)
     : cert_path_iter_(new CertPathIter(std::move(cert), trust_store)),
-      signature_policy_(signature_policy),
+      delegate_(delegate),
       time_(time),
       key_purpose_(key_purpose),
       initial_explicit_policy_(initial_explicit_policy),
@@ -614,17 +613,25 @@ void CertPathBuilder::DoGetNextPathComplete() {
 
   // Verify the entire certificate chain.
   auto result_path = base::MakeUnique<ResultPath>();
+  result_path->path = next_path_;
   VerifyCertificateChain(
-      next_path_.certs, next_path_.last_cert_trust, signature_policy_, time_,
-      key_purpose_, initial_explicit_policy_, user_initial_policy_set_,
+      result_path->path.certs, result_path->path.last_cert_trust, delegate_,
+      time_, key_purpose_, initial_explicit_policy_, user_initial_policy_set_,
       initial_policy_mapping_inhibit_, initial_any_policy_inhibit_,
       &result_path->user_constrained_policy_set, &result_path->errors);
   bool verify_result = !result_path->errors.ContainsHighSeverityErrors();
 
   DVLOG(1) << "CertPathBuilder VerifyCertificateChain result = "
            << verify_result << "\n"
-           << result_path->errors.ToDebugString(next_path_.certs);
-  result_path->path = next_path_;
+           << result_path->errors.ToDebugString(result_path->path.certs);
+
+  // If the path looks good so far. Give the delegate a chance to add errors.
+  if (verify_result) {
+    delegate_->CheckPathAfterVerification(result_path->path,
+                                          &result_path->errors);
+    verify_result = !result_path->errors.ContainsHighSeverityErrors();
+  }
+
   AddResultPath(std::move(result_path));
 
   if (verify_result) {
