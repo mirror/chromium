@@ -52,6 +52,24 @@
       "revId": "db332f89dc606025ab2cb75d4cf79c6288f0ac1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf7abc10_a2a93449",
+        "filename": "media/gpu/dxva_picture_buffer_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000608
+      },
+      "writtenOn": "2017-07-21T18:29:16Z",
+      "side": 1,
+      "message": "I\u0027m mainly interested in this as a temporary measure, but it would be nice if it could stick around in case someone else needs it in the future. There have several times when I\u0027ve wondered if some new piece of code is failing in an unexpected way, and there\u0027s no way to get info about that besides adding a bunch of one-time histograms and waiting for them to be released.\n\nWe actually don\u0027t include the log messages in release builds, so I don\u0027t know that there would be a way to hash them. We could add them, but it seems like adding new release LOGs is strongly discouraged, partly for binary size reasons.",
+      "parentUuid": "8670607e_529a0540",
+      "revId": "db332f89dc606025ab2cb75d4cf79c6288f0ac1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
