@@ -68,16 +68,16 @@ class CORE_TEMPLATE_CLASS_EXPORT VisibleSelectionTemplate {
   SelectionTemplate<Strategy> AsSelection() const;
   PositionTemplate<Strategy> Base() const { return base_; }
   PositionTemplate<Strategy> Extent() const { return extent_; }
-  PositionTemplate<Strategy> Start() const { return start_; }
-  PositionTemplate<Strategy> End() const { return end_; }
+  PositionTemplate<Strategy> Start() const;
+  PositionTemplate<Strategy> End() const;
 
   VisiblePositionTemplate<Strategy> VisibleStart() const {
     return CreateVisiblePosition(
-        start_, IsRange() ? TextAffinity::kDownstream : Affinity());
+        Start(), IsRange() ? TextAffinity::kDownstream : Affinity());
   }
   VisiblePositionTemplate<Strategy> VisibleEnd() const {
     return CreateVisiblePosition(
-        end_, IsRange() ? TextAffinity::kUpstream : Affinity());
+        End(), IsRange() ? TextAffinity::kUpstream : Affinity());
   }
   VisiblePositionTemplate<Strategy> VisibleBase() const {
     return CreateVisiblePosition(
@@ -148,9 +148,6 @@ class CORE_TEMPLATE_CLASS_EXPORT VisibleSelectionTemplate {
 
   void Validate(const SelectionTemplate<Strategy>&, TextGranularity);
 
-  // Support methods for Validate()
-  void UpdateSelectionType();
-
   // We need to store these as Positions because VisibleSelection is
   // used to store values in editing commands for use when
   // undoing the command. We need to be able to create a selection that, while
@@ -160,10 +157,6 @@ class CORE_TEMPLATE_CLASS_EXPORT VisibleSelectionTemplate {
   PositionTemplate<Strategy> base_;
   // Where the end click happened
   PositionTemplate<Strategy> extent_;
-  // Leftmost position when expanded to respect granularity
-  PositionTemplate<Strategy> start_;
-  // Rightmost position when expanded to respect granularity
-  PositionTemplate<Strategy> end_;
 
   TextAffinity affinity_;  // the upstream/downstream affinity of the caret
 
