@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0e262e5_f2c6a9b6",
+        "filename": "ios/chrome/app/strings/ios_strings.grd",
+        "patchSetId": 8
+      },
+      "lineNbr": 1002,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-21T08:30:21Z",
+      "side": 1,
+      "message": "There are already 3 other strings that are exactly equal to \"New\". I would recommend adding a \"meaning\" attribute to this string so that it get a separate translation.\n\nFrom grit documentation:\n\n\u003e meaning: You can use this field to ensure that two messages that have the same text will not necessarily share the same translation. This can provide a bit of context to the translators along with the \u0027desc\u0027 attribute.\n\nhttps://www.chromium.org/developers/tools-we-use-in-chromium/grit/grit-users-guide",
+      "revId": "43d7eb9baca3354d8a47af0fa20f000f953ea61d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "230a4925_2c046fb2",
+        "filename": "ios/shared/chrome/browser/ui/tools_menu/tools_menu_configuration.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-21T08:30:21Z",
+      "side": 1,
+      "message": "nit: NULL → nullptr",
+      "range": {
+        "startLine": 30,
+        "startChar": 25,
+        "endLine": 30,
+        "endChar": 29
+      },
+      "revId": "43d7eb9baca3354d8a47af0fa20f000f953ea61d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
