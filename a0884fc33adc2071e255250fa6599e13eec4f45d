@@ -45,6 +45,29 @@
       "revId": "a0884fc33adc2071e255250fa6599e13eec4f45d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ccdc8cd_dfe8550f",
+        "filename": "content/browser/media/capture/desktop_capture_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-21T18:05:39Z",
+      "side": 1,
+      "message": "Putting the new cropping logic here would be a better choice to fix both issues Sergey mentioned.",
+      "range": {
+        "startLine": 302,
+        "startChar": 0,
+        "endLine": 303,
+        "endChar": 29
+      },
+      "revId": "a0884fc33adc2071e255250fa6599e13eec4f45d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
