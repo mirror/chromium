@@ -45,13 +45,10 @@
 
 #include "base/memory/ref_counted.h"
 #include "base/strings/string16.h"
+#include "net/cert/scoped_nss_types.h"
 
 typedef struct CERTCertificateStr CERTCertificate;
 typedef struct PK11SlotInfoStr PK11SlotInfo;
-namespace net {
-class X509Certificate;
-typedef std::vector<scoped_refptr<X509Certificate> > CertificateList;
-}  // namespace net
 
 namespace mozilla_security_manager {
 
@@ -62,18 +59,19 @@ void EnsurePKCS12Init();
 // If |is_extractable| is false, mark the private key as non-extractable.
 // Returns a net error code.  |imported_certs|, if non-NULL, returns a list of
 // certs that were imported.
-int nsPKCS12Blob_Import(PK11SlotInfo* slot,
-                        const char* pkcs12_data,
-                        size_t pkcs12_len,
-                        const base::string16& password,
-                        bool is_extractable,
-                        net::CertificateList* imported_certs);
+int nsPKCS12Blob_Import(
+    PK11SlotInfo* slot,
+    const char* pkcs12_data,
+    size_t pkcs12_len,
+    const base::string16& password,
+    bool is_extractable,
+    std::vector<net::ScopedCERTCertificate>* imported_certs);
 
 // Export the given certificates into a PKCS#12 blob, storing into output.
 // Returns the number of certificates exported.
 // TODO(mattm): provide better error return status?
 int nsPKCS12Blob_Export(std::string* output,
-                        const net::CertificateList& certs,
+                        const net::ScopedCERTCertificateVector& certs,
                         const base::string16& password);
 
 }  // namespace mozilla_security_manager

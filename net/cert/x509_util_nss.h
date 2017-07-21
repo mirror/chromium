@@ -10,7 +10,11 @@
 #include <string>
 #include <vector>
 
+#include "base/memory/ref_counted.h"
 #include "net/base/net_export.h"
+#include "net/cert/cert_type.h"
+#include "net/cert/scoped_nss_types.h"
+#include "net/cert/x509_certificate.h"
 
 typedef struct CERTCertificateStr CERTCertificate;
 typedef struct PK11SlotInfoStr PK11SlotInfo;
@@ -19,6 +23,68 @@ typedef struct SECItemStr SECItem;
 namespace net {
 
 namespace x509_util {
+
+// XXX standardize naming (CertCertificate vs CERTCertificate, etc)
+
+// XXX docs
+NET_EXPORT bool IsSameCertificate(CERTCertificate* a, CERTCertificate* b);
+
+NET_EXPORT bool IsSameCertificate(CERTCertificate* a, const X509Certificate* b);
+NET_EXPORT bool IsSameCertificate(const X509Certificate* a, CERTCertificate* b);
+
+// XXX make sure everything calling x509_util::foo error checks the results
+// XXX are all places these CreateCERTCertificateFromXXX used okay with NULL
+// nickname?
+//
+// XXX docs
+NET_EXPORT ScopedCERTCertificate
+CreateCERTCertificateFromBytes(const uint8_t* data, size_t length);
+NET_EXPORT ScopedCERTCertificate
+CreateCERTCertificateFromBytesWithNickname(const uint8_t* data,
+                                           size_t length,
+                                           const char* nickname);
+
+// Similar to CreateCERTCertificateFromBytes, but the certificate must already
+// exist in NSS (possibly as a temp certificate).
+NET_EXPORT ScopedCERTCertificate
+FindCERTCertificateFromBytes(const uint8_t* data, size_t length);
+
+// XXX docs
+NET_EXPORT ScopedCERTCertificate
+CreateCERTCertificateFromX509Certificate(const X509Certificate* cert);
+NET_EXPORT ScopedCERTCertificateVector
+CreateCERTCertificateVectorFromX509Certificate(const X509Certificate* cert);
+
+// XXX rename? and docs
+NET_EXPORT ScopedCERTCertificateVector
+CreateCertificateListFromBytes(const char* data, size_t length, int format);
+
+// Similar to CreateCERTCertificateFromX509Certificate, but the certificate
+// must already exist in NSS (possibly as a temp certificate).
+NET_EXPORT ScopedCERTCertificate
+FindCERTCertificateFromX509Certificate(const X509Certificate* cert);
+
+// XXX docs
+// XXX replace direct usages of CERT_DupCertificate
+NET_EXPORT ScopedCERTCertificate
+DupCERTCertificate(const ScopedCERTCertificate& cert);
+NET_EXPORT ScopedCERTCertificate DupCERTCertificate(CERTCertificate* cert);
+NET_EXPORT ScopedCERTCertificateVector
+DupCERTCertificateVector(const ScopedCERTCertificateVector& certs);
+
+// XXX docs
+NET_EXPORT scoped_refptr<X509Certificate>
+CreateX509CertificateFromCertCertificate(
+    CERTCertificate* cert,
+    const std::vector<CERTCertificate*>& chain);
+NET_EXPORT scoped_refptr<X509Certificate>
+CreateX509CertificateFromCertCertificate(CERTCertificate* cert);
+
+NET_EXPORT CertificateList CreateX509CertificateListFromCERTCertificates(
+    const ScopedCERTCertificateVector& certs);
+
+NET_EXPORT bool GetDEREncoded(CERTCertificate* cert, std::string* der_encoded);
+NET_EXPORT bool GetPEMEncoded(CERTCertificate* cert, std::string* pem_encoded);
 
 // Stores the values of all rfc822Name subjectAltNames from |cert_handle|
 // into |names|. If no names are present, clears |names|.
@@ -49,16 +115,18 @@ NET_EXPORT void GetRFC822SubjectAltNames(CERTCertificate* cert_handle,
 NET_EXPORT void GetUPNSubjectAltNames(CERTCertificate* cert_handle,
                                       std::vector<std::string>* names);
 
-// Generates a unique nickname for |slot|, returning |nickname| if it is
-// already unique.
-//
-// Note: The nickname returned will NOT include the token name, thus the
-// token name must be prepended if calling an NSS function that expects
-// <token>:<nickname>.
-// TODO(gspencer): Internationalize this: it's wrong to hard-code English.
-std::string GetUniqueNicknameForSlot(const std::string& nickname,
-                                     const SECItem* subject,
-                                     PK11SlotInfo* slot);
+// Generates a unique nickname for |nss_cert| based on the |type| and |slot|.
+NET_EXPORT std::string GetDefaultUniqueNickname(CERTCertificate* nss_cert,
+                                                CertType type,
+                                                PK11SlotInfo* slot);
+
+// XXX
+NET_EXPORT bool GetValidityTimes(CERTCertificate* cert,
+                                 base::Time* not_before,
+                                 base::Time* not_after);
+
+// XXX
+NET_EXPORT SHA256HashValue CalculateFingerprint256(CERTCertificate* cert);
 
 } // namespace x509_util
 
