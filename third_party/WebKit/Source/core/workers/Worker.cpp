@@ -51,8 +51,9 @@ InProcessWorkerMessagingProxy* Worker::CreateInProcessWorkerMessagingProxy(
       WebLocalFrameBase::FromFrame(document->GetFrame());
 
   WorkerClients* worker_clients = WorkerClients::Create();
-  CoreInitializer::CallModulesProvideLocalFileSystem(*worker_clients);
-  CoreInitializer::CallModulesProvideIndexedDB(*worker_clients);
+  CoreInitializer::GetInstance().CallModulesProvideLocalFileSystem(
+      *worker_clients);
+  CoreInitializer::GetInstance().CallModulesProvideIndexedDB(*worker_clients);
   ProvideContentSettingsClientToWorker(
       worker_clients, web_frame->Client()->CreateWorkerContentSettingsClient());
   return new DedicatedWorkerMessagingProxy(this, worker_clients);
