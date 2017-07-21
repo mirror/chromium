@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7a5ace4b_89557b14",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 3791,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-07-21T20:53:11Z",
+      "side": 1,
+      "message": "Yes. Some calls that needed to trigger the event were changed to include |inIncognito|. The remaining calls that invoke the non-|inIncognito| method (such as the help button in the tools menu) are not user-initiated and should not fire the event.",
+      "parentUuid": "1eb875ca_87fb3011",
+      "revId": "8782748a3627b88267f6066fc3c4340cf2ff34da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8361a7a_a0fd4a66",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-21T08:16:08Z",
       "side": 1,
       "message": "webPageOrderedOpen is probably also called in cases where tapping on a link happens to open a new tab, even without the user\u0027s explicit direction.  For example, news.google.com is set up to automatically open articles in new tabs.\n\nWhat should the FeatureEngagementTracker do when a new tab is opened by the webpage, but technically not directly by the user?",
+      "revId": "8782748a3627b88267f6066fc3c4340cf2ff34da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "073d6da8_d6738596",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 3820,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-07-21T20:53:11Z",
+      "side": 1,
+      "message": "Links that open in new tabs are opened by -[BrowserViewController webState:createWebStateForURL:openerURL:initiatedByUser:], so the new tab event is not fired.",
+      "parentUuid": "a8361a7a_a0fd4a66",
       "revId": "8782748a3627b88267f6066fc3c4340cf2ff34da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c3ba13c3_8936c5df",
+        "filename": "ios/chrome/browser/ui/commands/open_new_tab_command.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-07-21T20:53:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "889c164b_c42e59b8",
+      "revId": "8782748a3627b88267f6066fc3c4340cf2ff34da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8bc3153_5a42781c",
         "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "8782748a3627b88267f6066fc3c4340cf2ff34da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b2df86d_00f2faf2",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 2734,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-07-21T20:53:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8bc3153_5a42781c",
+      "revId": "8782748a3627b88267f6066fc3c4340cf2ff34da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
