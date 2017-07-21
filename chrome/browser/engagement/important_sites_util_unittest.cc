@@ -9,6 +9,7 @@
 
 #include "base/files/scoped_temp_dir.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/sample_vector.h"
 #include "base/strings/utf_string_conversions.h"
@@ -17,7 +18,6 @@
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
 #include "chrome/browser/engagement/site_engagement_score.h"
 #include "chrome/browser/engagement/site_engagement_service.h"
-#include "chrome/browser/history/history_service_factory.h"
 #include "chrome/test/base/chrome_render_view_host_test_harness.h"
 #include "chrome/test/base/testing_profile.h"
 #include "components/bookmarks/browser/bookmark_model.h"
@@ -25,9 +25,6 @@
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "components/content_settings/core/common/content_settings.h"
 #include "components/content_settings/core/common/content_settings_pattern.h"
-#include "components/history/core/browser/history_database_params.h"
-#include "components/history/core/browser/history_service.h"
-#include "components/history/core/test/test_history_database.h"
 #include "components/keyed_service/core/keyed_service.h"
 #include "content/public/browser/web_contents.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -38,15 +35,6 @@ using BookmarkModel = bookmarks::BookmarkModel;
 using ImportantDomainInfo = ImportantSitesUtil::ImportantDomainInfo;
 
 const size_t kNumImportantSites = 5;
-base::FilePath g_temp_history_dir;
-
-std::unique_ptr<KeyedService> BuildTestHistoryService(
-    content::BrowserContext* context) {
-  std::unique_ptr<history::HistoryService> service(
-      new history::HistoryService());
-  service->Init(history::TestHistoryDatabaseParamsForPath(g_temp_history_dir));
-  return std::move(service);
-}
 
 // We only need to reproduce the values that we are testing. The values here
 // need to match the values in important_sites_util.
@@ -70,10 +58,6 @@ class ImportantSitesUtilTest : public ChromeRenderViewHostTestHarness {
   void SetUp() override {
     ChromeRenderViewHostTestHarness::SetUp();
     SiteEngagementScore::SetParamValuesForTesting();
-    ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
-    g_temp_history_dir = temp_dir_.GetPath();
-    HistoryServiceFactory::GetInstance()->SetTestingFactory(
-        profile(), &BuildTestHistoryService);
   }
 
   void AddContentSetting(ContentSettingsType type,
@@ -132,7 +116,6 @@ class ImportantSitesUtilTest : public ChromeRenderViewHostTestHarness {
   }
 
  private:
-  base::ScopedTempDir temp_dir_;
   BookmarkModel* model_ = nullptr;
 };
 

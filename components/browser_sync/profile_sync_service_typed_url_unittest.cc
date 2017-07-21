@@ -17,6 +17,7 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
+#include "base/memory/weak_ptr.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
@@ -27,11 +28,11 @@
 #include "base/time/time.h"
 #include "components/browser_sync/abstract_profile_sync_service_test.h"
 #include "components/browser_sync/test_profile_sync_service.h"
+#include "components/history/core/browser/fake_history_service.h"
 #include "components/history/core/browser/history_backend.h"
 #include "components/history/core/browser/history_backend_client.h"
 #include "components/history/core/browser/history_backend_notifier.h"
 #include "components/history/core/browser/history_db_task.h"
-#include "components/history/core/browser/history_service.h"
 #include "components/history/core/browser/typed_url_data_type_controller.h"
 #include "components/signin/core/browser/signin_manager.h"
 #include "components/sync/driver/data_type_manager_impl.h"
@@ -95,9 +96,9 @@ class HistoryBackendMock : public HistoryBackend {
   virtual ~HistoryBackendMock() {}
 };
 
-class HistoryServiceMock : public history::HistoryService {
+class TestHistoryService : public history::FakeHistoryService {
  public:
-  HistoryServiceMock() : history::HistoryService(), backend_(nullptr) {}
+  TestHistoryService() : backend_(nullptr), weak_ptr_factory_(this) {}
 
   base::CancelableTaskTracker::TaskId ScheduleDBTask(
       std::unique_ptr<history::HistoryDBTask> task,
@@ -106,14 +107,17 @@ class HistoryServiceMock : public history::HistoryService {
     // evaluate task.release() before the arguments for the first Bind().
     history::HistoryDBTask* task_raw = task.get();
     task_runner_->PostTaskAndReply(
-        FROM_HERE, base::Bind(&HistoryServiceMock::RunTaskOnDBThread,
-                              base::Unretained(this), task_raw),
+        FROM_HERE,
+        base::Bind(&TestHistoryService::RunTaskOnDBThread,
+                   base::Unretained(this), task_raw),
         base::Bind(&base::DeletePointer<history::HistoryDBTask>,
                    task.release()));
     return base::CancelableTaskTracker::kBadTaskId;  // unused
   }
 
-  ~HistoryServiceMock() override {}
+  base::WeakPtr<HistoryService> AsWeakPtr() override {
+    return weak_ptr_factory_.GetWeakPtr();
+  }
 
   void set_task_runner(
       scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
@@ -132,6 +136,7 @@ class HistoryServiceMock : public history::HistoryService {
 
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
   scoped_refptr<history::HistoryBackend> backend_;
+  base::WeakPtrFactory<TestHistoryService> weak_ptr_factory_;
 };
 
 class TestTypedUrlSyncableService : public TypedUrlSyncableService {
@@ -185,7 +190,7 @@ class ProfileSyncServiceTypedUrlTest : public AbstractProfileSyncServiceTest {
                    base::Unretained(this)),
         run_loop.QuitClosure());
     run_loop.Run();
-    history_service_ = base::WrapUnique(new HistoryServiceMock);
+    history_service_ = base::WrapUnique(new TestHistoryService);
     history_service_->set_task_runner(data_type_thread()->task_runner());
     history_service_->set_backend(history_backend_);
 
@@ -212,8 +217,6 @@ class ProfileSyncServiceTypedUrlTest : public AbstractProfileSyncServiceTest {
   }
 
   ~ProfileSyncServiceTypedUrlTest() override {
-    history_service_->Shutdown();
-
     // Request stop to get deletion tasks related to the HistoryService posted
     // on the Sync thread. It is important to not Shutdown at this moment,
     // because after shutdown the Sync thread is not returned to the sync
@@ -381,7 +384,7 @@ class ProfileSyncServiceTypedUrlTest : public AbstractProfileSyncServiceTest {
 
  private:
   scoped_refptr<HistoryBackendMock> history_backend_;
-  std::unique_ptr<HistoryServiceMock> history_service_;
+  std::unique_ptr<TestHistoryService> history_service_;
   syncer::DataTypeErrorHandlerMock error_handler_;
   std::unique_ptr<TestTypedUrlSyncableService> syncable_service_;
   std::unique_ptr<syncer::FakeSyncClient> sync_client_;

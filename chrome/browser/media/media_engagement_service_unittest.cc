@@ -4,6 +4,11 @@
 
 #include "chrome/browser/media/media_engagement_service.h"
 
+#include <memory>
+#include <string>
+#include <utility>
+#include <vector>
+
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
@@ -24,7 +29,7 @@
 #include "components/content_settings/core/common/content_settings.h"
 #include "components/content_settings/core/common/content_settings_types.h"
 #include "components/history/core/browser/history_database_params.h"
-#include "components/history/core/browser/history_service.h"
+#include "components/history/core/browser/history_service_impl.h"
 #include "components/history/core/test/test_history_database.h"
 #include "components/prefs/pref_service.h"
 #include "content/public/browser/browser_thread.h"
@@ -90,8 +95,7 @@ base::Time GetReferenceTime() {
 
 std::unique_ptr<KeyedService> BuildTestHistoryService(
     content::BrowserContext* context) {
-  std::unique_ptr<history::HistoryService> service(
-      new history::HistoryService());
+  auto service = base::MakeUnique<history::HistoryServiceImpl>();
   service->Init(history::TestHistoryDatabaseParamsForPath(g_temp_history_dir));
   return std::move(service);
 }

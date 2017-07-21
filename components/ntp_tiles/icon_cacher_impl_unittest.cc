@@ -22,7 +22,7 @@
 #include "components/favicon/core/large_icon_service.h"
 #include "components/favicon_base/favicon_types.h"
 #include "components/history/core/browser/history_database_params.h"
-#include "components/history/core/browser/history_service.h"
+#include "components/history/core/browser/history_service_impl.h"
 #include "components/image_fetcher/core/image_decoder.h"
 #include "components/image_fetcher/core/image_fetcher.h"
 #include "components/image_fetcher/core/request_metadata.h"
@@ -182,7 +182,7 @@ class IconCacherTestBase : public ::testing::Test {
 
   base::test::ScopedTaskEnvironment scoped_task_environment_;
   base::ScopedTempDir history_dir_;
-  history::HistoryService history_service_;
+  history::HistoryServiceImpl history_service_;
   favicon::FaviconServiceImpl favicon_service_;
 };
 

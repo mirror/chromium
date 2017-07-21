@@ -42,7 +42,7 @@
 #include "components/history/core/browser/download_row.h"
 #include "components/history/core/browser/history_constants.h"
 #include "components/history/core/browser/history_database_params.h"
-#include "components/history/core/browser/history_service.h"
+#include "components/history/core/browser/history_service_impl.h"
 #include "components/safe_browsing/common/safe_browsing_prefs.h"
 #include "components/safe_browsing/csd.pb.h"
 #include "components/sync_preferences/testing_pref_service_syncable.h"
@@ -68,11 +68,10 @@ std::unique_ptr<KeyedService> BuildHistoryService(
     return nullptr;
   }
 
-  std::unique_ptr<history::HistoryService> history_service(
-      new history::HistoryService(
-          base::MakeUnique<ChromeHistoryClient>(
-              BookmarkModelFactory::GetForBrowserContext(profile)),
-          std::unique_ptr<history::VisitDelegate>()));
+  auto history_service = base::MakeUnique<history::HistoryServiceImpl>(
+      base::MakeUnique<ChromeHistoryClient>(
+          BookmarkModelFactory::GetForBrowserContext(profile)),
+      std::unique_ptr<history::VisitDelegate>());
   if (history_service->Init(
           history::HistoryDatabaseParamsForPath(profile->GetPath()))) {
     return std::move(history_service);
