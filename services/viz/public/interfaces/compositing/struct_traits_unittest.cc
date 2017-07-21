@@ -5,6 +5,7 @@
 #include <utility>
 
 #include "base/message_loop/message_loop.h"
+#include "components/viz/common/display/renderer_settings.h"
 #include "components/viz/common/resources/resource_settings.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "services/viz/public/interfaces/compositing/resource_settings_struct_traits.h"
@@ -19,6 +20,7 @@ using StructTraitsTest = testing::Test;
 TEST_F(StructTraitsTest, ResourceSettings) {
   constexpr size_t kArbitrarySize = 32;
   constexpr bool kArbitraryBool = true;
+
   ResourceSettings input;
   input.texture_id_allocation_chunk_size = kArbitrarySize;
   input.use_gpu_memory_buffer_resources = kArbitraryBool;
