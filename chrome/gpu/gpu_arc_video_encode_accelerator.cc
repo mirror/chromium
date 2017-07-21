@@ -19,6 +19,21 @@
 namespace chromeos {
 namespace arc {
 
+namespace {
+
+// Helper class to notify client about the end of processing a video frame.
+class VideoFrameDoneNotifier {
+ public:
+  explicit VideoFrameDoneNotifier(base::OnceClosure notify_closure)
+      : notify_closure_(std::move(notify_closure)) {}
+  ~VideoFrameDoneNotifier() { std::move(notify_closure_).Run(); }
+
+ private:
+  base::OnceClosure notify_closure_;
+};
+
+}  // namespace
+
 GpuArcVideoEncodeAccelerator::GpuArcVideoEncodeAccelerator(
     const gpu::GpuPreferences& gpu_preferences)
     : gpu_preferences_(gpu_preferences) {}
@@ -87,11 +102,14 @@ void GpuArcVideoEncodeAccelerator::Initialize(
   callback.Run(true);
 }
 
-static void DropSharedMemory(std::unique_ptr<base::SharedMemory> shm) {
-  // Just let |shm| fall out of scope.
+static void DropShareMemoryAndVideoFrameDoneNotifier(
+    std::unique_ptr<base::SharedMemory> shm,
+    std::unique_ptr<VideoFrameDoneNotifier> notifier) {
+  // Just let |shm| and |notifier| fall out of scope.
 }
 
 void GpuArcVideoEncodeAccelerator::Encode(
+    uint32_t frame_id,
     mojo::ScopedHandle handle,
     std::vector<::arc::VideoFramePlane> planes,
     int64_t timestamp,
@@ -101,6 +119,13 @@ void GpuArcVideoEncodeAccelerator::Encode(
     DLOG(ERROR) << "Accelerator is not initialized.";
     return;
   }
+
+  // It is safe to unretain |client_| here as the |client_| will outlive
+  // the |notifier|. The lifetime of the notifier will be ended within this
+  // function or with the video frame.
+  auto notifier = base::MakeUnique<VideoFrameDoneNotifier>(
+      base::Bind(&::arc::mojom::VideoEncodeClient::NotifyVideoFrameDone,
+                 base::Unretained(client_.get()), frame_id));
 
   if (planes.empty()) {  // EOS
     accelerator_->Encode(media::VideoFrame::CreateEOSFrame(), force_keyframe);
@@ -148,10 +173,14 @@ void GpuArcVideoEncodeAccelerator::Encode(
       shm_memory + aligned_offset, allocation_size, shm_handle,
       planes[0].offset, base::TimeDelta::FromMicroseconds(timestamp));
 
-  // Wrap |shm| in a callback and add it as a destruction observer, so it
-  // stays alive and mapped until |frame| goes out of scope.
+  // Wrap |shm| and |notifier| in a callback and add it as a destruction
+  // observer. When the |frame| goes out of scope, it unmaps and releases
+  // the shared memory as well as notifies |client_| about the end of processing
+  // the |frame|.
   frame->AddDestructionObserver(
-      base::Bind(&DropSharedMemory, base::Passed(&shm)));
+      base::Bind(&DropShareMemoryAndVideoFrameDoneNotifier, base::Passed(&shm),
+                 base::Passed(&notifier)));
+
   accelerator_->Encode(frame, force_keyframe);
 }
 
