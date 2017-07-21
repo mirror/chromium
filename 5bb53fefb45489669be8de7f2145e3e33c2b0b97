@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "3450c082_0039960e",
+        "filename": "services/device/generic_sensor/platform_sensor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-21T21:01:26Z",
+      "side": 1,
+      "message": "We can clean this up in a follow-up CL but for now can you make initialization of the shared_buffer_reader_ lazy by doing it the first time GetLatestReading() is called.",
+      "parentUuid": "352a73ff_2a9faf93",
+      "revId": "5bb53fefb45489669be8de7f2145e3e33c2b0b97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7ac6656_3f10f502",
         "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
         "patchSetId": 1
@@ -113,6 +131,24 @@
       "side": 1,
       "message": "After some further thinking, I think reading all source sensors data here is a simpler and cleaner solution, since source sensors can have different reporting mode: ON_CHANGE or CONTINUOUS. Even when one ON_CHANGE sensor changes its data and this method PlatformSensorFusion::OnSensorReadingChanged() is called, we still need to read all the latest data from sensors which are CONTINUOUS since those data may change anytime and PlatformSensorFusion::OnSensorReadingChanged() won\u0027t be called. The code at:\n//device/sensors/android/java/src/org/chromium/device/sensors/DeviceSensors.java\ndoesn\u0027t need to do that since all the sensors there are ON_CHANGE.\n\nRealizing that I also add a timer in this class to handle the situation if all the source sensors are CONTINUOUS mode since PlatformSensorFusion::OnSensorReadingChanged() won\u0027t be called in that case.\n\nWhat do you think?",
       "parentUuid": "f7ac6656_3f10f502",
+      "revId": "5bb53fefb45489669be8de7f2145e3e33c2b0b97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8418514_f539eb67",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-21T21:01:26Z",
+      "side": 1,
+      "message": "There\u0027s some complexity here we can work through as we try to support more complex fusion algorithms. For now this is fine since there is only one sensor anyways.",
+      "parentUuid": "5ee155f4_22e04409",
       "revId": "5bb53fefb45489669be8de7f2145e3e33c2b0b97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
