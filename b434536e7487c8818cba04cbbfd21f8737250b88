@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "66a8fc61_f29d432b",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-21T11:09:52Z",
+      "side": 1,
+      "message": "Thanks for spotting this! This would have produced some very puzzling results.\nSize checks in ShouldContainSiteExplorationsWhenFeatureEnabled can reproduce the issue now.",
+      "parentUuid": "7289891a_d42cb560",
+      "revId": "b434536e7487c8818cba04cbbfd21f8737250b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14d2e9f2_89a211f0",
         "filename": "components/ntp_tiles/most_visited_sites.cc",
         "patchSetId": 14
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "507e0b02_4f1a531f",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-21T11:09:52Z",
+      "side": 1,
+      "message": "Yes. Same as above.",
+      "parentUuid": "14d2e9f2_89a211f0",
+      "range": {
+        "startLine": 377,
+        "startChar": 52,
+        "endLine": 377,
+        "endChar": 0
+      },
+      "revId": "b434536e7487c8818cba04cbbfd21f8737250b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0349dc4_214d967d",
         "filename": "components/ntp_tiles/most_visited_sites.cc",
         "patchSetId": 14
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "68dc1486_5b60a073",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-21T11:09:52Z",
+      "side": 1,
+      "message": "Gone",
+      "parentUuid": "d0349dc4_214d967d",
+      "revId": "b434536e7487c8818cba04cbbfd21f8737250b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afae2db0_51c7b0b6",
         "filename": "components/ntp_tiles/most_visited_sites.h",
         "patchSetId": 14
@@ -73,6 +133,24 @@
       "revId": "b434536e7487c8818cba04cbbfd21f8737250b88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ede5e3cc_97a4c4fa",
+        "filename": "components/ntp_tiles/most_visited_sites.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-21T11:09:52Z",
+      "side": 1,
+      "message": "The combination of the logic error and the misleading signature, this becomes very confusing and unreadable.\nI split the function into two new ones with clear scope (please confirm). Nice side effect: The diff is smaller now.",
+      "parentUuid": "afae2db0_51c7b0b6",
+      "revId": "b434536e7487c8818cba04cbbfd21f8737250b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -96,6 +174,30 @@
       "revId": "b434536e7487c8818cba04cbbfd21f8737250b88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4796f0b6_80e11c9d",
+        "filename": "components/ntp_tiles/popular_sites.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-21T11:09:52Z",
+      "side": 1,
+      "message": "Added \"and their sites\".",
+      "parentUuid": "18eb9f52_61591aed",
+      "range": {
+        "startLine": 65,
+        "startChar": 51,
+        "endLine": 65,
+        "endChar": 0
+      },
+      "revId": "b434536e7487c8818cba04cbbfd21f8737250b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
