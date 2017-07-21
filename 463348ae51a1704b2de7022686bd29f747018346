@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dec2787b_95e62353",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/chromium_commit.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-21T20:58:27Z",
+      "side": 1,
+      "message": ":-)\n\nMy actual motivation for adding this was that pylint was warning that commit.url() might not be valid because commit might be a string, somewhere... but anyway, I also thought this might be helpful later when printing commits for debugging purposes.",
+      "parentUuid": "085a5b54_ae52e590",
+      "revId": "463348ae51a1704b2de7022686bd29f747018346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4dd5c004_60018984",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/local_wpt.py",
         "patchSetId": 1
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "6656ff6c_01673687",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-21T20:58:27Z",
+      "side": 1,
+      "message": "Yep, that\u0027s right, good catch; Now removed.",
+      "parentUuid": "a75e1d19_e331a10e",
+      "revId": "463348ae51a1704b2de7022686bd29f747018346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e251449a_11330a3b",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer.py",
         "patchSetId": 1
@@ -64,6 +100,24 @@
       "writtenOn": "2017-07-21T20:12:40Z",
       "side": 1,
       "message": "Is this intentional?",
+      "revId": "463348ae51a1704b2de7022686bd29f747018346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4599a3d_f6bd43a9",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-21T20:58:27Z",
+      "side": 1,
+      "message": "Hm, this was a personal todo that I didn\u0027t want to commit. What I meant by the \"right dir\" was that \"third_party/WebKit/LayoutTests/external/wpt/\" in patches should be stripped when the patch is applied.\n\nAs of right now, my tests don\u0027t actually test this. Now updating tests so that some assertion is also made about the patch that\u0027s applied to local wpt based on the chromium commit patch.",
+      "parentUuid": "e251449a_11330a3b",
       "revId": "463348ae51a1704b2de7022686bd29f747018346",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
