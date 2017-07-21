@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "385c6bf6_1fb5039c",
+        "filename": "remoting/host/evaluate_capability.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-21T17:43:50Z",
+      "side": 1,
+      "message": "I have no concern to add it, but it won\u0027t help :)\nI happened to find a similar case at https://cs.chromium.org/chromium/src/media/base/key_systems.cc?q\u003dif.*UNIT_TEST+file:.*%5C.cc\u0026sq\u003dpackage:chromium\u0026l\u003d731\u0026ct\u003drc\u0026cd\u003d1\u0026dr\u003dC.",
+      "parentUuid": "fef2f197_5288ff10",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 1
+      },
+      "revId": "54ad5ee2e156610aafcb06f25cd4a83f94ae7c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c47d46e_6646a940",
         "filename": "remoting/host/evaluate_capability.cc",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-20T23:20:50Z",
       "side": 1,
       "message": "Rename \u0027TestInSeparateProcess()\u0027 or similar?  The EvaluateCapability* names are a bit repetitive.",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 29
+      },
+      "revId": "54ad5ee2e156610aafcb06f25cd4a83f94ae7c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "accd449e_2c7c1623",
+        "filename": "remoting/host/evaluate_capability.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-21T17:43:50Z",
+      "side": 1,
+      "message": "This function has been removed. See my next comment.",
+      "parentUuid": "6c47d46e_6646a940",
       "range": {
         "startLine": 41,
         "startChar": 4,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e34b9a30_79b80093",
+        "filename": "remoting/host/evaluate_capability.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-21T17:43:50Z",
+      "side": 1,
+      "message": "This function should be removed, because we can be smarter here to decide which binary we should use. We have a very limited binary set, so it\u0027s not hard to check current binary name against the set. See the newly add BuildHostBinaryPath() function.\n\nFor the case where output \u003d\u003d nullptr, I think it\u0027s still useful. According to the scenario, some evaluations may require return value only. (The evaluation function does not output anything to console.)",
+      "parentUuid": "6462697b_d409ef01",
+      "range": {
+        "startLine": 51,
+        "startChar": 6,
+        "endLine": 51,
+        "endChar": 12
+      },
+      "revId": "54ad5ee2e156610aafcb06f25cd4a83f94ae7c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "666d2fe5_0d2f2028",
         "filename": "remoting/host/evaluate_capability.cc",
         "patchSetId": 8
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-20T23:20:50Z",
       "side": 1,
       "message": "Can this method be moved to the anonymous namespace and just return the host_binary path?  That would simplify the logic for calling into the actual test function (and wouldn\u0027t require any params in this method (except perhaps a FilePath*).",
+      "range": {
+        "startLine": 64,
+        "startChar": 4,
+        "endLine": 64,
+        "endChar": 39
+      },
+      "revId": "54ad5ee2e156610aafcb06f25cd4a83f94ae7c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df8651b2_24ca4f14",
+        "filename": "remoting/host/evaluate_capability.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-21T17:43:50Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "666d2fe5_0d2f2028",
       "range": {
         "startLine": 64,
         "startChar": 4,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "3400d2d2_8207f00f",
+        "filename": "remoting/host/evaluate_capability.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-21T17:43:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed37ca0d_6c85165b",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 78
+      },
+      "revId": "54ad5ee2e156610aafcb06f25cd4a83f94ae7c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8eff6507_3759aedb",
         "filename": "remoting/host/evaluate_capability.cc",
         "patchSetId": 8
@@ -128,6 +248,30 @@
       "writtenOn": "2017-07-20T23:20:50Z",
       "side": 1,
       "message": "Wrap in \u0027#if UNIT_TEST\u0027 ?",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 3
+      },
+      "revId": "54ad5ee2e156610aafcb06f25cd4a83f94ae7c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "912ce5ef_a5c3258e",
+        "filename": "remoting/host/evaluate_capability.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-21T17:43:50Z",
+      "side": 1,
+      "message": "This won\u0027t help :)",
+      "parentUuid": "8eff6507_3759aedb",
       "range": {
         "startLine": 84,
         "startChar": 0,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "0b18fcc3_54dd045b",
+        "filename": "remoting/host/evaluate_capability.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-21T17:43:50Z",
+      "side": 1,
+      "message": "This specific treatment for Windows is not necessary: remoting_console.exe is not required. And this function itself is not tested, which should be covered by newly add test case.",
+      "parentUuid": "c4de4ea4_abf2ed0f",
+      "range": {
+        "startLine": 97,
+        "startChar": 17,
+        "endLine": 97,
+        "endChar": 37
+      },
+      "revId": "54ad5ee2e156610aafcb06f25cd4a83f94ae7c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f93ab7cf_e263262c",
         "filename": "remoting/host/evaluate_capability.h",
         "patchSetId": 8
@@ -174,6 +342,30 @@
       "writtenOn": "2017-07-20T23:20:50Z",
       "side": 1,
       "message": "You could move this block and into \u0027EvaluateCapabilityForkedly()\u0027 and use it in the unit test.  The Forkedly method already calls into this method for Windows so you can get rid of this extra test-only static method.",
+      "range": {
+        "startLine": 12,
+        "startChar": 22,
+        "endLine": 12,
+        "endChar": 0
+      },
+      "revId": "54ad5ee2e156610aafcb06f25cd4a83f94ae7c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e76a5dd_dd6ed89b",
+        "filename": "remoting/host/evaluate_capability.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-21T17:43:50Z",
+      "side": 1,
+      "message": "Indeed this is a very interesting trap: UNIT_TEST macro works in header file only. Since the CC files are built regardless the environment. But yes, I think we can be smarter here to decide how to execute the logic.",
+      "parentUuid": "f93ab7cf_e263262c",
       "range": {
         "startLine": 12,
         "startChar": 22,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "e2623db8_efb30b2a",
+        "filename": "remoting/host/evaluate_capability.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-21T17:43:50Z",
+      "side": 1,
+      "message": "The EvaluateCapabilityLocally() will only be called in HostMain(), EvaluateCapabilityForkedly() will be called everywhere else. But EvaluateCapabilityLocally() will be changed later to support more tests, EvaluateCapabilityForkedly() will not be changed any more (as long as we do not need to add extra parameter or change the binary name).\nSo it looks like merging them together won\u0027t provide too many benefits.\nBut I am happy to change the EvaluateCapabilityForkedly() into EvaluateCapability(), since it will be more widely used.",
+      "parentUuid": "3f1c9bcf_6eaaa1a7",
+      "range": {
+        "startLine": 21,
+        "startChar": 55,
+        "endLine": 21,
+        "endChar": 0
+      },
+      "revId": "54ad5ee2e156610aafcb06f25cd4a83f94ae7c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70668a86_ce399182",
         "filename": "remoting/host/evaluate_capability_unittest.cc",
         "patchSetId": 8
@@ -220,6 +436,30 @@
       "writtenOn": "2017-07-20T23:20:50Z",
       "side": 1,
       "message": "Is newline useful here?  You could just use simpler output for testing.",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 10
+      },
+      "revId": "54ad5ee2e156610aafcb06f25cd4a83f94ae7c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a3257e6_28c893e4",
+        "filename": "remoting/host/evaluate_capability_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-21T17:43:50Z",
+      "side": 1,
+      "message": "I am intentionally to cover the newline character / characters to avoid they have been magically ignored. Usually newline character / characters are the best way to format the output if needed.",
+      "parentUuid": "70668a86_ce399182",
       "range": {
         "startLine": 24,
         "startChar": 2,
