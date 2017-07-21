@@ -93,6 +93,30 @@
       "revId": "c7ed8fc8fda778738cf92ddaf3be497d6e4e5ce8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ced8dec1_be3756e1",
+        "filename": "ash/shell.h",
+        "patchSetId": 30
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-07-21T18:29:15Z",
+      "side": 1,
+      "message": "Sorry, I misunderstood the flow in my previous comment. It looks like this and AppListView::SetYPosition() should take ints, Otherwise, app_list_view.cc converts int to int32_t when calling SetYPosition() which isn\u0027t always safe (int32_t to int is safe).",
+      "parentUuid": "130a170d_ddf06f1a",
+      "range": {
+        "startLine": 543,
+        "startChar": 27,
+        "endLine": 543,
+        "endChar": 30
+      },
+      "revId": "c7ed8fc8fda778738cf92ddaf3be497d6e4e5ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
