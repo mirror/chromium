@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "ce0f0c85_086f991f",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4013,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-21T23:36:03Z",
+      "side": 1,
+      "message": "If we keep this, wrap in a namespace{}. Or just make a closure.\n\nBut cmumford@\u0027s suggestion is better anyway",
+      "range": {
+        "startLine": 4013,
+        "startChar": 5,
+        "endLine": 4013,
+        "endChar": 24
+      },
+      "revId": "5a634ed0a24fe58fd4675da51d95dabdce6c8b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "646756b3_85525b94",
         "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
         "patchSetId": 2
@@ -22,6 +45,52 @@
       "revId": "5a634ed0a24fe58fd4675da51d95dabdce6c8b09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8d79cc32_f8c16cb8",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-21T23:36:03Z",
+      "side": 1,
+      "message": "typo: Starts",
+      "range": {
+        "startLine": 589,
+        "startChar": 5,
+        "endLine": 589,
+        "endChar": 10
+      },
+      "revId": "5a634ed0a24fe58fd4675da51d95dabdce6c8b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be6cade4_a4000c83",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-21T23:36:03Z",
+      "side": 1,
+      "message": "spelling: guaranteed",
+      "range": {
+        "startLine": 590,
+        "startChar": 16,
+        "endLine": 590,
+        "endChar": 26
+      },
+      "revId": "5a634ed0a24fe58fd4675da51d95dabdce6c8b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -59,6 +128,30 @@
       "writtenOn": "2017-07-21T22:28:05Z",
       "side": 1,
       "message": "This is only a friend for access to db_ right? And that\u0027s guaranteed to outlive the crawler right? If so then why not just pass a raw pointer to the db to the crawler? to avoid this friendship?",
+      "range": {
+        "startLine": 635,
+        "startChar": 15,
+        "endLine": 635,
+        "endChar": 40
+      },
+      "revId": "5a634ed0a24fe58fd4675da51d95dabdce6c8b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "60c742ae_01df9777",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-21T23:36:03Z",
+      "side": 1,
+      "message": "That may have been my suggestion; it was weird (to me) to have the crawler hold a smart pointer to the backing store and a raw pointer into something owned by the backing store. This may be conflicting preferences among us reviewers. I\u0027m fine either way if sufficiently documented.",
+      "parentUuid": "6a521001_18cc2e49",
       "range": {
         "startLine": 635,
         "startChar": 15,
@@ -140,6 +233,75 @@
     },
     {
       "key": {
+        "uuid": "42bff81a_2be655cf",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_crawler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-21T23:36:03Z",
+      "side": 1,
+      "message": "Can you break this long method into two 2:\n\n* loop over the metadata, which calls\n* loop over the index contents",
+      "range": {
+        "startLine": 280,
+        "startChar": 66,
+        "endLine": 280,
+        "endChar": 73
+      },
+      "revId": "5a634ed0a24fe58fd4675da51d95dabdce6c8b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dad1687d_9b398694",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_crawler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-21T23:36:03Z",
+      "side": 1,
+      "message": "Thus far we\u0027ve kept encoding/decoding (i.e. key/value structure) just in the backing store. While this class is conceptually part of the backing store, maybe we can add some additional helpers?",
+      "range": {
+        "startLine": 353,
+        "startChar": 15,
+        "endLine": 353,
+        "endChar": 27
+      },
+      "revId": "5a634ed0a24fe58fd4675da51d95dabdce6c8b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7474070_94d30af7",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_crawler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-21T23:36:03Z",
+      "side": 1,
+      "message": "nit: should probably not refer to \u0027user\u0027 here (e.g. script, etc)",
+      "range": {
+        "startLine": 36,
+        "startChar": 67,
+        "endLine": 36,
+        "endChar": 71
+      },
+      "revId": "5a634ed0a24fe58fd4675da51d95dabdce6c8b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52f52424_d4a212d4",
         "filename": "content/browser/indexed_db/indexed_db_tombstone_crawler.h",
         "patchSetId": 2
@@ -160,6 +322,167 @@
       "revId": "5a634ed0a24fe58fd4675da51d95dabdce6c8b09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4bcb9c5c_74ca8b3e",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_crawler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-21T23:36:03Z",
+      "side": 1,
+      "message": "What owns this? (I mean, include that in the comment)",
+      "range": {
+        "startLine": 42,
+        "startChar": 3,
+        "endLine": 42,
+        "endChar": 11
+      },
+      "revId": "5a634ed0a24fe58fd4675da51d95dabdce6c8b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22096ecc_eda544de",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_crawler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-21T23:36:03Z",
+      "side": 1,
+      "message": "go/ links are internal to google, and I wouldn\u0027t put a gdoc link in the source - move to a markdown file in the source?",
+      "range": {
+        "startLine": 44,
+        "startChar": 7,
+        "endLine": 44,
+        "endChar": 31
+      },
+      "revId": "5a634ed0a24fe58fd4675da51d95dabdce6c8b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca2c836e_7b19b03e",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_crawler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-21T23:36:03Z",
+      "side": 1,
+      "message": "Elaborate, e.g. holds the backing store open in case another connection is made (e.g. on page reload where close/open is likely)",
+      "range": {
+        "startLine": 52,
+        "startChar": 12,
+        "endLine": 52,
+        "endChar": 18
+      },
+      "revId": "5a634ed0a24fe58fd4675da51d95dabdce6c8b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7507eb2_53cc151b",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_crawler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-21T23:36:03Z",
+      "side": 1,
+      "message": "Can you document these?",
+      "range": {
+        "startLine": 56,
+        "startChar": 13,
+        "endLine": 56,
+        "endChar": 18
+      },
+      "revId": "5a634ed0a24fe58fd4675da51d95dabdce6c8b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b4b2b02_aa7cda91",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_crawler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-21T23:36:03Z",
+      "side": 1,
+      "message": "TIMEOUT",
+      "range": {
+        "startLine": 60,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 15
+      },
+      "revId": "5a634ed0a24fe58fd4675da51d95dabdce6c8b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96ba0b6b_1b53b931",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_crawler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-21T23:36:03Z",
+      "side": 1,
+      "message": "What does swapped mean here?",
+      "range": {
+        "startLine": 74,
+        "startChar": 37,
+        "endLine": 74,
+        "endChar": 44
+      },
+      "revId": "5a634ed0a24fe58fd4675da51d95dabdce6c8b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bf0e50d_bcc475f1",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_crawler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-21T23:36:03Z",
+      "side": 1,
+      "message": "What are cases where it is destructed before complete? Force close?",
+      "range": {
+        "startLine": 76,
+        "startChar": 5,
+        "endLine": 76,
+        "endChar": 37
+      },
+      "revId": "5a634ed0a24fe58fd4675da51d95dabdce6c8b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -209,6 +532,29 @@
     },
     {
       "key": {
+        "uuid": "ca23f6ed_709fc266",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_crawler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-21T23:36:03Z",
+      "side": 1,
+      "message": "It\u0027s weird (without docs) to have both State and CrawlStatus enums. Can you document further?",
+      "range": {
+        "startLine": 112,
+        "startChar": 13,
+        "endLine": 112,
+        "endChar": 24
+      },
+      "revId": "5a634ed0a24fe58fd4675da51d95dabdce6c8b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5c5c2f4f_6d042097",
         "filename": "content/browser/indexed_db/indexed_db_tombstone_crawler.h",
         "patchSetId": 2
@@ -229,6 +575,47 @@
       "revId": "5a634ed0a24fe58fd4675da51d95dabdce6c8b09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1f5e9569_9275f2c8",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_crawler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-21T23:36:03Z",
+      "side": 1,
+      "message": "Yeah... maybe WAITING ? PENDING ? START_PENDING ?",
+      "parentUuid": "5c5c2f4f_6d042097",
+      "range": {
+        "startLine": 134,
+        "startChar": 24,
+        "endLine": 134,
+        "endChar": 30
+      },
+      "revId": "5a634ed0a24fe58fd4675da51d95dabdce6c8b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "44881de3_080a47bf",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_crawler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-21T23:36:03Z",
+      "side": 1,
+      "message": "Maybe clearer to say that backing_store_ owns this? (if that\u0027s true...)",
+      "revId": "5a634ed0a24fe58fd4675da51d95dabdce6c8b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
