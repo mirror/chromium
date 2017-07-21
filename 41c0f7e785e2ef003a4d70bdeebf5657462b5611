@@ -150,6 +150,24 @@
     },
     {
       "key": {
+        "uuid": "73d70ffb_277c8a03",
+        "filename": "content/common/unique_name_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-21T19:01:20Z",
+      "side": 1,
+      "message": "There are cases where the input name won\u0027t exceed the limit, but the legacy name will: one common case is the child frame that has a descendant frame with an obscenely long unique name. We could certainly try to determine this up front, but I\u0027d be wary of missing edge cases. Keeping one path makes things more consistent overall.\n\nThanks for the suggested comment, I tweaked a bit and incorporated it.",
+      "parentUuid": "5cf3ac7f_026211db",
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4902dc43_fb4bf12e",
         "filename": "content/common/unique_name_helper.cc",
         "patchSetId": 2
@@ -910,6 +928,30 @@
       "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaf34f13_202cd627",
+        "filename": "content/common/unique_name_helper_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-21T19:01:20Z",
+      "side": 1,
+      "message": "We would likely add a separate test for that at that point.\n\nThough I really hope it doesn\u0027t happen because then we need to test 24 -\u003e 26, 24 -\u003e 25, and 25 -\u003e 25, and that would just be not fun. I think what we\u0027d likely do in that case is incremental updates: first upgrade from 24 to 25, and then 25 to 26...\n\nIn any case, I agree with the statement that we should deal with that problem if we have it. I\u0027m going to avoid adding a comment because the whole point of writing a test is so that it will break if there are breaking changes to an area of the code \u003d)",
+      "parentUuid": "b6ed45f1_0b6007ac",
+      "range": {
+        "startLine": 156,
+        "startChar": 2,
+        "endLine": 156,
+        "endChar": 24
+      },
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

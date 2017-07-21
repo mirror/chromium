@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3a5c2812_7d4a01f2",
+        "filename": "content/common/unique_name_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-21T19:01:20Z",
+      "side": 1,
+      "message": "1) It\u0027s not guaranteed to be single digit. This limit is more about preventing a case where a page nests 1000 frames, and forces collisions to generate a really long unique suffix in the deepest frame.\n\n2) We need to calculate the hash of the legacy name without the unique suffix; otherwise, we run into issues where a name that would previously collided (under the legacy naming scheme) will no longer collide in the new system (since the overly long name for the first frame would be hashed, making the collision disappear).\n\n3) There\u0027s a TODO for this, since I had to run before completing the implementation. I\u0027ve implemented logic to handle this case as well now \u003d)\n\n4) Yes, there is now (I needed to finish the implementation)",
+      "parentUuid": "f42f3471_c6534d4d",
+      "revId": "fec5fd287200a5de1bf62d087b0100c125f4c58f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b47b41de_0f2494cc",
         "filename": "content/common/unique_name_helper.cc",
         "patchSetId": 4
@@ -39,6 +57,30 @@
       "revId": "fec5fd287200a5de1bf62d087b0100c125f4c58f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3923a688_8a0f3118",
+        "filename": "content/common/unique_name_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-21T19:01:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b47b41de_0f2494cc",
+      "range": {
+        "startLine": 169,
+        "startChar": 50,
+        "endLine": 169,
+        "endChar": 56
+      },
+      "revId": "fec5fd287200a5de1bf62d087b0100c125f4c58f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +118,24 @@
     },
     {
       "key": {
+        "uuid": "ab2931c9_ab0e9cfd",
+        "filename": "content/common/unique_name_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-21T19:01:20Z",
+      "side": 1,
+      "message": "I think this could go either way--there\u0027s definitely precedent for putting things specific to  a function near the function definition. But I don\u0027t feel strongly, so done.",
+      "parentUuid": "a9f11700_9f31f269",
+      "revId": "fec5fd287200a5de1bf62d087b0100c125f4c58f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d587547_891a1e88",
         "filename": "content/common/unique_name_helper.h",
         "patchSetId": 4
@@ -90,6 +150,24 @@
       "revId": "fec5fd287200a5de1bf62d087b0100c125f4c58f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1271140a_cea33d42",
+        "filename": "content/common/unique_name_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-21T19:01:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d587547_891a1e88",
+      "revId": "fec5fd287200a5de1bf62d087b0100c125f4c58f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -113,6 +191,30 @@
       "revId": "fec5fd287200a5de1bf62d087b0100c125f4c58f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6f240f2_6bf6bc2b",
+        "filename": "content/common/unique_name_helper_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-21T19:01:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54433764_82a55fd2",
+      "range": {
+        "startLine": 25,
+        "startChar": 42,
+        "endLine": 25,
+        "endChar": 51
+      },
+      "revId": "fec5fd287200a5de1bf62d087b0100c125f4c58f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
