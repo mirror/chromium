@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17083c82_16e38111",
+        "filename": "cc/resources/video_resource_updater.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-21T19:27:24Z",
+      "side": 1,
+      "message": "I think the idea of this code is that we may have 2 sync tokens to wait for, so we use this context to wait on both of them, and generate a new one after the wait, that we then send to the compositor.\nChanging to what you have means we wait on sync_token on this context, and pass sync_token_ through to the compositor, but the compositor will never see a dependency on sync_token.",
+      "revId": "9fece5c53d1a9a7d7fcbc64dded55854002c44d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
