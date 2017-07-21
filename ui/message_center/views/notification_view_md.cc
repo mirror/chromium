@@ -52,6 +52,7 @@ constexpr gfx::Insets kActionsRowPadding(8, 8, 8, 8);
 constexpr int kActionsRowHorizontalSpacing = 8;
 constexpr gfx::Insets kImageContainerPadding(0, 12, 12, 12);
 constexpr gfx::Insets kActionButtonPadding(0, 12, 0, 12);
+constexpr gfx::Insets kStatusTextPadding(4, 0, 0, 0);
 constexpr gfx::Size kActionButtonMinSize(88, 32);
 
 // Foreground of small icon image.
@@ -328,6 +329,7 @@ void NotificationViewMD::CreateOrUpdateViews(const Notification& notification) {
   CreateOrUpdateMessageView(notification);
   CreateOrUpdateCompactTitleMessageView(notification);
   CreateOrUpdateProgressBarView(notification);
+  CreateOrUpdateProgressStatusTextView(notification);
   CreateOrUpdateListItemViews(notification);
   CreateOrUpdateIconView(notification);
   CreateOrUpdateSmallIconView(notification);
@@ -572,7 +574,12 @@ void NotificationViewMD::CreateOrUpdateCompactTitleMessageView(
   }
 
   compact_title_message_view_->set_title(notification.title());
-  compact_title_message_view_->set_message(notification.message());
+  if (!notification.status_text().empty() &&
+      !notification.sub_status_text().empty()) {
+    compact_title_message_view_->set_message(notification.sub_status_text());
+  } else {
+    compact_title_message_view_->set_message(notification.message());
+  }
   left_content_->InvalidateLayout();
 }
 
@@ -600,6 +607,32 @@ void NotificationViewMD::CreateOrUpdateProgressBarView(
   progress_bar_view_->SetVisible(notification.items().empty());
 
   header_row_->SetProgress(notification.progress());
+}
+
+void NotificationViewMD::CreateOrUpdateProgressStatusTextView(
+    const Notification& notification) {
+  bool has_status_texts = !notification.status_text().empty() &&
+                          !notification.sub_status_text().empty();
+
+  if (notification.type() != NOTIFICATION_TYPE_PROGRESS || !has_status_texts) {
+    DCHECK(!status_view_ || left_content_->Contains(status_view_));
+    delete status_view_;
+    status_view_ = nullptr;
+    return;
+  }
+
+  if (!status_view_) {
+    const gfx::FontList& font_list = views::Label().font_list().Derive(
+        1, gfx::Font::NORMAL, gfx::Font::Weight::NORMAL);
+    status_view_ = new views::Label();
+    status_view_->SetFontList(font_list);
+    status_view_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
+    status_view_->SetEnabledColor(message_center::kDimTextColor);
+    status_view_->SetBorder(views::CreateEmptyBorder(kStatusTextPadding));
+    left_content_->AddChildView(status_view_);
+  }
+
+  status_view_->SetText(notification.status_text());
 }
 
 void NotificationViewMD::CreateOrUpdateListItemViews(
@@ -796,6 +829,8 @@ void NotificationViewMD::UpdateViewForExpandedState(bool expanded) {
   for (size_t i = kMaxLinesForMessageView; i < item_views_.size(); ++i) {
     item_views_[i]->SetVisible(expanded);
   }
+  if (status_view_)
+    status_view_->SetVisible(expanded);
   header_row_->SetOverflowIndicator(
       list_items_count_ -
       (expanded ? item_views_.size() : kMaxLinesForMessageView));

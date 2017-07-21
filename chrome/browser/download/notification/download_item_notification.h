@@ -95,7 +95,8 @@ class DownloadItemNotification : public DownloadNotification,
   base::string16 GetInProgressSubStatusString() const;
 
   // Get the status text.
-  base::string16 GetStatusString() const;
+  base::string16 GetStatusString(base::string16& status_string,
+                                 base::string16& sub_status_string) const;
 
   bool IsNotificationVisible() const;
 
