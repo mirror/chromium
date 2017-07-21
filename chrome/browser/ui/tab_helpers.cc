@@ -32,6 +32,7 @@
 #include "chrome/browser/page_load_metrics/page_load_metrics_initialize.h"
 #include "chrome/browser/password_manager/chrome_password_manager_client.h"
 #include "chrome/browser/permissions/permission_request_manager.h"
+#include "chrome/browser/plugins/pdf_plugin_observer.h"
 #include "chrome/browser/predictors/loading_predictor_factory.h"
 #include "chrome/browser/predictors/resource_prefetch_predictor_tab_helper.h"
 #include "chrome/browser/prerender/prerender_tab_helper.h"
@@ -208,6 +209,7 @@ void TabHelpers::AttachTabHelpers(WebContents* web_contents) {
   NavigationCorrectionTabObserver::CreateForWebContents(web_contents);
   NavigationMetricsRecorder::CreateForWebContents(web_contents);
   chrome::InitializePageLoadMetricsForWebContents(web_contents);
+  PDFPluginObserver::CreateForWebContents(web_contents);
   PermissionRequestManager::CreateForWebContents(web_contents);
   PopupBlockerTabHelper::CreateForWebContents(web_contents);
   PrefsTabHelper::CreateForWebContents(web_contents);
