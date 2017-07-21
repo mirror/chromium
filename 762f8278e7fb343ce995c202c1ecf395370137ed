@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fc02da36_aff70e23",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_handset_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-07-21T04:46:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "812fa87f_ce8a02f5",
+      "range": {
+        "startLine": 119,
+        "startChar": 20,
+        "endLine": 119,
+        "endChar": 27
+      },
+      "revId": "762f8278e7fb343ce995c202c1ecf395370137ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "805c30ec_884a8bb6",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_handset_view_controller.mm",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4d9cc5cd_b2e60471",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_handset_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-07-21T04:46:13Z",
+      "side": 1,
+      "message": "Ah thanks for pointing this out. Added a TODO.\nI am not sure why I cannot see a warning :-/. I checked settings that enable showing warnings for deprecated functions, and overriding them. But I still did not get any warnings. The deployment target is 9.0, and this method was deprecated in 9.0, so we should ideally have seen a warning. I see the following in other files that this method is used:\n#pragma clang diagnostic push\n#pragma clang diagnostic ignored \"-Wdeprecated-implementations\"\n- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)orientation...\n#pragma clang diagnostic pop\n\n\nWill look into this when I change this method.",
+      "parentUuid": "805c30ec_884a8bb6",
+      "range": {
+        "startLine": 121,
+        "startChar": 8,
+        "endLine": 121,
+        "endChar": 40
+      },
+      "revId": "762f8278e7fb343ce995c202c1ecf395370137ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33f9caec_ab6bc4a7",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_handset_view_controller.mm",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-20T09:28:04Z",
       "side": 1,
       "message": "Does this need a call to super?",
+      "range": {
+        "startLine": 123,
+        "startChar": 0,
+        "endLine": 123,
+        "endChar": 71
+      },
+      "revId": "762f8278e7fb343ce995c202c1ecf395370137ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f05145b_216d11bf",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_handset_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-07-21T04:46:13Z",
+      "side": 1,
+      "message": "Yes, it does actually. Thanks Added.",
+      "parentUuid": "33f9caec_ab6bc4a7",
       "range": {
         "startLine": 123,
         "startChar": 0,
