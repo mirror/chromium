@@ -266,7 +266,9 @@ String Deprecation::DeprecationMessage(WebFeature feature) {
 
     case WebFeature::kPrefixedVideoEnterFullscreen:
       return replacedBy("'HTMLVideoElement.webkitEnterFullscreen()'",
-                        "'Element.requestFullscreen()'");
+                        RuntimeEnabledFeatures::FullscreenUnprefixedEnabled()
+                            ? "'Element.requestFullscreen()'"
+                            : "'Element.webkitRequestFullscreen()'");
 
     case WebFeature::kPrefixedVideoExitFullscreen:
       return replacedBy("'HTMLVideoElement.webkitExitFullscreen()'",
