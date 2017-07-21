@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "725b7752_c983954c",
+        "filename": "ui/login/account_picker/md_user_pod_row.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 4205,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-07-21T03:53:03Z",
+      "side": 1,
+      "message": "This looks too complicate. Could it be just:\n\nchrome.send(\u0027focusPod\u0027, [podToFocus.user.username, podToFocus.getPodStyle() \u003d\u003d UserPod.Style.LARGE ]);\n\nand then HandleFocusPOD will do everything on its own.",
+      "revId": "3dacfd49f03dc2495e97eb0c718edae7eac730aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6774f2d_6d11a757",
+        "filename": "ui/login/account_picker/md_user_pod_row.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 4222,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-07-21T03:53:03Z",
+      "side": 1,
+      "message": "AFAIK, this is used when screen overlays are closed (like Gaia screen, settings, etc..., usually by cancelling it), and control returns to the Signin screen.\n\nThe tricky part is what should be focused after this? Could we just synchronize wallpaper with focused element?",
+      "revId": "3dacfd49f03dc2495e97eb0c718edae7eac730aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
