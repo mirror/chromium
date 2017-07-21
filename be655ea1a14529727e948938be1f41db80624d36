@@ -118,6 +118,30 @@
       "revId": "be655ea1a14529727e948938be1f41db80624d36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "debd44b4_3d3078c1",
+        "filename": "components/sync_bookmarks/bookmark_model_associator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 966,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-07-21T01:45:02Z",
+      "side": 1,
+      "message": "It\u0027s probably safer to let owners do this. Would you mind using the same bug id crbug.com/661401 for it? Or I could file a more specific one for ModelType.",
+      "parentUuid": "81c92e9d_555007aa",
+      "range": {
+        "startLine": 966,
+        "startChar": 0,
+        "endLine": 966,
+        "endChar": 74
+      },
+      "revId": "be655ea1a14529727e948938be1f41db80624d36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
