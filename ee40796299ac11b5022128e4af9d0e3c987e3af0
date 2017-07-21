@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c396301a_126dc300",
+        "filename": "cc/resources/video_resource_updater.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000608
+      },
+      "writtenOn": "2017-07-21T21:19:28Z",
+      "side": 1,
+      "message": "Suppose the Video frame already has a release_sync_token_, and then VideoResourceUpdater::ReturnTexture is called with a new release sync token from the browser compositor. This will wait for the existing release_sync_token_ on the compositor context, then copy the browser\u0027s sync token into the VideoFrame\u0027s release_sync_token_.\n\nSo when the video frame does WaitForSyncTokenCHROMIUM on the media context, it will only wait for the new release_sync_token_, not the previous one. So it\u0027s possible that the frame could be modified on the media context before the previous release_sync_token_ has finished.",
+      "revId": "ee40796299ac11b5022128e4af9d0e3c987e3af0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
