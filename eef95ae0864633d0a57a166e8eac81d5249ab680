@@ -22,6 +22,30 @@
       "revId": "eef95ae0864633d0a57a166e8eac81d5249ab680",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a514fe5_773a21ec",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position-3/position-sticky-flexbox.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-07-21T18:03:54Z",
+      "side": 1,
+      "message": "Hrm, to be honest I just copied the original test here. I assume the idea is to make sure that the flex layout is doing something different than just normal flow, and then make sure it continues to work after sticky.\n\nflackr, any feeling on this one?",
+      "parentUuid": "0067ed44_53c750ec",
+      "range": {
+        "startLine": 19,
+        "startChar": 22,
+        "endLine": 19,
+        "endChar": 0
+      },
+      "revId": "eef95ae0864633d0a57a166e8eac81d5249ab680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
