@@ -193,6 +193,9 @@ void DoVerify(X509Certificate* input_cert,
         x509_cert->os_cert_handle(), &parsing_errors);
     if (cert)
       ssl_trust_store->AddTrustAnchor(cert);
+    // XXX this breaks
+    // CertVerifyProcInternalTest.InvalidIntermediate/CertVerifyProcBuiltin
+
     // TODO(eroman): Surface parsing errors of additional trust anchor.
   }
 
