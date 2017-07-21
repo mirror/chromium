@@ -20,7 +20,7 @@ group("cronet_consumer_group") {
   ]
 }
 
-process_version("cronet_version_header") {
+process_version("cronet_version_header") {f
   template_file = "//components/cronet/version.h.in"
   sources = [
     "//chrome/VERSION",
@@ -55,12 +55,12 @@ _cronet_deps = [
   "//base:base",
   "//components/grpc_support",
   "//components/metrics:metrics",
-  "//components/metrics/proto:proto",
   "//components/prefs:prefs",
   "//ios/net:net",
   "//ios/web:user_agent",
   "//ios/web/public/global_state",
   "//net",
+  "//services/metrics/public/proto:proto",
   "//url",
 ]
 

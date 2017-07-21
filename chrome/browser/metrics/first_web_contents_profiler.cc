@@ -16,7 +16,6 @@
 #include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "components/metrics/profiler/tracking_synchronizer.h"
-#include "components/metrics/proto/profiler_event.pb.h"
 #include "components/startup_metric_utils/browser/startup_metric_utils.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/render_frame_host.h"
@@ -24,6 +23,7 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/browser_side_navigation_policy.h"
+#include "services/metrics/public/proto/profiler_event.pb.h"
 
 namespace {
 

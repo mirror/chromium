@@ -23,7 +23,6 @@
 #include "chrome/browser/ui/webui/settings_utils.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/grit/generated_resources.h"
-#include "components/metrics/proto/omnibox_event.pb.h"
 #include "components/omnibox/browser/autocomplete_classifier.h"
 #include "components/omnibox/browser/autocomplete_controller.h"
 #include "components/omnibox/browser/autocomplete_input.h"
@@ -31,6 +30,7 @@
 #include "components/prefs/pref_service.h"
 #include "content/public/browser/notification_details.h"
 #include "content/public/browser/web_ui.h"
+#include "services/metrics/public/proto/omnibox_event.pb.h"
 #include "url/gurl.h"
 
 namespace options {

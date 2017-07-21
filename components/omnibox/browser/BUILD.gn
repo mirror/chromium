@@ -132,8 +132,8 @@ static_library("browser") {
 
   public_deps = [
     "//components/history/core/browser",
-    "//components/metrics/proto",
     "//components/omnibox/common",
+    "//services/metrics/public/proto",
   ]
   deps = [
     ":in_memory_url_index_cache_proto",
@@ -226,9 +226,9 @@ static_library("test_support") {
     "//components/bookmarks/test",
     "//components/history/core/browser",
     "//components/history/core/test",
-    "//components/metrics/proto",
     "//components/search_engines",
     "//net",
+    "//services/metrics/public/proto",
     "//testing/gmock",
     "//testing/gtest",
     "//ui/base",

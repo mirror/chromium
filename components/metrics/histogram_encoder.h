@@ -10,7 +10,7 @@
 
 #include <string>
 
-#include "components/metrics/proto/chrome_user_metrics_extension.pb.h"
+#include "services/metrics/public/proto/chrome_user_metrics_extension.pb.h"
 
 namespace base {
 class HistogramSamples;

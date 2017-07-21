@@ -20,8 +20,6 @@
 #include "components/history/core/browser/history_service.h"
 #include "components/history/core/browser/url_database.h"
 #include "components/history/core/test/history_service_test_util.h"
-#include "components/metrics/proto/omnibox_event.pb.h"
-#include "components/metrics/proto/omnibox_input_type.pb.h"
 #include "components/omnibox/browser/autocomplete_match.h"
 #include "components/omnibox/browser/autocomplete_provider.h"
 #include "components/omnibox/browser/autocomplete_provider_listener.h"
@@ -35,6 +33,8 @@
 #include "components/search_engines/template_url.h"
 #include "components/search_engines/template_url_service.h"
 #include "components/url_formatter/url_fixer.h"
+#include "services/metrics/public/proto/omnibox_event.pb.h"
+#include "services/metrics/public/proto/omnibox_input_type.pb.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 using base::ASCIIToUTF16;

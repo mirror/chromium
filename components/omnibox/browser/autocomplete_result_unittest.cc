@@ -15,7 +15,6 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
-#include "components/metrics/proto/omnibox_event.pb.h"
 #include "components/omnibox/browser/autocomplete_input.h"
 #include "components/omnibox/browser/autocomplete_match.h"
 #include "components/omnibox/browser/autocomplete_match_type.h"
@@ -25,6 +24,7 @@
 #include "components/search_engines/template_url_service.h"
 #include "components/variations/entropy_provider.h"
 #include "components/variations/variations_associated_data.h"
+#include "services/metrics/public/proto/omnibox_event.pb.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 using metrics::OmniboxEventProto;

@@ -12,10 +12,10 @@
 #include "base/metrics/field_trial.h"
 #include "base/strings/string16.h"
 #include "build/build_config.h"
-#include "components/metrics/proto/omnibox_event.pb.h"
 #include "components/search/search.h"
 #include "components/variations/entropy_provider.h"
 #include "components/variations/variations_associated_data.h"
+#include "services/metrics/public/proto/omnibox_event.pb.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 using metrics::OmniboxEventProto;

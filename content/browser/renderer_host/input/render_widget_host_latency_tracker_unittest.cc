@@ -5,7 +5,6 @@
 #include "content/browser/renderer_host/input/render_widget_host_latency_tracker.h"
 #include "base/metrics/metrics_hashes.h"
 #include "base/test/histogram_tester.h"
-#include "components/metrics/proto/ukm/entry.pb.h"
 #include "components/rappor/public/rappor_utils.h"
 #include "components/rappor/test_rappor_service.h"
 #include "components/ukm/test_ukm_recorder.h"
@@ -15,6 +14,7 @@
 #include "content/test/test_content_browser_client.h"
 #include "content/test/test_render_view_host.h"
 #include "content/test/test_web_contents.h"
+#include "services/metrics/public/proto/ukm/entry.pb.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 

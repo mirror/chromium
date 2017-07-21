@@ -16,8 +16,8 @@
 #include "base/test/scoped_feature_list.h"
 #include "build/build_config.h"
 #include "components/metrics/call_stack_profile_params.h"
-#include "components/metrics/proto/chrome_user_metrics_extension.pb.h"
 #include "components/variations/entropy_provider.h"
+#include "services/metrics/public/proto/chrome_user_metrics_extension.pb.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 using base::StackSamplingProfiler;

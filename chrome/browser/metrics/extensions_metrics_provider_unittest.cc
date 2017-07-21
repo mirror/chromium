@@ -13,12 +13,12 @@
 #include "components/metrics/client_info.h"
 #include "components/metrics/metrics_service.h"
 #include "components/metrics/metrics_state_manager.h"
-#include "components/metrics/proto/system_profile.pb.h"
 #include "components/metrics/test_enabled_state_provider.h"
 #include "components/prefs/testing_pref_service.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/extension_builder.h"
 #include "extensions/common/extension_set.h"
+#include "services/metrics/public/proto/system_profile.pb.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace {

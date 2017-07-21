@@ -7,7 +7,7 @@
 
 #include "base/macros.h"
 #include "base/process/process_handle.h"
-#include "components/metrics/proto/profiler_event.pb.h"
+#include "services/metrics/public/proto/profiler_event.pb.h"
 
 namespace base {
 class DictionaryValue;

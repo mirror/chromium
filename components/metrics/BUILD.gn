@@ -97,7 +97,7 @@ static_library("metrics") {
   ]
 
   public_deps = [
-    "//components/metrics/proto",
+    "//services/metrics/public/proto",
   ]
 
   deps = [
