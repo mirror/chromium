@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "5b75660f_1d39b4c0",
+        "filename": "build/android/resource_sizes.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-07-21T14:20:59Z",
+      "side": 1,
+      "message": "resource_sizes.py uses tools_prefix, supersize uses tool_prefix.\n\nUpdated all references in resources_sizes.py to tool_prefix.",
+      "parentUuid": "7419fdfd_58596157",
+      "range": {
+        "startLine": 765,
+        "startChar": 4,
+        "endLine": 765,
+        "endChar": 16
+      },
+      "revId": "76f182d1b2d503171fc42267b4dc107d349e9643",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "54291795_772e3902",
+        "filename": "build/android/resource_sizes.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-07-21T14:20:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48a690ef_0697b583",
+      "range": {
+        "startLine": 765,
+        "startChar": 32,
+        "endLine": 765,
+        "endChar": 60
+      },
+      "revId": "76f182d1b2d503171fc42267b4dc107d349e9643",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "641c6e08_33c27788",
         "filename": "tools/binary_size/diagnose_bloat.py",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "76f182d1b2d503171fc42267b4dc107d349e9643",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4907a9df_9c4d432c",
+        "filename": "tools/binary_size/diagnose_bloat.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-07-21T14:20:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "641c6e08_33c27788",
+      "range": {
+        "startLine": 186,
+        "startChar": 6,
+        "endLine": 186,
+        "endChar": 23
+      },
+      "revId": "76f182d1b2d503171fc42267b4dc107d349e9643",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
