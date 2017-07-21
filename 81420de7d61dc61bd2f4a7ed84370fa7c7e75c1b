@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8e6c6c6f_da337600",
+        "filename": "third_party/WebKit/Source/core/CoreInitializer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-07-21T01:15:48Z",
+      "side": 1,
+      "message": "I\u0027ve done something a little bit like a singleton already, but I don\u0027t think that CoreInitializer works exactly like a typical singleton since it is subclassed by ModulesInitializer which is being used as a singleton at https://cs.chromium.org/chromium/src/third_party/WebKit/Source/controller/BlinkInitializer.cpp?l\u003d63\u0026rcl\u003d54480c31d8131be7f1c20494f0aecf341d088659.\n\nThis is stretching my knowledge of c++, so please do let me know if I\u0027m getting things wrong.\n\nI have added a static |CoreInitializer* instance_|, but I think it is better to capture the singleton instance which is created by ModulesInitializer (which I\u0027m doing right here) rather than create a separate instance of CoreInitializer.  I have added some extra comments about this.\n\nFor the caller sites, I figured that I could make the Getter methods static and then the code is slightly smaller to be |CoreInitializer::GetCallback| rather than |CoreInitializer::GetInstance()-\u003eGetCallback()|.  But either way is ok by me.",
+      "parentUuid": "744d1449_cbab3923",
+      "revId": "81420de7d61dc61bd2f4a7ed84370fa7c7e75c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d8f1e45_0097d67e",
         "filename": "third_party/WebKit/Source/core/CoreInitializer.h",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "095fd314_a3ac142f",
+        "filename": "third_party/WebKit/Source/core/CoreInitializer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-07-21T01:15:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d8f1e45_0097d67e",
+      "revId": "81420de7d61dc61bd2f4a7ed84370fa7c7e75c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0def1ef_810b22bf",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "81420de7d61dc61bd2f4a7ed84370fa7c7e75c1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dc74743_70da6493",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-07-21T01:15:48Z",
+      "side": 1,
+      "message": "Removed from callers.  I decided against adding the checks in CoreInitializer since the call will fail in any case if CoreInitializer is not correctly initialized by ModulesInitializer - DCHECK seems verbose and redundant.",
+      "parentUuid": "b0def1ef_810b22bf",
+      "revId": "81420de7d61dc61bd2f4a7ed84370fa7c7e75c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
