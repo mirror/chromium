@@ -13,6 +13,7 @@ namespace exo {
 
 class DataDeviceDelegate;
 class DataSource;
+class Display;
 class Surface;
 
 enum class DndAction { kNone, kCopy, kMove, kAsk };
@@ -21,7 +22,7 @@ enum class DndAction { kNone, kCopy, kMove, kAsk };
 // mechanisms such as copy-and-paste and drag-and-drop.
 class DataDevice {
  public:
-  explicit DataDevice(DataDeviceDelegate* delegate);
+  explicit DataDevice(Display* display, DataDeviceDelegate* delegate);
   ~DataDevice();
 
   // Starts drag-and-drop operation.
@@ -40,6 +41,7 @@ class DataDevice {
   void SetSelection(const DataSource* source, uint32_t serial);
 
  private:
+  Display* const display_;
   DataDeviceDelegate* const delegate_;
 
   DISALLOW_COPY_AND_ASSIGN(DataDevice);

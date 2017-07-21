@@ -6,13 +6,18 @@
 
 #include "base/logging.h"
 #include "components/exo/data_device_delegate.h"
+#include "components/exo/display.h"
 
 namespace exo {
 
-DataDevice::DataDevice(DataDeviceDelegate* delegate) : delegate_(delegate) {}
+DataDevice::DataDevice(Display* display, DataDeviceDelegate* delegate)
+    : display_(display), delegate_(delegate) {
+  display_->AddDataDevice(this);
+}
 
 DataDevice::~DataDevice() {
   delegate_->OnDataDeviceDestroying(this);
+  display_->RemoveDataDevice(this);
 }
 
 void DataDevice::StartDrag(const DataSource* source_resource,
