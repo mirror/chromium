@@ -777,6 +777,12 @@ be describing additional metrics about the same event.
       and 1 for false and true.
     </summary>
   </metric>
+  <metric name="Saving.Prompt.Suppression">
+    <summary>
+      Records whether a password save bubble was suppressed. Recorded values
+      correspond to the enum PasswordFormMetricsRecorder::BubbleSuppression.
+    </summary>
+  </metric>
   <metric name="Saving.Prompt.Trigger">
     <summary>
       Records the trigger of each password save bubble that was shown to the

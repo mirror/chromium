@@ -267,6 +267,7 @@ void PasswordFormManager::Init(
 PasswordFormManager::~PasswordFormManager() {
   form_fetcher_->RemoveConsumer(this);
 
+  DCHECK(metrics_recorder_) << "Forgot to call Init()";
   metrics_recorder_->RecordHistogramsOnSuppressedAccounts(
       observed_form_.origin.SchemeIsCryptographic(), *form_fetcher_,
       pending_credentials_);

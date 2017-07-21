@@ -43,6 +43,7 @@
 #include "components/password_manager/core/browser/log_receiver.h"
 #include "components/password_manager/core/browser/password_bubble_experiment.h"
 #include "components/password_manager/core/browser/password_form_manager.h"
+#include "components/password_manager/core/browser/password_form_metrics_recorder.h"
 #include "components/password_manager/core/browser/password_manager_internals_service.h"
 #include "components/password_manager/core/browser/password_manager_metrics_util.h"
 #include "components/password_manager/core/browser/password_manager_util.h"
@@ -90,6 +91,7 @@
 #endif
 
 using password_manager::ContentPasswordManagerDriverFactory;
+using password_manager::PasswordFormMetricsRecorder;
 using password_manager::PasswordManagerInternalsService;
 using password_manager::PasswordManagerMetricsRecorder;
 using sessions::SerializedNavigationEntry;
@@ -282,6 +284,13 @@ bool ChromePasswordManagerClient::PromptUserToSaveOrUpdatePassword(
         std::move(form_to_save));
   }
 #else
+  if (!update_password && form_to_save->metrics_recorder()) {
+    from_to_save->metrics_recorder()->RecordPasswordSaveBubbleSuppressed(
+        form_to_save->IsBlacklisted()
+            ? PasswordFormMetricsRecorder::BubbleSuppression::kBlacklisted
+            : PasswordFormMetricsRecorder::BubbleSuppression::kNotSuppressed);
+  }
+
   if (form_to_save->IsBlacklisted())
     return false;
 

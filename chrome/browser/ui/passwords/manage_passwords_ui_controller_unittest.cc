@@ -33,6 +33,7 @@
 #include "components/password_manager/core/browser/stub_password_manager_driver.h"
 #include "components/password_manager/core/common/password_manager_ui.h"
 #include "components/prefs/pref_service.h"
+#include "components/ukm/test_ukm_recorder.h"
 #include "components/variations/variations_associated_data.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/test/test_browser_thread_bundle.h"
@@ -193,6 +194,9 @@ class ManagePasswordsUIControllerTest : public ChromeRenderViewHostTestHarness {
 
   MOCK_METHOD1(CredentialCallback, void(const autofill::PasswordForm*));
 
+ protected:
+  ukm::TestUkmRecorder test_ukm_recorder_;
+
  private:
   password_manager::StubPasswordManagerClient client_;
   password_manager::StubPasswordManagerDriver driver_;
@@ -249,7 +253,11 @@ ManagePasswordsUIControllerTest::CreateFormManagerWithBestMatches(
       new password_manager::PasswordFormManager(
           &password_manager_, &client_, driver_.AsWeakPtr(), observed_form,
           base::WrapUnique(new password_manager::StubFormSaver), &fetcher_));
-  test_form_manager->Init(nullptr);
+  auto metrics_recorder =
+      base::MakeRefCounted<password_manager::PasswordFormMetricsRecorder>(
+          observed_form.origin.SchemeIsCryptographic(), &test_ukm_recorder_,
+          test_ukm_recorder_.GetNewSourceID(), observed_form.origin);
+  test_form_manager->Init(metrics_recorder);
   fetcher_.SetNonFederated(best_matches, 0u);
   return test_form_manager;
 }
@@ -332,6 +340,18 @@ TEST_F(ManagePasswordsUIControllerTest, PasswordSubmitted) {
   EXPECT_EQ(test_local_form().origin, controller()->GetOrigin());
 
   ExpectIconStateIs(password_manager::ui::PENDING_PASSWORD_STATE);
+
+  // Report UKM Metrics.
+  test_form_manager.reset();
+  DeleteContents();
+
+  const auto* source = test_ukm_recorder_.GetSourceForUrl(
+      test_local_form().origin.spec().c_str());
+  ASSERT_TRUE(source);
+  test_ukm_recorder_.ExpectMetric(
+      *source, "PasswordForm", password_manager::kUkmSavingPromptSuppressed,
+      static_cast<int64_t>(password_manager::PasswordFormMetricsRecorder::
+                               BubbleSuppression::kNotSuppressed));
 }
 
 TEST_F(ManagePasswordsUIControllerTest, BlacklistedFormPasswordSubmitted) {
@@ -348,6 +368,18 @@ TEST_F(ManagePasswordsUIControllerTest, BlacklistedFormPasswordSubmitted) {
   EXPECT_FALSE(controller()->opened_bubble());
 
   ExpectIconStateIs(password_manager::ui::PENDING_PASSWORD_STATE);
+
+  // Report UKM Metrics.
+  test_form_manager.reset();
+  DeleteContents();
+
+  const auto* source = test_ukm_recorder_.GetSourceForUrl(
+      test_local_form().origin.spec().c_str());
+  ASSERT_TRUE(source);
+  test_ukm_recorder_.ExpectMetric(
+      *source, "PasswordForm", password_manager::kUkmSavingPromptSuppressed,
+      static_cast<int64_t>(password_manager::PasswordFormMetricsRecorder::
+                               BubbleSuppression::kBlacklisted));
 }
 
 TEST_F(ManagePasswordsUIControllerTest, PasswordSubmittedBubbleSuppressed) {
@@ -372,6 +404,18 @@ TEST_F(ManagePasswordsUIControllerTest, PasswordSubmittedBubbleSuppressed) {
 
   ExpectIconStateIs(password_manager::ui::PENDING_PASSWORD_STATE);
   variations::testing::ClearAllVariationParams();
+
+  // Report UKM Metrics.
+  test_form_manager.reset();
+  DeleteContents();
+
+  const auto* source = test_ukm_recorder_.GetSourceForUrl(
+      test_local_form().origin.spec().c_str());
+  ASSERT_TRUE(source);
+  test_ukm_recorder_.ExpectMetric(
+      *source, "PasswordForm", password_manager::kUkmSavingPromptSuppressed,
+      static_cast<int64_t>(password_manager::PasswordFormMetricsRecorder::
+                               BubbleSuppression::kDismissalThresholdReached));
 }
 
 TEST_F(ManagePasswordsUIControllerTest, PasswordSubmittedBubbleNotSuppressed) {
