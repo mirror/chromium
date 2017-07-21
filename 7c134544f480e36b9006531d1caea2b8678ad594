@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "637940e8_ef53e925",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/ChannelDefinitions.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-21T14:24:28Z",
+      "side": 1,
+      "message": "Hmmm.. this raises a tricky question of whether CHANNELS_VERSION should be incremented in this case - where a new channel is only added if the flag is enabled.\n\nI think incrementing it conditionally would be too messy.\n\nWe *could* only increment it once the flag is removed and the feature is on by default. But until then we\u0027d have to live with updaters with the flag enabled not seeing the channel in settings until they receive a content suggestions notification, while fresh-installs with the flag enabled *would* see it. Which is a bit weird and inconsistent. But maybe fine if this is just a command line flag to aid development. (Still, if you go for this option I\u0027d like to see a TODO on line 90 to increment the version once the flag is removed.)\n\nAn alternative option would be to increment the CHANNELS_VERSION now, and also once the flag is removed. This would result in more consistent behaviour, but also lead to some unnecessary upgrade code running when channels don\u0027t actually need to be updated. Also, if the flag is enabled, and then later disabled, the channel will still show up  (although this will also be the case if the user receives one of the notifications while the flag is enabled, even if we go with the previous option).\n\nI don\u0027t feel very strongly about this so happy to leave the decision up to you.",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 96
+      },
+      "revId": "7c134544f480e36b9006531d1caea2b8678ad594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

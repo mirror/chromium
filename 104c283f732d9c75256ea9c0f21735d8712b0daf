@@ -94,6 +94,30 @@
       "revId": "104c283f732d9c75256ea9c0f21735d8712b0daf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "114b4ffb_b4c4b2bf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/ChannelDefinitions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-21T14:24:28Z",
+      "side": 1,
+      "message": "Not sure why it wasn\u0027t imported in the first place! Thanks for fixing :)",
+      "parentUuid": "ec1394fc_fca40c95",
+      "range": {
+        "startLine": 93,
+        "startChar": 32,
+        "endLine": 93,
+        "endChar": 53
+      },
+      "revId": "104c283f732d9c75256ea9c0f21735d8712b0daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
