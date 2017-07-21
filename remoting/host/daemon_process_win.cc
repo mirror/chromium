@@ -64,6 +64,7 @@ class WtsTerminalMonitor;
 // The command line parameters that should be copied from the service's command
 // line to the host process.
 const char kEnableVp9SwitchName[] = "enable-vp9";
+const char kEnableH264SwitchName[] = "enable-h264";
 const char* kCopiedSwitchNames[] =
     { switches::kV, switches::kVModule, kEnableVp9SwitchName };
 
