@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "07675c73_cb1002e9",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-07-21T17:34:56Z",
+      "side": 1,
+      "message": "Ack.  I do prefer to make checks like this explicit instead of using null-boolean implicit conversion.",
+      "parentUuid": "1f9c0127_570fbdb4",
+      "revId": "b4ab1ff3cf99246b179153877b542345d600e6fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26c5368f_c39250c9",
         "filename": "chromeos/printing/ppd_provider.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "b4ab1ff3cf99246b179153877b542345d600e6fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c36b335_d73ea1a0",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-07-21T17:34:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26c5368f_c39250c9",
+      "revId": "b4ab1ff3cf99246b179153877b542345d600e6fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "36ac4bb3_c11986b5",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1005,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-07-21T17:34:56Z",
+      "side": 1,
+      "message": "D0n3  :)",
+      "parentUuid": "ffad06af_e1672b60",
+      "range": {
+        "startLine": 1005,
+        "startChar": 12,
+        "endLine": 1005,
+        "endChar": 32
+      },
+      "revId": "b4ab1ff3cf99246b179153877b542345d600e6fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2095211f_35490647",
         "filename": "chromeos/printing/ppd_provider.h",
         "patchSetId": 4
@@ -73,6 +133,24 @@
       "revId": "b4ab1ff3cf99246b179153877b542345d600e6fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad60be15_3f6c87b5",
+        "filename": "chromeos/printing/ppd_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-07-21T17:34:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2095211f_35490647",
+      "revId": "b4ab1ff3cf99246b179153877b542345d600e6fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
