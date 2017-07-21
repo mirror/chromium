@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "38418201_0fcdce32",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_dialog_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-07-21T01:00:33Z",
+      "side": 1,
+      "message": "Went with your first suggestion. Thanks.",
+      "parentUuid": "ec32284c_652a1c05",
+      "range": {
+        "startLine": 235,
+        "startChar": 2,
+        "endLine": 235,
+        "endChar": 21
+      },
+      "revId": "51423db30e7f27f5e0ba9582c42a05ecc7541fa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "169a01e6_205328ef",
         "filename": "chrome/browser/ui/views/chrome_cleaner_dialog_win.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "51423db30e7f27f5e0ba9582c42a05ecc7541fa4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0403f10d_8a7d5b2b",
+        "filename": "chrome/browser/ui/views/chrome_cleaner_dialog_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-07-21T01:00:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "169a01e6_205328ef",
+      "range": {
+        "startLine": 44,
+        "startChar": 11,
+        "endLine": 44,
+        "endChar": 30
+      },
+      "revId": "51423db30e7f27f5e0ba9582c42a05ecc7541fa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
