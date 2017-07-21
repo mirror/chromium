@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdeca23a_d2071e5d",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_subpage.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-21T18:21:46Z",
+      "side": 1,
+      "message": "This has already been fixed by https://chromium-review.googlesource.com/c/577758/. Need to rebase.",
+      "revId": "c0042082605ffb239ed559454a2ac120ed90e566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc976d70_2b879a2f",
+        "filename": "chrome/browser/resources/settings/search_page/search_page.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-21T18:21:46Z",
+      "side": 1,
+      "message": "Nit: Maybe add an assertion here?\n\nassert(this.voiceInteractionFeatureEnabled_)",
+      "revId": "c0042082605ffb239ed559454a2ac120ed90e566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07298b16_d67fa22c",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-21T18:21:46Z",
+      "side": 1,
+      "message": "Should this be wrapped in a\n\nif (chromeos::switches::IsVoiceInteractionEnabled()) {...}\n\nIIUC, this is not used otherwise. Can the value of IsVoiceInteractionEnabled() change while the Settings page is open?",
+      "revId": "c0042082605ffb239ed559454a2ac120ed90e566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
