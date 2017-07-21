@@ -5,6 +5,7 @@
 #include <utility>
 
 #include "base/message_loop/message_loop.h"
+#include "components/viz/common/display/renderer_settings.h"
 #include "components/viz/common/resources/resource_settings.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "services/viz/public/interfaces/compositing/resource_settings_struct_traits.h"
