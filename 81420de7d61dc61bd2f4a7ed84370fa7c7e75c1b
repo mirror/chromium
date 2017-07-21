@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "b50219d4_1fa76705",
+        "filename": "third_party/WebKit/Source/core/CoreInitializer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-07-21T02:13:40Z",
+      "side": 1,
+      "message": "that being said - if Kentaro it happy with this approach then go for it.",
+      "parentUuid": "84f43c53_e8aa68b8",
+      "revId": "81420de7d61dc61bd2f4a7ed84370fa7c7e75c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d8f1e45_0097d67e",
         "filename": "third_party/WebKit/Source/core/CoreInitializer.h",
         "patchSetId": 5
