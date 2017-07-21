@@ -202,12 +202,8 @@ void Display::InitializeRenderer() {
   renderer_->Initialize();
   renderer_->SetVisible(visible_);
 
-  // TODO(jbauman): Outputting an incomplete quad list doesn't work when using
-  // overlays.
-  bool output_partial_list = renderer_->use_partial_swap() &&
-                             !output_surface_->GetOverlayCandidateValidator();
-  aggregator_.reset(new SurfaceAggregator(
-      surface_manager_, resource_provider_.get(), output_partial_list));
+  aggregator_.reset(
+      new SurfaceAggregator(surface_manager_, resource_provider_.get()));
   aggregator_->set_output_is_secure(output_is_secure_);
   aggregator_->SetOutputColorSpace(blending_color_space_, device_color_space_);
 }
