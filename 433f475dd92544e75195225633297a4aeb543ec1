@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8e1a3ba_226521be",
+        "filename": "chromeos/components/tether/host_scanner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-21T22:18:57Z",
+      "side": 1,
+      "message": "This will be true when scanned_device_list_so_far is empty. You need check that scanned_device_list_so_far.size() \u003e 1",
+      "range": {
+        "startLine": 102,
+        "startChar": 4,
+        "endLine": 102,
+        "endChar": 8
+      },
+      "revId": "433f475dd92544e75195225633297a4aeb543ec1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe01b494_e1a0e20b",
+        "filename": "chromeos/components/tether/host_scanner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-21T22:18:57Z",
+      "side": 1,
+      "message": "Did this work in tests? Resetting host_scanner_operation_ should cause a segfault when accessing  final_scan_results. I personally had issues with metrics recording being placed after this, hence the previous call structure.",
+      "range": {
+        "startLine": 158,
+        "startChar": 26,
+        "endLine": 158,
+        "endChar": 31
+      },
+      "revId": "433f475dd92544e75195225633297a4aeb543ec1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1981561_4f205400",
+        "filename": "chromeos/components/tether/host_scanner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-21T22:18:57Z",
+      "side": 1,
+      "message": "Why 1u? (I don\u0027t have an issue with it, but it\u0027s different from other similar checks in this file)",
+      "range": {
+        "startLine": 184,
+        "startChar": 42,
+        "endLine": 184,
+        "endChar": 44
+      },
+      "revId": "433f475dd92544e75195225633297a4aeb543ec1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99430f35_3c1ba11e",
+        "filename": "chromeos/components/tether/network_host_scan_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-21T22:18:57Z",
+      "side": 1,
+      "message": "Where is this method used?",
+      "range": {
+        "startLine": 69,
+        "startChar": 54,
+        "endLine": 69,
+        "endChar": 75
+      },
+      "revId": "433f475dd92544e75195225633297a4aeb543ec1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3e5e1ff_c0319edd",
+        "filename": "chromeos/components/tether/persistent_host_scan_cache_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-21T22:18:57Z",
+      "side": 1,
+      "message": "Similarly, where is this method used?",
+      "range": {
+        "startLine": 176,
+        "startChar": 29,
+        "endLine": 176,
+        "endChar": 50
+      },
+      "revId": "433f475dd92544e75195225633297a4aeb543ec1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
