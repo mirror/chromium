@@ -71,7 +71,8 @@ class StartupWarmBlankPage(_StartupWarm):
     return StoryExpectations()
 
 
-@benchmark.Disabled('content-shell')  # No pregenerated profiles.
+@benchmark.Disabled('content-shell',  # No pregenerated profiles.
+                    'mac')  # http://crbug.com/747024
 class StartupLargeProfileColdBlankPage(_StartupCold):
   """Measures cold startup time with a large profile."""
   tag = 'cold'
