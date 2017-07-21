@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14764010_78e4531d",
+        "filename": "chrome/browser/web_applications/web_app_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-21T03:19:26Z",
+      "side": 1,
+      "message": "this needs a retain count added:\n\nreturn base::scoped_nsobject\u003cNSImageRep\u003e([image_reps objectAtIndex:0],\n                                         base::scoped_policy::RETAIN);",
+      "revId": "9f9458f69a3eabf9178a873b993cf3e97581efe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e96dca93_e8c43ed9",
+        "filename": "chrome/browser/web_applications/web_app_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-21T03:19:26Z",
+      "side": 1,
+      "message": "no .release()  (the conversion operator is what you want)",
+      "revId": "9f9458f69a3eabf9178a873b993cf3e97581efe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bb31bc6_f5217558",
+        "filename": "chrome/browser/web_applications/web_app_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-21T03:19:26Z",
+      "side": 1,
+      "message": "remove .release()",
+      "range": {
+        "startLine": 434,
+        "startChar": 50,
+        "endLine": 434,
+        "endChar": 57
+      },
+      "revId": "9f9458f69a3eabf9178a873b993cf3e97581efe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
