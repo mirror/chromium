@@ -109,6 +109,24 @@
     },
     {
       "key": {
+        "uuid": "ef6d4d88_3a7bce5f",
+        "filename": "third_party/WebKit/Source/core/CoreInitializer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-21T04:48:35Z",
+      "side": 1,
+      "message": "Yeah, I\u0027d prefer the GetInstance() pattern (instead of static methods) simply because Blink is already using that pattern in many places.\n\nCan you just introduce a static GetInstance() method and replace the call sites to use it? You can keep instantiating instance_ in Initialize() and just make GetInstance() returnthe instance_.",
+      "parentUuid": "b50219d4_1fa76705",
+      "revId": "81420de7d61dc61bd2f4a7ed84370fa7c7e75c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d8f1e45_0097d67e",
         "filename": "third_party/WebKit/Source/core/CoreInitializer.h",
         "patchSetId": 5
