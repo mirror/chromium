@@ -4,6 +4,7 @@
 
 // https://w3c.github.io/performance-timeline/#the-performance-observer-interface
 
+[Exposed=(Window,Worker)]
 dictionary PerformanceObserverInit {
     required sequence<DOMString> entryTypes;
 };

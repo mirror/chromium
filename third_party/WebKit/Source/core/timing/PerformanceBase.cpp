@@ -433,7 +433,6 @@ void PerformanceBase::RegisterPerformanceObserver(
 
 void PerformanceBase::UnregisterPerformanceObserver(
     PerformanceObserver& old_observer) {
-  DCHECK(IsMainThread());
   // Deliver any pending observations on this observer before unregistering.
   if (active_observers_.Contains(&old_observer) &&
       !old_observer.ShouldBeSuspended()) {
@@ -480,7 +479,6 @@ void PerformanceBase::ActivateObserver(PerformanceObserver& observer) {
 }
 
 void PerformanceBase::ResumeSuspendedObservers() {
-  DCHECK(IsMainThread());
   if (suspended_observers_.IsEmpty())
     return;
 
@@ -495,7 +493,6 @@ void PerformanceBase::ResumeSuspendedObservers() {
 }
 
 void PerformanceBase::DeliverObservationsTimerFired(TimerBase*) {
-  DCHECK(IsMainThread());
   PerformanceObservers observers;
   active_observers_.Swap(observers);
   for (const auto& observer : observers) {
