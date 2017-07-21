@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7a202291_e001ea5e",
+        "filename": "base/sys_info.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-07-21T19:58:03Z",
+      "side": 1,
+      "message": "size_t is unsigned, so I don\u0027t think std::max will work here. Refactored to simplify though.",
+      "parentUuid": "1c26c9d7_869d8340",
+      "revId": "bf5e3a21b853055944d7df586da082e35d9f42a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d34c402_52cd0e5c",
         "filename": "base/sys_info.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-18T22:04:56Z",
       "side": 1,
       "message": "Available. Scary this passes bots.",
+      "revId": "bf5e3a21b853055944d7df586da082e35d9f42a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4617fd2_f052bcb3",
+        "filename": "base/sys_info.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-07-21T19:58:03Z",
+      "side": 1,
+      "message": "whoops... yup... AmountOfAvailablePhysicalMemory is almost never used... so I guess it makes sense that this passes bots... but yeah, wish it didn\u0027t.",
+      "parentUuid": "0d34c402_52cd0e5c",
       "revId": "bf5e3a21b853055944d7df586da082e35d9f42a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
