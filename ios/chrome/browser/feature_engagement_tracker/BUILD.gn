@@ -6,6 +6,8 @@ source_set("feature_engagement_tracker") {
   sources = [
     "feature_engagement_tracker_factory.h",
     "feature_engagement_tracker_factory.mm",
+    "feature_engagement_tracker_util.h",
+    "feature_engagement_tracker_util.mm",
   ]
 
   configs += [ "//build/config/compiler:enable_arc" ]
