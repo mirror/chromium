@@ -16,6 +16,24 @@
       "revId": "b86806eb9ca6d2a7ac80057fd7c57feac08d448c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae743c5a_43099839",
+        "filename": "dbus/object_proxy.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-21T06:58:26Z",
+      "side": 1,
+      "message": "done.\n\nThis is to keep the code readable as the number of arguments is large.",
+      "parentUuid": "eeb41ee8_e9c49e2f",
+      "revId": "b86806eb9ca6d2a7ac80057fd7c57feac08d448c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
