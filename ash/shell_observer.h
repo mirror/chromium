@@ -76,6 +76,8 @@ class ASH_EXPORT ShellObserver {
   // most of Shell's state has been deleted.
   virtual void OnShellDestroyed() {}
 
+  virtual void OnPrefServiceReady() {}
+
  protected:
   virtual ~ShellObserver() {}
 };

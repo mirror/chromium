@@ -136,6 +136,10 @@ PrefValueMap* ConfigurationPolicyPrefStore::CreatePreferencesFromPolicies() {
   handler_list_->ApplyPolicySettings(filtered_policies,
                                      prefs.get(),
                                      errors.get());
+  // if (prefs->empty()) {
+    // prefs->SetValue("show_logout_button_in_tray",
+                    // base::MakeUnique<base::Value>(true));
+  // }
 
   // Retrieve and log the errors once the UI loop is ready. This is only an
   // issue during startup.
