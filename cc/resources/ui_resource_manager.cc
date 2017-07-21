@@ -39,8 +39,17 @@ void UIResourceManager::DeleteUIResource(UIResourceId uid) {
   if (iter == ui_resource_client_map_.end())
     return;
 
-  UIResourceRequest request(UIResourceRequest::UI_RESOURCE_DELETE, uid);
-  ui_resource_request_queue_.push_back(request);
+  auto pending_create = std::find_if(ui_resource_request_queue_.begin(),
+                                     ui_resource_request_queue_.end(),
+                                     [uid](const UIResourceRequest& request) {
+                                       return request.GetId() == uid;
+                                     });
+  if (pending_create == ui_resource_request_queue_.end()) {
+    UIResourceRequest request(UIResourceRequest::UI_RESOURCE_DELETE, uid);
+    ui_resource_request_queue_.push_back(request);
+  } else {
+    ui_resource_request_queue_.erase(pending_create);
+  }
   ui_resource_client_map_.erase(iter);
 }
 
