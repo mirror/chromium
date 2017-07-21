@@ -22,6 +22,30 @@
       "revId": "315a5f722bbf38577a9785f3adba852577d1fe62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7102c44f_2a992156",
+        "filename": "dbus/object_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-21T05:54:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb79d8a9_6826d703",
+      "range": {
+        "startLine": 221,
+        "startChar": 26,
+        "endLine": 221,
+        "endChar": 36
+      },
+      "revId": "315a5f722bbf38577a9785f3adba852577d1fe62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
