@@ -349,6 +349,11 @@ public class ImageFetcher {
         }
 
         @Override
+        public String getContentId() {
+            return mSuggestion.getAssetDownloadGuid();
+        }
+
+        @Override
         public void onThumbnailRetrieved(String filePath, Bitmap thumbnail) {
             mThumbnailReceivedPromise.fulfill(thumbnail);
         }
@@ -356,6 +361,11 @@ public class ImageFetcher {
         @Override
         public int getIconSize() {
             return mSize;
+        }
+
+        @Override
+        public boolean shouldCacheToDisk() {
+            return false;
         }
 
         public void cancel() {

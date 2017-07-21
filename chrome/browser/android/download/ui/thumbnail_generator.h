@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_ANDROID_DOWNLOAD_UI_THUMBNAIL_PROVIDER_H_
-#define CHROME_BROWSER_ANDROID_DOWNLOAD_UI_THUMBNAIL_PROVIDER_H_
+#ifndef CHROME_BROWSER_ANDROID_DOWNLOAD_UI_THUMBNAIL_GENERATOR_H_
+#define CHROME_BROWSER_ANDROID_DOWNLOAD_UI_THUMBNAIL_GENERATOR_H_
 
 #include <string>
 
@@ -12,13 +12,13 @@
 #include "chrome/browser/image_decoder.h"
 
 // Kicks off asynchronous pipelines for creating thumbnails for local files.
-// The native-side ThumbnailProvider is owned by the Java-side and can be
+// The native-side ThumbnailGenerator is owned by the Java-side and can be
 // safely destroyed while a request is being processed.
-class ThumbnailProvider {
+class ThumbnailGenerator {
  public:
-  explicit ThumbnailProvider(const base::android::JavaParamRef<jobject>& jobj);
+  explicit ThumbnailGenerator(const base::android::JavaParamRef<jobject>& jobj);
 
-  // Destroys the ThumbnailProvider.  Any currently running ImageRequest will
+  // Destroys the ThumbnailGenerator.  Any currently running ImageRequest will
   // delete itself when it has completed.
   void Destroy(JNIEnv* env, const base::android::JavaParamRef<jobject>& jobj);
 
@@ -34,12 +34,12 @@ class ThumbnailProvider {
                             const SkBitmap& thumbnail);
 
  private:
-  ~ThumbnailProvider();
+  ~ThumbnailGenerator();
 
   base::android::ScopedJavaGlobalRef<jobject> java_delegate_;
-  base::WeakPtrFactory<ThumbnailProvider> weak_factory_;
+  base::WeakPtrFactory<ThumbnailGenerator> weak_factory_;
 
-  DISALLOW_COPY_AND_ASSIGN(ThumbnailProvider);
+  DISALLOW_COPY_AND_ASSIGN(ThumbnailGenerator);
 };
 
-#endif  // CHROME_BROWSER_ANDROID_DOWNLOAD_UI_THUMBNAIL_PROVIDER_H_
+#endif  // CHROME_BROWSER_ANDROID_DOWNLOAD_UI_THUMBNAIL_GENERATOR_H_
