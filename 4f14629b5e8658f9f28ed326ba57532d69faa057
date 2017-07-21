@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1ada0578_f203367b",
+        "filename": "chrome/browser/extensions/extension_service_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 4605,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-21T22:15:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1d887790_fae9529d",
+      "revId": "4f14629b5e8658f9f28ed326ba57532d69faa057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a5ce5ad_48d35a3f",
         "filename": "chrome/browser/extensions/extension_service_unittest.cc",
         "patchSetId": 13
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-20T02:02:37Z",
       "side": 1,
       "message": "Or, if these are identical (they appear to be), you could just pull it into a helper function.",
+      "revId": "4f14629b5e8658f9f28ed326ba57532d69faa057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bea9dd79_56002428",
+        "filename": "chrome/browser/extensions/extension_service_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 4744,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-21T22:15:16Z",
+      "side": 1,
+      "message": "Done! \n\n(The bodies of ClearAppData and ClearExtensionData are similar, maybe if we were sufficiently motivated we\u0027d de-dupe further...)\n\nI left the other lambdas (\"the database should have vanished\") alone as it was short (especially after I removed an unused param) and didn\u0027t wrap badly.",
+      "parentUuid": "4a5ce5ad_48d35a3f",
       "revId": "4f14629b5e8658f9f28ed326ba57532d69faa057",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
