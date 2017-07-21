@@ -18,9 +18,26 @@ namespace internal {
 template <typename Key, typename Value>
 class Map_Data {
  public:
-  static Map_Data* New(Buffer* buf) {
-    return new (buf->Allocate(sizeof(Map_Data))) Map_Data();
-  }
+  class BufferWriter {
+   public:
+    BufferWriter() = default;
+    explicit BufferWriter(Buffer* buffer)
+        : buffer_(buffer), index_(buffer_->Allocate(sizeof(Map_Data))) {
+      new (data()) Map_Data();
+    }
+    ~BufferWriter() = default;
+
+    bool is_null() const { return !buffer_; }
+    Map_Data* data() {
+      DCHECK(!is_null());
+      return buffer_->Get<Map_Data>(index_);
+    }
+    Map_Data* operator->() { return data(); }
+
+   private:
+    Buffer* buffer_ = nullptr;
+    size_t index_ = 0;
+  };
 
   // |validate_params| must have non-null |key_validate_params| and
   // |element_validate_params| members.
