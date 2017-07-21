@@ -4,6 +4,8 @@
 
 #include "chrome/browser/component_updater/cros_component_installer.h"
 
+#include <utility>
+
 #include "base/memory/ptr_util.h"
 #include "base/run_loop.h"
 #include "base/test/test_simple_task_runner.h"
@@ -22,9 +24,6 @@ class CrOSMockComponentUpdateService
  public:
   CrOSMockComponentUpdateService() {}
   ~CrOSMockComponentUpdateService() override {}
-  scoped_refptr<base::SequencedTaskRunner> GetSequencedTaskRunner() override {
-    return base::ThreadTaskRunnerHandle::Get();
-  }
 
  private:
   DISALLOW_COPY_AND_ASSIGN(CrOSMockComponentUpdateService);
