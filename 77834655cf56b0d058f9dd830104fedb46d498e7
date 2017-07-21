@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62710f5e_06f931e5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-07-21T23:26:39Z",
+      "side": 1,
+      "message": "Can getTimeSinceLastBackgroundedMs just be a member of ChromeActivity so we don\u0027t need this check?",
+      "range": {
+        "startLine": 722,
+        "startChar": 8,
+        "endLine": 722,
+        "endChar": 55
+      },
+      "revId": "77834655cf56b0d058f9dd830104fedb46d498e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0a6eabf_f9d7284d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-07-21T23:26:39Z",
+      "side": 1,
+      "message": "Can we move this logic into onSuccess in the StartupCallback? Or do init() and onSuccess() race?\n\nIn either case I think we eliminate mPendingStartState and instead use mCurrentState. We could then call setSheetState(mCurrentSheetState, true) at the end of init.",
+      "range": {
+        "startLine": 724,
+        "startChar": 12,
+        "endLine": 725,
+        "endChar": 78
+      },
+      "revId": "77834655cf56b0d058f9dd830104fedb46d498e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
