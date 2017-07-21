@@ -76,14 +76,15 @@ bool IsBeamformingDefaultEnabled() {
 std::string MicPositions() {
   // Get the list of devices from CRAS. An internal mic with a non-empty
   // positions field indicates the machine has a beamforming capable mic array.
-  chromeos::AudioDeviceList devices;
-  chromeos::CrasAudioHandler::Get()->GetAudioDevices(&devices);
-  for (const auto& device : devices) {
-    if (device.type == chromeos::AUDIO_TYPE_INTERNAL_MIC) {
-      // There should be only one internal mic device.
-      return device.mic_positions;
-    }
-  }
+  // TODO: Clean up beamforming properly.
+  // chromeos::AudioDeviceList devices;
+  // chromeos::CrasAudioHandler::Get()->GetAudioDevices(&devices);
+  // for (const auto& device : devices) {
+  //   if (device.type == chromeos::AUDIO_TYPE_INTERNAL_MIC) {
+  //     // There should be only one internal mic device.
+  //     return device.mic_positions;
+  //   }
+  // }
   return "";
 }
 
