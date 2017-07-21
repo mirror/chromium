@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58602eb9_97eb40f4",
+        "filename": "ui/app_list/views/app_list_page.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-21T15:27:51Z",
+      "side": 1,
+      "message": "I am bit confusing to have getter more protected than setter. Could you please move it back?",
+      "range": {
+        "startLine": 73,
+        "startChar": 22,
+        "endLine": 73,
+        "endChar": 35
+      },
+      "revId": "46a9b22341a55f23a1a00ae0f86cd548dbb4f4a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61a79c72_253cdf5a",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-21T15:27:51Z",
+      "side": 1,
+      "message": "Instead of casting could you please make app_num as  size_t",
+      "range": {
+        "startLine": 490,
+        "startChar": 12,
+        "endLine": 490,
+        "endChar": 38
+      },
+      "revId": "46a9b22341a55f23a1a00ae0f86cd548dbb4f4a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70750484_01bcac5b",
+        "filename": "ui/app_list/views/contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-21T15:27:51Z",
+      "side": 1,
+      "message": "nit: const or better inline at 490",
+      "range": {
+        "startLine": 488,
+        "startChar": 2,
+        "endLine": 488,
+        "endChar": 13
+      },
+      "revId": "46a9b22341a55f23a1a00ae0f86cd548dbb4f4a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f3e5e7c_69465b8b",
+        "filename": "ui/app_list/views/contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-21T15:27:51Z",
+      "side": 1,
+      "message": "This looks incorrect. Based on logic it must be false.",
+      "range": {
+        "startLine": 493,
+        "startChar": 11,
+        "endLine": 493,
+        "endChar": 15
+      },
+      "revId": "46a9b22341a55f23a1a00ae0f86cd548dbb4f4a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd725389_7059b856",
+        "filename": "ui/app_list/views/contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-21T15:27:51Z",
+      "side": 1,
+      "message": "nit: return false",
+      "range": {
+        "startLine": 503,
+        "startChar": 2,
+        "endLine": 503,
+        "endChar": 16
+      },
+      "revId": "46a9b22341a55f23a1a00ae0f86cd548dbb4f4a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0017bdfc_e791a634",
+        "filename": "ui/app_list/views/start_page_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-21T15:27:51Z",
+      "side": 1,
+      "message": "why false? Can you please confirm",
+      "range": {
+        "startLine": 314,
+        "startChar": 13,
+        "endLine": 314,
+        "endChar": 18
+      },
+      "revId": "46a9b22341a55f23a1a00ae0f86cd548dbb4f4a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19c7997e_8d20d0ea",
+        "filename": "ui/app_list/views/start_page_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-21T15:27:51Z",
+      "side": 1,
+      "message": "nit: please make it as member of AppListPage",
+      "revId": "46a9b22341a55f23a1a00ae0f86cd548dbb4f4a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

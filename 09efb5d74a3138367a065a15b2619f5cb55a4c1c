@@ -320,6 +320,30 @@
     },
     {
       "key": {
+        "uuid": "ff105b3a_edddc74d",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-21T15:27:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5260dc09_00532c93",
+      "range": {
+        "startLine": 521,
+        "startChar": 2,
+        "endLine": 521,
+        "endChar": 4
+      },
+      "revId": "09efb5d74a3138367a065a15b2619f5cb55a4c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "934b48d2_37c24936",
         "filename": "ui/app_list/views/app_list_view_unittest.cc",
         "patchSetId": 2
@@ -355,6 +379,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "934b48d2_37c24936",
+      "range": {
+        "startLine": 523,
+        "startChar": 2,
+        "endLine": 523,
+        "endChar": 13
+      },
+      "revId": "09efb5d74a3138367a065a15b2619f5cb55a4c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9d172a5b_8d9066d3",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-21T15:27:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5b60796e_af9d5b17",
       "range": {
         "startLine": 523,
         "startChar": 2,
