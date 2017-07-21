@@ -10,6 +10,9 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.support.annotation.StringDef;
 
+import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ChromeFeatureList;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.Collections;
@@ -30,6 +33,7 @@ public class ChannelDefinitions {
     public static final String CHANNEL_ID_DOWNLOADS = "downloads";
     public static final String CHANNEL_ID_INCOGNITO = "incognito";
     public static final String CHANNEL_ID_MEDIA = "media";
+    public static final String CHANNEL_ID_CONTENT_SUGGESTIONS = "contentsuggestions";
     // TODO(crbug.com/700377): Deprecate the 'sites' channel.
     public static final String CHANNEL_ID_SITES = "sites";
     public static final String CHANNEL_ID_PREFIX_SITES = "web:";
@@ -49,7 +53,7 @@ public class ChannelDefinitions {
      * Predefined Channels.MAP, and add the ID to the LEGACY_CHANNELS_ID array below.
      */
     @StringDef({CHANNEL_ID_BROWSER, CHANNEL_ID_DOWNLOADS, CHANNEL_ID_INCOGNITO, CHANNEL_ID_MEDIA,
-            CHANNEL_ID_SITES})
+            CHANNEL_ID_CONTENT_SUGGESTIONS, CHANNEL_ID_SITES})
     @Retention(RetentionPolicy.SOURCE)
     public @interface ChannelId {}
 
@@ -70,23 +74,27 @@ public class ChannelDefinitions {
             Map<String, PredefinedChannel> map = new HashMap<>();
             map.put(CHANNEL_ID_BROWSER,
                     new PredefinedChannel(CHANNEL_ID_BROWSER,
-                            org.chromium.chrome.R.string.notification_category_browser,
+                            R.string.notification_category_browser,
                             NotificationManager.IMPORTANCE_LOW, CHANNEL_GROUP_ID_GENERAL));
             map.put(CHANNEL_ID_DOWNLOADS,
                     new PredefinedChannel(CHANNEL_ID_DOWNLOADS,
-                            org.chromium.chrome.R.string.notification_category_downloads,
+                            R.string.notification_category_downloads,
                             NotificationManager.IMPORTANCE_LOW, CHANNEL_GROUP_ID_GENERAL));
             map.put(CHANNEL_ID_INCOGNITO,
                     new PredefinedChannel(CHANNEL_ID_INCOGNITO,
-                            org.chromium.chrome.R.string.notification_category_incognito,
+                            R.string.notification_category_incognito,
                             NotificationManager.IMPORTANCE_LOW, CHANNEL_GROUP_ID_GENERAL));
             map.put(CHANNEL_ID_MEDIA,
-                    new PredefinedChannel(CHANNEL_ID_MEDIA,
-                            org.chromium.chrome.R.string.notification_category_media,
+                    new PredefinedChannel(CHANNEL_ID_MEDIA, R.string.notification_category_media,
                             NotificationManager.IMPORTANCE_LOW, CHANNEL_GROUP_ID_GENERAL));
+            if (ChromeFeatureList.isEnabled(ChromeFeatureList.CONTENT_SUGGESTIONS_NOTIFICATIONS)) {
+                map.put(CHANNEL_ID_CONTENT_SUGGESTIONS,
+                        new PredefinedChannel(CHANNEL_ID_CONTENT_SUGGESTIONS,
+                                R.string.notification_category_content_suggestions,
+                                NotificationManager.IMPORTANCE_LOW, CHANNEL_GROUP_ID_GENERAL));
+            }
             map.put(CHANNEL_ID_SITES,
-                    new PredefinedChannel(CHANNEL_ID_SITES,
-                            org.chromium.chrome.R.string.notification_category_sites,
+                    new PredefinedChannel(CHANNEL_ID_SITES, R.string.notification_category_sites,
                             NotificationManager.IMPORTANCE_DEFAULT, CHANNEL_GROUP_ID_GENERAL));
             MAP = Collections.unmodifiableMap(map);
         }
@@ -106,10 +114,9 @@ public class ChannelDefinitions {
             Map<String, ChannelGroup> map = new HashMap<>();
             map.put(CHANNEL_GROUP_ID_GENERAL,
                     new ChannelGroup(CHANNEL_GROUP_ID_GENERAL,
-                            org.chromium.chrome.R.string.notification_category_group_general));
+                            R.string.notification_category_group_general));
             map.put(CHANNEL_GROUP_ID_SITES,
-                    new ChannelGroup(CHANNEL_GROUP_ID_SITES,
-                            org.chromium.chrome.R.string.notification_category_sites));
+                    new ChannelGroup(CHANNEL_GROUP_ID_SITES, R.string.notification_category_sites));
             MAP = Collections.unmodifiableMap(map);
         }
     }
