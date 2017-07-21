@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7518ff67_d4204eb8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console_counters/module.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-07-21T22:59:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34eea012_e33a1680",
+      "revId": "47aba5706d3c3fe6f3de31244600a9e5ecaaf304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3818829b_ea66084c",
         "filename": "third_party/WebKit/Source/devtools/front_end/console_test_runner/module.json",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "373af568_34ddb0e8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console_test_runner/module.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-07-21T22:59:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3818829b_ea66084c",
+      "revId": "47aba5706d3c3fe6f3de31244600a9e5ecaaf304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "192c115c_70450344",
         "filename": "third_party/WebKit/Source/devtools/front_end/inspector.json",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-21T17:58:35Z",
       "side": 1,
       "message": "do we really need autostart here? thought main\u0027s dependency should work for that.",
+      "revId": "47aba5706d3c3fe6f3de31244600a9e5ecaaf304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcd7fedf_01375276",
+        "filename": "third_party/WebKit/Source/devtools/front_end/inspector.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-07-21T22:59:01Z",
+      "side": 1,
+      "message": "Yeah, autostart modules can only depend on modules explicitly stated as autostart. https://cs.chromium.org/chromium/src/third_party/WebKit/Source/devtools/scripts/build/build_release_applications.py?type\u003dcs\u0026q\u003df:devtools/scripts+autostart\u0026sq\u003dpackage:chromium\u0026l\u003d196\n\nI believe this is done to simplify our build process.",
+      "parentUuid": "192c115c_70450344",
       "revId": "47aba5706d3c3fe6f3de31244600a9e5ecaaf304",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
