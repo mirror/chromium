@@ -1,5 +1,7 @@
-Tests frameScheduledNavigation event when navigation is initiated in JS.
-Scheduled navigation with delay 0
+Tests frameScheduledNavigation events when navigation is initiated in JS followed by other navigations.
+Scheduled navigation with delay 0 and reason frameNavigation
+Scheduled navigation with delay 0 and reason metaTagRefresh
+Scheduled navigation with delay 0 and reason formSubmission
 Started loading
 Cleared scheduled navigation
 

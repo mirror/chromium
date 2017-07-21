@@ -1,15 +1,18 @@
 (async function(testRunner) {
-  let {page, session, dp} = await testRunner.startBlank('Tests frameScheduledNavigation event when navigation is initiated in JS.');
+  let {page, session, dp} = await testRunner.startBlank('Tests frameScheduledNavigation events when navigation is initiated in JS followed by other navigations.');
 
   dp.Page.enable();
   session.evaluate(`
     var frame = document.createElement('iframe');
     document.body.appendChild(frame);
-    frame.src = '${testRunner.url('../resources/blank.html')}';
+    frame.src = '${testRunner.url('resources/navigation-chain1.html')}';
   `);
 
-  var msg = await dp.Page.onceFrameScheduledNavigation();
-  testRunner.log('Scheduled navigation with delay ' + msg.params.delay);
+  for (var i = 0; i < 3; i++) {
+    var msg = await dp.Page.onceFrameScheduledNavigation();
+    testRunner.log('Scheduled navigation with delay ' + msg.params.delay +
+                   ' and reason ' + msg.params.reason);
+  }
 
   await dp.Page.onceFrameStartedLoading();
   // This event should be received before the scheduled navigation is cleared.
