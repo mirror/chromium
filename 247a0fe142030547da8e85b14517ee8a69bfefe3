@@ -22,6 +22,30 @@
       "revId": "247a0fe142030547da8e85b14517ee8a69bfefe3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04904d7e_7f769c2a",
+        "filename": "chrome/browser/profiles/profile_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1526,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-07-21T01:36:07Z",
+      "side": 1,
+      "message": "Yeah, actually I tried it before this CL, but the code will as below because \"info\" is needed to be std::move() into profiles_info_ and then return its raw pointer. So I follow the original format. \n\nauto info \u003d base::MakeUnique\u003cProfileInfo\u003e(profile, created);\nProfileInfo* info_raw \u003d info.get()\nprofiles_info_.insert(\n      std::make_pair(profile-\u003eGetPath(), std::move(info)));\nreturn info_raw;",
+      "parentUuid": "f02eef4c_9b169c97",
+      "range": {
+        "startLine": 1526,
+        "startChar": 2,
+        "endLine": 1526,
+        "endChar": 13
+      },
+      "revId": "247a0fe142030547da8e85b14517ee8a69bfefe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
