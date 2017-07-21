@@ -544,6 +544,7 @@ void NetworkHandler::ClearBrowserCache(
   content::BrowsingDataRemover* remover =
       content::BrowserContext::GetBrowsingDataRemover(
           host_->GetSiteInstance()->GetProcess()->GetBrowserContext());
+  callback->fallThrough();
   remover->RemoveAndReply(
       base::Time(), base::Time::Max(),
       content::BrowsingDataRemover::DATA_TYPE_CACHE,

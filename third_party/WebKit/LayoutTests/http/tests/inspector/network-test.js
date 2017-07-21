@@ -181,11 +181,7 @@ InspectorTest.makeFetch = function(url, requestInitializer, callback)
  */
 InspectorTest.clearNetworkCache = function()
 {
-    // This turns cache off and then on, effectively clearning the memory cache.
-    var networkAgent = InspectorTest.NetworkAgent;
-    return Promise.all([
-        networkAgent.clearBrowserCache(),
-        networkAgent.setCacheDisabled(true).then(() => networkAgent.setCacheDisabled(false))]);
+    return InspectorTest.NetworkAgent.clearBrowserCache();
 }
 
 InspectorTest.HARPropertyFormatters = {
