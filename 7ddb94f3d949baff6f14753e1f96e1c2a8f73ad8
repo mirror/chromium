@@ -16,6 +16,24 @@
       "revId": "7ddb94f3d949baff6f14753e1f96e1c2a8f73ad8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7475c3e_dbb525f8",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_api.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-07-21T19:36:15Z",
+      "side": 1,
+      "message": "I guess ultimately we should get it from NGInlineItem::Style(), if we don\u0027t want to involve legacy layout.\n\nWhich means we need mapping from DOM offset to NGInlineItem... Do we?",
+      "parentUuid": "0d299a3f_47250eb6",
+      "revId": "7ddb94f3d949baff6f14753e1f96e1c2a8f73ad8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
