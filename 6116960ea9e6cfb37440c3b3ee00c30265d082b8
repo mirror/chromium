@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4435338_d94b4df0",
+        "filename": "ios/web/net/crw_ssl_status_updater_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-21T19:19:05Z",
+      "side": 1,
+      "message": "s/include/import",
+      "range": {
+        "startLine": 17,
+        "startChar": 1,
+        "endLine": 17,
+        "endChar": 8
+      },
+      "revId": "6116960ea9e6cfb37440c3b3ee00c30265d082b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "781a8a39_b3be18fc",
+        "filename": "ios/web/net/crw_ssl_status_updater_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-21T19:19:05Z",
+      "side": 1,
+      "message": "Should this still return the result?",
+      "range": {
+        "startLine": 118,
+        "startChar": 24,
+        "endLine": 118,
+        "endChar": 56
+      },
+      "revId": "6116960ea9e6cfb37440c3b3ee00c30265d082b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
