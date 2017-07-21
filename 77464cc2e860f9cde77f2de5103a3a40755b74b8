@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "44a35a6e_16d7b5ae",
+        "filename": "ash/login/ui/lock_screen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-07-21T06:18:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "209f8ed6_2ef48de1",
+      "revId": "77464cc2e860f9cde77f2de5103a3a40755b74b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a3ba320_d9a2d1d7",
         "filename": "ash/login/ui/lock_screen.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "77464cc2e860f9cde77f2de5103a3a40755b74b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff66edbf_055ae2bd",
+        "filename": "ash/login/ui/lock_screen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-07-21T06:18:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a3ba320_d9a2d1d7",
+      "revId": "77464cc2e860f9cde77f2de5103a3a40755b74b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "fd2beb8c_a1b49dfc",
+        "filename": "ash/login/ui/lock_screen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-07-21T06:18:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba7920a3_ec322bdf",
+      "revId": "77464cc2e860f9cde77f2de5103a3a40755b74b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eafb52a1_09d131e5",
         "filename": "ash/login/ui/lock_screen.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "77464cc2e860f9cde77f2de5103a3a40755b74b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36be6fbf_47eb68c1",
+        "filename": "ash/login/ui/lock_screen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1228419
+      },
+      "writtenOn": "2017-07-21T06:18:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eafb52a1_09d131e5",
+      "revId": "77464cc2e860f9cde77f2de5103a3a40755b74b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
