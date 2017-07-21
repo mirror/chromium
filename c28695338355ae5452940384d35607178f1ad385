@@ -139,6 +139,24 @@
       "revId": "c28695338355ae5452940384d35607178f1ad385",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae5b1532_16ac3f86",
+        "filename": "chromecast/media/cma/backend/android/loopback_audio_observer_android.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-07-21T19:22:03Z",
+      "side": 1,
+      "message": "Not entirely true: loopback_running_ is uninitialized, but your code assumes that it\u0027s false.  This is a bug.\n\nSome of the others may not technically be a bug, but it adds readability burden onto reviewers and maintainers to follow the flow.  It should be possible to pick reasonable defaults or known invalid values for at least some of them (e.g. kInvalidTimestamp, frame_count_ should be 0, etc.)",
+      "parentUuid": "29dac4dc_36ed84c0",
+      "revId": "c28695338355ae5452940384d35607178f1ad385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
