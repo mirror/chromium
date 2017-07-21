@@ -40,10 +40,16 @@ class ArcWindowDelegateImpl : public ArcImeService::ArcWindowDelegate {
   }
 
   void RegisterFocusObserver() override {
+    // If WMHelper is already destroyed, do nothing.
+    if (!exo::WMHelper::HasInstance())
+      return;
     exo::WMHelper::GetInstance()->AddFocusObserver(ime_service_);
   }
 
   void UnregisterFocusObserver() override {
+    // If WMHelper is already destroyed, do nothing.
+    if (!exo::WMHelper::HasInstance())
+      return;
     exo::WMHelper::GetInstance()->RemoveFocusObserver(ime_service_);
   }
 

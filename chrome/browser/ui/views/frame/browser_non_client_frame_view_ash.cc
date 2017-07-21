@@ -80,7 +80,8 @@ BrowserNonClientFrameViewAsh::BrowserNonClientFrameViewAsh(
 }
 
 BrowserNonClientFrameViewAsh::~BrowserNonClientFrameViewAsh() {
-  ash::Shell::Get()->tablet_mode_controller()->RemoveObserver(this);
+  if (ash::Shell::Get()->tablet_mode_controller())
+    ash::Shell::Get()->tablet_mode_controller()->RemoveObserver(this);
   ash::Shell::Get()->RemoveShellObserver(this);
 }
 
