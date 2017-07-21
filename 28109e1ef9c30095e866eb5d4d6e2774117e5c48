@@ -16,6 +16,24 @@
       "revId": "28109e1ef9c30095e866eb5d4d6e2774117e5c48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55079da7_02e1234a",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-21T10:32:40Z",
+      "side": 1,
+      "message": "It predates this CL so I think we\u0027re OK with that for now, added TODO.",
+      "parentUuid": "a1e66d66_fdfdc241",
+      "revId": "28109e1ef9c30095e866eb5d4d6e2774117e5c48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
