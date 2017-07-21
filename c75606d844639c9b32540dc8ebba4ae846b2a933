@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72d67a04_44eb41ef",
+        "filename": "third_party/WebKit/Source/core/CoreInitializer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-21T06:32:53Z",
+      "side": 1,
+      "message": "Add a comment and mention that Initialize() must be called before using GetInstance().",
+      "revId": "c75606d844639c9b32540dc8ebba4ae846b2a933",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
