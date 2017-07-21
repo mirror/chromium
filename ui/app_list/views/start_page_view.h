@@ -25,6 +25,9 @@ class SearchResultTileItemView;
 class SuggestionsContainerView;
 class TileItemView;
 
+constexpr int kNoSelection = -1;
+constexpr int kExpandArrowSelection = -2;
+
 // The start page for the app list.
 class APP_LIST_EXPORT StartPageView : public AppListPage {
  public:
@@ -54,6 +57,12 @@ class APP_LIST_EXPORT StartPageView : public AppListPage {
   bool OnMouseWheel(const ui::MouseWheelEvent& event) override;
   void OnGestureEvent(ui::GestureEvent* event) override;
   void OnScrollEvent(ui::ScrollEvent* event) override;
+
+  // Used only in the tests to get the selected index in start page view.
+  // |kNoSelection| means no view is selected.
+  // |kExpandArrowSelection| means expand arrow view is selected.
+  // >=0 means selected index in suggestions container view.
+  int GetSelectedIndexForTest() const;
 
  private:
   void InitInstantContainer();
