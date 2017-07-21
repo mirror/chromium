@@ -1176,11 +1176,20 @@ void RenderWidgetHostViewAndroid::SendReclaimCompositorResources(
   if (is_swap_ack) {
     renderer_compositor_frame_sink_->DidReceiveCompositorFrameAck(
         surface_returned_resources_);
+    while (!compositor_frame_ack_callbacks_.empty()) {
+      compositor_frame_ack_callbacks_.front().Run();
+      compositor_frame_ack_callbacks_.pop();
+    }
   } else {
     renderer_compositor_frame_sink_->ReclaimResources(
         surface_returned_resources_);
   }
   surface_returned_resources_.clear();
+}
+
+void RenderWidgetHostViewAndroid::NotifyOnNextCompositorFrameAck(
+    const base::Closure& closure) {
+  compositor_frame_ack_callbacks_.push(closure);
 }
 
 void RenderWidgetHostViewAndroid::DidReceiveCompositorFrameAck() {

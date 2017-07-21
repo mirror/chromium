@@ -21,9 +21,13 @@ import org.chromium.chrome.browser.metrics.WebappUma;
 import org.chromium.chrome.browser.tab.EmptyTabObserver;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.util.ColorUtils;
+import org.chromium.content_public.browser.WebContents;
 
 /** Shows and hides splash screen. */
 class WebappSplashScreenController extends EmptyTabObserver {
+    /** Used to schedule splash screen hiding. */
+    private WebContents mWebContents;
+
     /** View to which the splash screen is added. */
     private ViewGroup mParentView;
 
@@ -76,8 +80,9 @@ class WebappSplashScreenController extends EmptyTabObserver {
     }
 
     /** Should be called once native has loaded. */
-    public void onFinishedNativeInit(Tab tab) {
+    public void onFinishedNativeInit(Tab tab, WebContents webContents) {
         mNativeLoaded = true;
+        mWebContents = webContents;
         tab.addObserver(this);
         if (mInitializedLayout) {
             mWebappUma.commitMetrics();
@@ -92,27 +97,27 @@ class WebappSplashScreenController extends EmptyTabObserver {
     @Override
     public void didFirstVisuallyNonEmptyPaint(Tab tab) {
         if (canHideSplashScreen()) {
-            hideSplashScreen(tab, WebappUma.SPLASHSCREEN_HIDES_REASON_PAINT);
+            hideSplashScreenOnNextFrameAck(tab, WebappUma.SPLASHSCREEN_HIDES_REASON_PAINT);
         }
     }
 
     @Override
     public void onPageLoadFinished(Tab tab) {
         if (canHideSplashScreen()) {
-            hideSplashScreen(tab, WebappUma.SPLASHSCREEN_HIDES_REASON_LOAD_FINISHED);
+            animateHidingSplashScreen(tab, WebappUma.SPLASHSCREEN_HIDES_REASON_LOAD_FINISHED);
         }
     }
 
     @Override
     public void onPageLoadFailed(Tab tab, int errorCode) {
         if (canHideSplashScreen()) {
-            hideSplashScreen(tab, WebappUma.SPLASHSCREEN_HIDES_REASON_LOAD_FAILED);
+            animateHidingSplashScreen(tab, WebappUma.SPLASHSCREEN_HIDES_REASON_LOAD_FAILED);
         }
     }
 
     @Override
     public void onCrash(Tab tab, boolean sadTabShown) {
-        hideSplashScreen(tab, WebappUma.SPLASHSCREEN_HIDES_REASON_CRASH);
+        animateHidingSplashScreen(tab, WebappUma.SPLASHSCREEN_HIDES_REASON_CRASH);
     }
 
     protected boolean canHideSplashScreen() {
@@ -181,8 +186,25 @@ class WebappSplashScreenController extends EmptyTabObserver {
         }
     }
 
-    /** Hides the splash screen. */
-    private void hideSplashScreen(final Tab tab, final int reason) {
+    /**
+     * Schedules the splash screen hiding once the renderer compositor frame has been swapped.
+     *
+     * Without this callback we were seeing a short flash of white between the splash screen and
+     * the web content (crbug.com/734500).
+     * */
+    private void hideSplashScreenOnNextFrameAck(final Tab tab, final int reason) {
+        if (mSplashScreen == null || mWebContents == null) return;
+
+        mWebContents.notifyOnNextCompositorFrameAck(new Runnable() {
+            @Override
+            public void run() {
+                animateHidingSplashScreen(tab, reason);
+            }
+        });
+    }
+
+    /** Performs the splash screen hiding animation. */
+    private void animateHidingSplashScreen(final Tab tab, final int reason) {
         if (mSplashScreen == null) return;
 
         mSplashScreen.animate().alpha(0f).withEndAction(new Runnable() {
@@ -192,6 +214,7 @@ class WebappSplashScreenController extends EmptyTabObserver {
                 mParentView.removeView(mSplashScreen);
                 tab.removeObserver(WebappSplashScreenController.this);
                 mSplashScreen = null;
+                mWebContents = null;
                 mWebappUma.splashscreenHidden(reason);
             }
         });

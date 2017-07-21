@@ -609,6 +609,17 @@ void WebContentsAndroid::GetContentBitmap(
                         kN32_SkColorType);
 }
 
+void WebContentsAndroid::NotifyOnNextCompositorFrameAck(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& obj,
+    const JavaParamRef<jobject>& jcallback) {
+  RenderWidgetHostViewAndroid* view = GetRenderWidgetHostViewAndroid();
+  view->NotifyOnNextCompositorFrameAck(base::Bind(
+      &WebContentsAndroid::OnNextCompositorFrameAck, weak_factory_.GetWeakPtr(),
+      ScopedJavaGlobalRef<jobject>(env, obj),
+      ScopedJavaGlobalRef<jobject>(env, jcallback)));
+}
+
 void WebContentsAndroid::ReloadLoFiImages(JNIEnv* env,
                                           const JavaParamRef<jobject>& obj) {
   static_cast<WebContentsImpl*>(web_contents_)->ReloadLoFiImages();
@@ -700,6 +711,13 @@ void WebContentsAndroid::OnFinishGetContentBitmap(
     java_bitmap = gfx::ConvertToJavaBitmap(&bitmap);
   Java_WebContentsImpl_onGetContentBitmapFinished(env, obj, callback,
                                                   java_bitmap, response);
+}
+
+void WebContentsAndroid::OnNextCompositorFrameAck(
+    const JavaRef<jobject>& obj,
+    const JavaRef<jobject>& jcallback) {
+  JNIEnv* env = base::android::AttachCurrentThread();
+  Java_WebContentsImpl_onNextCompositorFrameAck(env, obj, jcallback);
 }
 
 void WebContentsAndroid::OnFinishDownloadImage(

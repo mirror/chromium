@@ -440,4 +440,12 @@ public interface WebContents extends Parcelable {
      * @param value Whether there is a persistent video associated with this WebContents.
      */
     public void setHasPersistentVideo(boolean value);
+
+    /**
+     * Requests a callback on the next compositor frame ack. Can be used to ensure the painted frame
+     * has reached the screen.
+     *
+     * @param callback The callback to execute once compositor frame ack.
+     */
+    void notifyOnNextCompositorFrameAck(Runnable callback);
 }
