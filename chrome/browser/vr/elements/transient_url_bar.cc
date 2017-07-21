@@ -14,11 +14,12 @@ namespace vr {
 
 TransientUrlBar::TransientUrlBar(
     int preferred_width,
+    float opacity_when_enabled,
     const base::TimeDelta& timeout,
     const base::Callback<void(UiUnsupportedMode)>& failure_callback)
     : TexturedElement(preferred_width),
       texture_(base::MakeUnique<UrlBarTexture>(true, failure_callback)),
-      transience_(this, timeout) {}
+      transience_(this, opacity_when_enabled, timeout) {}
 
 TransientUrlBar::~TransientUrlBar() = default;
 

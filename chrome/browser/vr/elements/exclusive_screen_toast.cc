@@ -10,8 +10,11 @@
 namespace vr {
 
 ExclusiveScreenToast::ExclusiveScreenToast(int preferred_width,
+                                           float opacity_when_enabled,
                                            const base::TimeDelta& timeout)
-    : TransientSimpleTexturedElement(preferred_width, timeout) {}
+    : TransientSimpleTexturedElement(preferred_width,
+                                     opacity_when_enabled,
+                                     timeout) {}
 
 ExclusiveScreenToast::~ExclusiveScreenToast() = default;
 

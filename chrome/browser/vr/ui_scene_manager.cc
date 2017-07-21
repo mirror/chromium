@@ -43,6 +43,7 @@ static constexpr float kPermanentWarningHeightDMM = 0.049f;
 static constexpr float kPermanentWarningWidthDMM = 0.1568f;
 static constexpr float kTransientWarningHeightDMM = 0.160;
 static constexpr float kTransientWarningWidthDMM = 0.512;
+static constexpr float kTransientWarningOpacity = 1.0;
 
 static constexpr float kExitWarningDistance = 0.6;
 static constexpr float kExitWarningHeight = 0.160;
@@ -88,6 +89,7 @@ static constexpr float kTransientUrlBarHeight =
 static constexpr float kTransientUrlBarVerticalOffset =
     -0.2 * kTransientUrlBarDistance;
 static constexpr int kTransientUrlBarTimeoutSeconds = 6;
+static constexpr float kTransientUrlBarOpacity = 1.0f;
 
 static constexpr float kWebVrToastDistance = 1.0;
 static constexpr float kFullscreenToastDistance = kFullscreenDistance;
@@ -98,6 +100,7 @@ static constexpr float kToastOffsetDMM = 0.004;
 // kWarningAngleRadians.
 static constexpr float kWebVrAngleRadians = 9.88 * M_PI / 180.0;
 static constexpr int kToastTimeoutSeconds = kTransientUrlBarTimeoutSeconds;
+static constexpr float kToastOpacity = 1.0f;
 
 static constexpr float kSplashScreenDistance = 2.5;
 static constexpr float kSplashScreenIconSize = 0.405;
@@ -195,7 +198,8 @@ void UiSceneManager::CreateSecurityWarnings() {
   scene_->AddUiElement(std::move(element));
 
   auto transient_warning = base::MakeUnique<TransientSecurityWarning>(
-      1024, base::TimeDelta::FromSeconds(kWarningTimeoutSeconds));
+      1024, kTransientWarningOpacity,
+      base::TimeDelta::FromSeconds(kWarningTimeoutSeconds));
   transient_security_warning_ = transient_warning.get();
   element = std::move(transient_warning);
   element->set_debug_id(kWebVrTransientHttpSecurityWarning);
@@ -384,7 +388,8 @@ void UiSceneManager::CreateUrlBar() {
 
 void UiSceneManager::CreateTransientUrlBar() {
   auto url_bar = base::MakeUnique<TransientUrlBar>(
-      512, base::TimeDelta::FromSeconds(kTransientUrlBarTimeoutSeconds),
+      512, kTransientUrlBarOpacity,
+      base::TimeDelta::FromSeconds(kTransientUrlBarTimeoutSeconds),
       base::Bind(&UiSceneManager::OnUnsupportedMode, base::Unretained(this)));
   url_bar->set_debug_id(kTransientUrlBar);
   url_bar->set_id(AllocateId());
@@ -452,7 +457,7 @@ void UiSceneManager::CreateExitPrompt() {
 
 void UiSceneManager::CreateToasts() {
   auto element = base::MakeUnique<ExclusiveScreenToast>(
-      512, base::TimeDelta::FromSeconds(kToastTimeoutSeconds));
+      512, kToastOpacity, base::TimeDelta::FromSeconds(kToastTimeoutSeconds));
   element->set_debug_id(kExclusiveScreenToast);
   element->set_id(AllocateId());
   element->set_fill(vr::Fill::NONE);

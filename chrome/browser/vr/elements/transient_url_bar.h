@@ -27,6 +27,7 @@ class TransientUrlBar : public TexturedElement {
  public:
   TransientUrlBar(
       int preferred_width,
+      float opacity_when_enabled,
       const base::TimeDelta& timeout,
       const base::Callback<void(UiUnsupportedMode)>& failure_callback);
   ~TransientUrlBar() override;

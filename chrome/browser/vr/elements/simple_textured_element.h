@@ -43,8 +43,10 @@ template <class T>
 class TransientSimpleTexturedElement : public SimpleTexturedElement<T> {
  public:
   TransientSimpleTexturedElement(int maximum_width,
+                                 float opacity_when_enabled,
                                  const base::TimeDelta& timeout)
-      : SimpleTexturedElement<T>(maximum_width), transience_(this, timeout) {}
+      : SimpleTexturedElement<T>(maximum_width),
+        transience_(this, opacity_when_enabled, timeout) {}
 
   ~TransientSimpleTexturedElement() override {}
 
