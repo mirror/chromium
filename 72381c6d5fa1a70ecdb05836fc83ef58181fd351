@@ -93,6 +93,30 @@
       "revId": "72381c6d5fa1a70ecdb05836fc83ef58181fd351",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bfad00c_12a18ead",
+        "filename": "ash/system/tray/tray_info_label_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T17:09:26Z",
+      "side": 1,
+      "message": "I\u0027m not saying it doesn\u0027t make sense to test this, but if you do, you should not use access to private variables.\n\nThe actual way to test this would be to inject the Label into the constructor instead of creating it in the constructor (currently, it\u0027s initialized in the constructor via TrayPopupUtils::CreateDefaultLabel()). Then, you could perform assertions on that label, like so:\n\nviews::Label* inner_label \u003d\n    base::WrapUnique(TrayPopupUtils::CreateDefaultLabel());\nstd::unique_ptr\u003cTrayInfoLabel\u003e tray_label \u003d\n    new TrayInfoLabel(base::WrapUnique(inner_label), \u003cother_args\u003e);\ntray_label-\u003eUpdate(\u003cmessage_id\u003e);\nEXPECT_EQ(\u003cmessage_as_string\u003e, inner_label-\u003etext());\n\nThe difference between these approaches is that injecting approach takes that variable as a parameter, meaning that it is an input.",
+      "parentUuid": "28311edd_f2703981",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 59
+      },
+      "revId": "72381c6d5fa1a70ecdb05836fc83ef58181fd351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
