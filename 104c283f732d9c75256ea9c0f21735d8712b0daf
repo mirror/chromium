@@ -70,6 +70,30 @@
       "revId": "104c283f732d9c75256ea9c0f21735d8712b0daf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec1394fc_fca40c95",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/ChannelDefinitions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-07-21T13:35:00Z",
+      "side": 1,
+      "message": "Importing it works fine; CL updated.",
+      "parentUuid": "16ecffae_8fbd1eea",
+      "range": {
+        "startLine": 93,
+        "startChar": 32,
+        "endLine": 93,
+        "endChar": 53
+      },
+      "revId": "104c283f732d9c75256ea9c0f21735d8712b0daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
