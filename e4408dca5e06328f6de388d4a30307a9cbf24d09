@@ -16,6 +16,24 @@
       "revId": "e4408dca5e06328f6de388d4a30307a9cbf24d09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2935a07_00be90e9",
+        "filename": "third_party/WebKit/Source/core/frame/Deprecation.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1149061
+      },
+      "writtenOn": "2017-07-21T22:37:12Z",
+      "side": 1,
+      "message": "Thanks for the catch!",
+      "parentUuid": "390ae7fb_30c77b2d",
+      "revId": "e4408dca5e06328f6de388d4a30307a9cbf24d09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
