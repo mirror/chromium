@@ -1,0 +1,533 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f413664_01743b62",
+        "filename": "components/cryptauth/remote_device_provider.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T17:58:17Z",
+      "side": 1,
+      "message": "nits:\n\n(1) #include the .h file first, then a line break.\n(2) #include all files in alphabetical order.\n\n#include \"components/cryptauth/remote_device_provider.h\"\n\n#include \"base/bind.h\"\n#include \"components/cryptauth/remote_device_loader.h\"\n#include \"components/cryptauth/secure_message_delegate.h\"",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 0
+      },
+      "revId": "f9b0bd363f2679eb278250b97d795f5ec9cda1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "400e9114_4ef89fba",
+        "filename": "components/cryptauth/remote_device_provider.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T17:58:17Z",
+      "side": 1,
+      "message": "nit: It\u0027s easier to read if you place both remote_device_loader_ lines next to each other:\n\ndevice_manager_-\u003eAddObserver(this);\n\nremote_device_loader_ \u003d /* ... */;\nremote_device_loader_-\u003eLoader();",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 17
+      },
+      "revId": "f9b0bd363f2679eb278250b97d795f5ec9cda1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79411e52_eea2b172",
+        "filename": "components/cryptauth/remote_device_provider.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T17:58:17Z",
+      "side": 1,
+      "message": "nit: No cast needed.",
+      "range": {
+        "startLine": 27,
+        "startChar": 6,
+        "endLine": 27,
+        "endChar": 52
+      },
+      "revId": "f9b0bd363f2679eb278250b97d795f5ec9cda1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "184aa7a5_2384d660",
+        "filename": "components/cryptauth/remote_device_provider.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T17:58:17Z",
+      "side": 1,
+      "message": "nit: /* should_load_beacon_seeds */ after parameter. You should add the parameter name after any parameter which is ambiguous, such as true, false, or a constant numerical value. If you\u0027re passing a variable whose name makes it obvious what the value is, you don\u0027t need to include a comment.",
+      "range": {
+        "startLine": 29,
+        "startChar": 6,
+        "endLine": 29,
+        "endChar": 11
+      },
+      "revId": "f9b0bd363f2679eb278250b97d795f5ec9cda1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67174ebb_55b47505",
+        "filename": "components/cryptauth/remote_device_provider.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T17:58:17Z",
+      "side": 1,
+      "message": "nit: This is kinda vague. How about:\n\nNotify observers of change. Note that there is no need to check if |remote_device_list_| has changed here because the fetch is only started if the change result passed to OnSyncFinished() is CHANGED.",
+      "range": {
+        "startLine": 50,
+        "startChar": 48,
+        "endLine": 50,
+        "endChar": 78
+      },
+      "revId": "f9b0bd363f2679eb278250b97d795f5ec9cda1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1a1ca53_a8cc1faf",
+        "filename": "components/cryptauth/remote_device_provider.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T17:58:17Z",
+      "side": 1,
+      "message": "nit: Move above OnRemoteDevicesLoaded(). In general, functions should go in the same order as they appeared in the .h file, but this isn\u0027t a hard rule it there\u0027s a good reason to change the ordering. In this case, though, OnSyncFinished triggers an OnRemoteDevicesLoaded() call, so it makes sense that this would go before the other function.",
+      "range": {
+        "startLine": 56,
+        "startChar": 27,
+        "endLine": 56,
+        "endChar": 41
+      },
+      "revId": "f9b0bd363f2679eb278250b97d795f5ec9cda1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1026bf0a_15b863df",
+        "filename": "components/cryptauth/remote_device_provider.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T17:58:17Z",
+      "side": 1,
+      "message": "nit: Also check that sync_result is SUCCESS.",
+      "range": {
+        "startLine": 59,
+        "startChar": 6,
+        "endLine": 59,
+        "endChar": 26
+      },
+      "revId": "f9b0bd363f2679eb278250b97d795f5ec9cda1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edb8133d_9317497d",
+        "filename": "components/cryptauth/remote_device_provider.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T17:58:17Z",
+      "side": 1,
+      "message": "nit: For trivial getter or setter functions (i.e., functions that just return an instance field or set an instance field\u0027s value to a parameter), we usually inline them in the .h file. For those cases, the convention is that the function is the same name as the instance field.\n\nIn this case, let\u0027s change the instance field\u0027s name to something more descriptive, like synced_remote_devices_, then just add this function to the header:\n\nconst RemoteDeviceList\u0026 synced_remote_devices() {\n  return synced_remote_devices_;\n}\n\nAlso note that I returned a const reference instead of a RemoteDeviceList directly. This ensures that we don\u0027t have to perform an extra copy of the RemoteDeviceList. If client of this class really want a copy, they can copy the list themselves.",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 59
+      },
+      "revId": "f9b0bd363f2679eb278250b97d795f5ec9cda1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aa2c8d1_e0cf6ab7",
+        "filename": "components/cryptauth/remote_device_provider.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T17:58:17Z",
+      "side": 1,
+      "message": "nit: Newline before this.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 1
+      },
+      "revId": "f9b0bd363f2679eb278250b97d795f5ec9cda1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fcdddb4_3a8f5289",
+        "filename": "components/cryptauth/remote_device_provider.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T17:58:17Z",
+      "side": 1,
+      "message": "nit: Inner classes go above functions.",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 7
+      },
+      "revId": "f9b0bd363f2679eb278250b97d795f5ec9cda1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65c4f193_8799f8fd",
+        "filename": "components/cryptauth/remote_device_provider.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T17:58:17Z",
+      "side": 1,
+      "message": "nit: Unnecessary comment - this is already clear from the function name.",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 56
+      },
+      "revId": "f9b0bd363f2679eb278250b97d795f5ec9cda1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae7d8f10_ad35eb70",
+        "filename": "components/cryptauth/remote_device_provider.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T17:58:17Z",
+      "side": 1,
+      "message": "nit: Capital C.",
+      "range": {
+        "startLine": 36,
+        "startChar": 33,
+        "endLine": 36,
+        "endChar": 34
+      },
+      "revId": "f9b0bd363f2679eb278250b97d795f5ec9cda1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc2753bd_c3e189cf",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T17:58:17Z",
+      "side": 1,
+      "message": "nit: Newline before this.",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 1
+      },
+      "revId": "f9b0bd363f2679eb278250b97d795f5ec9cda1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "398b74bc_8636ae73",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T17:58:17Z",
+      "side": 1,
+      "message": "nit: Initialize to 0 below where you declare the variable, and make this constructor empty.",
+      "range": {
+        "startLine": 99,
+        "startChar": 19,
+        "endLine": 99,
+        "endChar": 54
+      },
+      "revId": "f9b0bd363f2679eb278250b97d795f5ec9cda1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fc8ee26_25b687e3",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T17:58:17Z",
+      "side": 1,
+      "message": "nit: Newline before this.",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 1
+      },
+      "revId": "f9b0bd363f2679eb278250b97d795f5ec9cda1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05f579ff_acaec4fa",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T17:58:17Z",
+      "side": 1,
+      "message": "nit: Non-overrides before overrides.",
+      "range": {
+        "startLine": 104,
+        "startChar": 6,
+        "endLine": 104,
+        "endChar": 35
+      },
+      "revId": "f9b0bd363f2679eb278250b97d795f5ec9cda1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a3f5bc7_74b20564",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T17:58:17Z",
+      "side": 1,
+      "message": "nit: Add comment before this block describing what\u0027s going on.",
+      "range": {
+        "startLine": 152,
+        "startChar": 0,
+        "endLine": 158,
+        "endChar": 7
+      },
+      "revId": "f9b0bd363f2679eb278250b97d795f5ec9cda1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49afb783_655b83ad",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T17:58:17Z",
+      "side": 1,
+      "message": "nit: Move below SetUp(), and add a comment explaining that this is the mock implementation of GetSyncedDevices().",
+      "range": {
+        "startLine": 173,
+        "startChar": 0,
+        "endLine": 173,
+        "endChar": 70
+      },
+      "revId": "f9b0bd363f2679eb278250b97d795f5ec9cda1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "900cc956_047fa578",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T17:58:17Z",
+      "side": 1,
+      "message": "Let\u0027s add a CreateRemoteDeviceProvider() function which creates the provider, adds the observer, and verifies that the initial values are what we expect. Then, each individual test can set up mock_device_manager_synced_device_infos_ before creating remote_device_provider_ so that we can test initialization.",
+      "range": {
+        "startLine": 189,
+        "startChar": 0,
+        "endLine": 199,
+        "endChar": 50
+      },
+      "revId": "f9b0bd363f2679eb278250b97d795f5ec9cda1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deb58e19_5432f2e2",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T17:58:17Z",
+      "side": 1,
+      "message": "nit: Call AddObserver() in CreateRemoteDeviceProvider() instead of in individual tests.",
+      "range": {
+        "startLine": 200,
+        "startChar": 0,
+        "endLine": 200,
+        "endChar": 54
+      },
+      "revId": "f9b0bd363f2679eb278250b97d795f5ec9cda1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43cae1a5_58832889",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T17:58:17Z",
+      "side": 1,
+      "message": "nit: DISALLOW_COPY_AND_ASSIGN() should be private.",
+      "range": {
+        "startLine": 222,
+        "startChar": 1,
+        "endLine": 222,
+        "endChar": 10
+      },
+      "revId": "f9b0bd363f2679eb278250b97d795f5ec9cda1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c62cdc3_611a857f",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T17:58:17Z",
+      "side": 1,
+      "message": "Let\u0027s add a helper function which verifies that the synced devices are equivalent to what we expect them to be. You can add it below CreateRemoteDeviceProvider().\n\nvoid VerifySyncedDevicesMatchExpectation() {\n  std::vector\u003ccryptauth::RemoteDevice\u003e synced_devices \u003d\n      remote_device_provider_-\u003eGetSyncedDevices();\n  for (const auto\u0026 remote_device : synced_devices) {\n    // Verify that remote_device corresponds to a device in\n    // mock_device_manager_synced_device_infos_.\n  }\n}\n\nThen, you can write a couple tests which verify that the initial devices are what we expect:\n\n// Add test_device_infos_\u0027s element 0 and 1 to\n// mock_device_manager_synced_device_infos_.\nCreateRemoteDeviceProvider();\nVerifySyncedDevicesMatchExpectation();",
+      "range": {
+        "startLine": 227,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 54
+      },
+      "revId": "f9b0bd363f2679eb278250b97d795f5ec9cda1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90176f38_99828cae",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T17:58:17Z",
+      "side": 1,
+      "message": "Instead of writing multiple functions which each test one subset of functionality, let\u0027s write more comprehensive tests that test how the class would actually be used. A test would include testing the initial synced devices, getting some syncs finished, checking to see that the new RemoteDevices are generated correctly, and checking to see that observers are notified correctly. The test should include multiple syncs.\n\nFor your other tests, we should test edge cases on this flow. For example:\n* Verify that when a sync fails or when a sync completes and results in no change, we don\u0027t re-generate RemoteDevices.\n* Verify what happens when a new sync occurs while regenerating is already in progress.\n* Verify different sets of initial values.",
+      "range": {
+        "startLine": 238,
+        "startChar": 0,
+        "endLine": 259,
+        "endChar": 1
+      },
+      "revId": "f9b0bd363f2679eb278250b97d795f5ec9cda1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
