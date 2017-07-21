@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c7f26ff1_fa2611f9",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-07-21T17:50:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25a923d4_608e5eb0",
+      "range": {
+        "startLine": 510,
+        "startChar": 0,
+        "endLine": 510,
+        "endChar": 49
+      },
+      "revId": "0674aa99ce75397eec358e51bff223cbfc7b942e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9eda3531_36fed3df",
         "filename": "ui/app_list/views/search_box_view.h",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1c57e2b6_ad88ad2f",
+        "filename": "ui/app_list/views/search_box_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-07-21T17:50:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9eda3531_36fed3df",
+      "range": {
+        "startLine": 55,
+        "startChar": 16,
+        "endLine": 55,
+        "endChar": 52
+      },
+      "revId": "0674aa99ce75397eec358e51bff223cbfc7b942e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbf7e748_7a86e609",
         "filename": "ui/app_list/views/search_box_view.h",
         "patchSetId": 9
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-21T15:50:03Z",
       "side": 1,
       "message": "if you set it in CTOR you no need to double define it.",
+      "range": {
+        "startLine": 199,
+        "startChar": 25,
+        "endLine": 199,
+        "endChar": 30
+      },
+      "revId": "0674aa99ce75397eec358e51bff223cbfc7b942e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c75f94b8_748c16dc",
+        "filename": "ui/app_list/views/search_box_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-07-21T17:50:24Z",
+      "side": 1,
+      "message": "Removed from CTOR.",
+      "parentUuid": "fbf7e748_7a86e609",
       "range": {
         "startLine": 199,
         "startChar": 25,
