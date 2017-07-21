@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "93f06194_0dae9281",
+        "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1229489
+      },
+      "writtenOn": "2017-07-21T21:33:41Z",
+      "side": 1,
+      "message": "No, I\u0027m thinking it could make sense to have Copy() return a bool instead of having a void return type, so that in Cut() we could just check if Copy() was successful before trying to delete. What do you think about that?",
+      "parentUuid": "b96d8bc2_67abbe05",
+      "revId": "5625bf25582539bc8f315d1b45a958e1b8356789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c9ca78d_5649abc5",
         "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerImpl.cpp",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "5625bf25582539bc8f315d1b45a958e1b8356789",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89f2a63b_2f533f69",
+        "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 829,
+      "author": {
+        "id": 1229489
+      },
+      "writtenOn": "2017-07-21T21:33:41Z",
+      "side": 1,
+      "message": "Done - after going through how key events are handled (CTRL+C, CTRL+X, etc. are registered as kKeyDown events), I\u0027m just going to check kKeyDown events and let the kChar events through since doing so doesn\u0027t have any effect.",
+      "parentUuid": "6c9ca78d_5649abc5",
+      "revId": "5625bf25582539bc8f315d1b45a958e1b8356789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "310a949f_382e6033",
+        "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1229489
+      },
+      "writtenOn": "2017-07-21T21:33:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15f75ef8_b6852889",
+      "revId": "5625bf25582539bc8f315d1b45a958e1b8356789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c23e27cc_a22c7084",
         "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerImpl.cpp",
         "patchSetId": 3
@@ -85,6 +139,24 @@
       "revId": "5625bf25582539bc8f315d1b45a958e1b8356789",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1d473b6_632e1169",
+        "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 853,
+      "author": {
+        "id": 1229489
+      },
+      "writtenOn": "2017-07-21T21:33:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c23e27cc_a22c7084",
+      "revId": "5625bf25582539bc8f315d1b45a958e1b8356789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
