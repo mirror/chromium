@@ -11,6 +11,9 @@
 
 @class NumberBadgeView;
 
+// Accessibility identifier for the text badge on the reading list cell.
+extern NSString* const kReadingListNewFeatureBadgeAccessibilityIdentifier;
+
 // Specialization of a ToolsMenuViewItem for the reading list.
 @interface ReadingListMenuViewItem : ToolsMenuViewItem
 @end
@@ -20,12 +23,20 @@
 // based on existence of unread items.
 @interface ReadingListMenuViewCell : ToolsMenuViewCell
 
-// Update the badge count according to |count|. Can be animated or not.
+// Update the badge count according to |count|. Can be animated or not. If
+// |count| is greater than 0, then the new feature badge is animated out,
+// because only one badge should be visible and the number badge takes
+// precedence.
 - (void)updateBadgeCount:(NSInteger)count animated:(BOOL)animated;
 
 // Update the seen state according to |hasUnseenItems|. Can be animated or
 // not.
 - (void)updateSeenState:(BOOL)hasUnseenItems animated:(BOOL)animated;
+
+// Displays or hides the new feature badge based on |showNewFeatureBadge|. Can
+// be animated or not.
+- (void)updateShowNewFeatureBadge:(BOOL)showNewFeatureBadge
+                         animated:(BOOL)animated;
 
 @end
 

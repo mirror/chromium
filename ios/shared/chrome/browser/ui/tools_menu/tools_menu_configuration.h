@@ -13,6 +13,9 @@
 namespace web {
 enum class UserAgentType : short;
 }  // namespace web
+namespace feature_engagement_tracker {
+class FeatureEngagementTracker;
+}  // namespace feature_engagement_tracker
 
 // Configuation defining options that can be set to change the tools menu's
 // appearance. All boolean properties are set to NO, and |userAgentType| is set
@@ -24,6 +27,8 @@ enum class UserAgentType : short;
 @property(nonatomic, getter=hasNoOpenedTabs) BOOL noOpenedTabs;
 // Indicates that the menu is being shown while in incognito mode.
 @property(nonatomic, getter=isInIncognito) BOOL inIncognito;
+// Indicates that the menu should show a "NEW" badge on the reading list item.
+@property(nonatomic) BOOL showReadingListNewBadge;
 
 // Indicates that the menu is being shown while user agent is |userAgentType|.
 // If NONE, shows "Request Desktop Site" in disabled state.
@@ -47,6 +52,9 @@ enum class UserAgentType : short;
 // Records the time that the tools menu was requested; value is the time
 // interval since the NSDate referenceDate.
 @property(nonatomic, assign) NSTimeInterval requestStartTime;
+// Records events for the use of in-product help. Defaults to |NULL|.
+@property(nonatomic, assign)
+    feature_engagement_tracker::FeatureEngagementTracker* engagementTracker;
 
 // Initialize a ToolsMenuContext instance with default values. |displayView| is
 // the weakly-held parent view within which the popup tools menu using this
