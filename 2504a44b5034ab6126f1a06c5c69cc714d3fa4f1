@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61214fc2_72d8eb8f",
+        "filename": "content/browser/renderer_host/native_web_keyboard_event_aura.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-21T19:46:12Z",
+      "side": 1,
+      "message": "Am I correct that web_event is coming from the (untrusted) renderer, and therefore this cast could be unsafe, because windows_key_code could be outside of the ui::KeyboardCode enum range (therefore, undefined behavior)?",
+      "revId": "2504a44b5034ab6126f1a06c5c69cc714d3fa4f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf50e590_5463a27f",
+        "filename": "content/browser/renderer_host/native_web_keyboard_event_aura.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-21T19:46:12Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "2504a44b5034ab6126f1a06c5c69cc714d3fa4f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
