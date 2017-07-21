@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "6a2cccef_42c169d7",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-21T15:24:14Z",
+      "side": 1,
+      "message": "I\u0027m going to add\n\n if (state() \u003d\u003d STATE_DISABLED \u0026\u0026 !is_prominent_)\n\nButton::STATE_DISABLED is later overwritten below when the button |is_prominent_|.",
+      "range": {
+        "startLine": 253,
+        "startChar": 4,
+        "endLine": 255,
+        "endChar": 80
+      },
+      "revId": "4d3e3ed170f3e2fcfc6672208318fd6e40700c72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d86c110_1da0e5e8",
         "filename": "ui/views/controls/button/md_text_button.cc",
         "patchSetId": 8
@@ -33,6 +56,24 @@
       "revId": "4d3e3ed170f3e2fcfc6672208318fd6e40700c72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e25bcd6b_148245bb",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-21T15:24:14Z",
+      "side": 1,
+      "message": "From how I read the code, the enabled text color is always the basis for calculating the stroke color. The stroke is first lightened to 0xcccccc which is constant between Harmony and non-Harmony. It is then later further lightened down to 0xe6e6e6 for the disabled state.",
+      "parentUuid": "7d86c110_1da0e5e8",
+      "revId": "4d3e3ed170f3e2fcfc6672208318fd6e40700c72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +97,30 @@
       "revId": "4d3e3ed170f3e2fcfc6672208318fd6e40700c72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0ef9c5b_2c575a55",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-21T15:24:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7b9bff4_3272da9a",
+      "range": {
+        "startLine": 296,
+        "startChar": 51,
+        "endLine": 296,
+        "endChar": 52
+      },
+      "revId": "4d3e3ed170f3e2fcfc6672208318fd6e40700c72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -91,6 +156,24 @@
       "revId": "4d3e3ed170f3e2fcfc6672208318fd6e40700c72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7e3fa9e_3ed9d8e6",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-21T15:24:14Z",
+      "side": 1,
+      "message": "The only other place this is used is on the |bg_color| when the button |is_prominent_|. In that case, this code isn\u0027t executed. The code paths seem to be mutually exclusive. For that reason I think we can leave the other instance of gfx::kDisabledControlAlpha alone for now.",
+      "parentUuid": "fa7f4bbe_d182fce9",
+      "revId": "4d3e3ed170f3e2fcfc6672208318fd6e40700c72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
