@@ -58,8 +58,10 @@ var FilesQuickView = Polymer({
 
   // Opens the dialog.
   open: function() {
-    if (!this.isOpened())
+    if (!this.isOpened()) {
       this.$.dialog.showModal();
+      this.$['open-button'].blur();
+    }
   },
 
   // Closes the dialog.
