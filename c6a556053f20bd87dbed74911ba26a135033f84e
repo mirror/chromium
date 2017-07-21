@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3a2af250_aa6f9e90",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_list_prefs.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-07-21T15:13:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bb6bd71_4e5abe58",
+      "range": {
+        "startLine": 459,
+        "startChar": 26,
+        "endLine": 459,
+        "endChar": 76
+      },
+      "revId": "c6a556053f20bd87dbed74911ba26a135033f84e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3883c43_082f3ad5",
         "filename": "chrome/browser/ui/app_list/arc/arc_app_list_prefs.h",
         "patchSetId": 3
@@ -59,6 +83,54 @@
       "writtenOn": "2017-07-21T14:27:52Z",
       "side": 1,
       "message": "masks should be uint32_t or uint64_t. or std::bitset.",
+      "range": {
+        "startLine": 460,
+        "startChar": 2,
+        "endLine": 460,
+        "endChar": 5
+      },
+      "revId": "c6a556053f20bd87dbed74911ba26a135033f84e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faf7c441_a255a533",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_list_prefs.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-07-21T15:13:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3883c43_082f3ad5",
+      "range": {
+        "startLine": 460,
+        "startChar": 6,
+        "endLine": 460,
+        "endChar": 28
+      },
+      "revId": "c6a556053f20bd87dbed74911ba26a135033f84e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eb15874f_74d0ed41",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_list_prefs.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-07-21T15:13:27Z",
+      "side": 1,
+      "message": "Yes and no :) Pref has method SetInteger. That is why it was introduced as int.",
+      "parentUuid": "063530be_0f94f694",
       "range": {
         "startLine": 460,
         "startChar": 2,
