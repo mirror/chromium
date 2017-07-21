@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4eb2f587_6bad8866",
+        "filename": "chrome/browser/vr/elements/transience_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-21T20:14:47Z",
+      "side": 1,
+      "message": "nit: Swap method order?  It\u0027s show then hide in the declarations and other spots above.",
+      "revId": "13b3fc069d9a80e70a1d55efc6d1f212dc64f7ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e16dcdf2_61b1ba54",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-21T20:14:47Z",
+      "side": 1,
+      "message": "This is okay, but I think I would have done the 1.0 setting in these elements\u0027 constructors, when constructing their transience manager, to avoid changing calls in here, and in those element constructors.  Non-1.0 values seem like future knobs we can use if needed.",
+      "revId": "13b3fc069d9a80e70a1d55efc6d1f212dc64f7ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
