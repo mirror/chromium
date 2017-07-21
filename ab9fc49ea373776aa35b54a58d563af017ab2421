@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff8d9906_c1e05aa4",
+        "filename": "docs/fuchsia_sdk_updates.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001445
+      },
+      "writtenOn": "2017-07-21T18:05:53Z",
+      "side": 1,
+      "message": "what out of net-dev are you interested in having in the SDK?",
+      "revId": "ab9fc49ea373776aa35b54a58d563af017ab2421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
