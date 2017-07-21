@@ -42,6 +42,75 @@
     },
     {
       "key": {
+        "uuid": "a6a0a532_36536edc",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8IntersectionObserverDelegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-07-21T12:07:14Z",
+      "side": 1,
+      "message": "We shouldn\u0027t save a ScriptState as a member.\nWhat we need here is just an ExecutionContext, and no need to remember a ScriptState.  ContextClient may be the best option to use.\n\nIntersectionObserverDelegateImpl may also want to inherit from ContextClient, I guess.",
+      "range": {
+        "startLine": 38,
+        "startChar": 22,
+        "endLine": 38,
+        "endChar": 35
+      },
+      "revId": "ce6017bb95768a41df9e4d3ead058681045f2a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52f841db_ee0674e1",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/custom/V8IntersectionObserverCustom.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-07-21T12:07:14Z",
+      "side": 1,
+      "message": "The current context is the right context here, but if possible, could you use [ConstructorCallWith\u003dScriptState] rather than doing it for yourself?  (I knew that this CL doesn\u0027t touch this part, but could you give me a favor?)",
+      "range": {
+        "startLine": 52,
+        "startChar": 19,
+        "endLine": 52,
+        "endChar": 26
+      },
+      "revId": "ce6017bb95768a41df9e4d3ead058681045f2a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3efbb0e0_401d0904",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/custom/V8IntersectionObserverCustom.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-07-21T12:07:14Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 54,
+        "startChar": 29,
+        "endLine": 54,
+        "endChar": 36
+      },
+      "revId": "ce6017bb95768a41df9e4d3ead058681045f2a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9df650e_061758bb",
         "filename": "third_party/WebKit/Source/core/intersection_observer/IntersectionObserverDelegate.h",
         "patchSetId": 2
