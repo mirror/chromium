@@ -48,9 +48,14 @@ PP_Bool CanCut(PP_Instance instance) {
   return ret;
 }
 
+void DeleteSelectedText(PP_Instance instance) {
+  HostDispatcher::GetForInstance(instance)->Send(
+      new PpapiMsg_PPPPdf_DeleteSelectedText(API_ID_PPP_PDF, instance));
+}
+
 const PPP_Pdf ppp_pdf_interface = {
     &GetLinkAtPosition,   &Transform, &GetPrintPresetOptionsFromDocument,
-    &EnableAccessibility, &CanCut,
+    &EnableAccessibility, &CanCut,    &DeleteSelectedText,
 };
 #else
 // The NaCl plugin doesn't need the host side interface - stub it out.
@@ -88,6 +93,8 @@ bool PPP_Pdf_Proxy::OnMessageReceived(const IPC::Message& msg) {
     IPC_MESSAGE_HANDLER(PpapiMsg_PPPPdf_EnableAccessibility,
                         OnPluginMsgEnableAccessibility)
     IPC_MESSAGE_HANDLER(PpapiMsg_PPPPdf_CanCut, OnPluginMsgCanCut)
+    IPC_MESSAGE_HANDLER(PpapiMsg_PPPPdf_DeleteSelectedText,
+                        OnPluginMsgDeleteSelectedText)
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
   return handled;
@@ -119,6 +126,11 @@ void PPP_Pdf_Proxy::OnPluginMsgEnableAccessibility(PP_Instance instance) {
 void PPP_Pdf_Proxy::OnPluginMsgCanCut(PP_Instance instance, PP_Bool* result) {
   if (ppp_pdf_)
     *result = CallWhileUnlocked(ppp_pdf_->CanCut, instance);
+}
+
+void PPP_Pdf_Proxy::OnPluginMsgDeleteSelectedText(PP_Instance instance) {
+  if (ppp_pdf_)
+    CallWhileUnlocked(ppp_pdf_->DeleteSelectedText, instance);
 }
 
 }  // namespace proxy
