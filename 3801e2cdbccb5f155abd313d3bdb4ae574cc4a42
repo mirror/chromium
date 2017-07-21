@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3473d8bd_429a3aa3",
+        "filename": "chrome/browser/signin/easy_unlock_service_regular.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-21T19:36:40Z",
+      "side": 1,
+      "message": "So I thought about this for a bit, and this CHANGED enum made sense back when CryptAuthDeviceManager was only used for EasyUnlock. However, now that it is a generic manager for things like Magic Tether as well, we can no longer rely on this value to indicate that the unlock keys changed (even though it looks like its still the case in the implementation).\n\nI plan to clean this up, but that would bloat this CL.",
+      "parentUuid": "ed6212ef_bb59dffa",
+      "range": {
+        "startLine": 540,
+        "startChar": 2,
+        "endLine": 540,
+        "endChar": 76
+      },
+      "revId": "3801e2cdbccb5f155abd313d3bdb4ae574cc4a42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6fad1472_a44493f0",
         "filename": "chrome/browser/signin/easy_unlock_service_regular.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-21T08:49:10Z",
       "side": 1,
       "message": "This legacy \"pairing\" in the names is a bit misleading for our V2. We should probably try to clean it up at some point...",
+      "range": {
+        "startLine": 603,
+        "startChar": 6,
+        "endLine": 603,
+        "endChar": 41
+      },
+      "revId": "3801e2cdbccb5f155abd313d3bdb4ae574cc4a42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04cff166_94e382be",
+        "filename": "chrome/browser/signin/easy_unlock_service_regular.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-21T19:36:40Z",
+      "side": 1,
+      "message": "Yeah I agree. \"Phone changed\" is probably clearer and more descriptive.",
+      "parentUuid": "6fad1472_a44493f0",
       "range": {
         "startLine": 603,
         "startChar": 6,
@@ -68,6 +116,30 @@
       "revId": "3801e2cdbccb5f155abd313d3bdb4ae574cc4a42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a7dc6b0_b41ca549",
+        "filename": "chrome/browser/signin/easy_unlock_service_regular.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-21T19:36:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03b1a033_0288f1b9",
+      "range": {
+        "startLine": 181,
+        "startChar": 2,
+        "endLine": 181,
+        "endChar": 57
+      },
+      "revId": "3801e2cdbccb5f155abd313d3bdb4ae574cc4a42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
