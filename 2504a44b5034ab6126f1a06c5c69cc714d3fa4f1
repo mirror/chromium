@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "415b5dbe_0638c47e",
+        "filename": "content/browser/renderer_host/native_web_keyboard_event_aura.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-21T19:55:17Z",
+      "side": 1,
+      "message": "Hmm.. the enum ui::KeyboardCode doesn\u0027t encompass all event ids and is generally blindly cast from a word from the native OS.\nSee:\nhttps://cs.chromium.org/chromium/src/ui/events/keycodes/keyboard_code_conversion_win.cc?dr\u003dCSs\u0026l\u003d27",
+      "parentUuid": "61214fc2_72d8eb8f",
+      "revId": "2504a44b5034ab6126f1a06c5c69cc714d3fa4f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bf50e590_5463a27f",
         "filename": "content/browser/renderer_host/native_web_keyboard_event_aura.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-21T19:46:12Z",
       "side": 1,
       "message": "Ditto",
+      "revId": "2504a44b5034ab6126f1a06c5c69cc714d3fa4f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a583dbc0_c39387c2",
+        "filename": "content/browser/renderer_host/native_web_keyboard_event_aura.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-21T19:55:17Z",
+      "side": 1,
+      "message": "Yes. I should probably call https://cs.chromium.org/chromium/src/ui/events/keycodes/dom/keycode_converter.cc?dr\u003dC\u0026l\u003d82\n\ninstead.",
+      "parentUuid": "bf50e590_5463a27f",
       "revId": "2504a44b5034ab6126f1a06c5c69cc714d3fa4f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
