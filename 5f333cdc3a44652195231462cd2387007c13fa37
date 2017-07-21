@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "90415732_2ecad0b2",
+        "filename": "net/cert/internal/cert_errors.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-21T21:37:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87566529_d069192c",
+      "revId": "5f333cdc3a44652195231462cd2387007c13fa37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21cba16c_fe70d950",
         "filename": "net/cert/internal/path_builder.h",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "bb441213_76cacc11",
+        "filename": "net/cert/internal/path_builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-21T21:37:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21cba16c_fe70d950",
+      "range": {
+        "startLine": 128,
+        "startChar": 42,
+        "endLine": 128,
+        "endChar": 55
+      },
+      "revId": "5f333cdc3a44652195231462cd2387007c13fa37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6d1679a_90cc500a",
         "filename": "net/cert/internal/path_builder.h",
         "patchSetId": 2
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "3be2f073_b5b25ca9",
+        "filename": "net/cert/internal/path_builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-21T21:37:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6d1679a_90cc500a",
+      "revId": "5f333cdc3a44652195231462cd2387007c13fa37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "648f748b_2e018211",
         "filename": "net/cert/internal/path_builder.h",
         "patchSetId": 2
@@ -70,6 +130,24 @@
       "writtenOn": "2017-07-21T21:27:44Z",
       "side": 1,
       "message": "note that it\u0027s only called on paths that passed verification?",
+      "revId": "5f333cdc3a44652195231462cd2387007c13fa37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8e1373c_61edb2a8",
+        "filename": "net/cert/internal/path_builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-21T21:37:33Z",
+      "side": 1,
+      "message": "Done.\n\n(We could extend this in the future to be called on failed paths too, which could allow consumers to remove errors).",
+      "parentUuid": "648f748b_2e018211",
       "revId": "5f333cdc3a44652195231462cd2387007c13fa37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
