@@ -7,8 +7,8 @@
 
 #include <memory>
 
+#include "ash/shelf/shelf_context_menu_model.h"
 #include "base/macros.h"
-#include "chrome/browser/ui/ash/launcher/launcher_context_menu.h"
 #include "extensions/common/constants.h"
 
 class ChromeLauncherController;

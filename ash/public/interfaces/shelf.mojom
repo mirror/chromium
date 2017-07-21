@@ -11,11 +11,13 @@ import "ui/events/mojo/event.mojom";
 // The actions that may be performed when a shelf item is selected.
 // These values match ash::ShelfAction.
 enum ShelfAction {
-  NONE,              // No action was taken.
-  WINDOW_CREATED,    // A new window was created.
-  WINDOW_ACTIVATED,  // An existing inactive window was activated.
-  WINDOW_MINIMIZED,  // The currently active window was minimized.
-  APP_LIST_SHOWN,    // The app list launcher menu was shown.
+  NONE,                   // No action was taken.
+  WINDOW_CREATED,         // A new window was created.
+  WINDOW_ACTIVATED,       // An existing inactive window was activated.
+  WINDOW_MINIMIZED,       // The currently active window was minimized.
+  APP_LIST_SHOWN,         // The app list launcher menu was shown.
+  SHOW_APPLICATION_MENU,  // No action taken; an app menu should be shown.
+  SHOW_CONTEXT_MENU,      // No action taken; a context menu should be shown.
 };
 
 // These values match ash::ShelfAlignment.

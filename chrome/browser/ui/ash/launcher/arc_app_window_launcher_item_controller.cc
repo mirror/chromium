@@ -42,6 +42,7 @@ void ArcAppWindowLauncherItemController::ItemSelected(
     int64_t display_id,
     ash::ShelfLaunchSource source,
     ItemSelectedCallback callback) {
+  LOG(ERROR) << "MSW ArcAppWindowLauncherItemController::ItemSelected";
   if (window_count()) {
     AppWindowLauncherItemController::ItemSelected(std::move(event), display_id,
                                                   source, std::move(callback));

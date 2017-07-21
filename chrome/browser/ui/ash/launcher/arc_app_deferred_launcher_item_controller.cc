@@ -37,6 +37,8 @@ void ArcAppDeferredLauncherItemController::ItemSelected(
     int64_t display_id,
     ash::ShelfLaunchSource source,
     ItemSelectedCallback callback) {
+  LOG(ERROR) << "MSW ArcAppDeferredLauncherItemController::ItemSelected";
+
   std::move(callback).Run(ash::SHELF_ACTION_NONE, base::nullopt);
 }
 
