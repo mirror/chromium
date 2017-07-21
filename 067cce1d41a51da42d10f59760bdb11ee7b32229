@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "859b4542_51003b50",
+        "filename": "chrome/browser/ui/views/frame/browser_window_property_manager_browsertest_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-07-21T22:37:18Z",
+      "side": 1,
+      "message": "I tried a bunch of variations of this and c_str was the only one that I could make work, but then I moved it to this function later and I guess StringType just needed to be coerced to wstring first. Anyway, this is done.",
+      "parentUuid": "95ef1261_d5485961",
+      "revId": "067cce1d41a51da42d10f59760bdb11ee7b32229",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f80eb22_2bca76f2",
         "filename": "chrome/browser/ui/views/frame/browser_window_property_manager_browsertest_win.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "843e2197_046ef9c5",
+        "filename": "chrome/browser/ui/views/frame/browser_window_property_manager_browsertest_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-07-21T22:37:18Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "4f80eb22_2bca76f2",
+      "revId": "067cce1d41a51da42d10f59760bdb11ee7b32229",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f44b1d9_856965ed",
         "filename": "chrome/browser/ui/views/frame/browser_window_property_manager_browsertest_win.cc",
         "patchSetId": 4
@@ -50,6 +86,24 @@
       "revId": "067cce1d41a51da42d10f59760bdb11ee7b32229",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87c640ec_737b8f3f",
+        "filename": "chrome/browser/ui/views/frame/browser_window_property_manager_browsertest_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-07-21T22:37:18Z",
+      "side": 1,
+      "message": "I went to go investigate why the other test didn\u0027t need this call and it turns out it actually did! It was racing icon creation, but icon creation was always fast enough to finish first. So I added the necessary calls to flush the icon creation tasks and now they don\u0027t race.\n\nHowever this test isn\u0027t reliant on icon creation... so I\u0027m not actually sure what needs to be flushed here. It isn\u0027t BrowserWindowPropertyManager::UpdateWindowProperties because that occurs on browser creation, which already happened at this point.\n\nI tried to only flush the task scheduler, but the task scheduler\u0027s test API seems to interfere with the browser test infrastructure in a way I don\u0027t understand. At any rate, the icon creation task isn\u0027t migrated to TaskScheduler yet.",
+      "parentUuid": "7f44b1d9_856965ed",
+      "revId": "067cce1d41a51da42d10f59760bdb11ee7b32229",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

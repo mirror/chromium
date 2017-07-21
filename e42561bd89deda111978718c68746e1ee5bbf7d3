@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0eb41bef_6e46cbdd",
+        "filename": "chrome/browser/ui/views/frame/browser_window_property_manager_browsertest_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-07-21T22:37:18Z",
+      "side": 0,
+      "message": "It may have been true in the past; this file hasn\u0027t had any attention in a few years. But git cl format reordered it without me noticing and then it passed a CQ run, so it must be a lie now.",
+      "parentUuid": "196eb074_8bc28a62",
+      "revId": "e42561bd89deda111978718c68746e1ee5bbf7d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "069948e1_bef72fec",
         "filename": "chrome/browser/ui/views/frame/browser_window_property_manager_browsertest_win.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "e42561bd89deda111978718c68746e1ee5bbf7d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b77f7ea3_01f7bac2",
+        "filename": "chrome/browser/ui/views/frame/browser_window_property_manager_browsertest_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-07-21T22:37:18Z",
+      "side": 0,
+      "message": "It still applies, but it was un-necessary to do this thread dance to make sure the icon gets created. See my other reply below.",
+      "parentUuid": "069948e1_bef72fec",
+      "revId": "e42561bd89deda111978718c68746e1ee5bbf7d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
