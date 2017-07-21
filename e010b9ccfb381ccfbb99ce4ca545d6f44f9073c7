@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7630e81e_9aae3aeb",
+        "filename": "chrome/browser/resources/settings/languages_page/add_languages_dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-21T20:22:42Z",
+      "side": 1,
+      "message": "It looks like null is a sentinel, so maybe use \u003d\u003d\u003d",
+      "revId": "e010b9ccfb381ccfbb99ce4ca545d6f44f9073c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
