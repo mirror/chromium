@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "06868fe0_03ab3bed",
+        "filename": "ui/login/account_picker/md_user_pod_row.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 4205,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-21T19:07:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "725b7752_c983954c",
+      "revId": "3dacfd49f03dc2495e97eb0c718edae7eac730aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6774f2d_6d11a757",
         "filename": "ui/login/account_picker/md_user_pod_row.js",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-21T03:53:03Z",
       "side": 1,
       "message": "AFAIK, this is used when screen overlays are closed (like Gaia screen, settings, etc..., usually by cancelling it), and control returns to the Signin screen.\n\nThe tricky part is what should be focused after this? Could we just synchronize wallpaper with focused element?",
+      "revId": "3dacfd49f03dc2495e97eb0c718edae7eac730aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0551d308_f49a0e40",
+        "filename": "ui/login/account_picker/md_user_pod_row.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 4222,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-21T19:07:52Z",
+      "side": 1,
+      "message": "Done. Currently no pod is focused after the Gaia screen is closed, but this CL will make it focus on one pod.",
+      "parentUuid": "f6774f2d_6d11a757",
       "revId": "3dacfd49f03dc2495e97eb0c718edae7eac730aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
