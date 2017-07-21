@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c84ba039_9c767a97",
+        "filename": "third_party/WebKit/Source/modules/sensor/Sensor.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-21T17:40:35Z",
+      "side": 0,
+      "message": "Why not update this console message?",
+      "revId": "cec5fdea187d0edf9491000ba9989129f188e50e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

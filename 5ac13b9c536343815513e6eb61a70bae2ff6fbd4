@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f0ad1b7_f9dd6188",
+        "filename": "services/device/generic_sensor/sensor_provider_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-21T17:40:35Z",
+      "side": 1,
+      "message": "I\u0027m tempted to suggest that these two checks should be DCHECK but recognize that since these values may come from the platform they could be wacky. Please add a comment explaining this.",
+      "revId": "5ac13b9c536343815513e6eb61a70bae2ff6fbd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ad13305_590b8061",
+        "filename": "services/device/public/cpp/generic_sensor/platform_sensor_configuration.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-21T17:40:35Z",
+      "side": 1,
+      "message": "DCHECK_GT",
+      "range": {
+        "startLine": 11,
+        "startChar": 2,
+        "endLine": 11,
+        "endChar": 8
+      },
+      "revId": "5ac13b9c536343815513e6eb61a70bae2ff6fbd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2bcf713_299d5468",
+        "filename": "services/device/public/cpp/generic_sensor/platform_sensor_configuration.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-21T17:40:35Z",
+      "side": 1,
+      "message": "DCHECK_GT",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 8
+      },
+      "revId": "5ac13b9c536343815513e6eb61a70bae2ff6fbd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
