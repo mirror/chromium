@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a99abac0_5ae5c110",
+        "filename": "content/renderer/media/mojo_audio_input_ipc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-07-21T13:20:58Z",
+      "side": 1,
+      "message": "Sure thing!",
+      "parentUuid": "efcf8650_14f508d1",
+      "revId": "5bb301d13b796bbfde8d8e82fa1e3cdbaac81b3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7f02e48f_1b6c9f98",
         "filename": "content/renderer/media/mojo_audio_input_ipc.cc",
         "patchSetId": 1
@@ -65,6 +83,24 @@
       "writtenOn": "2017-07-21T11:03:39Z",
       "side": 1,
       "message": "I\u0027m not a fan of the FactoryAccessor since it requires the factory to already exist. Instead, I\u0027d take a frame_id in the constructor, and post a task to the main thread from here. On the main thread, you could call something like RenderFrame::FromRoutingId(frame_id)-\u003eGetAudioInputStreamFactory(), which returns a lazily initialized factory*, and use that.",
+      "revId": "5bb301d13b796bbfde8d8e82fa1e3cdbaac81b3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "844e5eac_39f7d189",
+        "filename": "content/renderer/media/mojo_audio_input_ipc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-07-21T13:20:58Z",
+      "side": 1,
+      "message": "That\u0027s not _strictly_ true though, is it? Couldn\u0027t the accessor create the factory for the frame if it didn\u0027t already exist? Regardless, I\u0027ll do as you suggest instead. It\u0027s a bit neater than having to send around a callback.",
+      "parentUuid": "7f02e48f_1b6c9f98",
       "revId": "5bb301d13b796bbfde8d8e82fa1e3cdbaac81b3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -88,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "25603e4c_2aadaa88",
+        "filename": "content/renderer/media/mojo_audio_input_ipc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-07-21T13:20:58Z",
+      "side": 1,
+      "message": "Should I use a WeakPtr to this instead (like for the authorization callback for the output) or have it somehow hold on to this while there\u0027s a CreateStream request in flight?",
+      "parentUuid": "43ab5628_bfa958ae",
+      "revId": "5bb301d13b796bbfde8d8e82fa1e3cdbaac81b3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1afc47b_8404ff83",
         "filename": "content/renderer/media/mojo_audio_input_ipc.cc",
         "patchSetId": 1
@@ -99,6 +153,24 @@
       "writtenOn": "2017-07-21T11:03:39Z",
       "side": 1,
       "message": "I\u0027d also set this error handler for |client_binding_|.",
+      "revId": "5bb301d13b796bbfde8d8e82fa1e3cdbaac81b3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbb391d0_b5290abc",
+        "filename": "content/renderer/media/mojo_audio_input_ipc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-07-21T13:20:58Z",
+      "side": 1,
+      "message": "Alright!",
+      "parentUuid": "b1afc47b_8404ff83",
       "revId": "5bb301d13b796bbfde8d8e82fa1e3cdbaac81b3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -140,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "2189e351_23ffde81",
+        "filename": "content/renderer/media/mojo_audio_input_ipc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-07-21T13:20:58Z",
+      "side": 1,
+      "message": "I think the audio backend code is written to adjust for any discrepancies between the requested buffer size and the actual hardware buffer size. So is memory_length here expected to be length * segment_count?)",
+      "parentUuid": "ca65e6b9_e6508863",
+      "revId": "5bb301d13b796bbfde8d8e82fa1e3cdbaac81b3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1feb52ab_25ae48b9",
         "filename": "content/renderer/media/mojo_audio_input_ipc.cc",
         "patchSetId": 1
@@ -169,6 +259,24 @@
       "side": 1,
       "message": "This will be called on the thread on which you bound |client_binding_|, so this is fine.",
       "parentUuid": "1feb52ab_25ae48b9",
+      "revId": "5bb301d13b796bbfde8d8e82fa1e3cdbaac81b3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2df87c14_8e82069f",
+        "filename": "content/renderer/media/mojo_audio_input_ipc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1210379
+      },
+      "writtenOn": "2017-07-21T13:20:58Z",
+      "side": 1,
+      "message": "Hooray! \\o/",
+      "parentUuid": "402247a3_f59e2b76",
       "revId": "5bb301d13b796bbfde8d8e82fa1e3cdbaac81b3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
