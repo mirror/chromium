@@ -683,6 +683,9 @@ TEST(NetworkQualityEstimatorTest, DefaultObservations) {
       true /* add_default_platform_observations */,
       base::MakeUnique<BoundTestNetLog>());
 
+  estimator.SimulateNetworkChange(
+      NetworkChangeNotifier::ConnectionType::CONNECTION_UNKNOWN, "unknown-1");
+
   histogram_tester.ExpectBucketCount(
       "NQE.RTT.ObservationSource",
       NETWORK_QUALITY_OBSERVATION_SOURCE_DEFAULT_HTTP_FROM_PLATFORM, 1);
@@ -795,6 +798,8 @@ TEST(NetworkQualityEstimatorTest, DefaultObservationsOverridden) {
       nullptr, variation_params, false, false,
       true /* add_default_platform_observations */,
       base::MakeUnique<BoundTestNetLog>());
+  estimator.SimulateNetworkChange(
+      NetworkChangeNotifier::ConnectionType::CONNECTION_UNKNOWN, "unknown-1");
 
   base::TimeDelta rtt;
   int32_t kbps;
