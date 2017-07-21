@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82836247_3a803482",
+        "filename": "chrome/browser/chromeos/login/chrome_restart_request.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-21T00:48:48Z",
+      "side": 1,
+      "message": "This can be removed.",
+      "range": {
+        "startLine": 248,
+        "startChar": 0,
+        "endLine": 250,
+        "endChar": 35
+      },
+      "revId": "4dc54c63069346bfbe8ad158d7536468e41ee0d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f075e606_a5aafd79",
+        "filename": "chrome/browser/chromeos/login/chrome_restart_request.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-21T00:48:48Z",
+      "side": 1,
+      "message": "BrowserProcessImpl::EndSession also posts a local_state()-\u003eCommitPendingWrite (albeit except for ChromeOS). Maybe this should be handled there instead?\n\nWe already wait for profile prefs to commit there.",
+      "range": {
+        "startLine": 312,
+        "startChar": 22,
+        "endLine": 312,
+        "endChar": 52
+      },
+      "revId": "4dc54c63069346bfbe8ad158d7536468e41ee0d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
