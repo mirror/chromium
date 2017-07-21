@@ -1,0 +1,406 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14c62cce_05e38178",
+        "filename": "components/cryptauth/remote_device_provider.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T23:05:02Z",
+      "side": 1,
+      "message": "nit: Period at end of sentence.",
+      "range": {
+        "startLine": 69,
+        "startChar": 56,
+        "endLine": 69,
+        "endChar": 63
+      },
+      "revId": "f0628242d176df25c5c88f31f75073fc60235176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e143a0a5_1375652a",
+        "filename": "components/cryptauth/remote_device_provider.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T23:05:02Z",
+      "side": 1,
+      "message": "nit: Add a class description.",
+      "revId": "f0628242d176df25c5c88f31f75073fc60235176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4848ea15_29812907",
+        "filename": "components/cryptauth/remote_device_provider.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T23:05:02Z",
+      "side": 1,
+      "message": "nit: Make this protected.",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 26
+      },
+      "revId": "f0628242d176df25c5c88f31f75073fc60235176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de206214_92ba3ba7",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T23:05:02Z",
+      "side": 1,
+      "message": "nit: HasQueuedCallback()",
+      "range": {
+        "startLine": 171,
+        "startChar": 9,
+        "endLine": 171,
+        "endChar": 29
+      },
+      "revId": "f0628242d176df25c5c88f31f75073fc60235176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50043d62_487f30fe",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T23:05:02Z",
+      "side": 1,
+      "message": "You shouldn\u0027t need this function. You control the test, so you should know when you can invoke the callback and when you can\u0027t.\n\nIf you can invoke it, just call InvokeLastCallback() directly. If you can\u0027t, then EXPECT_FALSE(HasQueuedCallback()).",
+      "range": {
+        "startLine": 183,
+        "startChar": 7,
+        "endLine": 183,
+        "endChar": 32
+      },
+      "revId": "f0628242d176df25c5c88f31f75073fc60235176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3bd710e_2c93678c",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T23:05:02Z",
+      "side": 1,
+      "message": "Remove this. You need to test that |remote_device_provider_| loads initial devices before a sync occurs.",
+      "range": {
+        "startLine": 195,
+        "startChar": 0,
+        "endLine": 195,
+        "endChar": 45
+      },
+      "revId": "f0628242d176df25c5c88f31f75073fc60235176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fd33ec6_eb5a0251",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T23:05:02Z",
+      "side": 1,
+      "message": "At the end of this function, call VerifySyncedDevicesMatchExpectation().",
+      "range": {
+        "startLine": 198,
+        "startChar": 0,
+        "endLine": 198,
+        "endChar": 52
+      },
+      "revId": "f0628242d176df25c5c88f31f75073fc60235176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58e17905_fc8fb425",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T23:05:02Z",
+      "side": 1,
+      "message": "nit: Add a \"size_t expected_size\" parameter here, and EXPECT_EQ(expected_size, synced_devices.size()) after you initialize synced_devices.",
+      "range": {
+        "startLine": 202,
+        "startChar": 7,
+        "endLine": 202,
+        "endChar": 42
+      },
+      "revId": "f0628242d176df25c5c88f31f75073fc60235176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6d324fe_eebb1fb3",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T23:05:02Z",
+      "side": 1,
+      "message": "unordered_set",
+      "range": {
+        "startLine": 205,
+        "startChar": 9,
+        "endLine": 205,
+        "endChar": 12
+      },
+      "revId": "f0628242d176df25c5c88f31f75073fc60235176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7378c882_f017cf48",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T23:05:02Z",
+      "side": 1,
+      "message": "Move this up. SetUp() should always occur before any helper functions (but after inner classes and the test class\u0027 constructor).",
+      "range": {
+        "startLine": 215,
+        "startChar": 0,
+        "endLine": 215,
+        "endChar": 25
+      },
+      "revId": "f0628242d176df25c5c88f31f75073fc60235176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d673333_67169aa3",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T23:05:02Z",
+      "side": 1,
+      "message": "Ah...sorry for wasting your time with this, but I don\u0027t think this is actually needed since we mock out the RemoteDeviceLoader. If you remove it, your tests still work as expected, right? If so, please remove this, |scoped_task_environment_|, and the #includes for both of these.",
+      "range": {
+        "startLine": 228,
+        "startChar": 0,
+        "endLine": 228,
+        "endChar": 35
+      },
+      "revId": "f0628242d176df25c5c88f31f75073fc60235176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1215365_2a68ba13",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T23:05:02Z",
+      "side": 1,
+      "message": "nit: Add a comment that this is the mock implementation of mock_device_manager_\u0027s GetSyncedDevices().",
+      "revId": "f0628242d176df25c5c88f31f75073fc60235176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8a92587_ad748c70",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T23:05:02Z",
+      "side": 1,
+      "message": "Using a variable like this makes tests harder to read. It\u0027s a lot clearer if you use literals instead. For example:\n\nEXPECT_EQ(2u, test_observer_-\u003enum_times_device_list_changed());",
+      "range": {
+        "startLine": 259,
+        "startChar": 6,
+        "endLine": 259,
+        "endChar": 22
+      },
+      "revId": "f0628242d176df25c5c88f31f75073fc60235176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e581660_26086c3b",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T23:05:02Z",
+      "side": 1,
+      "message": "You can initialize a std::vector\u003c\u003e with a literal. For example:\n\nmock_device_manager_synced_device_infos_ \u003d\n    std::vector\u003cExternalDeviceInfo\u003e{test_device_infos_[0],\n                                    test_device_infos_[1]};",
+      "range": {
+        "startLine": 260,
+        "startChar": 2,
+        "endLine": 260,
+        "endChar": 42
+      },
+      "revId": "f0628242d176df25c5c88f31f75073fc60235176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b01eefd4_c889b450",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T23:05:02Z",
+      "side": 1,
+      "message": "I probably wasn\u0027t clear enough earlier when I described multiple syncs. I was envisioning something like this:\n\n// Initialize with devices 0 and 1.\nmock_device_manager_synced_device_infos_ \u003d\n    std::vector\u003cExternalDeviceInfo\u003e{test_device_infos_[0],\n                                    test_device_infos_[1]};\nCreateRemoteDeviceProvider();\nVerifySyncedDevicesMatchExpectation(2u /* expected_size */);\nEXPECT_EQ(0, test_observer_-\u003enum_times_device_list_changed());\n\n// Now add device 2 and trigger another sync.\nmock_device_manager_synced_device_infos_.push_back(test_device_infos_[2]);\nmock_device_manager_-\u003eNotifySyncFinished(\n    CryptAuthDeviceManager::SyncResult::SUCCESS,\n    CryptAuthDeviceManager::DeviceChangeResult::CHANGED);\ntest_device_loader_factory_-\u003eInvokeLastCallback(\n    mock_device_manager_synced_device_infos_);\nVerifySyncedDevicesMatchExpectation(3u /* expected_size */);\nEXPECT_EQ(1u, test_observer_-\u003enum_times_device_list_changed());\n\n// Now, simulate a sync which shows that device 0 was removed.\nmock_device_manager_synced_device_infos_.erase(\n    mock_device_manager_synced_device_infos_.begin());\ntest_device_loader_factory_-\u003eInvokeLastCallback(\n    mock_device_manager_synced_device_infos_);\nVerifySyncedDevicesMatchExpectation(2u /* expected_size */);\nEXPECT_EQ(2u, test_observer_-\u003enum_times_device_list_changed());",
+      "range": {
+        "startLine": 266,
+        "startChar": 0,
+        "endLine": 266,
+        "endChar": 71
+      },
+      "revId": "f0628242d176df25c5c88f31f75073fc60235176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a348929_27ca4d0e",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T23:05:02Z",
+      "side": 1,
+      "message": "It deosn\u0027t make sense to add a device to mock_device_manager_synced_device_infos_ if you\u0027re not actually going to trigger a sync. mock_device_manager_synced_device_infos_ holds the value that will be returned by the next MockCryptAuthDeviceManager::GetSyncedDevices() call, but that call will never actually occur since you\u0027re calling NotifySyncFinished() with values that won\u0027t result in a sync.\n\nBelow, where you EXPECT_NE(), you should really just VerifySyncedDevicesMatchExpectation() again, and verify that test_observer_-\u003enum_times_device_list_changed() does not increase (since the Observer should only be notified of successful syncs).\n\nLastly, you should have a successful sync at the end to verify that things still work correctly even if there was an invalid sync in between.",
+      "range": {
+        "startLine": 286,
+        "startChar": 0,
+        "endLine": 286,
+        "endChar": 76
+      },
+      "revId": "f0628242d176df25c5c88f31f75073fc60235176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb348cea_6a32d807",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T23:05:02Z",
+      "side": 1,
+      "message": "This test isn\u0027t quite correct. You need to do something like:\n\nmock_device_manager_synced_device_infos_.push_back(test_device_infos_[0]);\nCreateRemoteDeviceProvider();\nVerifySyncedDevicesMatchExpectation(1u /* expected_size */);\n\n// Add device 1 and trigger a sync.\nmock_device_manager_synced_device_infos_.push_back(test_device_infos_[1]);\nmock_device_manager_-\u003eNotifySyncFinished(\n    CryptAuthDeviceManager::SyncResult::FAILURE,\n    CryptAuthDeviceManager::DeviceChangeResult::CHANGED);\n\n// Do not wait for the new devices to be generated (i.e., don\u0027t call\n// test_device_loader_factory_-\u003eInvokeLastCallback() yet). Trigger a new\n// sync with device 2 included.\nmock_device_manager_synced_device_infos_.push_back(test_device_infos_[2]);\nmock_device_manager_-\u003eNotifySyncFinished(\n    CryptAuthDeviceManager::SyncResult::FAILURE,\n    CryptAuthDeviceManager::DeviceChangeResult::CHANGED);\ntest_device_loader_factory_-\u003eInvokeLastCallback(\n    mock_device_manager_synced_device_infos_);\nVerifySyncedDevicesMatchExpectation(3u /* expected_size */);",
+      "range": {
+        "startLine": 305,
+        "startChar": 0,
+        "endLine": 305,
+        "endChar": 71
+      },
+      "revId": "f0628242d176df25c5c88f31f75073fc60235176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1659af7_11ccad94",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T23:05:02Z",
+      "side": 1,
+      "message": "No need for this test.",
+      "range": {
+        "startLine": 317,
+        "startChar": 0,
+        "endLine": 317,
+        "endChar": 66
+      },
+      "revId": "f0628242d176df25c5c88f31f75073fc60235176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
