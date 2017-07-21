@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "292b4745_c885dd49",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-21T17:58:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85eb0eb5_36c823f7",
+      "revId": "c2b71b326bf67aa98ca519a469308d74ff0ad627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98835d26_c37e33bb",
         "filename": "ash/login/ui/lock_contents_view.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-14T22:21:09Z",
       "side": 1,
       "message": "I\u0027m finding the list-of-rotation-actions code confusing. I have a hard time reasoning about what actions will actually happen on which views. I think I understand why they are RepeatingCallback, but I\u0027m not certain.\n\nIs there a way to do this more explicitly/imperatively, perhaps by caching pointers to all the various padding views you need to modify and having an explicit Refresh() or Update() method?",
+      "revId": "c2b71b326bf67aa98ca519a469308d74ff0ad627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "788d1ea3_91e36169",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-21T17:58:33Z",
+      "side": 1,
+      "message": "I originally maintained a list of all MultiSizedView instances and changed their preferred size on rotation. This works fine for almost every instance *except* for the horizontal margins in medium density layout, which changes flex weights.\n\nI prefer keeping the layout logic fully contained within this function (CreateMediumDensityLayout). I admit that having the rotation action abstraction is complex and harder to reason about, but I think having the code local is a worthwhile win. Otherwise, the Refresh/Update method will have to try to determine the active density, and then modify layout based on that. Random views will be cached, sometimes null, sometimes valid - this is an issue specifically for this AddRotationAction section, since it doesn\u0027t fit into the MultiSizedView mold.\n\nAs for RepeatingCallback, the callbacks are executed whenever there is a rotation event. The view hierarchy is setup only once, and after a rotation some weights/sizes are changed and then a Layout() happens.\n\nIf you feel strongly this is the wrong approach, I can do it more explicitly. I\u0027m primarily concerned that the code will become spaghetti in a few years because layout logic is placed in random locations.",
+      "parentUuid": "98835d26_c37e33bb",
       "revId": "c2b71b326bf67aa98ca519a469308d74ff0ad627",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0a1e06d6_e99f77bc",
+        "filename": "ash/login/ui/lock_contents_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-21T17:58:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13834b57_877639dc",
+      "revId": "c2b71b326bf67aa98ca519a469308d74ff0ad627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "025630e4_2329794f",
         "filename": "ash/login/ui/lock_contents_view_unittest.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "c2b71b326bf67aa98ca519a469308d74ff0ad627",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69d21e0e_1c38d8e6",
+        "filename": "ash/login/ui/lock_contents_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-21T17:58:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "025630e4_2329794f",
+      "revId": "c2b71b326bf67aa98ca519a469308d74ff0ad627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
