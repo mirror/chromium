@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "2b614d63_62c25c4c",
+        "filename": "content/renderer/media/mojo_audio_input_ipc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-07-21T14:12:05Z",
+      "side": 1,
+      "message": "The accessor could create the factory, but to do it synchronously it would have to be called on the main thread, and we probably don\u0027t want this class to live completely on the main thread. On the other hand, I guess the callback makes it easier to inject a factory for testing.\n\nMaybe this class could have a CreateStream callback, and post that to the main thread. That way, it doesn\u0027t have to care about factories or RenderFrames, which will make it easier to test.",
+      "parentUuid": "844e5eac_39f7d189",
+      "revId": "5bb301d13b796bbfde8d8e82fa1e3cdbaac81b3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "43ab5628_bfa958ae",
         "filename": "content/renderer/media/mojo_audio_input_ipc.cc",
         "patchSetId": 1
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "Should I use a WeakPtr to this instead (like for the authorization callback for the output) or have it somehow hold on to this while there\u0027s a CreateStream request in flight?",
       "parentUuid": "43ab5628_bfa958ae",
+      "revId": "5bb301d13b796bbfde8d8e82fa1e3cdbaac81b3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2375d9c_aad5465d",
+        "filename": "content/renderer/media/mojo_audio_input_ipc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-07-21T14:12:05Z",
+      "side": 1,
+      "message": "WeakPtr seems like the simplest, unless you have a better idea.",
+      "parentUuid": "25603e4c_2aadaa88",
       "revId": "5bb301d13b796bbfde8d8e82fa1e3cdbaac81b3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -224,6 +260,24 @@
       "side": 1,
       "message": "I think the audio backend code is written to adjust for any discrepancies between the requested buffer size and the actual hardware buffer size. So is memory_length here expected to be length * segment_count?)",
       "parentUuid": "ca65e6b9_e6508863",
+      "revId": "5bb301d13b796bbfde8d8e82fa1e3cdbaac81b3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25604a19_aca16785",
+        "filename": "content/renderer/media/mojo_audio_input_ipc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-07-21T14:12:05Z",
+      "side": 1,
+      "message": "length is expected to be memory_length, the reason length is a separate parameter is that the old IPC system didn\u0027t bundle the handle and the length. The only thing I\u0027m worried about is that base::SharedMemory (https://cs.chromium.org/chromium/src/base/memory/shared_memory.h?l\u003d178) has both requested_size and mapped_size, so I guess it\u0027s possible for memory_length to be greater then length, at least in theory. I think the best thing to do is to just make sure that AudioInputDevice and friends can handle if the length is larger than expected.",
+      "parentUuid": "2189e351_23ffde81",
       "revId": "5bb301d13b796bbfde8d8e82fa1e3cdbaac81b3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
