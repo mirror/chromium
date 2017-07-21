@@ -114,12 +114,6 @@ QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_fix_adaptive_time_loss, false)
 // compressed for QUIC version >= 38.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_enable_random_padding, true)
 
-// If true, update state if trailing headers with a :final-offset key are
-// received for a previously closed QUIC stream.
-QUIC_FLAG(bool,
-          FLAGS_quic_reloadable_flag_quic_final_offset_from_trailers,
-          true)
-
 // If enabled, use refactored stream creation methods.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_refactor_stream_creation, false)
 

@@ -11,7 +11,7 @@
 
 namespace net {
 
-class CryptoMessageParser {
+class QUIC_EXPORT_PRIVATE CryptoMessageParser {
  public:
   virtual ~CryptoMessageParser() {}
 
