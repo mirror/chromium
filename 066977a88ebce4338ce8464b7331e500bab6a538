@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1f546a7_4e304ee4",
+        "filename": "third_party/WebKit/Source/core/workers/Worklet.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-21T05:19:40Z",
+      "side": 1,
+      "message": "This \"Worklet\" class is a common class of all Worklet variants and having PaintWorklet-specific comments/checks in the class looks odd. Can you move this to \"PaintWorklet\" class?",
+      "revId": "066977a88ebce4338ce8464b7331e500bab6a538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c83d0840_846fa61c",
+        "filename": "third_party/WebKit/Source/modules/csspaint/DocumentPaintDefinition.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-21T05:19:40Z",
+      "side": 1,
+      "message": "finromation -\u003e information ?",
+      "revId": "066977a88ebce4338ce8464b7331e500bab6a538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3ff5bd8_0aaca608",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-21T05:19:40Z",
+      "side": 1,
+      "message": "How about incrementing |global_scope_number| (GetNumberOfGlobalScopes()) here instead of PaintWorkletGlobalScope::Create()? Passing the previous number seems error-prone.",
+      "revId": "066977a88ebce4338ce8464b7331e500bab6a538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
