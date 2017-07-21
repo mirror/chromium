@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "987d4d2c_d64eeb0b",
+        "filename": "net/http/http_response_info.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-21T17:18:50Z",
+      "side": 1,
+      "message": "Note that this CL introduces a functional change: Now, an uninitialized proxy server means that the response was fetched using an unknown proxy server. So, for a default-constructed HttpRsponseInfo object, was_fetched_via_proxy() would return true.\n\nThis functional change is probably fine, but I just want to make sure we are aware of it.",
+      "range": {
+        "startLine": 129,
+        "startChar": 6,
+        "endLine": 129,
+        "endChar": 25
+      },
+      "revId": "7725d829bc99b4f57e158e421fa2764d07fe3aec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
