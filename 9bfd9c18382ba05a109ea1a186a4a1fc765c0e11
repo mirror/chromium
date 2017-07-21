@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "06db7b01_b0c46aca",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_quick_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-07-21T05:02:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6e54a3e_cae98dd2",
+      "range": {
+        "startLine": 23,
+        "startChar": 156,
+        "endLine": 23,
+        "endChar": 169
+      },
+      "revId": "9bfd9c18382ba05a109ea1a186a4a1fc765c0e11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d60fbb15_60433a0d",
         "filename": "ui/file_manager/file_manager/foreground/elements/files_quick_view.html",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8528e0aa_3a511ba6",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_quick_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-07-21T05:02:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d60fbb15_60433a0d",
+      "range": {
+        "startLine": 26,
+        "startChar": 199,
+        "endLine": 26,
+        "endChar": 201
+      },
+      "revId": "9bfd9c18382ba05a109ea1a186a4a1fc765c0e11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62ed61e0_97f32716",
         "filename": "ui/file_manager/file_manager/foreground/elements/files_tooltip.js",
         "patchSetId": 2
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "b2f4a1e5_60c6e335",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_tooltip.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-07-21T05:02:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62ed61e0_97f32716",
+      "revId": "9bfd9c18382ba05a109ea1a186a4a1fc765c0e11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8835f22_ea16c594",
         "filename": "ui/file_manager/file_manager/foreground/js/quick_view_controller.js",
         "patchSetId": 2
@@ -76,6 +142,24 @@
       "writtenOn": "2017-07-20T09:04:54Z",
       "side": 1,
       "message": "I\u0027d like to avoid listening key events in document level.\n\nCould you investigate why the keyevent (on files-metadata-box) is not dispatched to quickView?",
+      "revId": "9bfd9c18382ba05a109ea1a186a4a1fc765c0e11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99675346_745a0005",
+        "filename": "ui/file_manager/file_manager/foreground/js/quick_view_controller.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-07-21T05:02:01Z",
+      "side": 1,
+      "message": "Event on quickView is not dispatched because document.activeElement does not always point to an actual element. Same approach is used in gallery.js (https://codesearch.chromium.org/chromium/src/ui/file_manager/gallery/js/gallery.js?dr\u003dC\u0026L192\u0026l\u003d192).\nChrome bug: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d38154",
+      "parentUuid": "e8835f22_ea16c594",
       "revId": "9bfd9c18382ba05a109ea1a186a4a1fc765c0e11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
