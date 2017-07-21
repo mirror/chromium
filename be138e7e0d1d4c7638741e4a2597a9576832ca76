@@ -166,6 +166,30 @@
       "revId": "be138e7e0d1d4c7638741e4a2597a9576832ca76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cd75ae3_35840a26",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-21T23:11:37Z",
+      "side": 1,
+      "message": "I\u0027ll put a flag in the callback method indicating a request canceled or not.",
+      "parentUuid": "cd415f01_18bdaea5",
+      "range": {
+        "startLine": 65,
+        "startChar": 7,
+        "endLine": 65,
+        "endChar": 24
+      },
+      "revId": "be138e7e0d1d4c7638741e4a2597a9576832ca76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
