@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "375a7e16_a5ba4852",
+        "filename": "components/cronet/android/java/src/org/chromium/net/impl/JavaUrlRequest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-07-21T15:31:58Z",
+      "side": 1,
+      "message": "Always calling execute() is a little wasteful.  We could avoid it if mRunning is true but we\u0027d need to first check if the underlying ExecutorService.isShutdown() is true which means we\u0027d need to pass the ExecutorService into this class.  We could also avoid it if the underlying ExecutorService.isShutdown() is true but we\u0027d first need to pass the ExecutorService into this class.  I think always calling execute() is a reasonable trade-off of performance for simplicity.",
+      "range": {
+        "startLine": 180,
+        "startChar": 59,
+        "endLine": 180,
+        "endChar": 0
+      },
+      "revId": "ecc46d63e0c27c7988c2a68f02e9a9b0ded9f9e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
