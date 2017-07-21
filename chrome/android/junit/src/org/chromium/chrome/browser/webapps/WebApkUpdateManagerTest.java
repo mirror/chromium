@@ -6,6 +6,7 @@ package org.chromium.chrome.browser.webapps;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import static org.chromium.webapk.lib.client.WebApkVersion.CURRENT_SHELL_APK_VERSION;
@@ -103,6 +104,7 @@ public class WebApkUpdateManagerTest {
 
     private static class TestWebApkUpdateManager extends WebApkUpdateManager {
         private TestWebApkUpdateDataFetcher mFetcher;
+        private WebappDataStorage mStorage;
         private boolean mUpdateRequested;
         private String mUpdateName;
         private boolean mDestroyedFetcher;
@@ -110,6 +112,7 @@ public class WebApkUpdateManagerTest {
 
         public TestWebApkUpdateManager(WebappDataStorage storage) {
             super(null, storage);
+            mStorage = storage;
         }
 
         /**
@@ -144,14 +147,15 @@ public class WebApkUpdateManagerTest {
         }
 
         @Override
-        protected void buildProtoAndScheduleUpdate(WebApkInfo info, String primaryIconUrl,
+        protected void buildUpdateRequestAndScheduleUpdate(WebApkInfo info, String primaryIconUrl,
                 String badgeIconUrl, boolean isManifestStale) {
             mUpdateName = info.name();
-            scheduleUpdate(info, new byte[0]);
+            mStorage.setPendingUpdateFilePath(getUpdateRequestFile(info).getPath());
+            scheduleUpdate();
         }
 
         @Override
-        protected void updateAsyncImpl(WebApkInfo info, byte[] serializedProto) {
+        protected void updateAsyncImpl(String updateRequestFilePath) {
             mUpdateRequested = true;
         }
 
@@ -742,7 +746,7 @@ public class WebApkUpdateManagerTest {
     }
 
     @Test
-    public void testForceUpdateWhenUncompletedUpdateRequestRechesMaximumTimes() {
+    public void testForceUpdateWhenUncompletedUpdateRequestReachesMaximumTimes() {
         mClock.advance(WebappDataStorage.UPDATE_INTERVAL);
         ManifestData differentManifestData = defaultManifestData();
         differentManifestData.name = DIFFERENT_NAME;
@@ -754,7 +758,7 @@ public class WebApkUpdateManagerTest {
             updateIfNeeded(updateManager);
 
             onGotManifestData(updateManager, differentManifestData);
-            assertTrue(updateManager.getHasPendingUpdateForTesting());
+            assertTrue(storage.getPendingUpdateFilePath() != null);
             assertFalse(updateManager.updateRequested());
             assertEquals(i + 1, storage.getUpdateRequests());
         }
@@ -764,7 +768,7 @@ public class WebApkUpdateManagerTest {
         updateIfNeeded(updateManager);
 
         onGotManifestData(updateManager, differentManifestData);
-        assertFalse(updateManager.getHasPendingUpdateForTesting());
+        assertNull(storage.getPendingUpdateFilePath());
         assertTrue(updateManager.updateRequested());
         assertEquals(0, storage.getUpdateRequests());
     }
@@ -782,7 +786,7 @@ public class WebApkUpdateManagerTest {
         assertTrue(updateManager.updateCheckStarted());
 
         onGotManifestData(updateManager, differentManifestData);
-        assertTrue(updateManager.getHasPendingUpdateForTesting());
+        assertTrue(storage.getPendingUpdateFilePath() != null);
         assertFalse(updateManager.updateRequested());
         assertEquals(1, storage.getUpdateRequests());
 
@@ -791,7 +795,7 @@ public class WebApkUpdateManagerTest {
         updateManager.setIsWebApkForeground(false);
         updateManager.requestPendingUpdate();
 
-        assertFalse(updateManager.getHasPendingUpdateForTesting());
+        assertNull(storage.getPendingUpdateFilePath());
         assertTrue(updateManager.updateRequested());
         assertEquals(0, storage.getUpdateRequests());
     }
