@@ -49,7 +49,10 @@ OmniboxPopupViewIOS::OmniboxPopupViewIOS(
     OmniboxPopupViewSuggestionsDelegate* delegate,
     OmniboxEditModel* edit_model,
     id<OmniboxPopupPositioner> positioner)
-    : model_(new OmniboxPopupModel(this, edit_model)),
+    : model_(new OmniboxPopupModel(this,
+                                   edit_model,
+                                   edit_model->client(),
+                                   edit_model->autocomplete_controller())),
       delegate_(delegate),
       positioner_(positioner),
       is_open_(false) {
