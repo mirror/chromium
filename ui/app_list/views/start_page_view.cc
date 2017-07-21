@@ -143,6 +143,9 @@ StartPageView::StartPageView(AppListMainView* app_list_main_view,
 
 StartPageView::~StartPageView() = default;
 
+int StartPageView::kNoSelection = -1;
+int StartPageView::kExpandArrowSelection = -2;
+
 void StartPageView::InitInstantContainer() {
   views::BoxLayout* instant_layout_manager = new views::BoxLayout(
       views::BoxLayout::kVertical, gfx::Insets(), kInstantContainerSpacing);
@@ -309,10 +312,13 @@ bool StartPageView::OnKeyPressed(const ui::KeyEvent& event) {
     if (event.key_code() == ui::VKEY_RIGHT ||
         (event.key_code() == ui::VKEY_TAB && !event.IsShiftDown())) {
       expand_arrow_view_->SetSelected(false);
-      suggestions_container_->SetSelectedIndex(0);
-    } else if (event.key_code() == ui::VKEY_LEFT ||
-               event.key_code() == ui::VKEY_UP ||
-               (event.key_code() == ui::VKEY_TAB && event.IsShiftDown())) {
+      // Move focus from the last element in contents view to the first element
+      // in search box view.
+      return false;
+    }
+
+    if (event.key_code() == ui::VKEY_LEFT || event.key_code() == ui::VKEY_UP ||
+        (event.key_code() == ui::VKEY_TAB && event.IsShiftDown())) {
       expand_arrow_view_->SetSelected(false);
       suggestions_container_->SetSelectedIndex(
           suggestions_container_->num_results() - 1);
@@ -376,6 +382,12 @@ bool StartPageView::OnKeyPressed(const ui::KeyEvent& event) {
     return false;
 
   if (selected_index == -1) {
+    if (expand_arrow_view_ && !expand_arrow_view_->selected() && dir == -1) {
+      // Move focus from the first element in search box view to the last
+      // element in contents view.
+      expand_arrow_view_->SetSelected(true);
+      return true;
+    }
     custom_launcher_page_background_->SetSelected(false);
     suggestions_container_->SetSelectedIndex(
         dir == -1 ? suggestions_container_->num_results() - 1 : 0);
@@ -454,6 +466,12 @@ void StartPageView::OnScrollEvent(ui::ScrollEvent* event) {
   // is enabled).
   if (event->type() == ui::ET_SCROLL && event->y_offset() < 0)
     MaybeOpenCustomLauncherPage();
+}
+
+int StartPageView::GetSelectedIndexForTest() const {
+  if (expand_arrow_view_ && expand_arrow_view_->selected())
+    return -2;
+  return suggestions_container_->selected_index();
 }
 
 TileItemView* StartPageView::GetTileItemView(size_t index) {
