@@ -310,7 +310,7 @@ CastCertError VerifyDeviceCertUsingCustomTrustStore(
       target_cert.get(), trust_store, signature_policy.get(), verification_time,
       net::KeyPurpose::CLIENT_AUTH, net::InitialExplicitPolicy::kFalse,
       {net::AnyPolicy()}, net::InitialPolicyMappingInhibit::kFalse,
-      net::InitialAnyPolicyInhibit::kFalse, &result);
+      net::InitialAnyPolicyInhibit::kFalse, nullptr, &result);
   path_builder.AddCertIssuerSource(&intermediate_cert_issuer_source);
   path_builder.Run();
   if (!result.HasValidPath())

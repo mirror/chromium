@@ -63,7 +63,7 @@ class PathBuilderPkitsTestDelegate {
         std::move(target_cert), &trust_store, &signature_policy, info.time,
         KeyPurpose::ANY_EKU, info.initial_explicit_policy,
         info.initial_policy_set, info.initial_policy_mapping_inhibit,
-        info.initial_inhibit_any_policy, &result);
+        info.initial_inhibit_any_policy, nullptr, &result);
     path_builder.AddCertIssuerSource(&cert_issuer_source);
 
     path_builder.Run();
