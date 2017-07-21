@@ -319,9 +319,8 @@
 
 - (void)loadView {
   // Create the root view of the notification.
-  NSRect rootFrame = NSMakeRect(0, 0,
-      message_center::kNotificationPreferredImageWidth,
-      message_center::kNotificationIconSize);
+  NSRect rootFrame = NSMakeRect(0, 0, message_center::kNotificationWidth,
+                                message_center::kNotificationIconSize);
   base::scoped_nsobject<MCNotificationView> rootView(
       [[MCNotificationView alloc] initWithController:self frame:rootFrame]);
   [self configureCustomBox:rootView];
@@ -368,9 +367,8 @@
   notification_ = notification;
 
   message_center::NotificationLayoutParams layoutParams;
-  layoutParams.rootFrame =
-      NSMakeRect(0, 0, message_center::kNotificationPreferredImageWidth,
-                 message_center::kNotificationIconSize);
+  layoutParams.rootFrame = NSMakeRect(0, 0, message_center::kNotificationWidth,
+                                      message_center::kNotificationIconSize);
 
   [smallImage_ setImage:notification_->small_image().AsNSImage()];
 
@@ -750,37 +748,9 @@
 }
 
 - (NSBox*)createImageBox:(const gfx::Image&)notificationImage {
-  using message_center::kNotificationImageBorderSize;
-  using message_center::kNotificationPreferredImageWidth;
-  using message_center::kNotificationPreferredImageHeight;
-
-  NSRect imageFrame = NSMakeRect(0, 0,
-       kNotificationPreferredImageWidth,
-       kNotificationPreferredImageHeight);
+  NOTREACHED() << "This code is no longer supported.";
   base::scoped_nsobject<NSBox> imageBox(
       [[AccessibilityIgnoredBox alloc] initWithFrame:imageFrame]);
-  [self configureCustomBox:imageBox];
-  [imageBox setFillColor:skia::SkColorToCalibratedNSColor(
-      message_center::kImageBackgroundColor)];
-
-  // Images with non-preferred aspect ratios get a border on all sides.
-  gfx::Size idealSize = gfx::Size(
-      kNotificationPreferredImageWidth, kNotificationPreferredImageHeight);
-  gfx::Size scaledSize = message_center::GetImageSizeForContainerSize(
-      idealSize, notificationImage.Size());
-  if (scaledSize != idealSize) {
-    NSSize borderSize =
-        NSMakeSize(kNotificationImageBorderSize, kNotificationImageBorderSize);
-    [imageBox setContentViewMargins:borderSize];
-  }
-
-  NSImage* image = notificationImage.AsNSImage();
-  base::scoped_nsobject<NSImageView> imageView(
-      [[NSImageView alloc] initWithFrame:imageFrame]);
-  [imageView setImage:image];
-  [imageView setImageScaling:NSImageScaleProportionallyUpOrDown];
-  [imageBox setContentView:imageView];
-
   return imageBox.autorelease();
 }
 
