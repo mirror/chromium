@@ -212,9 +212,20 @@ void TestResultsTracker::OnTestIterationStarting() {
   per_iteration_data_.push_back(PerIterationData());
 }
 
-void TestResultsTracker::AddTest(const std::string& test_name) {
+void TestResultsTracker::AddTest(const std::string& test_name,
+                                 const std::string& file,
+                                 int line) {
   // Record disabled test names without DISABLED_ prefix so that they are easy
   // to compare with regular test names, e.g. before or after disabling.
+  std::string test_name_without_disabled_prefix =
+      TestNameWithoutDisabledPrefix(test_name);
+  all_known_tests_.insert(test_name_without_disabled_prefix);
+
+  test_locations_.insert(std::make_pair(test_name_without_disabled_prefix,
+                                        CodeLocation(file, line)));
+}
+
+void TestResultsTracker::TestWillRun(const std::string& test_name) {
   all_tests_.insert(TestNameWithoutDisabledPrefix(test_name));
 }
 
@@ -224,15 +235,12 @@ void TestResultsTracker::AddDisabledTest(const std::string& test_name) {
   disabled_tests_.insert(TestNameWithoutDisabledPrefix(test_name));
 }
 
-void TestResultsTracker::AddTestLocation(const std::string& test_name,
-                                         const std::string& file,
-                                         int line) {
-  test_locations_.insert(std::make_pair(
-      TestNameWithoutDisabledPrefix(test_name), CodeLocation(file, line)));
-}
-
 void TestResultsTracker::AddTestResult(const TestResult& result) {
   DCHECK(thread_checker_.CalledOnValidThread());
+
+  std::string test_name = TestNameWithoutDisabledPrefix(result.full_name);
+  if (all_tests_.find(test_name) == all_tests_.end())
+    all_tests_.insert(test_name);
 
   // Record disabled test names without DISABLED_ prefix so that they are easy
   // to compare with regular test names, e.g. before or after disabling.
@@ -427,9 +435,12 @@ bool TestResultsTracker::SaveSummaryAsJSON(
   summary_root->Set("per_iteration_data", std::move(per_iteration_data));
 
   std::unique_ptr<DictionaryValue> test_locations(new DictionaryValue);
-  for (const auto& item : test_locations_) {
-    std::string test_name = item.first;
-    CodeLocation location = item.second;
+  for (std::string test_name : all_tests_) {
+    auto found = test_locations_.find(test_name);
+    if (found == test_locations_.end())
+      continue;
+
+    CodeLocation location = found->second;
     std::unique_ptr<DictionaryValue> location_value(new DictionaryValue);
     location_value->SetString("file", location.file);
     location_value->SetInteger("line", location.line);
@@ -485,11 +496,10 @@ void TestResultsTracker::PrintTests(InputIterator first,
           count != 1 ? "s" : "",
           description.c_str());
   for (InputIterator i = first; i != last; ++i) {
-    fprintf(stdout,
-            "    %s (%s:%d)\n",
-            (*i).c_str(),
-            test_locations_.at(*i).file.c_str(),
-            test_locations_.at(*i).line);
+    std::string test_name = TestNameWithoutDisabledPrefix(*i);
+    fprintf(stdout, "    %s (%s:%d)\n", (*i).c_str(),
+            test_locations_.at(test_name).file.c_str(),
+            test_locations_.at(test_name).line);
   }
   fflush(stdout);
 }
