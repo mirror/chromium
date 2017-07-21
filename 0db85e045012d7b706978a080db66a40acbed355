@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf70debb_f220a465",
+        "filename": "chrome/browser/signin/easy_unlock_notification_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-21T21:45:19Z",
+      "side": 1,
+      "message": "We need to keep the virtual destructor, as this class is also subclassed.",
+      "revId": "0db85e045012d7b706978a080db66a40acbed355",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03d68be3_d31cffe4",
+        "filename": "chrome/browser/signin/easy_unlock_notification_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-21T21:45:19Z",
+      "side": 1,
+      "message": "nit: add colon at the end of line",
+      "range": {
+        "startLine": 26,
+        "startChar": 43,
+        "endLine": 26,
+        "endChar": 0
+      },
+      "revId": "0db85e045012d7b706978a080db66a40acbed355",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8c31899_a4cbf61b",
+        "filename": "components/proximity_auth/promotion_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-21T21:45:19Z",
+      "side": 1,
+      "message": "nit: there\u0027s no need for this prefix as we log the file names.",
+      "range": {
+        "startLine": 165,
+        "startChar": 20,
+        "endLine": 165,
+        "endChar": 29
+      },
+      "revId": "0db85e045012d7b706978a080db66a40acbed355",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3525036b_7fb32d29",
+        "filename": "components/proximity_auth/promotion_manager_unittests.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-21T21:45:19Z",
+      "side": 1,
+      "message": "I would also test that after exceeding the maximum, promotions don\u0027t get shown anymore.",
+      "revId": "0db85e045012d7b706978a080db66a40acbed355",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
