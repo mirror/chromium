@@ -16,6 +16,24 @@
       "revId": "07d12473d504550fa44cf14012296a5607e75499",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9add9eef_59f42c6c",
+        "filename": "ui/aura/mus/window_tree_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1373,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-21T19:42:46Z",
+      "side": 1,
+      "message": "The down side of that is we lose pixel precision, and secondarily there may be rounding issues. Currently the edge detection code is done at the pixel level and the edge is a single pixel. If I do as you suggest the code would have to change to be at the dip level, which would mean 2 pixels at the 2x factor. Worse yet, there may be rounding issues in some configurations that would leave to not being able to warp at an edge. I\u0027m thinking of non-integer scales where the monitor bounds don\u0027t line up with the scale. I\u0027m not convinced that is an issue, but I would have to track down how dip conversion and monitor bounds are handled (round up, vs down...). I would rather not do that now;)\n\nReally what the warping code wants is the location of the mouse in pixels. An alternative is to add that to LocatedEvent, say root_location_in_native, (root_location_in_pixels here, but I\u0027m not sure if using pixels is right everywhere).\n\nWDYT?",
+      "parentUuid": "8d661655_c44b167b",
+      "revId": "07d12473d504550fa44cf14012296a5607e75499",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
