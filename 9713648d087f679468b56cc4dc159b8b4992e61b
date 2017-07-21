@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62e3d978_9c6bb513",
+        "filename": "mojo/public/cpp/bindings/lib/buffer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-21T20:31:11Z",
+      "side": 1,
+      "message": "nit: this line is not needed because of line 63.",
+      "revId": "9713648d087f679468b56cc4dc159b8b4992e61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa2beabd_f95b7f53",
+        "filename": "mojo/public/cpp/bindings/lib/buffer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-21T20:31:11Z",
+      "side": 1,
+      "message": "I am curious whether it is more performant to clear the whole buffer at the beginning (and entension) than doing multiple memset()s during allocations.",
+      "revId": "9713648d087f679468b56cc4dc159b8b4992e61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b23c9558_8cc3ffdc",
+        "filename": "mojo/public/cpp/bindings/lib/fixed_buffer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-21T20:31:11Z",
+      "side": 1,
+      "message": "Please remove this private constructor, and have the public one initialize Buffer.",
+      "revId": "9713648d087f679468b56cc4dc159b8b4992e61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b44c555e_18d2a318",
+        "filename": "mojo/public/cpp/bindings/lib/map_data_internal.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-21T20:31:11Z",
+      "side": 1,
+      "message": "Does it make sense to have a BufferWriterBase (may be templated) to share most of the code between different BufferWriter?",
+      "revId": "9713648d087f679468b56cc4dc159b8b4992e61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f73ab26c_bcf32cb4",
+        "filename": "mojo/public/cpp/bindings/lib/map_serialization.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-21T20:31:11Z",
+      "side": 1,
+      "message": "Please update *traits documents:\n- field getters are now called exactly once.\n- IsNull() of array/map_traits are called twice.",
+      "revId": "9713648d087f679468b56cc4dc159b8b4992e61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86ac2c84_48ad1044",
+        "filename": "mojo/public/cpp/bindings/tests/buffer_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-21T20:31:11Z",
+      "side": 1,
+      "message": "In the non-testing buffer impl, there is a comment saying that the bytes are not initialized; instead it is the user\u0027s responsibility to set the values. Although FixedBufferForTesting guarantees that the bytes are inited to zero, it doesn\u0027t seem useful to test this behavior.",
+      "revId": "9713648d087f679468b56cc4dc159b8b4992e61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "044981ff_7d429f06",
+        "filename": "mojo/public/cpp/bindings/tests/union_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-21T20:31:11Z",
+      "side": 1,
+      "message": "why this is different from line 40 or line 75?",
+      "revId": "9713648d087f679468b56cc4dc159b8b4992e61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "effa0e09_50e15b6d",
+        "filename": "mojo/public/cpp/bindings/tests/union_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-21T20:31:11Z",
+      "side": 1,
+      "message": "I am not sure I understand how this new code could test out-of-alignment issue?",
+      "revId": "9713648d087f679468b56cc4dc159b8b4992e61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b003c3ab_e7ef0dea",
+        "filename": "mojo/public/tools/bindings/generators/cpp_templates/struct_macros.tmpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-21T20:31:11Z",
+      "side": 1,
+      "message": "Is it easier if we make BufferWriter::data() returns nullptr when BufferWriter::is_null() is true? (Did you choose to avoid that to save one if-condition in data() in order to make it as fast as possible?)",
+      "revId": "9713648d087f679468b56cc4dc159b8b4992e61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ae0c363_e1dd7b39",
+        "filename": "mojo/public/tools/bindings/generators/cpp_templates/struct_serialization_declaration.tmpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-21T20:31:11Z",
+      "side": 1,
+      "message": "I think this line is not needed, because of line 53?",
+      "revId": "9713648d087f679468b56cc4dc159b8b4992e61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fa48b10_0df13a52",
+        "filename": "mojo/public/tools/bindings/generators/cpp_templates/union_declaration.tmpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-21T20:31:11Z",
+      "side": 1,
+      "message": "nit: please use DCHECK_GT",
+      "revId": "9713648d087f679468b56cc4dc159b8b4992e61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3b791ba_0c85c92c",
+        "filename": "mojo/public/tools/bindings/generators/cpp_templates/union_serialization_declaration.tmpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-21T20:31:11Z",
+      "side": 1,
+      "message": "nit: wrong indent.",
+      "revId": "9713648d087f679468b56cc4dc159b8b4992e61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acd6f9c3_379eb394",
+        "filename": "mojo/public/tools/bindings/generators/cpp_templates/union_serialization_declaration.tmpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-21T20:31:11Z",
+      "side": 1,
+      "message": "Please consider avoiding name collisions.",
+      "revId": "9713648d087f679468b56cc4dc159b8b4992e61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
