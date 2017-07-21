@@ -29041,7 +29041,6 @@
     { "name": "websiteservice.pro", "include_subdomains": true, "mode": "force-https" },
     { "name": "webspotter.nl", "include_subdomains": true, "mode": "force-https" },
     { "name": "wedos.com", "include_subdomains": true, "mode": "force-https" },
-    { "name": "weeblrpress.com", "include_subdomains": true, "mode": "force-https" },
     { "name": "weeknummers.nl", "include_subdomains": true, "mode": "force-https" },
     { "name": "weerstationgiethoorn.nl", "include_subdomains": true, "mode": "force-https" },
     { "name": "wegvielfalt.de", "include_subdomains": true, "mode": "force-https" },
@@ -29301,56 +29300,95 @@
     { "name": "matteomarescotti.it", "include_subdomains": true, "mode": "force-https", "expect_staple": true, "expect_staple_report_uri": "https://matteomarescotti.report-uri.io/r/default/staple/reportOnly", "include_subdomains_for_expect_staple": true },
     { "name": "www.cnet.com", "include_subdomains": true, "mode": "force-https" },
     {
-        "name": "alessandroz.pro",
-        "mode": "force-https", "include_subdomains": true,
-        "expect_staple": true, "include_subdomains_for_expect_staple": true,
-        "expect_staple_report_uri": "https://azreport.report-uri.io/r/default/staple/reportOnly"
+      "name": "alessandroz.pro",
+      "mode": "force-https", "include_subdomains": true,
+      "expect_staple": true, "include_subdomains_for_expect_staple": true,
+      "expect_staple_report_uri": "https://azreport.report-uri.io/r/default/staple/reportOnly"
     },
     {
-        "name": "minecraftforum.de",
-        "mode": "force-https", "include_subdomains": true,
-        "expect_staple": true, "include_subdomains_for_expect_staple": true,
-        "expect_staple_report_uri": "https://minecraft.report-uri.io/r/default/staple/reportOnly"
+      "name": "minecraftforum.de",
+      "mode": "force-https", "include_subdomains": true,
+      "expect_staple": true, "include_subdomains_for_expect_staple": true,
+      "expect_staple_report_uri": "https://minecraft.report-uri.io/r/default/staple/reportOnly"
     },
     {
-        "name": "tobiassachs.de",
-        "mode": "force-https", "include_subdomains": true,
-        "expect_staple": true, "include_subdomains_for_expect_staple": true,
-        "expect_staple_report_uri": "https://tobiassachs.report-uri.io/r/default/staple/reportOnly",
-        "expect_ct": true,
-        "expect_ct_report_uri": "https://tobiassachs.report-uri.io/r/default/ct/reportOnly"
+      "name": "tobiassachs.de",
+      "mode": "force-https", "include_subdomains": true,
+      "expect_staple": true, "include_subdomains_for_expect_staple": true,
+      "expect_staple_report_uri": "https://tobiassachs.report-uri.io/r/default/staple/reportOnly",
+      "expect_ct": true,
+      "expect_ct_report_uri": "https://tobiassachs.report-uri.io/r/default/ct/reportOnly"
     },
     {
-        "name": "gc-mc.de",
-        "mode": "force-https", "include_subdomains": true,
-        "expect_staple": true, "include_subdomains_for_expect_staple": true,
-        "expect_staple_report_uri": "https://tobiassachs.report-uri.io/r/default/staple/reportOnly",
-        "expect_ct": true,
-        "expect_ct_report_uri": "https://tobiassachs.report-uri.io/r/default/ct/reportOnly"
+      "name": "gc-mc.de",
+      "mode": "force-https", "include_subdomains": true,
+      "expect_staple": true, "include_subdomains_for_expect_staple": true,
+      "expect_staple_report_uri": "https://tobiassachs.report-uri.io/r/default/staple/reportOnly",
+      "expect_ct": true,
+      "expect_ct_report_uri": "https://tobiassachs.report-uri.io/r/default/ct/reportOnly"
     },
     {
-        "name": "knightsblog.de",
-        "mode": "force-https", "include_subdomains": true,
-        "expect_staple": true, "include_subdomains_for_expect_staple": true,
-        "expect_staple_report_uri": "https://tobiassachs.report-uri.io/r/default/staple/reportOnly",
-        "expect_ct": true,
-        "expect_ct_report_uri": "https://tobiassachs.report-uri.io/r/default/ct/reportOnly"
+      "name": "knightsblog.de",
+      "mode": "force-https", "include_subdomains": true,
+      "expect_staple": true, "include_subdomains_for_expect_staple": true,
+      "expect_staple_report_uri": "https://tobiassachs.report-uri.io/r/default/staple/reportOnly",
+      "expect_ct": true,
+      "expect_ct_report_uri": "https://tobiassachs.report-uri.io/r/default/ct/reportOnly"
     },
     {
-        "name": "secretintelligence.0.me.uk",
-        "mode": "force-https", "include_subdomains": true,
-        "pins": "ncsccs",
-        "expect_staple": true, "include_subdomains_for_expect_staple": true,
-        "expect_staple_report_uri": "https://log.ncsccs.com/report/expectocsp",
-        "expect_ct": true,
-        "expect_ct_report_uri": "https://log.ncsccs.com/report/expectct"
+      "name": "secretintelligence.0.me.uk",
+      "mode": "force-https", "include_subdomains": true,
+      "pins": "ncsccs",
+      "expect_staple": true, "include_subdomains_for_expect_staple": true,
+      "expect_staple_report_uri": "https://log.ncsccs.com/report/expectocsp",
+      "expect_ct": true,
+      "expect_ct_report_uri": "https://log.ncsccs.com/report/expectct"
     },
-    // hstspreload.org can't scan IPv6-only sites due to Google Cloud limitations.
-    { "name": "ipv6only.network", "include_subdomains": true, "mode": "force-https" },
-    { "name": "cloudflare.com", "include_subdomains": false, "mode": "force-https", "expect_staple": true, "expect_staple_report_uri": "https://staple.watch/cdn-cgi/beacon/expect-staple" },
-    { "name": "www.cloudflare.com", "include_subdomains": false, "mode": "force-https", "expect_staple": true, "expect_staple_report_uri": "https://staple.watch/cdn-cgi/beacon/expect-staple" },
-    { "name": "api.cloudflare.com", "include_subdomains": false, "mode": "force-https", "expect_staple": true, "expect_staple_report_uri": "https://staple.watch/cdn-cgi/beacon/expect-staple" },
+    {
+      "name": "cloudflare.com",
+      "mode": "force-https", "include_subdomains": false,
+      "expect_staple": true,
+      "expect_staple_report_uri": "https://staple.watch/cdn-cgi/beacon/expect-staple"
+    },
+    {
+      "name": "www.cloudflare.com",
+      "mode": "force-https", "include_subdomains": false,
+      "expect_staple": true,
+      "expect_staple_report_uri": "https://staple.watch/cdn-cgi/beacon/expect-staple"
+    },
+    {
+      "name": "api.cloudflare.com",
+      "mode": "force-https", "include_subdomains": false,
+      "expect_staple": true,
+      "expect_staple_report_uri": "https://staple.watch/cdn-cgi/beacon/expect-staple"
+    },
+    {
+      "name": "weeblrpress.com",
+      "mode": "force-https", "include_subdomains": true,
+      "expect_staple": true, "include_subdomains_for_expect_staple": true,
+      "expect_staple_report_uri": "https://weeblr.report-uri.io/r/default/staple/reportOnly"
+    },
     // END OF MANUAL ENTRIES
+
+    // TODO(lgarron): hstspreload.org can't scan IPv6-only sites due to Google
+    // Cloud limitations. Move these entries to the bulk entries once they can
+    // be handled automatically: github.com/chromium/hstspreload.org/issues/43
+    // START OF IPV6-ONLY ENTRIES
+    { "name": "ipv6only.network", "include_subdomains": true, "mode": "force-https" },
+    { "name": "bad.pet", "include_subdomains": true, "mode": "force-https" },
+    // END OF IPV6-ONLY ENTRIES
+
+    // eTLD owners who are working towards wide HSTS adoption can request to
+    // preload entries at registration time.
+    // START OF ETLD-OWNER REQUESTED ENTRIES
+    { "name": "digital.gov", "include_subdomains": true, "mode": "force-https" },
+    { "name": "cdcpartners.gov", "include_subdomains": true, "mode": "force-https" },
+    { "name": "smarterskies.gov", "include_subdomains": true, "mode": "force-https" },
+    { "name": "atcreform.gov", "include_subdomains": true, "mode": "force-https" },
+    { "name": "myfdic.gov", "include_subdomains": true, "mode": "force-https" },
+    { "name": "innovation.gov", "include_subdomains": true, "mode": "force-https" },
+    { "name": "trainingproviderresults.gov", "include_subdomains": true, "mode": "force-https" },
+    // END OF ETLD-OWNER REQUESTED ENTRIES
 
     // To avoid trailing comma changes from showing up in diffs, we place a
     // single entry at the end.
