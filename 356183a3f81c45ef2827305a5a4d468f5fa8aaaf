@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee75afc8_d513eb8b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-21T17:14:03Z",
+      "side": 1,
+      "message": "A bit more context is needed here as SchedulerWorker is involved in many contexts. I think you mean SchedulerWorkerPoolImpl here and below.",
+      "range": {
+        "startLine": 10,
+        "startChar": 58,
+        "endLine": 10,
+        "endChar": 62
+      },
+      "revId": "356183a3f81c45ef2827305a5a4d468f5fa8aaaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83c0b39d_fbbe30b4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-21T17:14:03Z",
+      "side": 1,
+      "message": "Nit: times out",
+      "range": {
+        "startLine": 12,
+        "startChar": 39,
+        "endLine": 12,
+        "endChar": 47
+      },
+      "revId": "356183a3f81c45ef2827305a5a4d468f5fa8aaaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e73292bb_073ac603",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-21T17:14:03Z",
+      "side": 1,
+      "message": "Describe the mechanics here",
+      "range": {
+        "startLine": 13,
+        "startChar": 11,
+        "endLine": 13,
+        "endChar": 71
+      },
+      "revId": "356183a3f81c45ef2827305a5a4d468f5fa8aaaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18446544_4c1ea5c8",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-21T17:14:03Z",
+      "side": 1,
+      "message": "unless",
+      "range": {
+        "startLine": 120,
+        "startChar": 25,
+        "endLine": 120,
+        "endChar": 32
+      },
+      "revId": "356183a3f81c45ef2827305a5a4d468f5fa8aaaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b75cc6a_8fac86eb",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-21T17:14:03Z",
+      "side": 1,
+      "message": "What is the purpose of this check? SchedulerWorkers generally shouldn\u0027t care about the shutdown state of the task tracker.",
+      "range": {
+        "startLine": 123,
+        "startChar": 30,
+        "endLine": 123,
+        "endChar": 73
+      },
+      "revId": "356183a3f81c45ef2827305a5a4d468f5fa8aaaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c39f246b_8fa157a0",
+        "filename": "base/task_scheduler/scheduler_worker.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-21T17:14:03Z",
+      "side": 1,
+      "message": "SchedulerWorkers should not be aware of any pool. This is better handled soles within SchedulerWorkerPoolImpl.",
+      "range": {
+        "startLine": 88,
+        "startChar": 4,
+        "endLine": 89,
+        "endChar": 59
+      },
+      "revId": "356183a3f81c45ef2827305a5a4d468f5fa8aaaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ba5ed10_65594855",
+        "filename": "base/task_scheduler/scheduler_worker.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-21T17:14:03Z",
+      "side": 1,
+      "message": "Preserve the previous order.",
+      "range": {
+        "startLine": 182,
+        "startChar": 2,
+        "endLine": 182,
+        "endChar": 35
+      },
+      "revId": "356183a3f81c45ef2827305a5a4d468f5fa8aaaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
