@@ -16,6 +16,24 @@
       "revId": "0a5d83f9d4ddef867d5b79bf01ce004a5b80e1a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44dbedec_09e071be",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMapProxy.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-21T08:57:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "654c6b74_467460a0",
+      "revId": "0a5d83f9d4ddef867d5b79bf01ce004a5b80e1a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
