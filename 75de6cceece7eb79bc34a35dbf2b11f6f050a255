@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "786bd3be_8e3433f4",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-21T14:18:36Z",
+      "side": 1,
+      "message": "Oops, meant to fill that in, now reads: bool wants_mmaps \u003d request-\u003eargs.level_of_detail \u003d\u003d\nbase::trace_event::MemoryDumpLevelOfDetail::DETAILED;",
+      "parentUuid": "606ca216_2b2cb8fe",
+      "range": {
+        "startLine": 219,
+        "startChar": 7,
+        "endLine": 219,
+        "endChar": 18
+      },
+      "revId": "75de6cceece7eb79bc34a35dbf2b11f6f050a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aec021df_31f36260",
         "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
         "patchSetId": 14
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8d2e9e4e_4216f8c3",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-21T14:18:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aec021df_31f36260",
+      "range": {
+        "startLine": 413,
+        "startChar": 32,
+        "endLine": 413,
+        "endChar": 46
+      },
+      "revId": "75de6cceece7eb79bc34a35dbf2b11f6f050a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c32eade_b92ddb2a",
         "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/tracing_observer.cc",
         "patchSetId": 14
@@ -68,6 +116,30 @@
       "revId": "75de6cceece7eb79bc34a35dbf2b11f6f050a255",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44fb4724_83d7ca35",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/tracing_observer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-21T14:18:36Z",
+      "side": 1,
+      "message": "Done, but I mean really what\u0027s the point of having lambdas if you don\u0027t use them in deeply dubious situations like this XD",
+      "parentUuid": "6c32eade_b92ddb2a",
+      "range": {
+        "startLine": 134,
+        "startChar": 4,
+        "endLine": 134,
+        "endChar": 47
+      },
+      "revId": "75de6cceece7eb79bc34a35dbf2b11f6f050a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
