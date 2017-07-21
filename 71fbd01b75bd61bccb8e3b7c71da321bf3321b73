@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58643c98_6e122f9d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-21T18:32:44Z",
+      "side": 1,
+      "message": "element",
+      "range": {
+        "startLine": 12,
+        "startChar": 35,
+        "endLine": 12,
+        "endChar": 42
+      },
+      "revId": "71fbd01b75bd61bccb8e3b7c71da321bf3321b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2732cf5_4db2648f",
+        "filename": "chrome/browser/resources/settings/settings_page/settings_section.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-21T18:32:44Z",
+      "side": 1,
+      "message": "Consider rephrasing to explain the weirdness of boolean|string:\n\nA return value of false will not add aira-hidden, but aria-hidden requires a string of \u0027true\u0027 to be hidden as per aria specs. This function ensures we have the right return type.",
+      "range": {
+        "startLine": 279,
+        "startChar": 5,
+        "endLine": 279,
+        "endChar": 68
+      },
+      "revId": "71fbd01b75bd61bccb8e3b7c71da321bf3321b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dad44d21_43d9ac46",
+        "filename": "chrome/browser/resources/settings/settings_page/settings_section.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-21T18:32:44Z",
+      "side": 1,
+      "message": "You can remove this param by using this.pageTitle in like 286.",
+      "range": {
+        "startLine": 280,
+        "startChar": 0,
+        "endLine": 280,
+        "endChar": 78
+      },
+      "revId": "71fbd01b75bd61bccb8e3b7c71da321bf3321b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d751c739_03f06564",
+        "filename": "chrome/browser/resources/settings/settings_page/settings_section.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-21T18:32:44Z",
+      "side": 1,
+      "message": "Drop this comment",
+      "range": {
+        "startLine": 281,
+        "startChar": 32,
+        "endLine": 281,
+        "endChar": 75
+      },
+      "revId": "71fbd01b75bd61bccb8e3b7c71da321bf3321b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02ca8648_a0dc469b",
+        "filename": "chrome/browser/resources/settings/settings_page/settings_section.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-07-21T18:32:44Z",
+      "side": 1,
+      "message": "Parens are not needed. Please run closure compiler to verify correctness",
+      "range": {
+        "startLine": 281,
+        "startChar": 14,
+        "endLine": 281,
+        "endChar": 30
+      },
+      "revId": "71fbd01b75bd61bccb8e3b7c71da321bf3321b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
