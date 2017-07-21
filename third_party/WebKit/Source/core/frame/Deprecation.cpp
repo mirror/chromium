@@ -11,6 +11,7 @@
 #include "core/inspector/ConsoleMessage.h"
 #include "core/page/Page.h"
 #include "core/workers/WorkerOrWorkletGlobalScope.h"
+#include "platform/RuntimeEnabledFeatures.h"
 #include "public/platform/WebFeaturePolicyFeature.h"
 
 namespace {
@@ -266,7 +267,9 @@ String Deprecation::DeprecationMessage(WebFeature feature) {
 
     case WebFeature::kPrefixedVideoEnterFullscreen:
       return replacedBy("'HTMLVideoElement.webkitEnterFullscreen()'",
-                        "'Element.requestFullscreen()'");
+                        RuntimeEnabledFeatures::FullscreenUnprefixedEnabled()
+                            ? "'Element.requestFullscreen()'"
+                            : "'Element.webkitRequestFullscreen()'");
 
     case WebFeature::kPrefixedVideoExitFullscreen:
       return replacedBy("'HTMLVideoElement.webkitExitFullscreen()'",
@@ -274,7 +277,9 @@ String Deprecation::DeprecationMessage(WebFeature feature) {
 
     case WebFeature::kPrefixedVideoEnterFullScreen:
       return replacedBy("'HTMLVideoElement.webkitEnterFullScreen()'",
-                        "'Element.requestFullscreen()'");
+                        RuntimeEnabledFeatures::FullscreenUnprefixedEnabled()
+                            ? "'Element.requestFullscreen()'"
+                            : "'Element.webkitRequestFullscreen()'");
 
     case WebFeature::kPrefixedVideoExitFullScreen:
       return replacedBy("'HTMLVideoElement.webkitExitFullScreen()'",
