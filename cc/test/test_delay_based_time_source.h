@@ -32,4 +32,4 @@ class TestDelayBasedTimeSource : public DelayBasedTimeSource {
 
 }  // namespace cc
 
-#endif  // CC_TEST_TEST_DELAY_BASED_TEST_SOURCE_H_
+#endif  // CC_TEST_TEST_DELAY_BASED_TIME_SOURCE_H_
