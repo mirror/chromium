@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "818d5766_1ad094e0",
+        "filename": "ios/shared/chrome/browser/ui/commands/command_dispatcher.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-21T16:09:37Z",
+      "side": 1,
+      "message": "__weak id\u003cMetricsRecorder\u003e?",
+      "range": {
+        "startLine": 24,
+        "startChar": 26,
+        "endLine": 24,
+        "endChar": 28
+      },
+      "revId": "e1aac63ba6c505cab2cfab90a02e25fcb3715507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba350f35_10726dc9",
+        "filename": "ios/shared/chrome/browser/ui/commands/command_dispatcher.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-21T16:09:37Z",
+      "side": 1,
+      "message": "DCHECK(![self findMetricsRecorderForSelector]) ?",
+      "range": {
+        "startLine": 78,
+        "startChar": 9,
+        "endLine": 78,
+        "endChar": 26
+      },
+      "revId": "e1aac63ba6c505cab2cfab90a02e25fcb3715507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9436a29a_86e085c1",
+        "filename": "ios/shared/chrome/browser/ui/commands/command_dispatcher.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-21T16:09:37Z",
+      "side": 1,
+      "message": "Comments are needed on these methods.\n\nI would prefer dropping \u0027find\u0027 from the names on these (consider [NSDictoionary objectForKey:], for example).",
+      "range": {
+        "startLine": 144,
+        "startChar": 6,
+        "endLine": 144,
+        "endChar": 27
+      },
+      "revId": "e1aac63ba6c505cab2cfab90a02e25fcb3715507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
