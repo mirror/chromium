@@ -211,6 +211,30 @@
       "revId": "8eaa61b7d52a155aca1286c383493e987474a71c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6248369b_2169e47e",
+        "filename": "components/ukm/ukm_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-07-21T21:59:46Z",
+      "side": 1,
+      "message": "Currently none of the providers which are registered to UKM actually do any AsyncInit, so there is still no duplicate work.",
+      "parentUuid": "87973f1d_536fc708",
+      "range": {
+        "startLine": 224,
+        "startChar": 32,
+        "endLine": 224,
+        "endChar": 33
+      },
+      "revId": "8eaa61b7d52a155aca1286c383493e987474a71c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
