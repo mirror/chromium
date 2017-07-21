@@ -219,4 +219,8 @@ bool WebLayerTreeViewImplForTesting::IsForSubframe() {
   return false;
 }
 
+bool WebLayerTreeViewImplForTesting::IsForGuest() {
+  return false;
+}
+
 }  // namespace blink

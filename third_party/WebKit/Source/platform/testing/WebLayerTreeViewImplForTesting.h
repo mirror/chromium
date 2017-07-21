@@ -93,6 +93,7 @@ class WebLayerTreeViewImplForTesting
   void DidCompletePageScaleAnimation() override {}
 
   bool IsForSubframe() override;
+  bool IsForGuest() override;
 
   // cc::LayerTreeHostSingleThreadClient implementation.
   void DidSubmitCompositorFrame() override {}

@@ -12,4 +12,8 @@ bool StubLayerTreeHostClient::IsForSubframe() {
   return false;
 }
 
+bool StubLayerTreeHostClient::IsForGuest() {
+  return false;
+}
+
 }  // namespace cc

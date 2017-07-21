@@ -37,6 +37,7 @@ class StubLayerTreeHostClient : public LayerTreeHostClient {
   void DidCompletePageScaleAnimation() override {}
 
   bool IsForSubframe() override;
+  bool IsForGuest() override;
 };
 
 }  // namespace cc

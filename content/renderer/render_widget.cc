@@ -359,6 +359,7 @@ RenderWidget::RenderWidget(int32_t widget_routing_id,
       host_closing_(false),
       is_swapped_out_(swapped_out),
       for_oopif_(false),
+      for_guest_(false),
       text_input_type_(ui::TEXT_INPUT_TYPE_NONE),
       text_input_mode_(ui::TEXT_INPUT_MODE_DEFAULT),
       text_input_flags_(0),
@@ -1311,8 +1312,9 @@ blink::WebLayerTreeView* RenderWidget::InitializeLayerTreeView() {
   compositor_ = RenderWidgetCompositor::Create(this, compositor_deps_);
   auto animation_host = cc::AnimationHost::CreateMainInstance();
 
-  // Oopif status must be set before the LayerTreeHost is created.
+  // Oopif and guest status must be set before the LayerTreeHost is created.
   compositor_->SetIsForOopif(for_oopif_);
+  compositor_->SetIsForGuest(for_guest_);
   auto layer_tree_host = RenderWidgetCompositor::CreateLayerTreeHost(
       compositor_.get(), compositor_.get(), animation_host.get(),
       compositor_deps_, device_scale_factor_, screen_info_);
