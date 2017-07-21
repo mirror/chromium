@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "24c58dfc_c829d262",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-21T17:08:12Z",
+      "side": 1,
+      "message": "Ah this probably should have been a separate CL. This is here so that the promo can be located to check its visibility in a browsertest.",
+      "parentUuid": "251d1326_e9462944",
+      "revId": "3a05756e853d20fa7ef82b2ed93790367a853af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0ab1150_bd51ba1f",
         "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
         "patchSetId": 24
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-21T06:00:46Z",
       "side": 1,
       "message": "If this is the only place you\u0027re going to use this variable, why keep it as a member at all?  Just compute the right string directly here and omit |promo_string_| entirely.",
+      "revId": "3a05756e853d20fa7ef82b2ed93790367a853af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1f00141_7ba84331",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-21T17:08:12Z",
+      "side": 1,
+      "message": "I think we need to keep this as a member variable because it is defined in the constructor based off of a constructor parameter and then used in Init()",
+      "parentUuid": "b0ab1150_bd51ba1f",
       "revId": "3a05756e853d20fa7ef82b2ed93790367a853af6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "add37ff5_3355925e",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-21T17:08:12Z",
+      "side": 1,
+      "message": "Cat and I\u0027s thoughts on this was that making the string look like the resource ID would make this more clear, but it is kind of redundant so we will just convert to int and use a switch as you recommended.",
+      "parentUuid": "dde56e1b_99493056",
+      "revId": "3a05756e853d20fa7ef82b2ed93790367a853af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d3e24c9_033cd78d",
         "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
         "patchSetId": 24
@@ -67,6 +121,24 @@
       "revId": "3a05756e853d20fa7ef82b2ed93790367a853af6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d4bd8cd_49e31005",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-21T17:08:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d3e24c9_033cd78d",
+      "revId": "3a05756e853d20fa7ef82b2ed93790367a853af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "143aa591_50d8abbd",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-21T17:08:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "924ff535_1b009bd6",
+      "revId": "3a05756e853d20fa7ef82b2ed93790367a853af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97b8994f_e932e0af",
         "filename": "chrome/browser/ui/views/tabs/new_tab_promo.h",
         "patchSetId": 24
@@ -101,6 +191,24 @@
       "revId": "3a05756e853d20fa7ef82b2ed93790367a853af6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57357c96_0bf04464",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-21T17:08:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "97b8994f_e932e0af",
+      "revId": "3a05756e853d20fa7ef82b2ed93790367a853af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
