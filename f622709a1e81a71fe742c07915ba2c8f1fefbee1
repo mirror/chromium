@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d627c1ee_5b49024e",
+        "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-21T22:44:17Z",
+      "side": 1,
+      "message": "Constants need to begin with lowercase k per style guide.",
+      "range": {
+        "startLine": 15,
+        "startChar": 14,
+        "endLine": 15,
+        "endChar": 25
+      },
+      "revId": "f622709a1e81a71fe742c07915ba2c8f1fefbee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c64879d_8b3143a5",
+        "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-21T22:44:17Z",
+      "side": 1,
+      "message": "Would be good to abstract this to a constant like |labelMargin|",
+      "range": {
+        "startLine": 35,
+        "startChar": 62,
+        "endLine": 35,
+        "endChar": 64
+      },
+      "revId": "f622709a1e81a71fe742c07915ba2c8f1fefbee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dadc0d74_4320bda3",
+        "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-21T22:44:17Z",
+      "side": 1,
+      "message": "Why divide by 2? Good to add in comment.",
+      "revId": "f622709a1e81a71fe742c07915ba2c8f1fefbee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9be9d4a7_5be144f3",
+        "filename": "ios/showcase/text_badge_view/sc_text_badge_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-21T22:44:17Z",
+      "side": 1,
+      "message": "This is done for the text badge both here and inside the view. Should probably only be done here, as parent of the view.",
+      "revId": "f622709a1e81a71fe742c07915ba2c8f1fefbee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
