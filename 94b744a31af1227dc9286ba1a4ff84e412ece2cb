@@ -232,6 +232,30 @@
     },
     {
       "key": {
+        "uuid": "26764cfb_1db4732e",
+        "filename": "components/signin/core/browser/about_signin_internals.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-07-21T12:36:23Z",
+      "side": 1,
+      "message": "They are needed, but this is just a cleanup (they were already needed before my CL).\nThey show up as errors for \"git cl lint\" for my CL, so I\u0027m fixing them now.",
+      "parentUuid": "76ebec79_bde6a13b",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 9,
+        "endChar": 19
+      },
+      "revId": "94b744a31af1227dc9286ba1a4ff84e412ece2cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "444f7c54_fafdc3e6",
         "filename": "components/signin/core/browser/scoped_account_consistency.cc",
         "patchSetId": 2
@@ -398,6 +422,30 @@
       "writtenOn": "2017-07-20T13:22:57Z",
       "side": 1,
       "message": "I think returning true in both cases has a risk. This means that that user will be able to enable sync with Dice when on kDiceFixAuthErrors is enabled.",
+      "range": {
+        "startLine": 44,
+        "startChar": 33,
+        "endLine": 44,
+        "endChar": 43
+      },
+      "revId": "94b744a31af1227dc9286ba1a4ff84e412ece2cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a57b7ea9_eadbac7d",
+        "filename": "components/signin/core/common/profile_management_switches.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-07-21T12:36:23Z",
+      "side": 1,
+      "message": "As discussed offline, reverting these changes. We\u0027ll figure out how to do this in another CL.",
+      "parentUuid": "5188b8a5_e3792410",
       "range": {
         "startLine": 44,
         "startChar": 33,
