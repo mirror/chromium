@@ -493,6 +493,10 @@ void Shell::ShowAppList() {
                       .id());
 }
 
+void Shell::SetAppListYPosition(int y_position_in_screen) {
+  app_list_->SetYPosition(y_position_in_screen);
+}
+
 void Shell::DismissAppList() {
   app_list_->Dismiss();
 }
