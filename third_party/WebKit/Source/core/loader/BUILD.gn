@@ -58,6 +58,8 @@ blink_core_sources("loader") {
     "ProgressTracker.h",
     "SubresourceFilter.cpp",
     "SubresourceFilter.h",
+    "SubresourceIntegrityHelper.cpp",
+    "SubresourceIntegrityHelper.h",
     "TextResourceDecoderBuilder.cpp",
     "TextResourceDecoderBuilder.h",
     "TextTrackLoader.cpp",
