@@ -614,8 +614,6 @@ cc_static_library("test_support") {
     "test/test_context_provider.h",
     "test/test_context_support.cc",
     "test/test_context_support.h",
-    "test/test_delay_based_time_source.cc",
-    "test/test_delay_based_time_source.h",
     "test/test_gles2_interface.cc",
     "test/test_gles2_interface.h",
     "test/test_gpu_memory_buffer_manager.cc",

@@ -8,6 +8,7 @@
 
 #include "base/test/test_simple_task_runner.h"
 #include "cc/test/fake_delay_based_time_source.h"
+#include "cc/test/ordered_simple_task_runner.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace cc {

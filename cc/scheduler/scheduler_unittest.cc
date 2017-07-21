@@ -20,7 +20,6 @@
 #include "cc/test/fake_external_begin_frame_source.h"
 #include "cc/test/ordered_simple_task_runner.h"
 #include "cc/test/scheduler_test_common.h"
-#include "cc/test/test_delay_based_time_source.h"
 #include "components/viz/common/frame_sinks/begin_frame_args.h"
 #include "components/viz/test/begin_frame_args_test.h"
 #include "testing/gmock/include/gmock/gmock.h"

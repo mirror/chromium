@@ -85,6 +85,7 @@ class OrderedSimpleTaskRunner : public base::SingleThreadTaskRunner {
 
   size_t NumPendingTasks() const;
   bool HasPendingTasks() const;
+  void ClearPendingTasks();
   base::TimeTicks NextTaskTime();
   base::TimeDelta DelayToNextTaskTime();
 
