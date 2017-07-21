@@ -55,10 +55,10 @@ namespace {
 
 static const char kPng[] = "png";
 static const char kJpeg[] = "jpeg";
-static int kDefaultScreenshotQuality = 80;
-static int kFrameRetryDelayMs = 100;
-static int kCaptureRetryLimit = 2;
-static int kMaxScreencastFramesInFlight = 2;
+static const int kDefaultScreenshotQuality = 80;
+static const int kFrameRetryDelayMs = 100;
+static const int kCaptureRetryLimit = 2;
+static const int kMaxScreencastFramesInFlight = 2;
 
 std::string EncodeImage(const gfx::Image& image,
                         const std::string& format,

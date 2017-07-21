@@ -62,8 +62,8 @@ MetaTable::~MetaTable() {
 }
 
 // static
-int64_t MetaTable::kMmapFailure = -2;
-int64_t MetaTable::kMmapSuccess = -1;
+const int64_t MetaTable::kMmapFailure = -2;
+const int64_t MetaTable::kMmapSuccess = -1;
 
 // static
 bool MetaTable::DoesTableExist(sql::Connection* db) {
