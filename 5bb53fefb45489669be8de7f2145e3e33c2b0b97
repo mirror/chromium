@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "79acbe36_9cfb7a8a",
+        "filename": "services/device/generic_sensor/platform_sensor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-07-21T21:54:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3450c082_0039960e",
+      "revId": "5bb53fefb45489669be8de7f2145e3e33c2b0b97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7ac6656_3f10f502",
         "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
         "patchSetId": 1
