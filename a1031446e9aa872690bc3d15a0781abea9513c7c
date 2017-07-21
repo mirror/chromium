@@ -22,6 +22,30 @@
       "revId": "a1031446e9aa872690bc3d15a0781abea9513c7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7cc6ed2_42aaccc5",
+        "filename": "components/cronet/android/java/src/org/chromium/net/impl/JavaUrlRequest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1140228
+      },
+      "writtenOn": "2017-07-21T16:05:02Z",
+      "side": 1,
+      "message": "The other benefit of always calling execute is that we don\u0027t have to do anything to prevent interrupts from leaking into subsequent tasks - that\u0027s handled by the executor we\u0027re delegating to. \n\nRather than trying to fix behavior in case of shutdown, would it make more sense to not shut down the thread pool until all the outstanding requests have finished their tasks?",
+      "parentUuid": "ab1f66a2_62acdac2",
+      "range": {
+        "startLine": 180,
+        "startChar": 59,
+        "endLine": 180,
+        "endChar": 0
+      },
+      "revId": "a1031446e9aa872690bc3d15a0781abea9513c7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
