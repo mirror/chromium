@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca2c9b22_81a71269",
+        "filename": "third_party/WebKit/LayoutTests/battery-status/resources/mock-battery-monitor.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-07-21T17:21:52Z",
+      "side": 1,
+      "message": "I assume there is no need for a corresponding stop()?",
+      "range": {
+        "startLine": 46,
+        "startChar": 30,
+        "endLine": 46,
+        "endChar": 0
+      },
+      "revId": "87d61e1934553081d416511c94c0d2e489820fd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d508ee5_14e4a3a2",
+        "filename": "third_party/WebKit/Source/modules/battery/BatteryDispatcher.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-07-21T17:21:52Z",
+      "side": 1,
+      "message": "So I understand the BatteryDispatcher is not a singleton anymore and instead is created one per frame (with potential memory usage increase, although probably minor). What exactly is the reason for requiring it be per frame (as opposed to singleton)? Does it need to be per frame?",
+      "range": {
+        "startLine": 25,
+        "startChar": 46,
+        "endLine": 25,
+        "endChar": 0
+      },
+      "revId": "87d61e1934553081d416511c94c0d2e489820fd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
