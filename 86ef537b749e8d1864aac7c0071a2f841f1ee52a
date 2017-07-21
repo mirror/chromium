@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8df6d44e_926cddf0",
+        "filename": "content/browser/frame_host/render_frame_host_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-21T16:44:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4015215_29ec4eb5",
+      "revId": "86ef537b749e8d1864aac7c0071a2f841f1ee52a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9df14a7b_9f53b60a",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 5
@@ -30,6 +48,30 @@
       "writtenOn": "2017-07-12T21:53:40Z",
       "side": 1,
       "message": "I\u0027m a bit confused by this function: it\u0027s called from RenderProcessGone. But at the point, the connection error should have ...\n\nAh, I guess it\u0027s because connection errors don\u0027t reset the bindings, and when we reuse the RenderFrameHost, we need to pretend it was just created. Meh.",
+      "range": {
+        "startLine": 3342,
+        "startChar": 0,
+        "endLine": 3352,
+        "endChar": 38
+      },
+      "revId": "86ef537b749e8d1864aac7c0071a2f841f1ee52a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "330b1069_6deb349b",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3352,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-21T16:44:12Z",
+      "side": 1,
+      "message": "Hm maybe this is unneeded if this is a binding set.",
+      "parentUuid": "9df14a7b_9f53b60a",
       "range": {
         "startLine": 3342,
         "startChar": 0,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "41cb3203_804ad0c1",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 4204,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-21T16:44:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c47ca9dd_f0a30fb2",
+      "range": {
+        "startLine": 4202,
+        "startChar": 2,
+        "endLine": 4204,
+        "endChar": 49
+      },
+      "revId": "86ef537b749e8d1864aac7c0071a2f841f1ee52a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9a5afd3_d06fe57e",
         "filename": "third_party/WebKit/Source/core/paint/PaintTiming.cpp",
         "patchSetId": 5
@@ -79,6 +145,24 @@
       "revId": "86ef537b749e8d1864aac7c0071a2f841f1ee52a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4089402_a4ad88e3",
+        "filename": "third_party/WebKit/Source/core/paint/PaintTiming.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-21T16:44:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9a5afd3_d06fe57e",
+      "revId": "86ef537b749e8d1864aac7c0071a2f841f1ee52a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
