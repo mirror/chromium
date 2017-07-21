@@ -1,0 +1,456 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82e10635_60be9e1e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-21T19:11:49Z",
+      "side": 1,
+      "message": "Please have one.",
+      "revId": "8df61b2abaf69dd0c576f93a3931cec7800979b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d619776e_566bed13",
+        "filename": "content/browser/devtools/devtools_io_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-21T19:11:49Z",
+      "side": 1,
+      "message": "task_task :)",
+      "range": {
+        "startLine": 39,
+        "startChar": 39,
+        "endLine": 39,
+        "endChar": 67
+      },
+      "revId": "8df61b2abaf69dd0c576f93a3931cec7800979b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "287e637d_30108b9c",
+        "filename": "content/browser/devtools/devtools_io_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-21T19:11:49Z",
+      "side": 1,
+      "message": "Add DISALLOW_COPY_AND_ASSIGN to all classes.",
+      "range": {
+        "startLine": 48,
+        "startChar": 6,
+        "endLine": 48,
+        "endChar": 20
+      },
+      "revId": "8df61b2abaf69dd0c576f93a3931cec7800979b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62e5079f_a4673215",
+        "filename": "content/browser/devtools/devtools_io_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-21T19:11:49Z",
+      "side": 1,
+      "message": "invoke_pending_callbacks",
+      "range": {
+        "startLine": 53,
+        "startChar": 18,
+        "endLine": 53,
+        "endChar": 40
+      },
+      "revId": "8df61b2abaf69dd0c576f93a3931cec7800979b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1ab0242_074a63d6",
+        "filename": "content/browser/devtools/devtools_io_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-21T19:11:49Z",
+      "side": 1,
+      "message": "I\u0027m curious whether we can create one BlobReader per request, not queue them and let storage part handle queueing for us?",
+      "revId": "8df61b2abaf69dd0c576f93a3931cec7800979b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a7b6a2a_995f05bd",
+        "filename": "content/browser/devtools/devtools_io_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-21T19:11:49Z",
+      "side": 1,
+      "message": "std::unique_ptr\u003cReadRequest\u003e request(new ReadRequest(..))\nis easier. MakeUnique saves you some typing when there is no unique_ptr around.",
+      "revId": "8df61b2abaf69dd0c576f93a3931cec7800979b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ac5cda2_34f9bf22",
+        "filename": "content/browser/devtools/devtools_io_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-21T19:11:49Z",
+      "side": 1,
+      "message": "Or you can inline MakeUnique here.",
+      "range": {
+        "startLine": 276,
+        "startChar": 50,
+        "endLine": 276,
+        "endChar": 68
+      },
+      "revId": "8df61b2abaf69dd0c576f93a3931cec7800979b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85d54b01_3d4e0fbb",
+        "filename": "content/browser/devtools/devtools_io_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-21T19:11:49Z",
+      "side": 1,
+      "message": "open_callback_ \u003d OpenCallback();",
+      "range": {
+        "startLine": 344,
+        "startChar": 4,
+        "endLine": 344,
+        "endChar": 10
+      },
+      "revId": "8df61b2abaf69dd0c576f93a3931cec7800979b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aae7aca_072d00c2",
+        "filename": "content/browser/devtools/devtools_io_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-21T19:11:49Z",
+      "side": 1,
+      "message": "Why this?",
+      "revId": "8df61b2abaf69dd0c576f93a3931cec7800979b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fc40717_c97e0b5b",
+        "filename": "content/browser/devtools/devtools_io_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-21T19:11:49Z",
+      "side": 1,
+      "message": "I\u0027d move this block to line 360 instead. That makes flow easier to understand.",
+      "revId": "8df61b2abaf69dd0c576f93a3931cec7800979b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5868d70_4c98e752",
+        "filename": "content/browser/devtools/devtools_io_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-21T19:11:49Z",
+      "side": 1,
+      "message": "Why not call directly?",
+      "revId": "8df61b2abaf69dd0c576f93a3931cec7800979b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a94d2310_524a3fc7",
+        "filename": "content/browser/devtools/devtools_io_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-21T19:11:49Z",
+      "side": 1,
+      "message": "style: {} around multiline",
+      "revId": "8df61b2abaf69dd0c576f93a3931cec7800979b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5b90f31_0c344b11",
+        "filename": "content/browser/devtools/devtools_io_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-21T19:11:49Z",
+      "side": 1,
+      "message": "Should you do std::min(request.max_size, total - seek_to)?",
+      "range": {
+        "startLine": 439,
+        "startChar": 17,
+        "endLine": 439,
+        "endChar": 53
+      },
+      "revId": "8df61b2abaf69dd0c576f93a3931cec7800979b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a377284b_8709e62c",
+        "filename": "content/browser/devtools/devtools_io_context.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-21T19:11:49Z",
+      "side": 1,
+      "message": "invoke_pending_callbacks",
+      "range": {
+        "startLine": 44,
+        "startChar": 28,
+        "endLine": 44,
+        "endChar": 50
+      },
+      "revId": "8df61b2abaf69dd0c576f93a3931cec7800979b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "305f5fa5_ccce25fc",
+        "filename": "content/browser/devtools/protocol/io_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-21T19:11:49Z",
+      "side": 1,
+      "message": "style: {} around multiline",
+      "revId": "8df61b2abaf69dd0c576f93a3931cec7800979b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "971f9343_d5bae04c",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/io/blob-streams.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-21T19:11:49Z",
+      "side": 1,
+      "message": "const result \u003d await session.evaluate(createFunction);",
+      "revId": "8df61b2abaf69dd0c576f93a3931cec7800979b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20f6237c_a191c09f",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/io/blob-streams.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-21T19:11:49Z",
+      "side": 1,
+      "message": "nit: not need to quote param names. You can even use object shorthand here :)",
+      "range": {
+        "startLine": 29,
+        "startChar": 46,
+        "endLine": 29,
+        "endChar": 52
+      },
+      "revId": "8df61b2abaf69dd0c576f93a3931cec7800979b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85e485b8_36d9480a",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/io/blob-streams.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-21T19:11:49Z",
+      "side": 1,
+      "message": "allData",
+      "range": {
+        "startLine": 50,
+        "startChar": 8,
+        "endLine": 50,
+        "endChar": 16
+      },
+      "revId": "8df61b2abaf69dd0c576f93a3931cec7800979b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c645d330_cfeab1c7",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/io/blob-streams.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-21T19:11:49Z",
+      "side": 1,
+      "message": "binaryUUID",
+      "range": {
+        "startLine": 74,
+        "startChar": 8,
+        "endLine": 74,
+        "endChar": 19
+      },
+      "revId": "8df61b2abaf69dd0c576f93a3931cec7800979b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30456946_85d91f1c",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/io/blob-streams.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-21T19:11:49Z",
+      "side": 1,
+      "message": "binaryHandle",
+      "range": {
+        "startLine": 75,
+        "startChar": 8,
+        "endLine": 75,
+        "endChar": 21
+      },
+      "revId": "8df61b2abaf69dd0c576f93a3931cec7800979b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5daa1ac7_00ee8ab4",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/io/blob-streams.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-21T19:11:49Z",
+      "side": 1,
+      "message": "I have hard times understanding this!",
+      "range": {
+        "startLine": 79,
+        "startChar": 31,
+        "endLine": 79,
+        "endChar": 102
+      },
+      "revId": "8df61b2abaf69dd0c576f93a3931cec7800979b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d6d296e_455c273c",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 3469,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-21T19:11:49Z",
+      "side": 1,
+      "message": "Let\u0027s document blob handling in protocol.",
+      "range": {
+        "startLine": 3469,
+        "startChar": 31,
+        "endLine": 3469,
+        "endChar": 37
+      },
+      "revId": "8df61b2abaf69dd0c576f93a3931cec7800979b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
