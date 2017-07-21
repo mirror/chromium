@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bf4cf195_2fdaf59a",
+        "filename": "mojo/public/cpp/bindings/lib/buffer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-21T22:46:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62e3d978_9c6bb513",
+      "revId": "9713648d087f679468b56cc4dc159b8b4992e61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa2beabd_f95b7f53",
         "filename": "mojo/public/cpp/bindings/lib/buffer.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-21T20:31:11Z",
       "side": 1,
       "message": "I am curious whether it is more performant to clear the whole buffer at the beginning (and entension) than doing multiple memset()s during allocations.",
+      "revId": "9713648d087f679468b56cc4dc159b8b4992e61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14d6381f_68230f0e",
+        "filename": "mojo/public/cpp/bindings/lib/buffer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-21T22:46:55Z",
+      "side": 1,
+      "message": "Maybe we could experiment with this separately? My intuition is that memset is usually very inexpensive (i.e. the cost is mostly in the memory writes themselves) and so the most performant solution would be the one that does the least total memory writing. Clearing the whole buffer means most bytes are written redundantly.",
+      "parentUuid": "aa2beabd_f95b7f53",
       "revId": "9713648d087f679468b56cc4dc159b8b4992e61b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6c2c76ce_a93a0292",
+        "filename": "mojo/public/cpp/bindings/lib/fixed_buffer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-21T22:46:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b23c9558_8cc3ffdc",
+      "revId": "9713648d087f679468b56cc4dc159b8b4992e61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b44c555e_18d2a318",
         "filename": "mojo/public/cpp/bindings/lib/map_data_internal.h",
         "patchSetId": 6
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-21T20:31:11Z",
       "side": 1,
       "message": "Does it make sense to have a BufferWriterBase (may be templated) to share most of the code between different BufferWriter?",
+      "revId": "9713648d087f679468b56cc4dc159b8b4992e61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a44f460_85994327",
+        "filename": "mojo/public/cpp/bindings/lib/map_data_internal.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-21T22:46:55Z",
+      "side": 1,
+      "message": "I decided against this since I didn\u0027t think there was much benefit.\n\nThere are only a few non-generated BufferWriters and one of them (NativeStructData\u0027s) is not like the others and couldn\u0027t actually use the base class. It might be weird to have BufferWriterBase types everywhere except one place.\n\nI will leave this alone for now, but please let me know if you feel strongly enough about it that you would prefer it to change here.",
+      "parentUuid": "b44c555e_18d2a318",
       "revId": "9713648d087f679468b56cc4dc159b8b4992e61b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ce88d43b_6b638040",
+        "filename": "mojo/public/cpp/bindings/lib/map_serialization.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-21T22:46:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f73ab26c_bcf32cb4",
+      "revId": "9713648d087f679468b56cc4dc159b8b4992e61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86ac2c84_48ad1044",
         "filename": "mojo/public/cpp/bindings/tests/buffer_unittest.cc",
         "patchSetId": 6
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "2d410a3d_c13d1ba8",
+        "filename": "mojo/public/cpp/bindings/tests/buffer_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-21T22:46:55Z",
+      "side": 1,
+      "message": "Agreed and removed.",
+      "parentUuid": "86ac2c84_48ad1044",
+      "revId": "9713648d087f679468b56cc4dc159b8b4992e61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "044981ff_7d429f06",
         "filename": "mojo/public/cpp/bindings/tests/union_unittest.cc",
         "patchSetId": 6
@@ -115,6 +223,24 @@
       "writtenOn": "2017-07-21T20:31:11Z",
       "side": 1,
       "message": "why this is different from line 40 or line 75?",
+      "revId": "9713648d087f679468b56cc4dc159b8b4992e61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a29e8639_b0e5ff40",
+        "filename": "mojo/public/cpp/bindings/tests/union_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-21T22:46:55Z",
+      "side": 1,
+      "message": "Only because the tests in this file never serialize a null toplevel struct or array. A few do however serialize a null union.",
+      "parentUuid": "044981ff_7d429f06",
       "revId": "9713648d087f679468b56cc4dc159b8b4992e61b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "10c6a058_e90c6198",
+        "filename": "mojo/public/cpp/bindings/tests/union_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-21T22:46:55Z",
+      "side": 1,
+      "message": "Sorry, I wasn\u0027t even paying attention when I converted this test, I apparently just made it compile :/\n\nBut as it turns out the test was already invalid anyway, as the message failed validation reasons unrelated to alignment. If I try to fix the test to test the right thing, it just hits a DCHECK anyway. So I\u0027ve deleted the test.",
+      "parentUuid": "effa0e09_50e15b6d",
+      "revId": "9713648d087f679468b56cc4dc159b8b4992e61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b003c3ab_e7ef0dea",
         "filename": "mojo/public/tools/bindings/generators/cpp_templates/struct_macros.tmpl",
         "patchSetId": 6
@@ -152,6 +296,24 @@
       "revId": "9713648d087f679468b56cc4dc159b8b4992e61b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db6692cf_2ebcaba7",
+        "filename": "mojo/public/tools/bindings/generators/cpp_templates/struct_macros.tmpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-21T22:46:55Z",
+      "side": 1,
+      "message": "That\u0027s how I originally had it, but many callsites know it won\u0027t be null, and it thus reduces code size to make the check explicit. (by about 4 kB)",
+      "parentUuid": "b003c3ab_e7ef0dea",
+      "revId": "9713648d087f679468b56cc4dc159b8b4992e61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "82d7eea7_f07e469c",
+        "filename": "mojo/public/tools/bindings/generators/cpp_templates/struct_serialization_declaration.tmpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-21T22:46:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ae0c363_e1dd7b39",
+      "revId": "9713648d087f679468b56cc4dc159b8b4992e61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fa48b10_0df13a52",
         "filename": "mojo/public/tools/bindings/generators/cpp_templates/union_declaration.tmpl",
         "patchSetId": 6
@@ -186,6 +366,24 @@
       "revId": "9713648d087f679468b56cc4dc159b8b4992e61b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fdad7d4_7057559c",
+        "filename": "mojo/public/tools/bindings/generators/cpp_templates/union_declaration.tmpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-21T22:46:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fa48b10_0df13a52",
+      "revId": "9713648d087f679468b56cc4dc159b8b4992e61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "002a9907_aaa8f510",
+        "filename": "mojo/public/tools/bindings/generators/cpp_templates/union_serialization_declaration.tmpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-21T22:46:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3b791ba_0c85c92c",
+      "revId": "9713648d087f679468b56cc4dc159b8b4992e61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "acd6f9c3_379eb394",
         "filename": "mojo/public/tools/bindings/generators/cpp_templates/union_serialization_declaration.tmpl",
         "patchSetId": 6
@@ -220,6 +436,24 @@
       "revId": "9713648d087f679468b56cc4dc159b8b4992e61b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5538ea6_69af47e7",
+        "filename": "mojo/public/tools/bindings/generators/cpp_templates/union_serialization_declaration.tmpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-21T22:46:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acd6f9c3_379eb394",
+      "revId": "9713648d087f679468b56cc4dc159b8b4992e61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
