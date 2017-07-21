@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2031cade_25a8cd9d",
+        "filename": "ui/arc/notification/arc_notification_content_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-07-21T05:14:56Z",
+      "side": 1,
+      "message": "Good catch! Done.",
+      "parentUuid": "09b6e88e_0f470e26",
+      "range": {
+        "startLine": 207,
+        "startChar": 2,
+        "endLine": 207,
+        "endChar": 39
+      },
+      "revId": "ad80b69073691c43ed093233e553382f34c71c6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b90e858_2fac3c0f",
         "filename": "ui/arc/notification/arc_notification_view.cc",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2017-07-21T04:02:26Z",
       "side": 1,
       "message": "Maybe you want to call |set_notify_enter_exit_on_child(true)| to observe {enter/exit} events on the control buttons.",
+      "revId": "ad80b69073691c43ed093233e553382f34c71c6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a393b6b3_ee60ad3d",
+        "filename": "ui/arc/notification/arc_notification_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-07-21T05:14:56Z",
+      "side": 1,
+      "message": "Thanks. That is already called in the ctor of the parent class (NotificationView).",
+      "parentUuid": "0b90e858_2fac3c0f",
       "revId": "ad80b69073691c43ed093233e553382f34c71c6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
