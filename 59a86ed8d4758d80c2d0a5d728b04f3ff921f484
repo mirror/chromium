@@ -22,6 +22,30 @@
       "revId": "59a86ed8d4758d80c2d0a5d728b04f3ff921f484",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0057f91_df5f9058",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_chip.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-21T06:57:16Z",
+      "side": 1,
+      "message": "Removed the ID. If Alan wants the second div back, then having the class will be easier.",
+      "parentUuid": "c34126bc_0529b4dd",
+      "range": {
+        "startLine": 87,
+        "startChar": 13,
+        "endLine": 87,
+        "endChar": 20
+      },
+      "revId": "59a86ed8d4758d80c2d0a5d728b04f3ff921f484",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
