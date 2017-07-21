@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cf71f00_14451e27",
+        "filename": "remoting/branding_Chrome",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-07-21T23:45:03Z",
+      "side": 0,
+      "message": "This directly comes from the output name after sdefresne\u0027s change.",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 36
+      },
+      "revId": "df983b6fb3ebd8cc9cbd1baceef224631efccfaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
