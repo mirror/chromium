@@ -22,7 +22,6 @@
 #include "content/public/renderer/media_stream_video_renderer.h"
 #include "content/renderer/media/web_media_element_source_utils.h"
 #include "content/renderer/media/webmediaplayer_ms_compositor.h"
-#include "content/renderer/media/webrtc_logging.h"
 #include "content/renderer/render_frame_impl.h"
 #include "content/renderer/render_thread_impl.h"
 #include "media/base/bind_to_current_loop.h"
@@ -247,22 +246,16 @@ void WebMediaPlayerMS::Load(LoadType load_type,
 
   RenderFrame* const frame = RenderFrame::FromWebFrame(frame_);
 
-  int routing_id = MSG_ROUTING_NONE;
-  GURL url = source.IsURL() ? GURL(source.GetAsURL()) : GURL();
-
   if (frame) {
     // Report UMA and RAPPOR metrics.
+    GURL url = source.IsURL() ? GURL(source.GetAsURL()) : GURL();
     media::ReportMetrics(load_type, url, frame_->GetSecurityOrigin(),
                          media_log_.get());
-    routing_id = frame->GetRoutingID();
+
+    audio_renderer_ = renderer_factory_->GetAudioRenderer(
+        web_stream, frame->GetRoutingID(), initial_audio_output_device_id_,
+        initial_security_origin_);
   }
-
-  audio_renderer_ = renderer_factory_->GetAudioRenderer(
-      web_stream, routing_id, initial_audio_output_device_id_,
-      initial_security_origin_);
-
-  if (!audio_renderer_)
-    WebRtcLogMessage("Warning: Failed to instantiate audio renderer.");
 
   if (!video_frame_provider_ && !audio_renderer_) {
     SetNetworkState(WebMediaPlayer::kNetworkStateNetworkError);
@@ -275,13 +268,7 @@ void WebMediaPlayerMS::Load(LoadType load_type,
   }
   if (video_frame_provider_)
     video_frame_provider_->Start();
-
-  // When associated with an <audio> element, we don't want to wait for the
-  // first video fram to become available as we do for <video> elements
-  // (<audio> elements can also be assigned video tracks).
-  // For more details, see crbug.com/738379
-  if (audio_renderer_ &&
-      (client_->IsAudioElement() || !video_frame_provider_)) {
+  if (audio_renderer_ && !video_frame_provider_) {
     // This is audio-only mode.
     SetReadyState(WebMediaPlayer::kReadyStateHaveMetadata);
     SetReadyState(WebMediaPlayer::kReadyStateHaveEnoughData);

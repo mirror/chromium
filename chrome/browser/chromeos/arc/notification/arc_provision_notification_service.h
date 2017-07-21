@@ -49,13 +49,11 @@ class ArcProvisionNotificationService : public KeyedService,
 
   // Constructs an instance with the supplied delegate.
   static std::unique_ptr<ArcProvisionNotificationService> CreateForTesting(
-      content::BrowserContext* context,
       std::unique_ptr<Delegate> delegate);
 
  private:
   // Constructs with the supplied delegate.
-  ArcProvisionNotificationService(content::BrowserContext* context,
-                                  std::unique_ptr<Delegate> delegate);
+  explicit ArcProvisionNotificationService(std::unique_ptr<Delegate> delegate);
 
   // ArcSessionManager::Observer:
   void OnArcPlayStoreEnabledChanged(bool enabled) override;
@@ -64,7 +62,6 @@ class ArcProvisionNotificationService : public KeyedService,
   void OnArcSessionStopped(ArcStopReason stop_reason) override;
   void OnArcErrorShowRequested(ArcSupportHost::Error error) override;
 
-  content::BrowserContext* const context_;
   std::unique_ptr<Delegate> delegate_;
 
   DISALLOW_COPY_AND_ASSIGN(ArcProvisionNotificationService);

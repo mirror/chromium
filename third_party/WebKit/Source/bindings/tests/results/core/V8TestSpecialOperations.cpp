@@ -121,9 +121,6 @@ static void namedPropertyQuery(const AtomicString& name, const v8::PropertyCallb
   bool result = impl->NamedPropertyQuery(name, exceptionState);
   if (!result)
     return;
-  // https://heycam.github.io/webidl/#LegacyPlatformObjectGetOwnProperty
-  // 2.7. If |O| implements an interface with a named property setter, then set
-  //      desc.[[Writable]] to true, otherwise set it to false.
   V8SetReturnValueInt(info, v8::None);
 }
 

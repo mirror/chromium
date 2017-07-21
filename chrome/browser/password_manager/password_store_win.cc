@@ -23,8 +23,10 @@
 #include "components/password_manager/core/browser/password_manager.h"
 #include "components/password_manager/core/browser/password_manager_metrics_util.h"
 #include "components/password_manager/core/browser/webdata/password_web_data_service_win.h"
+#include "content/public/browser/browser_thread.h"
 
 using autofill::PasswordForm;
+using content::BrowserThread;
 using password_manager::PasswordStore;
 using password_manager::PasswordStoreDefault;
 
@@ -84,8 +86,7 @@ class PasswordStoreWin::DBHandler : public WebDataServiceConsumer {
 };
 
 PasswordStoreWin::DBHandler::~DBHandler() {
-  DCHECK(
-      password_store_->GetBackgroundTaskRunner()->RunsTasksInCurrentSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::DB);
   for (PendingRequestMap::const_iterator i = pending_requests_.begin();
        i != pending_requests_.end();
        ++i) {
@@ -96,8 +97,7 @@ PasswordStoreWin::DBHandler::~DBHandler() {
 void PasswordStoreWin::DBHandler::GetIE7Login(
     const PasswordStore::FormDigest& form,
     const ResultCallback& result_callback) {
-  DCHECK(
-      password_store_->GetBackgroundTaskRunner()->RunsTasksInCurrentSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::DB);
   IE7PasswordInfo info;
   info.url_hash =
       ie7_password::GetUrlHash(base::UTF8ToWide(form.origin.spec()));
@@ -111,8 +111,7 @@ std::vector<std::unique_ptr<PasswordForm>>
 PasswordStoreWin::DBHandler::GetIE7Results(
     const WDTypedResult* result,
     const PasswordStore::FormDigest& form) {
-  DCHECK(
-      password_store_->GetBackgroundTaskRunner()->RunsTasksInCurrentSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::DB);
   std::vector<std::unique_ptr<PasswordForm>> matched_forms;
   const WDResult<IE7PasswordInfo>* r =
       static_cast<const WDResult<IE7PasswordInfo>*>(result);
@@ -156,8 +155,7 @@ void PasswordStoreWin::DBHandler::OnWebDataServiceRequestDone(
       FROM_HERE_WITH_EXPLICIT_FUNCTION(
           "422460 PasswordStoreWin::DBHandler::OnWebDataServiceRequestDone"));
 
-  DCHECK(
-      password_store_->GetBackgroundTaskRunner()->RunsTasksInCurrentSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::DB);
 
   PendingRequestMap::iterator i = pending_requests_.find(handle);
   DCHECK(i != pending_requests_.end());
@@ -199,13 +197,14 @@ PasswordStoreWin::~PasswordStoreWin() {
 }
 
 void PasswordStoreWin::ShutdownOnDBThread() {
-  DCHECK(GetBackgroundTaskRunner()->RunsTasksInCurrentSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::DB);
   db_handler_.reset();
 }
 
 void PasswordStoreWin::ShutdownOnUIThread() {
-  GetBackgroundTaskRunner()->PostTask(
-      FROM_HERE, base::Bind(&PasswordStoreWin::ShutdownOnDBThread, this));
+  BrowserThread::PostTask(
+      BrowserThread::DB, FROM_HERE,
+      base::Bind(&PasswordStoreWin::ShutdownOnDBThread, this));
   PasswordStoreDefault::ShutdownOnUIThread();
 }
 

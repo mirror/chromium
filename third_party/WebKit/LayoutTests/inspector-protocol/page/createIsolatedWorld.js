@@ -1,5 +1,5 @@
 (async function(testRunner) {
-  let {page, session, dp} = await testRunner.startBlank('Tests Page.createIsolatedWorld method.');
+  let {page, session, dp} = await testRunner.startBlank('');
 
   var reportedExecutionContextId;
   dp.Runtime.onExecutionContextCreated(message => {

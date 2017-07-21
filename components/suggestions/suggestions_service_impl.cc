@@ -442,7 +442,7 @@ SuggestionsServiceImpl::CreateSuggestionsRequest(
           destination: GOOGLE_OWNED_SERVICE
         }
         policy {
-          cookies_allowed: NO
+          cookies_allowed: false
           setting:
             "Users can disable this feature by signing out of Chromium, or "
             "disabling Sync or History Sync in Chromium settings under "

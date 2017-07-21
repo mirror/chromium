@@ -156,25 +156,12 @@ Polymer({
     listenOnce(this, 'transitionend', this.doAction_.bind(this));
   },
 
-  getTopSettingsBoxClass_: function(showDetails) {
-    return showDetails ? 'top-aligned-settings-box' : 'two-line';
-  },
-
   /**
-   * Toggles the expand button within the element being listened to.
-   * @param {!Event} e
+   * Enables presenting the list of files to be removed by Chrome Cleanup.
    * @private
    */
-  toggleExpandButton_: function(e) {
-    // The expand button handles toggling itself.
-    var expandButtonTag = 'CR-EXPAND-BUTTON';
-    if (e.target.tagName == expandButtonTag)
-      return;
-
-    /** @type {!CrExpandButtonElement} */
-    var expandButton = e.currentTarget.querySelector(expandButtonTag);
-    assert(expandButton);
-    expandButton.expanded = !expandButton.expanded;
+  showFiles_: function() {
+    this.showFilesToRemove_ = true;
   },
 
   /**

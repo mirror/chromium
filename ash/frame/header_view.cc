@@ -7,7 +7,6 @@
 #include "ash/frame/caption_buttons/frame_caption_button_container_view.h"
 #include "ash/frame/default_header_painter.h"
 #include "ash/shell.h"
-#include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "ui/views/controls/image_view.h"
 #include "ui/views/widget/widget.h"
 
@@ -28,12 +27,9 @@ HeaderView::HeaderView(views::Widget* target_widget,
   header_painter_->Init(target_widget_, this, caption_button_container_);
 
   Shell::Get()->AddShellObserver(this);
-  Shell::Get()->tablet_mode_controller()->AddObserver(this);
 }
 
 HeaderView::~HeaderView() {
-  if (Shell::Get()->tablet_mode_controller())
-    Shell::Get()->tablet_mode_controller()->RemoveObserver(this);
   Shell::Get()->RemoveShellObserver(this);
 }
 

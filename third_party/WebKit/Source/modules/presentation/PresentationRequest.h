@@ -44,8 +44,6 @@ class MODULES_EXPORT PresentationRequest final
   // ScriptWrappable implementation.
   bool HasPendingActivity() const final;
 
-  static void RecordStartOriginTypeAccess(ExecutionContext&);
-
   ScriptPromise start(ScriptState*);
   ScriptPromise reconnect(ScriptState*, const String& id);
   ScriptPromise getAvailability(ScriptState*);
@@ -55,6 +53,7 @@ class MODULES_EXPORT PresentationRequest final
   DEFINE_ATTRIBUTE_EVENT_LISTENER(connectionavailable);
 
   DECLARE_VIRTUAL_TRACE();
+
  protected:
   // EventTarget implementation.
   void AddedEventListener(const AtomicString& event_type,
@@ -62,7 +61,8 @@ class MODULES_EXPORT PresentationRequest final
 
  private:
   PresentationRequest(ExecutionContext*, const Vector<KURL>&);
-  static void RecordConstructorOriginTypeAccess(ExecutionContext&);
+
+  void RecordOriginTypeAccess(ExecutionContext*) const;
 
   Member<PresentationAvailabilityProperty> availability_property_;
   Vector<KURL> urls_;

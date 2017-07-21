@@ -26,8 +26,6 @@ class PresentationConnectionCallbacks final
     : public WebPresentationConnectionCallbacks {
  public:
   PresentationConnectionCallbacks(ScriptPromiseResolver*, PresentationRequest*);
-  PresentationConnectionCallbacks(ScriptPromiseResolver*,
-                                  PresentationConnection*);
   ~PresentationConnectionCallbacks() override = default;
 
   // WebCallbacks implementation

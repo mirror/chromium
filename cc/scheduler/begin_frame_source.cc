@@ -31,12 +31,11 @@ BeginFrameObserverBase::BeginFrameObserverBase() = default;
 
 BeginFrameObserverBase::~BeginFrameObserverBase() = default;
 
-const viz::BeginFrameArgs& BeginFrameObserverBase::LastUsedBeginFrameArgs()
-    const {
+const BeginFrameArgs& BeginFrameObserverBase::LastUsedBeginFrameArgs() const {
   return last_begin_frame_args_;
 }
 
-void BeginFrameObserverBase::OnBeginFrame(const viz::BeginFrameArgs& args) {
+void BeginFrameObserverBase::OnBeginFrame(const BeginFrameArgs& args) {
   DCHECK(args.IsValid());
   DCHECK(args.frame_time >= last_begin_frame_args_.frame_time);
   DCHECK(args.sequence_number > last_begin_frame_args_.sequence_number ||
@@ -62,7 +61,7 @@ void BeginFrameObserverBase::AsValueInto(
 
 // BeginFrameSource -------------------------------------------------------
 namespace {
-static base::AtomicSequenceNumber g_next_source_id;
+static base::StaticAtomicSequenceNumber g_next_source_id;
 }  // namespace
 
 BeginFrameSource::BeginFrameSource() : source_id_(g_next_source_id.GetNext()) {}
@@ -86,7 +85,7 @@ SyntheticBeginFrameSource::~SyntheticBeginFrameSource() = default;
 BackToBackBeginFrameSource::BackToBackBeginFrameSource(
     std::unique_ptr<DelayBasedTimeSource> time_source)
     : time_source_(std::move(time_source)),
-      next_sequence_number_(viz::BeginFrameArgs::kStartingFrameNumber),
+      next_sequence_number_(BeginFrameArgs::kStartingFrameNumber),
       weak_factory_(this) {
   time_source_->SetClient(this);
   // The time_source_ ticks immediately, so we SetActive(true) for a single
@@ -127,11 +126,10 @@ bool BackToBackBeginFrameSource::IsThrottled() const {
 
 void BackToBackBeginFrameSource::OnTimerTick() {
   base::TimeTicks frame_time = time_source_->LastTickTime();
-  base::TimeDelta default_interval = viz::BeginFrameArgs::DefaultInterval();
-  viz::BeginFrameArgs args = viz::BeginFrameArgs::Create(
+  base::TimeDelta default_interval = BeginFrameArgs::DefaultInterval();
+  BeginFrameArgs args = BeginFrameArgs::Create(
       BEGINFRAME_FROM_HERE, source_id(), next_sequence_number_, frame_time,
-      frame_time + default_interval, default_interval,
-      viz::BeginFrameArgs::NORMAL);
+      frame_time + default_interval, default_interval, BeginFrameArgs::NORMAL);
   next_sequence_number_++;
 
   // This must happen after getting the LastTickTime() from the time source.
@@ -148,7 +146,7 @@ void BackToBackBeginFrameSource::OnTimerTick() {
 DelayBasedBeginFrameSource::DelayBasedBeginFrameSource(
     std::unique_ptr<DelayBasedTimeSource> time_source)
     : time_source_(std::move(time_source)),
-      next_sequence_number_(viz::BeginFrameArgs::kStartingFrameNumber) {
+      next_sequence_number_(BeginFrameArgs::kStartingFrameNumber) {
   time_source_->SetClient(this);
 }
 
@@ -161,7 +159,7 @@ void DelayBasedBeginFrameSource::OnUpdateVSyncParameters(
     interval = authoritative_interval_;
   } else if (interval.is_zero()) {
     // TODO(brianderson): We should not be receiving 0 intervals.
-    interval = viz::BeginFrameArgs::DefaultInterval();
+    interval = BeginFrameArgs::DefaultInterval();
   }
 
   last_timebase_ = timebase;
@@ -174,11 +172,11 @@ void DelayBasedBeginFrameSource::SetAuthoritativeVSyncInterval(
   OnUpdateVSyncParameters(last_timebase_, interval);
 }
 
-viz::BeginFrameArgs DelayBasedBeginFrameSource::CreateBeginFrameArgs(
+BeginFrameArgs DelayBasedBeginFrameSource::CreateBeginFrameArgs(
     base::TimeTicks frame_time,
-    viz::BeginFrameArgs::BeginFrameArgsType type) {
+    BeginFrameArgs::BeginFrameArgsType type) {
   uint64_t sequence_number = next_sequence_number_++;
-  return viz::BeginFrameArgs::Create(
+  return BeginFrameArgs::Create(
       BEGINFRAME_FROM_HERE, source_id(), sequence_number, frame_time,
       time_source_->NextTickTime(), time_source_->Interval(), type);
 }
@@ -203,15 +201,15 @@ void DelayBasedBeginFrameSource::AddObserver(BeginFrameObserver* obs) {
       current_begin_frame_args_.frame_time == last_or_missed_tick_time &&
       current_begin_frame_args_.interval == time_source_->Interval()) {
     // Ensure that the args have the right type.
-    current_begin_frame_args_.type = viz::BeginFrameArgs::MISSED;
+    current_begin_frame_args_.type = BeginFrameArgs::MISSED;
   } else {
     // The args are not up to date and we need to create new ones with the
     // missed tick's time and a new sequence number.
-    current_begin_frame_args_ = CreateBeginFrameArgs(
-        last_or_missed_tick_time, viz::BeginFrameArgs::MISSED);
+    current_begin_frame_args_ =
+        CreateBeginFrameArgs(last_or_missed_tick_time, BeginFrameArgs::MISSED);
   }
 
-  viz::BeginFrameArgs last_args = obs->LastUsedBeginFrameArgs();
+  BeginFrameArgs last_args = obs->LastUsedBeginFrameArgs();
   if (!last_args.IsValid() ||
       (current_begin_frame_args_.frame_time >
        last_args.frame_time +
@@ -240,10 +238,10 @@ bool DelayBasedBeginFrameSource::IsThrottled() const {
 
 void DelayBasedBeginFrameSource::OnTimerTick() {
   current_begin_frame_args_ = CreateBeginFrameArgs(time_source_->LastTickTime(),
-                                                   viz::BeginFrameArgs::NORMAL);
+                                                   BeginFrameArgs::NORMAL);
   std::unordered_set<BeginFrameObserver*> observers(observers_);
   for (auto* obs : observers) {
-    viz::BeginFrameArgs last_args = obs->LastUsedBeginFrameArgs();
+    BeginFrameArgs last_args = obs->LastUsedBeginFrameArgs();
     if (!last_args.IsValid() ||
         (current_begin_frame_args_.frame_time >
          last_args.frame_time +
@@ -286,7 +284,7 @@ void ExternalBeginFrameSource::AddObserver(BeginFrameObserver* obs) {
 
   // Send a MISSED begin frame if necessary.
   if (last_begin_frame_args_.IsValid()) {
-    const viz::BeginFrameArgs& last_args = obs->LastUsedBeginFrameArgs();
+    const BeginFrameArgs& last_args = obs->LastUsedBeginFrameArgs();
     if (!last_args.IsValid() ||
         (last_begin_frame_args_.frame_time > last_args.frame_time)) {
       DCHECK(
@@ -294,8 +292,8 @@ void ExternalBeginFrameSource::AddObserver(BeginFrameObserver* obs) {
           (last_begin_frame_args_.sequence_number > last_args.sequence_number))
           << "current " << last_begin_frame_args_.AsValue()->ToString()
           << ", last " << last_args.AsValue()->ToString();
-      viz::BeginFrameArgs missed_args = last_begin_frame_args_;
-      missed_args.type = viz::BeginFrameArgs::MISSED;
+      BeginFrameArgs missed_args = last_begin_frame_args_;
+      missed_args.type = BeginFrameArgs::MISSED;
       obs->OnBeginFrame(missed_args);
     }
   }
@@ -307,7 +305,7 @@ void ExternalBeginFrameSource::RemoveObserver(BeginFrameObserver* obs) {
 
   observers_.erase(obs);
   if (observers_.empty()) {
-    last_begin_frame_args_ = viz::BeginFrameArgs();
+    last_begin_frame_args_ = BeginFrameArgs();
     client_->OnNeedsBeginFrames(false);
   }
 }
@@ -325,14 +323,14 @@ void ExternalBeginFrameSource::OnSetBeginFrameSourcePaused(bool paused) {
     obs->OnBeginFrameSourcePausedChanged(paused_);
 }
 
-void ExternalBeginFrameSource::OnBeginFrame(const viz::BeginFrameArgs& args) {
+void ExternalBeginFrameSource::OnBeginFrame(const BeginFrameArgs& args) {
   last_begin_frame_args_ = args;
   std::unordered_set<BeginFrameObserver*> observers(observers_);
   for (auto* obs : observers) {
     // It is possible that the source in which |args| originate changes, or that
     // our hookup to this source changes, so we have to check for continuity.
     // See also https://crbug.com/690127 for what may happen without this check.
-    const viz::BeginFrameArgs& last_args = obs->LastUsedBeginFrameArgs();
+    const BeginFrameArgs& last_args = obs->LastUsedBeginFrameArgs();
     if (!last_args.IsValid() || (args.frame_time > last_args.frame_time)) {
       DCHECK((args.source_id != last_args.source_id) ||
              (args.sequence_number > last_args.sequence_number))

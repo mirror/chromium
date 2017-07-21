@@ -41,4 +41,6 @@ void OpenVRDeviceProvider::Initialize() {
   }
 }
 
+void OpenVRDeviceProvider::SetListeningForActivate(bool listening) {}
+
 }  // namespace device

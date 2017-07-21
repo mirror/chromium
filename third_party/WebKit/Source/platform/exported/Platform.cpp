@@ -36,7 +36,6 @@
 #include "base/trace_event/memory_dump_manager.h"
 #include "platform/FontFamilyNames.h"
 #include "platform/Histogram.h"
-#include "platform/InstanceCountersMemoryDumpProvider.h"
 #include "platform/Language.h"
 #include "platform/MemoryCoordinator.h"
 #include "platform/PartitionAllocMemoryDumpProvider.h"
@@ -144,9 +143,6 @@ void Platform::Initialize(Platform* platform) {
         base::ThreadTaskRunnerHandle::Get());
     base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
         MemoryCacheDumpProvider::Instance(), "MemoryCache",
-        base::ThreadTaskRunnerHandle::Get());
-    base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
-        InstanceCountersMemoryDumpProvider::Instance(), "BlinkObjectCounters",
         base::ThreadTaskRunnerHandle::Get());
   }
 }

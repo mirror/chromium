@@ -25,11 +25,7 @@ WebState* TestNavigationManagerDelegate::GetWebState() {
 }
 id<CRWWebViewNavigationProxy>
 TestNavigationManagerDelegate::GetWebViewNavigationProxy() const {
-  return test_web_view_;
-}
-
-void TestNavigationManagerDelegate::SetWebViewNavigationProxy(id web_view) {
-  test_web_view_ = web_view;
+  return nil;
 }
 
 }  // namespace web

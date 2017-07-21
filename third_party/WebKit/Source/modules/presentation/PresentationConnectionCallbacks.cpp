@@ -23,14 +23,6 @@ PresentationConnectionCallbacks::PresentationConnectionCallbacks(
   DCHECK(request_);
 }
 
-PresentationConnectionCallbacks::PresentationConnectionCallbacks(
-    ScriptPromiseResolver* resolver,
-    PresentationConnection* connection)
-    : resolver_(resolver), request_(nullptr), connection_(connection) {
-  DCHECK(resolver_);
-  DCHECK(connection_);
-}
-
 void PresentationConnectionCallbacks::OnSuccess(
     const WebPresentationInfo& presentation_info) {
   if (!resolver_->GetExecutionContext() ||
@@ -38,10 +30,8 @@ void PresentationConnectionCallbacks::OnSuccess(
     return;
   }
 
-  if (!connection_ && request_) {
-    connection_ = PresentationConnection::Take(resolver_.Get(),
-                                               presentation_info, request_);
-  }
+  connection_ = PresentationConnection::Take(resolver_.Get(), presentation_info,
+                                             request_);
   resolver_->Resolve(connection_);
 }
 

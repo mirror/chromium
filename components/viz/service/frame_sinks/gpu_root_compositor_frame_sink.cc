@@ -96,7 +96,7 @@ void GpuRootCompositorFrameSink::SubmitCompositorFrame(
 }
 
 void GpuRootCompositorFrameSink::DidNotProduceFrame(
-    const BeginFrameAck& begin_frame_ack) {
+    const cc::BeginFrameAck& begin_frame_ack) {
   support_->DidNotProduceFrame(begin_frame_ack);
 }
 
@@ -129,7 +129,7 @@ void GpuRootCompositorFrameSink::DidReceiveCompositorFrameAck(
     client_->DidReceiveCompositorFrameAck(resources);
 }
 
-void GpuRootCompositorFrameSink::OnBeginFrame(const BeginFrameArgs& args) {
+void GpuRootCompositorFrameSink::OnBeginFrame(const cc::BeginFrameArgs& args) {
   hit_test_aggregator_.Swap();
   if (client_)
     client_->OnBeginFrame(args);

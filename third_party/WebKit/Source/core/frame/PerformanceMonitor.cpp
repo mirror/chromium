@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "core/frame/PerformanceMonitor.h"
+
 #include "bindings/core/v8/ScheduledAction.h"
 #include "bindings/core/v8/ScriptEventListener.h"
 #include "bindings/core/v8/SourceLocation.h"
@@ -14,9 +15,7 @@
 #include "core/frame/LocalFrame.h"
 #include "core/html/parser/HTMLDocumentParser.h"
 #include "core/probe/CoreProbes.h"
-#include "platform/Histogram.h"
 #include "platform/wtf/CurrentTime.h"
-#include "platform/wtf/Time.h"
 #include "public/platform/Platform.h"
 
 namespace blink {
@@ -201,16 +200,6 @@ void PerformanceMonitor::Did(const probe::CallFunction& probe) {
                                lround(duration * 1000));
   InnerReportGenericViolation(probe.context, handler_type, text, duration,
                               SourceLocation::FromFunction(probe.function));
-}
-
-void PerformanceMonitor::Will(const probe::V8Compile& probe) {
-  // Todo(maxlg): https://crbug.com/738495 Intentionally leave out as we need to
-  // verify monotonical time is reasonable in overhead.
-}
-
-void PerformanceMonitor::Did(const probe::V8Compile& probe) {
-  // Todo(maxlg): https://crbug.com/738495 Intentionally leave out as we need to
-  // verify monotonical time is reasonable in overhead.
 }
 
 void PerformanceMonitor::Will(const probe::UserCallback& probe) {

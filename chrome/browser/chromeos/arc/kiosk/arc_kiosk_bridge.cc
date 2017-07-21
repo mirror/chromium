@@ -77,7 +77,12 @@ ArcKioskBridge::ArcKioskBridge(ArcBridgeService* bridge_service,
 }
 
 ArcKioskBridge::~ArcKioskBridge() {
-  arc_bridge_service_->kiosk()->RemoveObserver(this);
+  // TODO(hidehiko): Currently, the lifetime of ArcBridgeService and
+  // BrowserContextKeyedService is not nested.
+  // If ArcServiceManager::Get() returns nullptr, it is already destructed,
+  // so do not touch it.
+  if (ArcServiceManager::Get())
+    arc_bridge_service_->kiosk()->RemoveObserver(this);
 }
 
 void ArcKioskBridge::OnInstanceReady() {

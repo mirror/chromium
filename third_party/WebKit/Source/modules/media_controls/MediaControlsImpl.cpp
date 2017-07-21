@@ -31,6 +31,8 @@
 #include "core/dom/MutationObserver.h"
 #include "core/dom/MutationObserverInit.h"
 #include "core/dom/MutationRecord.h"
+#include "core/dom/ResizeObserver.h"
+#include "core/dom/ResizeObserverEntry.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/events/KeyboardEvent.h"
 #include "core/events/MouseEvent.h"
@@ -47,8 +49,6 @@
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutTheme.h"
 #include "core/page/SpatialNavigation.h"
-#include "core/resize_observer/ResizeObserver.h"
-#include "core/resize_observer/ResizeObserverEntry.h"
 #include "modules/media_controls/MediaControlsMediaEventListener.h"
 #include "modules/media_controls/MediaControlsOrientationLockDelegate.h"
 #include "modules/media_controls/MediaControlsRotateToFullscreenDelegate.h"
@@ -255,6 +255,12 @@ class MediaControlsImpl::MediaElementMutationCallback
   Member<MediaControlsImpl> controls_;
   Member<MutationObserver> observer_;
 };
+
+MediaControls* MediaControlsImpl::Factory::Create(
+    HTMLMediaElement& media_element,
+    ShadowRoot& shadow_root) {
+  return MediaControlsImpl::Create(media_element, shadow_root);
+}
 
 MediaControlsImpl::MediaControlsImpl(HTMLMediaElement& media_element)
     : HTMLDivElement(media_element.GetDocument()),
@@ -864,8 +870,7 @@ void MediaControlsImpl::DefaultEventHandler(Event* event) {
       return;
     }
     if (key == "ArrowDown" || key == "ArrowUp") {
-      for (int i = 0; i < 5; i++)
-        volume_slider_->OnMediaKeyboardEvent(event);
+      volume_slider_->OnMediaKeyboardEvent(event);
       return;
     }
   }

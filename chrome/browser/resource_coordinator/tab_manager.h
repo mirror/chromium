@@ -105,23 +105,15 @@ class TabManager : public TabStripModelObserver,
   // discarding a particular tab from about:discards.
   bool CanDiscardTab(const TabStats& tab_stats) const;
 
-  // Indicates the criticality of the situation when attempting to discard a
-  // tab.
-  enum DiscardTabCondition { kProactiveShutdown, kUrgentShutdown };
-
   // Discards a tab to free the memory occupied by its renderer. The tab still
-  // exists in the tab-strip; clicking on it will reload it. If the |condition|
-  // is urgent, an aggressive fast-kill will be attempted if the sudden
-  // termination disablers are allowed to be ignored (e.g. On ChromeOS, we can
-  // ignore an unload handler and fast-kill the tab regardless).
-  void DiscardTab(DiscardTabCondition condition);
+  // exists in the tab-strip; clicking on it will reload it.
+  void DiscardTab();
 
   // Discards a tab with the given unique ID. The tab still exists in the
   // tab-strip; clicking on it will reload it. Returns null if the tab cannot
   // be found or cannot be discarded. Otherwise returns the new web_contents
   // of the discarded tab.
-  content::WebContents* DiscardTabById(int64_t target_web_contents_id,
-                                       DiscardTabCondition condition);
+  content::WebContents* DiscardTabById(int64_t target_web_contents_id);
 
   // Method used by the extensions API to discard tabs. If |contents| is null,
   // discards the least important tab using DiscardTab(). Otherwise discards
@@ -132,7 +124,7 @@ class TabManager : public TabStripModelObserver,
   // Log memory statistics for the running processes, then discards a tab.
   // Tab discard happens sometime later, as collecting the statistics touches
   // multiple threads and takes time.
-  void LogMemoryAndDiscardTab(DiscardTabCondition condition);
+  void LogMemoryAndDiscardTab();
 
   // Log memory statistics for the running processes, then call the callback.
   void LogMemory(const std::string& title, const base::Closure& callback);
@@ -217,6 +209,7 @@ class TabManager : public TabStripModelObserver,
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, ProtectVideoTabs);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, ReloadDiscardedTabContextMenu);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, TabManagerBasics);
+  FRIEND_TEST_ALL_PREFIXES(TabManagerTest, FastShutdownSingleTabProcess);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest,
                            GetUnsortedTabStatsIsInVisibleWindow);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, DiscardTabWithNonVisibleTabs);
@@ -225,22 +218,8 @@ class TabManager : public TabStripModelObserver,
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, OnDidStopLoading);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, OnWebContentsDestroyed);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, OnDelayedTabSelected);
-  FRIEND_TEST_ALL_PREFIXES(TabManagerTest, TimeoutWhenLoadingBackgroundTabs);
   FRIEND_TEST_ALL_PREFIXES(TabManagerStatsCollectorTest,
                            HistogramsSessionRestoreSwitchToTab);
-  FRIEND_TEST_ALL_PREFIXES(TabManagerTest,
-                           ProactiveFastShutdownSingleTabProcess);
-  FRIEND_TEST_ALL_PREFIXES(TabManagerTest, UrgentFastShutdownSingleTabProcess);
-  FRIEND_TEST_ALL_PREFIXES(TabManagerTest,
-                           ProactiveFastShutdownSharedTabProcess);
-  FRIEND_TEST_ALL_PREFIXES(TabManagerTest, UrgentFastShutdownSharedTabProcess);
-  FRIEND_TEST_ALL_PREFIXES(TabManagerTest,
-                           ProactiveFastShutdownWithUnloadHandler);
-  FRIEND_TEST_ALL_PREFIXES(TabManagerTest, UrgentFastShutdownWithUnloadHandler);
-  FRIEND_TEST_ALL_PREFIXES(TabManagerTest,
-                           ProactiveFastShutdownWithBeforeunloadHandler);
-  FRIEND_TEST_ALL_PREFIXES(TabManagerTest,
-                           UrgentFastShutdownWithBeforeunloadHandler);
 
   // Information about a Browser.
   struct BrowserInfo {
@@ -278,7 +257,7 @@ class TabManager : public TabStripModelObserver,
   void OnAutoDiscardableStateChange(content::WebContents* contents,
                                     bool is_auto_discardable);
 
-  static void PurgeMemoryAndDiscardTab(DiscardTabCondition condition);
+  static void PurgeMemoryAndDiscardTab();
 
   // Returns true if the |url| represents an internal Chrome web UI page that
   // can be easily reloaded and hence makes a good choice to discard.
@@ -335,9 +314,7 @@ class TabManager : public TabStripModelObserver,
   // Does the actual discard by destroying the WebContents in |model| at |index|
   // and replacing it by an empty one. Returns the new WebContents or NULL if
   // the operation fails (return value used only in testing).
-  content::WebContents* DiscardWebContentsAt(int index,
-                                             TabStripModel* model,
-                                             DiscardTabCondition condition);
+  content::WebContents* DiscardWebContentsAt(int index, TabStripModel* model);
 
   // Called by the memory pressure listener when the memory pressure rises.
   void OnMemoryPressure(
@@ -377,7 +354,7 @@ class TabManager : public TabStripModelObserver,
 
   // Implementation of DiscardTab. Returns null if no tab was discarded.
   // Otherwise returns the new web_contents of the discarded tab.
-  content::WebContents* DiscardTabImpl(DiscardTabCondition condition);
+  content::WebContents* DiscardTabImpl();
 
   // Returns true if tabs can be discarded only once.
   bool CanOnlyDiscardOnce() const;
@@ -397,10 +374,6 @@ class TabManager : public TabStripModelObserver,
   // Returns true if the navigation should be delayed.
   bool ShouldDelayNavigation(
       content::NavigationHandle* navigation_handle) const;
-
-  // Start |force_load_timer_| to load the next background tab if the timer
-  // expires before the current tab loading is finished.
-  void StartForceLoadTimer();
 
   // Start loading the next background tab if needed.
   void LoadNextBackgroundTabIfNeeded();
@@ -422,9 +395,6 @@ class TabManager : public TabStripModelObserver,
   // Check if the navigation is delayed. Use only in tests.
   bool IsNavigationDelayedForTest(
       const content::NavigationHandle* navigation_handle) const;
-
-  // Trigger |force_load_timer_| to fire. Use only in tests.
-  bool TriggerForceLoadTimerForTest();
 
   // Timer to periodically update the stats of the renderers.
   base::RepeatingTimer update_timer_;
@@ -494,9 +464,6 @@ class TabManager : public TabStripModelObserver,
 
   class TabManagerSessionRestoreObserver;
   std::unique_ptr<TabManagerSessionRestoreObserver> session_restore_observer_;
-
-  // When the timer fires, it forces loading the next background tab if needed.
-  std::unique_ptr<base::OneShotTimer> force_load_timer_;
 
   // The list of navigations that are delayed.
   std::vector<BackgroundTabNavigationThrottle*> pending_navigations_;

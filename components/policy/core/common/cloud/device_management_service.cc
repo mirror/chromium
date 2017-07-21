@@ -613,7 +613,7 @@ void DeviceManagementService::StartJob(DeviceManagementRequestJobImpl* job) {
           destination: GOOGLE_OWNED_SERVICE
         }
         policy {
-          cookies_allowed: NO
+          cookies_allowed: false
           setting:
             "This feature cannot be controlled by Chrome settings, but users "
             "can sign out of Chrome to disable it."

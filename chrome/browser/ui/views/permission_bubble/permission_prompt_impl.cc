@@ -6,51 +6,42 @@
 
 #include <stddef.h>
 
+#include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/string16.h"
 #include "chrome/browser/permissions/permission_request.h"
 #include "chrome/browser/platform_util.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_dialogs.h"
+#include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/layout_constants.h"
-#include "chrome/browser/ui/views/bubble_anchor_util_views.h"
+#include "chrome/browser/ui/views/exclusive_access_bubble_views.h"
 #include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
 #include "chrome/browser/ui/views/page_info/permission_selector_row.h"
 #include "chrome/browser/ui/views/page_info/permission_selector_row_observer.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/strings/grit/components_strings.h"
 #include "components/url_formatter/elide_url.h"
+#include "ui/accessibility/ax_node_data.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/color_palette.h"
 #include "ui/gfx/geometry/insets.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/gfx/text_constants.h"
+#include "ui/views/background.h"
 #include "ui/views/bubble/bubble_dialog_delegate.h"
 #include "ui/views/bubble/bubble_frame_view.h"
 #include "ui/views/controls/button/checkbox.h"
 #include "ui/views/controls/label.h"
 #include "ui/views/layout/box_layout.h"
+#include "ui/views/layout/grid_layout.h"
 
 namespace {
 
 // (Square) pixel size of icon.
-constexpr int kIconSize = 18;
-
-// The type of arrow to display on the permission bubble.
-constexpr views::BubbleBorder::Arrow kPermissionAnchorArrow =
-    views::BubbleBorder::TOP_LEFT;
-
-// Returns the view to anchor the permission bubble to. May be null.
-views::View* GetPermissionAnchorView(Browser* browser) {
-  return bubble_anchor_util::GetPageInfoAnchorView(browser);
-}
-
-// Returns the anchor rect to anchor the permission bubble to, as a fallback.
-// Only used if GetPermissionAnchorView() returns nullptr.
-gfx::Rect GetPermissionAnchorRect(Browser* browser) {
-  return bubble_anchor_util::GetPageInfoAnchorRect(browser);
-}
+const int kIconSize = 18;
 
 }  // namespace
 
@@ -80,9 +71,11 @@ class PermissionsBubbleDialogDelegateView
   base::string16 GetDialogButtonLabel(ui::DialogButton button) const override;
   void SizeToContents() override;
 
-  // Repositions the bubble so it's displayed in the correct location based on
-  // the updated anchor view, or anchor rect if that is (or became) null.
-  void UpdateAnchor();
+  // Updates the anchor's arrow and view. Also repositions the bubble so it's
+  // displayed in the correct location.
+  void UpdateAnchor(views::View* anchor_view,
+                    const gfx::Point& anchor_point,
+                    views::BubbleBorder::Arrow anchor_arrow);
 
  private:
   PermissionPromptImpl* owner_;
@@ -99,7 +92,6 @@ PermissionsBubbleDialogDelegateView::PermissionsBubbleDialogDelegateView(
   DCHECK(!requests.empty());
 
   set_close_on_deactivate(false);
-  set_arrow(kPermissionAnchorArrow);
 
   ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
   SetLayoutManager(new views::BoxLayout(
@@ -233,11 +225,25 @@ bool PermissionsBubbleDialogDelegateView::Close() {
   return true;
 }
 
-void PermissionsBubbleDialogDelegateView::UpdateAnchor() {
-  views::View* anchor_view = GetPermissionAnchorView(owner_->browser());
+void PermissionsBubbleDialogDelegateView::UpdateAnchor(
+    views::View* anchor_view,
+    const gfx::Point& anchor_point,
+    views::BubbleBorder::Arrow anchor_arrow) {
+  set_arrow(anchor_arrow);
+
+  // Update the border in the bubble: will either add or remove the arrow.
+  views::BubbleFrameView* frame =
+      views::BubbleDialogDelegateView::GetBubbleFrameView();
+  views::BubbleBorder::Arrow adjusted_arrow = anchor_arrow;
+  if (base::i18n::IsRTL())
+    adjusted_arrow = views::BubbleBorder::horizontal_mirror(adjusted_arrow);
+  frame->SetBubbleBorder(std::unique_ptr<views::BubbleBorder>(
+      new views::BubbleBorder(adjusted_arrow, shadow(), color())));
+
+  // Reposition the bubble based on the updated arrow and view.
   SetAnchorView(anchor_view);
-  if (!anchor_view)
-    SetAnchorRect(GetPermissionAnchorRect(owner_->browser()));
+  // The anchor rect is ignored unless |anchor_view| is nullptr.
+  SetAnchorRect(gfx::Rect(anchor_point, gfx::Size()));
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -264,7 +270,9 @@ void PermissionPromptImpl::UpdateAnchorPosition() {
   if (bubble_delegate_) {
     bubble_delegate_->set_parent_window(
         platform_util::GetViewForWindow(browser_->window()->GetNativeWindow()));
-    bubble_delegate_->UpdateAnchor();
+    bubble_delegate_->UpdateAnchor(GetAnchorView(),
+                                   GetAnchorPoint(),
+                                   GetAnchorArrow());
   }
 }
 
@@ -323,5 +331,6 @@ void PermissionPromptImpl::Show() {
 
   bubble_delegate_->SizeToContents();
 
-  bubble_delegate_->UpdateAnchor();
+  bubble_delegate_->UpdateAnchor(GetAnchorView(), GetAnchorPoint(),
+                                 GetAnchorArrow());
 }

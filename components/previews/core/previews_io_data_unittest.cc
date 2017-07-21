@@ -288,7 +288,7 @@ TEST_F(PreviewsIODataTest, TestAllowLitePageWhenNetworkQualityFast) {
   base::HistogramTester histogram_tester;
   EXPECT_TRUE(io_data()->ShouldAllowPreviewAtECT(
       *CreateRequest(), PreviewsType::LITE_PAGE,
-      net::EFFECTIVE_CONNECTION_TYPE_4G, std::vector<std::string>()));
+      net::EFFECTIVE_CONNECTION_TYPE_4G));
   histogram_tester.ExpectUniqueSample(
       "Previews.EligibilityReason.LitePage",
       static_cast<int>(PreviewsEligibilityReason::ALLOWED), 1);
@@ -353,8 +353,7 @@ TEST_F(PreviewsIODataTest, ClientLoFiDisallowedByDefault) {
   base::HistogramTester histogram_tester;
   EXPECT_FALSE(io_data()->ShouldAllowPreviewAtECT(
       *CreateRequest(), PreviewsType::LOFI,
-      params::EffectiveConnectionTypeThresholdForClientLoFi(),
-      params::GetBlackListedHostsForClientLoFiFieldTrial()));
+      params::EffectiveConnectionTypeThresholdForClientLoFi()));
   histogram_tester.ExpectTotalCount("Previews.EligibilityReason.LoFi", 0);
 }
 
@@ -365,8 +364,7 @@ TEST_F(PreviewsIODataTest, ClientLoFiDisallowedWhenFieldTrialDisabled) {
   base::HistogramTester histogram_tester;
   EXPECT_FALSE(io_data()->ShouldAllowPreviewAtECT(
       *CreateRequest(), PreviewsType::LOFI,
-      params::EffectiveConnectionTypeThresholdForClientLoFi(),
-      params::GetBlackListedHostsForClientLoFiFieldTrial()));
+      params::EffectiveConnectionTypeThresholdForClientLoFi()));
   histogram_tester.ExpectTotalCount("Previews.EligibilityReason.LoFi", 0);
 }
 
@@ -380,8 +378,7 @@ TEST_F(PreviewsIODataTest, ClientLoFiDisallowedWhenNetworkQualityUnavailable) {
   base::HistogramTester histogram_tester;
   EXPECT_FALSE(io_data()->ShouldAllowPreviewAtECT(
       *CreateRequest(), PreviewsType::LOFI,
-      params::EffectiveConnectionTypeThresholdForClientLoFi(),
-      params::GetBlackListedHostsForClientLoFiFieldTrial()));
+      params::EffectiveConnectionTypeThresholdForClientLoFi()));
   histogram_tester.ExpectUniqueSample(
       "Previews.EligibilityReason.LoFi",
       static_cast<int>(PreviewsEligibilityReason::NETWORK_QUALITY_UNAVAILABLE),
@@ -399,8 +396,7 @@ TEST_F(PreviewsIODataTest, ClientLoFiDisallowedWhenNetworkFast) {
   base::HistogramTester histogram_tester;
   EXPECT_FALSE(io_data()->ShouldAllowPreviewAtECT(
       *CreateRequest(), PreviewsType::LOFI,
-      params::EffectiveConnectionTypeThresholdForClientLoFi(),
-      params::GetBlackListedHostsForClientLoFiFieldTrial()));
+      params::EffectiveConnectionTypeThresholdForClientLoFi()));
   histogram_tester.ExpectUniqueSample(
       "Previews.EligibilityReason.LoFi",
       static_cast<int>(PreviewsEligibilityReason::NETWORK_NOT_SLOW), 1);
@@ -417,8 +413,7 @@ TEST_F(PreviewsIODataTest, ClientLoFiAllowed) {
   base::HistogramTester histogram_tester;
   EXPECT_TRUE(io_data()->ShouldAllowPreviewAtECT(
       *CreateRequest(), PreviewsType::LOFI,
-      params::EffectiveConnectionTypeThresholdForClientLoFi(),
-      params::GetBlackListedHostsForClientLoFiFieldTrial()));
+      params::EffectiveConnectionTypeThresholdForClientLoFi()));
   histogram_tester.ExpectUniqueSample(
       "Previews.EligibilityReason.LoFi",
       static_cast<int>(PreviewsEligibilityReason::ALLOWED), 1);
@@ -438,54 +433,10 @@ TEST_F(PreviewsIODataTest, ClientLoFiAllowedOnReload) {
   base::HistogramTester histogram_tester;
   EXPECT_TRUE(io_data()->ShouldAllowPreviewAtECT(
       *request, PreviewsType::LOFI,
-      params::EffectiveConnectionTypeThresholdForClientLoFi(),
-      params::GetBlackListedHostsForClientLoFiFieldTrial()));
+      params::EffectiveConnectionTypeThresholdForClientLoFi()));
   histogram_tester.ExpectUniqueSample(
       "Previews.EligibilityReason.LoFi",
       static_cast<int>(PreviewsEligibilityReason::ALLOWED), 1);
-}
-
-TEST_F(PreviewsIODataTest, ClientLoFiObeysHostBlackListFromServer) {
-  InitializeUIService();
-  CreateFieldTrialWithParams("PreviewsClientLoFi", "Enabled",
-                             {{"max_allowed_effective_connection_type", "2G"},
-                              {"short_host_blacklist", "foo.com, ,bar.net "}});
-
-  network_quality_estimator()->set_effective_connection_type(
-      net::EFFECTIVE_CONNECTION_TYPE_2G);
-
-  const struct {
-    const char* url;
-    bool expected_client_lofi_allowed;
-  } tests[] = {
-      {"http://example.com", true},      {"http://foo.com", false},
-      {"https://foo.com", false},        {"http://www.foo.com", true},
-      {"http://m.foo.com", true},        {"http://foo.net", true},
-      {"http://foo.com/example", false}, {"http://bar.net", false},
-      {"http://bar.net.tld", true},
-  };
-
-  for (const auto& test : tests) {
-    base::HistogramTester histogram_tester;
-
-    std::unique_ptr<net::URLRequest> request =
-        context()->CreateRequest(GURL(test.url), net::DEFAULT_PRIORITY, nullptr,
-                                 TRAFFIC_ANNOTATION_FOR_TESTS);
-
-    EXPECT_EQ(test.expected_client_lofi_allowed,
-              io_data()->ShouldAllowPreviewAtECT(
-                  *request, PreviewsType::LOFI,
-                  params::EffectiveConnectionTypeThresholdForClientLoFi(),
-                  params::GetBlackListedHostsForClientLoFiFieldTrial()));
-
-    histogram_tester.ExpectUniqueSample(
-        "Previews.EligibilityReason.LoFi",
-        static_cast<int>(
-            test.expected_client_lofi_allowed
-                ? PreviewsEligibilityReason::ALLOWED
-                : PreviewsEligibilityReason::HOST_BLACKLISTED_BY_SERVER),
-        1);
-  }
 }
 
 }  // namespace

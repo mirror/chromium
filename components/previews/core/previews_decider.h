@@ -7,7 +7,6 @@
 
 #include "components/previews/core/previews_experiments.h"
 
-#include "base/strings/string_piece.h"
 #include "net/nqe/effective_connection_type.h"
 
 namespace net {
@@ -26,11 +25,11 @@ class PreviewsDecider {
   virtual bool ShouldAllowPreviewAtECT(
       const net::URLRequest& request,
       PreviewsType type,
-      net::EffectiveConnectionType effective_connection_type_threshold,
-      const std::vector<std::string>& host_blacklist_from_server) const = 0;
+      net::EffectiveConnectionType effective_connection_type_threshold)
+      const = 0;
 
   // Same as ShouldAllowPreviewAtECT, but uses the previews default
-  // EffectiveConnectionType and no blacklisted hosts from the server.
+  // EffectiveConnectionType.
   virtual bool ShouldAllowPreview(const net::URLRequest& request,
                                   PreviewsType type) const = 0;
 

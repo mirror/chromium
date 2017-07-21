@@ -423,15 +423,15 @@ void DOMSelection::modify(const String& alter_string,
   else
     return;
 
-  SelectionModifyDirection direction;
+  SelectionDirection direction;
   if (DeprecatedEqualIgnoringCase(direction_string, "forward"))
-    direction = SelectionModifyDirection::kForward;
+    direction = kDirectionForward;
   else if (DeprecatedEqualIgnoringCase(direction_string, "backward"))
-    direction = SelectionModifyDirection::kBackward;
+    direction = kDirectionBackward;
   else if (DeprecatedEqualIgnoringCase(direction_string, "left"))
-    direction = SelectionModifyDirection::kLeft;
+    direction = kDirectionLeft;
   else if (DeprecatedEqualIgnoringCase(direction_string, "right"))
-    direction = SelectionModifyDirection::kRight;
+    direction = kDirectionRight;
   else
     return;
 

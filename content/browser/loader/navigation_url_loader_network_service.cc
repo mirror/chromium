@@ -78,7 +78,7 @@ net::NetworkTrafficAnnotationTag kTrafficAnnotation =
         destination: WEBSITE
       }
       policy {
-        cookies_allowed: YES
+        cookies_allowed: true
         cookies_store: "user"
         setting: "This feature cannot be disabled."
         policy_exception_justification:
@@ -137,8 +137,9 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
           webui_factory_ptr_.get(),
           GetContentClient()->browser()->CreateURLLoaderThrottles(
               web_contents_getter_),
-          0 /* routing_id? */, 0 /* request_id? */, mojom::kURLLoadOptionNone,
-          *resource_request_, this, kTrafficAnnotation);
+          0 /* routing_id? */, 0 /* request_id? */,
+          mojom::kURLLoadOptionSendSSLInfo, *resource_request_, this,
+          kTrafficAnnotation);
       return;
     }
 
@@ -219,8 +220,8 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
         GetContentClient()->browser()->CreateURLLoaderThrottles(
             web_contents_getter_),
         0 /* routing_id? */, 0 /* request_id? */,
-        mojom::kURLLoadOptionSendSSLInfo | mojom::kURLLoadOptionSniffMimeType,
-        *resource_request_, this, kTrafficAnnotation);
+        mojom::kURLLoadOptionSendSSLInfo, *resource_request_, this,
+        kTrafficAnnotation);
   }
 
   void FollowRedirect() {
@@ -410,7 +411,7 @@ void NavigationURLLoaderNetworkService::OnReceiveResponse(
     const base::Optional<net::SSLInfo>& ssl_info,
     mojom::DownloadedTempFilePtr downloaded_file) {
   // TODO(scottmg): This needs to do more of what
-  // NavigationResourceHandler::OnResponseStarted() does. Or maybe in
+  // NavigationResourceHandler::OnReponseStarted() does. Or maybe in
   // OnStartLoadingResponseBody().
   if (ssl_info && ssl_info->cert)
     NavigationResourceHandler::GetSSLStatusForRequest(*ssl_info, &ssl_status_);

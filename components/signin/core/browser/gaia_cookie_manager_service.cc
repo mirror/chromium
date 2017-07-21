@@ -234,7 +234,7 @@ GaiaCookieManagerService::ExternalCcResultFetcher::CreateFetcher(
             destination: GOOGLE_OWNED_SERVICE
           }
           policy {
-            cookies_allowed: NO
+            cookies_allowed: false
             setting: "This feature cannot be disabled in settings."
             policy_exception_justification:
               "Not implemented. Disabling GaiaCookieManager would break "

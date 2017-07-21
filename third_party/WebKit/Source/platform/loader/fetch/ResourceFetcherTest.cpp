@@ -735,11 +735,6 @@ TEST_F(ResourceFetcherTest, ContentTypeDataURL) {
   EXPECT_EQ("text/testmimetype", resource->GetResponse().HttpContentType());
 }
 
-// Request with the Content-ID scheme must not be canceled, even if there is no
-// MHTMLArchive to serve them.
-// Note: Not blocking it is important because there are some embedders of
-// Android WebView that are intercepting Content-ID URLs and serve their own
-// resources. Please see https://crbug.com/739658.
 TEST_F(ResourceFetcherTest, ContentIdURL) {
   KURL url(kParsedURLString, "cid:0123456789@example.com");
   ResourceResponse response;
@@ -749,7 +744,8 @@ TEST_F(ResourceFetcherTest, ContentIdURL) {
 
   ResourceFetcher* fetcher = ResourceFetcher::Create(Context());
 
-  // Main resource case.
+  // Fetching a main resource with the Content-ID scheme must be canceled if
+  // there is no MHTMLArchive.
   {
     ResourceRequest resource_request(url);
     resource_request.SetRequestContext(WebURLRequest::kRequestContextIframe);
@@ -757,10 +753,13 @@ TEST_F(ResourceFetcherTest, ContentIdURL) {
     FetchParameters fetch_params(resource_request);
     RawResource* resource =
         RawResource::FetchMainResource(fetch_params, fetcher, SubstituteData());
-    EXPECT_NE(nullptr, resource);
+    EXPECT_EQ(nullptr, resource);
   }
 
-  // Subresource case.
+  // For all the other resource type, it must not be canceled.
+  // Note: It is important not to cancel them because there are some embedders
+  // of WebView that are using Content-ID URLs for sub-resources, even without
+  // any MHTMLArchive. Please see https://crbug.com/739658.
   {
     ResourceRequest resource_request(url);
     resource_request.SetRequestContext(WebURLRequest::kRequestContextVideo);

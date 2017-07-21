@@ -183,7 +183,7 @@ class ProcessMemoryMetricsEmitterTest
     }
   }
 
-  ukm::TestAutoSetUkmRecorder test_ukm_recorder_;
+  ukm::TestUkmRecorder test_ukm_recorder_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(ProcessMemoryMetricsEmitterTest);

@@ -9,19 +9,15 @@ class MockChromiumCommit(object):
 
     def __init__(self, host,
                  position='refs/heads/master@{#123}',
-                 change_id='Iba5eba11',
-                 author='Fake author',
-                 subject='Fake subject',
-                 body='Fake body',
-                 patch='Fake patch contents'):
+                 message='Fake commit message',
+                 patch='Fake patch contents',
+                 change_id='Iba5eba11'):
         self.host = host
         self.position = position
         self.sha = hashlib.sha1(position).hexdigest()
-        self._change_id = change_id
-        self._author = author
-        self._subject = subject
-        self._body = body
+        self._message = message
         self._patch = patch
+        self._change_id = change_id
 
     @property
     def short_sha(self):
@@ -36,17 +32,11 @@ class MockChromiumCommit(object):
     def url(self):
         return 'https://fake-chromium-commit-viewer.org/+/%s' % self.short_sha
 
-    def author(self):
-        return self._author
+    def message(self):
+        return self._message
 
     def subject(self):
-        return self._subject
-
-    def body(self):
-        return self._body + '\n\nChange-Id: ' + self.change_id()
-
-    def message(self):
-        return self.subject() + '\n\n' + self.body()
+        return self._message
 
     def format_patch(self):
         return self._patch

@@ -335,8 +335,8 @@ class ChromeLauncherController
       int index,
       ash::ShelfItemType shelf_item_type);
 
-  // Initialize the Chrome browser shortcut ShelfItem.
-  void InitBrowserShortcutItem();
+  // Create ShelfItem for Browser Shortcut.
+  void CreateBrowserShortcutLauncherItem();
 
   // Check if the given |web_contents| is in incognito mode.
   bool IsIncognito(const content::WebContents* web_contents) const;

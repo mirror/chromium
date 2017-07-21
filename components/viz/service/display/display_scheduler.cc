@@ -87,7 +87,7 @@ void DisplayScheduler::DisplayResized() {
 void DisplayScheduler::SetNewRootSurface(const SurfaceId& root_surface_id) {
   TRACE_EVENT0("viz", "DisplayScheduler::SetNewRootSurface");
   root_surface_id_ = root_surface_id;
-  BeginFrameAck ack;
+  cc::BeginFrameAck ack;
   ack.has_damage = true;
   ProcessSurfaceDamage(root_surface_id, ack, true);
 }
@@ -96,7 +96,7 @@ void DisplayScheduler::SetNewRootSurface(const SurfaceId& root_surface_id) {
 // Has some logic to wait for multiple active surfaces before
 // triggering the deadline.
 void DisplayScheduler::ProcessSurfaceDamage(const SurfaceId& surface_id,
-                                            const BeginFrameAck& ack,
+                                            const cc::BeginFrameAck& ack,
                                             bool display_damaged) {
   TRACE_EVENT1("viz", "DisplayScheduler::SurfaceDamaged", "surface_id",
                surface_id.ToString());
@@ -116,7 +116,8 @@ void DisplayScheduler::ProcessSurfaceDamage(const SurfaceId& surface_id,
   }
 
   // Update surface state.
-  bool valid_ack = ack.sequence_number != BeginFrameArgs::kInvalidFrameNumber;
+  bool valid_ack =
+      ack.sequence_number != cc::BeginFrameArgs::kInvalidFrameNumber;
   if (valid_ack) {
     auto it = surface_states_.find(surface_id);
     if (it != surface_states_.end())
@@ -200,7 +201,7 @@ bool DisplayScheduler::DrawAndSwap() {
   return true;
 }
 
-bool DisplayScheduler::OnBeginFrameDerivedImpl(const BeginFrameArgs& args) {
+bool DisplayScheduler::OnBeginFrameDerivedImpl(const cc::BeginFrameArgs& args) {
   base::TimeTicks now = base::TimeTicks::Now();
   TRACE_EVENT2("viz", "DisplayScheduler::BeginFrame", "args", args.AsValue(),
                "now", now);
@@ -210,7 +211,7 @@ bool DisplayScheduler::OnBeginFrameDerivedImpl(const BeginFrameArgs& args) {
     // callstack. Otherwise we end up running unexpected scheduler actions
     // immediately while inside some other action (such as submitting a
     // CompositorFrame for a SurfaceFactory).
-    DCHECK_EQ(args.type, BeginFrameArgs::MISSED);
+    DCHECK_EQ(args.type, cc::BeginFrameArgs::MISSED);
     DCHECK(missed_begin_frame_task_.IsCancelled());
     missed_begin_frame_task_.Reset(base::Bind(
         base::IgnoreResult(&DisplayScheduler::OnBeginFrameDerivedImpl),
@@ -224,7 +225,7 @@ bool DisplayScheduler::OnBeginFrameDerivedImpl(const BeginFrameArgs& args) {
   // Save the |BeginFrameArgs| as the callback (missed_begin_frame_task_) can be
   // destroyed if we StopObservingBeginFrames(), and it would take the |args|
   // with it. Instead save the args and cancel the |missed_begin_frame_task_|.
-  BeginFrameArgs save_args = args;
+  cc::BeginFrameArgs save_args = args;
   // If we get another BeginFrame before a posted missed frame, just drop the
   // missed frame. Also if this was the missed frame, drop the Callback inside
   // it.
@@ -238,7 +239,7 @@ bool DisplayScheduler::OnBeginFrameDerivedImpl(const BeginFrameArgs& args) {
   // Schedule the deadline.
   current_begin_frame_args_ = save_args;
   current_begin_frame_args_.deadline -=
-      BeginFrameArgs::DefaultEstimatedParentDrawTime();
+      cc::BeginFrameArgs::DefaultEstimatedParentDrawTime();
   inside_begin_frame_deadline_interval_ = true;
   UpdateHasPendingSurfaces();
   ScheduleBeginFrameDeadline();
@@ -289,7 +290,7 @@ void DisplayScheduler::OnSurfaceDestroyed(const SurfaceId& surface_id) {
 }
 
 bool DisplayScheduler::OnSurfaceDamaged(const SurfaceId& surface_id,
-                                        const BeginFrameAck& ack) {
+                                        const cc::BeginFrameAck& ack) {
   bool damaged = client_->SurfaceDamaged(surface_id, ack);
   ProcessSurfaceDamage(surface_id, ack, damaged);
 
@@ -301,7 +302,7 @@ void DisplayScheduler::OnSurfaceDiscarded(const SurfaceId& surface_id) {
 }
 
 void DisplayScheduler::OnSurfaceDamageExpected(const SurfaceId& surface_id,
-                                               const BeginFrameArgs& args) {
+                                               const cc::BeginFrameArgs& args) {
   TRACE_EVENT1("viz", "DisplayScheduler::SurfaceDamageExpected", "surface_id",
                surface_id.ToString());
   // Insert a new state for the surface if we don't know of it yet. We don't use

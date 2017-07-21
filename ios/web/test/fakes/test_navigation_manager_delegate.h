@@ -22,12 +22,6 @@ class TestNavigationManagerDelegate : public NavigationManagerDelegate {
       const LoadCommittedDetails& load_details) override;
   WebState* GetWebState() override;
   id<CRWWebViewNavigationProxy> GetWebViewNavigationProxy() const override;
-
-  // Setters for tests to inject dependencies.
-  void SetWebViewNavigationProxy(id test_web_view);
-
- private:
-  id test_web_view_;
 };
 
 }  // namespace web

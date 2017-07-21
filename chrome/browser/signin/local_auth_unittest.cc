@@ -22,7 +22,7 @@
 
 class LocalAuthTest : public testing::Test {
  public:
-  LocalAuthTest() { OSCryptMocker::SetUp(); }
+  LocalAuthTest() { OSCryptMocker::SetUpWithSingleton(); }
 
   ~LocalAuthTest() override { OSCryptMocker::TearDown(); }
 

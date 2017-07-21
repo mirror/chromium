@@ -48,7 +48,6 @@ class RecentTabHelper
 
   // SnapshotController::Client
   void StartSnapshot() override;
-  void RunRenovations() override;
 
   // Delegate that is used by RecentTabHelper to get external dependencies.
   // Default implementation lives in .cc file, while tests provide an override.

@@ -11,8 +11,7 @@
 #include "base/location.h"
 #include "base/trace_event/trace_event.h"
 #include "base/trace_event/trace_event_argument.h"
-#include "cc/cc_export.h"
-#include "components/viz/common/frame_sinks/begin_frame_args.h"
+#include "cc/output/begin_frame_args.h"
 
 #define BEGINFRAMETRACKER_FROM_HERE FROM_HERE_WITH_EXPLICIT_FUNCTION("")
 
@@ -32,7 +31,7 @@ namespace cc {
 //  * Time period for which the BFA is in usage.
 //  * The flow of BFA as they are passed between tracking objects.
 //
-// TODO(mithro): Record stats about the viz::BeginFrameArgs
+// TODO(mithro): Record stats about the BeginFrameArgs
 class CC_EXPORT BeginFrameTracker {
  public:
   explicit BeginFrameTracker(const tracked_objects::Location& location);
@@ -45,7 +44,7 @@ class CC_EXPORT BeginFrameTracker {
 
   // Start using a new BFA value and check invariant properties.
   // **Must** only be called after finishing with any previous BFA.
-  void Start(viz::BeginFrameArgs new_args);
+  void Start(BeginFrameArgs new_args);
   // Finish using the current BFA.
   // **Must** only be called while still using a BFA.
   void Finish();
@@ -57,11 +56,11 @@ class CC_EXPORT BeginFrameTracker {
 
   // Get the current BFA object.
   // **Must** only be called between the start and finish methods calls.
-  const viz::BeginFrameArgs& Current() const;
+  const BeginFrameArgs& Current() const;
   // Get the last used BFA.
   // **Must** only be called when **not** between the start and finish method
   // calls.
-  const viz::BeginFrameArgs& Last() const;
+  const BeginFrameArgs& Last() const;
 
   // Helper method to try and return a valid interval property. Defaults to
   // BFA::DefaultInterval() is no other interval can be found. Can be called at
@@ -71,13 +70,13 @@ class CC_EXPORT BeginFrameTracker {
   void AsValueInto(base::TimeTicks now,
                    base::trace_event::TracedValue* dict) const;
 
-  // The following methods violate principles of how viz::BeginFrameArgs should
-  // be used. These methods should only be used when there is no other choice.
+  // The following methods violate principles of how BeginFrameArgs should be
+  // used. These methods should only be used when there is no other choice.
   bool DangerousMethodHasStarted() const {
     return !current_updated_at_.is_null();
   }
   bool DangerousMethodHasFinished() const { return HasFinished(); }
-  const viz::BeginFrameArgs& DangerousMethodCurrentOrLast() const;
+  const BeginFrameArgs& DangerousMethodCurrentOrLast() const;
 
  private:
   // Return if currently not between the start/end period. This method should
@@ -89,7 +88,7 @@ class CC_EXPORT BeginFrameTracker {
   const std::string location_string_;
 
   base::TimeTicks current_updated_at_;
-  viz::BeginFrameArgs current_args_;
+  BeginFrameArgs current_args_;
   base::TimeTicks current_finished_at_;
 };
 

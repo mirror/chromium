@@ -5,7 +5,6 @@
 #include "core/workers/Worker.h"
 
 #include "bindings/core/v8/ExceptionState.h"
-#include "core/CoreInitializer.h"
 #include "core/dom/Document.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/frame/UseCounter.h"
@@ -16,6 +15,8 @@
 #include "public/web/WebFrameClient.h"
 
 namespace blink {
+
+template class CORE_TEMPLATE_EXPORT WorkerClientsInitializer<Worker>;
 
 Worker::Worker(ExecutionContext* context) : InProcessWorkerBase(context) {}
 
@@ -51,8 +52,7 @@ InProcessWorkerMessagingProxy* Worker::CreateInProcessWorkerMessagingProxy(
       WebLocalFrameBase::FromFrame(document->GetFrame());
 
   WorkerClients* worker_clients = WorkerClients::Create();
-  CoreInitializer::CallModulesProvideLocalFileSystem(*worker_clients);
-  CoreInitializer::CallModulesProvideIndexedDB(*worker_clients);
+  WorkerClientsInitializer<Worker>::Run(worker_clients);
   ProvideContentSettingsClientToWorker(
       worker_clients, web_frame->Client()->CreateWorkerContentSettingsClient());
   return new DedicatedWorkerMessagingProxy(this, worker_clients);

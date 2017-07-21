@@ -187,7 +187,7 @@ void FamilyInfoFetcher::OnGetTokenSuccess(
           destination: GOOGLE_OWNED_SERVICE
         }
         policy {
-          cookies_allowed: NO
+          cookies_allowed: false
           setting:
             "This feature cannot be disabled in settings and is only enabled "
             "for child accounts. If sign-in is restricted to accounts from a "

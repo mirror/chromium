@@ -53,9 +53,7 @@ public class VariationsSeedFetcherTest {
         ThreadUtils.setUiThread(mock(Looper.class));
         mFetcher = spy(VariationsSeedFetcher.get());
         mConnection = mock(HttpURLConnection.class);
-        doReturn(mConnection)
-                .when(mFetcher)
-                .getServerConnection(VariationsSeedFetcher.VariationsPlatform.ANDROID, "");
+        doReturn(mConnection).when(mFetcher).getServerConnection("");
         mPrefs = ContextUtils.getAppSharedPreferences();
         mPrefs.edit().clear().apply();
     }

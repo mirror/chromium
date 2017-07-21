@@ -33,7 +33,6 @@
 #include <memory>
 
 #include "bindings/core/v8/ScriptController.h"
-#include "core/CoreInitializer.h"
 #include "core/CoreProbeSink.h"
 #include "core/dom/ChildFrameDisconnector.h"
 #include "core/dom/DocumentType.h"
@@ -118,6 +117,13 @@ inline float ParentTextZoomFactor(LocalFrame* frame) {
   return ToLocalFrame(parent)->TextZoomFactor();
 }
 
+using FrameInitCallbackVector = WTF::Vector<LocalFrame::FrameInitCallback>;
+FrameInitCallbackVector& GetInitializationVector() {
+  DEFINE_THREAD_SAFE_STATIC_LOCAL(FrameInitCallbackVector,
+                                  initialization_vector, ());
+  return initialization_vector;
+}
+
 }  // namespace
 
 template class CORE_TEMPLATE_EXPORT Supplement<LocalFrame>;
@@ -135,7 +141,10 @@ LocalFrame* LocalFrame::Create(LocalFrameClient* client,
 }
 
 void LocalFrame::Init() {
-  CoreInitializer::CallModulesLocalFrameInit(*this);
+  DCHECK(!GetInitializationVector().IsEmpty());
+  for (auto& initilization_callback : GetInitializationVector()) {
+    initilization_callback(this);
+  }
 
   loader_.Init();
 }
@@ -726,6 +735,10 @@ bool LocalFrame::ShouldThrottleRendering() const {
   return View() && View()->ShouldThrottleRendering();
 }
 
+void LocalFrame::RegisterInitializationCallback(FrameInitCallback callback) {
+  GetInitializationVector().push_back(callback);
+}
+
 inline LocalFrame::LocalFrame(LocalFrameClient* client,
                               Page& page,
                               FrameOwner* owner,
@@ -749,6 +762,10 @@ inline LocalFrame::LocalFrame(LocalFrameClient* client,
       text_zoom_factor_(ParentTextZoomFactor(this)),
       in_view_source_mode_(false),
       interface_registry_(interface_registry) {
+  if (FrameResourceCoordinator::IsEnabled()) {
+    frame_resource_coordinator_ =
+        FrameResourceCoordinator::Create(client->GetInterfaceProvider());
+  }
   if (IsLocalRoot()) {
     probe_sink_ = new CoreProbeSink();
     performance_monitor_ = new PerformanceMonitor(this);
@@ -990,19 +1007,6 @@ LocalFrameClient* LocalFrame::Client() const {
 
 ContentSettingsClient* LocalFrame::GetContentSettingsClient() {
   return Client() ? &Client()->GetContentSettingsClient() : nullptr;
-}
-
-FrameResourceCoordinator* LocalFrame::GetFrameResourceCoordinator() {
-  if (!FrameResourceCoordinator::IsEnabled())
-    return nullptr;
-  if (!frame_resource_coordinator_) {
-    auto local_frame_client = Client();
-    if (!local_frame_client)
-      return nullptr;
-    frame_resource_coordinator_ = FrameResourceCoordinator::Create(
-        local_frame_client->GetInterfaceProvider());
-  }
-  return frame_resource_coordinator_;
 }
 
 PluginData* LocalFrame::GetPluginData() const {

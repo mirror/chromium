@@ -115,3 +115,7 @@ void AutoSigninFirstRunDialogAndroid::WasHidden() {
   JNIEnv* env = AttachCurrentThread();
   Java_AutoSigninFirstRunDialog_dismissDialog(env, dialog_jobject_);
 }
+
+bool RegisterAutoSigninFirstRunDialogAndroid(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}

@@ -65,8 +65,6 @@
 
 namespace blink {
 
-CoreInitializer* CoreInitializer::instance_ = nullptr;
-
 void CoreInitializer::RegisterEventFactory() {
   static bool is_registered = false;
   if (is_registered)
@@ -77,9 +75,8 @@ void CoreInitializer::RegisterEventFactory() {
 }
 
 void CoreInitializer::Initialize() {
-  // Initialize must be called once by singleton ModulesInitializer.
-  DCHECK(!instance_);
-  instance_ = this;
+  DCHECK(!IsInitialized());
+  is_initialized_ = true;
   // Note: in order to add core static strings for a new module (1)
   // the value of 'coreStaticStringsCount' must be updated with the
   // added strings count, (2) if the added strings are quialified names

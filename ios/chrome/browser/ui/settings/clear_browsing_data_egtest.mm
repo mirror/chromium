@@ -38,6 +38,13 @@ using chrome_test_util::SettingsMenuPrivacyButton;
       performAction:grey_tap()];
 }
 
+- (void)exitSettingsMenu {
+  [[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()]
+      performAction:grey_tap()];
+  // Wait for UI components to finish loading.
+  [[GREYUIThreadExecutor sharedInstance] drainUntilIdle];
+}
+
 // Test that opening the clear browsing data dialog does not cause a crash.
 - (void)testOpeningClearBrowsingData {
   NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
@@ -46,8 +53,7 @@ using chrome_test_util::SettingsMenuPrivacyButton;
   [defaults setObject:@"Enabled" forKey:@"EnableNewClearBrowsingDataUI"];
 
   [self openClearBrowsingDataDialog];
-  [[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()]
-      performAction:grey_tap()];
+  [self exitSettingsMenu];
 
   [defaults setObject:oldSetting forKey:@"EnableNewClearBrowsingDataUI"];
 }

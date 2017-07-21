@@ -13,7 +13,6 @@
 #include "content/common/content_export.h"
 #include "content/public/common/url_loader.mojom.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
-#include "mojo/public/cpp/system/data_pipe.h"
 #include "mojo/public/cpp/system/simple_watcher.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_request.h"
@@ -22,7 +21,6 @@ namespace content {
 
 class NetworkContext;
 class NetToMojoPendingBuffer;
-struct ResourceResponse;
 
 class CONTENT_EXPORT URLLoaderImpl : public mojom::URLLoader,
                                      public net::URLRequest::Delegate {
@@ -61,7 +59,6 @@ class CONTENT_EXPORT URLLoaderImpl : public mojom::URLLoader,
   void OnResponseBodyStreamClosed(MojoResult result);
   void OnResponseBodyStreamReady(MojoResult result);
   void DeleteIfNeeded();
-  void SendResponseToClient();
 
   NetworkContext* context_;
   int32_t options_;
@@ -74,11 +71,6 @@ class CONTENT_EXPORT URLLoaderImpl : public mojom::URLLoader,
   scoped_refptr<NetToMojoPendingBuffer> pending_write_;
   mojo::SimpleWatcher writable_handle_watcher_;
   mojo::SimpleWatcher peer_closed_handle_watcher_;
-
-  // Used when deferring sending the data to the client until mime sniffing is
-  // finished.
-  scoped_refptr<ResourceResponse> response_;
-  mojo::ScopedDataPipeConsumerHandle consumer_handle_;
 
   base::WeakPtrFactory<URLLoaderImpl> weak_ptr_factory_;
 

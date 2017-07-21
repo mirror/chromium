@@ -9,12 +9,12 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/single_thread_task_runner.h"
+#include "cc/output/begin_frame_args.h"
 #include "cc/output/copy_output_request.h"
 #include "cc/output/direct_renderer.h"
 #include "cc/output/layer_tree_frame_sink_client.h"
 #include "cc/output/output_surface.h"
 #include "cc/output/texture_mailbox_deleter.h"
-#include "components/viz/common/frame_sinks/begin_frame_args.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
 
 namespace viz {
@@ -26,7 +26,7 @@ TestLayerTreeFrameSink::TestLayerTreeFrameSink(
     scoped_refptr<ContextProvider> worker_context_provider,
     SharedBitmapManager* shared_bitmap_manager,
     gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
-    const RendererSettings& renderer_settings,
+    const cc::RendererSettings& renderer_settings,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
     bool synchronous_composite,
     bool disable_display_vsync,
@@ -135,7 +135,7 @@ void TestLayerTreeFrameSink::SetLocalSurfaceId(
 
 void TestLayerTreeFrameSink::SubmitCompositorFrame(cc::CompositorFrame frame) {
   DCHECK(frame.metadata.begin_frame_ack.has_damage);
-  DCHECK_LE(BeginFrameArgs::kStartingFrameNumber,
+  DCHECK_LE(cc::BeginFrameArgs::kStartingFrameNumber,
             frame.metadata.begin_frame_ack.sequence_number);
   test_client_->DisplayReceivedCompositorFrame(frame);
 
@@ -169,9 +169,9 @@ void TestLayerTreeFrameSink::SubmitCompositorFrame(cc::CompositorFrame frame) {
   }
 }
 
-void TestLayerTreeFrameSink::DidNotProduceFrame(const BeginFrameAck& ack) {
+void TestLayerTreeFrameSink::DidNotProduceFrame(const cc::BeginFrameAck& ack) {
   DCHECK(!ack.has_damage);
-  DCHECK_LE(BeginFrameArgs::kStartingFrameNumber, ack.sequence_number);
+  DCHECK_LE(cc::BeginFrameArgs::kStartingFrameNumber, ack.sequence_number);
   support_->DidNotProduceFrame(ack);
 }
 
@@ -185,7 +185,7 @@ void TestLayerTreeFrameSink::DidReceiveCompositorFrameAck(
   client_->DidReceiveCompositorFrameAck();
 }
 
-void TestLayerTreeFrameSink::OnBeginFrame(const BeginFrameArgs& args) {
+void TestLayerTreeFrameSink::OnBeginFrame(const cc::BeginFrameArgs& args) {
   external_begin_frame_source_.OnBeginFrame(args);
 }
 

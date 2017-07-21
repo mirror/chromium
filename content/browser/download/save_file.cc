@@ -5,7 +5,7 @@
 #include "content/browser/download/save_file.h"
 
 #include "base/logging.h"
-#include "content/browser/download/download_task_runner.h"
+#include "content/public/browser/browser_thread.h"
 #include "net/log/net_log_with_source.h"
 
 namespace content {
@@ -16,14 +16,14 @@ namespace content {
 //               have access to the SavePackage at this point.
 SaveFile::SaveFile(const SaveFileCreateInfo* info, bool calculate_hash)
     : file_(net::NetLogWithSource()), info_(info) {
-  DCHECK(GetDownloadTaskRunner()->RunsTasksInCurrentSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
 
   DCHECK(info);
   DCHECK(info->path.empty());
 }
 
 SaveFile::~SaveFile() {
-  DCHECK(GetDownloadTaskRunner()->RunsTasksInCurrentSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
 }
 
 DownloadInterruptReason SaveFile::Initialize() {

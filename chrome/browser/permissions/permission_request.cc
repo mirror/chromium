@@ -11,6 +11,10 @@ bool PermissionRequest::ShouldShowPersistenceToggle() const {
   return false;
 }
 
+PermissionRequestType PermissionRequest::GetPermissionRequestType() const {
+  return PermissionRequestType::UNKNOWN;
+}
+
 PermissionRequestGestureType PermissionRequest::GetGestureType() const {
   return PermissionRequestGestureType::UNKNOWN;
 }

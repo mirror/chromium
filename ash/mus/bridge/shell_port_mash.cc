@@ -7,7 +7,8 @@
 #include <utility>
 
 #include "ash/accelerators/accelerator_controller.h"
-#include "ash/accelerators/accelerator_controller_delegate_classic.h"
+#include "ash/accelerators/accelerator_controller_delegate_aura.h"
+#include "ash/aura/pointer_watcher_adapter.h"
 #include "ash/host/ash_window_tree_host_init_params.h"
 #include "ash/laser/laser_pointer_controller.h"
 #include "ash/magnifier/partial_magnification_controller.h"
@@ -21,7 +22,6 @@
 #include "ash/mus/keyboard_ui_mus.h"
 #include "ash/mus/touch_transform_setter_mus.h"
 #include "ash/mus/window_manager.h"
-#include "ash/pointer_watcher_adapter_classic.h"
 #include "ash/public/cpp/config.h"
 #include "ash/public/cpp/immersive/immersive_fullscreen_controller.h"
 #include "ash/public/cpp/shell_window_ids.h"
@@ -34,12 +34,12 @@
 #include "ash/wm/drag_window_resizer.h"
 #include "ash/wm/mru_window_tracker.h"
 #include "ash/wm/tablet_mode/tablet_mode_event_handler.h"
-#include "ash/wm/tablet_mode/tablet_mode_event_handler_classic.h"
+#include "ash/wm/tablet_mode/tablet_mode_event_handler_aura.h"
 #include "ash/wm/window_cycle_event_filter.h"
-#include "ash/wm/window_cycle_event_filter_classic.h"
+#include "ash/wm/window_cycle_event_filter_aura.h"
 #include "ash/wm/window_resizer.h"
 #include "ash/wm/window_util.h"
-#include "ash/wm/workspace/workspace_event_handler_classic.h"
+#include "ash/wm/workspace/workspace_event_handler_aura.h"
 #include "base/memory/ptr_util.h"
 #include "components/user_manager/user_info_impl.h"
 #include "services/ui/public/interfaces/constants.mojom.h"
@@ -197,7 +197,7 @@ std::unique_ptr<WindowResizer> ShellPortMash::CreateDragWindowResizer(
 std::unique_ptr<WindowCycleEventFilter>
 ShellPortMash::CreateWindowCycleEventFilter() {
   if (GetAshConfig() == Config::MUS)
-    return base::MakeUnique<WindowCycleEventFilterClassic>();
+    return base::MakeUnique<WindowCycleEventFilterAura>();
 
   // TODO: implement me, http://crbug.com/629191.
   return nullptr;
@@ -206,7 +206,7 @@ ShellPortMash::CreateWindowCycleEventFilter() {
 std::unique_ptr<wm::TabletModeEventHandler>
 ShellPortMash::CreateTabletModeEventHandler() {
   if (GetAshConfig() == Config::MUS)
-    return base::MakeUnique<wm::TabletModeEventHandlerClassic>();
+    return base::MakeUnique<wm::TabletModeEventHandlerAura>();
 
   // TODO: need support for window manager to get events before client:
   // http://crbug.com/624157.
@@ -217,7 +217,7 @@ ShellPortMash::CreateTabletModeEventHandler() {
 std::unique_ptr<WorkspaceEventHandler>
 ShellPortMash::CreateWorkspaceEventHandler(aura::Window* workspace_window) {
   if (GetAshConfig() == Config::MUS)
-    return base::MakeUnique<WorkspaceEventHandlerClassic>(workspace_window);
+    return base::MakeUnique<WorkspaceEventHandlerAura>(workspace_window);
 
   return base::MakeUnique<WorkspaceEventHandlerMus>(workspace_window);
 }
@@ -293,12 +293,11 @@ void ShellPortMash::SetPartialMagnifierEnabled(bool enabled) {
 }
 
 void ShellPortMash::CreatePointerWatcherAdapter() {
-  // In Config::MUS PointerWatcherAdapterClassic must be created when this
-  // function is called (it is order dependent), that is not the case with
-  // Config::MASH.
+  // In Config::MUS PointerWatcherAdapter must be created when this function is
+  // called (it is order dependent), that is not the case with Config::MASH.
   if (GetAshConfig() == Config::MUS) {
     mus_state_->pointer_watcher_adapter =
-        base::MakeUnique<PointerWatcherAdapterClassic>();
+        base::MakeUnique<PointerWatcherAdapter>();
   }
 }
 
@@ -366,7 +365,7 @@ ShellPortMash::CreateAcceleratorController() {
   if (GetAshConfig() == Config::MUS) {
     DCHECK(!mus_state_->accelerator_controller_delegate);
     mus_state_->accelerator_controller_delegate =
-        base::MakeUnique<AcceleratorControllerDelegateClassic>();
+        base::MakeUnique<AcceleratorControllerDelegateAura>();
     return base::MakeUnique<AcceleratorController>(
         mus_state_->accelerator_controller_delegate.get(), nullptr);
   }

@@ -54,6 +54,7 @@ WebURLError& WebURLError::operator=(const ResourceError& error) {
     domain = error.Domain();
     reason = error.ErrorCode();
     unreachable_url = KURL(kParsedURLString, error.FailingURL());
+    is_cancellation = error.IsCancellation();
     stale_copy_in_cache = error.StaleCopyInCache();
     localized_description = error.LocalizedDescription();
     was_ignored_by_handler = error.WasIgnoredByHandler();
@@ -65,8 +66,9 @@ WebURLError& WebURLError::operator=(const ResourceError& error) {
 WebURLError::operator ResourceError() const {
   if (!reason)
     return ResourceError();
-  ResourceError resource_error =
-      ResourceError(domain, reason, unreachable_url, localized_description);
+  ResourceError resource_error = ResourceError(
+      domain, reason, unreachable_url.GetString(), localized_description);
+  resource_error.SetIsCancellation(is_cancellation);
   resource_error.SetStaleCopyInCache(stale_copy_in_cache);
   resource_error.SetWasIgnoredByHandler(was_ignored_by_handler);
   resource_error.SetIsAccessCheck(is_web_security_violation);

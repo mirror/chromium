@@ -32,8 +32,6 @@ class CORE_EXPORT LayoutNGBlockFlow final : public LayoutBlockFlow {
  private:
   bool IsOfType(LayoutObjectType) const override;
 
-  void UpdateMargins(const NGConstraintSpace&);
-
   std::unique_ptr<NGInlineNodeData> ng_inline_node_data_;
 };
 

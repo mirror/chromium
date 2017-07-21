@@ -58,18 +58,15 @@ bool IsOfflinePreviewsEnabled();
 // The blacklist version for offline previews.
 int OfflinePreviewsVersion();
 
-// Whether Client Lo-Fi previews are enabled.
+// Whether Client LoFi previews are enabled.
 bool IsClientLoFiEnabled();
 
-// The blacklist version for Client Lo-Fi previews.
+// The blacklist version for Client LoFi previews.
 int ClientLoFiVersion();
 
-// The threshold of EffectiveConnectionType above which Client Lo-Fi previews
+// The threshold of EffectiveConnectionType above which Client LoFi previews
 // should not be served.
 net::EffectiveConnectionType EffectiveConnectionTypeThresholdForClientLoFi();
-
-// Returns the hosts that are blacklisted by the Client Lo-Fi field trial.
-std::vector<std::string> GetBlackListedHostsForClientLoFiFieldTrial();
 
 }  // namespace params
 

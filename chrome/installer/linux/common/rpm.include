@@ -131,24 +131,18 @@ determine_rpm_package_manager() {
     RELEASE=$(lsb_release -i 2> /dev/null | sed 's/:\t/:/' | cut -d ':' -f 2-)
     case $RELEASE in
     "Fedora")
-      PACKAGEMANAGERS=(yum)
+      PACKAGEMANAGER=yum
       ;;
-    "Mageia")
-      PACKAGEMANAGERS=(urpmi)
-      if [ "$(lsb_release -rs 2> /dev/null)" -ge "6" ]; then
-        PACKAGEMANAGERS=(yum urpmi)
-      fi
-      ;;
-    "MandrivaLinux")
-      PACKAGEMANAGERS=(urpmi)
+    "Mageia"|"MandrivaLinux")
+      PACKAGEMANAGER=urpmi
       ;;
     "SUSE LINUX")
-      PACKAGEMANAGERS=(yast)
+      PACKAGEMANAGER=yast
       ;;
     esac
   fi
 
-  if [ "$PACKAGEMANAGERS" ]; then
+  if [ "$PACKAGEMANAGER" ]; then
     return
   fi
 
@@ -158,21 +152,21 @@ determine_rpm_package_manager() {
     eval $(sed -e '/DISTRIB_ID/!d' /etc/lsb-release)
     case $DISTRIB_ID in
     MandrivaLinux)
-      PACKAGEMANAGERS=(urpmi)
+      PACKAGEMANAGER=urpmi
       ;;
     esac
   fi
 
-  if [ "$PACKAGEMANAGERS" ]; then
+  if [ "$PACKAGEMANAGER" ]; then
     return
   fi
 
   if [ -f "/etc/fedora-release" ] || [ -f "/etc/redhat-release" ]; then
-    PACKAGEMANAGERS=(yum)
+    PACKAGEMANAGER=yum
   elif [ -f "/etc/SuSE-release" ]; then
-    PACKAGEMANAGERS=(yast)
+    PACKAGEMANAGER=yast
   elif [ -f "/etc/mandriva-release" ]; then
-    PACKAGEMANAGERS=(urpmi)
+    PACKAGEMANAGER=urpmi
   fi
 }
 
@@ -279,20 +273,17 @@ update_bad_repo() {
 
   determine_rpm_package_manager
 
-  for PACKAGEMANAGER in ${PACKAGEMANAGERS[*]}
-  do
-    case $PACKAGEMANAGER in
-    "yum")
-      update_repo_file "$YUM_REPO_FILE"
-      ;;
-    "yast")
-      update_repo_file "$ZYPPER_REPO_FILE"
-      ;;
-    "urpmi")
-      update_urpmi_cfg
-      ;;
-    esac
-  done
+  case $PACKAGEMANAGER in
+  "yum")
+    update_repo_file "$YUM_REPO_FILE"
+    ;;
+  "yast")
+    update_repo_file "$ZYPPER_REPO_FILE"
+    ;;
+  "urpmi")
+    update_urpmi_cfg
+    ;;
+  esac
 }
 
 update_repo_file() {

@@ -68,7 +68,13 @@ ArcIntentHelperBridge::ArcIntentHelperBridge(content::BrowserContext* context,
 
 ArcIntentHelperBridge::~ArcIntentHelperBridge() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  arc_bridge_service_->intent_helper()->RemoveObserver(this);
+
+  // TODO(hidehiko): Currently, the lifetime of ArcBridgeService and
+  // BrowserContextKeyedService is not nested.
+  // If ArcServiceManager::Get() returns nullptr, it is already destructed,
+  // so do not touch it.
+  if (ArcServiceManager::Get())
+    arc_bridge_service_->intent_helper()->RemoveObserver(this);
 }
 
 void ArcIntentHelperBridge::OnInstanceReady() {

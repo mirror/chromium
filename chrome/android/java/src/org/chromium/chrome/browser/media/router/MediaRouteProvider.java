@@ -10,12 +10,11 @@ package org.chromium.chrome.browser.media.router;
  */
 public interface MediaRouteProvider {
     /**
-     * Factory for {@link MediaRouteProvider}s.
+     * Builder for {@link MediaRouteProvider}.
      */
-    interface Factory {
-        void addProviders(MediaRouteManager manager);
+    interface Builder {
+        MediaRouteProvider create(MediaRouteManager manager);
     }
-
     /**
      * @param sourceId The id of the source to check.
      * @return if the specified source is supported by this route provider.

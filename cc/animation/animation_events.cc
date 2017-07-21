@@ -9,7 +9,7 @@ namespace cc {
 AnimationEvent::AnimationEvent(AnimationEvent::Type type,
                                ElementId element_id,
                                int group_id,
-                               int target_property,
+                               TargetProperty::Type target_property,
                                base::TimeTicks monotonic_time)
     : type(type),
       element_id(element_id),

@@ -214,7 +214,7 @@ SchedulerWorker::SchedulerWorker(
       priority_hint_(priority_hint),
       delegate_(std::move(delegate)),
       task_tracker_(task_tracker),
-#if defined(OS_WIN) && !defined(COM_INIT_CHECK_HOOK_ENABLED)
+#if defined(OS_WIN)
       backward_compatibility_(backward_compatibility),
 #endif
       initial_state_(initial_state) {

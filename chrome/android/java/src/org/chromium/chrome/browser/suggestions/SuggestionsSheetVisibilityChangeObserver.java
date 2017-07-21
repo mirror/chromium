@@ -23,7 +23,6 @@ public abstract class SuggestionsSheetVisibilityChangeObserver
     @BottomSheet.SheetState
     private int mCurrentContentState;
     private boolean mCurrentVisibility;
-    private boolean mWasShownSinceLastOpen;
 
     private final ChromeActivity mActivity;
     private final BottomSheet.BottomSheetContent mContentObserved;
@@ -56,11 +55,8 @@ public abstract class SuggestionsSheetVisibilityChangeObserver
         mBottomSheet.removeObserver(this);
     }
 
-    /** Called when the observed sheet content becomes visible.
-     * @param isFirstShown Only {@code true} the first time suggestions are shown each time the
-     *                     sheet is opened.
-     */
-    public abstract void onContentShown(boolean isFirstShown);
+    /** Called when the observed sheet content becomes visible. */
+    public abstract void onContentShown();
 
     /** Called when the observed sheet content becomes invisible. */
     public abstract void onContentHidden();
@@ -76,7 +72,6 @@ public abstract class SuggestionsSheetVisibilityChangeObserver
     @Override
     @CallSuper
     public void onSheetOpened() {
-        mWasShownSinceLastOpen = false;
         onStateChange();
     }
 
@@ -114,7 +109,7 @@ public abstract class SuggestionsSheetVisibilityChangeObserver
     /**
      * Compares the current state of the bottom sheet and activity with the ones recorded at the
      * previous call and generates events based on the difference.
-     * @see #onContentShown(boolean)
+     * @see #onContentShown()
      * @see #onContentHidden()
      * @see #onContentStateChanged(int)
      */
@@ -137,8 +132,7 @@ public abstract class SuggestionsSheetVisibilityChangeObserver
 
         if (newVisibility != mCurrentVisibility) {
             if (newVisibility) {
-                onContentShown(!mWasShownSinceLastOpen);
-                mWasShownSinceLastOpen = true;
+                onContentShown();
             } else {
                 onContentHidden();
             }

@@ -224,14 +224,9 @@ const char kDropSyncCredentialDescription[] =
 const char kEasyUnlockBluetoothLowEnergyDiscoveryName[] =
     "Smart Lock Bluetooth Low Energy Discovery";
 const char kEasyUnlockBluetoothLowEnergyDiscoveryDescription[] =
-    "Disables a Smart Lock setting that allows Chromebook to discover phones "
+    "Enables a Smart Lock setting that allows Chromebook to discover phones "
     "over Bluetooth Low Energy in order to unlock the Chromebook when the "
     "phone is in its proximity.";
-
-const char kEasyUnlockPromotionsName[] = "Smart Lock Promotions";
-const char kEasyUnlockPromotionsDescription[] =
-    "Enables Smart Lock promotions. Promotions will be periodically display "
-    "if the user is eligible.";
 
 const char kEmbeddedExtensionOptionsName[] = "Embedded extension options";
 const char kEmbeddedExtensionOptionsDescription[] =
@@ -943,6 +938,10 @@ const char kPinchScaleName[] = "Pinch scale";
 const char kPinchScaleDescription[] =
     "Enables experimental support for scale using pinch.";
 
+const char kPreferHtmlOverPluginsName[] = "Prefer HTML over Flash";
+const char kPreferHtmlOverPluginsDescription[] =
+    "Prefer HTML content by hiding Flash from the list of plugins.";
+
 const char kPrintPdfAsImageName[] = "Print Pdf as Image";
 const char kPrintPdfAsImageDescription[] =
     "If enabled, an option to print PDF files as images will be available in "
@@ -998,6 +997,12 @@ const char kResourceLoadSchedulerName[] = "Use the resource load scheduler";
 const char kResourceLoadSchedulerDescription[] =
     "Uses the resource load scheduler in blink to schedule and throttle "
     "resource load requests.";
+
+const char kRunAllFlashInAllowModeName[] =
+    R"*(Run all Flash content when Flash setting is set to "allow")*";
+const char kRunAllFlashInAllowModeDescription[] =
+    R"*(For sites that have been set to "allow" Flash content, run all )*"
+    R"*(content including any that has been deemed unimportant.)*";
 
 const char kSafeSearchUrlReportingName[] = "SafeSearch URLs reporting.";
 const char kSafeSearchUrlReportingDescription[] =
@@ -1315,13 +1320,6 @@ const char kWebPaymentsName[] = "Web Payments";
 const char kWebPaymentsDescription[] =
     "Enable Web Payments API integration, a JavaScript API for merchants.";
 
-const char kWebPaymentsModifiersName[] = "Enable web payment modifiers";
-const char kWebPaymentsModifiersDescription[] =
-    "If the website provides modifiers in the payment request, show the custom "
-    "total for each payment instrument, update the shopping cart when "
-    "instruments are switched, and send modified payment method specific data "
-    "to the payment app.";
-
 const char kWebrtcEchoCanceller3Name[] = "WebRTC Echo Canceller 3.";
 const char kWebrtcEchoCanceller3Description[] =
     "Experimental WebRTC echo canceller (AEC3).";
@@ -1390,11 +1388,6 @@ const char kAndroidPaymentAppsName[] = "Android payment apps";
 const char kAndroidPaymentAppsDescription[] =
     "Enable third party Android apps to integrate as payment apps";
 
-const char kAndroidSigninPromosName[] = "Signin promos for Android.";
-const char kAndroidSigninPromosDescription[] =
-    "New signin promos for Android which will be displayed in content "
-    "suggestions, Settings, Bookmarks and Recent Tabs.";
-
 const char kAutofillAccessoryViewName[] =
     "Autofill suggestions as keyboard accessory view";
 const char kAutofillAccessoryViewDescription[] =
@@ -1454,10 +1447,6 @@ const char kContextualSearchUrlActionsDescription[] =
 const char kContextualSearchName[] = "Contextual Search";
 const char kContextualSearchDescription[] =
     "Whether or not Contextual Search is enabled.";
-
-const char kDontPrefetchLibrariesName[] = "Don't Prefetch Libraries";
-const char kDontPrefetchLibrariesDescription[] =
-    "Don't prefetch libraries after loading.";
 
 const char kEnableAndroidPayIntegrationV1Name[] = "Enable Android Pay v1";
 const char kEnableAndroidPayIntegrationV1Description[] =
@@ -1808,10 +1797,6 @@ const char kReaderModeHeuristicsAllArticles[] = "All articles";
 const char kReaderModeHeuristicsAlwaysOff[] = "Never";
 const char kReaderModeHeuristicsAlwaysOn[] = "Always";
 
-const char kReaderModeInCCTName[] = "Reader Mode in CCT";
-const char kReaderModeInCCTDescription[] =
-    "Open Reader Mode in Chrome Custom Tabs.";
-
 const char kServiceWorkerPaymentAppsName[] = "Service Worker payment apps";
 const char kServiceWorkerPaymentAppsDescription[] =
     "Enable Service Worker applications to integrate as payment apps";
@@ -1857,6 +1842,13 @@ const char kUseAndroidMidiApiDescription[] =
 const char kUseDdljsonApiName[] = "Use new ddljson API for Doodles";
 const char kUseDdljsonApiDescription[] =
     "Enables the new ddljson API to fetch Doodles for the NTP.";
+
+const char kWebPaymentsModifiersName[] = "Enable web payment modifiers";
+const char kWebPaymentsModifiersDescription[] =
+    "If the website provides modifiers in the payment request, show the custom "
+    "total for each payment instrument, update the shopping cart when "
+    "instruments are switched, and send modified payment method specific data "
+    "to the payment app.";
 
 const char kXGEOVisibleNetworksName[] = "Enable XGEO Visible Networks";
 const char kXGEOVisibleNetworksDescription[] =
@@ -2300,6 +2292,11 @@ const char kUseWinrtMidiApiDescription[] =
 
 #if defined(OS_CHROMEOS)
 
+const char kDisableNativeCupsName[] = "Native CUPS";
+
+const char kDisableNativeCupsDescription[] =
+    "Disable the use of the native CUPS printing backend.";
+
 const char kEnableAndroidWallpapersAppName[] = "Android Wallpapers App";
 
 const char kEnableAndroidWallpapersAppDescription[] =
@@ -2710,13 +2707,9 @@ const char kOneGoogleBarOnLocalNtpDescription[] =
 extern const char kMacRTLName[] = "Enable RTL";
 extern const char kMacRTLDescription[] =
     "Mirrors the UI for RTL language users";
-extern const char kMacTouchBarName[] = "Hardware Touch Bar";
+extern const char kMacTouchBarName[] = "Hardware TouchBar";
 extern const char kMacTouchBarDescription[] =
-    "Control the use of the Touch Bar.";
-extern const char kCreditCardAutofillTouchBarName[] =
-    "Credit Card Autofill Touch Bar";
-extern const char kCreditCardAutofillTouchBarDescription[] =
-    "Shows Credit Card Autofill Suggestions on the Touch Bar.";
+    "Control the use of the TouchBar.";
 #endif
 
 #if defined(OS_CHROMEOS)

@@ -10,7 +10,6 @@
 #include "core/dom/Document.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/ExecutionContext.h"
-#include "core/frame/Deprecation.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/Navigator.h"
@@ -26,6 +25,7 @@ namespace blink {
 PresentationReceiver::PresentationReceiver(LocalFrame* frame,
                                            WebPresentationClient* client)
     : ContextClient(frame) {
+  RecordOriginTypeAccess(frame->GetDocument());
   connection_list_ = new PresentationConnectionList(frame->GetDocument());
 
   if (client)
@@ -45,12 +45,10 @@ PresentationReceiver* PresentationReceiver::From(Document& document) {
 }
 
 ScriptPromise PresentationReceiver::connectionList(ScriptState* script_state) {
-  ExecutionContext* execution_context = ExecutionContext::From(script_state);
-  RecordOriginTypeAccess(*execution_context);
-  if (!connection_list_property_) {
-    connection_list_property_ = new ConnectionListProperty(
-        execution_context, this, ConnectionListProperty::kReady);
-  }
+  if (!connection_list_property_)
+    connection_list_property_ =
+        new ConnectionListProperty(ExecutionContext::From(script_state), this,
+                                   ConnectionListProperty::kReady);
 
   if (!connection_list_->IsEmpty() && connection_list_property_->GetState() ==
                                           ScriptPromisePropertyBase::kPending)
@@ -115,15 +113,13 @@ void PresentationReceiver::RegisterConnection(
   connection_list_->AddConnection(connection);
 }
 
-// static
-void PresentationReceiver::RecordOriginTypeAccess(
-    ExecutionContext& execution_context) {
-  if (execution_context.IsSecureContext()) {
-    UseCounter::Count(&execution_context,
-                      WebFeature::kPresentationReceiverSecureOrigin);
+void PresentationReceiver::RecordOriginTypeAccess(Document* document) const {
+  DCHECK(document);
+  if (document->IsSecureContext()) {
+    UseCounter::Count(document, WebFeature::kPresentationReceiverSecureOrigin);
   } else {
-    Deprecation::CountDeprecation(
-        &execution_context, WebFeature::kPresentationReceiverInsecureOrigin);
+    UseCounter::Count(document,
+                      WebFeature::kPresentationReceiverInsecureOrigin);
   }
 }
 

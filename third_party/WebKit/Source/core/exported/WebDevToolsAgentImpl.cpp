@@ -35,7 +35,6 @@
 
 #include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/V8BindingForCore.h"
-#include "core/CoreInitializer.h"
 #include "core/CoreProbeSink.h"
 #include "core/events/WebInputEventConversion.h"
 #include "core/exported/WebSettingsImpl.h"
@@ -53,7 +52,6 @@
 #include "core/inspector/InspectorDOMDebuggerAgent.h"
 #include "core/inspector/InspectorDOMSnapshotAgent.h"
 #include "core/inspector/InspectorEmulationAgent.h"
-#include "core/inspector/InspectorIOAgent.h"
 #include "core/inspector/InspectorInputAgent.h"
 #include "core/inspector/InspectorLayerTreeAgent.h"
 #include "core/inspector/InspectorLogAgent.h"
@@ -367,8 +365,6 @@ InspectorSession* WebDevToolsAgentImpl::InitializeSession(int session_id,
   overlay_agents_.Set(session_id, overlay_agent);
   session->Append(overlay_agent);
 
-  session->Append(new InspectorIOAgent(isolate, session->V8Session()));
-
   tracing_agent->SetLayerTreeId(layer_tree_id_);
   network_agent->SetHostId(host_id);
 
@@ -381,7 +377,7 @@ InspectorSession* WebDevToolsAgentImpl::InitializeSession(int session_id,
   }
 
   // Call session init callbacks registered from higher layers
-  CoreInitializer::CallModulesInspectorAgentSessionInitCallback(
+  InspectorAgent::CallSessionInitCallbacks(
       session, include_view_agents_, dom_agent, inspected_frames_.Get(),
       web_local_frame_impl_->ViewImpl()->GetPage());
 

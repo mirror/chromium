@@ -109,6 +109,9 @@ class BookmarkNode;
 - (void)updatePrimaryMenuItem:(BookmarkMenuItem*)menuItem
                      animated:(BOOL)animated;
 
+// The active collection view that corresponds to primaryMenuItem.
+- (UIView<BookmarkHomePrimaryView>*)primaryView;
+
 // Caches the position in the collection view.
 - (void)cachePosition;
 

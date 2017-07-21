@@ -275,7 +275,7 @@ class SecureProxyChecker : public net::URLFetcherDelegate {
               destination: GOOGLE_OWNED_SERVICE
             }
             policy {
-              cookies_allowed: NO
+              cookies_allowed: false
               setting:
                 "Users can control Data Saver on Android via the 'Data Saver' "
                 "setting. Data Saver is not available on iOS, and on desktop "
@@ -353,7 +353,7 @@ class WarmupURLFetcher : public net::URLFetcherDelegate {
             destination: GOOGLE_OWNED_SERVICE
           }
           policy {
-            cookies_allowed: NO
+            cookies_allowed: false
             setting:
               "Users can control Data Saver on Android via the 'Data Saver' "
               "setting. Data Saver is not available on iOS, and on desktop it "
@@ -1061,8 +1061,7 @@ bool DataReductionProxyConfig::IsBlackListedOrDisabled(
     // TODO(ryansturm): Use the correct ECT value (or add new method to
     // just check blacklist). crbug.com/720102
     return !previews_decider.ShouldAllowPreviewAtECT(
-        request, previews_type, net::EFFECTIVE_CONNECTION_TYPE_4G,
-        std::vector<std::string>());
+        request, previews_type, net::EFFECTIVE_CONNECTION_TYPE_4G);
   } else {
     // If Lo-Fi has been turned off, its status can't change. This Lo-Fi bit
     // will be removed when Lo-Fi and Lite Pages are moved over to using the

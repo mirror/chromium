@@ -12,23 +12,27 @@
 namespace net {
 
 bool PlatformMimeUtil::GetPlatformMimeTypeFromExtension(
-    const base::FilePath::StringType& extension,
+    const base::FilePath::StringType& ext,
     std::string* result) const {
-  // TODO(fuchsia): Integrate with MIME DB when Fuchsia provides an API.
+  // TODO(fuchsia): Is there MIME DB on Fuchsia? Do we need it?
+  NOTIMPLEMENTED();
   return false;
 }
 
-bool PlatformMimeUtil::GetPlatformPreferredExtensionForMimeType(
+bool PlatformMimeUtil::GetPreferredExtensionForMimeType(
     const std::string& mime_type,
-    base::FilePath::StringType* extension) const {
-  // TODO(fuchsia): Integrate with MIME DB when Fuchsia provides an API.
+    base::FilePath::StringType* ext) const {
+  // TODO(fuchsia): Is there MIME DB on Fuchsia? Do we need it?
+  NOTIMPLEMENTED();
   return false;
 }
 
 void PlatformMimeUtil::GetPlatformExtensionsForMimeType(
     const std::string& mime_type,
     std::unordered_set<base::FilePath::StringType>* extensions) const {
-  // TODO(fuchsia): Integrate with MIME DB when Fuchsia provides an API.
+  base::FilePath::StringType ext;
+  if (GetPreferredExtensionForMimeType(mime_type, &ext))
+    extensions->insert(ext);
 }
 
 }  // namespace net

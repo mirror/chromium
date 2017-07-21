@@ -5,6 +5,7 @@
 #include "printing/backend/print_backend.h"
 
 namespace {
+bool g_native_cups_enabled = false;
 
 // PrintBackend override for testing.
 printing::PrintBackend* g_print_backend_for_test = nullptr;
@@ -58,6 +59,16 @@ scoped_refptr<PrintBackend> PrintBackend::CreateInstance(
 // static
 void PrintBackend::SetPrintBackendForTesting(PrintBackend* backend) {
   g_print_backend_for_test = backend;
+}
+
+// static
+bool PrintBackend::GetNativeCupsEnabled() {
+  return g_native_cups_enabled;
+}
+
+// static
+void PrintBackend::SetNativeCupsEnabled(bool enabled) {
+  g_native_cups_enabled = enabled;
 }
 
 }  // namespace printing

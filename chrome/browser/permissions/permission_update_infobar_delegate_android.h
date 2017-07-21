@@ -5,6 +5,7 @@
 #ifndef CHROME_BROWSER_PERMISSIONS_PERMISSION_UPDATE_INFOBAR_DELEGATE_ANDROID_H_
 #define CHROME_BROWSER_PERMISSIONS_PERMISSION_UPDATE_INFOBAR_DELEGATE_ANDROID_H_
 
+#include <jni.h>
 #include <string>
 #include <vector>
 
@@ -59,6 +60,8 @@ class PermissionUpdateInfoBarDelegate : public ConfirmInfoBarDelegate {
   static bool ShouldShowPermissionInfobar(
       content::WebContents* web_contents,
       const std::vector<ContentSettingsType>& content_settings_types);
+
+  static bool RegisterPermissionUpdateInfoBarDelegate(JNIEnv* env);
 
   void OnPermissionResult(JNIEnv* env,
                           const base::android::JavaParamRef<jobject>& obj,

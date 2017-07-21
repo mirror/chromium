@@ -297,7 +297,8 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestShippingAddressEditorTest, AsyncData) {
   SetCommonFields();
   SetComboboxValue(base::UTF8ToUTF16("United States"),
                    autofill::ADDRESS_HOME_COUNTRY);
-  SetComboboxValue(base::UTF8ToUTF16(kAnyState), autofill::ADDRESS_HOME_STATE);
+  SetComboboxValue(base::UTF8ToUTF16(kAnyStateCode),
+                   autofill::ADDRESS_HOME_STATE);
 
   std::string country_code(GetSelectedCountryCode());
 
@@ -319,7 +320,7 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestShippingAddressEditorTest, AsyncData) {
   DCHECK(profile);
   EXPECT_EQ(base::ASCIIToUTF16(country_code),
             profile->GetRawInfo(autofill::ADDRESS_HOME_COUNTRY));
-  EXPECT_EQ(base::ASCIIToUTF16(kAnyState),
+  EXPECT_EQ(base::ASCIIToUTF16(kAnyStateCode),
             profile->GetRawInfo(autofill::ADDRESS_HOME_STATE));
   ExpectExistingRequiredFields(/*unset_types=*/nullptr,
                                /*accept_empty_phone_number=*/false);
@@ -375,12 +376,12 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestShippingAddressEditorTest,
       if (use_regions1) {
         ASSERT_EQ(2, region_model->GetItemCount());
         EXPECT_EQ(base::ASCIIToUTF16("---"), region_model->GetItemAt(0));
-        EXPECT_EQ(base::ASCIIToUTF16("region1a"), region_model->GetItemAt(1));
+        EXPECT_EQ(base::ASCIIToUTF16("1a"), region_model->GetItemAt(1));
       } else {
         ASSERT_EQ(3, region_model->GetItemCount());
         EXPECT_EQ(base::ASCIIToUTF16("---"), region_model->GetItemAt(0));
-        EXPECT_EQ(base::ASCIIToUTF16("region2a"), region_model->GetItemAt(1));
-        EXPECT_EQ(base::ASCIIToUTF16("region2b"), region_model->GetItemAt(2));
+        EXPECT_EQ(base::ASCIIToUTF16("2a"), region_model->GetItemAt(1));
+        EXPECT_EQ(base::ASCIIToUTF16("2b"), region_model->GetItemAt(2));
       }
       use_regions1 = !use_regions1;
     }
@@ -403,11 +404,7 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestShippingAddressEditorTest,
           static_cast<ValidatingTextfield*>(dialog_view()->GetViewByID(
               EditorViewController::GetInputFieldViewId(type)));
       if (textfield) {
-        // The zip field will be populated after switching to a country for
-        // which the profile has a zip set.
-        EXPECT_TRUE(textfield->text().empty() ||
-                    type == autofill::ADDRESS_HOME_ZIP)
-            << type;
+        EXPECT_TRUE(textfield->text().empty()) << type;
         SetFieldTestValue(type);
         set_types.insert(type);
       }
@@ -652,8 +649,7 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestShippingAddressEditorTest,
   OpenShippingAddressEditorScreen();
 
   SetCommonFields();
-  SetComboboxValue(base::UTF8ToUTF16("California"),
-                   autofill::ADDRESS_HOME_STATE);
+  SetComboboxValue(base::UTF8ToUTF16("CA"), autofill::ADDRESS_HOME_STATE);
 
   // Set an Australian phone number in international format.
   SetEditorTextfieldValue(base::UTF8ToUTF16("+61 2 9374 4000"),
@@ -993,7 +989,7 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestShippingAddressEditorTest,
   EXPECT_FALSE(GetComboboxValue(autofill::ADDRESS_HOME_COUNTRY).empty());
 
   // Expect that the state was selected.
-  EXPECT_EQ(base::ASCIIToUTF16("California"),
+  EXPECT_EQ(base::ASCIIToUTF16("CA"),
             GetComboboxValue(autofill::ADDRESS_HOME_STATE));
 
   // Expect that the save button is enabled, since the profile is now valid.
@@ -1045,7 +1041,7 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestShippingAddressEditorTest,
   EXPECT_FALSE(GetComboboxValue(autofill::ADDRESS_HOME_COUNTRY).empty());
 
   // Expect that the state was selected.
-  EXPECT_EQ(base::ASCIIToUTF16("California"),
+  EXPECT_EQ(base::ASCIIToUTF16("CA"),
             GetComboboxValue(autofill::ADDRESS_HOME_STATE));
 
   // Expect that the save button is enabled, since the profile is now valid.
@@ -1081,7 +1077,7 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestShippingAddressEditorTest,
                                 DialogViewID::SHIPPING_ADDRESS_SHEET_LIST_VIEW);
 
   // Expect that the state was selected.
-  EXPECT_EQ(base::ASCIIToUTF16("California"),
+  EXPECT_EQ(base::ASCIIToUTF16("CA"),
             GetComboboxValue(autofill::ADDRESS_HOME_STATE));
 }
 
@@ -1112,33 +1108,8 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestShippingAddressEditorTest,
                                 DialogViewID::SHIPPING_ADDRESS_SHEET_LIST_VIEW);
 
   // Expect that the state was selected.
-  EXPECT_EQ(base::ASCIIToUTF16("California"),
+  EXPECT_EQ(base::ASCIIToUTF16("CA"),
             GetComboboxValue(autofill::ADDRESS_HOME_STATE));
-}
-
-IN_PROC_BROWSER_TEST_F(PaymentRequestShippingAddressEditorTest,
-                       NoCountryProfileDoesntSetCountryToLocale) {
-  // Add address without a country but a valid state for the default country.
-  autofill::AutofillProfile profile = autofill::test::GetFullProfile();
-  profile.SetInfo(autofill::AutofillType(autofill::NAME_FULL),
-                  base::ASCIIToUTF16(kNameFull), kLocale);
-  profile.SetInfo(autofill::AutofillType(autofill::ADDRESS_HOME_COUNTRY),
-                  base::ASCIIToUTF16(""), kLocale);
-  AddAutofillProfile(profile);
-
-  InvokePaymentRequestUI();
-  OpenShippingAddressSectionScreen();
-
-  ResetEventObserver(DialogEvent::SHIPPING_ADDRESS_EDITOR_OPENED);
-  ClickOnChildInListViewAndWait(/*child_index=*/0, /*num_children=*/1,
-                                DialogViewID::SHIPPING_ADDRESS_SHEET_LIST_VIEW);
-
-  ClickOnBackArrow();
-  PaymentRequest* request = GetPaymentRequests(GetActiveWebContents()).front();
-  EXPECT_EQ(
-      base::ASCIIToUTF16(""),
-      request->state()->shipping_profiles()[0]->GetInfo(
-          autofill::AutofillType(autofill::ADDRESS_HOME_COUNTRY), kLocale));
 }
 
 }  // namespace payments

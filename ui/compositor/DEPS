@@ -18,8 +18,5 @@ include_rules = [
 specific_include_rules = {
   "run_all_unittests\.cc": [
     "+mojo/edk/embedder",
-  ],
-  ".*_(unit|pixel|perf)test.*\.cc": [
-    "+components/viz/test",
-  ],
+  ]
 }

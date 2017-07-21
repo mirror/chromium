@@ -183,7 +183,7 @@ void SupervisedUserRefreshTokenFetcherImpl::OnGetTokenSuccess(
             destination: GOOGLE_OWNED_SERVICE
           }
           policy {
-            cookies_allowed: NO
+            cookies_allowed: false
             setting:
               "Users can disable this feature by toggling 'Let anyone add a "
               "person to Chrome' in Chromium settings, under People."

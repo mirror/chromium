@@ -18,6 +18,7 @@
 #include "base/guid.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/stl_util.h"
 #include "base/strings/string16.h"
@@ -39,7 +40,7 @@
 #include "content/public/browser/download_manager_delegate.h"
 #include "content/public/test/mock_download_item.h"
 #include "content/public/test/test_browser_context.h"
-#include "content/public/test/test_browser_thread_bundle.h"
+#include "content/public/test/test_browser_thread.h"
 #include "net/log/net_log_with_source.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gmock_mutant.h"
@@ -388,6 +389,8 @@ class DownloadManagerTest : public testing::Test {
         target_disposition_(DownloadItem::TARGET_DISPOSITION_OVERWRITE),
         danger_type_(DOWNLOAD_DANGER_TYPE_NOT_DANGEROUS),
         interrupt_reason_(DOWNLOAD_INTERRUPT_REASON_NONE),
+        ui_thread_(BrowserThread::UI, &message_loop_),
+        file_thread_(BrowserThread::FILE, &message_loop_),
         next_download_id_(0) {}
 
   // We tear down everything in TearDown().
@@ -524,7 +527,9 @@ class DownloadManagerTest : public testing::Test {
   std::vector<GURL> download_urls_;
 
  private:
-  TestBrowserThreadBundle thread_bundle_;
+  base::MessageLoopForUI message_loop_;
+  TestBrowserThread ui_thread_;
+  TestBrowserThread file_thread_;
   base::WeakPtr<MockDownloadItemFactory> mock_download_item_factory_;
   std::unique_ptr<MockDownloadManagerDelegate> mock_download_manager_delegate_;
   std::unique_ptr<MockBrowserContext> mock_browser_context_;

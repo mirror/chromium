@@ -40,6 +40,10 @@ namespace blink {
 
 namespace {
 
+const char* const kNullString = "null";
+const char* const kTrueString = "true";
+const char* const kFalseString = "false";
+
 inline bool EscapeChar(UChar c, StringBuilder* dst) {
   switch (c) {
     case '\b':
@@ -85,10 +89,6 @@ void WriteIndent(int depth, StringBuilder* output) {
 }
 
 }  // anonymous namespace
-
-const char* kJSONNullString = "null";
-const char* kJSONTrueString = "true";
-const char* kJSONFalseString = "false";
 
 void EscapeStringForJSON(const String& str, StringBuilder* dst) {
   for (unsigned i = 0; i < str.length(); ++i) {
@@ -150,7 +150,7 @@ String JSONValue::ToPrettyJSONString() const {
 
 void JSONValue::WriteJSON(StringBuilder* output) const {
   DCHECK(type_ == kTypeNull);
-  output->Append(kJSONNullString, 4);
+  output->Append(kNullString, 4);
 }
 
 void JSONValue::PrettyWriteJSON(StringBuilder* output) const {
@@ -198,12 +198,12 @@ void JSONBasicValue::WriteJSON(StringBuilder* output) const {
          GetType() == kTypeDouble);
   if (GetType() == kTypeBoolean) {
     if (bool_value_)
-      output->Append(kJSONTrueString, 4);
+      output->Append(kTrueString, 4);
     else
-      output->Append(kJSONFalseString, 5);
+      output->Append(kFalseString, 5);
   } else if (GetType() == kTypeDouble) {
     if (!std::isfinite(double_value_)) {
-      output->Append(kJSONNullString, 4);
+      output->Append(kNullString, 4);
       return;
     }
     output->Append(Decimal::FromDouble(double_value_).ToString());
@@ -301,7 +301,7 @@ bool JSONObject::GetString(const String& name, String* output) const {
   return value->AsString(output);
 }
 
-JSONObject* JSONObject::GetJSONObject(const String& name) const {
+JSONObject* JSONObject::GetObject(const String& name) const {
   return JSONObject::Cast(Get(name));
 }
 

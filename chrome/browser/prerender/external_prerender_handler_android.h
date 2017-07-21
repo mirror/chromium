@@ -5,6 +5,8 @@
 #ifndef CHROME_BROWSER_PRERENDER_EXTERNAL_PRERENDER_HANDLER_ANDROID_H_
 #define CHROME_BROWSER_PRERENDER_EXTERNAL_PRERENDER_HANDLER_ANDROID_H_
 
+#include <jni.h>
+
 #include <memory>
 
 #include "base/android/scoped_java_ref.h"
@@ -57,6 +59,8 @@ class ExternalPrerenderHandlerAndroid {
       Profile* profile,
       GURL url,
       content::WebContents* web_contents);
+
+  static bool RegisterExternalPrerenderHandlerAndroid(JNIEnv* env);
 
  private:
   virtual ~ExternalPrerenderHandlerAndroid();

@@ -11,7 +11,6 @@ import android.content.res.Resources;
 import android.text.TextUtils;
 
 import org.chromium.base.Log;
-import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.UrlConstants;
 import org.chromium.chrome.browser.payments.PaymentAppFactory.PaymentAppCreatedCallback;
@@ -26,6 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -39,14 +39,14 @@ import javax.annotation.Nullable;
  * app.
  */
 public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
-    private static final String TAG = "PaymentAppFinder";
+    private static final String TAG = "cr_PaymentAppFinder";
 
     /** The maximum number of payment method manifests to download. */
     private static final int MAX_NUMBER_OF_MANIFESTS = 10;
 
     /** The name of the intent for the service to check whether an app is ready to pay. */
     /* package */ static final String ACTION_IS_READY_TO_PAY =
-            "org.chromium.intent.action.IS_READY_TO_PAY";
+                          "org.chromium.intent.action.IS_READY_TO_PAY";
 
     /**
      * Meta data name of an app's supported payment method names.
@@ -59,8 +59,6 @@ public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
      */
     /* package */ static final String META_DATA_NAME_OF_DEFAULT_PAYMENT_METHOD_NAME =
             "org.chromium.default_payment_method_name";
-
-    private static boolean sAllowHttpForTest;
 
     private final WebContents mWebContents;
     private final Set<String> mNonUriPaymentMethods;
@@ -131,8 +129,7 @@ public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
             assert !TextUtils.isEmpty(method);
             if (supportedNonUriPaymentMethods.contains(method)) {
                 mNonUriPaymentMethods.add(method);
-            } else if (method.startsWith(UrlConstants.HTTPS_URL_PREFIX)
-                    || (sAllowHttpForTest && method.startsWith("http://127.0.0.1:"))) {
+            } else if (method.startsWith(UrlConstants.HTTPS_URL_PREFIX)) {
                 URI uri;
                 try {
                     // Don't use java.net.URL, because it performs a synchronous DNS lookup in
@@ -143,10 +140,7 @@ public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
                 }
 
                 if (uri.isAbsolute()) {
-                    assert UrlConstants.HTTPS_SCHEME.equals(uri.getScheme())
-                            || (sAllowHttpForTest
-                                       && UrlConstants.HTTP_SCHEME.equals(uri.getScheme())
-                                       && "127.0.0.1".equals(uri.getHost()));
+                    assert UrlConstants.HTTPS_SCHEME.equals(uri.getScheme());
                     mUriPaymentMethods.add(uri);
                 }
             }
@@ -198,7 +192,7 @@ public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
             mPendingApps.put(uriMethodName, new HashSet<>(supportedApps));
 
             if (mManifestVerifiers.size() == MAX_NUMBER_OF_MANIFESTS) {
-                Log.e(TAG, "Reached maximum number of allowed payment app manifests.");
+                Log.d(TAG, "Reached maximum number of allowed payment app manifests.");
                 break;
             }
         }
@@ -277,7 +271,9 @@ public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
         if (app == null) {
             CharSequence label = mPackageManagerDelegate.getAppLabel(resolveInfo);
             if (TextUtils.isEmpty(label)) {
-                Log.e(TAG, "Skipping \"%s\" because of empty label.", packageName);
+                Log.d(TAG,
+                        String.format(Locale.getDefault(), "Skipping '%s' because of empty label.",
+                                packageName));
                 return;
             }
             app = new AndroidPaymentApp(mWebContents, packageName, resolveInfo.activityInfo.name,
@@ -341,10 +337,5 @@ public class AndroidPaymentAppFinder implements ManifestVerifyCallback {
         }
 
         mCallback.onAllPaymentAppsCreated();
-    }
-
-    @VisibleForTesting
-    public static void allowHttpForTest() {
-        sAllowHttpForTest = true;
     }
 }

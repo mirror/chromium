@@ -78,22 +78,18 @@ class ArcContentFileSystemFileStreamReaderTest : public testing::Test {
         File(kArcUrlPipe, kData, kMimeType, File::Seekable::NO));
 
     arc_service_manager_ = base::MakeUnique<ArcServiceManager>();
-    profile_ = base::MakeUnique<TestingProfile>();
-    arc_service_manager_->set_browser_context(profile_.get());
+    arc_service_manager_->set_browser_context(&profile_);
     ArcFileSystemOperationRunner::GetFactory()->SetTestingFactoryAndUse(
-        profile_.get(), &CreateFileSystemOperationRunnerForTesting);
+        &profile_, &CreateFileSystemOperationRunnerForTesting);
     arc_service_manager_->arc_bridge_service()->file_system()->SetInstance(
         &fake_file_system_);
   }
 
  private:
   content::TestBrowserThreadBundle thread_bundle_;
+  TestingProfile profile_;
   FakeFileSystemInstance fake_file_system_;
-
-  // Use the same initialization/destruction order as
-  // ChromeBrowserMainPartsChromeos.
   std::unique_ptr<ArcServiceManager> arc_service_manager_;
-  std::unique_ptr<TestingProfile> profile_;
 
   DISALLOW_COPY_AND_ASSIGN(ArcContentFileSystemFileStreamReaderTest);
 };

@@ -76,6 +76,8 @@ goog.provide('__crWeb.contextMenu');
         continue;
       }
 
+      if (getComputedWebkitTouchCallout_(element) === 'none')
+        continue;
       // Also check element's ancestors. A bound on the level is used here to
       // avoid large overhead when no links or images are found.
       var level = 0;
@@ -92,48 +94,46 @@ goog.provide('__crWeb.contextMenu');
           return {};
         }
 
-       if (getComputedWebkitTouchCallout_(element) !== 'none') {
-          if (tagName === 'a' && element.href) {
-            // Found a link.
-            return {
-              href: element.href,
-              referrerPolicy: getReferrerPolicy_(element),
-              innerText: element.innerText
-            };
-          }
+        if (tagName === 'a' && element.href) {
+          // Found a link.
+          return {
+            href: element.href,
+            referrerPolicy: getReferrerPolicy_(element),
+            innerText: element.innerText
+          };
+        }
 
-          if (tagName === 'img' && element.src) {
-            // Found an image.
-            var result = {
-              src: element.src,
-              referrerPolicy: getReferrerPolicy_()
-            };
-            // Copy the title, if any.
-            if (element.title) {
-              result.title = element.title;
-            }
-            // Check if the image is also a link.
-            var parent = element.parentNode;
-            while (parent) {
-              if (parent.tagName &&
-                  parent.tagName.toLowerCase() === 'a' &&
-                  parent.href) {
-                // This regex identifies strings like void(0),
-                // void(0)  ;void(0);, ;;;;
-                // which result in a NOP when executed as JavaScript.
-                var regex = RegExp("^javascript:(?:(?:void\\(0\\)|;)\\s*)+$");
-                if (parent.href.match(regex)) {
-                  parent = parent.parentNode;
-                  continue;
-                }
-                result.href = parent.href;
-                result.referrerPolicy = getReferrerPolicy_(parent);
-                break;
-              }
-              parent = parent.parentNode;
-            }
-            return result;
+        if (tagName === 'img' && element.src) {
+          // Found an image.
+          var result = {
+            src: element.src,
+            referrerPolicy: getReferrerPolicy_()
+          };
+          // Copy the title, if any.
+          if (element.title) {
+            result.title = element.title;
           }
+          // Check if the image is also a link.
+          var parent = element.parentNode;
+          while (parent) {
+            if (parent.tagName &&
+                parent.tagName.toLowerCase() === 'a' &&
+                parent.href) {
+              // This regex identifies strings like void(0),
+              // void(0)  ;void(0);, ;;;;
+              // which result in a NOP when executed as JavaScript.
+              var regex = RegExp("^javascript:(?:(?:void\\(0\\)|;)\\s*)+$");
+              if (parent.href.match(regex)) {
+                parent = parent.parentNode;
+                continue;
+              }
+              result.href = parent.href;
+              result.referrerPolicy = getReferrerPolicy_(parent);
+              break;
+            }
+            parent = parent.parentNode;
+          }
+          return result;
         }
         element = element.parentNode;
       }

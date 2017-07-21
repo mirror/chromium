@@ -26,7 +26,6 @@
 #include "core/dom/ScriptRunner.h"
 
 #include <algorithm>
-#include "bindings/core/v8/ScriptStreamer.h"
 #include "core/dom/Document.h"
 #include "core/dom/ScriptLoader.h"
 #include "core/dom/TaskRunnerHelper.h"
@@ -44,7 +43,7 @@ ScriptRunner::ScriptRunner(Document* document)
       is_suspended_(false) {
   DCHECK(document);
 #ifndef NDEBUG
-  number_of_extra_tasks_ = 0;
+  has_ever_been_suspended_ = false;
 #endif
 }
 
@@ -55,7 +54,6 @@ void ScriptRunner::QueueScriptForExecution(ScriptLoader* script_loader,
   switch (execution_type) {
     case kAsync:
       pending_async_scripts_.insert(script_loader);
-      TryStream(script_loader);
       break;
 
     case kInOrder:
@@ -76,9 +74,7 @@ void ScriptRunner::PostTask(const WebTraceLocation& web_trace_location) {
 
 void ScriptRunner::Suspend() {
 #ifndef NDEBUG
-  // Resume will re-post tasks for all available scripts.
-  number_of_extra_tasks_ += async_scripts_to_execute_soon_.size() +
-                            in_order_scripts_to_execute_soon_.size();
+  has_ever_been_suspended_ = true;
 #endif
 
   is_suspended_ = true;
@@ -121,7 +117,7 @@ void ScriptRunner::NotifyScriptReady(ScriptLoader* script_loader,
       async_scripts_to_execute_soon_.push_back(script_loader);
 
       PostTask(BLINK_FROM_HERE);
-      TryStreamAny();
+
       break;
 
     case kInOrder:
@@ -146,11 +142,6 @@ bool ScriptRunner::RemovePendingInOrderScript(ScriptLoader* script_loader) {
   SECURITY_CHECK(number_of_in_order_scripts_with_pending_notification_ > 0);
   number_of_in_order_scripts_with_pending_notification_--;
   return true;
-}
-
-void ScriptRunner::NotifyScriptStreamerFinished() {
-  PostTask(BLINK_FROM_HERE);
-  TryStreamAny();
 }
 
 void ScriptRunner::MovePendingScript(Document& old_document,
@@ -196,100 +187,31 @@ void ScriptRunner::MovePendingScript(ScriptRunner* new_runner,
   }
 }
 
-bool ScriptRunner::ExecuteInOrderTask() {
-  if (in_order_scripts_to_execute_soon_.IsEmpty())
+// Returns true if task was run, and false otherwise.
+bool ScriptRunner::ExecuteTaskFromQueue(
+    HeapDeque<Member<ScriptLoader>>* task_queue) {
+  if (task_queue->IsEmpty())
     return false;
-
-  PendingScript* pending_script = in_order_scripts_to_execute_soon_.front()
-                                      ->GetPendingScriptIfScriptIsAsync();
-  if (pending_script && pending_script->IsCurrentlyStreaming())
-    return false;
-
-  in_order_scripts_to_execute_soon_.TakeFirst()->Execute();
+  task_queue->TakeFirst()->Execute();
 
   document_->DecrementLoadEventDelayCount();
   return true;
-}
-
-bool ScriptRunner::ExecuteAsyncTask() {
-  for (auto iter = async_scripts_to_execute_soon_.begin();
-       iter != async_scripts_to_execute_soon_.end(); ++iter) {
-    PendingScript* pending_script = (*iter)->GetPendingScriptIfScriptIsAsync();
-    if (!pending_script || !pending_script->IsCurrentlyStreaming()) {
-      ScriptLoader* loader = *iter;
-      async_scripts_to_execute_soon_.erase(iter);
-      loader->Execute();
-      document_->DecrementLoadEventDelayCount();
-      return true;
-    }
-  }
-  return false;
 }
 
 void ScriptRunner::ExecuteTask() {
   if (is_suspended_)
     return;
 
-  if (ExecuteAsyncTask())
+  if (ExecuteTaskFromQueue(&async_scripts_to_execute_soon_))
     return;
 
-  if (ExecuteInOrderTask())
+  if (ExecuteTaskFromQueue(&in_order_scripts_to_execute_soon_))
     return;
 
 #ifndef NDEBUG
-  // Extra tasks should be posted only when we resume after suspending,
-  // or when we stream a script. These should all be accounted for in
-  // number_of_extra_tasks_.
-  DCHECK_GT(number_of_extra_tasks_--, 0);
+  // Extra tasks should be posted only when we resume after suspending.
+  DCHECK(has_ever_been_suspended_);
 #endif
-}
-
-void ScriptRunner::TryStreamAny() {
-  if (is_suspended_)
-    return;
-
-  if (!RuntimeEnabledFeatures::WorkStealingInScriptRunnerEnabled())
-    return;
-
-  // Look through async_scripts_to_execute_soon_, and stream any one of them.
-  for (auto script_loader : async_scripts_to_execute_soon_) {
-    if (DoTryStream(script_loader))
-      return;
-  }
-}
-
-void ScriptRunner::TryStream(ScriptLoader* script_loader) {
-  if (!is_suspended_)
-    DoTryStream(script_loader);
-}
-
-bool ScriptRunner::DoTryStream(ScriptLoader* script_loader) {
-  // Checks that all callers should have already done.
-  DCHECK(!is_suspended_);
-  DCHECK(script_loader);
-
-  // Currently, we support streaming only for async scripts.
-  DCHECK(pending_async_scripts_.find(script_loader) !=
-             pending_async_scripts_.end() ||
-         std::find(async_scripts_to_execute_soon_.begin(),
-                   async_scripts_to_execute_soon_.end(),
-                   script_loader) != async_scripts_to_execute_soon_.end());
-
-  PendingScript* pending_script =
-      script_loader->GetPendingScriptIfScriptIsAsync();
-  if (!pending_script)
-    return false;
-
-  bool success = pending_script->StartStreamingIfPossible(
-      ScriptStreamer::kAsync,
-      WTF::Bind(&ScriptRunner::NotifyScriptStreamerFinished,
-                WrapPersistent(this)));
-  DCHECK_EQ(success, pending_script->IsCurrentlyStreaming());
-#ifndef NDEBUG
-  if (success)
-    number_of_extra_tasks_++;
-#endif
-  return success;
 }
 
 DEFINE_TRACE(ScriptRunner) {

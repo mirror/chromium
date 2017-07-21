@@ -123,7 +123,6 @@ PlayerUtils.registerEMEEventListeners = function(player) {
 
   this.registerDefaultEventListeners(player);
   player.video.receivedKeyMessage = false;
-  player.video.receivedRenewalMessage = false;
   Utils.timeLog('Setting video media keys: ' + player.testConfig.keySystem);
 
   var config = {
@@ -239,7 +238,6 @@ PlayerUtils.createPlayer = function(video, testConfig) {
       case OUTPUT_PROTECTION_TEST_KEYSYSTEM:
       case PLATFORM_VERIFICATION_TEST_KEYSYSTEM:
       case VERIFY_HOST_FILES_TEST_KEYSYSTEM:
-      case STORAGE_ID_TEST_KEYSYSTEM:
         return UnitTestPlayer;
       default:
         Utils.timeLog(keySystem + ' is not a known key system');

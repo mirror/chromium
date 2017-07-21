@@ -4,15 +4,4 @@
 
 #include "core/css/properties/CSSPropertyAPIWebkitBoxFlex.h"
 
-#include "core/css/parser/CSSPropertyParserHelpers.h"
-
-namespace blink {
-
-const CSSValue* CSSPropertyAPIWebkitBoxFlex::parseSingleValue(
-    CSSParserTokenRange& range,
-    const CSSParserContext&,
-    const CSSParserLocalContext&) {
-  return CSSPropertyParserHelpers::ConsumeNumber(range, kValueRangeAll);
-}
-
-}  // namespace blink
+namespace blink {}  // namespace blink

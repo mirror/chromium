@@ -80,7 +80,6 @@ public class CustomTabsConnection {
 
     @VisibleForTesting
     static final String PAGE_LOAD_METRICS_CALLBACK = "NavigationMetrics";
-    static final String BOTTOM_BAR_SCROLL_STATE_CALLBACK = "onBottomBarScrollStateChanged";
 
     // For CustomTabs.SpeculationStatusOnStart, see tools/metrics/enums.xml. Append only.
     private static final int SPECULATION_STATUS_ON_START_ALLOWED = 0;
@@ -778,11 +777,6 @@ public class CustomTabsConnection {
         return mClientManager.shouldSendNavigationInfoForSession(session);
     }
 
-    /** @see ClientManager#shouldSendBottomBarScrollStateForSession(CustomTabsSessionToken) */
-    public boolean shouldSendBottomBarScrollStateForSession(CustomTabsSessionToken session) {
-        return mClientManager.shouldSendBottomBarScrollStateForSession(session);
-    }
-
     /** See {@link ClientManager#getClientPackageNameForSession(CustomTabsSessionToken)} */
     public String getClientPackageNameForSession(CustomTabsSessionToken session) {
         return mClientManager.getClientPackageNameForSession(session);
@@ -850,30 +844,6 @@ public class CustomTabsConnection {
      */
     public void sendNavigationInfo(
             CustomTabsSessionToken session, String url, String title, Bitmap screenshot) { }
-
-    /**
-     * Called when the bottom bar for the custom tab has been hidden or shown completely by user
-     * scroll.
-     *
-     * @param session The session that is linked with the custom tab.
-     * @param hidden Whether the bottom bar is hidden or shown.
-     */
-    public void onBottomBarScrollStateChanged(CustomTabsSessionToken session, boolean hidden) {
-        if (!shouldSendBottomBarScrollStateForSession(session)) return;
-        CustomTabsCallback callback = mClientManager.getCallbackForSession(session);
-
-        Bundle args = new Bundle();
-        args.putBoolean("hidden", hidden);
-        try {
-            callback.extraCallback(BOTTOM_BAR_SCROLL_STATE_CALLBACK, args);
-        } catch (Exception e) {
-            // Pokemon exception handling, see above and crbug.com/517023.
-            return;
-        }
-        if (mLogRequests) {
-            logCallback("extraCallback(" + BOTTOM_BAR_SCROLL_STATE_CALLBACK + ")", hidden);
-        }
-    }
 
     /**
      * Notifies the application of a navigation event.
@@ -1124,9 +1094,6 @@ public class CustomTabsConnection {
                     Profile profile = Profile.getLastUsedProfile();
                     new LoadingPredictor(profile).cancelPageLoadHint(mSpeculation.url);
                     break;
-                case SpeculationParams.HIDDEN_TAB:
-                    mSpeculation.tab.destroy();
-                    break;
                 default:
                     return;
             }
@@ -1147,10 +1114,6 @@ public class CustomTabsConnection {
                 && !ChromeFeatureList.isEnabled(ChromeFeatureList.CCT_BACKGROUND_TAB)) {
             speculationMode = SpeculationParams.PRERENDER;
         }
-
-        // At most one on-going speculation, clears the previous one.
-        cancelSpeculation(null);
-
         switch (speculationMode) {
             case SpeculationParams.PREFETCH:
                 boolean didPrefetch = new LoadingPredictor(profile).prepareForPageLoad(url);
@@ -1227,25 +1190,30 @@ public class CustomTabsConnection {
      * Creates a hidden tab and initiates a navigation.
      */
     private void launchUrlInHiddenTab(
-            final CustomTabsSessionToken session, String url, Bundle extras) {
-        ThreadUtils.assertOnUiThread();
-        Intent extrasIntent = new Intent();
-        if (extras != null) extrasIntent.putExtras(extras);
-        if (IntentHandler.getExtraHeadersFromIntent(extrasIntent) != null) return;
+            final CustomTabsSessionToken session, final String url, final Bundle extras) {
+        ThreadUtils.postOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Intent extrasIntent = new Intent();
+                if (extras != null) extrasIntent.putExtras(extras);
+                if (IntentHandler.getExtraHeadersFromIntent(extrasIntent) != null) return;
 
-        Tab tab = Tab.createDetached(new CustomTabDelegateFactory(false, false, null));
+                Tab tab = Tab.createDetached(new CustomTabDelegateFactory(false, false, null));
 
-        // Updating post message as soon as we have a valid WebContents.
-        mClientManager.resetPostMessageHandlerForSession(
-                session, tab.getContentViewCore().getWebContents());
+                // Updating post message as soon as we have a valid WebContents.
+                mClientManager.resetPostMessageHandlerForSession(
+                        session, tab.getContentViewCore().getWebContents());
 
-        LoadUrlParams loadParams = new LoadUrlParams(url);
-        String referrer = getReferrer(session, extrasIntent);
-        if (referrer != null && !referrer.isEmpty()) {
-            loadParams.setReferrer(new Referrer(referrer, Referrer.REFERRER_POLICY_DEFAULT));
-        }
-        mSpeculation = SpeculationParams.forHiddenTab(session, url, tab, referrer, extras);
-        mSpeculation.tab.loadUrl(loadParams);
+                LoadUrlParams loadParams = new LoadUrlParams(url);
+                String referrer = getReferrer(session, extrasIntent);
+                if (referrer != null && !referrer.isEmpty()) {
+                    loadParams.setReferrer(
+                            new Referrer(referrer, Referrer.REFERRER_POLICY_DEFAULT));
+                }
+                mSpeculation = SpeculationParams.forHiddenTab(session, url, tab, referrer, extras);
+                mSpeculation.tab.loadUrl(loadParams);
+            }
+        });
     }
 
     @VisibleForTesting

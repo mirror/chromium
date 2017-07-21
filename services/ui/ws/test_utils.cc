@@ -678,7 +678,6 @@ void TestDisplayManagerObserver::OnDisplaysChanged(
   if (!observer_calls_.empty())
     observer_calls_ += "\n";
   observer_calls_ += "OnDisplaysChanged " + DisplayIdsToString(displays);
-  observer_calls_ += " " + base::Int64ToString(internal_display_id);
 }
 
 // -----------------------------------------------------------------------------

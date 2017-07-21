@@ -812,9 +812,8 @@ class PowerManagerClientImpl : public PowerManagerClient {
       return;
     }
 
-    power_manager_proxy_->CallMethod(&method_call,
-                                     dbus::ObjectProxy::TIMEOUT_USE_DEFAULT,
-                                     std::move(callback));
+    power_manager_proxy_->CallMethod(
+        &method_call, dbus::ObjectProxy::TIMEOUT_USE_DEFAULT, callback);
   }
 
   // Registers suspend delays with the power manager.  This is usually only

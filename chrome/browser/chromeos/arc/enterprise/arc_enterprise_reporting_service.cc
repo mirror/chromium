@@ -56,7 +56,13 @@ ArcEnterpriseReportingService::ArcEnterpriseReportingService(
 
 ArcEnterpriseReportingService::~ArcEnterpriseReportingService() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  arc_bridge_service_->enterprise_reporting()->RemoveObserver(this);
+
+  // TODO(hidehiko): Currently, the lifetime of ArcBridgeService and
+  // BrowserContextKeyedService is not nested.
+  // If ArcServiceManager::Get() returns nullptr, it is already destructed,
+  // so do not touch it.
+  if (ArcServiceManager::Get())
+    arc_bridge_service_->enterprise_reporting()->RemoveObserver(this);
 }
 
 void ArcEnterpriseReportingService::OnInstanceReady() {

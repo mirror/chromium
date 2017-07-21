@@ -63,8 +63,10 @@ std::string SurfaceManager::SurfaceReferencesToString() {
 }
 #endif
 
-void SurfaceManager::RequestSurfaceResolution(Surface* surface) {
-  dependency_tracker_.RequestSurfaceResolution(surface);
+void SurfaceManager::RequestSurfaceResolution(
+    Surface* surface,
+    SurfaceDependencyDeadline* deadline) {
+  dependency_tracker_.RequestSurfaceResolution(surface, deadline);
 }
 
 Surface* SurfaceManager::CreateSurface(
@@ -420,7 +422,7 @@ Surface* SurfaceManager::GetSurfaceForId(const viz::SurfaceId& surface_id) {
 }
 
 bool SurfaceManager::SurfaceModified(const viz::SurfaceId& surface_id,
-                                     const viz::BeginFrameAck& ack) {
+                                     const BeginFrameAck& ack) {
   CHECK(thread_checker_.CalledOnValidThread());
   bool changed = false;
   for (auto& observer : observer_list_)
@@ -464,7 +466,7 @@ void SurfaceManager::SurfaceDiscarded(Surface* surface) {
 }
 
 void SurfaceManager::SurfaceDamageExpected(const viz::SurfaceId& surface_id,
-                                           const viz::BeginFrameArgs& args) {
+                                           const BeginFrameArgs& args) {
   DCHECK(thread_checker_.CalledOnValidThread());
   for (auto& observer : observer_list_)
     observer.OnSurfaceDamageExpected(surface_id, args);

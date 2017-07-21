@@ -5,6 +5,8 @@
 #ifndef CHROME_BROWSER_SUPERVISED_USER_CHILD_ACCOUNTS_CHILD_ACCOUNT_SERVICE_ANDROID_H_
 #define CHROME_BROWSER_SUPERVISED_USER_CHILD_ACCOUNTS_CHILD_ACCOUNT_SERVICE_ANDROID_H_
 
+#include <jni.h>
+
 #include <string>
 
 #include "base/callback_forward.h"
@@ -12,6 +14,9 @@
 namespace content {
 class WebContents;
 }
+
+// Register native methods.
+bool RegisterChildAccountService(JNIEnv* env);
 
 void ReauthenticateChildAccount(content::WebContents* web_contents,
                                 const std::string& email,

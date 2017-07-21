@@ -302,26 +302,6 @@ class AutofillMetrics {
     NUM_INFO_BAR_METRICS,
   };
 
-  // Metric to measure if a submitted card's expiration date matches the same
-  // server card's expiration date (unmasked or not).  Cards are considered to
-  // be the same if they have the same card number (if unmasked) or if they have
-  // the same network and last four digits (if masked).
-  enum SubmittedServerCardExpirationStatusMetric {
-    // The submitted card and the unmasked server card had the same expiration
-    // date.
-    FULL_SERVER_CARD_EXPIRATION_DATE_MATCHED,
-    // The submitted card and the unmasked server card had different expiration
-    // dates.
-    FULL_SERVER_CARD_EXPIRATION_DATE_DID_NOT_MATCH,
-    // The submitted card and the masked server card had the same expiration
-    // date.
-    MASKED_SERVER_CARD_EXPIRATION_DATE_MATCHED,
-    // The submitted card and the masked server card had different expiration
-    // dates.
-    MASKED_SERVER_CARD_EXPIRATION_DATE_DID_NOT_MATCH,
-    NUM_SUBMITTED_SERVER_CARD_EXPIRATION_STATUS_METRICS,
-  };
-
   // Metrics to measure user interaction with the save credit card prompt.
   //
   // SAVE_CARD_PROMPT_DISMISS_FOCUS is not stored explicitly, but can be
@@ -747,26 +727,20 @@ class AutofillMetrics {
     void LogInteractedWithForm(bool is_for_credit_card,
                                size_t local_record_type_count,
                                size_t server_record_type_count);
-    void LogSuggestionsShown(const AutofillField& field,
-                             const base::TimeTicks& form_parsed_timestamp);
-    void LogSelectedMaskedServerCard(
-        const base::TimeTicks& form_parsed_timestamp);
-    void LogDidFillSuggestion(int record_type,
-                              const base::TimeTicks& form_parsed_timestamp);
-    void LogTextFieldDidChange(const AutofillField& field,
-                               const base::TimeTicks& form_parsed_timestamp);
+    void LogSuggestionsShown(const AutofillField& field);
+    void LogSelectedMaskedServerCard();
+    void LogDidFillSuggestion(int record_type);
+    void LogTextFieldDidChange(const AutofillField& field);
     void LogFieldFillStatus(const FormStructure& form,
                             const AutofillField& field,
                             QualityMetricType metric_type);
-    void LogFieldType(const base::TimeTicks& form_parsed_timestamp,
-                      FormSignature form_signature,
+    void LogFieldType(FormSignature form_signature,
                       FieldSignature field_signature,
                       QualityMetricPredictionSource prediction_source,
                       QualityMetricType metric_type,
                       ServerFieldType predicted_type,
                       ServerFieldType actual_type);
-    void LogFormSubmitted(AutofillFormSubmittedState state,
-                          const base::TimeTicks& form_parsed_timestamp);
+    void LogFormSubmitted(AutofillFormSubmittedState state);
 
     // We initialize |url_| with the form's URL when we log the first form
     // interaction. Later, we may update |url_| with the |source_url()| for the
@@ -775,13 +749,13 @@ class AutofillMetrics {
 
    private:
     bool CanLog() const;
-    int64_t MillisecondsSinceFormParsed(
-        const base::TimeTicks& form_parsed_timestamp) const;
+    int64_t MillisecondsSinceFormParsed() const;
     void GetNewSourceID();
 
     ukm::UkmRecorder* ukm_recorder_;  // Weak reference.
     ukm::SourceId source_id_ = -1;
     GURL url_;
+    base::TimeTicks form_parsed_timestamp_;
     base::TimeTicks pinned_timestamp_;
   };
 
@@ -797,12 +771,6 @@ class AutofillMetrics {
     FormInteractionsUkmLogger* const logger_;
     DISALLOW_IMPLICIT_CONSTRUCTORS(UkmTimestampPin);
   };
-
-  // If a credit card that matches a server card (unmasked or not) was submitted
-  // on a form, logs whether the submitted card's expiration date matched the
-  // server card's known expiration date.
-  static void LogSubmittedServerCardExpirationStatusMetric(
-      SubmittedServerCardExpirationStatusMetric metric);
 
   // |upload_decision_metrics| is a bitmask of |CardUploadDecisionMetric|.
   static void LogCardUploadDecisionMetrics(int upload_decision_metrics);
@@ -929,15 +897,8 @@ class AutofillMetrics {
   static void LogHasModifiedProfileOnCreditCardFormSubmission(
       bool has_modified_profile);
 
-  // Log the number of autofill address suggestions suppressed because they have
-  // not been used for a long time. Note that these addresses are only
-  // suppressed when the user has not typed any data into the field from which
-  // autofill is triggered. Addresses matching something the user has types are
-  // always offered, regardless of how recently they have been used.
-  static void LogNumberOfAddressesSuppressedForDisuse(size_t num_profiles);
-
-  // Log the number of Autofill address suggestions presented to the user when
-  // filling a form.
+  // Log the number of Autofill suggestions presented to the user when filling a
+  // form.
   static void LogAddressSuggestionsCount(size_t num_suggestions);
 
   // Log the index of the selected Autofill suggestion in the popup.
@@ -964,7 +925,6 @@ class AutofillMetrics {
   // state of the form.
   static void LogAutofillFormSubmittedState(
       AutofillFormSubmittedState state,
-      const base::TimeTicks& form_parsed_timestamp,
       FormInteractionsUkmLogger* form_interactions_ukm_logger);
 
   // This should be called when determining the heuristic types for a form's
@@ -1035,19 +995,15 @@ class AutofillMetrics {
 
     void OnDidPollSuggestions(const FormFieldData& field);
 
-    void OnDidShowSuggestions(const AutofillField& field,
-                              const base::TimeTicks& form_parsed_timestamp);
+    void OnDidShowSuggestions(const AutofillField& field);
 
-    void OnDidSelectMaskedServerCardSuggestion(
-        const base::TimeTicks& form_parsed_timestamp);
+    void OnDidSelectMaskedServerCardSuggestion();
 
     // In case of masked cards, caller must make sure this gets called before
     // the card is upgraded to a full card.
-    void OnDidFillSuggestion(const CreditCard& credit_card,
-                             const base::TimeTicks& form_parsed_timestamp);
+    void OnDidFillSuggestion(const CreditCard& credit_card);
 
-    void OnDidFillSuggestion(const AutofillProfile& profile,
-                             const base::TimeTicks& form_parsed_timestamp);
+    void OnDidFillSuggestion(const AutofillProfile& profile);
 
     void OnWillSubmitForm();
 

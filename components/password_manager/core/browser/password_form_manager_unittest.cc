@@ -723,7 +723,7 @@ class PasswordFormManagerTest : public testing::Test {
 
   // Returns the sample values of |metric_value| in events named |event_name|.
   std::vector<int64_t> GetAllUkmSamples(
-      const ukm::TestAutoSetUkmRecorder& test_ukm_recorder,
+      const ukm::TestUkmRecorder& test_ukm_recorder,
       base::StringPiece event_name,
       base::StringPiece metric_name) {
     std::vector<int64_t> values;
@@ -3619,7 +3619,7 @@ TEST_F(PasswordFormManagerTest, SuppressedFormsHistograms) {
       SCOPED_TRACE(test_case.expected_histogram_sample_generated);
 
       base::HistogramTester histogram_tester;
-      ukm::TestAutoSetUkmRecorder test_ukm_recorder;
+      ukm::TestUkmRecorder test_ukm_recorder;
 
       std::vector<PasswordForm> suppressed_forms;
       for (const auto* form_data : test_case.simulated_suppressed_forms) {
@@ -3842,23 +3842,22 @@ TEST_F(PasswordFormManagerTest, TestUkmForFilling) {
     if (test.fetched_form)
       fetched_forms.push_back(test.fetched_form);
 
-    ukm::TestAutoSetUkmRecorder test_ukm_recorder;
+    ukm::TestUkmRecorder test_ukm_recorder;
+    client()->GetUkmRecorder()->UpdateSourceURL(client()->GetUkmSourceId(),
+                                                form_to_fill.origin);
+
     {
-      auto metrics_recorder = base::MakeRefCounted<PasswordFormMetricsRecorder>(
-          form_to_fill.origin.SchemeIsCryptographic(), &test_ukm_recorder,
-          test_ukm_recorder.GetNewSourceID(), form_to_fill.origin);
       FakeFormFetcher fetcher;
       PasswordFormManager form_manager(
           password_manager(), client(),
           test.is_http_basic_auth ? nullptr : client()->driver(), form_to_fill,
           base::MakeUnique<NiceMock<MockFormSaver>>(), &fetcher);
-      form_manager.Init(metrics_recorder);
+      form_manager.Init(nullptr);
       fetcher.SetNonFederated(fetched_forms, 0u);
     }
 
     const auto* source =
         test_ukm_recorder.GetSourceForUrl(form_to_fill.origin.spec().c_str());
-    ASSERT_TRUE(source);
     test_ukm_recorder.ExpectMetric(*source, "PasswordForm",
                                    kUkmManagerFillEvent, test.expected_event);
   }

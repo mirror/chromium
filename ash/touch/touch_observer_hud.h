@@ -7,8 +7,6 @@
 
 #include <stdint.h>
 
-#include <string>
-
 #include "ash/ash_export.h"
 #include "ash/display/window_tree_host_manager.h"
 #include "base/macros.h"
@@ -42,9 +40,7 @@ class ASH_EXPORT TouchObserverHUD
   int64_t display_id() const { return display_id_; }
 
  protected:
-  // |widget_name| is set on Widget::InitParams::name, and is used purely for
-  // debugging.
-  TouchObserverHUD(aura::Window* initial_root, const std::string& widget_name);
+  explicit TouchObserverHUD(aura::Window* initial_root);
 
   ~TouchObserverHUD() override;
 

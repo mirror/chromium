@@ -25,9 +25,7 @@
 @interface ActivityServiceController (CrVisibleForTesting)
 - (NSArray*)activityItemsForData:(ShareToData*)data;
 - (NSArray*)applicationActivitiesForData:(ShareToData*)data
-                              controller:(UIViewController*)controller
-                              dispatcher:(id<BrowserCommands>)dispatcher;
-
+                              controller:(UIViewController*)controller;
 - (BOOL)processItemsReturnedFromActivity:(NSString*)activityType
                                   status:(ShareTo::ShareResult)result
                                    items:(NSArray*)extensionItems;
@@ -222,7 +220,6 @@ TEST_F(ActivityServiceControllerTest, PresentAndDismissController) {
   [activityController shareWithData:shareData_
                          controller:parentController
                        browserState:nullptr
-                         dispatcher:nil
                     shareToDelegate:GetShareToDelegate()
                            fromRect:AnchorRect()
                              inView:AnchorView()];
@@ -442,9 +439,8 @@ TEST_F(ActivityServiceControllerTest, ApplicationActivitiesForData) {
                        isPagePrintable:YES
                     thumbnailGenerator:DummyThumbnailGeneratorBlock()];
 
-  NSArray* items = [activityController applicationActivitiesForData:data
-                                                         controller:nil
-                                                         dispatcher:nil];
+  NSArray* items =
+      [activityController applicationActivitiesForData:data controller:nil];
   ASSERT_EQ(2U, [items count]);
   EXPECT_EQ([PrintActivity class], [[items objectAtIndex:0] class]);
 
@@ -455,9 +451,7 @@ TEST_F(ActivityServiceControllerTest, ApplicationActivitiesForData) {
                        isOriginalTitle:YES
                        isPagePrintable:NO
                     thumbnailGenerator:DummyThumbnailGeneratorBlock()];
-  items = [activityController applicationActivitiesForData:data
-                                                controller:nil
-                                                dispatcher:nil];
+  items = [activityController applicationActivitiesForData:data controller:nil];
   EXPECT_EQ(1U, [items count]);
 }
 

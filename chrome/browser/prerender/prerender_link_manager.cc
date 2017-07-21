@@ -74,15 +74,13 @@ enum RelTypeHistogramEnum {
 };
 
 void RecordLinkManagerAdded(const uint32_t rel_types) {
-  const RelTypeHistogramEnum enum_value = static_cast<RelTypeHistogramEnum>(
-      rel_types & (RelTypeHistogramEnumMax - 1));
+  const uint32_t enum_value = rel_types & (RelTypeHistogramEnumMax - 1);
   UMA_HISTOGRAM_ENUMERATION("Prerender.RelTypesLinkAdded", enum_value,
                             RelTypeHistogramEnumMax);
 }
 
 void RecordLinkManagerStarting(const uint32_t rel_types) {
-  const RelTypeHistogramEnum enum_value = static_cast<RelTypeHistogramEnum>(
-      rel_types & (RelTypeHistogramEnumMax - 1));
+  const uint32_t enum_value = rel_types & (RelTypeHistogramEnumMax - 1);
   UMA_HISTOGRAM_ENUMERATION("Prerender.RelTypesLinkStarted", enum_value,
                             RelTypeHistogramEnumMax);
 }

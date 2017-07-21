@@ -12,9 +12,7 @@
 #include "ash/system/tray/tray_constants.h"
 #include "ash/system/tray/tray_container.h"
 #include "ash/tray_action/tray_action.h"
-#include "base/command_line.h"
 #include "base/logging.h"
-#include "chromeos/chromeos_switches.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/geometry/size.h"
 #include "ui/gfx/paint_vector_icon.h"
@@ -23,33 +21,12 @@
 
 namespace ash {
 
-namespace {
-
-bool IsLockScreenActionTrayEnabled() {
-  // The lock screen action entry point will be move from system tray to the
-  // lock screen UI - for current incarnation of lock screen UI, this has
-  // already been done, so the tray action button is not needed in this case.
-  // For views base lock screen (used when show-md-login is set), this is not
-  // the case.
-  // TODO(tbarzic): Replace LockScreenActionTray item with a button in the lock
-  //     screen UI for views base lock screen implementation.
-  //     http://crbug.com/746596
-  return base::CommandLine::ForCurrentProcess()->HasSwitch(
-      chromeos::switches::kShowMdLogin);
-}
-
-}  // namespace
-
 LockScreenActionTray::LockScreenActionTray(Shelf* shelf)
     : TrayBackgroundView(shelf),
       session_observer_(this),
       tray_action_observer_(this) {
-  SetVisible(false);
-
-  if (!IsLockScreenActionTrayEnabled())
-    return;
-
   SetInkDropMode(InkDropMode::ON);
+  SetVisible(false);
   new_note_action_view_ = new views::ImageView();
   new_note_action_view_->SetImage(
       CreateVectorIcon(kTrayActionNewLockScreenNoteIcon, kShelfIconColor));
@@ -64,9 +41,6 @@ LockScreenActionTray::~LockScreenActionTray() {}
 
 void LockScreenActionTray::Initialize() {
   TrayBackgroundView::Initialize();
-
-  if (!IsLockScreenActionTrayEnabled())
-    return;
 
   session_observer_.Add(Shell::Get()->session_controller());
 
@@ -106,8 +80,7 @@ void LockScreenActionTray::OnLockScreenNoteStateChanged(
 }
 
 bool LockScreenActionTray::IsStateVisible() const {
-  return IsLockScreenActionTrayEnabled() &&
-         Shell::Get()->session_controller()->IsScreenLocked() &&
+  return Shell::Get()->session_controller()->IsScreenLocked() &&
          (new_note_state_ == mojom::TrayActionState::kAvailable ||
           new_note_state_ == mojom::TrayActionState::kLaunching);
 }

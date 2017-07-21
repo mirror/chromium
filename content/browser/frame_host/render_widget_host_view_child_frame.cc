@@ -510,7 +510,7 @@ void RenderWidgetHostViewChildFrame::SubmitCompositorFrame(
 }
 
 void RenderWidgetHostViewChildFrame::OnDidNotProduceFrame(
-    const viz::BeginFrameAck& ack) {
+    const cc::BeginFrameAck& ack) {
   support_->DidNotProduceFrame(ack);
 }
 
@@ -754,7 +754,7 @@ void RenderWidgetHostViewChildFrame::ReclaimResources(
 }
 
 void RenderWidgetHostViewChildFrame::OnBeginFrame(
-    const viz::BeginFrameArgs& args) {
+    const cc::BeginFrameArgs& args) {
   renderer_compositor_frame_sink_->OnBeginFrame(args);
 }
 

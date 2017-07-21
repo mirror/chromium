@@ -73,8 +73,6 @@ const char kExternalClearKeyCrashKeySystem[] =
 const char kExternalClearKeyVerifyCdmHostTestKeySystem[] =
     "org.chromium.externalclearkey.verifycdmhosttest";
 #endif
-const char kExternalClearKeyStorageIdTestKeySystem[] =
-    "org.chromium.externalclearkey.storageidtest";
 
 // Supported media types.
 const char kWebMVorbisAudioOnly[] = "audio/webm; codecs=\"vorbis\"";
@@ -781,15 +779,6 @@ IN_PROC_BROWSER_TEST_P(ECKEncryptedMediaTest, PlatformVerificationTest) {
 
 IN_PROC_BROWSER_TEST_P(ECKEncryptedMediaTest, Renewal) {
   TestPlaybackCase(kExternalClearKeyRenewalKeySystem, kNoSessionToLoad, kEnded);
-
-  // Check renewal message received.
-  bool receivedRenewalMessage = false;
-  EXPECT_TRUE(content::ExecuteScriptAndExtractBool(
-      browser()->tab_strip_model()->GetActiveWebContents(),
-      "window.domAutomationController.send("
-      "document.querySelector('video').receivedRenewalMessage);",
-      &receivedRenewalMessage));
-  EXPECT_TRUE(receivedRenewalMessage);
 }
 
 IN_PROC_BROWSER_TEST_P(ECKEncryptedMediaTest, LoadLoadableSession) {
@@ -844,17 +833,5 @@ IN_PROC_BROWSER_TEST_P(ECKEncryptedMediaTest, VerifyCdmHostTest) {
                        kUnitTestSuccess);
 }
 #endif  // BUILDFLAG(ENABLE_CDM_HOST_VERIFICATION)
-
-IN_PROC_BROWSER_TEST_P(ECKEncryptedMediaTest, StorageIdTest) {
-  // TODO(jrummell): Support Storage ID in mojo CDM. See
-  // http://crbug.com/478960
-  if (IsUsingMojoCdm()) {
-    DVLOG(0) << "Skipping test; Not working with mojo CDM yet.";
-    return;
-  }
-
-  TestNonPlaybackCases(kExternalClearKeyStorageIdTestKeySystem,
-                       kUnitTestSuccess);
-}
 
 }  // namespace chrome

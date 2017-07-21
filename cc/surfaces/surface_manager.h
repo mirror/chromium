@@ -38,12 +38,12 @@ namespace test {
 class SurfaceReferencesTest;
 class SurfaceSynchronizationTest;
 }
-struct BeginFrameAck;
-struct BeginFrameArgs;
 }  // namespace viz
 
 namespace cc {
 
+struct BeginFrameAck;
+struct BeginFrameArgs;
 class CompositorFrame;
 class Surface;
 
@@ -62,7 +62,8 @@ class CC_SURFACES_EXPORT SurfaceManager {
   std::string SurfaceReferencesToString();
 #endif
 
-  void RequestSurfaceResolution(Surface* surface);
+  void RequestSurfaceResolution(Surface* surface,
+                                SurfaceDependencyDeadline* deadline);
 
   // Creates a Surface for the given SurfaceClient. The surface will be
   // destroyed when DestroySurface is called, all of its destruction
@@ -93,7 +94,7 @@ class CC_SURFACES_EXPORT SurfaceManager {
   //
   // |ack.sequence_number| is only valid if called in response to a BeginFrame.
   bool SurfaceModified(const viz::SurfaceId& surface_id,
-                       const viz::BeginFrameAck& ack);
+                       const BeginFrameAck& ack);
 
   // Called when a CompositorFrame is submitted to a SurfaceClient
   // for a given |surface_id| for the first time.
@@ -115,7 +116,7 @@ class CC_SURFACES_EXPORT SurfaceManager {
   // Called when a Surface's CompositorFrame producer has received a BeginFrame
   // and, thus, is expected to produce damage soon.
   void SurfaceDamageExpected(const viz::SurfaceId& surface_id,
-                             const viz::BeginFrameArgs& args);
+                             const BeginFrameArgs& args);
 
   // Require that the given sequence number must be satisfied (using
   // SatisfySequence) before the given surface can be destroyed.

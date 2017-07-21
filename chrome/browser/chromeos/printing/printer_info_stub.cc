@@ -15,8 +15,7 @@ void QueryIppPrinter(const std::string& host,
                      const PrinterInfoCallback& callback) {
   DCHECK(!host.empty());
 
-  base::PostTask(FROM_HERE,
-                 base::Bind(callback, false, "Foo", "Bar", "Foo Bar", false));
+  base::PostTask(FROM_HERE, base::Bind(callback, false, "Foo", "Bar", false));
 }
 
 }  // namespace chromeos

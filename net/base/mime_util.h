@@ -27,12 +27,12 @@
 
 namespace net {
 
-// Gets the mime type (if any) that is associated with the given file extension.
+// Get the mime type (if any) that is associated with the given file extension.
 // Returns true if a corresponding mime type exists.
 NET_EXPORT bool GetMimeTypeFromExtension(const base::FilePath::StringType& ext,
                                          std::string* mime_type);
 
-// Gets the mime type (if any) that is associated with the given file extension.
+// Get the mime type (if any) that is associated with the given file extension.
 // Returns true if a corresponding mime type exists. In this method,
 // the search for a mime type is constrained to a limited set of
 // types known to the net library, the OS/registry is not consulted.
@@ -40,12 +40,12 @@ NET_EXPORT bool GetWellKnownMimeTypeFromExtension(
     const base::FilePath::StringType& ext,
     std::string* mime_type);
 
-// Gets the mime type (if any) that is associated with the given file.  Returns
+// Get the mime type (if any) that is associated with the given file.  Returns
 // true if a corresponding mime type exists.
 NET_EXPORT bool GetMimeTypeFromFile(const base::FilePath& file_path,
                                     std::string* mime_type);
 
-// Gets the preferred extension (if any) associated with the given mime type.
+// Get the preferred extension (if any) associated with the given mime type.
 // Returns true if a corresponding file extension exists.  The extension is
 // returned without a prefixed dot, ex "html".
 NET_EXPORT bool GetPreferredExtensionForMimeType(
@@ -104,6 +104,16 @@ NET_EXPORT void AddMultipartValueForUpload(const std::string& value_name,
 NET_EXPORT void AddMultipartFinalDelimiterForUpload(
     const std::string& mime_boundary,
     std::string* post_data);
+
+struct MimeInfo {
+  const char* const mime_type;
+  const char* const extensions;  // comma separated list
+};
+
+// Finds mime type of |ext| from |mappings|.
+const char* FindMimeType(const MimeInfo* mappings,
+                         size_t mappings_len,
+                         const std::string& ext);
 
 }  // namespace net
 

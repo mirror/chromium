@@ -876,13 +876,10 @@ int GetMobileUninitializedMsg() {
   static int s_uninitialized_msg(0);
 
   NetworkStateHandler* handler = NetworkHandler::Get()->network_state_handler();
-  if (handler->GetTechnologyState(NetworkTypePattern::Tether()) ==
+  if (handler->GetTechnologyState(NetworkTypePattern::Mobile()) ==
       NetworkStateHandler::TECHNOLOGY_UNINITIALIZED) {
-    s_uninitialized_msg = IDS_ASH_STATUS_TRAY_ENABLE_BLUETOOTH;
-    s_uninitialized_state_time = base::Time::Now();
-    return s_uninitialized_msg;
-  } else if (handler->GetTechnologyState(NetworkTypePattern::Mobile()) ==
-             NetworkStateHandler::TECHNOLOGY_UNINITIALIZED) {
+    // TODO (lesliewatkins): Add a more descriptive message (e.g. "Enable
+    // Bluetooth") for Tether technology type.
     s_uninitialized_msg = IDS_ASH_STATUS_TRAY_INITIALIZING_CELLULAR;
     s_uninitialized_state_time = base::Time::Now();
     return s_uninitialized_msg;

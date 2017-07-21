@@ -136,6 +136,21 @@ void ClearTick(base::TimeTicks* time) {
   *time = base::TimeTicks();
 }
 
+bool IsInstalled(ServiceWorkerVersion::Status status) {
+  switch (status) {
+    case ServiceWorkerVersion::NEW:
+    case ServiceWorkerVersion::INSTALLING:
+    case ServiceWorkerVersion::REDUNDANT:
+      return false;
+    case ServiceWorkerVersion::INSTALLED:
+    case ServiceWorkerVersion::ACTIVATING:
+    case ServiceWorkerVersion::ACTIVATED:
+      return true;
+  }
+  NOTREACHED() << "Unexpected status: " << status;
+  return false;
+}
+
 std::string VersionStatusToString(ServiceWorkerVersion::Status status) {
   switch (status) {
     case ServiceWorkerVersion::NEW:
@@ -1051,21 +1066,6 @@ void ServiceWorkerVersion::CountFeature(uint32_t feature) {
     provider_host_by_uuid.second->CountFeature(feature);
 }
 
-bool ServiceWorkerVersion::IsInstalled(ServiceWorkerVersion::Status status) {
-  switch (status) {
-    case ServiceWorkerVersion::NEW:
-    case ServiceWorkerVersion::INSTALLING:
-    case ServiceWorkerVersion::REDUNDANT:
-      return false;
-    case ServiceWorkerVersion::INSTALLED:
-    case ServiceWorkerVersion::ACTIVATING:
-    case ServiceWorkerVersion::ACTIVATED:
-      return true;
-  }
-  NOTREACHED() << "Unexpected status: " << status;
-  return false;
-}
-
 void ServiceWorkerVersion::OnOpenNewTab(int request_id, const GURL& url) {
   OnOpenWindow(request_id, url, WindowOpenDisposition::NEW_FOREGROUND_TAB);
 }
@@ -1476,14 +1476,11 @@ void ServiceWorkerVersion::StartWorkerInternal() {
   params->pause_after_download = pause_after_download_;
 
   mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info;
-  if (ServiceWorkerUtils::IsScriptStreamingEnabled() &&
-      !pause_after_download_) {
+  if (ServiceWorkerUtils::IsScriptStreamingEnabled()) {
     DCHECK(!installed_scripts_sender_);
     installed_scripts_sender_ =
-        base::MakeUnique<ServiceWorkerInstalledScriptsSender>(
-            this, script_url(), context());
+        base::MakeUnique<ServiceWorkerInstalledScriptsSender>();
     installed_scripts_info = installed_scripts_sender_->CreateInfoAndBind();
-    installed_scripts_sender_->Start();
   }
 
   embedded_worker_->Start(

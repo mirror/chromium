@@ -136,6 +136,11 @@ MediaRouterDialogControllerAndroid::MediaRouterDialogControllerAndroid(
       env, reinterpret_cast<jlong>(this)));
 }
 
+// static
+bool MediaRouterDialogControllerAndroid::Register(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
 MediaRouterDialogControllerAndroid::~MediaRouterDialogControllerAndroid() {
 }
 

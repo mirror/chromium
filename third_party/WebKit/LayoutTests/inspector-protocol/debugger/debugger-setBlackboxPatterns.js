@@ -1,5 +1,5 @@
 (async function(testRunner) {
-  let {page, session, dp} = await testRunner.startBlank('Tests setBlackboxPatterns functionality.');
+  let {page, session, dp} = await testRunner.startBlank('');
 
   await session.evaluate(`
     function bar()

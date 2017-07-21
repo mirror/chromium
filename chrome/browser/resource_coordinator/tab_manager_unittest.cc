@@ -331,8 +331,7 @@ TEST_F(TabManagerTest, DiscardWebContentsAt) {
   tabstrip.AddObserver(&tabstrip_observer);
 
   // Discard one of the tabs.
-  WebContents* null_contents1 = tab_manager.DiscardWebContentsAt(
-      0, &tabstrip, TabManager::kProactiveShutdown);
+  WebContents* null_contents1 = tab_manager.DiscardWebContentsAt(0, &tabstrip);
   ASSERT_EQ(2, tabstrip.count());
   EXPECT_TRUE(tab_manager.IsTabDiscarded(tabstrip.GetWebContentsAt(0)));
   EXPECT_FALSE(tab_manager.IsTabDiscarded(tabstrip.GetWebContentsAt(1)));
@@ -346,8 +345,7 @@ TEST_F(TabManagerTest, DiscardWebContentsAt) {
   // Discard the same tab again, after resetting its discard state.
   tab_manager.GetWebContentsData(tabstrip.GetWebContentsAt(0))
       ->SetDiscardState(false);
-  WebContents* null_contents2 = tab_manager.DiscardWebContentsAt(
-      0, &tabstrip, TabManager::kProactiveShutdown);
+  WebContents* null_contents2 = tab_manager.DiscardWebContentsAt(0, &tabstrip);
   ASSERT_EQ(2, tabstrip.count());
   EXPECT_TRUE(tab_manager.IsTabDiscarded(tabstrip.GetWebContentsAt(0)));
   EXPECT_FALSE(tab_manager.IsTabDiscarded(tabstrip.GetWebContentsAt(1)));
@@ -390,8 +388,7 @@ TEST_F(TabManagerTest, ReloadDiscardedTabContextMenu) {
       ->NavigateAndCommit(GURL("chrome://newtab"));
   EXPECT_FALSE(tab_manager.IsTabDiscarded(tabstrip.GetWebContentsAt(1)));
 
-  tab_manager.DiscardWebContentsAt(1, &tabstrip,
-                                   TabManager::kProactiveShutdown);
+  tab_manager.DiscardWebContentsAt(1, &tabstrip);
   EXPECT_TRUE(tab_manager.IsTabDiscarded(tabstrip.GetWebContentsAt(1)));
 
   tabstrip.GetWebContentsAt(1)->GetController().Reload(
@@ -419,8 +416,7 @@ TEST_F(TabManagerTest, DiscardedTabKeepsLastActiveTime) {
   test_contents->SetLastActiveTime(new_last_active_time);
   EXPECT_EQ(new_last_active_time, test_contents->GetLastActiveTime());
 
-  WebContents* null_contents = tab_manager.DiscardWebContentsAt(
-      1, &tabstrip, TabManager::kProactiveShutdown);
+  WebContents* null_contents = tab_manager.DiscardWebContentsAt(1, &tabstrip);
   EXPECT_EQ(new_last_active_time, null_contents->GetLastActiveTime());
 
   tabstrip.CloseAllTabs();
@@ -666,7 +662,7 @@ TEST_F(TabManagerTest, DiscardTabWithNonVisibleTabs) {
   tab_manager.test_browser_info_list_.push_back(browser_info2);
 
   for (int i = 0; i < 4; ++i)
-    tab_manager.DiscardTab(TabManager::kProactiveShutdown);
+    tab_manager.DiscardTab();
 
   // Active tab in a visible window should not be discarded.
   EXPECT_FALSE(tab_manager.IsTabDiscarded(tab_strip1.GetWebContentsAt(0)));
@@ -795,46 +791,6 @@ TEST_F(TabManagerTest, OnDelayedTabSelected) {
   EXPECT_FALSE(tab_manager->IsTabLoadingForTest(contents3_));
   EXPECT_TRUE(tab_manager->IsTabLoadingForTest(contents2_));
   EXPECT_FALSE(tab_manager->IsNavigationDelayedForTest(nav_handle2_.get()));
-}
-
-TEST_F(TabManagerTest, TimeoutWhenLoadingBackgroundTabs) {
-  TabManager* tab_manager = g_browser_process->GetTabManager();
-  base::SimpleTestTickClock test_clock;
-  tab_manager->set_test_tick_clock(&test_clock);
-
-  MaybeThrottleNavigations(tab_manager);
-  tab_manager->GetWebContentsData(contents1_)
-      ->DidStartNavigation(nav_handle1_.get());
-
-  EXPECT_TRUE(tab_manager->IsTabLoadingForTest(contents1_));
-  EXPECT_FALSE(tab_manager->IsTabLoadingForTest(contents2_));
-  EXPECT_FALSE(tab_manager->IsTabLoadingForTest(contents3_));
-  EXPECT_FALSE(tab_manager->IsNavigationDelayedForTest(nav_handle1_.get()));
-  EXPECT_TRUE(tab_manager->IsNavigationDelayedForTest(nav_handle2_.get()));
-  EXPECT_TRUE(tab_manager->IsNavigationDelayedForTest(nav_handle3_.get()));
-
-  // Simulate timout when loading the 1st tab. TabManager should start loading
-  // the 2nd tab.
-  test_clock.Advance(base::TimeDelta::FromMinutes(1));
-  EXPECT_TRUE(tab_manager->TriggerForceLoadTimerForTest());
-
-  EXPECT_TRUE(tab_manager->IsTabLoadingForTest(contents1_));
-  EXPECT_TRUE(tab_manager->IsTabLoadingForTest(contents2_));
-  EXPECT_FALSE(tab_manager->IsTabLoadingForTest(contents3_));
-  EXPECT_FALSE(tab_manager->IsNavigationDelayedForTest(nav_handle1_.get()));
-  EXPECT_FALSE(tab_manager->IsNavigationDelayedForTest(nav_handle2_.get()));
-  EXPECT_TRUE(tab_manager->IsNavigationDelayedForTest(nav_handle3_.get()));
-
-  // Simulate timout again. TabManager should start loading the 3rd tab.
-  test_clock.Advance(base::TimeDelta::FromMinutes(1));
-  EXPECT_TRUE(tab_manager->TriggerForceLoadTimerForTest());
-
-  EXPECT_TRUE(tab_manager->IsTabLoadingForTest(contents1_));
-  EXPECT_TRUE(tab_manager->IsTabLoadingForTest(contents2_));
-  EXPECT_TRUE(tab_manager->IsTabLoadingForTest(contents3_));
-  EXPECT_FALSE(tab_manager->IsNavigationDelayedForTest(nav_handle1_.get()));
-  EXPECT_FALSE(tab_manager->IsNavigationDelayedForTest(nav_handle2_.get()));
-  EXPECT_FALSE(tab_manager->IsNavigationDelayedForTest(nav_handle3_.get()));
 }
 
 }  // namespace resource_coordinator

@@ -69,13 +69,13 @@ VirtualKeyboardController::VirtualKeyboardController()
       has_internal_keyboard_(false),
       has_touchscreen_(false),
       ignore_external_keyboard_(false) {
-  Shell::Get()->tablet_mode_controller()->AddObserver(this);
+  Shell::Get()->AddShellObserver(this);
   ui::InputDeviceManager::GetInstance()->AddObserver(this);
   UpdateDevices();
 }
 
 VirtualKeyboardController::~VirtualKeyboardController() {
-  Shell::Get()->tablet_mode_controller()->RemoveObserver(this);
+  Shell::Get()->RemoveShellObserver(this);
   ui::InputDeviceManager::GetInstance()->RemoveObserver(this);
 }
 

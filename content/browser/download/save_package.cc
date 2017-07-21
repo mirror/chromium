@@ -20,16 +20,13 @@
 #include "base/strings/string_split.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/strings/utf_string_conversions.h"
-#include "base/task_runner_util.h"
 #include "base/threading/thread.h"
-#include "base/threading/thread_restrictions.h"
 #include "build/build_config.h"
 #include "components/url_formatter/url_formatter.h"
 #include "content/browser/bad_message.h"
 #include "content/browser/download/download_item_impl.h"
 #include "content/browser/download/download_manager_impl.h"
 #include "content/browser/download/download_stats.h"
-#include "content/browser/download/download_task_runner.h"
 #include "content/browser/download/save_file.h"
 #include "content/browser/download/save_file_manager.h"
 #include "content/browser/download/save_item.h"
@@ -603,8 +600,8 @@ bool SavePackage::UpdateSaveProgress(SaveItemId save_item_id,
   return true;
 }
 
-// Stop all page saving jobs that are in progress and instruct the download
-// sequence to delete all saved files.
+// Stop all page saving jobs that are in progress and instruct the FILE thread
+// to delete all saved  files.
 void SavePackage::Stop(bool cancel_download_item) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   // If we haven't moved out of the initial state, there's nothing to cancel and
@@ -635,9 +632,10 @@ void SavePackage::Stop(bool cancel_download_item) {
   for (const auto& it : saved_failed_items_)
     save_item_ids.push_back(it.first);
 
-  GetDownloadTaskRunner()->PostTask(
-      FROM_HERE, base::Bind(&SaveFileManager::RemoveSavedFileFromFileMap,
-                            file_manager_, save_item_ids));
+  BrowserThread::PostTask(
+      BrowserThread::FILE, FROM_HERE,
+      base::Bind(&SaveFileManager::RemoveSavedFileFromFileMap, file_manager_,
+                 save_item_ids));
 
   finished_ = true;
   wait_state_ = FAILED;
@@ -663,11 +661,15 @@ void SavePackage::CheckFinish() {
   for (const auto& it : saved_success_items_)
     final_names.insert(std::make_pair(it.first, it.second->full_path()));
 
-  GetDownloadTaskRunner()->PostTask(
-      FROM_HERE,
-      base::Bind(&SaveFileManager::RenameAllFiles, file_manager_, final_names,
-                 dir, web_contents()->GetRenderProcessHost()->GetID(),
-                 web_contents()->GetMainFrame()->GetRoutingID(), id()));
+  BrowserThread::PostTask(
+      BrowserThread::FILE, FROM_HERE,
+      base::Bind(&SaveFileManager::RenameAllFiles,
+                 file_manager_,
+                 final_names,
+                 dir,
+                 web_contents()->GetRenderProcessHost()->GetID(),
+                 web_contents()->GetMainFrame()->GetRoutingID(),
+                 id()));
 }
 
 // Successfully finished all items of this SavePackage.
@@ -699,9 +701,10 @@ void SavePackage::Finish() {
     list_of_failed_save_item_ids.push_back(save_item->id());
   }
 
-  GetDownloadTaskRunner()->PostTask(
-      FROM_HERE, base::Bind(&SaveFileManager::RemoveSavedFileFromFileMap,
-                            file_manager_, list_of_failed_save_item_ids));
+  BrowserThread::PostTask(
+      BrowserThread::FILE, FROM_HERE,
+      base::Bind(&SaveFileManager::RemoveSavedFileFromFileMap, file_manager_,
+                 list_of_failed_save_item_ids));
 
   if (download_) {
     if (save_type_ != SAVE_PAGE_TYPE_AS_MHTML) {
@@ -765,8 +768,8 @@ void SavePackage::SaveFinished(SaveItemId save_item_id,
 void SavePackage::SaveCanceled(const SaveItem* save_item) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   file_manager_->RemoveSaveFile(save_item->id(), this);
-  GetDownloadTaskRunner()->PostTask(
-      FROM_HERE,
+  BrowserThread::PostTask(
+      BrowserThread::FILE, FROM_HERE,
       base::Bind(&SaveFileManager::CancelSave, file_manager_, save_item->id()));
 }
 
@@ -926,9 +929,10 @@ void SavePackage::GetSerializedHtmlWithLocalLinks() {
       number_of_frames_pending_response_++;
     } else {
       // Notify SaveFileManager about the failure to save this SaveItem.
-      GetDownloadTaskRunner()->PostTask(
-          FROM_HERE, base::Bind(&SaveFileManager::SaveFinished, file_manager_,
-                                save_item->id(), id(), false));
+      BrowserThread::PostTask(
+          BrowserThread::FILE, FROM_HERE,
+          base::Bind(&SaveFileManager::SaveFinished, file_manager_,
+                     save_item->id(), id(), false));
     }
   }
   if (number_of_frames_pending_response_ == 0) {
@@ -1038,21 +1042,22 @@ void SavePackage::OnSerializedHtmlWithLocalLinksResponse(
     scoped_refptr<net::IOBuffer> new_data(new net::IOBuffer(data.size()));
     memcpy(new_data->data(), data.data(), data.size());
 
-    // Call write file functionality in download sequence.
-    GetDownloadTaskRunner()->PostTask(
-        FROM_HERE,
+    // Call write file functionality in FILE thread.
+    BrowserThread::PostTask(
+        BrowserThread::FILE, FROM_HERE,
         base::Bind(&SaveFileManager::UpdateSaveProgress, file_manager_,
                    save_item->id(), base::RetainedRef(new_data),
                    static_cast<int>(data.size())));
   }
 
-  // Current frame is completed saving, call finish in download sequence.
+  // Current frame is completed saving, call finish in FILE thread.
   if (end_of_data) {
     DVLOG(20) << __func__ << "() save_item_id = " << save_item->id()
               << " url = \"" << save_item->url().spec() << "\"";
-    GetDownloadTaskRunner()->PostTask(
-        FROM_HERE, base::Bind(&SaveFileManager::SaveFinished, file_manager_,
-                              save_item->id(), id(), true));
+    BrowserThread::PostTask(
+        BrowserThread::FILE, FROM_HERE,
+        base::Bind(&SaveFileManager::SaveFinished, file_manager_,
+                   save_item->id(), id(), true));
     number_of_frames_pending_response_--;
     DCHECK_LE(0, number_of_frames_pending_response_);
   }
@@ -1284,7 +1289,7 @@ base::FilePath SavePackage::GetSuggestedNameForSaveAs(
 
 // static
 base::FilePath SavePackage::EnsureHtmlExtension(const base::FilePath& name) {
-  base::ThreadRestrictions::AssertIOAllowed();
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
 
   base::FilePath::StringType ext = name.Extension();
   if (!ext.empty())
@@ -1301,7 +1306,7 @@ base::FilePath SavePackage::EnsureHtmlExtension(const base::FilePath& name) {
 // static
 base::FilePath SavePackage::EnsureMimeExtension(const base::FilePath& name,
     const std::string& contents_mime_type) {
-  base::ThreadRestrictions::AssertIOAllowed();
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
 
   // Start extension at 1 to skip over period if non-empty.
   base::FilePath::StringType ext = name.Extension();
@@ -1341,8 +1346,8 @@ const base::FilePath::CharType* SavePackage::ExtensionForMimeType(
 
 void SavePackage::GetSaveInfo() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  // Can't use |web_contents_| in the download sequence, so get the data that we
-  // need before calling to it.
+  // Can't use |web_contents_| in the FILE thread, so get the data that we need
+  // before calling to it.
   base::FilePath website_save_dir;
   base::FilePath download_save_dir;
   bool skip_dir_check = false;
@@ -1354,8 +1359,8 @@ void SavePackage::GetSaveInfo() {
   }
   std::string mime_type = web_contents()->GetContentsMimeType();
   bool can_save_as_complete = CanSaveAsComplete(mime_type);
-  base::PostTaskAndReplyWithResult(
-      GetDownloadTaskRunner().get(), FROM_HERE,
+  BrowserThread::PostTaskAndReplyWithResult(
+      BrowserThread::FILE, FROM_HERE,
       base::Bind(&SavePackage::CreateDirectoryOnFileThread, title_, page_url_,
                  can_save_as_complete, mime_type, website_save_dir,
                  download_save_dir, skip_dir_check),
@@ -1372,7 +1377,7 @@ base::FilePath SavePackage::CreateDirectoryOnFileThread(
     const base::FilePath& website_save_dir,
     const base::FilePath& download_save_dir,
     bool skip_dir_check) {
-  DCHECK(GetDownloadTaskRunner()->RunsTasksInCurrentSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
 
   base::FilePath suggested_filename = GetSuggestedNameForSaveAs(
       title, page_url, can_save_as_complete, mime_type);
@@ -1415,7 +1420,7 @@ void SavePackage::ContinueGetSaveInfo(bool can_save_as_complete,
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   // The WebContents which owns this SavePackage may have disappeared during
-  // the UI->download sequence->UI thread hop of
+  // the UI->FILE->UI thread hop of
   // GetSaveInfo->CreateDirectoryOnFileThread->ContinueGetSaveInfo.
   if (!web_contents() || !download_manager_->GetDelegate())
     return;

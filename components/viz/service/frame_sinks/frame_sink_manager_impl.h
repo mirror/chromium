@@ -112,11 +112,11 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl
   // cc::SurfaceObserver implementation.
   void OnSurfaceCreated(const SurfaceInfo& surface_info) override;
   bool OnSurfaceDamaged(const SurfaceId& surface_id,
-                        const BeginFrameAck& ack) override;
+                        const cc::BeginFrameAck& ack) override;
   void OnSurfaceDiscarded(const SurfaceId& surface_id) override;
   void OnSurfaceDestroyed(const SurfaceId& surface_id) override;
   void OnSurfaceDamageExpected(const SurfaceId& surface_id,
-                               const BeginFrameArgs& args) override;
+                               const cc::BeginFrameArgs& args) override;
   void OnSurfaceWillDraw(const SurfaceId& surface_id) override;
 
   void OnClientConnectionLost(const FrameSinkId& frame_sink_id);

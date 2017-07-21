@@ -58,7 +58,6 @@ suite('<bookmarks-command-manager>', function() {
     replaceBody(commandManager);
     document.body.appendChild(
         document.createElement('bookmarks-toast-manager'));
-    bookmarks.DialogFocusManager.instance_ = null;
   });
 
   test('Copy URL is only active for single URL items', function() {
@@ -165,7 +164,7 @@ suite('<bookmarks-command-manager>', function() {
     commandManager.assertLastCommand('redo');
   });
 
-  test('Show In Folder is only available during search', function() {
+  test.only('Show In Folder is only available during search', function() {
     store.data.selection.items = new Set(['12']);
     store.notifyObservers();
 
@@ -345,21 +344,6 @@ suite('<bookmarks-command-manager>', function() {
     MockInteractions.tap(commandItem[Command.EDIT]);
     commandManager.assertLastCommand(null);
   });
-
-  test('keyboard shortcuts are disabled while a dialog is open', function() {
-    assertFalse(bookmarks.DialogFocusManager.getInstance().hasOpenDialog());
-    items = new Set(['12']);
-    store.data.selection.items = items;
-    store.notifyObservers();
-
-    var editKey = cr.isMac ? 'Enter' : 'F2';
-    MockInteractions.pressAndReleaseKeyOn(document.body, '', '', editKey);
-    commandManager.assertLastCommand(Command.EDIT);
-    assertTrue(bookmarks.DialogFocusManager.getInstance().hasOpenDialog());
-
-    MockInteractions.pressAndReleaseKeyOn(document.body, '', '', 'Delete');
-    commandManager.assertLastCommand(null);
-  });
 });
 
 suite('<bookmarks-item> CommandManager integration', function() {
@@ -436,5 +420,14 @@ suite('<bookmarks-item> CommandManager integration', function() {
     simulateDoubleClick(items[2], {ctrlKey: true});
 
     assertOpenedTabs(['http://111/', 'http://13/']);
+  });
+
+  test('meta-down triggers Open on Mac', function() {
+    if (!cr.isMac)
+      return;
+
+    customClick(items[0]);
+    MockInteractions.pressAndReleaseKeyOn(items[0], 0, 'meta', 'ArrowDown');
+    assertEquals('11', store.data.selectedFolder);
   });
 });

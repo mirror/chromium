@@ -280,7 +280,6 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   // Called to notify the RenderWidget that its associated native window
   // got/lost focused.
   void GotFocus();
-  void LostFocus();
   void LostCapture();
 
   // Indicates whether the RenderWidgetHost thinks it is focused.
@@ -456,7 +455,7 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   // Set the RenderView background transparency.
   void SetBackgroundOpaque(bool opaque);
 
-  // Called when the response to a pending mouse lock request has arrived.
+  // Called when the reponse to a pending mouse lock request has arrived.
   // Returns true if |allowed| is true and the mouse has been successfully
   // locked.
   bool GotResponseToLockMouseRequest(bool allowed);
@@ -583,7 +582,7 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   void SetNeedsBeginFrame(bool needs_begin_frame) override;
   void SubmitCompositorFrame(const viz::LocalSurfaceId& local_surface_id,
                              cc::CompositorFrame frame) override;
-  void DidNotProduceFrame(const viz::BeginFrameAck& ack) override;
+  void DidNotProduceFrame(const cc::BeginFrameAck& ack) override;
 
   // Signals that a frame with token |frame_token| was finished processing. If
   // there are any queued messages belonging to it, they will be processed.

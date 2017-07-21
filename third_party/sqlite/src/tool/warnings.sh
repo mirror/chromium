@@ -1,18 +1,16 @@
 #/bin/sh
 #
-# Run this script in a directory with a working makefile to check for
+# Run this script in a directory with a working makefile to check for 
 # compiler warnings in SQLite.
 #
 
-if uname | grep -i openbsd ; then
-  # Use these for testing on OpenBSD:
-  WARNING_OPTS=-Wall
-  WARNING_ANDROID_OPTS=-Wall
-else
-  # Use these for testing on Linux and Mac OSX:
-  WARNING_OPTS="-Wshadow -Wall -Wextra -pedantic-errors -Wno-long-long"
-  WARNING_ANDROID_OPTS="-Wshadow -Wall -Wextra"
-fi
+# Use these for testing on Linux and Mac OSX:
+WARNING_OPTS="-Wshadow -Wall -Wextra -pedantic-errors -Wno-long-long"
+WARNING_ANDROID_OPTS="-Wshadow -Wall -Wextra"
+
+# Use these for testing on OpenBSD:
+# WARNING_OPTS=-Wall
+# WARNING_ANDROID_OPTS=-Wall
 
 rm -f sqlite3.c
 make sqlite3.c

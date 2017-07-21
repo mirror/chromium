@@ -137,16 +137,14 @@ class CORE_EXPORT LayoutText : public LayoutObject {
                       LayoutUnit x_pos,
                       TextDirection,
                       HashSet<const SimpleFontData*>* fallback_fonts = nullptr,
-                      FloatRect* glyph_bounds = nullptr,
-                      float expansion = 0) const;
+                      FloatRect* glyph_bounds = nullptr) const;
   virtual float Width(unsigned from,
                       unsigned len,
                       LayoutUnit x_pos,
                       TextDirection,
                       bool first_line = false,
                       HashSet<const SimpleFontData*>* fallback_fonts = nullptr,
-                      FloatRect* glyph_bounds = nullptr,
-                      float expansion = 0) const;
+                      FloatRect* glyph_bounds = nullptr) const;
 
   float MinLogicalWidth() const;
   float MaxLogicalWidth() const;
@@ -278,8 +276,7 @@ class CORE_EXPORT LayoutText : public LayoutObject {
                       float text_width_so_far,
                       TextDirection,
                       HashSet<const SimpleFontData*>* fallback_fonts,
-                      FloatRect* glyph_bounds_accumulation,
-                      float expansion = 0) const;
+                      FloatRect* glyph_bounds_accumulation) const;
 
   void SecureText(UChar mask);
 

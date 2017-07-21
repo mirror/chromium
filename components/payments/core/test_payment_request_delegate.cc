@@ -12,12 +12,7 @@ TestPaymentRequestDelegate::TestPaymentRequestDelegate(
     autofill::PersonalDataManager* personal_data_manager)
     : personal_data_manager_(personal_data_manager),
       locale_("en-US"),
-      last_committed_url_("https://shop.com"),
-      request_context_(new TestURLRequestContextGetter(loop_.task_runner())),
-      payments_client_(request_context_.get(), &payments_cleint_delegate_),
-      full_card_request_(&autofill_client_,
-                         &payments_client_,
-                         personal_data_manager) {}
+      last_committed_url_("https://shop.com") {}
 
 TestPaymentRequestDelegate::~TestPaymentRequestDelegate() {}
 
@@ -47,7 +42,7 @@ void TestPaymentRequestDelegate::DoFullCardRequest(
     base::WeakPtr<autofill::payments::FullCardRequest::ResultDelegate>
         result_delegate) {
   if (instantaneous_full_card_request_result_) {
-    result_delegate->OnFullCardRequestSucceeded(full_card_request_, credit_card,
+    result_delegate->OnFullCardRequestSucceeded(credit_card,
                                                 base::ASCIIToUTF16("123"));
     return;
   }
@@ -79,7 +74,7 @@ void TestPaymentRequestDelegate::DelayFullCardRequestCompletion() {
 void TestPaymentRequestDelegate::CompleteFullCardRequest() {
   DCHECK(instantaneous_full_card_request_result_ == false);
   full_card_result_delegate_->OnFullCardRequestSucceeded(
-      full_card_request_, full_card_request_card_, base::ASCIIToUTF16("123"));
+      full_card_request_card_, base::ASCIIToUTF16("123"));
 }
 
 std::string TestPaymentRequestDelegate::GetAuthenticatedEmail() const {
@@ -88,42 +83,6 @@ std::string TestPaymentRequestDelegate::GetAuthenticatedEmail() const {
 
 PrefService* TestPaymentRequestDelegate::GetPrefService() {
   return nullptr;
-}
-
-TestPaymentsClientDelegate::TestPaymentsClientDelegate() {}
-
-TestPaymentsClientDelegate::~TestPaymentsClientDelegate() {}
-
-void TestPaymentsClientDelegate::OnDidGetRealPan(
-    autofill::AutofillClient::PaymentsRpcResult result,
-    const std::string& real_pan) {}
-
-IdentityProvider* TestPaymentsClientDelegate::GetIdentityProvider() {
-  return nullptr;
-}
-
-void TestPaymentsClientDelegate::OnDidGetUploadDetails(
-    autofill::AutofillClient::PaymentsRpcResult result,
-    const base::string16& context_token,
-    std::unique_ptr<base::DictionaryValue> legal_message) {}
-
-void TestPaymentsClientDelegate::OnDidUploadCard(
-    autofill::AutofillClient::PaymentsRpcResult result,
-    const std::string& server_id) {}
-
-TestURLRequestContextGetter::TestURLRequestContextGetter(
-    scoped_refptr<base::SingleThreadTaskRunner> task_runner)
-    : task_runner_(task_runner) {}
-
-TestURLRequestContextGetter::~TestURLRequestContextGetter() {}
-
-net::URLRequestContext* TestURLRequestContextGetter::GetURLRequestContext() {
-  return nullptr;
-}
-
-scoped_refptr<base::SingleThreadTaskRunner>
-TestURLRequestContextGetter::GetNetworkTaskRunner() const {
-  return task_runner_;
 }
 
 }  // namespace payments

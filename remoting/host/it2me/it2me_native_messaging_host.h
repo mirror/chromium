@@ -14,7 +14,6 @@
 #include "build/build_config.h"
 #include "extensions/browser/api/messaging/native_message_host.h"
 #include "remoting/host/it2me/it2me_host.h"
-#include "remoting/protocol/errors.h"
 #include "remoting/signaling/delegating_signal_strategy.h"
 
 #if !defined(OS_CHROMEOS)
@@ -55,7 +54,7 @@ class It2MeNativeMessagingHost : public It2MeHost::Observer,
                                  base::TimeDelta access_code_lifetime) override;
   void OnNatPolicyChanged(bool nat_traversal_enabled) override;
   void OnStateChanged(It2MeHostState state,
-                      protocol::ErrorCode error_code) override;
+                      const std::string& error_message) override;
 
   // Set a callback to be called when a policy error notification has been
   // processed.
@@ -76,7 +75,7 @@ class It2MeNativeMessagingHost : public It2MeHost::Observer,
   void ProcessIncomingIq(std::unique_ptr<base::DictionaryValue> message,
                          std::unique_ptr<base::DictionaryValue> response);
   void SendErrorAndExit(std::unique_ptr<base::DictionaryValue> response,
-                        const protocol::ErrorCode error_code) const;
+                        const std::string& description) const;
   void SendPolicyErrorAndExit() const;
   void SendMessageToClient(std::unique_ptr<base::Value> message) const;
 

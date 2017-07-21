@@ -184,9 +184,9 @@ TestRunner.Page = class {
   }
 
   async createSession() {
-    var sessionId = (await DevToolsAPI._sendCommandOrDie('Target.attachToTarget', {targetId: this._targetId})).sessionId;
-    var session = new TestRunner.Session(this, sessionId);
-    DevToolsAPI._sessions.set(sessionId, session);
+    await DevToolsAPI._sendCommandOrDie('Target.attachToTarget', {targetId: this._targetId});
+    var session = new TestRunner.Session(this);
+    DevToolsAPI._sessions.set(this._targetId, session);
     return session;
   }
 
@@ -195,12 +195,18 @@ TestRunner.Page = class {
   }
 
   async _navigate(url) {
+    if (DevToolsAPI._sessions.get(this._targetId))
+      this._testRunner.die(`Cannot navigate to ${url} with active session`, new Error());
+
     var session = await this.createSession();
     await session._navigate(url);
     await session.disconnect();
   }
 
   async loadHTML(html) {
+    if (DevToolsAPI._sessions.get(this._targetId))
+      this._testRunner.die('Cannot loadHTML with active session', new Error());
+
     html = html.replace(/'/g, "\\'").replace(/\n/g, '\\n');
     var session = await this.createSession();
     await session.protocol.Runtime.evaluate({expression: `document.write('${html}');document.close();`});
@@ -209,10 +215,9 @@ TestRunner.Page = class {
 };
 
 TestRunner.Session = class {
-  constructor(page, sessionId) {
+  constructor(page) {
     this._testRunner = page._testRunner;
     this._page = page;
-    this._sessionId = sessionId;
     this._requestId = 0;
     this._dispatchTable = new Map();
     this._eventHandlers = new Map();
@@ -220,12 +225,12 @@ TestRunner.Session = class {
   }
 
   async disconnect() {
-    await DevToolsAPI._sendCommandOrDie('Target.detachFromTarget', {sessionId: this._sessionId});
+    await DevToolsAPI._sendCommandOrDie('Target.detachFromTarget', {targetId: this._page._targetId});
     DevToolsAPI._sessions.delete(this._page._targetId);
   }
 
   sendRawCommand(requestId, message) {
-    DevToolsAPI._sendCommandOrDie('Target.sendMessageToTarget', {sessionId: this._sessionId, message: message});
+    DevToolsAPI._sendCommandOrDie('Target.sendMessageToTarget', {targetId: this._page._targetId, message: message});
     return new Promise(f => this._dispatchTable.set(requestId, f));
   }
 
@@ -389,9 +394,9 @@ DevToolsAPI.dispatchMessage = function(messageOrObject) {
     } else {
       var eventName = messageObject.method;
       if (eventName === 'Target.receivedMessageFromTarget') {
-        var sessionId = messageObject.params.sessionId;
+        var targetId = messageObject.params.targetId;
         var message = messageObject.params.message;
-        var session = DevToolsAPI._sessions.get(sessionId);
+        var session = DevToolsAPI._sessions.get(targetId);
         if (session)
           session._dispatchMessage(JSON.parse(message));
       }

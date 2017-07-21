@@ -7,6 +7,7 @@
 
 #include <memory>
 
+#include "base/android/jni_android.h"
 #include "base/android/scoped_java_ref.h"
 #include "base/macros.h"
 #include "base/strings/string16.h"
@@ -29,6 +30,8 @@ class DataReductionPromoInfoBarDelegateAndroid : public ConfirmInfoBarDelegate {
 
   DataReductionPromoInfoBarDelegateAndroid();
   ~DataReductionPromoInfoBarDelegateAndroid() override;
+
+  static bool Register(JNIEnv* env);
 
   static void Launch(JNIEnv* env,
                      const base::android::JavaRef<jobject>& jweb_contents);

@@ -23,7 +23,7 @@ MediaEngagementWebUIBrowserTest.prototype = {
 
   commandLineSwitches: [{
     switchName: 'enable-features',
-    switchValue: 'RecordMediaEngagementScores'
+    switchValue: 'media-engagement'
   }],
 
   runAccessibilityChecks: false,

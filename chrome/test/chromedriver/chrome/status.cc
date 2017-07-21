@@ -30,8 +30,6 @@ const char* DefaultMessageForStatusCode(StatusCode code) {
       return "invalid element state";
     case kUnknownError:
       return "unknown error";
-    case kInvalidArgument:
-      return "invalid argument";
     case kJavaScriptError:
       return "javascript error";
     case kXPathLookupError:

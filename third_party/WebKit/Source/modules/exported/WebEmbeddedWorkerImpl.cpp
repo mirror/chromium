@@ -52,7 +52,6 @@
 #include "core/workers/WorkerGlobalScope.h"
 #include "core/workers/WorkerInspectorProxy.h"
 #include "core/workers/WorkerScriptLoader.h"
-#include "modules/indexeddb/IndexedDBClientImpl.h"
 #include "modules/serviceworkers/ServiceWorkerContainerClient.h"
 #include "modules/serviceworkers/ServiceWorkerGlobalScopeClient.h"
 #include "modules/serviceworkers/ServiceWorkerGlobalScopeProxy.h"
@@ -82,6 +81,8 @@
 #include "public/web/modules/serviceworker/WebServiceWorkerContextClient.h"
 
 namespace blink {
+
+template class MODULES_EXPORT WorkerClientsInitializer<WebEmbeddedWorkerImpl>;
 
 std::unique_ptr<WebEmbeddedWorker> WebEmbeddedWorker::Create(
     std::unique_ptr<WebServiceWorkerContextClient> client,
@@ -114,15 +115,12 @@ WebEmbeddedWorkerImpl::WebEmbeddedWorkerImpl(
       waiting_for_debugger_state_(kNotWaitingForDebugger) {
   RunningWorkerInstances().insert(this);
 
-  if (RuntimeEnabledFeatures::ServiceWorkerScriptStreamingEnabled() &&
-      installed_scripts_manager) {
+  if (RuntimeEnabledFeatures::ServiceWorkerScriptStreamingEnabled()) {
+    DCHECK(installed_scripts_manager);
     installed_scripts_manager_ =
         WTF::MakeUnique<ServiceWorkerInstalledScriptsManager>(
             std::move(installed_scripts_manager));
   }
-  service_manager::mojom::InterfaceProviderPtr provider;
-  mojo::MakeRequest(&provider);
-  interface_provider_.Bind(std::move(provider));
 }
 
 WebEmbeddedWorkerImpl::~WebEmbeddedWorkerImpl() {
@@ -367,11 +365,6 @@ void WebEmbeddedWorkerImpl::DidFinishDocumentLoad() {
   // invoked and |this| might have been deleted at this point.
 }
 
-service_manager::InterfaceProvider*
-WebEmbeddedWorkerImpl::GetInterfaceProvider() {
-  return &interface_provider_;
-}
-
 void WebEmbeddedWorkerImpl::SendProtocolMessage(int session_id,
                                                 int call_id,
                                                 const WebString& message,
@@ -438,8 +431,7 @@ void WebEmbeddedWorkerImpl::StartWorkerThread() {
   SecurityOrigin* starter_origin = document->GetSecurityOrigin();
 
   WorkerClients* worker_clients = WorkerClients::Create();
-  ProvideIndexedDBClientToWorker(worker_clients,
-                                 IndexedDBClientImpl::Create(*worker_clients));
+  WorkerClientsInitializer<WebEmbeddedWorkerImpl>::Run(worker_clients);
 
   ProvideContentSettingsClientToWorker(worker_clients,
                                        std::move(content_settings_client_));

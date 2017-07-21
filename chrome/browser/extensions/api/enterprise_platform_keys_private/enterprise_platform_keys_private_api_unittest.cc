@@ -30,7 +30,7 @@
 #include "chromeos/cryptohome/cryptohome_parameters.h"
 #include "chromeos/cryptohome/mock_async_method_caller.h"
 #include "chromeos/dbus/dbus_method_call_status.h"
-#include "chromeos/dbus/fake_cryptohome_client.h"
+#include "chromeos/dbus/mock_cryptohome_client.h"
 #include "components/policy/core/common/cloud/cloud_policy_constants.h"
 #include "components/prefs/pref_service.h"
 #include "components/signin/core/account_id/account_id.h"
@@ -158,6 +158,12 @@ class EPKPChallengeKeyTestBase : public BrowserWithTestWindowTest {
     extension_ = CreateExtension();
 
     // Set up the default behavior of mocks.
+    ON_CALL(mock_cryptohome_client_, TpmAttestationDoesKeyExist(_, _, _, _))
+        .WillByDefault(WithArgs<3>(Invoke(FakeBoolDBusMethod(
+            chromeos::DBUS_METHOD_CALL_SUCCESS, false))));
+    ON_CALL(mock_cryptohome_client_, TpmAttestationIsPrepared(_))
+        .WillByDefault(Invoke(FakeBoolDBusMethod(
+            chromeos::DBUS_METHOD_CALL_SUCCESS, true)));
     ON_CALL(mock_async_method_caller_, TpmAttestationRegisterKey(_, _, _, _))
         .WillByDefault(Invoke(RegisterKeyCallbackTrue));
     ON_CALL(mock_async_method_caller_,
@@ -213,7 +219,7 @@ class EPKPChallengeKeyTestBase : public BrowserWithTestWindowTest {
         SetAuthenticatedAccountInfo("12345", kUserEmail);
   }
 
-  chromeos::FakeCryptohomeClient cryptohome_client_;
+  NiceMock<chromeos::MockCryptohomeClient> mock_cryptohome_client_;
   NiceMock<cryptohome::MockAsyncMethodCaller> mock_async_method_caller_;
   NiceMock<chromeos::attestation::MockAttestationFlow> mock_attestation_flow_;
   chromeos::ScopedCrosSettingsTestHelper settings_helper_;
@@ -247,7 +253,7 @@ class EPKPChallengeMachineKeyTest : public EPKPChallengeKeyTestBase {
   explicit EPKPChallengeMachineKeyTest(
       ProfileType profile_type = ProfileType::USER_PROFILE)
       : EPKPChallengeKeyTestBase(profile_type),
-        impl_(&cryptohome_client_,
+        impl_(&mock_cryptohome_client_,
               &mock_async_method_caller_,
               &mock_attestation_flow_,
               &stub_install_attributes_),
@@ -299,7 +305,9 @@ TEST_F(EPKPChallengeMachineKeyTest, DevicePolicyDisabled) {
 }
 
 TEST_F(EPKPChallengeMachineKeyTest, DoesKeyExistDbusFailed) {
-  cryptohome_client_.set_tpm_attestation_does_key_exist_should_succeed(false);
+  EXPECT_CALL(mock_cryptohome_client_, TpmAttestationDoesKeyExist(_, _, _, _))
+      .WillRepeatedly(WithArgs<3>(Invoke(FakeBoolDBusMethod(
+          chromeos::DBUS_METHOD_CALL_FAILURE, false))));
 
   EXPECT_EQ(GetCertificateError(kDBusError),
             utils::RunFunctionAndReturnError(func_.get(), kArgs, browser()));
@@ -323,8 +331,9 @@ TEST_F(EPKPChallengeMachineKeyTest, SignChallengeFailed) {
 }
 
 TEST_F(EPKPChallengeMachineKeyTest, KeyExists) {
-  cryptohome_client_.SetTpmAttestationDeviceCertificate("attest-ent-machine",
-                                                        std::string());
+  EXPECT_CALL(mock_cryptohome_client_, TpmAttestationDoesKeyExist(_, _, _, _))
+      .WillRepeatedly(WithArgs<3>(Invoke(FakeBoolDBusMethod(
+          chromeos::DBUS_METHOD_CALL_SUCCESS, true))));
   // GetCertificate must not be called if the key exists.
   EXPECT_CALL(mock_attestation_flow_, GetCertificate(_, _, _, _, _))
       .Times(0);
@@ -333,14 +342,18 @@ TEST_F(EPKPChallengeMachineKeyTest, KeyExists) {
 }
 
 TEST_F(EPKPChallengeMachineKeyTest, AttestationNotPrepared) {
-  cryptohome_client_.set_tpm_attestation_is_prepared(false);
+  EXPECT_CALL(mock_cryptohome_client_, TpmAttestationIsPrepared(_))
+      .WillRepeatedly(Invoke(
+          FakeBoolDBusMethod(chromeos::DBUS_METHOD_CALL_SUCCESS, false)));
 
   EXPECT_EQ(GetCertificateError(kResetRequired),
             utils::RunFunctionAndReturnError(func_.get(), kArgs, browser()));
 }
 
 TEST_F(EPKPChallengeMachineKeyTest, AttestationPreparedDbusFailed) {
-  cryptohome_client_.SetServiceIsAvailable(false);
+  EXPECT_CALL(mock_cryptohome_client_, TpmAttestationIsPrepared(_))
+      .WillRepeatedly(
+          Invoke(FakeBoolDBusMethod(chromeos::DBUS_METHOD_CALL_FAILURE, true)));
 
   EXPECT_EQ(GetCertificateError(kDBusError),
             utils::RunFunctionAndReturnError(func_.get(), kArgs, browser()));
@@ -392,7 +405,7 @@ class EPKPChallengeUserKeyTest : public EPKPChallengeKeyTestBase {
   explicit EPKPChallengeUserKeyTest(
       ProfileType profile_type = ProfileType::USER_PROFILE)
       : EPKPChallengeKeyTestBase(profile_type),
-        impl_(&cryptohome_client_,
+        impl_(&mock_cryptohome_client_,
               &mock_async_method_caller_,
               &mock_attestation_flow_,
               &stub_install_attributes_),
@@ -452,7 +465,9 @@ TEST_F(EPKPChallengeUserKeyTest, DevicePolicyDisabled) {
 }
 
 TEST_F(EPKPChallengeUserKeyTest, DoesKeyExistDbusFailed) {
-  cryptohome_client_.set_tpm_attestation_does_key_exist_should_succeed(false);
+  EXPECT_CALL(mock_cryptohome_client_, TpmAttestationDoesKeyExist(_, _, _, _))
+      .WillRepeatedly(WithArgs<3>(Invoke(FakeBoolDBusMethod(
+          chromeos::DBUS_METHOD_CALL_FAILURE, false))));
 
   EXPECT_EQ(GetCertificateError(kDBusError),
             utils::RunFunctionAndReturnError(func_.get(), kArgs, browser()));
@@ -484,9 +499,9 @@ TEST_F(EPKPChallengeUserKeyTest, KeyRegistrationFailed) {
 }
 
 TEST_F(EPKPChallengeUserKeyTest, KeyExists) {
-  cryptohome_client_.SetTpmAttestationUserCertificate(
-      cryptohome::Identification(AccountId::FromUserEmail(kUserEmail)),
-      "attest-ent-user", std::string());
+  EXPECT_CALL(mock_cryptohome_client_, TpmAttestationDoesKeyExist(_, _, _, _))
+      .WillRepeatedly(WithArgs<3>(Invoke(FakeBoolDBusMethod(
+          chromeos::DBUS_METHOD_CALL_SUCCESS, true))));
   // GetCertificate must not be called if the key exists.
   EXPECT_CALL(mock_attestation_flow_, GetCertificate(_, _, _, _, _))
       .Times(0);
@@ -542,14 +557,18 @@ TEST_F(EPKPChallengeUserKeyTest, Success) {
 }
 
 TEST_F(EPKPChallengeUserKeyTest, AttestationNotPrepared) {
-  cryptohome_client_.set_tpm_attestation_is_prepared(false);
+  EXPECT_CALL(mock_cryptohome_client_, TpmAttestationIsPrepared(_))
+      .WillRepeatedly(Invoke(FakeBoolDBusMethod(
+          chromeos::DBUS_METHOD_CALL_SUCCESS, false)));
 
   EXPECT_EQ(GetCertificateError(kResetRequired),
             utils::RunFunctionAndReturnError(func_.get(), kArgs, browser()));
 }
 
 TEST_F(EPKPChallengeUserKeyTest, AttestationPreparedDbusFailed) {
-  cryptohome_client_.SetServiceIsAvailable(false);
+  EXPECT_CALL(mock_cryptohome_client_, TpmAttestationIsPrepared(_))
+      .WillRepeatedly(Invoke(FakeBoolDBusMethod(
+          chromeos::DBUS_METHOD_CALL_FAILURE, true)));
 
   EXPECT_EQ(GetCertificateError(kDBusError),
             utils::RunFunctionAndReturnError(func_.get(), kArgs, browser()));

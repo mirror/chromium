@@ -6,7 +6,6 @@
 #define COMPONENTS_PASSWORD_MANAGER_CONTENT_BROWSER_CONTENT_PASSWORD_MANAGER_DRIVER_H_
 
 #include <map>
-#include <string>
 #include <vector>
 
 #include "base/compiler_specific.h"
@@ -21,6 +20,7 @@
 #include "components/password_manager/core/browser/password_manager_driver.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
+#include "third_party/WebKit/public/platform/modules/sensitive_input_visibility/sensitive_input_visibility_service.mojom.h"
 
 namespace autofill {
 struct PasswordForm;
@@ -38,7 +38,8 @@ enum class BadMessageReason;
 // The lifetime is managed by the ContentPasswordManagerDriverFactory.
 class ContentPasswordManagerDriver
     : public PasswordManagerDriver,
-      public autofill::mojom::PasswordManagerDriver {
+      public autofill::mojom::PasswordManagerDriver,
+      public blink::mojom::SensitiveInputVisibilityService {
  public:
   ContentPasswordManagerDriver(content::RenderFrameHost* render_frame_host,
                                PasswordManagerClient* client,
@@ -50,6 +51,8 @@ class ContentPasswordManagerDriver
       content::RenderFrameHost* render_frame_host);
 
   void BindRequest(autofill::mojom::PasswordManagerDriverRequest request);
+  void BindSensitiveInputVisibilityServiceRequest(
+      blink::mojom::SensitiveInputVisibilityServiceRequest request);
 
   // PasswordManagerDriver implementation.
   void FillPasswordForm(
@@ -115,6 +118,10 @@ class ContentPasswordManagerDriver
       const std::vector<autofill::PasswordForm>& forms);
   void OnFocusedPasswordFormFound(const autofill::PasswordForm& password_form);
 
+  // blink::mojom::SensitiveInputVisibility:
+  void PasswordFieldVisibleInInsecureContext() override;
+  void AllPasswordFieldsInInsecureContextInvisible() override;
+
  private:
   bool CheckChildProcessSecurityPolicy(const GURL& url,
                                        BadMessageReason reason);
@@ -151,6 +158,8 @@ class ContentPasswordManagerDriver
 
   mojo::Binding<autofill::mojom::PasswordManagerDriver>
       password_manager_binding_;
+  mojo::BindingSet<blink::mojom::SensitiveInputVisibilityService>
+      sensitive_input_visibility_bindings_;
 
   base::WeakPtrFactory<ContentPasswordManagerDriver> weak_factory_;
 

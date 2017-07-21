@@ -20,6 +20,7 @@
 #include "cc/layers/layer.h"
 #include "cc/layers/layer_impl.h"
 #include "cc/test/animation_test_common.h"
+#include "cc/test/begin_frame_args_test.h"
 #include "cc/test/fake_layer_tree_host_client.h"
 #include "cc/test/fake_output_surface.h"
 #include "cc/test/test_context_provider.h"
@@ -32,7 +33,6 @@
 #include "cc/trees/proxy_main.h"
 #include "cc/trees/single_thread_proxy.h"
 #include "components/viz/common/resources/buffer_to_texture_target_map.h"
-#include "components/viz/test/begin_frame_args_test.h"
 #include "components/viz/test/test_layer_tree_frame_sink.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "ui/gfx/geometry/size_conversions.h"
@@ -136,7 +136,7 @@ class LayerTreeHostImplForTesting : public LayerTreeHostImpl {
         this, raster_buffer_provider, resource_pool);
   }
 
-  void WillBeginImplFrame(const viz::BeginFrameArgs& args) override {
+  void WillBeginImplFrame(const BeginFrameArgs& args) override {
     LayerTreeHostImpl::WillBeginImplFrame(args);
     test_hooks_->WillBeginImplFrameOnThread(this, args);
   }
@@ -324,7 +324,7 @@ class LayerTreeHostClientForTesting : public LayerTreeHostClient,
 
   void DidBeginMainFrame() override { test_hooks_->DidBeginMainFrame(); }
 
-  void BeginMainFrame(const viz::BeginFrameArgs& args) override {
+  void BeginMainFrame(const BeginFrameArgs& args) override {
     test_hooks_->BeginMainFrame(args);
   }
 
@@ -862,7 +862,7 @@ void LayerTreeTest::RequestNewLayerTreeFrameSink() {
   scoped_refptr<TestContextProvider> worker_context_provider =
       TestContextProvider::CreateWorker();
 
-  viz::RendererSettings renderer_settings;
+  RendererSettings renderer_settings;
   // Spend less time waiting for BeginFrame because the output is
   // mocked out.
   constexpr double refresh_rate = 200.0;
@@ -877,7 +877,7 @@ void LayerTreeTest::RequestNewLayerTreeFrameSink() {
 
 std::unique_ptr<viz::TestLayerTreeFrameSink>
 LayerTreeTest::CreateLayerTreeFrameSink(
-    const viz::RendererSettings& renderer_settings,
+    const RendererSettings& renderer_settings,
     double refresh_rate,
     scoped_refptr<viz::ContextProvider> compositor_context_provider,
     scoped_refptr<viz::ContextProvider> worker_context_provider) {

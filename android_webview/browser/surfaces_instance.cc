@@ -12,11 +12,11 @@
 #include "android_webview/browser/deferred_gpu_command_service.h"
 #include "android_webview/browser/parent_output_surface.h"
 #include "base/memory/ptr_util.h"
+#include "cc/output/renderer_settings.h"
 #include "cc/output/texture_mailbox_deleter.h"
 #include "cc/quads/solid_color_draw_quad.h"
 #include "cc/quads/surface_draw_quad.h"
 #include "cc/scheduler/begin_frame_source.h"
-#include "components/viz/common/display/renderer_settings.h"
 #include "components/viz/common/surfaces/local_surface_id_allocator.h"
 #include "components/viz/service/display/display.h"
 #include "components/viz/service/display/display_scheduler.h"
@@ -45,7 +45,7 @@ scoped_refptr<SurfacesInstance> SurfacesInstance::GetOrCreateInstance() {
 SurfacesInstance::SurfacesInstance()
     : frame_sink_id_allocator_(kDefaultClientId),
       frame_sink_id_(AllocateFrameSinkId()) {
-  viz::RendererSettings settings;
+  cc::RendererSettings settings;
 
   // Should be kept in sync with compositor_impl_android.cc.
   settings.allow_antialiasing = false;
@@ -148,7 +148,7 @@ void SurfacesInstance::DrawAndSwap(const gfx::Size& viewport,
   cc::CompositorFrame frame;
   // We draw synchronously, so acknowledge a manual BeginFrame.
   frame.metadata.begin_frame_ack =
-      viz::BeginFrameAck::CreateManualAckWithDamage();
+      cc::BeginFrameAck::CreateManualAckWithDamage();
   frame.render_pass_list.push_back(std::move(render_pass));
   frame.metadata.device_scale_factor = 1.f;
   frame.metadata.referenced_surfaces = child_ids_;
@@ -197,7 +197,7 @@ void SurfacesInstance::SetSolidColorRootFrame() {
   frame.render_pass_list.push_back(std::move(render_pass));
   // We draw synchronously, so acknowledge a manual BeginFrame.
   frame.metadata.begin_frame_ack =
-      viz::BeginFrameAck::CreateManualAckWithDamage();
+      cc::BeginFrameAck::CreateManualAckWithDamage();
   frame.metadata.referenced_surfaces = child_ids_;
   frame.metadata.device_scale_factor = 1;
   bool result = support_->SubmitCompositorFrame(root_id_, std::move(frame));
@@ -209,7 +209,7 @@ void SurfacesInstance::DidReceiveCompositorFrameAck(
   ReclaimResources(resources);
 }
 
-void SurfacesInstance::OnBeginFrame(const viz::BeginFrameArgs& args) {}
+void SurfacesInstance::OnBeginFrame(const cc::BeginFrameArgs& args) {}
 
 void SurfacesInstance::WillDrawSurface(
     const viz::LocalSurfaceId& local_surface_id,

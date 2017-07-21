@@ -36,7 +36,6 @@
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
-#include "base/task_runner_util.h"
 #include "content/browser/download/download_create_info.h"
 #include "content/browser/download/download_file.h"
 #include "content/browser/download/download_interrupt_reasons_impl.h"
@@ -46,7 +45,6 @@
 #include "content/browser/download/download_net_log_parameters.h"
 #include "content/browser/download/download_request_handle.h"
 #include "content/browser/download/download_stats.h"
-#include "content/browser/download/download_task_runner.h"
 #include "content/browser/download/parallel_download_utils.h"
 #include "content/browser/renderer_host/render_view_host_impl.h"
 #include "content/browser/web_contents/web_contents_impl.h"
@@ -71,7 +69,7 @@ namespace content {
 namespace {
 
 bool DeleteDownloadedFile(const base::FilePath& path) {
-  DCHECK(GetDownloadTaskRunner()->RunsTasksInCurrentSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
 
   // Make sure we only delete files.
   if (base::DirectoryExists(path))
@@ -94,14 +92,14 @@ void DeleteDownloadedFileDone(
 // at the end of the function.
 static base::FilePath DownloadFileDetach(
     std::unique_ptr<DownloadFile> download_file) {
-  DCHECK(GetDownloadTaskRunner()->RunsTasksInCurrentSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   base::FilePath full_path = download_file->FullPath();
   download_file->Detach();
   return full_path;
 }
 
 static base::FilePath MakeCopyOfDownloadFile(DownloadFile* download_file) {
-  DCHECK(GetDownloadTaskRunner()->RunsTasksInCurrentSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   base::FilePath temp_file_path;
   if (base::CreateTemporaryFile(&temp_file_path) &&
       base::CopyFile(download_file->FullPath(), temp_file_path)) {
@@ -116,7 +114,7 @@ static base::FilePath MakeCopyOfDownloadFile(DownloadFile* download_file) {
 }
 
 static void DownloadFileCancel(std::unique_ptr<DownloadFile> download_file) {
-  DCHECK(GetDownloadTaskRunner()->RunsTasksInCurrentSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   download_file->Cancel();
 }
 
@@ -411,8 +409,8 @@ void DownloadItemImpl::StealDangerousDownload(
 
   if (delete_file_afterward) {
     if (download_file_) {
-      base::PostTaskAndReplyWithResult(
-          GetDownloadTaskRunner().get(), FROM_HERE,
+      BrowserThread::PostTaskAndReplyWithResult(
+          BrowserThread::FILE, FROM_HERE,
           base::Bind(&DownloadFileDetach, base::Passed(&download_file_)),
           callback);
     } else {
@@ -422,8 +420,8 @@ void DownloadItemImpl::StealDangerousDownload(
     Remove();
     // Download item has now been deleted.
   } else if (download_file_) {
-    base::PostTaskAndReplyWithResult(
-        GetDownloadTaskRunner().get(), FROM_HERE,
+    BrowserThread::PostTaskAndReplyWithResult(
+        BrowserThread::FILE, FROM_HERE,
         base::Bind(&MakeCopyOfDownloadFile, download_file_.get()), callback);
   } else {
     callback.Run(GetFullPath());
@@ -458,8 +456,8 @@ void DownloadItemImpl::Pause() {
       job_->Pause();
       UpdateObservers();
       if (download_file_) {
-        GetDownloadTaskRunner()->PostTask(
-            FROM_HERE,
+        BrowserThread::PostTask(
+            BrowserThread::FILE, FROM_HERE,
             base::Bind(&DownloadFile::WasPaused,
                        // Safe because we control download file lifetime.
                        base::Unretained(download_file_.get())));
@@ -766,8 +764,8 @@ void DownloadItemImpl::DeleteFile(const base::Callback<void(bool)>& callback) {
                    base::WeakPtr<DownloadItemImpl>(), callback, true));
     return;
   }
-  base::PostTaskAndReplyWithResult(
-      GetDownloadTaskRunner().get(), FROM_HERE,
+  BrowserThread::PostTaskAndReplyWithResult(
+      BrowserThread::FILE, FROM_HERE,
       base::Bind(&DeleteDownloadedFile, GetFullPath()),
       base::Bind(&DeleteDownloadedFileDone, weak_ptr_factory_.GetWeakPtr(),
                  callback));
@@ -1118,8 +1116,7 @@ void DownloadItemImpl::UpdateValidatorsOnResumption(
   }
   if (content_disposition_ != new_create_info.content_disposition)
     origin_state |= ORIGIN_STATE_ON_RESUMPTION_CONTENT_DISPOSITION_CHANGED;
-  RecordOriginStateOnResumption(
-      is_partial, static_cast<OriginStateOnResumption>(origin_state));
+  RecordOriginStateOnResumption(is_partial, origin_state);
 
   request_info_.url_chain.insert(request_info_.url_chain.end(), chain_iter,
                                  new_create_info.url_chain.end());
@@ -1497,11 +1494,12 @@ void DownloadItemImpl::OnDownloadTargetDetermined(
   DownloadFile::RenameCompletionCallback callback =
       base::Bind(&DownloadItemImpl::OnDownloadRenamedToIntermediateName,
                  weak_ptr_factory_.GetWeakPtr());
-  GetDownloadTaskRunner()->PostTask(
-      FROM_HERE, base::Bind(&DownloadFile::RenameAndUniquify,
-                            // Safe because we control download file lifetime.
-                            base::Unretained(download_file_.get()),
-                            intermediate_path, callback));
+  BrowserThread::PostTask(
+      BrowserThread::FILE, FROM_HERE,
+      base::Bind(&DownloadFile::RenameAndUniquify,
+                 // Safe because we control download file lifetime.
+                 base::Unretained(download_file_.get()),
+                 intermediate_path, callback));
 }
 
 void DownloadItemImpl::OnDownloadRenamedToIntermediateName(
@@ -1607,12 +1605,16 @@ void DownloadItemImpl::OnDownloadCompleting() {
   DownloadFile::RenameCompletionCallback callback =
       base::Bind(&DownloadItemImpl::OnDownloadRenamedToFinalName,
                  weak_ptr_factory_.GetWeakPtr());
-  GetDownloadTaskRunner()->PostTask(
+  BrowserThread::PostTask(
+      BrowserThread::FILE,
       FROM_HERE,
       base::Bind(&DownloadFile::RenameAndAnnotate,
-                 base::Unretained(download_file_.get()), GetTargetFilePath(),
-                 delegate_->GetApplicationClientIdForFileScanning(), GetURL(),
-                 GetReferrerUrl(), callback));
+                 base::Unretained(download_file_.get()),
+                 GetTargetFilePath(),
+                 delegate_->GetApplicationClientIdForFileScanning(),
+                 GetURL(),
+                 GetReferrerUrl(),
+                 callback));
 }
 
 void DownloadItemImpl::OnDownloadRenamedToFinalName(
@@ -1794,9 +1796,10 @@ void DownloadItemImpl::InterruptWithPartialState(
         // There is no download file and this is transitioning from INTERRUPTED
         // to CANCELLED. The intermediate file is no longer usable, and should
         // be deleted.
-        GetDownloadTaskRunner()->PostTask(
-            FROM_HERE, base::Bind(base::IgnoreResult(&DeleteDownloadedFile),
-                                  GetFullPath()));
+        BrowserThread::PostTask(
+            BrowserThread::FILE, FROM_HERE,
+            base::Bind(base::IgnoreResult(&DeleteDownloadedFile),
+                       GetFullPath()));
         destination_info_.current_path.clear();
       }
       break;
@@ -1893,8 +1896,8 @@ void DownloadItemImpl::ReleaseDownloadFile(bool destroy_file) {
   DVLOG(20) << __func__ << "() destroy_file:" << destroy_file;
 
   if (destroy_file) {
-    GetDownloadTaskRunner()->PostTask(
-        FROM_HERE,
+    BrowserThread::PostTask(
+        BrowserThread::FILE, FROM_HERE,
         // Will be deleted at end of task execution.
         base::Bind(&DownloadFileCancel, base::Passed(&download_file_)));
     // Avoid attempting to reuse the intermediate file by clearing out
@@ -1902,10 +1905,12 @@ void DownloadItemImpl::ReleaseDownloadFile(bool destroy_file) {
     destination_info_.current_path.clear();
     received_slices_.clear();
   } else {
-    GetDownloadTaskRunner()->PostTask(
-        FROM_HERE, base::Bind(base::IgnoreResult(&DownloadFileDetach),
-                              // Will be deleted at end of task execution.
-                              base::Passed(&download_file_)));
+    BrowserThread::PostTask(
+        BrowserThread::FILE,
+        FROM_HERE,
+        base::Bind(base::IgnoreResult(&DownloadFileDetach),
+                   // Will be deleted at end of task execution.
+                   base::Passed(&download_file_)));
   }
   // Don't accept any more messages from the DownloadFile, and null
   // out any previous "all data received".  This also breaks links to
@@ -2147,7 +2152,7 @@ void DownloadItemImpl::ResumeInterruptedDownload(
           destination: WEBSITE
         }
         policy {
-          cookies_allowed: YES
+          cookies_allowed: true
           cookies_store: "user"
           setting:
             "This feature cannot be disabled in settings, but it is activated "

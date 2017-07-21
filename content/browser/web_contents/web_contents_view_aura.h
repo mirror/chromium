@@ -136,8 +136,8 @@ class CONTENT_EXPORT WebContentsViewAura
                      const DragEventSourceInfo& event_info,
                      RenderWidgetHostImpl* source_rwh) override;
   void UpdateDragCursor(blink::WebDragOperation operation) override;
-  void GotFocus(RenderWidgetHostImpl* render_widget_host) override;
-  void LostFocus(RenderWidgetHostImpl* render_widget_host) override;
+  void GotFocus() override;
+  void LostFocus() override;
   void TakeFocus(bool reverse) override;
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
   void ShowPopupMenu(RenderFrameHost* render_frame_host,
@@ -153,6 +153,7 @@ class CONTENT_EXPORT WebContentsViewAura
 #endif
 
   // Overridden from OverscrollControllerDelegate:
+  gfx::Size GetVisibleSize() const override;
   gfx::Size GetDisplaySize() const override;
   bool OnOverscrollUpdate(float delta_x, float delta_y) override;
   void OnOverscrollComplete(OverscrollMode overscroll_mode) override;

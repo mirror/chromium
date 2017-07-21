@@ -620,7 +620,7 @@ UChar32 CSSTokenizer::ConsumeEscape() {
     };
     ConsumeSingleWhitespaceIfNext();
     bool ok = false;
-    UChar32 code_point = hex_chars.ToString().HexToUIntStrict(&ok);
+    UChar32 code_point = hex_chars.ToString().ToUIntStrict(&ok, 16);
     DCHECK(ok);
     if (code_point == 0 || (0xD800 <= code_point && code_point <= 0xDFFF) ||
         code_point > 0x10FFFF)

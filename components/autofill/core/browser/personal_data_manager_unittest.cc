@@ -310,7 +310,7 @@ class PersonalDataManagerTestBase {
 class PersonalDataManagerTest : public PersonalDataManagerTestBase,
                                 public testing::Test {
   void SetUp() override {
-    OSCryptMocker::SetUp();
+    OSCryptMocker::SetUpWithSingleton();
     prefs_ = test::PrefServiceForTesting();
     ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
     base::FilePath path = temp_dir_.GetPath().AppendASCII("TestWebDB");
@@ -356,7 +356,7 @@ class PersonalDataManagerTest : public PersonalDataManagerTestBase,
     account_tracker_.reset();
     signin_client_.reset();
 
-    test::ReenableSystemServices();
+    test::DisableSystemServices(prefs_.get());
     OSCryptMocker::TearDown();
   }
 };
@@ -3638,63 +3638,6 @@ TEST_F(PersonalDataManagerTest,
   EXPECT_EQ(2U, suggestions.size());
 }
 
-// Tests that disused profiles are suppressed when supression is enabled and
-// the input field is empty.
-TEST_F(PersonalDataManagerTest,
-       GetProfileSuggestions_SuppressDisusedProfilesOnEmptyField) {
-  base::test::ScopedFeatureList scoped_features;
-  scoped_features.InitAndEnableFeature(kAutofillSuppressDisusedAddresses);
-
-  // Set up 2 different profiles.
-  AutofillProfile profile1(base::GenerateGUID(), "https://www.example.com");
-  test::SetProfileInfo(&profile1, "Marion1", "Mitchell", "Morrison",
-                       "johnwayne@me.xyz", "Fox",
-                       "123 Zoo St.\nSecond Line\nThird line", "unit 5",
-                       "Hollywood", "CA", "91601", "US", "12345678910");
-  profile1.set_use_date(AutofillClock::Now() - base::TimeDelta::FromDays(200));
-  personal_data_->AddProfile(profile1);
-
-  AutofillProfile profile2(base::GenerateGUID(), "https://www.example.com");
-  test::SetProfileInfo(&profile2, "Marion2", "Mitchell", "Morrison",
-                       "johnwayne@me.xyz", "Fox",
-                       "456 Zoo St.\nSecond Line\nThird line", "unit 5",
-                       "Hollywood", "CA", "91601", "US", "12345678910");
-  profile2.set_use_date(AutofillClock::Now() - base::TimeDelta::FromDays(20));
-  personal_data_->AddProfile(profile2);
-
-  ResetPersonalDataManager(USER_MODE_NORMAL);
-
-  // Query with empty string only returns profile2.
-  {
-    std::vector<Suggestion> suggestions = personal_data_->GetProfileSuggestions(
-        AutofillType(ADDRESS_HOME_STREET_ADDRESS), base::string16(), false,
-        std::vector<ServerFieldType>());
-    EXPECT_EQ(1U, suggestions.size());
-  }
-
-  // Query with prefix for profile1 returns profile1.
-  {
-    std::vector<Suggestion> suggestions = personal_data_->GetProfileSuggestions(
-        AutofillType(ADDRESS_HOME_STREET_ADDRESS), base::ASCIIToUTF16("123"),
-        false, std::vector<ServerFieldType>());
-    ASSERT_EQ(1U, suggestions.size());
-    EXPECT_EQ(
-        base::ASCIIToUTF16("123 Zoo St., Second Line, Third line, unit 5"),
-        suggestions[0].value);
-  }
-
-  // Query with prefix for profile2 returns profile2.
-  {
-    std::vector<Suggestion> suggestions = personal_data_->GetProfileSuggestions(
-        AutofillType(ADDRESS_HOME_STREET_ADDRESS), base::ASCIIToUTF16("456"),
-        false, std::vector<ServerFieldType>());
-    EXPECT_EQ(1U, suggestions.size());
-    EXPECT_EQ(
-        base::ASCIIToUTF16("456 Zoo St., Second Line, Third line, unit 5"),
-        suggestions[0].value);
-  }
-}
-
 // Test that a masked server card is not suggested if more that six numbers have
 // been typed in the field.
 TEST_F(PersonalDataManagerTest,
@@ -4518,190 +4461,6 @@ TEST_F(PersonalDataManagerTest, DontDuplicateFullServerCard) {
   EXPECT_FALSE(imported_credit_card_matches_masked_server_credit_card);
 }
 
-TEST_F(PersonalDataManagerTest,
-       Metrics_SubmittedServerCardExpirationStatus_FullServerCardMatch) {
-  EnableWalletCardImport();
-
-  std::vector<CreditCard> server_cards;
-  server_cards.push_back(CreditCard(CreditCard::FULL_SERVER_CARD, "c789"));
-  test::SetCreditCardInfo(&server_cards.back(), "Clyde Barrow",
-                          "4444333322221111" /* Visa */, "04", "2111", "1");
-
-  test::SetServerCreditCards(autofill_table_, server_cards);
-  personal_data_->Refresh();
-  EXPECT_CALL(personal_data_observer_, OnPersonalDataChanged())
-      .WillOnce(QuitMainMessageLoop());
-  base::RunLoop().Run();
-
-  // A user fills/enters the card's information on a checkout form.  Ensure that
-  // an expiration date match is recorded.
-  FormData form;
-  FormFieldData field;
-  test::CreateTestFormField("Name on card:", "name_on_card", "Clyde Barrow",
-                            "text", &field);
-  form.fields.push_back(field);
-  test::CreateTestFormField("Card Number:", "card_number", "4444333322221111",
-                            "text", &field);
-  form.fields.push_back(field);
-  test::CreateTestFormField("Exp Month:", "exp_month", "04", "text", &field);
-  form.fields.push_back(field);
-  test::CreateTestFormField("Exp Year:", "exp_year", "2111", "text", &field);
-  form.fields.push_back(field);
-
-  base::HistogramTester histogram_tester;
-  FormStructure form_structure(form);
-  form_structure.DetermineHeuristicTypes(nullptr /* ukm_service */);
-  std::unique_ptr<CreditCard> imported_credit_card;
-  bool imported_credit_card_matches_masked_server_credit_card;
-  EXPECT_FALSE(personal_data_->ImportFormData(
-      form_structure, false, &imported_credit_card,
-      &imported_credit_card_matches_masked_server_credit_card));
-  EXPECT_FALSE(imported_credit_card);
-  EXPECT_FALSE(imported_credit_card_matches_masked_server_credit_card);
-  histogram_tester.ExpectUniqueSample(
-      "Autofill.SubmittedServerCardExpirationStatus",
-      AutofillMetrics::FULL_SERVER_CARD_EXPIRATION_DATE_MATCHED, 1);
-}
-
-TEST_F(PersonalDataManagerTest,
-       Metrics_SubmittedServerCardExpirationStatus_FullServerCardMismatch) {
-  EnableWalletCardImport();
-
-  std::vector<CreditCard> server_cards;
-  server_cards.push_back(CreditCard(CreditCard::FULL_SERVER_CARD, "c789"));
-  test::SetCreditCardInfo(&server_cards.back(), "Clyde Barrow",
-                          "4444333322221111" /* Visa */, "04", "2111", "1");
-
-  test::SetServerCreditCards(autofill_table_, server_cards);
-  personal_data_->Refresh();
-  EXPECT_CALL(personal_data_observer_, OnPersonalDataChanged())
-      .WillOnce(QuitMainMessageLoop());
-  base::RunLoop().Run();
-
-  // A user fills/enters the card's information on a checkout form but changes
-  // the expiration date of the card.  Ensure that an expiration date mismatch
-  // is recorded.
-  FormData form;
-  FormFieldData field;
-  test::CreateTestFormField("Name on card:", "name_on_card", "Clyde Barrow",
-                            "text", &field);
-  form.fields.push_back(field);
-  test::CreateTestFormField("Card Number:", "card_number", "4444333322221111",
-                            "text", &field);
-  form.fields.push_back(field);
-  test::CreateTestFormField("Exp Month:", "exp_month", "04", "text", &field);
-  form.fields.push_back(field);
-  test::CreateTestFormField("Exp Year:", "exp_year", "2345", "text", &field);
-  form.fields.push_back(field);
-
-  base::HistogramTester histogram_tester;
-  FormStructure form_structure(form);
-  form_structure.DetermineHeuristicTypes(nullptr /* ukm_service */);
-  std::unique_ptr<CreditCard> imported_credit_card;
-  bool imported_credit_card_matches_masked_server_credit_card;
-  EXPECT_FALSE(personal_data_->ImportFormData(
-      form_structure, false, &imported_credit_card,
-      &imported_credit_card_matches_masked_server_credit_card));
-  EXPECT_FALSE(imported_credit_card);
-  EXPECT_FALSE(imported_credit_card_matches_masked_server_credit_card);
-  histogram_tester.ExpectUniqueSample(
-      "Autofill.SubmittedServerCardExpirationStatus",
-      AutofillMetrics::FULL_SERVER_CARD_EXPIRATION_DATE_DID_NOT_MATCH, 1);
-}
-
-TEST_F(PersonalDataManagerTest,
-       Metrics_SubmittedServerCardExpirationStatus_MaskedServerCardMatch) {
-  EnableWalletCardImport();
-
-  std::vector<CreditCard> server_cards;
-  server_cards.push_back(CreditCard(CreditCard::MASKED_SERVER_CARD, "a123"));
-  test::SetCreditCardInfo(&server_cards.back(), "John Dillinger",
-                          "1111" /* Visa */, "01", "2111", "");
-  server_cards.back().SetNetworkForMaskedCard(kVisaCard);
-
-  test::SetServerCreditCards(autofill_table_, server_cards);
-  personal_data_->Refresh();
-  EXPECT_CALL(personal_data_observer_, OnPersonalDataChanged())
-      .WillOnce(QuitMainMessageLoop());
-  base::RunLoop().Run();
-
-  // A user fills/enters the card's information on a checkout form.  Ensure that
-  // an expiration date match is recorded.
-  FormData form;
-  FormFieldData field;
-  test::CreateTestFormField("Name on card:", "name_on_card", "Clyde Barrow",
-                            "text", &field);
-  form.fields.push_back(field);
-  test::CreateTestFormField("Card Number:", "card_number", "4444333322221111",
-                            "text", &field);
-  form.fields.push_back(field);
-  test::CreateTestFormField("Exp Month:", "exp_month", "01", "text", &field);
-  form.fields.push_back(field);
-  test::CreateTestFormField("Exp Year:", "exp_year", "2111", "text", &field);
-  form.fields.push_back(field);
-
-  base::HistogramTester histogram_tester;
-  FormStructure form_structure(form);
-  form_structure.DetermineHeuristicTypes(nullptr /* ukm_service */);
-  std::unique_ptr<CreditCard> imported_credit_card;
-  bool imported_credit_card_matches_masked_server_credit_card;
-  EXPECT_TRUE(personal_data_->ImportFormData(
-      form_structure, false, &imported_credit_card,
-      &imported_credit_card_matches_masked_server_credit_card));
-  EXPECT_TRUE(imported_credit_card);
-  EXPECT_TRUE(imported_credit_card_matches_masked_server_credit_card);
-  histogram_tester.ExpectUniqueSample(
-      "Autofill.SubmittedServerCardExpirationStatus",
-      AutofillMetrics::MASKED_SERVER_CARD_EXPIRATION_DATE_MATCHED, 1);
-}
-
-TEST_F(PersonalDataManagerTest,
-       Metrics_SubmittedServerCardExpirationStatus_MaskedServerCardMismatch) {
-  EnableWalletCardImport();
-
-  std::vector<CreditCard> server_cards;
-  server_cards.push_back(CreditCard(CreditCard::MASKED_SERVER_CARD, "a123"));
-  test::SetCreditCardInfo(&server_cards.back(), "John Dillinger",
-                          "1111" /* Visa */, "01", "2111", "");
-  server_cards.back().SetNetworkForMaskedCard(kVisaCard);
-
-  test::SetServerCreditCards(autofill_table_, server_cards);
-  personal_data_->Refresh();
-  EXPECT_CALL(personal_data_observer_, OnPersonalDataChanged())
-      .WillOnce(QuitMainMessageLoop());
-  base::RunLoop().Run();
-
-  // A user fills/enters the card's information on a checkout form but changes
-  // the expiration date of the card.  Ensure that an expiration date mismatch
-  // is recorded.
-  FormData form;
-  FormFieldData field;
-  test::CreateTestFormField("Name on card:", "name_on_card", "Clyde Barrow",
-                            "text", &field);
-  form.fields.push_back(field);
-  test::CreateTestFormField("Card Number:", "card_number", "4444333322221111",
-                            "text", &field);
-  form.fields.push_back(field);
-  test::CreateTestFormField("Exp Month:", "exp_month", "04", "text", &field);
-  form.fields.push_back(field);
-  test::CreateTestFormField("Exp Year:", "exp_year", "2345", "text", &field);
-  form.fields.push_back(field);
-
-  base::HistogramTester histogram_tester;
-  FormStructure form_structure(form);
-  form_structure.DetermineHeuristicTypes(nullptr /* ukm_service */);
-  std::unique_ptr<CreditCard> imported_credit_card;
-  bool imported_credit_card_matches_masked_server_credit_card;
-  EXPECT_TRUE(personal_data_->ImportFormData(
-      form_structure, false, &imported_credit_card,
-      &imported_credit_card_matches_masked_server_credit_card));
-  EXPECT_TRUE(imported_credit_card);
-  EXPECT_TRUE(imported_credit_card_matches_masked_server_credit_card);
-  histogram_tester.ExpectUniqueSample(
-      "Autofill.SubmittedServerCardExpirationStatus",
-      AutofillMetrics::MASKED_SERVER_CARD_EXPIRATION_DATE_DID_NOT_MATCH, 1);
-}
-
 // Tests the SaveImportedProfile method with different profiles to make sure the
 // merge logic works correctly.
 typedef struct {
@@ -4731,7 +4490,7 @@ class SaveImportedProfileTest
   ~SaveImportedProfileTest() override {}
 
   void SetUp() override {
-    OSCryptMocker::SetUp();
+    OSCryptMocker::SetUpWithSingleton();
     prefs_ = test::PrefServiceForTesting();
     ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
     base::FilePath path = temp_dir_.GetPath().AppendASCII("TestWebDB");
@@ -6874,113 +6633,6 @@ TEST_F(PersonalDataManagerTest, LogStoredProfileMetrics) {
                                      3, 1);
   histogram_tester.ExpectBucketCount("Autofill.DaysSinceLastUse.StoredProfile",
                                      200, 1);
-}
-
-TEST_F(PersonalDataManagerTest, RemoveProfilesNotUsedSinceTimestamp) {
-  const char kHistogramName[] = "Autofill.AddressesSuppressedForDisuse";
-  const base::Time kNow = AutofillClock::Now();
-  constexpr size_t kNumProfiles = 10;
-
-  // Setup the profile vectors with last use dates ranging from |now| to 270
-  // days ago, in 30 day increments.  Note that the profiles are sorted by
-  // decreasing last use date.
-  std::vector<AutofillProfile> all_profile_data;
-  std::vector<AutofillProfile*> all_profile_ptrs;
-  all_profile_data.reserve(kNumProfiles);
-  all_profile_ptrs.reserve(kNumProfiles);
-  for (size_t i = 0; i < kNumProfiles; ++i) {
-    constexpr base::TimeDelta k30Days = base::TimeDelta::FromDays(30);
-    all_profile_data.emplace_back(base::GenerateGUID(), "https://example.com");
-    all_profile_data.back().set_use_date(kNow - (i * k30Days));
-    all_profile_ptrs.push_back(&all_profile_data.back());
-  }
-
-  // Verify that disused profiles get removed from the end. Note that the last
-  // four profiles have use dates more than 175 days ago.
-  {
-    // Create a working copy of the profile pointers.
-    std::vector<AutofillProfile*> profiles(all_profile_ptrs);
-
-    // The first 6 have use dates more recent than 175 days ago.
-    std::vector<AutofillProfile*> expected_profiles(profiles.begin(),
-                                                    profiles.begin() + 6);
-
-    // Filter the profiles while capturing histograms.
-    base::HistogramTester histogram_tester;
-    PersonalDataManager::RemoveProfilesNotUsedSinceTimestamp(
-        kNow - base::TimeDelta::FromDays(175), &profiles);
-
-    // Validate that we get the expected filtered profiles and histograms.
-    EXPECT_EQ(expected_profiles, profiles);
-    histogram_tester.ExpectTotalCount(kHistogramName, 1);
-    histogram_tester.ExpectBucketCount(kHistogramName, 4, 1);
-  }
-
-  // Reverse the profile order and verify that disused profiles get removed
-  // from the beginning. Note that the first five profiles, post reversal, have
-  // use dates more then 145 days ago.
-  {
-    // Create a reversed working copy of the profile pointers.
-    std::vector<AutofillProfile*> profiles(all_profile_ptrs.rbegin(),
-                                           all_profile_ptrs.rend());
-
-    // The last 5 profiles have use dates more recent than 145 days ago.
-    std::vector<AutofillProfile*> expected_profiles(profiles.begin() + 5,
-                                                    profiles.end());
-
-    // Filter the profiles while capturing histograms.
-    base::HistogramTester histogram_tester;
-    PersonalDataManager::RemoveProfilesNotUsedSinceTimestamp(
-        kNow - base::TimeDelta::FromDays(145), &profiles);
-
-    // Validate that we get the expected filtered profiles and histograms.
-    EXPECT_EQ(expected_profiles, profiles);
-    histogram_tester.ExpectTotalCount(kHistogramName, 1);
-    histogram_tester.ExpectBucketCount(kHistogramName, 5, 1);
-  }
-
-  // Randomize the profile order and validate that the filtered list retains
-  // that order. Note that the six profiles have use dates more then 115 days
-  // ago.
-  {
-    // A handy constant.
-    const base::Time k115DaysAgo = kNow - base::TimeDelta::FromDays(115);
-
-    // Created a shuffled master copy of the profile pointers.
-    std::vector<AutofillProfile*> shuffled_profiles(all_profile_ptrs);
-    std::random_shuffle(shuffled_profiles.begin(), shuffled_profiles.end());
-
-    // Copy the shuffled profile pointer collections to use as the working set.
-    std::vector<AutofillProfile*> profiles(shuffled_profiles);
-
-    // Filter the profiles while capturing histograms.
-    base::HistogramTester histogram_tester;
-    PersonalDataManager::RemoveProfilesNotUsedSinceTimestamp(k115DaysAgo,
-                                                             &profiles);
-
-    // Validate that we have the right profiles. Iterate of the the shuffled
-    // master copy and the filtered copy at the same time. making sure that the
-    // elements in the filtered copy occur in the same order as the shuffled
-    // master. Along the way, validate that the elements in and out of the
-    // filtered copy have appropriate use dates.
-    EXPECT_EQ(4u, profiles.size());
-    auto it = shuffled_profiles.begin();
-    for (const AutofillProfile* profile : profiles) {
-      for (; it != shuffled_profiles.end() && (*it) != profile; ++it) {
-        EXPECT_LT((*it)->use_date(), k115DaysAgo);
-      }
-      ASSERT_TRUE(it != shuffled_profiles.end());
-      EXPECT_GT(profile->use_date(), k115DaysAgo);
-      ++it;
-    }
-    for (; it != shuffled_profiles.end(); ++it) {
-      EXPECT_LT((*it)->use_date(), k115DaysAgo);
-    }
-
-    // Validate the histograms.
-    histogram_tester.ExpectTotalCount(kHistogramName, 1);
-    histogram_tester.ExpectBucketCount(kHistogramName, 6, 1);
-  }
 }
 
 }  // namespace autofill

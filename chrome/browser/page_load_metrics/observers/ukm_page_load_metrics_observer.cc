@@ -9,7 +9,6 @@
 #include "chrome/browser/page_load_metrics/page_load_metrics_util.h"
 #include "chrome/browser/profiles/profile.h"
 #include "content/public/browser/web_contents.h"
-#include "services/metrics/public/cpp/ukm_builders.h"
 #include "services/metrics/public/cpp/ukm_entry_builder.h"
 #include "services/metrics/public/cpp/ukm_recorder.h"
 
@@ -124,16 +123,18 @@ void UkmPageLoadMetricsObserver::OnFailedProvisionalLoad(
   RecordPageLoadExtraInfoMetrics(
       extra_info, base::TimeTicks() /* no app_background_time */);
 
+  ukm::UkmRecorder* ukm_recorder = g_browser_process->ukm_recorder();
+  std::unique_ptr<ukm::UkmEntryBuilder> builder = ukm_recorder->GetEntryBuilder(
+      extra_info.source_id, internal::kUkmPageLoadEventName);
   // Error codes have negative values, however we log net error code enum values
   // for UMA histograms using the equivalent positive value. For consistency in
   // UKM, we convert to a positive value here.
   int64_t net_error_code = static_cast<int64_t>(failed_load_info.error) * -1;
   DCHECK_GE(net_error_code, 0);
-  ukm::builders::PageLoad(extra_info.source_id)
-      .SetNet_ErrorCode_OnFailedProvisionalLoad(net_error_code)
-      .SetPageTiming_NavigationToFailedProvisionalLoad(
-          failed_load_info.time_to_failed_provisional_load.InMilliseconds())
-      .Record(g_browser_process->ukm_recorder());
+  builder->AddMetric(internal::kUkmNetErrorCode, net_error_code);
+  builder->AddMetric(
+      internal::kUkmFailedProvisionaLoadName,
+      failed_load_info.time_to_failed_provisional_load.InMilliseconds());
 }
 
 void UkmPageLoadMetricsObserver::OnComplete(
@@ -147,33 +148,40 @@ void UkmPageLoadMetricsObserver::OnComplete(
 void UkmPageLoadMetricsObserver::RecordTimingMetrics(
     const page_load_metrics::mojom::PageLoadTiming& timing,
     ukm::SourceId source_id) {
-  ukm::builders::PageLoad builder(source_id);
+  ukm::UkmRecorder* ukm_recorder = g_browser_process->ukm_recorder();
+  std::unique_ptr<ukm::UkmEntryBuilder> builder =
+      ukm_recorder->GetEntryBuilder(source_id, internal::kUkmPageLoadEventName);
   if (timing.parse_timing->parse_start) {
-    builder.SetParseTiming_NavigationToParseStart(
+    builder->AddMetric(
+        internal::kUkmParseStartName,
         timing.parse_timing->parse_start.value().InMilliseconds());
   }
   if (timing.document_timing->dom_content_loaded_event_start) {
-    builder.SetDocumentTiming_NavigationToDOMContentLoadedEventFired(
+    builder->AddMetric(
+        internal::kUkmDomContentLoadedName,
         timing.document_timing->dom_content_loaded_event_start.value()
             .InMilliseconds());
   }
   if (timing.document_timing->load_event_start) {
-    builder.SetDocumentTiming_NavigationToLoadEventFired(
+    builder->AddMetric(
+        internal::kUkmLoadEventName,
         timing.document_timing->load_event_start.value().InMilliseconds());
   }
   if (timing.paint_timing->first_paint) {
-    builder.SetPaintTiming_NavigationToFirstPaint(
+    builder->AddMetric(
+        internal::kUkmFirstPaintName,
         timing.paint_timing->first_paint.value().InMilliseconds());
   }
   if (timing.paint_timing->first_contentful_paint) {
-    builder.SetPaintTiming_NavigationToFirstContentfulPaint(
+    builder->AddMetric(
+        internal::kUkmFirstContentfulPaintName,
         timing.paint_timing->first_contentful_paint.value().InMilliseconds());
   }
   if (timing.paint_timing->first_meaningful_paint) {
-    builder.SetExperimental_PaintTiming_NavigationToFirstMeaningfulPaint(
+    builder->AddMetric(
+        internal::kUkmFirstMeaningfulPaintName,
         timing.paint_timing->first_meaningful_paint.value().InMilliseconds());
   }
-  builder.Record(g_browser_process->ukm_recorder());
 }
 
 void UkmPageLoadMetricsObserver::RecordPageLoadExtraInfoMetrics(

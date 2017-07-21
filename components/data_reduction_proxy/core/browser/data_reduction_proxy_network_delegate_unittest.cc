@@ -314,14 +314,13 @@ class TestPreviewsDecider : public previews::PreviewsDecider {
   bool ShouldAllowPreviewAtECT(
       const net::URLRequest& request,
       previews::PreviewsType type,
-      net::EffectiveConnectionType effective_connection_type_threshold,
-      const std::vector<std::string>& host_blacklist_from_server)
+      net::EffectiveConnectionType effective_connection_type_threshold)
       const override {
     return true;
   }
 
   // Same as ShouldAllowPreviewAtECT, but uses the previews default
-  // EffectiveConnectionType and no blacklisted hosts from the server.
+  // EffectiveConnectionType.
   bool ShouldAllowPreview(const net::URLRequest& request,
                           previews::PreviewsType type) const override {
     return true;

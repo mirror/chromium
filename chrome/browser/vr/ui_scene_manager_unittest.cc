@@ -9,8 +9,6 @@
 #include "base/test/scoped_mock_time_message_loop_task_runner.h"
 #include "chrome/browser/vr/elements/ui_element.h"
 #include "chrome/browser/vr/elements/ui_element_debug_id.h"
-#include "chrome/browser/vr/target_property.h"
-#include "chrome/browser/vr/test/animation_utils.h"
 #include "chrome/browser/vr/test/mock_browser_interface.h"
 #include "chrome/browser/vr/test/ui_scene_manager_test.h"
 #include "chrome/browser/vr/ui_scene.h"
@@ -18,11 +16,6 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace vr {
-
-using TargetProperty::BOUNDS;
-using TargetProperty::TRANSFORM;
-using TargetProperty::VISIBILITY;
-using TargetProperty::OPACITY;
 
 namespace {
 std::set<UiElementDebugId> kElementsVisibleInBrowsing = {
@@ -35,9 +28,9 @@ TEST_F(UiSceneManagerTest, ExitPresentAndFullscreenOnAppButtonClick) {
   MakeManager(kNotInCct, kInWebVr);
 
   // Clicking app button should trigger to exit presentation.
-  EXPECT_CALL(*browser_, ExitPresent());
+  EXPECT_CALL(*browser_, ExitPresent()).Times(1);
   // And also trigger exit fullscreen.
-  EXPECT_CALL(*browser_, ExitFullscreen());
+  EXPECT_CALL(*browser_, ExitFullscreen()).Times(1);
   manager_->OnAppButtonClicked();
 }
 
@@ -168,54 +161,54 @@ TEST_F(UiSceneManagerTest, UiUpdatesForIncognito) {
   MakeManager(kNotInCct, kNotInWebVr);
 
   // Hold onto the background color to make sure it changes.
-  SkColor initial_background = scene_->background_color();
+  SkColor initial_background = scene_->GetWorldBackgroundColor();
   manager_->SetFullscreen(true);
 
   {
     SCOPED_TRACE("Entered Fullsceen");
     // Make sure background has changed for fullscreen.
-    EXPECT_NE(initial_background, scene_->background_color());
+    EXPECT_NE(initial_background, scene_->GetWorldBackgroundColor());
   }
 
-  SkColor fullscreen_background = scene_->background_color();
+  SkColor fullscreen_background = scene_->GetWorldBackgroundColor();
 
   manager_->SetIncognito(true);
 
   {
     SCOPED_TRACE("Entered Incognito");
     // Make sure background has changed for incognito.
-    EXPECT_NE(fullscreen_background, scene_->background_color());
-    EXPECT_NE(initial_background, scene_->background_color());
+    EXPECT_NE(fullscreen_background, scene_->GetWorldBackgroundColor());
+    EXPECT_NE(initial_background, scene_->GetWorldBackgroundColor());
   }
 
-  SkColor incognito_background = scene_->background_color();
+  SkColor incognito_background = scene_->GetWorldBackgroundColor();
 
   manager_->SetIncognito(false);
 
   {
     SCOPED_TRACE("Exited Incognito");
-    EXPECT_EQ(fullscreen_background, scene_->background_color());
+    EXPECT_EQ(fullscreen_background, scene_->GetWorldBackgroundColor());
   }
 
   manager_->SetFullscreen(false);
 
   {
     SCOPED_TRACE("Exited Fullsceen");
-    EXPECT_EQ(initial_background, scene_->background_color());
+    EXPECT_EQ(initial_background, scene_->GetWorldBackgroundColor());
   }
 
   manager_->SetIncognito(true);
 
   {
     SCOPED_TRACE("Entered Incognito");
-    EXPECT_EQ(incognito_background, scene_->background_color());
+    EXPECT_EQ(incognito_background, scene_->GetWorldBackgroundColor());
   }
 
   manager_->SetIncognito(false);
 
   {
     SCOPED_TRACE("Exited Incognito");
-    EXPECT_EQ(initial_background, scene_->background_color());
+    EXPECT_EQ(initial_background, scene_->GetWorldBackgroundColor());
   }
 }
 
@@ -237,12 +230,6 @@ TEST_F(UiSceneManagerTest, WebVrAutopresentedInsecureOrigin) {
 
   // Make sure the transient elements go away.
   task_runner_->FastForwardUntilNoTasksRemain();
-  UiElement* transient_url_bar =
-      scene_->GetUiElementByDebugId(kTransientUrlBar);
-  EXPECT_TRUE(IsAnimating(transient_url_bar, {OPACITY, VISIBILITY}));
-  // Finish the transition.
-  AnimateBy(MsToDelta(1000));
-  EXPECT_FALSE(IsAnimating(transient_url_bar, {OPACITY, VISIBILITY}));
   VerifyElementsVisible("End state", std::set<UiElementDebugId>{
                                          kWebVrPermanentHttpSecurityWarning});
 }
@@ -265,12 +252,6 @@ TEST_F(UiSceneManagerTest, WebVrAutopresented) {
 
   // Make sure the transient URL bar times out.
   task_runner_->FastForwardUntilNoTasksRemain();
-  UiElement* transient_url_bar =
-      scene_->GetUiElementByDebugId(kTransientUrlBar);
-  EXPECT_TRUE(IsAnimating(transient_url_bar, {OPACITY, VISIBILITY}));
-  // Finish the transition.
-  AnimateBy(MsToDelta(1000));
-  EXPECT_FALSE(IsAnimating(transient_url_bar, {OPACITY, VISIBILITY}));
   EXPECT_FALSE(IsVisible(kTransientUrlBar));
 }
 
@@ -283,41 +264,29 @@ TEST_F(UiSceneManagerTest, UiUpdatesForFullscreenChanges) {
   MakeManager(kNotInCct, kNotInWebVr);
 
   // Hold onto the background color to make sure it changes.
-  SkColor initial_background = scene_->background_color();
+  SkColor initial_background = scene_->GetWorldBackgroundColor();
   VerifyElementsVisible("Initial", kElementsVisibleInBrowsing);
-  UiElement* content_quad = scene_->GetUiElementByDebugId(kContentQuad);
-  gfx::SizeF initial_content_size = content_quad->size();
-  gfx::Transform initial_position =
-      content_quad->transform_operations().Apply();
 
   // In fullscreen mode, content elements should be visible, control elements
   // should be hidden.
   manager_->SetFullscreen(true);
   VerifyElementsVisible("In fullscreen", visible_in_fullscreen);
-  // Make sure background has changed for fullscreen.
-  EXPECT_NE(initial_background, scene_->background_color());
-  // Should have started transition.
-  EXPECT_TRUE(IsAnimating(content_quad, {TRANSFORM, BOUNDS}));
-  // Finish the transition.
-  AnimateBy(MsToDelta(1000));
-  EXPECT_FALSE(IsAnimating(content_quad, {TRANSFORM, BOUNDS}));
-  EXPECT_NE(initial_content_size, content_quad->size());
-  EXPECT_NE(initial_position, content_quad->transform_operations().Apply());
+  {
+    SCOPED_TRACE("Entered Fullsceen");
+    // Make sure background has changed for fullscreen.
+    EXPECT_NE(initial_background, scene_->GetWorldBackgroundColor());
+  }
 
   // Everything should return to original state after leaving fullscreen.
   manager_->SetFullscreen(false);
   VerifyElementsVisible("Restore initial", kElementsVisibleInBrowsing);
-  EXPECT_EQ(initial_background, scene_->background_color());
-  // Should have started transition.
-  EXPECT_TRUE(IsAnimating(content_quad, {TRANSFORM, BOUNDS}));
-  // Finish the transition.
-  AnimateBy(MsToDelta(1000));
-  EXPECT_FALSE(IsAnimating(content_quad, {TRANSFORM, BOUNDS}));
-  EXPECT_EQ(initial_content_size, content_quad->size());
-  EXPECT_EQ(initial_position, content_quad->transform_operations().Apply());
+  {
+    SCOPED_TRACE("Exited Fullsceen");
+    EXPECT_EQ(initial_background, scene_->GetWorldBackgroundColor());
+  }
 }
 
-TEST_F(UiSceneManagerTest, SecurityIconClickTriggersUnsupportedMode) {
+TEST_F(UiSceneManagerTest, UiUpdatesExitPrompt) {
   MakeManager(kNotInCct, kNotInWebVr);
 
   manager_->SetWebVrSecureOrigin(true);
@@ -325,111 +294,31 @@ TEST_F(UiSceneManagerTest, SecurityIconClickTriggersUnsupportedMode) {
   // Initial state.
   VerifyElementsVisible("Initial", kElementsVisibleInBrowsing);
 
-  // Clicking on security icon should trigger unsupported mode.
-  EXPECT_CALL(*browser_,
-              OnUnsupportedMode(UiUnsupportedMode::kUnhandledPageInfo));
+  // Exit prompt visible state.
   manager_->OnSecurityIconClickedForTesting();
-  VerifyElementsVisible("Prompt invisible", kElementsVisibleInBrowsing);
-}
-
-TEST_F(UiSceneManagerTest, UiUpdatesForShowingExitPrompt) {
-  MakeManager(kNotInCct, kNotInWebVr);
-
-  manager_->SetWebVrSecureOrigin(true);
-
-  // Initial state.
-  VerifyElementsVisible("Initial", kElementsVisibleInBrowsing);
-
-  // Showing exit VR prompt should make prompt visible.
-  manager_->SetExitVrPromptEnabled(true, UiUnsupportedMode::kUnhandledPageInfo);
   VerifyElementsVisible("Prompt visible", kElementsVisibleWithExitPrompt);
+
+  // Back to initial state.
+  manager_->OnExitPromptPrimaryButtonClickedForTesting();
+  VerifyElementsVisible("Restore initial", kElementsVisibleInBrowsing);
 }
 
-TEST_F(UiSceneManagerTest, UiUpdatesForHidingExitPrompt) {
-  MakeManager(kNotInCct, kNotInWebVr);
-
-  manager_->SetWebVrSecureOrigin(true);
-
-  // Initial state.
-  manager_->SetExitVrPromptEnabled(true, UiUnsupportedMode::kUnhandledPageInfo);
-  VerifyElementsVisible("Initial", kElementsVisibleWithExitPrompt);
-
-  // Hiding exit VR prompt should make prompt invisible.
-  manager_->SetExitVrPromptEnabled(false, UiUnsupportedMode::kCount);
-  VerifyElementsVisible("Prompt invisible", kElementsVisibleInBrowsing);
-}
-
-TEST_F(UiSceneManagerTest, BackplaneClickTriggersOnExitPrompt) {
+TEST_F(UiSceneManagerTest, BackplaneClickClosesExitPrompt) {
   MakeManager(kNotInCct, kNotInWebVr);
 
   manager_->SetWebVrSecureOrigin(true);
 
   // Initial state.
   VerifyElementsVisible("Initial", kElementsVisibleInBrowsing);
-  manager_->SetExitVrPromptEnabled(true, UiUnsupportedMode::kUnhandledPageInfo);
 
-  // Click on backplane should trigger UI browser interface but not close
-  // prompt.
-  EXPECT_CALL(*browser_,
-              OnExitVrPromptResult(UiUnsupportedMode::kUnhandledPageInfo,
-                                   ExitVrPromptChoice::CHOICE_NONE));
+  // Exit prompt visible state.
+  manager_->OnSecurityIconClickedForTesting();
+  VerifyElementsVisible("Prompt visble", kElementsVisibleWithExitPrompt);
+
+  // Back to initial state.
   scene_->GetUiElementByDebugId(kExitPromptBackplane)
       ->OnButtonUp(gfx::PointF());
-  VerifyElementsVisible("Prompt still visible", kElementsVisibleWithExitPrompt);
-}
-
-TEST_F(UiSceneManagerTest, PrimaryButtonClickTriggersOnExitPrompt) {
-  MakeManager(kNotInCct, kNotInWebVr);
-
-  manager_->SetWebVrSecureOrigin(true);
-
-  // Initial state.
-  VerifyElementsVisible("Initial", kElementsVisibleInBrowsing);
-  manager_->SetExitVrPromptEnabled(true, UiUnsupportedMode::kUnhandledPageInfo);
-
-  // Click on 'OK' should trigger UI browser interface but not close prompt.
-  EXPECT_CALL(*browser_,
-              OnExitVrPromptResult(UiUnsupportedMode::kUnhandledPageInfo,
-                                   ExitVrPromptChoice::CHOICE_STAY));
-  manager_->OnExitPromptChoiceForTesting(false);
-  VerifyElementsVisible("Prompt still visible", kElementsVisibleWithExitPrompt);
-}
-
-TEST_F(UiSceneManagerTest, SecondaryButtonClickTriggersOnExitPrompt) {
-  MakeManager(kNotInCct, kNotInWebVr);
-
-  manager_->SetWebVrSecureOrigin(true);
-
-  // Initial state.
-  VerifyElementsVisible("Initial", kElementsVisibleInBrowsing);
-  manager_->SetExitVrPromptEnabled(true, UiUnsupportedMode::kUnhandledPageInfo);
-
-  // Click on 'Exit VR' should trigger UI browser interface but not close
-  // prompt.
-  EXPECT_CALL(*browser_,
-              OnExitVrPromptResult(UiUnsupportedMode::kUnhandledPageInfo,
-                                   ExitVrPromptChoice::CHOICE_EXIT));
-  manager_->OnExitPromptChoiceForTesting(true);
-  VerifyElementsVisible("Prompt still visible", kElementsVisibleWithExitPrompt);
-}
-
-TEST_F(UiSceneManagerTest, SecondExitPromptTriggersOnExitPrompt) {
-  MakeManager(kNotInCct, kNotInWebVr);
-
-  manager_->SetWebVrSecureOrigin(true);
-
-  // Initial state.
-  VerifyElementsVisible("Initial", kElementsVisibleInBrowsing);
-  manager_->SetExitVrPromptEnabled(true, UiUnsupportedMode::kUnhandledPageInfo);
-
-  // Click on 'Exit VR' should trigger UI browser interface but not close
-  // prompt.
-  EXPECT_CALL(*browser_,
-              OnExitVrPromptResult(UiUnsupportedMode::kUnhandledPageInfo,
-                                   ExitVrPromptChoice::CHOICE_NONE));
-  manager_->SetExitVrPromptEnabled(true,
-                                   UiUnsupportedMode::kUnhandledCodePoint);
-  VerifyElementsVisible("Prompt still visible", kElementsVisibleWithExitPrompt);
+  VerifyElementsVisible("Restore initial", kElementsVisibleInBrowsing);
 }
 
 TEST_F(UiSceneManagerTest, UiUpdatesForWebVR) {

@@ -2913,8 +2913,8 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
                  routing_id_));
 
 #if BUILDFLAG(ENABLE_VR)
-  GetInterfaceRegistry()->AddInterface<device::mojom::VRService>(base::Bind(
-      &device::VRServiceImpl::Create, GetProcess()->GetID(), GetRoutingID()));
+  GetInterfaceRegistry()->AddInterface<device::mojom::VRService>(
+      base::Bind(&device::VRServiceImpl::Create));
 #else
   GetInterfaceRegistry()->AddInterface<device::mojom::VRService>(
       base::Bind(&IgnoreInterfaceRequest<device::mojom::VRService>));
@@ -4011,11 +4011,8 @@ void RenderFrameHostImpl::GetInterface(
     mojo::ScopedMessagePipeHandle interface_pipe) {
   if (!interface_registry_ ||
       !interface_registry_->TryBindInterface(interface_name, &interface_pipe)) {
-    delegate_->OnInterfaceRequest(this, interface_name, &interface_pipe);
-    if (interface_pipe->is_valid()) {
-      GetContentClient()->browser()->BindInterfaceRequestFromFrame(
-          this, interface_name, std::move(interface_pipe));
-    }
+    GetContentClient()->browser()->BindInterfaceRequestFromFrame(
+        this, interface_name, std::move(interface_pipe));
   }
 }
 

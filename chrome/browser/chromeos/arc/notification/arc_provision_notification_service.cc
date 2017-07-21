@@ -11,7 +11,6 @@
 #include "base/memory/singleton.h"
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/chromeos/arc/arc_util.h"
-#include "chrome/browser/profiles/profile.h"
 #include "chrome/grit/generated_resources.h"
 #include "chrome/grit/theme_resources.h"
 #include "components/arc/arc_browser_context_keyed_service_factory_base.h"
@@ -107,29 +106,32 @@ ArcProvisionNotificationService::GetForBrowserContext(
 ArcProvisionNotificationService::ArcProvisionNotificationService(
     content::BrowserContext* context,
     ArcBridgeService* bridge_service)
-    : ArcProvisionNotificationService(context,
-                                      base::MakeUnique<DelegateImpl>()) {}
+    : ArcProvisionNotificationService(base::MakeUnique<DelegateImpl>()) {}
 
 ArcProvisionNotificationService::~ArcProvisionNotificationService() {
   // Make sure no notification is left being shown.
   delegate_->RemoveManagedProvisionNotification();
 
-  ArcSessionManager::Get()->RemoveObserver(this);
+  // TODO(hidehiko): Currently, the lifetime of ArcSessionManager and
+  // BrowserContextKeyedService is not nested.
+  // If ArcSessionManager::Get() returns nullptr, it is already destructed,
+  // so do not touch it.
+  auto* arc_session_manager = ArcSessionManager::Get();
+  if (arc_session_manager)
+    arc_session_manager->RemoveObserver(this);
 }
 
 // static
 std::unique_ptr<ArcProvisionNotificationService>
 ArcProvisionNotificationService::CreateForTesting(
-    content::BrowserContext* context,
     std::unique_ptr<Delegate> delegate) {
   return base::WrapUnique<ArcProvisionNotificationService>(
-      new ArcProvisionNotificationService(context, std::move(delegate)));
+      new ArcProvisionNotificationService(std::move(delegate)));
 }
 
 ArcProvisionNotificationService::ArcProvisionNotificationService(
-    content::BrowserContext* context,
     std::unique_ptr<Delegate> delegate)
-    : context_(context), delegate_(std::move(delegate)) {
+    : delegate_(std::move(delegate)) {
   ArcSessionManager::Get()->AddObserver(this);
 }
 
@@ -145,9 +147,9 @@ void ArcProvisionNotificationService::OnArcOptInManagementCheckStarted() {
   // This observer is notified at an early phase of the opt-in flow, so start
   // showing the notification if the opt-in flow happens silently (due to the
   // managed prefs), or ensure that no notification is shown otherwise.
-  const Profile* const profile = Profile::FromBrowserContext(context_);
+  const Profile* const profile = ArcSessionManager::Get()->profile();
   if (IsArcPlayStoreEnabledPreferenceManagedForProfile(profile) &&
-      AreArcAllOptInPreferencesIgnorableForProfile(profile)) {
+      AreArcAllOptInPreferencesManagedForProfile(profile)) {
     delegate_->ShowManagedProvisionNotification();
   } else {
     delegate_->RemoveManagedProvisionNotification();

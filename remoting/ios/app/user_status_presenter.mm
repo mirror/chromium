@@ -12,10 +12,6 @@
 #import "remoting/ios/facade/remoting_authentication.h"
 #import "remoting/ios/facade/remoting_service.h"
 
-#include "base/strings/sys_string_conversions.h"
-#include "remoting/base/string_resources.h"
-#include "ui/base/l10n/l10n_util.h"
-
 @interface UserStatusPresenter () {
   BOOL _isStarted;
 }
@@ -78,8 +74,8 @@
     return;
   }
   MDCSnackbarMessage* message = [[MDCSnackbarMessage alloc] init];
-  message.text = l10n_util::GetNSStringF(
-      IDS_LOG_IN_ACCOUNT_DESCRIPTION, base::SysNSStringToUTF16(user.userEmail));
+  message.text =
+      [NSString stringWithFormat:@"Currently signed in as %@.", user.userEmail];
   [MDCSnackbarManager showMessage:message];
 }
 

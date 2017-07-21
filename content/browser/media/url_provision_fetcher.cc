@@ -57,7 +57,7 @@ void URLProvisionFetcher::Retrieve(
           destination: OTHER
         }
         policy {
-          cookies_allowed: NO
+          cookies_allowed: false
           setting:
             "On Android, users can disable this feature by disabling Protected "
             "Media Identifier permissions."

@@ -3,7 +3,6 @@
 # found in the LICENSE file.
 
 import("//build/config/android/rules.gni")
-import("//device/vr/features/features.gni")
 import("//testing/test.gni")
 
 # Mark all targets as test only.
@@ -118,7 +117,6 @@ instrumentation_test_apk("webview_instrumentation_test_apk") {
     "//components/policy/android:policy_java",
     "//components/policy/android:policy_java_test_support",
     "//components/safe_browsing_db/android:safe_browsing_java",
-    "//components/variations/android:variations_java",
     "//components/web_contents_delegate_android:web_contents_delegate_android_java",
     "//content/public/android:content_java",
     "//content/public/test/android:content_java_test_support",
@@ -168,7 +166,6 @@ instrumentation_test_apk("webview_instrumentation_test_apk") {
     "../javatests/src/org/chromium/android_webview/test/AwStrictModeTest.java",
     "../javatests/src/org/chromium/android_webview/test/AwTestBase.java",
     "../javatests/src/org/chromium/android_webview/test/AwWebContentsObserverTest.java",
-    "../javatests/src/org/chromium/android_webview/test/AwVariationsSeedFetchServiceTest.java",
     "../javatests/src/org/chromium/android_webview/test/AwZoomTest.java",
     "../javatests/src/org/chromium/android_webview/test/CleanupReferenceTest.java",
     "../javatests/src/org/chromium/android_webview/test/ClearHistoryTest.java",
@@ -229,14 +226,6 @@ instrumentation_test_apk("webview_instrumentation_test_apk") {
   data = [
     "data/",
   ]
-
-  # We only want to bother including these on bots set up for VR testing
-  if (include_vr_data) {
-    data += [
-      "//chrome/android/shared_preference_files/test/",
-      "//third_party/gvr-android-sdk/test-apks/vr_services/vr_services_current.apk",
-    ]
-  }
   additional_apks = [
     "//android_webview/test/embedded_test_server:aw_net_test_support_apk",
     "//net/android:net_test_support_apk",

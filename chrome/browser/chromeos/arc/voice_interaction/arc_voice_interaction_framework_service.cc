@@ -223,8 +223,14 @@ ArcVoiceInteractionFrameworkService::ArcVoiceInteractionFrameworkService(
 }
 
 ArcVoiceInteractionFrameworkService::~ArcVoiceInteractionFrameworkService() {
+  // TODO(hidehiko): Currently, the lifetime of ArcBridgeService and
+  // BrowserContextKeyedService is not nested.
+  // If ArcServiceManager::Get() returns nullptr, it is already destructed,
+  // so do not touch it.
+  if (ArcServiceManager::Get())
+    arc_bridge_service_->voice_interaction_framework()->RemoveObserver(this);
   ArcSessionManager::Get()->RemoveObserver(this);
-  arc_bridge_service_->voice_interaction_framework()->RemoveObserver(this);
+  ArcSessionManager::Get()->AddObserver(this);
 }
 
 void ArcVoiceInteractionFrameworkService::OnInstanceReady() {

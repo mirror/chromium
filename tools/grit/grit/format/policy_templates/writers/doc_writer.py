@@ -688,6 +688,7 @@ class DocWriter(xml_formatted_writer.XMLFormattedWriter):
       'linux': 'Linux',
       'chrome_os': self.config['os_name'],
       'android': 'Android',
+      'ios': 'iOS',
     }
     # Human-readable names of supported products.
     self._PRODUCT_MAP = {

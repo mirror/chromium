@@ -173,8 +173,7 @@ void ChromeOSMetricsProvider::InitTaskGetHardwareClass(
   // the UI thread.
   base::PostTaskWithTraitsAndReply(
       FROM_HERE,
-      {base::MayBlock(), base::WithBaseSyncPrimitives(),
-       base::TaskPriority::BACKGROUND,
+      {base::MayBlock(), base::TaskPriority::BACKGROUND,
        base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN},
       base::BindOnce(
           &ChromeOSMetricsProvider::InitTaskGetHardwareClassOnBackgroundThread,

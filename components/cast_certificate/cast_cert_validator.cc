@@ -25,7 +25,6 @@
 #include "net/cert/internal/signature_algorithm.h"
 #include "net/cert/internal/signature_policy.h"
 #include "net/cert/internal/trust_store_in_memory.h"
-#include "net/cert/internal/verify_certificate_chain.h"
 #include "net/cert/internal/verify_signed_data.h"
 #include "net/cert/x509_util.h"
 #include "net/der/encode_values.h"
@@ -235,35 +234,19 @@ net::ParseCertificateOptions GetCertParsingOptions() {
   return options;
 }
 
-// Returns the CastCertError for the failed path building.
-// This function must only be called if path building failed.
-CastCertError MapToCastError(const net::CertPathBuilder::Result& result) {
-  DCHECK(!result.HasValidPath());
-  if (result.paths.empty())
-    return CastCertError::ERR_CERTS_VERIFY_GENERIC;
-  const net::CertPathErrors& path_errors =
-      result.paths.at(result.best_result_index)->errors;
-  if (path_errors.ContainsError(net::kValidityFailedNotAfter) ||
-      path_errors.ContainsError(net::kValidityFailedNotBefore)) {
-    return CastCertError::ERR_CERTS_DATE_INVALID;
-  }
-  return CastCertError::ERR_CERTS_VERIFY_GENERIC;
-}
-
 }  // namespace
 
-CastCertError VerifyDeviceCert(
-    const std::vector<std::string>& certs,
-    const base::Time& time,
-    std::unique_ptr<CertVerificationContext>* context,
-    CastDeviceCertPolicy* policy,
-    const CastCRL* crl,
-    CRLPolicy crl_policy) {
+bool VerifyDeviceCert(const std::vector<std::string>& certs,
+                      const base::Time& time,
+                      std::unique_ptr<CertVerificationContext>* context,
+                      CastDeviceCertPolicy* policy,
+                      const CastCRL* crl,
+                      CRLPolicy crl_policy) {
   return VerifyDeviceCertUsingCustomTrustStore(
       certs, time, context, policy, crl, crl_policy, &CastTrustStore::Get());
 }
 
-CastCertError VerifyDeviceCertUsingCustomTrustStore(
+bool VerifyDeviceCertUsingCustomTrustStore(
     const std::vector<std::string>& certs,
     const base::Time& time,
     std::unique_ptr<CertVerificationContext>* context,
@@ -275,11 +258,7 @@ CastCertError VerifyDeviceCertUsingCustomTrustStore(
     return VerifyDeviceCert(certs, time, context, policy, crl, crl_policy);
 
   if (certs.empty())
-    return CastCertError::ERR_CERTS_MISSING;
-
-  // Fail early if CRL is required but not provided.
-  if (!crl && crl_policy == CRLPolicy::CRL_REQUIRED)
-    return CastCertError::ERR_CRL_INVALID;
+    return false;
 
   net::CertErrors errors;
   scoped_refptr<net::ParsedCertificate> target_cert;
@@ -288,8 +267,9 @@ CastCertError VerifyDeviceCertUsingCustomTrustStore(
     scoped_refptr<net::ParsedCertificate> cert(net::ParsedCertificate::Create(
         net::x509_util::CreateCryptoBuffer(certs[i]), GetCertParsingOptions(),
         &errors));
+    // TODO(eroman): Propagate/log these parsing errors.
     if (!cert)
-      return CastCertError::ERR_CERTS_PARSE;
+      return false;
 
     if (i == 0)
       target_cert = std::move(cert);
@@ -304,7 +284,7 @@ CastCertError VerifyDeviceCertUsingCustomTrustStore(
   // two Cast trust anchors and Cast signature policy.
   net::der::GeneralizedTime verification_time;
   if (!net::der::EncodeTimeAsGeneralizedTime(time, &verification_time))
-    return CastCertError::ERR_UNEXPECTED;
+    return false;
   net::CertPathBuilder::Result result;
   net::CertPathBuilder path_builder(
       target_cert.get(), trust_store, signature_policy.get(), verification_time,
@@ -313,8 +293,10 @@ CastCertError VerifyDeviceCertUsingCustomTrustStore(
       net::InitialAnyPolicyInhibit::kFalse, &result);
   path_builder.AddCertIssuerSource(&intermediate_cert_issuer_source);
   path_builder.Run();
-  if (!result.HasValidPath())
-    return MapToCastError(result);
+  if (!result.HasValidPath()) {
+    // TODO(crbug.com/634443): Log error information.
+    return false;
+  }
 
   // Determine whether this device certificate is restricted to audio-only.
   DetermineDeviceCertificatePolicy(result.GetBestValidPath(), policy);
@@ -323,13 +305,19 @@ CastCertError VerifyDeviceCertUsingCustomTrustStore(
   // building (key usage), and construct a CertVerificationContext that uses
   // its public key.
   if (!CheckTargetCertificate(target_cert.get(), context))
-    return CastCertError::ERR_CERTS_RESTRICTIONS;
+    return false;
 
-  // Check for revocation.
-  if (crl && !crl->CheckRevocation(result.GetBestValidPath()->path, time))
-    return CastCertError::ERR_CERTS_REVOKED;
-
-  return CastCertError::OK;
+  // Check if a CRL is available.
+  if (!crl) {
+    if (crl_policy == CRLPolicy::CRL_REQUIRED) {
+      return false;
+    }
+  } else {
+    if (!crl->CheckRevocation(result.GetBestValidPath()->path, time)) {
+      return false;
+    }
+  }
+  return true;
 }
 
 std::unique_ptr<CertVerificationContext> CertVerificationContextImplForTest(

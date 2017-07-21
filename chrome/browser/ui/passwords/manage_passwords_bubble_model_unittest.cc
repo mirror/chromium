@@ -330,14 +330,17 @@ TEST_F(ManagePasswordsBubbleModelTest, ClickUpdate) {
 TEST_F(ManagePasswordsBubbleModelTest, Edit) {
   using password_manager::metrics_util::CredentialSourceType;
   for (const bool do_change : {false, true}) {
-    ukm::TestAutoSetUkmRecorder test_ukm_recorder;
+    ukm::TestUkmRecorder test_ukm_recorder;
     {
       // Setup metrics recorder
       ukm::SourceId source_id = test_ukm_recorder.GetNewSourceID();
-      auto recorder =
-          base::MakeRefCounted<password_manager::PasswordFormMetricsRecorder>(
-              true /*is_main_frame_secure*/, &test_ukm_recorder, source_id,
-              GURL("https://www.example.com/"));
+      static_cast<ukm::UkmRecorder*>(&test_ukm_recorder)
+          ->UpdateSourceURL(source_id, GURL("https://www.example.com/"));
+      auto recorder = base::MakeRefCounted<
+          password_manager::PasswordFormMetricsRecorder>(
+          true /*is_main_frame_secure*/,
+          password_manager::PasswordFormMetricsRecorder::CreateUkmEntryBuilder(
+              &test_ukm_recorder, source_id));
 
       // Exercise bubble.
       ON_CALL(*controller(), GetPasswordFormMetricsRecorder())
@@ -565,14 +568,17 @@ TEST_F(ManagePasswordsBubbleModelTest, RecordUKMs) {
                      << ", interaction = " << static_cast<int64_t>(interaction)
                      << ", credential management api ="
                      << credential_management_api);
-        ukm::TestAutoSetUkmRecorder test_ukm_recorder;
+        ukm::TestUkmRecorder test_ukm_recorder;
         {
           // Setup metrics recorder
+          ukm::SourceId source_id = test_ukm_recorder.GetNewSourceID();
+          static_cast<ukm::UkmRecorder*>(&test_ukm_recorder)
+              ->UpdateSourceURL(source_id, GURL("https://www.example.com/"));
           auto recorder = base::MakeRefCounted<
               password_manager::PasswordFormMetricsRecorder>(
-              true /*is_main_frame_secure*/, &test_ukm_recorder,
-              test_ukm_recorder.GetNewSourceID(),
-              GURL("https://www.example.com/"));
+              true /*is_main_frame_secure*/,
+              password_manager::PasswordFormMetricsRecorder::
+                  CreateUkmEntryBuilder(&test_ukm_recorder, source_id));
 
           // Exercise bubble.
           ON_CALL(*controller(), GetPasswordFormMetricsRecorder())

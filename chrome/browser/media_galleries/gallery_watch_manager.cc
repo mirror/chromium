@@ -79,8 +79,8 @@ class GalleryWatchManager::FileWatchManager {
   base::WeakPtr<FileWatchManager> GetWeakPtr();
 
  private:
-  using WatcherMap =
-      std::map<base::FilePath, std::unique_ptr<base::FilePathWatcher>>;
+  typedef std::map<base::FilePath, linked_ptr<base::FilePathWatcher> >
+      WatcherMap;
 
   void OnFilePathChanged(const base::FilePath& path, bool error);
 
@@ -116,14 +116,14 @@ void GalleryWatchManager::FileWatchManager::AddFileWatch(
     return;
   }
 
-  auto watcher = base::MakeUnique<base::FilePathWatcher>();
+  linked_ptr<base::FilePathWatcher> watcher(new base::FilePathWatcher);
   bool success = watcher->Watch(path,
                                 true /*recursive*/,
                                 base::Bind(&FileWatchManager::OnFilePathChanged,
                                            weak_factory_.GetWeakPtr()));
 
   if (success)
-    watchers_[path] = std::move(watcher);
+    watchers_[path] = watcher;
 
   BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
                           base::BindOnce(callback, success));

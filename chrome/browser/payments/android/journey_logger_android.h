@@ -5,6 +5,8 @@
 #ifndef CHROME_BROWSER_PAYMENTS_ANDROID_JOURNEY_LOGGER_ANDROID_H_
 #define CHROME_BROWSER_PAYMENTS_ANDROID_JOURNEY_LOGGER_ANDROID_H_
 
+#include <jni.h>
+
 #include "base/android/scoped_java_ref.h"
 #include "base/macros.h"
 #include "components/payments/core/journey_logger.h"
@@ -14,6 +16,9 @@ namespace payments {
 // Forwarding calls to payments::JourneyLogger.
 class JourneyLoggerAndroid {
  public:
+  // Registers the JNI bindings for this class.
+  static bool Register(JNIEnv* env);
+
   JourneyLoggerAndroid(bool is_incognito, const std::string& url);
   ~JourneyLoggerAndroid();
 

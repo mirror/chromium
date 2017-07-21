@@ -78,12 +78,6 @@ public class EventForwarder {
 
         TraceEvent.begin("sendTouchEvent");
         try {
-            // Android may batch multiple events together for efficiency. We
-            // want to use the oldest event time as hardware time stamp.
-            final long oldestEventTime = event.getHistorySize() > 0
-                    ? event.getHistoricalEventTime(0)
-                    : event.getEventTime();
-
             int eventAction = event.getActionMasked();
 
             eventAction = SPenSupport.convertSPenEventAction(eventAction);
@@ -113,7 +107,7 @@ public class EventForwarder {
             }
 
             final boolean consumed = nativeOnTouchEvent(mNativeEventForwarder, event,
-                    oldestEventTime, eventAction, pointerCount, event.getHistorySize(),
+                    event.getEventTime(), eventAction, pointerCount, event.getHistorySize(),
                     event.getActionIndex(), event.getX(), event.getY(),
                     pointerCount > 1 ? event.getX(1) : 0, pointerCount > 1 ? event.getY(1) : 0,
                     event.getPointerId(0), pointerCount > 1 ? event.getPointerId(1) : -1,

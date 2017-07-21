@@ -160,11 +160,11 @@ ScreenOrientationController::ScreenOrientationController()
       rotation_locked_orientation_(blink::kWebScreenOrientationLockAny),
       user_rotation_(display::Display::ROTATE_0),
       current_rotation_(display::Display::ROTATE_0) {
-  Shell::Get()->tablet_mode_controller()->AddObserver(this);
+  Shell::Get()->AddShellObserver(this);
 }
 
 ScreenOrientationController::~ScreenOrientationController() {
-  Shell::Get()->tablet_mode_controller()->RemoveObserver(this);
+  Shell::Get()->RemoveShellObserver(this);
   chromeos::AccelerometerReader::GetInstance()->RemoveObserver(this);
   Shell::Get()->window_tree_host_manager()->RemoveObserver(this);
   Shell::Get()->activation_client()->RemoveObserver(this);

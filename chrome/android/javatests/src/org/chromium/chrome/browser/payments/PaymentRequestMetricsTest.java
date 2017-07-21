@@ -103,14 +103,6 @@ public class PaymentRequestMetricsTest implements MainActivityStartCallback {
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
                         "PaymentRequest.CheckoutFunnel.Completed", 1));
-
-        // Make sure the events were logged correctly.
-        int expectedSample = Event.SHOWN | Event.PAY_CLICKED | Event.RECEIVED_INSTRUMENT_DETAILS
-                | Event.COMPLETED | Event.HAD_INITIAL_FORM_OF_PAYMENT
-                | Event.HAD_NECESSARY_COMPLETE_SUGGESTIONS;
-        Assert.assertEquals(1,
-                RecordHistogram.getHistogramValueCountForTesting(
-                        "PaymentRequest.Events", expectedSample));
     }
 
     /**
@@ -142,13 +134,6 @@ public class PaymentRequestMetricsTest implements MainActivityStartCallback {
         mPaymentRequestTestRule.expectResultContains(new String[] {"Request cancelled"});
 
         mPaymentRequestTestRule.assertOnlySpecificAbortMetricLogged(AbortReason.ABORTED_BY_USER);
-
-        // Make sure the events were logged correctly.
-        int expectedSample = Event.SHOWN | Event.USER_ABORTED | Event.HAD_INITIAL_FORM_OF_PAYMENT
-                | Event.HAD_NECESSARY_COMPLETE_SUGGESTIONS;
-        Assert.assertEquals(1,
-                RecordHistogram.getHistogramValueCountForTesting(
-                        "PaymentRequest.Events", expectedSample));
     }
 
     /**
@@ -171,13 +156,6 @@ public class PaymentRequestMetricsTest implements MainActivityStartCallback {
         mPaymentRequestTestRule.expectResultContains(new String[] {"Request cancelled"});
 
         mPaymentRequestTestRule.assertOnlySpecificAbortMetricLogged(AbortReason.ABORTED_BY_USER);
-
-        // Make sure the events were logged correctly.
-        int expectedSample = Event.SHOWN | Event.USER_ABORTED | Event.HAD_INITIAL_FORM_OF_PAYMENT
-                | Event.HAD_NECESSARY_COMPLETE_SUGGESTIONS;
-        Assert.assertEquals(1,
-                RecordHistogram.getHistogramValueCountForTesting(
-                        "PaymentRequest.Events", expectedSample));
     }
 
     /**
@@ -206,13 +184,6 @@ public class PaymentRequestMetricsTest implements MainActivityStartCallback {
         mPaymentRequestTestRule.expectResultContains(new String[] {"Request cancelled"});
 
         mPaymentRequestTestRule.assertOnlySpecificAbortMetricLogged(AbortReason.ABORTED_BY_USER);
-
-        // Make sure the events were logged correctly.
-        int expectedSample = Event.SHOWN | Event.USER_ABORTED | Event.HAD_INITIAL_FORM_OF_PAYMENT
-                | Event.HAD_NECESSARY_COMPLETE_SUGGESTIONS;
-        Assert.assertEquals(1,
-                RecordHistogram.getHistogramValueCountForTesting(
-                        "PaymentRequest.Events", expectedSample));
     }
 
     /**
@@ -223,7 +194,7 @@ public class PaymentRequestMetricsTest implements MainActivityStartCallback {
     @MediumTest
     @Feature({"Payments"})
     @RetryOnFailure
-    public void testAbortMetrics_OtherAborted_TabClosed()
+    public void testAbortMetrics_AbortedByUser_TabClosed()
             throws InterruptedException, ExecutionException, TimeoutException {
         mPaymentRequestTestRule.triggerUIAndWait("ccBuy", mPaymentRequestTestRule.getReadyToPay());
         mPaymentRequestTestRule.clickInShippingAddressAndWait(
@@ -235,13 +206,6 @@ public class PaymentRequestMetricsTest implements MainActivityStartCallback {
 
         mPaymentRequestTestRule.assertOnlySpecificAbortMetricLogged(
                 AbortReason.MOJO_RENDERER_CLOSING);
-
-        // Make sure the events were logged correctly.
-        int expectedSample = Event.SHOWN | Event.OTHER_ABORTED | Event.HAD_INITIAL_FORM_OF_PAYMENT
-                | Event.HAD_NECESSARY_COMPLETE_SUGGESTIONS;
-        Assert.assertEquals(1,
-                RecordHistogram.getHistogramValueCountForTesting(
-                        "PaymentRequest.Events", expectedSample));
     }
 
     /**
@@ -262,13 +226,6 @@ public class PaymentRequestMetricsTest implements MainActivityStartCallback {
 
         mPaymentRequestTestRule.assertOnlySpecificAbortMetricLogged(
                 AbortReason.ABORTED_BY_MERCHANT);
-
-        // Make sure the events were logged correctly.
-        int expectedSample = Event.SHOWN | Event.OTHER_ABORTED | Event.HAD_INITIAL_FORM_OF_PAYMENT
-                | Event.HAD_NECESSARY_COMPLETE_SUGGESTIONS;
-        Assert.assertEquals(1,
-                RecordHistogram.getHistogramValueCountForTesting(
-                        "PaymentRequest.Events", expectedSample));
     }
 
     /**
@@ -299,10 +256,6 @@ public class PaymentRequestMetricsTest implements MainActivityStartCallback {
                 RecordHistogram.getHistogramValueCountForTesting(
                         "PaymentRequest.CheckoutFunnel.NoShow",
                         NotShownReason.NO_MATCHING_PAYMENT_METHOD));
-
-        // Make sure no events were logged.
-        Assert.assertEquals(
-                0, RecordHistogram.getHistogramTotalCountForTesting("PaymentRequest.Events"));
     }
 
     /**
@@ -329,10 +282,6 @@ public class PaymentRequestMetricsTest implements MainActivityStartCallback {
                 RecordHistogram.getHistogramValueCountForTesting(
                         "PaymentRequest.CheckoutFunnel.NoShow",
                         NotShownReason.NO_SUPPORTED_PAYMENT_METHOD));
-
-        // Make sure no events were logged.
-        Assert.assertEquals(
-                0, RecordHistogram.getHistogramTotalCountForTesting("PaymentRequest.Events"));
     }
 
     /**
@@ -403,14 +352,6 @@ public class PaymentRequestMetricsTest implements MainActivityStartCallback {
                         "PaymentRequest.CheckoutFunnel.Shown", 1));
 
         assertOnlySpecificSelectedPaymentMethodMetricLogged(SelectedPaymentMethod.ANDROID_PAY);
-
-        // Make sure the events were logged correctly.
-        int expectedSample = Event.SKIPPED_SHOW | Event.PAY_CLICKED
-                | Event.RECEIVED_INSTRUMENT_DETAILS | Event.COMPLETED
-                | Event.HAD_INITIAL_FORM_OF_PAYMENT | Event.HAD_NECESSARY_COMPLETE_SUGGESTIONS;
-        Assert.assertEquals(1,
-                RecordHistogram.getHistogramValueCountForTesting(
-                        "PaymentRequest.Events", expectedSample));
     }
 
     /**
@@ -442,13 +383,6 @@ public class PaymentRequestMetricsTest implements MainActivityStartCallback {
         Assert.assertEquals(0,
                 RecordHistogram.getHistogramValueCountForTesting(
                         "PaymentRequest.CheckoutFunnel.SkippedShow", 1));
-
-        // Make sure the events were logged correctly.
-        int expectedSample = Event.SHOWN | Event.USER_ABORTED | Event.HAD_INITIAL_FORM_OF_PAYMENT
-                | Event.HAD_NECESSARY_COMPLETE_SUGGESTIONS;
-        Assert.assertEquals(1,
-                RecordHistogram.getHistogramValueCountForTesting(
-                        "PaymentRequest.Events", expectedSample));
     }
 
     /**
@@ -484,10 +418,6 @@ public class PaymentRequestMetricsTest implements MainActivityStartCallback {
         Assert.assertEquals(1,
                 RecordHistogram.getHistogramValueCountForTesting(
                         "PaymentRequest.CheckoutFunnel.Shown", 1));
-
-        // Make sure only one set of events was logged.
-        Assert.assertEquals(
-                1, RecordHistogram.getHistogramTotalCountForTesting("PaymentRequest.Events"));
     }
 
     /**

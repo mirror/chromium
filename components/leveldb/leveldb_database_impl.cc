@@ -16,7 +16,6 @@
 #include "base/trace_event/memory_dump_manager.h"
 #include "components/leveldb/env_mojo.h"
 #include "components/leveldb/public/cpp/util.h"
-#include "third_party/leveldatabase/env_chromium.h"
 #include "third_party/leveldatabase/src/include/leveldb/db.h"
 #include "third_party/leveldatabase/src/include/leveldb/write_batch.h"
 
@@ -311,10 +310,11 @@ bool LevelDBDatabaseImpl::OnMemoryDump(
                          cache_->TotalCharge());
   }
 
-  // All leveldb databases are already dumped by leveldb_env::DBTracker. Add
-  // an edge to avoid double counting.
-  pmd->AddSuballocation(mad->guid(),
-                        leveldb_env::DBTracker::GetMemoryDumpName(db_.get()));
+  const char* system_allocator_name =
+      base::trace_event::MemoryDumpManager::GetInstance()
+          ->system_allocator_pool_name();
+  if (system_allocator_name)
+    pmd->AddSuballocation(mad->guid(), system_allocator_name);
 
   if (memory_dump_id_) {
     auto* global_dump = pmd->CreateSharedGlobalAllocatorDump(*memory_dump_id_);

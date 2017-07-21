@@ -59,7 +59,7 @@
 #include "ui/gfx/geometry/vector2d_conversions.h"
 
 namespace {
-static base::AtomicSequenceNumber s_layer_tree_host_sequence_number;
+static base::StaticAtomicSequenceNumber s_layer_tree_host_sequence_number;
 }
 
 namespace cc {
@@ -251,7 +251,7 @@ void LayerTreeHost::BeginMainFrameNotExpectedUntil(base::TimeTicks time) {
   client_->BeginMainFrameNotExpectedUntil(time);
 }
 
-void LayerTreeHost::BeginMainFrame(const viz::BeginFrameArgs& args) {
+void LayerTreeHost::BeginMainFrame(const BeginFrameArgs& args) {
   client_->BeginMainFrame(args);
 }
 

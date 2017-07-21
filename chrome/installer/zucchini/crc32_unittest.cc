@@ -4,8 +4,7 @@
 
 #include "chrome/installer/zucchini/crc32.h"
 
-#include <stdint.h>
-
+#include <cstdint>
 #include <iterator>
 
 #include "base/test/gtest_util.h"

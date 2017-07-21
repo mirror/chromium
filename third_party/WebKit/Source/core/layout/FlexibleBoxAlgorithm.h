@@ -42,11 +42,6 @@ namespace blink {
 
 class LayoutBox;
 
-enum FlexSign {
-  kPositiveFlexibility,
-  kNegativeFlexibility,
-};
-
 class FlexItem {
  public:
   FlexItem(LayoutBox*,
@@ -79,29 +74,16 @@ class FlexItem {
   bool frozen;
 };
 
-class FlexLine {
- public:
-  FlexLine() {
+struct FlexLine {
+  void Reset() {
+    line_items.clear();
+    sum_flex_base_size = LayoutUnit();
     total_flex_grow = total_flex_shrink = total_weighted_flex_shrink = 0;
+    sum_hypothetical_main_size = LayoutUnit();
+    cross_axis_offset = cross_axis_extent = max_ascent = LayoutUnit();
   }
-
-  FlexSign Sign() const {
-    return sum_hypothetical_main_size < container_main_inner_size
-               ? kPositiveFlexibility
-               : kNegativeFlexibility;
-  }
-
-  void SetContainerMainInnerSize(LayoutUnit size) {
-    container_main_inner_size = size;
-  }
-
-  void FreezeInflexibleItems();
-
-  // This modifies remaining_free_space.
-  void FreezeViolations(Vector<FlexItem*>& violations);
 
   // These fields get filled in by ComputeNextFlexLine.
-  // TODO(cbiesinger): Consider moving to a constructor.
   Vector<FlexItem> line_items;
   LayoutUnit sum_flex_base_size;
   double total_flex_grow;
@@ -110,17 +92,6 @@ class FlexLine {
   // The hypothetical main size of an item is the flex base size clamped
   // according to its min and max main size properties
   LayoutUnit sum_hypothetical_main_size;
-
-  // This gets set by SetContainerMainInnerSize
-  LayoutUnit container_main_inner_size;
-  // initial_free_space is the initial amount of free space in this flexbox.
-  // remaining_free_space starts out at the same value but as we place and lay
-  // out flex items we subtract from it. Note that both values can be
-  // negative.
-  // These get set by FreezeInflexibleItems, see spec:
-  // https://drafts.csswg.org/css-flexbox/#resolve-flexible-lengths step 3
-  LayoutUnit initial_free_space;
-  LayoutUnit remaining_free_space;
 
   // These get filled in by LayoutAndPlaceChildren (for now)
   // TODO(cbiesinger): Move that to FlexibleBoxAlgorithm.
@@ -137,11 +108,7 @@ class FlexLayoutAlgorithm {
                       LayoutUnit line_break_length,
                       const Vector<FlexItem>& all_items);
 
-  Vector<FlexLine>& FlexLines() { return flex_lines_; }
-
-  // Computes the next flex line, stores it in FlexLines(), and returns a
-  // pointer to it. Returns nullptr if there are no more lines.
-  FlexLine* ComputeNextFlexLine();
+  bool ComputeNextFlexLine(size_t* next_index, FlexLine*);
 
  private:
   bool IsMultiline() const { return style_->FlexWrap() != EFlexWrap::kNowrap; }
@@ -149,8 +116,6 @@ class FlexLayoutAlgorithm {
   const ComputedStyle* style_;
   LayoutUnit line_break_length_;
   const Vector<FlexItem>& all_items_;
-  Vector<FlexLine> flex_lines_;
-  size_t next_item_index_;
 };
 
 }  // namespace blink

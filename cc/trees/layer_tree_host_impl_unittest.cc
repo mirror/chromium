@@ -35,6 +35,7 @@
 #include "cc/layers/texture_layer_impl.h"
 #include "cc/layers/video_layer_impl.h"
 #include "cc/layers/viewport.h"
+#include "cc/output/begin_frame_args.h"
 #include "cc/output/compositor_frame_metadata.h"
 #include "cc/output/copy_output_request.h"
 #include "cc/output/copy_output_result.h"
@@ -47,6 +48,7 @@
 #include "cc/resources/ui_resource_bitmap.h"
 #include "cc/resources/ui_resource_manager.h"
 #include "cc/test/animation_test_common.h"
+#include "cc/test/begin_frame_args_test.h"
 #include "cc/test/fake_layer_tree_frame_sink.h"
 #include "cc/test/fake_layer_tree_host_impl.h"
 #include "cc/test/fake_mask_layer_impl.h"
@@ -68,8 +70,6 @@
 #include "cc/trees/scroll_node.h"
 #include "cc/trees/single_thread_proxy.h"
 #include "cc/trees/transform_node.h"
-#include "components/viz/common/frame_sinks/begin_frame_args.h"
-#include "components/viz/test/begin_frame_args_test.h"
 #include "components/viz/test/test_layer_tree_frame_sink.h"
 #include "media/base/media.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -105,7 +105,7 @@ viz::SurfaceId MakeSurfaceId(const viz::FrameSinkId& frame_sink_id,
 struct TestFrameData : public LayerTreeHostImpl::FrameData {
   TestFrameData() {
     // Set ack to something valid, so DCHECKs don't complain.
-    begin_frame_ack = viz::BeginFrameAck(0, 1, true);
+    begin_frame_ack = BeginFrameAck(0, 1, true);
   }
 };
 
@@ -229,8 +229,8 @@ class LayerTreeHostImplTest : public testing::Test,
     bool init = host_impl_->InitializeRenderer(layer_tree_frame_sink_.get());
     host_impl_->SetViewportSize(gfx::Size(10, 10));
     host_impl_->active_tree()->PushPageScaleFromMainThread(1.f, 1.f, 1.f);
-    // Set the viz::BeginFrameArgs so that methods which use it are able to.
-    host_impl_->WillBeginImplFrame(viz::CreateBeginFrameArgsForTesting(
+    // Set the BeginFrameArgs so that methods which use it are able to.
+    host_impl_->WillBeginImplFrame(CreateBeginFrameArgsForTesting(
         BEGINFRAME_FROM_HERE, 0, 1,
         base::TimeTicks() + base::TimeDelta::FromMilliseconds(1)));
     host_impl_->DidFinishImplFrame();
@@ -598,7 +598,7 @@ class LayerTreeHostImplTest : public testing::Test,
           layer_impl->element_id());
   }
 
-  void BeginImplFrameAndAnimate(viz::BeginFrameArgs begin_frame_args,
+  void BeginImplFrameAndAnimate(BeginFrameArgs begin_frame_args,
                                 base::TimeTicks frame_time) {
     begin_frame_args.frame_time = frame_time;
     host_impl_->WillBeginImplFrame(begin_frame_args);
@@ -1696,7 +1696,7 @@ TEST_F(LayerTreeHostImplTest, AnimationSchedulingActiveTree) {
 
   base::TimeTicks now = base::TimeTicks::Now();
   host_impl_->WillBeginImplFrame(
-      viz::CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 2, now));
+      CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 2, now));
 
   // TODO(crbug.com/551134): We always request a new frame and a draw for
   // animations that are on the pending tree, but we don't need to do that
@@ -1807,7 +1807,7 @@ TEST_F(LayerTreeHostImplTest, AnimationSchedulingOnLayerDestruction) {
 
   base::TimeTicks now = base::TimeTicks::Now();
   host_impl_->WillBeginImplFrame(
-      viz::CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 2, now));
+      CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 2, now));
   EXPECT_TRUE(did_request_next_frame_);
   did_request_next_frame_ = false;
 
@@ -2530,8 +2530,8 @@ TEST_F(LayerTreeHostImplTest, PageScaleAnimation) {
   base::TimeTicks halfway_through_animation = start_time + duration / 2;
   base::TimeTicks end_time = start_time + duration;
 
-  viz::BeginFrameArgs begin_frame_args =
-      viz::CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 1);
+  BeginFrameArgs begin_frame_args =
+      CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 1);
 
   // Non-anchor zoom-in
   {
@@ -2660,8 +2660,8 @@ TEST_F(LayerTreeHostImplTest, PageScaleAnimationNoOp) {
   base::TimeTicks halfway_through_animation = start_time + duration / 2;
   base::TimeTicks end_time = start_time + duration;
 
-  viz::BeginFrameArgs begin_frame_args =
-      viz::CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 1);
+  BeginFrameArgs begin_frame_args =
+      CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 1);
 
   // Anchor zoom with unchanged page scale should not change scroll or scale.
   {
@@ -2730,8 +2730,8 @@ TEST_F(LayerTreeHostImplTest, PageScaleAnimationTransferedOnSyncTreeActivate) {
   base::TimeTicks end_time = start_time + duration;
   float target_scale = 2.f;
 
-  viz::BeginFrameArgs begin_frame_args =
-      viz::CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 1);
+  BeginFrameArgs begin_frame_args =
+      CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 1);
 
   scroll_layer->layer_tree_impl()
       ->property_trees()
@@ -2843,8 +2843,8 @@ TEST_F(LayerTreeHostImplTest, PageScaleAnimationCompletedNotification) {
   base::TimeTicks halfway_through_animation = start_time + duration / 2;
   base::TimeTicks end_time = start_time + duration;
 
-  viz::BeginFrameArgs begin_frame_args =
-      viz::CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 1);
+  BeginFrameArgs begin_frame_args =
+      CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 1);
 
   host_impl_->active_tree()->PushPageScaleFromMainThread(1.f, 0.5f, 4.f);
   scroll_layer->layer_tree_impl()
@@ -2923,9 +2923,9 @@ class LayerTreeHostImplOverridePhysicalTime : public LayerTreeHostImpl {
                           0,
                           nullptr) {}
 
-  viz::BeginFrameArgs CurrentBeginFrameArgs() const override {
-    return viz::CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 1,
-                                               fake_current_physical_time_);
+  BeginFrameArgs CurrentBeginFrameArgs() const override {
+    return CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 1,
+                                          fake_current_physical_time_);
   }
 
   void SetCurrentPhysicalTimeTicksForTest(base::TimeTicks fake_now) {
@@ -3035,8 +3035,8 @@ class LayerTreeHostImplTestScrollbarAnimation : public LayerTreeHostImplTest {
     }
 
     // Before the scrollbar animation exists, we should not get redraws.
-    viz::BeginFrameArgs begin_frame_args = viz::CreateBeginFrameArgsForTesting(
-        BEGINFRAME_FROM_HERE, 0, 2, fake_now);
+    BeginFrameArgs begin_frame_args =
+        CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 2, fake_now);
     host_impl_->WillBeginImplFrame(begin_frame_args);
     host_impl_->Animate();
     EXPECT_FALSE(did_request_next_frame_);
@@ -3072,8 +3072,8 @@ class LayerTreeHostImplTestScrollbarAnimation : public LayerTreeHostImplTest {
 
     if (expecting_animations) {
       // Before the scrollbar animation begins, we should not get redraws.
-      begin_frame_args = viz::CreateBeginFrameArgsForTesting(
-          BEGINFRAME_FROM_HERE, 0, 3, fake_now);
+      begin_frame_args =
+          CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 3, fake_now);
       host_impl_->WillBeginImplFrame(begin_frame_args);
       host_impl_->Animate();
       EXPECT_FALSE(did_request_next_frame_);
@@ -3092,8 +3092,8 @@ class LayerTreeHostImplTestScrollbarAnimation : public LayerTreeHostImplTest {
       EXPECT_FALSE(did_request_redraw_);
 
       // After the scrollbar animation begins, we should start getting redraws.
-      begin_frame_args = viz::CreateBeginFrameArgsForTesting(
-          BEGINFRAME_FROM_HERE, 0, 4, fake_now);
+      begin_frame_args =
+          CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 4, fake_now);
       host_impl_->WillBeginImplFrame(begin_frame_args);
       host_impl_->Animate();
       EXPECT_TRUE(did_request_next_frame_);
@@ -4880,10 +4880,12 @@ TEST_F(LayerTreeHostImplBrowserControlsTest,
   child->SetDrawsContent(true);
   child->test_properties()->is_container_for_fixed_position_layers = true;
 
-  // scroll child to limit
-  SetScrollOffsetDelta(child.get(), gfx::Vector2dF(0, 100.f));
+  LayerImpl* child_ptr = child.get();
   outer_viewport_scroll_layer->test_properties()->AddChild(std::move(child));
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
+
+  // Scroll child to the limit.
+  SetScrollOffsetDelta(child_ptr, gfx::Vector2dF(0, 100.f));
 
   // Scroll 25px to hide browser controls
   gfx::Vector2dF scroll_delta(0.f, 25.f);
@@ -5341,8 +5343,8 @@ TEST_F(LayerTreeHostImplBrowserControlsTest,
   host_impl_->browser_controls_manager()->UpdateBrowserControlsState(
       BOTH, SHOWN, true);
   base::TimeTicks start_time = base::TimeTicks::Now();
-  viz::BeginFrameArgs begin_frame_args =
-      viz::CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 1);
+  BeginFrameArgs begin_frame_args =
+      CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 1);
 
   // Pump an animation frame to put some delta in the browser controls.
   {
@@ -5853,8 +5855,8 @@ TEST_F(LayerTreeHostImplTimelinesTest, ScrollAnimatedLatchToChild) {
   base::TimeTicks start_time =
       base::TimeTicks() + base::TimeDelta::FromMilliseconds(10);
 
-  viz::BeginFrameArgs begin_frame_args =
-      viz::CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 1);
+  BeginFrameArgs begin_frame_args =
+      CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 1);
 
   EXPECT_EQ(
       InputHandler::SCROLL_ON_IMPL_THREAD,
@@ -8193,7 +8195,7 @@ TEST_F(LayerTreeHostImplTest, PartialSwapReceivesDamageRect) {
   layer_tree_host_impl->SetVisible(true);
   layer_tree_host_impl->InitializeRenderer(layer_tree_frame_sink.get());
   layer_tree_host_impl->WillBeginImplFrame(
-      viz::CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 2));
+      CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 2));
   layer_tree_host_impl->SetViewportSize(gfx::Size(500, 500));
 
   std::unique_ptr<LayerImpl> root =
@@ -8927,7 +8929,7 @@ TEST_F(LayerTreeHostImplTest, ShutdownReleasesContext) {
   constexpr double refresh_rate = 60.0;
   auto layer_tree_frame_sink = base::MakeUnique<viz::TestLayerTreeFrameSink>(
       context_provider, TestContextProvider::CreateWorker(), nullptr, nullptr,
-      viz::RendererSettings(), base::ThreadTaskRunnerHandle::Get().get(),
+      RendererSettings(), base::ThreadTaskRunnerHandle::Get().get(),
       synchronous_composite, disable_display_vsync, refresh_rate);
   layer_tree_frame_sink->SetClient(&test_client);
 
@@ -9501,8 +9503,8 @@ TEST_F(LayerTreeHostImplWithBrowserControlsTest, NoIdleAnimations) {
       ->property_trees()
       ->scroll_tree.UpdateScrollOffsetBaseForTesting(scroll_layer->element_id(),
                                                      gfx::ScrollOffset(0, 10));
-  viz::BeginFrameArgs begin_frame_args =
-      viz::CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 2);
+  BeginFrameArgs begin_frame_args =
+      CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 2);
   host_impl_->WillBeginImplFrame(begin_frame_args);
   host_impl_->Animate();
   EXPECT_FALSE(did_request_redraw_);
@@ -9709,7 +9711,7 @@ TEST_F(LayerTreeHostImplWithBrowserControlsTest,
 
   // The browser controls should properly animate until finished, despite the
   // scroll offset being at the origin.
-  viz::BeginFrameArgs begin_frame_args = viz::CreateBeginFrameArgsForTesting(
+  BeginFrameArgs begin_frame_args = CreateBeginFrameArgsForTesting(
       BEGINFRAME_FROM_HERE, 0, 1, base::TimeTicks::Now());
   while (did_request_next_frame_) {
     did_request_redraw_ = false;
@@ -9794,7 +9796,7 @@ TEST_F(LayerTreeHostImplWithBrowserControlsTest,
   EXPECT_FALSE(did_request_commit_);
 
   // Animate the browser controls to the limit.
-  viz::BeginFrameArgs begin_frame_args = viz::CreateBeginFrameArgsForTesting(
+  BeginFrameArgs begin_frame_args = CreateBeginFrameArgsForTesting(
       BEGINFRAME_FROM_HERE, 0, 1, base::TimeTicks::Now());
   while (did_request_next_frame_) {
     did_request_redraw_ = false;
@@ -9872,7 +9874,7 @@ TEST_F(LayerTreeHostImplWithBrowserControlsTest,
   EXPECT_FALSE(did_request_commit_);
 
   // Animate the browser controls to the limit.
-  viz::BeginFrameArgs begin_frame_args = viz::CreateBeginFrameArgsForTesting(
+  BeginFrameArgs begin_frame_args = CreateBeginFrameArgsForTesting(
       BEGINFRAME_FROM_HERE, 0, 1, base::TimeTicks::Now());
   while (did_request_next_frame_) {
     did_request_redraw_ = false;
@@ -10917,8 +10919,8 @@ TEST_F(LayerTreeHostImplTest, ScrollAnimated) {
   base::TimeTicks start_time =
       base::TimeTicks() + base::TimeDelta::FromMilliseconds(100);
 
-  viz::BeginFrameArgs begin_frame_args =
-      viz::CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 1);
+  BeginFrameArgs begin_frame_args =
+      CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 1);
 
   EXPECT_EQ(
       InputHandler::SCROLL_ON_IMPL_THREAD,
@@ -11006,8 +11008,8 @@ TEST_F(LayerTreeHostImplTest, AnimatedScrollUpdateTargetBeforeStarting) {
   base::TimeTicks start_time =
       base::TimeTicks() + base::TimeDelta::FromMilliseconds(200);
 
-  viz::BeginFrameArgs begin_frame_args =
-      viz::CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 1);
+  BeginFrameArgs begin_frame_args =
+      CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 1);
   begin_frame_args.frame_time = start_time;
   begin_frame_args.sequence_number++;
   host_impl_->WillBeginImplFrame(begin_frame_args);
@@ -11058,8 +11060,8 @@ TEST_F(LayerTreeHostImplTest, ScrollAnimatedWithDelay) {
 
   base::TimeTicks start_time =
       base::TimeTicks() + base::TimeDelta::FromMilliseconds(100);
-  viz::BeginFrameArgs begin_frame_args =
-      viz::CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 1);
+  BeginFrameArgs begin_frame_args =
+      CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 1);
 
   // Create animation with a 100ms delay.
   EXPECT_EQ(InputHandler::SCROLL_ON_IMPL_THREAD,
@@ -11121,8 +11123,8 @@ TEST_F(LayerTreeHostImplTimelinesTest, ScrollAnimatedAborted) {
   base::TimeTicks start_time =
       base::TimeTicks() + base::TimeDelta::FromMilliseconds(100);
 
-  viz::BeginFrameArgs begin_frame_args =
-      viz::CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 1);
+  BeginFrameArgs begin_frame_args =
+      CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 1);
 
   // Perform animated scroll.
   EXPECT_EQ(
@@ -11194,8 +11196,8 @@ TEST_F(LayerTreeHostImplTimelinesTest, ScrollAnimated) {
   base::TimeTicks start_time =
       base::TimeTicks() + base::TimeDelta::FromMilliseconds(100);
 
-  viz::BeginFrameArgs begin_frame_args =
-      viz::CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 1);
+  BeginFrameArgs begin_frame_args =
+      CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 1);
 
   EXPECT_EQ(
       InputHandler::SCROLL_ON_IMPL_THREAD,
@@ -11278,8 +11280,8 @@ TEST_F(LayerTreeHostImplTimelinesTest, ImplPinchZoomScrollAnimated) {
   // viewport.
   base::TimeTicks start_time =
       base::TimeTicks() + base::TimeDelta::FromMilliseconds(250);
-  viz::BeginFrameArgs begin_frame_args =
-      viz::CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 1);
+  BeginFrameArgs begin_frame_args =
+      CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 1);
   EXPECT_EQ(InputHandler::SCROLL_ON_IMPL_THREAD,
             host_impl_->ScrollAnimated(gfx::Point(), gfx::Vector2d(10.f, 20.f))
                 .thread);
@@ -11374,8 +11376,8 @@ TEST_F(LayerTreeHostImplTimelinesTest, ImplPinchZoomScrollAnimatedUpdate) {
   // Scroll the inner viewport.
   base::TimeTicks start_time =
       base::TimeTicks() + base::TimeDelta::FromMilliseconds(50);
-  viz::BeginFrameArgs begin_frame_args =
-      viz::CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 1);
+  BeginFrameArgs begin_frame_args =
+      CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 1);
   EXPECT_EQ(
       InputHandler::SCROLL_ON_IMPL_THREAD,
       host_impl_->ScrollAnimated(gfx::Point(), gfx::Vector2d(90, 90)).thread);
@@ -11434,8 +11436,8 @@ TEST_F(LayerTreeHostImplTimelinesTest, ScrollAnimatedNotUserScrollable) {
   base::TimeTicks start_time =
       base::TimeTicks() + base::TimeDelta::FromMilliseconds(100);
 
-  viz::BeginFrameArgs begin_frame_args =
-      viz::CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 1);
+  BeginFrameArgs begin_frame_args =
+      CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 1);
 
   EXPECT_EQ(
       InputHandler::SCROLL_ON_IMPL_THREAD,
@@ -11511,8 +11513,8 @@ TEST_F(LayerTreeHostImplTimelinesTest, ScrollAnimatedChangingBounds) {
 
   base::TimeTicks start_time =
       base::TimeTicks() + base::TimeDelta::FromMilliseconds(100);
-  viz::BeginFrameArgs begin_frame_args =
-      viz::CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 1);
+  BeginFrameArgs begin_frame_args =
+      CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 1);
 
   host_impl_->ScrollAnimated(gfx::Point(), gfx::Vector2d(500, 500));
 
@@ -11808,27 +11810,25 @@ TEST_F(LayerTreeHostImplTest, DoNotRemoveEmptyRootRenderPass) {
 
 class FakeVideoFrameController : public VideoFrameController {
  public:
-  void OnBeginFrame(const viz::BeginFrameArgs& args) override {
+  void OnBeginFrame(const BeginFrameArgs& args) override {
     begin_frame_args_ = args;
     did_draw_frame_ = false;
   }
 
   void DidDrawFrame() override { did_draw_frame_ = true; }
 
-  const viz::BeginFrameArgs& begin_frame_args() const {
-    return begin_frame_args_;
-  }
+  const BeginFrameArgs& begin_frame_args() const { return begin_frame_args_; }
 
   bool did_draw_frame() const { return did_draw_frame_; }
 
  private:
-  viz::BeginFrameArgs begin_frame_args_;
+  BeginFrameArgs begin_frame_args_;
   bool did_draw_frame_ = false;
 };
 
 TEST_F(LayerTreeHostImplTest, AddVideoFrameControllerInsideFrame) {
-  viz::BeginFrameArgs begin_frame_args =
-      viz::CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 2);
+  BeginFrameArgs begin_frame_args =
+      CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 2);
   FakeVideoFrameController controller;
 
   host_impl_->WillBeginImplFrame(begin_frame_args);
@@ -11850,8 +11850,8 @@ TEST_F(LayerTreeHostImplTest, AddVideoFrameControllerInsideFrame) {
 }
 
 TEST_F(LayerTreeHostImplTest, AddVideoFrameControllerOutsideFrame) {
-  viz::BeginFrameArgs begin_frame_args =
-      viz::CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 2);
+  BeginFrameArgs begin_frame_args =
+      CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 2);
   FakeVideoFrameController controller;
 
   host_impl_->WillBeginImplFrame(begin_frame_args);
@@ -11861,8 +11861,7 @@ TEST_F(LayerTreeHostImplTest, AddVideoFrameControllerOutsideFrame) {
   host_impl_->AddVideoFrameController(&controller);
   EXPECT_FALSE(controller.begin_frame_args().IsValid());
 
-  begin_frame_args =
-      viz::CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 3);
+  begin_frame_args = CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 3);
   EXPECT_FALSE(controller.begin_frame_args().IsValid());
   host_impl_->WillBeginImplFrame(begin_frame_args);
   EXPECT_TRUE(controller.begin_frame_args().IsValid());
@@ -12648,23 +12647,6 @@ TEST_F(LayerTreeHostImplTest, RasterColorSpace) {
   LayerTreeSettings settings = DefaultSettings();
   settings.enable_color_correct_rasterization = true;
   CreateHostImpl(settings, CreateLayerTreeFrameSink());
-  // The default raster color space should be sRGB.
-  EXPECT_EQ(host_impl_->GetRasterColorSpace(), gfx::ColorSpace::CreateSRGB());
-  // The raster color space should update with tree activation.
-  host_impl_->active_tree()->SetRasterColorSpace(
-      gfx::ColorSpace::CreateDisplayP3D65());
-  EXPECT_EQ(host_impl_->GetRasterColorSpace(),
-            gfx::ColorSpace::CreateDisplayP3D65());
-}
-
-TEST_F(LayerTreeHostImplTest, RasterColorSpaceSoftware) {
-  LayerTreeSettings settings = DefaultSettings();
-  settings.enable_color_correct_rasterization = true;
-  CreateHostImpl(settings, FakeLayerTreeFrameSink::CreateSoftware());
-  // Software composited resources should always use sRGB as their color space.
-  EXPECT_EQ(host_impl_->GetRasterColorSpace(), gfx::ColorSpace::CreateSRGB());
-  host_impl_->active_tree()->SetRasterColorSpace(
-      gfx::ColorSpace::CreateDisplayP3D65());
   EXPECT_EQ(host_impl_->GetRasterColorSpace(), gfx::ColorSpace::CreateSRGB());
 }
 

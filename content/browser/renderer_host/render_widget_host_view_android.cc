@@ -73,7 +73,6 @@
 #include "content/public/browser/devtools_agent_host.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/render_widget_host_iterator.h"
-#include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "gpu/command_buffer/client/gles2_implementation.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
@@ -510,6 +509,12 @@ RenderWidgetHostViewAndroid::~RenderWidgetHostViewAndroid() {
   DCHECK(!delegated_frame_host_);
 }
 
+void RenderWidgetHostViewAndroid::Blur() {
+  host_->Blur();
+  if (overscroll_controller_)
+    overscroll_controller_->Disable();
+}
+
 void RenderWidgetHostViewAndroid::AddDestructionObserver(
     DestructionObserver* observer) {
   destruction_observers_.AddObserver(observer);
@@ -604,31 +609,10 @@ RenderWidgetHostViewAndroid::GetNativeViewAccessible() {
   return NULL;
 }
 
-void RenderWidgetHostViewAndroid::GotFocus() {
-  host_->GotFocus();
-  OnFocusInternal();
-}
-
-void RenderWidgetHostViewAndroid::LostFocus() {
-  host_->LostFocus();
-  LostFocusInternal();
-}
-
 void RenderWidgetHostViewAndroid::Focus() {
-  // TODO(boliu): Make sure rwhva/rwh focus state stays in sync with CVC, and
-  // ideally properly implements "request focus". See crbug.com/746099.
   host_->Focus();
-  OnFocusInternal();
-}
-
-void RenderWidgetHostViewAndroid::OnFocusInternal() {
   if (overscroll_controller_)
     overscroll_controller_->Enable();
-}
-
-void RenderWidgetHostViewAndroid::LostFocusInternal() {
-  if (overscroll_controller_)
-    overscroll_controller_->Disable();
 }
 
 bool RenderWidgetHostViewAndroid::HasFocus() const {
@@ -1215,10 +1199,6 @@ void RenderWidgetHostViewAndroid::DidCreateNewRendererCompositorFrameSink(
 }
 
 void RenderWidgetHostViewAndroid::EvictFrameIfNecessary() {
-  if (!base::FeatureList::IsEnabled(
-          features::kHideIncorrectlySizedFullscreenFrames)) {
-    return;
-  }
   if (host_->delegate()->IsFullscreenForCurrentTab() &&
       current_surface_size_ != view_.GetPhysicalBackingSize()) {
     // When we're in a fullscreen and the frame size doesn't match the view
@@ -1254,7 +1234,7 @@ void RenderWidgetHostViewAndroid::SubmitCompositorFrame(
 
   ack_callbacks_.push(ack_callback);
 
-  viz::BeginFrameAck ack = frame.metadata.begin_frame_ack;
+  cc::BeginFrameAck ack = frame.metadata.begin_frame_ack;
   if (!has_content) {
     DestroyDelegatedContent();
 
@@ -1292,7 +1272,7 @@ void RenderWidgetHostViewAndroid::DestroyDelegatedContent() {
 }
 
 void RenderWidgetHostViewAndroid::OnDidNotProduceFrame(
-    const viz::BeginFrameAck& ack) {
+    const cc::BeginFrameAck& ack) {
   if (!delegated_frame_host_) {
     // We are not using the browser compositor and there's no DisplayScheduler
     // that needs to be notified about the BeginFrameAck, so we can drop it.
@@ -1305,7 +1285,7 @@ void RenderWidgetHostViewAndroid::OnDidNotProduceFrame(
 }
 
 void RenderWidgetHostViewAndroid::AcknowledgeBeginFrame(
-    const viz::BeginFrameAck& ack) {
+    const cc::BeginFrameAck& ack) {
   if (begin_frame_source_)
     begin_frame_source_->DidFinishFrame(this);
 }
@@ -1690,7 +1670,7 @@ void RenderWidgetHostViewAndroid::StopObservingRootWindow() {
   DCHECK(!begin_frame_source_);
 }
 
-void RenderWidgetHostViewAndroid::SendBeginFrame(viz::BeginFrameArgs args) {
+void RenderWidgetHostViewAndroid::SendBeginFrame(cc::BeginFrameArgs args) {
   TRACE_EVENT2("cc", "RenderWidgetHostViewAndroid::SendBeginFrame",
                "frame_number", args.sequence_number, "frame_time_us",
                args.frame_time.ToInternalValue());
@@ -2226,21 +2206,20 @@ void RenderWidgetHostViewAndroid::OnDetachCompositor() {
   delegated_frame_host_->DetachFromCompositor();
 }
 
-void RenderWidgetHostViewAndroid::OnBeginFrame(
-    const viz::BeginFrameArgs& args) {
+void RenderWidgetHostViewAndroid::OnBeginFrame(const cc::BeginFrameArgs& args) {
   TRACE_EVENT0("cc,benchmark", "RenderWidgetHostViewAndroid::OnBeginFrame");
   if (!host_) {
     OnDidNotProduceFrame(
-        viz::BeginFrameAck(args.source_id, args.sequence_number, false));
+        cc::BeginFrameAck(args.source_id, args.sequence_number, false));
     return;
   }
 
   // In sync mode, we disregard missed frame args to ensure that
   // SynchronousCompositorBrowserFilter::SyncStateAfterVSync will be called
   // during WindowAndroid::WindowBeginFrameSource::OnVSync() observer iteration.
-  if (sync_compositor_ && args.type == viz::BeginFrameArgs::MISSED) {
+  if (sync_compositor_ && args.type == cc::BeginFrameArgs::MISSED) {
     OnDidNotProduceFrame(
-        viz::BeginFrameAck(args.source_id, args.sequence_number, false));
+        cc::BeginFrameAck(args.source_id, args.sequence_number, false));
     return;
   }
 
@@ -2255,11 +2234,11 @@ void RenderWidgetHostViewAndroid::OnBeginFrame(
     SendBeginFrame(args);
   } else {
     OnDidNotProduceFrame(
-        viz::BeginFrameAck(args.source_id, args.sequence_number, false));
+        cc::BeginFrameAck(args.source_id, args.sequence_number, false));
   }
 }
 
-const viz::BeginFrameArgs& RenderWidgetHostViewAndroid::LastUsedBeginFrameArgs()
+const cc::BeginFrameArgs& RenderWidgetHostViewAndroid::LastUsedBeginFrameArgs()
     const {
   return last_begin_frame_args_;
 }

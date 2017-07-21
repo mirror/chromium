@@ -88,19 +88,26 @@ CastSocket* CastSocketService::GetSocket(
   return it == sockets_.end() ? nullptr : it->second.get();
 }
 
-int CastSocketService::OpenSocket(const CastSocketOpenParams& open_params,
+int CastSocketService::OpenSocket(const net::IPEndPoint& ip_endpoint,
+                                  net::NetLog* net_log,
+                                  const base::TimeDelta& connect_timeout,
+                                  const base::TimeDelta& liveness_timeout,
+                                  const base::TimeDelta& ping_interval,
+                                  uint64_t device_capabilities,
                                   CastSocket::OnOpenCallback open_cb,
                                   CastSocket::Observer* observer) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK(observer);
-  auto* socket = GetSocket(open_params.ip_endpoint);
+  auto* socket = GetSocket(ip_endpoint);
 
   if (!socket) {
     // If cast socket does not exist.
     if (socket_for_test_) {
       socket = AddSocket(std::move(socket_for_test_));
     } else {
-      socket = new CastSocketImpl(open_params, logger_);
+      socket = new CastSocketImpl(ip_endpoint, net_log, connect_timeout,
+                                  liveness_timeout, ping_interval, logger_,
+                                  device_capabilities);
       AddSocket(base::WrapUnique(socket));
     }
   }
@@ -118,11 +125,9 @@ int CastSocketService::OpenSocket(const net::IPEndPoint& ip_endpoint,
   auto ping_interval = base::TimeDelta::FromSeconds(kPingIntervalInSecs);
   auto liveness_timeout =
       base::TimeDelta::FromSeconds(kConnectLivenessTimeoutSecs);
-  CastSocketOpenParams open_params(ip_endpoint, net_log, connect_timeout,
-                                   liveness_timeout, ping_interval,
-                                   CastDeviceCapability::NONE);
-
-  return OpenSocket(open_params, std::move(open_cb), observer);
+  return OpenSocket(ip_endpoint, net_log, connect_timeout, liveness_timeout,
+                    ping_interval, CastDeviceCapability::NONE,
+                    std::move(open_cb), observer);
 }
 
 void CastSocketService::RemoveObserver(CastSocket::Observer* observer) {

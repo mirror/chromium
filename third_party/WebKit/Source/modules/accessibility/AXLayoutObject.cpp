@@ -1896,14 +1896,6 @@ AXLayoutObject* AXLayoutObject::GetUnignoredObjectFromNode(Node& node) const {
 
 // Convert from an accessible object and offset to a VisiblePosition.
 static VisiblePosition ToVisiblePosition(AXObject* obj, int offset) {
-  if (!obj || offset < 0)
-    return VisiblePosition();
-
-  // Some objects don't have an associated node, e.g. |LayoutListMarker|.
-  if (obj->GetLayoutObject() && !obj->GetNode() && obj->ParentObject()) {
-    return ToVisiblePosition(obj->ParentObject(), obj->IndexInParent());
-  }
-
   if (!obj->GetNode())
     return VisiblePosition();
 
@@ -1911,7 +1903,7 @@ static VisiblePosition ToVisiblePosition(AXObject* obj, int offset) {
   if (!node->IsTextNode()) {
     int child_count = obj->Children().size();
 
-    // Place position immediately before the container node, if there were no
+    // Place position immediately before the container node, if there was no
     // children.
     if (child_count == 0) {
       if (!obj->ParentObject())
@@ -1929,13 +1921,10 @@ static VisiblePosition ToVisiblePosition(AXObject* obj, int offset) {
         static_cast<unsigned>(offset) > (obj->Children().size() - 1)
             ? offset - 1
             : offset;
-
     AXObject* child_obj = obj->Children()[clamped_offset];
     Node* child_node = child_obj->GetNode();
-    // If a particular child can't be selected, expand to select the whole
-    // object.
     if (!child_node || !child_node->parentNode())
-      return ToVisiblePosition(obj->ParentObject(), obj->IndexInParent());
+      return VisiblePosition();
 
     // The index in parent.
     int adjusted_offset = child_node->NodeIndex();
@@ -1994,7 +1983,7 @@ void AXLayoutObject::SetSelection(const AXRange& selection) {
   }
 
   LocalFrame* frame = GetLayoutObject()->GetFrame();
-  if (!frame || !frame->Selection().IsAvailable())
+  if (!frame)
     return;
 
   // TODO(editing-dev): Use of updateStyleAndLayoutIgnorePendingStylesheets

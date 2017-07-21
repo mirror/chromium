@@ -31,13 +31,17 @@
 #include "core/dom/ElementTraversal.h"
 #include "core/frame/UseCounter.h"
 #include "core/html/HTMLTableElement.h"
-#include "core/html/TableConstants.h"
 #include "core/html/parser/HTMLParserIdioms.h"
 #include "core/layout/LayoutTableCell.h"
 
 namespace blink {
 
 using namespace HTMLNames;
+
+namespace {
+const unsigned kDefaultColSpan = 1;
+const unsigned kDefaultRowSpan = 1;
+}  // namespace
 
 inline HTMLTableCellElement::HTMLTableCellElement(const QualifiedName& tag_name,
                                                   Document& document)
@@ -48,8 +52,8 @@ DEFINE_ELEMENT_FACTORY_WITH_TAGNAME(HTMLTableCellElement)
 unsigned HTMLTableCellElement::colSpan() const {
   const AtomicString& col_span_value = FastGetAttribute(colspanAttr);
   unsigned value = 0;
-  if (!ParseHTMLClampedNonNegativeInteger(col_span_value, kMinColSpan,
-                                          kMaxColSpan, value))
+  if (col_span_value.IsEmpty() ||
+      !ParseHTMLNonNegativeInteger(col_span_value, value))
     return kDefaultColSpan;
   // Counting for https://github.com/whatwg/html/issues/1198
   UseCounter::Count(GetDocument(), WebFeature::kHTMLTableCellElementColspan);
@@ -60,16 +64,16 @@ unsigned HTMLTableCellElement::colSpan() const {
     UseCounter::Count(GetDocument(),
                       WebFeature::kHTMLTableCellElementColspanGreaterThan1000);
   }
-  return value;
+  return std::max(1u, std::min(value, MaxColSpan()));
 }
 
 unsigned HTMLTableCellElement::rowSpan() const {
   const AtomicString& row_span_value = FastGetAttribute(rowspanAttr);
   unsigned value = 0;
-  if (!ParseHTMLClampedNonNegativeInteger(row_span_value, kMinRowSpan,
-                                          kMaxRowSpan, value))
+  if (row_span_value.IsEmpty() ||
+      !ParseHTMLNonNegativeInteger(row_span_value, value))
     return kDefaultRowSpan;
-  return value;
+  return std::max(1u, std::min(value, MaxRowSpan()));
 }
 
 int HTMLTableCellElement::cellIndex() const {

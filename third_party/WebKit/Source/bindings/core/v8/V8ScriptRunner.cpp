@@ -319,6 +319,17 @@ typedef Function<v8::MaybeLocal<v8::Script>(v8::Isolate*,
                                             v8::ScriptOrigin)>
     CompileFn;
 
+// A notation convenience: WTF::bind<...> needs to be given the right argument
+// types. We have an awful lot of bind calls below, all with the same types, so
+// this local bind lets WTF::bind to all the work, but 'knows' the right
+// parameter types.
+// This version isn't quite as smart as the real WTF::bind, though, so you
+// sometimes may still have to call the original.
+template <typename... A>
+std::unique_ptr<CompileFn> Bind(const A&... args) {
+  return WTF::Bind(args...);
+}
+
 // Select a compile function from any of the above, mainly depending on
 // cacheOptions.
 static std::unique_ptr<CompileFn> SelectCompileFunction(
@@ -332,26 +343,25 @@ static std::unique_ptr<CompileFn> SelectCompileFunction(
 
   // Caching is not available in this case.
   if (!cache_handler)
-    return WTF::Bind(CompileWithoutOptions, cacheability_if_no_handler);
+    return Bind(CompileWithoutOptions, cacheability_if_no_handler);
 
   if (cache_options == kV8CacheOptionsNone)
-    return WTF::Bind(CompileWithoutOptions, V8CompileHistogram::kCacheable);
+    return Bind(CompileWithoutOptions, V8CompileHistogram::kCacheable);
 
   // Caching is not worthwhile for small scripts.  Do not use caching
   // unless explicitly expected, indicated by the cache option.
   if (code->Length() < kMinimalCodeLength)
-    return WTF::Bind(CompileWithoutOptions, V8CompileHistogram::kCacheable);
+    return Bind(CompileWithoutOptions, V8CompileHistogram::kCacheable);
 
   // The cacheOptions will guide our strategy:
   switch (cache_options) {
     case kV8CacheOptionsParse:
       // Use parser-cache; in-memory only.
-      return WTF::Bind(CompileAndConsumeOrProduce,
-                       WrapPersistent(cache_handler),
-                       CacheTag(kCacheTagParser, cache_handler),
-                       v8::ScriptCompiler::kConsumeParserCache,
-                       v8::ScriptCompiler::kProduceParserCache,
-                       CachedMetadataHandler::kCacheLocally);
+      return Bind(CompileAndConsumeOrProduce, WrapPersistent(cache_handler),
+                  CacheTag(kCacheTagParser, cache_handler),
+                  v8::ScriptCompiler::kConsumeParserCache,
+                  v8::ScriptCompiler::kProduceParserCache,
+                  CachedMetadataHandler::kCacheLocally);
       break;
 
     case kV8CacheOptionsDefault:
@@ -360,19 +370,19 @@ static std::unique_ptr<CompileFn> SelectCompileFunction(
       // Use code caching for recently seen resources.
       // Use compression depending on the cache option.
       if (code_cache) {
-        return WTF::Bind(CompileAndConsumeCache, WrapPersistent(cache_handler),
-                         std::move(code_cache),
-                         v8::ScriptCompiler::kConsumeCodeCache);
+        return Bind(CompileAndConsumeCache, WrapPersistent(cache_handler),
+                    std::move(code_cache),
+                    v8::ScriptCompiler::kConsumeCodeCache);
       }
       if (cache_options != kV8CacheOptionsAlways &&
           !IsResourceHotForCaching(cache_handler, kHotHours)) {
         V8ScriptRunner::SetCacheTimeStamp(cache_handler);
-        return WTF::Bind(CompileWithoutOptions, V8CompileHistogram::kCacheable);
+        return Bind(CompileWithoutOptions, V8CompileHistogram::kCacheable);
       }
       uint32_t code_cache_tag = CacheTag(kCacheTagCode, cache_handler);
-      return WTF::Bind(CompileAndProduceCache, WrapPersistent(cache_handler),
-                       code_cache_tag, v8::ScriptCompiler::kProduceCodeCache,
-                       CachedMetadataHandler::kSendToPlatform);
+      return Bind(CompileAndProduceCache, WrapPersistent(cache_handler),
+                  code_cache_tag, v8::ScriptCompiler::kProduceCodeCache,
+                  CachedMetadataHandler::kSendToPlatform);
       break;
     }
 
@@ -386,7 +396,7 @@ static std::unique_ptr<CompileFn> SelectCompileFunction(
   // All switch branches should return and we should never get here.
   // But some compilers aren't sure, hence this default.
   NOTREACHED();
-  return WTF::Bind(CompileWithoutOptions, V8CompileHistogram::kCacheable);
+  return Bind(CompileWithoutOptions, V8CompileHistogram::kCacheable);
 }
 
 // Select a compile function for a streaming compile.
@@ -455,12 +465,6 @@ v8::MaybeLocal<v8::Script> V8ScriptRunner::CompileScript(
       "v8,devtools.timeline", "v8.compile", "fileName", file_name.Utf8(),
       "data",
       InspectorCompileScriptEvent::Data(file_name, script_start_position));
-  // TODO(maxlg): probe will use a execution context once
-  // DocumentWriteEvaluator::EnsureEvaluationContext provide script state, see
-  // https://crbug.com/746961.
-  probe::V8Compile probe(nullptr, file_name,
-                         script_start_position.line_.ZeroBasedInt(),
-                         script_start_position.column_.ZeroBasedInt());
 
   DCHECK(!streamer || resource);
   DCHECK(!resource || resource->CacheHandler() == cache_handler);

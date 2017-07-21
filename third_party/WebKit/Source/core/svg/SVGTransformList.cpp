@@ -168,20 +168,20 @@ SVGTransformType ParseAndSkipTransformType(const CharType*& ptr,
     return kSvgTransformUnknown;
 
   if (*ptr == 's') {
-    if (SkipToken(ptr, end, "skewX"))
+    if (skipToken(ptr, end, "skewX"))
       return kSvgTransformSkewx;
-    if (SkipToken(ptr, end, "skewY"))
+    if (skipToken(ptr, end, "skewY"))
       return kSvgTransformSkewy;
-    if (SkipToken(ptr, end, "scale"))
+    if (skipToken(ptr, end, "scale"))
       return kSvgTransformScale;
 
     return kSvgTransformUnknown;
   }
-  if (SkipToken(ptr, end, "translate"))
+  if (skipToken(ptr, end, "translate"))
     return kSvgTransformTranslate;
-  if (SkipToken(ptr, end, "rotate"))
+  if (skipToken(ptr, end, "rotate"))
     return kSvgTransformRotate;
-  if (SkipToken(ptr, end, "matrix"))
+  if (skipToken(ptr, end, "matrix"))
     return kSvgTransformMatrix;
 
   return kSvgTransformUnknown;

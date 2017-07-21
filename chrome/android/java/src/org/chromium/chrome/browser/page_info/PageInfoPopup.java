@@ -31,7 +31,6 @@ import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
-import android.text.style.TextAppearanceSpan;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -415,8 +414,7 @@ public class PageInfoPopup implements OnClickListener {
             OmniboxUrlEmphasizer.EmphasizeComponentsResponse emphasizeResponse =
                     OmniboxUrlEmphasizer.parseForEmphasizeComponents(
                             mTab.getProfile(), urlBuilder.toString());
-            urlBuilder.setSpan(
-                    new TextAppearanceSpan(mUrlTitle.getContext(), R.style.RobotoMediumStyle), 0,
+            urlBuilder.setSpan(new StyleSpan(R.style.RobotoMediumStyle), 0,
                     emphasizeResponse.schemeLength, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
         }
         mUrlTitle.setText(urlBuilder);

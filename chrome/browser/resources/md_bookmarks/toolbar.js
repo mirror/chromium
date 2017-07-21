@@ -44,13 +44,9 @@ Polymer({
     selectedFolder_: String,
 
     /** @private */
-    selectedFolderChildren_: Number,
-
-    /** @private */
     canSortFolder_: {
       type: Boolean,
-      computed: `computeCanSortFolder_(
-          canChangeList_, selectedFolder_, selectedFolderChildren_)`,
+      computed: 'computeCanSortFolder_(canChangeList_, selectedFolder_)',
     },
 
     /** @private */
@@ -73,12 +69,6 @@ Polymer({
     });
     this.watch('selectedFolder_', function(state) {
       return state.selectedFolder;
-    });
-    this.watch('selectedFolderChildren_', (state) => {
-      if (!state.selectedFolder)
-        return 0;
-
-      return state.nodes[state.selectedFolder].children.length;
     });
     this.updateFromStore();
   },
@@ -178,7 +168,8 @@ Polymer({
    * @private
    */
   computeCanSortFolder_: function() {
-    return this.canChangeList_ && this.selectedFolderChildren_ > 0;
+    return this.canChangeList_ &&
+        this.getState().nodes[this.selectedFolder_].children.length > 0;
   },
 
   /**

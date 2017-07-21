@@ -237,3 +237,7 @@ void AccountChooserDialogAndroid::ChooseCredential(
         action);
   }
 }
+
+bool RegisterAccountChooserDialogAndroid(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}

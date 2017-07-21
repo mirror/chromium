@@ -84,7 +84,7 @@ std::unique_ptr<net::URLFetcher> SendProtocolRequest(
           destination: GOOGLE_OWNED_SERVICE
         }
         policy {
-          cookies_allowed: NO
+          cookies_allowed: false
           setting: "This feature cannot be disabled."
           chrome_policy {
             ComponentUpdatesEnabled {

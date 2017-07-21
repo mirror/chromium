@@ -6,6 +6,7 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/scoped_observer.h"
+#include "chrome/browser/extensions/api/messaging/message_service.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/interstitial_page.h"
 #include "content/public/browser/navigation_handle.h"
@@ -16,8 +17,6 @@
 #include "extensions/browser/extension_host.h"
 #include "extensions/browser/process_manager.h"
 #include "extensions/browser/process_manager_observer.h"
-#include "extensions/common/api/messaging/message.h"
-#include "extensions/common/api/messaging/port_id.h"
 #include "extensions/common/extension_messages.h"
 #include "extensions/common/manifest_handlers/background_info.h"
 
@@ -93,11 +92,11 @@ class ExtensionMessagePort::FrameTracker : public content::WebContentsObserver,
 };
 
 ExtensionMessagePort::ExtensionMessagePort(
-    base::WeakPtr<ChannelDelegate> channel_delegate,
+    base::WeakPtr<MessageService> message_service,
     const PortId& port_id,
     const std::string& extension_id,
     content::RenderProcessHost* extension_process)
-    : weak_channel_delegate_(channel_delegate),
+    : weak_message_service_(message_service),
       port_id_(port_id),
       extension_id_(extension_id),
       browser_context_(extension_process->GetBrowserContext()),
@@ -114,12 +113,12 @@ ExtensionMessagePort::ExtensionMessagePort(
 }
 
 ExtensionMessagePort::ExtensionMessagePort(
-    base::WeakPtr<ChannelDelegate> channel_delegate,
+    base::WeakPtr<MessageService> message_service,
     const PortId& port_id,
     const std::string& extension_id,
     content::RenderFrameHost* rfh,
     bool include_child_frames)
-    : weak_channel_delegate_(channel_delegate),
+    : weak_message_service_(message_service),
       port_id_(port_id),
       extension_id_(extension_id),
       browser_context_(rfh->GetProcess()->GetBrowserContext()),
@@ -271,11 +270,10 @@ void ExtensionMessagePort::ClosePort(int process_id, int routing_id) {
 }
 
 void ExtensionMessagePort::CloseChannel() {
-  std::string error_message;
-  if (did_create_port_)
-    error_message = kReceivingEndDoesntExistError;
-  if (weak_channel_delegate_)
-    weak_channel_delegate_->CloseChannel(port_id_, error_message);
+  std::string error_message = did_create_port_ ? std::string() :
+      kReceivingEndDoesntExistError;
+  if (weak_message_service_)
+    weak_message_service_->CloseChannel(port_id_, error_message);
 }
 
 void ExtensionMessagePort::RegisterFrame(content::RenderFrameHost* rfh) {

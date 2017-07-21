@@ -26,7 +26,7 @@ namespace printers_helper {
 
 namespace {
 
-using PrinterList = std::vector<chromeos::Printer>;
+using PrinterList = std::vector<std::unique_ptr<chromeos::Printer>>;
 
 // Returns true if Printer#id, Printer#description, and Printer#uri all match.
 bool PrintersAreMostlyEqual(const chromeos::Printer& left,
@@ -40,16 +40,16 @@ bool ListsContainTheSamePrinters(const PrinterList& list_a,
                                  const PrinterList& list_b) {
   std::unordered_multimap<std::string, const chromeos::Printer*> map_b;
   for (const auto& b : list_b) {
-    map_b.insert({b.id(), &b});
+    map_b.insert({b->id(), b.get()});
   }
 
   for (const auto& a : list_a) {
-    auto range = map_b.equal_range(a.id());
+    auto range = map_b.equal_range(a->id());
 
     auto it = std::find_if(
         range.first, range.second,
         [&a](const std::pair<std::string, const chromeos::Printer*>& entry)
-            -> bool { return PrintersAreMostlyEqual(a, *(entry.second)); });
+            -> bool { return PrintersAreMostlyEqual(*a, *(entry.second)); });
 
     if (it == range.second) {
       // Element in a does not match an element in b. Lists do not contain the
@@ -88,30 +88,30 @@ chromeos::SyncedPrintersManager* GetPrinterStore(
 
 void AddPrinter(chromeos::SyncedPrintersManager* manager,
                 const chromeos::Printer& printer) {
-  manager->UpdateConfiguredPrinter(printer);
+  manager->RegisterPrinter(base::MakeUnique<chromeos::Printer>(printer));
 }
 
 void RemovePrinter(chromeos::SyncedPrintersManager* manager, int index) {
   chromeos::Printer testPrinter(CreateTestPrinter(index));
-  manager->RemoveConfiguredPrinter(testPrinter.id());
+  manager->RemovePrinter(testPrinter.id());
 }
 
 bool EditPrinterDescription(chromeos::SyncedPrintersManager* manager,
                             int index,
                             const std::string& description) {
-  PrinterList printers = manager->GetConfiguredPrinters();
+  PrinterList printers = manager->GetPrinters();
   std::string printer_id = PrinterId(index);
-  auto found =
-      std::find_if(printers.begin(), printers.end(),
-                   [&printer_id](const chromeos::Printer& printer) -> bool {
-                     return printer.id() == printer_id;
-                   });
+  auto found = std::find_if(
+      printers.begin(), printers.end(),
+      [&printer_id](const std::unique_ptr<chromeos::Printer>& printer) -> bool {
+        return printer->id() == printer_id;
+      });
 
   if (found == printers.end())
     return false;
 
-  found->set_description(description);
-  manager->UpdateConfiguredPrinter(*found);
+  (*found)->set_description(description);
+  manager->RegisterPrinter(std::move(*found));
 
   return true;
 }
@@ -139,17 +139,17 @@ chromeos::SyncedPrintersManager* GetPrinterStore(int index) {
 }
 
 int GetVerifierPrinterCount() {
-  return GetVerifierPrinterStore()->GetConfiguredPrinters().size();
+  return GetVerifierPrinterStore()->GetPrinters().size();
 }
 
 int GetPrinterCount(int index) {
-  return GetPrinterStore(index)->GetConfiguredPrinters().size();
+  return GetPrinterStore(index)->GetPrinters().size();
 }
 
 bool AllProfilesContainSamePrinters() {
-  auto reference_printers = GetPrinterStore(0)->GetConfiguredPrinters();
+  auto reference_printers = GetPrinterStore(0)->GetPrinters();
   for (int i = 1; i < test()->num_clients(); ++i) {
-    auto printers = GetPrinterStore(i)->GetConfiguredPrinters();
+    auto printers = GetPrinterStore(i)->GetPrinters();
     if (!ListsContainTheSamePrinters(reference_printers, printers)) {
       VLOG(1) << "Printers in client [" << i << "] don't match client 0";
       return false;
@@ -160,9 +160,8 @@ bool AllProfilesContainSamePrinters() {
 }
 
 bool ProfileContainsSamePrintersAsVerifier(int index) {
-  return ListsContainTheSamePrinters(
-      GetVerifierPrinterStore()->GetConfiguredPrinters(),
-      GetPrinterStore(index)->GetConfiguredPrinters());
+  return ListsContainTheSamePrinters(GetVerifierPrinterStore()->GetPrinters(),
+                                     GetPrinterStore(index)->GetPrinters());
 }
 
 PrintersMatchChecker::PrintersMatchChecker()

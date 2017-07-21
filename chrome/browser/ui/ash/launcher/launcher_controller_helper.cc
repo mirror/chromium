@@ -24,7 +24,6 @@
 #include "chrome/browser/ui/extensions/extension_enable_flow.h"
 #include "chrome/browser/web_applications/web_app.h"
 #include "chrome/common/extensions/manifest_handlers/app_launch_info.h"
-#include "components/arc/arc_util.h"
 #include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/web_contents.h"
 #include "extensions/browser/extension_registry.h"
@@ -150,11 +149,10 @@ bool LauncherControllerHelper::IsValidIDForCurrentUser(
   const ArcAppListPrefs* arc_prefs = GetArcAppListPrefs();
   if (arc_prefs && arc_prefs->IsRegistered(id))
     return true;
-
   if (!GetExtensionByID(profile_, id))
     return false;
   if (id == arc::kPlayStoreAppId) {
-    if (!arc::IsArcAllowedForProfile(profile()) || !arc::IsPlayStoreAvailable())
+    if (!arc::IsArcAllowedForProfile(profile()))
       return false;
     const arc::ArcSessionManager* arc_session_manager =
         arc::ArcSessionManager::Get();

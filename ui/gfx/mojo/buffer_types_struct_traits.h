@@ -111,7 +111,6 @@ struct EnumTraits<gfx::mojom::BufferFormat, gfx::BufferFormat> {
         return true;
       case gfx::mojom::BufferFormat::UYVY_422:
         *out = gfx::BufferFormat::UYVY_422;
-        return true;
     }
     NOTREACHED();
     return false;

@@ -20,14 +20,10 @@ ChromeMemoryCoordinatorDelegate::ChromeMemoryCoordinatorDelegate() {}
 
 ChromeMemoryCoordinatorDelegate::~ChromeMemoryCoordinatorDelegate() {}
 
-void ChromeMemoryCoordinatorDelegate::DiscardTab(bool skip_unload_handlers) {
+void ChromeMemoryCoordinatorDelegate::DiscardTab() {
 #if !defined(OS_ANDROID)
-  if (g_browser_process->GetTabManager()) {
-    g_browser_process->GetTabManager()->DiscardTab(
-        skip_unload_handlers
-            ? resource_coordinator::TabManager::kUrgentShutdown
-            : resource_coordinator::TabManager::kProactiveShutdown);
-  }
+  if (g_browser_process->GetTabManager())
+    g_browser_process->GetTabManager()->DiscardTab();
 #endif
 }
 

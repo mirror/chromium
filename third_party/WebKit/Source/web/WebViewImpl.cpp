@@ -76,7 +76,6 @@
 #include "core/html/HTMLMediaElement.h"
 #include "core/html/HTMLPlugInElement.h"
 #include "core/html/HTMLTextAreaElement.h"
-#include "core/html/PluginDocument.h"
 #include "core/input/ContextMenuAllowedScope.h"
 #include "core/input/EventHandler.h"
 #include "core/input/TouchActionUtil.h"
@@ -218,6 +217,8 @@ const double WebView::kTextSizeMultiplierRatio = 1.2;
 const double WebView::kMinTextSizeMultiplier = 0.5;
 const double WebView::kMaxTextSizeMultiplier = 3.0;
 
+static bool g_should_use_external_popup_menus = false;
+
 namespace {
 
 class EmptyEventListener final : public EventListener {
@@ -267,6 +268,14 @@ WebViewBase* WebViewImpl::Create(WebViewClient* client,
                                  WebPageVisibilityState visibility_state) {
   // Pass the WebViewImpl's self-reference to the caller.
   return AdoptRef(new WebViewImpl(client, visibility_state)).LeakRef();
+}
+
+const WebInputEvent* WebViewBase::CurrentInputEvent() {
+  return WebViewImpl::CurrentInputEvent();
+}
+
+void WebView::SetUseExternalPopupMenus(bool use_external_popup_menus) {
+  g_should_use_external_popup_menus = use_external_popup_menus;
 }
 
 void WebView::UpdateVisitedLinkState(unsigned long long link_hash) {
@@ -2108,6 +2117,8 @@ bool WebViewImpl::HasVerticalScrollbar() {
       ->VerticalScrollbar();
 }
 
+const WebInputEvent* WebViewImpl::current_input_event_ = nullptr;
+
 WebInputEventResult WebViewImpl::HandleInputEvent(
     const WebCoalescedInputEvent& coalesced_event) {
   const WebInputEvent& input_event = coalesced_event.Event();
@@ -2829,12 +2840,8 @@ void WebViewImpl::PropagateZoomFactorToLocalFrameRoots(Frame* frame,
                                                        float zoom_factor) {
   if (frame->IsLocalRoot()) {
     LocalFrame* local_frame = ToLocalFrame(frame);
-    if (Document* document = local_frame->GetDocument()) {
-      if (!document->IsPluginDocument() ||
-          !ToPluginDocument(document)->GetPluginView()) {
-        local_frame->SetPageZoomFactor(zoom_factor);
-      }
-    }
+    if (!local_frame->GetWebPluginContainer())
+      local_frame->SetPageZoomFactor(zoom_factor);
   }
 
   for (Frame* child = frame->Tree().FirstChild(); child;
@@ -3630,6 +3637,14 @@ void WebViewImpl::PageScaleFactorChanged() {
 
 void WebViewImpl::MainFrameScrollOffsetChanged() {
   dev_tools_emulator_->MainFrameScrollOrScaleChanged();
+}
+
+bool WebViewBase::UseExternalPopupMenus() {
+  return WebViewImpl::UseExternalPopupMenus();
+}
+
+bool WebViewImpl::UseExternalPopupMenus() {
+  return g_should_use_external_popup_menus;
 }
 
 void WebViewImpl::SetBackgroundColorOverride(WebColor color) {

@@ -8,16 +8,12 @@ if (enable_oop_heap_profiling) {
   static_library("profiling") {
     sources = [
       "address.h",
-      "allocation_event.cc",
-      "allocation_event.h",
       "allocation_tracker.cc",
       "allocation_tracker.h",
       "backtrace.cc",
       "backtrace.h",
       "backtrace_storage.cc",
       "backtrace_storage.h",
-      "json_exporter.cc",
-      "json_exporter.h",
       "memlog_connection_manager.cc",
       "memlog_connection_manager.h",
       "memlog_receiver.h",
@@ -47,19 +43,6 @@ if (enable_oop_heap_profiling) {
       "//mojo/edk/system",
     ]
   }
-
-  source_set("unit_tests") {
-    testonly = true
-    sources = [
-      "backtrace_storage_unittest.cc",
-      "json_exporter_unittest.cc",
-    ]
-    deps = [
-      ":profiling",
-      "//base",
-      "//testing/gtest",
-    ]
-  }
 } else {
   # Dummy target so this can be unconditionally depended on and header checking
   # will work.
@@ -67,7 +50,5 @@ if (enable_oop_heap_profiling) {
     sources = [
       "profiling_main.h",
     ]
-  }
-  group("unit_tests") {
   }
 }

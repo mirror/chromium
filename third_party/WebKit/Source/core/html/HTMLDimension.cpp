@@ -152,17 +152,17 @@ template <typename CharacterType>
 static bool ParseDimensionValue(const CharacterType* current,
                                 const CharacterType* end,
                                 HTMLDimension& dimension) {
-  SkipWhile<CharacterType, IsHTMLSpace>(current, end);
+  skipWhile<CharacterType, IsHTMLSpace>(current, end);
   // Deviation: HTML allows '+' here.
   const CharacterType* number_start = current;
-  if (!SkipExactly<CharacterType, IsASCIIDigit>(current, end))
+  if (!skipExactly<CharacterType, IsASCIIDigit>(current, end))
     return false;
-  SkipWhile<CharacterType, IsASCIIDigit>(current, end);
-  if (SkipExactly<CharacterType>(current, end, '.')) {
+  skipWhile<CharacterType, IsASCIIDigit>(current, end);
+  if (skipExactly<CharacterType>(current, end, '.')) {
     // Deviation: HTML requires a digit after the full stop to be able to treat
     // the value as a percentage (if not, the '.' will considered "garbage",
     // yielding a regular length.) Gecko and Edge does not.
-    SkipWhile<CharacterType, IsASCIIDigit>(current, end);
+    skipWhile<CharacterType, IsASCIIDigit>(current, end);
   }
   bool ok;
   double value = CharactersToDouble(number_start, current - number_start, &ok);

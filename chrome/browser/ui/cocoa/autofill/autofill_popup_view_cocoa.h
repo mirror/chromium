@@ -9,7 +9,6 @@
 #include <stddef.h>
 
 #import "chrome/browser/ui/cocoa/autofill/autofill_popup_base_view_cocoa.h"
-#import "ui/base/cocoa/touch_bar_forward_declarations.h"
 
 namespace autofill {
 class AutofillPopupController;
@@ -17,8 +16,7 @@ class AutofillPopupViewCocoaDelegate;
 }  // namespace autofill
 
 // Draws the native Autofill popup view on Mac.
-@interface AutofillPopupViewCocoa
-    : AutofillPopupBaseViewCocoa<NSTouchBarDelegate> {
+@interface AutofillPopupViewCocoa : AutofillPopupBaseViewCocoa {
  @private
   // The cross-platform controller for this view.
   autofill::AutofillPopupController* controller_;  // weak
@@ -36,15 +34,6 @@ class AutofillPopupViewCocoaDelegate;
 - (void)controllerDestroyed;
 
 - (void)invalidateRow:(NSInteger)row;
-
-// Creates and returns a touch bar if the popup is for credit cards.
-- (NSTouchBar*)makeTouchBar;
-
-@end
-
-@interface AutofillPopupViewCocoa (ExposedForTesting)
-
-- (void)acceptCreditCard:(id)sender;
 
 @end
 

@@ -256,10 +256,8 @@ class FullCardRequester : public payments::FullCardRequest::ResultDelegate,
   ~FullCardRequester() override {}
 
   // payments::FullCardRequest::ResultDelegate:
-  void OnFullCardRequestSucceeded(
-      const payments::FullCardRequest& /* full_card_request */,
-      const CreditCard& card,
-      const base::string16& cvc) override {
+  void OnFullCardRequestSucceeded(const CreditCard& card,
+                                  const base::string16& cvc) override {
     JNIEnv* env = base::android::AttachCurrentThread();
     Java_FullCardRequestDelegate_onFullCardDetails(
         env, jdelegate_, CreateJavaCreditCardFromNative(env, card),
@@ -616,6 +614,11 @@ void PersonalDataManagerAndroid::OnPersonalDataChanged() {
     return;
 
   Java_PersonalDataManager_personalDataChanged(env, java_obj);
+}
+
+// static
+bool PersonalDataManagerAndroid::Register(JNIEnv* env) {
+  return RegisterNativesImpl(env);
 }
 
 void PersonalDataManagerAndroid::RecordAndLogProfileUse(

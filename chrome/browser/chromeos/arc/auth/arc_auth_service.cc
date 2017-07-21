@@ -174,7 +174,12 @@ ArcAuthService::ArcAuthService(content::BrowserContext* browser_context,
 }
 
 ArcAuthService::~ArcAuthService() {
-  arc_bridge_service_->auth()->RemoveObserver(this);
+  // TODO(hidehiko): Currently, the lifetime of ArcBridgeService and
+  // BrowserContextKeyedService is not nested.
+  // If ArcServiceManager::Get() returns nullptr, it is already destructed,
+  // so do not touch it.
+  if (ArcServiceManager::Get())
+    arc_bridge_service_->auth()->RemoveObserver(this);
 }
 
 void ArcAuthService::OnInstanceReady() {
@@ -293,8 +298,7 @@ void ArcAuthService::RequestAccountInfoInternal(
     // For Active Directory enrolled devices, we get an enrollment token for a
     // managed Google Play account from DMServer.
     auto enrollment_token_fetcher =
-        base::MakeUnique<ArcActiveDirectoryEnrollmentTokenFetcher>(
-            ArcSessionManager::Get()->support_host());
+        base::MakeUnique<ArcActiveDirectoryEnrollmentTokenFetcher>();
     enrollment_token_fetcher->Fetch(
         base::Bind(&ArcAuthService::OnEnrollmentTokenFetched,
                    weak_ptr_factory_.GetWeakPtr()));

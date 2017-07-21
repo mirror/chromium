@@ -129,7 +129,6 @@
 #include "net/url_request/url_request_context_getter.h"
 #include "ppapi/features/features.h"
 #include "printing/features/features.h"
-#include "services/preferences/public/cpp/in_process_service_factory.h"
 #include "ui/base/idle/idle.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/message_center/message_center.h"
@@ -227,9 +226,7 @@ BrowserProcessImpl::BrowserProcessImpl(
       tearing_down_(false),
       download_status_updater_(new DownloadStatusUpdater),
       local_state_task_runner_(local_state_task_runner),
-      cached_default_web_client_state_(shell_integration::UNKNOWN_DEFAULT),
-      pref_service_factory_(
-          base::MakeUnique<prefs::InProcessPrefServiceFactory>()) {
+      cached_default_web_client_state_(shell_integration::UNKNOWN_DEFAULT) {
   g_browser_process = this;
   rappor::SetDefaultServiceAccessor(&GetBrowserRapporService);
   platform_part_.reset(new BrowserProcessPlatformPart());
@@ -824,11 +821,6 @@ BrowserProcessImpl::GetPhysicalWebDataSource() {
 #endif
 }
 
-prefs::InProcessPrefServiceFactory* BrowserProcessImpl::pref_service_factory()
-    const {
-  return pref_service_factory_.get();
-}
-
 // static
 void BrowserProcessImpl::RegisterPrefs(PrefRegistrySimple* registry) {
   registry->RegisterBooleanPref(prefs::kDefaultBrowserSettingEnabled,
@@ -1038,11 +1030,9 @@ void BrowserProcessImpl::CreateLocalState() {
   // Register local state preferences.
   chrome::RegisterLocalState(pref_registry.get());
 
-  auto delegate = pref_service_factory_->CreateDelegate();
-  delegate->InitPrefRegistry(pref_registry.get());
   local_state_ = chrome_prefs::CreateLocalState(
       local_state_path, local_state_task_runner_.get(), policy_service(),
-      pref_registry, false, std::move(delegate));
+      pref_registry, false);
 
   pref_change_registrar_.Init(local_state_.get());
 

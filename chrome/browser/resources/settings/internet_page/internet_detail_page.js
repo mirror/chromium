@@ -724,13 +724,8 @@ Polymer({
         onc.StaticIPConfig =
             /** @type {!chrome.networkingPrivate.IPConfigProperties} */ ({});
       }
-      // Only copy Static IP properties.
-      var keysToCopy = ['Type', 'IPAddress', 'RoutingPrefix', 'Gateway'];
-      for (var i = 0; i < keysToCopy.length; ++i) {
-        var key = keysToCopy[i];
-        if (key in value)
-          onc.StaticIPConfig[key] = value[key];
-      }
+      for (var key in value)
+        onc.StaticIPConfig[key] = value[key];
     } else if (field == 'NameServers') {
       // If a StaticIPConfig property is specified and its NameServers value
       // matches the new value, no need to set anything.

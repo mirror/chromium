@@ -4,8 +4,6 @@
 
 #include "components/previews/core/previews_io_data.h"
 
-#include <algorithm>
-
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/files/file_path.h"
@@ -110,15 +108,13 @@ void PreviewsIOData::ClearBlackList(base::Time begin_time,
 bool PreviewsIOData::ShouldAllowPreview(const net::URLRequest& request,
                                         PreviewsType type) const {
   return ShouldAllowPreviewAtECT(
-      request, type, params::DefaultEffectiveConnectionTypeThreshold(),
-      std::vector<std::string>());
+      request, type, params::DefaultEffectiveConnectionTypeThreshold());
 }
 
 bool PreviewsIOData::ShouldAllowPreviewAtECT(
     const net::URLRequest& request,
     PreviewsType type,
-    net::EffectiveConnectionType effective_connection_type_threshold,
-    const std::vector<std::string>& host_blacklist_from_server) const {
+    net::EffectiveConnectionType effective_connection_type_threshold) const {
   if (is_enabled_callback_.is_null() || !previews_black_list_) {
     LogPreviewsEligibilityReason(
         PreviewsEligibilityReason::BLACKLIST_UNAVAILABLE, type);
@@ -135,7 +131,6 @@ bool PreviewsIOData::ShouldAllowPreviewAtECT(
     LogPreviewsEligibilityReason(status, type);
     return false;
   }
-
   net::NetworkQualityEstimator* network_quality_estimator =
       request.context()->network_quality_estimator();
   if (!network_quality_estimator ||
@@ -159,14 +154,6 @@ bool PreviewsIOData::ShouldAllowPreviewAtECT(
           (net::LOAD_VALIDATE_CACHE | net::LOAD_BYPASS_CACHE)) {
     LogPreviewsEligibilityReason(PreviewsEligibilityReason::RELOAD_DISALLOWED,
                                  type);
-    return false;
-  }
-
-  if (std::find(host_blacklist_from_server.begin(),
-                host_blacklist_from_server.end(), request.url().host_piece()) !=
-      host_blacklist_from_server.end()) {
-    LogPreviewsEligibilityReason(
-        PreviewsEligibilityReason::HOST_BLACKLISTED_BY_SERVER, type);
     return false;
   }
 

@@ -11,6 +11,7 @@
 #include "content/browser/devtools/protocol/devtools_domain_handler.h"
 #include "content/browser/devtools/protocol/target.h"
 #include "content/browser/devtools/protocol/target_auto_attacher.h"
+#include "content/public/browser/devtools_agent_host_client.h"
 #include "content/public/browser/devtools_agent_host_observer.h"
 
 namespace content {
@@ -22,6 +23,7 @@ namespace protocol {
 
 class TargetHandler : public DevToolsDomainHandler,
                       public Target::Backend,
+                      public DevToolsAgentHostClient,
                       public DevToolsAgentHostObserver {
  public:
   TargetHandler();
@@ -44,12 +46,10 @@ class TargetHandler : public DevToolsDomainHandler,
   Response SetRemoteLocations(
       std::unique_ptr<protocol::Array<Target::RemoteLocation>>) override;
   Response AttachToTarget(const std::string& target_id,
-                          std::string* out_session_id) override;
-  Response DetachFromTarget(Maybe<std::string> session_id,
-                            Maybe<std::string> target_id) override;
-  Response SendMessageToTarget(const std::string& message,
-                               Maybe<std::string> session_id,
-                               Maybe<std::string> target_id) override;
+                          bool* out_success) override;
+  Response DetachFromTarget(const std::string& target_id) override;
+  Response SendMessageToTarget(const std::string& target_id,
+                               const std::string& message) override;
   Response GetTargetInfo(
       const std::string& target_id,
       std::unique_ptr<Target::TargetInfo>* target_info) override;
@@ -69,14 +69,14 @@ class TargetHandler : public DevToolsDomainHandler,
       override;
 
  private:
-  class Session;
+  using RawHostsMap = std::map<std::string, DevToolsAgentHost*>;
 
-  void AutoAttach(DevToolsAgentHost* host, bool waiting_for_debugger);
-  void AutoDetach(DevToolsAgentHost* host);
-  Response FindSession(Maybe<std::string> session_id,
-                       Maybe<std::string> target_id,
-                       Session** session,
-                       bool fall_through);
+  void TargetCreatedInternal(DevToolsAgentHost* host);
+  void TargetInfoChangedInternal(DevToolsAgentHost* host);
+  void TargetDestroyedInternal(DevToolsAgentHost* host);
+  bool AttachToTargetInternal(DevToolsAgentHost* host,
+                              bool waiting_for_debugger);
+  void DetachFromTargetInternal(DevToolsAgentHost* host);
 
   // DevToolsAgentHostObserver implementation.
   bool ShouldForceDevToolsAgentHostCreation() override;
@@ -85,13 +85,17 @@ class TargetHandler : public DevToolsDomainHandler,
   void DevToolsAgentHostAttached(DevToolsAgentHost* agent_host) override;
   void DevToolsAgentHostDetached(DevToolsAgentHost* agent_host) override;
 
+  // DevToolsAgentHostClient implementation.
+  void DispatchProtocolMessage(DevToolsAgentHost* agent_host,
+                               const std::string& message) override;
+  void AgentHostClosed(DevToolsAgentHost* agent_host,
+                       bool replaced_with_another_client) override;
+
   std::unique_ptr<Target::Frontend> frontend_;
   TargetAutoAttacher auto_attacher_;
   bool discover_;
-  std::map<std::string, std::unique_ptr<Session>> attached_sessions_;
-  std::map<DevToolsAgentHost*, Session*> auto_attached_sessions_;
-  std::set<DevToolsAgentHost*> reported_hosts_;
-  int last_session_id_ = 0;
+  std::map<std::string, scoped_refptr<DevToolsAgentHost>> attached_hosts_;
+  RawHostsMap reported_hosts_;
 
   DISALLOW_COPY_AND_ASSIGN(TargetHandler);
 };

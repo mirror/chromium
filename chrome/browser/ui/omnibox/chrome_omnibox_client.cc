@@ -318,7 +318,7 @@ void ChromeOmniboxClient::OnResultChanged(
               destination: WEBSITE
             }
             policy {
-              cookies_allowed: YES
+              cookies_allowed: true
               cookies_store: "user"
               setting:
                 "You can enable or disable this feature via 'Use a prediction "

@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "chrome/browser/autofill/android/phone_number_util_android.h"
+
 #include "base/android/jni_string.h"
 #include "base/android/scoped_java_ref.h"
 #include "chrome/browser/browser_process.h"
@@ -116,3 +118,8 @@ jboolean IsPossibleNumber(JNIEnv* env,
 }
 
 }  // namespace autofill
+
+// static
+bool RegisterPhoneNumberUtil(JNIEnv* env) {
+  return autofill::RegisterNativesImpl(env);
+}

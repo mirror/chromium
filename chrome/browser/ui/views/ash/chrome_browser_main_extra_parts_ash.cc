@@ -44,10 +44,6 @@
 #include "ui/keyboard/keyboard_controller.h"
 #include "ui/views/mus/mus_client.h"
 
-#if BUILDFLAG(ENABLE_WAYLAND_SERVER)
-#include "chrome/browser/exo_parts.h"
-#endif
-
 ChromeBrowserMainExtraPartsAsh::ChromeBrowserMainExtraPartsAsh() {}
 
 ChromeBrowserMainExtraPartsAsh::~ChromeBrowserMainExtraPartsAsh() {}
@@ -121,10 +117,6 @@ void ChromeBrowserMainExtraPartsAsh::PreProfileInit() {
   keyboard::InitializeKeyboard();
 
   ui::SelectFileDialog::SetFactory(new SelectFileDialogExtensionFactory);
-
-#if BUILDFLAG(ENABLE_WAYLAND_SERVER)
-  exo_parts_ = ExoParts::CreateIfNecessary();
-#endif
 }
 
 void ChromeBrowserMainExtraPartsAsh::PostProfileInit() {
@@ -155,12 +147,6 @@ void ChromeBrowserMainExtraPartsAsh::PostProfileInit() {
 }
 
 void ChromeBrowserMainExtraPartsAsh::PostMainMessageLoopRun() {
-#if BUILDFLAG(ENABLE_WAYLAND_SERVER)
-  // ExoParts uses state from ash, delete it before ash so that exo can
-  // uninstall correctly.
-  exo_parts_.reset();
-#endif
-
   chrome_launcher_controller_.reset();
   chrome_shelf_model_.reset();
   vpn_list_forwarder_.reset();

@@ -155,7 +155,11 @@ static leveldb::Status OpenDB(
   options.block_cache = default_block_cache;
 
   // ChromiumEnv assumes UTF8, converts back to FilePath before using.
-  return leveldb_env::OpenDB(options, path.AsUTF8Unsafe(), db);
+  leveldb::DB* db_ptr = nullptr;
+  leveldb::Status s = leveldb::DB::Open(options, path.AsUTF8Unsafe(), &db_ptr);
+  db->reset(db_ptr);
+
+  return s;
 }
 
 leveldb::Status LevelDBDatabase::Destroy(const base::FilePath& file_name) {
@@ -502,11 +506,10 @@ bool LevelDBDatabase::OnMemoryDump(
 
   dump->AddString("file_name", "", file_name_for_tracing);
 
-  // All leveldb databases are already dumped by leveldb_env::DBTracker. Add
-  // an edge to avoid double counting.
+  // Memory is allocated from system allocator (malloc).
   pmd->AddSuballocation(dump->guid(),
-                        leveldb_env::DBTracker::GetMemoryDumpName(db_.get()));
-
+                        base::trace_event::MemoryDumpManager::GetInstance()
+                            ->system_allocator_pool_name());
   return true;
 }
 

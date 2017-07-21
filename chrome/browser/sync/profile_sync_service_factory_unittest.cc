@@ -28,12 +28,6 @@ using browser_sync::ProfileSyncService;
 using syncer::DataTypeController;
 
 class ProfileSyncServiceFactoryTest : public testing::Test {
- public:
-  void SetUp() override {
-    // Some services will only be created if there is a WebDataService.
-    profile_->CreateWebDataService();
-  }
-
  protected:
   ProfileSyncServiceFactoryTest() : profile_(new TestingProfile()) {}
 
@@ -119,7 +113,7 @@ class ProfileSyncServiceFactoryTest : public testing::Test {
 
  private:
   content::TestBrowserThreadBundle thread_bundle_;
-  std::unique_ptr<TestingProfile> profile_;
+  std::unique_ptr<Profile> profile_;
 };
 
 // Verify that the disable sync flag disables creation of the sync service.

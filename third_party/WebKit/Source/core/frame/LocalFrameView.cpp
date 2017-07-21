@@ -35,6 +35,7 @@
 #include "core/dom/AXObjectCache.h"
 #include "core/dom/DOMNodeIds.h"
 #include "core/dom/ElementVisibilityObserver.h"
+#include "core/dom/ResizeObserverController.h"
 #include "core/dom/StyleChangeReason.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/editing/DragCaret.h"
@@ -100,7 +101,6 @@
 #include "core/paint/PrePaintTreeWalk.h"
 #include "core/plugins/PluginView.h"
 #include "core/probe/CoreProbes.h"
-#include "core/resize_observer/ResizeObserverController.h"
 #include "core/style/ComputedStyle.h"
 #include "core/svg/SVGDocumentExtensions.h"
 #include "core/svg/SVGSVGElement.h"
@@ -2677,9 +2677,15 @@ void LocalFrameView::GetTickmarks(Vector<IntRect>& tickmarks) const {
       GetFrame().GetDocument()->Markers().LayoutRectsForTextMatchMarkers();
 }
 
-void LocalFrameView::SetInputEventsScaleForEmulation(
+void LocalFrameView::SetInputEventsTransformForEmulation(
+    const IntSize& offset,
     float content_scale_factor) {
+  input_events_offset_for_emulation_ = offset;
   input_events_scale_factor_for_emulation_ = content_scale_factor;
+}
+
+IntSize LocalFrameView::InputEventsOffsetForEmulation() const {
+  return input_events_offset_for_emulation_;
 }
 
 float LocalFrameView::InputEventsScaleFactor() const {

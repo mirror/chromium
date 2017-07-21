@@ -329,7 +329,13 @@ ArcNetHostImpl::~ArcNetHostImpl() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   if (observing_network_state_)
     GetStateHandler()->RemoveObserver(this, FROM_HERE);
-  arc_bridge_service_->net()->RemoveObserver(this);
+
+  // TODO(hidehiko): Currently, the lifetime of ArcBridgeService and
+  // BrowserContextKeyedService is not nested.
+  // If ArcServiceManager::Get() returns nullptr, it is already destructed,
+  // so do not touch it.
+  if (ArcServiceManager::Get())
+    arc_bridge_service_->net()->RemoveObserver(this);
 }
 
 void ArcNetHostImpl::OnInstanceReady() {
@@ -357,8 +363,27 @@ void ArcNetHostImpl::OnInstanceClosed() {
 }
 
 void ArcNetHostImpl::GetNetworksDeprecated(
-    mojom::GetNetworksRequestType type,
+    bool configured_only,
+    bool visible_only,
     const GetNetworksDeprecatedCallback& callback) {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  if (configured_only && visible_only) {
+    VLOG(1) << "Illegal arguments - both configured and visible networks "
+               "requested.";
+    return;
+  }
+
+  mojom::GetNetworksRequestType type =
+      mojom::GetNetworksRequestType::CONFIGURED_ONLY;
+  if (visible_only) {
+    type = mojom::GetNetworksRequestType::VISIBLE_ONLY;
+  }
+
+  GetNetworks(type, callback);
+}
+
+void ArcNetHostImpl::GetNetworks(mojom::GetNetworksRequestType type,
+                                 const GetNetworksCallback& callback) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
 
   mojom::NetworkDataPtr data = mojom::NetworkData::New();
@@ -369,7 +394,7 @@ void ArcNetHostImpl::GetNetworksDeprecated(
     visible_only = true;
   }
 
-  // Retrieve list of nearby WiFi networks.
+  // Retrieve list of nearby wifi networks
   chromeos::NetworkTypePattern network_pattern =
       chromeos::onc::NetworkTypePatternFromOncType(onc::network_type::kWiFi);
   std::unique_ptr<base::ListValue> network_properties_list =
@@ -432,31 +457,6 @@ void ArcNetHostImpl::GetNetworksDeprecated(
   }
   data->networks = std::move(networks);
   callback.Run(std::move(data));
-}
-
-void ArcNetHostImpl::GetNetworks(mojom::GetNetworksRequestType type,
-                                 const GetNetworksCallback& callback) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-
-  // Retrieve list of configured or visible WiFi networks.
-  bool configured_only = type == mojom::GetNetworksRequestType::CONFIGURED_ONLY;
-  chromeos::NetworkTypePattern network_pattern =
-      chromeos::onc::NetworkTypePatternFromOncType(onc::network_type::kWiFi);
-  std::unique_ptr<base::ListValue> network_properties_list =
-      chromeos::network_util::TranslateNetworkListToONC(
-          network_pattern, configured_only, !configured_only /* visible_only */,
-          kGetNetworksListLimit);
-
-  std::vector<mojom::NetworkConfigurationPtr> networks;
-  for (const auto& value : *network_properties_list) {
-    const base::DictionaryValue* network_dict = nullptr;
-    value.GetAsDictionary(&network_dict);
-    DCHECK(network_dict);
-    networks.push_back(TranslateONCConfiguration(network_dict));
-  }
-
-  callback.Run(mojom::GetNetworksResponseType::New(
-      arc::mojom::NetworkResult::SUCCESS, std::move(networks)));
 }
 
 void ArcNetHostImpl::CreateNetworkSuccessCallback(

@@ -5,13 +5,12 @@
 #ifndef CHROME_BROWSER_VR_ANIMATION_PLAYER_H_
 #define CHROME_BROWSER_VR_ANIMATION_PLAYER_H_
 
-#include <set>
 #include <vector>
 
 #include "base/macros.h"
 #include "cc/animation/animation.h"
+#include "cc/trees/target_property.h"
 #include "chrome/browser/vr/transition.h"
-#include "third_party/skia/include/core/SkColor.h"
 
 namespace cc {
 class AnimationTarget;
@@ -46,7 +45,7 @@ class AnimationPlayer final {
   // groups are not currently supported. crbug.com/742358
   void AddAnimation(std::unique_ptr<cc::Animation> animation);
   void RemoveAnimation(int animation_id);
-  void RemoveAnimations(int target_property);
+  void RemoveAnimations(cc::TargetProperty::Type target_property);
 
   void Tick(base::TimeTicks monotonic_time);
 
@@ -61,34 +60,20 @@ class AnimationPlayer final {
     transition_ = transition;
   }
 
-  void SetTransitionedProperties(const std::set<int>& properties);
-
-  void TransitionFloatTo(base::TimeTicks monotonic_time,
-                         int target_property,
-                         float current,
-                         float target);
+  void TransitionOpacityTo(base::TimeTicks monotonic_time,
+                           float current,
+                           float target);
   void TransitionTransformOperationsTo(base::TimeTicks monotonic_time,
-                                       int target_property,
                                        const cc::TransformOperations& current,
                                        const cc::TransformOperations& target);
-  void TransitionSizeTo(base::TimeTicks monotonic_time,
-                        int target_property,
-                        const gfx::SizeF& current,
-                        const gfx::SizeF& target);
-  void TransitionColorTo(base::TimeTicks monotonic_time,
-                         int target_property,
-                         SkColor current,
-                         SkColor target);
-  void TransitionBooleanTo(base::TimeTicks monotonic_time,
-                           int target_property,
-                           bool current,
-                           bool target);
-
-  bool IsAnimatingProperty(int property) const;
+  void TransitionBoundsTo(base::TimeTicks monotonic_time,
+                          const gfx::SizeF& current,
+                          const gfx::SizeF& target);
 
  private:
   void StartAnimations(base::TimeTicks monotonic_time);
-  cc::Animation* GetRunningAnimationForProperty(int target_property) const;
+  cc::Animation* GetRunningAnimationForProperty(
+      cc::TargetProperty::Type target_property);
 
   cc::AnimationTarget* target_ = nullptr;
   Animations animations_;

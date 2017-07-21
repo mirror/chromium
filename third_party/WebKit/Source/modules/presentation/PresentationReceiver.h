@@ -61,7 +61,7 @@ class MODULES_EXPORT PresentationReceiver final
  private:
   friend class PresentationReceiverTest;
 
-  static void RecordOriginTypeAccess(ExecutionContext&);
+  void RecordOriginTypeAccess(Document*) const;
 
   Member<ConnectionListProperty> connection_list_property_;
   Member<PresentationConnectionList> connection_list_;

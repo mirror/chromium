@@ -462,31 +462,23 @@ TEST_F(ChromeArcUtilTest, ArcPlayStoreEnabledForProfile_Managed) {
   EXPECT_FALSE(IsArcPlayStoreEnabledPreferenceManagedForProfile(profile()));
 }
 
-// Test the AreArcAllOptInPreferencesIgnorableForProfile() function.
-TEST_F(ChromeArcUtilTest, AreArcAllOptInPreferencesIgnorableForProfile) {
+// Test the AreArcAllOptInPreferencesManagedForProfile() function.
+TEST_F(ChromeArcUtilTest, AreArcAllOptInPreferencesManagedForProfile) {
   base::CommandLine::ForCurrentProcess()->InitFromArgv(
       {"", "--arc-availability=officially-supported"});
   // OptIn prefs are unset, the function returns false.
-  EXPECT_FALSE(AreArcAllOptInPreferencesIgnorableForProfile(profile()));
-
-  // Prefs are unused for Active Directory users.
-  {
-    ScopedLogIn login(GetFakeUserManager(),
-                      AccountId::AdFromUserEmailObjGuid(
-                          profile()->GetProfileUserName(), kTestGaiaId));
-    EXPECT_TRUE(AreArcAllOptInPreferencesIgnorableForProfile(profile()));
-  }
+  EXPECT_FALSE(AreArcAllOptInPreferencesManagedForProfile(profile()));
 
   // OptIn prefs are set to unmanaged values, and the function returns false.
   profile()->GetPrefs()->SetBoolean(prefs::kArcBackupRestoreEnabled, false);
   profile()->GetPrefs()->SetBoolean(prefs::kArcLocationServiceEnabled, false);
-  EXPECT_FALSE(AreArcAllOptInPreferencesIgnorableForProfile(profile()));
+  EXPECT_FALSE(AreArcAllOptInPreferencesManagedForProfile(profile()));
 
   // Backup-restore pref is managed, while location-service is not, and the
   // function returns false.
   profile()->GetTestingPrefService()->SetManagedPref(
       prefs::kArcBackupRestoreEnabled, base::MakeUnique<base::Value>(false));
-  EXPECT_FALSE(AreArcAllOptInPreferencesIgnorableForProfile(profile()));
+  EXPECT_FALSE(AreArcAllOptInPreferencesManagedForProfile(profile()));
 
   // Location-service pref is managed, while backup-restore is not, and the
   // function returns false.
@@ -494,12 +486,12 @@ TEST_F(ChromeArcUtilTest, AreArcAllOptInPreferencesIgnorableForProfile) {
       prefs::kArcBackupRestoreEnabled);
   profile()->GetTestingPrefService()->SetManagedPref(
       prefs::kArcLocationServiceEnabled, base::MakeUnique<base::Value>(false));
-  EXPECT_FALSE(AreArcAllOptInPreferencesIgnorableForProfile(profile()));
+  EXPECT_FALSE(AreArcAllOptInPreferencesManagedForProfile(profile()));
 
   // Both OptIn prefs are set to managed values, and the function returns true.
   profile()->GetTestingPrefService()->SetManagedPref(
       prefs::kArcBackupRestoreEnabled, base::MakeUnique<base::Value>(false));
-  EXPECT_TRUE(AreArcAllOptInPreferencesIgnorableForProfile(profile()));
+  EXPECT_TRUE(AreArcAllOptInPreferencesManagedForProfile(profile()));
 }
 
 // Test the IsActiveDirectoryUserForProfile() function for non-AD accounts.

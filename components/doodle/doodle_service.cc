@@ -119,7 +119,7 @@ void DoodleService::GetImage(const ImageCallback& callback) {
           destination: GOOGLE_OWNED_SERVICE
         }
         policy {
-          cookies_allowed: NO
+          cookies_allowed: false
           setting:
             "Choosing a non-Google search engine in Chromium settings under "
             "'Search Engine' disables this feature."

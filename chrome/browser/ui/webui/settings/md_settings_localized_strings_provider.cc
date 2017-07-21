@@ -904,16 +904,6 @@ void AddEasyUnlockStrings(content::WebUIDataSource* html_source) {
       {"easyUnlockTurnOffErrorMessage",
        IDS_SETTINGS_EASY_UNLOCK_TURN_OFF_ERROR_MESSAGE},
       {"easyUnlockTurnOffRetryButton", IDS_SETTINGS_EASY_UNLOCK_TURN_OFF_RETRY},
-      {"easyUnlockProximityThresholdLabel",
-       IDS_SETTINGS_EASY_UNLOCK_PROXIMITY_THRESHOLD_LABEL},
-      {"easyUnlockProximityThresholdVeryClose",
-       IDS_SETTINGS_EASY_UNLOCK_PROXIMITY_THRESHOLD_VERY_CLOSE},
-      {"easyUnlockProximityThresholdClose",
-       IDS_SETTINGS_EASY_UNLOCK_PROXIMITY_THRESHOLD_CLOSE},
-      {"easyUnlockProximityThresholdFar",
-       IDS_SETTINGS_EASY_UNLOCK_PROXIMITY_THRESHOLD_FAR},
-      {"easyUnlockProximityThresholdVeryFar",
-       IDS_SETTINGS_EASY_UNLOCK_PROXIMITY_THRESHOLD_VERY_FAR},
   };
   AddLocalizedStringsBulk(html_source, localized_strings,
                           arraysize(localized_strings));
@@ -936,10 +926,6 @@ void AddEasyUnlockStrings(content::WebUIDataSource* html_source) {
       "easyUnlockTurnOffDescription",
       l10n_util::GetStringFUTF16(IDS_SETTINGS_EASY_UNLOCK_TURN_OFF_DESCRIPTION,
                                  device_name));
-  html_source->AddString(
-      "easyUnlockProximityThresholdLabel",
-      l10n_util::GetStringFUTF16(
-          IDS_SETTINGS_EASY_UNLOCK_PROXIMITY_THRESHOLD_LABEL, device_name));
 
   html_source->AddString("easyUnlockLearnMoreURL",
                          chrome::kEasyUnlockLearnMoreUrl);
@@ -1593,6 +1579,9 @@ void AddPrintingStrings(content::WebUIDataSource* html_source) {
                          chrome::kCloudPrintLearnMoreURL);
 
 #if defined(OS_CHROMEOS)
+  html_source->AddBoolean("showCupsPrintingFeatures",
+                          !base::CommandLine::ForCurrentProcess()->HasSwitch(
+                              ::switches::kDisableNativeCups));
   html_source->AddString("printingCUPSPrintLearnMoreUrl",
                          chrome::kCupsPrintLearnMoreURL);
 #endif
@@ -1904,12 +1893,6 @@ void AddSiteSettingsStrings(content::WebUIDataSource* html_source,
     {"siteSettingsBlockedRecommended",
      IDS_SETTINGS_SITE_SETTINGS_BLOCKED_RECOMMENDED},
     {"siteSettingsSiteUrl", IDS_SETTINGS_SITE_SETTINGS_SITE_URL},
-    {"siteSettingsActionAskDefault",
-     IDS_SETTINGS_SITE_SETTINGS_ASK_DEFAULT_MENU},
-    {"siteSettingsActionAllowDefault",
-     IDS_SETTINGS_SITE_SETTINGS_ALLOW_DEFAULT_MENU},
-    {"siteSettingsActionBlockDefault",
-     IDS_SETTINGS_SITE_SETTINGS_BLOCK_DEFAULT_MENU},
     {"siteSettingsActionAllow", IDS_SETTINGS_SITE_SETTINGS_ALLOW_MENU},
     {"siteSettingsActionBlock", IDS_SETTINGS_SITE_SETTINGS_BLOCK_MENU},
     {"siteSettingsActionReset", IDS_SETTINGS_SITE_SETTINGS_RESET_MENU},

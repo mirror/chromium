@@ -94,11 +94,6 @@ void SnapshotController::PendingSnapshotCompleted() {
   state_ = State::READY;
 }
 
-void SnapshotController::RenovationsCompleted() {
-  // Do nothing for now.
-  // TODO(collinbaker): delay snapshot until this signal is received.
-}
-
 void SnapshotController::DocumentAvailableInMainFrame() {
   if (document_available_triggers_snapshot_) {
     DCHECK_EQ(PageQuality::POOR, current_page_quality_);

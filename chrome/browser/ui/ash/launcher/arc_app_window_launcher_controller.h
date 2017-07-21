@@ -9,7 +9,7 @@
 #include <memory>
 #include <vector>
 
-#include "ash/wm/tablet_mode/tablet_mode_observer.h"
+#include "ash/shell_observer.h"
 #include "base/macros.h"
 #include "base/time/time.h"
 #include "chrome/browser/chromeos/arc/arc_session_manager.h"
@@ -33,7 +33,7 @@ class Profile;
 class ArcAppWindowLauncherController : public AppWindowLauncherController,
                                        public aura::EnvObserver,
                                        public aura::WindowObserver,
-                                       public ash::TabletModeObserver,
+                                       public ash::ShellObserver,
                                        public ArcAppListPrefs::Observer,
                                        public arc::ArcSessionManager::Observer {
  public:
@@ -59,7 +59,7 @@ class ArcAppWindowLauncherController : public AppWindowLauncherController,
                          aura::Window* gained_active,
                          aura::Window* lost_active) override;
 
-  // ash::TabletModeObserver:
+  // ash::ShellObserver:
   void OnTabletModeStarted() override;
   void OnTabletModeEnded() override;
 

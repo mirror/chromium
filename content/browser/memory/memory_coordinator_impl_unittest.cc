@@ -101,7 +101,7 @@ class TestMemoryCoordinatorDelegate : public MemoryCoordinatorDelegate {
   TestMemoryCoordinatorDelegate() {}
   ~TestMemoryCoordinatorDelegate() override {}
 
-  void DiscardTab(bool skip_unload_handlers) override { ++discard_tab_count_; }
+  void DiscardTab() override { ++discard_tab_count_; }
 
   int discard_tab_count() const { return discard_tab_count_; }
 
@@ -120,9 +120,7 @@ class MockMemoryCoordinatorPolicy : public MemoryCoordinatorImpl::Policy {
 
   ~MockMemoryCoordinatorPolicy() override = default;
 
-  void OnCriticalCondition() override {
-    coordinator_->DiscardTab(false /* skip_unload_handlers */);
-  }
+  void OnCriticalCondition() override { coordinator_->DiscardTab(); }
 
   void OnConditionChanged(MemoryCondition prev, MemoryCondition next) override {
     EXPECT_NE(prev, next);
@@ -398,7 +396,7 @@ TEST_F(MemoryCoordinatorImplTest, ForceSetMemoryCondition) {
 }
 
 TEST_F(MemoryCoordinatorImplTest, DiscardTab) {
-  coordinator_->DiscardTab(false /* skip_unload_handlers */);
+  coordinator_->DiscardTab();
   EXPECT_EQ(1, coordinator_->GetDelegate()->discard_tab_count());
 }
 

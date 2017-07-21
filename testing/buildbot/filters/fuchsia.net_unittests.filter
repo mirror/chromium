@@ -14,9 +14,11 @@
 -DiskCache*
 -EffectiveConnectionTypeTest*
 -EmbeddedTestServer*
+-FilenameUtilTest.Generate*
 -FileStreamTest.*
 -HttpNetworkTransactionTest.UploadUnreadableFile
 -HttpServerTest.*
+-MimeUtilTest.*
 -NetworkInterfacesTest.GetNetworkList
 -NetworkQualitiesPrefManager*
 -NetworkQualityEstimatorTest*

@@ -1443,7 +1443,7 @@ void RenderWidgetHostViewMac::SubmitCompositorFrame(
 }
 
 void RenderWidgetHostViewMac::OnDidNotProduceFrame(
-    const viz::BeginFrameAck& ack) {
+    const cc::BeginFrameAck& ack) {
   browser_compositor_->OnDidNotProduceFrame(ack);
 }
 
@@ -2876,7 +2876,7 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
   if (closeOnDeactivate_)
     renderWidgetHostView_->KillSelf();
 
-  renderWidgetHostView_->render_widget_host_->LostFocus();
+  renderWidgetHostView_->render_widget_host_->Blur();
 
   // We should cancel any onging composition whenever RWH's Blur() method gets
   // called, because in this case, webkit will confirm the ongoing composition

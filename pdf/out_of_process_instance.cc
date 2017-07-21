@@ -150,11 +150,6 @@ const char kJSFieldFocus[] = "focused";
 
 const int kFindResultCooldownMs = 100;
 
-// Same value as printing::COMPLETE_PREVIEW_DOCUMENT_INDEX.
-constexpr int kCompletePDFIndex = -1;
-// A different negative value to differentiate itself from |kCompletePDFIndex|.
-constexpr int kInvalidPDFIndex = -2;
-
 // A delay to wait between each accessibility page to keep the system
 // responsive.
 const int kAccessibilityPageDelayMs = 100;
@@ -225,19 +220,18 @@ const PPP_Pdf ppp_private = {
 
 int ExtractPrintPreviewPageIndex(base::StringPiece src_url) {
   // Sample |src_url| format: chrome://print/id/page_index/print.pdf
-  // The page_index is zero-based, but can be negative with special meanings.
   std::vector<base::StringPiece> url_substr =
       base::SplitStringPiece(src_url.substr(strlen(kChromePrint)), "/",
                              base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL);
   if (url_substr.size() != 3)
-    return kInvalidPDFIndex;
+    return -1;
 
   if (url_substr[2] != "print.pdf")
-    return kInvalidPDFIndex;
+    return -1;
 
   int page_index = 0;
   if (!base::StringToInt(url_substr[1], &page_index))
-    return kInvalidPDFIndex;
+    return -1;
   return page_index;
 }
 
@@ -534,39 +528,20 @@ void OutOfProcessInstance::HandleMessage(const pp::Var& message) {
              dict.Get(pp::Var(kJSPrintPreviewUrl)).is_string() &&
              dict.Get(pp::Var(kJSPrintPreviewGrayscale)).is_bool() &&
              dict.Get(pp::Var(kJSPrintPreviewPageCount)).is_int()) {
-    // For security reasons, crash if the URL that is trying to be loaded here
-    // isn't a print preview one.
-    std::string url = dict.Get(pp::Var(kJSPrintPreviewUrl)).AsString();
-    CHECK(IsPrintPreview());
-    CHECK(IsPrintPreviewUrl(url));
-
     int print_preview_page_count =
-        dict.Get(pp::Var(kJSPrintPreviewPageCount)).AsInt();
-    if (print_preview_page_count < 0) {
+        std::max(dict.Get(pp::Var(kJSPrintPreviewPageCount)).AsInt(), 0);
+    if (print_preview_page_count <= 0) {
       NOTREACHED();
       return;
     }
 
-    // The page count is zero if the print preview source is a PDF. In which
-    // case, the page index for |url| should be at |kCompletePDFIndex|.
-    // When the page count is not zero, then the source is not PDF. In which
-    // case, the page index for |url| should be non-negative.
-    bool is_printing_pdf = print_preview_page_count == 0;
-    int page_index = ExtractPrintPreviewPageIndex(url);
-    if (is_printing_pdf) {
-      if (page_index != kCompletePDFIndex) {
-        NOTREACHED();
-        return;
-      }
-    } else {
-      if (page_index < 0) {
-        NOTREACHED();
-        return;
-      }
-    }
-
     print_preview_page_count_ = print_preview_page_count;
-    url_ = url;
+    url_ = dict.Get(pp::Var(kJSPrintPreviewUrl)).AsString();
+    // For security reasons we crash if the URL that is trying to be loaded here
+    // isn't a print preview one.
+    CHECK(IsPrintPreview());
+    CHECK(IsPrintPreviewUrl(url_));
+
     preview_pages_info_ = std::queue<PreviewPageInfo>();
     preview_document_load_state_ = LOAD_STATE_COMPLETE;
     document_load_state_ = LOAD_STATE_LOADING;
@@ -1343,9 +1318,10 @@ void OutOfProcessInstance::DocumentLoadComplete(int page_count) {
   DCHECK_EQ(LOAD_STATE_LOADING, document_load_state_);
   document_load_state_ = LOAD_STATE_COMPLETE;
   UserMetricsRecordAction("PDF.LoadSuccess");
-  HistogramEnumeration("PDF.DocumentFeature", LOADED_DOCUMENT, FEATURES_COUNT);
+  uma_.HistogramEnumeration("PDF.DocumentFeature", LOADED_DOCUMENT,
+                            FEATURES_COUNT);
   if (!font_substitution_reported_)
-    HistogramEnumeration("PDF.IsFontSubstituted", 0, 2);
+    uma_.HistogramEnumeration("PDF.IsFontSubstituted", 0, 2);
 
   // Note: If we are in print preview mode the scroll location is retained
   // across document loads so we don't want to scroll again and override it.
@@ -1359,13 +1335,15 @@ void OutOfProcessInstance::DocumentLoadComplete(int page_count) {
   std::string title = engine_->GetMetadata("Title");
   if (!base::TrimWhitespace(base::UTF8ToUTF16(title), base::TRIM_ALL).empty()) {
     metadata_message.Set(pp::Var(kJSTitle), pp::Var(title));
-    HistogramEnumeration("PDF.DocumentFeature", HAS_TITLE, FEATURES_COUNT);
+    uma_.HistogramEnumeration("PDF.DocumentFeature", HAS_TITLE, FEATURES_COUNT);
   }
 
   pp::VarArray bookmarks = engine_->GetBookmarks();
   metadata_message.Set(pp::Var(kJSBookmarks), bookmarks);
-  if (bookmarks.GetLength() > 0)
-    HistogramEnumeration("PDF.DocumentFeature", HAS_BOOKMARKS, FEATURES_COUNT);
+  if (bookmarks.GetLength() > 0) {
+    uma_.HistogramEnumeration("PDF.DocumentFeature", HAS_BOOKMARKS,
+                              FEATURES_COUNT);
+  }
   PostMessage(metadata_message);
 
   pp::VarDictionary progress_message;
@@ -1396,7 +1374,7 @@ void OutOfProcessInstance::DocumentLoadComplete(int page_count) {
 
   pp::PDF::SetContentRestriction(this, content_restrictions);
 
-  HistogramCustomCounts("PDF.PageCount", page_count, 1, 1000000, 50);
+  uma_.HistogramCustomCounts("PDF.PageCount", page_count, 1, 1000000, 50);
 }
 
 void OutOfProcessInstance::RotateClockwise() {
@@ -1416,7 +1394,7 @@ void OutOfProcessInstance::PreviewDocumentLoadComplete() {
   preview_document_load_state_ = LOAD_STATE_COMPLETE;
 
   int dest_page_index = preview_pages_info_.front().second;
-  DCHECK_GT(dest_page_index, 0);
+  DCHECK_GE(dest_page_index, 0);
   DCHECK(preview_engine_);
   engine_->AppendPage(preview_engine_.get(), dest_page_index);
 
@@ -1624,17 +1602,16 @@ void OutOfProcessInstance::ProcessPreviewPageInfo(const std::string& url,
     return;
   }
 
-  // Print Preview JS will send the loadPreviewPage message for every page,
-  // including the first page in the print preview, which has already been
-  // loaded when handing the resetPrintPreviewMode message. Just ignore it.
-  if (dest_page_index == 0)
-    return;
-
   int src_page_index = ExtractPrintPreviewPageIndex(url);
   if (src_page_index < 0) {
     NOTREACHED();
     return;
   }
+
+  // Print Preview JS will call loadPreviewPage() for every page, including
+  // page 0. Just ignore it.
+  if (src_page_index == 0)
+    return;
 
   preview_pages_info_.push(std::make_pair(url, dest_page_index));
   LoadAvailablePreviewPage();
@@ -1673,26 +1650,6 @@ pp::FloatPoint OutOfProcessInstance::BoundScrollOffsetToDocument(
   float max_y = document_size_.height() * zoom_ - plugin_dip_size_.height();
   float y = std::max(std::min(scroll_offset.y(), max_y), min_y);
   return pp::FloatPoint(x, y);
-}
-
-void OutOfProcessInstance::HistogramCustomCounts(const std::string& name,
-                                                 int32_t sample,
-                                                 int32_t min,
-                                                 int32_t max,
-                                                 uint32_t bucket_count) {
-  if (IsPrintPreview())
-    return;
-
-  uma_.HistogramCustomCounts(name, sample, min, max, bucket_count);
-}
-
-void OutOfProcessInstance::HistogramEnumeration(const std::string& name,
-                                                int32_t sample,
-                                                int32_t boundary_value) {
-  if (IsPrintPreview())
-    return;
-
-  uma_.HistogramEnumeration(name, sample, boundary_value);
 }
 
 }  // namespace chrome_pdf

@@ -28,9 +28,6 @@ APP_LIST_EXPORT extern const base::Feature kEnableAnswerCardDarkRun;
 // Enables the fullscreen app list.
 APP_LIST_EXPORT extern const base::Feature kEnableFullscreenAppList;
 
-// Enables the Play Store app search.
-APP_LIST_EXPORT extern const base::Feature kEnablePlayStoreAppSearch;
-
 bool APP_LIST_EXPORT IsAnswerCardEnabled();
 bool APP_LIST_EXPORT IsAnswerCardDarkRunEnabled();
 bool APP_LIST_EXPORT IsFullscreenAppListEnabled();

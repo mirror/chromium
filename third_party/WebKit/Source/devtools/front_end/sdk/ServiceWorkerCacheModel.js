@@ -168,7 +168,7 @@ SDK.ServiceWorkerCacheModel = class extends SDK.SDKModel {
 
     for (var cacheJson of cachesJson) {
       var cache =
-          new SDK.ServiceWorkerCacheModel.Cache(this, cacheJson.securityOrigin, cacheJson.cacheName, cacheJson.cacheId);
+          new SDK.ServiceWorkerCacheModel.Cache(cacheJson.securityOrigin, cacheJson.cacheName, cacheJson.cacheId);
       updatingCachesIds.add(cache.cacheId);
       if (this._caches.has(cache.cacheId))
         continue;
@@ -258,13 +258,11 @@ SDK.ServiceWorkerCacheModel.Entry = class {
  */
 SDK.ServiceWorkerCacheModel.Cache = class {
   /**
-   * @param {!SDK.ServiceWorkerCacheModel} model
    * @param {string} securityOrigin
    * @param {string} cacheName
    * @param {string} cacheId
    */
-  constructor(model, securityOrigin, cacheName, cacheId) {
-    this._model = model;
+  constructor(securityOrigin, cacheName, cacheId) {
     this.securityOrigin = securityOrigin;
     this.cacheName = cacheName;
     this.cacheId = cacheId;
@@ -284,13 +282,5 @@ SDK.ServiceWorkerCacheModel.Cache = class {
    */
   toString() {
     return this.securityOrigin + this.cacheName;
-  }
-
-  /**
-   * @param {string} url
-   * @return {!Promise<?Protocol.CacheStorage.CachedResponse>}
-   */
-  requestCachedResponse(url) {
-    return this._model._agent.requestCachedResponse(this.cacheId, url);
   }
 };

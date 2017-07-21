@@ -53,9 +53,9 @@ void EncryptionMigrationScreen::SetUserContext(
   view_->SetUserContext(user_context);
 }
 
-void EncryptionMigrationScreen::SetMode(EncryptionMigrationMode mode) {
+void EncryptionMigrationScreen::SetShouldResume(bool should_resume) {
   DCHECK(view_);
-  view_->SetMode(mode);
+  view_->SetShouldResume(should_resume);
 }
 
 void EncryptionMigrationScreen::SetContinueLoginCallback(

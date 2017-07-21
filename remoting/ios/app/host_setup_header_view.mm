@@ -11,11 +11,13 @@
 #import "ios/third_party/material_components_ios/src/components/Typography/src/MaterialTypography.h"
 #import "remoting/ios/app/remoting_theme.h"
 
-#include "remoting/base/string_resources.h"
-#include "ui/base/l10n/l10n_util.h"
-
 static const CGFloat kSetupTitleInset = 22.f;
 static const CGFloat kBottomPadding = 6.f;
+
+// TODO(yuweih): i18n
+static NSString* const kSetupTitle =
+    @"Welcome to Chrome Remote Desktop.\n"
+    @"Let's get you setup.";
 
 @implementation HostSetupHeaderView
 
@@ -30,7 +32,7 @@ static const CGFloat kBottomPadding = 6.f;
   self.backgroundColor = RemotingTheme.setupListBackgroundColor;
 
   UILabel* titleLabel = [[UILabel alloc] init];
-  titleLabel.text = l10n_util::GetNSString(IDS_HOST_SETUP_TITLE);
+  titleLabel.text = kSetupTitle;
   titleLabel.font = MDCTypography.titleFont;
   titleLabel.numberOfLines = 2;
   titleLabel.adjustsFontSizeToFitWidth = YES;

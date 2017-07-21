@@ -15,8 +15,6 @@
 #import "remoting/ios/app/settings/setting_option.h"
 
 #include "base/logging.h"
-#include "remoting/base/string_resources.h"
-#include "ui/base/l10n/l10n_util.h"
 
 static NSString* const kReusableIdentifierItem = @"remotingSettingsVCItem";
 static NSString* const kFeedbackContext = @"InSessionFeedbackContext";
@@ -78,10 +76,7 @@ static NSString* const kFeedbackContext = @"InSessionFeedbackContext";
 
   // TODO(nicholss): All of these strings need to be setup for l18n.
   _sections = @[
-    l10n_util::GetNSString(IDS_DISPLAY_OPTIONS),
-    l10n_util::GetNSString(IDS_MOUSE_OPTIONS),
-    l10n_util::GetNSString(IDS_KEYBOARD_OPTIONS),
-    l10n_util::GetNSString(IDS_SUPPORT_MENU),
+    @"Display options", @"Mouse options", @"Keyboard controls", @"Support"
   ];
   self.styler.cellStyle = MDCCollectionViewCellStyleCard;
 }
@@ -234,9 +229,9 @@ static NSString* const kFeedbackContext = @"InSessionFeedbackContext";
   __weak RemotingSettingsViewController* weakSelf = self;
 
   SettingOption* shrinkOption = [[SettingOption alloc] init];
-  shrinkOption.title = l10n_util::GetNSString(IDS_SHRINK_TO_FIT);
+  shrinkOption.title = @"Shrink to fit";
   // TODO(nicholss): I think this text changes based on value. Confirm.
-  shrinkOption.subtext = l10n_util::GetNSString(IDS_SHRINK_TO_FIT_SUBTITLE);
+  shrinkOption.subtext = @"Don't change resolution to match window";
   shrinkOption.style = OptionCheckbox;
   shrinkOption.checked = NO;
   __weak SettingOption* weakShrinkOption = shrinkOption;
@@ -247,9 +242,9 @@ static NSString* const kFeedbackContext = @"InSessionFeedbackContext";
   };
 
   SettingOption* resizeOption = [[SettingOption alloc] init];
-  resizeOption.title = l10n_util::GetNSString(IDS_RESIZE_TO_CLIENT);
+  resizeOption.title = @"Resize to fit";
   // TODO(nicholss): I think this text changes based on value. Confirm.
-  resizeOption.subtext = l10n_util::GetNSString(IDS_RESIZE_TO_CLIENT_SUBTITLE);
+  resizeOption.subtext = @"Update remote resolution to match window";
   resizeOption.style = OptionCheckbox;
   resizeOption.checked = YES;
   __weak SettingOption* weakResizeOption = resizeOption;
@@ -262,9 +257,9 @@ static NSString* const kFeedbackContext = @"InSessionFeedbackContext";
   [_content addObject:@[ shrinkOption, resizeOption ]];
 
   SettingOption* directMode = [[SettingOption alloc] init];
-  directMode.title = l10n_util::GetNSString(IDS_SELECT_TOUCH_MODE);
+  directMode.title = @"Touch mode";
   // TODO(nicholss): I think this text changes based on value. Confirm.
-  directMode.subtext = l10n_util::GetNSString(IDS_TOUCH_MODE_DESCRIPTION);
+  directMode.subtext = @"Screen acts like a touch screen";
   directMode.style = OptionSelector;
   directMode.checked =
       self.inputMode == remoting::GestureInterpreter::DIRECT_INPUT_MODE;
@@ -275,9 +270,9 @@ static NSString* const kFeedbackContext = @"InSessionFeedbackContext";
   };
 
   SettingOption* trackpadMode = [[SettingOption alloc] init];
-  trackpadMode.title = l10n_util::GetNSString(IDS_SELECT_TRACKPAD_MODE);
+  trackpadMode.title = @"Trackpad mode";
   // TODO(nicholss): I think this text changes based on value. Confirm.
-  trackpadMode.subtext = l10n_util::GetNSString(IDS_TRACKPAD_MODE_DESCRIPTION);
+  trackpadMode.subtext = @"Screen acts like a trackpad";
   trackpadMode.style = OptionSelector;
   trackpadMode.checked =
       self.inputMode == remoting::GestureInterpreter::TRACKPAD_INPUT_MODE;
@@ -291,7 +286,7 @@ static NSString* const kFeedbackContext = @"InSessionFeedbackContext";
   [_content addObject:@[ directMode, trackpadMode ]];
 
   SettingOption* ctrlAltDelOption = [[SettingOption alloc] init];
-  ctrlAltDelOption.title = l10n_util::GetNSString(IDS_SEND_CTRL_ALT_DEL);
+  ctrlAltDelOption.title = @"Press \"Ctrl+Alt+Del\"";
   ctrlAltDelOption.style = FlatButton;
   ctrlAltDelOption.action = ^{
     if ([weakSelf.delegate respondsToSelector:@selector(sendCtrAltDel)]) {
@@ -300,7 +295,7 @@ static NSString* const kFeedbackContext = @"InSessionFeedbackContext";
   };
 
   SettingOption* printScreenOption = [[SettingOption alloc] init];
-  printScreenOption.title = l10n_util::GetNSString(IDS_SEND_PRINT_SCREEN);
+  printScreenOption.title = @"Press \"Print Screen\"";
   printScreenOption.style = FlatButton;
   printScreenOption.action = ^{
     if ([weakSelf.delegate respondsToSelector:@selector(sendPrintScreen)]) {
@@ -311,7 +306,7 @@ static NSString* const kFeedbackContext = @"InSessionFeedbackContext";
   [_content addObject:@[ ctrlAltDelOption, printScreenOption ]];
 
   SettingOption* helpCenterOption = [[SettingOption alloc] init];
-  helpCenterOption.title = l10n_util::GetNSString(IDS_HELP_CENTER);
+  helpCenterOption.title = @"Help center";
   helpCenterOption.style = FlatButton;
   helpCenterOption.action = ^{
     [AppDelegate.instance navigateToHelpCenter:weakSelf.navigationController];
@@ -319,7 +314,7 @@ static NSString* const kFeedbackContext = @"InSessionFeedbackContext";
   };
 
   SettingOption* faqsOption = [[SettingOption alloc] init];
-  faqsOption.title = l10n_util::GetNSString(IDS_FAQS);
+  faqsOption.title = @"FAQs";
   faqsOption.style = FlatButton;
   faqsOption.action = ^{
     [AppDelegate.instance navigateToFAQs:weakSelf.navigationController];
@@ -329,8 +324,7 @@ static NSString* const kFeedbackContext = @"InSessionFeedbackContext";
   // TODO(yuweih): Currently the EAGLView is not captured by the feedback tool.
   // To get it working we need to override renderInContext in CAEAGLLayer.
   SettingOption* sendFeedbackOption = [[SettingOption alloc] init];
-  sendFeedbackOption.title =
-      l10n_util::GetNSString(IDS_ACTIONBAR_SEND_FEEDBACK);
+  sendFeedbackOption.title = @"Send feedback";
   sendFeedbackOption.style = FlatButton;
   sendFeedbackOption.action = ^{
     // Dismiss self so that it can capture the screenshot of HostView.

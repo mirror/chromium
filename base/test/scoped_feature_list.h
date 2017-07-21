@@ -6,8 +6,6 @@
 #define BASE_TEST_SCOPED_FEATURE_LIST_H_
 
 #include <initializer_list>
-#include <memory>
-#include <string>
 
 #include "base/feature_list.h"
 
@@ -61,16 +59,16 @@ class ScopedFeatureList final {
   // method. This is important for testing potentially unexpected feature
   // interactions.
   void InitWithFeatures(
-      const std::initializer_list<Feature>& enabled_features,
-      const std::initializer_list<Feature>& disabled_features);
+      const std::initializer_list<base::Feature>& enabled_features,
+      const std::initializer_list<base::Feature>& disabled_features);
 
   // Initializes and registers a FeatureList instance based on present
   // FeatureList and overridden with single enabled feature.
-  void InitAndEnableFeature(const Feature& feature);
+  void InitAndEnableFeature(const base::Feature& feature);
 
   // Initializes and registers a FeatureList instance based on present
   // FeatureList and overridden with single disabled feature.
-  void InitAndDisableFeature(const Feature& feature);
+  void InitAndDisableFeature(const base::Feature& feature);
 
  private:
   std::unique_ptr<FeatureList> original_feature_list_;

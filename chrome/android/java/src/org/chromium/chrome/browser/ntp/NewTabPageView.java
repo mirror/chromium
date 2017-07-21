@@ -289,14 +289,13 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
         setSearchProviderHasLogo(searchProviderHasLogo);
         mSearchProviderLogoView.showSearchProviderInitialView();
 
-        mTileGroup.startObserving(getMaxTileRows(searchProviderHasLogo), getMaxTileColumns());
+        mTileGroup.startObserving(getMaxTileRows(searchProviderHasLogo) * getMaxTileColumns());
 
         mRecyclerView.init(mUiConfig, mContextMenuManager);
 
         // Set up snippets
         NewTabPageAdapter newTabPageAdapter = new NewTabPageAdapter(mManager, mNewTabPageLayout,
-                mUiConfig, offlinePageBridge, mContextMenuManager, /* tileGroupDelegate = */ null,
-                /* suggestionsCarousel = */ null);
+                mUiConfig, offlinePageBridge, mContextMenuManager, /* tileGroupDelegate = */ null);
         newTabPageAdapter.refreshSuggestions();
         mRecyclerView.setAdapter(newTabPageAdapter);
         mRecyclerView.getLinearLayoutManager().scrollToPosition(scrollPosition);

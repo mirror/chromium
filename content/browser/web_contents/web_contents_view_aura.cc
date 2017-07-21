@@ -1010,12 +1010,12 @@ void WebContentsViewAura::UpdateDragCursor(blink::WebDragOperation operation) {
   current_drag_op_ = operation;
 }
 
-void WebContentsViewAura::GotFocus(RenderWidgetHostImpl* render_widget_host) {
-  web_contents_->NotifyWebContentsFocused(render_widget_host);
+void WebContentsViewAura::GotFocus() {
+  web_contents_->NotifyWebContentsFocused();
 }
 
-void WebContentsViewAura::LostFocus(RenderWidgetHostImpl* render_widget_host) {
-  web_contents_->NotifyWebContentsLostFocus(render_widget_host);
+void WebContentsViewAura::LostFocus() {
+  web_contents_->NotifyWebContentsLostFocus();
 }
 
 void WebContentsViewAura::TakeFocus(bool reverse) {
@@ -1028,6 +1028,14 @@ void WebContentsViewAura::TakeFocus(bool reverse) {
 
 ////////////////////////////////////////////////////////////////////////////////
 // WebContentsViewAura, OverscrollControllerDelegate implementation:
+
+gfx::Size WebContentsViewAura::GetVisibleSize() const {
+  RenderWidgetHostView* rwhv = web_contents_->GetRenderWidgetHostView();
+  if (!rwhv || !rwhv->IsShowing())
+    return gfx::Size();
+
+  return rwhv->GetViewBounds().size();
+}
 
 gfx::Size WebContentsViewAura::GetDisplaySize() const {
   RenderWidgetHostView* rwhv = web_contents_->GetRenderWidgetHostView();

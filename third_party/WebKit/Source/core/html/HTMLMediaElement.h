@@ -103,6 +103,11 @@ class CORE_EXPORT HTMLMediaElement
   // for the given document.
   static void OnMediaControlsEnabledChange(Document*);
 
+  // Called by the module implementing the media controls to notify of the
+  // factory to use. It should only be called once at process initialisation.
+  static void RegisterMediaControlsFactory(
+      std::unique_ptr<MediaControls::Factory>);
+
   DECLARE_VIRTUAL_TRACE();
 
   DECLARE_VIRTUAL_TRACE_WRAPPERS();
@@ -316,6 +321,9 @@ class CORE_EXPORT HTMLMediaElement
 
   void VideoWillBeDrawnToCanvas() const;
 
+  WebRemotePlaybackClient* RemotePlaybackClient() {
+    return remote_playback_client_;
+  }
   const WebRemotePlaybackClient* RemotePlaybackClient() const {
     return remote_playback_client_;
   }
@@ -406,19 +414,13 @@ class CORE_EXPORT HTMLMediaElement
   void DisconnectedFromRemoteDevice() final;
   void CancelledRemotePlaybackRequest() final;
   void RemotePlaybackStarted() final;
-  void RemotePlaybackCompatibilityChanged(const WebURL&,
-                                          bool is_compatible) final;
   void OnBecamePersistentVideo(bool) override {}
   bool HasSelectedVideoTrack() final;
   WebMediaPlayer::TrackId GetSelectedVideoTrackId() final;
   bool IsAutoplayingMuted() final;
   void ActivateViewportIntersectionMonitoring(bool) final;
   bool HasNativeControls() final;
-  bool IsAudioElement() final;
   WebMediaPlayer::DisplayType DisplayType() const override;
-  WebRemotePlaybackClient* RemotePlaybackClient() final {
-    return remote_playback_client_;
-  }
 
   void LoadTimerFired(TimerBase*);
   void ProgressEventTimerFired(TimerBase*);

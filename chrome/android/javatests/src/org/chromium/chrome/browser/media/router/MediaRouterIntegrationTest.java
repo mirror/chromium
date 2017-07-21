@@ -87,7 +87,7 @@ public class MediaRouterIntegrationTest {
 
     @Before
     public void setUp() throws Exception {
-        ChromeMediaRouter.setRouteProviderFactoryForTest(new MockMediaRouteProvider.Factory());
+        ChromeMediaRouter.setRouteProviderBuilderForTest(new MockMediaRouteProvider.Builder());
         mActivityTestRule.startMainActivityOnBlankPage();
         // Temporary until support library is updated, see http://crbug.com/576393.
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
@@ -257,7 +257,7 @@ public class MediaRouterIntegrationTest {
     @LargeTest
     @RetryOnFailure
     public void testOnClose() throws InterruptedException, TimeoutException {
-        MockMediaRouteProvider.Factory.sProvider.setCloseRouteWithErrorOnSend(true);
+        MockMediaRouteProvider.Builder.sProvider.setCloseRouteWithErrorOnSend(true);
         mActivityTestRule.loadUrl(mTestServer.getURL(TEST_PAGE));
         WebContents webContents = mActivityTestRule.getActivity().getActivityTab().getWebContents();
         executeJavaScriptApi(webContents, WAIT_DEVICE_SCRIPT);
@@ -279,7 +279,7 @@ public class MediaRouterIntegrationTest {
     @LargeTest
     @RetryOnFailure
     public void testFailNoProvider() throws InterruptedException, TimeoutException {
-        MockMediaRouteProvider.Factory.sProvider.setIsSupportsSource(false);
+        MockMediaRouteProvider.Builder.sProvider.setIsSupportsSource(false);
         mActivityTestRule.loadUrl(mTestServer.getURL(TEST_PAGE));
         WebContents webContents = mActivityTestRule.getActivity().getActivityTab().getWebContents();
         executeJavaScriptApi(webContents, WAIT_DEVICE_SCRIPT);
@@ -297,7 +297,7 @@ public class MediaRouterIntegrationTest {
     @Feature({"MediaRouter"})
     @LargeTest
     public void testFailCreateRoute() throws InterruptedException, TimeoutException {
-        MockMediaRouteProvider.Factory.sProvider.setCreateRouteErrorMessage("Unknown sink");
+        MockMediaRouteProvider.Builder.sProvider.setCreateRouteErrorMessage("Unknown sink");
         mActivityTestRule.loadUrl(mTestServer.getURL(TEST_PAGE));
         WebContents webContents = mActivityTestRule.getActivity().getActivityTab().getWebContents();
         executeJavaScriptApi(webContents, WAIT_DEVICE_SCRIPT);
@@ -355,7 +355,7 @@ public class MediaRouterIntegrationTest {
         executeJavaScriptApi(webContents, CHECK_SESSION_SCRIPT);
         String sessionId = getJavaScriptVariable(webContents, "startedConnection.id");
 
-        MockMediaRouteProvider.Factory.sProvider.setJoinRouteErrorMessage("Unknown route");
+        MockMediaRouteProvider.Builder.sProvider.setJoinRouteErrorMessage("Unknown route");
         mActivityTestRule.loadUrlInNewTab(mTestServer.getURL(TEST_PAGE_RECONNECT_FAIL));
         WebContents newWebContents =
                 mActivityTestRule.getActivity().getActivityTab().getWebContents();

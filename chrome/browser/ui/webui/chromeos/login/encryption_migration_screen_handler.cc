@@ -76,7 +76,6 @@ enum class FirstScreen {
   FIRST_SCREEN_RESUME = 1,
   FIRST_SCREEN_LOW_STORAGE = 2,
   FIRST_SCREEN_ARC_KIOSK = 3,
-  FIRST_SCREEN_START_AUTOMATICALLY = 4,
   FIRST_SCREEN_COUNT
 };
 
@@ -220,21 +219,6 @@ void RecordRemoveCryptohomeResultFailure(bool resume, bool arc_kiosk) {
   }
 }
 
-// Chooses the value for the MigrationUIFirstScreen UMA stat. Not used for ARC
-// kiosk.
-FirstScreen GetFirstScreenForMode(chromeos::EncryptionMigrationMode mode) {
-  switch (mode) {
-    case chromeos::EncryptionMigrationMode::ASK_USER:
-      return FirstScreen::FIRST_SCREEN_READY;
-    case chromeos::EncryptionMigrationMode::START_MIGRATION:
-      return FirstScreen::FIRST_SCREEN_START_AUTOMATICALLY;
-    case chromeos::EncryptionMigrationMode::RESUME_MIGRATION:
-      return FirstScreen::FIRST_SCREEN_RESUME;
-    default:
-      NOTREACHED();
-  }
-}
-
 }  // namespace
 
 namespace chromeos {
@@ -273,9 +257,9 @@ void EncryptionMigrationScreenHandler::SetUserContext(
   user_context_ = user_context;
 }
 
-void EncryptionMigrationScreenHandler::SetMode(EncryptionMigrationMode mode) {
-  mode_ = mode;
-  CallJS("setIsResuming", IsStartImmediately());
+void EncryptionMigrationScreenHandler::SetShouldResume(bool should_resume) {
+  should_resume_ = should_resume;
+  CallJS("setIsResuming", should_resume_);
 }
 
 void EncryptionMigrationScreenHandler::SetContinueLoginCallback(
@@ -478,10 +462,11 @@ void EncryptionMigrationScreenHandler::CheckAvailableStorage() {
 
 void EncryptionMigrationScreenHandler::OnGetAvailableStorage(int64_t size) {
   if (size >= arc::kMigrationMinimumAvailableStorage || IsTestingUI()) {
-    RecordFirstScreen(GetFirstScreenForMode(mode_));
-    if (IsStartImmediately()) {
+    if (should_resume_) {
+      RecordFirstScreen(FirstScreen::FIRST_SCREEN_RESUME);
       WaitBatteryAndMigrate();
     } else {
+      RecordFirstScreen(FirstScreen::FIRST_SCREEN_READY);
       UpdateUIState(UIState::READY);
     }
   } else {
@@ -534,8 +519,7 @@ void EncryptionMigrationScreenHandler::OnMountExistingVault(
     cryptohome::MountError return_code,
     const std::string& mount_hash) {
   if (!success || return_code != cryptohome::MOUNT_ERROR_NONE) {
-    RecordMigrationResultMountFailure(IsResumingIncompleteMigration(),
-                                      IsArcKiosk());
+    RecordMigrationResultMountFailure(should_resume_, IsArcKiosk());
     UpdateUIState(UIState::MIGRATION_FAILED);
     return;
   }
@@ -596,11 +580,9 @@ void EncryptionMigrationScreenHandler::OnRemoveCryptohome(
   LOG_IF(ERROR, !success) << "Removing cryptohome failed. return code: "
                           << return_code;
   if (success)
-    RecordRemoveCryptohomeResultSuccess(IsResumingIncompleteMigration(),
-                                        IsArcKiosk());
+    RecordRemoveCryptohomeResultSuccess(should_resume_, IsArcKiosk());
   else
-    RecordRemoveCryptohomeResultFailure(IsResumingIncompleteMigration(),
-                                        IsArcKiosk());
+    RecordRemoveCryptohomeResultFailure(should_resume_, IsArcKiosk());
 
   UpdateUIState(UIState::MIGRATION_FAILED);
 }
@@ -637,8 +619,7 @@ void EncryptionMigrationScreenHandler::OnMigrationProgress(
       CallJS("setMigrationProgress", static_cast<double>(current) / total);
       break;
     case cryptohome::DIRCRYPTO_MIGRATION_SUCCESS:
-      RecordMigrationResultSuccess(IsResumingIncompleteMigration(),
-                                   IsArcKiosk());
+      RecordMigrationResultSuccess(should_resume_, IsArcKiosk());
       // If the battery level decreased during migration, record the consumed
       // battery level.
       if (*current_battery_percent_ < initial_battery_percent_) {
@@ -651,8 +632,7 @@ void EncryptionMigrationScreenHandler::OnMigrationProgress(
       DBusThreadManager::Get()->GetPowerManagerClient()->RequestRestart();
       break;
     case cryptohome::DIRCRYPTO_MIGRATION_FAILED:
-      RecordMigrationResultGeneralFailure(IsResumingIncompleteMigration(),
-                                          IsArcKiosk());
+      RecordMigrationResultGeneralFailure(should_resume_, IsArcKiosk());
       // Stop listening to the progress updates.
       DBusThreadManager::Get()
           ->GetCryptohomeClient()
@@ -669,8 +649,7 @@ void EncryptionMigrationScreenHandler::OnMigrationProgress(
 void EncryptionMigrationScreenHandler::OnMigrationRequested(bool success) {
   if (!success) {
     LOG(ERROR) << "Requesting MigrateToDircrypto failed.";
-    RecordMigrationResultRequestFailure(IsResumingIncompleteMigration(),
-                                        IsArcKiosk());
+    RecordMigrationResultRequestFailure(should_resume_, IsArcKiosk());
     UpdateUIState(UIState::MIGRATION_FAILED);
   }
 }
@@ -683,15 +662,6 @@ void EncryptionMigrationScreenHandler::OnDelayedRecordVisibleScreen(
   // If |current_ui_state_| is not changed for a second, record the current
   // screen as a "visible" screen.
   UMA_HISTOGRAM_ENUMERATION(kUmaNameVisibleScreen, ui_state, UIState::COUNT);
-}
-
-bool EncryptionMigrationScreenHandler::IsResumingIncompleteMigration() {
-  return mode_ == EncryptionMigrationMode::RESUME_MIGRATION;
-}
-
-bool EncryptionMigrationScreenHandler::IsStartImmediately() {
-  return mode_ == EncryptionMigrationMode::START_MIGRATION ||
-         mode_ == EncryptionMigrationMode::RESUME_MIGRATION;
 }
 
 }  // namespace chromeos

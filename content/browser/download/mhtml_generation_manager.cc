@@ -18,11 +18,9 @@
 #include "base/stl_util.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
-#include "base/task_runner_util.h"
 #include "base/time/time.h"
 #include "base/trace_event/trace_event.h"
 #include "content/browser/bad_message.h"
-#include "content/browser/download/download_task_runner.h"
 #include "content/browser/download/mhtml_extra_parts_impl.h"
 #include "content/browser/frame_host/frame_tree_node.h"
 #include "content/browser/frame_host/render_frame_host_impl.h"
@@ -382,8 +380,8 @@ void MHTMLGenerationManager::Job::CloseFile(
   }
 
   // If no previous error occurred the boundary should be sent.
-  base::PostTaskAndReplyWithResult(
-      GetDownloadTaskRunner().get(), FROM_HERE,
+  BrowserThread::PostTaskAndReplyWithResult(
+      BrowserThread::FILE, FROM_HERE,
       base::Bind(
           &MHTMLGenerationManager::Job::FinalizeAndCloseFileOnFileThread,
           save_status,
@@ -440,7 +438,7 @@ MHTMLGenerationManager::Job::FinalizeAndCloseFileOnFileThread(
     const std::string& boundary,
     base::File file,
     const MHTMLExtraPartsImpl* extra_parts) {
-  DCHECK(GetDownloadTaskRunner()->RunsTasksInCurrentSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
 
   // If no previous error occurred the boundary should have been provided.
   if (save_status == MhtmlSaveStatus::SUCCESS) {
@@ -476,7 +474,7 @@ bool MHTMLGenerationManager::Job::WriteExtraDataParts(
     const std::string& boundary,
     base::File& file,
     const MHTMLExtraPartsImpl* extra_parts) {
-  DCHECK(GetDownloadTaskRunner()->RunsTasksInCurrentSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   // Don't write an extra data part if there is none.
   if (extra_parts == nullptr)
     return true;
@@ -511,7 +509,7 @@ bool MHTMLGenerationManager::Job::WriteExtraDataParts(
 // static
 bool MHTMLGenerationManager::Job::WriteFooter(const std::string& boundary,
                                               base::File& file) {
-  DCHECK(GetDownloadTaskRunner()->RunsTasksInCurrentSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   std::string footer = base::StringPrintf("--%s--\r\n", boundary.c_str());
   DCHECK(base::IsStringASCII(footer));
   return (file.WriteAtCurrentPos(footer.data(), footer.size()) >= 0);
@@ -520,7 +518,7 @@ bool MHTMLGenerationManager::Job::WriteFooter(const std::string& boundary,
 // static
 bool MHTMLGenerationManager::Job::CloseFileIfValid(base::File& file,
                                                    int64_t* file_size) {
-  DCHECK(GetDownloadTaskRunner()->RunsTasksInCurrentSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   DCHECK(file_size);
   if (file.IsValid()) {
     *file_size = file.GetLength();
@@ -551,8 +549,8 @@ void MHTMLGenerationManager::SaveMHTML(WebContents* web_contents,
       web_contents->GetLastCommittedURL().possibly_invalid_spec(),
       "file", params.file_path.AsUTF8Unsafe());
 
-  base::PostTaskAndReplyWithResult(
-      GetDownloadTaskRunner().get(), FROM_HERE,
+  BrowserThread::PostTaskAndReplyWithResult(
+      BrowserThread::FILE, FROM_HERE,
       base::Bind(&MHTMLGenerationManager::CreateFile, params.file_path),
       base::Bind(&MHTMLGenerationManager::OnFileAvailable,
                  base::Unretained(this),  // Safe b/c |this| is a singleton.
@@ -599,7 +597,7 @@ void MHTMLGenerationManager::OnSerializeAsMHTMLResponse(
 
 // static
 base::File MHTMLGenerationManager::CreateFile(const base::FilePath& file_path) {
-  DCHECK(GetDownloadTaskRunner()->RunsTasksInCurrentSequence());
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
 
   // SECURITY NOTE: A file descriptor to the file created below will be passed
   // to multiple renderer processes which (in out-of-process iframes mode) can

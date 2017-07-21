@@ -290,8 +290,11 @@ TEST(FilenameUtilTest, FileURLConversion) {
 #if defined(OS_WIN)
 #define JPEG_EXT L".jpg"
 #define HTML_EXT L".htm"
-#else
+#elif defined(OS_MACOSX)
 #define JPEG_EXT L".jpeg"
+#define HTML_EXT L".html"
+#else
+#define JPEG_EXT L".jpg"
 #define HTML_EXT L".html"
 #endif
 #define TXT_EXT L".txt"

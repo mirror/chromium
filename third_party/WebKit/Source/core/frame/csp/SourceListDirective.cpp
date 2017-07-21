@@ -37,14 +37,14 @@ SourceListDirective::SourceListDirective(const String& name,
 }
 
 static bool IsSourceListNone(const UChar* begin, const UChar* end) {
-  SkipWhile<UChar, IsASCIISpace>(begin, end);
+  skipWhile<UChar, IsASCIISpace>(begin, end);
 
   const UChar* position = begin;
-  SkipWhile<UChar, IsSourceCharacter>(position, end);
+  skipWhile<UChar, IsSourceCharacter>(position, end);
   if (!EqualIgnoringASCIICase("'none'", StringView(begin, position - begin)))
     return false;
 
-  SkipWhile<UChar, IsASCIISpace>(position, end);
+  skipWhile<UChar, IsASCIISpace>(position, end);
   if (position != end)
     return false;
 
@@ -128,12 +128,12 @@ void SourceListDirective::Parse(const UChar* begin, const UChar* end) {
 
   const UChar* position = begin;
   while (position < end) {
-    SkipWhile<UChar, IsASCIISpace>(position, end);
+    skipWhile<UChar, IsASCIISpace>(position, end);
     if (position == end)
       return;
 
     const UChar* begin_source = position;
-    SkipWhile<UChar, IsSourceCharacter>(position, end);
+    skipWhile<UChar, IsSourceCharacter>(position, end);
 
     String scheme, host, path;
     int port = 0;
@@ -241,7 +241,7 @@ bool SourceListDirective::ParseSource(
   const UChar* begin_path = end;
   const UChar* begin_port = 0;
 
-  SkipWhile<UChar, IsNotColonOrSlash>(position, end);
+  skipWhile<UChar, IsNotColonOrSlash>(position, end);
 
   if (position == end) {
     // host
@@ -267,21 +267,21 @@ bool SourceListDirective::ParseSource(
       // scheme://host || scheme://
       //       ^                ^
       if (!ParseScheme(begin, position, scheme) ||
-          !SkipExactly<UChar>(position, end, ':') ||
-          !SkipExactly<UChar>(position, end, '/') ||
-          !SkipExactly<UChar>(position, end, '/'))
+          !skipExactly<UChar>(position, end, ':') ||
+          !skipExactly<UChar>(position, end, '/') ||
+          !skipExactly<UChar>(position, end, '/'))
         return false;
       if (position == end)
         return false;
       begin_host = position;
-      SkipWhile<UChar, IsNotColonOrSlash>(position, end);
+      skipWhile<UChar, IsNotColonOrSlash>(position, end);
     }
 
     if (position < end && *position == ':') {
       // host:port || scheme://host:port
       //     ^                     ^
       begin_port = position;
-      SkipUntil<UChar>(position, end, '/');
+      skipUntil<UChar>(position, end, '/');
     }
   }
 
@@ -330,7 +330,7 @@ bool SourceListDirective::ParseNonce(const UChar* begin,
   const UChar* nonce_begin = position;
 
   DCHECK(position < end);
-  SkipWhile<UChar, IsNonceCharacter>(position, end);
+  skipWhile<UChar, IsNonceCharacter>(position, end);
   DCHECK(nonce_begin <= position);
 
   if (position + 1 != end || *position != '\'' || position == nonce_begin)
@@ -386,14 +386,14 @@ bool SourceListDirective::ParseHash(
   const UChar* hash_begin = position;
 
   DCHECK(position < end);
-  SkipWhile<UChar, IsBase64EncodedCharacter>(position, end);
+  skipWhile<UChar, IsBase64EncodedCharacter>(position, end);
   DCHECK(hash_begin <= position);
 
   // Base64 encodings may end with exactly one or two '=' characters
   if (position < end)
-    SkipExactly<UChar>(position, position + 1, '=');
+    skipExactly<UChar>(position, position + 1, '=');
   if (position < end)
-    SkipExactly<UChar>(position, position + 1, '=');
+    skipExactly<UChar>(position, position + 1, '=');
 
   if (position + 1 != end || *position != '\'' || position == hash_begin)
     return false;
@@ -423,10 +423,10 @@ bool SourceListDirective::ParseScheme(const UChar* begin,
 
   const UChar* position = begin;
 
-  if (!SkipExactly<UChar, IsASCIIAlpha>(position, end))
+  if (!skipExactly<UChar, IsASCIIAlpha>(position, end))
     return false;
 
-  SkipWhile<UChar, IsSchemeContinuationCharacter>(position, end);
+  skipWhile<UChar, IsSchemeContinuationCharacter>(position, end);
 
   if (position != end)
     return false;
@@ -455,7 +455,7 @@ bool SourceListDirective::ParseHost(
   const UChar* position = begin;
 
   // Parse "*" or [ "*." ].
-  if (SkipExactly<UChar>(position, end, '*')) {
+  if (skipExactly<UChar>(position, end, '*')) {
     host_wildcard = CSPSource::kHasWildcard;
 
     if (position == end) {
@@ -463,23 +463,23 @@ bool SourceListDirective::ParseHost(
       return true;
     }
 
-    if (!SkipExactly<UChar>(position, end, '.'))
+    if (!skipExactly<UChar>(position, end, '.'))
       return false;
   }
   const UChar* host_begin = position;
 
   // Parse 1*host-hcar.
-  if (!SkipExactly<UChar, IsHostCharacter>(position, end))
+  if (!skipExactly<UChar, IsHostCharacter>(position, end))
     return false;
-  SkipWhile<UChar, IsHostCharacter>(position, end);
+  skipWhile<UChar, IsHostCharacter>(position, end);
 
   // Parse *( "." 1*host-char ).
   while (position < end) {
-    if (!SkipExactly<UChar>(position, end, '.'))
+    if (!skipExactly<UChar>(position, end, '.'))
       return false;
-    if (!SkipExactly<UChar, IsHostCharacter>(position, end))
+    if (!skipExactly<UChar, IsHostCharacter>(position, end))
       return false;
-    SkipWhile<UChar, IsHostCharacter>(position, end);
+    skipWhile<UChar, IsHostCharacter>(position, end);
   }
 
   host = String(host_begin, end - host_begin);
@@ -493,7 +493,7 @@ bool SourceListDirective::ParsePath(const UChar* begin,
   DCHECK(path.IsEmpty());
 
   const UChar* position = begin;
-  SkipWhile<UChar, IsPathComponentCharacter>(position, end);
+  skipWhile<UChar, IsPathComponentCharacter>(position, end);
   // path/to/file.js?query=string || path/to/file.js#anchor
   //                ^                               ^
   if (position < end) {
@@ -519,7 +519,7 @@ bool SourceListDirective::ParsePort(
   DCHECK(!port);
   DCHECK(port_wildcard == CSPSource::kNoWildcard);
 
-  if (!SkipExactly<UChar>(begin, end, ':'))
+  if (!skipExactly<UChar>(begin, end, ':'))
     NOTREACHED();
 
   if (begin == end)
@@ -532,7 +532,7 @@ bool SourceListDirective::ParsePort(
   }
 
   const UChar* position = begin;
-  SkipWhile<UChar, IsASCIIDigit>(position, end);
+  skipWhile<UChar, IsASCIIDigit>(position, end);
 
   if (position != end)
     return false;

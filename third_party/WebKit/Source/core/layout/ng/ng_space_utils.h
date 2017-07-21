@@ -29,7 +29,7 @@ bool ShouldShrinkToFit(const ComputedStyle& parent_style,
                        const ComputedStyle& style);
 
 // Adjusts {@code offset} to the clearance line.
-CORE_EXPORT bool AdjustToClearance(
+CORE_EXPORT void AdjustToClearance(
     const WTF::Optional<LayoutUnit>& clearance_offset,
     NGLogicalOffset* offset);
 

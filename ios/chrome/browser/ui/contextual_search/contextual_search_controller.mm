@@ -22,6 +22,9 @@
 #include "ios/chrome/browser/application_context.h"
 #import "ios/chrome/browser/procedural_block_types.h"
 #import "ios/chrome/browser/tabs/tab.h"
+#import "ios/chrome/browser/ui/commands/UIKit+ChromeExecuteCommand.h"
+#import "ios/chrome/browser/ui/commands/generic_chrome_command.h"
+#include "ios/chrome/browser/ui/commands/ios_command_ids.h"
 #include "ios/chrome/browser/ui/contextual_search/contextual_search_context.h"
 #include "ios/chrome/browser/ui/contextual_search/contextual_search_delegate.h"
 #import "ios/chrome/browser/ui/contextual_search/contextual_search_header_view.h"
@@ -1515,7 +1518,10 @@ dismissPaneWithJavascriptCompletionHandler:(ProceduralBlock)completionHandler
 }
 
 - (void)promoViewSettingsTapped {
-  // Show the contextual search settings.
+  GenericChromeCommand* command = [[GenericChromeCommand alloc]
+      initWithTag:IDC_SHOW_CONTEXTUAL_SEARCH_SETTINGS];
+  UIWindow* main_window = [[UIApplication sharedApplication] keyWindow];
+  [main_window chromeExecuteCommand:command];
 }
 
 #pragma mark - ContextualSearchWebStateObserver methods

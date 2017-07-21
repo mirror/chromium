@@ -120,23 +120,17 @@ class TestWebUIController : public WebUIController {
 
 // TestWebUIController that additionally creates the ping test BrowserTarget
 // implementation at the right time.
-class PingTestWebUIController : public TestWebUIController,
-                                public WebContentsObserver {
+class PingTestWebUIController : public TestWebUIController {
  public:
   PingTestWebUIController(WebUI* web_ui, base::RunLoop* run_loop)
-      : TestWebUIController(web_ui, run_loop),
-        WebContentsObserver(web_ui->GetWebContents()) {
-    registry_.AddInterface(base::Bind(&PingTestWebUIController::CreateHandler,
-                                      base::Unretained(this)));
-  }
+      : TestWebUIController(web_ui, run_loop) {}
   ~PingTestWebUIController() override {}
 
-  // WebContentsObserver implementation:
-  void OnInterfaceRequestFromFrame(
-      RenderFrameHost* render_frame_host,
-      const std::string& interface_name,
-      mojo::ScopedMessagePipeHandle* interface_pipe) override {
-    registry_.TryBindInterface(interface_name, interface_pipe);
+  // WebUIController overrides:
+  void RenderFrameCreated(RenderFrameHost* render_frame_host) override {
+    render_frame_host->GetInterfaceRegistry()->AddInterface(
+        base::Bind(&PingTestWebUIController::CreateHandler,
+                   base::Unretained(this)));
   }
 
   void CreateHandler(mojom::BrowserTargetRequest request) {
@@ -145,8 +139,6 @@ class PingTestWebUIController : public TestWebUIController,
   }
 
  private:
-  service_manager::BinderRegistry registry_;
-
   DISALLOW_COPY_AND_ASSIGN(PingTestWebUIController);
 };
 

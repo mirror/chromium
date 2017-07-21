@@ -108,10 +108,9 @@ void OpenExternalOnWorkerThread(const GURL& url) {
 }  // namespace
 
 void ShowItemInFolder(Profile* profile, const base::FilePath& full_path) {
-  base::CreateCOMSTATaskRunnerWithTraits(
-      {base::MayBlock(), base::TaskPriority::USER_BLOCKING})
-      ->PostTask(FROM_HERE,
-                 base::Bind(&ShowItemInFolderOnWorkerThread, full_path));
+  PostTaskWithTraits(FROM_HERE,
+                     {base::MayBlock(), base::TaskPriority::USER_BLOCKING},
+                     base::Bind(&ShowItemInFolderOnWorkerThread, full_path));
 }
 
 namespace internal {
@@ -133,9 +132,9 @@ void PlatformOpenVerifiedItem(const base::FilePath& path, OpenItemType type) {
 void OpenExternal(Profile* profile, const GURL& url) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  base::CreateCOMSTATaskRunnerWithTraits(
-      {base::MayBlock(), base::TaskPriority::USER_BLOCKING})
-      ->PostTask(FROM_HERE, base::Bind(&OpenExternalOnWorkerThread, url));
+  PostTaskWithTraits(FROM_HERE,
+                     {base::MayBlock(), base::TaskPriority::USER_BLOCKING},
+                     base::Bind(&OpenExternalOnWorkerThread, url));
 }
 
 }  // namespace platform_util

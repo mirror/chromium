@@ -58,11 +58,7 @@ void ReverseAnimation(base::TimeTicks monotonic_time,
   // This implies that,
   //   0 = d - o - 2t
   //   o = d - 2t
-  //
-  // Now if there was a previous offset, we must adjust d by that offset before
-  // performing this computation, so it becomes d - o_old - 2t:
   animation->set_time_offset(animation->curve()->Duration() -
-                             animation->time_offset() -
                              (2 * (monotonic_time - animation->start_time())));
 }
 
@@ -70,20 +66,6 @@ std::unique_ptr<cc::CubicBezierTimingFunction>
 CreateTransitionTimingFunction() {
   return cc::CubicBezierTimingFunction::CreatePreset(
       cc::CubicBezierTimingFunction::EaseType::EASE);
-}
-
-base::TimeDelta GetStartTime(cc::Animation* animation) {
-  if (animation->direction() == cc::Animation::Direction::NORMAL) {
-    return base::TimeDelta();
-  }
-  return animation->curve()->Duration();
-}
-
-base::TimeDelta GetEndTime(cc::Animation* animation) {
-  if (animation->direction() == cc::Animation::Direction::REVERSE) {
-    return base::TimeDelta();
-  }
-  return animation->curve()->Duration();
 }
 
 }  // namespace
@@ -111,11 +93,12 @@ void AnimationPlayer::RemoveAnimation(int animation_id) {
       });
 }
 
-void AnimationPlayer::RemoveAnimations(int target_property) {
+void AnimationPlayer::RemoveAnimations(
+    cc::TargetProperty::Type target_property) {
   base::EraseIf(
       animations_,
       [target_property](const std::unique_ptr<cc::Animation>& animation) {
-        return animation->target_property_id() == target_property;
+        return animation->target_property() == target_property;
       });
 }
 
@@ -125,14 +108,14 @@ void AnimationPlayer::StartAnimations(base::TimeTicks monotonic_time) {
   for (auto& animation : animations_) {
     if (animation->run_state() == cc::Animation::RUNNING ||
         animation->run_state() == cc::Animation::PAUSED) {
-      animated_properties[animation->target_property_id()] = true;
+      animated_properties[animation->target_property()] = true;
     }
   }
   for (auto& animation : animations_) {
-    if (!animated_properties[animation->target_property_id()] &&
+    if (!animated_properties[animation->target_property()] &&
         animation->run_state() ==
             cc::Animation::WAITING_FOR_TARGET_AVAILABILITY) {
-      animated_properties[animation->target_property_id()] = true;
+      animated_properties[animation->target_property()] = true;
       animation->SetRunState(cc::Animation::RUNNING, monotonic_time);
       animation->set_start_time(monotonic_time);
     }
@@ -160,41 +143,27 @@ void AnimationPlayer::Tick(base::TimeTicks monotonic_time) {
   StartAnimations(monotonic_time);
 }
 
-void AnimationPlayer::SetTransitionedProperties(
-    const std::set<int>& properties) {
-  transition_.target_properties = properties;
-}
-
-void AnimationPlayer::TransitionFloatTo(base::TimeTicks monotonic_time,
-                                        int target_property,
-                                        float current,
-                                        float target) {
+void AnimationPlayer::TransitionOpacityTo(base::TimeTicks monotonic_time,
+                                          float current,
+                                          float target) {
   DCHECK(target_);
 
-  if (transition_.target_properties.find(target_property) ==
-      transition_.target_properties.end()) {
-    target_->NotifyClientFloatAnimated(target, nullptr);
+  if (!transition_.target_properties[cc::TargetProperty::OPACITY]) {
+    target_->NotifyClientOpacityAnimated(target, nullptr);
     return;
   }
 
   cc::Animation* running_animation =
-      GetRunningAnimationForProperty(target_property);
+      GetRunningAnimationForProperty(cc::TargetProperty::OPACITY);
 
-  if (running_animation) {
-    const cc::FloatAnimationCurve* curve =
-        running_animation->curve()->ToFloatAnimationCurve();
-    if (target == curve->GetValue(GetEndTime(running_animation))) {
-      return;
-    }
-    if (target == curve->GetValue(GetStartTime(running_animation))) {
-      ReverseAnimation(monotonic_time, running_animation);
-      return;
-    }
-  } else if (target == current) {
+  if (running_animation &&
+      target == running_animation->curve()->ToFloatAnimationCurve()->GetValue(
+                    base::TimeDelta())) {
+    ReverseAnimation(monotonic_time, running_animation);
     return;
   }
 
-  RemoveAnimations(target_property);
+  RemoveAnimations(cc::TargetProperty::OPACITY);
 
   std::unique_ptr<cc::KeyframedFloatAnimationCurve> curve(
       cc::KeyframedFloatAnimationCurve::Create());
@@ -207,42 +176,34 @@ void AnimationPlayer::TransitionFloatTo(base::TimeTicks monotonic_time,
 
   std::unique_ptr<cc::Animation> animation(
       cc::Animation::Create(std::move(curve), GetNextAnimationId(),
-                            GetNextGroupId(), target_property));
+                            GetNextGroupId(), cc::TargetProperty::OPACITY));
 
   AddAnimation(std::move(animation));
 }
 
 void AnimationPlayer::TransitionTransformOperationsTo(
     base::TimeTicks monotonic_time,
-    int target_property,
     const cc::TransformOperations& current,
     const cc::TransformOperations& target) {
   DCHECK(target_);
 
-  if (transition_.target_properties.find(target_property) ==
-      transition_.target_properties.end()) {
+  if (!transition_.target_properties[cc::TargetProperty::TRANSFORM]) {
     target_->NotifyClientTransformOperationsAnimated(target, nullptr);
     return;
   }
 
   cc::Animation* running_animation =
-      GetRunningAnimationForProperty(target_property);
+      GetRunningAnimationForProperty(cc::TargetProperty::TRANSFORM);
 
-  if (running_animation) {
-    const cc::TransformAnimationCurve* curve =
-        running_animation->curve()->ToTransformAnimationCurve();
-    if (target == curve->GetValue(GetEndTime(running_animation))) {
-      return;
-    }
-    if (target == curve->GetValue(GetStartTime(running_animation))) {
-      ReverseAnimation(monotonic_time, running_animation);
-      return;
-    }
-  } else if (target == current) {
+  if (running_animation &&
+      target ==
+          running_animation->curve()->ToTransformAnimationCurve()->GetValue(
+              base::TimeDelta())) {
+    ReverseAnimation(monotonic_time, running_animation);
     return;
   }
 
-  RemoveAnimations(target_property);
+  RemoveAnimations(cc::TargetProperty::TRANSFORM);
 
   std::unique_ptr<cc::KeyframedTransformAnimationCurve> curve(
       cc::KeyframedTransformAnimationCurve::Create());
@@ -254,39 +215,31 @@ void AnimationPlayer::TransitionTransformOperationsTo(
       transition_.duration, target, CreateTransitionTimingFunction()));
 
   AddAnimation(cc::Animation::Create(std::move(curve), GetNextAnimationId(),
-                                     GetNextGroupId(), target_property));
+                                     GetNextGroupId(),
+                                     cc::TargetProperty::TRANSFORM));
 }
 
-void AnimationPlayer::TransitionSizeTo(base::TimeTicks monotonic_time,
-                                       int target_property,
-                                       const gfx::SizeF& current,
-                                       const gfx::SizeF& target) {
+void AnimationPlayer::TransitionBoundsTo(base::TimeTicks monotonic_time,
+                                         const gfx::SizeF& current,
+                                         const gfx::SizeF& target) {
   DCHECK(target_);
 
-  if (transition_.target_properties.find(target_property) ==
-      transition_.target_properties.end()) {
-    target_->NotifyClientSizeAnimated(target, nullptr);
+  if (!transition_.target_properties[cc::TargetProperty::BOUNDS]) {
+    target_->NotifyClientBoundsAnimated(target, nullptr);
     return;
   }
 
   cc::Animation* running_animation =
-      GetRunningAnimationForProperty(target_property);
+      GetRunningAnimationForProperty(cc::TargetProperty::BOUNDS);
 
-  if (running_animation) {
-    const cc::SizeAnimationCurve* curve =
-        running_animation->curve()->ToSizeAnimationCurve();
-    if (target == curve->GetValue(GetEndTime(running_animation))) {
-      return;
-    }
-    if (target == curve->GetValue(GetStartTime(running_animation))) {
-      ReverseAnimation(monotonic_time, running_animation);
-      return;
-    }
-  } else if (target == current) {
+  if (running_animation &&
+      target == running_animation->curve()->ToSizeAnimationCurve()->GetValue(
+                    base::TimeDelta())) {
+    ReverseAnimation(monotonic_time, running_animation);
     return;
   }
 
-  RemoveAnimations(target_property);
+  RemoveAnimations(cc::TargetProperty::BOUNDS);
 
   std::unique_ptr<cc::KeyframedSizeAnimationCurve> curve(
       cc::KeyframedSizeAnimationCurve::Create());
@@ -298,115 +251,22 @@ void AnimationPlayer::TransitionSizeTo(base::TimeTicks monotonic_time,
       transition_.duration, target, CreateTransitionTimingFunction()));
 
   AddAnimation(cc::Animation::Create(std::move(curve), GetNextAnimationId(),
-                                     GetNextGroupId(), target_property));
-}
-
-void AnimationPlayer::TransitionColorTo(base::TimeTicks monotonic_time,
-                                        int target_property,
-                                        SkColor current,
-                                        SkColor target) {
-  DCHECK(target_);
-
-  if (transition_.target_properties.find(target_property) ==
-      transition_.target_properties.end()) {
-    target_->NotifyClientColorAnimated(target, nullptr);
-    return;
-  }
-
-  cc::Animation* running_animation =
-      GetRunningAnimationForProperty(target_property);
-
-  if (running_animation) {
-    const cc::ColorAnimationCurve* curve =
-        running_animation->curve()->ToColorAnimationCurve();
-    if (target == curve->GetValue(GetEndTime(running_animation))) {
-      return;
-    }
-    if (target == curve->GetValue(GetStartTime(running_animation))) {
-      ReverseAnimation(monotonic_time, running_animation);
-      return;
-    }
-  } else if (target == current) {
-    return;
-  }
-
-  RemoveAnimations(target_property);
-
-  std::unique_ptr<cc::KeyframedColorAnimationCurve> curve(
-      cc::KeyframedColorAnimationCurve::Create());
-
-  curve->AddKeyframe(cc::ColorKeyframe::Create(
-      base::TimeDelta(), current, CreateTransitionTimingFunction()));
-
-  curve->AddKeyframe(cc::ColorKeyframe::Create(
-      transition_.duration, target, CreateTransitionTimingFunction()));
-
-  AddAnimation(cc::Animation::Create(std::move(curve), GetNextAnimationId(),
-                                     GetNextGroupId(), target_property));
-}
-
-void AnimationPlayer::TransitionBooleanTo(base::TimeTicks monotonic_time,
-                                          int target_property,
-                                          bool current,
-                                          bool target) {
-  DCHECK(target_);
-
-  if (transition_.target_properties.find(target_property) ==
-      transition_.target_properties.end()) {
-    target_->NotifyClientBooleanAnimated(target, nullptr);
-    return;
-  }
-
-  cc::Animation* running_animation =
-      GetRunningAnimationForProperty(target_property);
-
-  if (running_animation) {
-    const cc::BooleanAnimationCurve* curve =
-        running_animation->curve()->ToBooleanAnimationCurve();
-    if (target == curve->GetValue(GetEndTime(running_animation))) {
-      return;
-    }
-    if (target == curve->GetValue(GetStartTime(running_animation))) {
-      ReverseAnimation(monotonic_time, running_animation);
-      return;
-    }
-  } else if (target == current) {
-    return;
-  }
-
-  RemoveAnimations(target_property);
-
-  std::unique_ptr<cc::KeyframedBooleanAnimationCurve> curve(
-      cc::KeyframedBooleanAnimationCurve::Create());
-
-  curve->AddKeyframe(cc::BooleanKeyframe::Create(
-      base::TimeDelta(), current, CreateTransitionTimingFunction()));
-
-  curve->AddKeyframe(cc::BooleanKeyframe::Create(
-      transition_.duration, target, CreateTransitionTimingFunction()));
-
-  AddAnimation(cc::Animation::Create(std::move(curve), GetNextAnimationId(),
-                                     GetNextGroupId(), target_property));
+                                     GetNextGroupId(),
+                                     cc::TargetProperty::BOUNDS));
 }
 
 cc::Animation* AnimationPlayer::GetRunningAnimationForProperty(
-    int target_property) const {
-  for (auto& animation : animations_) {
-    if ((animation->run_state() == cc::Animation::RUNNING ||
-         animation->run_state() == cc::Animation::PAUSED) &&
-        animation->target_property_id() == target_property) {
-      return animation.get();
-    }
-  }
-  return nullptr;
-}
-
-bool AnimationPlayer::IsAnimatingProperty(int property) const {
-  for (auto& animation : animations_) {
-    if (animation->target_property_id() == property)
-      return true;
-  }
-  return false;
+    cc::TargetProperty::Type target_property) {
+  auto it = std::find_if(
+      animations_.begin(), animations_.end(),
+      [target_property](const std::unique_ptr<cc::Animation>& animation) {
+        if (animation->run_state() != cc::Animation::RUNNING &&
+            animation->run_state() != cc::Animation::PAUSED) {
+          return false;
+        }
+        return animation->target_property() == target_property;
+      });
+  return it == animations_.end() ? nullptr : it->get();
 }
 
 }  // namespace vr

@@ -98,32 +98,6 @@
   const errCannotPipeToALockedStream = 'Cannot pipe to a locked stream';
   const errDestinationStreamClosed = 'Destination stream closed';
 
-  // TODO(ricea): Share these with WritableStream.
-  function internalError() {
-    throw new RangeError('ReadableStream Internal Error');
-  }
-
-  function rejectPromise(p, reason) {
-    if (!v8.isPromise(p)) {
-      internalError();
-    }
-    v8.rejectPromise(p, reason);
-  }
-
-  function resolvePromise(p, value) {
-    if (!v8.isPromise(p)) {
-      internalError();
-    }
-    v8.resolvePromise(p, value);
-  }
-
-  function markPromiseAsHandled(p) {
-    if (!v8.isPromise(p)) {
-      internalError();
-    }
-    v8.markPromiseAsHandled(p);
-  }
-
   class ReadableStream {
     constructor() {
       // TODO(domenic): when V8 gets default parameters and destructuring, all
@@ -205,7 +179,7 @@
     pipeThrough({writable, readable}, options) {
       const promise = this.pipeTo(writable, options);
       if (v8.isPromise(promise)) {
-        markPromiseAsHandled(promise);
+        v8.markPromiseAsHandled(promise);
       }
       return readable;
     }
@@ -421,9 +395,9 @@
       binding.WritableStreamDefaultWriterRelease(writer);
       ReadableStreamReaderGenericRelease(reader);
       if (errorGiven) {
-        rejectPromise(promise, error);
+        v8.rejectPromise(promise, error);
       } else {
-        resolvePromise(promise, undefined);
+        v8.resolvePromise(promise, undefined);
       }
     }
 
@@ -686,7 +660,7 @@
     const reader = stream[_reader];
 
     const readRequest = stream[_reader][_readRequests].shift();
-    resolvePromise(readRequest, CreateIterResultObject(chunk, done));
+    v8.resolvePromise(readRequest, CreateIterResultObject(chunk, done));
   }
 
   function ReadableStreamDefaultControllerEnqueue(controller, chunk) {
@@ -747,12 +721,12 @@
     }
 
     if (IsReadableStreamDefaultReader(reader) === true) {
-      reader[_readRequests].forEach(request => rejectPromise(request, e));
+      reader[_readRequests].forEach(request => v8.rejectPromise(request, e));
       reader[_readRequests] = new binding.SimpleQueue();
     }
 
-    rejectPromise(reader[_closedPromise], e);
-    markPromiseAsHandled(reader[_closedPromise]);
+    v8.rejectPromise(reader[_closedPromise], e);
+    v8.markPromiseAsHandled(reader[_closedPromise]);
   }
 
   function ReadableStreamClose(stream) {
@@ -765,11 +739,11 @@
 
     if (IsReadableStreamDefaultReader(reader) === true) {
       reader[_readRequests].forEach(request =>
-          resolvePromise(request, CreateIterResultObject(undefined, true)));
+          v8.resolvePromise(request, CreateIterResultObject(undefined, true)));
       reader[_readRequests] = new binding.SimpleQueue();
     }
 
-    resolvePromise(reader[_closedPromise], undefined);
+    v8.resolvePromise(reader[_closedPromise], undefined);
   }
 
   function ReadableStreamDefaultControllerGetDesiredSize(controller) {
@@ -832,7 +806,7 @@
         break;
       case STATE_ERRORED:
         reader[_closedPromise] = Promise_reject(stream[_storedError]);
-        markPromiseAsHandled(reader[_closedPromise]);
+        v8.markPromiseAsHandled(reader[_closedPromise]);
         break;
     }
   }
@@ -849,11 +823,11 @@
     }
 
     if (ReadableStreamGetState(reader[_ownerReadableStream]) === STATE_READABLE) {
-      rejectPromise(reader[_closedPromise], new TypeError(errReleasedReaderClosedPromise));
+      v8.rejectPromise(reader[_closedPromise], new TypeError(errReleasedReaderClosedPromise));
     } else {
       reader[_closedPromise] = Promise_reject(new TypeError(errReleasedReaderClosedPromise));
     }
-    markPromiseAsHandled(reader[_closedPromise]);
+    v8.markPromiseAsHandled(reader[_closedPromise]);
 
     reader[_ownerReadableStream][_reader] = undefined;
     reader[_ownerReadableStream] = undefined;
@@ -1013,7 +987,7 @@
       if (canceled2 === true) {
         const compositeReason = [reason1, reason2];
         const cancelResult = ReadableStreamCancel(stream, compositeReason);
-        resolvePromise(promise, cancelResult);
+        v8.resolvePromise(promise, cancelResult);
       }
 
       return promise;
@@ -1026,7 +1000,7 @@
       if (canceled1 === true) {
         const compositeReason = [reason1, reason2];
         const cancelResult = ReadableStreamCancel(stream, compositeReason);
-        resolvePromise(promise, cancelResult);
+        v8.resolvePromise(promise, cancelResult);
       }
 
       return promise;

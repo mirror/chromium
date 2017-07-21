@@ -45,7 +45,7 @@
 namespace blink {
 
 enum class ResourceRequestBlockedReason {
-  kCSP,
+  CSP,
   kMixedContent,
   kOrigin,
   kInspector,

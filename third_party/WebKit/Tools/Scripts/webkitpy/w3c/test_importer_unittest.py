@@ -26,7 +26,7 @@ class TestImporterTest(LoggingTestCase):
         ])
         importer = TestImporter(host, wpt_github=wpt_github)
         importer.exportable_but_not_exported_commits = lambda _: [
-            MockChromiumCommit(host, subject='Fake PR subject', change_id='Iba5eba11')
+            MockChromiumCommit(host, change_id='Iba5eba11')
         ]
         importer.checkout_is_okay = lambda: True
         return_code = importer.main(['--credentials-json=/tmp/creds.json'])
@@ -35,7 +35,7 @@ class TestImporterTest(LoggingTestCase):
             'INFO: Cloning GitHub w3c/web-platform-tests into /tmp/wpt\n',
             'INFO: There were exportable but not-yet-exported commits:\n',
             'INFO: Commit: https://fake-chromium-commit-viewer.org/+/14fd77e88e\n',
-            'INFO: Subject: Fake PR subject\n',
+            'INFO: Subject: Fake commit message\n',
             'INFO: PR: https://github.com/w3c/web-platform-tests/pull/5\n',
             'INFO: Modified files in wpt directory in this commit:\n',
             'INFO:   third_party/WebKit/LayoutTests/external/wpt/one.html\n',
@@ -50,7 +50,7 @@ class TestImporterTest(LoggingTestCase):
         wpt_github = MockWPTGitHub(pull_requests=[])
         importer = TestImporter(host, wpt_github=wpt_github)
         importer.exportable_but_not_exported_commits = lambda _: [
-            MockChromiumCommit(host, subject='Fake PR subject', position='refs/heads/master@{#431}')
+            MockChromiumCommit(host, position='refs/heads/master@{#431}')
         ]
         importer.checkout_is_okay = lambda: True
         return_code = importer.main(['--credentials-json=/tmp/creds.json'])
@@ -59,7 +59,7 @@ class TestImporterTest(LoggingTestCase):
             'INFO: Cloning GitHub w3c/web-platform-tests into /tmp/wpt\n',
             'INFO: There were exportable but not-yet-exported commits:\n',
             'INFO: Commit: https://fake-chromium-commit-viewer.org/+/fa2de685c0\n',
-            'INFO: Subject: Fake PR subject\n',
+            'INFO: Subject: Fake commit message\n',
             'WARNING: No pull request found.\n',
             'INFO: Modified files in wpt directory in this commit:\n',
             'INFO:   third_party/WebKit/LayoutTests/external/wpt/one.html\n',
@@ -87,7 +87,7 @@ class TestImporterTest(LoggingTestCase):
             '/mock-checkout/third_party/WebKit/LayoutTests/W3CImportExpectations', '')
         importer = TestImporter(host)
         importer.git_cl = MockGitCL(host, results={
-            Build('builder-a', 123): TryJobStatus('COMPLETED', 'SUCCESS'),
+            Build('builder-a', 123): TryJobStatus('COMPLETED', 'SUCCESS')
         })
         success = importer.update_expectations_for_cl()
         self.assertTrue(success)
@@ -98,7 +98,7 @@ class TestImporterTest(LoggingTestCase):
             '/mock-checkout/third_party/WebKit/LayoutTests/W3CImportExpectations', '')
         importer = TestImporter(host)
         importer.git_cl = MockGitCL(host, results={
-            Build('builder-a', 123): TryJobStatus('COMPLETED', 'FAILURE'),
+            Build('builder-a', 123): TryJobStatus('COMPLETED', 'FAILURE')
         })
         importer.fetch_new_expectations_and_baselines = lambda: None
         success = importer.update_expectations_for_cl()
@@ -112,10 +112,8 @@ class TestImporterTest(LoggingTestCase):
         host.filesystem.write_text_file(
             '/mock-checkout/third_party/WebKit/LayoutTests/W3CImportExpectations', '')
         importer = TestImporter(host)
-        # Only the latest job for each builder is counted.
         importer.git_cl = MockGitCL(host, results={
-            Build('builder-a', 120): TryJobStatus('COMPLETED', 'FAILURE'),
-            Build('builder-a', 123): TryJobStatus('COMPLETED', 'SUCCESS'),
+            Build('builder-a', 123): TryJobStatus('COMPLETED', 'SUCCESS')
         })
         success = importer.run_commit_queue_for_cl()
         self.assertTrue(success)
@@ -136,9 +134,7 @@ class TestImporterTest(LoggingTestCase):
             '/mock-checkout/third_party/WebKit/LayoutTests/W3CImportExpectations', '')
         importer = TestImporter(host)
         importer.git_cl = MockGitCL(host, results={
-            Build('builder-a', 120): TryJobStatus('COMPLETED', 'SUCCESS'),
-            Build('builder-a', 123): TryJobStatus('COMPLETED', 'FAILURE'),
-            Build('builder-b', 200): TryJobStatus('COMPLETED', 'SUCCESS'),
+            Build('builder-a', 123): TryJobStatus('COMPLETED', 'FAILURE')
         })
         importer.fetch_new_expectations_and_baselines = lambda: None
         success = importer.run_commit_queue_for_cl()

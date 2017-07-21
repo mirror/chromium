@@ -7,7 +7,6 @@ include_rules = [
   "+components/prefs",
   "+components/pref_registry",
   "+components/strings",
-  "+net",
   "+services/metrics/public",
   "+third_party/libaddressinput",
   "+third_party/libphonenumber",

@@ -69,7 +69,7 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
     @Override
     public void getInstruments(Map<String, PaymentMethodData> unusedMethodDataMap,
             String unusedOrigin, String unusedIFrameOrigin, byte[][] unusedCertificateChain,
-            final InstrumentsCallback callback) {
+            PaymentItem unusedItem, final InstrumentsCallback callback) {
         new Handler().post(new Runnable() {
             @Override
             public void run() {

@@ -13,7 +13,6 @@
 #include "base/strings/string_piece.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "extensions/common/extension_urls.h"
-#include "extensions/common/feature_switch.h"
 #include "extensions/renderer/dispatcher.h"
 #include "extensions/renderer/process_info_native_handler.h"
 #include "gin/converter.h"
@@ -177,11 +176,6 @@ void ApiTestEnvironment::RegisterModules() {
 }
 
 void ApiTestEnvironment::InitializeEnvironment() {
-  // With native bindings, we use the actual bindings system to set up the
-  // context, so there's no need to provide these stubs.
-  if (FeatureSwitch::native_crx_bindings()->IsEnabled())
-    return;
-
   gin::Dictionary global(env()->isolate(),
                          env()->context()->v8_context()->Global());
   gin::Dictionary navigator(gin::Dictionary::CreateEmpty(env()->isolate()));
@@ -189,6 +183,8 @@ void ApiTestEnvironment::InitializeEnvironment() {
   global.Set("navigator", navigator);
   gin::Dictionary chrome(gin::Dictionary::CreateEmpty(env()->isolate()));
   global.Set("chrome", chrome);
+  gin::Dictionary extension(gin::Dictionary::CreateEmpty(env()->isolate()));
+  chrome.Set("extension", extension);
   gin::Dictionary runtime(gin::Dictionary::CreateEmpty(env()->isolate()));
   chrome.Set("runtime", runtime);
 }
@@ -237,6 +233,9 @@ void ApiTestEnvironment::RunTestInner(const std::string& test_name,
 
 void ApiTestEnvironment::RunPromisesAgain() {
   v8::MicrotasksScope::PerformCheckpoint(env()->isolate());
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::Bind(&ApiTestEnvironment::RunPromisesAgain,
+                            base::Unretained(this)));
 }
 
 ApiTestBase::ApiTestBase() {

@@ -92,7 +92,7 @@ void RecordRepeatHistograms(CaptivePortalResult result,
   result_duration_histogram->AddTime(result_duration);
 }
 
-CaptivePortalDetectionResult GetHistogramEntryForDetectionResult(
+int GetHistogramEntryForDetectionResult(
     const captive_portal::CaptivePortalDetector::Results& results) {
   bool is_https = results.landing_url.SchemeIs("https");
   bool is_ip = results.landing_url.HostIsIPAddress();
@@ -119,7 +119,7 @@ CaptivePortalDetectionResult GetHistogramEntryForDetectionResult(
           DETECTION_RESULT_BEHIND_CAPTIVE_PORTAL;
     default:
       NOTREACHED();
-      return DETECTION_RESULT_COUNT;
+      return -1;
   }
 }
 
@@ -255,7 +255,7 @@ void CaptivePortalService::DetectCaptivePortalInternal() {
           destination: GOOGLE_OWNED_SERVICE
         }
         policy {
-          cookies_allowed: NO
+          cookies_allowed: false
           setting:
             "Users can enable/disable this feature by toggling 'Use a web "
             "service to resolve network errors' in Chromium settings under "

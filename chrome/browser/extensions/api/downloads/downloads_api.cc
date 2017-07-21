@@ -1017,7 +1017,7 @@ bool DownloadsDownloadFunction::RunAsync() {
           destination: OTHER
         }
         policy {
-          cookies_allowed: YES
+          cookies_allowed: true
           cookies_store: "user"
           setting:
             "This feature cannot be disabled in settings, but disabling all "

@@ -5,7 +5,6 @@
 #ifndef CHROME_BROWSER_VR_UI_BROWSER_INTERFACE_H_
 #define CHROME_BROWSER_VR_UI_BROWSER_INTERFACE_H_
 
-#include "chrome/browser/vr/exit_vr_prompt_choice.h"
 #include "chrome/browser/vr/ui_unsupported_mode.h"
 
 namespace vr {
@@ -21,8 +20,6 @@ class UiBrowserInterface {
   virtual void NavigateBack() = 0;
   virtual void ExitCct() = 0;
   virtual void OnUnsupportedMode(UiUnsupportedMode mode) = 0;
-  virtual void OnExitVrPromptResult(UiUnsupportedMode reason,
-                                    ExitVrPromptChoice choice) = 0;
 };
 
 }  // namespace vr

@@ -11,8 +11,8 @@ using gpu::gles2::GLES2Interface;
 
 namespace {
 template <typename R, typename... Args>
-GrGLFunction<R (*)(Args...)> gles_bind(R (GLES2Interface::*func)(Args...),
-                                       GLES2Interface* gles2Interface) {
+std::function<R(Args...)> gles_bind(R (GLES2Interface::*func)(Args...),
+                                    GLES2Interface* gles2Interface) {
   return [func, gles2Interface](Args... args) {
     return (gles2Interface->*func)(args...);
   };

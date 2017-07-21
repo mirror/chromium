@@ -217,10 +217,10 @@ class CONTENT_EXPORT WebContentsImpl
       const ResourceRedirectDetails& details);
 
   // Notify observers that the web contents has been focused.
-  void NotifyWebContentsFocused(RenderWidgetHost* render_widget_host);
+  void NotifyWebContentsFocused();
 
   // Notify observers that the web contents has lost focus.
-  void NotifyWebContentsLostFocus(RenderWidgetHost* render_widget_host);
+  void NotifyWebContentsLostFocus();
 
   WebContentsView* GetView() const;
 
@@ -488,10 +488,6 @@ class CONTENT_EXPORT WebContentsImpl
       RenderFrameHost* render_frame_host,
       const std::string& interface_name,
       mojo::ScopedInterfaceEndpointHandle handle) override;
-  void OnInterfaceRequest(
-      RenderFrameHost* render_frame_host,
-      const std::string& interface_name,
-      mojo::ScopedMessagePipeHandle* interface_pipe) override;
   const GURL& GetMainFrameLastCommittedURL() const override;
   void RenderFrameCreated(RenderFrameHost* render_frame_host) override;
   void RenderFrameDeleted(RenderFrameHost* render_frame_host) override;

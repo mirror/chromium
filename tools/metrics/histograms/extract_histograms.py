@@ -301,9 +301,7 @@ def _ExtractHistogramsFromXmlTree(tree, enums):
             ' found %s.',
             name, EXPIRY_DATE_PATTERN, expiry_date_str)
         have_errors = True
-      else:
-        histogram_entry['expiry_date'] = expiry_date.strftime(
-            EXPIRY_DATE_PATTERN)
+      histograms[expiry_date] = expiry_date
 
     # Find <owner> tag.
     owners = _ExtractOwners(histogram)

@@ -17,8 +17,6 @@
 #include "base/strings/stringprintf.h"
 #include "google_apis/google_api_keys.h"
 #include "net/base/escape.h"
-#include "remoting/base/string_resources.h"
-#include "ui/base/l10n/l10n_util.h"
 
 // TODO(nicholss): This should be generated from a remoting/base class:
 
@@ -78,7 +76,7 @@ std::string GetAuthorizationCodeUri() {
 - (id)init {
   self = [super init];
   if (self) {
-    self.title = l10n_util::GetNSString(IDS_SETTINGS_BUTTON);
+    self.title = @"Settings";
 
     _appBar = [[MDCAppBar alloc] init];
     [self addChildViewController:_appBar.headerViewController];
@@ -118,10 +116,7 @@ std::string GetAuthorizationCodeUri() {
   self.styler.cellStyle = MDCCollectionViewCellStyleCard;
 
   _content = [NSMutableArray array];
-  [_content addObject:@[
-    l10n_util::GetNSString(IDS_SIGN_IN_BUTTON),
-    l10n_util::GetNSString(IDS_SIGN_OUT_BUTTON)
-  ]];
+  [_content addObject:@[ @"Login", @"Logout" ]];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -156,8 +151,7 @@ std::string GetAuthorizationCodeUri() {
     cell.accessoryView = accessCodeButton;
   } else if (indexPath.section == 0 && indexPath.item == 1) {
     MDCRaisedButton* logoutButton = [[MDCRaisedButton alloc] init];
-    [logoutButton setTitle:l10n_util::GetNSString(IDS_SIGN_OUT_BUTTON)
-                  forState:UIControlStateNormal];
+    [logoutButton setTitle:@"Logout" forState:UIControlStateNormal];
     [logoutButton sizeToFit];
     [logoutButton addTarget:self
                      action:@selector(didTapLogout:)

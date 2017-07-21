@@ -12,45 +12,35 @@
 
 namespace {
 
-std::unique_ptr<KeyStorageLinux> GetNullKeyStorage() {
+KeyStorageLinux* GetNullKeyStorage() {
   return nullptr;
 }
 
 class OSCryptLinuxTest : public testing::Test {
  public:
-  OSCryptLinuxTest() : key_("something") { key_ptr_ = &key_; }
-
-  ~OSCryptLinuxTest() override { key_ptr_ = nullptr; };
+  OSCryptLinuxTest() = default;
+  ~OSCryptLinuxTest() override = default;
 
   void SetUp() override {
-    OSCryptMockerLinux::SetUp();
-    UseMockKeyStorageForTesting(nullptr, OSCryptLinuxTest::GetKey);
+    OSCryptMockerLinux::SetUpWithSingleton();
+    key_storage_ = OSCryptMockerLinux::GetInstance();
   }
 
   void TearDown() override { OSCryptMockerLinux::TearDown(); }
 
  protected:
-  void SetEncryptionKey(const std::string& key) { key_ = key; }
-
-  // Get the key of the currently running test.
-  static std::string* GetKey() { return key_ptr_; }
+  OSCryptMockerLinux* key_storage_ = nullptr;
 
  private:
-  std::string key_;
-  // Points to the |key_| of the currently running test.
-  static std::string* key_ptr_;
-
   DISALLOW_COPY_AND_ASSIGN(OSCryptLinuxTest);
 };
-
-std::string* OSCryptLinuxTest::key_ptr_;
 
 TEST_F(OSCryptLinuxTest, VerifyV0) {
   const std::string originaltext = "hello";
   std::string ciphertext;
   std::string decipheredtext;
 
-  SetEncryptionKey(std::string());
+  key_storage_->ResetTo("");
   ciphertext = originaltext;  // No encryption
   ASSERT_TRUE(OSCrypt::DecryptString(ciphertext, &decipheredtext));
   ASSERT_EQ(originaltext, decipheredtext);
@@ -61,9 +51,9 @@ TEST_F(OSCryptLinuxTest, VerifyV10) {
   std::string ciphertext;
   std::string decipheredtext;
 
-  SetEncryptionKey("peanuts");
+  key_storage_->ResetTo("peanuts");
   ASSERT_TRUE(OSCrypt::EncryptString(originaltext, &ciphertext));
-  SetEncryptionKey("not_peanuts");
+  key_storage_->ResetTo("not_peanuts");
   ciphertext = ciphertext.substr(3).insert(0, "v10");
   ASSERT_TRUE(OSCrypt::DecryptString(ciphertext, &decipheredtext));
   ASSERT_EQ(originaltext, decipheredtext);
@@ -74,7 +64,7 @@ TEST_F(OSCryptLinuxTest, VerifyV11) {
   std::string ciphertext;
   std::string decipheredtext;
 
-  SetEncryptionKey(std::string());
+  key_storage_->ResetTo("");
   ASSERT_TRUE(OSCrypt::EncryptString(originaltext, &ciphertext));
   ASSERT_EQ(ciphertext.substr(0, 3), "v11");
   ASSERT_TRUE(OSCrypt::DecryptString(ciphertext, &decipheredtext));

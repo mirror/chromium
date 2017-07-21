@@ -2,16 +2,15 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-from webkitpy.common.net.git_cl import GitCL
+from webkitpy.common.net.buildbot import filter_latest_builds
 
-# pylint: disable=unused-argument
 
+# TODO(qyearsley): Use this class in wpt_expectations_updater_unittest and rebaseline_cl_unittest.
 class MockGitCL(object):
 
-    def __init__(self, host, results=None, issue_number='1234'):
+    def __init__(self, host, results=None):
         self._host = host
         self._results = results or {}
-        self._issue_number = issue_number
         self.calls = []
 
     def run(self, args):
@@ -26,29 +25,22 @@ class MockGitCL(object):
         self.run(command)
 
     def get_issue_number(self):
-        return self._issue_number
-
-    def try_job_results(self, **_):
-        return self._results
+        return '1234'
 
     def wait_for_try_jobs(self, **_):
         return self._results
 
-    def latest_try_jobs(self, builder_names=None):
-        return self.filter_latest(self._results)
+    def latest_try_jobs(self, **_):
+        latest_builds = filter_latest_builds(self._results)
+        return {b: s for b, s in self._results.items() if b in latest_builds}
+
+    def try_job_results(self, **_):
+        return self._results
 
     @staticmethod
-    def filter_latest(try_results):
-        return GitCL.filter_latest(try_results)
+    def all_jobs_finished(results):
+        return all(s.status == 'COMPLETED' for s in results.values())
 
     @staticmethod
-    def all_finished(try_results):
-        return GitCL.all_finished(try_results)
-
-    @staticmethod
-    def all_success(try_results):
-        return GitCL.all_success(try_results)
-
-    @staticmethod
-    def some_failed(try_results):
-        return GitCL.some_failed(try_results)
+    def has_failing_try_results(results):
+        return any(s.result == 'FAILURE' for s in results.values())

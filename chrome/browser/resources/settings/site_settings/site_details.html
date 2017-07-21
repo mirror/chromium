@@ -54,7 +54,7 @@
         <div class="list-frame">
           <div class="list-item" id="storage">
             <div class="start">[[storedData_]]</div>
-            <button is="paper-icon-button-light" class="icon-delete-gray"
+            <button is="paper-icon-button-light" class="icon-delete"
                 on-tap="onConfirmClearStorage_"
                 alt="$i18n{siteSettingsDelete}"></button>
           </div>
@@ -103,10 +103,6 @@
           category="{{ContentSettingsTypes.AUTOMATIC_DOWNLOADS}}"
           icon="cr:file-download" id="automaticDownloads"
           label="$i18n{siteSettingsAutomaticDownloads}">
-      </site-details-permission>
-      <site-details-permission
-          category="{{ContentSettingsTypes.MIDI_DEVICES}}" icon="settings:midi"
-          id="midiDevices" label="$i18n{siteSettingsMidiDevices}">
       </site-details-permission>
       <site-details-permission
           category="{{ContentSettingsTypes.UNSANDBOXED_PLUGINS}}"

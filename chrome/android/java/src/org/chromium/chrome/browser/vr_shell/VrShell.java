@@ -54,20 +54,4 @@ public interface VrShell {
      * Returns the GVRLayout as a FrameLayout.
      */
     FrameLayout getContainer();
-
-    /**
-     * Returns whether the back button is enabled.
-     */
-    Boolean isBackButtonEnabled();
-
-    /**
-     * Requests to exit VR.
-     */
-    void requestToExitVr(@UiUnsupportedMode int reason);
-
-    /**
-     * Gives VrShell a chance to clean up any view-dependent state before removing
-     * VrShell from the view hierarchy.
-     */
-    void onBeforeWindowDetached();
 }

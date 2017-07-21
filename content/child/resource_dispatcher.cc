@@ -35,7 +35,6 @@
 #include "content/public/child/fixed_received_data.h"
 #include "content/public/child/request_peer.h"
 #include "content/public/child/resource_dispatcher_delegate.h"
-#include "content/public/common/content_features.h"
 #include "content/public/common/resource_request.h"
 #include "content/public/common/resource_request_completion_status.h"
 #include "content/public/common/resource_response.h"
@@ -679,7 +678,7 @@ int ResourceDispatcher::StartAsync(
         destination: OTHER
       }
       policy {
-        cookies_allowed: YES
+        cookies_allowed: true
         cookies_store: "user"
         setting: "These requests cannot be disabled in settings."
         policy_exception_justification:
@@ -692,21 +691,11 @@ int ResourceDispatcher::StartAsync(
         loading_task_runner ? loading_task_runner : thread_task_runner_;
     std::unique_ptr<URLLoaderClientImpl> client(
         new URLLoaderClientImpl(request_id, this, task_runner));
-
-    uint32_t options = mojom::kURLLoadOptionNone;
-    // TODO(jam): use this flag for ResourceDispatcherHost code path once
-    // MojoLoading is the only IPC code path.
-    if (base::FeatureList::IsEnabled(features::kNetworkService) &&
-        request->fetch_request_context_type != REQUEST_CONTEXT_TYPE_FETCH) {
-      // MIME sniffing should be disabled for a request initiated by fetch().
-      options |= mojom::kURLLoadOptionSniffMimeType;
-    }
-
     std::unique_ptr<ThrottlingURLLoader> url_loader =
         ThrottlingURLLoader::CreateLoaderAndStart(
             url_loader_factory, std::move(throttles), routing_id, request_id,
-            options, *request, client.get(), traffic_annotation,
-            std::move(task_runner));
+            mojom::kURLLoadOptionNone, *request, client.get(),
+            traffic_annotation, std::move(task_runner));
     pending_requests_[request_id]->url_loader = std::move(url_loader);
     pending_requests_[request_id]->url_loader_client = std::move(client);
   } else {

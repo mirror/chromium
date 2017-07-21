@@ -1,7 +1,6 @@
 <link rel="import" href="chrome://resources/html/polymer.html">
 
 <link rel="import" href="chrome://resources/cr_elements/cr_dialog/cr_dialog.html">
-<link rel="import" href="chrome://resources/cr_elements/paper_button_style_css.html">
 <link rel="import" href="chrome://resources/cr_elements/shared_style_css.html">
 <link rel="import" href="chrome://resources/html/assert.html">
 <link rel="import" href="chrome://resources/html/cr.html">
@@ -10,9 +9,18 @@
 
 <dom-module id="extensions-pack-dialog">
   <template>
-    <style include="cr-shared-style paper-button-style">
-      .file-input {
+    <style include="cr-shared-style">
+      paper-button {
         align-items: center;
+        border-radius: 2px;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        padding: 8px 12px;
+        text-transform: uppercase;
+      }
+
+      .file-input {
         display: flex;
         --paper-input-container-input: {
           font-size: inherit;

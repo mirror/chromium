@@ -10,7 +10,6 @@
 
 #include "base/macros.h"
 #include "base/metrics/histogram_macros.h"
-#include "base/metrics/metrics_hashes.h"
 #include "base/metrics/sparse_histogram.h"
 #include "components/language_usage_metrics/language_usage_metrics.h"
 
@@ -30,10 +29,6 @@ const char kTranslateUndisplayableLanguage[] =
     "Translate.UndisplayableLanguage";
 const char kTranslateUnsupportedLanguageAtInitiation[] =
     "Translate.UnsupportedLanguageAtInitiation";
-const char kTranslateSourceLanguage[] =
-    "Translate.SourceLanguage";
-const char kTranslateTargetLanguage[] =
-    "Translate.TargetLanguage";
 
 struct MetricsEntry {
   TranslateBrowserMetrics::MetricsNameIndex index;
@@ -52,10 +47,6 @@ const MetricsEntry kMetricsEntries[] = {
     kTranslateUndisplayableLanguage },
   { TranslateBrowserMetrics::UMA_UNSUPPORTED_LANGUAGE_AT_INITIATION,
     kTranslateUnsupportedLanguageAtInitiation },
-  { TranslateBrowserMetrics::UMA_TRANSLATE_SOURCE_LANGUAGE,
-    kTranslateSourceLanguage },
-  { TranslateBrowserMetrics::UMA_TRANSLATE_TARGET_LANGUAGE,
-    kTranslateTargetLanguage },
 };
 
 static_assert(arraysize(kMetricsEntries) == TranslateBrowserMetrics::UMA_MAX,
@@ -93,16 +84,6 @@ void ReportUnsupportedLanguageAtInitiation(const std::string& language) {
       language_usage_metrics::LanguageUsageMetrics::ToLanguageCode(language);
   UMA_HISTOGRAM_SPARSE_SLOWLY(kTranslateUnsupportedLanguageAtInitiation,
                               language_code);
-}
-
-void ReportTranslateSourceLanguage(const std::string& language) {
-  UMA_HISTOGRAM_SPARSE_SLOWLY(kTranslateSourceLanguage,
-                              base::HashMetricName(language));
-}
-
-void ReportTranslateTargetLanguage(const std::string& language) {
-  UMA_HISTOGRAM_SPARSE_SLOWLY(kTranslateTargetLanguage,
-                              base::HashMetricName(language));
 }
 
 const char* GetMetricsName(MetricsNameIndex index) {

@@ -59,17 +59,18 @@ void DiagnosticsTest::RecordOutcome(int outcome_code,
   additional_info_ = additional_info;
   result_ = result;
 #if defined(OS_CHROMEOS)  // Only collecting UMA stats on ChromeOS
-  DiagnosticsTestId id = static_cast<DiagnosticsTestId>(GetId());
   if (result_ == DiagnosticsModel::TEST_OK) {
     // Record individual test success.
-    RecordUMATestResult(id, RESULT_SUCCESS);
+    RecordUMATestResult(static_cast<DiagnosticsTestId>(GetId()),
+                        RESULT_SUCCESS);
   } else if (result_ == DiagnosticsModel::TEST_FAIL_CONTINUE ||
              result_ == DiagnosticsModel::TEST_FAIL_STOP) {
     // Record test failure in summary histogram.
-    UMA_HISTOGRAM_ENUMERATION("Diagnostics.TestFailures", id,
-                              DIAGNOSTICS_TEST_ID_COUNT);
+    UMA_HISTOGRAM_ENUMERATION(
+        "Diagnostics.TestFailures", GetId(), DIAGNOSTICS_TEST_ID_COUNT);
     // Record individual test failure.
-    RecordUMATestResult(id, RESULT_FAILURE);
+    RecordUMATestResult(static_cast<DiagnosticsTestId>(GetId()),
+                        RESULT_FAILURE);
   }
 #endif
 }

@@ -269,8 +269,8 @@ void WebContentsViewMac::UpdateDragCursor(WebDragOperation operation) {
   [cocoa_view_ setCurrentDragOperation: operation];
 }
 
-void WebContentsViewMac::GotFocus(RenderWidgetHostImpl* render_widget_host) {
-  web_contents_->NotifyWebContentsFocused(render_widget_host);
+void WebContentsViewMac::GotFocus() {
+  web_contents_->NotifyWebContentsFocused();
 }
 
 // This is called when the renderer asks us to take focus back (i.e., it has

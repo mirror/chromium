@@ -25,7 +25,6 @@ class UiBrowserInterface;
 class UiElement;
 class UiScene;
 class UrlBar;
-class ExitPrompt;
 
 class UiSceneManager {
  public:
@@ -61,10 +60,8 @@ class UiSceneManager {
   void OnAppButtonGesturePerformed(UiInterface::Direction direction);
   void OnWebVrFrameAvailable();
 
-  void SetExitVrPromptEnabled(bool enabled, UiUnsupportedMode reason);
-
   void OnSecurityIconClickedForTesting();
-  void OnExitPromptChoiceForTesting(bool chose_exit);
+  void OnExitPromptPrimaryButtonClickedForTesting();
 
  private:
   void CreateScreenDimmer();
@@ -83,10 +80,12 @@ class UiSceneManager {
   void ConfigureSecurityWarnings();
   void ConfigureExclusiveScreenToast();
   void ConfigureIndicators();
-  void ConfigureBackgroundColor();
+  void UpdateBackgroundColor();
+  void CloseExitPrompt();
   void OnBackButtonClicked();
   void OnSecurityIconClicked();
-  void OnExitPromptChoice(bool chose_exit);
+  void OnExitPromptPrimaryButtonClicked();
+  void OnExitPromptSecondaryButtonClicked();
   void OnExitPromptBackplaneClicked();
   void OnCloseButtonClicked();
   void OnUnsupportedMode(UiUnsupportedMode mode);
@@ -101,7 +100,7 @@ class UiSceneManager {
   UiElement* permanent_security_warning_ = nullptr;
   TransientSecurityWarning* transient_security_warning_ = nullptr;
   ExclusiveScreenToast* exclusive_screen_toast_ = nullptr;
-  ExitPrompt* exit_prompt_ = nullptr;
+  UiElement* exit_prompt_ = nullptr;
   UiElement* exit_prompt_backplane_ = nullptr;
   UiElement* exit_warning_ = nullptr;
   UiElement* main_content_ = nullptr;
@@ -128,10 +127,7 @@ class UiSceneManager {
   // Flag to indicate that we're waiting for the first WebVR frame to show up
   // before we hide the splash screen. This is used in the case of WebVR
   // auto-presentation.
-  bool showing_web_vr_splash_screen_ = false;
-  bool prompting_to_exit_ = false;
-  bool exiting_ = false;
-
+  bool waiting_for_first_web_vr_frame_ = false;
   bool secure_origin_ = false;
   bool fullscreen_ = false;
   bool incognito_ = false;
@@ -140,7 +136,6 @@ class UiSceneManager {
   bool screen_capturing_ = false;
   bool location_access_ = false;
   bool bluetooth_connected_ = false;
-  UiUnsupportedMode exit_vr_prompt_reason_ = UiUnsupportedMode::kCount;
 
   int next_available_id_ = 1;
 

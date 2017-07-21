@@ -4,8 +4,7 @@
 
 #include "chrome/installer/zucchini/patch_utils.h"
 
-#include <stdint.h>
-
+#include <cstdint>
 #include <iterator>
 #include <vector>
 

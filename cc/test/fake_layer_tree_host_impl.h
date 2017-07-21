@@ -38,7 +38,7 @@ class FakeLayerTreeHostImpl : public LayerTreeHostImpl {
   void CreatePendingTree() override;
 
   void NotifyTileStateChanged(const Tile* tile) override;
-  viz::BeginFrameArgs CurrentBeginFrameArgs() const override;
+  BeginFrameArgs CurrentBeginFrameArgs() const override;
   void AdvanceToNextFrame(base::TimeDelta advance_by);
   void UpdateNumChildrenAndDrawPropertiesForActiveTree();
   static void UpdateNumChildrenAndDrawProperties(LayerTreeImpl* layerTree);

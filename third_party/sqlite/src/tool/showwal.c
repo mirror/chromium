@@ -12,7 +12,6 @@
 
 #if !defined(_MSC_VER)
 #include <unistd.h>
-#include <sys/types.h>
 #else
 #include <io.h>
 #endif
@@ -234,7 +233,7 @@ static void print_oneline_frame(int iFrame, Cksum *pCksum){
   s0 = getInt32(aData+16);
   s1 = getInt32(aData+20);
   fprintf(stdout, "Frame %4d: %6d %6d 0x%08x,%08x 0x%08x,%08x %s\n",
-          iFrame,
+          iFrame, 
           getInt32(aData),
           getInt32(aData+4),
           getInt32(aData+8),
@@ -509,7 +508,7 @@ static void decode_btree_page(
       printf(" %03x: %.64s\n", i, &zMap[i]);
     }
     free(zMap);
-  }
+  }  
 }
 
 int main(int argc, char **argv){
@@ -580,14 +579,6 @@ int main(int argc, char **argv){
         decode_btree_page(a, iStart, hdrSize, zLeft+1);
         free(a);
         continue;
-#if !defined(_MSC_VER)
-      }else if( zLeft && strcmp(zLeft,"truncate")==0 ){
-        /* Frame number followed by "truncate" truncates the WAL file
-        ** after that frame */
-        off_t newSize = 32 + iStart*(pagesize+24);
-        truncate(argv[1], newSize);
-        continue;
-#endif
       }else{
         iEnd = iStart;
       }

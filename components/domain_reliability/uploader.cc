@@ -103,7 +103,7 @@ class DomainReliabilityUploaderImpl
             destination: GOOGLE_OWNED_SERVICE
           }
           policy {
-            cookies_allowed: NO
+            cookies_allowed: false
             setting:
               "Users can enable or disable Domain Reliability on desktop, via "
               "toggling 'Automatically send usage statistics and crash reports "

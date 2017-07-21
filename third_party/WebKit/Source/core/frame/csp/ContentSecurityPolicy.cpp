@@ -331,7 +331,7 @@ void ContentSecurityPolicy::AddPolicyFromHeaderValue(
   // separated chunk as a separate header.
   const UChar* position = begin;
   while (position < end) {
-    SkipUntil<UChar>(position, end, ',');
+    skipUntil<UChar>(position, end, ',');
 
     // header1,header2 OR header1
     //        ^                  ^
@@ -349,7 +349,7 @@ void ContentSecurityPolicy::AddPolicyFromHeaderValue(
 
     // Skip the comma, and begin the next header from the current position.
     DCHECK(position == end || *position == ',');
-    SkipExactly<UChar>(position, end, ',');
+    skipExactly<UChar>(position, end, ',');
     begin = position;
   }
 }

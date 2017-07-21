@@ -106,6 +106,11 @@ bool IsAutoReloadEnabled() {
                           base::CompareCase::INSENSITIVE_ASCII);
 }
 
+bool IsForceResetContextualSearchEnabled() {
+  return [[NSUserDefaults standardUserDefaults]
+      boolForKey:kForceResetContextualSearch];
+}
+
 bool IsLRUSnapshotCacheEnabled() {
   // Check if the experimental flag is forced on or off.
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();

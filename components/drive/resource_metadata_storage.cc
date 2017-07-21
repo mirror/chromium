@@ -269,15 +269,14 @@ bool ResourceMetadataStorage::UpgradeOldDB(
     return false;
 
   // Open DB.
-  std::unique_ptr<leveldb::DB> resource_map;
+  leveldb::DB* db = NULL;
   leveldb::Options options;
   options.max_open_files = 0;  // Use minimum.
   options.create_if_missing = false;
   options.reuse_logs = leveldb_env::kDefaultLogReuseOptionValue;
-  leveldb::Status status = leveldb_env::OpenDB(
-      options, resource_map_path.AsUTF8Unsafe(), &resource_map);
-  if (!status.ok())
+  if (!leveldb::DB::Open(options, resource_map_path.AsUTF8Unsafe(), &db).ok())
     return false;
+  std::unique_ptr<leveldb::DB> resource_map(db);
 
   // Check DB version.
   std::string serialized_header;
@@ -553,6 +552,7 @@ bool ResourceMetadataStorage::Initialize() {
   }
 
   // Try to open the existing DB.
+  leveldb::DB* db = NULL;
   leveldb::Options options;
   options.max_open_files = 0;  // Use minimum.
   options.create_if_missing = false;
@@ -561,12 +561,13 @@ bool ResourceMetadataStorage::Initialize() {
   DBInitStatus open_existing_result = DB_INIT_NOT_FOUND;
   leveldb::Status status;
   if (base::PathExists(resource_map_path)) {
-    status = leveldb_env::OpenDB(options, resource_map_path.AsUTF8Unsafe(),
-                                 &resource_map_);
+    status = leveldb::DB::Open(options, resource_map_path.AsUTF8Unsafe(), &db);
     open_existing_result = LevelDBStatusToDBInitStatus(status);
   }
 
   if (open_existing_result == DB_INIT_SUCCESS) {
+    resource_map_.reset(db);
+
     // Check the validity of existing DB.
     int db_version = -1;
     ResourceMetadataHeader header;
@@ -609,9 +610,10 @@ bool ResourceMetadataStorage::Initialize() {
     options.error_if_exists = true;
     options.reuse_logs = leveldb_env::kDefaultLogReuseOptionValue;
 
-    status = leveldb_env::OpenDB(options, resource_map_path.AsUTF8Unsafe(),
-                                 &resource_map_);
+    status = leveldb::DB::Open(options, resource_map_path.AsUTF8Unsafe(), &db);
     if (status.ok()) {
+      resource_map_.reset(db);
+
       // Set up header and trash the old DB.
       if (PutHeader(GetDefaultHeaderEntry()) == FILE_ERROR_OK &&
           MoveIfPossible(preserved_resource_map_path,
@@ -674,13 +676,14 @@ void ResourceMetadataStorage::RecoverCacheInfoFromTrashedResourceMap(
   }
 
   // Open it.
-  std::unique_ptr<leveldb::DB> resource_map;
-  status = leveldb_env::OpenDB(
-      options, trashed_resource_map_path.AsUTF8Unsafe(), &resource_map);
+  leveldb::DB* db = NULL;
+  status = leveldb::DB::Open(options, trashed_resource_map_path.AsUTF8Unsafe(),
+                             &db);
   if (!status.ok()) {
     LOG(ERROR) << "Failed to open trashed DB: " << status.ToString();
     return;
   }
+  std::unique_ptr<leveldb::DB> resource_map(db);
 
   // Check DB version.
   std::string serialized_header;

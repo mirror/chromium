@@ -7,7 +7,6 @@
 #include <math.h>
 
 #include "base/logging.h"
-#include "base/metrics/histogram_macros.h"
 #include "third_party/WebKit/public/platform/WebGestureEvent.h"
 
 using blink::WebInputEvent;
@@ -24,12 +23,6 @@ bool IsYAxisActionDisallowed(cc::TouchAction action) {
 
 bool IsXAxisActionDisallowed(cc::TouchAction action) {
   return (action & cc::kTouchActionPanY) && !(action & cc::kTouchActionPanX);
-}
-
-// Report how often the gesture event is or is not dropped due to the current
-// allowed touch action state not matching the gesture event.
-void ReportGestureEventFiltered(bool event_filtered) {
-  UMA_HISTOGRAM_BOOLEAN("TouchAction.GestureEventFiltered", event_filtered);
 }
 
 }  // namespace
@@ -76,7 +69,6 @@ bool TouchActionFilter::FilterGestureEvent(WebGestureEvent* gesture_event) {
       break;
 
     case WebInputEvent::kGestureFlingStart:
-      ReportGestureEventFiltered(suppress_manipulation_events_);
       // Touchscreen flings should always have non-zero velocity.
       DCHECK(gesture_event->data.fling_start.velocity_x ||
              gesture_event->data.fling_start.velocity_y);
@@ -97,13 +89,11 @@ bool TouchActionFilter::FilterGestureEvent(WebGestureEvent* gesture_event) {
       return FilterManipulationEventAndResetState();
 
     case WebInputEvent::kGestureScrollEnd:
-      ReportGestureEventFiltered(suppress_manipulation_events_);
       return FilterManipulationEventAndResetState();
 
     case WebInputEvent::kGesturePinchBegin:
     case WebInputEvent::kGesturePinchUpdate:
     case WebInputEvent::kGesturePinchEnd:
-      ReportGestureEventFiltered(suppress_manipulation_events_);
       return suppress_manipulation_events_;
 
     // The double tap gesture is a tap ending event. If a double tap gesture is
@@ -172,23 +162,6 @@ void TouchActionFilter::OnSetTouchAction(cc::TouchAction touch_action) {
   // 2. Only subtractive - eg. can't trigger scrolling on a element that
   //    otherwise has scrolling disabling by the addition of a finger.
   allowed_touch_action_ &= touch_action;
-}
-
-void TouchActionFilter::ReportAndResetTouchAction() {
-  // Report the effective touch action computed by blink such as
-  // kTouchActionNone, kTouchActionPanX, etc.
-  // Since |cc::kTouchActionAuto| is equivalent to |cc::kTouchActionMax|, we
-  // must add one to the upper bound to be able to visualize the number of
-  // times |cc::kTouchActionAuto| is hit.
-  UMA_HISTOGRAM_ENUMERATION("TouchAction.EffectiveTouchAction",
-                            allowed_touch_action_, cc::kTouchActionMax + 1);
-
-  // Report how often the effective touch action computed by blink is or is
-  // not equivalent to the whitelisted touch action computed by the
-  // compositor.
-  UMA_HISTOGRAM_BOOLEAN("TouchAction.EquivalentEffectiveAndWhiteListed",
-                        allowed_touch_action_ == white_listed_touch_action_);
-  ResetTouchAction();
 }
 
 void TouchActionFilter::ResetTouchAction() {

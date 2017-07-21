@@ -9,10 +9,13 @@
 
 #include "base/macros.h"
 #include "components/bubble/bubble_ui.h"
+#include "ui/gfx/geometry/point.h"
+#include "ui/views/bubble/bubble_border.h"
 #include "ui/views/widget/widget_observer.h"
 
 namespace views {
 class BubbleDialogDelegateView;
+class View;
 }
 
 class Browser;
@@ -39,9 +42,12 @@ class ChooserBubbleUi : public BubbleUi, public views::WidgetObserver {
   void OnWidgetClosing(views::Widget* widget) override;
 
  private:
-  // Has separate implementations for Views-based and Cocoa-based browsers, to
-  // allow this bubble to be used in either.
+  // These functions have separate implementations for Views-based and
+  // Cocoa-based browsers, to allow this bubble to be used in either.
   void CreateAndShow(views::BubbleDialogDelegateView* delegate);
+  views::View* GetAnchorView();
+  gfx::Point GetAnchorPoint();
+  views::BubbleBorder::Arrow GetAnchorArrow();
 
   Browser* browser_;  // Weak.
   // Weak. Owned by its parent view.

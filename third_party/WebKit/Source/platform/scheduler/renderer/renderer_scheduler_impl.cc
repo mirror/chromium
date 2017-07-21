@@ -13,7 +13,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/trace_event.h"
 #include "base/trace_event/trace_event_argument.h"
-#include "components/viz/common/frame_sinks/begin_frame_args.h"
+#include "cc/output/begin_frame_args.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/scheduler/base/real_time_domain.h"
 #include "platform/scheduler/base/task_queue_impl.h"
@@ -383,13 +383,9 @@ scoped_refptr<MainThreadTaskQueue> RendererSchedulerImpl::NewLoadingTaskQueue(
     MainThreadTaskQueue::QueueType queue_type) {
   DCHECK_EQ(MainThreadTaskQueue::QueueClassForQueueType(queue_type),
             MainThreadTaskQueue::QueueClass::LOADING);
-  return NewTaskQueue(
-      MainThreadTaskQueue::QueueCreationParams(queue_type)
-          .SetCanBeSuspended(true)
-          .SetCanBeBlocked(true)
-          .SetUsedForControlTasks(
-              queue_type ==
-              MainThreadTaskQueue::QueueType::FRAME_LOADING_CONTROL));
+  return NewTaskQueue(MainThreadTaskQueue::QueueCreationParams(queue_type)
+                          .SetCanBeSuspended(true)
+                          .SetCanBeBlocked(true));
 }
 
 scoped_refptr<MainThreadTaskQueue> RendererSchedulerImpl::NewTimerTaskQueue(
@@ -445,7 +441,7 @@ void RendererSchedulerImpl::RemoveTaskObserver(
   helper_.RemoveTaskObserver(task_observer);
 }
 
-void RendererSchedulerImpl::WillBeginFrame(const viz::BeginFrameArgs& args) {
+void RendererSchedulerImpl::WillBeginFrame(const cc::BeginFrameArgs& args) {
   TRACE_EVENT1(TRACE_DISABLED_BY_DEFAULT("renderer.scheduler"),
                "RendererSchedulerImpl::WillBeginFrame", "args", args.AsValue());
   helper_.CheckOnValidThread();
@@ -1638,8 +1634,7 @@ bool RendererSchedulerImpl::TaskQueuePolicy::IsQueueEnabled(
 
 TaskQueue::QueuePriority RendererSchedulerImpl::TaskQueuePolicy::GetPriority(
     MainThreadTaskQueue* task_queue) const {
-  return task_queue->UsedForControlTasks() ? TaskQueue::HIGH_PRIORITY
-                                           : priority;
+  return priority;
 }
 
 RendererSchedulerImpl::TimeDomainType

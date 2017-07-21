@@ -5,7 +5,7 @@
 package org.chromium.chrome.browser.vr_shell.util;
 
 import static org.chromium.chrome.browser.vr_shell.VrTestRule.POLL_CHECK_INTERVAL_SHORT_MS;
-import static org.chromium.chrome.browser.vr_shell.VrTestRule.POLL_TIMEOUT_LONG_MS;
+import static org.chromium.chrome.browser.vr_shell.VrTestRule.POLL_TIMEOUT_SHORT_MS;
 
 import org.junit.Assert;
 
@@ -20,7 +20,6 @@ import org.chromium.content_public.browser.WebContents;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeoutException;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Class containing utility functions for transitioning between different
@@ -112,22 +111,7 @@ public class VrTransitionUtils {
     public static void enterPresentationOrFail(ContentViewCore cvc) {
         enterPresentation(cvc);
         VrTestRule.pollJavaScriptBoolean(
-                "vrDisplay.isPresenting", POLL_TIMEOUT_LONG_MS, cvc.getWebContents());
+                "vrDisplay.isPresenting", POLL_TIMEOUT_SHORT_MS, cvc.getWebContents());
         Assert.assertTrue(VrShellDelegate.getVrShellForTesting().getWebVrModeEnabled());
-    }
-
-    /**
-     * @return Whether the VR back button is enabled.
-     */
-    public static Boolean isBackButtonEnabled() {
-        final AtomicBoolean isBackButtonEnabled = new AtomicBoolean();
-        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
-            @Override
-            public void run() {
-                isBackButtonEnabled.set(
-                        VrShellDelegate.getVrShellForTesting().isBackButtonEnabled());
-            }
-        });
-        return isBackButtonEnabled.get();
     }
 }

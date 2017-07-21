@@ -95,21 +95,21 @@ static ViewSpecFunctionType ScanViewSpecFunction(const CharType*& ptr,
   DCHECK_LT(ptr, end);
   switch (*ptr) {
     case 'v':
-      if (SkipToken(ptr, end, "viewBox"))
+      if (skipToken(ptr, end, "viewBox"))
         return kViewBox;
-      if (SkipToken(ptr, end, "viewTarget"))
+      if (skipToken(ptr, end, "viewTarget"))
         return kViewTarget;
       break;
     case 'z':
-      if (SkipToken(ptr, end, "zoomAndPan"))
+      if (skipToken(ptr, end, "zoomAndPan"))
         return kZoomAndPan;
       break;
     case 'p':
-      if (SkipToken(ptr, end, "preserveAspectRatio"))
+      if (skipToken(ptr, end, "preserveAspectRatio"))
         return kPreserveAspectRatio;
       break;
     case 't':
-      if (SkipToken(ptr, end, "transform"))
+      if (skipToken(ptr, end, "transform"))
         return kTransform;
       break;
   }
@@ -121,10 +121,10 @@ static ViewSpecFunctionType ScanViewSpecFunction(const CharType*& ptr,
 template <typename CharType>
 bool SVGViewSpec::ParseViewSpecInternal(const CharType* ptr,
                                         const CharType* end) {
-  if (!SkipToken(ptr, end, "svgView"))
+  if (!skipToken(ptr, end, "svgView"))
     return false;
 
-  if (!SkipExactly<CharType>(ptr, end, '('))
+  if (!skipExactly<CharType>(ptr, end, '('))
     return false;
 
   while (ptr < end && *ptr != ')') {
@@ -132,7 +132,7 @@ bool SVGViewSpec::ParseViewSpecInternal(const CharType* ptr,
     if (function_type == kUnknown)
       return false;
 
-    if (!SkipExactly<CharType>(ptr, end, '('))
+    if (!skipExactly<CharType>(ptr, end, '('))
       return false;
 
     switch (function_type) {
@@ -150,7 +150,7 @@ bool SVGViewSpec::ParseViewSpecInternal(const CharType* ptr,
       }
       case kViewTarget: {
         // Ignore arguments.
-        SkipUntil<CharType>(ptr, end, ')');
+        skipUntil<CharType>(ptr, end, ')');
         break;
       }
       case kZoomAndPan:
@@ -169,12 +169,12 @@ bool SVGViewSpec::ParseViewSpecInternal(const CharType* ptr,
         break;
     }
 
-    if (!SkipExactly<CharType>(ptr, end, ')'))
+    if (!skipExactly<CharType>(ptr, end, ')'))
       return false;
 
-    SkipExactly<CharType>(ptr, end, ';');
+    skipExactly<CharType>(ptr, end, ';');
   }
-  return SkipExactly<CharType>(ptr, end, ')');
+  return skipExactly<CharType>(ptr, end, ')');
 }
 
 }  // namespace blink

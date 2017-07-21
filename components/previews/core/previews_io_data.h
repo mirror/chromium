@@ -7,7 +7,6 @@
 
 #include <memory>
 #include <string>
-#include <vector>
 
 #include "base/callback.h"
 #include "base/macros.h"
@@ -65,8 +64,7 @@ class PreviewsIOData : public PreviewsDecider {
   bool ShouldAllowPreviewAtECT(
       const net::URLRequest& request,
       PreviewsType type,
-      net::EffectiveConnectionType effective_connection_type_threshold,
-      const std::vector<std::string>& host_blacklist_from_server)
+      net::EffectiveConnectionType effective_connection_type_threshold)
       const override;
 
  protected:

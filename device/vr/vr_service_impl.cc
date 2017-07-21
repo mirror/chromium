@@ -11,18 +11,15 @@
 #include "base/memory/ptr_util.h"
 #include "device/vr/vr_device.h"
 #include "device/vr/vr_device_manager.h"
-#include "device/vr/vr_display_impl.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 
 namespace device {
 
-VRServiceImpl::VRServiceImpl(int render_frame_process_id,
-                             int render_frame_routing_id)
-    : in_set_client_(false),
+VRServiceImpl::VRServiceImpl()
+    : listening_for_activate_(false),
+      in_set_client_(false),
       connected_devices_(0),
       handled_devices_(0),
-      render_frame_process_id_(render_frame_process_id),
-      render_frame_routing_id_(render_frame_routing_id),
       weak_ptr_factory_(this) {}
 
 VRServiceImpl::~VRServiceImpl() {
@@ -33,11 +30,8 @@ VRServiceImpl::~VRServiceImpl() {
   VRDeviceManager::GetInstance()->RemoveService(this);
 }
 
-void VRServiceImpl::Create(int render_frame_process_id,
-                           int render_frame_routing_id,
-                           mojom::VRServiceRequest request) {
-  mojo::MakeStrongBinding(base::MakeUnique<VRServiceImpl>(
-                              render_frame_process_id, render_frame_routing_id),
+void VRServiceImpl::Create(mojom::VRServiceRequest request) {
+  mojo::MakeStrongBinding(base::MakeUnique<VRServiceImpl>(),
                           std::move(request));
 }
 
@@ -77,9 +71,9 @@ void VRServiceImpl::ConnectDevice(VRDevice* device) {
 }
 
 void VRServiceImpl::SetListeningForActivate(bool listening) {
-  for (const auto& display : displays_) {
-    display.second->SetListeningForActivate(listening);
-  }
+  listening_for_activate_ = listening;
+  VRDeviceManager* device_manager = VRDeviceManager::GetInstance();
+  device_manager->ListeningForActivateChanged(listening, this);
 }
 
 // Creates a VRDisplayPtr unique to this service so that the associated page can
@@ -103,8 +97,7 @@ void VRServiceImpl::OnVRDisplayInfoCreated(
     DCHECK(in_set_client_);
   } else {
     displays_[device] = base::MakeUnique<VRDisplayImpl>(
-        device, render_frame_process_id_, render_frame_routing_id_,
-        client_.get(), std::move(display_info));
+        device, this, client_.get(), std::move(display_info));
     connected_devices_++;
   }
   handled_devices_++;

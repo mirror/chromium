@@ -64,7 +64,12 @@ ArcVolumeMounterBridge::ArcVolumeMounterBridge(content::BrowserContext* context,
 
 ArcVolumeMounterBridge::~ArcVolumeMounterBridge() {
   DiskMountManager::GetInstance()->RemoveObserver(this);
-  arc_bridge_service_->volume_mounter()->RemoveObserver(this);
+  // TODO(hidehiko): Currently, the lifetime of ArcBridgeService and
+  // BrowserContextKeyedService is not nested.
+  // If ArcServiceManager::Get() returns nullptr, it is already destructed,
+  // so do not touch it.
+  if (ArcServiceManager::Get())
+    arc_bridge_service_->volume_mounter()->RemoveObserver(this);
 }
 
 void ArcVolumeMounterBridge::OnInstanceReady() {

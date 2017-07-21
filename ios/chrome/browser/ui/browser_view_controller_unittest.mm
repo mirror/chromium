@@ -472,7 +472,6 @@ TEST_F(BrowserViewControllerTest, TestSharePageCommandHandling) {
         shareWithData:[OCMArg checkWithBlock:shareDataChecker]
            controller:bvc_
          browserState:chrome_browser_state_.get()
-           dispatcher:bvc_.dispatcher
       shareToDelegate:bvc_
              fromRect:[bvc_ testing_shareButtonAnchorRect]
                inView:[OCMArg any]];
@@ -499,7 +498,6 @@ TEST_F(BrowserViewControllerTest, TestSharePageWhenClosing) {
         shareWithData:[OCMArg any]
            controller:bvc_
          browserState:chrome_browser_state_.get()
-           dispatcher:bvc_.dispatcher
       shareToDelegate:bvc_
              fromRect:[bvc_ testing_shareButtonAnchorRect]
                inView:[OCMArg any]];

@@ -948,7 +948,7 @@ void RenderWidgetHostViewAura::SubmitCompositorFrame(
 }
 
 void RenderWidgetHostViewAura::OnDidNotProduceFrame(
-    const viz::BeginFrameAck& ack) {
+    const cc::BeginFrameAck& ack) {
   if (delegated_frame_host_)
     delegated_frame_host_->DidNotProduceFrame(ack);
 }
@@ -1777,7 +1777,7 @@ void RenderWidgetHostViewAura::OnWindowFocused(aura::Window* gained_focus,
       manager->OnWindowFocused();
   } else if (window_ == lost_focus) {
     host_->SetActive(false);
-    host_->LostFocus();
+    host_->Blur();
 
     DetachFromInputMethod();
 

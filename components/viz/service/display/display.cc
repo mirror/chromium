@@ -14,12 +14,12 @@
 #include "cc/output/compositor_frame.h"
 #include "cc/output/direct_renderer.h"
 #include "cc/output/gl_renderer.h"
+#include "cc/output/renderer_settings.h"
 #include "cc/output/software_renderer.h"
 #include "cc/output/texture_mailbox_deleter.h"
 #include "cc/scheduler/begin_frame_source.h"
 #include "cc/surfaces/surface.h"
 #include "cc/surfaces/surface_manager.h"
-#include "components/viz/common/display/renderer_settings.h"
 #include "components/viz/service/display/display_client.h"
 #include "components/viz/service/display/display_scheduler.h"
 #include "components/viz/service/display/surface_aggregator.h"
@@ -36,7 +36,7 @@ namespace viz {
 Display::Display(
     SharedBitmapManager* bitmap_manager,
     gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
-    const RendererSettings& settings,
+    const cc::RendererSettings& settings,
     const FrameSinkId& frame_sink_id,
     std::unique_ptr<cc::OutputSurface> output_surface,
     std::unique_ptr<DisplayScheduler> scheduler,
@@ -376,14 +376,14 @@ void Display::DidReceiveTextureInUseResponses(
 void Display::SetNeedsRedrawRect(const gfx::Rect& damage_rect) {
   aggregator_->SetFullDamageForSurface(current_surface_id_);
   if (scheduler_) {
-    BeginFrameAck ack;
+    cc::BeginFrameAck ack;
     ack.has_damage = true;
     scheduler_->ProcessSurfaceDamage(current_surface_id_, ack, true);
   }
 }
 
 bool Display::SurfaceDamaged(const SurfaceId& surface_id,
-                             const BeginFrameAck& ack) {
+                             const cc::BeginFrameAck& ack) {
   bool display_damaged = false;
   if (ack.has_damage) {
     if (aggregator_ &&

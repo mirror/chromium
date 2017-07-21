@@ -97,9 +97,7 @@ PrintPreviewUIBrowserTest.prototype = {
   'CustomPaperNames',
   'InitIssuesOneRequest',
   'InvalidSettingsError',
-  // TODO(thestig): Re-enable this test when the feature works properly.
-  // https://crbug.com/746768
-  'DISABLED_GenerateDraft',
+  'GenerateDraft',
 ].forEach(function(testName) {
   TEST_F('PrintPreviewUIBrowserTest', testName, function() {
     mocha.grep(new RegExp(testName + '\\b')).run();

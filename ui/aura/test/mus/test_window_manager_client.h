@@ -27,7 +27,6 @@ class TestWindowManagerClient : public ui::mojom::WindowManagerClient {
   ~TestWindowManagerClient() override;
 
   size_t GetChangeCountForType(WindowManagerClientChangeType type);
-  int64_t last_internal_display_id() const { return last_internal_display_id_; }
 
  private:
   // ui::mojom::WindowManagerClient:
@@ -52,7 +51,6 @@ class TestWindowManagerClient : public ui::mojom::WindowManagerClient {
       const std::vector<display::Display>& displays,
       std::vector<::ui::mojom::WmViewportMetricsPtr> viewport_metrics,
       int64_t primary_display_id,
-      int64_t internal_display_id,
       const SetDisplayConfigurationCallback& callback) override;
   void SwapDisplayRoots(int64_t display_id1,
                         int64_t display_id2,
@@ -81,7 +79,6 @@ class TestWindowManagerClient : public ui::mojom::WindowManagerClient {
       override;
 
   std::vector<WindowManagerClientChangeType> changes_;
-  int64_t last_internal_display_id_ = -1;
 
   DISALLOW_COPY_AND_ASSIGN(TestWindowManagerClient);
 };

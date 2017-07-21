@@ -38,8 +38,6 @@ const base::Feature kAutofillCreditCardLastUsedDateDisplay{
 const base::Feature kAutofillOfferLocalSaveIfServerCardManuallyEntered{
     "AutofillOfferLocalSaveIfServerCardManuallyEntered",
     base::FEATURE_DISABLED_BY_DEFAULT};
-const base::Feature kAutofillSuppressDisusedAddresses{
-    "AutofillSuppressDisusedAddresses", base::FEATURE_DISABLED_BY_DEFAULT};
 const base::Feature kAutofillUpstreamRequestCvcIfMissing{
     "AutofillUpstreamRequestCvcIfMissing", base::FEATURE_DISABLED_BY_DEFAULT};
 const base::Feature kAutofillUpstreamUseAutofillProfileComparator{
@@ -62,11 +60,6 @@ const char kAutofillCreditCardLastUsedDateShowExpirationDateKey[] =
     "show_expiration_date";
 const char kAutofillUpstreamMaxMinutesSinceAutofillProfileUseKey[] =
     "max_minutes_since_autofill_profile_use";
-
-#if defined(OS_MACOSX)
-const base::Feature kCreditCardAutofillTouchBar{
-    "CreditCardAutofillTouchBar", base::FEATURE_DISABLED_BY_DEFAULT};
-#endif  // defined(OS_MACOSX)
 
 namespace {
 
@@ -272,11 +265,5 @@ base::TimeDelta GetMaxTimeSinceAutofillProfileUseForCardUpload() {
     return base::TimeDelta::FromMinutes(value);
   return base::TimeDelta();
 }
-
-#if defined(OS_MACOSX)
-bool IsCreditCardAutofillTouchBarExperimentEnabled() {
-  return base::FeatureList::IsEnabled(kCreditCardAutofillTouchBar);
-}
-#endif  // defined(OS_MACOSX)
 
 }  // namespace autofill

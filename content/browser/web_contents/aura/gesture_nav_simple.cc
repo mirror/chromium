@@ -57,8 +57,7 @@ const int kMaxRippleRadius = 54;
 const SkColor kRippleColor = SkColorSetA(gfx::kGoogleBlue500, 0x66);
 const int kMaxRippleBurstRadius = 72;
 const gfx::Tween::Type kBurstAnimationTweenType = gfx::Tween::EASE_IN;
-constexpr auto kRippleBurstAnimationDuration =
-    base::TimeDelta::FromMilliseconds(160);
+const int kRippleBurstAnimationDuration = 160;
 
 // Offset of the affordance when it is at the maximum distance with content
 // border. Since the affordance is initially out of content bounds, this is the
@@ -67,7 +66,7 @@ const int kMaxAffordanceOffset = 146;
 
 // Parameters defining animation when the affordance is aborted.
 const gfx::Tween::Type kAbortAnimationTweenType = gfx::Tween::EASE_IN;
-constexpr auto kAbortAnimationDuration = base::TimeDelta::FromMilliseconds(300);
+const int kAbortAnimationDuration = 300;
 
 bool ShouldNavigateForward(const NavigationController& controller,
                            OverscrollMode mode) {
@@ -367,6 +366,10 @@ void GestureNavSimple::OnAffordanceAnimationEnded() {
   affordance_.reset();
 }
 
+gfx::Size GestureNavSimple::GetVisibleSize() const {
+  return web_contents_->GetNativeView()->bounds().size();
+}
+
 gfx::Size GestureNavSimple::GetDisplaySize() const {
   return display::Screen::GetScreen()
       ->GetDisplayNearestView(web_contents_->GetNativeView())
@@ -382,9 +385,6 @@ bool GestureNavSimple::OnOverscrollUpdate(float delta_x, float delta_y) {
 }
 
 void GestureNavSimple::OnOverscrollComplete(OverscrollMode overscroll_mode) {
-  if (!affordance_ || affordance_->IsFinishing())
-    return;
-
   CompleteGestureAnimation();
 
   NavigationControllerImpl& controller = web_contents_->GetController();
@@ -409,13 +409,15 @@ void GestureNavSimple::OnOverscrollModeChange(OverscrollMode old_mode,
       source == OverscrollSource::TOUCHPAD
           ? OVERSCROLL_CONFIG_HORIZ_THRESHOLD_START_TOUCHPAD
           : OVERSCROLL_CONFIG_HORIZ_THRESHOLD_START_TOUCHSCREEN);
-  const int width = GetDisplaySize().width();
+  const int width = source == OverscrollSource::TOUCHPAD
+                        ? GetDisplaySize().width()
+                        : GetVisibleSize().width();
   completion_threshold_ =
       width * GetOverscrollConfig(OVERSCROLL_CONFIG_HORIZ_THRESHOLD_COMPLETE) -
       start_threshold;
 
   aura::Window* window = web_contents_->GetNativeView();
-  affordance_ = base::MakeUnique<Affordance>(this, new_mode, window->bounds());
+  affordance_.reset(new Affordance(this, new_mode, window->bounds()));
 
   // Adding the affordance as a child of the content window is not sufficient,
   // because it is possible for a new layer to be parented on top of the

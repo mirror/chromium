@@ -281,7 +281,7 @@ void Display::CreateRootWindow(const gfx::Size& size) {
 void Display::UpdateCursorConfig() {
   float scale = display_.device_scale_factor();
 
-  if (!display_manager()->IsInternalDisplay(display_))
+  if (!display_.IsInternal())
     scale *= ui::mojom::kCursorMultiplierForExternalDisplays;
 
   if (platform_display_)

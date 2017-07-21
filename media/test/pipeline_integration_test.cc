@@ -122,8 +122,6 @@ const int kVP9WebMFileDurationMs = 2736;
 const int kVP8AWebMFileDurationMs = 2734;
 
 #if !defined(MOJO_RENDERER)
-static const char kSfxLosslessHash[] = "3.03,2.86,2.99,3.31,3.57,4.06,";
-
 #if defined(OPUS_FIXED_POINT)
 // NOTE: Hashes are specific to ARM devices. x86 will not match.
 static const char kOpusEndTrimmingHash_1[] =
@@ -989,7 +987,7 @@ TEST_F(PipelineIntegrationTest, S32PlaybackHashed) {
   Play();
   ASSERT_TRUE(WaitUntilOnEnded());
   EXPECT_HASH_EQ(std::string(kNullVideoHash), GetVideoHash());
-  EXPECT_HASH_EQ(kSfxLosslessHash, GetAudioHash());
+  EXPECT_HASH_EQ("3.03,2.86,2.99,3.31,3.57,4.06,", GetAudioHash());
 }
 
 TEST_F(PipelineIntegrationTest, F32PlaybackHashed) {
@@ -997,7 +995,7 @@ TEST_F(PipelineIntegrationTest, F32PlaybackHashed) {
   Play();
   ASSERT_TRUE(WaitUntilOnEnded());
   EXPECT_HASH_EQ(std::string(kNullVideoHash), GetVideoHash());
-  EXPECT_HASH_EQ(kSfxLosslessHash, GetAudioHash());
+  EXPECT_HASH_EQ("3.03,2.86,2.99,3.31,3.57,4.06,", GetAudioHash());
 }
 
 TEST_F(PipelineIntegrationTest, MAYBE_EME(BasicPlaybackEncrypted)) {
@@ -1020,7 +1018,7 @@ TEST_F(PipelineIntegrationTest, FlacPlaybackHashed) {
   Play();
   ASSERT_TRUE(WaitUntilOnEnded());
   EXPECT_HASH_EQ(std::string(kNullVideoHash), GetVideoHash());
-  EXPECT_HASH_EQ(kSfxLosslessHash, GetAudioHash());
+  EXPECT_HASH_EQ("3.03,2.86,2.99,3.31,3.57,4.06,", GetAudioHash());
 }
 
 TEST_F(PipelineIntegrationTest, BasicPlayback_MediaSource) {
@@ -1474,14 +1472,6 @@ TEST_F(PipelineIntegrationTest, BasicPlaybackHashed_MP3) {
 
   // Verify codec delay and preroll are stripped.
   EXPECT_HASH_EQ("1.30,2.72,4.56,5.08,3.74,2.03,", GetAudioHash());
-}
-
-TEST_F(PipelineIntegrationTest, BasicPlaybackHashed_FlacInMp4) {
-  ASSERT_EQ(PIPELINE_OK, Start("sfx-flac.mp4", kHashed));
-  Play();
-  ASSERT_TRUE(WaitUntilOnEnded());
-  EXPECT_HASH_EQ(std::string(kNullVideoHash), GetVideoHash());
-  EXPECT_HASH_EQ(kSfxLosslessHash, GetAudioHash());
 }
 
 #if !defined(DISABLE_CLOCKLESS_TESTS)

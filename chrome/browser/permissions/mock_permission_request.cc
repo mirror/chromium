@@ -18,15 +18,16 @@ MockPermissionRequest::MockPermissionRequest()
                             "button",
                             "button",
                             GURL("http://www.google.com"),
-                            PermissionRequestType::PERMISSION_NOTIFICATIONS,
+                            PermissionRequestType::UNKNOWN,
                             PermissionRequestGestureType::UNKNOWN) {}
 
-MockPermissionRequest::MockPermissionRequest(const std::string& text)
+MockPermissionRequest::MockPermissionRequest(
+    const std::string& text)
     : MockPermissionRequest(text,
                             "button",
                             "button",
                             GURL("http://www.google.com"),
-                            PermissionRequestType::PERMISSION_NOTIFICATIONS,
+                            PermissionRequestType::UNKNOWN,
                             PermissionRequestGestureType::UNKNOWN) {}
 
 MockPermissionRequest::MockPermissionRequest(
@@ -50,14 +51,15 @@ MockPermissionRequest::MockPermissionRequest(const std::string& text,
                             request_type,
                             PermissionRequestGestureType::UNKNOWN) {}
 
-MockPermissionRequest::MockPermissionRequest(const std::string& text,
-                                             const std::string& accept_label,
-                                             const std::string& deny_label)
+MockPermissionRequest::MockPermissionRequest(
+    const std::string& text,
+    const std::string& accept_label,
+    const std::string& deny_label)
     : MockPermissionRequest(text,
                             accept_label,
                             deny_label,
                             GURL("http://www.google.com"),
-                            PermissionRequestType::PERMISSION_NOTIFICATIONS,
+                            PermissionRequestType::UNKNOWN,
                             PermissionRequestGestureType::UNKNOWN) {}
 
 MockPermissionRequest::~MockPermissionRequest() {}

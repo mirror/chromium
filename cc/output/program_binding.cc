@@ -25,7 +25,6 @@ bool ProgramKey::operator==(const ProgramKey& other) const {
          is_opaque_ == other.is_opaque_ &&
          premultiplied_alpha_ == other.premultiplied_alpha_ &&
          has_background_color_ == other.has_background_color_ &&
-         has_tex_clamp_rect_ == other.has_tex_clamp_rect_ &&
          mask_mode_ == other.mask_mode_ &&
          mask_for_background_ == other.mask_for_background_ &&
          has_color_matrix_ == other.has_color_matrix_ &&
@@ -74,15 +73,13 @@ ProgramKey ProgramKey::Tile(TexCoordPrecision precision,
 ProgramKey ProgramKey::Texture(TexCoordPrecision precision,
                                SamplerType sampler,
                                PremultipliedAlphaMode premultiplied_alpha,
-                               bool has_background_color,
-                               bool has_tex_clamp_rect) {
+                               bool has_background_color) {
   ProgramKey result;
   result.type_ = PROGRAM_TYPE_TEXTURE;
   result.precision_ = precision;
   result.sampler_ = sampler;
   result.premultiplied_alpha_ = premultiplied_alpha;
   result.has_background_color_ = has_background_color;
-  result.has_tex_clamp_rect_ = has_tex_clamp_rect;
   return result;
 }
 

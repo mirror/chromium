@@ -530,11 +530,6 @@ bool WindowTree::SetModalType(const ClientWindowId& window_id,
     return false;
   }
 
-  if (user_id_ == InvalidUserId() && modal_type == MODAL_TYPE_SYSTEM) {
-    DVLOG(1) << "SetModalType failed (invalid user id)";
-    return false;
-  }
-
   if (ShouldRouteToWindowManager(window)) {
     WindowTree* wm_tree = GetWindowManagerDisplayRoot(window)
                               ->window_manager_state()
@@ -557,6 +552,10 @@ bool WindowTree::SetModalType(const ClientWindowId& window_id,
   auto* display_root = GetWindowManagerDisplayRoot(window);
   switch (modal_type) {
     case MODAL_TYPE_SYSTEM:
+      if (user_id_ == InvalidUserId()) {
+        DVLOG(1) << "SetModalType failed (invalid user id)";
+        return false;
+      }
       if (!display_root) {
         DVLOG(1) << "SetModalType failed (no display root)";
         return false;
@@ -2351,11 +2350,9 @@ void WindowTree::SetDisplayConfiguration(
     const std::vector<display::Display>& displays,
     std::vector<ui::mojom::WmViewportMetricsPtr> viewport_metrics,
     int64_t primary_display_id,
-    int64_t internal_display_id,
     const SetDisplayConfigurationCallback& callback) {
   callback.Run(display_manager()->SetDisplayConfiguration(
-      displays, std::move(viewport_metrics), primary_display_id,
-      internal_display_id));
+      displays, std::move(viewport_metrics), primary_display_id));
 }
 
 void WindowTree::SwapDisplayRoots(int64_t display_id1,

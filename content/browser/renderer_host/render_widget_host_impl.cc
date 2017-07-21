@@ -780,14 +780,6 @@ void RenderWidgetHostImpl::GotFocus() {
     delegate_->RenderWidgetGotFocus(this);
 }
 
-void RenderWidgetHostImpl::LostFocus() {
-  Blur();
-  if (owner_delegate_)
-    owner_delegate_->RenderWidgetLostFocus();
-  if (delegate_)
-    delegate_->RenderWidgetLostFocus(this);
-}
-
 void RenderWidgetHostImpl::Focus() {
   RenderWidgetHostImpl* focused_widget =
       delegate_ ? delegate_->GetRenderWidgetHostWithPageFocus() : nullptr;
@@ -804,6 +796,10 @@ void RenderWidgetHostImpl::Blur() {
   if (!focused_widget)
     focused_widget = this;
   focused_widget->SetPageFocus(false);
+  if (owner_delegate_)
+    owner_delegate_->RenderWidgetLostFocus();
+  if (delegate_)
+    delegate_->RenderWidgetLostFocus(this);
 }
 
 void RenderWidgetHostImpl::SetPageFocus(bool focused) {
@@ -1942,9 +1938,9 @@ void RenderWidgetHostImpl::OnRequestMove(const gfx::Rect& pos) {
   }
 }
 
-void RenderWidgetHostImpl::DidNotProduceFrame(const viz::BeginFrameAck& ack) {
+void RenderWidgetHostImpl::DidNotProduceFrame(const cc::BeginFrameAck& ack) {
   // |has_damage| is not transmitted.
-  viz::BeginFrameAck modified_ack = ack;
+  cc::BeginFrameAck modified_ack = ack;
   modified_ack.has_damage = false;
 
   if (view_)

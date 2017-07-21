@@ -169,9 +169,6 @@ extern const char kDropSyncCredentialDescription[];
 extern const char kEasyUnlockBluetoothLowEnergyDiscoveryName[];
 extern const char kEasyUnlockBluetoothLowEnergyDiscoveryDescription[];
 
-extern const char kEasyUnlockPromotionsName[];
-extern const char kEasyUnlockPromotionsDescription[];
-
 extern const char kEmbeddedExtensionOptionsName[];
 extern const char kEmbeddedExtensionOptionsDescription[];
 
@@ -594,6 +591,9 @@ extern const char kPermissionsBlacklistDescription[];
 extern const char kPinchScaleName[];
 extern const char kPinchScaleDescription[];
 
+extern const char kPreferHtmlOverPluginsName[];
+extern const char kPreferHtmlOverPluginsDescription[];
+
 extern const char kPrintPdfAsImageName[];
 extern const char kPrintPdfAsImageDescription[];
 
@@ -623,6 +623,9 @@ extern const char kResetAppListInstallStateDescription[];
 
 extern const char kResourceLoadSchedulerName[];
 extern const char kResourceLoadSchedulerDescription[];
+
+extern const char kRunAllFlashInAllowModeName[];
+extern const char kRunAllFlashInAllowModeDescription[];
 
 extern const char kSafeSearchUrlReportingName[];
 extern const char kSafeSearchUrlReportingDescription[];
@@ -815,9 +818,6 @@ extern const char kWebMidiDescription[];
 extern const char kWebPaymentsName[];
 extern const char kWebPaymentsDescription[];
 
-extern const char kWebPaymentsModifiersName[];
-extern const char kWebPaymentsModifiersDescription[];
-
 extern const char kWebrtcEchoCanceller3Name[];
 extern const char kWebrtcEchoCanceller3Description[];
 
@@ -864,9 +864,6 @@ extern const char kAndroidAutofillAccessibilityDescription[];
 extern const char kAndroidPaymentAppsName[];
 extern const char kAndroidPaymentAppsDescription[];
 
-extern const char kAndroidSigninPromosName[];
-extern const char kAndroidSigninPromosDescription[];
-
 extern const char kAutofillAccessoryViewName[];
 extern const char kAutofillAccessoryViewDescription[];
 
@@ -901,9 +898,6 @@ extern const char kContextualSearchUrlActionsDescription[];
 
 extern const char kContextualSearchName[];
 extern const char kContextualSearchDescription[];
-
-extern const char kDontPrefetchLibrariesName[];
-extern const char kDontPrefetchLibrariesDescription[];
 
 extern const char kEnableAndroidPayIntegrationV1Name[];
 extern const char kEnableAndroidPayIntegrationV1Description[];
@@ -1108,9 +1102,6 @@ extern const char kReaderModeHeuristicsAllArticles[];
 extern const char kReaderModeHeuristicsAlwaysOff[];
 extern const char kReaderModeHeuristicsAlwaysOn[];
 
-extern const char kReaderModeInCCTName[];
-extern const char kReaderModeInCCTDescription[];
-
 extern const char kServiceWorkerPaymentAppsName[];
 extern const char kServiceWorkerPaymentAppsDescription[];
 
@@ -1140,6 +1131,9 @@ extern const char kUseAndroidMidiApiDescription[];
 
 extern const char kUseDdljsonApiName[];
 extern const char kUseDdljsonApiDescription[];
+
+extern const char kWebPaymentsModifiersName[];
+extern const char kWebPaymentsModifiersDescription[];
 
 extern const char kXGEOVisibleNetworksName[];
 extern const char kXGEOVisibleNetworksDescription[];
@@ -1221,9 +1215,6 @@ extern const char kMacRTLDescription[];
 extern const char kMacTouchBarName[];
 extern const char kMacTouchBarDescription[];
 
-extern const char kCreditCardAutofillTouchBarName[];
-extern const char kCreditCardAutofillTouchBarDescription[];
-
 extern const char kMacV2SandboxName[];
 extern const char kMacV2SandboxDescription[];
 
@@ -1284,6 +1275,9 @@ extern const char kCrosRegionsModeDescription[];
 extern const char kCrosRegionsModeDefault[];
 extern const char kCrosRegionsModeOverride[];
 extern const char kCrosRegionsModeHide[];
+
+extern const char kDisableNativeCupsName[];
+extern const char kDisableNativeCupsDescription[];
 
 extern const char kDisableNewVirtualKeyboardBehaviorName[];
 extern const char kDisableNewVirtualKeyboardBehaviorDescription[];

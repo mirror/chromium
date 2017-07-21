@@ -6,6 +6,7 @@
 
 #include <vector>
 
+#include "base/test/gtest_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace zucchini {
@@ -14,8 +15,10 @@ constexpr uint8_t kUninit = 0xFF;
 
 class BufferSinkTest : public testing::Test {
  protected:
-  BufferSinkTest()
-      : buffer_(10, kUninit), sink_(buffer_.data(), buffer_.size()) {}
+  void SetUp() override {
+    buffer_ = std::vector<uint8_t>(10, kUninit);
+    sink_ = BufferSink(buffer_.data(), buffer_.size());
+  }
 
   std::vector<uint8_t> buffer_;
   BufferSink sink_;

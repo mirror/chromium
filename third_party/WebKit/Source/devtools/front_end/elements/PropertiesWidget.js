@@ -32,8 +32,7 @@
  */
 Elements.PropertiesWidget = class extends UI.ThrottledWidget {
   constructor() {
-    super(true /* isWebComponent */);
-    this.registerRequiredCSS('elements/propertiesWidget.css');
+    super();
 
     SDK.targetManager.addModelListener(SDK.DOMModel, SDK.DOMModel.Events.AttrModified, this._onNodeChange, this);
     SDK.targetManager.addModelListener(SDK.DOMModel, SDK.DOMModel.Events.AttrRemoved, this._onNodeChange, this);
@@ -66,7 +65,7 @@ Elements.PropertiesWidget = class extends UI.ThrottledWidget {
     }
 
     if (!this._node) {
-      this.contentElement.removeChildren();
+      this.element.removeChildren();
       this.sections = [];
       return Promise.resolve();
     }
@@ -128,7 +127,7 @@ Elements.PropertiesWidget = class extends UI.ThrottledWidget {
       for (var i = 0; i < sections.length; ++i)
         expanded.push(sections[i].expanded);
 
-      this.contentElement.removeChildren();
+      this.element.removeChildren();
       this.sections = [];
 
       // Get array of property user-friendly names.
@@ -141,7 +140,7 @@ Elements.PropertiesWidget = class extends UI.ThrottledWidget {
         var section = new ObjectUI.ObjectPropertiesSection(property, title);
         section.element.classList.add('properties-widget-section');
         this.sections.push(section);
-        this.contentElement.appendChild(section.element);
+        this.element.appendChild(section.element);
         if (expanded[this.sections.length - 1])
           section.expand();
         section.addEventListener(UI.TreeOutline.Events.ElementExpanded, this._propertyExpanded, this);

@@ -47,13 +47,27 @@ using bookmarks::BookmarkNode;
 @interface BookmarkHomeHandsetViewController ()<BookmarkMenuViewDelegate,
                                                 BookmarkPanelViewDelegate>
 
+// Returns the parent, if all the bookmarks are siblings.
+// Otherwise returns the mobile_node.
++ (const BookmarkNode*)
+defaultMoveFolderFromBookmarks:(const std::set<const BookmarkNode*>&)bookmarks
+                         model:(bookmarks::BookmarkModel*)model;
+
+// This views holds the primary content of this view controller.
+@property(nonatomic, strong) UIView* contentView;
+
 // When the view is first shown on the screen, this property represents the
-// cached value of the y of the content offset of the folder view. This
+// cached value of the y of the content offset of the primary view. This
 // property is set to nil after it is used.
 @property(nonatomic, strong) NSNumber* cachedContentPosition;
 
-#pragma mark Navigation bar
+#pragma mark View loading and switching
+// This method should be called at most once in the life-cycle of the
+// class. It should be called at the soonest possible time after the
+// view has been loaded, and the bookmark model is loaded.
+- (void)loadBookmarkViews;
 
+#pragma mark Navigation bar
 - (void)updateNavigationBarWithDuration:(CGFloat)duration
                             orientation:(UIInterfaceOrientation)orientation;
 // Whether the edit button on the navigation bar should be shown.
@@ -63,10 +77,9 @@ using bookmarks::BookmarkNode;
 // Called when the menu button is pressed on the navigation bar.
 - (void)navigationBarToggledMenu:(id)sender;
 
-#pragma mark Private methods
-
-// Returns the size of the panel view.
-- (CGRect)frameForPanelView;
+#pragma mark private methods
+// Returns the size of the primary view.
+- (CGRect)frameForPrimaryView;
 // Updates the UI to reflect the given orientation, with an animation lasting
 // |duration|.
 - (void)updateUIForInterfaceOrientation:(UIInterfaceOrientation)orientation
@@ -81,7 +94,7 @@ using bookmarks::BookmarkNode;
 @end
 
 @implementation BookmarkHomeHandsetViewController
-
+@synthesize contentView = _contentView;
 @synthesize cachedContentPosition = _cachedContentPosition;
 @synthesize delegate = _delegate;
 
@@ -94,7 +107,7 @@ using bookmarks::BookmarkNode;
   return self;
 }
 
-#pragma mark - UIViewController
+#pragma mark - UIViewController methods
 
 - (void)viewDidLoad {
   [super viewDidLoad];
@@ -111,59 +124,6 @@ using bookmarks::BookmarkNode;
     [self loadBookmarkViews];
   else
     [self loadWaitingView];
-}
-
-// There are 2 UIViewController methods that could be overridden. This one and
-// willAnimateRotationToInterfaceOrientation:duration:. The latter is called
-// during an "animation block", and its unclear that reloading a collection view
-// will always work during an "animation block", although it appears to work at
-// first glance.
-// TODO(crbug.com/705339): Replace this deprecated method with
-// viewWillTransitionToSize:withTransitionCoordinator:
-- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)orientation
-                                duration:(NSTimeInterval)duration {
-  [super willRotateToInterfaceOrientation:orientation duration:duration];
-  [self updateUIForInterfaceOrientation:orientation duration:duration];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
-  UIInterfaceOrientation orient = GetInterfaceOrientation();
-  [self updateUIForInterfaceOrientation:orient duration:0];
-}
-
-- (void)viewWillLayoutSubviews {
-  [super viewWillLayoutSubviews];
-
-  // Store the content scroll position.
-  CGFloat contentPosition =
-      [[self folderView] contentPositionInPortraitOrientation];
-  // If we have the cached position, use it instead.
-  if (self.cachedContentPosition) {
-    contentPosition = [self.cachedContentPosition floatValue];
-    self.cachedContentPosition = nil;
-  }
-
-  // Invalidate the layout of the collection view, as its frame might have
-  // changed. Normally, this can be done automatically when the collection view
-  // layout returns YES to -shouldInvalidateLayoutForBoundsChange:.
-  // Unfortunately, it doesn't happen for all bounds changes. E.g. on iPhone 6
-  // Plus landscape, the width of the collection is too large when created, then
-  // resized down before being presented. Yet, the bounds change doesn't yield a
-  // call to the flow layout, thus not invalidating the layout correctly.
-  [self.folderView.collectionView.collectionViewLayout invalidateLayout];
-
-  self.navigationBar.frame = [self navigationBarFrame];
-  self.editingBar.frame = [self navigationBarFrame];
-  [self.panelView setFrame:[self frameForPanelView]];
-
-  // Restore the content scroll position if it was reset to zero. This could
-  // happen when folderView is newly created (restore from cached) or its frame
-  // height has changed.
-  if (contentPosition > 0 &&
-      [[self folderView] contentPositionInPortraitOrientation] == 0) {
-    [[self folderView] applyContentPosition:contentPosition];
-  }
 }
 
 - (BOOL)prefersStatusBarHidden {
@@ -185,13 +145,18 @@ using bookmarks::BookmarkNode;
   DCHECK([self isViewLoaded]);
 
   self.menuView.delegate = self;
+  [self.folderView setFrame:[self frameForPrimaryView]];
 
-  // Set view frames and add them to hierarchy.
-  [self.panelView setFrame:[self frameForPanelView]];
+  [self.panelView setFrame:[self frameForPrimaryView]];
   self.panelView.delegate = self;
   [self.view insertSubview:self.panelView atIndex:0];
-  self.folderView.frame = self.panelView.contentView.bounds;
-  [self.panelView.contentView addSubview:self.folderView];
+
+  self.contentView = [[UIView alloc] init];
+  self.contentView.frame = self.panelView.contentView.bounds;
+  self.contentView.autoresizingMask =
+      UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+  [self.panelView.contentView addSubview:self.contentView];
+
   [self.panelView.menuView addSubview:self.menuView];
 
   // Load the last primary menu item which the user had active.
@@ -208,7 +173,7 @@ using bookmarks::BookmarkNode;
     // If the view has already been laid out, then immediately apply the content
     // position.
     if (self.view.window) {
-      [self.folderView applyContentPosition:position];
+      [[self primaryView] applyContentPosition:position];
     } else {
       // Otherwise, save the position to be applied once the view has been laid
       // out.
@@ -221,10 +186,14 @@ using bookmarks::BookmarkNode;
                      animated:(BOOL)animated {
   [super updatePrimaryMenuItem:menuItem animated:animated];
 
-  // Disable editing on previous folder view before dismissing it. No need to
+  // Disable editing on previous primary view before dismissing it. No need to
   // animate because this view is immediately removed from hierarchy.
   if ([[self primaryMenuItem] supportsEditing])
-    [self.folderView setEditing:NO animated:NO];
+    [self.primaryView setEditing:NO animated:NO];
+
+  UIView* primaryView = [self primaryView];
+  [self.contentView insertSubview:primaryView atIndex:0];
+  primaryView.frame = self.contentView.bounds;
 
   [self updateNavigationBarAnimated:animated
                         orientation:GetInterfaceOrientation()];
@@ -362,9 +331,9 @@ using bookmarks::BookmarkNode;
     [self showMenuAnimated:YES];
 }
 
-#pragma mark - Private.
+#pragma mark - Other internal methods.
 
-- (CGRect)frameForPanelView {
+- (CGRect)frameForPrimaryView {
   CGFloat margin;
   if (self.editing)
     margin = CGRectGetMaxY(self.editingBar.frame);
@@ -377,13 +346,13 @@ using bookmarks::BookmarkNode;
 
 - (void)updateUIForInterfaceOrientation:(UIInterfaceOrientation)orientation
                                duration:(NSTimeInterval)duration {
-  [self.folderView changeOrientation:orientation];
+  [[self primaryView] changeOrientation:orientation];
   [self updateNavigationBarWithDuration:duration orientation:orientation];
 }
 
 - (void)showMenuAnimated:(BOOL)animated {
   [self.menuView setScrollsToTop:YES];
-  [self.folderView setScrollsToTop:NO];
+  [[self primaryView] setScrollsToTop:NO];
   self.scrollToTop = YES;
   [self.panelView showMenuAnimated:animated];
   [self updateNavigationBarAnimated:animated
@@ -392,7 +361,7 @@ using bookmarks::BookmarkNode;
 
 - (void)hideMenuAnimated:(BOOL)animated updateNavigationBar:(BOOL)update {
   [self.menuView setScrollsToTop:NO];
-  [self.folderView setScrollsToTop:YES];
+  [[self primaryView] setScrollsToTop:YES];
   self.scrollToTop = NO;
   [self.panelView hideMenuAnimated:animated];
   if (update) {
@@ -406,12 +375,6 @@ using bookmarks::BookmarkNode;
   self.actionSheetCoordinator = nil;
 }
 
-- (void)delegateDismiss:(const GURL&)url {
-  [self cachePosition];
-  [self.delegate bookmarkHomeHandsetViewControllerWantsDismissal:self
-                                                 navigationToUrl:url];
-}
-
 #pragma mark - BookmarkPanelViewDelegate
 
 - (void)bookmarkPanelView:(BookmarkPanelView*)view
@@ -419,11 +382,11 @@ using bookmarks::BookmarkNode;
     withAnimationDuration:(CGFloat)duration {
   if (showMenu) {
     [self.menuView setScrollsToTop:YES];
-    [self.folderView setScrollsToTop:NO];
+    [[self primaryView] setScrollsToTop:NO];
     self.scrollToTop = YES;
   } else {
     [self.menuView setScrollsToTop:NO];
-    [self.folderView setScrollsToTop:YES];
+    [[self primaryView] setScrollsToTop:YES];
     self.scrollToTop = NO;
   }
 
@@ -444,6 +407,65 @@ using bookmarks::BookmarkNode;
 
 - (UIStatusBarStyle)preferredStatusBarStyle {
   return self.editing ? UIStatusBarStyleLightContent : UIStatusBarStyleDefault;
+}
+
+// There are 2 UIViewController methods that could be overridden. This one and
+// willAnimateRotationToInterfaceOrientation:duration:. The latter is called
+// during an "animation block", and its unclear that reloading a collection view
+// will always work duratin an "animation block", although it appears to work at
+// first glance.
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)orientation
+                                duration:(NSTimeInterval)duration {
+  [self updateUIForInterfaceOrientation:orientation duration:duration];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+  [super viewWillAppear:animated];
+  UIInterfaceOrientation orient = GetInterfaceOrientation();
+  [self updateUIForInterfaceOrientation:orient duration:0];
+  if (self.cachedContentPosition) {
+    [[self primaryView]
+        applyContentPosition:[self.cachedContentPosition floatValue]];
+    self.cachedContentPosition = nil;
+  }
+}
+
+- (void)viewWillLayoutSubviews {
+  [super viewWillLayoutSubviews];
+  // Invalidate the layout of the collection view, as its frame might have
+  // changed. Normally, this can be done automatically when the collection view
+  // layout returns YES to -shouldInvalidateLayoutForBoundsChange:.
+  // Unfortunately, it doesn't happen for all bounds changes. E.g. on iPhone 6
+  // Plus landscape, the width of the collection is too large when created, then
+  // resized down before being presented. Yet, the bounds change doesn't yield a
+  // call to the flow layout, thus not invalidating the layout correctly.
+  [[self primaryView].collectionView.collectionViewLayout invalidateLayout];
+
+  self.navigationBar.frame = [self navigationBarFrame];
+  self.editingBar.frame = [self navigationBarFrame];
+  [self.panelView setFrame:[self frameForPrimaryView]];
+}
+
+#pragma mark - Internal non-UI Methods
+
+- (void)delegateDismiss:(const GURL&)url {
+  [self cachePosition];
+  [self.delegate bookmarkHomeHandsetViewControllerWantsDismissal:self
+                                                 navigationToUrl:url];
+}
+
++ (const BookmarkNode*)
+defaultMoveFolderFromBookmarks:(const std::set<const BookmarkNode*>&)bookmarks
+                         model:(bookmarks::BookmarkModel*)model {
+  if (bookmarks.size() == 0)
+    return model->mobile_node();
+  const BookmarkNode* firstParent = (*(bookmarks.begin()))->parent();
+  for (const BookmarkNode* node : bookmarks) {
+    if (node->parent() != firstParent)
+      return model->mobile_node();
+  }
+
+  return firstParent;
 }
 
 @end

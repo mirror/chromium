@@ -83,8 +83,7 @@ class InterstitialPageImpl::InterstitialPageRVHDelegateView
                      const DragEventSourceInfo& event_info,
                      RenderWidgetHostImpl* source_rwh) override;
   void UpdateDragCursor(WebDragOperation operation) override;
-  void GotFocus(RenderWidgetHostImpl* render_widget_host) override;
-  void LostFocus(RenderWidgetHostImpl* render_widget_host) override;
+  void GotFocus() override;
   void TakeFocus(bool reverse) override;
   virtual void OnFindReply(int request_id,
                            int number_of_matches,
@@ -936,22 +935,10 @@ void InterstitialPageImpl::InterstitialPageRVHDelegateView::UpdateDragCursor(
   NOTREACHED() << "InterstitialPage does not support dragging yet.";
 }
 
-void InterstitialPageImpl::InterstitialPageRVHDelegateView::GotFocus(
-    RenderWidgetHostImpl* render_widget_host) {
+void InterstitialPageImpl::InterstitialPageRVHDelegateView::GotFocus() {
   WebContents* web_contents = interstitial_page_->web_contents();
-  if (web_contents) {
-    static_cast<WebContentsImpl*>(web_contents)
-        ->NotifyWebContentsFocused(render_widget_host);
-  }
-}
-
-void InterstitialPageImpl::InterstitialPageRVHDelegateView::LostFocus(
-    RenderWidgetHostImpl* render_widget_host) {
-  WebContents* web_contents = interstitial_page_->web_contents();
-  if (web_contents) {
-    static_cast<WebContentsImpl*>(web_contents)
-        ->NotifyWebContentsLostFocus(render_widget_host);
-  }
+  if (web_contents)
+    static_cast<WebContentsImpl*>(web_contents)->NotifyWebContentsFocused();
 }
 
 void InterstitialPageImpl::InterstitialPageRVHDelegateView::TakeFocus(

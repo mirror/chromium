@@ -12,7 +12,6 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "base/time/time.h"
 #include "ui/aura/client/drag_drop_client.h"
 #include "ui/aura/window_observer.h"
 #include "ui/base/dragdrop/os_exchange_data.h"
@@ -71,7 +70,7 @@ class ASH_EXPORT DragDropController : public aura::client::DragDropClient,
   // cancel animation. Caller take ownership of the returned object. Protected
   // for testing.
   virtual gfx::LinearAnimation* CreateCancelAnimation(
-      base::TimeDelta duration,
+      int duration,
       int frame_rate,
       gfx::AnimationDelegate* delegate);
 
@@ -80,7 +79,7 @@ class ASH_EXPORT DragDropController : public aura::client::DragDropClient,
   virtual void Drop(aura::Window* target, const ui::LocatedEvent& event);
 
   // Actual implementation of |DragCancel()|. protected for testing.
-  virtual void DoDragCancel(base::TimeDelta drag_cancel_animation_duration);
+  virtual void DoDragCancel(int drag_cancel_animation_duration_ms);
 
  private:
   friend class DragDropControllerTest;
@@ -94,7 +93,7 @@ class ASH_EXPORT DragDropController : public aura::client::DragDropClient,
   void OnDisplayConfigurationChanging() override;
 
   // Helper method to start drag widget flying back animation.
-  void StartCanceledAnimation(base::TimeDelta animation_duration);
+  void StartCanceledAnimation(int animation_duration_ms);
 
   // Helper method to forward |pending_log_tap_| event to |drag_source_window_|.
   void ForwardPendingLongTap();

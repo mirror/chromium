@@ -18,8 +18,6 @@
 #include "content/public/common/resource_type.h"
 #include "ipc/ipc_listener.h"
 #include "ipc/ipc_sender.h"
-#include "mojo/public/cpp/system/message_pipe.h"
-#include "services/service_manager/public/cpp/bind_source_info.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/base/page_transition_types.h"
@@ -430,13 +428,11 @@ class CONTENT_EXPORT WebContentsObserver : public IPC::Listener,
   virtual bool OnMessageReceived(const IPC::Message& message,
                                  RenderFrameHost* render_frame_host);
 
-  // Notification that the |render_widget_host| for this WebContents has gained
-  // focus.
-  virtual void OnWebContentsFocused(RenderWidgetHost* render_widget_host) {}
+  // Notification that |contents| has gained focus.
+  virtual void OnWebContentsFocused() {}
 
-  // Notification that the |render_widget_host| for this WebContents has lost
-  // focus.
-  virtual void OnWebContentsLostFocus(RenderWidgetHost* render_widget_host) {}
+  // Notification that |contents| has lost focus.
+  virtual void OnWebContentsLostFocus() {}
 
   // Notifes that a CompositorFrame was received from the renderer.
   virtual void DidReceiveCompositorFrame() {}
@@ -449,13 +445,6 @@ class CONTENT_EXPORT WebContentsObserver : public IPC::Listener,
   // be invoked before DidUpdateFaviconURL().
   virtual void DidUpdateWebManifestURL(
       const base::Optional<GURL>& manifest_url) {}
-
-  // Called to give the embedder an opportunity to bind an interface request
-  // from a frame. If the request can be bound, |interface_pipe| will be taken.
-  virtual void OnInterfaceRequestFromFrame(
-      RenderFrameHost* render_frame_host,
-      const std::string& interface_name,
-      mojo::ScopedMessagePipeHandle* interface_pipe) {}
 
   // IPC::Listener implementation.
   bool OnMessageReceived(const IPC::Message& message) override;

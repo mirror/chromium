@@ -26,6 +26,12 @@ MediaRouterAndroidBridge::MediaRouterAndroidBridge(MediaRouterAndroid* router)
 
 MediaRouterAndroidBridge::~MediaRouterAndroidBridge() = default;
 
+// static
+bool MediaRouterAndroidBridge::Register(JNIEnv* env) {
+  bool ret = RegisterNativesImpl(env);
+  return ret;
+}
+
 void MediaRouterAndroidBridge::CreateRoute(const MediaSource::Id& source_id,
                                            const MediaSink::Id& sink_id,
                                            const std::string& presentation_id,
@@ -126,7 +132,7 @@ void MediaRouterAndroidBridge::OnSinksReceived(
         env, java_media_router_, jsource_urn, i);
     sinks_converted.push_back(MediaSink(
         ConvertJavaStringToUTF8(env, jsink_urn.obj()),
-        ConvertJavaStringToUTF8(env, jsink_name.obj()), SinkIconType::GENERIC));
+        ConvertJavaStringToUTF8(env, jsink_name.obj()), MediaSink::GENERIC));
   }
   native_media_router_->OnSinksReceived(
       ConvertJavaStringToUTF8(env, jsource_urn), sinks_converted);

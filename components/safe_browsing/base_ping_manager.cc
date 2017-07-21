@@ -58,8 +58,7 @@ std::unique_ptr<base::Value> NetLogPingEndCallback(
 }
 
 net::NetworkTrafficAnnotationTag kTrafficAnnotation =
-    net::DefineNetworkTrafficAnnotation("safe_browsing_extended_reporting",
-                                        R"(
+    net::DefineNetworkTrafficAnnotation("safe_browsing_extended_reporting", R"(
       semantics {
         sender: "Safe Browsing Extended Reporting"
         description:
@@ -80,7 +79,7 @@ net::NetworkTrafficAnnotationTag kTrafficAnnotation =
         destination: GOOGLE_OWNED_SERVICE
       }
       policy {
-        cookies_allowed: YES
+        cookies_allowed: true
         cookies_store: "Safe Browsing Cookie Store"
         setting:
           "Users can control this feature via the 'Automatically report "

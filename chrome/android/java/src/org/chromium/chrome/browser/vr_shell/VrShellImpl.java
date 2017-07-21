@@ -33,7 +33,7 @@ import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeTabbedActivity;
 import org.chromium.chrome.browser.NativePage;
 import org.chromium.chrome.browser.UrlConstants;
-import org.chromium.chrome.browser.page_info.PageInfoPopup;
+import org.chromium.chrome.browser.ntp.NewTabPage;
 import org.chromium.chrome.browser.tab.EmptyTabObserver;
 import org.chromium.chrome.browser.tab.InterceptNavigationDelegateImpl;
 import org.chromium.chrome.browser.tab.Tab;
@@ -71,16 +71,15 @@ public class VrShellImpl
     // a way to compute good values for any screen size/scaling ratio.
 
     // Increasing DPR any more than this doesn't appear to increase text quality.
-    private static final float DEFAULT_DPR = 1.7f;
+    private static final float DEFAULT_DPR = 1.4f;
     // Fairly arbitrary values that put a good amount of content on the screen without making the
     // text too small to read.
     @VisibleForTesting
-    public static final float DEFAULT_CONTENT_WIDTH = 645f;
+    public static final float DEFAULT_CONTENT_WIDTH = 800f;
     @VisibleForTesting
-    public static final float DEFAULT_CONTENT_HEIGHT = 430f;
+    public static final float DEFAULT_CONTENT_HEIGHT = 533f;
 
     // Make full screen 16:9 until we get exact dimensions from playing video.
-    private static final float FULLSCREEN_DPR = 1.4f;
     private static final float FULLSCREEN_CONTENT_WIDTH = 1024f;
     private static final float FULLSCREEN_CONTENT_HEIGHT = 576f;
 
@@ -93,7 +92,6 @@ public class VrShellImpl
     private final TabModelSelectorObserver mTabModelSelectorObserver;
     private final View.OnTouchListener mTouchListener;
     private TabModelSelectorTabObserver mTabModelSelectorTabObserver;
-    private OnPreDrawListener mPredrawListener;
 
     private long mNativeVrShell;
 
@@ -312,7 +310,7 @@ public class VrShellImpl
         mRenderToSurfaceLayout.setVisibility(View.VISIBLE);
         // We need a pre-draw listener to invalidate the native page because scrolling usually
         // doesn't trigger an onDraw call, so our texture won't get updated.
-        mPredrawListener = new OnPreDrawListener() {
+        mRenderToSurfaceLayout.getViewTreeObserver().addOnPreDrawListener(new OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
                 if (mRenderToSurfaceLayout.isDirty()) {
@@ -321,8 +319,7 @@ public class VrShellImpl
                 }
                 return true;
             }
-        };
-        mRenderToSurfaceLayout.getViewTreeObserver().addOnPreDrawListener(mPredrawListener);
+        });
         mRenderToSurfaceLayoutParent.addView(mRenderToSurfaceLayout);
         addView(mRenderToSurfaceLayoutParent);
     }
@@ -454,16 +451,7 @@ public class VrShellImpl
     // the security icon in the URL bar.
     @CalledByNative
     public void onUnhandledPageInfo() {
-        mDelegate.requestToExitVr(new OnExitVrRequestListener() {
-            @Override
-            public void onSucceeded() {
-                PageInfoPopup.show(
-                        mActivity, mActivity.getActivityTab(), null, PageInfoPopup.OPENED_FROM_VR);
-            }
-
-            @Override
-            public void onDenied() {}
-        }, UiUnsupportedMode.UNHANDLED_PAGE_INFO);
+        mDelegate.onUnhandledPageInfo();
     }
 
     // Exits CCT, returning to the app that opened it.
@@ -506,7 +494,7 @@ public class VrShellImpl
     @CalledByNative
     public void onFullscreenChanged(boolean enabled) {
         if (enabled) {
-            setContentCssSize(FULLSCREEN_CONTENT_WIDTH, FULLSCREEN_CONTENT_HEIGHT, FULLSCREEN_DPR);
+            setContentCssSize(FULLSCREEN_CONTENT_WIDTH, FULLSCREEN_CONTENT_HEIGHT, DEFAULT_DPR);
         } else {
             setContentCssSize(DEFAULT_CONTENT_WIDTH, DEFAULT_CONTENT_HEIGHT, DEFAULT_DPR);
         }
@@ -554,11 +542,6 @@ public class VrShellImpl
         if (mNativeVrShell != 0) {
             nativeOnPause(mNativeVrShell);
         }
-    }
-
-    @Override
-    public void onBeforeWindowDetached() {
-        mRenderToSurfaceLayout.getViewTreeObserver().removeOnPreDrawListener(mPredrawListener);
     }
 
     @Override
@@ -669,19 +652,6 @@ public class VrShellImpl
         return mDelegate.hasDaydreamSupport();
     }
 
-    @Override
-    public void requestToExitVr(@UiUnsupportedMode int reason) {
-        nativeRequestToExitVr(mNativeVrShell, reason);
-    }
-
-    @CalledByNative
-    private void onExitVrRequestResult(@UiUnsupportedMode int reason, boolean shouldExit) {
-        if (shouldExit) {
-            nativeLogUnsupportedModeUserMetric(mNativeVrShell, reason);
-        }
-        mDelegate.onExitVrRequestResult(shouldExit);
-    }
-
     @CalledByNative
     private void showTab(int id) {
         Tab tab = mActivity.getTabModelSelector().getTabById(id);
@@ -703,14 +673,12 @@ public class VrShellImpl
 
     @CalledByNative
     public void navigateForward() {
-        if (!mCanGoForward) return;
         mActivity.getToolbarManager().forward();
         updateHistoryButtonsVisibility();
     }
 
     @CalledByNative
     public void navigateBack() {
-        if (!mCanGoBack) return;
         if (mActivity instanceof ChromeTabbedActivity) {
             // TODO(mthiesse): We should do this for custom tabs as well, as back for custom tabs
             // is also expected to close tabs.
@@ -726,14 +694,11 @@ public class VrShellImpl
             nativeSetHistoryButtonsEnabled(mNativeVrShell, false, false);
             return;
         }
-        boolean willCloseTab = false;
-        if (mActivity instanceof ChromeTabbedActivity) {
-            // If hitting back would minimize Chrome, disable the back button.
-            // See ChromeTabbedActivity#handleBackPressed().
-            willCloseTab = ChromeTabbedActivity.backShouldCloseTab(mTab)
-                    && !mTab.isCreatedForExternalApp();
-        }
-        boolean canGoBack = mTab.canGoBack() || willCloseTab;
+        // Hitting back when on the NTP usually closes Chrome, which we don't allow in VR, so we
+        // just disable the back button.
+        boolean shouldAlwaysGoBack = mActivity instanceof ChromeTabbedActivity
+                && (mNativePage == null || !(mNativePage instanceof NewTabPage));
+        boolean canGoBack = mTab.canGoBack() || shouldAlwaysGoBack;
         boolean canGoForward = mTab.canGoForward();
         if ((mCanGoBack != null && canGoBack == mCanGoBack)
                 && (mCanGoForward != null && canGoForward == mCanGoForward)) {
@@ -776,12 +741,6 @@ public class VrShellImpl
         mOnDispatchTouchEventForTesting = callback;
     }
 
-    @VisibleForTesting
-    @Override
-    public Boolean isBackButtonEnabled() {
-        return mCanGoBack;
-    }
-
     private native long nativeInit(VrShellDelegate delegate, long nativeWindowAndroid,
             boolean forWebVR, boolean webVrAutopresentationExpected, boolean inCct, long gvrApi,
             boolean reprojectedRendering);
@@ -810,7 +769,4 @@ public class VrShellImpl
     private native void nativeRestoreContentSurface(long nativeVrShell);
     private native void nativeSetHistoryButtonsEnabled(
             long nativeVrShell, boolean canGoBack, boolean canGoForward);
-    private native void nativeRequestToExitVr(long nativeVrShell, @UiUnsupportedMode int reason);
-    private native void nativeLogUnsupportedModeUserMetric(
-            long nativeVrShell, @UiUnsupportedMode int mode);
 }

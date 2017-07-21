@@ -148,6 +148,17 @@ bool VRDisplay::getFrameData(VRFrameData* frame_data) {
   if (!frame_data)
     return false;
 
+  if (!in_animation_frame_) {
+    Document* doc = navigator_vr_->GetDocument();
+    if (doc) {
+      doc->AddConsoleMessage(
+          ConsoleMessage::Create(kRenderingMessageSource, kWarningMessageLevel,
+                                 "getFrameData must be called within a "
+                                 "VRDisplay.requestAnimationFrame callback."));
+    }
+    return false;
+  }
+
   if (depth_near_ == depth_far_)
     return false;
 
@@ -1006,9 +1017,8 @@ void VRDisplay::FocusChanged() {
 }
 
 bool VRDisplay::FocusedOrPresenting() {
-  // The browser can't track focus for frames, so we still need to check for
-  // focus in the renderer, even if the browser is checking focus before
-  // sending input.
+  // TODO(mthiesse, crbug.com/687411): Focused state should be determined
+  // browser-side to correctly track which display should be receiving input.
   return navigator_vr_->IsFocused() || is_presenting_;
 }
 

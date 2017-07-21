@@ -65,10 +65,9 @@ class CORE_EXPORT NGInlineNode : public NGLayoutInputNode {
 
   void GetLayoutTextOffsets(Vector<unsigned, 32>*);
 
-  // Returns the DOM to text content offset mapping of this block. If it is not
-  // computed before, compute and store it in NGInlineNodeData.
-  // This funciton must be called with clean layout.
-  const NGOffsetMappingResult& ComputeOffsetMappingIfNeeded();
+  // Returns the DOM to text content offset mapping of this block. Must be
+  // called with clean layout.
+  NGOffsetMappingResult BuildOffsetMapping() const;
 
   bool IsBidiEnabled() const { return Data().is_bidi_enabled_; }
   TextDirection BaseDirection() const { return Data().BaseDirection(); }

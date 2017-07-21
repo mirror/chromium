@@ -444,12 +444,6 @@ TEST_P(MostVisitedSitesTest, ShouldStartNoCallInConstructor) {
   base::RunLoop().RunUntilIdle();
 }
 
-TEST_P(MostVisitedSitesTest, ShouldRefreshBothBackends) {
-  EXPECT_CALL(*mock_top_sites_, SyncWithHistory());
-  EXPECT_CALL(mock_suggestions_service_, FetchSuggestionsData());
-  most_visited_sites_->Refresh();
-}
-
 TEST_P(MostVisitedSitesTest, ShouldIncludeTileForHomePage) {
   FakeHomePageClient* home_page_client = RegisterNewHomePageClient();
   home_page_client->SetHomePageEnabled(true);
@@ -555,7 +549,7 @@ TEST_P(MostVisitedSitesTest, ShouldNotIncludeHomePageIfNoTileRequested) {
   base::RunLoop().RunUntilIdle();
 }
 
-TEST_P(MostVisitedSitesTest, ShouldReturnHomePageIfOneTileRequested) {
+TEST_P(MostVisitedSitesTest, ShouldReturnMostPopularPageIfOneTileRequested) {
   FakeHomePageClient* home_page_client = RegisterNewHomePageClient();
   home_page_client->SetHomePageEnabled(true);
   DisableRemoteSuggestions();
@@ -567,40 +561,14 @@ TEST_P(MostVisitedSitesTest, ShouldReturnHomePageIfOneTileRequested) {
       .Times(AnyNumber())
       .WillRepeatedly(Return(false));
   EXPECT_CALL(mock_observer_,
-              OnMostVisitedURLsAvailable(ElementsAre(
-                  MatchesTile("", kHomePageUrl, TileSource::HOMEPAGE))));
+              OnMostVisitedURLsAvailable(ElementsAre(MatchesTile(
+                  "Site 1", "http://site1/", TileSource::TOP_SITES))));
   most_visited_sites_->SetMostVisitedURLsObserver(&mock_observer_,
                                                   /*num_sites=*/1);
   base::RunLoop().RunUntilIdle();
 }
 
-TEST_P(MostVisitedSitesTest, ShouldReplaceLastTileWithHomePageWhenFull) {
-  FakeHomePageClient* home_page_client = RegisterNewHomePageClient();
-  home_page_client->SetHomePageEnabled(true);
-  DisableRemoteSuggestions();
-  EXPECT_CALL(*mock_top_sites_, GetMostVisitedURLs(_, false))
-      .WillRepeatedly(InvokeCallbackArgument<0>((MostVisitedURLList{
-          MakeMostVisitedURL("Site 1", "http://site1/"),
-          MakeMostVisitedURL("Site 2", "http://site2/"),
-          MakeMostVisitedURL("Site 3", "http://site3/"),
-          MakeMostVisitedURL("Site 4", "http://site4/"),
-          MakeMostVisitedURL("Site 5", "http://site5/"),
-      })));
-  EXPECT_CALL(*mock_top_sites_, SyncWithHistory());
-  EXPECT_CALL(*mock_top_sites_, IsBlacklisted(Eq(GURL(kHomePageUrl))))
-      .Times(AnyNumber())
-      .WillRepeatedly(Return(false));
-  std::vector<NTPTile> tiles;
-  EXPECT_CALL(mock_observer_, OnMostVisitedURLsAvailable(_))
-      .WillOnce(SaveArg<0>(&tiles));
-  most_visited_sites_->SetMostVisitedURLsObserver(&mock_observer_,
-                                                  /*num_sites=*/4);
-  base::RunLoop().RunUntilIdle();
-  // Assert that the home page replaces the final tile.
-  EXPECT_THAT(tiles[3], MatchesTile("", kHomePageUrl, TileSource::HOMEPAGE));
-}
-
-TEST_P(MostVisitedSitesTest, ShouldAppendHomePageWhenNotFull) {
+TEST_P(MostVisitedSitesTest, ShouldContainHomePageInFirstFourTiles) {
   FakeHomePageClient* home_page_client = RegisterNewHomePageClient();
   home_page_client->SetHomePageEnabled(true);
   DisableRemoteSuggestions();
@@ -622,8 +590,8 @@ TEST_P(MostVisitedSitesTest, ShouldAppendHomePageWhenNotFull) {
   most_visited_sites_->SetMostVisitedURLsObserver(&mock_observer_,
                                                   /*num_sites=*/8);
   base::RunLoop().RunUntilIdle();
-  // Assert that the home page is appended as the final tile.
-  EXPECT_THAT(tiles[5], MatchesTile("", kHomePageUrl, TileSource::HOMEPAGE));
+  // Assert that the home page tile is in the first four tiles.
+  EXPECT_THAT(tiles[3], MatchesTile("", kHomePageUrl, TileSource::HOMEPAGE));
 }
 
 TEST_P(MostVisitedSitesTest, ShouldDeduplicateHomePageWithTopSites) {
@@ -787,6 +755,7 @@ TEST_P(MostVisitedSitesTest, ShouldHandleTopSitesCacheHit) {
           MostVisitedURLList{MakeMostVisitedURL("Site 1", "http://site1/")}));
 
   InSequence seq;
+  EXPECT_CALL(*mock_top_sites_, SyncWithHistory());
   EXPECT_CALL(mock_suggestions_service_, AddCallback(_))
       .WillOnce(Invoke(&suggestions_service_callbacks_,
                        &SuggestionsService::ResponseCallbackList::Add));
@@ -806,7 +775,6 @@ TEST_P(MostVisitedSitesTest, ShouldHandleTopSitesCacheHit) {
                 OnMostVisitedURLsAvailable(ElementsAre(MatchesTile(
                     "Site 1", "http://site1/", TileSource::TOP_SITES))));
   }
-  EXPECT_CALL(*mock_top_sites_, SyncWithHistory());
   EXPECT_CALL(mock_suggestions_service_, FetchSuggestionsData())
       .WillOnce(Return(true));
 
@@ -840,6 +808,7 @@ class MostVisitedSitesWithCacheHitTest : public MostVisitedSitesTest {
   // service has cached results when the observer is registered.
   MostVisitedSitesWithCacheHitTest() {
     InSequence seq;
+    EXPECT_CALL(*mock_top_sites_, SyncWithHistory());
     EXPECT_CALL(mock_suggestions_service_, AddCallback(_))
         .WillOnce(Invoke(&suggestions_service_callbacks_,
                          &SuggestionsService::ResponseCallbackList::Add));
@@ -870,7 +839,6 @@ class MostVisitedSitesWithCacheHitTest : public MostVisitedSitesTest {
                       MatchesTile("Site 3", "http://site3/",
                                   TileSource::SUGGESTIONS_SERVICE))));
     }
-    EXPECT_CALL(*mock_top_sites_, SyncWithHistory());
     EXPECT_CALL(mock_suggestions_service_, FetchSuggestionsData())
         .WillOnce(Return(true));
 
@@ -984,6 +952,7 @@ class MostVisitedSitesWithEmptyCacheTest : public MostVisitedSitesTest {
   // service doesn't have cached results when the observer is registered.
   MostVisitedSitesWithEmptyCacheTest() {
     InSequence seq;
+    EXPECT_CALL(*mock_top_sites_, SyncWithHistory());
     EXPECT_CALL(mock_suggestions_service_, AddCallback(_))
         .WillOnce(Invoke(&suggestions_service_callbacks_,
                          &SuggestionsService::ResponseCallbackList::Add));
@@ -991,7 +960,6 @@ class MostVisitedSitesWithEmptyCacheTest : public MostVisitedSitesTest {
         .WillOnce(Return(SuggestionsProfile()));  // Empty cache.
     EXPECT_CALL(*mock_top_sites_, GetMostVisitedURLs(_, false))
         .WillOnce(Invoke(&top_sites_callbacks_, &TopSitesCallbackList::Add));
-    EXPECT_CALL(*mock_top_sites_, SyncWithHistory());
     EXPECT_CALL(mock_suggestions_service_, FetchSuggestionsData())
         .WillOnce(Return(true));
 

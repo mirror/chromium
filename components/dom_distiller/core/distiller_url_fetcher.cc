@@ -70,7 +70,7 @@ std::unique_ptr<URLFetcher> DistillerURLFetcher::CreateURLFetcher(
           destination: WEBSITE
         }
         policy {
-          cookies_allowed: YES
+          cookies_allowed: true
           cookies_store: "user"
           setting: "Users can enable or disable Mobile-friendly view by "
           "toggling chrome://flags#reader-mode-heuristics in Chromium on "

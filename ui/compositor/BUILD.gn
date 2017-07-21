@@ -213,7 +213,6 @@ test("compositor_unittests") {
     "//cc:test_support",
     "//cc/surfaces",
     "//components/viz/common",
-    "//components/viz/test:test_support",
     "//mojo/edk/system",
     "//skia",
     "//testing/gmock",

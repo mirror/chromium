@@ -75,7 +75,6 @@ class EmptyFrameScheduler : public WebFrameScheduler {
   void RemoveThrottlingObserver(ObserverType, Observer*) override {}
   void SetFrameVisible(bool) override {}
   RefPtr<WebTaskRunner> LoadingTaskRunner() override;
-  RefPtr<WebTaskRunner> LoadingControlTaskRunner() override;
   RefPtr<WebTaskRunner> TimerTaskRunner() override;
   RefPtr<WebTaskRunner> UnthrottledTaskRunner() override;
   RefPtr<WebTaskRunner> SuspendableTaskRunner() override;
@@ -83,10 +82,6 @@ class EmptyFrameScheduler : public WebFrameScheduler {
 };
 
 RefPtr<WebTaskRunner> EmptyFrameScheduler::LoadingTaskRunner() {
-  return Platform::Current()->MainThread()->GetWebTaskRunner();
-}
-
-RefPtr<WebTaskRunner> EmptyFrameScheduler::LoadingControlTaskRunner() {
   return Platform::Current()->MainThread()->GetWebTaskRunner();
 }
 

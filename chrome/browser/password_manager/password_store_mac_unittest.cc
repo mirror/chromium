@@ -142,7 +142,7 @@ PasswordStoreMacTest::PasswordStoreMacTest() {
                             static_cast<int>(GetParam()));
   // Ensure that LoginDatabase will use the mock keychain if it needs to
   // encrypt/decrypt a password.
-  OSCryptMocker::SetUp();
+  OSCryptMocker::SetUpWithSingleton();
 }
 
 PasswordStoreMacTest::~PasswordStoreMacTest() {

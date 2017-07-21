@@ -28,6 +28,7 @@
 #include "platform/wtf/MathExtras.h"
 #include "platform/wtf/text/AtomicString.h"
 #include "platform/wtf/text/ParsingUtilities.h"
+#include "platform/wtf/text/StringBuilder.h"
 #include "platform/wtf/text/StringHash.h"
 #include "platform/wtf/text/StringToNumber.h"
 #include "platform/wtf/text/TextEncoding.h"
@@ -225,10 +226,9 @@ bool ParseHTMLInteger(const String& input, int& value) {
 }
 
 template <typename CharacterType>
-static WTF::NumberParsingState ParseHTMLNonNegativeIntegerInternal(
-    const CharacterType* position,
-    const CharacterType* end,
-    unsigned& value) {
+static bool ParseHTMLNonNegativeIntegerInternal(const CharacterType* position,
+                                                const CharacterType* end,
+                                                unsigned& value) {
   // This function is an implementation of the following algorithm:
   // https://html.spec.whatwg.org/multipage/infrastructure.html#rules-for-parsing-non-negative-integers
   // However, in order to support integers >= 2^31, we fold [1] into this.
@@ -241,11 +241,15 @@ static WTF::NumberParsingState ParseHTMLNonNegativeIntegerInternal(
   int sign = 1;
 
   // Step 4: Skip whitespace.
-  SkipWhile<CharacterType, IsHTMLSpace<CharacterType>>(position, end);
+  while (position < end) {
+    if (!IsHTMLSpace<CharacterType>(*position))
+      break;
+    ++position;
+  }
 
   // Step 5: If position is past the end of input, return an error.
   if (position == end)
-    return WTF::NumberParsingState::kError;
+    return false;
   DCHECK_LT(position, end);
 
   // Step 6: If the character indicated by position (the first character) is a
@@ -258,75 +262,48 @@ static WTF::NumberParsingState ParseHTMLNonNegativeIntegerInternal(
   }
 
   if (position == end)
-    return WTF::NumberParsingState::kError;
+    return false;
   DCHECK_LT(position, end);
 
   // Step 7: If the character indicated by position is not an ASCII digit,
   // then return an error.
   if (!IsASCIIDigit(*position))
-    return WTF::NumberParsingState::kError;
+    return false;
 
   // Step 8: Collect a sequence of characters ...
-  const CharacterType* digits_start = position;
-  SkipWhile<CharacterType, IsASCIIDigit>(position, end);
-
-  WTF::NumberParsingState state;
-  unsigned digits_value =
-      CharactersToUIntStrict(digits_start, position - digits_start, &state);
-  // TODO(tkent): The following code to adjust NumberParsingState is not simple
-  // due to "-0" behavior difference between CharactersToUIntStrict() and
-  // ParseHTMLNonNegativeIntegerInternal(). Simplify the code by updating
-  // CharactersToUIntStrict() to accept "-0".
-  if (state == WTF::NumberParsingState::kOverflowMax && sign < 0)
-    return WTF::NumberParsingState::kError;
-  if (state == WTF::NumberParsingState::kSuccess) {
-    if (sign < 0 && digits_value != 0)
-      return WTF::NumberParsingState::kError;
-    value = digits_value;
+  StringBuilder digits;
+  while (position < end) {
+    if (!IsASCIIDigit(*position))
+      break;
+    digits.Append(*position++);
   }
-  return state;
+
+  bool ok;
+  unsigned digits_value;
+  if (digits.Is8Bit())
+    digits_value =
+        CharactersToUIntStrict(digits.Characters8(), digits.length(), &ok);
+  else
+    digits_value =
+        CharactersToUIntStrict(digits.Characters16(), digits.length(), &ok);
+  if (!ok)
+    return false;
+  if (sign < 0 && digits_value != 0)
+    return false;
+  value = digits_value;
+  return true;
 }
 
-static WTF::NumberParsingState ParseHTMLNonNegativeIntegerInternal(
-    const String& input,
-    unsigned& value) {
+// https://html.spec.whatwg.org/multipage/infrastructure.html#rules-for-parsing-non-negative-integers
+bool ParseHTMLNonNegativeInteger(const String& input, unsigned& value) {
   unsigned length = input.length();
-  if (length == 0)
-    return WTF::NumberParsingState::kError;
-  if (input.Is8Bit()) {
+  if (length && input.Is8Bit()) {
     const LChar* start = input.Characters8();
     return ParseHTMLNonNegativeIntegerInternal(start, start + length, value);
   }
 
   const UChar* start = input.Characters16();
   return ParseHTMLNonNegativeIntegerInternal(start, start + length, value);
-}
-
-// https://html.spec.whatwg.org/multipage/infrastructure.html#rules-for-parsing-non-negative-integers
-bool ParseHTMLNonNegativeInteger(const String& input, unsigned& value) {
-  return ParseHTMLNonNegativeIntegerInternal(input, value) ==
-         WTF::NumberParsingState::kSuccess;
-}
-
-bool ParseHTMLClampedNonNegativeInteger(const String& input,
-                                        unsigned min,
-                                        unsigned max,
-                                        unsigned& value) {
-  unsigned parsed_value;
-  switch (ParseHTMLNonNegativeIntegerInternal(input, parsed_value)) {
-    case WTF::NumberParsingState::kError:
-      return false;
-    case WTF::NumberParsingState::kOverflowMin:
-      NOTREACHED() << input;
-      return false;
-    case WTF::NumberParsingState::kOverflowMax:
-      value = max;
-      return true;
-    case WTF::NumberParsingState::kSuccess:
-      value = std::max(min, std::min(parsed_value, max));
-      return true;
-  }
-  return false;
 }
 
 template <typename CharacterType>
@@ -344,20 +321,20 @@ static Vector<double> ParseHTMLListOfFloatingPointNumbersInternal(
     const CharacterType* position,
     const CharacterType* end) {
   Vector<double> numbers;
-  SkipWhile<CharacterType, IsSpaceOrDelimiter>(position, end);
+  skipWhile<CharacterType, IsSpaceOrDelimiter>(position, end);
 
   while (position < end) {
-    SkipWhile<CharacterType, IsNotSpaceDelimiterOrNumberStart>(position, end);
+    skipWhile<CharacterType, IsNotSpaceDelimiterOrNumberStart>(position, end);
 
     const CharacterType* unparsed_number_start = position;
-    SkipUntil<CharacterType, IsSpaceOrDelimiter>(position, end);
+    skipUntil<CharacterType, IsSpaceOrDelimiter>(position, end);
 
     size_t parsed_length = 0;
     double number = CharactersToDouble(
         unparsed_number_start, position - unparsed_number_start, parsed_length);
     numbers.push_back(CheckDoubleValue(number, parsed_length != 0, 0));
 
-    SkipWhile<CharacterType, IsSpaceOrDelimiter>(position, end);
+    skipWhile<CharacterType, IsSpaceOrDelimiter>(position, end);
   }
   return numbers;
 }

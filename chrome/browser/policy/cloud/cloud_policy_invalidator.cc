@@ -410,8 +410,7 @@ bool CloudPolicyInvalidator::IsInvalidationExpired(int64_t version) {
   return invalidation_time < last_fetch_time;
 }
 
-MetricPolicyRefresh CloudPolicyInvalidator::GetPolicyRefreshMetric(
-    bool policy_changed) {
+int CloudPolicyInvalidator::GetPolicyRefreshMetric(bool policy_changed) {
   if (policy_changed) {
     if (invalid_)
       return METRIC_POLICY_REFRESH_INVALIDATED_CHANGED;
@@ -424,9 +423,8 @@ MetricPolicyRefresh CloudPolicyInvalidator::GetPolicyRefreshMetric(
   return METRIC_POLICY_REFRESH_UNCHANGED;
 }
 
-PolicyInvalidationType CloudPolicyInvalidator::GetInvalidationMetric(
-    bool is_missing_payload,
-    bool is_expired) {
+int CloudPolicyInvalidator::GetInvalidationMetric(bool is_missing_payload,
+                                                  bool is_expired) {
   if (is_expired) {
     if (is_missing_payload)
       return POLICY_INVALIDATION_TYPE_NO_PAYLOAD_EXPIRED;

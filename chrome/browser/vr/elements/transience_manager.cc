@@ -9,7 +9,7 @@ namespace vr {
 TransienceManager::TransienceManager(UiElement* element,
                                      const base::TimeDelta& timeout)
     : element_(element), timeout_(timeout) {
-  element_->SetVisible(false);
+  element_->set_visible(false);
 }
 
 void TransienceManager::SetEnabled(bool enabled) {
@@ -17,24 +17,24 @@ void TransienceManager::SetEnabled(bool enabled) {
     return;
   enabled_ = enabled;
   if (enabled) {
-    element_->SetVisible(true);
+    element_->set_visible(true);
     StartTimer();
   } else {
-    element_->SetVisible(false);
+    element_->set_visible(false);
     visibility_timer_.Stop();
   }
 }
 
 void TransienceManager::KickVisibilityIfEnabled() {
   if (enabled_) {
-    element_->SetVisible(true);
+    element_->set_visible(true);
     StartTimer();
   }
 }
 
 void TransienceManager::EndVisibilityIfEnabled() {
   if (enabled_) {
-    element_->SetVisible(false);
+    element_->set_visible(false);
     visibility_timer_.Stop();
   }
 }
@@ -46,8 +46,7 @@ void TransienceManager::StartTimer() {
 }
 
 void TransienceManager::OnTimeout() {
-  element_->SetVisible(false);
-  element_->SetOpacity(0);
+  element_->set_visible(false);
 }
 
 }  // namespace vr

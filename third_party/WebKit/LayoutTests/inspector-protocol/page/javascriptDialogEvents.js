@@ -1,5 +1,5 @@
 (async function(testRunner) {
-  let {page, session, dp} = await testRunner.startBlank('Tests that javascript dialogs send events.');
+  let {page, session, dp} = await testRunner.startBlank('');
 
   await session.evaluate(`
     testRunner.setShouldStayOnPageAfterHandlingBeforeUnload(true);

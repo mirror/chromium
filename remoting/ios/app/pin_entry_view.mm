@@ -11,9 +11,6 @@
 #import "ios/third_party/material_components_ios/src/components/Buttons/src/MaterialButtons.h"
 #import "remoting/ios/app/remoting_theme.h"
 
-#include "remoting/base/string_resources.h"
-#include "ui/base/l10n/l10n_util.h"
-
 static const CGFloat kMargin = 5.f;
 static const CGFloat kPadding = 8.f;
 static const CGFloat kLineSpace = 12.f;
@@ -49,8 +46,7 @@ static const int kMinPinLength = 6;
     _pairingLabel.textColor =
         [UIColor colorWithRed:1.f green:1.f blue:1.f alpha:0.5];
     _pairingLabel.font = [UIFont systemFontOfSize:12.f];
-    _pairingLabel.text =
-        l10n_util::GetNSString(IDS_REMEMBER_PIN_ON_THIS_DEVICE);
+    _pairingLabel.text = @"Remember my PIN on this device.";
     _pairingLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [self addSubview:_pairingLabel];
 
@@ -72,8 +68,9 @@ static const int kMinPinLength = 6;
     _pinEntry.textColor = [UIColor whiteColor];
     _pinEntry.secureTextEntry = YES;
     _pinEntry.keyboardType = UIKeyboardTypeNumberPad;
+    // TODO(nicholss): L18N this.
     _pinEntry.attributedPlaceholder = [[NSAttributedString alloc]
-        initWithString:l10n_util::GetNSString(IDS_ENTER_PIN)
+        initWithString:@"Enter PIN"
             attributes:@{
               NSForegroundColorAttributeName :
                   [UIColor colorWithRed:1.f green:1.f blue:1.f alpha:0.5]

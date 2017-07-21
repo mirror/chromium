@@ -510,8 +510,6 @@ const TestParams kFFmpegTestParams[] = {
     {kCodecMP3, "sfx.mp3", kSfxMp3Expectations, 0, 44100, CHANNEL_LAYOUT_MONO},
     {kCodecAAC, "sfx.adts", kSfxAdtsExpectations, 0, 44100,
      CHANNEL_LAYOUT_MONO},
-    {kCodecFLAC, "sfx-flac.mp4", kSfxFlacExpectations, 0, 44100,
-     CHANNEL_LAYOUT_MONO},
 #endif
     {kCodecFLAC, "sfx.flac", kSfxFlacExpectations, 0, 44100,
      CHANNEL_LAYOUT_MONO},

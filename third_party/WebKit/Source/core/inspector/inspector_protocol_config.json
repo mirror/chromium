@@ -18,7 +18,7 @@
             },
             {
                 "domain": "CacheStorage",
-                "async": ["requestCacheNames", "requestEntries", "deleteCache", "deleteEntry", "requestCachedResponse"]
+                "async": ["requestCacheNames", "requestEntries", "deleteCache", "deleteEntry"]
             },
             {
                 "domain": "CSS",
@@ -62,7 +62,7 @@
             },
             {
                 "domain": "IO",
-                "include": ["resolveBlob"]
+                "include": []
             },
             {
                 "domain": "Security",

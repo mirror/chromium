@@ -30,9 +30,7 @@ class ANIMATION_EXPORT LinearAnimation : public Animation {
                            int frame_rate = kDefaultFrameRate);
 
   // Initializes all fields.
-  LinearAnimation(base::TimeDelta duration,
-                  int frame_rate,
-                  AnimationDelegate* delegate);
+  LinearAnimation(int duration, int frame_rate, AnimationDelegate* delegate);
 
   // Gets the value for the current state, according to the animation curve in
   // use. This class provides only for a linear relationship, however subclasses
@@ -47,7 +45,7 @@ class ANIMATION_EXPORT LinearAnimation : public Animation {
 
   // Changes the length of the animation. This resets the current
   // state of the animation to the beginning.
-  void SetDuration(base::TimeDelta duration);
+  void SetDuration(int duration);
 
  protected:
   // Called when the animation progresses. Subclasses override this to
@@ -67,8 +65,6 @@ class ANIMATION_EXPORT LinearAnimation : public Animation {
 
   // Overriden to return true if state is not 1.
   bool ShouldSendCanceledFromStop() override;
-
-  base::TimeDelta duration() const { return duration_; }
 
  private:
   base::TimeDelta duration_;

@@ -56,8 +56,7 @@ class MEDIA_MOJO_EXPORT MojoVideoEncodeAcceleratorService
                   const gfx::Size& input_visible_size,
                   VideoCodecProfile output_profile,
                   uint32_t initial_bitrate,
-                  mojom::VideoEncodeAcceleratorClientPtr client,
-                  InitializeCallback callback) override;
+                  mojom::VideoEncodeAcceleratorClientPtr client) override;
   void Encode(const scoped_refptr<VideoFrame>& frame,
               bool force_keyframe,
               EncodeCallback callback) override;

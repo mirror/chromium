@@ -158,7 +158,7 @@ BrandcodeConfigFetcher::BrandcodeConfigFetcher(const FetchCallback& callback,
           destination: GOOGLE_OWNED_SERVICE
         }
         policy {
-          cookies_allowed: NO
+          cookies_allowed: false
           setting:
             "This feature cannot be disabled and is only invoked by user "
             "request."

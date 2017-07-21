@@ -3,9 +3,6 @@
 // found in the LICENSE file.
 
 #include "content/browser/download/mock_download_file.h"
-
-#include "base/bind.h"
-#include "content/public/browser/browser_thread.h"
 #include "testing/gmock/include/gmock/gmock.h"
 
 using ::testing::_;
@@ -14,17 +11,12 @@ using ::testing::Return;
 namespace content {
 namespace {
 
-void SuccessRun(const DownloadFile::InitializeCallback& initialize_callback) {
-  initialize_callback.Run(DOWNLOAD_INTERRUPT_REASON_NONE);
-}
-
-void PostSuccessRun(
+void SuccessRun(
     const DownloadFile::InitializeCallback& initialize_callback,
     const DownloadFile::CancelRequestCallback& cancel_request_callback,
     const DownloadItem::ReceivedSlices& received_slices,
     bool is_parallelizable) {
-  BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                          base::Bind(&SuccessRun, initialize_callback));
+  initialize_callback.Run(DOWNLOAD_INTERRUPT_REASON_NONE);
 }
 
 }  // namespace
@@ -33,7 +25,7 @@ MockDownloadFile::MockDownloadFile() {
   // This is here because |Initialize()| is normally called right after
   // construction.
   ON_CALL(*this, Initialize(_, _, _, _))
-      .WillByDefault(::testing::Invoke(PostSuccessRun));
+      .WillByDefault(::testing::Invoke(SuccessRun));
 }
 
 MockDownloadFile::~MockDownloadFile() {

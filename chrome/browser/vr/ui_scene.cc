@@ -14,10 +14,48 @@
 
 namespace vr {
 
+namespace {
+
+void ApplyAnchoring(const UiElement& parent,
+                    XAnchoring x_anchoring,
+                    YAnchoring y_anchoring,
+                    gfx::Transform* transform) {
+  // To anchor a child, use the parent's size to find its edge.
+  float x_offset;
+  switch (x_anchoring) {
+    case XLEFT:
+      x_offset = -0.5f * parent.size().width();
+      break;
+    case XRIGHT:
+      x_offset = 0.5f * parent.size().width();
+      break;
+    case XNONE:
+      x_offset = 0.0f;
+      break;
+  }
+  float y_offset;
+  switch (y_anchoring) {
+    case YTOP:
+      y_offset = 0.5f * parent.size().height();
+      break;
+    case YBOTTOM:
+      y_offset = -0.5f * parent.size().height();
+      break;
+    case YNONE:
+      y_offset = 0.0f;
+      break;
+  }
+  transform->matrix().postTranslate(x_offset, y_offset, 0);
+}
+
+}  // namespace
+
 void UiScene::AddUiElement(std::unique_ptr<UiElement> element) {
   CHECK_GE(element->id(), 0);
   CHECK_EQ(GetUiElementById(element->id()), nullptr);
-  if (!element->parent()) {
+  if (element->parent_id() >= 0) {
+    CHECK_NE(GetUiElementById(element->parent_id()), nullptr);
+  } else {
     CHECK_EQ(element->x_anchoring(), XAnchoring::XNONE);
     CHECK_EQ(element->y_anchoring(), YAnchoring::YNONE);
   }
@@ -52,11 +90,12 @@ void UiScene::RemoveAnimation(int element_id, int animation_id) {
 void UiScene::OnBeginFrame(const base::TimeTicks& current_time) {
   for (const auto& element : ui_elements_) {
     // Process all animations before calculating object transforms.
+    // TODO: eventually, we'd like to stop assuming that animations are
+    // element-level concepts. A single animation may simultaneously update
+    // properties on multiple elements, say.
     element->Animate(current_time);
+
     element->set_dirty(true);
-  }
-  for (auto& element : ui_elements_) {
-    element->LayOutChildren();
   }
   for (auto& element : ui_elements_) {
     ApplyRecursiveTransforms(element.get());
@@ -123,6 +162,53 @@ bool UiScene::HasVisibleHeadLockedElements() const {
   return !GetHeadLockedElements().empty();
 }
 
+void UiScene::SetMode(ColorScheme::Mode mode) {
+  if (mode == mode_)
+    return;
+
+  mode_ = mode;
+  for (const auto& element : ui_elements_)
+    element->SetMode(mode);
+}
+
+ColorScheme::Mode UiScene::mode() const {
+  return mode_;
+}
+
+SkColor UiScene::GetWorldBackgroundColor() const {
+  return showing_splash_screen_
+             ? ColorScheme::GetColorScheme(mode_).splash_screen_background
+             : ColorScheme::GetColorScheme(mode_).world_background;
+}
+
+void UiScene::SetBackgroundDistance(float distance) {
+  background_distance_ = distance;
+}
+
+float UiScene::GetBackgroundDistance() const {
+  return background_distance_;
+}
+
+bool UiScene::GetWebVrRenderingEnabled() const {
+  return webvr_rendering_enabled_;
+}
+
+void UiScene::SetWebVrRenderingEnabled(bool enabled) {
+  webvr_rendering_enabled_ = enabled;
+}
+
+void UiScene::set_is_exiting() {
+  is_exiting_ = true;
+}
+
+void UiScene::set_is_prompting_to_exit(bool prompting) {
+  is_prompting_to_exit_ = prompting;
+}
+
+void UiScene::set_showing_splash_screen(bool showing) {
+  showing_splash_screen_ = showing;
+}
+
 const std::vector<std::unique_ptr<UiElement>>& UiScene::GetUiElements() const {
   return ui_elements_;
 }
@@ -135,7 +221,11 @@ void UiScene::ApplyRecursiveTransforms(UiElement* element) {
   if (!element->dirty())
     return;
 
-  UiElement* parent = element->parent();
+  UiElement* parent = nullptr;
+  if (element->parent_id() >= 0) {
+    parent = GetUiElementById(element->parent_id());
+    CHECK(parent != nullptr);
+  }
 
   gfx::Transform transform;
   transform.Scale(element->size().width(), element->size().height());
@@ -147,6 +237,8 @@ void UiScene::ApplyRecursiveTransforms(UiElement* element) {
   gfx::Transform inheritable = element->transform_operations().Apply();
 
   if (parent) {
+    ApplyAnchoring(*parent, element->x_anchoring(), element->y_anchoring(),
+                   &inheritable);
     ApplyRecursiveTransforms(parent);
     inheritable.ConcatTransform(parent->inheritable_transform());
 

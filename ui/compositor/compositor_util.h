@@ -10,13 +10,13 @@
 #include "components/viz/common/resources/buffer_to_texture_target_map.h"
 #include "ui/compositor/compositor_export.h"
 
-namespace viz {
+namespace cc {
 class RendererSettings;
 }
 
 namespace ui {
 
-COMPOSITOR_EXPORT viz::RendererSettings CreateRendererSettings(
+COMPOSITOR_EXPORT cc::RendererSettings CreateRendererSettings(
     const viz::BufferToTextureTargetMap& image_targets);
 
 }  // namespace ui

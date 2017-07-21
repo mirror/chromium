@@ -18,6 +18,7 @@
 #include "content/browser/download/download_interrupt_reasons_impl.h"
 #include "content/browser/download/download_net_log_parameters.h"
 #include "content/browser/download/download_stats.h"
+#include "content/public/browser/browser_thread.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/common/quarantine.h"
 #include "crypto/secure_hash.h"
@@ -27,12 +28,10 @@
 
 namespace content {
 
-BaseFile::BaseFile(const net::NetLogWithSource& net_log) : net_log_(net_log) {
-  DETACH_FROM_SEQUENCE(sequence_checker_);
-}
+BaseFile::BaseFile(const net::NetLogWithSource& net_log) : net_log_(net_log) {}
 
 BaseFile::~BaseFile() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   if (detached_)
     Close();
   else
@@ -47,7 +46,7 @@ DownloadInterruptReason BaseFile::Initialize(
     const std::string& hash_so_far,
     std::unique_ptr<crypto::SecureHash> hash_state,
     bool is_sparse_file) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   DCHECK(!detached_);
 
   if (full_path.empty()) {
@@ -128,7 +127,7 @@ DownloadInterruptReason BaseFile::WriteDataToFile(int64_t offset,
 }
 
 DownloadInterruptReason BaseFile::Rename(const base::FilePath& new_path) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   DownloadInterruptReason rename_result = DOWNLOAD_INTERRUPT_REASON_NONE;
 
   // If the new path is same as the old one, there is no need to perform the
@@ -173,7 +172,7 @@ void BaseFile::Detach() {
 }
 
 void BaseFile::Cancel() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   DCHECK(!detached_);
 
   net_log_.AddEvent(net::NetLogEventType::CANCELLED);
@@ -189,7 +188,7 @@ void BaseFile::Cancel() {
 }
 
 std::unique_ptr<crypto::SecureHash> BaseFile::Finish() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
 
   // TODO(qinmin): verify that all the holes have been filled.
   if (is_sparse_file_)
@@ -277,7 +276,7 @@ DownloadInterruptReason BaseFile::CalculatePartialHash(
 }
 
 DownloadInterruptReason BaseFile::Open(const std::string& hash_so_far) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   DCHECK(!detached_);
   DCHECK(!full_path_.empty());
 
@@ -340,7 +339,7 @@ DownloadInterruptReason BaseFile::Open(const std::string& hash_so_far) {
 }
 
 void BaseFile::Close() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
 
   if (file_.IsValid()) {
     // Currently we don't really care about the return value, since if it fails
@@ -427,7 +426,7 @@ DownloadInterruptReason BaseFile::AnnotateWithSourceInformation(
     const std::string& client_guid,
     const GURL& source_url,
     const GURL& referrer_url) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
   DCHECK(!detached_);
   DCHECK(!full_path_.empty());
 

@@ -965,13 +965,6 @@ UI.ToolbarComboBox = class extends UI.ToolbarItem {
   setMaxWidth(width) {
     this._selectElement.style.maxWidth = width + 'px';
   }
-
-  /**
-   * @param {number} width
-   */
-  setMinWidth(width) {
-    this._selectElement.style.minWidth = width + 'px';
-  }
 };
 
 /**

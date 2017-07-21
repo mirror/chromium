@@ -47,8 +47,7 @@ enum KeyboardMode {
 
 // Represents the current state of the keyboard managed by the controller.
 // Don't change the numeric value of the members because they are used in UMA
-// - VirtualKeyboard.ControllerStateTransition.
-// - VirtualKeyboard.LingeringIntermediateState
+// VirtualKeyboard.ControllerStateTransition.
 enum class KeyboardControllerState {
   UNKNOWN = 0,
   // Keyboard has never been shown.
@@ -67,7 +66,6 @@ enum class KeyboardControllerState {
   HIDING = 6,
   // Keyboard is hidden, but has shown at least once.
   HIDDEN = 7,
-  COUNT,
 };
 
 // Provides control of the virtual keyboard, including providing a container
@@ -210,12 +208,8 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   // Validates the state transition. Called from ChangeState.
   void CheckStateTransition(KeyboardControllerState prev,
                             KeyboardControllerState next);
-
   // Changes the current state with validating the transition.
   void ChangeState(KeyboardControllerState state);
-
-  // Reports error histogram in case lingering in an intermediate state.
-  void ReportLingeringState();
 
   std::unique_ptr<KeyboardUI> ui_;
   KeyboardLayoutDelegate* layout_delegate_;
@@ -242,8 +236,7 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
 
   static KeyboardController* instance_;
 
-  base::WeakPtrFactory<KeyboardController> weak_factory_report_lingering_state_;
-  base::WeakPtrFactory<KeyboardController> weak_factory_will_hide_;
+  base::WeakPtrFactory<KeyboardController> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(KeyboardController);
 };

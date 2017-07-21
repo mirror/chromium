@@ -1872,17 +1872,13 @@ void WebContentsImpl::RenderWidgetGotFocus(
   // Notify the observers if an embedded fullscreen widget was focused.
   if (delegate_ && render_widget_host && delegate_->EmbedsFullscreenWidget() &&
       render_widget_host->GetView() == GetFullscreenRenderWidgetHostView()) {
-    NotifyWebContentsFocused(render_widget_host);
+    NotifyWebContentsFocused();
   }
 }
 
 void WebContentsImpl::RenderWidgetLostFocus(
     RenderWidgetHostImpl* render_widget_host) {
-  // Notify the observers if an embedded fullscreen widget lost focus.
-  if (delegate_ && render_widget_host && delegate_->EmbedsFullscreenWidget() &&
-      render_widget_host->GetView() == GetFullscreenRenderWidgetHostView()) {
-    NotifyWebContentsLostFocus(render_widget_host);
-  }
+  NotifyWebContentsLostFocus();
 }
 
 void WebContentsImpl::RenderWidgetWasResized(
@@ -3270,7 +3266,7 @@ void WebContentsImpl::SaveFrameWithHeaders(const GURL& url,
           destination: WEBSITE
         }
         policy {
-          cookies_allowed: YES
+          cookies_allowed: true
           cookies_store: "user"
           setting:
             "This feature cannot be disabled by settings, but it's is only "
@@ -3381,16 +3377,14 @@ void WebContentsImpl::DidGetRedirectForResourceRequest(
       Details<const ResourceRedirectDetails>(&details));
 }
 
-void WebContentsImpl::NotifyWebContentsFocused(
-    RenderWidgetHost* render_widget_host) {
+void WebContentsImpl::NotifyWebContentsFocused() {
   for (auto& observer : observers_)
-    observer.OnWebContentsFocused(render_widget_host);
+    observer.OnWebContentsFocused();
 }
 
-void WebContentsImpl::NotifyWebContentsLostFocus(
-    RenderWidgetHost* render_widget_host) {
+void WebContentsImpl::NotifyWebContentsLostFocus() {
   for (auto& observer : observers_)
-    observer.OnWebContentsLostFocus(render_widget_host);
+    observer.OnWebContentsLostFocus();
 }
 
 void WebContentsImpl::SystemDragEnded(RenderWidgetHost* source_rwh) {
@@ -4436,18 +4430,6 @@ void WebContentsImpl::OnAssociatedInterfaceRequest(
   auto it = binding_sets_.find(interface_name);
   if (it != binding_sets_.end())
     it->second->OnRequestForFrame(render_frame_host, std::move(handle));
-}
-
-void WebContentsImpl::OnInterfaceRequest(
-    RenderFrameHost* render_frame_host,
-    const std::string& interface_name,
-    mojo::ScopedMessagePipeHandle* interface_pipe) {
-  for (auto& observer : observers_) {
-    observer.OnInterfaceRequestFromFrame(render_frame_host, interface_name,
-                                         interface_pipe);
-    if (!interface_pipe->is_valid())
-      break;
-  }
 }
 
 const GURL& WebContentsImpl::GetMainFrameLastCommittedURL() const {

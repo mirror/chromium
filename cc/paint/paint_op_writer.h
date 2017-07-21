@@ -60,8 +60,6 @@ class PaintOpWriter {
   template <typename T>
   void WriteSimple(const T& val);
 
-  void WriteFlattenable(const SkFlattenable* val);
-
   char* memory_ = nullptr;
   size_t size_ = 0u;
   size_t remaining_bytes_ = 0u;

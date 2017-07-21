@@ -12,22 +12,27 @@
 #include "ui/gfx/animation/animation_container.h"
 #include "ui/gfx/animation/animation_delegate.h"
 
+using base::Time;
+using base::TimeDelta;
+
 namespace gfx {
 
-static base::TimeDelta CalculateInterval(int frame_rate) {
+static TimeDelta CalculateInterval(int frame_rate) {
   int timer_interval = 1000000 / frame_rate;
   if (timer_interval < 10000)
     timer_interval = 10000;
-  return base::TimeDelta::FromMicroseconds(timer_interval);
+  return TimeDelta::FromMicroseconds(timer_interval);
 }
 
 LinearAnimation::LinearAnimation(AnimationDelegate* delegate, int frame_rate)
-    : LinearAnimation({}, frame_rate, delegate) {}
+    : LinearAnimation(0, frame_rate, delegate) {}
 
-LinearAnimation::LinearAnimation(base::TimeDelta duration,
+LinearAnimation::LinearAnimation(int duration,
                                  int frame_rate,
                                  AnimationDelegate* delegate)
-    : Animation(CalculateInterval(frame_rate)), state_(0.0), in_end_(false) {
+    : Animation(CalculateInterval(frame_rate)),
+      state_(0.0),
+      in_end_(false) {
   set_delegate(delegate);
   SetDuration(duration);
 }
@@ -55,8 +60,8 @@ void LinearAnimation::End() {
   Stop();
 }
 
-void LinearAnimation::SetDuration(base::TimeDelta duration) {
-  duration_ = duration;
+void LinearAnimation::SetDuration(int duration) {
+  duration_ = TimeDelta::FromMilliseconds(duration);
   if (duration_ < timer_interval())
     duration_ = timer_interval();
   if (is_animating())
@@ -64,7 +69,7 @@ void LinearAnimation::SetDuration(base::TimeDelta duration) {
 }
 
 void LinearAnimation::Step(base::TimeTicks time_now) {
-  base::TimeDelta elapsed_time = time_now - start_time();
+  TimeDelta elapsed_time = time_now - start_time();
   state_ = static_cast<double>(elapsed_time.InMicroseconds()) /
            static_cast<double>(duration_.InMicroseconds());
   if (state_ >= 1.0)

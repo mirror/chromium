@@ -26,4 +26,6 @@ foreach ($_SERVER as $name => $value)
     }
 }
 
+$headers['get_value'] = isset($_GET['get_value']) ? $_GET['get_value'] : '';
+
 echo json_encode( $headers );

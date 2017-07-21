@@ -15,7 +15,6 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "base/observer_list.h"
 #include "base/time/time.h"
 #include "chromeos/accelerometer/accelerometer_reader.h"
 #include "chromeos/accelerometer/accelerometer_types.h"
@@ -40,7 +39,6 @@ namespace ash {
 
 class ScopedDisableInternalMouseAndKeyboard;
 class TabletModeControllerTest;
-class TabletModeObserver;
 class TabletModeWindowManager;
 class TabletModeWindowManagerTest;
 
@@ -90,10 +88,9 @@ class ASH_EXPORT TabletModeController
   // Binds the mojom::TouchViewManager interface request to this object.
   void BindRequest(mojom::TouchViewManagerRequest request);
 
-  void AddObserver(TabletModeObserver* observer);
-  void RemoveObserver(TabletModeObserver* observer);
-
   // ShellObserver:
+  void OnTabletModeStarted() override;
+  void OnTabletModeEnded() override;
   void OnShellInitialized() override;
 
   // WindowTreeHostManager::Observer:
@@ -217,8 +214,6 @@ class ASH_EXPORT TabletModeController
   ForceTabletMode force_tablet_mode_ = ForceTabletMode::NONE;
 
   ScopedSessionObserver scoped_session_observer_;
-
-  base::ObserverList<TabletModeObserver> tablet_mode_observers_;
 
   base::WeakPtrFactory<TabletModeController> weak_factory_;
 

@@ -96,8 +96,6 @@ class DummyWebMediaPlayerClient : public blink::WebMediaPlayerClient {
   void DisconnectedFromRemoteDevice() override {}
   void CancelledRemotePlaybackRequest() override {}
   void RemotePlaybackStarted() override {}
-  void RemotePlaybackCompatibilityChanged(const blink::WebURL& url,
-                                          bool is_compatible) override {}
   void OnBecamePersistentVideo(bool) override {}
   bool IsAutoplayingMuted() override { return is_autoplaying_muted_; }
   bool HasSelectedVideoTrack() override { return false; }
@@ -105,7 +103,6 @@ class DummyWebMediaPlayerClient : public blink::WebMediaPlayerClient {
     return blink::WebMediaPlayer::TrackId();
   }
   bool HasNativeControls() override { return false; }
-  bool IsAudioElement() override { return false; }
   blink::WebMediaPlayer::DisplayType DisplayType() const override {
     return blink::WebMediaPlayer::DisplayType::kInline;
   }

@@ -104,8 +104,6 @@ message NetworkTrafficAnnotation {
     string data = 5;
 
     enum Destination {
-      // Do not use this value. It's just a placeholder for default value.
-      UNSEPCIFIED = 0;
       // A website the user visits or interacts with. The distinction from a
       // google owned service can be difficult when the user navigates to
       // google.com or searches with the omnibar. Therefore follow the following
@@ -113,11 +111,11 @@ message NetworkTrafficAnnotation {
       // Google (e.g. for ZeroSuggest), use GOOGLE_OWNED_SERVICE. If the request
       // can go to other domains and is perceived as a part of a website rather
       // than a native browser feature, use WEBSITE. In other cases use OTHER.
-      WEBSITE = 1;
+      WEBSITE = 0;
       // A Google owned service, like SafeBrowsing, spellchecking, ...
-      GOOGLE_OWNED_SERVICE = 2;
+      GOOGLE_OWNED_SERVICE = 1;
       // Does not go to the network and just fetches a resource locally.
-      LOCAL = 3;
+      LOCAL = 2;
       // Other endpoints, e.g. a service hosting a PAC script. In case of doubt,
       // use this category. We will audit it in the future to see whether we
       // need more categories.
@@ -132,16 +130,9 @@ message NetworkTrafficAnnotation {
   TrafficSemantics semantics = 3;
 
   message TrafficPolicy {
-    enum CookiesAllowed {
-      // Do not use this value. It's just a placeholder for default value.
-      UNSEPCIFIED = 0;
-      // Cookies are never used.
-      NO = 1;
-      // Cookies/channel IDs/... can be sent or saved (use if at least one is
-      // correct).
-      YES = 2;
-    }
-    CookiesAllowed cookies_allowed = 1;
+    // Whether cookies/channel IDs/... can be sent or saved (use true if at
+    // least one is correct).
+    bool cookies_allowed = 1;
 
     // If a request sends or stores cookies/channel IDs/... (i.e. if
     // cookies_allowed is true), we want to know which cookie store is being
@@ -174,9 +165,6 @@ message NetworkTrafficAnnotation {
   }
 
   TrafficPolicy policy = 4;
-
-  // Human readable extra comments, if required.
-  string comments = 5;
 };
 
 // NetworkTrafficAnnotations that were extracted from the source code.

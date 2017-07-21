@@ -145,7 +145,7 @@ void PaymentManifestDownloader::InitiateDownload(
           destination: WEBSITE
         }
         policy {
-          cookies_allowed: NO
+          cookies_allowed: false
           setting:
             "This feature cannot be disabled in settings. Users can uninstall/"
             "disable all payment apps to stop this feature."
@@ -175,8 +175,7 @@ void PaymentManifestDownloader::InitiateDownload(
 bool PaymentManifestDownloader::IsValidManifestUrl(const GURL& url) {
   return url.is_valid() &&
          (url.SchemeIs(url::kHttpsScheme) ||
-          (allow_http_for_test_ && url.SchemeIs(url::kHttpScheme) &&
-           url.host() == "127.0.0.1"));
+          (url.SchemeIs(url::kHttpScheme) && allow_http_for_test_));
 }
 
 }  // namespace payments

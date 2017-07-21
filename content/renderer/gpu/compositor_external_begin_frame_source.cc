@@ -86,7 +86,7 @@ void CompositorExternalBeginFrameSource::OnSetBeginFrameSourcePaused(
 }
 
 void CompositorExternalBeginFrameSource::OnBeginFrame(
-    const viz::BeginFrameArgs& args) {
+    const cc::BeginFrameArgs& args) {
   external_begin_frame_source_.OnBeginFrame(args);
 }
 

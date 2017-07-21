@@ -7,10 +7,13 @@
 
 #include "base/files/file_path.h"
 #include "base/macros.h"
-#include "base/synchronization/waitable_event.h"
 #include "components/autofill/core/browser/webdata/autofill_webdata_service.h"
 #include "components/webdata/common/web_data_service_consumer.h"
 #include "components/webdata/common/web_database_service.h"
+
+namespace base {
+class WaitableEvent;
+};
 
 namespace android_webview {
 
@@ -42,8 +45,16 @@ class AwFormDatabaseService : public WebDataServiceConsumer {
       std::unique_ptr<WDTypedResult> result) override;
 
  private:
-  bool has_form_data_result_;
-  base::WaitableEvent has_form_data_completion_;
+  struct PendingQuery {
+    bool* result;
+    base::WaitableEvent* completion;
+  };
+  typedef std::map<WebDataServiceBase::Handle, PendingQuery> QueryMap;
+
+  void ClearFormDataImpl();
+  void HasFormDataImpl(base::WaitableEvent* completion, bool* result);
+
+  QueryMap result_map_;
 
   scoped_refptr<autofill::AutofillWebDataService> autofill_data_;
   scoped_refptr<WebDatabaseService> web_database_;

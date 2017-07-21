@@ -60,7 +60,8 @@ SearchResultListView::SearchResultListView(
   AddChildView(auto_launch_indicator_);
 }
 
-SearchResultListView::~SearchResultListView() {}
+SearchResultListView::~SearchResultListView() {
+}
 
 bool SearchResultListView::IsResultViewSelected(
     const SearchResultView* result_view) const {
@@ -114,8 +115,8 @@ void SearchResultListView::SetAutoLaunchTimeout(
   if (timeout > base::TimeDelta()) {
     auto_launch_indicator_->SetVisible(true);
     auto_launch_indicator_->SetBounds(0, 0, 0, kTimeoutIndicatorHeight);
-    auto_launch_animation_.reset(
-        new gfx::LinearAnimation(timeout, kTimeoutFramerate, this));
+    auto_launch_animation_.reset(new gfx::LinearAnimation(
+        timeout.InMilliseconds(), kTimeoutFramerate, this));
     auto_launch_animation_->Start();
   } else {
     auto_launch_indicator_->SetVisible(false);
@@ -162,7 +163,8 @@ int SearchResultListView::GetYSize() {
 int SearchResultListView::DoUpdate() {
   std::vector<SearchResult*> display_results =
       AppListModel::FilterSearchResultsByDisplayType(
-          results(), SearchResult::DISPLAY_LIST,
+          results(),
+          SearchResult::DISPLAY_LIST,
           results_container_->child_count());
 
   for (size_t i = 0; i < static_cast<size_t>(results_container_->child_count());
@@ -248,8 +250,8 @@ void SearchResultListView::AnimationProgressed(
     const gfx::Animation* animation) {
   DCHECK_EQ(auto_launch_animation_.get(), animation);
   int indicator_width = auto_launch_animation_->CurrentValueBetween(0, width());
-  auto_launch_indicator_->SetBounds(0, 0, indicator_width,
-                                    kTimeoutIndicatorHeight);
+  auto_launch_indicator_->SetBounds(
+      0, 0, indicator_width, kTimeoutIndicatorHeight);
 }
 
 void SearchResultListView::SearchResultActivated(SearchResultView* view,
@@ -262,8 +264,8 @@ void SearchResultListView::SearchResultActionActivated(SearchResultView* view,
                                                        size_t action_index,
                                                        int event_flags) {
   if (view_delegate_ && view->result()) {
-    view_delegate_->InvokeSearchResultAction(view->result(), action_index,
-                                             event_flags);
+    view_delegate_->InvokeSearchResultAction(
+        view->result(), action_index, event_flags);
   }
 }
 

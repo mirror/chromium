@@ -43,8 +43,10 @@ void VoiceInteractionValuePropScreenHandler::DeclareLocalizedValues(
                IDS_VOICE_INTERACTION_VALUE_PROP_SKIP_BUTTON);
   builder->Add("voiceInteractionValuePropRetryButton",
                IDS_VOICE_INTERACTION_VALUE_PROP_RETRY_BUTTON);
-  builder->Add("voiceInteractionValuePropNextButton",
-               IDS_VOICE_INTERACTION_VALUE_PROP_NEXT_BUTTION);
+  builder->Add("voiceInteractionValuePropNoThanksButton",
+               IDS_VOICE_INTERACTION_VALUE_PROP_NO_THANKS_BUTTON);
+  builder->Add("voiceInteractionValuePropContinueButton",
+               IDS_VOICE_INTERACTION_VALUE_PROP_CONTINUE_BUTTION);
 }
 
 void VoiceInteractionValuePropScreenHandler::Bind(

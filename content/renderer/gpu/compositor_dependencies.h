@@ -9,7 +9,7 @@
 #include <vector>
 
 #include "base/memory/ref_counted.h"
-#include "components/viz/common/display/renderer_settings.h"
+#include "cc/output/renderer_settings.h"
 
 namespace base {
 class SingleThreadTaskRunner;

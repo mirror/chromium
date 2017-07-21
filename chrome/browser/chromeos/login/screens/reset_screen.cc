@@ -72,8 +72,7 @@ void ResetScreen::Show() {
   if (view_)
     view_->Show();
 
-  reset::DialogViewType dialog_type =
-      reset::DIALOG_VIEW_TYPE_SIZE;  // used by UMA metrics.
+  int dialog_type = -1;  // used by UMA metrics.
 
   ContextEditor context_editor = GetContextEditor();
 
@@ -97,7 +96,7 @@ void ResetScreen::Show() {
         weak_ptr_factory_.GetWeakPtr()));
   }
 
-  if (dialog_type < reset::DIALOG_VIEW_TYPE_SIZE) {
+  if (dialog_type >= 0) {
     UMA_HISTOGRAM_ENUMERATION("Reset.ChromeOS.PowerwashDialogShown",
                               dialog_type,
                               reset::DIALOG_VIEW_TYPE_SIZE);
@@ -205,10 +204,9 @@ void ResetScreen::OnToggleRollback() {
 }
 
 void ResetScreen::OnShowConfirm() {
-  reset::DialogViewType dialog_type =
-      context_.GetBoolean(kContextKeyIsRollbackChecked)
-          ? reset::DIALOG_SHORTCUT_CONFIRMING_POWERWASH_AND_ROLLBACK
-          : reset::DIALOG_SHORTCUT_CONFIRMING_POWERWASH_ONLY;
+  int dialog_type = context_.GetBoolean(kContextKeyIsRollbackChecked) ?
+      reset::DIALOG_SHORTCUT_CONFIRMING_POWERWASH_AND_ROLLBACK :
+      reset::DIALOG_SHORTCUT_CONFIRMING_POWERWASH_ONLY;
   UMA_HISTOGRAM_ENUMERATION(
       "Reset.ChromeOS.PowerwashDialogShown",
       dialog_type,
@@ -251,9 +249,9 @@ void ResetScreen::UpdateStatusChanged(
 // Invoked from call to CanRollbackCheck upon completion of the DBus call.
 void ResetScreen::OnRollbackCheck(bool can_rollback) {
   VLOG(1) << "Callback from CanRollbackCheck, result " << can_rollback;
-  reset::DialogViewType dialog_type =
-      can_rollback ? reset::DIALOG_SHORTCUT_OFFERING_ROLLBACK_AVAILABLE
-                   : reset::DIALOG_SHORTCUT_OFFERING_ROLLBACK_UNAVAILABLE;
+  int dialog_type = can_rollback ?
+      reset::DIALOG_SHORTCUT_OFFERING_ROLLBACK_AVAILABLE :
+      reset::DIALOG_SHORTCUT_OFFERING_ROLLBACK_UNAVAILABLE;
   UMA_HISTOGRAM_ENUMERATION("Reset.ChromeOS.PowerwashDialogShown",
                             dialog_type,
                             reset::DIALOG_VIEW_TYPE_SIZE);

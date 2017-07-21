@@ -19,8 +19,8 @@
 #include "base/memory/weak_ptr.h"
 #include "base/process/process.h"
 #include "cc/input/selection.h"
+#include "cc/output/begin_frame_args.h"
 #include "cc/scheduler/begin_frame_source.h"
-#include "components/viz/common/frame_sinks/begin_frame_args.h"
 #include "components/viz/service/frame_sinks/frame_evictor.h"
 #include "content/browser/android/content_view_core_observer.h"
 #include "content/browser/renderer_host/input/mouse_wheel_phase_handler.h"
@@ -80,6 +80,8 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   RenderWidgetHostViewAndroid(RenderWidgetHostImpl* widget,
                               ContentViewCore* content_view_core);
   ~RenderWidgetHostViewAndroid() override;
+
+  void Blur();
 
   // Interface used to observe the destruction of a RenderWidgetHostViewAndroid.
   class DestructionObserver {
@@ -153,7 +155,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
       override;
   void SubmitCompositorFrame(const viz::LocalSurfaceId& local_surface_id,
                              cc::CompositorFrame frame) override;
-  void OnDidNotProduceFrame(const viz::BeginFrameAck& ack) override;
+  void OnDidNotProduceFrame(const cc::BeginFrameAck& ack) override;
   void ClearCompositorFrame() override;
   void SetIsInVR(bool is_in_vr) override;
   bool IsInVR() const override;
@@ -237,8 +239,8 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
       const std::vector<cc::ReturnedResource>& resources) override;
 
   // cc::BeginFrameObserver implementation.
-  void OnBeginFrame(const viz::BeginFrameArgs& args) override;
-  const viz::BeginFrameArgs& LastUsedBeginFrameArgs() const override;
+  void OnBeginFrame(const cc::BeginFrameArgs& args) override;
+  const cc::BeginFrameArgs& LastUsedBeginFrameArgs() const override;
   void OnBeginFrameSourcePausedChanged(bool paused) override;
 
   // Non-virtual methods
@@ -315,9 +317,6 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   void SetSelectionControllerClientForTesting(
       std::unique_ptr<ui::TouchSelectionControllerClient> client);
 
-  void GotFocus();
-  void LostFocus();
-
  private:
   void RunAckCallbacks();
 
@@ -350,11 +349,11 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   };
   void AddBeginFrameRequest(BeginFrameRequestType request);
   void ClearBeginFrameRequest(BeginFrameRequestType request);
-  void AcknowledgeBeginFrame(const viz::BeginFrameAck& ack);
+  void AcknowledgeBeginFrame(const cc::BeginFrameAck& ack);
   void StartObservingRootWindow();
   void StopObservingRootWindow();
   void SendBeginFramePaused();
-  void SendBeginFrame(viz::BeginFrameArgs args);
+  void SendBeginFrame(cc::BeginFrameArgs args);
   bool Animate(base::TimeTicks frame_time);
   void RequestDisallowInterceptTouchEvent();
 
@@ -370,15 +369,12 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
 
   WebContentsAccessibilityAndroid* GetWebContentsAccessibilityAndroid() const;
 
-  void OnFocusInternal();
-  void LostFocusInternal();
-
   // The model object.
   RenderWidgetHostImpl* host_;
 
   // The begin frame source being observed.  Null if none.
   cc::BeginFrameSource* begin_frame_source_;
-  viz::BeginFrameArgs last_begin_frame_args_;
+  cc::BeginFrameArgs last_begin_frame_args_;
   bool begin_frame_paused_ = false;
 
   // Indicates whether and for what reason a request for begin frames has been

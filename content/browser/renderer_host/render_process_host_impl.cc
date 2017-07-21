@@ -2721,11 +2721,7 @@ bool RenderProcessHostImpl::Shutdown(int exit_code, bool wait) {
   return child_process_launcher_->Terminate(exit_code, wait);
 }
 
-bool RenderProcessHostImpl::FastShutdownIfPossible(size_t page_count,
-                                                   bool skip_unload_handlers) {
-  if (page_count && GetActiveViewCount() != page_count)
-    return false;
-
+bool RenderProcessHostImpl::FastShutdownIfPossible() {
   if (run_renderer_in_process())
     return false;  // Single process mode never shuts down the renderer.
 
@@ -2738,7 +2734,7 @@ bool RenderProcessHostImpl::FastShutdownIfPossible(size_t page_count,
   // while we're shutting down, so there's a small race here.  Given that
   // the window is small, it's unlikely that the web page has much
   // state that will be lost by not calling its unload handlers properly.
-  if (!skip_unload_handlers && !SuddenTerminationAllowed())
+  if (!SuddenTerminationAllowed())
     return false;
 
   if (GetWorkerRefCount() != 0) {
@@ -3166,6 +3162,12 @@ IPC::ChannelProxy* RenderProcessHostImpl::GetChannel() {
 void RenderProcessHostImpl::AddFilter(BrowserMessageFilter* filter) {
   filter->RegisterAssociatedInterfaces(channel_.get());
   channel_->AddFilter(filter->GetFilter());
+}
+
+bool RenderProcessHostImpl::FastShutdownForPageCount(size_t count) {
+  if (GetActiveViewCount() == count)
+    return FastShutdownIfPossible();
+  return false;
 }
 
 bool RenderProcessHostImpl::FastShutdownStarted() const {

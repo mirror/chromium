@@ -42,6 +42,12 @@ namespace blink {
 class SelectionAdjuster;
 
 const TextAffinity kSelDefaultAffinity = TextAffinity::kDownstream;
+enum SelectionDirection {
+  kDirectionForward,
+  kDirectionBackward,
+  kDirectionRight,
+  kDirectionLeft
+};
 
 template <typename Strategy>
 class CORE_TEMPLATE_CLASS_EXPORT VisibleSelectionTemplate {
@@ -149,6 +155,7 @@ class CORE_TEMPLATE_CLASS_EXPORT VisibleSelectionTemplate {
   void Validate(const SelectionTemplate<Strategy>&, TextGranularity);
 
   // Support methods for Validate()
+  void AdjustSelectionToAvoidCrossingEditingBoundaries();
   void UpdateSelectionType();
 
   // We need to store these as Positions because VisibleSelection is

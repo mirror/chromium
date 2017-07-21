@@ -270,10 +270,9 @@ void FrameSelection::DidSetSelectionDeprecated(SetSelectionOptions options,
     }
   }
 
-  SetSelectionBy set_selection_by =
-      ConvertSelectionOptionsToSetSelectionBy(options);
-  NotifyTextControlOfSelectionChange(set_selection_by);
-  if (set_selection_by == SetSelectionBy::kUser) {
+  EUserTriggered user_triggered = SelectionOptionsToUserTriggered(options);
+  NotifyTextControlOfSelectionChange(user_triggered);
+  if (user_triggered == kUserTriggered) {
     ScrollAlignment alignment;
 
     if (frame_->GetEditor()
@@ -342,15 +341,15 @@ static DispatchEventResult DispatchSelectStart(
 // When |userTriggered| is |NotUserTrigged|, return value specifies whether
 // selection is modified or not.
 bool FrameSelection::Modify(SelectionModifyAlteration alter,
-                            SelectionModifyDirection direction,
+                            SelectionDirection direction,
                             TextGranularity granularity,
-                            SetSelectionBy set_selection_by) {
+                            EUserTriggered user_triggered) {
   SelectionModifier selection_modifier(*GetFrame(),
                                        ComputeVisibleSelectionInDOMTree(),
                                        x_pos_for_vertical_arrow_navigation_);
   const bool modified =
       selection_modifier.Modify(alter, direction, granularity);
-  if (set_selection_by == SetSelectionBy::kUser &&
+  if (user_triggered == kUserTriggered &&
       selection_modifier.Selection().IsRange() &&
       ComputeVisibleSelectionInDOMTree().IsCaret() &&
       DispatchSelectStart(ComputeVisibleSelectionInDOMTree()) !=
@@ -358,7 +357,7 @@ bool FrameSelection::Modify(SelectionModifyAlteration alter,
     return false;
   }
   if (!modified) {
-    if (set_selection_by == SetSelectionBy::kSystem)
+    if (user_triggered == kNotUserTriggered)
       return false;
     // If spatial navigation enabled, focus navigator will move focus to
     // another element. See snav-input.html and snav-textarea.html
@@ -370,8 +369,7 @@ bool FrameSelection::Modify(SelectionModifyAlteration alter,
   }
 
   const SetSelectionOptions options =
-      kCloseTyping | kClearTypingStyle |
-      ConvertSetSelectionByToSetSelectionOptions(set_selection_by);
+      kCloseTyping | kClearTypingStyle | user_triggered;
   SetSelection(selection_modifier.Selection().AsSelection(), options);
 
   if (granularity == TextGranularity::kLine ||
@@ -379,7 +377,7 @@ bool FrameSelection::Modify(SelectionModifyAlteration alter,
     x_pos_for_vertical_arrow_navigation_ =
         selection_modifier.XPosForVerticalArrowNavigation();
 
-  if (set_selection_by == SetSelectionBy::kUser)
+  if (user_triggered == kUserTriggered)
     granularity_ = TextGranularity::kCharacter;
 
   ScheduleVisualUpdateForPaintInvalidationIfNeeded();
@@ -633,7 +631,7 @@ static Node* NonBoundaryShadowTreeRootNode(const Position& position) {
              : nullptr;
 }
 
-void FrameSelection::SelectAll(SetSelectionBy set_selection_by) {
+void FrameSelection::SelectAll(EUserTriggered user_triggered) {
   if (isHTMLSelectElement(GetDocument().FocusedElement())) {
     HTMLSelectElement* select_element =
         toHTMLSelectElement(GetDocument().FocusedElement());
@@ -645,7 +643,7 @@ void FrameSelection::SelectAll(SetSelectionBy set_selection_by) {
 
   Node* root = nullptr;
   Node* select_start_target = nullptr;
-  if (set_selection_by == SetSelectionBy::kUser && IsHidden()) {
+  if (user_triggered == kUserTriggered && IsHidden()) {
     // Hidden selection appears as no selection to user, in which case user-
     // triggered SelectAll should act as if there is no selection.
     root = GetDocument().documentElement();
@@ -685,23 +683,19 @@ void FrameSelection::SelectAll(SetSelectionBy set_selection_by) {
       return;
   }
 
-  // TODO(editing-dev): Should we pass in set_selection_by?
+  // TODO(editing-dev): Should we pass in user_triggered?
   SetSelection(SelectionInDOMTree::Builder()
                    .SelectAllChildren(*root)
                    .SetIsHandleVisible(IsHandleVisible())
                    .Build());
   SelectFrameElementInParentIfFullySelected();
-  // TODO(editing-dev): Should we pass in set_selection_by?
-  NotifyTextControlOfSelectionChange(SetSelectionBy::kUser);
+  // TODO(editing-dev): Should we pass in user_triggered?
+  NotifyTextControlOfSelectionChange(kUserTriggered);
   if (IsHandleVisible()) {
     ContextMenuAllowedScope scope;
     frame_->GetEventHandler().ShowNonLocatedContextMenu(nullptr,
                                                         kMenuSourceTouch);
   }
-}
-
-void FrameSelection::SelectAll() {
-  SelectAll(SetSelectionBy::kSystem);
 }
 
 void FrameSelection::NotifyAccessibilityForSelectionChange() {
@@ -817,12 +811,12 @@ void FrameSelection::UpdateAppearance() {
 }
 
 void FrameSelection::NotifyTextControlOfSelectionChange(
-    SetSelectionBy set_selection_by) {
+    EUserTriggered user_triggered) {
   TextControlElement* text_control =
       EnclosingTextControl(GetSelectionInDOMTree().Base());
   if (!text_control)
     return;
-  text_control->SelectionChanged(set_selection_by == SetSelectionBy::kUser);
+  text_control->SelectionChanged(user_triggered == kUserTriggered);
 }
 
 // Helper function that tells whether a particular node is an element that has

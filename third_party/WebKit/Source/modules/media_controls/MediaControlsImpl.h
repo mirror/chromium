@@ -66,7 +66,11 @@ class MODULES_EXPORT MediaControlsImpl final : public HTMLDivElement,
   WTF_MAKE_NONCOPYABLE(MediaControlsImpl);
 
  public:
-  static MediaControlsImpl* Create(HTMLMediaElement&, ShadowRoot&);
+  class Factory : public MediaControls::Factory {
+   public:
+    MediaControls* Create(HTMLMediaElement&, ShadowRoot&) override;
+  };
+
   ~MediaControlsImpl() = default;
 
   // Node override.
@@ -139,6 +143,8 @@ class MODULES_EXPORT MediaControlsImpl final : public HTMLDivElement,
   class BatchedControlUpdate;
   class MediaControlsResizeObserverDelegate;
   class MediaElementMutationCallback;
+
+  static MediaControlsImpl* Create(HTMLMediaElement&, ShadowRoot&);
 
   void Invalidate(Element*);
 

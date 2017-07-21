@@ -150,7 +150,7 @@ bool Surface::QueueFrame(CompositorFrame frame,
 
     // Ask the surface manager to inform |this| when its dependencies are
     // resolved.
-    surface_manager_->RequestSurfaceResolution(this);
+    surface_manager_->RequestSurfaceResolution(this, &deadline_);
   }
 
   // Returns resources for the previous pending frame.

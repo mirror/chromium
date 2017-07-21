@@ -26,11 +26,11 @@ are described by their code comments or by their code structure).
     * UI-thread object
 
 * SaveFileManager class
-    * coordinates between the download sequence and the UI thread
+    * coordinates between FILE and UI threads
         * Gets requests from `SavePackage` and communicates results back to
           `SavePackage` on the UI thread.
         * Shephards data (received from the network OR from DOM) into
-          the download sequence - via `SaveFileManager::UpdateSaveProgress`
+          FILE thread - via `SaveFileManager::UpdateSaveProgress`
     * created and owned by `BrowserMainLoop`
       (ref-counted today, but it is unnecessary - see https://crbug.com/596953)
     * The global instance can be retrieved by the Get method.
@@ -38,11 +38,11 @@ are described by their code comments or by their code structure).
 * SaveFile class
     * tracks saving a single file
     * created and owned by `SaveFileManager`
-    * download sequence object
+    * FILE-thread object
 
 * SaveFileResourceHandler class
     * tracks network downloads + forwards their status into `SaveFileManager`
-      (onto download sequence)
+      (onto FILE-thread)
     * created by `ResourceDispatcherHostImpl::BeginSaveFile`
     * IO-thread object
 

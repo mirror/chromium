@@ -89,7 +89,6 @@
 #include "chrome/browser/profiles/profile_attributes_storage.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/profiles/profiles_state.h"
-#include "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe.h"
 #include "chrome/browser/resource_coordinator/tab_manager.h"
 #include "chrome/browser/sessions/chrome_serialized_navigation_driver.h"
 #include "chrome/browser/shell_integration.h"
@@ -382,7 +381,7 @@ PrefService* InitializeLocalState(
       std::unique_ptr<PrefService> parent_local_state(
           chrome_prefs::CreateLocalState(
               parent_profile, local_state_task_runner,
-              g_browser_process->policy_service(), registry, false, nullptr));
+              g_browser_process->policy_service(), registry, false));
       registry->RegisterStringPref(prefs::kApplicationLocale, std::string());
       // Right now, we only inherit the locale setting from the parent profile.
       local_state->SetString(
@@ -1957,9 +1956,6 @@ bool ChromeBrowserMainParts::MainMessageLoopRun(int* result_code) {
   base::RunLoop run_loop;
 
   performance_monitor::PerformanceMonitor::GetInstance()->StartGatherCycle();
-
-  resource_coordinator::ResourceCoordinatorRenderProcessProbe::GetInstance()
-      ->StartGatherCycle();
 
   metrics::MetricsService::SetExecutionPhase(
       metrics::ExecutionPhase::MAIN_MESSAGE_LOOP_RUN,

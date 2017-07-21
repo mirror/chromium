@@ -173,7 +173,11 @@ void TetherNotificationPresenter::NotifyMultiplePotentialHotspotsNearby() {
 }
 
 void TetherNotificationPresenter::RemovePotentialHotspotNotification() {
-  RemoveNotificationIfVisible(kPotentialHotspotNotificationId);
+  PA_LOG(INFO) << "Removing \"potential hotspot nearby\" dialog. "
+               << "Notification ID = " << kPotentialHotspotNotificationId;
+
+  message_center_->RemoveNotification(kPotentialHotspotNotificationId,
+                                      false /* by_user */);
 }
 
 void TetherNotificationPresenter::NotifySetupRequired(
@@ -190,7 +194,11 @@ void TetherNotificationPresenter::NotifySetupRequired(
 }
 
 void TetherNotificationPresenter::RemoveSetupRequiredNotification() {
-  RemoveNotificationIfVisible(kSetupRequiredNotificationId);
+  PA_LOG(INFO) << "Removing \"setup required\" dialog. "
+               << "Notification ID = " << kSetupRequiredNotificationId;
+
+  message_center_->RemoveNotification(kSetupRequiredNotificationId,
+                                      false /* by_user */);
 }
 
 void TetherNotificationPresenter::NotifyConnectionToHostFailed() {
@@ -206,7 +214,11 @@ void TetherNotificationPresenter::NotifyConnectionToHostFailed() {
 }
 
 void TetherNotificationPresenter::RemoveConnectionToHostFailedNotification() {
-  RemoveNotificationIfVisible(kActiveHostNotificationId);
+  PA_LOG(INFO) << "Removing \"connection attempt failed\" dialog. "
+               << "Notification ID = " << kActiveHostNotificationId;
+
+  message_center_->RemoveNotification(kActiveHostNotificationId,
+                                      false /* by_user */);
 }
 
 void TetherNotificationPresenter::NotifyEnableBluetooth() {
@@ -220,7 +232,11 @@ void TetherNotificationPresenter::NotifyEnableBluetooth() {
 }
 
 void TetherNotificationPresenter::RemoveEnableBluetoothNotification() {
-  RemoveNotificationIfVisible(kEnableBluetoothNotificationId);
+  PA_LOG(INFO) << "Removing \"enable Bluetooth\" notification. "
+               << "Notification ID = " << kEnableBluetoothNotificationId;
+
+  message_center_->RemoveNotification(kEnableBluetoothNotificationId,
+                                      false /* by_user */);
 }
 
 void TetherNotificationPresenter::OnNotificationClicked(
@@ -285,16 +301,6 @@ void TetherNotificationPresenter::OpenSettingsAndRemoveNotification(
   settings_ui_delegate_->ShowSettingsSubPageForProfile(profile_,
                                                        settings_subpage);
   message_center_->RemoveNotification(notification_id, true /* by_user */);
-}
-
-void TetherNotificationPresenter::RemoveNotificationIfVisible(
-    const std::string& notification_id) {
-  if (!message_center_->FindVisibleNotificationById(notification_id))
-    return;
-
-  PA_LOG(INFO) << "Removing notification with ID \"" << notification_id
-               << "\".";
-  message_center_->RemoveNotification(notification_id, false /* by_user */);
 }
 
 }  // namespace tether

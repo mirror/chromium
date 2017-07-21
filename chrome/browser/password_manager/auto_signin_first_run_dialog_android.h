@@ -53,4 +53,7 @@ class AutoSigninFirstRunDialogAndroid : public content::WebContentsObserver {
   DISALLOW_COPY_AND_ASSIGN(AutoSigninFirstRunDialogAndroid);
 };
 
+// Native JNI methods
+bool RegisterAutoSigninFirstRunDialogAndroid(JNIEnv* env);
+
 #endif  // CHROME_BROWSER_PASSWORD_MANAGER_AUTO_SIGNIN_FIRST_RUN_DIALOG_ANDROID_H_

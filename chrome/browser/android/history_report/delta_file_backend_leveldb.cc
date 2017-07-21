@@ -12,7 +12,6 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/stringprintf.h"
 #include "chrome/browser/android/history_report/delta_file_commons.h"
-#include "third_party/leveldatabase/env_chromium.h"
 #include "third_party/leveldatabase/src/include/leveldb/comparator.h"
 #include "third_party/leveldatabase/src/include/leveldb/db.h"
 #include "third_party/leveldatabase/src/include/leveldb/iterator.h"
@@ -96,14 +95,16 @@ bool DeltaFileBackend::Init() {
   options.max_open_files = 0;  // Use minimum number of files.
   options.comparator = leveldb_cmp_.get();
   std::string path = path_.value();
-  leveldb::Status status = leveldb_env::OpenDB(options, path, &db_);
+  leveldb::DB* db = NULL;
+  leveldb::Status status = leveldb::DB::Open(options, path, &db);
   if (status.IsCorruption()) {
     LOG(WARNING) << "Deleting possibly-corrupt database";
     base::DeleteFile(path_, true);
-    status = leveldb_env::OpenDB(options, path, &db_);
+    status = leveldb::DB::Open(options, path, &db);
   }
   if (status.ok()) {
-    CHECK(db_);
+    CHECK(db);
+    db_.reset(db);
     return true;
   }
   LOG(WARNING) << "Unable to open " << path_.value() << ": "

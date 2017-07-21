@@ -122,8 +122,7 @@ TEST_F(WKWebViewConfigurationProviderTest, Purge) {
   __weak id config;
   __weak id router;
   @autoreleasepool {  // Make sure that resulting copy is deallocated.
-    id strong_config = GetProvider().GetWebViewConfiguration();
-    config = strong_config;
+    config = GetProvider().GetWebViewConfiguration();
     router = GetProvider().GetScriptMessageRouter();
     ASSERT_TRUE(config);
     ASSERT_TRUE(router);

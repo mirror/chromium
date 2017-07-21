@@ -27,10 +27,8 @@
 #include <algorithm>
 #include "core/dom/AXObjectCache.h"
 #include "core/dom/Text.h"
-#include "core/editing/FrameSelection.h"
 #include "core/editing/VisiblePosition.h"
 #include "core/editing/iterators/TextIterator.h"
-#include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/layout/LayoutBlock.h"
@@ -798,8 +796,7 @@ ALWAYS_INLINE float LayoutText::WidthFromFont(
     float text_width_so_far,
     TextDirection text_direction,
     HashSet<const SimpleFontData*>* fallback_fonts,
-    FloatRect* glyph_bounds_accumulation,
-    float expansion) const {
+    FloatRect* glyph_bounds_accumulation) const {
   if (Style()->HasTextCombine() && IsCombineText()) {
     const LayoutTextCombine* combine_text = ToLayoutTextCombine(this);
     if (combine_text->IsCombined())
@@ -812,7 +809,6 @@ ALWAYS_INLINE float LayoutText::WidthFromFont(
   DCHECK_GE(run.CharactersLength(), run.length());
   run.SetTabSize(!Style()->CollapseWhiteSpace(), Style()->GetTabSize());
   run.SetXPos(lead_width + text_width_so_far);
-  run.SetExpansion(expansion);
 
   FloatRect new_glyph_bounds;
   float result =
@@ -1759,8 +1755,7 @@ float LayoutText::Width(unsigned from,
                         TextDirection text_direction,
                         bool first_line,
                         HashSet<const SimpleFontData*>* fallback_fonts,
-                        FloatRect* glyph_bounds,
-                        float expansion) const {
+                        FloatRect* glyph_bounds) const {
   if (from >= TextLength())
     return 0;
 
@@ -1768,7 +1763,7 @@ float LayoutText::Width(unsigned from,
     len = TextLength() - from;
 
   return Width(from, len, Style(first_line)->GetFont(), x_pos, text_direction,
-               fallback_fonts, glyph_bounds, expansion);
+               fallback_fonts, glyph_bounds);
 }
 
 float LayoutText::Width(unsigned from,
@@ -1777,8 +1772,7 @@ float LayoutText::Width(unsigned from,
                         LayoutUnit x_pos,
                         TextDirection text_direction,
                         HashSet<const SimpleFontData*>* fallback_fonts,
-                        FloatRect* glyph_bounds,
-                        float expansion) const {
+                        FloatRect* glyph_bounds) const {
   DCHECK_LE(from + len, TextLength());
   if (!TextLength())
     return 0;
@@ -1807,7 +1801,7 @@ float LayoutText::Width(unsigned from,
       }
     } else {
       w = WidthFromFont(f, from, len, x_pos.ToFloat(), 0, text_direction,
-                        fallback_fonts, glyph_bounds, expansion);
+                        fallback_fonts, glyph_bounds);
     }
   } else {
     TextRun run =
@@ -1922,18 +1916,11 @@ LayoutRect LayoutText::LocalSelectionRect() const {
     start_pos = 0;
     end_pos = TextLength();
   } else {
-    const FrameSelection& frame_selection = GetFrame()->Selection();
-    if (GetSelectionState() == SelectionState::kStart) {
-      start_pos = frame_selection.LayoutSelectionStart().value();
+    std::tie(start_pos, end_pos) = SelectionStartEnd();
+    if (GetSelectionState() == SelectionState::kStart)
       end_pos = TextLength();
-    } else if (GetSelectionState() == SelectionState::kEnd) {
+    else if (GetSelectionState() == SelectionState::kEnd)
       start_pos = 0;
-      end_pos = frame_selection.LayoutSelectionEnd().value();
-    } else {
-      DCHECK(GetSelectionState() == SelectionState::kStartAndEnd);
-      start_pos = frame_selection.LayoutSelectionStart().value();
-      end_pos = frame_selection.LayoutSelectionEnd().value();
-    }
   }
 
   LayoutRect rect;

@@ -32,7 +32,6 @@
 
 #include <memory>
 #include "bindings/core/v8/V8CacheOptions.h"
-#include "core/CoreInitializer.h"
 #include "core/dom/Document.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/events/MessageEvent.h"
@@ -82,6 +81,9 @@ namespace blink {
 // TODO(toyoshim): Share implementation with WebEmbeddedWorkerImpl as much as
 // possible.
 
+template class CORE_TEMPLATE_EXPORT
+    WorkerClientsInitializer<WebSharedWorkerImpl>;
+
 WebSharedWorkerImpl::WebSharedWorkerImpl(WebSharedWorkerClient* client)
     : web_view_(nullptr),
       main_frame_(nullptr),
@@ -92,9 +94,6 @@ WebSharedWorkerImpl::WebSharedWorkerImpl(WebSharedWorkerClient* client)
       is_paused_on_start_(false),
       creation_address_space_(kWebAddressSpacePublic) {
   DCHECK(IsMainThread());
-  service_manager::mojom::InterfaceProviderPtr provider;
-  mojo::MakeRequest(&provider);
-  interface_provider_.Bind(std::move(provider));
 }
 
 WebSharedWorkerImpl::~WebSharedWorkerImpl() {
@@ -209,11 +208,6 @@ void WebSharedWorkerImpl::DidFinishDocumentLoad() {
            WTF::Unretained(this)));
   // Do nothing here since onScriptLoaderFinished() might have been already
   // invoked and |this| might have been deleted at this point.
-}
-
-service_manager::InterfaceProvider*
-WebSharedWorkerImpl::GetInterfaceProvider() {
-  return &interface_provider_;
 }
 
 void WebSharedWorkerImpl::SendProtocolMessage(int session_id,
@@ -332,8 +326,7 @@ void WebSharedWorkerImpl::OnScriptLoaderFinished() {
   SecurityOrigin* starter_origin = loading_document_->GetSecurityOrigin();
 
   WorkerClients* worker_clients = WorkerClients::Create();
-  CoreInitializer::CallModulesProvideLocalFileSystem(*worker_clients);
-  CoreInitializer::CallModulesProvideIndexedDB(*worker_clients);
+  WorkerClientsInitializer<WebSharedWorkerImpl>::Run(worker_clients);
 
   WebSecurityOrigin web_security_origin(loading_document_->GetSecurityOrigin());
   ProvideContentSettingsClientToWorker(

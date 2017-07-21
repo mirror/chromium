@@ -94,7 +94,7 @@ void ThreatDetailsCacheCollector::OpenEntry() {
           destination: OTHER
         }
         policy {
-          cookies_allowed: NO
+          cookies_allowed: false
           setting:
             "Users can enable or disable this feature by stopping sending "
             "security incident reports to Google via disabling 'Automatically "

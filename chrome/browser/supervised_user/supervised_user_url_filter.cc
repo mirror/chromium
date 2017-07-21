@@ -540,7 +540,7 @@ void SupervisedUserURLFilter::InitAsyncURLChecker(
           destination: GOOGLE_OWNED_SERVICE
         }
         policy {
-          cookies_allowed: NO
+          cookies_allowed: false
           setting:
             "This feature is only used in child accounts and cannot be "
             "disabled by settings. Parent accounts can disable it in the "

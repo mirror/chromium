@@ -64,8 +64,7 @@ SyncedPrintersManager* SyncedPrintersManagerFactory::BuildServiceInstanceFor(
           store_factory, base::BindRepeating(base::IgnoreResult(
                              &base::debug::DumpWithoutCrashing)));
 
-  return SyncedPrintersManager::Create(profile, std::move(sync_bridge))
-      .release();
+  return new SyncedPrintersManager(profile, std::move(sync_bridge));
 }
 
 }  // namespace chromeos

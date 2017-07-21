@@ -233,10 +233,10 @@ class CORE_EXPORT LocalFrame final : public Frame,
   LocalFrameClient* Client() const;
 
   ContentSettingsClient* GetContentSettingsClient();
-
-  // GetFrameResourceCoordinator may return nullptr when it can not hook up to
-  // services/resource_coordinator.
-  FrameResourceCoordinator* GetFrameResourceCoordinator();
+  FrameResourceCoordinator* GetFrameResourceCoordinator() {
+    // can be null
+    return frame_resource_coordinator_;
+  }
 
   PluginData* GetPluginData() const;
 
@@ -251,6 +251,13 @@ class CORE_EXPORT LocalFrame final : public Frame,
                                                 WebTaskRunner*);
 
   bool IsInert() const { return is_inert_; }
+
+  using FrameInitCallback = void (*)(LocalFrame*);
+  // Allows for the registration of a callback that is invoked whenever a new
+  // LocalFrame is initialized. Callbacks are executed in the order that they
+  // were added using registerInitializationCallback, and there are no checks
+  // for adding a callback multiple times.
+  static void RegisterInitializationCallback(FrameInitCallback);
 
   // If the frame hosts a PluginDocument, this method returns the
   // WebPluginContainerImpl that hosts the plugin. If the provided node is a

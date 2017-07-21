@@ -44,10 +44,9 @@ class RunAnimation : public LinearAnimation {
 
 class CancelAnimation : public LinearAnimation {
  public:
-  CancelAnimation(base::TimeDelta duration,
-                  int frame_rate,
-                  AnimationDelegate* delegate)
-      : LinearAnimation(duration, frame_rate, delegate) {}
+  CancelAnimation(int duration, int frame_rate, AnimationDelegate* delegate)
+      : LinearAnimation(duration, frame_rate, delegate) {
+  }
 
   void AnimateToState(double state) override {
     if (state >= 0.5)
@@ -60,10 +59,9 @@ class CancelAnimation : public LinearAnimation {
 
 class EndAnimation : public LinearAnimation {
  public:
-  EndAnimation(base::TimeDelta duration,
-               int frame_rate,
-               AnimationDelegate* delegate)
-      : LinearAnimation(duration, frame_rate, delegate) {}
+  EndAnimation(int duration, int frame_rate, AnimationDelegate* delegate)
+      : LinearAnimation(duration, frame_rate, delegate) {
+  }
 
   void AnimateToState(double state) override {
     if (state >= 0.5)
@@ -91,7 +89,7 @@ class DeletingAnimationDelegate : public AnimationDelegate {
 TEST_F(AnimationTest, RunCase) {
   TestAnimationDelegate ad;
   RunAnimation a1(150, &ad);
-  a1.SetDuration(base::TimeDelta::FromSeconds(2));
+  a1.SetDuration(2000);
   a1.Start();
   base::RunLoop().Run();
 
@@ -101,7 +99,7 @@ TEST_F(AnimationTest, RunCase) {
 
 TEST_F(AnimationTest, CancelCase) {
   TestAnimationDelegate ad;
-  CancelAnimation a2(base::TimeDelta::FromSeconds(2), 150, &ad);
+  CancelAnimation a2(2000, 150, &ad);
   a2.Start();
   base::RunLoop().Run();
 
@@ -113,7 +111,7 @@ TEST_F(AnimationTest, CancelCase) {
 // right delegate methods invoked.
 TEST_F(AnimationTest, EndCase) {
   TestAnimationDelegate ad;
-  EndAnimation a2(base::TimeDelta::FromSeconds(2), 150, &ad);
+  EndAnimation a2(2000, 150, &ad);
   a2.Start();
   base::RunLoop().Run();
 
@@ -145,7 +143,7 @@ TEST_F(AnimationTest, ShouldRenderRichAnimation) {
 
 // Test that current value is always 0 after Start() is called.
 TEST_F(AnimationTest, StartState) {
-  LinearAnimation animation(base::TimeDelta::FromMilliseconds(100), 60, NULL);
+  LinearAnimation animation(100, 60, NULL);
   EXPECT_EQ(0.0, animation.GetCurrentValue());
   animation.Start();
   EXPECT_EQ(0.0, animation.GetCurrentValue());

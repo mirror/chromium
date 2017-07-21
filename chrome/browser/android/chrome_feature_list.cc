@@ -18,7 +18,6 @@
 #include "components/ntp_snippets/features.h"
 #include "components/offline_pages/core/offline_page_feature.h"
 #include "components/password_manager/core/common/password_manager_features.h"
-#include "components/payments/core/features.h"
 #include "components/subresource_filter/core/browser/subresource_filter_features.h"
 #include "content/public/common/content_features.h"
 #include "jni/ChromeFeatureList_jni.h"
@@ -51,7 +50,6 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kAndroidPayIntegrationV1,
     &kAndroidPayIntegrationV2,
     &kAndroidPaymentApps,
-    &kAndroidSigninPromos,
     &kCCTBackgroundTab,
     &kCCTExternalLinkHandling,
     &kCCTPostMessageAPI,
@@ -68,7 +66,6 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kContextualSuggestionsCarousel,
     &kCustomContextMenu,
     &kCustomFeedbackUi,
-    &kDontPrefetchLibraries,
     &kDownloadHomeShowStorageInfo,
     &data_reduction_proxy::features::kDataReductionMainMenu,
     &data_reduction_proxy::features::kDataReductionSiteBreakdown,
@@ -85,7 +82,6 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kPayWithGoogleV1,
     &kPhysicalWebFeature,
     &kPhysicalWebSharing,
-    &kReaderModeInCCT,
     &kSearchEnginePromoExistingDevice,
     &kSearchEnginePromoNewDevice,
     &kSpannableInlineAutocomplete,
@@ -96,7 +92,7 @@ const base::Feature* kFeaturesExposedToJava[] = {
     &kVideoPersistence,
     &kVrBrowsingFeedback,
     &kVrCustomTabBrowsing,
-    &payments::features::kWebPaymentsModifiers,
+    &kWebPaymentsModifiers,
     &kWebPaymentsSingleAppUiSkip,
     &kWebVrAutopresent,
     &kWebVRCardboardSupport,
@@ -133,9 +129,6 @@ const base::Feature kAndroidPayIntegrationV2{"AndroidPayIntegrationV2",
 
 const base::Feature kAndroidPaymentApps{"AndroidPaymentApps",
                                         base::FEATURE_ENABLED_BY_DEFAULT};
-
-const base::Feature kAndroidSigninPromos{"AndroidSigninPromos",
-                                         base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kCCTBackgroundTab{"CCTBackgroundTab",
                                       base::FEATURE_DISABLED_BY_DEFAULT};
@@ -184,9 +177,6 @@ const base::Feature kCustomContextMenu{"CustomContextMenu",
 
 const base::Feature kCustomFeedbackUi{"CustomFeedbackUi",
                                       base::FEATURE_DISABLED_BY_DEFAULT};
-
-const base::Feature kDontPrefetchLibraries{"DontPrefetchLibraries",
-                                           base::FEATURE_DISABLED_BY_DEFAULT};
 
 const base::Feature kDownloadAutoResumptionThrottling{
     "DownloadAutoResumptionThrottling", base::FEATURE_ENABLED_BY_DEFAULT};
@@ -241,9 +231,6 @@ const base::Feature kPhysicalWebFeature{"PhysicalWeb",
 const base::Feature kPhysicalWebSharing{"PhysicalWebSharing",
                                         base::FEATURE_DISABLED_BY_DEFAULT};
 
-const base::Feature kReaderModeInCCT{"ReaderModeInCCT",
-                                     base::FEATURE_DISABLED_BY_DEFAULT};
-
 const base::Feature kSpannableInlineAutocomplete{
     "SpannableInlineAutocomplete", base::FEATURE_DISABLED_BY_DEFAULT};
 
@@ -270,6 +257,9 @@ const base::Feature kVrBrowsingFeedback{"VrBrowsingFeedback",
 
 const base::Feature kVrCustomTabBrowsing{"VrCustomTabBrowsing",
                                          base::FEATURE_DISABLED_BY_DEFAULT};
+
+const base::Feature kWebPaymentsModifiers{"WebPaymentsModifiers",
+                                          base::FEATURE_ENABLED_BY_DEFAULT};
 
 const base::Feature kWebPaymentsSingleAppUiSkip{
     "WebPaymentsSingleAppUiSkip", base::FEATURE_ENABLED_BY_DEFAULT};

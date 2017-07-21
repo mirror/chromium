@@ -46,7 +46,7 @@ var prefsGeolocation = {
     images: [],
     javascript: [],
     mic: [],
-    midi_devices: [],
+    midiDevices: [],
     notifications: [],
     plugins: [],
     protectedContent: [],
@@ -180,7 +180,7 @@ var prefsVarious = {
     images: [],
     javascript: [],
     mic: [],
-    midi_devices: [],
+    midiDevices: [],
     notifications: [
       {
         embeddingOrigin: '',
@@ -546,7 +546,7 @@ suite('SiteList', function() {
             assertEquals(
                 kControlledByLookup[prefsMixedProvider.exceptions.geolocation[i]
                                         .source] ||
-                    chrome.settingsPrivate.ControlledBy.PRIMARY_USER,
+                    '',
                 testElement.sites[i].controlledBy);
           }
         });

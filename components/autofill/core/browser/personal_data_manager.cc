@@ -12,7 +12,6 @@
 #include <string>
 #include <utility>
 
-#include "base/feature_list.h"
 #include "base/i18n/case_conversion.h"
 #include "base/i18n/timezone.h"
 #include "base/memory/ptr_util.h"
@@ -51,7 +50,6 @@
 #include "third_party/libaddressinput/src/cpp/include/libaddressinput/address_formatter.h"
 
 namespace autofill {
-
 namespace {
 
 using ::i18n::addressinput::AddressField;
@@ -833,12 +831,12 @@ void PersonalDataManager::Refresh() {
   LoadCreditCards();
 }
 
-std::vector<AutofillProfile*> PersonalDataManager::GetProfilesToSuggest()
+const std::vector<AutofillProfile*> PersonalDataManager::GetProfilesToSuggest()
     const {
   std::vector<AutofillProfile*> profiles = GetProfiles(true);
 
   // Rank the suggestions by frecency (see AutofillDataModel for details).
-  const base::Time comparison_time = AutofillClock::Now();
+  base::Time comparison_time = AutofillClock::Now();
   std::sort(profiles.begin(), profiles.end(),
             [comparison_time](const AutofillDataModel* a,
                               const AutofillDataModel* b) {
@@ -846,22 +844,6 @@ std::vector<AutofillProfile*> PersonalDataManager::GetProfilesToSuggest()
             });
 
   return profiles;
-}
-
-// static
-void PersonalDataManager::RemoveProfilesNotUsedSinceTimestamp(
-    base::Time min_last_used,
-    std::vector<AutofillProfile*>* profiles) {
-  const size_t original_size = profiles->size();
-  profiles->erase(
-      std::stable_partition(profiles->begin(), profiles->end(),
-                            [min_last_used](const AutofillDataModel* m) {
-                              return m->use_date() > min_last_used;
-                            }),
-      profiles->end());
-  const size_t num_profiles_supressed = original_size - profiles->size();
-  AutofillMetrics::LogNumberOfAddressesSuppressedForDisuse(
-      num_profiles_supressed);
 }
 
 std::vector<Suggestion> PersonalDataManager::GetProfileSuggestions(
@@ -878,15 +860,6 @@ std::vector<Suggestion> PersonalDataManager::GetProfileSuggestions(
 
   // Get the profiles to suggest, which are already sorted.
   std::vector<AutofillProfile*> profiles = GetProfilesToSuggest();
-
-  // If enabled, suppress disused address profiles when triggered from an empty
-  // field.
-  if (field_contents.empty() &&
-      base::FeatureList::IsEnabled(kAutofillSuppressDisusedAddresses)) {
-    const base::Time min_last_used =
-        AutofillClock::Now() - kDisusedProfileTimeDelta;
-    RemoveProfilesNotUsedSinceTimestamp(min_last_used, &profiles);
-  }
 
   std::vector<Suggestion> suggestions;
   // Match based on a prefix search.
@@ -1666,23 +1639,6 @@ bool PersonalDataManager::ImportCreditCard(
   // can enter the full card number without having to unmask the card.
   for (const auto& card : server_credit_cards_) {
     if (candidate_credit_card.HasSameNumberAs(*card)) {
-      // Record metric on whether expiration dates matched.
-      if (candidate_credit_card.expiration_month() ==
-              card->expiration_month() &&
-          candidate_credit_card.expiration_year() == card->expiration_year()) {
-        AutofillMetrics::LogSubmittedServerCardExpirationStatusMetric(
-            card->record_type() == CreditCard::FULL_SERVER_CARD
-                ? AutofillMetrics::FULL_SERVER_CARD_EXPIRATION_DATE_MATCHED
-                : AutofillMetrics::MASKED_SERVER_CARD_EXPIRATION_DATE_MATCHED);
-      } else {
-        AutofillMetrics::LogSubmittedServerCardExpirationStatusMetric(
-            card->record_type() == CreditCard::FULL_SERVER_CARD
-                ? AutofillMetrics::
-                      FULL_SERVER_CARD_EXPIRATION_DATE_DID_NOT_MATCH
-                : AutofillMetrics::
-                      MASKED_SERVER_CARD_EXPIRATION_DATE_DID_NOT_MATCH);
-      }
-
       if (card->record_type() == CreditCard::FULL_SERVER_CARD)
         return false;
       DCHECK_EQ(card->record_type(), CreditCard::MASKED_SERVER_CARD);

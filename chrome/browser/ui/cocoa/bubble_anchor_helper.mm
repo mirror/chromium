@@ -9,7 +9,6 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_window.h"
-#include "chrome/browser/ui/bubble_anchor_util.h"
 #import "chrome/browser/ui/cocoa/browser_window_controller.h"
 #import "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.h"
 #include "chrome/browser/ui/exclusive_access/exclusive_access_context.h"
@@ -18,6 +17,14 @@
 #include "chrome/common/pref_names.h"
 #include "components/prefs/pref_service.h"
 #import "ui/base/cocoa/cocoa_base_utils.h"
+
+namespace {
+
+// Offset from the screen edge to show dialogs when there is no location bar.
+// Don't center, since that could obscure a fullscreen bubble.
+constexpr NSInteger kFullscreenLeftOffset = 40;
+
+}  // namespace
 
 bool HasVisibleLocationBarForBrowser(Browser* browser) {
   if (!browser->SupportsWindowFeature(Browser::FEATURE_LOCATIONBAR))
@@ -41,13 +48,8 @@ bool HasVisibleLocationBarForBrowser(Browser* browser) {
   return false;
 }
 
-NSPoint GetPageInfoAnchorPointForBrowser(Browser* browser) {
-  return GetPageInfoAnchorPointForBrowser(
-      browser, HasVisibleLocationBarForBrowser(browser));
-}
-
-NSPoint GetPageInfoAnchorPointForBrowser(Browser* browser,
-                                         bool has_location_bar) {
+NSPoint GetPermissionBubbleAnchorPointForBrowser(Browser* browser,
+                                                 bool has_location_bar) {
   NSPoint anchor;
   NSWindow* parentWindow = browser->window()->GetNativeWindow();
   if (has_location_bar) {
@@ -58,9 +60,8 @@ NSPoint GetPageInfoAnchorPointForBrowser(Browser* browser,
     // Position the bubble on the left of the screen if there is no page info
     // button to point at.
     NSRect contentFrame = [[parentWindow contentView] frame];
-    anchor = NSMakePoint(
-        NSMinX(contentFrame) + bubble_anchor_util::kNoToolbarLeftOffset,
-        NSMaxY(contentFrame));
+    anchor = NSMakePoint(NSMinX(contentFrame) + kFullscreenLeftOffset,
+                         NSMaxY(contentFrame));
   }
 
   return ui::ConvertPointFromWindowToScreen(parentWindow, anchor);

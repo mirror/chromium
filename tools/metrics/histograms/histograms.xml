@@ -3998,17 +3998,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="Autofill.AddressesSuppressedForDisuse">
-  <owner>rogerm@chromium.org</owner>
-  <summary>
-    The number of address suggestions not shown in the Autofill popup because
-    they have not been used recently enough. Note that suppression only applies
-    when the user has not typed any text into the field. If any text is in the
-    field, all matching addresses are displayed, regardless of how recently they
-    have been used.
-  </summary>
-</histogram>
-
 <histogram name="Autofill.AddressSuggestionsCount">
   <owner>isherman@chromium.org</owner>
   <summary>
@@ -4718,17 +4707,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     The number of server credit cards a user has stored, measured at Chrome
     profile launch time.
-  </summary>
-</histogram>
-
-<histogram name="Autofill.SubmittedServerCardExpirationStatus"
-    enum="AutofillSubmittedServerCardExpirationStatus">
-  <owner>jsaul@google.com</owner>
-  <summary>
-    Metric to measure if a submitted card's expiration date matches the same
-    server card's expiration date (unmasked or not).  Cards are considered to be
-    the same if they have the same card number (if unmasked) or if they have the
-    same network and last four digits (if masked).
   </summary>
 </histogram>
 
@@ -8599,7 +8577,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram base="true" name="Compositing.Browser.LayersUpdateTime"
     units="microseconds">
-  <owner>threaded-rendering-dev@chromium.org</owner>
+  <owner>threaded-rendering@chromium.org</owner>
   <summary>
     Time spent updating layers, in microseconds. Recorded when layers are
     updated (in a browser process).
@@ -8916,7 +8894,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram base="true" name="Compositing.Renderer.LayersUpdateTime"
     units="microseconds">
-  <owner>threaded-rendering-dev@chromium.org</owner>
+  <owner>threaded-rendering@chromium.org</owner>
   <summary>
     Time spent updating layers, in microseconds. Recorded when layers are
     updated (in a renderer process).
@@ -18738,25 +18716,25 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="Event.Scroll.ScrollerSize.OnLoad" units="pixels">
   <owner>yigu@chromium.org</owner>
+  <owner>input-dev@chromium.org</owner>
+  <owner>threaded-rendering@chromium.org</owner>
   <summary>
     Record the area of a scroller upon page load. This is intended to help us
     measure the distribution of scrollers with different sizes. Combined with
     the other two metrics which measure the size of scrollers on scroll, we may
     have a better idea of not compositing small scrollers.
-
-    Team: input-dev@chromium.org, threaded-rendering-dev@chromium.org.
   </summary>
 </histogram>
 
 <histogram name="Event.Scroll.ScrollerSize.OnScroll" units="pixels">
   <owner>yigu@chromium.org</owner>
+  <owner>input-dev@chromium.org</owner>
+  <owner>threaded-rendering@chromium.org</owner>
   <summary>
     Record the area of a scroller upon ScrollBegin. This is intended to help us
     measure the frequencies of different sizes of scrollers getting scrolled.
     For those small scrollers that users may rarely scroll, there is no need to
     composite them even if we are able to do so.
-
-    Team: input-dev@chromium.org, threaded-rendering-dev@chromium.org.
   </summary>
 </histogram>
 
@@ -31479,37 +31457,10 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 <histogram
     name="Media.VideoCaptureService.DurationFromLastConnectToClosingConnection"
     units="ms">
-  <obsolete>
-    Deprecated 07/2017 in favor of the more differentiated durations.
-  </obsolete>
   <owner>chfremer@chromium.org</owner>
   <summary>
     Measures the duration from the time the Browser connected to the video
     capture service to the time it closed the connection.
-  </summary>
-</histogram>
-
-<histogram
-    name="Media.VideoCaptureService.DurationFromLastConnectToClosingConnectionAfterCapture"
-    units="ms">
-  <owner>chfremer@chromium.org</owner>
-  <summary>
-    Measures the duration from the time the Browser connected to the video
-    capture service to the time it closed the connection. Entries are only
-    logged if the service was used for creating an actual capture session as
-    opposed to enumerating devices only.
-  </summary>
-</histogram>
-
-<histogram
-    name="Media.VideoCaptureService.DurationFromLastConnectToClosingConnectionAfterEnumerationOnly"
-    units="ms">
-  <owner>chfremer@chromium.org</owner>
-  <summary>
-    Measures the duration from the time the Browser connected to the video
-    capture service to the time it closed the connection. Entries are only
-    logged if the service was used for enumerating devices only, but not for
-    creating an actual capture session.
   </summary>
 </histogram>
 
@@ -31524,36 +31475,10 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Media.VideoCaptureService.DurationUntilReconnect" units="ms">
-  <obsolete>
-    Deprecated 07/2017 in favor of the more differentiated durations.
-  </obsolete>
   <owner>chfremer@chromium.org</owner>
   <summary>
     Measures the duration from the time the Browser last closed or lost
     connection to the video capture service to the time it reconnects.
-  </summary>
-</histogram>
-
-<histogram name="Media.VideoCaptureService.DurationUntilReconnectAfterCapture"
-    units="ms">
-  <owner>chfremer@chromium.org</owner>
-  <summary>
-    Measures the duration from the time the Browser last closed or lost
-    connection to the video capture service to the time it reconnects. This
-    duration only gets logged for reconnects after usage of the service for
-    capture (as opposed to enumeration-only usage).
-  </summary>
-</histogram>
-
-<histogram
-    name="Media.VideoCaptureService.DurationUntilReconnectAfterEnumerationOnly"
-    units="ms">
-  <owner>chfremer@chromium.org</owner>
-  <summary>
-    Measures the duration from the time the Browser last closed or lost
-    connection to the video capture service to the time it reconnects. This
-    duration only gets logged for reconnects after enumeration-only usage of the
-    service.
   </summary>
 </histogram>
 
@@ -36911,6 +36836,18 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Net.CountOfBrokenAlternativeServices" units="services">
+  <owner>wangyix@chromium.org</owner>
+  <summary>
+    The number of broken alternative services loaded from the prefs file on
+    startup. Alternative services allow an origin server to specify additional
+    means of interacting with it on the network. A broken alternative service is
+    one whose most recent connection attempt failed and whose retry timeout
+    period has not yet expired. Recorded when broken alternative services are
+    loaded from the prefs file on startup.
+  </summary>
+</histogram>
+
 <histogram name="Net.CountOfPipelineCapableServers" units="servers">
   <obsolete>
     Deprecated 05/2014, related field trial already long expired.
@@ -36926,6 +36863,18 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>zhongyi@chromium.org</owner>
   <summary>
     This counts the number of server configs persisted in prefs file.
+  </summary>
+</histogram>
+
+<histogram name="Net.CountOfRecentlyBrokenAlternativeServices" units="services">
+  <owner>wangyix@chromium.org</owner>
+  <summary>
+    The number of recently broken alternative services loaded from the prefs
+    file on startup. Alternative services allow an origin server to specify
+    additional means of interacting with it on the network. A recently broken
+    alternative service is one whose most recent connection attempt failed.
+    Recorded when broken alternative services are loaded from the prefs file on
+    startup.
   </summary>
 </histogram>
 
@@ -42364,9 +42313,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Net.SuccessfulResolutionWithValidDNSName" enum="Boolean">
-  <obsolete>
-    Removed in 07/2017.
-  </obsolete>
   <owner>palmer@chromium.org</owner>
   <summary>
     True if a DNS name contains only characters for which
@@ -53864,14 +53810,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="PaymentRequest.Events" units="bitfield value">
-  <owner>sebsg@chromium.org</owner>
-  <summary>
-    A bitfield representing the different events that happened during the
-    Payment Request.
-  </summary>
-</histogram>
-
 <histogram name="PaymentRequest.NumberOfSelectionAdds">
   <owner>sebsg@chromium.org</owner>
   <summary>
@@ -54157,43 +54095,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     Records the elapsed time between the client sending a request to Safe
     Browsing and receiving a result, or the maximum wait time is exceeded and
     Safe Browsing is deemed to have timed out.
-  </summary>
-</histogram>
-
-<histogram name="Permissions.Engagement.Accepted" units="%">
-  <owner>dominickn@chromium.org</owner>
-  <owner>kcarattini@chromium.org</owner>
-  <owner>timloh@chromium.org</owner>
-  <summary>
-    Tracks the engagement score for sites where permission prompts are accepted.
-  </summary>
-</histogram>
-
-<histogram name="Permissions.Engagement.Denied" units="%">
-  <owner>dominickn@chromium.org</owner>
-  <owner>kcarattini@chromium.org</owner>
-  <owner>timloh@chromium.org</owner>
-  <summary>
-    Tracks the engagement score for sites where permission prompts are denied.
-  </summary>
-</histogram>
-
-<histogram name="Permissions.Engagement.Dismissed" units="%">
-  <owner>dominickn@chromium.org</owner>
-  <owner>kcarattini@chromium.org</owner>
-  <owner>timloh@chromium.org</owner>
-  <summary>
-    Tracks the engagement score for sites where permission prompts are
-    dismissed.
-  </summary>
-</histogram>
-
-<histogram name="Permissions.Engagement.Ignored" units="%">
-  <owner>dominickn@chromium.org</owner>
-  <owner>kcarattini@chromium.org</owner>
-  <owner>timloh@chromium.org</owner>
-  <summary>
-    Tracks the engagement score for sites where permission prompts are ignored.
   </summary>
 </histogram>
 
@@ -65219,25 +65120,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram base="true" name="SafeBrowsing.WebSocket.Elapsed" units="ms">
-  <owner>ricea@chromium.org</owner>
-  <summary>
-    Time spent on SafeBrowsing lookup. Since this includes any time spent on the
-    interstitial page the average may not be useful.
-  </summary>
-</histogram>
-
-<histogram name="SafeBrowsing.WebSocket.Result"
-    enum="SafeBrowsingWebSocketResult">
-  <owner>ricea@chromium.org</owner>
-  <summary>
-    Results of a SafeBrowsing lookup for a WebSocket handshake. All lookups are
-    counted. Note: the &quot;ABANDONED&quot; bucket contains both connections
-    that were abandoned before the check completed and those that were cancelled
-    when the user navigated away from the SafeBrowsing interstitial.
-  </summary>
-</histogram>
-
 <histogram name="SB.BloomFilter" units="ms">
   <obsolete>
     Has not been generated for years (7/8/14).
@@ -74301,15 +74183,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="SoftwareReporter.Cleaner.CleaningTime" units="ms">
-  <owner>alito@chromium.org</owner>
-  <summary>
-    The time between sending the user's response to the Chrome Cleaner process
-    and the Cleaner process terminating. This histogram is logged only for
-    successfully completed runs of the cleaner.
-  </summary>
-</histogram>
-
 <histogram name="SoftwareReporter.Cleaner.CleanupResult"
     enum="SoftwareReporterCleanupResult">
   <owner>ftirelo@chromium.org</owner>
@@ -74359,15 +74232,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 <histogram name="SoftwareReporter.Cleaner.RunningTime" units="ms">
   <owner>mad@chromium.org</owner>
   <summary>How long it took to run the software reporter cleaner tool.</summary>
-</histogram>
-
-<histogram name="SoftwareReporter.Cleaner.ScanningTime" units="ms">
-  <owner>alito@chromium.org</owner>
-  <summary>
-    The time between launching the Chrome Cleaner process and the cleaner having
-    scanned the user's machine and Chrome receiving an IPC call with the
-    results.
-  </summary>
 </histogram>
 
 <histogram name="SoftwareReporter.Cleaner.Version">
@@ -74512,14 +74376,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     The number of profiles whose settings will be reset once a successful
     cleanup completes.
-  </summary>
-</histogram>
-
-<histogram name="SoftwareReporter.PromptDialog.TimeUntilDone" units="ms">
-  <owner>alito@chromium.org</owner>
-  <summary>
-    The time between the Chrome Cleaner dialog being shown and the dialog being
-    closed.
   </summary>
 </histogram>
 
@@ -79486,17 +79342,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     enum="BooleanTabDiscardFastShutdown">
   <owner>oysteine@chromium.org</owner>
   <summary>
-    Recorded for each discarding, indicates whether the discarded tab succeeded
-    in doing a render process fast shutdown or not.
-  </summary>
-</histogram>
-
-<histogram name="TabManager.Discarding.DiscardedTabCouldUnsafeFastShutdown"
-    enum="BooleanTabDiscardFastShutdown">
-  <owner>oysteine@chromium.org</owner>
-  <summary>
     Recorded for each discarding, allowing us to know whether the discarded tab
-    succeeded an unsafe process shutdown (not invoking unload handlers).
+    succeeded in doing a render process fast shutdown.
   </summary>
 </histogram>
 
@@ -80538,27 +80385,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="TouchAction.EquivalentEffectiveAndWhiteListed"
-    enum="EquivalentEffectiveAndWhiteListed">
-  <owner>hayleyferr@chromium.org</owner>
-  <owner>xidachen@chromium.org</owner>
-  <summary>
-    Tracks how often the effective touch action computed by blink is or is not
-    equivalent to the whitelisted touch action computed by the compositor at the
-    end of each touch sequence.
-  </summary>
-</histogram>
-
-<histogram name="TouchAction.GestureEventFiltered"
-    enum="TouchGestureEventFiltered">
-  <owner>hayleyferr@chromium.org</owner>
-  <owner>xidachen@chromium.org</owner>
-  <summary>
-    Tracks how often a gesture event is or is not dropped due to the current
-    allowed touch action state not matching the gesture event.
-  </summary>
-</histogram>
-
 <histogram name="TouchBar.Default.Metrics" enum="DefaultTouchBarActions">
   <owner>spqchan@chromium.com</owner>
   <summary>Tracks the usage of the default touch bar buttons.</summary>
@@ -81185,22 +81011,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     case, Chrome ignore the CLD-determined language and instead uses the page
     language code. The page language code is decided by Content-Language and
     HTML lang attribute.
-  </summary>
-</histogram>
-
-<histogram name="Translate.SourceLanguage" enum="CLD3LanguageCode">
-  <owner>yyushkina@google.com</owner>
-  <summary>
-    The number of requests sent to the Translate server, grouped by source
-    language.
-  </summary>
-</histogram>
-
-<histogram name="Translate.TargetLanguage" enum="CLD3LanguageCode">
-  <owner>yyushkina@google.com</owner>
-  <summary>
-    The number of requests sent to the Translate server, grouped by target
-    language.
   </summary>
 </histogram>
 
@@ -84334,15 +84144,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     Counts the number of keys typed by the virtual keyboard between each
     backspace. This metric provides a rough approximation of an error rate for
     the virtual keyboard.
-  </summary>
-</histogram>
-
-<histogram name="VirtualKeyboard.LingeringIntermediateState"
-    enum="VirtualKeyboardControllerState">
-  <owner>oka@chromium.org</owner>
-  <summary>
-    Records whenever an intermediate keyboard state has been active for longer
-    than a fixed timeout.
   </summary>
 </histogram>
 
@@ -90278,24 +90079,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="MobileStartup.ToolbarInflationTime"/>
 </histogram_suffixes>
 
-<histogram_suffixes name="ChromeCleanerDialogDoneReason" separator="_">
-  <suffix name="Accepted" label="User accepted the prompt."/>
-  <suffix name="Canceled" label="User clicked the cancel button."/>
-  <suffix name="Dismissed"
-      label="User dismissed the prompt, for example by pressing ESC."/>
-  <suffix name="DetailsButtonClicked" label="User clicked the details button."/>
-  <affected-histogram name="SoftwareReporter.PromptDialog.TimeUntilDone"/>
-</histogram_suffixes>
-
-<histogram_suffixes name="ChromeContentBrowserClientMetricSuffixes"
-    separator=".">
-  <suffix name="search"
-      label="Custom histogram for the Google Search results page"/>
-  <suffix name="docs" label="Custom histogram for Google Docs"/>
-  <affected-histogram
-      name="ServiceWorker.ActivatedWorkerPreparationForMainFrame.Type"/>
-</histogram_suffixes>
-
 <histogram_suffixes name="ChromeOS.MachineIdRegen.AgeSeconds" separator="_">
   <suffix name="Network"/>
   <suffix name="Periodic"/>
@@ -96061,6 +95844,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
       name="PageLoad.Clients.ServiceWorker.PaintTiming.ParseStartToFirstContentfulPaint"/>
   <affected-histogram
       name="PageLoad.Clients.ServiceWorker.ParseTiming.NavigationToParseStart"/>
+  <affected-histogram
+      name="ServiceWorker.ActivatedWorkerPreparationForMainFrame.Type"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="PageLoadMetricsClientsSubresourceFilter"
@@ -96554,26 +96339,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="Permissions.Prompt.Accepted"/>
   <affected-histogram name="Permissions.Prompt.Denied"/>
   <affected-histogram name="Permissions.Prompt.Shown"/>
-</histogram_suffixes>
-
-<histogram_suffixes name="PermissionRequestTypes" separator=".">
-  <suffix name="MidiSysEx" label="Midi SysEx permission"/>
-  <suffix name="PushMessaging" label="Push messaging permission"/>
-  <suffix name="Notifications" label="Notification permission"/>
-  <suffix name="Geolocation" label="Geolocation permission"/>
-  <suffix name="ProtectedMedia" label="Protected media permission"/>
-  <suffix name="AudioCapture" label="Microphone permission"/>
-  <suffix name="VideoCapture" label="Camera permission"/>
-  <suffix name="AudioAndVideoCapture" label="Mic+Camera permission"/>
-  <suffix name="Flash" label="Flash permission"/>
-  <suffix name="RegisterProtocolHandler"
-      label="registerProtocolHandler permission"/>
-  <suffix name="Quota" label="Quota permission"/>
-  <suffix name="MultipleDownload" label="Multiple downloads permission"/>
-  <affected-histogram name="Permissions.Engagement.Accepted"/>
-  <affected-histogram name="Permissions.Engagement.Denied"/>
-  <affected-histogram name="Permissions.Engagement.Dismissed"/>
-  <affected-histogram name="Permissions.Engagement.Ignored"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="PermissionTypes" separator=".">
@@ -97863,17 +97628,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="SafeBrowsing.Pref.Scout.NoScoutGroup"/>
   <affected-histogram name="SafeBrowsing.Pref.Scout.ScoutGroup"/>
   <affected-histogram name="SafeBrowsing.Pref.Scout.SetPref"/>
-</histogram_suffixes>
-
-<histogram_suffixes name="SafeBrowsingWebSocketElapsed" separator=".">
-  <suffix name="Safe"
-      label="Passed SafeBrowsing check, or blocked and interstitial clicked
-             through"/>
-  <suffix name="Blocked" label="Failed SafeBrowsing check and blocked"/>
-  <suffix name="Abandoned"
-      label="Connection abandoned, or interstitial displayed and user did not
-             proceed to site"/>
-  <affected-histogram name="SafeBrowsing.WebSocket.Elapsed"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="SameVersionStartupCounts" separator=".">

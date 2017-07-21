@@ -82,7 +82,6 @@ AppListPresenterDelegate::AppListPresenterDelegate(
     app_list::AppListViewDelegateFactory* view_delegate_factory)
     : presenter_(presenter), view_delegate_factory_(view_delegate_factory) {
   Shell::Get()->AddShellObserver(this);
-  Shell::Get()->tablet_mode_controller()->AddObserver(this);
 }
 
 AppListPresenterDelegate::~AppListPresenterDelegate() {
@@ -91,8 +90,6 @@ AppListPresenterDelegate::~AppListPresenterDelegate() {
       keyboard::KeyboardController::GetInstance();
   if (keyboard_controller)
     keyboard_controller->RemoveObserver(this);
-  if (Shell::Get()->tablet_mode_controller())
-    Shell::Get()->tablet_mode_controller()->RemoveObserver(this);
   Shell::Get()->RemovePreTargetHandler(this);
   Shell::Get()->RemoveShellObserver(this);
 }

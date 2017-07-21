@@ -170,7 +170,7 @@ class RequestImpl : public SMSService::Request,
           destination: GOOGLE_OWNED_SERVICE
         }
         policy {
-          cookies_allowed: NO
+          cookies_allowed: false
           setting:
             "The feature cannot be disabled by settings, but it can be "
             "disabled by 'Desktop to iOS Promotions' feature flag in "

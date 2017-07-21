@@ -257,7 +257,6 @@ class WindowServer : public ServerWindowDelegate,
   bool GetFrameDecorationsForUser(
       const UserId& user_id,
       mojom::FrameDecorationValuesPtr* values) override;
-  int64_t GetInternalDisplayId() override;
 
  private:
   struct CurrentMoveLoopState;

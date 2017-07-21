@@ -102,8 +102,8 @@ class NetworkPortalDetectorImpl : public NetworkPortalDetector,
 
     std::string network_name;
     std::string network_id;
-    captive_portal::CaptivePortalResult result = captive_portal::RESULT_COUNT;
-    int response_code = -1;
+    captive_portal::CaptivePortalResult result;
+    int response_code;
   };
 
   // Starts detection process.
@@ -232,8 +232,7 @@ class NetworkPortalDetectorImpl : public NetworkPortalDetector,
   base::CancelableClosure attempt_task_;
   base::CancelableClosure attempt_timeout_;
 
-  // URL that returns a 204 response code when connected to the Internet. Used
-  // by tests.
+  // URL that returns a 204 response code when connected to the Internet.
   GURL portal_test_url_;
 
   // Detector for checking default network for a portal state.

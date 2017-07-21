@@ -78,7 +78,6 @@ class ArcProvisionNotificationServiceTest : public testing::Test {
         mock_arc_provision_notification_service_delegate.get();
     arc_provision_notification_service_ =
         ArcProvisionNotificationService::CreateForTesting(
-            profile_.get(),
             std::move(mock_arc_provision_notification_service_delegate));
 
     const AccountId account_id(AccountId::FromUserEmailGaiaId(

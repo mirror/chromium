@@ -249,7 +249,11 @@ TEST(MimeUtilTest, TestGetExtensionsForMimeType) {
     {"message/", 0, NULL, true},
     {"image/bmp", 1, "bmp"},
     {"video/*", 6, "mp4"},
+#if defined(OS_LINUX) || defined(OS_ANDROID) || defined(OS_IOS)
+    {"video/*", 6, "mpg"},
+#else
     {"video/*", 6, "mpeg"},
+#endif
     {"audio/*", 6, "oga"},
     {"aUDIo/*", 6, "wav"},
   };

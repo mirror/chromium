@@ -296,8 +296,7 @@ void WebView::DidDetachInterstitialPage() {
   NotifyAccessibilityWebContentsChanged();
 }
 
-void WebView::OnWebContentsFocused(
-    content::RenderWidgetHost* render_widget_host) {
+void WebView::OnWebContentsFocused() {
   RequestFocus();
 }
 

@@ -30,7 +30,7 @@ constexpr net::NetworkTrafficAnnotationTag kTrafficAnnotation =
           destination: WEBSITE
         }
         policy {
-          cookies_allowed: NO
+          cookies_allowed: false
           setting:
             "One can disable saving new credentials in the settings (see "
             "'Passwords and forms'). There is no setting to disable the API."

@@ -201,7 +201,7 @@
           </div>
           <button class="subpage-arrow"
               is="paper-icon-button-light" aria-label="$i18n{lockScreenTitle}"
-              aria-describedby="lockScreenSecondary"></button>
+              aria-describedby="lockScrenSecondary"></button>
         </div>
 </if>
 
@@ -311,7 +311,7 @@
         </div>
 <if expr="(not chromeos and is_posix) or is_win or is_macosx">
         <template is="dom-if" if="[[!syncStatus.domain]]">
-          <div class="footer" slot="footer">
+          <div class="footer border-top-divider" slot="footer">
             <div class="settings-box first">
               <paper-checkbox id="deleteProfile" class="start"
                   checked="{{deleteProfile_}}">

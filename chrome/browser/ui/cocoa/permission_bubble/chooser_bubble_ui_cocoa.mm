@@ -58,6 +58,10 @@
 // Should only be used outside this class for tests.
 - (NSPoint)getExpectedAnchorPoint;
 
+// Returns true if the browser has support for the location bar.
+// Should only be used outside this class for tests.
+- (bool)hasLocationBar;
+
 // Update |tableView_| when chooser options changed.
 - (void)updateTableView;
 
@@ -216,12 +220,17 @@
 }
 
 - (NSPoint)getExpectedAnchorPoint {
-  return GetPageInfoAnchorPointForBrowser(browser_);
+  return GetPermissionBubbleAnchorPointForBrowser(browser_,
+                                                  [self hasLocationBar]);
+}
+
+- (bool)hasLocationBar {
+  return HasVisibleLocationBarForBrowser(browser_);
 }
 
 - (info_bubble::BubbleArrowLocation)getExpectedArrowLocation {
-  return HasVisibleLocationBarForBrowser(browser_) ? info_bubble::kTopLeading
-                                                   : info_bubble::kNoArrow;
+  return [self hasLocationBar] ? info_bubble::kTopLeading
+                               : info_bubble::kNoArrow;
 }
 
 - (NSWindow*)getExpectedParentWindow {

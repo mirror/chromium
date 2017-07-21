@@ -17,6 +17,7 @@
 #include "ash/app_list/app_list_delegate_impl.h"
 #include "ash/ash_constants.h"
 #include "ash/ash_switches.h"
+#include "ash/aura/shell_port_classic.h"
 #include "ash/autoclick/autoclick_controller.h"
 #include "ash/cast_config_controller.h"
 #include "ash/display/ash_display_controller.h"
@@ -62,7 +63,6 @@
 #include "ash/shell_init_params.h"
 #include "ash/shell_observer.h"
 #include "ash/shell_port.h"
-#include "ash/shell_port_classic.h"
 #include "ash/shutdown_controller.h"
 #include "ash/sticky_keys/sticky_keys_controller.h"
 #include "ash/system/bluetooth/bluetooth_notification_controller.h"
@@ -420,9 +420,6 @@ PrefService* Shell::GetActiveUserPrefService() const {
 }
 
 PrefService* Shell::GetLocalStatePrefService() const {
-  if (shell_port_->GetAshConfig() == Config::MASH)
-    return local_state_.get();
-
   return shell_delegate_->GetLocalStatePrefService();
 }
 
@@ -515,6 +512,21 @@ bool Shell::GetAppListTargetVisibility() const {
 void Shell::UpdateAfterLoginStatusChange(LoginStatus status) {
   for (auto* root_window_controller : GetAllRootWindowControllers())
     root_window_controller->UpdateAfterLoginStatusChange(status);
+}
+
+void Shell::NotifyTabletModeStarted() {
+  for (auto& observer : shell_observers_)
+    observer.OnTabletModeStarted();
+}
+
+void Shell::NotifyTabletModeEnding() {
+  for (auto& observer : shell_observers_)
+    observer.OnTabletModeEnding();
+}
+
+void Shell::NotifyTabletModeEnded() {
+  for (auto& observer : shell_observers_)
+    observer.OnTabletModeEnded();
 }
 
 void Shell::NotifyOverviewModeStarting() {
@@ -621,8 +633,7 @@ Shell::Shell(std::unique_ptr<ShellDelegate> shell_delegate,
       display_configurator_(new display::DisplayConfigurator()),
       native_cursor_manager_(nullptr),
       simulate_modal_window_open_for_testing_(false),
-      is_touch_hud_projection_enabled_(false),
-      weak_factory_(this) {
+      is_touch_hud_projection_enabled_(false) {
   // TODO(sky): better refactor cash/mash dependencies. Perhaps put all cash
   // state on ShellPortClassic. http://crbug.com/671246.
 
@@ -845,17 +856,10 @@ void Shell::Init(const ShellInitParams& init_params) {
   if (config == Config::MASH && shell_delegate_->GetShellConnector()) {
     auto pref_registry = base::MakeRefCounted<PrefRegistrySimple>();
     Shell::RegisterPrefs(pref_registry.get());
-    prefs::ConnectToPrefService(shell_delegate_->GetShellConnector(),
-                                std::move(pref_registry),
-                                base::Bind(&Shell::OnPrefServiceInitialized,
-                                           weak_factory_.GetWeakPtr()),
-                                prefs::mojom::kForwarderServiceName);
-    pref_registry = base::MakeRefCounted<PrefRegistrySimple>();
     prefs::ConnectToPrefService(
         shell_delegate_->GetShellConnector(), std::move(pref_registry),
-        base::Bind(&Shell::OnLocalStatePrefServiceInitialized,
-                   weak_factory_.GetWeakPtr()),
-        prefs::mojom::kLocalStateServiceName);
+        base::Bind(&Shell::OnPrefServiceInitialized, base::Unretained(this)),
+        prefs::mojom::kForwarderServiceName);
   }
 
   // Some delegates access ShellPort during their construction. Create them here
@@ -1288,16 +1292,11 @@ void Shell::InitializeShelf() {
 
 void Shell::OnPrefServiceInitialized(
     std::unique_ptr<::PrefService> pref_service) {
+  if (!instance_)
+    return;
   // |pref_service_| is null if can't connect to Chrome (as happens when
   // running mash outside of chrome --mash and chrome isn't built).
   pref_service_ = std::move(pref_service);
-}
-
-void Shell::OnLocalStatePrefServiceInitialized(
-    std::unique_ptr<::PrefService> pref_service) {
-  // |pref_service_| is null if can't connect to Chrome (as happens when
-  // running mash outside of chrome --mash and chrome isn't built).
-  local_state_ = std::move(pref_service);
 }
 
 }  // namespace ash

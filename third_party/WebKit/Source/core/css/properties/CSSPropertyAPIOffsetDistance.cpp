@@ -4,18 +4,4 @@
 
 #include "core/css/properties/CSSPropertyAPIOffsetDistance.h"
 
-#include "core/css/parser/CSSParserContext.h"
-#include "core/css/parser/CSSPropertyParserHelpers.h"
-#include "platform/Length.h"
-
-namespace blink {
-
-const CSSValue* CSSPropertyAPIOffsetDistance::parseSingleValue(
-    CSSParserTokenRange& range,
-    const CSSParserContext& context,
-    const CSSParserLocalContext&) {
-  return CSSPropertyParserHelpers::ConsumeLengthOrPercent(range, context.Mode(),
-                                                          kValueRangeAll);
-}
-
-}  // namespace blink
+namespace blink {}  // namespace blink

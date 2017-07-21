@@ -38,8 +38,6 @@
 
 namespace {
 
-const char kMojoChannelToken[] = "mojo-channel-token";
-
 // Launch the child process:
 // |nss_path| - path to the NSS directory holding the decryption libraries.
 // |mojo_handle| - platform handle for Mojo transport.
@@ -50,7 +48,7 @@ base::Process LaunchNSSDecrypterChildProcess(
     const std::string& mojo_channel_token) {
   base::CommandLine cl(*base::CommandLine::ForCurrentProcess());
   cl.AppendSwitchASCII(switches::kTestChildProcess, "NSSDecrypterChildProcess");
-  cl.AppendSwitchASCII(kMojoChannelToken, mojo_channel_token);
+  cl.AppendSwitchASCII(switches::kMojoChannelToken, mojo_channel_token);
 
   // Set env variable needed for FF encryption libs to load.
   // See "chrome/utility/importer/nss_decryptor_mac.mm" for an explanation of
@@ -291,7 +289,7 @@ MULTIPROCESS_TEST_MAIN(NSSDecrypterChildProcess) {
               kMojoIPCChannel + base::GlobalDescriptors::kBaseDescriptor))));
   mojo::ScopedMessagePipeHandle mojo_handle = invitation->ExtractMessagePipe(
       base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
-          kMojoChannelToken));
+          switches::kMojoChannelToken));
 
   std::unique_ptr<IPC::Channel> channel =
       IPC::Channel::CreateClient(mojo_handle.release(), &listener);

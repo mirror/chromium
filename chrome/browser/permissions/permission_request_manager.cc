@@ -31,8 +31,7 @@ class CancelledRequest : public PermissionRequest {
         message_(cancelled->GetMessageText()),
 #endif
         message_fragment_(cancelled->GetMessageTextFragment()),
-        origin_(cancelled->GetOrigin()),
-        request_type_(cancelled->GetPermissionRequestType()) {
+        origin_(cancelled->GetOrigin()) {
   }
   ~CancelledRequest() override {}
 
@@ -52,10 +51,6 @@ class CancelledRequest : public PermissionRequest {
 
   void RequestFinished() override { delete this; }
 
-  PermissionRequestType GetPermissionRequestType() const override {
-    return request_type_;
-  }
-
  private:
   IconId icon_;
 #if defined(OS_ANDROID)
@@ -63,7 +58,6 @@ class CancelledRequest : public PermissionRequest {
 #endif
   base::string16 message_fragment_;
   GURL origin_;
-  PermissionRequestType request_type_;
 };
 
 bool IsMessageTextEqual(PermissionRequest* a,
@@ -193,23 +187,35 @@ void PermissionRequestManager::CancelRequest(PermissionRequest* request) {
     }
   }
 
-  if (!requests_.empty() && requests_[0] == request) {
-    // Grouped (mic+camera) requests are currently never cancelled.
-    // TODO(timloh): We should fix this at some point.
-    DCHECK_EQ(static_cast<size_t>(1), requests_.size());
+  std::vector<PermissionRequest*>::iterator requests_iter;
+  for (requests_iter = requests_.begin(); requests_iter != requests_.end();
+       requests_iter++) {
+    if (*requests_iter != request)
+      continue;
 
-    // We can finalize the prompt if we aren't showing the dialog (because we
-    // switched tabs with an active prompt), or if we are showing it and it
-    // can accept the update.
+    // We can simply erase the current entry in the request table if we aren't
+    // showing the dialog (because we switched tabs with an active prompt), or
+    // if we are showing it and it can accept the update.
     if (!view_ || view_->CanAcceptRequestUpdate()) {
-      FinalizeBubble(PermissionAction::IGNORED);
+      // TODO(timloh): We should fix this at some point.
+      // Grouped (mic+camera) requests are currently never cancelled.
+      DCHECK_EQ(static_cast<size_t>(1), requests_.size());
+
+      if (view_)
+        DeleteBubble();
+
+      RequestFinishedIncludingDuplicates(*requests_iter);
+      requests_.erase(requests_iter);
+
+      DequeueRequestsAndShowBubble();
       return;
     }
 
     // Cancel the existing request and replace it with a dummy.
-    PermissionRequest* cancelled_request = new CancelledRequest(request);
-    RequestFinishedIncludingDuplicates(request);
-    requests_[0] = cancelled_request;
+    PermissionRequest* cancelled_request =
+        new CancelledRequest(*requests_iter);
+    RequestFinishedIncludingDuplicates(*requests_iter);
+    *requests_iter = cancelled_request;
     return;
   }
 
@@ -323,24 +329,26 @@ void PermissionRequestManager::TogglePersist(bool new_value) {
 }
 
 void PermissionRequestManager::Accept() {
-  DCHECK(view_);
+  PermissionUmaUtil::PermissionPromptAccepted(requests_);
+
   std::vector<PermissionRequest*>::iterator requests_iter;
   for (requests_iter = requests_.begin(); requests_iter != requests_.end();
        requests_iter++) {
     PermissionGrantedIncludingDuplicates(*requests_iter);
   }
-  FinalizeBubble(PermissionAction::GRANTED);
+  FinalizeBubble();
 }
 
 void PermissionRequestManager::Deny() {
-  DCHECK(view_);
+  PermissionUmaUtil::PermissionPromptDenied(requests_);
+
   std::vector<PermissionRequest*>::iterator requests_iter;
   for (requests_iter = requests_.begin();
        requests_iter != requests_.end();
        requests_iter++) {
     PermissionDeniedIncludingDuplicates(*requests_iter);
   }
-  FinalizeBubble(PermissionAction::DENIED);
+  FinalizeBubble();
 }
 
 void PermissionRequestManager::Closing() {
@@ -349,15 +357,13 @@ void PermissionRequestManager::Closing() {
   if (!view_)
     return;
 #endif
-
-  DCHECK(view_);
   std::vector<PermissionRequest*>::iterator requests_iter;
   for (requests_iter = requests_.begin();
        requests_iter != requests_.end();
        requests_iter++) {
     CancelledIncludingDuplicates(*requests_iter);
   }
-  FinalizeBubble(PermissionAction::DISMISSED);
+  FinalizeBubble();
 }
 
 void PermissionRequestManager::ScheduleShowBubble() {
@@ -413,15 +419,11 @@ void PermissionRequestManager::DeleteBubble() {
   view_.reset();
 }
 
-void PermissionRequestManager::FinalizeBubble(
-    PermissionAction permission_action) {
+void PermissionRequestManager::FinalizeBubble() {
+  DCHECK(view_);
   DCHECK(!requests_.empty());
 
-  if (view_)
-    DeleteBubble();
-
-  PermissionUmaUtil::PermissionPromptResolved(requests_, web_contents(),
-                                              permission_action);
+  DeleteBubble();
 
   std::vector<PermissionRequest*>::iterator requests_iter;
   for (requests_iter = requests_.begin();
@@ -444,7 +446,7 @@ void PermissionRequestManager::CleanUpRequests() {
   queued_requests_.clear();
 
   if (view_)
-    FinalizeBubble(PermissionAction::IGNORED);
+    FinalizeBubble();
 }
 
 PermissionRequest* PermissionRequestManager::GetExistingRequest(

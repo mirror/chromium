@@ -792,7 +792,6 @@ split_static_library("ui") {
       "omnibox/chrome_omnibox_navigation_observer.h",
       "omnibox/clipboard_utils.cc",
       "omnibox/clipboard_utils.h",
-      "overlay/overlay_window.h",
       "page_info/page_info_infobar_delegate.cc",
       "page_info/page_info_infobar_delegate.h",
       "page_info/permission_menu_model.cc",
@@ -1462,7 +1461,6 @@ split_static_library("ui") {
       "autofill/save_card_bubble_controller_impl.cc",
       "autofill/save_card_bubble_controller_impl.h",
       "autofill/save_card_bubble_view.h",
-      "bubble_anchor_util.h",
       "desktop_ios_promotion/desktop_ios_promotion_footnote_delegate.h",
 
       # This test header is included because it contains forward declarations
@@ -1498,7 +1496,6 @@ split_static_library("ui") {
       "views/bookmarks/bookmark_bubble_view.h",
       "views/bookmarks/bookmark_editor_view.cc",
       "views/bookmarks/bookmark_editor_view.h",
-      "views/bubble_anchor_util_views.h",
       "views/chrome_browser_main_extra_parts_views.cc",
       "views/chrome_browser_main_extra_parts_views.h",
       "views/chrome_constrained_window_views_client.cc",
@@ -1560,8 +1557,6 @@ split_static_library("ui") {
       "views/login_view.h",
       "views/new_back_shortcut_bubble.cc",
       "views/new_back_shortcut_bubble.h",
-      "views/overlay/overlay_window_views.cc",
-      "views/overlay/overlay_window_views.h",
       "views/page_info/chosen_object_row.cc",
       "views/page_info/chosen_object_row.h",
       "views/page_info/chosen_object_row_observer.h",
@@ -1766,7 +1761,6 @@ split_static_library("ui") {
         "views/bookmarks/bookmark_menu_delegate.cc",
         "views/bookmarks/bookmark_menu_delegate.h",
         "views/browser_dialogs_views.cc",
-        "views/bubble_anchor_util_views.cc",
         "views/certificate_selector.cc",
         "views/certificate_selector.h",
         "views/certificate_viewer_win.cc",
@@ -2128,12 +2122,6 @@ split_static_library("ui") {
         "webui/signin/signin_dice_internals_handler.h",
         "webui/signin/signin_dice_internals_ui.cc",
         "webui/signin/signin_dice_internals_ui.h",
-      ]
-    }
-    if (enable_oop_heap_profiling) {
-      sources += [
-        "webui/memory_internals_ui.cc",
-        "webui/memory_internals_ui.h",
       ]
     }
     if (is_mac && !mac_views_browser) {
@@ -2686,7 +2674,6 @@ split_static_library("ui") {
         "cocoa/browser_window_touch_bar.mm",
         "cocoa/browser_window_utils.h",
         "cocoa/browser_window_utils.mm",
-        "cocoa/bubble_anchor_util_views_mac.mm",
         "cocoa/bubble_combobox.h",
         "cocoa/bubble_combobox.mm",
         "cocoa/bubble_sync_promo_controller.h",
@@ -3120,8 +3107,6 @@ split_static_library("ui") {
         "cocoa/view_resizer.h",
         "cocoa/web_contents_modal_dialog_manager_views_mac.h",
         "cocoa/web_contents_modal_dialog_manager_views_mac.mm",
-        "cocoa/web_textfield_touch_bar_controller.h",
-        "cocoa/web_textfield_touch_bar_controller.mm",
         "cocoa/window_size_autosaver.h",
         "cocoa/window_size_autosaver.mm",
 

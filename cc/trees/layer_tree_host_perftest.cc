@@ -47,7 +47,7 @@ class LayerTreeHostPerfTest : public LayerTreeTest {
   }
 
   std::unique_ptr<viz::TestLayerTreeFrameSink> CreateLayerTreeFrameSink(
-      const viz::RendererSettings& renderer_settings,
+      const RendererSettings& renderer_settings,
       double refresh_rate,
       scoped_refptr<viz::ContextProvider> compositor_context_provider,
       scoped_refptr<viz::ContextProvider> worker_context_provider) override {
@@ -67,7 +67,7 @@ class LayerTreeHostPerfTest : public LayerTreeTest {
     PostSetNeedsCommitToMainThread();
   }
 
-  void BeginMainFrame(const viz::BeginFrameArgs& args) override {
+  void BeginMainFrame(const BeginFrameArgs& args) override {
     if (begin_frame_driven_drawing_ && !TestEnded())
       layer_tree_host()->SetNeedsCommitWithForcedRedraw();
   }

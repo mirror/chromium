@@ -38,7 +38,7 @@ class Backtrace {
   bool operator==(const Backtrace& other) const;
   bool operator!=(const Backtrace& other) const;
 
-  const std::vector<Address>& addrs() const { return addrs_; }
+  const std::vector<Address>& addrs() const;
 
   size_t fingerprint() const { return fingerprint_; }
 

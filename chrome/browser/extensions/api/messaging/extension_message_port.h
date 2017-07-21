@@ -9,7 +9,7 @@
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "chrome/browser/extensions/api/messaging/message_port.h"
+#include "extensions/browser/api/messaging/message_port.h"
 #include "extensions/common/api/messaging/port_id.h"
 
 class GURL;
@@ -26,6 +26,7 @@ class Message;
 
 namespace extensions {
 class ExtensionHost;
+class MessageService;
 
 // A port that manages communication with an extension.
 // The port's lifetime will end when either all receivers close the port, or
@@ -33,14 +34,14 @@ class ExtensionHost;
 class ExtensionMessagePort : public MessagePort {
  public:
   // Create a port that is tied to frame(s) in a single tab.
-  ExtensionMessagePort(base::WeakPtr<ChannelDelegate> channel_delegate,
+  ExtensionMessagePort(base::WeakPtr<MessageService> message_service,
                        const PortId& port_id,
                        const std::string& extension_id,
                        content::RenderFrameHost* rfh,
                        bool include_child_frames);
   // Create a port that is tied to all frames of an extension, possibly spanning
   // multiple tabs, including the invisible background page, popups, etc.
-  ExtensionMessagePort(base::WeakPtr<ChannelDelegate> channel_delegate,
+  ExtensionMessagePort(base::WeakPtr<MessageService> message_service,
                        const PortId& port_id,
                        const std::string& extension_id,
                        content::RenderProcessHost* extension_process);
@@ -88,7 +89,7 @@ class ExtensionMessagePort : public MessagePort {
   // Send a IPC message to the renderer for all registered frames.
   void SendToPort(std::unique_ptr<IPC::Message> msg);
 
-  base::WeakPtr<ChannelDelegate> weak_channel_delegate_;
+  base::WeakPtr<MessageService> weak_message_service_;
 
   const PortId port_id_;
   std::string extension_id_;

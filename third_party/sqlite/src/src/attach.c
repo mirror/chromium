@@ -69,8 +69,7 @@ static void attachFunc(
   char *zPath = 0;
   char *zErr = 0;
   unsigned int flags;
-  Db *aNew;                 /* New array of Db pointers */
-  Db *pNew;                 /* Db object for the newly attached database */
+  Db *aNew;
   char *zErrDyn = 0;
   sqlite3_vfs *pVfs;
 
@@ -88,7 +87,7 @@ static void attachFunc(
   **     * Specified database name already being used.
   */
   if( db->nDb>=db->aLimit[SQLITE_LIMIT_ATTACHED]+2 ){
-    zErrDyn = sqlite3MPrintf(db, "too many attached databases - max %d",
+    zErrDyn = sqlite3MPrintf(db, "too many attached databases - max %d", 
       db->aLimit[SQLITE_LIMIT_ATTACHED]
     );
     goto attach_error;
@@ -118,8 +117,8 @@ static void attachFunc(
     if( aNew==0 ) return;
   }
   db->aDb = aNew;
-  pNew = &db->aDb[db->nDb];
-  memset(pNew, 0, sizeof(*pNew));
+  aNew = &db->aDb[db->nDb];
+  memset(aNew, 0, sizeof(*aNew));
 
   /* Open the database file. If the btree is successfully opened, use
   ** it to obtain the database schema. At this point the schema may
@@ -135,7 +134,7 @@ static void attachFunc(
   }
   assert( pVfs );
   flags |= SQLITE_OPEN_MAIN_DB;
-  rc = sqlite3BtreeOpen(pVfs, zPath, db, &pNew->pBt, 0, flags);
+  rc = sqlite3BtreeOpen(pVfs, zPath, db, &aNew->pBt, 0, flags);
   sqlite3_free( zPath );
   db->nDb++;
   db->skipBtreeMutex = 0;
@@ -144,28 +143,28 @@ static void attachFunc(
     zErrDyn = sqlite3MPrintf(db, "database is already attached");
   }else if( rc==SQLITE_OK ){
     Pager *pPager;
-    pNew->pSchema = sqlite3SchemaGet(db, pNew->pBt);
-    if( !pNew->pSchema ){
+    aNew->pSchema = sqlite3SchemaGet(db, aNew->pBt);
+    if( !aNew->pSchema ){
       rc = SQLITE_NOMEM_BKPT;
-    }else if( pNew->pSchema->file_format && pNew->pSchema->enc!=ENC(db) ){
-      zErrDyn = sqlite3MPrintf(db,
+    }else if( aNew->pSchema->file_format && aNew->pSchema->enc!=ENC(db) ){
+      zErrDyn = sqlite3MPrintf(db, 
         "attached databases must use the same text encoding as main database");
       rc = SQLITE_ERROR;
     }
-    sqlite3BtreeEnter(pNew->pBt);
-    pPager = sqlite3BtreePager(pNew->pBt);
+    sqlite3BtreeEnter(aNew->pBt);
+    pPager = sqlite3BtreePager(aNew->pBt);
     sqlite3PagerLockingMode(pPager, db->dfltLockMode);
-    sqlite3BtreeSecureDelete(pNew->pBt,
+    sqlite3BtreeSecureDelete(aNew->pBt,
                              sqlite3BtreeSecureDelete(db->aDb[0].pBt,-1) );
 #ifndef SQLITE_OMIT_PAGER_PRAGMAS
-    sqlite3BtreeSetPagerFlags(pNew->pBt,
+    sqlite3BtreeSetPagerFlags(aNew->pBt,
                       PAGER_SYNCHRONOUS_FULL | (db->flags & PAGER_FLAGS_MASK));
 #endif
-    sqlite3BtreeLeave(pNew->pBt);
+    sqlite3BtreeLeave(aNew->pBt);
   }
-  pNew->safety_level = SQLITE_DEFAULT_SYNCHRONOUS+1;
-  pNew->zDbSName = sqlite3DbStrDup(db, zName);
-  if( rc==SQLITE_OK && pNew->zDbSName==0 ){
+  aNew->safety_level = SQLITE_DEFAULT_SYNCHRONOUS+1;
+  aNew->zDbSName = sqlite3DbStrDup(db, zName);
+  if( rc==SQLITE_OK && aNew->zDbSName==0 ){
     rc = SQLITE_NOMEM_BKPT;
   }
 
@@ -183,7 +182,7 @@ static void attachFunc(
         zErrDyn = sqlite3DbStrDup(db, "Invalid key value");
         rc = SQLITE_ERROR;
         break;
-
+        
       case SQLITE_TEXT:
       case SQLITE_BLOB:
         nKey = sqlite3_value_bytes(argv[2]);
@@ -203,7 +202,7 @@ static void attachFunc(
 #endif
 
   /* If the file was opened successfully, read the schema for the new database.
-  ** If this fails, or if opening the file failed, then close the file and
+  ** If this fails, or if opening the file failed, then close the file and 
   ** remove the entry from the db->aDb[] array. i.e. put everything back the way
   ** we found it.
   */
@@ -240,7 +239,7 @@ static void attachFunc(
     }
     goto attach_error;
   }
-
+  
   return;
 
 attach_error:
@@ -331,7 +330,7 @@ static void codeAttach(
   memset(&sName, 0, sizeof(NameContext));
   sName.pParse = pParse;
 
-  if(
+  if( 
       SQLITE_OK!=(rc = resolveAttachExpr(&sName, pFilename)) ||
       SQLITE_OK!=(rc = resolveAttachExpr(&sName, pDbname)) ||
       SQLITE_OK!=(rc = resolveAttachExpr(&sName, pKey))
@@ -367,14 +366,14 @@ static void codeAttach(
                       (char *)pFunc, P4_FUNCDEF);
     assert( pFunc->nArg==-1 || (pFunc->nArg&0xff)==pFunc->nArg );
     sqlite3VdbeChangeP5(v, (u8)(pFunc->nArg));
-
+ 
     /* Code an OP_Expire. For an ATTACH statement, set P1 to true (expire this
     ** statement only). For DETACH, set it to false (expire all existing
     ** statements).
     */
     sqlite3VdbeAddOp1(v, OP_Expire, (type==SQLITE_ATTACH));
   }
-
+  
 attach_end:
   sqlite3ExprDelete(db, pFilename);
   sqlite3ExprDelete(db, pDbname);

@@ -12,7 +12,6 @@
 #include "base/memory/ref_counted.h"
 #include "base/message_loop/message_loop.h"
 #include "build/build_config.h"
-#include "mojo/edk/embedder/scoped_platform_handle.h"
 
 namespace base {
 class TaskRunner;
@@ -42,7 +41,7 @@ class MemlogReceiverPipe
   friend class base::RefCountedThreadSafe<MemlogReceiverPipe>;
   ~MemlogReceiverPipe();
 
-  mojo::edk::ScopedPlatformHandle handle_;
+  base::ScopedFD fd_;
   base::MessageLoopForIO::FileDescriptorWatcher controller_;
   std::unique_ptr<char[]> read_buffer_;
 

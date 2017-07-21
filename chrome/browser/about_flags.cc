@@ -62,7 +62,6 @@
 #include "components/omnibox/browser/omnibox_field_trial.h"
 #include "components/omnibox/browser/omnibox_switches.h"
 #include "components/password_manager/core/common/password_manager_features.h"
-#include "components/payments/core/features.h"
 #include "components/previews/core/previews_features.h"
 #include "components/proximity_auth/switches.h"
 #include "components/search_provider_logos/features.h"
@@ -1376,9 +1375,16 @@ const FeatureEntry kFeatureEntries[] = {
      FEATURE_VALUE_TYPE(features::kMediaDocumentDownloadButton)},
 #endif  // OS_ANDROID
 #if BUILDFLAG(ENABLE_PLUGINS)
+    {"prefer-html-over-flash", flag_descriptions::kPreferHtmlOverPluginsName,
+     flag_descriptions::kPreferHtmlOverPluginsDescription, kOsDesktop,
+     FEATURE_VALUE_TYPE(features::kPreferHtmlOverPlugins)},
     {"allow-nacl-socket-api", flag_descriptions::kAllowNaclSocketApiName,
      flag_descriptions::kAllowNaclSocketApiDescription, kOsDesktop,
      SINGLE_VALUE_TYPE_AND_VALUE(switches::kAllowNaClSocketAPI, "*")},
+    {"run-all-flash-in-allow-mode",
+     flag_descriptions::kRunAllFlashInAllowModeName,
+     flag_descriptions::kRunAllFlashInAllowModeDescription, kOsDesktop,
+     FEATURE_VALUE_TYPE(features::kRunAllFlashInAllowMode)},
 #endif  // ENABLE_PLUGINS
 #if defined(OS_CHROMEOS)
     {"mus", flag_descriptions::kUseMusName,
@@ -1392,16 +1398,12 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kAshEnableUnifiedDesktopName,
      flag_descriptions::kAshEnableUnifiedDesktopDescription, kOsCrOS,
      SINGLE_VALUE_TYPE(switches::kEnableUnifiedDesktop)},
-    {"disable-easy-unlock-bluetooth-low-energy-detection",
+    {"enable-easy-unlock-bluetooth-low-energy-detection",
      flag_descriptions::kEasyUnlockBluetoothLowEnergyDiscoveryName,
      flag_descriptions::kEasyUnlockBluetoothLowEnergyDiscoveryDescription,
      kOsCrOS,
-     SINGLE_DISABLE_VALUE_TYPE(
-         proximity_auth::switches::kDisableBluetoothLowEnergyDiscovery)},
-    {"enable-easyunlock-promotions",
-     flag_descriptions::kEasyUnlockPromotionsName,
-     flag_descriptions::kEasyUnlockPromotionsDescription, kOsCrOS,
-     FEATURE_VALUE_TYPE(features::kEasyUnlockPromotions)},
+     SINGLE_VALUE_TYPE(
+         proximity_auth::switches::kEnableBluetoothLowEnergyDiscovery)},
     {"spurious-power-button-window",
      flag_descriptions::kSpuriousPowerButtonWindowName,
      flag_descriptions::kSpuriousPowerButtonWindowDescription, kOsCrOS,
@@ -2535,6 +2537,9 @@ const FeatureEntry kFeatureEntries[] = {
      kOsCrOS,
      SINGLE_VALUE_TYPE(
          chromeos::switches::kDisableSystemTimezoneAutomaticDetectionPolicy)},
+    {"disable-native-cups", flag_descriptions::kDisableNativeCupsName,
+     flag_descriptions::kDisableNativeCupsDescription, kOsCrOS,
+     SINGLE_VALUE_TYPE(switches::kDisableNativeCups)},
     {"enable-cros-component", flag_descriptions::kCrOSComponentName,
      flag_descriptions::kCrOSComponentDescription, kOsCrOS,
      FEATURE_VALUE_TYPE(features::kCrOSComponent)},
@@ -2596,10 +2601,6 @@ const FeatureEntry kFeatureEntries[] = {
     {"web-payments", flag_descriptions::kWebPaymentsName,
      flag_descriptions::kWebPaymentsDescription, kOsDesktop,
      FEATURE_VALUE_TYPE(features::kWebPayments)},
-    {"web-payments-modifiers", flag_descriptions::kWebPaymentsModifiersName,
-     flag_descriptions::kWebPaymentsModifiersDescription,
-     kOsAndroid | kOsDesktop,
-     FEATURE_VALUE_TYPE(payments::features::kWebPaymentsModifiers)},
 #if defined(OS_ANDROID)
     {"enable-android-pay-integration-v1",
      flag_descriptions::kEnableAndroidPayIntegrationV1Name,
@@ -2733,6 +2734,9 @@ const FeatureEntry kFeatureEntries[] = {
      kOsAndroid,
      FEATURE_VALUE_TYPE(
          offline_pages::kOfflinePagesSvelteConcurrentLoadingFeature)},
+    {"web-payments-modifiers", flag_descriptions::kWebPaymentsModifiersName,
+     flag_descriptions::kWebPaymentsModifiersDescription, kOsAndroid,
+     FEATURE_VALUE_TYPE(chrome::android::kWebPaymentsModifiers)},
     {"xgeo-visible-networks", flag_descriptions::kXGEOVisibleNetworksName,
      flag_descriptions::kXGEOVisibleNetworksDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(chrome::android::kXGEOVisibleNetworks)},
@@ -3146,10 +3150,6 @@ const FeatureEntry kFeatureEntries[] = {
     {"mac-touchbar", flag_descriptions::kMacTouchBarName,
      flag_descriptions::kMacTouchBarDescription, kOsMac,
      FEATURE_VALUE_TYPE(features::kBrowserTouchBar)},
-    {"credit-card-autofill-touchbar",
-     flag_descriptions::kCreditCardAutofillTouchBarName,
-     flag_descriptions::kCreditCardAutofillTouchBarDescription, kOsMac,
-     FEATURE_VALUE_TYPE(autofill::kCreditCardAutofillTouchBar)},
 #endif  // defined(OS_MACOSX)
 
 #if defined(TOOLKIT_VIEWS)
@@ -3221,25 +3221,6 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEnableLockScreenAppsDescription, kOsCrOS,
      SINGLE_VALUE_TYPE(chromeos::switches::kEnableLockScreenApps)},
 #endif  // defined(OS_CHROMEOS)
-
-#if defined(OS_ANDROID)
-    {"dont-prefetch-libraries", flag_descriptions::kDontPrefetchLibrariesName,
-     flag_descriptions::kDontPrefetchLibrariesDescription, kOsAndroid,
-     FEATURE_VALUE_TYPE(chrome::android::kDontPrefetchLibraries)},
-#endif  // defined(OS_ANDROID)
-
-#if defined(OS_ANDROID)
-    {"enable-reader-mode-in-cct", flag_descriptions::kReaderModeInCCTName,
-     flag_descriptions::kReaderModeInCCTDescription, kOsAndroid,
-     FEATURE_VALUE_TYPE(chrome::android::kReaderModeInCCT)},
-#endif  // !defined(OS_ANDROID)
-
-#if defined(OS_ANDROID)
-    {"enable-android-signin-promos",
-     flag_descriptions::kAndroidSigninPromosName,
-     flag_descriptions::kAndroidSigninPromosDescription, kOsAndroid,
-     FEATURE_VALUE_TYPE(chrome::android::kAndroidSigninPromos)},
-#endif  // OS_ANDROID
 
     // NOTE: Adding new command-line switches requires adding corresponding
     // entries to enum "LoginCustomFlags" in histograms/enums.xml. See note in

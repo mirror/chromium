@@ -27,14 +27,11 @@ namespace gfx {
 class ColorSpace;
 }
 
-namespace viz {
-class RendererSettings;
-}
-
 namespace cc {
 class DrawPolygon;
 class OutputSurface;
 class RenderPass;
+class RendererSettings;
 class ResourceProvider;
 class ScopedResource;
 
@@ -44,7 +41,7 @@ class ScopedResource;
 // for reference).
 class CC_EXPORT DirectRenderer {
  public:
-  DirectRenderer(const viz::RendererSettings* settings,
+  DirectRenderer(const RendererSettings* settings,
                  OutputSurface* output_surface,
                  ResourceProvider* resource_provider);
   virtual ~DirectRenderer();
@@ -180,7 +177,7 @@ class CC_EXPORT DirectRenderer {
     return reshape_surface_size_;
   }
 
-  const viz::RendererSettings* const settings_;
+  const RendererSettings* const settings_;
   OutputSurface* const output_surface_;
   ResourceProvider* const resource_provider_;
   // This can be replaced by test implementations.

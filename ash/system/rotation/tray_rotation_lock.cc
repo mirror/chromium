@@ -44,7 +44,7 @@ bool IsUserRotationLocked() {
 namespace tray {
 
 class RotationLockDefaultView : public ActionableView,
-                                public TabletModeObserver,
+                                public ShellObserver,
                                 public ScreenOrientationController::Observer {
  public:
   explicit RotationLockDefaultView(SystemTrayItem* owner);
@@ -61,7 +61,7 @@ class RotationLockDefaultView : public ActionableView,
   void GetAccessibleNodeData(ui::AXNodeData* node_data) override;
   bool PerformAction(const ui::Event& event) override;
 
-  // TabletModeObserver:
+  // ShellObserver:
   void OnTabletModeStarted() override;
   void OnTabletModeEnded() override;
 
@@ -92,14 +92,14 @@ RotationLockDefaultView::RotationLockDefaultView(SystemTrayItem* owner)
   SetInkDropMode(InkDropHostView::InkDropMode::ON);
 
   SetVisible(IsTabletModeWindowManagerEnabled());
-  Shell::Get()->tablet_mode_controller()->AddObserver(this);
+  Shell::Get()->AddShellObserver(this);
   if (IsTabletModeWindowManagerEnabled())
     Shell::Get()->screen_orientation_controller()->AddObserver(this);
 }
 
 RotationLockDefaultView::~RotationLockDefaultView() {
   StopObservingRotation();
-  Shell::Get()->tablet_mode_controller()->RemoveObserver(this);
+  Shell::Get()->RemoveShellObserver(this);
 }
 
 void RotationLockDefaultView::Update() {
@@ -172,12 +172,11 @@ TrayRotationLock::TrayRotationLock(SystemTray* system_tray)
     : TrayImageItem(system_tray,
                     kSystemTrayRotationLockLockedIcon,
                     UMA_ROTATION_LOCK) {
-  Shell::Get()->tablet_mode_controller()->AddObserver(this);
+  Shell::Get()->AddShellObserver(this);
 }
 
 TrayRotationLock::~TrayRotationLock() {
-  if (Shell::Get()->tablet_mode_controller())
-    Shell::Get()->tablet_mode_controller()->RemoveObserver(this);
+  Shell::Get()->RemoveShellObserver(this);
 }
 
 void TrayRotationLock::OnUserRotationLockChanged() {
@@ -203,8 +202,7 @@ void TrayRotationLock::OnTabletModeEnded() {
 
 void TrayRotationLock::OnTrayViewDestroyed() {
   StopObservingRotation();
-  if (Shell::Get()->tablet_mode_controller())
-    Shell::Get()->tablet_mode_controller()->RemoveObserver(this);
+  Shell::Get()->RemoveShellObserver(this);
   TrayImageItem::OnTrayViewDestroyed();
 }
 

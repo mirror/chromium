@@ -166,7 +166,7 @@ void RegistrationRequest::Start() {
           destination: GOOGLE_OWNED_SERVICE
         }
         policy {
-          cookies_allowed: NO
+          cookies_allowed: false
           setting:
             "Support for interacting with Google Cloud Messaging is enabled by "
             "default, and there is no configuration option to completely "

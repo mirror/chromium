@@ -14,6 +14,7 @@
 
 // clang-format off
 #define IDC_VIEW_SOURCE                                35002
+#define IDC_PRINT                                      35003
 #define IDC_FIND                                       37000
 #define IDC_FIND_NEXT                                  37001
 #define IDC_FIND_PREVIOUS                              37002
@@ -35,6 +36,7 @@
 #define IDC_OPEN_URL                                   40915
 #define IDC_SHOW_OTHER_DEVICES                         40917
 #define IDC_CLOSE_ALL_INCOGNITO_TABS                   40918
+#define IDC_SHOW_CONTEXTUAL_SEARCH_SETTINGS            40919
 #define IDC_CLOSE_SETTINGS_AND_OPEN_URL                40920
 #define IDC_REQUEST_DESKTOP_SITE                       40921
 #define IDC_REQUEST_MOBILE_SITE                        40922
@@ -49,6 +51,7 @@
 #define IDC_SHOW_SAVE_PASSWORDS_SETTINGS               40945
 #define IDC_READER_MODE                                40947
 #define IDC_RATE_THIS_APP                              40948
+#define IDC_ADD_READING_LIST                           40949
 #define IDC_SHOW_READING_LIST                          40950
 #define IDC_SHOW_CLEAR_BROWSING_DATA_SETTINGS          40951
 #define IDC_SHOW_SYNC_PASSPHRASE_SETTINGS              40952

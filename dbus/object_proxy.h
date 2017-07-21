@@ -68,30 +68,30 @@ class CHROME_DBUS_EXPORT ObjectProxy
 
   // Called when an error response is returned or no response is returned.
   // Used for CallMethodWithErrorCallback().
-  using ErrorCallback = base::OnceCallback<void(ErrorResponse*)>;
+  typedef base::Callback<void(ErrorResponse*)> ErrorCallback;
 
   // Called when the response is returned. Used for CallMethod().
-  using ResponseCallback = base::OnceCallback<void(Response*)>;
+  typedef base::Callback<void(Response*)> ResponseCallback;
 
   // Called when a signal is received. Signal* is the incoming signal.
-  using SignalCallback = base::Callback<void(Signal*)>;
+  typedef base::Callback<void (Signal*)> SignalCallback;
 
   // Called when NameOwnerChanged signal is received.
-  using NameOwnerChangedCallback =
-      base::Callback<void(const std::string& old_owner,
-                          const std::string& new_owner)>;
+  typedef base::Callback<void(
+      const std::string& old_owner,
+      const std::string& new_owner)> NameOwnerChangedCallback;
 
   // Called when the service becomes available.
-  using WaitForServiceToBeAvailableCallback =
-      base::Callback<void(bool service_is_available)>;
+  typedef base::Callback<void(
+      bool service_is_available)> WaitForServiceToBeAvailableCallback;
 
   // Called when the object proxy is connected to the signal.
   // Parameters:
   // - the interface name.
   // - the signal name.
   // - whether it was successful or not.
-  using OnConnectedCallback =
-      base::Callback<void(const std::string&, const std::string&, bool)>;
+  typedef base::Callback<void (const std::string&, const std::string&, bool)>
+      OnConnectedCallback;
 
   // Calls the method of the remote object and blocks until the response
   // is returned. Returns NULL on error with the error details specified
@@ -201,45 +201,40 @@ class CHROME_DBUS_EXPORT ObjectProxy
  private:
   friend class base::RefCountedThreadSafe<ObjectProxy>;
 
-  using CallMethodInternalCallback =
-      base::OnceCallback<void(Response* response,
-                              ErrorResponse* error_response)>;
-
   // Struct of data we'll be passing from StartAsyncMethodCall() to
   // OnPendingCallIsCompleteThunk().
   struct OnPendingCallIsCompleteData {
     OnPendingCallIsCompleteData(ObjectProxy* in_object_proxy,
-                                CallMethodInternalCallback callback,
+                                ResponseCallback in_response_callback,
+                                ErrorCallback error_callback,
                                 base::TimeTicks start_time);
     ~OnPendingCallIsCompleteData();
 
     ObjectProxy* object_proxy;
-    CallMethodInternalCallback callback;
+    ResponseCallback response_callback;
+    ErrorCallback error_callback;
     base::TimeTicks start_time;
   };
-
-  // This is a helpr function to implement CallMethod() and
-  // CallMethodWithErrorCallback().
-  void CallMethodInternal(MethodCall* method_call,
-                          int timeout_ms,
-                          CallMethodInternalCallback callback);
 
   // Starts the async method call. This is a helper function to implement
   // CallMethod().
   void StartAsyncMethodCall(int timeout_ms,
                             DBusMessage* request_message,
-                            CallMethodInternalCallback callback,
+                            ResponseCallback response_callback,
+                            ErrorCallback error_callback,
                             base::TimeTicks start_time);
 
   // Called when the pending call is complete.
   void OnPendingCallIsComplete(DBusPendingCall* pending_call,
-                               CallMethodInternalCallback callback,
+                               ResponseCallback response_callback,
+                               ErrorCallback error_callback,
                                base::TimeTicks start_time);
 
-  // Runs the CallMethodInternalCallback with the given response object.
-  void RunCallMethodInternalCallback(CallMethodInternalCallback callback,
-                                     base::TimeTicks start_time,
-                                     DBusMessage* response_message);
+  // Runs the response callback with the given response object.
+  void RunResponseCallback(ResponseCallback response_callback,
+                           ErrorCallback error_callback,
+                           base::TimeTicks start_time,
+                           DBusMessage* response_message);
 
   // Redirects the function call to OnPendingCallIsComplete().
   static void OnPendingCallIsCompleteThunk(DBusPendingCall* pending_call,
@@ -277,14 +272,11 @@ class CHROME_DBUS_EXPORT ObjectProxy
                             const base::StringPiece& error_name,
                             const base::StringPiece& error_message) const;
 
-  // Used as CallMethodInternalCallback by CallMethod(). (i.e. ErrorCallback
-  // wasn't provided, hence response_callback will be used for handling the
-  // error response).
-  void OnCallMethod(const std::string& interface_name,
-                    const std::string& method_name,
-                    ResponseCallback response_callback,
-                    Response* response,
-                    ErrorResponse* error_response);
+  // Used as ErrorCallback by CallMethod().
+  void OnCallMethodError(const std::string& interface_name,
+                         const std::string& method_name,
+                         ResponseCallback response_callback,
+                         ErrorResponse* error_response);
 
   // Adds the match rule to the bus and associate the callback with the signal.
   bool AddMatchRuleWithCallback(const std::string& match_rule,
@@ -318,7 +310,7 @@ class CHROME_DBUS_EXPORT ObjectProxy
 
   // The method table where keys are absolute signal names (i.e. interface
   // name + signal name), and values are lists of the corresponding callbacks.
-  using MethodTable = std::map<std::string, std::vector<SignalCallback>>;
+  typedef std::map<std::string, std::vector<SignalCallback> > MethodTable;
   MethodTable method_table_;
 
   // The callback called when NameOwnerChanged signal is received.

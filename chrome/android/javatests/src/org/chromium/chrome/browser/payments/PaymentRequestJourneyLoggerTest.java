@@ -585,13 +585,6 @@ public class PaymentRequestJourneyLoggerTest implements MainActivityStartCallbac
                 RecordHistogram.getHistogramTotalCountForTesting(
                         "PaymentRequest.UserDidNotHaveCompleteSuggestionsForEverything."
                         + "EffectOnCompletion"));
-
-        // Make sure the events were logged correctly.
-        int expectedSample = Event.SHOWN | Event.USER_ABORTED | Event.HAD_INITIAL_FORM_OF_PAYMENT
-                | Event.HAD_NECESSARY_COMPLETE_SUGGESTIONS;
-        Assert.assertEquals(1,
-                RecordHistogram.getHistogramValueCountForTesting(
-                        "PaymentRequest.Events", expectedSample));
     }
 
     /**
@@ -631,12 +624,6 @@ public class PaymentRequestJourneyLoggerTest implements MainActivityStartCallbac
                 RecordHistogram.getHistogramTotalCountForTesting(
                         "PaymentRequest.UserHadCompleteSuggestionsForEverything."
                         + "EffectOnCompletion"));
-
-        // Make sure the events were logged correctly.
-        int expectedSample = Event.SHOWN | Event.USER_ABORTED | Event.HAD_INITIAL_FORM_OF_PAYMENT;
-        Assert.assertEquals(1,
-                RecordHistogram.getHistogramValueCountForTesting(
-                        "PaymentRequest.Events", expectedSample));
     }
 
     /**
@@ -653,9 +640,9 @@ public class PaymentRequestJourneyLoggerTest implements MainActivityStartCallbac
         String mBillingAddressId = mHelper.setProfile(new AutofillProfile("", "https://example.com",
                 true, "Jon Doe", "Google", "340 Main St", "CA", "Los Angeles", "", "90291", "",
                 "US", "650-253-0000", "", "en-US"));
-        mHelper.setCreditCard(new CreditCard("", "https://example.com", true, true,
-                /*cardholderName=*/"", "4111111111111111", "1111", "10", "2021", "visa",
-                R.drawable.visa_card, CardType.UNKNOWN, mBillingAddressId, "" /* serverId */));
+        mHelper.setCreditCard(new CreditCard("", "https://example.com", true, true, "Jon Doe",
+                /*number=*/"", "1111", "10", "2021", "visa", R.drawable.visa_card, CardType.UNKNOWN,
+                mBillingAddressId, "" /* serverId */));
 
         // Cancel the payment request.
         mPaymentRequestTestRule.triggerUIAndWait(
@@ -676,12 +663,6 @@ public class PaymentRequestJourneyLoggerTest implements MainActivityStartCallbac
                 RecordHistogram.getHistogramTotalCountForTesting(
                         "PaymentRequest.UserHadCompleteSuggestionsForEverything."
                         + "EffectOnCompletion"));
-
-        // Make sure the events were logged correctly.
-        int expectedSample = Event.SHOWN | Event.USER_ABORTED | Event.HAD_INITIAL_FORM_OF_PAYMENT;
-        Assert.assertEquals(1,
-                RecordHistogram.getHistogramValueCountForTesting(
-                        "PaymentRequest.Events", expectedSample));
     }
 
     /**
@@ -721,12 +702,6 @@ public class PaymentRequestJourneyLoggerTest implements MainActivityStartCallbac
                 RecordHistogram.getHistogramTotalCountForTesting(
                         "PaymentRequest.UserHadCompleteSuggestionsForEverything."
                         + "EffectOnCompletion"));
-
-        // Make sure the events were logged correctly.
-        int expectedSample = Event.SHOWN | Event.USER_ABORTED;
-        Assert.assertEquals(1,
-                RecordHistogram.getHistogramValueCountForTesting(
-                        "PaymentRequest.Events", expectedSample));
     }
 
     /**
@@ -764,12 +739,6 @@ public class PaymentRequestJourneyLoggerTest implements MainActivityStartCallbac
                 RecordHistogram.getHistogramTotalCountForTesting(
                         "PaymentRequest.UserHadCompleteSuggestionsForEverything."
                         + "EffectOnCompletion"));
-
-        // Make sure the events were logged correctly.
-        int expectedSample = Event.SHOWN | Event.USER_ABORTED;
-        Assert.assertEquals(1,
-                RecordHistogram.getHistogramValueCountForTesting(
-                        "PaymentRequest.Events", expectedSample));
     }
 
     /**
@@ -807,12 +776,6 @@ public class PaymentRequestJourneyLoggerTest implements MainActivityStartCallbac
                 RecordHistogram.getHistogramTotalCountForTesting(
                         "PaymentRequest.UserHadCompleteSuggestionsForEverything."
                         + "EffectOnCompletion"));
-
-        // Make sure the events were logged correctly.
-        int expectedSample = Event.SHOWN | Event.USER_ABORTED;
-        Assert.assertEquals(1,
-                RecordHistogram.getHistogramValueCountForTesting(
-                        "PaymentRequest.Events", expectedSample));
     }
 
     /**
@@ -849,13 +812,6 @@ public class PaymentRequestJourneyLoggerTest implements MainActivityStartCallbac
                 RecordHistogram.getHistogramTotalCountForTesting(
                         "PaymentRequest.UserDidNotHaveCompleteSuggestionsForEverything."
                         + "EffectOnCompletion"));
-
-        // Make sure the events were logged correctly.
-        int expectedSample = Event.SHOWN | Event.USER_ABORTED | Event.HAD_INITIAL_FORM_OF_PAYMENT
-                | Event.HAD_NECESSARY_COMPLETE_SUGGESTIONS;
-        Assert.assertEquals(1,
-                RecordHistogram.getHistogramValueCountForTesting(
-                        "PaymentRequest.Events", expectedSample));
     }
 
     /**
@@ -895,12 +851,6 @@ public class PaymentRequestJourneyLoggerTest implements MainActivityStartCallbac
                 RecordHistogram.getHistogramTotalCountForTesting(
                         "PaymentRequest.UserHadCompleteSuggestionsForEverything."
                         + "EffectOnCompletion"));
-
-        // Make sure the events were logged correctly.
-        int expectedSample = Event.SHOWN | Event.USER_ABORTED | Event.HAD_INITIAL_FORM_OF_PAYMENT;
-        Assert.assertEquals(1,
-                RecordHistogram.getHistogramValueCountForTesting(
-                        "PaymentRequest.Events", expectedSample));
     }
 
     /**
@@ -940,13 +890,6 @@ public class PaymentRequestJourneyLoggerTest implements MainActivityStartCallbac
                 RecordHistogram.getHistogramTotalCountForTesting(
                         "PaymentRequest.UserDidNotHaveCompleteSuggestionsForEverything."
                         + "EffectOnCompletion"));
-
-        // Make sure the events were logged correctly.
-        int expectedSample = Event.SHOWN | Event.USER_ABORTED | Event.HAD_INITIAL_FORM_OF_PAYMENT
-                | Event.HAD_NECESSARY_COMPLETE_SUGGESTIONS;
-        Assert.assertEquals(1,
-                RecordHistogram.getHistogramValueCountForTesting(
-                        "PaymentRequest.Events", expectedSample));
     }
 
     /**
@@ -984,13 +927,6 @@ public class PaymentRequestJourneyLoggerTest implements MainActivityStartCallbac
                 RecordHistogram.getHistogramTotalCountForTesting(
                         "PaymentRequest.UserDidNotHaveCompleteSuggestionsForEverything."
                         + "EffectOnCompletion"));
-
-        // Make sure the events were logged correctly.
-        int expectedSample = Event.SHOWN | Event.USER_ABORTED | Event.HAD_INITIAL_FORM_OF_PAYMENT
-                | Event.HAD_NECESSARY_COMPLETE_SUGGESTIONS;
-        Assert.assertEquals(1,
-                RecordHistogram.getHistogramValueCountForTesting(
-                        "PaymentRequest.Events", expectedSample));
     }
 
     /**
@@ -1031,13 +967,6 @@ public class PaymentRequestJourneyLoggerTest implements MainActivityStartCallbac
                 RecordHistogram.getHistogramTotalCountForTesting(
                         "PaymentRequest.UserDidNotHaveCompleteSuggestionsForEverything."
                         + "EffectOnCompletion"));
-
-        // Make sure the events were logged correctly.
-        int expectedSample = Event.SHOWN | Event.USER_ABORTED | Event.HAD_INITIAL_FORM_OF_PAYMENT
-                | Event.HAD_NECESSARY_COMPLETE_SUGGESTIONS;
-        Assert.assertEquals(1,
-                RecordHistogram.getHistogramValueCountForTesting(
-                        "PaymentRequest.Events", expectedSample));
     }
 
     /**
@@ -1073,12 +1002,6 @@ public class PaymentRequestJourneyLoggerTest implements MainActivityStartCallbac
         Assert.assertEquals(0,
                 RecordHistogram.getHistogramTotalCountForTesting(
                         "PaymentRequest.UserHadCompleteSuggestions.EffectOnCompletion"));
-
-        // Make sure the events were logged correctly.
-        int expectedSample = Event.SHOWN | Event.USER_ABORTED;
-        Assert.assertEquals(1,
-                RecordHistogram.getHistogramValueCountForTesting(
-                        "PaymentRequest.Events", expectedSample));
     }
 
     /**

@@ -1,5 +1,5 @@
 (async function(testRunner) {
-  let {page, session, dp} = await testRunner.startBlank('Tests frame lifetime events.');
+  let {page, session, dp} = await testRunner.startBlank('');
 
   dp.Page.enable();
   session.evaluate(`

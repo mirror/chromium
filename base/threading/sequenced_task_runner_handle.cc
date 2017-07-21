@@ -51,11 +51,7 @@ scoped_refptr<SequencedTaskRunner> SequencedTaskRunnerHandle::Get() {
   // sequenced task, return a SequencedTaskRunner for it.
   scoped_refptr<SequencedWorkerPool> pool =
       SequencedWorkerPool::GetWorkerPoolForCurrentThread();
-  // Note if you hit this: the problem isn't the lack of a |pool|, it's the lack
-  // of a sequenced context above. The |pool| is just the last desperate attempt
-  // at finding such a context from the deprecated SequencedWorkerPool.
-  DCHECK(pool) << "Error: This caller requires a sequenced context (i.e. the "
-                  "current task needs to run from a SequencedTaskRunner).";
+  DCHECK(pool);
   SequencedWorkerPool::SequenceToken sequence_token =
       SequencedWorkerPool::GetSequenceTokenForCurrentThread();
   DCHECK(sequence_token.IsValid());

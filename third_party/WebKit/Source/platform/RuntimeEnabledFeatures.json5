@@ -364,7 +364,7 @@
     },
     {
       name: "DeviceMemoryHeader",
-      status: "stable",
+      status: "experimental",
     },
     {
       name: "DisplayList2dCanvas",
@@ -1153,10 +1153,6 @@
     },
     {
       name: "Worklet",
-      status: "experimental",
-    },
-    {
-      name: "WorkStealingInScriptRunner",
       status: "experimental",
     },
     {

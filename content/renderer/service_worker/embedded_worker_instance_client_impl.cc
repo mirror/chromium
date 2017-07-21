@@ -120,11 +120,8 @@ EmbeddedWorkerInstanceClientImpl::StartWorkerContext(
     mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info,
     std::unique_ptr<ServiceWorkerContextClient> context_client) {
   std::unique_ptr<blink::WebServiceWorkerInstalledScriptsManager> manager;
-  // |installed_scripts_info| is null if scripts should be served by net layer,
-  // when the worker is not installed, or the worker is launched for checking
-  // the update.
-  if (ServiceWorkerUtils::IsScriptStreamingEnabled() &&
-      installed_scripts_info) {
+  if (ServiceWorkerUtils::IsScriptStreamingEnabled()) {
+    DCHECK(installed_scripts_info);
     manager = WebServiceWorkerInstalledScriptsManagerImpl::Create(
         std::move(installed_scripts_info), io_thread_runner_);
   }

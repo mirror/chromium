@@ -69,7 +69,6 @@ class BackgroundLoaderOffliner : public Offliner,
 
   // SnapshotController::Client implementation.
   void StartSnapshot() override;
-  void RunRenovations() override;
 
   void SetSnapshotControllerForTest(
       std::unique_ptr<SnapshotController> controller);

@@ -31,7 +31,6 @@
 #include "cc/test/test_gles2_interface.h"
 #include "cc/test/test_shared_bitmap_manager.h"
 #include "cc/test/test_web_graphics_context_3d.h"
-#include "components/viz/common/display/renderer_settings.h"
 #include "gpu/GLES2/gl2extchromium.h"
 #include "gpu/command_buffer/client/context_support.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -218,22 +217,14 @@ class GLRendererShaderPixelTest : public GLRendererPixelTest {
       return;
     }
 
-    TestShader(ProgramKey::Texture(precision, sampler, PREMULTIPLIED_ALPHA,
-                                   false, true));
-    TestShader(ProgramKey::Texture(precision, sampler, PREMULTIPLIED_ALPHA,
-                                   false, false));
-    TestShader(ProgramKey::Texture(precision, sampler, PREMULTIPLIED_ALPHA,
-                                   true, true));
-    TestShader(ProgramKey::Texture(precision, sampler, PREMULTIPLIED_ALPHA,
-                                   true, false));
+    TestShader(
+        ProgramKey::Texture(precision, sampler, PREMULTIPLIED_ALPHA, false));
+    TestShader(
+        ProgramKey::Texture(precision, sampler, PREMULTIPLIED_ALPHA, true));
     TestShader(ProgramKey::Texture(precision, sampler, NON_PREMULTIPLIED_ALPHA,
-                                   false, true));
-    TestShader(ProgramKey::Texture(precision, sampler, NON_PREMULTIPLIED_ALPHA,
-                                   false, false));
-    TestShader(ProgramKey::Texture(precision, sampler, NON_PREMULTIPLIED_ALPHA,
-                                   true, true));
-    TestShader(ProgramKey::Texture(precision, sampler, NON_PREMULTIPLIED_ALPHA,
-                                   true, false));
+                                   false));
+    TestShader(
+        ProgramKey::Texture(precision, sampler, NON_PREMULTIPLIED_ALPHA, true));
     TestShader(ProgramKey::Tile(precision, sampler, NO_AA, NO_SWIZZLE, false));
     TestShader(ProgramKey::Tile(precision, sampler, NO_AA, DO_SWIZZLE, false));
     TestShader(ProgramKey::Tile(precision, sampler, USE_AA, NO_SWIZZLE, false));
@@ -380,12 +371,12 @@ INSTANTIATE_TEST_CASE_P(MaskShadersCompile,
 
 class FakeRendererGL : public GLRenderer {
  public:
-  FakeRendererGL(const viz::RendererSettings* settings,
+  FakeRendererGL(const RendererSettings* settings,
                  OutputSurface* output_surface,
                  ResourceProvider* resource_provider)
       : GLRenderer(settings, output_surface, resource_provider, nullptr) {}
 
-  FakeRendererGL(const viz::RendererSettings* settings,
+  FakeRendererGL(const RendererSettings* settings,
                  OutputSurface* output_surface,
                  ResourceProvider* resource_provider,
                  TextureMailboxDeleter* texture_mailbox_deleter)
@@ -424,7 +415,7 @@ class GLRendererWithDefaultHarnessTest : public GLRendererTest {
 
   void SwapBuffers() { renderer_->SwapBuffers(std::vector<ui::LatencyInfo>()); }
 
-  viz::RendererSettings settings_;
+  RendererSettings settings_;
   FakeOutputSurfaceClient output_surface_client_;
   std::unique_ptr<FakeOutputSurface> output_surface_;
   std::unique_ptr<viz::SharedBitmapManager> shared_bitmap_manager_;
@@ -535,7 +526,7 @@ class GLRendererShaderTest : public GLRendererTest {
     EXPECT_EQ(program, renderer_->current_program_);
   }
 
-  viz::RendererSettings settings_;
+  RendererSettings settings_;
   FakeOutputSurfaceClient output_surface_client_;
   std::unique_ptr<FakeOutputSurface> output_surface_;
   std::unique_ptr<viz::SharedBitmapManager> shared_bitmap_manager_;
@@ -673,7 +664,7 @@ TEST_F(GLRendererTest, InitializationDoesNotMakeSynchronousCalls) {
       FakeResourceProvider::Create(output_surface->context_provider(),
                                    shared_bitmap_manager.get());
 
-  viz::RendererSettings settings;
+  RendererSettings settings;
   FakeRendererGL renderer(&settings, output_surface.get(),
                           resource_provider.get());
 }
@@ -709,7 +700,7 @@ TEST_F(GLRendererTest, InitializationWithQuicklyLostContextDoesNotAssert) {
       FakeResourceProvider::Create(output_surface->context_provider(),
                                    shared_bitmap_manager.get());
 
-  viz::RendererSettings settings;
+  RendererSettings settings;
   FakeRendererGL renderer(&settings, output_surface.get(),
                           resource_provider.get());
 }
@@ -743,7 +734,7 @@ TEST_F(GLRendererTest, OpaqueBackground) {
       FakeResourceProvider::Create(output_surface->context_provider(),
                                    shared_bitmap_manager.get());
 
-  viz::RendererSettings settings;
+  RendererSettings settings;
   FakeRendererGL renderer(&settings, output_surface.get(),
                           resource_provider.get());
   renderer.Initialize();
@@ -787,7 +778,7 @@ TEST_F(GLRendererTest, TransparentBackground) {
       FakeResourceProvider::Create(output_surface->context_provider(),
                                    shared_bitmap_manager.get());
 
-  viz::RendererSettings settings;
+  RendererSettings settings;
   FakeRendererGL renderer(&settings, output_surface.get(),
                           resource_provider.get());
   renderer.Initialize();
@@ -824,7 +815,7 @@ TEST_F(GLRendererTest, OffscreenOutputSurface) {
       FakeResourceProvider::Create(output_surface->context_provider(),
                                    shared_bitmap_manager.get());
 
-  viz::RendererSettings settings;
+  RendererSettings settings;
   FakeRendererGL renderer(&settings, output_surface.get(),
                           resource_provider.get());
   renderer.Initialize();
@@ -883,7 +874,7 @@ TEST_F(GLRendererTest, ActiveTextureState) {
       FakeResourceProvider::Create(output_surface->context_provider(),
                                    shared_bitmap_manager.get());
 
-  viz::RendererSettings settings;
+  RendererSettings settings;
   FakeRendererGL renderer(&settings, output_surface.get(),
                           resource_provider.get());
   renderer.Initialize();
@@ -967,7 +958,7 @@ TEST_F(GLRendererTest, ShouldClearRootRenderPass) {
       FakeResourceProvider::Create(output_surface->context_provider(),
                                    shared_bitmap_manager.get());
 
-  viz::RendererSettings settings;
+  RendererSettings settings;
   settings.should_clear_root_render_pass = false;
 
   FakeRendererGL renderer(&settings, output_surface.get(),
@@ -1055,7 +1046,7 @@ TEST_F(GLRendererTest, ScissorTestWhenClearing) {
       FakeResourceProvider::Create(output_surface->context_provider(),
                                    shared_bitmap_manager.get());
 
-  viz::RendererSettings settings;
+  RendererSettings settings;
   FakeRendererGL renderer(&settings, output_surface.get(),
                           resource_provider.get());
   renderer.Initialize();
@@ -1130,7 +1121,7 @@ TEST_F(GLRendererTest, NoDiscardOnPartialUpdates) {
       FakeResourceProvider::Create(output_surface->context_provider(),
                                    shared_bitmap_manager.get());
 
-  viz::RendererSettings settings;
+  RendererSettings settings;
   settings.partial_swap_enabled = true;
   FakeRendererGL renderer(&settings, output_surface.get(),
                           resource_provider.get());
@@ -1221,7 +1212,7 @@ class GLRendererSkipTest : public GLRendererTest {
   }
 
   StrictMock<DrawElementsGLES2Interface>* gl_;
-  viz::RendererSettings settings_;
+  RendererSettings settings_;
   FakeOutputSurfaceClient output_surface_client_;
   std::unique_ptr<FakeOutputSurface> output_surface_;
   std::unique_ptr<viz::SharedBitmapManager> shared_bitmap_manager_;
@@ -1302,7 +1293,7 @@ TEST_F(GLRendererTest, DrawFramePreservesFramebuffer) {
       FakeResourceProvider::Create(output_surface->context_provider(),
                                    shared_bitmap_manager.get());
 
-  viz::RendererSettings settings;
+  RendererSettings settings;
   FakeRendererGL renderer(&settings, output_surface.get(),
                           resource_provider.get());
   renderer.Initialize();
@@ -1702,7 +1693,7 @@ class MockOutputSurfaceTest : public GLRendererTest {
                          viewport_size);
   }
 
-  viz::RendererSettings settings_;
+  RendererSettings settings_;
   FakeOutputSurfaceClient output_surface_client_;
   OutputSurfaceMockContext* context_ = nullptr;
   std::unique_ptr<StrictMock<MockOutputSurface>> output_surface_;
@@ -1784,7 +1775,7 @@ TEST_F(GLRendererTest, DontOverlayWithCopyRequests) {
   std::unique_ptr<TextureMailboxDeleter> mailbox_deleter(
       new TextureMailboxDeleter(base::ThreadTaskRunnerHandle::Get()));
 
-  viz::RendererSettings settings;
+  RendererSettings settings;
   FakeRendererGL renderer(&settings, output_surface.get(),
                           resource_provider.get(), mailbox_deleter.get());
   renderer.Initialize();
@@ -1949,7 +1940,7 @@ TEST_F(GLRendererTest, OverlaySyncTokensAreProcessed) {
   std::unique_ptr<TextureMailboxDeleter> mailbox_deleter(
       new TextureMailboxDeleter(base::ThreadTaskRunnerHandle::Get()));
 
-  viz::RendererSettings settings;
+  RendererSettings settings;
   FakeRendererGL renderer(&settings, output_surface.get(),
                           resource_provider.get(), mailbox_deleter.get());
   renderer.Initialize();
@@ -2044,7 +2035,7 @@ class GLRendererPartialSwapTest : public GLRendererTest {
         FakeResourceProvider::Create(output_surface->context_provider(),
                                      nullptr);
 
-    viz::RendererSettings settings;
+    RendererSettings settings;
     settings.partial_swap_enabled = partial_swap;
     FakeRendererGL renderer(&settings, output_surface.get(),
                             resource_provider.get());
@@ -2154,7 +2145,7 @@ TEST_F(GLRendererTest, DCLayerOverlaySwitch) {
   std::unique_ptr<ResourceProvider> resource_provider =
       FakeResourceProvider::Create(output_surface->context_provider(), nullptr);
 
-  viz::RendererSettings settings;
+  RendererSettings settings;
   settings.partial_swap_enabled = true;
   FakeRendererGL renderer(&settings, output_surface.get(),
                           resource_provider.get());
@@ -2250,7 +2241,7 @@ class GLRendererWithMockContextTest : public ::testing::Test {
     renderer_->Initialize();
   }
 
-  viz::RendererSettings settings_;
+  RendererSettings settings_;
   FakeOutputSurfaceClient output_surface_client_;
   MockContextSupport* context_support_ptr_;
   std::unique_ptr<OutputSurface> output_surface_;
@@ -2325,7 +2316,7 @@ class GLRendererSwapWithBoundsTest : public GLRendererTest {
         FakeResourceProvider::Create(output_surface->context_provider(),
                                      nullptr);
 
-    viz::RendererSettings settings;
+    RendererSettings settings;
     FakeRendererGL renderer(&settings, output_surface.get(),
                             resource_provider.get());
     renderer.Initialize();

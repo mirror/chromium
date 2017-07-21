@@ -48,20 +48,11 @@ class CORE_EXPORT ScriptStreamer final
                              ScriptState*,
                              RefPtr<WebTaskRunner>);
 
-  // Like StartStreaming, but assume that the resource has already been
-  // fully loaded.
-  static void StartStreamingLoadedScript(ClassicPendingScript*,
-                                         Type,
-                                         Settings*,
-                                         ScriptState*,
-                                         RefPtr<WebTaskRunner>);
-
   // Returns false if we cannot stream the given encoding.
   static bool ConvertEncoding(const char* encoding_name,
                               v8::ScriptCompiler::StreamedSource::Encoding*);
 
-  bool IsFinished() const;           // Has loading & streaming finished?
-  bool IsStreamingFinished() const;  // Has streaming finished?
+  bool IsFinished() const;
 
   v8::ScriptCompiler::StreamedSource* Source() { return source_.get(); }
   ScriptResource* GetResource() const { return resource_; }

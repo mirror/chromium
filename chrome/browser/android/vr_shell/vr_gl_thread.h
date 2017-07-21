@@ -43,6 +43,9 @@ class VrGLThread : public base::Thread,
 
   ~VrGLThread() override;
   base::WeakPtr<VrShellGl> GetVrShellGl() { return weak_vr_shell_gl_; }
+  base::WeakPtr<vr::UiSceneManager> GetSceneManager() {
+    return weak_scene_manager_;
+  }
 
   // GlBrowserInterface implementation (VrShellGl calling out to UI/VrShell).
   void ContentSurfaceChanged(jobject surface) override;
@@ -67,8 +70,6 @@ class VrGLThread : public base::Thread,
   void NavigateBack() override;
   void ExitCct() override;
   void OnUnsupportedMode(vr::UiUnsupportedMode mode) override;
-  void OnExitVrPromptResult(vr::UiUnsupportedMode reason,
-                            vr::ExitVrPromptChoice choice) override;
 
   // vr::UiInterface implementation (VrShell and GL calling to the UI).
   void SetFullscreen(bool enabled) override;
@@ -86,8 +87,6 @@ class VrGLThread : public base::Thread,
   void SetLocationAccessIndicator(bool enabled) override;
   void SetIsExiting() override;
   void SetSplashScreenIcon(const SkBitmap& bitmap) override;
-  void SetExitVrPromptEnabled(bool enabled,
-                              vr::UiUnsupportedMode reason) override;
 
  protected:
   void Init() override;

@@ -1374,11 +1374,6 @@ gfx::ColorSpace LayerTreeHostImpl::GetRasterColorSpace() const {
   else if (active_tree_)
     result = active_tree_->raster_color_space();
 
-  // If we are likely to software composite the resource, use sRGB because
-  // software compositing is unable to perform color conversion.
-  if (!layer_tree_frame_sink_ || !layer_tree_frame_sink_->context_provider())
-    result = gfx::ColorSpace::CreateSRGB();
-
   // Always specify a color space if color correct rasterization is requested
   // (not specifying a color space indicates that no color conversion is
   // required).
@@ -1756,7 +1751,7 @@ bool LayerTreeHostImpl::DrawLayers(FrameData* frame) {
     }
   }
 
-  DCHECK_LE(viz::BeginFrameArgs::kStartingFrameNumber,
+  DCHECK_LE(BeginFrameArgs::kStartingFrameNumber,
             frame->begin_frame_ack.sequence_number);
   metadata.begin_frame_ack = frame->begin_frame_ack;
 
@@ -1943,7 +1938,7 @@ void LayerTreeHostImpl::UpdateTreeResourcesForGpuRasterizationIfNeeded() {
   SetRequiresHighResToDraw();
 }
 
-void LayerTreeHostImpl::WillBeginImplFrame(const viz::BeginFrameArgs& args) {
+void LayerTreeHostImpl::WillBeginImplFrame(const BeginFrameArgs& args) {
   current_begin_frame_tracker_.Start(args);
 
   if (is_likely_to_require_a_draw_) {
@@ -1970,7 +1965,7 @@ void LayerTreeHostImpl::DidFinishImplFrame() {
   decoded_image_tracker_.NotifyFrameFinished();
 }
 
-void LayerTreeHostImpl::DidNotProduceFrame(const viz::BeginFrameAck& ack) {
+void LayerTreeHostImpl::DidNotProduceFrame(const BeginFrameAck& ack) {
   if (layer_tree_frame_sink_)
     layer_tree_frame_sink_->DidNotProduceFrame(ack);
 }
@@ -3983,7 +3978,7 @@ TreePriority LayerTreeHostImpl::GetTreePriority() const {
   return global_tile_state_.tree_priority;
 }
 
-viz::BeginFrameArgs LayerTreeHostImpl::CurrentBeginFrameArgs() const {
+BeginFrameArgs LayerTreeHostImpl::CurrentBeginFrameArgs() const {
   // TODO(mithro): Replace call with current_begin_frame_tracker_.Current()
   // once all calls which happens outside impl frames are fixed.
   return current_begin_frame_tracker_.DangerousMethodCurrentOrLast();

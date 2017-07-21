@@ -12,11 +12,11 @@
 #include "core/dom/Document.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/dom/UserGestureIndicator.h"
-#include "core/frame/Deprecation.h"
 #include "core/frame/Settings.h"
 #include "core/frame/UseCounter.h"
 #include "core/loader/MixedContentChecker.h"
 #include "modules/EventTargetModules.h"
+#include "modules/presentation/ExistingPresentationConnectionCallbacks.h"
 #include "modules/presentation/PresentationAvailability.h"
 #include "modules/presentation/PresentationAvailabilityCallbacks.h"
 #include "modules/presentation/PresentationConnection.h"
@@ -120,22 +120,8 @@ bool PresentationRequest::HasPendingActivity() const {
                                        ScriptPromisePropertyBase::kPending;
 }
 
-// static
-void PresentationRequest::RecordStartOriginTypeAccess(
-    ExecutionContext& execution_context) {
-  if (execution_context.IsSecureContext()) {
-    UseCounter::Count(&execution_context,
-                      WebFeature::kPresentationRequestStartSecureOrigin);
-  } else {
-    Deprecation::CountDeprecation(
-        &execution_context,
-        WebFeature::kPresentationRequestStartInsecureOrigin);
-  }
-}
-
 ScriptPromise PresentationRequest::start(ScriptState* script_state) {
-  ExecutionContext* execution_context = GetExecutionContext();
-  Settings* context_settings = GetSettings(execution_context);
+  Settings* context_settings = GetSettings(GetExecutionContext());
   bool is_user_gesture_required =
       !context_settings ||
       context_settings->GetPresentationRequiresUserGesture();
@@ -149,7 +135,7 @@ ScriptPromise PresentationRequest::start(ScriptState* script_state) {
             "PresentationRequest::start() requires user gesture."));
 
   WebPresentationClient* client =
-      PresentationController::ClientFromContext(execution_context);
+      PresentationController::ClientFromContext(GetExecutionContext());
   if (!client)
     return ScriptPromise::RejectWithDOMException(
         script_state,
@@ -157,7 +143,6 @@ ScriptPromise PresentationRequest::start(ScriptState* script_state) {
             kInvalidStateError,
             "The PresentationRequest is no longer associated to a frame."));
 
-  RecordStartOriginTypeAccess(*execution_context);
   ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
   client->StartPresentation(
       urls_, WTF::MakeUnique<PresentationConnectionCallbacks>(resolver, this));
@@ -186,8 +171,8 @@ ScriptPromise PresentationRequest::reconnect(ScriptState* script_state,
   if (existing_connection) {
     client->ReconnectPresentation(
         urls_, id,
-        WTF::MakeUnique<PresentationConnectionCallbacks>(resolver,
-                                                         existing_connection));
+        WTF::MakeUnique<ExistingPresentationConnectionCallbacks>(
+            resolver, existing_connection));
   } else {
     client->ReconnectPresentation(
         urls_, id,
@@ -231,17 +216,17 @@ DEFINE_TRACE(PresentationRequest) {
 PresentationRequest::PresentationRequest(ExecutionContext* execution_context,
                                          const Vector<KURL>& urls)
     : ContextClient(execution_context), urls_(urls) {
-  RecordConstructorOriginTypeAccess(*execution_context);
+  RecordOriginTypeAccess(execution_context);
 }
 
-// static
-void PresentationRequest::RecordConstructorOriginTypeAccess(
-    ExecutionContext& execution_context) {
-  if (execution_context.IsSecureContext()) {
-    UseCounter::Count(&execution_context,
+void PresentationRequest::RecordOriginTypeAccess(
+    ExecutionContext* execution_context) const {
+  DCHECK(execution_context);
+  if (execution_context->IsSecureContext()) {
+    UseCounter::Count(execution_context,
                       WebFeature::kPresentationRequestSecureOrigin);
   } else {
-    UseCounter::Count(&execution_context,
+    UseCounter::Count(execution_context,
                       WebFeature::kPresentationRequestInsecureOrigin);
   }
 }

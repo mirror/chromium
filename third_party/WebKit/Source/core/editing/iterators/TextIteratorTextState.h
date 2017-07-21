@@ -33,11 +33,11 @@
 
 namespace blink {
 
-class CORE_EXPORT TextIteratorTextState {
-  STACK_ALLOCATED();
-
+class CORE_EXPORT TextIteratorTextState
+    : public GarbageCollectedFinalized<TextIteratorTextState> {
  public:
-  TextIteratorTextState() = default;
+  TextIteratorTextState() {}
+  ~TextIteratorTextState() {}
 
   // Return properties of the current text.
   int length() const { return text_length_; }
@@ -76,6 +76,8 @@ class CORE_EXPORT TextIteratorTextState {
     position_node_ = nullptr;
     text_length_ = 0;
   }
+
+  DECLARE_TRACE();
 
  private:
   int text_length_ = 0;

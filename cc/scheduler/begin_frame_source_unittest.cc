@@ -8,10 +8,9 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/test/test_simple_task_runner.h"
+#include "cc/test/begin_frame_args_test.h"
 #include "cc/test/begin_frame_source_test.h"
-#include "cc/test/fake_delay_based_time_source.h"
-#include "cc/test/ordered_simple_task_runner.h"
-#include "components/viz/test/begin_frame_args_test.h"
+#include "cc/test/scheduler_test_common.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -41,8 +40,8 @@ class BackToBackBeginFrameSourceTest : public ::testing::Test {
     now_src_->Advance(base::TimeDelta::FromMicroseconds(1000));
     task_runner_ =
         make_scoped_refptr(new OrderedSimpleTaskRunner(now_src_.get(), false));
-    std::unique_ptr<FakeDelayBasedTimeSource> time_source(
-        new FakeDelayBasedTimeSource(now_src_.get(), task_runner_.get()));
+    std::unique_ptr<TestDelayBasedTimeSource> time_source(
+        new TestDelayBasedTimeSource(now_src_.get(), task_runner_.get()));
     delay_based_time_source_ = time_source.get();
     source_.reset(new BackToBackBeginFrameSource(std::move(time_source)));
     obs_ = base::WrapUnique(new ::testing::NiceMock<MockBeginFrameObserver>);
@@ -54,14 +53,14 @@ class BackToBackBeginFrameSourceTest : public ::testing::Test {
   scoped_refptr<OrderedSimpleTaskRunner> task_runner_;
   std::unique_ptr<BackToBackBeginFrameSource> source_;
   std::unique_ptr<MockBeginFrameObserver> obs_;
-  FakeDelayBasedTimeSource* delay_based_time_source_;  // Owned by |now_src_|.
+  TestDelayBasedTimeSource* delay_based_time_source_;  // Owned by |now_src_|.
 };
 
 const int64_t BackToBackBeginFrameSourceTest::kDeadline =
-    viz::BeginFrameArgs::DefaultInterval().ToInternalValue();
+    BeginFrameArgs::DefaultInterval().ToInternalValue();
 
 const int64_t BackToBackBeginFrameSourceTest::kInterval =
-    viz::BeginFrameArgs::DefaultInterval().ToInternalValue();
+    BeginFrameArgs::DefaultInterval().ToInternalValue();
 
 TEST_F(BackToBackBeginFrameSourceTest, AddObserverSendsBeginFrame) {
   EXPECT_BEGIN_FRAME_SOURCE_PAUSED(*obs_, false);
@@ -338,7 +337,7 @@ class DelayBasedBeginFrameSourceTest : public ::testing::Test {
     task_runner_ =
         make_scoped_refptr(new OrderedSimpleTaskRunner(now_src_.get(), false));
     std::unique_ptr<DelayBasedTimeSource> time_source(
-        new FakeDelayBasedTimeSource(now_src_.get(), task_runner_.get()));
+        new TestDelayBasedTimeSource(now_src_.get(), task_runner_.get()));
     time_source->SetTimebaseAndInterval(
         base::TimeTicks(), base::TimeDelta::FromMicroseconds(10000));
     source_.reset(new DelayBasedBeginFrameSource(std::move(time_source)));
@@ -557,7 +556,7 @@ TEST_F(ExternalBeginFrameSourceTest, OnBeginFrameChecksBeginFrameContinuity) {
   EXPECT_CALL((*client_), OnNeedsBeginFrames(true)).Times(1);
   source_->AddObserver(obs_.get());
 
-  viz::BeginFrameArgs args = viz::CreateBeginFrameArgsForTesting(
+  BeginFrameArgs args = CreateBeginFrameArgsForTesting(
       BEGINFRAME_FROM_HERE, 0, 2, base::TimeTicks::FromInternalValue(10000));
   EXPECT_BEGIN_FRAME_ARGS_USED(*obs_, args);
   source_->OnBeginFrame(args);

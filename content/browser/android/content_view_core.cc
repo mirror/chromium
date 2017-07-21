@@ -20,7 +20,7 @@
 #include "base/values.h"
 #include "cc/layers/layer.h"
 #include "cc/layers/solid_color_layer.h"
-#include "components/viz/common/frame_sinks/begin_frame_args.h"
+#include "cc/output/begin_frame_args.h"
 #include "content/browser/android/gesture_event_type.h"
 #include "content/browser/android/interstitial_page_delegate_android.h"
 #include "content/browser/android/java/gin_java_bridge_dispatcher_host.h"
@@ -739,9 +739,9 @@ void ContentViewCore::SetFocusInternal(bool focused) {
     return;
 
   if (focused)
-    GetRenderWidgetHostViewAndroid()->GotFocus();
+    GetRenderWidgetHostViewAndroid()->Focus();
   else
-    GetRenderWidgetHostViewAndroid()->LostFocus();
+    GetRenderWidgetHostViewAndroid()->Blur();
 }
 
 void ContentViewCore::SendOrientationChangeEvent(

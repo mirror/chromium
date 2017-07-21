@@ -21,7 +21,10 @@ class CONTENT_EXPORT VideoCaptureProviderSwitcher
       std::unique_ptr<VideoCaptureProvider> other_types_capture_provider);
   ~VideoCaptureProviderSwitcher() override;
 
-  void GetDeviceInfosAsync(GetDeviceInfosCallback result_callback) override;
+  void Uninitialize() override;
+
+  void GetDeviceInfosAsync(
+      const GetDeviceInfosCallback& result_callback) override;
 
   std::unique_ptr<VideoCaptureDeviceLauncher> CreateDeviceLauncher() override;
 

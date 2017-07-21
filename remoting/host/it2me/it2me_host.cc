@@ -42,8 +42,6 @@
 
 namespace remoting {
 
-using protocol::ErrorCode;
-
 namespace {
 
 // This is used for tagging system event logs.
@@ -105,7 +103,7 @@ void It2MeHost::ConnectOnNetworkThread(const std::string& username,
   DCHECK(host_context_->network_task_runner()->BelongsToCurrentThread());
   DCHECK_EQ(kDisconnected, state_);
 
-  SetState(kStarting, ErrorCode::OK);
+  SetState(kStarting, std::string());
 
   // Check the host domain policy.
   if (!required_host_domain_list_.empty()) {
@@ -118,7 +116,7 @@ void It2MeHost::ConnectOnNetworkThread(const std::string& username,
       }
     }
     if (!matched) {
-      SetState(kInvalidDomainError, ErrorCode::OK);
+      SetState(kInvalidDomainError, std::string());
       return;
     }
   }
@@ -194,7 +192,7 @@ void It2MeHost::ConnectOnNetworkThread(const std::string& username,
   signal_strategy_->Connect();
   host_->Start(username);
 
-  SetState(kRequestedAccessCode, ErrorCode::OK);
+  SetState(kRequestedAccessCode, std::string());
   return;
 }
 
@@ -208,7 +206,7 @@ void It2MeHost::OnAccessDenied(const std::string& jid) {
     DCHECK_EQ(state_, kConnecting);
     connecting_jid_.clear();
     confirmation_dialog_proxy_.reset();
-    SetState(kReceivedAccessCode, ErrorCode::OK);
+    SetState(kReceivedAccessCode, std::string());
   }
 }
 
@@ -232,7 +230,7 @@ void It2MeHost::OnClientConnected(const std::string& jid) {
       FROM_HERE, base::Bind(&It2MeHost::Observer::OnClientAuthenticated,
                             observer_, client_username));
 
-  SetState(kConnected, ErrorCode::OK);
+  SetState(kConnected, std::string());
 }
 
 void It2MeHost::OnClientDisconnected(const std::string& jid) {
@@ -352,7 +350,8 @@ void It2MeHost::UpdateHostUdpPortRangePolicy(
   }
 }
 
-void It2MeHost::SetState(It2MeHostState state, ErrorCode error_code) {
+void It2MeHost::SetState(It2MeHostState state,
+                         const std::string& error_message) {
   DCHECK(host_context_->network_task_runner()->BelongsToCurrentThread());
 
   switch (state_) {
@@ -398,7 +397,7 @@ void It2MeHost::SetState(It2MeHostState state, ErrorCode error_code) {
   // Post a state-change notification to the web-app.
   host_context_->ui_task_runner()->PostTask(
       FROM_HERE, base::Bind(&It2MeHost::Observer::OnStateChanged, observer_,
-                            state, error_code));
+                            state, error_message));
 }
 
 bool It2MeHost::IsRunning() const {
@@ -406,13 +405,14 @@ bool It2MeHost::IsRunning() const {
          state_ == kConnected || state_ == kConnecting;
 }
 
-void It2MeHost::OnReceivedSupportID(const std::string& support_id,
-                                    const base::TimeDelta& lifetime,
-                                    const ErrorCode error_code) {
+void It2MeHost::OnReceivedSupportID(
+    const std::string& support_id,
+    const base::TimeDelta& lifetime,
+    const std::string& error_message) {
   DCHECK(host_context_->network_task_runner()->BelongsToCurrentThread());
 
-  if (error_code != ErrorCode::OK) {
-    SetState(kError, error_code);
+  if (!error_message.empty()) {
+    SetState(kError, error_message);
     DisconnectOnNetworkThread();
     return;
   }
@@ -424,8 +424,9 @@ void It2MeHost::OnReceivedSupportID(const std::string& support_id,
 
   std::string local_certificate = host_key_pair_->GenerateCertificate();
   if (local_certificate.empty()) {
-    LOG(ERROR) << "Failed to generate host certificate.";
-    SetState(kError, ErrorCode::HOST_CERTIFICATE_ERROR);
+    std::string error_message = "Failed to generate host certificate.";
+    LOG(ERROR) << error_message;
+    SetState(kError, error_message);
     DisconnectOnNetworkThread();
     return;
   }
@@ -442,7 +443,7 @@ void It2MeHost::OnReceivedSupportID(const std::string& support_id,
       FROM_HERE, base::Bind(&It2MeHost::Observer::OnStoreAccessCode, observer_,
                             access_code, lifetime));
 
-  SetState(kReceivedAccessCode, ErrorCode::OK);
+  SetState(kReceivedAccessCode, std::string());
 }
 
 void It2MeHost::DisconnectOnNetworkThread() {
@@ -470,7 +471,7 @@ void It2MeHost::DisconnectOnNetworkThread() {
   host_context_->ui_task_runner()->DeleteSoon(
       FROM_HERE, desktop_environment_factory_.release());
 
-  SetState(kDisconnected, ErrorCode::OK);
+  SetState(kDisconnected, std::string());
 }
 
 void It2MeHost::ValidateConnectionDetails(
@@ -528,7 +529,7 @@ void It2MeHost::ValidateConnectionDetails(
 
   HOST_LOG << "Client " << client_username << " connecting.";
   connecting_jid_ = remote_jid;
-  SetState(kConnecting, ErrorCode::OK);
+  SetState(kConnecting, std::string());
 
   // Show a confirmation dialog to the user to allow them to confirm/reject it.
   confirmation_dialog_proxy_.reset(new It2MeConfirmationDialogProxy(

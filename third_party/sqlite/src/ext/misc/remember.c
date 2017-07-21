@@ -21,12 +21,8 @@
 **    UPDATE counterTab SET cnt=remember(cnt,$PTR)+1 WHERE id=$ID
 **
 ** Prepare the above statement once.  Then to use it, bind the address
-** of the output variable to $PTR using sqlite3_bind_pointer() with a
-** pointer type of "carray" and bind the id of the counter to $ID and
+** of the output variable to $PTR and the id of the counter to $ID and
 ** run the prepared statement.
-**
-** This implementation of the remember() function uses a "carray"
-** pointer so that it can share pointers with the carray() extension.
 **
 ** One can imagine doing similar things with floating-point values and
 ** strings, but this demonstration extension will stick to using just
@@ -51,7 +47,7 @@ static void rememberFunc(
   sqlite3_int64 *ptr;
   assert( argc==2 );
   v = sqlite3_value_int64(argv[0]);
-  ptr = sqlite3_value_pointer(argv[1], "carray");
+  ptr = sqlite3_value_pointer(argv[1]);
   if( ptr ) *ptr = v;
   sqlite3_result_int64(pCtx, v);
 }
@@ -60,8 +56,8 @@ static void rememberFunc(
 __declspec(dllexport)
 #endif
 int sqlite3_remember_init(
-  sqlite3 *db,
-  char **pzErrMsg,
+  sqlite3 *db, 
+  char **pzErrMsg, 
   const sqlite3_api_routines *pApi
 ){
   int rc = SQLITE_OK;

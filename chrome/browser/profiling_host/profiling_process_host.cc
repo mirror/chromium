@@ -18,7 +18,14 @@
 #include "mojo/edk/embedder/platform_channel_pair.h"
 #include "mojo/public/cpp/system/platform_handle.h"
 
-#if defined(OS_POSIX)
+#if defined(OS_LINUX)
+#include <fcntl.h>
+#include <stddef.h>
+#include <stdint.h>
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <unistd.h>
+
 #include "base/files/scoped_file.h"
 #include "base/process/process_metrics.h"
 #include "base/third_party/valgrind/valgrind.h"
@@ -142,14 +149,30 @@ void ProfilingProcessHost::Launch() {
   mojo::edk::PlatformChannelPair control_channel;
   mojo::edk::HandlePassingInformation handle_passing_info;
 
-  // Create the socketpair for the low level memlog pipe.
-  mojo::edk::PlatformChannelPair data_channel;
-  pipe_id_ = data_channel.PrepareToPassClientHandleToChildProcessAsString(
-      &handle_passing_info);
+// TODO(brettw) most of this logic can be replaced with PlatformChannelPair.
 
-  mojo::edk::ScopedPlatformHandle child_end = data_channel.PassClientHandle();
-
+#if defined(OS_WIN)
+  base::Process process = base::Process::Current();
+  pipe_id_ = base::IntToString(static_cast<int>(process.Pid()));
   base::CommandLine profiling_cmd = MakeProfilingCommandLine(pipe_id_);
+#else
+
+  // Create the socketpair for the low level memlog pipe.
+  // TODO(ajwong): Should this use base/posix/unix_domain_socket_linux.h?
+  int memlog_fds[2];
+  PCHECK(socketpair(AF_UNIX, SOCK_STREAM, 0, memlog_fds) == 0);
+  PCHECK(fcntl(memlog_fds[0], F_SETFL, O_NONBLOCK) == 0);
+  PCHECK(fcntl(memlog_fds[1], F_SETFL, O_NONBLOCK) == 0);
+
+  // Store one end for our message sender to use.
+  base::ScopedFD child_end(memlog_fds[1]);
+  // TODO(brettw) need to get rid of pipe_id when we can share over Mojo.
+  pipe_id_ = base::IntToString(memlog_fds[0]);
+
+  handle_passing_info.emplace_back(child_end.get(), child_end.get());
+  base::CommandLine profiling_cmd =
+      MakeProfilingCommandLine(base::IntToString(child_end.get()));
+#endif
 
   // Keep the server handle, pass the client handle to the child.
   pending_control_connection_ = control_channel.PassServerHandle();
@@ -159,21 +182,15 @@ void ProfilingProcessHost::Launch() {
   base::LaunchOptions options;
 #if defined(OS_WIN)
   options.handles_to_inherit = &handle_passing_info;
-  std::string local_pipe_string = base::IntToString(
-      reinterpret_cast<int>(data_channel.PassServerHandle().release().handle));
 #elif defined(OS_POSIX)
   options.fds_to_remap = &handle_passing_info;
-  std::string local_pipe_string =
-      base::IntToString(data_channel.PassServerHandle().release().handle);
-#if defined(OS_LINUX)
   options.kill_on_parent_death = true;
-#endif
 #else
 #error Unsupported OS.
 #endif
 
   process_ = base::LaunchProcess(profiling_cmd, options);
-  StartMemlogSender(local_pipe_string);
+  StartMemlogSender(pipe_id_);
 }
 
 void ProfilingProcessHost::EnsureControlChannelExists() {

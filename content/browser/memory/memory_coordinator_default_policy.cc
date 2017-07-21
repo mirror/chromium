@@ -16,7 +16,7 @@ MemoryCoordinatorDefaultPolicy::~MemoryCoordinatorDefaultPolicy() {}
 
 void MemoryCoordinatorDefaultPolicy::OnCriticalCondition() {
   // Just trigger tab discarding for now.
-  coordinator_->DiscardTab(true);
+  coordinator_->DiscardTab();
 }
 
 void MemoryCoordinatorDefaultPolicy::OnConditionChanged(MemoryCondition prev,

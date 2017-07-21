@@ -12,48 +12,24 @@ namespace uma {
 void LogVideoCaptureServiceEvent(VideoCaptureServiceEvent event) {
   UMA_HISTOGRAM_ENUMERATION("Media.VideoCaptureService.Event", event,
                             NUM_VIDEO_CAPTURE_SERVICE_EVENT);
-  DVLOG(4) << "Logged VideoCaptureServiceEvent " << event;
 }
 
-void LogDurationFromLastConnectToClosingConnectionAfterEnumerationOnly(
-    base::TimeDelta duration) {
+void LogDurationFromLastConnectToClosingConnection(base::TimeDelta duration) {
   UMA_HISTOGRAM_CUSTOM_TIMES(
-      "Media.VideoCaptureService."
-      "DurationFromLastConnectToClosingConnectionAfterEnumerationOnly",
-      duration, base::TimeDelta(), base::TimeDelta::FromMinutes(1), 50);
-  DVLOG(4) << "Logged "
-              "DurationFromLastConnectToClosingConnectionAfterEnumerationOnl"
-              "y";
-}
-
-void LogDurationFromLastConnectToClosingConnectionAfterCapture(
-    base::TimeDelta duration) {
-  UMA_HISTOGRAM_CUSTOM_TIMES(
-      "Media.VideoCaptureService."
-      "DurationFromLastConnectToClosingConnectionAfterCapture",
-      duration, base::TimeDelta(), base::TimeDelta::FromDays(21), 50);
-  DVLOG(4) << "Logged DurationFromLastConnectToClosingConnectionAfterCapture";
+      "Media.VideoCaptureService.DurationFromLastConnectToClosingConnection",
+      duration, base::TimeDelta(), base::TimeDelta::FromDays(7), 50);
 }
 
 void LogDurationFromLastConnectToConnectionLost(base::TimeDelta duration) {
   UMA_HISTOGRAM_CUSTOM_TIMES(
       "Media.VideoCaptureService.DurationFromLastConnectToConnectionLost",
-      duration, base::TimeDelta(), base::TimeDelta::FromDays(21), 50);
-  DVLOG(4) << "Logged DurationFromLastConnectToConnectionLost";
-}
-
-void LogDurationUntilReconnectAfterEnumerationOnly(base::TimeDelta duration) {
-  UMA_HISTOGRAM_CUSTOM_TIMES(
-      "Media.VideoCaptureService.DurationUntilReconnectAfterEnumerationOnly",
       duration, base::TimeDelta(), base::TimeDelta::FromDays(7), 50);
-  DVLOG(4) << "Logged DurationUntilReconnectAfterEnumerationOnly";
 }
 
-void LogDurationUntilReconnectAfterCapture(base::TimeDelta duration) {
-  UMA_HISTOGRAM_CUSTOM_TIMES(
-      "Media.VideoCaptureService.DurationUntilReconnectAfterCapture", duration,
-      base::TimeDelta(), base::TimeDelta::FromDays(7), 50);
-  DVLOG(4) << "Logged DurationUntilReconnectAfterCapture";
+void LogDurationUntilReconnect(base::TimeDelta duration) {
+  UMA_HISTOGRAM_CUSTOM_TIMES("Media.VideoCaptureService.DurationUntilReconnect",
+                             duration, base::TimeDelta(),
+                             base::TimeDelta::FromDays(7), 50);
 }
 
 }  // namespace uma

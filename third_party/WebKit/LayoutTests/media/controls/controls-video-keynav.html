@@ -24,17 +24,11 @@ async_test(function(t) {
       eventSender.keyDown("Enter");
       assert_false(video.paused);
 
-      // 'Down' reduces volume by .05.
+      // 'Down' reduces volume.
       eventSender.keyDown("ArrowDown");
-      assert_equals(video.volume, .95);
+      assert_less_than(video.volume, 1);
 
-      eventSender.keyDown("ArrowDown");
-      assert_equals(video.volume, .9);
-
-      // 'Up' increases volume by .05
-      eventSender.keyDown("ArrowUp");
-      assert_equals(video.volume, .95);
-
+      // 'Up' increases volume.
       eventSender.keyDown("ArrowUp");
       assert_equals(video.volume, 1);
 

@@ -37,7 +37,7 @@
 
 namespace cc {
 
-base::AtomicSequenceNumber g_next_layer_id;
+base::StaticAtomicSequenceNumber g_next_layer_id;
 
 Layer::Inputs::Inputs(int layer_id)
     : layer_id(layer_id),

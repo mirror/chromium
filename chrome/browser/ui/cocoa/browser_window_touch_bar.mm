@@ -10,6 +10,7 @@
 #include "base/mac/mac_util.h"
 #import "base/mac/scoped_nsobject.h"
 #import "base/mac/sdk_forward_declarations.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/sys_string_conversions.h"
 #include "chrome/app/chrome_command_ids.h"
 #include "chrome/app/vector_icons/vector_icons.h"
@@ -45,6 +46,19 @@
 
 namespace {
 
+// The touch bar actions that are being recorded in a histogram. These values
+// should not be re-ordered or removed.
+enum TouchBarAction {
+  BACK = 0,
+  FORWARD,
+  STOP,
+  RELOAD,
+  HOME,
+  SEARCH,
+  STAR,
+  NEW_TAB,
+  TOUCH_BAR_ACTION_COUNT
+};
 
 // Touch bar identifiers.
 NSString* const kBrowserWindowTouchBarId = @"browser-window";
@@ -97,28 +111,35 @@ NSButton* CreateTouchBarButton(const gfx::VectorIcon& icon,
   return button;
 }
 
-ui::TouchBarAction TouchBarActionFromCommand(int command) {
+TouchBarAction TouchBarActionFromCommand(int command) {
   switch (command) {
     case IDC_BACK:
-      return ui::TouchBarAction::BACK;
+      return TouchBarAction::BACK;
     case IDC_FORWARD:
-      return ui::TouchBarAction::FORWARD;
+      return TouchBarAction::FORWARD;
     case IDC_STOP:
-      return ui::TouchBarAction::STOP;
+      return TouchBarAction::STOP;
     case IDC_RELOAD:
-      return ui::TouchBarAction::RELOAD;
+      return TouchBarAction::RELOAD;
     case IDC_HOME:
-      return ui::TouchBarAction::HOME;
+      return TouchBarAction::HOME;
     case IDC_FOCUS_LOCATION:
-      return ui::TouchBarAction::SEARCH;
+      return TouchBarAction::SEARCH;
     case IDC_BOOKMARK_PAGE:
-      return ui::TouchBarAction::STAR;
+      return TouchBarAction::STAR;
     case IDC_NEW_TAB:
-      return ui::TouchBarAction::NEW_TAB;
+      return TouchBarAction::NEW_TAB;
     default:
       NOTREACHED();
-      return ui::TouchBarAction::TOUCH_BAR_ACTION_COUNT;
+      return TouchBarAction::TOUCH_BAR_ACTION_COUNT;
   }
+}
+
+// Logs the sample's UMA metrics into the DefaultTouchBar.Metrics histogram.
+void LogTouchBarUMA(int command) {
+  UMA_HISTOGRAM_ENUMERATION("TouchBar.Default.Metrics",
+                            TouchBarActionFromCommand(command),
+                            TOUCH_BAR_ACTION_COUNT);
 }
 
 // A class registered for C++ notifications. This is used to detect changes in
@@ -443,7 +464,7 @@ class HomePrefNotificationBridge {
   NSSegmentedControl* control = sender;
   int command =
       [control selectedSegment] == kBackSegmentIndex ? IDC_BACK : IDC_FORWARD;
-  LogTouchBarUMA(TouchBarActionFromCommand(command));
+  LogTouchBarUMA(command);
   commandUpdater_->ExecuteCommand(command);
 }
 
@@ -455,7 +476,7 @@ class HomePrefNotificationBridge {
 
 - (void)executeCommand:(id)sender {
   int command = [sender tag];
-  ui::LogTouchBarUMA(TouchBarActionFromCommand(command));
+  LogTouchBarUMA(command);
   commandUpdater_->ExecuteCommand(command);
 }
 

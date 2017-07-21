@@ -48,8 +48,7 @@ int CompositorAnimation::Group() const {
 }
 
 CompositorTargetProperty::Type CompositorAnimation::TargetProperty() const {
-  return static_cast<CompositorTargetProperty::Type>(
-      animation_->target_property_id());
+  return animation_->target_property();
 }
 
 double CompositorAnimation::Iterations() const {

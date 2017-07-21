@@ -53,7 +53,7 @@ void GpuCompositorFrameSink::SubmitCompositorFrame(
 }
 
 void GpuCompositorFrameSink::DidNotProduceFrame(
-    const BeginFrameAck& begin_frame_ack) {
+    const cc::BeginFrameAck& begin_frame_ack) {
   support_->DidNotProduceFrame(begin_frame_ack);
 }
 
@@ -73,7 +73,7 @@ void GpuCompositorFrameSink::RequestCopyOfSurface(
   support_->RequestCopyOfSurface(std::move(request));
 }
 
-void GpuCompositorFrameSink::OnBeginFrame(const BeginFrameArgs& args) {
+void GpuCompositorFrameSink::OnBeginFrame(const cc::BeginFrameArgs& args) {
   if (client_)
     client_->OnBeginFrame(args);
 }

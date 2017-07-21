@@ -439,6 +439,10 @@ void VideoCaptureManager::DisconnectClient(
 
   // If controller has no more clients, delete controller and device.
   DestroyControllerIfNoClients(controller);
+
+  if (controllers_.empty()) {
+    video_capture_provider_->Uninitialize();
+  }
 }
 
 void VideoCaptureManager::PauseCaptureForClient(

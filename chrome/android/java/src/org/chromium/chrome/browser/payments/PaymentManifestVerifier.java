@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.payments;
 import android.content.pm.PackageInfo;
 import android.content.pm.ResolveInfo;
 import android.content.pm.Signature;
+import android.support.annotation.Nullable;
 
 import org.chromium.base.Log;
 import org.chromium.chrome.browser.UrlConstants;
@@ -39,7 +40,7 @@ import java.util.Set;
 public class PaymentManifestVerifier
         implements ManifestDownloadCallback, ManifestParseCallback,
                    PaymentManifestWebDataService.PaymentManifestWebDataServiceCallback {
-    private static final String TAG = "PaymentManifest";
+    private static final String TAG = "cr_PaymentManifest";
 
     /** Interface for the callback to invoke when finished verification. */
     public interface ManifestVerifyCallback {
@@ -125,8 +126,7 @@ public class PaymentManifestVerifier
      * Builds the manifest verifier.
      *
      * @param methodName             The name of the payment method name that apps offer to handle.
-     *                               Must be an absolute URI with HTTPS scheme, but HTTP localhost
-     *                               is allowed in testing.
+     *                               Must be an absolute URI with HTTPS scheme.
      * @param matchingApps           The identifying information for the native Android payment apps
      *                               that offer to handle this payment method.
      * @param webDataService         The web data service to cache manifest.
@@ -140,9 +140,7 @@ public class PaymentManifestVerifier
             PaymentManifestParser parser, PackageManagerDelegate packageManagerDelegate,
             ManifestVerifyCallback callback) {
         assert methodName.isAbsolute();
-        assert UrlConstants.HTTPS_SCHEME.equals(methodName.getScheme())
-                || ("127.0.0.1".equals(methodName.getHost())
-                           && UrlConstants.HTTP_SCHEME.equals(methodName.getScheme()));
+        assert UrlConstants.HTTPS_SCHEME.equals(methodName.getScheme());
         assert !matchingApps.isEmpty();
 
         mMethodName = methodName;
@@ -164,7 +162,7 @@ public class PaymentManifestVerifier
             md = MessageDigest.getInstance("SHA-256");
         } catch (NoSuchAlgorithmException e) {
             // Intentionally ignore.
-            Log.e(TAG, "Unable to generate SHA-256 hashes.");
+            Log.d(TAG, "Unable to generate SHA-256 hashes.");
         }
         mMessageDigest = md;
 
@@ -279,9 +277,12 @@ public class PaymentManifestVerifier
             return;
         }
 
-        // Do not notify onValidPaymentApp immediately in case of fetching the other web app's
-        // manifest failed. Switch to download manifest online in that case immediately.
-        mVerifiedAppPackageNamesByCachedManifest.addAll(verifyAppWithWebAppManifest(manifest));
+        String verifiedAppPackageName = verifyAppWithWebAppManifest(manifest);
+        if (verifiedAppPackageName != null) {
+            // Do not notify onValidPaymentApp immediately in case of fetching the other web app's
+            // manifest failed. Switch to download manifest online in that case immediately.
+            mVerifiedAppPackageNamesByCachedManifest.add(verifiedAppPackageName);
+        }
 
         mPendingWebAppManifestsCount--;
         if (mPendingWebAppManifestsCount != 0) return;
@@ -338,13 +339,13 @@ public class PaymentManifestVerifier
         }
         mSupportedAppParsedManifests.add(manifest);
 
-        // Verify payment apps only if they have not already been verified by the cached manifest.
+        // Do not verify payment app if it has already been verified by cached manifest.
         if (mIsManifestCacheStaleOrUnusable) {
-            Set<String> verifiedAppPackageNames = verifyAppWithWebAppManifest(manifest);
-            for (String packageName : verifiedAppPackageNames) {
+            String verifiedAppPackageName = verifyAppWithWebAppManifest(manifest);
+            if (verifiedAppPackageName != null) {
                 mCallback.onValidPaymentApp(
-                        mMethodName, mMatchingApps.get(packageName).resolveInfo);
-                mMatchingApps.remove(packageName);
+                        mMethodName, mMatchingApps.get(verifiedAppPackageName).resolveInfo);
+                mMatchingApps.remove(verifiedAppPackageName);
             }
         }
 
@@ -364,42 +365,15 @@ public class PaymentManifestVerifier
                 mSupportedAppPackageNames.toArray(new String[mSupportedAppPackageNames.size()]));
 
         // Cache supported apps' parsed manifests.
-        mWebDataService.addPaymentWebAppManifest(flattenListOfArrays(mSupportedAppParsedManifests));
+        for (int i = 0; i < mSupportedAppParsedManifests.size(); i++) {
+            mWebDataService.addPaymentWebAppManifest(mSupportedAppParsedManifests.get(i));
+        }
 
         mCallback.onVerifyFinished(this);
     }
 
-    /**
-     * Flattens a list of arrays into a single array.
-     *
-     * @param listOfLists A lists of arrays to flatten.
-     * @return The single array result.
-     */
-    private static WebAppManifestSection[] flattenListOfArrays(
-            List<WebAppManifestSection[]> listOfLists) {
-        int totalNumberOfItems = 0;
-        for (int i = 0; i < listOfLists.size(); i++) {
-            totalNumberOfItems += listOfLists.get(i).length;
-        }
-
-        WebAppManifestSection[] flattenedList = new WebAppManifestSection[totalNumberOfItems];
-        for (int i = 0, k = 0; i < listOfLists.size(); i++) {
-            for (int j = 0; j < listOfLists.get(i).length; j++, k++) {
-                assert k < flattenedList.length;
-                flattenedList[k] = listOfLists.get(i)[j];
-            }
-        }
-
-        return flattenedList;
-    }
-
-    /**
-     * @return The set of package names of payment apps that match the manifest. Could be empty,
-     * but never null.
-     */
-    private Set<String> verifyAppWithWebAppManifest(WebAppManifestSection[] manifest) {
-        assert manifest.length > 0;
-
+    @Nullable
+    private String verifyAppWithWebAppManifest(WebAppManifestSection[] manifest) {
         List<Set<String>> sectionsFingerprints = new ArrayList<>();
         for (int i = 0; i < manifest.length; i++) {
             WebAppManifestSection section = manifest[i];
@@ -410,45 +384,17 @@ public class PaymentManifestVerifier
             sectionsFingerprints.add(fingerprints);
         }
 
-        Set<String> packageNames = new HashSet<>();
         for (int i = 0; i < manifest.length; i++) {
             WebAppManifestSection section = manifest[i];
             AppInfo appInfo = mMatchingApps.get(section.id);
-            if (appInfo == null) continue;
-
-            if (appInfo.version < section.minVersion) {
-                Log.e(TAG, "\"%s\" version is %d, but at least %d is required.", section.id,
-                        appInfo.version, section.minVersion);
-                continue;
+            if (appInfo != null && appInfo.version >= section.minVersion
+                    && appInfo.sha256CertFingerprints != null
+                    && appInfo.sha256CertFingerprints.equals(sectionsFingerprints.get(i))) {
+                return section.id;
             }
-
-            if (appInfo.sha256CertFingerprints == null) {
-                Log.e(TAG, "Unable to determine fingerprints of \"%s\".", section.id);
-                continue;
-            }
-
-            if (!appInfo.sha256CertFingerprints.equals(sectionsFingerprints.get(i))) {
-                Log.e(TAG,
-                        "\"%s\" fingerprints don't match the manifest. Expected %s, but found %s.",
-                        section.id, setToString(sectionsFingerprints.get(i)),
-                        setToString(appInfo.sha256CertFingerprints));
-                continue;
-            }
-
-            packageNames.add(section.id);
         }
 
-        return packageNames;
-    }
-
-    private static String setToString(Set<String> set) {
-        StringBuilder result = new StringBuilder("[");
-        for (String item : set) {
-            result.append(' ');
-            result.append(item);
-        }
-        result.append(" ]");
-        return result.toString();
+        return null;
     }
 
     @Override

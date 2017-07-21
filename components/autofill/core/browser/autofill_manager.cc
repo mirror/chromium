@@ -528,8 +528,7 @@ void AutofillManager::OnTextFieldDidChangeImpl(const FormData& form,
   UpdatePendingForm(form);
 
   if (!user_did_type_ || autofill_field->is_autofilled)
-    form_interactions_ukm_logger_->LogTextFieldDidChange(
-        *autofill_field, form_structure->form_parsed_timestamp());
+    form_interactions_ukm_logger_->LogTextFieldDidChange(*autofill_field);
 
   if (!user_did_type_) {
     user_did_type_ = true;
@@ -737,10 +736,6 @@ void AutofillManager::FillOrPreviewCreditCardForm(
     const FormData& form,
     const FormFieldData& field,
     const CreditCard& credit_card) {
-  FormStructure* form_structure = NULL;
-  AutofillField* autofill_field = NULL;
-  if (!GetCachedFormAndField(form, field, &form_structure, &autofill_field))
-    return;
   if (action == AutofillDriver::FORM_DATA_ACTION_FILL) {
     if (credit_card.record_type() == CreditCard::MASKED_SERVER_CARD &&
         WillFillCreditCardNumber(form, field)) {
@@ -748,22 +743,18 @@ void AutofillManager::FillOrPreviewCreditCardForm(
       unmasking_form_ = form;
       unmasking_field_ = field;
       masked_card_ = credit_card;
-      payments::FullCardRequest* full_card_request =
-          CreateFullCardRequest(form_structure->form_parsed_timestamp());
-      full_card_request->GetFullCard(
+      GetOrCreateFullCardRequest()->GetFullCard(
           masked_card_, AutofillClient::UNMASK_FOR_AUTOFILL,
           weak_ptr_factory_.GetWeakPtr(), weak_ptr_factory_.GetWeakPtr());
-      credit_card_form_event_logger_->OnDidSelectMaskedServerCardSuggestion(
-          form_structure->form_parsed_timestamp());
+      credit_card_form_event_logger_->OnDidSelectMaskedServerCardSuggestion();
       return;
     }
-    credit_card_form_event_logger_->OnDidFillSuggestion(
-        credit_card, form_structure->form_parsed_timestamp());
+    credit_card_form_event_logger_->OnDidFillSuggestion(credit_card);
   }
 
-  FillOrPreviewDataModelForm(
-      action, query_id, form, field, credit_card, true /* is_credit_card */,
-      base::string16() /* cvc */, form_structure, autofill_field);
+  FillOrPreviewDataModelForm(action, query_id, form, field, credit_card,
+                             true /* is_credit_card */,
+                             base::string16() /* cvc */);
 }
 
 void AutofillManager::FillOrPreviewProfileForm(
@@ -772,17 +763,12 @@ void AutofillManager::FillOrPreviewProfileForm(
     const FormData& form,
     const FormFieldData& field,
     const AutofillProfile& profile) {
-  FormStructure* form_structure = NULL;
-  AutofillField* autofill_field = NULL;
-  if (!GetCachedFormAndField(form, field, &form_structure, &autofill_field))
-    return;
   if (action == AutofillDriver::FORM_DATA_ACTION_FILL)
-    address_form_event_logger_->OnDidFillSuggestion(
-        profile, form_structure->form_parsed_timestamp());
+    address_form_event_logger_->OnDidFillSuggestion(profile);
 
-  FillOrPreviewDataModelForm(
-      action, query_id, form, field, profile, false /* is_credit_card */,
-      base::string16() /* cvc */, form_structure, autofill_field);
+  FillOrPreviewDataModelForm(action, query_id, form, field, profile,
+                             false /* is_credit_card */,
+                             base::string16() /* cvc */);
 }
 
 void AutofillManager::FillOrPreviewForm(
@@ -872,11 +858,9 @@ void AutofillManager::DidShowSuggestions(bool is_new_popup,
     }
 
     if (autofill_field->Type().group() == CREDIT_CARD) {
-      credit_card_form_event_logger_->OnDidShowSuggestions(
-          *autofill_field, form_structure->form_parsed_timestamp());
+      credit_card_form_event_logger_->OnDidShowSuggestions(*autofill_field);
     } else {
-      address_form_event_logger_->OnDidShowSuggestions(
-          *autofill_field, form_structure->form_parsed_timestamp());
+      address_form_event_logger_->OnDidShowSuggestions(*autofill_field);
     }
   }
 }
@@ -986,13 +970,7 @@ payments::FullCardRequest* AutofillManager::GetOrCreateFullCardRequest() {
     full_card_request_.reset(new payments::FullCardRequest(
         client_, payments_client_.get(), personal_data_));
   }
-  return full_card_request_.get();
-}
 
-payments::FullCardRequest* AutofillManager::CreateFullCardRequest(
-    const base::TimeTicks& form_parsed_timestamp) {
-  full_card_request_.reset(new payments::FullCardRequest(
-      client_, payments_client_.get(), personal_data_, form_parsed_timestamp));
   return full_card_request_.get();
 }
 
@@ -1128,12 +1106,9 @@ void AutofillManager::OnDidUploadCard(AutofillClient::PaymentsRpcResult result,
   }
 }
 
-void AutofillManager::OnFullCardRequestSucceeded(
-    const payments::FullCardRequest& full_card_request,
-    const CreditCard& card,
-    const base::string16& cvc) {
-  credit_card_form_event_logger_->OnDidFillSuggestion(
-      masked_card_, full_card_request.form_parsed_timestamp());
+void AutofillManager::OnFullCardRequestSucceeded(const CreditCard& card,
+                                                 const base::string16& cvc) {
+  credit_card_form_event_logger_->OnDidFillSuggestion(masked_card_);
   FillCreditCardForm(unmasking_query_id_, unmasking_form_, unmasking_field_,
                      card, cvc);
   masked_card_ = CreditCard();
@@ -1740,21 +1715,7 @@ void AutofillManager::FillOrPreviewDataModelForm(
   AutofillField* autofill_field = NULL;
   if (!GetCachedFormAndField(form, field, &form_structure, &autofill_field))
     return;
-  FillOrPreviewDataModelForm(action, query_id, form, field, data_model,
-                             is_credit_card, cvc, form_structure,
-                             autofill_field);
-}
 
-void AutofillManager::FillOrPreviewDataModelForm(
-    AutofillDriver::RendererFormDataAction action,
-    int query_id,
-    const FormData& form,
-    const FormFieldData& field,
-    const AutofillDataModel& data_model,
-    bool is_credit_card,
-    const base::string16& cvc,
-    FormStructure* form_structure,
-    AutofillField* autofill_field) {
   DCHECK(form_structure);
   DCHECK(autofill_field);
 
@@ -2135,7 +2096,6 @@ bool AutofillManager::ParseForm(const FormData& form,
   // Ownership is transferred to |form_structures_| which maintains it until
   // the manager is Reset() or destroyed. It is safe to use references below
   // as long as receivers don't take ownership.
-  form_structure->set_form_parsed_timestamp(TimeTicks::Now());
   form_structures_.push_back(std::move(form_structure));
   *parsed_form_structure = form_structures_.back().get();
   (*parsed_form_structure)->DetermineHeuristicTypes(client_->GetUkmRecorder());

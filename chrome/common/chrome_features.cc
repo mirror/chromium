@@ -222,7 +222,7 @@ const base::Feature kMacFullSizeContentView{"MacFullSizeContentView",
 
 // Enables or disables the Material Design version of chrome://bookmarks.
 const base::Feature kMaterialDesignBookmarks{"MaterialDesignBookmarks",
-                                             base::FEATURE_DISABLED_BY_DEFAULT};
+                                             base::FEATURE_ENABLED_BY_DEFAULT};
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
 // Enabled or disabled the Material Design version of chrome://extensions.
@@ -343,6 +343,12 @@ const base::Feature kRuntimeMemoryLeakDetector{
     "RuntimeMemoryLeakDetector", base::FEATURE_DISABLED_BY_DEFAULT};
 #endif  // defined(OS_CHROMEOS)
 
+#if BUILDFLAG(ENABLE_PLUGINS)
+// Disables Plugin Power Saver when Flash is in ALLOW mode.
+const base::Feature kRunAllFlashInAllowMode{"RunAllFlashInAllowMode",
+                                            base::FEATURE_DISABLED_BY_DEFAULT};
+#endif
+
 const base::Feature kSafeSearchUrlReporting{"SafeSearchUrlReporting",
                                             base::FEATURE_DISABLED_BY_DEFAULT};
 
@@ -429,10 +435,6 @@ const base::Feature kCrOSComponent{"CrOSComponent",
 // Enables or disables Instant Tethering on Chrome OS.
 const base::Feature kInstantTethering{"InstantTethering",
                                       base::FEATURE_DISABLED_BY_DEFAULT};
-
-// Enables or disables EasyUnlock promotions on Chrome OS.
-const base::Feature kEasyUnlockPromotions{"EasyUnlockPromotions",
-                                          base::FEATURE_DISABLED_BY_DEFAULT};
 #endif  // defined(OS_CHROMEOS)
 
 }  // namespace features

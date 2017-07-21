@@ -66,9 +66,6 @@ class PaintOpReader {
   template <typename T>
   void ReadSimple(T* val);
 
-  template <typename T>
-  void ReadFlattenable(sk_sp<T>* val);
-
   const char* memory_ = nullptr;
   size_t remaining_bytes_ = 0u;
   bool valid_ = true;

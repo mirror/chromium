@@ -54,7 +54,7 @@ class VIZ_SERVICE_EXPORT Display : public DisplaySchedulerClient,
   // case, DrawAndSwap must be called externally when needed.
   Display(SharedBitmapManager* bitmap_manager,
           gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
-          const RendererSettings& settings,
+          const cc::RendererSettings& settings,
           const FrameSinkId& frame_sink_id,
           std::unique_ptr<cc::OutputSurface> output_surface,
           std::unique_ptr<DisplayScheduler> scheduler,
@@ -79,7 +79,7 @@ class VIZ_SERVICE_EXPORT Display : public DisplaySchedulerClient,
   bool DrawAndSwap() override;
   bool SurfaceHasUndrawnFrame(const SurfaceId& surface_id) const override;
   bool SurfaceDamaged(const SurfaceId& surface_id,
-                      const BeginFrameAck& ack) override;
+                      const cc::BeginFrameAck& ack) override;
   void SurfaceDiscarded(const SurfaceId& surface_id) override;
 
   // OutputSurfaceClient implementation.
@@ -103,7 +103,7 @@ class VIZ_SERVICE_EXPORT Display : public DisplaySchedulerClient,
 
   SharedBitmapManager* const bitmap_manager_;
   gpu::GpuMemoryBufferManager* const gpu_memory_buffer_manager_;
-  const RendererSettings settings_;
+  const cc::RendererSettings settings_;
 
   DisplayClient* client_ = nullptr;
   cc::SurfaceManager* surface_manager_ = nullptr;

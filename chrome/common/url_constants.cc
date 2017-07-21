@@ -152,10 +152,6 @@ const char kChromeUITabModalConfirmDialogURL[] =
     "chrome://tab-modal-confirm-dialog/";
 #endif
 
-#if BUILDFLAG(ENABLE_OOP_HEAP_PROFILING)
-extern const char kChromeUIMemoryInternalsURL[] = "chrome://memory-internals/";
-#endif
-
 #if BUILDFLAG(ENABLE_WEBRTC)
 const char kChromeUIWebRtcLogsURL[] = "chrome://webrtc-logs/";
 #endif
@@ -350,10 +346,6 @@ const char kChromeUIMetroFlowHost[] = "make-metro";
 
 #if (defined(OS_LINUX) && defined(TOOLKIT_VIEWS)) || defined(USE_AURA)
 const char kChromeUITabModalConfirmDialogHost[] = "tab-modal-confirm-dialog";
-#endif
-
-#if BUILDFLAG(ENABLE_OOP_HEAP_PROFILING)
-extern const char kChromeUIMemoryInternalsHost[] = "memory-internals";
 #endif
 
 #if BUILDFLAG(ENABLE_WEBRTC)
@@ -636,7 +628,7 @@ const char kLearnMoreEnterpriseURL[] =
 const char kAndroidAppsLearnMoreURL[] =
     "https://support.google.com/chromebook/?p=playapps";
 const char kInstantTetheringLearnMoreURL[] =
-    "https://support.google.com/chromebook?p=instant_tethering";
+    "https://support.google.com/pixelphone/answer/2812516";
 #endif
 
 const char kRemoveNonCWSExtensionURL[] =
@@ -673,7 +665,6 @@ const char* const kChromeHostURLs[] = {
     kChromeUIHistoryHost,
     kChromeUIInvalidationsHost,
     kChromeUILocalStateHost,
-    kChromeUIMediaEngagementHost,
     kChromeUINetExportHost,
     kChromeUINetInternalsHost,
     kChromeUINewTabHost,

@@ -25,8 +25,10 @@ ExternalPopupMenu::ExternalPopupMenu(
       origin_scale_for_emulation_(0) {
 }
 
-void ExternalPopupMenu::SetOriginScaleForEmulation(float scale) {
+void ExternalPopupMenu::SetOriginScaleAndOffsetForEmulation(
+    float scale, const gfx::PointF& offset) {
   origin_scale_for_emulation_ = scale;
+  origin_offset_for_emulation_ = offset;
 }
 
 void ExternalPopupMenu::Show(const blink::WebRect& bounds) {
@@ -35,6 +37,8 @@ void ExternalPopupMenu::Show(const blink::WebRect& bounds) {
     rect.x *= origin_scale_for_emulation_;
     rect.y *= origin_scale_for_emulation_;
   }
+  rect.x += origin_offset_for_emulation_.x();
+  rect.y += origin_offset_for_emulation_.y();
 
   FrameHostMsg_ShowPopup_Params popup_params;
   popup_params.bounds = rect;

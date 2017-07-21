@@ -14,7 +14,10 @@ namespace password_manager {
 StubPasswordManagerClient::StubPasswordManagerClient()
     : ukm_source_id_(ukm::UkmRecorder::Get()
                          ? ukm::UkmRecorder::Get()->GetNewSourceID()
-                         : 0) {}
+                         : 0),
+      metrics_recorder_(PasswordManagerMetricsRecorder::CreateUkmEntryBuilder(
+          ukm::UkmRecorder::Get(),
+          ukm_source_id_)) {}
 
 StubPasswordManagerClient::~StubPasswordManagerClient() {}
 
@@ -92,11 +95,7 @@ ukm::SourceId StubPasswordManagerClient::GetUkmSourceId() {
 
 PasswordManagerMetricsRecorder&
 StubPasswordManagerClient::GetMetricsRecorder() {
-  if (!metrics_recorder_) {
-    metrics_recorder_.emplace(GetUkmRecorder(), GetUkmSourceId(),
-                              GetMainFrameURL());
-  }
-  return metrics_recorder_.value();
+  return metrics_recorder_;
 }
 
 }  // namespace password_manager

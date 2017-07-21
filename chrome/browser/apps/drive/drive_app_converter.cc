@@ -66,7 +66,7 @@ class DriveAppConverter::IconFetcher : public net::URLFetcherDelegate,
             destination: WEBSITE
           }
           policy {
-            cookies_allowed: YES
+            cookies_allowed: true
             cookies_store: "user"
             setting: "Unconditionally enabled on ChromeOS"
             policy_exception_justification:

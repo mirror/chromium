@@ -10,8 +10,6 @@
 #include "base/posix/unix_domain_socket_linux.h"
 #include "base/threading/thread.h"
 #include "chrome/profiling/memlog_stream_receiver.h"
-#include "mojo/edk/embedder/platform_channel_utils_posix.h"
-#include "mojo/edk/embedder/platform_handle.h"
 
 namespace profiling {
 
@@ -27,18 +25,20 @@ const int kReadBufferSize = 1024 * 64;
 }  // namespace
 
 MemlogReceiverPipe::MemlogReceiverPipe(base::ScopedFD fd)
-    : handle_(mojo::edk::PlatformHandle(fd.release())),
+    : fd_(std::move(fd)),
       controller_(FROM_HERE),
-      read_buffer_(new char[kReadBufferSize]) {}
+      read_buffer_(new char[kReadBufferSize]) {
+  static std::vector<base::ScopedFD> dummy_instance;
+  dummy_for_receive_ = &dummy_instance;
+}
 
 MemlogReceiverPipe::~MemlogReceiverPipe() {}
 
 void MemlogReceiverPipe::ReadUntilBlocking() {
   ssize_t bytes_read = 0;
   do {
-    std::deque<mojo::edk::PlatformHandle> dummy_for_receive;
-    bytes_read = mojo::edk::PlatformChannelRecvmsg(
-        handle_.get(), read_buffer_.get(), kReadBufferSize, &dummy_for_receive);
+    bytes_read = base::UnixDomainSocket::RecvMsg(
+        fd_.get(), read_buffer_.get(), kReadBufferSize, dummy_for_receive_);
     if (bytes_read > 0) {
       receiver_task_runner_->PostTask(
           FROM_HERE,

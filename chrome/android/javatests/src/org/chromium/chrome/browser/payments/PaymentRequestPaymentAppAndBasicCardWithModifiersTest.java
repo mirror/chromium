@@ -9,7 +9,6 @@ import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
 import static org.chromium.chrome.browser.payments.PaymentRequestTestRule.DELAYED_RESPONSE;
-import static org.chromium.chrome.browser.payments.PaymentRequestTestRule.ENABLE_WEB_PAYMENTS_MODIFIERS;
 import static org.chromium.chrome.browser.payments.PaymentRequestTestRule.HAVE_INSTRUMENTS;
 import static org.chromium.chrome.browser.payments.PaymentRequestTestRule.IMMEDIATE_RESPONSE;
 
@@ -40,7 +39,7 @@ import java.util.concurrent.TimeoutException;
 @RunWith(ChromeJUnit4ClassRunner.class)
 @CommandLineFlags.Add({
         ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
-        ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG, ENABLE_WEB_PAYMENTS_MODIFIERS,
+        ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG,
 })
 public class PaymentRequestPaymentAppAndBasicCardWithModifiersTest
         implements PaymentRequestTestRule.MainActivityStartCallback {

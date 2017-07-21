@@ -795,7 +795,7 @@ void SupervisedUserService::OnBlacklistFileChecked(const base::FilePath& path,
           destination: GOOGLE_OWNED_SERVICE
         }
         policy {
-          cookies_allowed: NO
+          cookies_allowed: false
           setting:
             "The feature can be remotely enabled or disabled by the parent. In "
             "addition, if sign-in is restricted to accounts from a managed "

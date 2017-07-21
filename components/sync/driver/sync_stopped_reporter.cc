@@ -74,7 +74,7 @@ void SyncStoppedReporter::ReportSyncStopped(const std::string& access_token,
           destination: GOOGLE_OWNED_SERVICE
         }
         policy {
-          cookies_allowed: NO
+          cookies_allowed: false
           setting: "This feature cannot be disabled by settings."
           chrome_policy {
             SyncDisabled {

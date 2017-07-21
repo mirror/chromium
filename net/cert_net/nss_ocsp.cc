@@ -416,7 +416,7 @@ class OCSPRequestSession
           destination: OTHER
         }
         policy {
-          cookies_allowed: NO
+          cookies_allowed: false
           setting: "This feature cannot be disabled by settings."
           policy_exception_justification: "Not implemented."
         })");

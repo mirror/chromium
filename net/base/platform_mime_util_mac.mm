@@ -52,9 +52,8 @@ bool PlatformMimeUtil::GetPlatformMimeTypeFromExtension(
   return true;
 }
 
-bool PlatformMimeUtil::GetPlatformPreferredExtensionForMimeType(
-    const std::string& mime_type,
-    base::FilePath::StringType* ext) const {
+bool PlatformMimeUtil::GetPreferredExtensionForMimeType(
+    const std::string& mime_type, base::FilePath::StringType* ext) const {
   base::ScopedCFTypeRef<CFStringRef> mime_ref(
       base::SysUTF8ToCFStringRef(mime_type));
   if (!mime_ref)
@@ -98,7 +97,7 @@ void PlatformMimeUtil::GetPlatformExtensionsForMimeType(
   } else {
     // Huh? Give up.
     base::FilePath::StringType ext;
-    if (GetPlatformPreferredExtensionForMimeType(mime_type, &ext))
+    if (GetPreferredExtensionForMimeType(mime_type, &ext))
       extensions->insert(ext);
   }
 }

@@ -101,7 +101,6 @@ TEST_F(SettingsNavigationControllerTest, PopController) {
         [settingsController popViewControllerAnimated:NO];
     EXPECT_NSEQ(viewController, poppedViewController);
     EXPECT_EQ(1U, [[settingsController viewControllers] count]);
-    [settingsController settingsWillBeDismissed];
   }
 }
 
@@ -117,7 +116,6 @@ TEST_F(SettingsNavigationControllerTest, DontPopRootController) {
     EXPECT_EQ(1U, [[settingsController viewControllers] count]);
 
     EXPECT_FALSE([settingsController popViewControllerAnimated:NO]);
-    [settingsController settingsWillBeDismissed];
   }
 }
 
@@ -140,7 +138,6 @@ TEST_F(SettingsNavigationControllerTest,
     [settingsController popViewControllerOrCloseSettingsAnimated:NO];
     EXPECT_EQ(1U, [[settingsController viewControllers] count]);
     EXPECT_OCMOCK_VERIFY(mockDelegate_);
-    [settingsController settingsWillBeDismissed];
   }
 }
 
@@ -159,7 +156,6 @@ TEST_F(SettingsNavigationControllerTest,
     [[mockDelegate_ expect] closeSettings];
     [settingsController popViewControllerOrCloseSettingsAnimated:NO];
     EXPECT_OCMOCK_VERIFY(mockDelegate_);
-    [settingsController settingsWillBeDismissed];
   }
 }
 

@@ -77,7 +77,6 @@ class CORE_EXPORT WebSharedWorkerImpl final
       WebApplicationCacheHostClient*) override;
   void FrameDetached(WebLocalFrame*, DetachType) override;
   void DidFinishDocumentLoad() override;
-  service_manager::InterfaceProvider* GetInterfaceProvider() override;
 
   // WebDevToolsAgentClient overrides.
   void SendProtocolMessage(int session_id,
@@ -153,7 +152,6 @@ class CORE_EXPORT WebSharedWorkerImpl final
 
   Persistent<SharedWorkerReportingProxy> reporting_proxy_;
   std::unique_ptr<WorkerThread> worker_thread_;
-  service_manager::InterfaceProvider interface_provider_;
 
   WebSharedWorkerClient* client_;
 
@@ -167,6 +165,9 @@ class CORE_EXPORT WebSharedWorkerImpl final
   WebString name_;
   WebAddressSpace creation_address_space_;
 };
+
+extern template class CORE_EXTERN_TEMPLATE_EXPORT
+    WorkerClientsInitializer<WebSharedWorkerImpl>;
 
 }  // namespace blink
 

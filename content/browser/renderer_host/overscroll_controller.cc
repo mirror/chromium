@@ -243,7 +243,9 @@ bool OverscrollController::DispatchEventCompletesAction (
     }
   }
 
-  const gfx::Size size = delegate_->GetDisplaySize();
+  const gfx::Size size = overscroll_source_ == OverscrollSource::TOUCHPAD
+                             ? delegate_->GetDisplaySize()
+                             : delegate_->GetVisibleSize();
   if (size.IsEmpty())
     return false;
 

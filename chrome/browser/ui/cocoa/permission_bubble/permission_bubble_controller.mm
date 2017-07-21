@@ -150,7 +150,7 @@ const NSSize kPermissionIconSize = {18, 18};
 }
 
 + (NSPoint)getAnchorPointForBrowser:(Browser*)browser {
-  return GetPageInfoAnchorPointForBrowser(
+  return GetPermissionBubbleAnchorPointForBrowser(
       browser,
       [PermissionBubbleController hasVisibleLocationBarForBrowser:browser]);
 }

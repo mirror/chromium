@@ -22,7 +22,6 @@
 #include "components/ukm/ukm_pref_names.h"
 #include "components/ukm/ukm_source.h"
 #include "components/variations/variations_associated_data.h"
-#include "services/metrics/public/cpp/ukm_builders.h"
 #include "services/metrics/public/cpp/ukm_entry_builder.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/zlib/google/compression_utils.h"
@@ -293,7 +292,10 @@ TEST_F(UkmServiceTest, AddEntryWithEmptyMetrics) {
   ukm::SourceId id = UkmRecorder::GetNewSourceID();
   recorder.UpdateSourceURL(id, GURL("https://google.com/foobar"));
 
-  { ::ukm::builders::PageLoad(id).Record(&service); }
+  {
+    std::unique_ptr<UkmEntryBuilder> builder =
+        service.GetEntryBuilder(id, "PageLoad");
+  }
   service.Flush();
   EXPECT_EQ(1, GetPersistedLogCount());
   Report proto_report = GetPersistedReport();
@@ -320,9 +322,9 @@ TEST_F(UkmServiceTest, MetricsProviderTest) {
   ukm::SourceId id = UkmRecorder::GetNewSourceID();
   recorder.UpdateSourceURL(id, GURL("https://google.com/foobar"));
   {
-    ::ukm::builders::PageLoad(id)
-        .SetPaintTiming_NavigationToFirstContentfulPaint(300)
-        .Record(&service);
+    std::unique_ptr<UkmEntryBuilder> builder =
+        service.GetEntryBuilder(id, "PageLoad");
+    builder->AddMetric("FirstContentfulPaint", 300);
   }
   service.Flush();
   EXPECT_EQ(GetPersistedLogCount(), 1);

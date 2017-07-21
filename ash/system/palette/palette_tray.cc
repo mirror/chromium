@@ -22,7 +22,6 @@
 #include "ash/system/tray/tray_container.h"
 #include "ash/system/tray/tray_popup_header_button.h"
 #include "ash/system/tray/tray_popup_item_style.h"
-#include "ash/system/tray/tray_popup_utils.h"
 #include "base/metrics/histogram_macros.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
@@ -86,8 +85,6 @@ class TitleView : public views::View, public views::ButtonListener {
     // TODO(tdanderson|jdufault): Use TriView to handle the layout of the title.
     // See crbug.com/614453.
     auto* box_layout = new views::BoxLayout(views::BoxLayout::kHorizontal);
-    box_layout->set_cross_axis_alignment(
-        views::BoxLayout::CROSS_AXIS_ALIGNMENT_CENTER);
     SetLayoutManager(box_layout);
 
     auto* title_label =
@@ -105,7 +102,6 @@ class TitleView : public views::View, public views::ButtonListener {
                              kSystemMenuSettingsIcon, IDS_ASH_PALETTE_SETTINGS);
 
     AddChildView(help_button_);
-    AddChildView(TrayPopupUtils::CreateVerticalSeparator());
     AddChildView(settings_button_);
   }
 
@@ -238,9 +234,7 @@ void PaletteTray::OnStylusStateChanged(ui::StylusState stylus_state) {
 
 void PaletteTray::BubbleViewDestroyed() {
   palette_tool_manager_->NotifyViewsDestroyed();
-  // The tray button remains active if the current active tool is a mode.
-  SetIsActive(palette_tool_manager_->GetActiveTool(PaletteGroup::MODE) !=
-              PaletteToolId::NONE);
+  SetIsActive(false);
 }
 
 void PaletteTray::OnMouseEnteredView() {}
@@ -340,19 +334,6 @@ bool PaletteTray::PerformAction(const ui::Event& event) {
     return true;
   }
 
-  // Deactivate the active tool if there is one.
-  PaletteToolId active_tool_id =
-      palette_tool_manager_->GetActiveTool(PaletteGroup::MODE);
-  if (active_tool_id != PaletteToolId::NONE) {
-    palette_tool_manager_->DeactivateTool(active_tool_id);
-    // TODO(sammiequon): Investigate whether we should removed |is_switched|
-    // from PaletteToolIdToPaletteModeCancelType.
-    RecordPaletteModeCancellation(PaletteToolIdToPaletteModeCancelType(
-        active_tool_id, false /*is_switched*/));
-    SetIsActive(false);
-    return true;
-  }
-
   ShowBubble();
   return true;
 }
@@ -392,33 +373,18 @@ void PaletteTray::ShowBubble() {
       gfx::Insets(0, kPaddingBetweenTitleAndLeftEdge, 0, 0)));
   bubble_view->AddChildView(title_view);
 
-  // Function for creating a separator.
-  auto build_separator = []() {
-    auto* separator = new views::Separator();
-    separator->SetColor(kPaletteSeparatorColor);
-    separator->SetBorder(views::CreateEmptyBorder(
-        gfx::Insets(kPaddingBetweenTitleAndSeparator, 0,
-                    kMenuSeparatorVerticalPadding, 0)));
-    return separator;
-  };
-
-  // Add horizontal separator between the title and the tools.
-  bubble_view->AddChildView(build_separator());
+  // Add horizontal separator.
+  views::Separator* separator = new views::Separator();
+  separator->SetColor(kPaletteSeparatorColor);
+  separator->SetBorder(views::CreateEmptyBorder(gfx::Insets(
+      kPaddingBetweenTitleAndSeparator, 0, kMenuSeparatorVerticalPadding, 0)));
+  bubble_view->AddChildView(separator);
 
   // Add palette tools.
   // TODO(tdanderson|jdufault): Use SystemMenuButton to get the material design
   // ripples.
-  std::vector<PaletteToolView> action_views =
-      palette_tool_manager_->CreateViewsForGroup(PaletteGroup::ACTION);
-  for (const PaletteToolView& view : action_views)
-    bubble_view->AddChildView(view.view);
-
-  // Add horizontal separator between action tools and mode tools.
-  bubble_view->AddChildView(build_separator());
-
-  std::vector<PaletteToolView> mode_views =
-      palette_tool_manager_->CreateViewsForGroup(PaletteGroup::MODE);
-  for (const PaletteToolView& view : mode_views)
+  std::vector<PaletteToolView> views = palette_tool_manager_->CreateViews();
+  for (const PaletteToolView& view : views)
     bubble_view->AddChildView(view.view);
 
   // Show the bubble.
@@ -433,7 +399,7 @@ views::TrayBubbleView* PaletteTray::GetBubbleView() {
 void PaletteTray::UpdateTrayIcon() {
   icon_->SetImage(CreateVectorIcon(
       palette_tool_manager_->GetActiveTrayIcon(
-          palette_tool_manager_->GetActiveTool(PaletteGroup::MODE)),
+          palette_tool_manager_->GetActiveTool(ash::PaletteGroup::MODE)),
       kTrayIconSize, kShelfIconColor));
 }
 
@@ -452,13 +418,5 @@ void PaletteTray::UpdateIconVisibility() {
   SetVisible(is_palette_enabled_ && palette_utils::HasStylusInput() &&
              ShouldShowOnDisplay(this) && IsInUserSession());
 }
-
-// TestApi. For testing purposes.
-PaletteTray::TestApi::TestApi(PaletteTray* palette_tray)
-    : palette_tray_(palette_tray) {
-  DCHECK(palette_tray_);
-}
-
-PaletteTray::TestApi::~TestApi() {}
 
 }  // namespace ash

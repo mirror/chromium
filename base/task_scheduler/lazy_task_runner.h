@@ -38,9 +38,7 @@
 //
 // namespace {
 // base::LazySequencedTaskRunner g_sequenced_task_runner =
-//     LAZY_SEQUENCED_TASK_RUNNER_INITIALIZER(
-//         base::TaskTraits(base::MayBlock(),
-//                          base::TaskPriority::USER_VISIBLE));
+//     LAZY_SEQUENCED_TASK_RUNNER_INITIALIZER({base::MayBlock()});
 // }  // namespace
 //
 // void SequencedFunction() {

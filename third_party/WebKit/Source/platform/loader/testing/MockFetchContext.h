@@ -99,9 +99,6 @@ class MockFetchContext : public FetchContext {
     void RemoveThrottlingObserver(ObserverType, Observer*) override {}
     RefPtr<WebTaskRunner> TimerTaskRunner() override { return runner_; }
     RefPtr<WebTaskRunner> LoadingTaskRunner() override { return runner_; }
-    RefPtr<WebTaskRunner> LoadingControlTaskRunner() override {
-      return runner_;
-    }
     RefPtr<WebTaskRunner> SuspendableTaskRunner() override { return runner_; }
     RefPtr<WebTaskRunner> UnthrottledTaskRunner() override { return runner_; }
     RefPtr<WebTaskRunner> UnthrottledButBlockableTaskRunner() override {

@@ -120,7 +120,7 @@ class MockMediaStreamDispatcherHost : public MediaStreamDispatcherHost,
 
   void OnStopStreamDevice(int render_frame_id,
                           const std::string& device_id) {
-    MediaStreamDispatcherHost::StopStreamDevice(render_frame_id, device_id);
+    MediaStreamDispatcherHost::OnStopStreamDevice(render_frame_id, device_id);
   }
 
   void OnOpenDevice(int render_frame_id,
@@ -135,7 +135,7 @@ class MockMediaStreamDispatcherHost : public MediaStreamDispatcherHost,
   }
 
   void OnStreamStarted(const std::string label) {
-    MediaStreamDispatcherHost::StreamStarted(label);
+    MediaStreamDispatcherHost::OnStreamStarted(label);
   }
 
   std::string label_;
@@ -286,10 +286,11 @@ class MediaStreamDispatcherHostTest : public testing::Test {
   void SetUp() override {
     stub_video_device_ids_.emplace_back(kRegularVideoDeviceId);
     stub_video_device_ids_.emplace_back(kDepthVideoDeviceId);
-    ON_CALL(*mock_video_capture_provider_, DoGetDeviceInfosAsync(_))
+    ON_CALL(*mock_video_capture_provider_, GetDeviceInfosAsync(_))
         .WillByDefault(Invoke(
-            [this](
-                VideoCaptureProvider::GetDeviceInfosCallback& result_callback) {
+            [this](const base::Callback<void(
+                       const std::vector<media::VideoCaptureDeviceInfo>&)>&
+                       result_callback) {
               std::vector<media::VideoCaptureDeviceInfo> result;
               for (const auto& device_id : stub_video_device_ids_) {
                 media::VideoCaptureDeviceInfo info;
@@ -307,7 +308,7 @@ class MediaStreamDispatcherHostTest : public testing::Test {
                 }
                 result.push_back(info);
               }
-              base::ResetAndReturn(&result_callback).Run(result);
+              result_callback.Run(result);
             }));
 
     base::RunLoop run_loop;

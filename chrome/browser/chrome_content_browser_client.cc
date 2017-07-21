@@ -84,7 +84,6 @@
 #include "chrome/browser/speech/chrome_speech_recognition_manager_delegate.h"
 #include "chrome/browser/speech/tts_controller.h"
 #include "chrome/browser/speech/tts_message_filter.h"
-#include "chrome/browser/ssl/insecure_sensitive_input_driver_factory.h"
 #include "chrome/browser/ssl/ssl_blocking_page.h"
 #include "chrome/browser/ssl/ssl_cert_reporter.h"
 #include "chrome/browser/ssl/ssl_client_certificate_selector.h"
@@ -213,8 +212,6 @@
 #include "ppapi/features/features.h"
 #include "ppapi/host/ppapi_host.h"
 #include "printing/features/features.h"
-#include "services/preferences/public/cpp/in_process_service_factory.h"
-#include "services/preferences/public/interfaces/preferences.mojom.h"
 #include "storage/browser/fileapi/external_mount_points.h"
 #include "third_party/WebKit/public/platform/modules/installedapp/installed_app_provider.mojom.h"
 #include "third_party/WebKit/public/platform/modules/webshare/webshare.mojom.h"
@@ -388,6 +385,10 @@
 
 #if BUILDFLAG(ENABLE_PRINTING)
 #include "components/printing/service/public/interfaces/pdf_compositor.mojom.h"
+#endif
+
+#if BUILDFLAG(ENABLE_WAYLAND_SERVER)
+#include "chrome/browser/chrome_browser_main_extra_parts_exo.h"
 #endif
 
 #if BUILDFLAG(ENABLE_MOJO_MEDIA)
@@ -902,6 +903,10 @@ content::BrowserMainParts* ChromeContentBrowserClient::CreateBrowserMainParts(
 
 #if defined(USE_X11)
   main_parts->AddParts(new ChromeBrowserMainExtraPartsX11());
+#endif
+
+#if BUILDFLAG(ENABLE_WAYLAND_SERVER)
+  main_parts->AddParts(new ChromeBrowserMainExtraPartsExo());
 #endif
 
   chrome::AddMetricsExtraParts(main_parts);
@@ -2962,14 +2967,6 @@ void ChromeContentBrowserClient::BindInterfaceRequest(
 
 void ChromeContentBrowserClient::RegisterInProcessServices(
     StaticServiceMap* services) {
-  if (g_browser_process->pref_service_factory()) {
-    service_manager::EmbeddedServiceInfo info;
-    info.factory =
-        g_browser_process->pref_service_factory()->CreatePrefServiceFactory();
-    info.task_runner = base::ThreadTaskRunnerHandle::Get();
-    services->insert(
-        std::make_pair(prefs::mojom::kLocalStateServiceName, info));
-  }
 #if BUILDFLAG(ENABLE_MOJO_MEDIA_IN_BROWSER_PROCESS)
   service_manager::EmbeddedServiceInfo info;
   info.factory = base::Bind(&media::CreateMediaService);
@@ -3088,10 +3085,9 @@ std::string ChromeContentBrowserClient::GetMetricSuffixForURL(const GURL& url) {
   // histograms review. Only Google domains should be here for privacy purposes.
   // TODO(falken): Ideally Chrome would log the relevant UMA directly and this
   // function could be removed.
-  if (page_load_metrics::IsGoogleSearchResultUrl(url))
+  if (page_load_metrics::IsGoogleSearchResultUrl(url)) {
     return "search";
-  if (url.host() == "docs.google.com")
-    return "docs";
+  }
   return std::string();
 }
 
@@ -3298,7 +3294,8 @@ void ChromeContentBrowserClient::InitFrameInterfaces() {
                      BindPasswordManagerDriver));
 
   frame_interfaces_parameterized_->AddInterface(
-      base::Bind(&InsecureSensitiveInputDriverFactory::BindDriver));
+      base::Bind(&password_manager::ContentPasswordManagerDriverFactory::
+                     BindSensitiveInputVisibilityService));
 
 #if defined(OS_ANDROID)
   frame_interfaces_parameterized_->AddInterface(base::Bind(

@@ -22,7 +22,6 @@
 #include "base/synchronization/waitable_event.h"
 #include "base/test/histogram_tester.h"
 #include "base/threading/sequenced_task_runner_handle.h"
-#include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "chrome/test/base/testing_profile.h"
 #include "components/os_crypt/ie7_password_win.h"
@@ -32,6 +31,8 @@
 #include "components/password_manager/core/browser/password_store_consumer.h"
 #include "components/password_manager/core/browser/webdata/logins_table.h"
 #include "components/password_manager/core/browser/webdata/password_web_data_service_win.h"
+#include "components/password_manager/core/common/password_manager_pref_names.h"
+#include "components/prefs/pref_service.h"
 #include "components/webdata/common/web_database_service.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/test/test_browser_thread_bundle.h"
@@ -137,14 +138,14 @@ class PasswordStoreWinTest : public testing::Test {
 
     base::FilePath path = temp_dir_.GetPath().AppendASCII("web_data_test");
     wdbs_ = new WebDatabaseService(
-        path, base::ThreadTaskRunnerHandle::Get(),
+        path, BrowserThread::GetTaskRunnerForThread(BrowserThread::UI),
         BrowserThread::GetTaskRunnerForThread(BrowserThread::DB));
     // Need to add at least one table so the database gets created.
     wdbs_->AddTable(std::unique_ptr<WebDatabaseTable>(new LoginsTable()));
     wdbs_->LoadDatabase();
-    wds_ =
-        new PasswordWebDataService(wdbs_, base::ThreadTaskRunnerHandle::Get(),
-                                   WebDataServiceBase::ProfileErrorCallback());
+    wds_ = new PasswordWebDataService(
+        wdbs_, BrowserThread::GetTaskRunnerForThread(BrowserThread::UI),
+        WebDataServiceBase::ProfileErrorCallback());
     wds_->Init();
   }
 
@@ -188,6 +189,7 @@ class PasswordStoreWinTest : public testing::Test {
 };
 
 ACTION(QuitUIMessageLoop) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
   base::MessageLoop::current()->QuitWhenIdle();
 }
 

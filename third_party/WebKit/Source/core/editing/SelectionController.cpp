@@ -1023,7 +1023,7 @@ bool SelectionController::HandleMouseReleaseEvent(
     handled = true;
   }
 
-  Selection().NotifyTextControlOfSelectionChange(SetSelectionBy::kUser);
+  Selection().NotifyTextControlOfSelectionChange(kUserTriggered);
 
   Selection().SelectFrameElementInParentIfFullySelected();
 

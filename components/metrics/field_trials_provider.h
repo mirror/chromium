@@ -7,7 +7,6 @@
 
 #include <vector>
 
-#include "base/strings/string_piece.h"
 #include "base/time/time.h"
 #include "components/metrics/metrics_provider.h"
 
@@ -22,8 +21,7 @@ struct ActiveGroupId;
 class FieldTrialsProvider : public metrics::MetricsProvider {
  public:
   // |registry| must outlive this metrics provider.
-  FieldTrialsProvider(SyntheticTrialRegistry* registry,
-                      base::StringPiece suffix);
+  FieldTrialsProvider(SyntheticTrialRegistry* registry);
   ~FieldTrialsProvider() override;
 
   // metrics::MetricsProvider:
@@ -37,9 +35,6 @@ class FieldTrialsProvider : public metrics::MetricsProvider {
       std::vector<ActiveGroupId>* field_trial_ids) const;
 
   SyntheticTrialRegistry* registry_;
-
-  // Suffix used for the field trial names before they are hashed for uploads.
-  std::string suffix_;
 
   // A stack of log creation times.
   // While the initial metrics log exists, there will be two logs open.

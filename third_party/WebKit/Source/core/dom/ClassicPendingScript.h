@@ -37,7 +37,6 @@ class CORE_EXPORT ClassicPendingScript final
 
   ~ClassicPendingScript() override;
 
-  // ScriptStreamer callbacks.
   void SetStreamer(ScriptStreamer*);
   void StreamingFinished();
 
@@ -53,9 +52,7 @@ class CORE_EXPORT ClassicPendingScript final
   bool IsExternal() const override { return GetResource(); }
   bool ErrorOccurred() const override;
   bool WasCanceled() const override;
-  bool StartStreamingIfPossible(ScriptStreamer::Type,
-                                std::unique_ptr<WTF::Closure>) override;
-  bool IsCurrentlyStreaming() const override;
+  void StartStreamingIfPossible(Document*, ScriptStreamer::Type) override;
   KURL UrlForClassicScript() const override;
   void RemoveFromMemoryCache() override;
   void DisposeInternal() override;
@@ -63,14 +60,12 @@ class CORE_EXPORT ClassicPendingScript final
   void Prefinalize();
 
  private:
-  // See AdvanceReadyState implementation for valid state transitions.
   enum ReadyState {
     // These states are considered "not ready".
     kWaitingForResource,
     kWaitingForStreaming,
     // These states are considered "ready".
     kReady,
-    kReadyStreaming,
     kErrorOccurred,
   };
 
@@ -82,10 +77,6 @@ class CORE_EXPORT ClassicPendingScript final
   // Advances the current state of the script, reporting to the client if
   // appropriate.
   void AdvanceReadyState(ReadyState);
-
-  // Handle the end of streaming.
-  void FinishWaitingForStreaming();
-  void FinishReadyStreaming();
 
   void CheckState() const override;
 
@@ -99,9 +90,7 @@ class CORE_EXPORT ClassicPendingScript final
 
   ReadyState ready_state_;
   bool integrity_failure_;
-
   Member<ScriptStreamer> streamer_;
-  std::unique_ptr<WTF::Closure> streamer_done_;
 
   // This is a temporary flag to confirm that ClassicPendingScript is not
   // touched after its refinalizer call and thus https://crbug.com/715309

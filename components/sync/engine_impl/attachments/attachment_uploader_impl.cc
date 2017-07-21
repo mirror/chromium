@@ -233,7 +233,7 @@ void AttachmentUploaderImpl::UploadState::OnGetTokenSuccess(
           destination: GOOGLE_OWNED_SERVICE
         }
         policy {
-          cookies_allowed: NO
+          cookies_allowed: false
           setting:
             "Users can disable Chrome Sync by going into the profile settings "
             "and choosing to Sign Out."

@@ -85,7 +85,12 @@ ArcPrintService::ArcPrintService(content::BrowserContext* context,
 }
 
 ArcPrintService::~ArcPrintService() {
-  arc_bridge_service_->print()->RemoveObserver(this);
+  // TODO(hidehiko): Currently, the lifetime of ArcBridgeService and
+  // BrowserContextKeyedService is not nested.
+  // If ArcServiceManager::Get() returns nullptr, it is already destructed,
+  // so do not touch it.
+  if (ArcServiceManager::Get())
+    arc_bridge_service_->print()->RemoveObserver(this);
 }
 
 void ArcPrintService::OnInstanceReady() {

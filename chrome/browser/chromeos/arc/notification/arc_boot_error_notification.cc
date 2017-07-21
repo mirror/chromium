@@ -128,7 +128,11 @@ ArcBootErrorNotification::ArcBootErrorNotification(
 }
 
 ArcBootErrorNotification::~ArcBootErrorNotification() {
-  ArcSessionManager::Get()->RemoveObserver(this);
+  // TODO(hidehiko): Currently, the lifetime of ArcSessionManager and
+  // BrowserContextKeyedService is not nested. Remove if statement.
+  auto* arc_session_manager = ArcSessionManager::Get();
+  if (arc_session_manager)
+    arc_session_manager->RemoveObserver(this);
 }
 
 void ArcBootErrorNotification::OnArcSessionStopped(ArcStopReason reason) {

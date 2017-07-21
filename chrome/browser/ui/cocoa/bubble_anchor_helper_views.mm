@@ -55,18 +55,12 @@ class BubbleAnchorHelper : public views::WidgetObserver {
 
 }  // namespace
 
-LocationBarDecoration* GetManagePasswordDecoration(gfx::NativeWindow window) {
-  BrowserWindowController* window_controller =
-      [BrowserWindowController browserWindowControllerForWindow:window];
+LocationBarDecoration* GetManagePasswordDecoration(
+    views::BubbleDialogDelegateView* bubble) {
+  BrowserWindowController* window_controller = [BrowserWindowController
+      browserWindowControllerForWindow:[bubble->parent_window() window]];
   LocationBarViewMac* location_bar = [window_controller locationBarBridge];
   return location_bar ? location_bar->manage_passwords_decoration() : nullptr;
-}
-
-LocationBarDecoration* GetPageInfoDecoration(gfx::NativeWindow window) {
-  BrowserWindowController* window_controller =
-      [BrowserWindowController browserWindowControllerForWindow:window];
-  LocationBarViewMac* location_bar = [window_controller locationBarBridge];
-  return location_bar ? location_bar->GetPageInfoDecoration() : nullptr;
 }
 
 void KeepBubbleAnchored(views::BubbleDialogDelegateView* bubble,

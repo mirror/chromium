@@ -5,9 +5,9 @@
 #ifndef CHROME_INSTALLER_ZUCCHINI_BUFFER_SINK_H_
 #define CHROME_INSTALLER_ZUCCHINI_BUFFER_SINK_H_
 
-#include <stdint.h>
-
 #include <algorithm>
+#include <cstddef>
+#include <cstdint>
 #include <iterator>
 
 #include "base/logging.h"
@@ -28,11 +28,12 @@ class BufferSink : public MutableBufferView {
   BufferSink() = default;
   explicit BufferSink(MutableBufferView buffer);
   BufferSink(const BufferSink&) = default;
+
   BufferSink& operator=(BufferSink&&) = default;
 
   // If sufficient space is available, writes the binary representation of
-  // |value| starting at the cursor, while advancing the cursor beyond the
-  // written region, and returns true. Otherwise returns false.
+  // |value| starting at cursor, while advancing the cursor beyond the written
+  // region, and returns true. Otherwise returns false.
   template <class T>
   bool PutValue(const T& value) {
     DCHECK_NE(begin(), nullptr);
@@ -44,8 +45,8 @@ class BufferSink : public MutableBufferView {
   }
 
   // If sufficient space is available, writes the raw bytes [|first|, |last|)
-  // starting at the cursor, while advancing the cursor beyond the written
-  // region, and returns true. Otherwise returns false.
+  // starting at cursor, while advancing the cursor beyond the written region,
+  // and returns true. Otherwise returns false.
   template <class It>
   bool PutRange(It first, It last) {
     static_assert(sizeof(typename std::iterator_traits<It>::value_type) ==

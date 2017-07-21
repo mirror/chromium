@@ -43,7 +43,6 @@
 #include "core/editing/FrameSelection.h"
 #include "core/editing/InputMethodController.h"
 #include "core/editing/markers/DocumentMarkerController.h"
-#include "core/exported/FakeWebPlugin.h"
 #include "core/exported/WebSettingsImpl.h"
 #include "core/exported/WebViewBase.h"
 #include "core/frame/EventHandlerRegistry.h"
@@ -56,7 +55,6 @@
 #include "core/fullscreen/Fullscreen.h"
 #include "core/html/HTMLIFrameElement.h"
 #include "core/html/HTMLInputElement.h"
-#include "core/html/HTMLObjectElement.h"
 #include "core/html/HTMLTextAreaElement.h"
 #include "core/inspector/DevToolsEmulator.h"
 #include "core/layout/api/LayoutViewItem.h"
@@ -1646,6 +1644,8 @@ TEST_P(WebViewTest, ExitingDeviceEmulationResetsPageScale) {
   WebDeviceEmulationParams params;
   params.screen_position = WebDeviceEmulationParams::kDesktop;
   params.device_scale_factor = 0;
+  params.fit_to_view = false;
+  params.offset = WebFloatPoint();
   params.scale = 1;
 
   web_view_impl->EnableDeviceEmulation(params);
@@ -4154,9 +4154,10 @@ TEST_P(WebViewTest, ViewportOverrideIntegratesDeviceMetricsOffsetAndScale) {
             web_view_impl->GetDeviceEmulationTransformForTesting());
 
   WebDeviceEmulationParams emulation_params;
+  emulation_params.offset = WebFloatPoint(50, 50);
   emulation_params.scale = 2.f;
   web_view_impl->EnableDeviceEmulation(emulation_params);
-  expected_matrix.MakeIdentity().Scale(2.f);
+  expected_matrix.MakeIdentity().Translate(50, 50).Scale(2.f);
   EXPECT_EQ(expected_matrix,
             web_view_impl->GetDeviceEmulationTransformForTesting());
 
@@ -4166,6 +4167,7 @@ TEST_P(WebViewTest, ViewportOverrideIntegratesDeviceMetricsOffsetAndScale) {
   expected_matrix.MakeIdentity()
       .Scale(1.5f)
       .Translate(-5, -10)
+      .Translate(50, 50)
       .Scale(2.f);
   EXPECT_EQ(expected_matrix,
             web_view_impl->GetDeviceEmulationTransformForTesting());
@@ -4375,6 +4377,8 @@ TEST_P(WebViewTest, DeviceEmulationResetScrollbars) {
   WebDeviceEmulationParams params;
   params.screen_position = WebDeviceEmulationParams::kMobile;
   params.device_scale_factor = 0;
+  params.fit_to_view = false;
+  params.offset = WebFloatPoint();
   params.scale = 1;
 
   web_view->EnableDeviceEmulation(params);
@@ -4393,39 +4397,6 @@ TEST_P(WebViewTest, DeviceEmulationResetScrollbars) {
   } else {
     EXPECT_NE(nullptr, frame_view->VerticalScrollbar());
   }
-}
-
-TEST_P(WebViewTest, SetZoomLevelWhilePluginFocused) {
-  class PluginCreatingWebFrameClient
-      : public FrameTestHelpers::TestWebFrameClient {
-   public:
-    // WebFrameClient overrides:
-    WebPlugin* CreatePlugin(const WebPluginParams& params) override {
-      return new FakeWebPlugin(params);
-    }
-  };
-  PluginCreatingWebFrameClient frame_client;
-  WebViewBase* web_view = web_view_helper_.Initialize(&frame_client);
-  WebURL base_url = URLTestHelpers::ToKURL("https://example.com/");
-  FrameTestHelpers::LoadHTMLString(
-      web_view->MainFrameImpl(),
-      "<!DOCTYPE html><html><body>"
-      "<object type='application/x-webkit-test-plugin'></object>"
-      "</body></html>",
-      base_url);
-  // Verify the plugin is loaded.
-  LocalFrame* main_frame = web_view->MainFrameImpl()->GetFrame();
-  HTMLObjectElement* plugin_element =
-      toHTMLObjectElement(main_frame->GetDocument()->body()->firstChild());
-  EXPECT_TRUE(plugin_element->OwnedPlugin());
-  // Focus the plugin element, and then change the zoom level on the WebView.
-  plugin_element->focus();
-  EXPECT_FLOAT_EQ(1.0f, main_frame->PageZoomFactor());
-  web_view->SetZoomLevel(-1.0);
-  // Even though the plugin is focused, the entire frame's zoom factor should
-  // still be updated.
-  EXPECT_FLOAT_EQ(5.0f / 6.0f, main_frame->PageZoomFactor());
-  web_view_helper_.Reset();  // Remove dependency on locally scoped client.
 }
 
 }  // namespace blink

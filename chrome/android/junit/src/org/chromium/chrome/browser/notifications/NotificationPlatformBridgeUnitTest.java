@@ -120,7 +120,7 @@ public class NotificationPlatformBridgeUnitTest {
         // Returns the expected origin for a channel id associated with a particular origin.
         assertEquals("https://example.com",
                 NotificationPlatformBridge.getOriginFromChannelId(
-                        SiteChannelsManager.createChannelId("https://example.com", 62104680000L)));
+                        SiteChannelsManager.toChannelId("https://example.com")));
 
         // Returns null for a channel id that is not associated with a particular origin.
         assertNull(NotificationPlatformBridge.getOriginFromChannelId(

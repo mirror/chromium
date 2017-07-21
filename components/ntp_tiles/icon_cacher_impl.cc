@@ -133,7 +133,7 @@ void IconCacherImpl::OnGetFaviconImageForPageURLFinished(
           destination: WEBSITE
         }
         policy {
-          cookies_allowed: NO
+          cookies_allowed: false
           setting: "This feature cannot be disabled in settings."
           policy_exception_justification: "Not implemented."
         })");
@@ -252,7 +252,7 @@ void IconCacherImpl::OnGetLargeIconOrFallbackStyleFinished(
           destination: GOOGLE_OWNED_SERVICE
         }
         policy {
-          cookies_allowed: NO
+          cookies_allowed: false
           setting:
             "Users can disable this feature via 'History' setting under "
             "'Advanced sync settings'."

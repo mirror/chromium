@@ -18,7 +18,7 @@
 #include "cc/quads/surface_draw_quad.h"
 #include "cc/quads/texture_draw_quad.h"
 #include "cc/quads/yuv_video_draw_quad.h"
-#include "components/viz/test/begin_frame_args_test.h"
+#include "cc/test/begin_frame_args_test.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/core/SkString.h"
@@ -41,12 +41,12 @@ class StructTraitsTest : public testing::Test, public mojom::TraitsTestService {
 
  private:
   // TraitsTestService:
-  void EchoBeginFrameArgs(const viz::BeginFrameArgs& b,
+  void EchoBeginFrameArgs(const BeginFrameArgs& b,
                           EchoBeginFrameArgsCallback callback) override {
     std::move(callback).Run(b);
   }
 
-  void EchoBeginFrameAck(const viz::BeginFrameAck& b,
+  void EchoBeginFrameAck(const BeginFrameAck& b,
                          EchoBeginFrameAckCallback callback) override {
     std::move(callback).Run(b);
   }
@@ -163,12 +163,11 @@ TEST_F(StructTraitsTest, BeginFrameArgs) {
   const base::TimeTicks frame_time = base::TimeTicks::Now();
   const base::TimeTicks deadline = base::TimeTicks::Now();
   const base::TimeDelta interval = base::TimeDelta::FromMilliseconds(1337);
-  const viz::BeginFrameArgs::BeginFrameArgsType type =
-      viz::BeginFrameArgs::NORMAL;
+  const BeginFrameArgs::BeginFrameArgsType type = BeginFrameArgs::NORMAL;
   const bool on_critical_path = true;
   const uint32_t source_id = 5;
   const uint64_t sequence_number = 10;
-  viz::BeginFrameArgs input;
+  BeginFrameArgs input;
   input.source_id = source_id;
   input.sequence_number = sequence_number;
   input.frame_time = frame_time;
@@ -177,7 +176,7 @@ TEST_F(StructTraitsTest, BeginFrameArgs) {
   input.type = type;
   input.on_critical_path = on_critical_path;
   mojom::TraitsTestServicePtr proxy = GetTraitsTestProxy();
-  viz::BeginFrameArgs output;
+  BeginFrameArgs output;
   proxy->EchoBeginFrameArgs(input, &output);
   EXPECT_EQ(source_id, output.source_id);
   EXPECT_EQ(sequence_number, output.sequence_number);
@@ -192,12 +191,12 @@ TEST_F(StructTraitsTest, BeginFrameAck) {
   const uint32_t source_id = 5;
   const uint64_t sequence_number = 10;
   const bool has_damage = true;
-  viz::BeginFrameAck input;
+  BeginFrameAck input;
   input.source_id = source_id;
   input.sequence_number = sequence_number;
   input.has_damage = has_damage;
   mojom::TraitsTestServicePtr proxy = GetTraitsTestProxy();
-  viz::BeginFrameAck output;
+  BeginFrameAck output;
   proxy->EchoBeginFrameAck(input, &output);
   EXPECT_EQ(source_id, output.source_id);
   EXPECT_EQ(sequence_number, output.sequence_number);
@@ -263,7 +262,7 @@ TEST_F(StructTraitsTest, CompositorFrame) {
   const float page_scale_factor = 1337.5f;
   const gfx::SizeF scrollable_viewport_size(1337.7f, 1234.5f);
   const uint32_t content_source_id = 3;
-  const viz::BeginFrameAck begin_frame_ack(5, 10, false);
+  const BeginFrameAck begin_frame_ack(5, 10, false);
 
   CompositorFrame input;
   input.metadata.device_scale_factor = device_scale_factor;

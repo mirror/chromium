@@ -487,10 +487,7 @@ Press any key to continue exploring.
   <message name="IDS_FILE_BROWSER_CUT_BUTTON_LABEL" desc="Context menu item that cuts the currently-selected file(s) to the clipboard.">
     Cut
   </message>
-  <message name="IDS_FILE_BROWSER_OPEN_WITH_BUTTON_LABEL" desc="Menu item label, showing dialog to choose extension to open selected files or directories.">
-    Open with...
-  </message>
-  <message name="IDS_FILE_BROWSER_MORE_ACTIONS_BUTTON_LABEL" desc="Menu item label, showing dialog to choose extension to open/share/pack/etc... selected files or directories.">
+  <message name="IDS_FILE_BROWSER_MORE_ACTIONS_BUTTON_LABEL" desc="Menu item label, showing dialog to choose extension to open selected files or directories.">
     More actions...
   </message>
   <message name="IDS_FILE_BROWSER_OPEN_WITH_VERB_BUTTON_LABEL" desc="Verb that describe the action of opening one or more files or directories with the given extension.">
@@ -1173,16 +1170,13 @@ Press any key to continue exploring.
     Thumbnail view
   </message>
   <message name="IDS_FILE_BROWSER_SHARE_BUTTON_TOOLTIP" desc="Tooltip for the button which provides share options in the Files app.">
-    More actions
+    Share options
   </message>
   <message name="IDS_FILE_BROWSER_SORT_BUTTON_TOOLTIP" desc="Tooltip for the button which provides sort options in the Files app.">
     Sort options
   </message>
   <message name="IDS_FILE_BROWSER_GEAR_BUTTON_TOOLTIP" desc="Tooltip for the gear button in the Files app.">
-    More...
-  </message>
-  <message name="IDS_FILE_BROWSER_SELECTION_MENU_BUTTON_TOOLTIP" desc="Tooltip for the button to open the context menu of currently selected items in the Files app.">
-    More...
+    Settings
   </message>
 
   <message name="IDS_FILE_BROWSER_TIME_TODAY" desc="File date and time in case the date is today.">
@@ -1481,27 +1475,6 @@ Press any key to continue exploring.
   </message>
   <message name="IDS_WELCOME_SCREEN_TITLE" desc="Title of the OOBE welcome screen">
     Connect
-  </message>
-  <message name="IDS_OOBE_ADVANCED_OPTIONS_SCREEN_TITLE" desc="Screen title on the Chrome OS OOBE (first run) Advanced options screen">
-    Advanced options
-  </message>
-  <message name="IDS_OOBE_ADVANCED_OPTIONS_EE_BOOTSTRAPPING_TITLE" desc="Title of the button that triggers Enterprise Enrollment via bootstrapping application mode on the Chrome OS OOBE (first run UI) Advanced options screen">
-    Enable remote enrollment
-  </message>
-  <message name="IDS_OOBE_ADVANCED_OPTIONS_EE_BOOTSTRAPPING_SUBTITLE" desc="Subtitle of the button that triggers Enterprise Enrollment via bootstrapping application mode on the Chrome OS OOBE (first run UI) Advanced options screen">
-    Use the bootstrapping app to quickly enroll
-  </message>
-  <message name="IDS_OOBE_ADVANCED_OPTIONS_CFM_SETUP_TITLE" desc="Title of the button that triggers Chromebox for Meetings device mode on the Chrome OS OOBE (first run UI) Advanced options screen">
-    Set up as Chromebox for meetings
-  </message>
-  <message name="IDS_OOBE_ADVANCED_OPTIONS_CFM_SETUP_SUBTITLE" desc="Subtitle of the button that trigers Chromebox for Meetings device mode on the Chrome OS OOBE (first run UI) Advanced options screen">
-    Enroll device for video conferencing
-  </message>
-  <message name="IDS_OOBE_ADVANCED_OPTIONS_DEVICE_REQUISITION_TITLE" desc="Title of the button that triggers Device requisition device setup mode on the Chrome OS OOBE (first run UI) Advanced options screen">
-    Device requisition
-  </message>
-  <message name="IDS_OOBE_ADVANCED_OPTIONS_DEVICE_REQUISITION_SUBTITLE" desc="Subtitle of the button that trigers Device requisition device setup mode on the Chrome OS OOBE (first run UI) Advanced options screen">
-    Add requisition ID to this device
   </message>
   <message name="IDS_NETWORK_SCREEN_ACCESSIBLE_TITLE" desc="Text to be spoken on opening the OOBE network screen">
     Welcome! Set your language and network
@@ -6026,11 +5999,8 @@ All users must sign out to continue.
   <message name="IDS_ARC_OPT_IN_PRIVACY_POLICY_LINK" desc="Text of the Link to Goolge Privacy Policy in opt-in dialog">
     Google privacy policy
   </message>
-  <message name="IDS_ARC_OPT_IN_ACTIVE_DIRECTORY_AUTH_TITLE" desc="Title displayed in opt-in dialog to inform an Active Directory user that they may have to enter their credentials">
-    Google Play Store Account
-  </message>
-  <message name="IDS_ARC_OPT_IN_ACTIVE_DIRECTORY_AUTH_DESC" desc="Description displayed in opt-in dialog to inform an Active Directory user that they may have to enter their credentials">
-    To enable your account to access the Google Play Store, please authenticate with your Identity Provider.
+  <message name="IDS_ARC_OPT_IN_AD_AUTH_NOTIFICATION" desc="Text displayed in opt-in dialog to inform an Active Directory user that they may have to enter their credentials in a browser window">
+    To enable your account to access the Google Play Store, you will need to authenticate with your Identity Provider. Please click Next to proceed.
   </message>
   <message name="IDS_ARC_OPT_OUT_TAB_TITLE" desc="Tab title when viewing opt-out setting dialog for android apps.">
     Settings - Remove Android apps
@@ -6162,8 +6132,11 @@ All users must sign out to continue.
   <message name="IDS_VOICE_INTERACTION_VALUE_PROP_RETRY_BUTTON" desc="Button label for retry loading voice interaction value prop.">
     Retry
   </message>
-  <message name="IDS_VOICE_INTERACTION_VALUE_PROP_NEXT_BUTTION" desc="Button label for accepting voice interaction value proposition.">
-    Next
+  <message name="IDS_VOICE_INTERACTION_VALUE_PROP_NO_THANKS_BUTTON" desc="Button label for skipping voice interaction value proposition.">
+    No thanks
+  </message>
+  <message name="IDS_VOICE_INTERACTION_VALUE_PROP_CONTINUE_BUTTION" desc="Button label for accepting voice interaction value proposition.">
+    Continue
   </message>
   <message name="IDS_WAIT_FOR_CONTAINER_READY_TITLE" desc="Title of the wait for container ready OOBE screen.">
     Just a sec
@@ -6228,18 +6201,6 @@ All users must sign out to continue.
   </message>
   <message name="IDS_REQUEST_PIN_DIALOG_PUK" desc="The Personal Unlocking Key (as used in mobile phones) abbreviation">
     PUK
-  </message>
-
-  <message name="IDS_USB_PRINTER_UNKNOWN_DISPLAY_NAME" desc="Display string used for USB printers where we have identified neither the correct manufactuer nor model strings. USB stands for Universal Serial Bus, it indicates how the printer is attached to the computer.">
-    Unknown Printer (USB)
-  </message>
-
-  <message name="IDS_USB_PRINTER_DISPLAY_NAME" desc="The display name assigned to USB printers which were automatically configured for the user. USB stands for Universal Serial Bus, it indicates how the printer is attached to the computer.">
-    <ph name="PRINTER_MANUFACTURER">$1<ex>Hewlett Packard</ex></ph> <ph name="PRINTER_MODEL">$2<ex>OfficeJet 8710</ex></ph> (USB)
-  </message>
-
-  <message name="IDS_USB_PRINTER_DISPLAY_NAME_MAKE_OR_MODEL" desc="The display name assigned to USB printers which were automatically configured for the user. This string is used when only one of manufacturer or model strings are present. USB stands for Universal Serial Bus, it indicates how the printer is attached to the computer.">
-    <ph name="PRINTER_MAKE_OR_MODEL">$1<ex>OfficeJet 8710</ex></ph> (USB)
   </message>
 
 </grit-part>

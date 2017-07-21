@@ -64,7 +64,7 @@ SVGParsingError SVGPreserveAspectRatio::ParseInternal(const CharType*& ptr,
     return SVGParsingError(SVGParseStatus::kExpectedEnumeration, ptr - start);
 
   if (*ptr == 'n') {
-    if (!SkipToken(ptr, end, "none"))
+    if (!skipToken(ptr, end, "none"))
       return SVGParsingError(SVGParseStatus::kExpectedEnumeration, ptr - start);
     align = kSvgPreserveaspectratioNone;
     SkipOptionalSVGSpaces(ptr, end);
@@ -134,12 +134,12 @@ SVGParsingError SVGPreserveAspectRatio::ParseInternal(const CharType*& ptr,
 
   if (ptr < end) {
     if (*ptr == 'm') {
-      if (!SkipToken(ptr, end, "meet"))
+      if (!skipToken(ptr, end, "meet"))
         return SVGParsingError(SVGParseStatus::kExpectedEnumeration,
                                ptr - start);
       SkipOptionalSVGSpaces(ptr, end);
     } else if (*ptr == 's') {
-      if (!SkipToken(ptr, end, "slice"))
+      if (!skipToken(ptr, end, "slice"))
         return SVGParsingError(SVGParseStatus::kExpectedEnumeration,
                                ptr - start);
       SkipOptionalSVGSpaces(ptr, end);

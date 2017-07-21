@@ -54,10 +54,8 @@ class AutofillPaymentInstrument
       const std::vector<std::string>& supported_networks) const override;
 
   // autofill::payments::FullCardRequest::ResultDelegate:
-  void OnFullCardRequestSucceeded(
-      const autofill::payments::FullCardRequest& full_card_request,
-      const autofill::CreditCard& card,
-      const base::string16& cvc) override;
+  void OnFullCardRequestSucceeded(const autofill::CreditCard& card,
+                                  const base::string16& cvc) override;
   void OnFullCardRequestFailed() override;
 
   // AddressNormalizer::Delegate:

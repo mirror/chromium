@@ -1,5 +1,5 @@
 (async function(testRunner) {
-  var {page, session, dp} = await testRunner.startURL('resources/dom-getFlattenedDocument.html', 'Tests DOM.getFlattenedDocument method.');
+  var {page, session, dp} = await testRunner.startURL('resources/dom-getFlattenedDocument.html', '');
 
   await session.evaluate(() => {
     var host = document.querySelector('#shadow-host').createShadowRoot();

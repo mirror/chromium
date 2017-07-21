@@ -221,23 +221,26 @@ class SpdyFramerPeer {
                                                     size_t size) {
     return framer->GetNumberRequiredContinuationFrames(size);
   }
+  static void SetError(SpdyFramer* framer, SpdyFramer::SpdyFramerError error) {
+    framer->set_error(error);
+  }
 
   // TODO(dahollings): Remove these methods when deprecating non-incremental
   // header serialization path.
   static std::unique_ptr<SpdyHeadersIR> CloneSpdyHeadersIR(
       const SpdyHeadersIR& headers) {
-    auto new_headers = SpdyMakeUnique<SpdyHeadersIR>(
+    auto newHeaders = SpdyMakeUnique<SpdyHeadersIR>(
         headers.stream_id(), headers.header_block().Clone());
-    new_headers->set_fin(headers.fin());
-    new_headers->set_has_priority(headers.has_priority());
-    new_headers->set_weight(headers.weight());
-    new_headers->set_parent_stream_id(headers.parent_stream_id());
-    new_headers->set_exclusive(headers.exclusive());
+    newHeaders->set_fin(headers.fin());
+    newHeaders->set_has_priority(headers.has_priority());
+    newHeaders->set_weight(headers.weight());
+    newHeaders->set_parent_stream_id(headers.parent_stream_id());
+    newHeaders->set_exclusive(headers.exclusive());
     if (headers.padded()) {
-      new_headers->set_padding_len(headers.padding_payload_len() + 1);
+      newHeaders->set_padding_len(headers.padding_payload_len() + 1);
     }
-    new_headers->set_end_headers(headers.end_headers());
-    return new_headers;
+    newHeaders->set_end_headers(headers.end_headers());
+    return newHeaders;
   }
 
   static SpdySerializedFrame SerializeHeaders(SpdyFramer* framer,

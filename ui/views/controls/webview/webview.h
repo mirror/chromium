@@ -138,8 +138,7 @@ class WEBVIEW_EXPORT WebView : public View,
   void OnChannelConnected(int32_t peer_id) override {}
   void OnChannelError() override {}
   void OnBadMessageReceived(const IPC::Message& message) override {}
-  void OnWebContentsFocused(
-      content::RenderWidgetHost* render_widget_host) override;
+  void OnWebContentsFocused() override;
 
  private:
   friend class WebViewUnitTest;

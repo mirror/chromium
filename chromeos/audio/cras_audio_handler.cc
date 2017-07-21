@@ -10,8 +10,6 @@
 #include <algorithm>
 #include <cmath>
 #include <set>
-#include <string>
-#include <vector>
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
@@ -1034,16 +1032,6 @@ void CrasAudioHandler::SwitchToDevice(const AudioDevice& device,
     SetupAudioOutputState();
 
   SetActiveDevice(device, notify, activate_by);
-
-  // content::MediaStreamManager listens to
-  // base::SystemMonitor::DevicesChangedObserver for audio devices,
-  // and updates EnumerateDevices when OnDevicesChanged is called.
-  base::SystemMonitor* monitor = base::SystemMonitor::Get();
-  // In some unittest, |monitor| might be nullptr.
-  if (!monitor)
-    return;
-  monitor->ProcessDevicesChanged(
-      base::SystemMonitor::DeviceType::DEVTYPE_AUDIO);
 }
 
 bool CrasAudioHandler::HasDeviceChange(const AudioNodeList& new_nodes,
@@ -1390,6 +1378,16 @@ void CrasAudioHandler::HandleAudioDeviceChange(
     // Typical user hotplug case.
     HandleHotPlugDevice(hotplug_nodes.top(), devices_pq);
   }
+
+  // content::MediaStreamManager listens to
+  // base::SystemMonitor::DevicesChangedObserver for audio devices,
+  // and updates EnumerateDevices when OnDevicesChanged is called.
+  base::SystemMonitor* monitor = base::SystemMonitor::Get();
+  // In some unittest, |monitor| might be nullptr.
+  if (!monitor)
+    return;
+  monitor->ProcessDevicesChanged(
+      base::SystemMonitor::DeviceType::DEVTYPE_AUDIO);
 }
 
 void CrasAudioHandler::HandleGetNodes(const chromeos::AudioNodeList& node_list,

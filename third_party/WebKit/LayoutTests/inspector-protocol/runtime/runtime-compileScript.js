@@ -1,5 +1,5 @@
 (async function(testRunner) {
-  let {page, session, dp} = await testRunner.startBlank(`Tests Runtime.compileScript functionality.`);
+  let {page, session, dp} = await testRunner.startBlank(``);
 
   await dp.Debugger.enable();
   dp.Debugger.onScriptParsed(messageObject => {

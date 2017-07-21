@@ -72,7 +72,6 @@ void FakeVRDevice::ExitPresent() {
 }
 
 void FakeVRDevice::GetNextMagicWindowPose(
-    VRDisplayImpl* display,
     mojom::VRDisplay::GetNextMagicWindowPoseCallback callback) {
   std::move(callback).Run(nullptr);
 }

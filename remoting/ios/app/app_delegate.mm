@@ -8,6 +8,10 @@
 
 #import "remoting/ios/app/app_delegate.h"
 
+#include "base/logging.h"
+#include "ui/base/l10n/l10n_util.h"
+#include "ui/base/resource/resource_bundle.h"
+
 #import "remoting/ios/app/app_view_controller.h"
 #import "remoting/ios/app/first_launch_view_presenter.h"
 #import "remoting/ios/app/help_and_feedback.h"
@@ -16,11 +20,6 @@
 #import "remoting/ios/app/user_status_presenter.h"
 #import "remoting/ios/app/web_view_controller.h"
 #import "remoting/ios/facade/remoting_oauth_authentication.h"
-
-#include "base/logging.h"
-#include "remoting/base/string_resources.h"
-#include "ui/base/l10n/l10n_util.h"
-#include "ui/base/resource/resource_bundle.h"
 
 @interface AppDelegate ()<FirstLaunchViewControllerDelegate> {
   AppViewController* _appViewController;
@@ -117,8 +116,7 @@ static NSString* const kFAQsUrl =
 
 - (void)navigateToFAQs:(UINavigationController*)navigationController {
   WebViewController* viewController =
-      [[WebViewController alloc] initWithUrl:kFAQsUrl
-                                       title:l10n_util::GetNSString(IDS_FAQS)];
+      [[WebViewController alloc] initWithUrl:kFAQsUrl title:@"FAQs"];
   [navigationController pushViewController:viewController animated:YES];
 }
 

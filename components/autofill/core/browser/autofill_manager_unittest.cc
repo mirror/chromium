@@ -693,7 +693,6 @@ class TestAutofillManager : public AutofillManager {
   }
 
   void AddSeenForm(std::unique_ptr<FormStructure> form) {
-    form->set_form_parsed_timestamp(base::TimeTicks::Now());
     form_structures()->push_back(std::move(form));
   }
 
@@ -1165,7 +1164,7 @@ class AutofillManagerTest : public testing::Test {
 
  protected:
   base::test::ScopedTaskEnvironment scoped_task_environment_;
-  ukm::TestAutoSetUkmRecorder test_ukm_recorder_;
+  ukm::TestUkmRecorder test_ukm_recorder_;
   MockAutofillClient autofill_client_;
   std::unique_ptr<MockAutofillDriver> autofill_driver_;
   std::unique_ptr<TestAutofillManager> autofill_manager_;
@@ -7080,7 +7079,6 @@ TEST_F(AutofillManagerTest, SignInFormSubmission_Upload) {
 
   std::unique_ptr<FormStructure> form_structure(new FormStructure(form));
   form_structure->set_is_signin_upload(true);
-  form_structure->set_form_parsed_timestamp(base::TimeTicks::Now());
   form_structure->field(1)->set_possible_types({autofill::PASSWORD});
 
   std::string signature = form_structure->FormSignatureAsStr();

@@ -88,6 +88,7 @@ class DataReductionProxySettingsAndroidTest
   // DataReductionProxySettingsTest implementation:
   void SetUp() override {
     env_ = base::android::AttachCurrentThread();
+    DataReductionProxySettingsAndroid::Register(env_);
     DataReductionProxySettingsTestBase::SetUp();
     ResetSettingsAndroid();
   }

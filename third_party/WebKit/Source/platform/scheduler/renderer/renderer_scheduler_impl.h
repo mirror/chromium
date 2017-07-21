@@ -93,7 +93,7 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   scoped_refptr<SingleThreadIdleTaskRunner> IdleTaskRunner() override;
   std::unique_ptr<RenderWidgetSchedulingState> NewRenderWidgetSchedulingState()
       override;
-  void WillBeginFrame(const viz::BeginFrameArgs& args) override;
+  void WillBeginFrame(const cc::BeginFrameArgs& args) override;
   void BeginFrameNotExpectedSoon() override;
   void BeginMainFrameNotExpectedUntil(base::TimeTicks time) override;
   void DidCommitFrameToCompositor() override;
@@ -158,7 +158,6 @@ class PLATFORM_EXPORT RendererSchedulerImpl
 
   // Returns a new loading task queue. This queue is intended for tasks related
   // to resource dispatch, foreground HTML parsing, etc...
-  // Note: Tasks posted to FRAME_LOADING_CONTROL queues must execute quickly.
   scoped_refptr<MainThreadTaskQueue> NewLoadingTaskQueue(
       MainThreadTaskQueue::QueueType queue_type);
 

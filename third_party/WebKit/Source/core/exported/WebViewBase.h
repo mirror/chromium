@@ -167,7 +167,7 @@ class WebViewBase : public WebView, public RefCounted<WebViewBase> {
   virtual FloatSize ElasticOverscroll() const = 0;
   virtual double LastFrameTimeMonotonic() const = 0;
 
-  CORE_EXPORT static const WebInputEvent* CurrentInputEvent();
+  static const WebInputEvent* CurrentInputEvent();
 
   virtual void SetCompositorVisibility(bool) = 0;
   using WebWidget::SetSuppressFrameRequestsWorkaroundFor704763Only;
@@ -223,9 +223,6 @@ class WebViewBase : public WebView, public RefCounted<WebViewBase> {
   virtual LinkHighlightImpl* GetLinkHighlight(int) = 0;
   virtual unsigned NumLinkHighlights() = 0;
   virtual void EnableTapHighlights(HeapVector<Member<Node>>&) = 0;
-
- protected:
-  CORE_EXPORT static const WebInputEvent* current_input_event_;
 };
 }
 

@@ -457,8 +457,10 @@ SDK.ChildTargetManager = class {
           InspectorFrontendHostAPI.Events.DevicesDiscoveryConfigChanged, this._devicesDiscoveryConfigChanged, this);
     }
 
-    for (var sessionId of this._childConnections.keys())
-      this.detachedFromTarget(sessionId, undefined);
+    // TODO(dgozman): this is O(n^2) when removing main target.
+    var childTargets = this._targetManager._targets.filter(child => child.parentTarget() === this._parentTarget);
+    for (var child of childTargets)
+      this.detachedFromTarget(child.id());
   }
 
   /**
@@ -532,11 +534,10 @@ SDK.ChildTargetManager = class {
 
   /**
    * @override
-   * @param {string} sessionId
    * @param {!Protocol.Target.TargetInfo} targetInfo
    * @param {boolean} waitingForDebugger
    */
-  attachedToTarget(sessionId, targetInfo, waitingForDebugger) {
+  attachedToTarget(targetInfo, waitingForDebugger) {
     var targetName = '';
     if (targetInfo.type === 'node') {
       targetName = Common.UIString('Node.js: %s', targetInfo.url);
@@ -547,7 +548,7 @@ SDK.ChildTargetManager = class {
     }
     var target = this._targetManager.createTarget(
         targetInfo.targetId, targetName, this._capabilitiesForType(targetInfo.type),
-        this._createChildConnection.bind(this, this._targetAgent, sessionId), this._parentTarget);
+        this._createChildConnection.bind(this, this._targetAgent, targetInfo.targetId), this._parentTarget);
 
     // Only pause the new worker if debugging SW - we are going through the pause on start checkbox.
     if (!this._parentTarget.parentTarget() && Runtime.queryParam('isSharedWorker') && waitingForDebugger) {
@@ -563,35 +564,33 @@ SDK.ChildTargetManager = class {
 
   /**
    * @override
-   * @param {string} sessionId
-   * @param {string=} childTargetId
+   * @param {string} childTargetId
    */
-  detachedFromTarget(sessionId, childTargetId) {
-    this._childConnections.get(sessionId)._onDisconnect.call(null, 'target terminated');
-    this._childConnections.delete(sessionId);
+  detachedFromTarget(childTargetId) {
+    this._childConnections.get(childTargetId)._onDisconnect.call(null, 'target terminated');
+    this._childConnections.delete(childTargetId);
   }
 
   /**
    * @override
-   * @param {string} sessionId
+   * @param {string} childTargetId
    * @param {string} message
-   * @param {string=} childTargetId
    */
-  receivedMessageFromTarget(sessionId, message, childTargetId) {
-    var connection = this._childConnections.get(sessionId);
+  receivedMessageFromTarget(childTargetId, message) {
+    var connection = this._childConnections.get(childTargetId);
     if (connection)
       connection._onMessage.call(null, message);
   }
 
   /**
    * @param {!Protocol.TargetAgent} agent
-   * @param {string} sessionId
+   * @param {string} childTargetId
    * @param {!Protocol.InspectorBackend.Connection.Params} params
    * @return {!Protocol.InspectorBackend.Connection}
    */
-  _createChildConnection(agent, sessionId, params) {
-    var connection = new SDK.ChildConnection(agent, sessionId, params);
-    this._childConnections.set(sessionId, connection);
+  _createChildConnection(agent, childTargetId, params) {
+    var connection = new SDK.ChildConnection(agent, childTargetId, params);
+    this._childConnections.set(childTargetId, connection);
     return connection;
   }
 };
@@ -602,12 +601,12 @@ SDK.ChildTargetManager = class {
 SDK.ChildConnection = class {
   /**
    * @param {!Protocol.TargetAgent} agent
-   * @param {string} sessionId
+   * @param {string} targetId
    * @param {!Protocol.InspectorBackend.Connection.Params} params
    */
-  constructor(agent, sessionId, params) {
+  constructor(agent, targetId, params) {
     this._agent = agent;
-    this._sessionId = sessionId;
+    this._targetId = targetId;
     this._onMessage = params.onMessage;
     this._onDisconnect = params.onDisconnect;
   }
@@ -617,7 +616,7 @@ SDK.ChildConnection = class {
    * @param {string} message
    */
   sendMessage(message) {
-    this._agent.sendMessageToTarget(message, this._sessionId);
+    this._agent.sendMessageToTarget(this._targetId, message);
   }
 
   /**

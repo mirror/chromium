@@ -286,18 +286,15 @@ void CastChannelOpenFunction::AsyncWorkStart() {
   auto* observer =
       api_->GetObserver(extension_->id(), cast_socket_service_->GetLogger());
 
-  cast_channel::CastSocketOpenParams open_params(
+  cast_socket_service_->OpenSocket(
       *ip_endpoint_, ExtensionsBrowserClient::Get()->GetNetLog(),
       base::TimeDelta::FromMilliseconds(connect_info.timeout.get()
                                             ? *connect_info.timeout
                                             : kDefaultConnectTimeoutMillis),
       liveness_timeout_, ping_interval_,
       connect_info.capabilities.get() ? *connect_info.capabilities
-                                      : CastDeviceCapability::NONE);
-
-  cast_socket_service_->OpenSocket(
-      open_params, base::Bind(&CastChannelOpenFunction::OnOpen, this),
-      observer);
+                                      : CastDeviceCapability::NONE,
+      base::Bind(&CastChannelOpenFunction::OnOpen, this), observer);
 }
 
 void CastChannelOpenFunction::OnOpen(int channel_id, ChannelError result) {

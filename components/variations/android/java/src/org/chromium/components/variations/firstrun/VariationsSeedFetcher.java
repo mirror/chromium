@@ -4,6 +4,7 @@
 
 package org.chromium.components.variations.firstrun;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.SystemClock;
 
@@ -29,11 +30,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class VariationsSeedFetcher {
     private static final String TAG = "VariationsSeedFetch";
-
-    public enum VariationsPlatform { ANDROID, ANDROID_WEBVIEW }
-
     private static final String VARIATIONS_SERVER_URL =
-            "https://clientservices.googleapis.com/chrome-variations/seed?osname=";
+            "https://clientservices.googleapis.com/chrome-variations/seed?osname=android";
 
     private static final int BUFFER_SIZE = 4096;
     private static final int READ_TIMEOUT = 3000; // time in ms
@@ -49,7 +47,7 @@ public class VariationsSeedFetcher {
     @VisibleForTesting
     static final String VARIATIONS_INITIALIZED_PREF = "variations_initialized";
 
-    // Synchronization lock to make singleton thread-safe.
+    // Synchronization lock
     private static final Object sLock = new Object();
 
     private static VariationsSeedFetcher sInstance;
@@ -79,35 +77,14 @@ public class VariationsSeedFetcher {
     }
 
     @VisibleForTesting
-    protected HttpURLConnection getServerConnection(VariationsPlatform platform,
-            String restrictMode) throws MalformedURLException, IOException {
+    protected HttpURLConnection getServerConnection(String restrictMode)
+            throws MalformedURLException, IOException {
         String urlString = VARIATIONS_SERVER_URL;
-        switch (platform) {
-            case ANDROID:
-                urlString += "android";
-                break;
-            case ANDROID_WEBVIEW:
-                urlString += "android_webview";
-                break;
-            default:
-                assert false;
-        }
         if (restrictMode != null && !restrictMode.isEmpty()) {
             urlString += "&restrict=" + restrictMode;
         }
         URL url = new URL(urlString);
         return (HttpURLConnection) url.openConnection();
-    }
-
-    /**
-     * Object holding the seed data and related fields retrieved from HTTP headers.
-     */
-    public static class SeedInfo {
-        public String signature;
-        public String country;
-        public String date;
-        public boolean isGzipCompressed;
-        public byte[] seedData;
     }
 
     /**
@@ -118,6 +95,7 @@ public class VariationsSeedFetcher {
         assert !ThreadUtils.runningOnUiThread();
         // Prevent multiple simultaneous fetches
         synchronized (sLock) {
+            Context context = ContextUtils.getApplicationContext();
             SharedPreferences prefs = ContextUtils.getAppSharedPreferences();
             // Early return if an attempt has already been made to fetch the seed, even if it
             // failed. Only attempt to get the initial Java seed once, since a failure probably
@@ -128,18 +106,7 @@ public class VariationsSeedFetcher {
                     || VariationsSeedBridge.hasNativePref()) {
                 return;
             }
-
-            try {
-                SeedInfo info = downloadContent(VariationsPlatform.ANDROID, restrictMode);
-                VariationsSeedBridge.setVariationsFirstRunSeed(info.seedData, info.signature,
-                        info.country, info.date, info.isGzipCompressed);
-            } catch (IOException e) {
-                // Exceptions are handled and logged in the downloadContent method, so we don't
-                // need any exception handling here. The only reason we need a catch-statement here
-                // is because those exceptions are re-thrown from downloadContent to skip the
-                // normal logic flow within that method.
-            }
-            // VARIATIONS_INITIALIZED_PREF should still be set to true when exceptions occur
+            downloadContent(context, restrictMode);
             prefs.edit().putBoolean(VARIATIONS_INITIALIZED_PREF, true).apply();
         }
     }
@@ -163,23 +130,11 @@ public class VariationsSeedFetcher {
         histogram.record(timeDeltaMillis);
     }
 
-    /**
-     * Download the variations seed data with platform and retrictMode.
-     * @param platform the platform parameter to let server only return experiments which can be
-     * run on that platform.
-     * @param restrictMode the restrict mode parameter to pass to the server via a URL param.
-     * @return the object holds the seed data and its related header fields.
-     * @throws SocketTimeoutException when fetching seed connection times out.
-     * @throws UnknownHostException when fetching seed connection has an unknown host.
-     * @throws IOException when response code is not HTTP_OK or transmission fails on the open
-     * connection.
-     */
-    public SeedInfo downloadContent(VariationsPlatform platform, String restrictMode)
-            throws SocketTimeoutException, UnknownHostException, IOException {
+    private void downloadContent(Context context, String restrictMode) {
         HttpURLConnection connection = null;
         try {
             long startTimeMillis = SystemClock.elapsedRealtime();
-            connection = getServerConnection(platform, restrictMode);
+            connection = getServerConnection(restrictMode);
             connection.setReadTimeout(READ_TIMEOUT);
             connection.setConnectTimeout(REQUEST_TIMEOUT);
             connection.setDoInput(true);
@@ -188,54 +143,34 @@ public class VariationsSeedFetcher {
             int responseCode = connection.getResponseCode();
             recordFetchResultOrCode(responseCode);
             if (responseCode != HttpURLConnection.HTTP_OK) {
-                String errorMsg = "Non-OK response code = " + responseCode;
-                Log.w(TAG, errorMsg);
-                throw new IOException(errorMsg);
+                Log.w(TAG, "Non-OK response code = %d", responseCode);
+                return;
             }
 
             recordSeedConnectTime(SystemClock.elapsedRealtime() - startTimeMillis);
-
-            SeedInfo info = new SeedInfo();
-            info.seedData = getRawSeed(connection);
-            info.signature = getHeaderFieldOrEmpty(connection, "X-Seed-Signature");
-            info.country = getHeaderFieldOrEmpty(connection, "X-Country");
-            info.date = getHeaderFieldOrEmpty(connection, "Date");
-            info.isGzipCompressed = getHeaderFieldOrEmpty(connection, "IM").equals("gzip");
+            // Convert the InputStream into a byte array.
+            byte[] rawSeed = getRawSeed(connection);
+            String signature = getHeaderFieldOrEmpty(connection, "X-Seed-Signature");
+            String country = getHeaderFieldOrEmpty(connection, "X-Country");
+            String date = getHeaderFieldOrEmpty(connection, "Date");
+            boolean isGzipCompressed = getHeaderFieldOrEmpty(connection, "IM").equals("gzip");
+            VariationsSeedBridge.setVariationsFirstRunSeed(
+                    rawSeed, signature, country, date, isGzipCompressed);
             recordSeedFetchTime(SystemClock.elapsedRealtime() - startTimeMillis);
-            return info;
         } catch (SocketTimeoutException e) {
             recordFetchResultOrCode(SEED_FETCH_RESULT_TIMEOUT);
-            Log.w(TAG, "SocketTimeoutException timeout when fetching variations seed.", e);
-            throw e;
+            Log.w(TAG, "SocketTimeoutException fetching first run seed: ", e);
         } catch (UnknownHostException e) {
             recordFetchResultOrCode(SEED_FETCH_RESULT_UNKNOWN_HOST_EXCEPTION);
-            Log.w(TAG, "UnknownHostException unknown host when fetching variations seed.", e);
-            throw e;
+            Log.w(TAG, "UnknownHostException fetching first run seed: ", e);
         } catch (IOException e) {
             recordFetchResultOrCode(SEED_FETCH_RESULT_IOEXCEPTION);
-            Log.w(TAG, "IOException when fetching variations seed.", e);
-            throw e;
+            Log.w(TAG, "IOException fetching first run seed: ", e);
         } finally {
             if (connection != null) {
                 connection.disconnect();
             }
         }
-    }
-
-    /**
-     * Convert a input stream into a byte array.
-     * @param inputStream the input stream
-     * @return the byte array which holds the data from the input stream
-     * @throws IOException if I/O error occurs when reading data from the input stream
-     */
-    public static byte[] convertInputStreamToByteArray(InputStream inputStream) throws IOException {
-        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
-        byte[] buffer = new byte[BUFFER_SIZE];
-        int charactersReadCount = 0;
-        while ((charactersReadCount = inputStream.read(buffer)) != -1) {
-            byteBuffer.write(buffer, 0, charactersReadCount);
-        }
-        return byteBuffer.toByteArray();
     }
 
     private String getHeaderFieldOrEmpty(HttpURLConnection connection, String name) {
@@ -256,5 +191,15 @@ public class VariationsSeedFetcher {
                 inputStream.close();
             }
         }
+    }
+
+    private byte[] convertInputStreamToByteArray(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
+        byte[] buffer = new byte[BUFFER_SIZE];
+        int charactersReadCount = 0;
+        while ((charactersReadCount = inputStream.read(buffer)) != -1) {
+            byteBuffer.write(buffer, 0, charactersReadCount);
+        }
+        return byteBuffer.toByteArray();
     }
 }

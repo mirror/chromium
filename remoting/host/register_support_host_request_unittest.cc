@@ -18,7 +18,6 @@
 #include "remoting/base/rsa_key_pair.h"
 #include "remoting/base/test_rsa_key_pair.h"
 #include "remoting/host/host_details.h"
-#include "remoting/protocol/errors.h"
 #include "remoting/signaling/iq_sender.h"
 #include "remoting/signaling/mock_signal_strategy.h"
 #include "remoting/signaling/signaling_address.h"
@@ -38,8 +37,6 @@ using testing::SaveArg;
 using testing::DeleteArg;
 
 namespace remoting {
-
-using protocol::ErrorCode;
 
 namespace {
 const char kTestBotJid[] = "remotingunittest@bot.talk.google.com";
@@ -94,7 +91,7 @@ TEST_F(RegisterSupportHostRequestTest, Timeout) {
 
   // Generate response and verify that callback is called.
   EXPECT_CALL(callback_, Run("", base::TimeDelta::FromSeconds(0),
-                             ErrorCode::SIGNALING_TIMEOUT));
+                             "register-support-host request timed out."));
 
   mock_time_task_runner_->FastForwardBy(base::TimeDelta::FromSeconds(15));
 }
@@ -160,8 +157,8 @@ TEST_F(RegisterSupportHostRequestTest, Send) {
   EXPECT_EQ(expected_signature, signature->BodyText());
 
   // Generate response and verify that callback is called.
-  EXPECT_CALL(callback_, Run(kSupportId, base::TimeDelta::FromSeconds(300),
-                             ErrorCode::OK));
+  EXPECT_CALL(callback_,
+              Run(kSupportId, base::TimeDelta::FromSeconds(300), ""));
 
   std::unique_ptr<XmlElement> response(new XmlElement(buzz::QN_IQ));
   response->AddAttr(QName(std::string(), "from"), kTestBotJid);

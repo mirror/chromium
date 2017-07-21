@@ -30,6 +30,10 @@ enum Token {
   kInvalidToken,
 };
 
+const char* const kNullString = "null";
+const char* const kTrueString = "true";
+const char* const kFalseString = "false";
+
 template <typename CharType>
 bool ParseConstToken(const CharType* start,
                      const CharType* end,
@@ -245,15 +249,15 @@ Token ParseToken(const CharType* start,
 
   switch (*start) {
     case 'n':
-      if (ParseConstToken(start, end, token_end, kJSONNullString))
+      if (ParseConstToken(start, end, token_end, kNullString))
         return kNullToken;
       break;
     case 't':
-      if (ParseConstToken(start, end, token_end, kJSONTrueString))
+      if (ParseConstToken(start, end, token_end, kTrueString))
         return kBoolTrue;
       break;
     case 'f':
-      if (ParseConstToken(start, end, token_end, kJSONFalseString))
+      if (ParseConstToken(start, end, token_end, kFalseString))
         return kBoolFalse;
       break;
     case '[':

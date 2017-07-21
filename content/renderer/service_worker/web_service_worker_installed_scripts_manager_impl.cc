@@ -27,10 +27,6 @@ class Receiver {
         watcher_(FROM_HERE, mojo::SimpleWatcher::ArmingPolicy::MANUAL) {}
 
   void Start(base::OnceClosure callback) {
-    if (!handle_.is_valid()) {
-      std::move(callback).Run();
-      return;
-    }
     callback_ = std::move(callback);
     // base::Unretained is safe because |watcher_| is owned by |this|.
     watcher_.Watch(handle_.get(), MOJO_HANDLE_SIGNAL_READABLE,

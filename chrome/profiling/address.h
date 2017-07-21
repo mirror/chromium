@@ -62,4 +62,6 @@ struct hash<profiling::Address> {
 
 }  // namespace std
 
+std::ostream& operator<<(std::ostream& out, profiling::Address a);
+
 #endif  // CHROME_PROFILING_ADDRESS_H_

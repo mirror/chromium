@@ -149,8 +149,7 @@ class CHROMEOS_EXPORT Printer {
   std::string model_;
 
   // The manufactuer and model of the printer in one string. e.g. HP OfficeJet
-  // 415. This is either read from or derived from printer information and is
-  // not necessarily suitable for display.
+  // 415.
   std::string make_and_model_;
 
   // The full path for the printer. Suitable for configuration in CUPS.

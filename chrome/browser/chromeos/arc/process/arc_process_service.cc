@@ -22,8 +22,7 @@
 #include "base/process/process.h"
 #include "base/process/process_iterator.h"
 #include "base/task_runner_util.h"
-#include "base/task_scheduler/post_task.h"
-#include "base/task_scheduler/task_traits.h"
+#include "base/threading/sequenced_worker_pool.h"
 #include "base/trace_event/trace_event.h"
 #include "components/arc/arc_bridge_service.h"
 #include "components/arc/arc_browser_context_keyed_service_factory_base.h"
@@ -234,14 +233,20 @@ ArcProcessService::ArcProcessService(content::BrowserContext* context,
       nspid_to_pid_(new NSPidToPidMap()),
       weak_ptr_factory_(this) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  task_runner_ = base::CreateSequencedTaskRunnerWithTraits(
-      {base::MayBlock(), base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN,
-       base::TaskPriority::USER_VISIBLE});
+  auto* blocking_pool = content::BrowserThread::GetBlockingPool();
+  task_runner_ = blocking_pool->GetSequencedTaskRunnerWithShutdownBehavior(
+      blocking_pool->GetSequenceToken(),
+      base::SequencedWorkerPool::SKIP_ON_SHUTDOWN);
   arc_bridge_service_->process()->AddObserver(this);
 }
 
 ArcProcessService::~ArcProcessService() {
-  arc_bridge_service_->process()->RemoveObserver(this);
+  // TODO(hidehiko): Currently, the lifetime of ArcBridgeService and
+  // BrowserContextKeyedService is not nested.
+  // If ArcServiceManager::Get() returns nullptr, it is already destructed,
+  // so do not touch it.
+  if (ArcServiceManager::Get())
+    arc_bridge_service_->process()->RemoveObserver(this);
 }
 
 // static

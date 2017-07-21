@@ -9,7 +9,6 @@
 
 #include "base/files/file_path.h"
 #include "base/macros.h"
-#include "base/time/time.h"
 #include "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_win.h"
 #include "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_win.h"
 
@@ -50,7 +49,6 @@ class ChromeCleanerDialogControllerImpl
 
   ChromeCleanerController* cleaner_controller_ = nullptr;
   bool dialog_shown_ = false;
-  base::Time time_dialog_shown_;  // Used for reporting metrics.
   Browser* browser_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeCleanerDialogControllerImpl);
