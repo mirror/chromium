@@ -60,6 +60,12 @@ extern const char kCastInitialScreenWidth[];
 extern const char kCastInitialScreenHeight[];
 extern const char kUseDoubleBuffering[];
 
+// I2S loopback configuration switches
+extern const char kLoopbackI2sNumber[];
+extern const char kLoopbackI2sRate[];
+extern const char kLoopbackI2sChannels[];
+extern const char kLoopbackI2sBits[];
+
 // Graphics switches
 extern const char kDesktopWindow1080p[];
 
