@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "8e9e7e2f_e40b3c59",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-21T21:45:27Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "fe99a239_3f06aa26",
+      "revId": "187041422ff496b955c2d40a9cc0b357af229b8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf9f3978_43fd4b8f",
         "filename": "chrome/browser/vr/ui_scene_manager.cc",
         "patchSetId": 1
