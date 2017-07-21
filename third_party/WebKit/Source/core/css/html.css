@@ -423,7 +423,6 @@ input {
     background-color: white;
     border: 2px inset;
     -webkit-rtl-ordering: logical;
-    -webkit-user-select: text;
     cursor: auto;
 }
 
