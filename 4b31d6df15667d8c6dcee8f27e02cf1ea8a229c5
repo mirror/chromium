@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a71f90c_e1d9d7bd",
+        "filename": "components/storage_monitor/media_storage_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-21T05:58:04Z",
+      "side": 1,
+      "message": "I think we can omit this since this is a really short function that\u0027s not going to change. Since it\u0027s using base::DirectoryExists(), guess what\u0027s the first thing that does.",
+      "revId": "4b31d6df15667d8c6dcee8f27e02cf1ea8a229c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "283b3e44_a560e84d",
+        "filename": "components/storage_monitor/storage_monitor_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-21T05:58:04Z",
+      "side": 1,
+      "message": "I think we should have left this alone in the first StorageMonitor CL. I was under the impression that StorageMonitor wasn\u0027t suppose to know about content::BrowserThread at all, but I looked at it again, and it\u0027s a component that lives above content/.",
+      "revId": "4b31d6df15667d8c6dcee8f27e02cf1ea8a229c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
