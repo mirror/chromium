@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "781ae908_e36271b4",
+        "filename": "ui/file_manager/file_manager/foreground/css/file_manager.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-07-21T07:03:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6901c3bd_e5a14f45",
+      "revId": "a2deca3b1313e193b3383b6b837b5941c023db77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0015d08a_b0f9b3e2",
         "filename": "ui/file_manager/file_manager/foreground/css/file_manager.css",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "a2deca3b1313e193b3383b6b837b5941c023db77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba3ad504_066ad317",
+        "filename": "ui/file_manager/file_manager/foreground/css/file_manager.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-07-21T07:03:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0015d08a_b0f9b3e2",
+      "revId": "a2deca3b1313e193b3383b6b837b5941c023db77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "5ad50041_a96f751b",
+        "filename": "ui/file_manager/file_manager/foreground/css/file_manager.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-07-21T07:03:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05a1024e_de9c3bdf",
+      "range": {
+        "startLine": 587,
+        "startChar": 32,
+        "endLine": 587,
+        "endChar": 43
+      },
+      "revId": "a2deca3b1313e193b3383b6b837b5941c023db77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "662e4f79_afc9c719",
         "filename": "ui/file_manager/file_manager/foreground/css/file_manager.css",
         "patchSetId": 2
@@ -70,6 +130,24 @@
       "writtenOn": "2017-07-21T06:22:15Z",
       "side": 1,
       "message": "flex: 1 does not seem necessary.",
+      "revId": "a2deca3b1313e193b3383b6b837b5941c023db77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38a29c5a_dccb6575",
+        "filename": "ui/file_manager/file_manager/foreground/css/file_manager.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-07-21T07:03:17Z",
+      "side": 1,
+      "message": "I think it is necessary because otherwise the label will not grow when there will be more space than label+arrow require and they will stay in the middle div.",
+      "parentUuid": "662e4f79_afc9c719",
       "revId": "a2deca3b1313e193b3383b6b837b5941c023db77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
