@@ -203,6 +203,30 @@
     },
     {
       "key": {
+        "uuid": "18a46a18_2fc1172a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-21T09:54:41Z",
+      "side": 1,
+      "message": "Bernhard, I\u0027ll answer this one, if you don\u0027t mind. I agree that current implementation lacks necessary subscriptions in SignInPreference (SignInPreference is responsible for observing data for SigninPromoMediator, at least for now). This will be fixed when I migrate SignInPreference to using ProfileDataCache instead of AccountManagemenetFragment for getting profile data. I already opened a bug for it: https://crbug.com/746519.",
+      "parentUuid": "9d836595_be8e6430",
+      "range": {
+        "startLine": 136,
+        "startChar": 32,
+        "endLine": 136,
+        "endChar": 72
+      },
+      "revId": "a39dc7f5ac33cac0ff922be412e2cee4d94aa932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c5d1976_c492d9d9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
         "patchSetId": 14
