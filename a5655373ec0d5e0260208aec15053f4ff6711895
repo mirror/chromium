@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d32c2096_c49c8dd1",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-21T15:42:04Z",
+      "side": 1,
+      "message": "Why wouldn\u0027t we want tab stats on ChromeOS?",
+      "range": {
+        "startLine": 283,
+        "startChar": 27,
+        "endLine": 283,
+        "endChar": 34
+      },
+      "revId": "a5655373ec0d5e0260208aec15053f4ff6711895",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2ee342a_3f73108e",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-21T15:42:04Z",
+      "side": 1,
+      "message": "stays",
+      "range": {
+        "startLine": 34,
+        "startChar": 64,
+        "endLine": 34,
+        "endChar": 68
+      },
+      "revId": "a5655373ec0d5e0260208aec15053f4ff6711895",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1057af8_ab649d11",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-21T15:42:04Z",
+      "side": 1,
+      "message": "s/ to//\n\nthat notify it.",
+      "revId": "a5655373ec0d5e0260208aec15053f4ff6711895",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8fbbef5_e0023ca3",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-21T15:42:04Z",
+      "side": 1,
+      "message": "These should be const.",
+      "revId": "a5655373ec0d5e0260208aec15053f4ff6711895",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46e08111_dadc8636",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-21T15:42:04Z",
+      "side": 1,
+      "message": "Do we care about profile count, tabs per window, windows per profile, etc?",
+      "revId": "a5655373ec0d5e0260208aec15053f4ff6711895",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
