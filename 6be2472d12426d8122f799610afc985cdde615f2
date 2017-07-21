@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "79c14196_8a5dad46",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-07-21T13:03:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb4c1ddd_0a7e1474",
+      "range": {
+        "startLine": 47,
+        "startChar": 4,
+        "endLine": 47,
+        "endChar": 41
+      },
+      "revId": "6be2472d12426d8122f799610afc985cdde615f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd109fc1_69aa39e9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
         "patchSetId": 16
@@ -45,6 +69,30 @@
       "revId": "6be2472d12426d8122f799610afc985cdde615f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dacfd73_df026337",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-07-21T13:03:38Z",
+      "side": 1,
+      "message": "Added TODO clarifying this.",
+      "parentUuid": "dd109fc1_69aa39e9",
+      "range": {
+        "startLine": 153,
+        "startChar": 16,
+        "endLine": 153,
+        "endChar": 64
+      },
+      "revId": "6be2472d12426d8122f799610afc985cdde615f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
