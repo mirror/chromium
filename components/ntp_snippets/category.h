@@ -53,10 +53,13 @@ enum class KnownCategories {
 
   // Breaking News
   BREAKING_NEWS = 10008,
+
+  // Contextual suggestion.
+  CONTEXTUAL = 10009,
   // ****************** INSERT NEW REMOTE CATEGORIES HERE! ******************
 
   // Tracks the last known remote category
-  LAST_KNOWN_REMOTE_CATEGORY = BREAKING_NEWS,
+  LAST_KNOWN_REMOTE_CATEGORY = CONTEXTUAL,
 };
 
 // A category groups ContentSuggestions which belong together. Use the
