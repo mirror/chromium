@@ -170,6 +170,8 @@ component("gfx") {
     "ui_gfx_exports.cc",
     "utf16_indexing.cc",
     "utf16_indexing.h",
+    "vector_icon_util_mac.h",
+    "vector_icon_util_mac.mm",
     "vsync_provider.cc",
     "vsync_provider.h",
     "win/direct_manipulation.cc",
@@ -699,6 +701,7 @@ test("gfx_unittests") {
       "skrect_conversion_unittest.cc",
       "transform_util_unittest.cc",
       "utf16_indexing_unittest.cc",
+      "vector_icon_util_mac_unittest.mm",
     ]
   }
 
