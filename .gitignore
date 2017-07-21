@@ -283,6 +283,7 @@ vs-chromium-project.txt
 /tools/gn/bin/linux
 /tools/gn/bin/mac
 /tools/gn/bin/win
+/tools/goma/bin
 /tools/gyp
 /tools/histograms
 /tools/json_schema_compiler/test/json_schema_compiler_tests.xml

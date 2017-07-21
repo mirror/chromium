@@ -935,6 +935,14 @@ hooks = [
                 '-s', 'src/third_party/checkstyle/checkstyle-8.0-all.jar.sha1'
     ],
   },
+
+  {
+    'name': 'install_goma',
+    'pattern': '.',
+    'action': [ 'python',
+                'src/tools/goma/install.py',  # XXX put version here?
+    ],
+  },
 ]
 
 # Note: These are keyed off target os, not host os. So don't move things here
