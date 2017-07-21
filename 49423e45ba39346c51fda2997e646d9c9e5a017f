@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04876abc_89e58856",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/dom_distiller/ReaderModeManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-07-21T17:15:29Z",
+      "side": 1,
+      "message": "See the way we create the custom tabs intents for all other UI_TYPEs in CustomTabIntentDataProvider.\n\n\nI think it would be great if we can follow a similar pattern instead of using an explicit intent to CUstomTabActivity here. (Then you wont really need things like isCustomTab etc as well(Because ChromeActivity has isCustomTab())). Maybe that will need us to combine with your other CL that adds the UI_TYPE?\n \n- For creating the intent you use a CustomTabsIntent.Builder and then rather than adding new extras, you can just rely on the UI_Type inside the CustomTabIntentDataProvider. instead of isReaderModeCreatedIntent, we can have a isReaderModeUI that goes nicely with isInfoPage, isMediaViewer in the same class.",
+      "range": {
+        "startLine": 484,
+        "startChar": 15,
+        "endLine": 484,
+        "endChar": 30
+      },
+      "revId": "49423e45ba39346c51fda2997e646d9c9e5a017f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
