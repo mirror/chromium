@@ -401,7 +401,15 @@ void WorkerThread::InitializeOnWorkerThread(
     std::unique_ptr<GlobalScopeCreationParams> global_scope_creation_params,
     const WTF::Optional<WorkerBackingThreadStartupData>& thread_startup_data) {
   DCHECK(IsCurrentThread());
-  DCHECK_EQ(ThreadState::kNotStarted, thread_state_);
+
+  // Initialize the underlying thread if needed.
+  if (IsOwningBackingThread()) {
+    DCHECK(thread_startup_data.has_value());
+    GetWorkerBackingThread().InitializeOnBackingThread(*thread_startup_data);
+  } else {
+    DCHECK(!thread_startup_data.has_value());
+  }
+  GetWorkerBackingThread().BackingThread().AddTaskObserver(this);
 
   KURL script_url = global_scope_creation_params->script_url;
   String given_source_code = global_scope_creation_params->source_code;
@@ -412,36 +420,24 @@ void WorkerThread::InitializeOnWorkerThread(
   WorkerThreadStartMode start_mode = global_scope_creation_params->start_mode;
   V8CacheOptions v8_cache_options =
       global_scope_creation_params->v8_cache_options;
+  global_scope_ =
+      CreateWorkerGlobalScope(std::move(global_scope_creation_params));
 
-  {
-    MutexLocker lock(thread_state_mutex_);
+  console_message_storage_ = new ConsoleMessageStorage;
+  worker_reporting_proxy_.DidCreateWorkerGlobalScope(GlobalScope());
+  worker_inspector_controller_ = WorkerInspectorController::Create(this);
 
-    if (IsOwningBackingThread()) {
-      DCHECK(thread_startup_data.has_value());
-      GetWorkerBackingThread().InitializeOnBackingThread(*thread_startup_data);
-    } else {
-      DCHECK(!thread_startup_data.has_value());
-    }
-    GetWorkerBackingThread().BackingThread().AddTaskObserver(this);
-
-    console_message_storage_ = new ConsoleMessageStorage();
-    global_scope_ =
-        CreateWorkerGlobalScope(std::move(global_scope_creation_params));
-    worker_reporting_proxy_.DidCreateWorkerGlobalScope(GlobalScope());
-    worker_inspector_controller_ = WorkerInspectorController::Create(this);
-
-    // TODO(nhiroki): Handle a case where the script controller fails to
-    // initialize the context.
-    if (GlobalScope()->ScriptController()->InitializeContextIfNeeded(
-            String())) {
-      worker_reporting_proxy_.DidInitializeWorkerContext();
-      v8::HandleScope handle_scope(GetIsolate());
-      Platform::Current()->WorkerContextCreated(
-          GlobalScope()->ScriptController()->GetContext());
-    }
-
-    SetThreadState(lock, ThreadState::kRunning);
+  // TODO(nhiroki): Handle a case where the script controller fails to
+  // initialize the context.
+  if (GlobalScope()->ScriptController()->InitializeContextIfNeeded(String())) {
+    worker_reporting_proxy_.DidInitializeWorkerContext();
+    v8::HandleScope handle_scope(GetIsolate());
+    Platform::Current()->WorkerContextCreated(
+        GlobalScope()->ScriptController()->GetContext());
   }
+
+  // Execution environments are ready to run scripts. Advance the state.
+  SetThreadState(MutexLocker(thread_state_mutex_), ThreadState::kRunning);
 
   if (start_mode == kPauseWorkerGlobalScopeOnStart)
     StartRunningDebuggerTasksOnPauseOnWorkerThread();
