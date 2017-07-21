@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f248d491_0240ee1d",
+        "filename": "ios/web/public/web_state/web_state_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-21T15:52:24Z",
+      "side": 1,
+      "message": "Could you please add a comment to explain what will happen if this method is not implemented.",
+      "range": {
+        "startLine": 46,
+        "startChar": 12,
+        "endLine": 46,
+        "endChar": 29
+      },
+      "revId": "27f261337efc16c841e7e963d933e17edf62992d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32f8fdb6_511e1063",
+        "filename": "ios/web/public/web_state/web_state_delegate_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-21T15:52:24Z",
+      "side": 1,
+      "message": "Is this comment still valid?",
+      "range": {
+        "startLine": 37,
+        "startChar": 38,
+        "endLine": 37,
+        "endChar": 39
+      },
+      "revId": "27f261337efc16c841e7e963d933e17edf62992d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "040c8b78_2fb97d4e",
+        "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-21T15:52:24Z",
+      "side": 1,
+      "message": "I think old comments were more informative and actually explained why this number is 0.45",
+      "range": {
+        "startLine": 26,
+        "startChar": 34,
+        "endLine": 26,
+        "endChar": 36
+      },
+      "revId": "27f261337efc16c841e7e963d933e17edf62992d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b45ebdc_6d17da4c",
+        "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-21T15:52:24Z",
+      "side": 1,
+      "message": "Since you adding another |showContextMenu| method, how about renaming this to longPressDetected: or something like that?",
+      "range": {
+        "startLine": 55,
+        "startChar": 8,
+        "endLine": 55,
+        "endChar": 29
+      },
+      "revId": "27f261337efc16c841e7e963d933e17edf62992d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "369e13cd_88a99788",
+        "filename": "ios/web/web_state/ui/crw_context_menu_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-21T15:52:24Z",
+      "side": 1,
+      "message": "This is pretty significant change to UX. If setDOMElementForLastTouch: is called after user moved the finger then Chrome should not show the context menu. We probably need a custom gesture recognizer for this task and how context menu from setDOMElementForLastTouch: callback only if user is still performing long press on a link.",
+      "range": {
+        "startLine": 192,
+        "startChar": 10,
+        "endLine": 192,
+        "endChar": 25
+      },
+      "revId": "27f261337efc16c841e7e963d933e17edf62992d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a72d0154_fb8c4018",
+        "filename": "ios/web_view/internal/cwv_web_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-21T15:52:24Z",
+      "side": 1,
+      "message": "Please update comments for CWVUIDelegate to explain what happens if |runContextMenuWithTitle| is not implemented.",
+      "range": {
+        "startLine": 268,
+        "startChar": 11,
+        "endLine": 268,
+        "endChar": 0
+      },
+      "revId": "27f261337efc16c841e7e963d933e17edf62992d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
