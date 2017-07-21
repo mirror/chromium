@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "da03530e_7efb98ef",
+        "filename": "chromeos/components/tether/host_scanner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T22:29:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8e1a3ba_226521be",
+      "range": {
+        "startLine": 102,
+        "startChar": 4,
+        "endLine": 102,
+        "endChar": 8
+      },
+      "revId": "433f475dd92544e75195225633297a4aeb543ec1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe01b494_e1a0e20b",
         "filename": "chromeos/components/tether/host_scanner.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-21T22:18:57Z",
       "side": 1,
       "message": "Did this work in tests? Resetting host_scanner_operation_ should cause a segfault when accessing  final_scan_results. I personally had issues with metrics recording being placed after this, hence the previous call structure.",
+      "range": {
+        "startLine": 158,
+        "startChar": 26,
+        "endLine": 158,
+        "endChar": 31
+      },
+      "revId": "433f475dd92544e75195225633297a4aeb543ec1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01a90780_6fd6620e",
+        "filename": "chromeos/components/tether/host_scanner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T22:29:10Z",
+      "side": 1,
+      "message": "It did pass, but good catch - you\u0027re right. Perhaps the memory just happened to remain the same in this particular case.\n\nMoved it to the bottom.",
+      "parentUuid": "fe01b494_e1a0e20b",
       "range": {
         "startLine": 158,
         "startChar": 26,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0c9fcc00_7fd9fb71",
+        "filename": "chromeos/components/tether/host_scanner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T22:29:10Z",
+      "side": 1,
+      "message": "size() returns a size_t, and size_t is unsigned.",
+      "parentUuid": "d1981561_4f205400",
+      "range": {
+        "startLine": 184,
+        "startChar": 42,
+        "endLine": 184,
+        "endChar": 44
+      },
+      "revId": "433f475dd92544e75195225633297a4aeb543ec1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "99430f35_3c1ba11e",
         "filename": "chromeos/components/tether/network_host_scan_cache.cc",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "fefd1030_52a70310",
+        "filename": "chromeos/components/tether/network_host_scan_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T22:29:10Z",
+      "side": 1,
+      "message": "Good catch. I had meant to use it as a DCHECK() for MasterHostScanCache, but I forgot. Added.",
+      "parentUuid": "99430f35_3c1ba11e",
+      "range": {
+        "startLine": 69,
+        "startChar": 54,
+        "endLine": 69,
+        "endChar": 75
+      },
+      "revId": "433f475dd92544e75195225633297a4aeb543ec1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3e5e1ff_c0319edd",
         "filename": "chromeos/components/tether/persistent_host_scan_cache_impl.cc",
         "patchSetId": 2
@@ -105,6 +201,30 @@
       "writtenOn": "2017-07-21T22:18:57Z",
       "side": 1,
       "message": "Similarly, where is this method used?",
+      "range": {
+        "startLine": 176,
+        "startChar": 29,
+        "endLine": 176,
+        "endChar": 50
+      },
+      "revId": "433f475dd92544e75195225633297a4aeb543ec1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9f632bb_416e0dd0",
+        "filename": "chromeos/components/tether/persistent_host_scan_cache_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T22:29:10Z",
+      "side": 1,
+      "message": "Same.",
+      "parentUuid": "f3e5e1ff_c0319edd",
       "range": {
         "startLine": 176,
         "startChar": 29,
