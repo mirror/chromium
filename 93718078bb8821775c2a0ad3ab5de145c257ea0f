@@ -70,6 +70,30 @@
       "revId": "93718078bb8821775c2a0ad3ab5de145c257ea0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9de2f90d_8fa99705",
+        "filename": "net/disk_cache/simple/simple_index_file_posix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-21T17:45:55Z",
+      "side": 1,
+      "message": "\u003e \u003e I think the problem there was that errno needs to be reset before every readdir() call in case it\u0027s set by some \n\u003e \n\u003e I think not quite that. Old sources suggest that readdir could sporadically set errno to EINTR: https://android.googlesource.com/platform/bionic/+/1dc9e472e1/libc/unistd/opendir.c#102\n\u003e \n\u003e not sure the webview tests were running on the bot _that_ old, but at least it seems theoretically possible.\n\nI see. I\u0027ve added a workaround for this issue.",
+      "parentUuid": "f50e38f5_ecfcdbdd",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 14
+      },
+      "revId": "93718078bb8821775c2a0ad3ab5de145c257ea0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

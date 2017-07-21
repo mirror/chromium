@@ -22,6 +22,30 @@
       "revId": "b5f67e08a2b9045ab0a33dede33453e79e1ad937",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bae6e742_76e38758",
+        "filename": "net/disk_cache/simple/simple_index_file_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-21T17:45:55Z",
+      "side": 1,
+      "message": "The while loop above will quit only immediately after calling readdir(), so the errno we get here can be only from readdir()",
+      "parentUuid": "15eab342_924a43bd",
+      "range": {
+        "startLine": 57,
+        "startChar": 6,
+        "endLine": 57,
+        "endChar": 11
+      },
+      "revId": "b5f67e08a2b9045ab0a33dede33453e79e1ad937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
