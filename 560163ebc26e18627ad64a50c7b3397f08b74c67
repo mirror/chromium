@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fed3eb1_cdcd6bf8",
+        "filename": "chrome/browser/chromeos/net/network_portal_detector_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-21T00:00:29Z",
+      "side": 1,
+      "message": "Could you please move these to the header?",
+      "revId": "560163ebc26e18627ad64a50c7b3397f08b74c67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57dc3b05_5371e80b",
+        "filename": "chrome/browser/chromeos/net/network_portal_detector_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-21T00:00:29Z",
+      "side": 1,
+      "message": "Please initialize here",
+      "revId": "560163ebc26e18627ad64a50c7b3397f08b74c67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
