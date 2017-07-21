@@ -69,6 +69,24 @@
       "revId": "84c0127aa7779b4e32dbc8f8367dc7fd582c8d1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f528b32_9e3a08ff",
+        "filename": "base/metrics/histogram_snapshot_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-21T16:24:39Z",
+      "side": 1,
+      "message": "OK. since the iterator looks (based on stats recorder) is alphabetical, if it\u0027s the same few all the time we may always get just the last and we may not get great visibility.  SO you could consider sending a string which appending all the invalid histograms.\nBut if this is pretty experimental and we\u0027re not sure it\u0027ll help, can just start here.",
+      "parentUuid": "b1006164_1b644920",
+      "revId": "84c0127aa7779b4e32dbc8f8367dc7fd582c8d1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
