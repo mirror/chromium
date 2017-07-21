@@ -51,6 +51,12 @@ class CORE_EXPORT CoreInitializer {
   WTF_MAKE_NONCOPYABLE(CoreInitializer);
 
  public:
+  // Initialize must be called before GetInstance.
+  static CoreInitializer& GetInstance() {
+    DCHECK(instance_);
+    return *instance_;
+  }
+
   virtual ~CoreInitializer() {}
 
   // Should be called by clients before trying to create Frames.
@@ -58,45 +64,47 @@ class CORE_EXPORT CoreInitializer {
 
   // Callbacks stored in CoreInitializer and set by ModulesInitializer to bypass
   // the inverted dependency from core/ to modules/.
-  using LocalFrameCallback = void (*)(LocalFrame&);
-  static void CallModulesLocalFrameInit(LocalFrame& frame) {
-    instance_->local_frame_init_callback_(frame);
+  void CallModulesLocalFrameInit(LocalFrame& frame) const {
+    local_frame_init_callback_(frame);
   }
-  static void CallModulesInstallSupplements(LocalFrame& frame) {
-    instance_->chrome_client_install_supplements_callback_(frame);
+  void CallModulesInstallSupplements(LocalFrame& frame) const {
+    chrome_client_install_supplements_callback_(frame);
   }
-  using WorkerClientsCallback = void (*)(WorkerClients&);
-  static void CallModulesProvideLocalFileSystem(WorkerClients& worker_clients) {
-    instance_->worker_clients_local_file_system_callback_(worker_clients);
+  void CallModulesProvideLocalFileSystem(WorkerClients& worker_clients) const {
+    worker_clients_local_file_system_callback_(worker_clients);
   }
-  static void CallModulesProvideIndexedDB(WorkerClients& worker_clients) {
-    instance_->worker_clients_indexed_db_callback_(worker_clients);
+  void CallModulesProvideIndexedDB(WorkerClients& worker_clients) const {
+    worker_clients_indexed_db_callback_(worker_clients);
   }
-  using MediaControlsFactory = MediaControls* (*)(HTMLMediaElement&,
-                                                  ShadowRoot&);
-  static MediaControls* CallModulesMediaControlsFactory(
+  MediaControls* CallModulesMediaControlsFactory(
       HTMLMediaElement& media_element,
-      ShadowRoot& shadow_root) {
-    return instance_->media_controls_factory_(media_element, shadow_root);
+      ShadowRoot& shadow_root) const {
+    return media_controls_factory_(media_element, shadow_root);
   }
-  using InspectorAgentSessionInitCallback = void (*)(InspectorSession*,
-                                                     bool,
-                                                     InspectorDOMAgent*,
-                                                     InspectedFrames*,
-                                                     Page*);
-  static void CallModulesInspectorAgentSessionInitCallback(
+  void CallModulesInspectorAgentSessionInitCallback(
       InspectorSession* session,
       bool allow_view_agents,
       InspectorDOMAgent* dom_agent,
       InspectedFrames* inspected_frames,
-      Page* page) {
-    instance_->inspector_agent_session_init_callback_(
-        session, allow_view_agents, dom_agent, inspected_frames, page);
+      Page* page) const {
+    inspector_agent_session_init_callback_(session, allow_view_agents,
+                                           dom_agent, inspected_frames, page);
   }
 
  protected:
   // CoreInitializer is only instantiated by subclass ModulesInitializer.
   CoreInitializer() {}
+
+  using LocalFrameCallback = void (*)(LocalFrame&);
+  using WorkerClientsCallback = void (*)(WorkerClients&);
+  using MediaControlsFactory = MediaControls* (*)(HTMLMediaElement&,
+                                                  ShadowRoot&);
+  using InspectorAgentSessionInitCallback = void (*)(InspectorSession*,
+                                                     bool,
+                                                     InspectorDOMAgent*,
+                                                     InspectedFrames*,
+                                                     Page*);
+
   LocalFrameCallback local_frame_init_callback_;
   LocalFrameCallback chrome_client_install_supplements_callback_;
   WorkerClientsCallback worker_clients_local_file_system_callback_;
