@@ -234,7 +234,6 @@ void Surface::ActivatePendingFrame() {
 // compositor.
 void Surface::ActivateFrame(FrameData frame_data) {
   deadline_.Cancel();
-  DCHECK(surface_client_);
 
   // Save root pass copy requests.
   std::vector<std::unique_ptr<CopyOutputRequest>> old_copy_requests;
@@ -260,7 +259,8 @@ void Surface::ActivateFrame(FrameData frame_data) {
 
   UnrefFrameResourcesAndRunDrawCallback(std::move(previous_frame_data));
 
-  surface_client_->OnSurfaceActivated(this);
+  if (surface_client_)
+    surface_client_->OnSurfaceActivated(this);
 }
 
 void Surface::UpdateActivationDependencies(
