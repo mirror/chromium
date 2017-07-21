@@ -210,6 +210,24 @@
       "revId": "71dbacf1a58c401079c7990f4b498ac6b28ea043",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4945e7c4_c3a10e47",
+        "filename": "cc/output/shader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1227294
+      },
+      "writtenOn": "2017-07-21T16:28:01Z",
+      "side": 1,
+      "message": "I think to optimize shaders in next CL, but Ok, I try to make it in this CL.",
+      "parentUuid": "62ae90ff_f88abc1f",
+      "revId": "71dbacf1a58c401079c7990f4b498ac6b28ea043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
