@@ -55,6 +55,13 @@ class APP_LIST_EXPORT StartPageView : public AppListPage {
   void OnGestureEvent(ui::GestureEvent* event) override;
   void OnScrollEvent(ui::ScrollEvent* event) override;
 
+  // Used only in the tests to get the selected index in start page view.
+  // Returns |kNoSelection|, |kExpandArrowSelection| or an index >= 0 which is
+  // the selected index in suggestions container view.
+  int GetSelectedIndexForTest() const;
+  static constexpr int kNoSelection = -1;           // No view is selected.
+  static constexpr int kExpandArrowSelection = -2;  // Expand arrow is selected.
+
  private:
   void InitInstantContainer();
 
