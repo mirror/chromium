@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73f92003_56e72bcf",
+        "filename": "media/audio/android/audio_manager_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-07-21T23:10:25Z",
+      "side": 1,
+      "message": "How is lipsync with bluetooth headsets now? It was already bad... did it go to teri-bad?",
+      "range": {
+        "startLine": 346,
+        "startChar": 17,
+        "endLine": 346,
+        "endChar": 18
+      },
+      "revId": "7ad08688b87a60b9999427ee833ab5191b59f231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41ef056d_5cb2d997",
+        "filename": "media/audio/android/opensles_output.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-07-21T23:10:25Z",
+      "side": 1,
+      "message": "Let me double check that I understand. \n\nIt looks like the ndk level we use to compile may vary. When \u003c 25, these things aren\u0027t defined, so we\u0027re just making them to match what the \u003e\u003d 25 headers would specify. This would then make it possible to use this feature on \u003e 25 devices, regardless of the compile time ndk level. Am I right?",
+      "range": {
+        "startLine": 27,
+        "startChar": 4,
+        "endLine": 27,
+        "endChar": 19
+      },
+      "revId": "7ad08688b87a60b9999427ee833ab5191b59f231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2472657d_6183c7fd",
+        "filename": "media/audio/android/opensles_output.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-07-21T23:10:25Z",
+      "side": 1,
+      "message": "nit: do you mean for these to have the same tabstop as the line above?",
+      "range": {
+        "startLine": 34,
+        "startChar": 3,
+        "endLine": 34,
+        "endChar": 13
+      },
+      "revId": "7ad08688b87a60b9999427ee833ab5191b59f231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbf164ad_456ffc30",
+        "filename": "media/audio/android/opensles_output.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-07-21T23:10:25Z",
+      "side": 1,
+      "message": "This appears to be the only one you\u0027re using. Do you need to also define the others?",
+      "range": {
+        "startLine": 44,
+        "startChar": 8,
+        "endLine": 44,
+        "endChar": 43
+      },
+      "revId": "7ad08688b87a60b9999427ee833ab5191b59f231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
