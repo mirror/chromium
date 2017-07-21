@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5baafb1f_56e6448c",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-07-21T20:30:52Z",
+      "side": 1,
+      "message": "Ha, no reason , I\u0027ve enabled this for ChromeOS as well, I also realized that there\u0027s chrome\\browser\\metrics\\chrome_browser_main_extra_parts_metrics.cc that\u0027s a more appropriate to initialize the TabStats tracker (I think)",
+      "parentUuid": "d32c2096_c49c8dd1",
+      "range": {
+        "startLine": 283,
+        "startChar": 27,
+        "endLine": 283,
+        "endChar": 34
+      },
+      "revId": "a5655373ec0d5e0260208aec15053f4ff6711895",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2ee342a_3f73108e",
         "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
         "patchSetId": 10
@@ -65,6 +89,42 @@
     },
     {
       "key": {
+        "uuid": "c32d291e_2bc893c4",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-07-21T20:30:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1057af8_ab649d11",
+      "revId": "a5655373ec0d5e0260208aec15053f4ff6711895",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e486a6f_dcb44abc",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-07-21T20:30:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1057af8_ab649d11",
+      "revId": "a5655373ec0d5e0260208aec15053f4ff6711895",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8fbbef5_e0023ca3",
         "filename": "chrome/browser/metrics/tab_stats_tracker.h",
         "patchSetId": 10
@@ -82,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "713f5c25_b329ed65",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-07-21T20:30:52Z",
+      "side": 1,
+      "message": "Oops, overlooked, done.",
+      "parentUuid": "e8fbbef5_e0023ca3",
+      "revId": "a5655373ec0d5e0260208aec15053f4ff6711895",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "46e08111_dadc8636",
         "filename": "chrome/browser/metrics/tab_stats_tracker.h",
         "patchSetId": 10
@@ -93,6 +171,24 @@
       "writtenOn": "2017-07-21T15:42:04Z",
       "side": 1,
       "message": "Do we care about profile count, tabs per window, windows per profile, etc?",
+      "revId": "a5655373ec0d5e0260208aec15053f4ff6711895",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3f68ae1_af9fc732",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-07-21T20:30:52Z",
+      "side": 1,
+      "message": "Yes, but I wanted to keep this simple for now and implement the accounting part in another CL.",
+      "parentUuid": "46e08111_dadc8636",
       "revId": "a5655373ec0d5e0260208aec15053f4ff6711895",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
