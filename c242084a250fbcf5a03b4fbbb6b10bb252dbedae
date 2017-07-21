@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0281c248_7cbf8e22",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-21T02:41:55Z",
+      "side": 1,
+      "message": "I guess this must have been already discussed (sorry) but can you tell why we don\u0027t store this in thread local but create each time?",
+      "revId": "c242084a250fbcf5a03b4fbbb6b10bb252dbedae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5967e039_8d8622f8",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-21T02:41:55Z",
+      "side": 1,
+      "message": "called on the IO thread -\u003e is this true?",
+      "revId": "c242084a250fbcf5a03b4fbbb6b10bb252dbedae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
