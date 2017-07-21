@@ -145,7 +145,7 @@ QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_faster_bandwidth_sampler, true)
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_use_stream_notifier2, false)
 
 // When true, defaults to BBR congestion control instead of Cubic.
-QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_default_to_bbr, false)
+QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_default_to_bbr, true)
 
 // If true, stream sent data is saved in streams rather than stream frames.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_stream_owns_data, false)
