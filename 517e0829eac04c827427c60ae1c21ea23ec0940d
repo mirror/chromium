@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "028eca2e_12baa878",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-07-21T17:48:26Z",
+      "side": 1,
+      "message": "Agreed, I\u0027ll let that change land and rebase onto it before submitting.",
+      "parentUuid": "31726ad9_e0dd1b69",
+      "revId": "517e0829eac04c827427c60ae1c21ea23ec0940d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b713959_964acf6e",
         "filename": "content/common/page_state_serialization.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-21T17:30:18Z",
       "side": 1,
       "message": "Note: We\u0027ve found that ExplodedFrameStates can get extremely large in memory due to these various strings being unbounded in size.  (For example, the frame\u0027s unique name is stored in |target|, and reaches hundreds of KB in practice due to ads putting JS code into the name.)\n\nDaniel\u0027s trying to mitigate this by setting a max size for |target| in https://crbug.com/626202 and https://chromium-review.googlesource.com/c/579031/.  Unclear yet if we need to do this for any of the other strings, but I want to be careful before we add more.\n\nIs it possible for scroll_anchor_selectors to be large in practice?",
+      "revId": "517e0829eac04c827427c60ae1c21ea23ec0940d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a20091ed_f3a519af",
+        "filename": "content/common/page_state_serialization.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-07-21T17:48:26Z",
+      "side": 1,
+      "message": "It is possible for scroll_anchor_selector to be large in practice. The exact size will vary based on the structure of the DOM and the location of the anchor element, but it\u0027s possible that the document will have, e.g., very long classnames or a very deep DOM. \nWith that said, I\u0027d speculate that the selector isn\u0027t quite as vulnerable to size blowups as |target|, because:\n1) It\u0027s not set in every frame; you need to have a user-initiated scroll for it to be present.\n2) Sites probably aren\u0027t stuffing a lot of, e.g., javascript code into the classnames or tagnames of their markup.",
+      "parentUuid": "9b713959_964acf6e",
       "revId": "517e0829eac04c827427c60ae1c21ea23ec0940d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
