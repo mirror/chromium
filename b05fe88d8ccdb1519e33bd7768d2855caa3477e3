@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3c24fe8_902dd715",
+        "filename": "tools/perf/benchmarks/startup.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-07-21T17:59:15Z",
+      "side": 1,
+      "message": "It looks like the failing story for that benchmark is \u0027blank_page.html\u0027. Instead of using the annotation above you can add:\n\nself.DisableStory(\u0027blank_page.html\u0027, [story.expectations.ALL_MAC], \u0027crbug.com/747024\u0027)\n\nThis will make it so that during this benchmark telemetry will output that this story is skipped and will display the bug number.\n\nI\u0027m guessing that this is the only story in the benchmark. I\u0027m still thinking that we want to disable it at this level. We then may want telemetry to use a return code that makes the step turn yellow/orange (warning instead of failure) instead of red or green if all stories are disabled. This would make it glaringly obvious that something is wrong with the benchmark and will help make sure that the problem doesn\u0027t just disappear from view. There would have to be a change to the swarming code for that I think though. I\u0027ll talk to Stephen about that if Ned agrees with that plan forward.",
+      "range": {
+        "startLine": 95,
+        "startChar": 13,
+        "endLine": 95,
+        "endChar": 40
+      },
+      "revId": "b05fe88d8ccdb1519e33bd7768d2855caa3477e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
