@@ -70,6 +70,30 @@
       "revId": "899d45794064d63a2c8549a393c30417ad8c0adc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "444a5789_2c6ae3b0",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-07-21T23:23:24Z",
+      "side": 1,
+      "message": "Unite() does ignore empty boxes, but Move() runs 4 float additions that checking early saves it.",
+      "parentUuid": "bdf1a898_7f6147d1",
+      "range": {
+        "startLine": 425,
+        "startChar": 9,
+        "endLine": 425,
+        "endChar": 21
+      },
+      "revId": "899d45794064d63a2c8549a393c30417ad8c0adc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
