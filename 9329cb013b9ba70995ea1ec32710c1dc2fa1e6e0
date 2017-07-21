@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb537c29_73b65250",
+        "filename": "chromeos/dbus/session_manager_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-21T03:34:06Z",
+      "side": 1,
+      "message": "nit: This should come under StartDeviceWipe() to be consistent with .cc file and the mock?",
+      "revId": "9329cb013b9ba70995ea1ec32710c1dc2fa1e6e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
