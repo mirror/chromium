@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9f798df_3d306e59",
+        "filename": "tools/perf/benchmarks/rasterize_and_record_micro.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-07-21T18:32:41Z",
+      "side": 1,
+      "message": "The disabling should happen here:\nhttps://cs.chromium.org/chromium/src/tools/perf/page_sets/top_25_pages.py?type\u003dcs\u0026q\u003dTop25StoryExpectations\u0026l\u003d65\n\nI have been thinking of refactoring all of the class declarations to be in line in the benchmark classes, this CL kinda makes me think that its a good idea. I\u0027ll take care of that in a refactor though, so the Disabling for this CL should still live there.",
+      "range": {
+        "startLine": 62,
+        "startChar": 9,
+        "endLine": 62,
+        "endChar": 10
+      },
+      "revId": "d6832e79542d8558f86f0515f8be0051a24e5d68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
