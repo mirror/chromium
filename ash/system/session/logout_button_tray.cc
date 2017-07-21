@@ -43,10 +43,12 @@ LogoutButtonTray::LogoutButtonTray(Shelf* shelf)
 
   container_->AddChildView(button_);
   Shell::Get()->session_controller()->AddObserver(this);
+  Shell::Get()->AddShellObserver(this);
   SetVisible(false);
 }
 
 LogoutButtonTray::~LogoutButtonTray() {
+  Shell::Get()->RemoveShellObserver(this);
   Shell::Get()->session_controller()->RemoveObserver(this);
 }
 
@@ -85,6 +87,11 @@ void LogoutButtonTray::ButtonPressed(views::Button* sender,
 void LogoutButtonTray::OnActiveUserSessionChanged(const AccountId& account_id) {
   // JAMES do this on init? what about secondary monitor?
   // JAMES extract to method?
+  OnPrefServiceReady();
+}
+
+void LogoutButtonTray::OnPrefServiceReady() {
+  pref_change_registrar_.reset();
   PrefService* prefs = Shell::Get()->GetActiveUserPrefService();
   LOG(ERROR) << "JAMES ActiveUserSessionChanged, observing prefs " << prefs;
   if (!prefs)  // Null on mash startup and in tests.
