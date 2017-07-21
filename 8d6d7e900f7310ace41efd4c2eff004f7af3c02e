@@ -167,6 +167,24 @@
     },
     {
       "key": {
+        "uuid": "f0eef8ac_c01bee4b",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1294,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-21T10:59:34Z",
+      "side": 1,
+      "message": "WebTaskRunner used to be exposed on public but not anymore. It has an interface to SingleThreadTaskRunner but I feel it could be still better than directly using threads, we can\u0027t change everything at once.\n\nWhat I imagined is something like following, but I could be still missing something.\n\nAdd GetFileTaskRunner() (returns WebTaskRunner) and GetFileThread() (returns SingleThreadedTaskRunner) on Platform interface, and expose the former only if INSIDE_BLINK.  The latter should be used only by non-blink consumers and should go away soon once all non-blink consumers go away.\n\nGetFileTaskRunner can be implemented within Platform.cpp.\n\nPlatform::CurrentThread wouldn\u0027t work in this way but maybe ok for the new code that doesn\u0027t directly use WebThread?\n\nShall we talk this a bit on platform-arch as well? I can start a thread then. Also: if we don\u0027t want to spend too much time I think we could start smaller in parallel, with something like the current patch. (feeling a bit sorry that this taking long)",
+      "parentUuid": "a91abf1a_6d163cdc",
+      "revId": "8d6d7e900f7310ace41efd4c2eff004f7af3c02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f3bb2f5_490c5f80",
         "filename": "third_party/WebKit/public/platform/Platform.h",
         "patchSetId": 5
