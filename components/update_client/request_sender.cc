@@ -56,7 +56,7 @@ const int64_t kMaxRetryAfterSec = 24 * 60 * 60;
 // net/base/net_error_list.h. The callers don't have to handle this error in
 // any meaningful way, but this value may be reported in UMA stats, therefore
 // avoiding collisions with known network errors is desirable.
-int RequestSender::kErrorResponseNotTrusted = -10000;
+const int RequestSender::kErrorResponseNotTrusted = -10000;
 
 RequestSender::RequestSender(const scoped_refptr<Configurator>& config)
     : config_(config), use_signing_(false) {}

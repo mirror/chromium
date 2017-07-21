@@ -45,7 +45,7 @@ class RequestSender : public net::URLFetcherDelegate {
   using RequestSenderCallback = base::Callback<
       void(int error, const std::string& response, int retry_after_sec)>;
 
-  static int kErrorResponseNotTrusted;
+  static const int kErrorResponseNotTrusted;
 
   explicit RequestSender(const scoped_refptr<Configurator>& config);
   ~RequestSender() override;

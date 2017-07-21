@@ -43,7 +43,7 @@ base::TimeDelta GetDefaultDelayForType(ModelType model_type,
 
 }  // namespace
 
-size_t NudgeTracker::kDefaultMaxPayloadsPerType = 10;
+const size_t NudgeTracker::kDefaultMaxPayloadsPerType = 10;
 
 NudgeTracker::NudgeTracker()
     : invalidations_enabled_(false),
