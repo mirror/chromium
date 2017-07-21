@@ -18,6 +18,7 @@
 #include "content/public/common/content_constants.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/test/mock_render_process_host.h"
+#include "content/public/test/navigation_simulator.h"
 #include "content/public/test/test_browser_context.h"
 #include "content/public/test/test_utils.h"
 #include "content/test/test_render_frame_host.h"
@@ -134,21 +135,7 @@ TEST_F(RenderProcessHostUnitTest, ReuseCommittedSite) {
       ParsedFeaturePolicyHeader(), FrameOwnerProperties());
   TestRenderFrameHost* subframe = static_cast<TestRenderFrameHost*>(
       contents()->GetFrameTree()->root()->child_at(0)->current_frame_host());
-  {
-    FrameHostMsg_DidCommitProvisionalLoad_Params params;
-    params.nav_entry_id = 0;
-    params.frame_unique_name = unique_name;
-    params.did_create_new_entry = false;
-    params.url = kUrl1;
-    params.transition = ui::PAGE_TRANSITION_AUTO_SUBFRAME;
-    params.should_update_history = false;
-    params.gesture = NavigationGestureUser;
-    params.method = "GET";
-    params.page_state = PageState::CreateFromURL(kUrl1);
-    subframe->SendRendererInitiatedNavigationRequest(kUrl1, false);
-    subframe->PrepareForCommit();
-    subframe->SendNavigateWithParams(&params);
-  }
+  NavigationSimulator::NavigateAndCommitFromDocument(kUrl1, subframe);
   site_instance = SiteInstanceImpl::CreateForURL(browser_context(), kUrl1);
   site_instance->set_process_reuse_policy(
       SiteInstanceImpl::ProcessReusePolicy::REUSE_PENDING_OR_COMMITTED_SITE);
