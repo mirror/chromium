@@ -259,6 +259,10 @@ SkColor RasterSource::GetSolidColor() const {
   return solid_color_;
 }
 
+bool RasterSource::HasNonSRGBContent() const {
+  return display_list_->discardable_image_map().has_non_srgb_lazy_images();
+}
+
 bool RasterSource::HasRecordings() const {
   return !!display_list_.get();
 }

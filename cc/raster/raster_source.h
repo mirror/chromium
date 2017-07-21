@@ -97,6 +97,10 @@ class CC_EXPORT RasterSource : public base::RefCountedThreadSafe<RasterSource> {
   // are unspecified if IsSolidColor returns false.
   SkColor GetSolidColor() const;
 
+  // Returns true iff the raster source contains lazy images that are originally
+  // from a non-sRGB color space.
+  bool HasNonSRGBContent() const;
+
   // Returns the size of this raster source.
   gfx::Size GetSize() const;
 
