@@ -67,7 +67,7 @@ class CORE_TEMPLATE_CLASS_EXPORT VisibleSelectionTemplate {
       const SelectionTemplate<Strategy>&,
       TextGranularity);
 
-  SelectionType GetSelectionType() const { return selection_type_; }
+  SelectionType GetSelectionType() const;
 
   TextAffinity Affinity() const { return affinity_; }
 
@@ -156,7 +156,6 @@ class CORE_TEMPLATE_CLASS_EXPORT VisibleSelectionTemplate {
 
   // Support methods for Validate()
   void AdjustSelectionToAvoidCrossingEditingBoundaries();
-  void UpdateSelectionType();
 
   // We need to store these as Positions because VisibleSelection is
   // used to store values in editing commands for use when
@@ -174,8 +173,6 @@ class CORE_TEMPLATE_CLASS_EXPORT VisibleSelectionTemplate {
 
   TextAffinity affinity_;  // the upstream/downstream affinity of the caret
 
-  // these are cached, can be recalculated by validate()
-  SelectionType selection_type_;  // None, Caret, Range
   bool base_is_first_ : 1;        // True if base is before the extent
   // Non-directional ignores m_baseIsFirst and selection always extends on shift
   // + arrow key.
