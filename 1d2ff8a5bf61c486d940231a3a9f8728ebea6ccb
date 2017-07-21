@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "27159938_7ea6f85c",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-07-21T10:36:02Z",
+      "side": 1,
+      "message": "Done. Yes, will be destroyed on the main thread.",
+      "parentUuid": "acbead34_79613dc8",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 25
+      },
+      "revId": "1d2ff8a5bf61c486d940231a3a9f8728ebea6ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1e62223_9d284f42",
         "filename": "third_party/WebKit/public/web/WebSharedWorkerClient.h",
         "patchSetId": 15
@@ -45,6 +69,30 @@
       "revId": "1d2ff8a5bf61c486d940231a3a9f8728ebea6ccb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3072fdf0_5a779326",
+        "filename": "third_party/WebKit/public/web/WebSharedWorkerClient.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-07-21T10:36:02Z",
+      "side": 1,
+      "message": "It will be able to avoid passing ID into blink after whole of shared worker is mojofied in the future, but I think it is difficult now. There are so many codes to fix in order to realize it.",
+      "parentUuid": "d1e62223_9d284f42",
+      "range": {
+        "startLine": 93,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 33
+      },
+      "revId": "1d2ff8a5bf61c486d940231a3a9f8728ebea6ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
