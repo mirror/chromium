@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "46669fc0_e2dfcf72",
+        "filename": "components/ntp_snippets/category.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-21T14:21:53Z",
+      "side": 1,
+      "message": "Sure, let\u0027s keep explicit IDs here.",
+      "parentUuid": "481dabe0_adaef84b",
+      "revId": "45cca7107e89fe31387a7e41fb3aec7ca859c4a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d318184c_10d73ef7",
         "filename": "components/ntp_snippets/category.h",
         "patchSetId": 3
@@ -69,6 +87,41 @@
       "revId": "45cca7107e89fe31387a7e41fb3aec7ca859c4a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1b5882f_f739d331",
+        "filename": "components/ntp_snippets/category.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-21T14:21:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d318184c_10d73ef7",
+      "revId": "45cca7107e89fe31387a7e41fb3aec7ca859c4a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2f02cdc9_1a8eec97",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-21T14:21:53Z",
+      "side": 1,
+      "message": "I will remove this static initialization.",
+      "revId": "45cca7107e89fe31387a7e41fb3aec7ca859c4a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
