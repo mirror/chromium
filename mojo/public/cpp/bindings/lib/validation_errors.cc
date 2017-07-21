@@ -85,6 +85,7 @@ void ReportValidationError(ValidationContext* context,
   } else {
     if (!g_suppress_logging)
       LOG(ERROR) << "Invalid message: " << ValidationErrorToString(error);
+    CHECK(false);
     if (context->message()) {
       context->message()->NotifyBadMessage(
           base::StringPrintf("Validation failed for %s [%s]",
