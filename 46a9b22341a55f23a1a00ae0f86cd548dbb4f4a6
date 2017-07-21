@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "085f230a_c9bbd435",
+        "filename": "ui/app_list/views/app_list_page.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-21T17:10:58Z",
+      "side": 1,
+      "message": "No, member should be private. Code before looks nicer for me. If you strongly prefer this you may leave it.",
+      "parentUuid": "04e02222_c5b6e7d3",
+      "range": {
+        "startLine": 73,
+        "startChar": 22,
+        "endLine": 73,
+        "endChar": 35
+      },
+      "revId": "46a9b22341a55f23a1a00ae0f86cd548dbb4f4a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61a79c72_253cdf5a",
         "filename": "ui/app_list/views/app_list_view_unittest.cc",
         "patchSetId": 3
@@ -281,6 +305,30 @@
       "revId": "46a9b22341a55f23a1a00ae0f86cd548dbb4f4a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33841770_a69505be",
+        "filename": "ui/app_list/views/start_page_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-21T17:10:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "05c7a7cc_5c4e8c3b",
+      "range": {
+        "startLine": 314,
+        "startChar": 13,
+        "endLine": 314,
+        "endChar": 18
+      },
+      "revId": "46a9b22341a55f23a1a00ae0f86cd548dbb4f4a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
