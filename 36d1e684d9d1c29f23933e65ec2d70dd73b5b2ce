@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2a7238c_d825d193",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 42412,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-21T17:15:06Z",
+      "side": 1,
+      "message": "Not intended to change this, but `git cl format` caught this.",
+      "range": {
+        "startLine": 42412,
+        "startChar": 2,
+        "endLine": 42412,
+        "endChar": 36
+      },
+      "revId": "36d1e684d9d1c29f23933e65ec2d70dd73b5b2ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
