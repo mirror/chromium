@@ -378,6 +378,12 @@ void ExtensionFunctionDispatcher::Dispatch(
   } else {
     // Extension API from Service Worker.
     DCHECK_NE(kInvalidServiceWorkerVersionId, params.service_worker_version_id);
+
+    // UIThreadWorkerResponseCallbackWrapper requires render process host to be
+    // around.
+    if (!content::RenderProcessHost::FromID(render_process_id))
+      return;
+
     WorkerResponseCallbackMapKey key(render_process_id,
                                      params.service_worker_version_id);
     UIThreadWorkerResponseCallbackWrapperMap::const_iterator iter =
