@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "118e1e38_cb539a1d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabIntentDataProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-07-21T17:21:10Z",
+      "side": 1,
+      "message": "Can we add a test so that if we add/remove default items, this one is also in the changing SWEs mind? See CustomTabActivityTest#testAppMenuForMediaViewer",
+      "range": {
+        "startLine": 56,
+        "startChar": 12,
+        "endLine": 56,
+        "endChar": 43
+      },
+      "revId": "c1de56c8b63050e0c4ebcbcd950042755df13b40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98e537bb_5e5d8770",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabIntentDataProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-07-21T17:21:10Z",
+      "side": 1,
+      "message": "verifyUIType maybe? I feel like it should say something about not simply getting the type but verifying the requested type to be true.",
+      "range": {
+        "startLine": 238,
+        "startChar": 16,
+        "endLine": 238,
+        "endChar": 25
+      },
+      "revId": "c1de56c8b63050e0c4ebcbcd950042755df13b40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
