@@ -4,7 +4,19 @@
 
 #include "chrome/browser/ui/webui/print_preview/printer_handler.h"
 
+#include "build/buildflag.h"
 #include "chrome/browser/ui/webui/print_preview/extension_printer_handler.h"
+#include "chrome/common/features.h"
+
+#if BUILDFLAG(ENABLE_SERVICE_DISCOVERY)
+#include "chrome/browser/ui/webui/print_preview/privet_printer_handler.h"
+#endif
+
+namespace content {
+class BrowserContext;
+}
+
+class Profile;
 
 // static
 std::unique_ptr<PrinterHandler> PrinterHandler::CreateForExtensionPrinters(
@@ -12,3 +24,12 @@ std::unique_ptr<PrinterHandler> PrinterHandler::CreateForExtensionPrinters(
   return std::unique_ptr<ExtensionPrinterHandler>(
       new ExtensionPrinterHandler(browser_context));
 }
+
+#if BUILDFLAG(ENABLE_SERVICE_DISCOVERY)
+// static
+std::unique_ptr<PrinterHandler> PrinterHandler::CreateForPrivetPrinters(
+    Profile* profile) {
+  return std::unique_ptr<PrivetPrinterHandler>(
+      new PrivetPrinterHandler(profile));
+}
+#endif
