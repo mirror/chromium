@@ -292,6 +292,24 @@
       "revId": "5d2f99f29965717edd788d9a5e6c4eecffabc3a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af638739_e1de15d3",
+        "filename": "third_party/WebKit/Source/core/loader/ScheduledNavigation.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-21T22:13:27Z",
+      "side": 1,
+      "message": "I see. Good idea giving them different names.",
+      "parentUuid": "eb8ac857_64e763ba",
+      "revId": "5d2f99f29965717edd788d9a5e6c4eecffabc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18693386_c3a9749a",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/page/frameScheduledNavigation.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-21T22:13:27Z",
+      "side": 1,
+      "message": "Let\u0027s do this and next await in a loop? I think next navigation should clear previous one?",
+      "revId": "153085416930a01b11a83c9bc0675226c92242a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efc57f28_0990c046",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-21T22:13:27Z",
+      "side": 1,
+      "message": "Let\u0027s call this \"scriptInitiated\"? FrameNavigation is a bit vague for \"frameScheduledNavigation\" event. We can leave FrameNavigation in class names though.",
+      "range": {
+        "startLine": 645,
+        "startChar": 129,
+        "endLine": 645,
+        "endChar": 144
+      },
+      "revId": "153085416930a01b11a83c9bc0675226c92242a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2be6ba3e_c2d31ef3",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-21T22:13:27Z",
+      "side": 1,
+      "message": "Which one corresponds to user hitting back button or typing in omnibox? Clicking a link? Do we even schedule one? We have to be careful here.",
+      "revId": "153085416930a01b11a83c9bc0675226c92242a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
