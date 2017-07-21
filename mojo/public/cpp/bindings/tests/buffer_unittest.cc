@@ -28,44 +28,15 @@ TEST(FixedBufferTest, Alignment) {
   internal::FixedBufferForTesting buf(internal::Align(10) * 2);
   ASSERT_EQ(buf.size(), 16u * 2);
 
-  void* a = buf.Allocate(10);
-  ASSERT_TRUE(a);
-  EXPECT_TRUE(IsZero(a, 10));
-  EXPECT_EQ(0, reinterpret_cast<ptrdiff_t>(a) % 8);
+  size_t a = buf.Allocate(10);
+  EXPECT_EQ(0u, a);
+  EXPECT_TRUE(IsZero(buf.Get<void>(a), 10));
 
-  void* b = buf.Allocate(10);
-  ASSERT_TRUE(b);
-  EXPECT_TRUE(IsZero(b, 10));
-  EXPECT_EQ(0, reinterpret_cast<ptrdiff_t>(b) % 8);
+  size_t b = buf.Allocate(10);
+  ASSERT_EQ(16u, b);
+  EXPECT_TRUE(IsZero(buf.Get<void>(b), 10));
 
   // Any more allocations would result in an assert, but we can't test that.
-}
-
-// Tests that FixedBufferForTesting::Leak passes ownership to the caller.
-TEST(FixedBufferTest, Leak) {
-  void* ptr = nullptr;
-  void* buf_ptr = nullptr;
-  {
-    internal::FixedBufferForTesting buf(8);
-    ASSERT_EQ(8u, buf.size());
-
-    ptr = buf.Allocate(8);
-    ASSERT_TRUE(ptr);
-    buf_ptr = buf.Leak();
-
-    // The buffer should point to the first element allocated.
-    // TODO(mpcomplete): Is this a reasonable expectation?
-    EXPECT_EQ(ptr, buf_ptr);
-
-    // The FixedBufferForTesting should be empty now.
-    EXPECT_EQ(0u, buf.size());
-    EXPECT_FALSE(buf.Leak());
-  }
-
-  // Since we called Leak, ptr is still writable after FixedBufferForTesting
-  // went out of scope.
-  memset(ptr, 1, 8);
-  free(buf_ptr);
 }
 
 #if defined(NDEBUG) && !defined(DCHECK_ALWAYS_ON)
