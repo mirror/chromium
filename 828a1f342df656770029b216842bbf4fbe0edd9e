@@ -33,6 +33,24 @@
       "revId": "828a1f342df656770029b216842bbf4fbe0edd9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2378389_7738db17",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-21T19:01:59Z",
+      "side": 1,
+      "message": "Oh, I see what you mean. It looks like this should be:\n\n stroke_color \u003d\n     SkColorSetA(GetResultingPaintColor(stroke_color, bg_color), 0x41);\n\nThis should create cccccc @ 1.0 (or whatever blend of the background is), before applying the new alpha.",
+      "parentUuid": "dd66140e_cdb6a9a5",
+      "revId": "828a1f342df656770029b216842bbf4fbe0edd9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
