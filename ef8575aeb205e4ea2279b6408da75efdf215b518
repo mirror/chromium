@@ -16,6 +16,24 @@
       "revId": "ef8575aeb205e4ea2279b6408da75efdf215b518",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb58aef2_4f5db141",
+        "filename": "components/ntp_snippets/category.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-21T08:37:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1eea3ce2_1319c284",
+      "revId": "ef8575aeb205e4ea2279b6408da75efdf215b518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
