@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fcb5d9de_b56e30c1",
+        "filename": "net/http/http_network_transaction_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 12817,
+      "author": {
+        "id": 1000307
+      },
+      "writtenOn": "2017-07-21T22:06:01Z",
+      "side": 0,
+      "message": "Tarun should know how to answer that better than me. It was removed in his CL on https://codereview.chromium.org/2447133002/.",
+      "parentUuid": "7152ce49_00802511",
+      "range": {
+        "startLine": 12817,
+        "startChar": 24,
+        "endLine": 12817,
+        "endChar": 45
+      },
+      "revId": "da0a4f9e5cabf886dc27ac4b7dcbd3057a42f248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd08ccf5_18d8a297",
         "filename": "net/http/http_network_transaction_unittest.cc",
         "patchSetId": 16
