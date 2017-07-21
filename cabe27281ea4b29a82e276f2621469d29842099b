@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "963a6792_f258fbed",
+        "filename": "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-21T18:50:20Z",
+      "side": 1,
+      "message": "The program_callback is global to ANGLE, right?\nSo, what happens if I make a GLES2DecoderPassthroughImpl (which makes the context) current, which sets the callback, then destroy the GLES2DecoderPassthroughImpl, and make another context (not a GLES2DecoderPassthroughImpl) current and link a shader?",
+      "parentUuid": "ec2c4127_bcd55f98",
+      "revId": "cabe27281ea4b29a82e276f2621469d29842099b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "46ff0f81_674b9755",
         "filename": "gpu/command_buffer/service/passthrough_program_cache.cc",
         "patchSetId": 1
