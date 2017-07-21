@@ -349,8 +349,9 @@ const char kEnablePreferCompositingToLCDText[] =
 // features.
 const char kEnableBlinkFeatures[]           = "enable-blink-features";
 
-// PlzNavigate: Use the experimental browser-side navigation path.
+// PlzNavigate: Use or don't use the experimental browser-side navigation path.
 const char kEnableBrowserSideNavigation[]   = "enable-browser-side-navigation";
+const char kDisableBrowserSideNavigation[] = "disable-browser-side-navigation";
 
 // Enables display list based 2d canvas implementation. Options:
 //  1. Enable: allow browser to use display list for 2d canvas (browser makes
