@@ -52,6 +52,14 @@
       .easy-unlock-nested-settings {
         @apply(--settings-list-frame-padding);
       }
+
+      .easy-unlock-nested-setting {
+        padding: 0;
+      }
+
+      .easy-unlock-nested-setting.underbar {
+        border-bottom: var(--settings-separator-line);
+      }
     </style>
 
     <div>
@@ -155,8 +163,17 @@
             </paper-button>
           </template>
         </div>
-        <iron-collapse opened="[[easyUnlockEnabled_]]">
-          <div class="settings-box continuation easy-unlock-nested-settings">
+        <iron-collapse opened="[[easyUnlockEnabled_]]"
+                       class="easy-unlock-nested-settings">
+          <div class="settings-box continuation easy-unlock-nested-setting
+                      underbar">
+            <settings-toggle-button
+              class="start"
+              pref="{{prefs.proximity_auth.is_chromeos_login_enabled}}"
+              label="$i18n{easyUnlockAllowSignInLabel}">
+            </settings-toggle-button>
+          </div>
+          <div class="settings-box continuation easy-unlock-nested-setting">
             <div class="start">
               $i18n{easyUnlockProximityThresholdLabel}
             </div>
