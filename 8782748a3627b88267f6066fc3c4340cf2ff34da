@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8bc3153_5a42781c",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 2734,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-07-21T00:53:47Z",
+      "side": 1,
+      "message": "These two conditions are identical except for the input parameter here.  How about:\n\nconst char event[] \u003d command.incognito\n  ? feature_engagement_tracker::events::kIncognitoTabOpened\n  : feature_engagement_tracker::events::kNewTabOpened;\nFeatureEngagementTrackerFactory::GetForBrowserState(\n  _activeCardSet.tabModel.browserState)-\u003eNotifyEvent(std::string(event));\n\nIn addition to taking up less space, this formatting the logic of choosing the event string parameter closer to checking the |incognito| parameter, which makes it easier to read and eliminates the need for the comments since the logic is straightforward (in my opinion).",
+      "revId": "8782748a3627b88267f6066fc3c4340cf2ff34da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
