@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "0ab67f1d_c3597f2e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-07-21T21:59:46Z",
+      "side": 1,
+      "message": "Don\u0027t quite understand why this is part of initialize compositor?",
+      "range": {
+        "startLine": 667,
+        "startChar": 12,
+        "endLine": 667,
+        "endChar": 30
+      },
+      "revId": "49423e45ba39346c51fda2997e646d9c9e5a017f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e29dec6_cb2cee1d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/document/ChromeLauncherActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-07-21T21:59:46Z",
+      "side": 1,
+      "message": "This can have unintended consequences. For example, if we don\u0027t set isCustomTabIntent, we will treat the new tab differently for instant apps handling in terms of dispatching. What should happen if the URL matches an instant app? Did you look through other uses of these variables?",
+      "range": {
+        "startLine": 151,
+        "startChar": 36,
+        "endLine": 151,
+        "endChar": 53
+      },
+      "revId": "49423e45ba39346c51fda2997e646d9c9e5a017f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "645f1e69_d2c4d275",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/dom_distiller/DomDistillerTabUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-07-21T21:59:46Z",
+      "side": 1,
+      "message": "I believe it\u0027s supposed to be {@link ..} not @{link...}",
+      "range": {
+        "startLine": 33,
+        "startChar": 48,
+        "endLine": 33,
+        "endChar": 59
+      },
+      "revId": "49423e45ba39346c51fda2997e646d9c9e5a017f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "04876abc_89e58856",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/dom_distiller/ReaderModeManager.java",
         "patchSetId": 3
