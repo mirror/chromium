@@ -11,7 +11,6 @@
 #include "build/build_config.h"
 #include "media/base/media_export.h"
 #include "media/media_features.h"
-#include "ppapi/features/features.h"
 
 namespace base {
 class CommandLine;
