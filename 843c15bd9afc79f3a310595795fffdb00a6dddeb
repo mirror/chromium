@@ -291,6 +291,30 @@
     },
     {
       "key": {
+        "uuid": "3ecb52fe_f730711e",
+        "filename": "components/url_log/url_log.cc",
+        "patchSetId": 40
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-07-21T20:06:05Z",
+      "side": 1,
+      "message": "This should still use base::OpenFile(), and not fopen to bypass those restrictions.\n\n(If accepted, it would be added as a friended exception in thread_restrictions.h)",
+      "parentUuid": "e18fdc8d_063924ac",
+      "range": {
+        "startLine": 33,
+        "startChar": 42,
+        "endLine": 33,
+        "endChar": 43
+      },
+      "revId": "843c15bd9afc79f3a310595795fffdb00a6dddeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35cbbbb8_dde8575b",
         "filename": "components/url_log/url_log.cc",
         "patchSetId": 40
