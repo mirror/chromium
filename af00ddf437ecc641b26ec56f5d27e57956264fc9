@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58a87135_fee94b13",
+        "filename": "tools/idl_parser/idl_parser_test.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-07-21T12:47:37Z",
+      "side": 1,
+      "message": "Is this a dupe of testAImplementsB?\nI\u0027m not sure if we need this one.\nIf you want, I\u0027m okay with this, though.",
+      "range": {
+        "startLine": 69,
+        "startChar": 6,
+        "endLine": 69,
+        "endChar": 22
+      },
+      "revId": "af00ddf437ecc641b26ec56f5d27e57956264fc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
