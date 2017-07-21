@@ -617,6 +617,7 @@ class GoogleUpdateWinTest : public ::testing::TestWithParam<bool> {
   void TearDown() override {
     // Remove the test's IGoogleUpdate on-demand update class factory.
     SetGoogleUpdateFactoryForTesting(GoogleUpdate3ClassFactory());
+    SetUpdateDriverTaskRunnerForTesting(nullptr);
     ::testing::TestWithParam<bool>::TearDown();
   }
 
