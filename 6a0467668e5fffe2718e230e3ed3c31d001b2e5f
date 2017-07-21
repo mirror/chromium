@@ -22,6 +22,30 @@
       "revId": "6a0467668e5fffe2718e230e3ed3c31d001b2e5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2fa450e_7b991c3f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-07-21T13:27:47Z",
+      "side": 1,
+      "message": "We could, sure. Do we have a decision about how many columns to show in Modern / Explore?",
+      "parentUuid": "bc000f7f_b41fb3c0",
+      "range": {
+        "startLine": 862,
+        "startChar": 39,
+        "endLine": 862,
+        "endChar": 40
+      },
+      "revId": "6a0467668e5fffe2718e230e3ed3c31d001b2e5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
