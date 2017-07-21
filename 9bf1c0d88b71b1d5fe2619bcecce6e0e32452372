@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8c9e137_926b64a9",
+        "filename": "net/quic/core/quic_flags_list.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-07-21T22:39:19Z",
+      "side": 1,
+      "message": "Are we ready to do this in Chrome? I\u0027d be good to confirm this with Ian.",
+      "range": {
+        "startLine": 148,
+        "startChar": 69,
+        "endLine": 148,
+        "endChar": 0
+      },
+      "revId": "9bf1c0d88b71b1d5fe2619bcecce6e0e32452372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
