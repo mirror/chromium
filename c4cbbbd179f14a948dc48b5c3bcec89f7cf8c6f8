@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8d197ed3_67a1ebe8",
+        "filename": "net/url_request/network_error_logging_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-07-21T16:22:57Z",
+      "side": 1,
+      "message": "NEL itself isn\u0027t going here; this is just the delegate for //net to inform it of relevant things. NEL will probably be a component so it can be set up both within //content and in Cronet.",
+      "parentUuid": "beaa391b_4e1905b6",
+      "revId": "c4cbbbd179f14a948dc48b5c3bcec89f7cf8c6f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c2cb2d4_dc225f90",
         "filename": "net/url_request/network_error_logging_delegate.h",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b857c755_807061d6",
+        "filename": "net/url_request/network_error_logging_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-07-21T16:22:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c2cb2d4_dc225f90",
+      "revId": "c4cbbbd179f14a948dc48b5c3bcec89f7cf8c6f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "945ea5a4_c37b62cf",
         "filename": "net/url_request/network_error_logging_delegate.h",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-20T22:20:00Z",
       "side": 1,
       "message": "The name sounds a lot like NetErrorDetails, which is confusing since that one is part of domain reliability but isn\u0027t the entire thing. But it fits way better here. Maybe we should rename that one?",
+      "revId": "c4cbbbd179f14a948dc48b5c3bcec89f7cf8c6f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75d565c5_88e5ba80",
+        "filename": "net/url_request/network_error_logging_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-07-21T16:22:57Z",
+      "side": 1,
+      "message": "Rename it and add these fields to it? I\u0027d rather have a separate one and eventually just deprecate the other one (probably scavenging bits of the code used to fill it in).",
+      "parentUuid": "945ea5a4_c37b62cf",
       "revId": "c4cbbbd179f14a948dc48b5c3bcec89f7cf8c6f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "f576b0bf_a767f090",
+        "filename": "net/url_request/network_error_logging_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-07-21T16:22:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3aa56a0_22bb5b75",
+      "revId": "c4cbbbd179f14a948dc48b5c3bcec89f7cf8c6f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26d9a0b5_85985a73",
         "filename": "net/url_request/network_error_logging_delegate.h",
         "patchSetId": 1
@@ -84,6 +156,24 @@
       "revId": "c4cbbbd179f14a948dc48b5c3bcec89f7cf8c6f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "765ebc60_13bbca5e",
+        "filename": "net/url_request/network_error_logging_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1147120
+      },
+      "writtenOn": "2017-07-21T16:22:57Z",
+      "side": 1,
+      "message": "Changed to OnHeader instead, since the class name implies the header.",
+      "parentUuid": "26d9a0b5_85985a73",
+      "revId": "c4cbbbd179f14a948dc48b5c3bcec89f7cf8c6f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
