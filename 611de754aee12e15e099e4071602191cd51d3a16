@@ -39,6 +39,30 @@
       "revId": "611de754aee12e15e099e4071602191cd51d3a16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0cb997c_f7fdc808",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-21T15:25:51Z",
+      "side": 1,
+      "message": "My understanding was views are destroyed from\nhttps://cs.chromium.org/chromium/src/ash/shell.cc?q\u003dash::Shell\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d725\n\nwhile tablet_mode_controller is destroyed\n\nhttps://cs.chromium.org/chromium/src/ash/shell.cc?q\u003dash::Shell\u0026sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d690\n\nhere, though I\u0027m not the expert of this area and may be misunderstanding.",
+      "parentUuid": "20e13791_ff460cd1",
+      "range": {
+        "startLine": 83,
+        "startChar": 5,
+        "endLine": 83,
+        "endChar": 17
+      },
+      "revId": "611de754aee12e15e099e4071602191cd51d3a16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
