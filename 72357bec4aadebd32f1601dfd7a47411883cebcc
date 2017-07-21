@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "be7f3180_b9f3d624",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-21T23:12:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c30a808_ef37ece6",
+      "revId": "72357bec4aadebd32f1601dfd7a47411883cebcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "301d4dac_79f2fd62",
         "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "72357bec4aadebd32f1601dfd7a47411883cebcc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2baf4f2_744473be",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-21T23:12:23Z",
+      "side": 1,
+      "message": "Done. Thanks for the suggestion, this looks good.",
+      "parentUuid": "301d4dac_79f2fd62",
+      "revId": "72357bec4aadebd32f1601dfd7a47411883cebcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -80,6 +116,30 @@
       "revId": "72357bec4aadebd32f1601dfd7a47411883cebcc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50024cff_6c1ed60c",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-21T23:12:23Z",
+      "side": 1,
+      "message": "Ack. Oh good. Good to see you still remember the history. ;)",
+      "parentUuid": "c2541a5b_ec0634e4",
+      "range": {
+        "startLine": 167,
+        "startChar": 1,
+        "endLine": 167,
+        "endChar": 0
+      },
+      "revId": "72357bec4aadebd32f1601dfd7a47411883cebcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
