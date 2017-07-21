@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9e31c2ab_5bb9b726",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-21T03:51:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ff75230_b039c289",
+      "revId": "953fe018ad899d7d7fd3a406e2690dbee37970f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e73f070_8dd4777e",
         "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-20T22:50:20Z",
       "side": 1,
       "message": "We should introduce a function ToSetSelectionOptions(SetSelectionBy) ?",
+      "revId": "953fe018ad899d7d7fd3a406e2690dbee37970f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b491d2d9_c0f89562",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-21T03:51:48Z",
+      "side": 1,
+      "message": "Done.\nIntroduce ConvertSetSelectionByToSetSelectionOptions()",
+      "parentUuid": "6e73f070_8dd4777e",
       "revId": "953fe018ad899d7d7fd3a406e2690dbee37970f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cbe7cce7_37d3c1b6",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-21T03:51:48Z",
+      "side": 1,
+      "message": "Rename to ConvertSelectionOptionsToSetSelectionBy().\nNote: this function will be removed in following patch.",
+      "parentUuid": "f18757da_3ec2f71c",
+      "revId": "953fe018ad899d7d7fd3a406e2690dbee37970f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71b57418_b7bd295f",
         "filename": "third_party/WebKit/Source/web/WebLocalFrameImpl.cpp",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "953fe018ad899d7d7fd3a406e2690dbee37970f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "124092a4_853cc09d",
+        "filename": "third_party/WebKit/Source/web/WebLocalFrameImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1218,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-21T03:51:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71b57418_b7bd295f",
+      "revId": "953fe018ad899d7d7fd3a406e2690dbee37970f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
