@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "fe7c550e_98d3cf42",
+        "filename": "chrome/test/vr/perf/latency/webvr_latency_test.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-07-21T14:06:36Z",
+      "side": 1,
+      "message": "Out of curiosity, why is it \"chartjson\" instead of \"chart_json\"?",
+      "range": {
+        "startLine": 168,
+        "startChar": 29,
+        "endLine": 168,
+        "endChar": 66
+      },
+      "revId": "30c5a4784394d7f2e1886885b3dd24f40b1800d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ac2c280_0c2f78d9",
         "filename": "chrome/test/vr/perf/vr_test_arg_parser.py",
         "patchSetId": 1
