@@ -7,7 +7,7 @@
 #include <stdint.h>
 
 #include "base/test/test_simple_task_runner.h"
-#include "cc/test/scheduler_test_common.h"
+#include "cc/test/fake_delay_based_time_source.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace cc {
