@@ -93,6 +93,30 @@
       "revId": "e35db1ce4bce86525ba1c24b75a0a9f478c66d91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7e60cb9_e031b03d",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-21T19:09:01Z",
+      "side": 1,
+      "message": "sigh... i guess it is. Sorry.",
+      "parentUuid": "6deb6bc1_ccd646a8",
+      "range": {
+        "startLine": 729,
+        "startChar": 0,
+        "endLine": 730,
+        "endChar": 32
+      },
+      "revId": "e35db1ce4bce86525ba1c24b75a0a9f478c66d91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
