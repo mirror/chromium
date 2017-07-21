@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9978504e_3c4d12a4",
+        "filename": "base/i18n/file_util_icu.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-07-21T19:52:30Z",
+      "side": 1,
+      "message": "not used",
+      "revId": "421228f534c6e7412c67f485b6288c9b486cd183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59a27396_c6f0ed7a",
+        "filename": "base/i18n/file_util_icu.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-07-21T19:52:30Z",
+      "side": 1,
+      "message": "Let\u0027s just have this one function. Given the issue described here, it\u0027s quite likely that someone adding a call site to ReplaceIllegalCharactersInPath() is doing the wrong thing.",
+      "revId": "421228f534c6e7412c67f485b6288c9b486cd183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92880138_11324104",
+        "filename": "base/i18n/file_util_icu.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-07-21T19:52:30Z",
+      "side": 1,
+      "message": "This parameter is only used on Posix and the only value that has any effect is kCodepageUTF8. Should we just turn this into a |is_unicode| flag?\n\nIf not a bool, then turn this into a base::StringPiece value. That way we can eliminate one string copy. There won\u0027t be a heap allocation because kCodepageUTF8 is within range for short-string-optimization. But the string copy is unnecessary.",
+      "revId": "421228f534c6e7412c67f485b6288c9b486cd183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65d2310e_382b8fb7",
+        "filename": "net/base/filename_util_internal.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-07-21T19:52:30Z",
+      "side": 1,
+      "message": "Hmm. I thought we\u0027ve moved all sanitization steps away from using \u0027-\u0027 as a replacement character. It\u0027s safer to use \u0027_\u0027, specially on Posix.\n\nImagine what would happen if there was a file named \"\u003cCR\u003erf\" which gets escaped into \"-rf\", and someone tries to remove it without thinking too hard.\n\nApplies both here and in SanitizeGeneratedFilename(). I looked at some of the call sites of ReplaceIllegalCharacters...(). Looks like we are mostly getting it right elsewhere.",
+      "revId": "421228f534c6e7412c67f485b6288c9b486cd183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
