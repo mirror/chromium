@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7712bcf_181da507",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_util.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-07-21T21:08:36Z",
+      "side": 1,
+      "message": "I think we should probably add this to the feature_engagement_tracker to make it clear that this notifies the feature engagement tacker without having to look at the comments in this header.",
+      "revId": "4d53b8112000ac047a0a60ba38acb728688d48d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fbb87b1_0215d7a2",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_util.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-07-21T21:08:36Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this second function since it\u0027s just a trivial pass-through call to NotifyNewTabEvent().  Instead of using this function, you could just do \"NotifyNewTabEvent(browserState, command.incognito)\", which adds a bit more context to future readers of the code.",
+      "revId": "4d53b8112000ac047a0a60ba38acb728688d48d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ef52f09_7fbcf622",
+        "filename": "ios/chrome/browser/ui/commands/open_new_tab_command.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-07-21T21:08:36Z",
+      "side": 1,
+      "message": "The style guide requires to use a getter with an \"is\" prefix.\n\n@property(nonatomic, getter\u003disUserInitiated) BOOL userInitiated;\n\nhttps://engdoc.corp.google.com/eng/doc/objcguide.xml?showone\u003dObjective-C_Method_Names\u0026cl\u003dhead#Objective-C_Method_Names",
+      "revId": "4d53b8112000ac047a0a60ba38acb728688d48d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ceb75e1_96938e2a",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-07-21T21:08:36Z",
+      "side": 1,
+      "message": "This comment is confusing because the tracker will be notified of an event regardless of |command|.  How about \"Send either the \"New Tab Opened\" or \"Incognito Tab Opened\" event to the FeatureEngagementTracker ...\"?",
+      "revId": "4d53b8112000ac047a0a60ba38acb728688d48d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
