@@ -27,7 +27,7 @@ class CryptAuthGCMManagerImpl : public CryptAuthGCMManager,
  public:
   // Creates the manager:
   // |gcm_driver|: Handles the actual GCM communications. The driver is not
-  //     owned and must outlive this instance.
+  //     owned.
   // |pref_service|: Contains preferences across browser restarts, and should
   //     have been registered through RegisterPrefs(). The service is not owned
   //     and must outlive this instance.
@@ -66,7 +66,10 @@ class CryptAuthGCMManagerImpl : public CryptAuthGCMManager,
   PrefService* pref_service_;
 
   // Whether a GCM registration is currently being processed.
-  bool registration_in_progress_;
+  bool registration_in_progress_ = false;
+
+  // Whether GCM has been shutdown. See ShutdownHandler().
+  bool gcm_is_shutdown_ = false;
 
   // List of observers.
   base::ObserverList<Observer> observers_;
