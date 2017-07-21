@@ -21,7 +21,6 @@ class AppListViewDelegate;
 class CustomLauncherPageBackgroundView;
 class ExpandArrowView;
 class IndicatorChipView;
-class SearchResultTileItemView;
 class SuggestionsContainerView;
 class TileItemView;
 
@@ -38,8 +37,11 @@ class APP_LIST_EXPORT StartPageView : public AppListPage {
   void UpdateForTesting();
 
   views::View* instant_container() const { return instant_container_; }
-  const std::vector<SearchResultTileItemView*>& tile_views() const;
+  SuggestionsContainerView* suggestions_container_for_test() const {
+    return suggestions_container_;
+  }
   TileItemView* all_apps_button() const;
+  ExpandArrowView* expand_arrow_for_test() const { return expand_arrow_view_; }
 
   // Overridden from AppListPage:
   gfx::Rect GetPageBoundsForState(AppListModel::State state) const override;

@@ -656,6 +656,7 @@ void AppListView::EndDrag(const gfx::Point& location) {
 }
 
 void AppListView::SetStateFromSearchBoxView(bool search_box_is_empty) {
+  LOG(ERROR) << "app_list_state_: " << app_list_state_;
   switch (app_list_state_) {
     case PEEKING:
       if (!search_box_is_empty)
