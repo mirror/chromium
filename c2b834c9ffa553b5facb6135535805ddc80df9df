@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0844af54_353cafea",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-21T15:46:20Z",
+      "side": 1,
+      "message": "nit: DCHECK(!is_voice_query) ?",
+      "revId": "c2b834c9ffa553b5facb6135535805ddc80df9df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
