@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68107929_6f3df7c0",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-21T00:42:14Z",
+      "side": 1,
+      "message": "make the comment a bit more specific... NameServers is part of IPConfigUIProperties, but we ignore it because...",
+      "range": {
+        "startLine": 727,
+        "startChar": 19,
+        "endLine": 727,
+        "endChar": 38
+      },
+      "revId": "e35db1ce4bce86525ba1c24b75a0a9f478c66d91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ad54bf7_c61112b9",
+        "filename": "chrome/browser/resources/settings/internet_page/internet_detail_page.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-21T00:42:14Z",
+      "side": 1,
+      "message": "optional, why not \"for (var key of keysToCopy) {\"?",
+      "range": {
+        "startLine": 729,
+        "startChar": 0,
+        "endLine": 730,
+        "endChar": 32
+      },
+      "revId": "e35db1ce4bce86525ba1c24b75a0a9f478c66d91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
