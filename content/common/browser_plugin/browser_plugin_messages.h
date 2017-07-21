@@ -2,6 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#ifndef CONTENT_COMMON_BROWSER_PLUGIN_BROWSER_PLUGIN_MESSAGES_H_
+#define CONTENT_COMMON_BROWSER_PLUGIN_BROWSER_PLUGIN_MESSAGES_H_
+
 // Multiply-included message header, no traditional include guard.
 
 #include <string>
@@ -208,3 +211,5 @@ IPC_MESSAGE_CONTROL2(BrowserPluginMsg_SetMouseLock,
 IPC_MESSAGE_CONTROL2(BrowserPluginMsg_SetTooltipText,
                      int /* browser_plugin_instance_id */,
                      base::string16 /* tooltip_text */)
+
+#endif  // CONTENT_COMMON_BROWSER_PLUGIN_BROWSER_PLUGIN_MESSAGES_H_

@@ -2,6 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#ifndef CONTENT_COMMON_MEDIA_MEDIA_STREAM_MESSAGES_H_
+#define CONTENT_COMMON_MEDIA_MEDIA_STREAM_MESSAGES_H_
+
 // IPC messages for the media streaming.
 // Multiply-included message file, hence no include guard.
 
@@ -136,3 +139,5 @@ IPC_MESSAGE_CONTROL3(MediaStreamHostMsg_SetCapturingLinkSecured,
 
 // Tell the browser process that the stream has been started successfully.
 IPC_MESSAGE_CONTROL1(MediaStreamHostMsg_StreamStarted, std::string /* label */)
+
+#endif  // CONTENT_COMMON_MEDIA_MEDIA_STREAM_MESSAGES_H_

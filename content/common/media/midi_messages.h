@@ -2,6 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#ifndef CONTENT_COMMON_MEDIA_MIDI_MESSAGES_H_
+#define CONTENT_COMMON_MEDIA_MIDI_MESSAGES_H_
+
 // IPC messages for access to MIDI hardware.
 // Multiply-included message file, hence no include guard.
 
@@ -71,3 +74,5 @@ IPC_MESSAGE_CONTROL3(MidiMsg_DataReceived,
                      double /* timestamp */)
 
 IPC_MESSAGE_CONTROL1(MidiMsg_AcknowledgeSentData, uint32_t /* bytes sent */)
+
+#endif  // CONTENT_COMMON_MEDIA_MIDI_MESSAGES_H_
