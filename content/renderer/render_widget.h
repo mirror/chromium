@@ -465,6 +465,7 @@ class CONTENT_EXPORT RenderWidget
   void OnRequestCompositionUpdates(bool immediate_request,
                                    bool monitor_updates);
 
+  void GetWidgetInputHandler(mojom::WidgetInputHandlerRequest request) override;
   void SetWidgetBinding(mojom::WidgetRequest request);
 
  protected:
