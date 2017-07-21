@@ -25,8 +25,4 @@ static_assert(static_cast<int>(TargetProperty::LAST_TARGET_PROPERTY) + 1 ==
 
 }  // namespace
 
-const char* TargetProperty::GetName(TargetProperty::Type property) {
-  return s_targetPropertyNames[property];
-}
-
 }  // namespace cc

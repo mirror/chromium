@@ -6,9 +6,10 @@
 
 #include "base/memory/ptr_util.h"
 #include "chrome/browser/vr/elements/url_bar_texture.h"
+#include "chrome/browser/vr/target_property.h"
 
-using cc::TargetProperty::OPACITY;
-using cc::TargetProperty::VISIBILITY;
+using vr::TargetProperty::OPACITY;
+using vr::TargetProperty::VISIBILITY;
 
 namespace vr {
 
