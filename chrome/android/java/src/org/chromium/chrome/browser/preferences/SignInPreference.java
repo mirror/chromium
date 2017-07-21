@@ -5,18 +5,16 @@
 package org.chromium.chrome.browser.preferences;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.preference.Preference;
 import android.support.v7.content.res.AppCompatResources;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.firstrun.FirstRunSignInProcessor;
+import org.chromium.chrome.browser.firstrun.ProfileDataCache;
 import org.chromium.chrome.browser.profiles.Profile;
-import org.chromium.chrome.browser.profiles.ProfileDownloader;
 import org.chromium.chrome.browser.signin.AccountManagementFragment;
 import org.chromium.chrome.browser.signin.AccountSigninActivity;
 import org.chromium.chrome.browser.signin.SigninAccessPoint;
@@ -28,22 +26,26 @@ import org.chromium.chrome.browser.util.ViewUtils;
 import org.chromium.components.signin.ChromeSigninController;
 import org.chromium.components.sync.AndroidSyncSettings;
 
+import java.util.Collections;
+
 /**
  * A preference that displays "Sign in to Chrome" when the user is not sign in, and displays
  * the user's name, email, profile image and sync error icon if necessary when the user is signed
  * in.
  */
 public class SignInPreference extends Preference
-        implements SignInAllowedObserver, ProfileDownloader.Observer,
+        implements SignInAllowedObserver, ProfileDataCache.Observer,
                    AndroidSyncSettings.AndroidSyncSettingsObserver, SyncStateChangedListener {
     private boolean mViewEnabled;
     private boolean mShowingPromo;
+    private final ProfileDataCache mProfileDataCache;
 
     /**
      * Constructor for inflating from XML.
      */
     public SignInPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
+        mProfileDataCache = new ProfileDataCache(context, Profile.getLastUsedProfile());
         update();
     }
 
@@ -53,7 +55,7 @@ public class SignInPreference extends Preference
     public void registerForUpdates() {
         SigninManager manager = SigninManager.get(getContext());
         manager.addSignInAllowedObserver(this);
-        ProfileDownloader.addObserver(this);
+        mProfileDataCache.addObserver(this);
         FirstRunSignInProcessor.updateSigninManagerFirstRunCheckDone(getContext());
         AndroidSyncSettings.registerObserver(getContext(), this);
         ProfileSyncService syncService = ProfileSyncService.get();
@@ -69,7 +71,7 @@ public class SignInPreference extends Preference
     public void unregisterForUpdates() {
         SigninManager manager = SigninManager.get(getContext());
         manager.removeSignInAllowedObserver(this);
-        ProfileDownloader.removeObserver(this);
+        mProfileDataCache.removeObserver(this);
         AndroidSyncSettings.unregisterObserver(getContext(), this);
         ProfileSyncService syncService = ProfileSyncService.get();
         if (syncService != null) {
@@ -126,21 +128,13 @@ public class SignInPreference extends Preference
     }
 
     private void setupSignedIn(String accountName) {
-        String title = AccountManagementFragment.getCachedUserName(accountName);
-        if (title == null) {
-            Profile profile = Profile.getLastUsedProfile();
-            String cachedName = ProfileDownloader.getCachedFullName(profile);
-            Bitmap cachedBitmap = ProfileDownloader.getCachedAvatar(profile);
-            if (TextUtils.isEmpty(cachedName) || cachedBitmap == null) {
-                AccountManagementFragment.startFetchingAccountInformation(
-                        getContext(), profile, accountName);
-            }
-            title = TextUtils.isEmpty(cachedName) ? accountName : cachedName;
-        }
+        mProfileDataCache.update(Collections.singletonList(accountName));
+        String title = mProfileDataCache.getFullName(accountName);
+        if (title == null) title = accountName;
         setTitle(title);
         setSummary(SyncPreference.getSyncStatusSummary(getContext()));
         setFragment(AccountManagementFragment.class.getName());
-        setIcon(AccountManagementFragment.getUserPicture(getContext(), accountName));
+        setIcon(mProfileDataCache.getImage(accountName));
 
         setWidgetLayoutResource(
                 SyncPreference.showSyncErrorIcon(getContext()) ? R.layout.sync_error_widget : 0);
@@ -181,10 +175,7 @@ public class SignInPreference extends Preference
     // ProfileDownloader.Observer
 
     @Override
-    public void onProfileDownloaded(String accountId, String fullName, String givenName,
-            Bitmap bitmap) {
-        AccountManagementFragment.updateUserNamePictureCache(
-                getContext(), accountId, fullName, bitmap);
+    public void onProfileDataUpdated(String accountId) {
         update();
     }
 
