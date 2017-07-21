@@ -16,6 +16,29 @@
       "revId": "611de754aee12e15e099e4071602191cd51d3a16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20e13791_ff460cd1",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-21T14:42:30Z",
+      "side": 1,
+      "message": "I would expect the tablet_mode_controller to be destroyed before this. Under what conditions is that not the case?",
+      "range": {
+        "startLine": 83,
+        "startChar": 5,
+        "endLine": 83,
+        "endChar": 17
+      },
+      "revId": "611de754aee12e15e099e4071602191cd51d3a16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
