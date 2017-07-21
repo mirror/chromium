@@ -10,6 +10,7 @@
 #include "base/stl_util.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
+#include "base/strings/stringprintf.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -46,20 +47,30 @@ class TrafficAnnotationAuditorTest : public ::testing::Test {
                         .Append(FILE_PATH_LITERAL("traffic_annotation"))
                         .Append(FILE_PATH_LITERAL("auditor"))
                         .Append(FILE_PATH_LITERAL("tests"));
+    auditor_ =
+        base::MakeUnique<TrafficAnnotationAuditor>(source_path(), build_path());
   }
 
   const base::FilePath source_path() const { return source_path_; }
   const base::FilePath build_path() const { return build_path_; }
   const base::FilePath tests_folder() const { return tests_folder_; };
+  TrafficAnnotationAuditor& auditor() { return *auditor_; }
 
  protected:
   // Deserializes an annotation or a call instance from a sample file similar to
   // clang tool outputs.
-  AuditorResult::ResultType Deserialize(const std::string& file_name,
-                                        InstanceBase* instance);
+  AuditorResult::Type Deserialize(const std::string& file_name,
+                                  InstanceBase* instance);
 
   // Creates a complete annotation instance using sample files.
   std::unique_ptr<AnnotationInstance> CreateAnnotationInstanceSample();
+
+  void SetAnnotationForTest(const AnnotationInstance& instance) {
+    std::vector<AnnotationInstance> annotations;
+    annotations.push_back(instance);
+    auditor_->SetExtractedAnnotationsForTest(annotations);
+    auditor_->ClearErrorsForTest();
+  }
 
  private:
   base::FilePath source_path_;
@@ -67,9 +78,10 @@ class TrafficAnnotationAuditorTest : public ::testing::Test {
                                // to a compiled build directory would be
                                // granted.
   base::FilePath tests_folder_;
+  std::unique_ptr<TrafficAnnotationAuditor> auditor_;
 };
 
-AuditorResult::ResultType TrafficAnnotationAuditorTest::Deserialize(
+AuditorResult::Type TrafficAnnotationAuditorTest::Deserialize(
     const std::string& file_name,
     InstanceBase* instance) {
   std::string file_content;
@@ -89,7 +101,7 @@ TrafficAnnotationAuditorTest::CreateAnnotationInstanceSample() {
   std::unique_ptr<AnnotationInstance> instance =
       base::MakeUnique<AnnotationInstance>();
   if (Deserialize("good_complete_annotation.txt", instance.get()) !=
-      AuditorResult::ResultType::RESULT_OK) {
+      AuditorResult::Type::RESULT_OK) {
     instance.reset();
   }
   return instance;
@@ -166,8 +178,6 @@ TEST_F(TrafficAnnotationAuditorTest, RelevantFilesReceived) {
 // Inherently checks if TrafficAnnotationFileFilter::LoadWhiteList works and
 // AuditorException rules are correctly deserialized.
 TEST_F(TrafficAnnotationAuditorTest, IsWhitelisted) {
-  TrafficAnnotationAuditor auditor(source_path(), build_path());
-
   for (unsigned int i = 0;
        i < static_cast<unsigned int>(
                AuditorException::ExceptionType::EXCEPTION_TYPE_LAST);
@@ -175,61 +185,63 @@ TEST_F(TrafficAnnotationAuditorTest, IsWhitelisted) {
     AuditorException::ExceptionType type =
         static_cast<AuditorException::ExceptionType>(i);
     // Anything in /tools directory is whitelisted for all types.
-    EXPECT_TRUE(auditor.IsWhitelisted("tools/something.cc", type));
-    EXPECT_TRUE(auditor.IsWhitelisted("tools/somewhere/something.mm", type));
+    EXPECT_TRUE(auditor().IsWhitelisted("tools/something.cc", type));
+    EXPECT_TRUE(auditor().IsWhitelisted("tools/somewhere/something.mm", type));
 
     // Anything in a general folder is not whitelisted for any type
-    EXPECT_FALSE(auditor.IsWhitelisted("something.cc", type));
-    EXPECT_FALSE(auditor.IsWhitelisted("content/something.mm", type));
+    EXPECT_FALSE(auditor().IsWhitelisted("something.cc", type));
+    EXPECT_FALSE(auditor().IsWhitelisted("content/something.mm", type));
   }
 
   // Files defining missing annotation functions in net/ are exceptions of
   // 'missing' type.
-  EXPECT_TRUE(auditor.IsWhitelisted("net/url_request/url_fetcher.cc",
-                                    AuditorException::ExceptionType::MISSING));
-  EXPECT_TRUE(auditor.IsWhitelisted("net/url_request/url_request_context.cc",
-                                    AuditorException::ExceptionType::MISSING));
+  EXPECT_TRUE(
+      auditor().IsWhitelisted("net/url_request/url_fetcher.cc",
+                              AuditorException::ExceptionType::MISSING));
+  EXPECT_TRUE(
+      auditor().IsWhitelisted("net/url_request/url_request_context.cc",
+                              AuditorException::ExceptionType::MISSING));
 }
 
 // Tests if annotation instances are corrrectly deserialized.
 TEST_F(TrafficAnnotationAuditorTest, AnnotationDeserialization) {
   struct AnnotationSample {
     std::string file_name;
-    AuditorResult::ResultType result_type;
-    AnnotationInstance::AnnotationType annotation_type;
+    AuditorResult::Type result_type;
+    AnnotationInstance::Type type;
   };
 
   AnnotationSample test_cases[] = {
-      {"good_complete_annotation.txt", AuditorResult::ResultType::RESULT_OK,
-       AnnotationInstance::AnnotationType::ANNOTATION_COMPLETE},
+      {"good_complete_annotation.txt", AuditorResult::Type::RESULT_OK,
+       AnnotationInstance::Type::ANNOTATION_COMPLETE},
       {"good_branched_completing_annotation.txt",
-       AuditorResult::ResultType::RESULT_OK,
-       AnnotationInstance::AnnotationType::ANNOTATION_BRANCHED_COMPLETING},
-      {"good_completing_annotation.txt", AuditorResult::ResultType::RESULT_OK,
-       AnnotationInstance::AnnotationType::ANNOTATION_COMPLETENG},
-      {"good_partial_annotation.txt", AuditorResult::ResultType::RESULT_OK,
-       AnnotationInstance::AnnotationType::ANNOTATION_PARTIAL},
-      {"good_test_annotation.txt", AuditorResult::ResultType::RESULT_IGNORE},
-      {"missing_annotation.txt", AuditorResult::ResultType::ERROR_MISSING},
-      {"no_annotation.txt", AuditorResult::ResultType::ERROR_NO_ANNOTATION},
-      {"fatal_annotation1.txt", AuditorResult::ResultType::ERROR_FATAL},
-      {"fatal_annotation2.txt", AuditorResult::ResultType::ERROR_FATAL},
-      {"fatal_annotation3.txt", AuditorResult::ResultType::ERROR_FATAL},
-      {"bad_syntax_annotation1.txt", AuditorResult::ResultType::ERROR_SYNTAX},
-      {"bad_syntax_annotation2.txt", AuditorResult::ResultType::ERROR_SYNTAX},
-      {"bad_syntax_annotation3.txt", AuditorResult::ResultType::ERROR_SYNTAX},
-      {"bad_syntax_annotation4.txt", AuditorResult::ResultType::ERROR_SYNTAX},
+       AuditorResult::Type::RESULT_OK,
+       AnnotationInstance::Type::ANNOTATION_BRANCHED_COMPLETING},
+      {"good_completing_annotation.txt", AuditorResult::Type::RESULT_OK,
+       AnnotationInstance::Type::ANNOTATION_COMPLETING},
+      {"good_partial_annotation.txt", AuditorResult::Type::RESULT_OK,
+       AnnotationInstance::Type::ANNOTATION_PARTIAL},
+      {"good_test_annotation.txt", AuditorResult::Type::RESULT_IGNORE},
+      {"missing_annotation.txt", AuditorResult::Type::ERROR_MISSING},
+      {"no_annotation.txt", AuditorResult::Type::ERROR_NO_ANNOTATION},
+      {"fatal_annotation1.txt", AuditorResult::Type::ERROR_FATAL},
+      {"fatal_annotation2.txt", AuditorResult::Type::ERROR_FATAL},
+      {"fatal_annotation3.txt", AuditorResult::Type::ERROR_FATAL},
+      {"bad_syntax_annotation1.txt", AuditorResult::Type::ERROR_SYNTAX},
+      {"bad_syntax_annotation2.txt", AuditorResult::Type::ERROR_SYNTAX},
+      {"bad_syntax_annotation3.txt", AuditorResult::Type::ERROR_SYNTAX},
+      {"bad_syntax_annotation4.txt", AuditorResult::Type::ERROR_SYNTAX},
   };
 
   for (const auto& test_case : test_cases) {
     // Check if deserialization result is as expected.
     AnnotationInstance annotation;
-    AuditorResult::ResultType result_type =
+    AuditorResult::Type result_type =
         Deserialize(test_case.file_name, &annotation);
     EXPECT_EQ(result_type, test_case.result_type);
 
-    if (result_type == AuditorResult::ResultType::RESULT_OK)
-      EXPECT_EQ(annotation.annotation_type, test_case.annotation_type);
+    if (result_type == AuditorResult::Type::RESULT_OK)
+      EXPECT_EQ(annotation.type, test_case.type);
 
     // Content checks for one complete sample.
     if (test_case.file_name != "good_complete_annotation.txt")
@@ -251,19 +263,18 @@ TEST_F(TrafficAnnotationAuditorTest, AnnotationDeserialization) {
 TEST_F(TrafficAnnotationAuditorTest, CallDeserialization) {
   struct CallSample {
     std::string file_name;
-    AuditorResult::ResultType result_type;
+    AuditorResult::Type result_type;
   };
 
   CallSample test_cases[] = {
-      {"good_call.txt", AuditorResult::ResultType::RESULT_OK},
-      {"bad_call.txt", AuditorResult::ResultType::ERROR_FATAL},
+      {"good_call.txt", AuditorResult::Type::RESULT_OK},
+      {"bad_call.txt", AuditorResult::Type::ERROR_FATAL},
   };
 
   for (const auto& test_case : test_cases) {
     // Check if deserialization result is as expected.
     CallInstance call;
-    AuditorResult::ResultType result_type =
-        Deserialize(test_case.file_name, &call);
+    AuditorResult::Type result_type = Deserialize(test_case.file_name, &call);
     EXPECT_EQ(result_type, test_case.result_type);
 
     // Content checks for one complete sample.
@@ -309,7 +320,6 @@ TEST_F(TrafficAnnotationAuditorTest, CheckDuplicateHashes) {
   const std::map<int, std::string>& reserved_words =
       TrafficAnnotationAuditor::GetReservedUniqueIDs();
 
-  TrafficAnnotationAuditor auditor(source_path(), build_path());
   std::vector<AnnotationInstance> annotations;
 
   // Check for reserved words hash code duplication errors.
@@ -318,12 +328,12 @@ TEST_F(TrafficAnnotationAuditorTest, CheckDuplicateHashes) {
     annotations.push_back(*instance);
   }
 
-  auditor.SetExtractedAnnotationsForTest(annotations);
-  auditor.CheckDuplicateHashes();
-  EXPECT_EQ(auditor.errors().size(), reserved_words.size());
-  for (const auto& error : auditor.errors()) {
+  auditor().SetExtractedAnnotationsForTest(annotations);
+  auditor().CheckDuplicateHashes();
+  EXPECT_EQ(auditor().errors().size(), reserved_words.size());
+  for (const auto& error : auditor().errors()) {
     EXPECT_EQ(error.type(),
-              AuditorResult::ResultType::ERROR_RESERVED_UNIQUE_ID_HASH_CODE);
+              AuditorResult::Type::ERROR_RESERVED_UNIQUE_ID_HASH_CODE);
   }
 
   // Check if several different hash codes result in no error.
@@ -334,10 +344,10 @@ TEST_F(TrafficAnnotationAuditorTest, CheckDuplicateHashes) {
     instance->unique_id_hash_code = i;
     annotations.push_back(*instance);
   }
-  auditor.SetExtractedAnnotationsForTest(annotations);
-  auditor.ClearErrorsForTest();
-  auditor.CheckDuplicateHashes();
-  EXPECT_EQ(auditor.errors().size(), 0u);
+  auditor().SetExtractedAnnotationsForTest(annotations);
+  auditor().ClearErrorsForTest();
+  auditor().CheckDuplicateHashes();
+  EXPECT_EQ(auditor().errors().size(), 0u);
 
   // Check if repeating the same hash codes results in errors.
   annotations.clear();
@@ -346,14 +356,16 @@ TEST_F(TrafficAnnotationAuditorTest, CheckDuplicateHashes) {
     annotations.push_back(*instance);
     annotations.push_back(*instance);
   }
-  auditor.SetExtractedAnnotationsForTest(annotations);
-  auditor.ClearErrorsForTest();
-  auditor.CheckDuplicateHashes();
-  EXPECT_EQ(auditor.errors().size(), 10u);
-  for (const auto& error : auditor.errors()) {
+  auditor().SetExtractedAnnotationsForTest(annotations);
+  auditor().ClearErrorsForTest();
+  auditor().CheckDuplicateHashes();
+  EXPECT_EQ(auditor().errors().size(), 10u);
+  for (const auto& error : auditor().errors()) {
     EXPECT_EQ(error.type(),
-              AuditorResult::ResultType::ERROR_DUPLICATE_UNIQUE_ID_HASH_CODE);
+              AuditorResult::Type::ERROR_DUPLICATE_UNIQUE_ID_HASH_CODE);
   }
+
+  // TODO: Check Combination's errors and safe cases.
 }
 
 // Tests if TrafficAnnotationAuditor::CheckUniqueIDsFormat results are as
@@ -364,9 +376,7 @@ TEST_F(TrafficAnnotationAuditorTest, CheckUniqueIDsFormat) {
       {"ID?4", false}, {"ID:5", false}, {"ID>>6", false},
   };
 
-  TrafficAnnotationAuditor auditor(source_path(), build_path());
   std::vector<AnnotationInstance> annotations;
-  std::vector<AnnotationInstance> all_annotations;
   std::unique_ptr<AnnotationInstance> instance =
       CreateAnnotationInstanceSample();
   EXPECT_TRUE(instance != nullptr);
@@ -375,22 +385,21 @@ TEST_F(TrafficAnnotationAuditorTest, CheckUniqueIDsFormat) {
   // Test cases one by one.
   for (const auto& test_case : test_cases) {
     instance->proto.set_unique_id(test_case.first);
-    annotations.clear();
+    SetAnnotationForTest(*instance);
     annotations.push_back(*instance);
-    all_annotations.push_back(*instance);
-    auditor.SetExtractedAnnotationsForTest(annotations);
-    auditor.ClearErrorsForTest();
-    auditor.CheckUniqueIDsFormat();
-    EXPECT_EQ(auditor.errors().size(), test_case.second ? 0u : 1u);
+    auditor().CheckUniqueIDsFormat();
+    EXPECT_EQ(auditor().errors().size(), test_case.second ? 0u : 1u);
     if (!test_case.second)
       false_samples_count++;
   }
 
   // Test all cases together.
-  auditor.SetExtractedAnnotationsForTest(all_annotations);
-  auditor.ClearErrorsForTest();
-  auditor.CheckUniqueIDsFormat();
-  EXPECT_EQ(auditor.errors().size(), false_samples_count);
+  auditor().SetExtractedAnnotationsForTest(annotations);
+  auditor().ClearErrorsForTest();
+  auditor().CheckUniqueIDsFormat();
+  EXPECT_EQ(auditor().errors().size(), false_samples_count);
+
+  // TODO: Check for extra ids.
 }
 
 // Tests if TrafficAnnotationAuditor::CheckAllRequiredFunctionsAreAnnotated
@@ -400,12 +409,11 @@ TEST_F(TrafficAnnotationAuditorTest, CheckAllRequiredFunctionsAreAnnotated) {
   std::string file_paths[] = {"net/url_request/url_fetcher.cc",
                               "net/url_request/url_request_context.cc",
                               "net/url_request/other_file.cc",
-                              "somewhere_else.cc"};
+                              "somewhere_else.cc", "something_unittest.cc"};
   std::string function_names[] = {"net::URLFetcher::Create",
                                   "net::URLRequestContext::CreateRequest",
                                   "SSLClientSocket", "Something else", ""};
 
-  TrafficAnnotationAuditor auditor(source_path(), build_path());
   std::vector<CallInstance> calls(1);
   CallInstance& call = calls[0];
 
@@ -413,32 +421,206 @@ TEST_F(TrafficAnnotationAuditorTest, CheckAllRequiredFunctionsAreAnnotated) {
     for (const std::string& function_name : function_names) {
       for (int annotated = 0; annotated < 2; annotated++) {
         for (int dependent = 0; dependent < 2; dependent++) {
+          SCOPED_TRACE(
+              base::StringPrintf("Testing (%s, %s, %i, %i).", file_path.c_str(),
+                                 function_name.c_str(), annotated, dependent));
           call.file_path = file_path;
           call.function_name = function_name;
           call.is_annotated = annotated;
-          auditor.SetGnFileForTest(tests_folder().Append(
+          auditor().SetGnFileForTest(tests_folder().Append(
               dependent ? FILE_PATH_LITERAL("gn_list_positive.txt")
                         : FILE_PATH_LITERAL("gn_list_negative.txt")));
 
-          auditor.ClearErrorsForTest();
-          auditor.SetExtractedCallsForTest(calls);
-          auditor.ClearCheckedDependenciesForTest();
-          auditor.CheckAllRequiredFunctionsAreAnnotated();
-          // Error should be issued if a function is not annotated,
-          // chrome::chrome depends on it, the filepath is not whitelisted, and
-          // function name is either of the two specified ones.
-          EXPECT_EQ(
-              auditor.errors().size() == 1,
-              !annotated && dependent &&
-                  file_path != "net/url_request/url_fetcher.cc" &&
-                  file_path != "net/url_request/url_request_context.cc" &&
-                  (function_name == "net::URLFetcher::Create" ||
-                   function_name == "net::URLRequestContext::CreateRequest"))
-              << "The conditions for generating an error for missing "
-                 "annotation do not match the returned number of errors by "
-                 "auditor.";
+          auditor().ClearErrorsForTest();
+          auditor().SetExtractedCallsForTest(calls);
+          auditor().ClearCheckedDependenciesForTest();
+          auditor().CheckAllRequiredFunctionsAreAnnotated();
+          // Error should be issued if a function is not annotated, it's a
+          // unittest or chrome::chrome depends on it, the filepath is not
+          // whitelisted, and function name is either of the two specified ones.
+          bool is_unittest = file_path.find("unittest") != std::string::npos;
+          bool is_whitelist =
+              file_path == "net/url_request/url_fetcher.cc" ||
+              file_path == "net/url_request/url_request_context.cc";
+          bool monitored_function =
+              function_name == "net::URLFetcher::Create" ||
+              function_name == "net::URLRequestContext::CreateRequest";
+          EXPECT_EQ(auditor().errors().size() == 1,
+                    !annotated && (dependent || is_unittest) && !is_whitelist &&
+                        monitored_function)
+              << base::StringPrintf(
+                     "Annotated:%i, Depending:%i, IsUnitTest:%i, "
+                     "IsWhitelisted:%i, MonitoredFunction:%i",
+                     annotated, dependent, is_unittest, is_whitelist,
+                     monitored_function);
         }
       }
     }
   }
+}
+
+// Tests if TrafficAnnotationAuditor::CheckCompleteAnnotations works as
+// expected. It also inherently checks
+// TrafficAnnotationAuditor::IsAnnotationComplete and
+// TrafficAnnotationAuditor::IsAnnotationConsistent.
+TEST_F(TrafficAnnotationAuditorTest, CheckAnnotations) {
+  std::unique_ptr<AnnotationInstance> instance =
+      CreateAnnotationInstanceSample();
+  EXPECT_TRUE(instance != nullptr);
+  std::vector<AnnotationInstance> annotations;
+  unsigned int expected_errors_count = 0;
+
+  for (int test_no = 0;; test_no++) {
+    AnnotationInstance test_case = *instance;
+    bool expect_error = true;
+    std::string test_description;
+    switch (test_no) {
+      case 0:
+        test_description = "All fields OK.";
+        expect_error = false;
+        break;
+      case 1:
+        test_description = "Missing semantics::sender.";
+        test_case.proto.mutable_semantics()->clear_sender();
+        break;
+      case 2:
+        test_description = "Missing semantics::description.";
+        test_case.proto.mutable_semantics()->clear_description();
+        break;
+      case 3:
+        test_description = "Missing semantics::trigger.";
+        test_case.proto.mutable_semantics()->clear_trigger();
+        break;
+      case 4:
+        test_description = "Missing semantics::data.";
+        test_case.proto.mutable_semantics()->clear_data();
+        break;
+      case 5:
+        test_description = "Missing semantics::destination.";
+        test_case.proto.mutable_semantics()->clear_destination();
+        break;
+      case 6:
+        test_description = "Missing policy::cookies_allowed.";
+        test_case.proto.mutable_policy()->set_cookies_allowed(
+            traffic_annotation::
+                NetworkTrafficAnnotation_TrafficPolicy_CookiesAllowed_UNSPECIFIED);
+        break;
+      case 7:
+        test_description =
+            "policy::cookies_allowed = NO with existing policy::cookies_store.";
+        test_case.proto.mutable_policy()->set_cookies_allowed(
+            traffic_annotation::
+                NetworkTrafficAnnotation_TrafficPolicy_CookiesAllowed_NO);
+        test_case.proto.mutable_policy()->set_cookies_store("somewhere");
+        break;
+      case 8:
+        test_description =
+            "policy::cookies_allowed = NO and no policy::cookies_store.";
+        test_case.proto.mutable_policy()->set_cookies_allowed(
+            traffic_annotation::
+                NetworkTrafficAnnotation_TrafficPolicy_CookiesAllowed_NO);
+        test_case.proto.mutable_policy()->clear_cookies_store();
+        expect_error = false;
+        break;
+      case 9:
+        test_description =
+            "policy::cookies_allowed = YES and policy::cookies_store exists.";
+        test_case.proto.mutable_policy()->set_cookies_allowed(
+            traffic_annotation::
+                NetworkTrafficAnnotation_TrafficPolicy_CookiesAllowed_YES);
+        test_case.proto.mutable_policy()->set_cookies_store("somewhere");
+        expect_error = false;
+        break;
+      case 10:
+        test_description =
+            "policy::cookies_allowed = YES and no policy::cookies_store.";
+        test_case.proto.mutable_policy()->set_cookies_allowed(
+            traffic_annotation::
+                NetworkTrafficAnnotation_TrafficPolicy_CookiesAllowed_YES);
+        test_case.proto.mutable_policy()->clear_cookies_store();
+        break;
+      case 11:
+        test_description = "Missing policy::settings.";
+        test_case.proto.mutable_policy()->clear_setting();
+        break;
+      case 12:
+        test_description =
+            "Missing policy::chrome_policy and "
+            "policy::policy_exception_justification.";
+        test_case.proto.mutable_policy()->clear_chrome_policy();
+        test_case.proto.mutable_policy()
+            ->clear_policy_exception_justification();
+        break;
+      case 13:
+        test_description =
+            "Missing policy::chrome_policy and existing "
+            "policy::policy_exception_justification.";
+        test_case.proto.mutable_policy()->clear_chrome_policy();
+        test_case.proto.mutable_policy()->set_policy_exception_justification(
+            "Because!");
+        expect_error = false;
+        break;
+      case 14:
+        test_description =
+            "Existing policy::chrome_policy and no "
+            "policy::policy_exception_justification.";
+        test_case.proto.mutable_policy()->add_chrome_policy();
+        test_case.proto.mutable_policy()
+            ->clear_policy_exception_justification();
+        expect_error = false;
+        break;
+      case 15:
+        test_description =
+            "Existing policy::chrome_policy and existing"
+            "policy::policy_exception_justification.";
+        test_case.proto.mutable_policy()->add_chrome_policy();
+        test_case.proto.mutable_policy()->set_policy_exception_justification(
+            "Because!");
+        break;
+
+      default:
+        test_no = -2;
+        break;
+    }
+    if (test_no < 0)
+      break;
+    SCOPED_TRACE(base::StringPrintf("Testing: %s", test_description.c_str()));
+    SetAnnotationForTest(test_case);
+    auditor().CheckAnnotationsContents();
+
+    // Only first case is complete.
+    EXPECT_EQ(auditor().errors().size(), expect_error ? 1u : 0u);
+    annotations.push_back(test_case);
+    if (expect_error)
+      expected_errors_count++;
+  }
+
+  // Check All.
+  unsigned int tests_count = annotations.size();
+  auditor().SetExtractedAnnotationsForTest(annotations);
+  auditor().ClearErrorsForTest();
+  auditor().CheckAnnotationsContents();
+  EXPECT_EQ(auditor().errors().size(), expected_errors_count);
+  // All annotations with errors should be dropped.
+  EXPECT_EQ(auditor().extracted_annotations().size(),
+            tests_count - expected_errors_count);
+}
+
+// Tests if TrafficAnnotationAuditor::AreAnnotationInstancesCombinable works as
+// expected.
+TEST_F(TrafficAnnotationAuditorTest, AreAnnotationInstancesCombinable) {
+  // TODO
+}
+
+// Tests if TrafficAnnotationAuditor::MergeAnnotationInstances works as
+// expected.
+TEST_F(TrafficAnnotationAuditorTest, MergeAnnotationInstances) {
+  // TODO
+  // TODO: + Removal from main list.
+}
+
+// Tests if TrafficAnnotationAuditor::CheckIncompleteAnnotationsSemantics works
+// as expected.
+TEST_F(TrafficAnnotationAuditorTest, CheckIncompleteAnnotationsSemantics) {
+  // TODO
 }
