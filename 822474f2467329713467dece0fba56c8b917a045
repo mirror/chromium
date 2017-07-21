@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a087be0_bc4eeb08",
+        "filename": "ui/app_list/views/start_page_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-21T17:23:43Z",
+      "side": 1,
+      "message": "I meant to define static here:\n\nstatic int kNoSelection;           // No view is selected.\nstatic int kExpandArrowSelection;  // Expand arrow is selected.\n\nAnd also please move it L 36 and append empty line",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 64,
+        "endChar": 0
+      },
+      "revId": "822474f2467329713467dece0fba56c8b917a045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
