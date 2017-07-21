@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "251d1326_e9462944",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-21T06:00:46Z",
+      "side": 1,
+      "message": "This view ID addition seems orthogonal to this change.  How come it\u0027s here and what is it doing?  Is it for a11y?",
+      "revId": "3a05756e853d20fa7ef82b2ed93790367a853af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0ab1150_bd51ba1f",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-21T06:00:46Z",
+      "side": 1,
+      "message": "If this is the only place you\u0027re going to use this variable, why keep it as a member at all?  Just compute the right string directly here and omit |promo_string_| entirely.",
+      "revId": "3a05756e853d20fa7ef82b2ed93790367a853af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dde56e1b_99493056",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-21T06:00:46Z",
+      "side": 1,
+      "message": "Why is the specifier being passed as a string that looks like a resource ID?  It seems like the simplest thing to pass in wou8ld be a simple integer variant like 0, 1, 2.  Then you could use a (more performant and easier to write) switch statement, and probably the Finch code would be easier too.",
+      "revId": "3a05756e853d20fa7ef82b2ed93790367a853af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d3e24c9_033cd78d",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-21T06:00:46Z",
+      "side": 1,
+      "message": "Every arm of this does something like:\n\n  promo_string_ \u003d l10n_util::GetStringUTF16(...);\n  return;\n\nThis means you should probably factor this common code into the caller:\n\nNewTabPromo::NewTabPromo(...)\n    : promo_string_(l10n_util::GetStringUTF16(SpecifierToId(specifier))) { ...\n\nThen this function need only return the correct string ID, which the switch statement idea above should make easy.",
+      "revId": "3a05756e853d20fa7ef82b2ed93790367a853af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "924ff535_1b009bd6",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-21T06:00:46Z",
+      "side": 1,
+      "message": "NOTE: These next two comments are only necessary if you actually keep this member, see comments in .cc file.\n\nNit: All but the first three words of this comment describe the promo UI (again), rather than talking about this specific member.  It seems like this comment isn\u0027t actually saying anything about the member, in which case just omit the comment.",
+      "revId": "3a05756e853d20fa7ef82b2ed93790367a853af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97b8994f_e932e0af",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-21T06:00:46Z",
+      "side": 1,
+      "message": "Nit: \"promo\" is in the classname already, it doesn\u0027t need to be in the variable name.  I\u0027d probably call this |text_|.",
+      "revId": "3a05756e853d20fa7ef82b2ed93790367a853af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
