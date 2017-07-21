@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d299a3f_47250eb6",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_api.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-21T04:08:11Z",
+      "side": 1,
+      "message": "Does this mean we should access computed style from NGInlineNode instead of\nLayoutObject? Or, just for NGInlineText::Text()?",
+      "revId": "7ddb94f3d949baff6f14753e1f96e1c2a8f73ad8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
