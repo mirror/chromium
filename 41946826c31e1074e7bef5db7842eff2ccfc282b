@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b80e8472_05719c3b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentManifestVerifier.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-21T17:49:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38ed1fd7_43f5b811",
+      "range": {
+        "startLine": 373,
+        "startChar": 0,
+        "endLine": 373,
+        "endChar": 51
+      },
+      "revId": "41946826c31e1074e7bef5db7842eff2ccfc282b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aaf5f68b_1914566c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentManifestVerifier.java",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "41946826c31e1074e7bef5db7842eff2ccfc282b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "482ce5c4_93cd922d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentManifestVerifier.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-21T17:49:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aaf5f68b_1914566c",
+      "range": {
+        "startLine": 378,
+        "startChar": 43,
+        "endLine": 378,
+        "endChar": 61
+      },
+      "revId": "41946826c31e1074e7bef5db7842eff2ccfc282b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a70714a4_7f86e99c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/payments/AndroidPaymentAppFinderTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-21T17:49:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe61d9af_d77001bf",
+      "range": {
+        "startLine": 389,
+        "startChar": 0,
+        "endLine": 389,
+        "endChar": 66
+      },
+      "revId": "41946826c31e1074e7bef5db7842eff2ccfc282b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "562dc290_c61ca60e",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/payments/AndroidPaymentAppFinderTest.java",
         "patchSetId": 7
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "baf0d0a0_8c79b65d",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/payments/AndroidPaymentAppFinderTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-21T17:49:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "562dc290_c61ca60e",
+      "range": {
+        "startLine": 434,
+        "startChar": 17,
+        "endLine": 434,
+        "endChar": 37
+      },
+      "revId": "41946826c31e1074e7bef5db7842eff2ccfc282b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad3337eb_99cab9a2",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/payments/AndroidPaymentAppFinderTest.java",
         "patchSetId": 7
@@ -114,6 +210,30 @@
       "revId": "41946826c31e1074e7bef5db7842eff2ccfc282b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25ea4ad3_2655e222",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/payments/AndroidPaymentAppFinderTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-21T17:49:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad3337eb_99cab9a2",
+      "range": {
+        "startLine": 468,
+        "startChar": 17,
+        "endLine": 468,
+        "endChar": 37
+      },
+      "revId": "41946826c31e1074e7bef5db7842eff2ccfc282b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
