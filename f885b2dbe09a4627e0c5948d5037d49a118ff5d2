@@ -46,6 +46,30 @@
       "revId": "f885b2dbe09a4627e0c5948d5037d49a118ff5d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d31c54e3_e38757ae",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/payments/PaymentRequestJourneyLoggerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-21T18:14:49Z",
+      "side": 1,
+      "message": "I mean there are many test cases in this file, but it seems we only add these extra checks for some of them. Just to make sure I understand it correct.",
+      "parentUuid": "4ff79e9c_6b5a3d51",
+      "range": {
+        "startLine": 593,
+        "startChar": 32,
+        "endLine": 593,
+        "endChar": 64
+      },
+      "revId": "f885b2dbe09a4627e0c5948d5037d49a118ff5d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
