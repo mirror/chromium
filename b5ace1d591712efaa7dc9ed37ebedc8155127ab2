@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bcfced06_c036aeba",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-21T03:38:28Z",
+      "side": 1,
+      "message": "Sick ASCII art! Added.\n\nYeah, I\u0027ve noticed that bug before too. I think it might have something to do with event handlers not getting fired...",
+      "parentUuid": "c4187dbb_56cbe1df",
+      "revId": "b5ace1d591712efaa7dc9ed37ebedc8155127ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d18aa7ec_dd3f8d78",
         "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5812910a_d6a154d3",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-21T03:38:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d18aa7ec_dd3f8d78",
+      "revId": "b5ace1d591712efaa7dc9ed37ebedc8155127ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5fa68e31_15b97de9",
         "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
         "patchSetId": 5
@@ -47,6 +83,30 @@
       "writtenOn": "2017-07-20T04:48:03Z",
       "side": 1,
       "message": "Interestingly, the autoexpander has lost some of its functionality. When we\u0027re using native drag, dragover events fire at a regular rate even when the mouse is still. However, mousemove events only fire when the mouse is actually moving. This means that when you hover over a closed node, it won\u0027t actually open until you move the mouse. It\u0027s a bit of a weird experience.\n\nMaybe we can fix this by changing the AutoExpander to use setTimeout internally?",
+      "range": {
+        "startLine": 153,
+        "startChar": 11,
+        "endLine": 153,
+        "endChar": 23
+      },
+      "revId": "b5ace1d591712efaa7dc9ed37ebedc8155127ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3d2f41d_8b55254a",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-21T03:38:28Z",
+      "side": 1,
+      "message": "Nice catch! I\u0027ll fix this in a follow-up. This CL is gigantic enough already. Also, I have a hunch I can use your debouncer to do this \u003dP",
+      "parentUuid": "5fa68e31_15b97de9",
       "range": {
         "startLine": 153,
         "startChar": 11,
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "a2980692_4274bd51",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-21T03:38:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08d255c9_f4a30d80",
+      "range": {
+        "startLine": 390,
+        "startChar": 50,
+        "endLine": 390,
+        "endChar": 64
+      },
+      "revId": "b5ace1d591712efaa7dc9ed37ebedc8155127ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad281ed3_0e9ef7de",
         "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
         "patchSetId": 5
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "6a20148c_fb056aa0",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-21T03:38:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad281ed3_0e9ef7de",
+      "revId": "b5ace1d591712efaa7dc9ed37ebedc8155127ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70642fdb_ade1c9ef",
         "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
         "patchSetId": 5
@@ -110,6 +212,24 @@
       "writtenOn": "2017-07-20T04:48:03Z",
       "side": 1,
       "message": "FYI: This conflicts with my select and scroll CL 😢. We\u0027re going to need to do something fancy with the callbacks here to achieve the same thing as what we\u0027ll be doing in onDrop",
+      "revId": "b5ace1d591712efaa7dc9ed37ebedc8155127ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b4d56a7_0320b5c2",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-21T03:38:28Z",
+      "side": 1,
+      "message": "i cri evrytiem",
+      "parentUuid": "70642fdb_ade1c9ef",
       "revId": "b5ace1d591712efaa7dc9ed37ebedc8155127ab2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -133,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "2e047ef2_5eed4d0a",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-21T03:38:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6597d45_3fff631a",
+      "revId": "b5ace1d591712efaa7dc9ed37ebedc8155127ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "981091bc_d319bfb9",
         "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
         "patchSetId": 5
@@ -147,6 +285,24 @@
       "revId": "b5ace1d591712efaa7dc9ed37ebedc8155127ab2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abd2fba5_2da08e91",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-21T03:38:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "981091bc_d319bfb9",
+      "revId": "b5ace1d591712efaa7dc9ed37ebedc8155127ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -173,6 +329,30 @@
     },
     {
       "key": {
+        "uuid": "3b3ed509_2ecaf3d6",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-21T03:38:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29ea34fd_b12378ba",
+      "range": {
+        "startLine": 570,
+        "startChar": 4,
+        "endLine": 570,
+        "endChar": 19
+      },
+      "revId": "b5ace1d591712efaa7dc9ed37ebedc8155127ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "457d4bcb_4c137656",
         "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
         "patchSetId": 5
@@ -187,6 +367,24 @@
       "revId": "b5ace1d591712efaa7dc9ed37ebedc8155127ab2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abbf3338_3e1d97a6",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-21T03:38:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "457d4bcb_4c137656",
+      "revId": "b5ace1d591712efaa7dc9ed37ebedc8155127ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
