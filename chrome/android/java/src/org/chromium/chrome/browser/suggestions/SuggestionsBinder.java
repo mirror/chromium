@@ -172,9 +172,9 @@ public class SuggestionsBinder {
         // mThumbnailView's visibility is modified in updateFieldsVisibility().
         if (mThumbnailView.getVisibility() != View.VISIBLE) return;
 
-        Bitmap thumbnail = mSuggestion.getThumbnailBitmap();
+        Drawable thumbnail = mSuggestion.getThumbnail();
         if (thumbnail != null) {
-            setThumbnailFromBitmap(thumbnail);
+            setThumbnail(thumbnail);
             return;
         }
 
@@ -211,7 +211,10 @@ public class SuggestionsBinder {
             if (thumbnailReceivedPromise.isFulfilled()) {
                 // If the thumbnail was cached, then it will be retrieved synchronously, the promise
                 // will be fulfilled and we can set the thumbnail immediately.
-                setThumbnailFromBitmap(thumbnailReceivedPromise.getResult());
+                verifyBitmap(thumbnailReceivedPromise.getResult());
+                setThumbnail(ThumbnailGradient.createDrawableWithGradientIfNeeded(
+                        thumbnailReceivedPromise.getResult(), mCardContainerView.getResources()));
+
                 return;
             }
 
@@ -225,14 +228,12 @@ public class SuggestionsBinder {
         setThumbnailFromFileType(fileType);
     }
 
-    private void setThumbnailFromBitmap(Bitmap thumbnail) {
+    private void setThumbnail(Drawable thumbnail) {
         assert thumbnail != null;
-        assert !thumbnail.isRecycled();
-        assert thumbnail.getWidth() <= mThumbnailSize || thumbnail.getHeight() <= mThumbnailSize;
 
         mThumbnailView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         mThumbnailView.setBackground(null);
-        mThumbnailView.setImageBitmap(thumbnail);
+        mThumbnailView.setImageDrawable(thumbnail);
         mThumbnailView.setTint(null);
     }
 
@@ -274,7 +275,7 @@ public class SuggestionsBinder {
         }
     }
 
-    private void fadeThumbnailIn(Bitmap thumbnail) {
+    private void fadeThumbnailIn(Drawable thumbnail) {
         assert mThumbnailView.getDrawable() != null;
 
         mThumbnailView.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -283,14 +284,13 @@ public class SuggestionsBinder {
         int duration = (int) (FADE_IN_ANIMATION_TIME_MS
                 * ChromeAnimation.Animation.getAnimationMultiplier());
         if (duration == 0) {
-            mThumbnailView.setImageBitmap(thumbnail);
+            mThumbnailView.setImageDrawable(thumbnail);
             return;
         }
 
         // Cross-fade between the placeholder and the thumbnail. We cross-fade because the incoming
         // image may have transparency and we don't want the previous image showing up behind.
-        Drawable[] layers = {mThumbnailView.getDrawable(),
-                new BitmapDrawable(mThumbnailView.getResources(), thumbnail)};
+        Drawable[] layers = {mThumbnailView.getDrawable(), thumbnail};
         TransitionDrawable transitionDrawable = new TransitionDrawable(layers);
         mThumbnailView.setImageDrawable(transitionDrawable);
         transitionDrawable.setCrossFadeEnabled(true);
@@ -354,8 +354,11 @@ public class SuggestionsBinder {
                         mCapturedSuggestion.isArticle() ? ThumbnailUtils.OPTIONS_RECYCLE_INPUT : 0);
             }
 
+            Drawable drawable = ThumbnailGradient.createDrawableWithGradientIfNeeded(
+                    thumbnail, mThumbnailView.getResources());
+
             // Store the bitmap to skip the download task next time we display this snippet.
-            mCapturedSuggestion.setThumbnailBitmap(mUiDelegate.getReferencePool().put(thumbnail));
+            mCapturedSuggestion.setThumbnail(mUiDelegate.getReferencePool().put(drawable));
 
             // Check whether the suggestions currently displayed in the view holder is the same as
             // the suggestion whose thumbnail we have just fetched.
@@ -367,7 +370,7 @@ public class SuggestionsBinder {
                 return;
             }
 
-            fadeThumbnailIn(thumbnail);
+            fadeThumbnailIn(drawable);
         }
     }
 
@@ -381,5 +384,10 @@ public class SuggestionsBinder {
         mPublisherTextView.setCompoundDrawables(null, null, null, null);
 
         mSuggestion = null;
+    }
+
+    private void verifyBitmap(Bitmap bitmap) {
+        assert !bitmap.isRecycled();
+        assert bitmap.getWidth() <= mThumbnailSize || bitmap.getHeight() <= mThumbnailSize;
     }
 }
