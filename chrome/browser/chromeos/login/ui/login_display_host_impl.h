@@ -27,6 +27,7 @@
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
 #include "content/public/browser/web_contents_observer.h"
+#include "device/bluetooth/bluetooth_adapter.h"
 #include "ui/display/display_observer.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/views/widget/widget_removals_observer.h"
@@ -52,7 +53,8 @@ class LoginDisplayHostImpl : public LoginDisplayHost,
                              public chromeos::CrasAudioHandler::AudioObserver,
                              public display::DisplayObserver,
                              public views::WidgetRemovalsObserver,
-                             public chrome::MultiUserWindowManager::Observer {
+                             public chrome::MultiUserWindowManager::Observer,
+                             public device::BluetoothAdapter::Observer {
  public:
   explicit LoginDisplayHostImpl(const gfx::Rect& wallpaper_bounds);
   ~LoginDisplayHostImpl() override;
@@ -99,6 +101,13 @@ class LoginDisplayHostImpl : public LoginDisplayHost,
 
   // Disable GaiaScreenHandler restrictive proxy check.
   static void DisableRestrictiveProxyCheckForTest();
+
+  // BluetoothAdapter::Observer implementation:
+  void AdapterPresentChanged(device::BluetoothAdapter* adapter,
+                             bool present) override;
+
+  // Called when bluetooth adapter is ready.
+  void OnBluetoothAdapterReady(scoped_refptr<device::BluetoothAdapter> adapter);
 
  protected:
   class KeyboardDrivenOobeKeyHandler;
@@ -305,6 +314,10 @@ class LoginDisplayHostImpl : public LoginDisplayHost,
   std::unique_ptr<wm::ScopedDragDropDisabler> scoped_drag_drop_disabler_;
 
   bool is_voice_interaction_oobe_ = false;
+
+  // The bluetooth adapter this object is observing for AdapterPresentChanged.
+  // Needed to turn on/off bluetooth adapter power based on local state setting.
+  scoped_refptr<device::BluetoothAdapter> bluetooth_adapter_ = nullptr;
 
   base::WeakPtrFactory<LoginDisplayHostImpl> pointer_factory_;
   base::WeakPtrFactory<LoginDisplayHostImpl> animation_weak_ptr_factory_;

@@ -19,7 +19,8 @@ function setAdapterState() {
   var newState = {
     name: newAdapterName,
     powered: true,
-    discoverable: true
+    discoverable: true,
+    is_user_pref: true
   };
 
   chrome.bluetoothPrivate.setAdapterState(newState, function() {
