@@ -1025,8 +1025,10 @@ void AddInternetStrings(content::WebUIDataSource* html_source) {
        IDS_SETTINGS_INTERNET_NETWORK_SECTION_ADVANCED},
       {"networkSectionAdvancedA11yLabel",
        IDS_SETTINGS_INTERNET_NETWORK_SECTION_ADVANCED_ACCESSIBILITY_LABEL},
-      {"networkSectionNameservers",
-       IDS_SETTINGS_INTERNET_NETWORK_SECTION_NAMESERVERS},
+      {"networkNameserversAutomatic",
+       IDS_SETTINGS_INTERNET_NETWORK_NAMESERVERS_AUTOMATIC},
+      {"networkNameserversGoogle",
+       IDS_SETTINGS_INTERNET_NETWORK_NAMESERVERS_GOOGLE},
       {"networkSectionNetwork", IDS_SETTINGS_INTERNET_NETWORK_SECTION_NETWORK},
       {"networkSectionNetworkExpandA11yLabel",
        IDS_SETTINGS_INTERNET_NETWORK_SECTION_NETWORK_ACCESSIBILITY_LABEL},
@@ -1093,6 +1095,8 @@ void AddInternetStrings(content::WebUIDataSource* html_source) {
       l10n_util::GetStringFUTF16(
           IDS_SETTINGS_INTERNET_NO_NETWORKS_MOBILE_DATA,
           base::ASCIIToUTF16(chrome::kInstantTetheringLearnMoreURL)));
+  html_source->AddString("networkGoogleNameserversLearnMoreUrl",
+                         chrome::kGoogleNameserversLearnMoreURL);
 }
 #endif
 
