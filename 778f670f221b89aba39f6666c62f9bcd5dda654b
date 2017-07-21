@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "5f0da000_d68a6849",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-07-21T19:16:23Z",
+      "side": 1,
+      "message": "This still doesn\u0027t treat this all_data_received case properly. As I suggested previously, if you add\n\n  || all_data_received\n\nto this condition, it restores the proper behavior.",
+      "range": {
+        "startLine": 264,
+        "startChar": 6,
+        "endLine": 264,
+        "endChar": 62
+      },
+      "revId": "778f670f221b89aba39f6666c62f9bcd5dda654b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9876313_be5091cf",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/ImageDecoder.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-07-21T19:16:23Z",
+      "side": 1,
+      "message": "This check is unnecessary.",
+      "range": {
+        "startLine": 136,
+        "startChar": 2,
+        "endLine": 136,
+        "endChar": 13
+      },
+      "revId": "778f670f221b89aba39f6666c62f9bcd5dda654b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c3a9406d_4487bc12",
         "filename": "third_party/WebKit/Source/platform/image-decoders/ImageDecoder.h",
         "patchSetId": 7
