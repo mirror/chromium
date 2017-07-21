@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87566529_d069192c",
+        "filename": "net/cert/internal/cert_errors.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-07-21T21:27:44Z",
+      "side": 1,
+      "message": "I guess it\u0027s implied by being const, but perhaps a comment that this one returns null if the bucket doesn\u0027t exist?",
+      "revId": "5f333cdc3a44652195231462cd2387007c13fa37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21cba16c_fe70d950",
+        "filename": "net/cert/internal/path_builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-07-21T21:27:44Z",
+      "side": 1,
+      "message": "s/path_delegate/post_verification_checker/?",
+      "range": {
+        "startLine": 128,
+        "startChar": 42,
+        "endLine": 128,
+        "endChar": 55
+      },
+      "revId": "5f333cdc3a44652195231462cd2387007c13fa37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6d1679a_90cc500a",
+        "filename": "net/cert/internal/path_builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-07-21T21:27:44Z",
+      "side": 1,
+      "message": "same",
+      "revId": "5f333cdc3a44652195231462cd2387007c13fa37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "648f748b_2e018211",
+        "filename": "net/cert/internal/path_builder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-07-21T21:27:44Z",
+      "side": 1,
+      "message": "note that it\u0027s only called on paths that passed verification?",
+      "revId": "5f333cdc3a44652195231462cd2387007c13fa37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
