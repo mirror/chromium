@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "40e90f22_411e0469",
+        "filename": "remoting/client/software_video_renderer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-07-21T18:04:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fd32026_a182b1d7",
+      "range": {
+        "startLine": 88,
+        "startChar": 21,
+        "endLine": 88,
+        "endChar": 76
+      },
+      "revId": "d26c1cf59ae5a28926803e072dccc69c65d9700a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46109f25_d9a9fb41",
         "filename": "remoting/host/remoting_me2me_host.cc",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-21T04:38:26Z",
       "side": 1,
       "message": "Do you want to plumb this through for Windows as well?  If so, check out this code here which copies the switch from the Daemon process to the Network process:\nhttps://cs.chromium.org/chromium/src/remoting/host/daemon_process_win.cc?rcl\u003d26ffad3ad7dede34c8bd8a42707565da30e53533\u0026l\u003d66",
+      "range": {
+        "startLine": 181,
+        "startChar": 11,
+        "endLine": 181,
+        "endChar": 32
+      },
+      "revId": "d26c1cf59ae5a28926803e072dccc69c65d9700a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "017ee9c4_e7b2e3d5",
+        "filename": "remoting/host/remoting_me2me_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-07-21T18:04:14Z",
+      "side": 1,
+      "message": "I made the change - though I\u0027m not fully sure I understand what\u0027s happening. Is it just ensuring that the flag gets copied over when the host is started?",
+      "parentUuid": "46109f25_d9a9fb41",
       "range": {
         "startLine": 181,
         "startChar": 11,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9c8732bb_c6c4b94e",
+        "filename": "remoting/protocol/webrtc_video_stream.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-07-21T18:04:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37a1b6a8_13f789f1",
+      "range": {
+        "startLine": 259,
+        "startChar": 20,
+        "endLine": 259,
+        "endChar": 72
+      },
+      "revId": "d26c1cf59ae5a28926803e072dccc69c65d9700a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b89321e_7e900770",
         "filename": "remoting/protocol/webrtc_video_stream.cc",
         "patchSetId": 9
@@ -91,6 +163,30 @@
       "revId": "d26c1cf59ae5a28926803e072dccc69c65d9700a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8938603c_3d6a1db8",
+        "filename": "remoting/protocol/webrtc_video_stream.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-07-21T18:04:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b89321e_7e900770",
+      "range": {
+        "startLine": 260,
+        "startChar": 34,
+        "endLine": 260,
+        "endChar": 35
+      },
+      "revId": "d26c1cf59ae5a28926803e072dccc69c65d9700a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
