@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b77b28a9_0a83cd9a",
+        "filename": "chrome/browser/metrics/google_update_metrics_provider_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-07-21T18:48:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecb62e53_031db64a",
+      "range": {
+        "startLine": 22,
+        "startChar": 51,
+        "endLine": 22,
+        "endChar": 52
+      },
+      "revId": "8eaa61b7d52a155aca1286c383493e987474a71c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fed81c6_1ced4da4",
         "filename": "components/metrics/metrics_provider.h",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-21T17:49:41Z",
       "side": 1,
       "message": "I think this comment is too cryptic. Can you change it to explain the use case? i.e. for the provider to gather information asynchronously and notify when done via the callback.",
+      "range": {
+        "startLine": 30,
+        "startChar": 47,
+        "endLine": 30,
+        "endChar": 48
+      },
+      "revId": "8eaa61b7d52a155aca1286c383493e987474a71c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "983cef71_77b3f726",
+        "filename": "components/metrics/metrics_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-07-21T18:48:38Z",
+      "side": 1,
+      "message": "Expanded the comment a bit.",
+      "parentUuid": "7fed81c6_1ced4da4",
       "range": {
         "startLine": 30,
         "startChar": 47,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ff76afee_3d0844a1",
+        "filename": "components/metrics/metrics_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-07-21T18:48:38Z",
+      "side": 1,
+      "message": "Edited the commit message.  The only way that this would be visible in UMA would probably be if it moves UMA.InitSequence, which seems unlikely, or perhaps if we started seeing the set of synthetic trials that appear in initial metrics logs becoming more similar to the first normal log, due to it\u0027s creation time moving earlier.  Neither seem terribly likely, but it wouldn\u0027t change anything in most cases since we\u0027ll be most likely waiting on the timer to do anything after it anyway.",
+      "parentUuid": "853614fb_5e614b38",
+      "range": {
+        "startLine": 643,
+        "startChar": 32,
+        "endLine": 643,
+        "endChar": 33
+      },
+      "revId": "8eaa61b7d52a155aca1286c383493e987474a71c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cdedbe4f_1083dcb3",
         "filename": "components/ukm/ukm_service.cc",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-21T17:49:41Z",
       "side": 1,
       "message": "Is there any problem with some of this work being done twice?\n\nIdeally, there could be caching of this info somewhere so that it only needs to be retrieved once. Can you add a TODO about it?\n\nAlso, I wonder if it wouldn\u0027t be better for UkmService to just use PersistentSystemProfile and rely on metrics service to actually fill it in. Then, it wouldn\u0027t need to have extra providers and init task running at all.",
+      "range": {
+        "startLine": 224,
+        "startChar": 32,
+        "endLine": 224,
+        "endChar": 33
+      },
+      "revId": "8eaa61b7d52a155aca1286c383493e987474a71c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c13d91f0_db9ddf5e",
+        "filename": "components/ukm/ukm_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-07-21T18:48:38Z",
+      "side": 1,
+      "message": "MetricsService and UkmService actually have separate lists of provider (they are vectors of unique_ptr).  So no provider object will be AsyncInit\u0027d twice.  (They could have been before this fix, incorrectly).  Possibly UKM could get some data from PersistentSystemProfile, but it\u0027s probably fine to just have separate providers, and just make providers that work well when create two instances of them.  Particularly for stuff like field trials where we need to use a slightly different representation in UKM.",
+      "parentUuid": "cdedbe4f_1083dcb3",
       "range": {
         "startLine": 224,
         "startChar": 32,
