@@ -413,6 +413,30 @@
     },
     {
       "key": {
+        "uuid": "2a8bf572_6fe9448f",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/tracing_observer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-21T10:09:01Z",
+      "side": 1,
+      "message": "Ahh, right. ack",
+      "parentUuid": "8bbf78ab_68686a51",
+      "range": {
+        "startLine": 169,
+        "startChar": 0,
+        "endLine": 169,
+        "endChar": 46
+      },
+      "revId": "7a9546923f03af422590688483af847630d2f9d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a497642a_3f48e340",
         "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/tracing_observer.cc",
         "patchSetId": 11
@@ -448,6 +472,30 @@
       "side": 1,
       "message": "I thought I would just leave that there in case anyone needed it :P",
       "parentUuid": "a497642a_3f48e340",
+      "range": {
+        "startLine": 182,
+        "startChar": 0,
+        "endLine": 218,
+        "endChar": 3
+      },
+      "revId": "7a9546923f03af422590688483af847630d2f9d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b33585fe_ad38a2fe",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/tracing_observer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-21T10:09:01Z",
+      "side": 1,
+      "message": "nice try :P",
+      "parentUuid": "c83cd4e3_3f515ae4",
       "range": {
         "startLine": 182,
         "startChar": 0,

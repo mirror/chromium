@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "606ca216_2b2cb8fe",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-21T10:09:01Z",
+      "side": 1,
+      "message": "given that this is not used, for the moment I\u0027d just make Line 257 just RequestOSMemoryDump(true /* wants_mmaps */, ...) and reintroduce this later when needed",
+      "range": {
+        "startLine": 219,
+        "startChar": 7,
+        "endLine": 219,
+        "endChar": 18
+      },
+      "revId": "75de6cceece7eb79bc34a35dbf2b11f6f050a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aec021df_31f36260",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-21T10:09:01Z",
+      "side": 1,
+      "message": "micro-nit: either \"client process\" (lower c) or \"ClientProcess\"\nP.S. not worth spinning a new patchset for this if you don\u0027t need to re-touch this file for other reasons.",
+      "range": {
+        "startLine": 413,
+        "startChar": 32,
+        "endLine": 413,
+        "endChar": 46
+      },
+      "revId": "75de6cceece7eb79bc34a35dbf2b11f6f050a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c32eade_b92ddb2a",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/tracing_observer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-21T10:09:01Z",
+      "side": 1,
+      "message": "Oh I realized only now what this callback is doing. At the beginning I thought it was asynchronous. This is a bit hard to follow, specifically when I looked at the two call below I stared wondering: \"how can you be sure that the lifetime of the |process_memory_dump|\" will be long enough to survive to the callback. Only later I figured out that the callback is meant to be called re-entrantly in the same call stack, and is not async.\nIMHO this could be way easier if you:\n\n1. Extract a private bool ShouldAddToTrace(MemoryDumpRequestArgs) which essentially contains lines 135-146 here.\n2. Make this a void AddToTrace(args, pid, unique_ptr\u003cTraceValue\u003e)\n3. Make AddDumpToTraceIfEnabled just:\n  if (!ShouldAddToTrace())\n    return;\n  traced_Value \u003d MakeUnique\u003cTracedValue\u003e;\n  ... (the code that right now is in the labmda)...\n  AddToTrace(std::move(traced_Value));\n4. Ditto for AddOsDumpToTraceIfEnabled",
+      "range": {
+        "startLine": 134,
+        "startChar": 4,
+        "endLine": 134,
+        "endChar": 47
+      },
+      "revId": "75de6cceece7eb79bc34a35dbf2b11f6f050a255",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
