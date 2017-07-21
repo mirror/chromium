@@ -85,11 +85,11 @@ bool ChromeOmniboxClientIOS::IsSearchResultsPage() const {
       ->IsSearchResultsPageFromDefaultSearchProvider(GetURL());
 }
 
-bool ChromeOmniboxClientIOS::IsNewTabPage(const std::string& url) const {
+bool ChromeOmniboxClientIOS::IsNewTabPage(const GURL& ur) const {
   return url == kChromeUINewTabURL;
 }
 
-bool ChromeOmniboxClientIOS::IsHomePage(const std::string& url) const {
+bool ChromeOmniboxClientIOS::IsHomePage(const GURL& ur) const {
   // iOS does not have a notion of home page.
   return false;
 }
