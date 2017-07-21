@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e910374a_d5904101",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 17
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-21T13:12:21Z",
+      "side": 1,
+      "message": "Oh wait, you declare this as nullable, but you don\u0027t actually have a null check when the dismiss button is clicked. Did you test this CL?",
+      "range": {
+        "startLine": 92,
+        "startChar": 12,
+        "endLine": 92,
+        "endChar": 21
+      },
+      "revId": "4dce19bbd5486110277cb0877a1045a6dc30b83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
