@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ecde5d72_fe725069",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000258
+      },
+      "writtenOn": "2017-07-21T01:53:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc989973_1a2083f0",
+      "revId": "e19904b03bc60226fe01c69a35572eca2aabd464",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6e70143_ba8ff608",
         "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.html",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "e19904b03bc60226fe01c69a35572eca2aabd464",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "849379c5_29687585",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000258
+      },
+      "writtenOn": "2017-07-21T01:53:16Z",
+      "side": 1,
+      "message": "I\u0027ve removed this.  Turns out the linux_chromeos build has different default weights...",
+      "parentUuid": "c6e70143_ba8ff608",
+      "revId": "e19904b03bc60226fe01c69a35572eca2aabd464",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "64c77c78_0af42b59",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000258
+      },
+      "writtenOn": "2017-07-21T01:53:16Z",
+      "side": 1,
+      "message": "Woops! :|",
+      "parentUuid": "980ec14f_0d85517f",
+      "revId": "e19904b03bc60226fe01c69a35572eca2aabd464",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c988434_97860ea3",
         "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.js",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "e19904b03bc60226fe01c69a35572eca2aabd464",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "696d5d53_9c369ad2",
+        "filename": "chrome/browser/resources/settings/google_assistant_page/google_assistant_page.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000258
+      },
+      "writtenOn": "2017-07-21T01:53:16Z",
+      "side": 1,
+      "message": "Added to the deps.",
+      "parentUuid": "7c988434_97860ea3",
+      "revId": "e19904b03bc60226fe01c69a35572eca2aabd464",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
