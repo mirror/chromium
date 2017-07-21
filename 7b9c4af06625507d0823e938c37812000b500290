@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81bdf6d0_8123da9a",
+        "filename": "media/filters/audio_video_metadata_extractor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-21T21:01:23Z",
+      "side": 1,
+      "message": "What do you think a good value for has_duration_ \u003d false is? I know we said it was undefined but maybe consider 0.0? I leave that up to you.",
+      "revId": "7b9c4af06625507d0823e938c37812000b500290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de9d9272_9d82ced9",
+        "filename": "media/filters/audio_video_metadata_extractor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-21T21:01:23Z",
+      "side": 1,
+      "message": "eh... do we really want to impose the check in prod? Is there a security risk i\u0027m missing? I\u0027m thinking worst case scenario they get a duration of -1?",
+      "revId": "7b9c4af06625507d0823e938c37812000b500290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "810c7ae3_a41a2b18",
+        "filename": "media/filters/audio_video_metadata_extractor.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-21T21:01:23Z",
+      "side": 1,
+      "message": "Suggestion:\n\nReturns the duration in seconds. Value is undefined if has_duration() returns false.",
+      "range": {
+        "startLine": 49,
+        "startChar": 5,
+        "endLine": 49,
+        "endChar": 12
+      },
+      "revId": "7b9c4af06625507d0823e938c37812000b500290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
