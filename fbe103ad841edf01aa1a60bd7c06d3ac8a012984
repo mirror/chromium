@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbd4a0d9_6bc05443",
+        "filename": "chrome/browser/ui/views/extensions/extension_popup.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-21T03:51:59Z",
+      "side": 1,
+      "message": "this needs a USE_AURA guard. But I\u0027ve also noticed there\u0027s extension_popup_aura.cc -- can we put all the Aura stuff there? (assuming you really don\u0027t like the NativeViewHost route)",
+      "revId": "fbe103ad841edf01aa1a60bd7c06d3ac8a012984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
