@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a957c4b_fd7ac1df",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-07-21T18:11:48Z",
+      "side": 1,
+      "message": "Maybe add a comment somewhere that showLearnMore_ doesn\u0027t need to be set to true here because it was set by either OnInfected() or OnCleaning(), which are the only states that could precede this? While reviewing this, it took me a while to realize that and I spend a few minutes looking for where it was enabled.",
+      "range": {
+        "startLine": 208,
+        "startChar": 29,
+        "endLine": 208,
+        "endChar": 0
+      },
+      "revId": "ad347d5a1249528f5d85c48d8fdd457f36532c03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
