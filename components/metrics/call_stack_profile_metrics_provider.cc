@@ -28,7 +28,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
-#include "components/metrics/proto/chrome_user_metrics_extension.pb.h"
+#include "services/metrics/public/proto/chrome_user_metrics_extension.pb.h"
 
 using base::StackSamplingProfiler;
 

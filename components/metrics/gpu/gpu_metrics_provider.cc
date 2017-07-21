@@ -4,9 +4,9 @@
 
 #include "components/metrics/gpu/gpu_metrics_provider.h"
 
-#include "components/metrics/proto/system_profile.pb.h"
 #include "content/public/browser/gpu_data_manager.h"
 #include "gpu/config/gpu_info.h"
+#include "services/metrics/public/proto/system_profile.pb.h"
 
 namespace metrics {
 

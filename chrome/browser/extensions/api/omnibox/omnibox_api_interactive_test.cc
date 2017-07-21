@@ -6,8 +6,8 @@
 #include "chrome/browser/extensions/api/omnibox/omnibox_api_testbase.h"
 #include "chrome/browser/search_engines/template_url_service_factory.h"
 #include "chrome/test/base/search_test_utils.h"
-#include "components/metrics/proto/omnibox_event.pb.h"
 #include "extensions/test/result_catcher.h"
+#include "services/metrics/public/proto/omnibox_event.pb.h"
 
 // Tests that the autocomplete popup doesn't reopen after accepting input for
 // a given query.

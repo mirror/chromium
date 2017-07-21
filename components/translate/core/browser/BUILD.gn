@@ -53,7 +53,6 @@ static_library("browser") {
     "//components/machine_intelligence",
     "//components/machine_intelligence/proto",
     "//components/metrics",
-    "//components/metrics/proto",
     "//components/pref_registry",
     "//components/prefs",
     "//components/resources:components_resources",
@@ -63,6 +62,7 @@ static_library("browser") {
     "//components/variations",
     "//google_apis",
     "//net",
+    "//services/metrics/public/proto",
     "//third_party/icu",
     "//ui/base",
     "//url",
@@ -111,7 +111,6 @@ source_set("unit_tests") {
     "//components/infobars/core",
     "//components/machine_intelligence",
     "//components/machine_intelligence/proto",
-    "//components/metrics/proto",
     "//components/pref_registry:pref_registry",
     "//components/prefs",
     "//components/prefs:test_support",
@@ -121,6 +120,7 @@ source_set("unit_tests") {
     "//components/ukm:test_support",
     "//components/variations",
     "//net:test_support",
+    "//services/metrics/public/proto",
     "//testing/gtest",
   ]
 }

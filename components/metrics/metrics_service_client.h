@@ -15,7 +15,7 @@
 #include "base/time/time.h"
 #include "components/metrics/metrics_log_uploader.h"
 #include "components/metrics/metrics_reporting_default_state.h"
-#include "components/metrics/proto/system_profile.pb.h"
+#include "services/metrics/public/proto/system_profile.pb.h"
 
 namespace base {
 class FilePath;

@@ -32,7 +32,7 @@ if (is_chromeos) {
     deps = [
       ":interfaces",
       "//base",
-      "//components/metrics/proto:proto",
+      "//services/metrics/public/proto:proto",
     ]
   }
 
@@ -58,8 +58,8 @@ if (is_chromeos) {
       ":interfaces",
       ":leak_detector",
       "//base",
-      "//components/metrics/proto:proto",
       "//content/test:test_support",
+      "//services/metrics/public/proto:proto",
       "//testing/gtest",
     ]
   }

@@ -18,7 +18,6 @@
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "components/bookmarks/browser/bookmark_model.h"
-#include "components/metrics/proto/omnibox_event.pb.h"
 #include "components/omnibox/browser/autocomplete_classifier.h"
 #include "components/omnibox/browser/autocomplete_match_type.h"
 #include "components/omnibox/browser/autocomplete_provider.h"
@@ -38,6 +37,7 @@
 #include "components/search_engines/template_url_service.h"
 #include "components/toolbar/toolbar_model.h"
 #include "components/url_formatter/url_fixer.h"
+#include "services/metrics/public/proto/omnibox_event.pb.h"
 #include "ui/gfx/image/image.h"
 #include "url/url_util.h"
 

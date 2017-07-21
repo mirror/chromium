@@ -10,9 +10,9 @@
 #include "base/strings/string16.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
-#include "components/metrics/proto/omnibox_event.pb.h"
-#include "components/metrics/proto/omnibox_input_type.pb.h"
 #include "components/omnibox/browser/test_scheme_classifier.h"
+#include "services/metrics/public/proto/omnibox_event.pb.h"
+#include "services/metrics/public/proto/omnibox_input_type.pb.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/third_party/mozilla/url_parse.h"
 

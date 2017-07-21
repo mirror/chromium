@@ -7,7 +7,7 @@
 
 #include <string>
 
-#include "components/metrics/proto/system_profile.pb.h"
+#include "services/metrics/public/proto/system_profile.pb.h"
 
 namespace version_info {
 enum class Channel;
