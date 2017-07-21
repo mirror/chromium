@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "952944e6_4215d43f",
+        "filename": "base/test/scoped_feature_list.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-07-21T11:26:27Z",
+      "side": 1,
+      "message": "This clears all the params. Maybe it would be better to clear only the params we overrode, but it doesn\u0027t seem to be possible. Do you want me to add this API to FieldTrialParamAssociator?",
+      "range": {
+        "startLine": 90,
+        "startChar": 52,
+        "endLine": 90,
+        "endChar": 78
+      },
+      "revId": "e69270b1fda0136b6123d3a2a4878b09820a8ca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f115198_0cb84bd6",
+        "filename": "base/test/scoped_feature_list.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-07-21T11:26:27Z",
+      "side": 1,
+      "message": "It would be nice here to check if there is a FieldTrialList, and if not create one here.\nIt does not seem to be possible with the current API though?\n\nIf we don\u0027t do this, then the client has to ensure a FieldTrialList exists before calling this method, and they would have the same problem (there is no way to know if one is already registered).\n\nIs it possible to check for the FieldTrialList? If not, should we add this capability?",
+      "revId": "e69270b1fda0136b6123d3a2a4878b09820a8ca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

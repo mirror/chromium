@@ -542,6 +542,30 @@
       "revId": "c0d7fdee634e8f819c9f3c563cef1263781b6575",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6430f863_f214f693",
+        "filename": "components/signin/core/browser/scoped_account_consistency.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-07-21T11:26:27Z",
+      "side": 1,
+      "message": "I\u0027m fine doing this in this CL. My point that I was not sure it belongs to this class, but reading your comment it seems it clearly does.\n\nDone!",
+      "parentUuid": "ef068539_95ddbd6c",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 51
+      },
+      "revId": "c0d7fdee634e8f819c9f3c563cef1263781b6575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
