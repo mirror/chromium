@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90a4e0a1_8997e855",
+        "filename": "android_webview/renderer/aw_print_web_frame_helper_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-21T18:59:40Z",
+      "side": 1,
+      "message": "This is showing up as a \"new\" file. Can we try running git cl uplaod with --similarity and see if we can convince git / PolyGerrit that this is a rename?",
+      "revId": "c3f8af374c9e01ea0a0ecedcb9029de4b991bd18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
