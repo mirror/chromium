@@ -46,6 +46,29 @@
       "revId": "a1f15f9c8bdb4e870fad07913e491b541935bbc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df758b20_eefc4d87",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_tablet_ntp_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-07-21T05:26:39Z",
+      "side": 1,
+      "message": "Update this comment, now that this position is being used in your CL?",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 56
+      },
+      "revId": "a1f15f9c8bdb4e870fad07913e491b541935bbc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
