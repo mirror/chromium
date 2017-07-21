@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d077dc67_3c4aea11",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-21T16:57:51Z",
+      "side": 1,
+      "message": "Oh it\u0027s not needed. Removed.",
+      "parentUuid": "02ae94a4_20f28a75",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 46
+      },
+      "revId": "d59fbffc3c899d688235f9934cd110a365b03a1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "006b10c0_24e97628",
         "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
         "patchSetId": 7
@@ -68,6 +92,54 @@
       "revId": "d59fbffc3c899d688235f9934cd110a365b03a1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ccb6b98_7574c9cd",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-21T16:57:51Z",
+      "side": 1,
+      "message": "Hmm.. Makes sense.",
+      "parentUuid": "006b10c0_24e97628",
+      "range": {
+        "startLine": 60,
+        "startChar": 21,
+        "endLine": 60,
+        "endChar": 64
+      },
+      "revId": "d59fbffc3c899d688235f9934cd110a365b03a1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bc98ae5e_048ea958",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-21T16:57:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58c47bdf_08dc4930",
+      "range": {
+        "startLine": 60,
+        "startChar": 5,
+        "endLine": 60,
+        "endChar": 11
+      },
+      "revId": "d59fbffc3c899d688235f9934cd110a365b03a1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
