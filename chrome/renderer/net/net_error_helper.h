@@ -19,12 +19,12 @@
 #include "content/public/renderer/render_frame_observer_tracker.h"
 #include "content/public/renderer/render_thread_observer.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
+#include "third_party/WebKit/public/platform/WebURLError.h"
 
 class GURL;
 
 namespace blink {
 class WebURLResponse;
-struct WebURLError;
 }
 
 namespace content {
@@ -82,6 +82,10 @@ class NetErrorHelper
   // Returns whether a load for |url| in the |frame| the NetErrorHelper is
   // attached to should have its error page suppressed.
   bool ShouldSuppressErrorPage(const GURL& url);
+
+  // Returns a string representation of |domain|. The returned value is usable
+  // for error_page::LocalizedError.
+  static std::string GetDomainString(blink::WebURLError::Domain domain);
 
  private:
   chrome::mojom::NetworkDiagnostics* GetRemoteNetworkDiagnostics();
