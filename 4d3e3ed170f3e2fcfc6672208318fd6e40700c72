@@ -174,6 +174,24 @@
       "revId": "4d3e3ed170f3e2fcfc6672208318fd6e40700c72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "433339d9_44acd6c1",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-21T18:44:35Z",
+      "side": 1,
+      "message": "This is used in other files as well.\n\nI didn\u0027t mean so much that they would interact, but simply that we had a consistent constant/technique we used in several places for \"disabled\", and now we\u0027ve swapped just one of those for a different technique and a different constant.  This feels dangerous to me; I\u0027d rather swap them all at once.\n\nI\u0027m not going to block the CL on it, but I think the other uses of this should be audited, and ideally we could have a single technique/constant for them all.",
+      "parentUuid": "b7e3fa9e_3ed9d8e6",
+      "revId": "4d3e3ed170f3e2fcfc6672208318fd6e40700c72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

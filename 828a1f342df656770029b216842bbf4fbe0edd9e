@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2294446_792de5d1",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-21T18:44:35Z",
+      "side": 1,
+      "message": "Nit: You need {} here",
+      "revId": "828a1f342df656770029b216842bbf4fbe0edd9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd66140e_cdb6a9a5",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-21T18:44:35Z",
+      "side": 1,
+      "message": "Nit: This comment isn\u0027t technically correct; setting to 0x41 for non-Harmony won\u0027t be #000000 @0.1.",
+      "revId": "828a1f342df656770029b216842bbf4fbe0edd9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
