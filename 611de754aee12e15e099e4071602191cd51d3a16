@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48d0337e_09b8776b",
+        "filename": "ash/virtual_keyboard_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-21T11:59:22Z",
+      "side": 1,
+      "message": "Note: for consistency, I added the null check here, but this may be unnecessary because in ash::Shell\u0027s dtor, VirtualKeyboardController is destroyed before TabletModeController.",
+      "revId": "611de754aee12e15e099e4071602191cd51d3a16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
