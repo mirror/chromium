@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61308e05_9cb908e8",
+        "filename": "ios/chrome/browser/ui/omnibox/chrome_omnibox_client_ios.mm",
+        "patchSetId": 32
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-07-21T09:24:12Z",
+      "side": 1,
+      "message": "s/ur/url, and below",
+      "revId": "424a9fc2192798f30a317ab71a36038f6d9717c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9284df26_527706f5",
+        "filename": "ios/chrome/browser/ui/omnibox/chrome_omnibox_client_ios.mm",
+        "patchSetId": 32
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-07-21T09:24:12Z",
+      "side": 1,
+      "message": "Will this compile without checking spec?",
+      "revId": "424a9fc2192798f30a317ab71a36038f6d9717c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
