@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6dc57dc5_a6b71884",
+        "filename": "base/memory/discardable_shared_memory.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-21T20:58:52Z",
+      "side": 1,
+      "message": "The keyword soup of static const auto reinterpret_cast decltype is a bit intimidating but I believe it is correct, appropriate, and actually minimalist.",
+      "revId": "191ed09fa74c4e8f0786946dde148601ca3b19d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
