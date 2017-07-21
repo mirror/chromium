@@ -5,6 +5,7 @@
 #include "components/sync_bookmarks/bookmark_data_type_controller.h"
 
 #include <memory>
+#include <vector>
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
@@ -16,7 +17,7 @@
 #include "components/bookmarks/browser/bookmark_model.h"
 #include "components/bookmarks/test/bookmark_test_helpers.h"
 #include "components/bookmarks/test/test_bookmark_client.h"
-#include "components/history/core/browser/history_service.h"
+#include "components/history/core/browser/fake_history_service.h"
 #include "components/prefs/testing_pref_service.h"
 #include "components/sync/driver/data_type_controller_mock.h"
 #include "components/sync/driver/fake_sync_client.h"
@@ -29,6 +30,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 using bookmarks::BookmarkModel;
+using history::HistoryServiceObserver;
 using sync_bookmarks::BookmarkDataTypeController;
 using syncer::ChangeProcessorMock;
 using syncer::DataTypeController;
@@ -43,12 +45,25 @@ using testing::SetArgPointee;
 
 namespace {
 
-class HistoryMock : public history::HistoryService {
+class TestHistoryService : public history::FakeHistoryService {
  public:
-  HistoryMock() : history::HistoryService() {}
-  MOCK_METHOD0(BackendLoaded, bool(void));
+  bool BackendLoaded() override { return backend_loaded_; }
 
-  ~HistoryMock() override {}
+  void SetBackendLoaded(bool backend_loaded) {
+    backend_loaded_ = backend_loaded;
+  }
+
+  void AddObserver(HistoryServiceObserver* observer) override {
+    observers_.push_back(observer);
+  }
+
+  std::vector<history::HistoryServiceObserver*> GetObservers() {
+    return observers_;
+  }
+
+ private:
+  bool backend_loaded_;
+  std::vector<HistoryServiceObserver*> observers_;
 };
 
 }  // namespace
@@ -71,7 +86,7 @@ class SyncBookmarkDataTypeControllerTest : public testing::Test,
   void SetUp() override {
     model_associator_ = new ModelAssociatorMock();
     change_processor_ = new ChangeProcessorMock();
-    history_service_ = base::MakeUnique<HistoryMock>();
+    history_service_ = base::MakeUnique<TestHistoryService>();
     profile_sync_factory_ =
         base::MakeUnique<syncer::SyncApiComponentFactoryMock>(
             model_associator_, change_processor_);
@@ -98,8 +113,7 @@ class SyncBookmarkDataTypeControllerTest : public testing::Test,
   }
 
   void SetStartExpectations() {
-    EXPECT_CALL(*history_service_.get(), BackendLoaded())
-        .WillRepeatedly(Return(true));
+    history_service_->SetBackendLoaded(true);
     EXPECT_CALL(model_load_callback_, Run(_, _));
   }
 
@@ -128,13 +142,16 @@ class SyncBookmarkDataTypeControllerTest : public testing::Test,
   }
 
   void NotifyHistoryServiceLoaded() {
-    history_service_->NotifyHistoryServiceLoaded();
+    std::vector<HistoryServiceObserver*> observers =
+        history_service_->GetObservers();
+    ASSERT_EQ(1U, observers.size());
+    observers[0]->OnHistoryServiceLoaded(history_service_.get());
   }
 
   base::MessageLoop message_loop_;
   std::unique_ptr<syncer::SyncApiComponentFactoryMock> profile_sync_factory_;
   std::unique_ptr<BookmarkModel> bookmark_model_;
-  std::unique_ptr<HistoryMock> history_service_;
+  std::unique_ptr<TestHistoryService> history_service_;
   std::unique_ptr<BookmarkDataTypeController> bookmark_dtc_;
   syncer::FakeSyncService service_;
   ModelAssociatorMock* model_associator_;
@@ -184,17 +201,14 @@ TEST_F(SyncBookmarkDataTypeControllerTest, StartBookmarkModelNotReady) {
 TEST_F(SyncBookmarkDataTypeControllerTest, StartHistoryServiceNotReady) {
   CreateBookmarkModel(LOAD_MODEL);
   SetStartExpectations();
-  EXPECT_CALL(*history_service_.get(), BackendLoaded())
-      .WillRepeatedly(Return(false));
+  history_service_->SetBackendLoaded(false);
 
   bookmark_dtc_->LoadModels(
       base::Bind(&ModelLoadCallbackMock::Run,
                  base::Unretained(&model_load_callback_)));
 
   EXPECT_EQ(DataTypeController::MODEL_STARTING, bookmark_dtc_->state());
-  testing::Mock::VerifyAndClearExpectations(history_service_.get());
-  EXPECT_CALL(*history_service_.get(), BackendLoaded())
-      .WillRepeatedly(Return(true));
+  history_service_->SetBackendLoaded(true);
 
   // Send the notification that the history service has finished loading the db.
   NotifyHistoryServiceLoaded();
@@ -213,8 +227,7 @@ TEST_F(SyncBookmarkDataTypeControllerTest, StartFirstRun) {
 
 TEST_F(SyncBookmarkDataTypeControllerTest, StartBusy) {
   CreateBookmarkModel(LOAD_MODEL);
-  EXPECT_CALL(*history_service_.get(), BackendLoaded())
-      .WillRepeatedly(Return(false));
+  history_service_->SetBackendLoaded(false);
 
   EXPECT_CALL(model_load_callback_, Run(_, _));
   bookmark_dtc_->LoadModels(
@@ -273,8 +286,7 @@ TEST_F(SyncBookmarkDataTypeControllerTest,
 
 TEST_F(SyncBookmarkDataTypeControllerTest, StartAborted) {
   CreateBookmarkModel(LOAD_MODEL);
-  EXPECT_CALL(*history_service_.get(), BackendLoaded())
-      .WillRepeatedly(Return(false));
+  history_service_->SetBackendLoaded(false);
 
   bookmark_dtc_->LoadModels(
       base::Bind(&ModelLoadCallbackMock::Run,

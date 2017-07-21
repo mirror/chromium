@@ -37,7 +37,7 @@
 #include "components/history/core/browser/history_backend_client.h"
 #include "components/history/core/browser/history_constants.h"
 #include "components/history/core/browser/history_database_params.h"
-#include "components/history/core/browser/history_service.h"
+#include "components/history/core/browser/history_service_impl.h"
 #include "components/history/core/browser/history_service_observer.h"
 #include "components/history/core/browser/in_memory_database.h"
 #include "components/history/core/browser/in_memory_history_backend.h"
@@ -1185,8 +1185,8 @@ TEST_F(HistoryBackendTest, ImportedFaviconsTest) {
   rows.push_back(row2);
   backend_->AddPagesWithDetails(rows, history::SOURCE_BROWSED);
   URLRow url_row1, url_row2;
-  EXPECT_FALSE(backend_->db_->GetRowForURL(row1.url(), &url_row1) == 0);
-  EXPECT_FALSE(backend_->db_->GetRowForURL(row2.url(), &url_row2) == 0);
+  EXPECT_NE(0, backend_->db_->GetRowForURL(row1.url(), &url_row1));
+  EXPECT_NE(0, backend_->db_->GetRowForURL(row2.url(), &url_row2));
   EXPECT_EQ(1u, NumIconMappingsForPageURL(row1.url(), favicon_base::FAVICON));
   EXPECT_EQ(0u, NumIconMappingsForPageURL(row2.url(), favicon_base::FAVICON));
 
@@ -1201,8 +1201,8 @@ TEST_F(HistoryBackendTest, ImportedFaviconsTest) {
   favicon.urls.insert(row2.url());
   favicons.push_back(favicon);
   backend_->SetImportedFavicons(favicons);
-  EXPECT_FALSE(backend_->db_->GetRowForURL(row1.url(), &url_row1) == 0);
-  EXPECT_FALSE(backend_->db_->GetRowForURL(row2.url(), &url_row2) == 0);
+  EXPECT_NE(0, backend_->db_->GetRowForURL(row1.url(), &url_row1));
+  EXPECT_NE(0, backend_->db_->GetRowForURL(row2.url(), &url_row2));
 
   std::vector<IconMapping> mappings;
   EXPECT_TRUE(backend_->thumbnail_db_->GetIconMappingsForPageURL(
@@ -1227,13 +1227,13 @@ TEST_F(HistoryBackendTest, ImportedFaviconsTest) {
   favicons.push_back(favicon);
   backend_->SetImportedFavicons(favicons);
   URLRow url_row3;
-  EXPECT_TRUE(backend_->db_->GetRowForURL(url3, &url_row3) == 0);
+  EXPECT_EQ(0, backend_->db_->GetRowForURL(url3, &url_row3));
 
   // If the URL is bookmarked, it should get added to history with 0 visits.
   history_client_.AddBookmark(url3);
   backend_->SetImportedFavicons(favicons);
-  EXPECT_FALSE(backend_->db_->GetRowForURL(url3, &url_row3) == 0);
-  EXPECT_TRUE(url_row3.visit_count() == 0);
+  EXPECT_NE(0, backend_->db_->GetRowForURL(url3, &url_row3));
+  EXPECT_EQ(0, url_row3.visit_count());
 }
 #endif  // !defined(OS_ANDROID)
 
@@ -3612,9 +3612,9 @@ TEST_F(HistoryBackendTest, RemoveNotification) {
 
   // Add a URL.
   GURL url("http://www.google.com");
-  std::unique_ptr<HistoryService> service(
-      new HistoryService(base::WrapUnique(new HistoryClientFakeBookmarks),
-                         std::unique_ptr<history::VisitDelegate>()));
+  auto service = base::MakeUnique<HistoryServiceImpl>(
+      base::MakeUnique<HistoryClientFakeBookmarks>(),
+      std::unique_ptr<history::VisitDelegate>());
   EXPECT_TRUE(service->Init(
       TestHistoryDatabaseParamsForPath(scoped_temp_dir.GetPath())));
 

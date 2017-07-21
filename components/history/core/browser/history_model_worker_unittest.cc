@@ -16,16 +16,17 @@
 #include "base/test/test_timeouts.h"
 #include "base/threading/platform_thread.h"
 #include "base/threading/thread.h"
+#include "components/history/core/browser/fake_history_service.h"
 #include "components/history/core/browser/history_db_task.h"
-#include "components/history/core/browser/history_service.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace browser_sync {
 namespace {
 
-class HistoryServiceMock : public history::HistoryService {
+class TestHistoryService : public history::FakeHistoryService {
  public:
-  HistoryServiceMock(scoped_refptr<base::SingleThreadTaskRunner> history_thread)
+  explicit TestHistoryService(
+      scoped_refptr<base::SingleThreadTaskRunner> history_thread)
       : history_thread_(std::move(history_thread)) {}
 
   base::CancelableTaskTracker::TaskId ScheduleDBTask(
@@ -44,7 +45,7 @@ class HistoryServiceMock : public history::HistoryService {
  private:
   const scoped_refptr<base::SingleThreadTaskRunner> history_thread_;
 
-  DISALLOW_COPY_AND_ASSIGN(HistoryServiceMock);
+  DISALLOW_COPY_AND_ASSIGN(TestHistoryService);
 };
 
 syncer::WorkCallback ClosureToWorkCallback(base::Closure work) {
@@ -92,11 +93,11 @@ class HistoryModelWorkerTest : public testing::Test {
       new base::TestSimpleTaskRunner();
   base::AtomicFlag sync_thread_unblocked_;
   base::Thread sync_thread_;
-  HistoryServiceMock history_service_;
+  TestHistoryService history_service_;
   scoped_refptr<HistoryModelWorker> worker_;
 
  private:
-  base::WeakPtrFactory<HistoryServiceMock> history_service_factory_;
+  base::WeakPtrFactory<TestHistoryService> history_service_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(HistoryModelWorkerTest);
 };

@@ -66,7 +66,7 @@
 #include "components/history/core/browser/history_constants.h"
 #include "components/history/core/browser/history_database_params.h"
 #include "components/history/core/browser/history_db_task.h"
-#include "components/history/core/browser/history_service.h"
+#include "components/history/core/browser/history_service_impl.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
 #include "components/keyed_service/core/refcounted_keyed_service.h"
 #include "components/offline_pages/features/features.h"
@@ -206,7 +206,7 @@ class TestExtensionURLRequestContextGetter
 
 std::unique_ptr<KeyedService> BuildHistoryService(
     content::BrowserContext* context) {
-  return base::MakeUnique<history::HistoryService>(
+  return base::MakeUnique<history::HistoryServiceImpl>(
       base::MakeUnique<ChromeHistoryClient>(
           BookmarkModelFactory::GetForBrowserContext(context)),
       base::MakeUnique<history::ContentVisitDelegate>(context));
@@ -595,8 +595,8 @@ bool TestingProfile::CreateHistoryService(bool delete_file, bool no_db) {
       return false;
   }
   // This will create and init the history service.
-  history::HistoryService* history_service =
-      static_cast<history::HistoryService*>(
+  history::HistoryServiceImpl* history_service =
+      static_cast<history::HistoryServiceImpl*>(
           HistoryServiceFactory::GetInstance()->SetTestingFactoryAndUse(
               this, BuildHistoryService));
   if (!history_service->Init(
@@ -622,7 +622,7 @@ void TestingProfile::DestroyHistoryService() {
   history_service->ClearCachedDataForContextID(0);
   history_service->SetOnBackendDestroyTask(
       base::MessageLoop::QuitWhenIdleClosure());
-  history_service->Cleanup();
+  history_service->Shutdown();
   HistoryServiceFactory::ShutdownForProfile(this);
 
   // Wait for the backend class to terminate before deleting the files and
@@ -660,11 +660,10 @@ void TestingProfile::CreateWebDataService() {
 }
 
 void TestingProfile::BlockUntilHistoryIndexIsRefreshed() {
-  // Only get the history service if it actually exists since the caller of the
-  // test should explicitly call CreateHistoryService to build it.
-  history::HistoryService* history_service =
-      HistoryServiceFactory::GetForProfileWithoutCreating(this);
-  DCHECK(history_service);
+  // The caller of the test should have explicitly called CreateHistoryService
+  // to build it.
+  DCHECK(HistoryServiceFactory::GetForProfileWithoutCreating(this));
+
   InMemoryURLIndex* index = InMemoryURLIndexFactory::GetForProfile(this);
   if (!index || index->restored())
     return;

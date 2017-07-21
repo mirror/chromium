@@ -4,6 +4,7 @@
 
 #include "chrome/browser/engagement/site_engagement_service.h"
 
+#include <string>
 #include <utility>
 
 #include "base/files/scoped_temp_dir.h"
@@ -28,7 +29,7 @@
 #include "components/content_settings/core/common/content_settings.h"
 #include "components/content_settings/core/common/content_settings_types.h"
 #include "components/history/core/browser/history_database_params.h"
-#include "components/history/core/browser/history_service.h"
+#include "components/history/core/browser/history_service_impl.h"
 #include "components/history/core/test/test_history_database.h"
 #include "components/prefs/pref_service.h"
 #include "content/public/browser/browser_thread.h"
@@ -97,8 +98,7 @@ base::Time GetReferenceTime() {
 
 std::unique_ptr<KeyedService> BuildTestHistoryService(
     content::BrowserContext* context) {
-  std::unique_ptr<history::HistoryService> service(
-      new history::HistoryService());
+  auto service = base::MakeUnique<history::HistoryServiceImpl>();
   service->Init(history::TestHistoryDatabaseParamsForPath(g_temp_history_dir));
   return std::move(service);
 }
@@ -218,7 +218,7 @@ class SiteEngagementServiceTest : public ChromeRenderViewHostTestHarness {
  protected:
   void CheckScoreFromSettings(HostContentSettingsMap* settings_map,
                               const GURL& url,
-                              double *score) {
+                              double* score) {
     *score = SiteEngagementService::GetScoreFromSettings(settings_map, url);
   }
 
@@ -241,7 +241,7 @@ TEST_F(SiteEngagementServiceTest, GetMedianEngagement) {
   {
     // For zero total sites, the median is 0.
     std::map<GURL, double> score_map = service->GetScoreMap();
-    EXPECT_TRUE(0 == score_map.size());
+    EXPECT_EQ(0U, score_map.size());
     EXPECT_DOUBLE_EQ(0, service->GetMedianEngagement(score_map));
   }
 
@@ -249,7 +249,7 @@ TEST_F(SiteEngagementServiceTest, GetMedianEngagement) {
     // For odd total sites, the median is the middle score.
     service->AddPoints(url1, 1);
     std::map<GURL, double> score_map = service->GetScoreMap();
-    EXPECT_TRUE(1 == score_map.size());
+    EXPECT_EQ(1U, score_map.size());
     EXPECT_DOUBLE_EQ(1, service->GetMedianEngagement(score_map));
   }
 
@@ -257,35 +257,35 @@ TEST_F(SiteEngagementServiceTest, GetMedianEngagement) {
     // For even total sites, the median is the mean of the middle two scores.
     service->AddPoints(url2, 2);
     std::map<GURL, double> score_map = service->GetScoreMap();
-    EXPECT_TRUE(2 == score_map.size());
+    EXPECT_EQ(2U, score_map.size());
     EXPECT_DOUBLE_EQ(1.5, service->GetMedianEngagement(score_map));
   }
 
   {
     service->AddPoints(url3, 1.4);
     std::map<GURL, double> score_map = service->GetScoreMap();
-    EXPECT_TRUE(3 == score_map.size());
+    EXPECT_EQ(3U, score_map.size());
     EXPECT_DOUBLE_EQ(1.4, service->GetMedianEngagement(score_map));
   }
 
   {
     service->AddPoints(url4, 1.8);
     std::map<GURL, double> score_map = service->GetScoreMap();
-    EXPECT_TRUE(4 == score_map.size());
+    EXPECT_EQ(4U, score_map.size());
     EXPECT_DOUBLE_EQ(1.6, service->GetMedianEngagement(score_map));
   }
 
   {
     service->AddPoints(url5, 2.5);
     std::map<GURL, double> score_map = service->GetScoreMap();
-    EXPECT_TRUE(5 == score_map.size());
+    EXPECT_EQ(5U, score_map.size());
     EXPECT_DOUBLE_EQ(1.8, service->GetMedianEngagement(score_map));
   }
 
   {
     service->AddPoints(url6, 3);
     std::map<GURL, double> score_map = service->GetScoreMap();
-    EXPECT_TRUE(6 == score_map.size());
+    EXPECT_EQ(6U, score_map.size());
     EXPECT_DOUBLE_EQ(1.9, service->GetMedianEngagement(score_map));
   }
 }
