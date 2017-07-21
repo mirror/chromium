@@ -41,8 +41,7 @@ class DisplayOutputSurfaceOzone : public DisplayOutputSurface {
       gfx::AcceleratedWidget widget,
       cc::SyntheticBeginFrameSource* synthetic_begin_frame_source,
       gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
-      uint32_t target,
-      uint32_t internalformat);
+      uint32_t target);
 
   ~DisplayOutputSurfaceOzone() override;
 
