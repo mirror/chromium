@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a6409986_fb85737e",
+        "filename": "chrome/browser/devtools/global_confirm_info_bar.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-07-21T15:49:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "126cf139_fde87dd6",
+      "revId": "034d3806d806d295d2131ad32ef407fc171ba2fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7cb08c48_1ec1a08f",
         "filename": "chrome/browser/devtools/global_confirm_info_bar.cc",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "034d3806d806d295d2131ad32ef407fc171ba2fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64c29d1e_c6df76d0",
+        "filename": "chrome/browser/devtools/global_confirm_info_bar.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-07-21T15:49:36Z",
+      "side": 1,
+      "message": "Not needed anymore. But AFAIK Bind() doesn\u0027t support lambdas?",
+      "parentUuid": "7cb08c48_1ec1a08f",
+      "revId": "034d3806d806d295d2131ad32ef407fc171ba2fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5e19fc21_c06a49fa",
+        "filename": "chrome/browser/devtools/global_confirm_info_bar.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-07-21T15:49:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f522096_13bd5c19",
+      "revId": "034d3806d806d295d2131ad32ef407fc171ba2fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a5cb080_7d43bf23",
         "filename": "chrome/browser/devtools/global_confirm_info_bar.h",
         "patchSetId": 11
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "8955e8fc_7f22b6b5",
+        "filename": "chrome/browser/devtools/global_confirm_info_bar.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-07-21T15:49:36Z",
+      "side": 1,
+      "message": "Good suggestion. Done.",
+      "parentUuid": "2a5cb080_7d43bf23",
+      "revId": "034d3806d806d295d2131ad32ef407fc171ba2fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf8db673_592e613d",
         "filename": "chrome/browser/devtools/global_confirm_info_bar.h",
         "patchSetId": 11
@@ -84,6 +156,24 @@
       "revId": "034d3806d806d295d2131ad32ef407fc171ba2fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba66a485_e6fa11b0",
+        "filename": "chrome/browser/devtools/global_confirm_info_bar.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-07-21T15:49:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf8db673_592e613d",
+      "revId": "034d3806d806d295d2131ad32ef407fc171ba2fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
