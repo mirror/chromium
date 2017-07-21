@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc322bf0_180fe3b4",
+        "filename": "content/browser/appcache/appcache_url_loader_job.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-21T08:10:27Z",
+      "side": 1,
+      "message": "nit: Maybe add a comment that this is used both for main resource loading and subresource loading.",
+      "revId": "768023d9fc6474ccf2d058eef0570f24fa4b2bea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
