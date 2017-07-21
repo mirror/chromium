@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "055f2985_180327c1",
+        "filename": "chromeos/components/tether/host_scanner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-21T23:21:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae294677_9b73b01a",
+      "range": {
+        "startLine": 184,
+        "startChar": 42,
+        "endLine": 184,
+        "endChar": 44
+      },
+      "revId": "433f475dd92544e75195225633297a4aeb543ec1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99430f35_3c1ba11e",
         "filename": "chromeos/components/tether/network_host_scan_cache.cc",
         "patchSetId": 2
