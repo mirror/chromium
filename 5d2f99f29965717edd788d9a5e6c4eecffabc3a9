@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3a755bb8_d99157f0",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/page/frameScheduledNavigationTypes-expected.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-21T09:19:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc70cef0_faef1854",
+      "revId": "5d2f99f29965717edd788d9a5e6c4eecffabc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c86317fd_f25b9fb9",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 3
@@ -111,6 +129,102 @@
     },
     {
       "key": {
+        "uuid": "03957dfc_2bb67419",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-21T09:19:59Z",
+      "side": 1,
+      "message": "window.location and iframe.src\u003d are both location change.  The page block is when you go to a page you either don\u0027t have permission to see (e.g. http 407 served) or safe browsing shows a warning interstitial.",
+      "parentUuid": "f3d3ec38_f39a5b03",
+      "range": {
+        "startLine": 645,
+        "startChar": 165,
+        "endLine": 645,
+        "endChar": 174
+      },
+      "revId": "5d2f99f29965717edd788d9a5e6c4eecffabc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8feffe0d_0de7a9d8",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-21T09:19:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dcbedf9_cf601daf",
+      "range": {
+        "startLine": 645,
+        "startChar": 31,
+        "endLine": 645,
+        "endChar": 35
+      },
+      "revId": "5d2f99f29965717edd788d9a5e6c4eecffabc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ea57b5c_71dbef2e",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-21T09:19:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c86317fd_f25b9fb9",
+      "range": {
+        "startLine": 645,
+        "startChar": 90,
+        "endLine": 645,
+        "endChar": 104
+      },
+      "revId": "5d2f99f29965717edd788d9a5e6c4eecffabc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a6e775a6_66c2cb9d",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-21T09:19:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c7dd1da_b153f93a",
+      "range": {
+        "startLine": 645,
+        "startChar": 73,
+        "endLine": 645,
+        "endChar": 77
+      },
+      "revId": "5d2f99f29965717edd788d9a5e6c4eecffabc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65318147_e74a6dd0",
         "filename": "third_party/WebKit/Source/core/loader/NavigationScheduler.cpp",
         "patchSetId": 3
@@ -128,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "86a3df2d_182b0e39",
+        "filename": "third_party/WebKit/Source/core/loader/NavigationScheduler.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-21T09:19:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65318147_e74a6dd0",
+      "revId": "5d2f99f29965717edd788d9a5e6c4eecffabc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "005f46f3_711e6198",
         "filename": "third_party/WebKit/Source/core/loader/ScheduledNavigation.h",
         "patchSetId": 3
@@ -139,6 +271,24 @@
       "writtenOn": "2017-07-20T17:53:53Z",
       "side": 1,
       "message": "This is superseded by GetType now.",
+      "revId": "5d2f99f29965717edd788d9a5e6c4eecffabc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb8ac857_64e763ba",
+        "filename": "third_party/WebKit/Source/core/loader/ScheduledNavigation.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-21T09:19:59Z",
+      "side": 1,
+      "message": "The logic behind IsLocationChange() is slightly complex.  Form submission and reloads are considered location changes but kLocationChange is not considered a location change if the protocol is \u0027javascript\u0027.\n\nI think the root problem here is that ScheduledLocationChange and kLocationChange are confusingly named in light of IsLocationChange(). Perhaps kFrameNavigation is a better name because ultimately this came from LocalFrame::Navigate.  WDYT?",
+      "parentUuid": "005f46f3_711e6198",
       "revId": "5d2f99f29965717edd788d9a5e6c4eecffabc3a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
