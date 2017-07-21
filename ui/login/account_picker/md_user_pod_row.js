@@ -414,6 +414,10 @@ cr.define('login', function() {
         validIcon = validIcon || this.iconId_ == icon.id;
       }, this);
       this.hidden = validIcon ? false : true;
+      // Update password container width based on the visibility of the
+      // custom icon container.
+      document.querySelector('.password-container')
+          .classList.toggle('custom-icon-shown', !this.hidden);
     },
 
     /**
@@ -3775,7 +3779,6 @@ cr.define('login', function() {
         // was added to ensure a symmetric layout.
         pod.style.paddingBottom = cr.ui.toCssPx(0);
       }
-      this.clearPodsAnimation_();
       this.hideEmptyArea_();
       // Clear error bubbles whenever pod placement is happening, i.e., after
       // orientation change, showing or hiding virtual keyboard, and user
@@ -4195,9 +4198,12 @@ cr.define('login', function() {
           podToFocus.focus();
         }
 
-        // focusPod() automatically loads wallpaper
-        if (!podToFocus.user.isApp)
+        if (!podToFocus.user.isApp) {
           chrome.send('focusPod', [podToFocus.user.username]);
+          // Only updates wallpaper when the focused pod is in large style.
+          if (podToFocus.getPodStyle() == UserPod.Style.LARGE)
+            chrome.send('loadWallpaper', [podToFocus.user.username]);
+        }
         this.firstShown_ = false;
         this.lastFocusedPod_ = podToFocus;
         this.setUserPodFingerprintIcon(
@@ -4209,11 +4215,19 @@ cr.define('login', function() {
     },
 
     /**
-     * Resets wallpaper to the last active user's wallpaper, if any.
+     * Resets wallpaper to the last focused user's wallpaper, if any. If the
+     * last focused user pod is not in large style, resets the wallpaper to the
+     * main pod's instead.
      */
     loadLastWallpaper: function() {
-      if (this.lastFocusedPod_ && !this.lastFocusedPod_.user.isApp)
+      if (this.lastFocusedPod_ && !this.lastFocusedPod_.user.isApp &&
+          this.lastFocusedPod_.getPodStyle() == UserPod.Style.LARGE) {
         chrome.send('loadWallpaper', [this.lastFocusedPod_.user.username]);
+      } else if (this.mainPod_ && !this.mainPod_.user.isApp) {
+        // Small pods' wallpaper should never be loaded. Loads the wallpaper of
+        // the main pod as a backup because main pod is always in large style.
+        chrome.send('loadWallpaper', [this.mainPod_.user.username]);
+      }
     },
 
     /**
@@ -4599,6 +4613,7 @@ cr.define('login', function() {
       }
 
       this.handleAfterPodPlacement_();
+      this.clearPodsAnimation_();
     },
 
     /**
