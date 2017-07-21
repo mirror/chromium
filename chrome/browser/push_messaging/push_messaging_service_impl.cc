@@ -280,13 +280,34 @@ void PushMessagingServiceImpl::OnMessage(const std::string& app_id,
                            content::mojom::PushDeliveryStatus::UNKNOWN_APP_ID);
     return;
   }
-  // Drop message and unregister if |origin| has lost push permission.
-  if (!IsPermissionSet(app_identifier.origin())) {
-    DeliverMessageCallback(
-        app_id, app_identifier.origin(),
-        app_identifier.service_worker_registration_id(), message,
-        message_handled_closure,
-        content::mojom::PushDeliveryStatus::PERMISSION_DENIED);
+
+  // Drop message and unregister if |origin| has lost push permission. However,
+  // we should only drop the subscription if the permission was in fact denied
+  // rather than suspended, for example through the kill switch.
+  PermissionResult permission_result =
+      PermissionManager::Get(profile_)->GetPermissionStatus(
+          CONTENT_SETTINGS_TYPE_PUSH_MESSAGING, app_identifier.origin(),
+          app_identifier.origin());
+
+  if (permission_result.content_setting != CONTENT_SETTING_ALLOW) {
+    content::mojom::PushDeliveryStatus status =
+        content::mojom::PushDeliveryStatus::PERMISSION_DENIED;
+
+    switch (permission_result.source) {
+      case PermissionStatusSource::KILL_SWITCH:
+        status = content::mojom::PushDeliveryStatus::PERMISSION_SUSPENDED;
+        break;
+      case PermissionStatusSource::UNSPECIFIED:
+      case PermissionStatusSource::SAFE_BROWSING_BLACKLIST:
+      case PermissionStatusSource::MULTIPLE_DISMISSALS:
+      case PermissionStatusSource::MULTIPLE_IGNORES:
+        status = content::mojom::PushDeliveryStatus::PERMISSION_DENIED;
+        break;
+    }
+
+    DeliverMessageCallback(app_id, app_identifier.origin(),
+                           app_identifier.service_worker_registration_id(),
+                           message, message_handled_closure, status);
     return;
   }
 
@@ -372,6 +393,9 @@ void PushMessagingServiceImpl::DeliverMessageCallback(
     case content::mojom::PushDeliveryStatus::PERMISSION_DENIED:
       unsubscribe_reason =
           content::mojom::PushUnregistrationReason::DELIVERY_PERMISSION_DENIED;
+      break;
+    case content::mojom::PushDeliveryStatus::PERMISSION_SUSPENDED:
+      // Do nothing, the kill switch might be withdrawn at some point.
       break;
     case content::mojom::PushDeliveryStatus::NO_SERVICE_WORKER:
       unsubscribe_reason =
@@ -944,7 +968,8 @@ void PushMessagingServiceImpl::OnContentSettingChanged(
       continue;
     }
 
-    if (IsPermissionSet(app_identifier.origin())) {
+    if (GetPermissionStatus(app_identifier.origin(), true /* user_visible */) ==
+        blink::kWebPushPermissionStatusGranted) {
       barrier_closure.Run();
       continue;
     }
@@ -1048,13 +1073,6 @@ std::string PushMessagingServiceImpl::NormalizeSenderInfo(
                         &encoded_sender_info);
 
   return encoded_sender_info;
-}
-
-// Assumes user_visible always since this is just meant to check
-// if the permission was previously granted and not revoked.
-bool PushMessagingServiceImpl::IsPermissionSet(const GURL& origin) {
-  return GetPermissionStatus(origin, true /* user_visible */) ==
-         blink::kWebPushPermissionStatusGranted;
 }
 
 void PushMessagingServiceImpl::GetEncryptionInfoForAppId(

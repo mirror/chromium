@@ -244,9 +244,6 @@ class PushMessagingServiceImpl : public content::PushMessagingService,
   // keys have to be encoded using the URL-safe variant of the base64 encoding.
   std::string NormalizeSenderInfo(const std::string& sender_info) const;
 
-  // Checks if a given origin is allowed to use Push.
-  bool IsPermissionSet(const GURL& origin);
-
   // Wrapper around {GCMDriver, InstanceID}::GetEncryptionInfo.
   void GetEncryptionInfoForAppId(
       const std::string& app_id,

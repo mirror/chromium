@@ -33,6 +33,7 @@
 #include "chrome/browser/notifications/message_center_display_service.h"
 #include "chrome/browser/notifications/notification_test_util.h"
 #include "chrome/browser/notifications/platform_notification_service_impl.h"
+#include "chrome/browser/permissions/permission_context_base.h"
 #include "chrome/browser/permissions/permission_request_manager.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/push_messaging/push_messaging_app_identifier.h"
@@ -52,6 +53,7 @@
 #include "components/gcm_driver/gcm_client.h"
 #include "components/gcm_driver/instance_id/fake_gcm_driver_for_instance_id.h"
 #include "components/gcm_driver/instance_id/instance_id_driver.h"
+#include "components/variations/variations_associated_data.h"
 #include "content/public/browser/browsing_data_remover.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/web_contents.h"
@@ -1295,6 +1297,53 @@ IN_PROC_BROWSER_TEST_F(PushMessagingBrowserTest, PushEventWithoutPermission) {
       static_cast<int>(
           content::mojom::PushUnregistrationReason::DELIVERY_PERMISSION_DENIED),
       1);
+}
+
+// Tests that an activated kill switch will not result in subscriptions being
+// unsubscribed upon receiving a message.
+IN_PROC_BROWSER_TEST_F(PushMessagingBrowserTest, PushEventDuringKillSwitch) {
+  std::string script_result;
+
+  ASSERT_NO_FATAL_FAILURE(SubscribeSuccessfully());
+  PushMessagingAppIdentifier app_identifier =
+      GetAppIdentifierForServiceWorkerRegistration(0LL);
+
+  LoadTestPage();  // Reload to become controlled.
+  ASSERT_TRUE(RunScript("isControlled()", &script_result));
+  ASSERT_EQ("true - is controlled", script_result);
+
+  // Enable the kill switch for the Push Notifications permission.
+  std::map<std::string, std::string> params;
+  params["PushMessaging"] =
+      PermissionContextBase::kPermissionsKillSwitchBlockedValue;
+  variations::AssociateVariationParams(
+      PermissionContextBase::kPermissionsKillSwitchFieldStudy, "TestGroup",
+      params);
+  base::FieldTrialList::CreateFieldTrial(
+      PermissionContextBase::kPermissionsKillSwitchFieldStudy, "TestGroup");
+
+  // Now try to deliver a message.
+  gcm::IncomingMessage message;
+  message.sender_id = GetTestApplicationServerKey();
+  message.raw_data = "testdata";
+  message.decrypted = true;
+  SendMessageAndWaitUntilHandled(app_identifier, message);
+
+  // No push data should have been received.
+  ASSERT_TRUE(RunScript("resultQueue.popImmediately()", &script_result));
+  EXPECT_EQ("null", script_result);
+
+  // Check that we record this case in UMA.
+  histogram_tester_.ExpectUniqueSample(
+      "PushMessaging.DeliveryStatus",
+      static_cast<int>(
+          content::mojom::PushDeliveryStatus::PERMISSION_SUSPENDED),
+      1);
+
+  // The kill switch should not unsubscribe the given permission however.
+  EXPECT_NE(app_identifier.app_id(), gcm_driver_->last_deletetoken_app_id());
+  ASSERT_TRUE(RunScript("hasSubscription()", &script_result));
+  EXPECT_EQ("true - subscribed", script_result);
 }
 
 IN_PROC_BROWSER_TEST_F(PushMessagingBrowserTest,

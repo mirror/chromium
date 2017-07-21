@@ -29,12 +29,16 @@ enum PushDeliveryStatus {
   // The message was delivered, but the Service Worker timed out processing it.
   TIMEOUT = 7,
 
+  // The message could not be delivered because the permission granted to the
+  // origin has been suspended, for example through a kill switch.
+  PERMISSION_SUSPENDED = 8,
+
   // NOTE: Do not renumber these as that would confuse interpretation of
   // previously logged data. When making changes, also update the enum list
-  // in tools/metrics/histograms/histograms.xml to keep it in sync, and
+  // in tools/metrics/histograms/enums.xml to keep it in sync, and
   // update LAST below.
 
-  LAST = TIMEOUT
+  LAST = PERMISSION_SUSPENDED
 };
 
 // Push getregistration success/error codes for internal use & reporting in UMA.
@@ -70,7 +74,7 @@ enum PushGetRegistrationStatus {
 
   // NOTE: Do not renumber these as that would confuse interpretation of
   // previously logged data. When making changes, also update the enum list
-  // in tools/metrics/histograms/histograms.xml to keep it in sync, and
+  // in tools/metrics/histograms/enums.xml to keep it in sync, and
   // update LAST below.
 
   LAST = NO_LIVE_SERVICE_WORKER
@@ -139,7 +143,7 @@ enum PushRegistrationStatus {
 
   // NOTE: Do not renumber these as that would confuse interpretation of
   // previously logged data. When making changes, also update the enum list
-  // in tools/metrics/histograms/histograms.xml to keep it in sync, and
+  // in tools/metrics/histograms/enums.xml to keep it in sync, and
   // update LAST below.
 
   LAST = RENDERER_SHUTDOWN
@@ -184,7 +188,7 @@ enum PushUnregistrationReason {
 
   // NOTE: Do not renumber these as that would confuse interpretation of
   // previously logged data. When making changes, also update the enum list
-  // in tools/metrics/histograms/histograms.xml to keep it in sync, and
+  // in tools/metrics/histograms/enums.xml to keep it in sync, and
   // update LAST below.
 
   LAST = SERVICE_WORKER_DATABASE_WIPED
@@ -222,7 +226,7 @@ enum PushUnregistrationStatus {
 
   // NOTE: Do not renumber these as that would confuse interpretation of
   // previously logged data. When making changes, also update the enum list
-  // in tools/metrics/histograms/histograms.xml to keep it in sync, and
+  // in tools/metrics/histograms/enums.xml to keep it in sync, and
   // update LAST below.
 
   LAST = NETWORK_ERROR
@@ -250,7 +254,7 @@ enum PushUserVisibleStatus {
 
   // NOTE: Do not renumber these as that would confuse interpretation of
   // previously logged data. When making changes, also update the enum list
-  // in tools/metrics/histograms/histograms.xml to keep it in sync, and
+  // in tools/metrics/histograms/enums.xml to keep it in sync, and
   // update LAST below.
 
   LAST = REQUIRED_BUT_NOT_SHOWN_GRACE_EXCEEDED
