@@ -95,7 +95,6 @@ void Worklet::ContextDestroyed(ExecutionContext* execution_context) {
 WorkletGlobalScopeProxy* Worklet::FindAvailableGlobalScope() const {
   DCHECK(IsMainThread());
   // TODO(nhiroki): Support the case where there are multiple global scopes.
-  DCHECK_EQ(1u, GetNumberOfGlobalScopes());
   return proxies_.begin()->Get();
 }
 
@@ -136,9 +135,13 @@ void Worklet::FetchAndInvokeScript(const KURL& module_url_record,
   //   10.2: "Add the WorkletGlobalScope to worklet's WorkletGlobalScopes."
   // "Depending on the type of worklet the user agent may create additional
   // WorkletGlobalScopes at this time."
+
+  // PaintWorklet numbers the global scopes as they are created. So to avoid
+  // two paint worklets getting the same number, we check it either has 0
+  // global scope or two global scope.
+  DCHECK(!NeedsToCreateGlobalScope() || GetNumberOfGlobalScopes() == 0);
   while (NeedsToCreateGlobalScope())
     proxies_.insert(CreateGlobalScope());
-  DCHECK_EQ(1u, GetNumberOfGlobalScopes());
 
   // Step 11: "Let pendingTaskStruct be a new pending tasks struct with counter
   // initialized to the length of worklet's WorkletGlobalScopes."
