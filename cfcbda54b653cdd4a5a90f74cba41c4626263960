@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d31e2138_f091fd0a",
+        "filename": "chrome/renderer/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-21T02:27:00Z",
+      "side": 1,
+      "message": "nit: alpha",
+      "range": {
+        "startLine": 17,
+        "startChar": 35,
+        "endLine": 17,
+        "endChar": 0
+      },
+      "revId": "cfcbda54b653cdd4a5a90f74cba41c4626263960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb2374e7_4128df90",
+        "filename": "chromecast/base/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-21T02:27:00Z",
+      "side": 1,
+      "message": "nit: 80-col",
+      "range": {
+        "startLine": 15,
+        "startChar": 84,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "cfcbda54b653cdd4a5a90f74cba41c4626263960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebdba1ab_b302704d",
+        "filename": "components/cronet/ios/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-21T02:27:00Z",
+      "side": 1,
+      "message": "nit: alpha",
+      "range": {
+        "startLine": 58,
+        "startChar": 42,
+        "endLine": 58,
+        "endChar": 0
+      },
+      "revId": "cfcbda54b653cdd4a5a90f74cba41c4626263960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06ff24bc_bd9ee2b8",
+        "filename": "components/search_engines/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-21T02:27:00Z",
+      "side": 1,
+      "message": "nit: alpha",
+      "range": {
+        "startLine": 6,
+        "startChar": 35,
+        "endLine": 6,
+        "endChar": 0
+      },
+      "revId": "cfcbda54b653cdd4a5a90f74cba41c4626263960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28fd7af1_c9f0b5a3",
+        "filename": "components/translate/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-21T02:27:00Z",
+      "side": 1,
+      "message": "nit: alpha",
+      "range": {
+        "startLine": 7,
+        "startChar": 35,
+        "endLine": 7,
+        "endChar": 0
+      },
+      "revId": "cfcbda54b653cdd4a5a90f74cba41c4626263960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
