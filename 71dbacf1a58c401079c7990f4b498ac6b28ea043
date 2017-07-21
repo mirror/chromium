@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "834fcc6c_73aa27ca",
+        "filename": "cc/output/gl_renderer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1227294
+      },
+      "writtenOn": "2017-07-21T14:50:21Z",
+      "side": 1,
+      "message": "We need to carry this params from GLRenderer::UpdateRPDQShadersForBlending to GLRenderer::UpdateRPDQUniforms.\nSo I think it is better to add them to params.",
+      "parentUuid": "3d01aa9b_43dcbbd0",
+      "revId": "71dbacf1a58c401079c7990f4b498ac6b28ea043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0135238_d3d6c5ce",
         "filename": "cc/output/gl_renderer.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-21T14:28:52Z",
       "side": 1,
       "message": "Nit: please skip this temporary and just \"return ApplyImageFilter...\"",
+      "revId": "71dbacf1a58c401079c7990f4b498ac6b28ea043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afd953e8_d3e4be57",
+        "filename": "cc/output/gl_renderer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 949,
+      "author": {
+        "id": 1227294
+      },
+      "writtenOn": "2017-07-21T14:50:21Z",
+      "side": 1,
+      "message": "Ok.",
+      "parentUuid": "b0135238_d3d6c5ce",
       "revId": "71dbacf1a58c401079c7990f4b498ac6b28ea043",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "641aeeaf_53efd74d",
+        "filename": "cc/output/gl_renderer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1156,
+      "author": {
+        "id": 1227294
+      },
+      "writtenOn": "2017-07-21T14:50:21Z",
+      "side": 1,
+      "message": "background_subset is used in line 1426.\nbackground_offset is not used, because I don\u0027t know when it not equals {0, 0}.\nWe have tests with SkBlurImageFilter and SkOffsetImageFilter and they pass.\nI try to add more tests (case crbug.com/744981)",
+      "parentUuid": "eb926f30_eb5c4095",
+      "revId": "71dbacf1a58c401079c7990f4b498ac6b28ea043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0997ae1e_d3a7c6eb",
         "filename": "cc/output/shader.cc",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-21T14:28:52Z",
       "side": 1,
       "message": "Could you add a test which exercises shader-based blending in conjunction with filters?",
+      "revId": "71dbacf1a58c401079c7990f4b498ac6b28ea043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf3bb4a1_8bf8fbfb",
+        "filename": "cc/output/shader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1227294
+      },
+      "writtenOn": "2017-07-21T14:50:21Z",
+      "side": 1,
+      "message": "Ok.",
+      "parentUuid": "0997ae1e_d3a7c6eb",
       "revId": "71dbacf1a58c401079c7990f4b498ac6b28ea043",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
