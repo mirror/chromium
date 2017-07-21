@@ -14,6 +14,7 @@
 #include "components/cryptauth/cryptauth_client.h"
 #include "components/cryptauth/local_device_data_provider.h"
 #include "components/proximity_auth/logging/logging.h"
+#include "components/proximity_auth/notification_controller.h"
 #include "components/proximity_auth/proximity_auth_pref_manager.h"
 
 namespace proximity_auth {
@@ -33,12 +34,14 @@ const double kCheckEligibilityProbability = 0.2;
 
 PromotionManager::PromotionManager(
     cryptauth::LocalDeviceDataProvider* provider,
+    NotificationController* notification_controller,
     ProximityAuthPrefManager* pref_manager,
     std::unique_ptr<cryptauth::CryptAuthClientFactory> client_factory,
     std::unique_ptr<base::Clock> clock,
     scoped_refptr<base::TaskRunner> task_runner)
     : check_eligibility_probability_(kCheckEligibilityProbability),
       local_device_data_provider_(provider),
+      notification_controller_(notification_controller),
       pref_manager_(pref_manager),
       client_factory_(std::move(client_factory)),
       clock_(std::move(clock)),
@@ -153,7 +156,7 @@ void PromotionManager::OnFindEligibleUnlockDevicesSuccess(
 
 void PromotionManager::ShowPromotion() {
   PA_LOG(INFO) << "[Promotion] Showing promotion for the user.";
-  // TODO(sacomoto): Actually display the promotion message.
+  notification_controller_->ShowPromotionNotification();
 }
 
 }  // namespace proximity_auth
