@@ -68,8 +68,15 @@ class ProximityAuthPrefManager {
   virtual void SetLastPasswordEntryTimestampMs(int64_t timestamp_ms);
   virtual int64_t GetLastPasswordEntryTimestampMs() const;
 
+  // Setter and getter for the timestamp of the last time the promotion was
+  // shown to the user.
   virtual void SetLastPromotionCheckTimestampMs(int64_t timestamp_ms);
   virtual int64_t GetLastPromotionCheckTimestampMs() const;
+
+  // Setter and getter for the number of times the promotion was shown to the
+  // user.
+  virtual void SetPromotionShownCount(int count);
+  virtual int GetPromotionShownCount() const;
 
   // These are arbitrary labels displayed in the settings page for the user
   // to select. The actual mapping is done in the ProximityMonitorImpl.
