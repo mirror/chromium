@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8236868f_0b34386f",
+        "filename": "base/posix/unix_domain_socket_posix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-07-21T19:29:43Z",
+      "side": 1,
+      "message": "I don’t think that \u003csys/un.h\u003e needs to be guarded. It’s definitely available on Linux.",
+      "revId": "9ba9431e6c2bfa9009c348527f551d9c4635ca98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f11da1c_ee3bfa20",
+        "filename": "base/posix/unix_domain_socket_posix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-07-21T19:29:43Z",
+      "side": 1,
+      "message": "If it’s not supported, should this pretend to succeed, or should it return false?",
+      "revId": "9ba9431e6c2bfa9009c348527f551d9c4635ca98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42f3b890_b342675e",
+        "filename": "base/posix/unix_domain_socket_posix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-07-21T19:29:43Z",
+      "side": 1,
+      "message": "I’m not sure if putting the getsockopt() in the DPCHECK() in this way will result in unused variable warnings in some build configurations. It may. This is fine if it doesn’t, though.",
+      "revId": "9ba9431e6c2bfa9009c348527f551d9c4635ca98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e053fb0e_b6a29371",
+        "filename": "base/posix/unix_domain_socket_posix.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-07-21T19:29:43Z",
+      "side": 1,
+      "message": "Since this is in base/posix, you can name it unix_domain_socket.h, without the extra _posix. That already matches the name of the class that this defines.",
+      "revId": "9ba9431e6c2bfa9009c348527f551d9c4635ca98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2063f26_d2d78f47",
+        "filename": "base/posix/unix_domain_socket_posix.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-07-21T19:29:43Z",
+      "side": 1,
+      "message": "Fix the #include guards to match the new filename. Line 111 at the end of the file, too.",
+      "revId": "9ba9431e6c2bfa9009c348527f551d9c4635ca98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae7c139a_2922b280",
+        "filename": "base/posix/unix_domain_socket_posix_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-07-21T19:29:43Z",
+      "side": 0,
+      "message": "This test used to bail out right here if socketpair() failed. Now, CreateSocketPair() will bail out if socketpair() fails, but the test won’t stop. That’s not right, you do want the test to stop. So you can ASSERT_NO_FATAL_FAILURE(). https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#asserting-on-subroutines\n\nSame elsewhere in this file.",
+      "revId": "2bc5e180f592aace72a4b65f83b462265634d4c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
