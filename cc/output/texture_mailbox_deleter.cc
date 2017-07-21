@@ -10,6 +10,7 @@
 #include "base/location.h"
 #include "base/memory/weak_ptr.h"
 #include "base/single_thread_task_runner.h"
+#include "cc/resources/release_callback.h"
 #include "cc/resources/single_release_callback.h"
 #include "components/viz/common/gpu/context_provider.h"
 #include "gpu/command_buffer/client/gles2_interface.h"

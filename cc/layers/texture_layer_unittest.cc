@@ -25,6 +25,7 @@
 #include "cc/layers/solid_color_layer.h"
 #include "cc/layers/texture_layer_client.h"
 #include "cc/layers/texture_layer_impl.h"
+#include "cc/resources/release_callback.h"
 #include "cc/resources/returned_resource.h"
 #include "cc/test/fake_impl_task_runner_provider.h"
 #include "cc/test/fake_layer_tree_frame_sink.h"
