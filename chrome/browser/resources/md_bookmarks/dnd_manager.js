@@ -304,7 +304,7 @@ cr.define('bookmarks', function() {
    * mousedown -> mousemove -> mouseup
    *               |
    *               v
-   *      dragstart/dragleave (if the drag leaves the browser window)
+   *      dragstart/dragleave ( if the drag leaves the browser window)
    *               |
    *               v
    * external drag -> bookmarkManagerPrivate.onDragEnter -> dragover -> drop
