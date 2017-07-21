@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "824a2b77_7c4e9146",
+        "filename": "android_webview/browser/aw_browser_terminator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-21T20:46:30Z",
+      "side": 1,
+      "message": "question: how does this work? this seem to be a permanent change, but what if app handles the crash?",
+      "revId": "766ddd9b89306d64814458e11d329b1eec0f7107",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
