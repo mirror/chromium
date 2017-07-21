@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1024a27d_e9abdc82",
+        "filename": "build/package_mac_xcode.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-07-21T12:21:33Z",
+      "side": 1,
+      "message": "For the time being you might be able to cut out some directories we don\u0027t use.\n\n\u0027Contents/Developer/Platforms/AppleTVOS.platform\u0027, 1.3G\n\u0027Contents/Developer/Platforms/WatchOS.platform\u0027, 1.4G\n\nThere have been cases where totally unrelated files have been pulled in by tools like ibtool, but hopefully these shouldn\u0027t matter, and can save almost 3GB.",
+      "revId": "78728087a7dd7f2338ac0a83f803ad0e48766953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3e7c5f7_b349d798",
+        "filename": "build/package_mac_xcode.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-07-21T12:21:33Z",
+      "side": 1,
+      "message": "can this just iterate all pkg files in this ${PKG_PATH}?",
+      "revId": "78728087a7dd7f2338ac0a83f803ad0e48766953",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
