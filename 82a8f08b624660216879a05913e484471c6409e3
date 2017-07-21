@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2a2a32ae_94021450",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/app_manager_impl_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-21T17:47:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf160a28_96d36c6f",
+      "revId": "82a8f08b624660216879a05913e484471c6409e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7ad8bc4_d9dc304d",
         "filename": "chrome/browser/chromeos/lock_screen_apps/app_manager_impl_unittest.cc",
         "patchSetId": 24
@@ -33,6 +51,24 @@
       "revId": "82a8f08b624660216879a05913e484471c6409e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7e5d705_673ae4f8",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/app_manager_impl_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-21T17:47:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7ad8bc4_d9dc304d",
+      "revId": "82a8f08b624660216879a05913e484471c6409e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3e3751d1_8e8a56f3",
+        "filename": "chrome/browser/chromeos/note_taking_helper.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-21T17:47:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5d59f49_68b2cb65",
+      "revId": "82a8f08b624660216879a05913e484471c6409e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9bafe6be_40e6bdf7",
         "filename": "chrome/browser/chromeos/note_taking_helper_unittest.cc",
         "patchSetId": 24
@@ -67,6 +121,24 @@
       "revId": "82a8f08b624660216879a05913e484471c6409e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63b9ad2b_4bb9b599",
+        "filename": "chrome/browser/chromeos/note_taking_helper_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-21T17:47:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bafe6be_40e6bdf7",
+      "revId": "82a8f08b624660216879a05913e484471c6409e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "3881e9f9_5e8fa2b8",
+        "filename": "chrome/browser/chromeos/note_taking_helper_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 1364,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-21T17:47:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06a56bf6_1c6aee1a",
+      "revId": "82a8f08b624660216879a05913e484471c6409e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9896eaf5_88db862a",
         "filename": "chrome/browser/chromeos/note_taking_helper_unittest.cc",
         "patchSetId": 24
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "afe4cb31_319cbe53",
+        "filename": "chrome/browser/chromeos/note_taking_helper_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 1397,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-21T17:47:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9896eaf5_88db862a",
+      "revId": "82a8f08b624660216879a05913e484471c6409e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44610f91_e181139c",
         "filename": "chrome/browser/ui/webui/settings/chromeos/device_stylus_handler.cc",
         "patchSetId": 24
@@ -115,6 +223,24 @@
       "writtenOn": "2017-07-21T01:28:57Z",
       "side": 1,
       "message": "Perhaps assign these values directly in the enum and add a comment saying be careful reordering or removing, as they are shared constants in settings JS? Even better would be defining it in mojo :)",
+      "revId": "82a8f08b624660216879a05913e484471c6409e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c2a0d94_11ea1414",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/device_stylus_handler.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-21T17:47:24Z",
+      "side": 1,
+      "message": "hm, I like having this fail at compile time if NoteTakingLockScreenSupport enum is changed without updating this, than have setting UI fail at runtime.\nThough, in this case we have to sync *these* values with JS constants - it\u0027s more evident it has to be done here, but that\u0027s just marginally better; so done.\n\n(I might look into switching these to mojo in a follow-up, I like that idea)",
+      "parentUuid": "44610f91_e181139c",
       "revId": "82a8f08b624660216879a05913e484471c6409e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
