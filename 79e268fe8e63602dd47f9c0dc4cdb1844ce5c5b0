@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e62ffe34_1bc85ee1",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleCSSValueMapping.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 2668,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-07-21T14:09:12Z",
+      "side": 1,
+      "message": "I think the spec is incorrect regarding how to deal with computed style:\n\nhttps://drafts.csswg.org/css-align/#justify-items-property\n\"specified value, except for auto (see prose)\"\n\nThe \u0027auto\u0027 value is now invalid for this property.\n\nIn any case, the spec states that the computed value in case of \u0027legacy\u0027\nwould depend on the parent\u0027s computed value for this property. I think there is\ncode already in the StyleAdjuster to deal with this scenario.",
+      "revId": "79e268fe8e63602dd47f9c0dc4cdb1844ce5c5b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c6697de_f17e20c1",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParser.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 2086,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-07-21T14:09:12Z",
+      "side": 1,
+      "message": "The code goes in the right direction now, but I still have several doubts.\n1- this is perhaps spec related, but I don\u0027t think \"legacy || [ left | right | center ] \" makes sense because it allows \"center legacy\". I think \"legacy\" must be always in the first place.\n   - Perhaps we should file a spec issue about this.\n2- Assuming the spec editors agree on the issue 1, we should check and consume first the legacy keyword.\n3- The current code does not consider there is a keyword after \"legacy\", eg \"legacy center\"",
+      "revId": "79e268fe8e63602dd47f9c0dc4cdb1844ce5c5b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cab90ca9_8290d905",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPIJustifyItems.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-07-21T14:09:12Z",
+      "side": 1,
+      "message": "I think this code will allow \"legacy auto\", which should be invalid.",
+      "revId": "79e268fe8e63602dd47f9c0dc4cdb1844ce5c5b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f86b1170_c2e133c9",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleAdjuster.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-07-21T14:09:12Z",
+      "side": 1,
+      "message": "Is this code considering cases like \"legacy right\" ? \nBefore the change in the spec, we were dealing with the \u0027legacy\u0027 keyword in the PositionType. I\u0027m not totally sure we have the same behavior now.",
+      "revId": "79e268fe8e63602dd47f9c0dc4cdb1844ce5c5b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
