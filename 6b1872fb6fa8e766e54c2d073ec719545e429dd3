@@ -16,6 +16,24 @@
       "revId": "6b1872fb6fa8e766e54c2d073ec719545e429dd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f514115d_dd9ceb48",
+        "filename": "components/exo/wm_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-21T15:11:12Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "9ab81a5b_75df465d",
+      "revId": "6b1872fb6fa8e766e54c2d073ec719545e429dd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
