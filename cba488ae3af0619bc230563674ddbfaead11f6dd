@@ -16,6 +16,24 @@
       "revId": "cba488ae3af0619bc230563674ddbfaead11f6dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c60b7983_2eea717e",
+        "filename": "content/browser/web_contents/web_contents_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1186495
+      },
+      "writtenOn": "2017-07-21T10:28:27Z",
+      "side": 1,
+      "message": "Ah, yes. I updated the patch.",
+      "parentUuid": "dde361bb_efdc5a80",
+      "revId": "cba488ae3af0619bc230563674ddbfaead11f6dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
