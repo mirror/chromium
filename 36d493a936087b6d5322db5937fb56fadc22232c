@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df13114f_2f1b3fd6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-21T19:25:10Z",
+      "side": 1,
+      "message": "This doesn\u0027t change anything, just is more semantically correct and robust.",
+      "range": {
+        "startLine": 545,
+        "startChar": 18,
+        "endLine": 545,
+        "endChar": 29
+      },
+      "revId": "36d493a936087b6d5322db5937fb56fadc22232c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43080326_6931f520",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-21T19:25:10Z",
+      "side": 1,
+      "message": "Just moved this early return down to make it more likely we hit the assert above if things are going wrong. This might help diagnose the other bot failures.",
+      "range": {
+        "startLine": 549,
+        "startChar": 16,
+        "endLine": 549,
+        "endChar": 58
+      },
+      "revId": "36d493a936087b6d5322db5937fb56fadc22232c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "899b680c_7d2c799c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/util/VrTransitionUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-21T19:25:10Z",
+      "side": 1,
+      "message": "Also not a functional change, but makes it more obvious where the actual error is.",
+      "range": {
+        "startLine": 114,
+        "startChar": 8,
+        "endLine": 114,
+        "endChar": 25
+      },
+      "revId": "36d493a936087b6d5322db5937fb56fadc22232c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
