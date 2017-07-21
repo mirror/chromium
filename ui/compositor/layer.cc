@@ -933,7 +933,13 @@ scoped_refptr<cc::DisplayItemList> Layer::PaintContentsToDisplayList(
       gfx::IntersectRects(paint_region_.bounds(), local_bounds));
   paint_region_.Clear();
   auto display_list = make_scoped_refptr(new cc::DisplayItemList);
-  if (delegate_) {
+  // ui::Layer adds a notion of layer visibility atop the base cc
+  // notion of a layer. Ideally we would omit invisible layers from
+  // the list of layers needing update as accumulated in
+  // draw_property_utils. However, given that currently visibility is
+  // not exposed to cc, in the interest of avoiding code complexity,
+  // we skip painting such layers here.
+  if (delegate_ && visible()) {
     delegate_->OnPaintLayer(
         PaintContext(display_list.get(), device_scale_factor_, invalidation));
   }
