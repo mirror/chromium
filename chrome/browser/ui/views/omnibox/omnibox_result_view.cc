@@ -216,6 +216,7 @@ OmniboxResultView::OmniboxResultView(OmniboxPopupContentsView* model,
                                      const gfx::FontList& font_list)
     : model_(model),
       model_index_(model_index),
+      is_hovered_(false),
       font_list_(font_list),
       font_height_(std::max(
           font_list.GetHeight(),
@@ -332,7 +333,7 @@ void OmniboxResultView::OnNativeThemeChanged(const ui::NativeTheme* theme) {
 OmniboxResultView::ResultViewState OmniboxResultView::GetState() const {
   if (model_->IsSelectedIndex(model_index_))
     return SELECTED;
-  return model_->IsHoveredIndex(model_index_) ? HOVERED : NORMAL;
+  return is_hovered_ ? HOVERED : NORMAL;
 }
 
 int OmniboxResultView::GetTextHeight() const {
@@ -773,6 +774,25 @@ int OmniboxResultView::GetAnswerHeight() const {
   return (GetAnswerFont().GetHeight() *
           description_rendertext_->GetNumLines()) +
          kVerticalPadding;
+}
+
+bool OmniboxResultView::OnMousePressed(const ui::MouseEvent& event) {
+  // Cancel the hover state in case the user starts a drag, in which case we
+  // won't be notified on mouse exit.
+  is_hovered_ = false;
+  return false;
+}
+
+void OmniboxResultView::OnMouseEntered(const ui::MouseEvent& event) {
+  is_hovered_ = true;
+  Invalidate();
+  SchedulePaint();
+}
+
+void OmniboxResultView::OnMouseExited(const ui::MouseEvent& event) {
+  is_hovered_ = false;
+  Invalidate();
+  SchedulePaint();
 }
 
 int OmniboxResultView::GetVerticalMargin() const {
