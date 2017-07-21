@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "base/logging.h"
+#include "base/strings/stringprintf.h"
 #include "base/test/fuzzed_data_provider.h"
 #include "net/base/address_list.h"
 #include "net/base/net_errors.h"
@@ -35,14 +36,23 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
   scoped_refptr<net::RuleBasedHostResolverProc> rules(
       new net::RuleBasedHostResolverProc(nullptr));
   mock_host_resolver.set_synchronous_mode(data_provider.ConsumeBool());
-  switch (data_provider.ConsumeInt32InRange(0, 2)) {
+  switch (data_provider.ConsumeInt32InRange(0, 3)) {
     case 0:
-      rules->AddRule("*", "127.0.0.1");
+      rules->AddIPLiteralRule("*", "127.0.0.1", "localhost");
       break;
     case 1:
-      rules->AddRule("*", "::1");
+      rules->AddIPLiteralRule("*", "::1", "localhost");
       break;
     case 2:
+      rules->AddIPLiteralRule(
+          "*",
+          base::StringPrintf("%u.%u.%u.%u", data_provider.ConsumeUint8(),
+                             data_provider.ConsumeUint8(),
+                             data_provider.ConsumeUint8(),
+                             data_provider.ConsumeUint8()),
+          "foo");
+      break;
+    case 3:
       rules->AddSimulatedFailure("*");
       break;
   }
