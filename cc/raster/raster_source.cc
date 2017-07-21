@@ -13,7 +13,6 @@
 #include "cc/debug/traced_value.h"
 #include "cc/paint/display_item_list.h"
 #include "cc/raster/image_hijack_canvas.h"
-#include "cc/raster/skip_image_canvas.h"
 #include "skia/ext/analysis_canvas.h"
 #include "third_party/skia/include/core/SkCanvas.h"
 #include "third_party/skia/include/core/SkColorSpaceXformCanvas.h"
@@ -76,10 +75,9 @@ void RasterSource::PlaybackToCanvas(SkCanvas* input_canvas,
   if (!settings.playback_to_shared_canvas)
     PrepareForPlaybackToCanvas(raster_canvas);
 
-  if (settings.skip_images) {
-    SkipImageCanvas canvas(raster_canvas);
-    RasterCommon(&canvas);
-  } else if (settings.use_image_hijack_canvas) {
+  if (settings.use_image_hijack_canvas) {
+    DCHECK(!settings.skip_images);
+
     const SkImageInfo& info = raster_canvas->imageInfo();
     ImageHijackCanvas canvas(info.width(), info.height(), image_decode_cache_,
                              &settings.images_to_skip, target_color_space);
@@ -94,7 +92,7 @@ void RasterSource::PlaybackToCanvas(SkCanvas* input_canvas,
 
     RasterCommon(&canvas);
   } else {
-    RasterCommon(raster_canvas);
+    RasterCommon(raster_canvas, settings.skip_images);
   }
 }
 
@@ -188,11 +186,12 @@ void RasterSource::PrepareForPlaybackToCanvas(SkCanvas* canvas) const {
 }
 
 void RasterSource::RasterCommon(SkCanvas* raster_canvas,
+                                bool skip_all_images,
                                 SkPicture::AbortCallback* callback) const {
   DCHECK(display_list_.get());
   int repeat_count = std::max(1, slow_down_raster_scale_factor_for_debug_);
   for (int i = 0; i < repeat_count; ++i)
-    display_list_->Raster(raster_canvas, callback);
+    display_list_->Raster(raster_canvas, skip_all_images, callback);
 }
 
 sk_sp<SkPicture> RasterSource::GetFlattenedPicture() {

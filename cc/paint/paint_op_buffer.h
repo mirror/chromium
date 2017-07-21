@@ -981,6 +981,7 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
   // contains indices in an increasing order and only the indices specified in
   // the vector will be replayed.
   void Playback(SkCanvas* canvas,
+                bool skip_all_images = false,
                 SkPicture::AbortCallback* callback = nullptr,
                 const std::vector<size_t>* indices = nullptr) const;
 
