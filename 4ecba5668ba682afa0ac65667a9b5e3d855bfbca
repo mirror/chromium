@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdc67de2_afe26b30",
+        "filename": "ui/display/win/screen_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-07-21T00:30:15Z",
+      "side": 1,
+      "message": "This seems weird to me. kEnableHDR is a force-switch UNLESS we specify kEnableHDRAutoDetect?\nWhen I saw the switches I assumed that kEneableHDR would force hdr on and kEnableHDRAutoDetect would enable if detected. Requiring people to use both switches to get the behavior we want in the future seems weird to me.",
+      "revId": "4ecba5668ba682afa0ac65667a9b5e3d855bfbca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f7fed88_b7d8034a",
+        "filename": "ui/display/win/screen_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-07-21T00:30:15Z",
+      "side": 1,
+      "message": "(optional) I tend to prefer base::Feature over command-line switches.",
+      "range": {
+        "startLine": 101,
+        "startChar": 45,
+        "endLine": 101,
+        "endChar": 65
+      },
+      "revId": "4ecba5668ba682afa0ac65667a9b5e3d855bfbca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
