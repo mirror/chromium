@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84edd33b_2457934b",
+        "filename": "ui/aura/window_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1586,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-21T21:18:30Z",
+      "side": 1,
+      "message": "Interesting. It might make sense to actually target |w1| in this case. But we can revisit that when we run into it.",
+      "revId": "7e122b9689fb5775826c942ecc7d3fd825c01a10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
