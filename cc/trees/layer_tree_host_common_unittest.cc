@@ -9806,6 +9806,65 @@ TEST_F(LayerTreeHostCommonTest, LargeTransformTest) {
             rsl->end());
 }
 
+TEST_F(LayerTreeHostCommonTest, WillChangeAnimatingProperties) {
+  FakeImplTaskRunnerProvider task_runner_provider;
+  TestTaskGraphRunner task_graph_runner;
+  LayerTreeSettings settings = host()->GetSettings();
+  FakeLayerTreeHostImpl host_impl(settings, &task_runner_provider,
+                                  &task_graph_runner);
+
+  std::unique_ptr<LayerImpl> root =
+      LayerImpl::Create(host_impl.active_tree(), 1);
+  LayerImpl* root_layer = root.get();
+  std::unique_ptr<LayerImpl> child =
+      LayerImpl::Create(host_impl.active_tree(), 2);
+  LayerImpl* child_layer = child.get();
+
+  root->test_properties()->AddChild(std::move(child));
+  host_impl.active_tree()->SetRootLayerForTesting(std::move(root));
+
+  host_impl.active_tree()->SetElementIdsForTesting();
+
+  root_layer->SetBounds(gfx::Size(1, 1));
+  child_layer->SetBounds(gfx::Size(1, 1));
+
+  root_layer->layer_tree_impl()->property_trees()->needs_rebuild = true;
+  ExecuteCalculateDrawProperties(root_layer);
+
+  EXPECT_EQ(root_layer->transform_tree_index(),
+            child_layer->transform_tree_index());
+  EXPECT_EQ(root_layer->effect_tree_index(), child_layer->effect_tree_index());
+
+  // Now add an animation player.
+  scoped_refptr<AnimationTimeline> timeline;
+  timeline = AnimationTimeline::Create(AnimationIdProvider::NextTimelineId());
+  host_impl.animation_host()->AddAnimationTimeline(timeline);
+
+  scoped_refptr<AnimationPlayer> player =
+      AnimationPlayer::Create(AnimationIdProvider::NextPlayerId());
+  timeline->AttachPlayer(player);
+  player->AttachElement(child_layer->element_id());
+
+  root_layer->layer_tree_impl()->property_trees()->needs_rebuild = true;
+  ExecuteCalculateDrawProperties(root_layer);
+
+  // The transform and effect nodes should still be the same.
+  EXPECT_EQ(root_layer->transform_tree_index(),
+            child_layer->transform_tree_index());
+  EXPECT_EQ(root_layer->effect_tree_index(), child_layer->effect_tree_index());
+
+  // Now SetWillChangeAnimatingProperties() and make sure we have new nodes.
+  player->SetWillChangeAnimatingProperties(true);
+
+  root_layer->layer_tree_impl()->property_trees()->needs_rebuild = true;
+  ExecuteCalculateDrawProperties(root_layer);
+
+  // The child layer should now have its own transform and effect nodes.
+  EXPECT_NE(root_layer->transform_tree_index(),
+            child_layer->transform_tree_index());
+  EXPECT_NE(root_layer->effect_tree_index(), child_layer->effect_tree_index());
+}
+
 TEST_F(LayerTreeHostCommonTest, PropertyTreesRebuildWithOpacityChanges) {
   scoped_refptr<Layer> root = Layer::Create();
   scoped_refptr<LayerWithForcedDrawsContent> child =
