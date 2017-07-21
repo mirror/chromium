@@ -58,19 +58,6 @@ IPC_MESSAGE_CONTROL1(WorkerProcessMsg_CreateWorker,
 // WorkerProcessHost messages
 // These are messages sent from the worker process to the browser process.
 
-// Sent by the worker process to check whether access to file system is allowed.
-IPC_SYNC_MESSAGE_CONTROL2_1(WorkerProcessHostMsg_RequestFileSystemAccessSync,
-                            int /* worker_route_id */,
-                            GURL /* origin url */,
-                            bool /* result */)
-
-// Sent by the worker process to check whether access to IndexedDB is allowed.
-IPC_SYNC_MESSAGE_CONTROL3_1(WorkerProcessHostMsg_AllowIndexedDB,
-                            int /* worker_route_id */,
-                            GURL /* origin url */,
-                            base::string16 /* database name */,
-                            bool /* result */)
-
 // Sent by the worker process to request being killed.
 IPC_SYNC_MESSAGE_CONTROL0_0(WorkerProcessHostMsg_ForceKillWorker)
 
