@@ -16,6 +16,7 @@ enum class UiUnsupportedMode : int {
   kCouldNotElideURL,
   kUnhandledPageInfo,
   kURLWithStrongRTLChars,
+  kInsecureAutopresentation,
 
   // This must be last.
   kCount,

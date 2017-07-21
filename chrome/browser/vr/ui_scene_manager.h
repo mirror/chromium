@@ -67,6 +67,11 @@ class UiSceneManager {
   void OnExitPromptChoiceForTesting(bool chose_exit);
 
  private:
+  enum SecureOrigin {
+    kUninitialized,
+    kSecure,
+    kInsecure,
+  };
   void CreateScreenDimmer();
   void CreateSecurityWarnings();
   void CreateSystemIndicators();
@@ -132,7 +137,7 @@ class UiSceneManager {
   bool prompting_to_exit_ = false;
   bool exiting_ = false;
 
-  bool secure_origin_ = false;
+  SecureOrigin secure_origin_ = SecureOrigin::kUninitialized;
   bool fullscreen_ = false;
   bool incognito_ = false;
   bool audio_capturing_ = false;

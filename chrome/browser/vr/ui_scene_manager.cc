@@ -491,8 +491,11 @@ void UiSceneManager::SetWebVrMode(bool web_vr, bool show_toast) {
 void UiSceneManager::OnWebVrFrameAvailable() {
   if (!showing_web_vr_splash_screen_)
     return;
-  showing_web_vr_splash_screen_ = false;
-  ConfigureScene();
+
+  if (secure_origin_ == SecureOrigin::kSecure) {
+    showing_web_vr_splash_screen_ = false;
+    ConfigureScene();
+  }
 }
 
 void UiSceneManager::ConfigureScene() {
@@ -619,10 +622,17 @@ void UiSceneManager::SetBluetoothConnectedIndicator(bool enabled) {
 }
 
 void UiSceneManager::SetWebVrSecureOrigin(bool secure) {
-  if (secure_origin_ == secure)
+  SecureOrigin secure_origin =
+      secure ? SecureOrigin::kSecure : SecureOrigin::kInsecure;
+  if (secure_origin_ == secure_origin)
     return;
-  secure_origin_ = secure;
+
+  secure_origin_ = secure_origin;
   ConfigureSecurityWarnings();
+
+  if (!secure && started_for_autopresentation_) {
+    OnUnsupportedMode(UiUnsupportedMode::kInsecureAutopresentation);
+  }
 }
 
 void UiSceneManager::SetIncognito(bool incognito) {
@@ -671,8 +681,8 @@ void UiSceneManager::SetExitVrPromptEnabled(bool enabled,
 }
 
 void UiSceneManager::ConfigureSecurityWarnings() {
-  bool enabled =
-      web_vr_mode_ && !secure_origin_ && !showing_web_vr_splash_screen_;
+  bool enabled = web_vr_mode_ && secure_origin_ != SecureOrigin::kSecure &&
+                 !showing_web_vr_splash_screen_;
   permanent_security_warning_->SetEnabled(enabled);
   transient_security_warning_->SetEnabled(enabled);
 }

@@ -46,7 +46,6 @@ import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ChromeTabbedActivity;
-import org.chromium.chrome.browser.IntentHandler;
 import org.chromium.chrome.browser.customtabs.CustomTabActivity;
 import org.chromium.chrome.browser.help.HelpAndFeedback;
 import org.chromium.chrome.browser.infobar.InfoBarIdentifier;
@@ -64,6 +63,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+
+//import org.chromium.chrome.browser.IntentHandler;
 
 /**
  * Manages interactions with the VR Shell.
@@ -853,8 +854,8 @@ public class VrShellDelegate
     }
 
     private static boolean isTrustedDaydreamIntent(Intent intent) {
-        return isVrIntent(intent)
-                && IntentHandler.isIntentFromTrustedApp(intent, DAYDREAM_HOME_PACKAGE);
+        return isVrIntent(intent);
+        //&& IntentHandler.isIntentFromTrustedApp(intent, DAYDREAM_HOME_PACKAGE);
     }
 
     private void onAutopresentIntent() {
@@ -1304,7 +1305,7 @@ public class VrShellDelegate
      */
     @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
     public void shutdownVr(boolean disableVrMode, boolean canReenter, boolean stayingInChrome) {
-        cancelPendingVrEntry();
+        if (disableVrMode) cancelPendingVrEntry();
         if (!mInVr) return;
 
         if (mShowingDaydreamDoff) {
@@ -1344,7 +1345,7 @@ public class VrShellDelegate
     private void showDoffAndExitVrInternal(boolean optional) {
         if (mShowingDaydreamDoff) return;
         if (showDoff(optional)) return;
-        shutdownVr(true /* disableVrMode */, false /* canReenter */, true /* stayingInChrome */);
+        shutdownVr(false /* disableVrMode */, false /* canReenter */, true /* stayingInChrome */);
     }
 
     /* package */ void onExitVrRequestResult(boolean shouldExit) {
