@@ -5,6 +5,7 @@
 // https://wicg.github.io/background-fetch/#background-fetch-manager
 
 [
+    SecureContext,
     Exposed=(Window,Worker),
     RuntimeEnabled=BackgroundFetch
 ] interface BackgroundFetchManager {
