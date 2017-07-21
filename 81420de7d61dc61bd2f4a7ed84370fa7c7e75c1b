@@ -127,6 +127,24 @@
     },
     {
       "key": {
+        "uuid": "a9908162_9752e371",
+        "filename": "third_party/WebKit/Source/core/CoreInitializer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-07-21T05:17:59Z",
+      "side": 1,
+      "message": "new CL on the way very soon",
+      "parentUuid": "ef6d4d88_3a7bce5f",
+      "revId": "81420de7d61dc61bd2f4a7ed84370fa7c7e75c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d8f1e45_0097d67e",
         "filename": "third_party/WebKit/Source/core/CoreInitializer.h",
         "patchSetId": 5
