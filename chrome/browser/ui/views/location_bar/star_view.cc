@@ -11,10 +11,14 @@
 #include "chrome/browser/ui/browser_commands.h"
 #include "chrome/browser/ui/view_ids.h"
 #include "chrome/browser/ui/views/bookmarks/bookmark_bubble_view.h"
+#include "chrome/browser/ui/views/frame/browser_view.h"
+#include "chrome/browser/ui/views/toolbar/toolbar_view.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/strings/grit/components_strings.h"
 #include "components/toolbar/vector_icons.h"
 #include "ui/base/l10n/l10n_util.h"
+#include "ui/gfx/color_palette.h"
+#include "ui/gfx/color_utils.h"
 
 StarView::StarView(CommandUpdater* command_updater, Browser* browser)
     : BubbleIconView(command_updater, IDC_BOOKMARK_PAGE), browser_(browser) {
@@ -64,4 +68,14 @@ views::BubbleDialogDelegateView* StarView::GetBubble() const {
 
 const gfx::VectorIcon& StarView::GetVectorIcon() const {
   return active() ? toolbar::kStarActiveIcon : toolbar::kStarIcon;
+}
+
+SkColor StarView::GetInkDropBaseColor() const {
+  return BrowserView::GetBrowserViewForBrowser(browser_)
+                 ->toolbar()
+                 ->IsBookmarkPromoObserving()
+             ? gfx::kGoogleBlue300
+             : color_utils::DeriveDefaultIconColor(
+                   GetNativeTheme()->GetSystemColor(
+                       ui::NativeTheme::kColorId_TextfieldDefaultColor));
 }
