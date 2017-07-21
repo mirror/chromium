@@ -566,6 +566,43 @@ struct CallbackCancellationTraits<Callback<Signature, copy_mode, repeat_mode>,
   }
 };
 
+namespace internal {
+
+template <typename Signature>
+class CalledExactlyOnceHelper;
+
+template <typename R, typename... Args>
+class CalledExactlyOnceHelper<R(Args...)> {
+ public:
+  using CallbackType = OnceCallback<R(Args...)>;
+
+  CalledExactlyOnceHelper(CallbackType callback)
+      : callback_(std::move(callback)) {
+    DCHECK(callback);
+  }
+  ~CalledExactlyOnceHelper() { DCHECK(!callback_); }
+
+  R Run(Args... args) {
+    return std::move(callback_).Run(std::forward<Args>(args)...);
+  }
+
+ private:
+  CallbackType callback_;
+};
+
+}  // namespace internal
+
+template <typename Signature>
+OnceCallback<Signature> EnsureCalledExactlyOnce(
+    OnceCallback<Signature> callback) {
+#if DCHECK_IS_ON()
+  using Helper = internal::CalledExactlyOnceHelper<Signature>;
+  return BindOnce(&Helper::Run, Owned(new Helper(std::move(callback))));
+#else
+  return callback;
+#endif
+}
+
 }  // namespace base
 
 #endif  // BASE_BIND_HELPERS_H_
