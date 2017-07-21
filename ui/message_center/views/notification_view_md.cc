@@ -12,7 +12,6 @@
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/geometry/size.h"
-#include "ui/gfx/image/image_skia_operations.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/gfx/skia_util.h"
 #include "ui/gfx/text_elider.h"
@@ -54,10 +53,6 @@ constexpr gfx::Insets kImageContainerPadding(0, 12, 12, 12);
 constexpr gfx::Insets kActionButtonPadding(0, 12, 0, 12);
 constexpr gfx::Size kActionButtonMinSize(88, 32);
 
-// Foreground of small icon image.
-constexpr SkColor kSmallImageBackgroundColor = SK_ColorWHITE;
-// Background of small icon image.
-const SkColor kSmallImageColor = SkColorSetRGB(0x43, 0x43, 0x43);
 // Background of inline actions area.
 const SkColor kActionsRowBackgroundColor = SkColorSetRGB(0xee, 0xee, 0xee);
 // Base ink drop color of action buttons.
@@ -77,35 +72,17 @@ constexpr int kCompactTitleMessageViewSpacing = 12;
 
 constexpr int kProgressBarHeight = 4;
 
-const gfx::ImageSkia CreateSolidColorImage(int width,
-                                           int height,
-                                           SkColor color) {
-  SkBitmap bitmap;
-  bitmap.allocN32Pixels(width, height);
-  bitmap.eraseColor(color);
-  return gfx::ImageSkia::CreateFrom1xBitmap(bitmap);
+base::string16 GetSystemComponentContextTitle(const NotifierId& notifier_id) {
+  DCHECK(notifier_id.type == NotifierId::SYSTEM_COMPONENT);
+  // TODO(tetsui): Add all first-party notification captions here.
+  return l10n_util::GetStringUTF16(
+      IDS_MESSAGE_CENTER_NOTIFICATION_CHROMEOS_SYSTEM);
 }
 
-// Take the alpha channel of icon, mask it with the foreground,
-// then add the masked foreground on top of the background
-const gfx::ImageSkia GetMaskedIcon(const gfx::ImageSkia& icon) {
-  int width = icon.width();
-  int height = icon.height();
-
-  // Background color grey
-  const gfx::ImageSkia background = CreateSolidColorImage(
-      width, height, message_center::kSmallImageBackgroundColor);
-  // Foreground color white
-  const gfx::ImageSkia foreground =
-      CreateSolidColorImage(width, height, message_center::kSmallImageColor);
-  const gfx::ImageSkia masked_small_image =
-      gfx::ImageSkiaOperations::CreateMaskedImage(foreground, icon);
-  return gfx::ImageSkiaOperations::CreateSuperimposedImage(background,
-                                                           masked_small_image);
-}
-
-const gfx::ImageSkia GetProductIcon() {
-  return gfx::CreateVectorIcon(kProductIcon, kSmallImageColor);
+SkColor GetSystemComponentAccentColor(const NotifierId& notifier_id) {
+  DCHECK(notifier_id.type == NotifierId::SYSTEM_COMPONENT);
+  // TODO(tetsui): Add all first-party notification accent colors here.
+  return kActionButtonTextColor;
 }
 
 // ItemView ////////////////////////////////////////////////////////////////////
@@ -496,7 +473,15 @@ void NotificationViewMD::RequestFocusOnCloseButton() {
 
 void NotificationViewMD::CreateOrUpdateContextTitleView(
     const Notification& notification) {
-  header_row_->SetAppName(notification.display_source());
+  if (notification.notifier_id().type == NotifierId::SYSTEM_COMPONENT) {
+    header_row_->SetAppName(
+        GetSystemComponentContextTitle(notification.notifier_id()));
+    header_row_->SetAccentColor(
+        GetSystemComponentAccentColor(notification.notifier_id()));
+  } else {
+    header_row_->SetAppName(notification.display_source());
+    header_row_->ClearAccentColor();
+  }
   header_row_->SetTimestamp(notification.timestamp());
 }
 
@@ -627,7 +612,8 @@ void NotificationViewMD::CreateOrUpdateListItemViews(
 void NotificationViewMD::CreateOrUpdateIconView(
     const Notification& notification) {
   if (notification.type() == NOTIFICATION_TYPE_PROGRESS ||
-      notification.type() == NOTIFICATION_TYPE_MULTIPLE) {
+      notification.type() == NOTIFICATION_TYPE_MULTIPLE ||
+      notification.notifier_id().type == NotifierId::SYSTEM_COMPONENT) {
     DCHECK(!icon_view_ || right_content_->Contains(icon_view_));
     delete icon_view_;
     icon_view_ = nullptr;
@@ -646,11 +632,26 @@ void NotificationViewMD::CreateOrUpdateIconView(
 
 void NotificationViewMD::CreateOrUpdateSmallIconView(
     const Notification& notification) {
-  gfx::ImageSkia icon =
-      notification.small_image().IsEmpty()
-          ? GetProductIcon()
-          : GetMaskedIcon(notification.small_image().AsImageSkia());
-  header_row_->SetAppIcon(icon);
+  if (notification.notifier_id().type == NotifierId::WEB_PAGE) {
+    // If the notifier is web, always show Chrome product icon.
+    header_row_->ClearAppIcon();
+  } else if (notification.notifier_id().type == NotifierId::SYSTEM_COMPONENT) {
+    // If the notifier is system component, try to use small_image and icon,
+    // then fallback to the product icon.
+    if (!notification.small_image().IsEmpty())
+      header_row_->SetAppIcon(notification.small_image().AsImageSkia());
+    else if (!notification.icon().IsEmpty())
+      header_row_->SetAppIcon(notification.icon().AsImageSkia());
+    else
+      header_row_->ClearAppIcon();
+  } else {
+    // For other notifiers, try to use small_image then fallback to the product
+    // icon. (Same as the behavior of NotificationView.)
+    if (!notification.small_image().IsEmpty())
+      header_row_->SetAppIcon(notification.small_image().AsImageSkia());
+    else
+      header_row_->ClearAppIcon();
+  }
 }
 
 void NotificationViewMD::CreateOrUpdateImageView(
@@ -718,6 +719,13 @@ void NotificationViewMD::CreateOrUpdateActionButtonViews(
       action_buttons_[i]->SetText(button_info.title);
       action_buttons_[i]->SchedulePaint();
       action_buttons_[i]->Layout();
+    }
+
+    // Change action button color to the accent color.
+    if (notification.notifier_id().type == NotifierId::SYSTEM_COMPONENT) {
+      SkColor accent_color =
+          GetSystemComponentAccentColor(notification.notifier_id());
+      action_buttons_[i]->SetEnabledTextColors(accent_color);
     }
   }
 
