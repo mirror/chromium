@@ -46,6 +46,13 @@
 -ServiceWorkerVersionBrowserTest.FetchEvent_ResponseViaCache
 -ServiceWorkerVersionBrowserTest.FetchEvent_respondWithRejection
 
+# http://crbug.com/736362
+-ServiceWorkerVersionBrowserTest.Activate_Rejected
+-ServiceWorkerVersionBrowserTest.FetchEvent_Response
+-ServiceWorkerVersionBrowserTest.Activate_NoEventListener
+-ServiceWorkerVersionBrowserTest.FetchEvent_ResponseViaCache
+-ServiceWorkerVersionBrowserTest.FetchEvent_respondWithRejection
+
 -AsyncResourceHandlerBrowserTest/AsyncResourceHandlerBrowserTest.UploadProgress*
 -BrowserSideNavigationBrowserTest.FailedNavigation
 -CrossSiteResourceHandlerTest.NoDeliveryToDetachedFrame
