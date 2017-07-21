@@ -22,9 +22,6 @@ class CrOSMockComponentUpdateService
  public:
   CrOSMockComponentUpdateService() {}
   ~CrOSMockComponentUpdateService() override {}
-  scoped_refptr<base::SequencedTaskRunner> GetSequencedTaskRunner() override {
-    return base::ThreadTaskRunnerHandle::Get();
-  }
 
  private:
   DISALLOW_COPY_AND_ASSIGN(CrOSMockComponentUpdateService);
