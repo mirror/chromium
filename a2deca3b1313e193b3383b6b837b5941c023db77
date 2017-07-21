@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6901c3bd_e5a14f45",
+        "filename": "ui/file_manager/file_manager/foreground/css/file_manager.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-21T06:22:15Z",
+      "side": 1,
+      "message": "Alphabetize properties.\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/web/web.md",
+      "revId": "a2deca3b1313e193b3383b6b837b5941c023db77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0015d08a_b0f9b3e2",
+        "filename": "ui/file_manager/file_manager/foreground/css/file_manager.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-21T06:22:15Z",
+      "side": 1,
+      "message": "flex-flow and max-width are not necessary.\nIf you set display:flex on the button and set \"flex: none\" on the arrow icon, the \"Cancel selection\" label will become flexible by default.",
+      "revId": "a2deca3b1313e193b3383b6b837b5941c023db77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05a1024e_de9c3bdf",
+        "filename": "ui/file_manager/file_manager/foreground/css/file_manager.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-21T06:22:15Z",
+      "side": 1,
+      "message": "Using nth-of-type for this purpose does not seem right :)\nWe might add elements before the label in the future.\n\nCould you add id for the label and use the id in this css file?",
+      "range": {
+        "startLine": 587,
+        "startChar": 32,
+        "endLine": 587,
+        "endChar": 43
+      },
+      "revId": "a2deca3b1313e193b3383b6b837b5941c023db77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "662e4f79_afc9c719",
+        "filename": "ui/file_manager/file_manager/foreground/css/file_manager.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-21T06:22:15Z",
+      "side": 1,
+      "message": "flex: 1 does not seem necessary.",
+      "revId": "a2deca3b1313e193b3383b6b837b5941c023db77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
