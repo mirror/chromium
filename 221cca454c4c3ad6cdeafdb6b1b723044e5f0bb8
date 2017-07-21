@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf5eba77_3afee3db",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1448,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-21T08:23:36Z",
+      "side": 1,
+      "message": "Why do we need both insertTextWhileEditing and setText?  Does this still work if we only have the call to setText?\n\nDoes the popup open as a result?  Should it?",
+      "revId": "221cca454c4c3ad6cdeafdb6b1b723044e5f0bb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
