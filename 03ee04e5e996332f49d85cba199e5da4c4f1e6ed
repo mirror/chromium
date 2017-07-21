@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fafc9adf_cce5bc34",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/io/blob-uuid.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-21T18:01:06Z",
+      "side": 1,
+      "message": "Please add a description. It\u0027s going to be mandatory next week.",
+      "range": {
+        "startLine": 2,
+        "startChar": 57,
+        "endLine": 2,
+        "endChar": 58
+      },
+      "revId": "03ee04e5e996332f49d85cba199e5da4c4f1e6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51af4fb1_0e6a7113",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/io/blob-uuid.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-21T18:01:06Z",
+      "side": 1,
+      "message": "nit: no need to quote param names",
+      "range": {
+        "startLine": 12,
+        "startChar": 44,
+        "endLine": 12,
+        "endChar": 52
+      },
+      "revId": "03ee04e5e996332f49d85cba199e5da4c4f1e6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e7c19a4_e2a407ee",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorIOAgent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-21T18:01:06Z",
+      "side": 1,
+      "message": "Not using context anywhere - pass nullptr?",
+      "range": {
+        "startLine": 27,
+        "startChar": 42,
+        "endLine": 27,
+        "endChar": 49
+      },
+      "revId": "03ee04e5e996332f49d85cba199e5da4c4f1e6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f132eaee_b012aa97",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorIOAgent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-21T18:01:06Z",
+      "side": 1,
+      "message": "style: warp this with {}",
+      "revId": "03ee04e5e996332f49d85cba199e5da4c4f1e6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88e40790_87415269",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 3471,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-21T18:01:06Z",
+      "side": 1,
+      "message": "Add Runtime dependency.",
+      "revId": "03ee04e5e996332f49d85cba199e5da4c4f1e6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
