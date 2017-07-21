@@ -13,6 +13,26 @@
 #include "third_party/skia/include/core/SkCanvas.h"
 
 namespace cc {
+namespace {
+
+bool IsImageOp(const PaintOp* op) {
+  PaintOpType type = static_cast<PaintOpType>(op->type);
+
+  if (!op->IsDrawOp()) {
+    return false;
+  } else if (type == PaintOpType::DrawImage) {
+    return true;
+  } else if (type == PaintOpType::DrawImageRect) {
+    return true;
+  } else if (op->kHasPaintFlags) {
+    const PaintFlags& flags = static_cast<const PaintOpWithFlags*>(op)->flags;
+    return flags.HasShader() && flags.getSkShader()->isAImage(nullptr, nullptr);
+  }
+
+  return false;
+}
+
+}  // namespace
 
 #define TYPES(M)           \
   M(AnnotateOp)            \
@@ -1558,6 +1578,7 @@ static const PaintOp* GetNestedSingleDrawingOp(const PaintOp* op) {
 }
 
 void PaintOpBuffer::Playback(SkCanvas* canvas,
+                             bool skip_all_images,
                              SkPicture::AbortCallback* callback,
                              const std::vector<size_t>* indices) const {
   if (!op_count_)
@@ -1617,6 +1638,9 @@ void PaintOpBuffer::Playback(SkCanvas* canvas,
         const PaintOp* draw_op = GetNestedSingleDrawingOp(second);
 
         if (draw_op) {
+          if (skip_all_images && IsImageOp(op))
+            continue;
+
           third = next_op();
           if (third && third->GetType() == PaintOpType::Restore) {
             auto* save_op = static_cast<const SaveLayerAlphaOp*>(op);
@@ -1636,6 +1660,8 @@ void PaintOpBuffer::Playback(SkCanvas* canvas,
     // other PaintFlags options) are not a noop.  Figure out what these
     // are so we can skip them correctly.
 
+    if (skip_all_images && IsImageOp(op))
+      continue;
     op->Raster(canvas, original);
   }
 }

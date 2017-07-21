@@ -32,7 +32,7 @@ CanvasPainter::~CanvasPainter() {
   canvas.scale(raster_scale_, raster_scale_);
 
   list_->Finalize();
-  list_->Raster(&canvas, nullptr);
+  list_->Raster(&canvas, false, nullptr);
 }
 
 }  // namespace ui

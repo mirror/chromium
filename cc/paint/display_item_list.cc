@@ -43,13 +43,14 @@ DisplayItemList::DisplayItemList() {
 DisplayItemList::~DisplayItemList() = default;
 
 void DisplayItemList::Raster(SkCanvas* canvas,
+                             bool skip_all_images,
                              SkPicture::AbortCallback* callback) const {
   gfx::Rect canvas_playback_rect;
   if (!GetCanvasClipBounds(canvas, &canvas_playback_rect))
     return;
 
   std::vector<size_t> indices = rtree_.Search(canvas_playback_rect);
-  paint_op_buffer_.Playback(canvas, callback, &indices);
+  paint_op_buffer_.Playback(canvas, skip_all_images, callback, &indices);
 }
 
 void DisplayItemList::GrowCurrentBeginItemVisualRect(
@@ -107,7 +108,7 @@ DisplayItemList::CreateTracedValue(bool include_items) const {
       SkCanvas* canvas =
           recorder.beginRecording(gfx::RectToSkRect(rtree_.GetBounds()));
       std::vector<size_t> indices{i};
-      paint_op_buffer_.Playback(canvas, nullptr, &indices);
+      paint_op_buffer_.Playback(canvas, false, nullptr, &indices);
       sk_sp<SkPicture> picture = recorder.finishRecordingAsPicture();
 
       std::string b64_picture;

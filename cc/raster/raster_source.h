@@ -160,6 +160,7 @@ class CC_EXPORT RasterSource : public base::RefCountedThreadSafe<RasterSource> {
 
  private:
   void RasterCommon(SkCanvas* canvas,
+                    bool skip_all_images = false,
                     SkPicture::AbortCallback* callback = nullptr) const;
 
   void PrepareForPlaybackToCanvas(SkCanvas* canvas) const;

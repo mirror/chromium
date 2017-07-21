@@ -40,6 +40,7 @@ class CC_PAINT_EXPORT DisplayItemList
   DisplayItemList();
 
   void Raster(SkCanvas* canvas,
+              bool skip_all_images = false,
               SkPicture::AbortCallback* callback = nullptr) const;
 
   PaintOpBuffer* StartPaint() {
