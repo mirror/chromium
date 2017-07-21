@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f1fb60be_fdfcceb3",
+        "filename": "third_party/WebKit/Source/platform/wtf/text/StringToNumber.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-21T04:06:16Z",
+      "side": 1,
+      "message": "I mean, their behavior were not well defined and we should avoid to use them.  \u0027Historical\u0027 or \u0027Deprecated\u0027 might be better.\n\nWe have kept their behavior just because we don\u0027t want to break existing behavior. We should clarify what behavior is necessary for all of callsites.\n\nFYI.\nI haven\u0027t found any code requiring kAcceptLeadingTrailingWhitespace yet.\nI found SMIL clock type parser incorrectly accepted string like \"02:+1:00\" due to kAcceptLeadingPlus.",
+      "parentUuid": "6ea6c6df_d603fb90",
+      "revId": "07cbd5b3380ca92d2a14af5cb8dab3b2be349a47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2817286b_ffc61df9",
         "filename": "third_party/WebKit/Source/platform/wtf/text/StringToNumber.h",
         "patchSetId": 3
