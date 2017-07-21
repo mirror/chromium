@@ -34,6 +34,24 @@
       "revId": "07d12473d504550fa44cf14012296a5607e75499",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9653f0d3_2786a57c",
+        "filename": "ui/aura/mus/window_tree_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1373,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-21T20:35:30Z",
+      "side": 1,
+      "message": "Yep. I think we have discussed doing something similar a while back: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d608547 Looking at the usage of LocatedEvent::root_location(), I think it would make sense to replace that with the \u0027system location\u0027 (which remains in the native untransformed state).\n\nBut yeah, that\u0027s a non-trivial amount of work, and doesn\u0027t make sense to block this on that. I was hoping we could do the necessary transform in ExtendedMouseWarpController (using ScreenPositionClient etc.), but we do lose precision in most places (although LocatedEvent::location_f etc. are floats).\n\nMaybe add a TODO that we hope to be able to get rid of this once 608547 is addressed?",
+      "parentUuid": "9add9eef_59f42c6c",
+      "revId": "07d12473d504550fa44cf14012296a5607e75499",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
