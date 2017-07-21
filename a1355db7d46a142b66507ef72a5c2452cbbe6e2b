@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09417b1f_63b714c2",
+        "filename": "chrome/browser/ui/webui/options/certificate_manager_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-21T05:19:51Z",
+      "side": 1,
+      "message": "Why does this one block shutdown, whereas the one above does not?",
+      "revId": "a1355db7d46a142b66507ef72a5c2452cbbe6e2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
