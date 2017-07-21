@@ -578,6 +578,7 @@ body.check-select #files-selected-label {
 }
 
 #cancel-selection-button {
+  display: flex;
   text-transform: none;
 }
 
@@ -606,6 +607,14 @@ body.check-select #files-selected-label {
 #cancel-selection-button > iron-icon {
   -webkit-margin-end: 6px;
 }
+
+#cancel-selection-label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 
 body.check-select #cancel-selection-button-wrapper {
   display: block;
