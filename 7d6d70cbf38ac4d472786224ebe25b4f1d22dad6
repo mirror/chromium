@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fae8688d_a6912cbb",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 3669,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-21T22:55:51Z",
+      "side": 1,
+      "message": "This doesn\u0027t have to be a class method, since it doesn\u0027t depend on the class at all. Can we move it to the anonymous namespace, around line 626?",
+      "revId": "7d6d70cbf38ac4d472786224ebe25b4f1d22dad6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
