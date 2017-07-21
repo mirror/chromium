@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8d6e1ab9_664c5288",
+        "filename": "base/test/launcher/test_results_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1128614
+      },
+      "writtenOn": "2017-07-21T13:02:52Z",
+      "side": 1,
+      "message": "I\u0027ve replaced this condition with AddShardTest() call now.",
+      "parentUuid": "dad55bca_6f5b5c0a",
+      "range": {
+        "startLine": 245,
+        "startChar": 2,
+        "endLine": 246,
+        "endChar": 33
+      },
+      "revId": "42f0e441f62fcc8c2c1e602332470f67b5f712f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "17b7f9b5_b7a84a52",
         "filename": "base/test/launcher/test_results_tracker.h",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c4c490c0_d3eff1ab",
+        "filename": "base/test/launcher/test_results_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1128614
+      },
+      "writtenOn": "2017-07-21T13:02:52Z",
+      "side": 1,
+      "message": "We need to collect list of shard tests before actual test run. So separate method will mark that test will be launched and it will be reported in the early summary (which may be usable when test-launcher crashes).",
+      "parentUuid": "17b7f9b5_b7a84a52",
+      "range": {
+        "startLine": 50,
+        "startChar": 7,
+        "endLine": 50,
+        "endChar": 19
+      },
+      "revId": "42f0e441f62fcc8c2c1e602332470f67b5f712f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b6dd5bf0_8247bd21",
         "filename": "base/test/launcher/test_results_tracker.h",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-21T12:26:58Z",
       "side": 1,
       "message": "Do we need two member variables to keep track of tests?\n\nper_iteration_data_ should already have tests which we actually ran.",
+      "range": {
+        "startLine": 126,
+        "startChar": 24,
+        "endLine": 126,
+        "endChar": 40
+      },
+      "revId": "42f0e441f62fcc8c2c1e602332470f67b5f712f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da2fb39f_355673a4",
+        "filename": "base/test/launcher/test_results_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1128614
+      },
+      "writtenOn": "2017-07-21T13:02:52Z",
+      "side": 1,
+      "message": "No, I\u0027ve removed one of them and renamed other to shard_tests_.",
+      "parentUuid": "b6dd5bf0_8247bd21",
       "range": {
         "startLine": 126,
         "startChar": 24,
