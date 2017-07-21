@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d941ce7f_d0310340",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1984,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-21T00:54:40Z",
+      "side": 1,
+      "message": "Why do we have these spaces? This won\u0027t catch, e.g., lines 14 or 17 of https://cs.chromium.org/chromium/src/components/safe_browsing/web_ui/resources/safe_browsing.js?type\u003dcs\u0026q\u003dfile:%5C.js+%22%3D%3E%22+-%22+%3D%3E+%22+file:%5Esrc/+-file:third_party+-file:%5Esrc/out+-file:v8\u0026sq\u003dpackage:chromium\u0026l\u003d14",
+      "range": {
+        "startLine": 1984,
+        "startChar": 6,
+        "endLine": 1984,
+        "endChar": 10
+      },
+      "revId": "110576f5f690ffb2f1663597b4401290d6d182c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35c25981_88e52590",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1985,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-21T00:54:40Z",
+      "side": 1,
+      "message": "nit: isn\u0027t this already stated by the strings in _CheckForRiskyJsFeatures?",
+      "range": {
+        "startLine": 1985,
+        "startChar": 19,
+        "endLine": 1985,
+        "endChar": 55
+      },
+      "revId": "110576f5f690ffb2f1663597b4401290d6d182c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27c95293_36a5efac",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1991,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-21T00:54:40Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 1991,
+        "startChar": 19,
+        "endLine": 1991,
+        "endChar": 49
+      },
+      "revId": "110576f5f690ffb2f1663597b4401290d6d182c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
