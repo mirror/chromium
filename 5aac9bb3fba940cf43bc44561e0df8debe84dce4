@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37f46f85_be081439",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2713,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-21T08:31:59Z",
+      "side": 1,
+      "message": "nit: wich may set -\u003e which may be set",
+      "revId": "5aac9bb3fba940cf43bc44561e0df8debe84dce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f7f6dac_f128c2aa",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2743,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-21T08:31:59Z",
+      "side": 1,
+      "message": "will relaods -\u003e will reload",
+      "revId": "5aac9bb3fba940cf43bc44561e0df8debe84dce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dc965f3_684111b9",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2877,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-21T08:31:59Z",
+      "side": 1,
+      "message": "didn\u0027t -\u003e don\u0027t ?\n\nMaybe just rephrase this in a \u0027TODO\u0027 style, i.e.\n\nTODO(horo): Remove this return when we implement WorkerFetchContext::ShouldBlock...()\ncorrectly for off-main-thread-fetch cases.",
+      "revId": "5aac9bb3fba940cf43bc44561e0df8debe84dce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e470b391_5b356824",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2992,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-21T08:31:59Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "5aac9bb3fba940cf43bc44561e0df8debe84dce4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
