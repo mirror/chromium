@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51aa4b6a_3cb10d58",
+        "filename": "chrome/browser/ui/browser_commands.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-21T06:37:55Z",
+      "side": 1,
+      "message": "Maybe this should reveal too?  (Though I dunno if you can trigger it directly via shortcut)",
+      "revId": "f7a42bf9bd55f284cea6205cbf9cb2e579722647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2027f0bf_30c1751d",
+        "filename": "chrome/browser/ui/cocoa/browser_window_cocoa.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-21T06:37:55Z",
+      "side": 1,
+      "message": "Honestly, I\u0027d think we\u0027d want some kind of implementation on Mac, since it has a top toolbar that animates down from offscreen when in fullscreen mode, doesn\u0027t it?",
+      "revId": "f7a42bf9bd55f284cea6205cbf9cb2e579722647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6517d64f_6b28df50",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-21T06:37:55Z",
+      "side": 1,
+      "message": "Nit: Can we use WaitableEvent in place of spinning a runloop?",
+      "revId": "f7a42bf9bd55f284cea6205cbf9cb2e579722647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdd9aac7_f01086b0",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-21T06:37:55Z",
+      "side": 1,
+      "message": "It feels strange that this EXPECT is after WaitUntilRevealEnds().  Would it not pass before then?",
+      "revId": "f7a42bf9bd55f284cea6205cbf9cb2e579722647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "098a6b52_eb7efb3a",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-21T06:37:55Z",
+      "side": 1,
+      "message": "Nit: Could probably just use a do-nothing lambda for this.",
+      "revId": "f7a42bf9bd55f284cea6205cbf9cb2e579722647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32e31e11_0cbe4fc6",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-21T06:37:55Z",
+      "side": 1,
+      "message": "Nit: Prefer \u003d to () for this; see https://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Variable-initialization .",
+      "revId": "f7a42bf9bd55f284cea6205cbf9cb2e579722647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00c91637_4fa08af2",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-21T06:37:55Z",
+      "side": 1,
+      "message": "Is there something we can do to make sure that in tests this runs near-instantly?  Or are delayed tasks already run with no delay in tests?  (I saw that proposal somewhere but I don\u0027t know if it was implemented.)\n\nI\u0027d hate to have every invocation of the browsertest for this take an extra four seconds to complete; that\u0027s a lot of waiting across all bots on all CLs.",
+      "revId": "f7a42bf9bd55f284cea6205cbf9cb2e579722647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
