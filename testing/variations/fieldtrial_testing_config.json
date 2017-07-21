@@ -1984,6 +1984,21 @@
             ]
         }
     ],
+    "OfflinePagesNewBackgroundLoader": [
+        {
+            "platforms": [
+                "android"
+            ],
+            "experiments": [
+                {
+                    "name": "Enabled",
+                    "enable_features": [
+                        "BackgroundLoader"
+                    ]
+                }
+            ]
+        }
+    ],
     "OmniboxBundledExperimentV1": [
         {
             "platforms": [
