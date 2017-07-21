@@ -23,12 +23,15 @@ class MouseEvent;
 class NewTabPromo : public views::BubbleDialogDelegateView {
  public:
   // Returns a self owned raw pointer to the NewTabButton.
-  static NewTabPromo* CreateSelfOwned(const gfx::Rect& anchor_rect);
+  // |text_specifier| determines the text that the promo will show.
+  static NewTabPromo* CreateSelfOwned(const gfx::Rect& anchor_rect,
+                                      const int& text_specifier);
 
  private:
   // Constructs NewTabPromo. Anchors the bubble to the NewTabButton.
   // The bubble widget and promo are owned by their native widget.
-  explicit NewTabPromo(const gfx::Rect& anchor_rect);
+
+  NewTabPromo(const gfx::Rect& anchor_rect, const int& text_specifier);
   ~NewTabPromo() override;
 
   // BubbleDialogDelegateView:
@@ -44,8 +47,14 @@ class NewTabPromo : public views::BubbleDialogDelegateView {
   // Starts a timer which will close the bubble.
   void StartAutoCloseTimer(base::TimeDelta auto_close_duration);
 
+  // Based off of the specifier passed through the constuctor, returns the
+  // appropriate resource ID  for the string to be displayed in the NewTabPromo.
+  int SpecifierToID(const int& text_specifier);
+
   // Timer used to auto close the bubble.
   base::OneShotTimer timer_;
+
+  base::string16 text_;
 
   DISALLOW_COPY_AND_ASSIGN(NewTabPromo);
 };
