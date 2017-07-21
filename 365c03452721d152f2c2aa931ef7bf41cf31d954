@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "585c011b_4b82eac0",
+        "filename": "dbus/object_proxy.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1170239
+      },
+      "writtenOn": "2017-07-21T02:13:05Z",
+      "side": 1,
+      "message": "rename this function to RunCallMethodInternalCallback()?\n\nThe original name wasn\u0027t good either since the function was both running response_callback and error_callback.",
+      "range": {
+        "startLine": 312,
+        "startChar": 18,
+        "endLine": 312,
+        "endChar": 37
+      },
+      "revId": "365c03452721d152f2c2aa931ef7bf41cf31d954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d488006_9adab272",
         "filename": "dbus/object_proxy.h",
         "patchSetId": 3
@@ -30,6 +53,29 @@
       "writtenOn": "2017-07-20T15:53:37Z",
       "side": 1,
       "message": "Optional: how about using \"using\"? (Ditto for below).",
+      "revId": "365c03452721d152f2c2aa931ef7bf41cf31d954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aa7a5bb_3b96330c",
+        "filename": "dbus/object_proxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1170239
+      },
+      "writtenOn": "2017-07-21T02:13:05Z",
+      "side": 1,
+      "message": "maybe make it a bit clearer:\n\n// Used as CallMethodInternalCallback by CallMethod() (i.e. ErrorCallback wasn\u0027t provided,\n// hence response_callback will be used for handling the error response).",
+      "range": {
+        "startLine": 278,
+        "startChar": 13,
+        "endLine": 278,
+        "endChar": 39
+      },
       "revId": "365c03452721d152f2c2aa931ef7bf41cf31d954",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
