@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b650eb96_51e470be",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXLayoutObject.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2031,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-21T04:36:41Z",
+      "side": 1,
+      "message": "Don\u0027t forget to remove this",
+      "range": {
+        "startLine": 2031,
+        "startChar": 6,
+        "endLine": 2031,
+        "endChar": 11
+      },
+      "revId": "2ba532ddac93b8f913c9908143e69f355cf57a46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
