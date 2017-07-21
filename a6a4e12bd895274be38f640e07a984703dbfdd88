@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6ddf8af1_5a9d38bf",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-21T20:48:36Z",
+      "side": 1,
+      "message": "Done. Removed.",
+      "parentUuid": "f4e2e631_133fc90e",
+      "revId": "a6a4e12bd895274be38f640e07a984703dbfdd88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02e574b4_8b63abfd",
         "filename": "media/remoting/renderer_controller.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "a6a4e12bd895274be38f640e07a984703dbfdd88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15bb57a5_73d7b147",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-21T20:48:36Z",
+      "side": 1,
+      "message": "Done. Was thinking these seem good to be left in the observer. But since MediaObserver is currently only implemented by RendererController, it makes sense to remove it.",
+      "parentUuid": "02e574b4_8b63abfd",
+      "revId": "a6a4e12bd895274be38f640e07a984703dbfdd88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "066173a8_e85c67c8",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-21T20:48:36Z",
+      "side": 1,
+      "message": "I feel using states is equal to the current implementation. |should_be_remoting| tells whether to enter/leave remoting. The timer tells whether in the delayed start period.\n \nThe encrypted related codes will be removed in a clean-up CL, which will make this logic simple and clear. :)",
+      "parentUuid": "696d78e8_b815b730",
+      "revId": "a6a4e12bd895274be38f640e07a984703dbfdd88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7666f98e_6c5a98ce",
         "filename": "media/remoting/renderer_controller.h",
         "patchSetId": 5
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "43721bac_1fc7c56d",
+        "filename": "media/remoting/renderer_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-21T20:48:36Z",
+      "side": 1,
+      "message": "Yes. The codes relate to encrypted will be deleted in a coming clean-up CL since it complicates the logic a lot and we currently don\u0027t have plan to support remoting encrypted contents.",
+      "parentUuid": "7666f98e_6c5a98ce",
+      "revId": "a6a4e12bd895274be38f640e07a984703dbfdd88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2504affa_d692027c",
         "filename": "media/remoting/renderer_controller.h",
         "patchSetId": 5
@@ -84,6 +156,24 @@
       "revId": "a6a4e12bd895274be38f640e07a984703dbfdd88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32b5e142_438d3a6e",
+        "filename": "media/remoting/renderer_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-07-21T20:48:36Z",
+      "side": 1,
+      "message": "Done. Thanks for catching. :)",
+      "parentUuid": "2504affa_d692027c",
+      "revId": "a6a4e12bd895274be38f640e07a984703dbfdd88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
