@@ -16,6 +16,24 @@
       "revId": "5bbe7d6c1a865d70d72101c2c6e5bfa7547a7bf2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33667aac_39ab86dd",
+        "filename": "services/device/generic_sensor/sensor_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-07-21T16:26:50Z",
+      "side": 1,
+      "message": "Done. In the latest patch the Blink part also uses traits, kMaxAllowedFrequency is removed from .mojom",
+      "parentUuid": "ca6a2b12_651ac786",
+      "revId": "5bbe7d6c1a865d70d72101c2c6e5bfa7547a7bf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
