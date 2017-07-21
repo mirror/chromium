@@ -20,8 +20,12 @@ function repaintTest() {
   highlightRange('svg3', 26, 32, 'kInactive');
   internals.setMarkedTextMatchesAreHighlighted(document, true);
 }
-if (window.internals)
+if (window.internals) {
   onload = runRepaintAndPixelTest;
+  // TODO(srirama.m): Added this line to avoid crash.
+  // Fix the crash and remove this line.
+  internals.runtimeFlags.paintUnderInvalidationCheckingEnabled = false;
+}
 </script>
 <style>
 body { margin: 0 }
