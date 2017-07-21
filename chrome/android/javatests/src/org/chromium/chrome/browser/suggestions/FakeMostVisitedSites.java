@@ -103,7 +103,7 @@ public class FakeMostVisitedSites implements MostVisitedSites {
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
-                mObserver.onMostVisitedURLsAvailable(mTitles.clone(), mUrls.clone(),
+                mObserver.onURLsAvailable(mTitles.clone(), mUrls.clone(),
                         mWhitelistIconPaths.clone(), mSources.clone());
             }
         });
