@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a1aa83e_378487e1",
+        "filename": "chrome/browser/ui/views/location_bar/star_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-21T21:05:48Z",
+      "side": 1,
+      "message": "are we calling UpdateIcon from somewhere when this condition changes?",
+      "revId": "f8205277acf03a27b474e4c35e9a4cb381fa2e8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ee0bccf_4d81eacc",
+        "filename": "chrome/browser/ui/views/location_bar/star_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-21T21:05:48Z",
+      "side": 1,
+      "message": "this should be using the prominent color from the native theme (as in BubbleIconView)",
+      "range": {
+        "startLine": 77,
+        "startChar": 20,
+        "endLine": 77,
+        "endChar": 34
+      },
+      "revId": "f8205277acf03a27b474e4c35e9a4cb381fa2e8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
