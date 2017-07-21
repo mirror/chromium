@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11253fe0_6ad13d41",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-21T03:20:28Z",
+      "side": 1,
+      "message": "Maybe split this function into two:\nretrieveWebappInfoForIntent() which checks |sWebInfoMap| (and is static)\ncreateWebappInfo() which calls WebappInfo.create()\n\nWebApkActivity would override createWebappInfo() but not retrieveWebappInfoForIntent()\n\nWe should remove the element from sWebInfoMap after retrieving it",
+      "revId": "2f5729fd19bb712117f16e5ba80049b333f03bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a24586de_457a4644",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-21T03:20:28Z",
+      "side": 1,
+      "message": "Can you use getIdFromIntent() here?",
+      "range": {
+        "startLine": 110,
+        "startChar": 84,
+        "endLine": 110,
+        "endChar": 0
+      },
+      "revId": "2f5729fd19bb712117f16e5ba80049b333f03bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6083eca2_b4e24cdc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappLauncherActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-21T03:20:28Z",
+      "side": 1,
+      "message": "Can you call WebappActivity#addWebappInfoToCache() here instead? (That way you don\u0027t call WebappActivity#addWebappInfoToCache() if the Webapp/WebAPK is not launched, like when |webappInfo \u003d\u003d null|)",
+      "revId": "2f5729fd19bb712117f16e5ba80049b333f03bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "934f6294_a333b590",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappLauncherActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-21T03:20:28Z",
+      "side": 1,
+      "message": "Instead of calling WebappInfo#setWebappIntentExtras() can you just set the id?\n\nIt would be nice if we could delete WebappInfo#setWebappIntentExtras() altogether. This would involve calling WebappActivity#addWebappInfoToCache() in WebappDelegateFactory.java",
+      "range": {
+        "startLine": 193,
+        "startChar": 49,
+        "endLine": 193,
+        "endChar": 0
+      },
+      "revId": "2f5729fd19bb712117f16e5ba80049b333f03bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
