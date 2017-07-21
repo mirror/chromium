@@ -3470,7 +3470,6 @@
     {
         "domain": "IO",
         "description": "Input/Output operations for streams produced by DevTools.",
-        "dependencies": ["Runtime"],
         "experimental": true,
         "types": [
             {
@@ -3488,6 +3487,7 @@
                     { "name": "size", "type": "integer", "optional": true,  "description": "Maximum number of bytes to read (left upon the agent discretion if not specified)." }
                 ],
                 "returns": [
+                    { "name": "base64Encoded", "type": "boolean", "optional": true, "description": "Set if the data is base64-encoded"},
                     { "name": "data", "type": "string", "description": "Data that were read." },
                     { "name": "eof", "type": "boolean", "description": "Set if the end-of-file condition occured while reading." }
                 ]
