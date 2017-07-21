@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "f42f3471_c6534d4d",
+        "filename": "content/common/unique_name_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-21T02:08:55Z",
+      "side": 1,
+      "message": "I\u0027m having trouble following a few aspects of this:\n\n1) How is the string length related to i?  Is position guaranteed to be a single digit until i gets to 10?  What about 10 itself?  (Are the positions 0-9?)\n\n2) Why is it a problem to change the string length?  This looks like it\u0027s called within the computation of the legacy name, and we already have to check the output length and possibly hash if it\u0027s too long, so I\u0027m not sure why this limit is needed.\n\n3) Are we going to face any problems having different legacy names due to this change than before (and compared to what\u0027s read from disk)?\n\n4) Are there tests covering this change?\n\nThese things make me a bit nervous, and I\u0027m not sure why it\u0027s needed.",
+      "revId": "fec5fd287200a5de1bf62d087b0100c125f4c58f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b47b41de_0f2494cc",
+        "filename": "content/common/unique_name_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-21T02:08:55Z",
+      "side": 1,
+      "message": "nit: unique",
+      "range": {
+        "startLine": 169,
+        "startChar": 50,
+        "endLine": 169,
+        "endChar": 56
+      },
+      "revId": "fec5fd287200a5de1bf62d087b0100c125f4c58f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "077bcf42_43cabd74",
         "filename": "content/common/unique_name_helper.cc",
         "patchSetId": 4
@@ -13,6 +53,63 @@
       "writtenOn": "2017-07-20T22:46:36Z",
       "side": 1,
       "message": "Note to self: I need to run for a bit, but I will implement this before landing.",
+      "revId": "fec5fd287200a5de1bf62d087b0100c125f4c58f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9f11700_9f31f269",
+        "filename": "content/common/unique_name_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-21T02:08:55Z",
+      "side": 1,
+      "message": "nit: This belongs above the constructor and methods, near FrameAdapter.",
+      "revId": "fec5fd287200a5de1bf62d087b0100c125f4c58f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d587547_891a1e88",
+        "filename": "content/common/unique_name_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-21T02:08:55Z",
+      "side": 1,
+      "message": "UpdateLegacyNameForMaxSize(), right?",
+      "revId": "fec5fd287200a5de1bf62d087b0100c125f4c58f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54433764_82a55fd2",
+        "filename": "content/common/unique_name_helper_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-21T02:08:55Z",
+      "side": 1,
+      "message": "nit: Remove extra space.",
+      "range": {
+        "startLine": 25,
+        "startChar": 42,
+        "endLine": 25,
+        "endChar": 51
+      },
       "revId": "fec5fd287200a5de1bf62d087b0100c125f4c58f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

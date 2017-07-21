@@ -132,6 +132,24 @@
     },
     {
       "key": {
+        "uuid": "5cf3ac7f_026211db",
+        "filename": "content/common/unique_name_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-21T02:08:55Z",
+      "side": 1,
+      "message": "\u003e Well, the problem is we often don\u0027t know if we\u0027re going to exceed the limit. \n\nI meant that if |name| exceeds the limit, it seems like the legacy name is going to exceed the limit as well.  Or are you saying that there are corner cases where legacy name could be under the limit when |name| is over the limit?  Anyway, I\u0027m guessing it\u0027s simpler to always have the hash input be the legacy name, regardless of whether we can deterministically shortcut here.\n \n\u003e We also don\u0027t know if the name is going to collide (and fallback to a frame path) without doing all this work. I\u0027m not really sure how to encode that in a meaningful comment that just describes the what, rather than the why. I\u0027m open to suggestions.\n\nPossible proposal for comment:\nAlways compute the legacy name first, so that it can always be used as the input to the hashing function when needed. Do not shortcut based on the length of |name|, because the legacy name may be unpredictable due to collisions, etc.",
+      "parentUuid": "d41a871e_694a795b",
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4902dc43_fb4bf12e",
         "filename": "content/common/unique_name_helper.cc",
         "patchSetId": 2
@@ -519,6 +537,24 @@
     },
     {
       "key": {
+        "uuid": "f0c189db_816c48f1",
+        "filename": "content/common/unique_name_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-21T02:08:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f71a38ca_269cdd24",
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3ea8b86_ca5b6224",
         "filename": "content/common/unique_name_helper.h",
         "patchSetId": 2
@@ -668,6 +704,24 @@
       "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b192eeb8_6af88eb4",
+        "filename": "content/common/unique_name_helper_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-21T02:08:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9873cfe0_ad2cfc1f",
+      "revId": "41c0f7e785e2ef003a4d70bdeebf5657462b5611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
