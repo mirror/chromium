@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecb62e53_031db64a",
+        "filename": "chrome/browser/metrics/google_update_metrics_provider_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-21T17:49:41Z",
+      "side": 1,
+      "message": "override",
+      "range": {
+        "startLine": 22,
+        "startChar": 51,
+        "endLine": 22,
+        "endChar": 52
+      },
+      "revId": "8eaa61b7d52a155aca1286c383493e987474a71c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fed81c6_1ced4da4",
+        "filename": "components/metrics/metrics_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-21T17:49:41Z",
+      "side": 1,
+      "message": "I think this comment is too cryptic. Can you change it to explain the use case? i.e. for the provider to gather information asynchronously and notify when done via the callback.",
+      "range": {
+        "startLine": 30,
+        "startChar": 47,
+        "endLine": 30,
+        "endChar": 48
+      },
+      "revId": "8eaa61b7d52a155aca1286c383493e987474a71c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "853614fb_5e614b38",
+        "filename": "components/metrics/metrics_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-21T17:49:41Z",
+      "side": 1,
+      "message": "So one function change is we\u0027re now starting all the async tasks at the same time, as opposed for us synchronously controlling the order and flow. I think it should be OK, but please mention this functional change in the CL description.\n\nAlso, do we have a way to see the effect of this in UMA? i.e. does it result in initialization completing faster?",
+      "range": {
+        "startLine": 643,
+        "startChar": 32,
+        "endLine": 643,
+        "endChar": 33
+      },
+      "revId": "8eaa61b7d52a155aca1286c383493e987474a71c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdedbe4f_1083dcb3",
+        "filename": "components/ukm/ukm_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-21T17:49:41Z",
+      "side": 1,
+      "message": "Is there any problem with some of this work being done twice?\n\nIdeally, there could be caching of this info somewhere so that it only needs to be retrieved once. Can you add a TODO about it?\n\nAlso, I wonder if it wouldn\u0027t be better for UkmService to just use PersistentSystemProfile and rely on metrics service to actually fill it in. Then, it wouldn\u0027t need to have extra providers and init task running at all.",
+      "range": {
+        "startLine": 224,
+        "startChar": 32,
+        "endLine": 224,
+        "endChar": 33
+      },
+      "revId": "8eaa61b7d52a155aca1286c383493e987474a71c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
