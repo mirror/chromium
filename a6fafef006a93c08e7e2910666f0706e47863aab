@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "634f4bc6_b8921a35",
+        "filename": "ui/app_list/views/app_list_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-07-21T17:04:47Z",
+      "side": 1,
+      "message": "If I directly use StartPageView::kNoSelection, EXPECT_EQ has link error.",
+      "range": {
+        "startLine": 483,
+        "startChar": 16,
+        "endLine": 483,
+        "endChar": 28
+      },
+      "revId": "a6fafef006a93c08e7e2910666f0706e47863aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
