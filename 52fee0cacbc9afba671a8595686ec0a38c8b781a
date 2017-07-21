@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "546ecc43_c7656a87",
+        "filename": "base/android/java/src/org/chromium/base/JavaExceptionReporter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-21T18:36:07Z",
+      "side": 1,
+      "message": "Since this just does the default behaviour, I would skip adding this for now. Maybe just add a comment to BuildHooks setter saying that it should be called from attachBaseContext.",
+      "range": {
+        "startLine": 61,
+        "startChar": 24,
+        "endLine": 61,
+        "endChar": 45
+      },
+      "revId": "52fee0cacbc9afba671a8595686ec0a38c8b781a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03e33f1f_0e422ace",
+        "filename": "build/android/buildhooks/java/org/chromium/buildhooks/BuildHooks.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-21T18:36:07Z",
+      "side": 1,
+      "message": "stale docs",
+      "range": {
+        "startLine": 8,
+        "startChar": 12,
+        "endLine": 8,
+        "endChar": 21
+      },
+      "revId": "52fee0cacbc9afba671a8595686ec0a38c8b781a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fd6b7de_d83b54e7",
+        "filename": "build/android/buildhooks/java/org/chromium/buildhooks/BuildHooks.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-21T18:36:07Z",
+      "side": 1,
+      "message": "Make private",
+      "revId": "52fee0cacbc9afba671a8595686ec0a38c8b781a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13c94b47_04bf8ae2",
+        "filename": "build/android/buildhooks/java/org/chromium/buildhooks/BuildHooks.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-21T18:36:07Z",
+      "side": 1,
+      "message": "Mention that this is called is made by java_assertion_enabler",
+      "revId": "52fee0cacbc9afba671a8595686ec0a38c8b781a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffe48cf4_8c2a088d",
+        "filename": "build/android/buildhooks/java/org/chromium/buildhooks/BuildHooks.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-21T18:36:07Z",
+      "side": 1,
+      "message": "no need to specify this.",
+      "range": {
+        "startLine": 15,
+        "startChar": 75,
+        "endLine": 15,
+        "endChar": 96
+      },
+      "revId": "52fee0cacbc9afba671a8595686ec0a38c8b781a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58119a39_77c9bb7e",
+        "filename": "build/android/buildhooks/java/org/chromium/buildhooks/Callback.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-21T18:36:07Z",
+      "side": 1,
+      "message": "nit: call this org.chromium.build;",
+      "range": {
+        "startLine": 5,
+        "startChar": 21,
+        "endLine": 5,
+        "endChar": 31
+      },
+      "revId": "52fee0cacbc9afba671a8595686ec0a38c8b781a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11b0fa5f_eaf49444",
+        "filename": "build/android/buildhooks/java/org/chromium/buildhooks/Callback.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-21T18:36:07Z",
+      "side": 1,
+      "message": "put on next line",
+      "range": {
+        "startLine": 10,
+        "startChar": 31,
+        "endLine": 10,
+        "endChar": 35
+      },
+      "revId": "52fee0cacbc9afba671a8595686ec0a38c8b781a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6f75b1c_b6a1b28f",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 2492,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-21T18:36:07Z",
+      "side": 1,
+      "message": "You need build_hooks_java added here as well.",
+      "range": {
+        "startLine": 2492,
+        "startChar": 41,
+        "endLine": 2492,
+        "endChar": 45
+      },
+      "revId": "52fee0cacbc9afba671a8595686ec0a38c8b781a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
