@@ -119,6 +119,11 @@ WebContents* RenderWidgetHostDelegate::GetAsWebContents() {
   return nullptr;
 }
 
+SyntheticGestureTarget* RenderWidgetHostDelegate::CreateSyntheticGestureTarget(
+    RenderWidgetHostImpl*) {
+  return nullptr;
+}
+
 bool RenderWidgetHostDelegate::IsShowingContextMenuOnPage() const {
   return false;
 }

@@ -1150,8 +1150,7 @@ void RenderWidgetHostViewAndroid::ShowDisambiguationPopup(
 std::unique_ptr<SyntheticGestureTarget>
 RenderWidgetHostViewAndroid::CreateSyntheticGestureTarget() {
   return std::unique_ptr<SyntheticGestureTarget>(
-      new SyntheticGestureTargetAndroid(
-          host_, content_view_core_->CreateMotionEventSynthesizer()));
+      host_->delegate()->CreateSyntheticGestureTarget(host_));
 }
 
 void RenderWidgetHostViewAndroid::SendReclaimCompositorResources(

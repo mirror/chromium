@@ -739,4 +739,19 @@ void WebContentsAndroid::SetMediaSession(
   Java_WebContentsImpl_setMediaSession(env, obj_, j_media_session);
 }
 
+SyntheticGestureTarget* WebContentsAndroid::CreateSyntheticGestureTarget(
+    RenderWidgetHostImpl* host) {
+  const ScopedJavaLocalRef<jobject>& target(
+      web_contents_->GetNativeView()->GetContainerView());
+  if (target.is_null())
+    return nullptr;
+
+  JNIEnv* env = base::android::AttachCurrentThread();
+  jlong native_target = Java_WebContentsImpl_createSyntheticGestureTarget(
+      env, obj_, reinterpret_cast<intptr_t>(host), target,
+      web_contents_->GetNativeView()->GetDipScale());
+  DCHECK(native_target);
+  return reinterpret_cast<SyntheticGestureTarget*>(native_target);
+}
+
 }  // namespace content

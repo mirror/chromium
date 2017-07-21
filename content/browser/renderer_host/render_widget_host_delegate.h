@@ -43,6 +43,7 @@ class BrowserAccessibilityManager;
 class RenderWidgetHostImpl;
 class RenderWidgetHostInputEventRouter;
 class RenderViewHostDelegateView;
+class SyntheticGestureTarget;
 class TextInputManager;
 class WebContents;
 enum class KeyboardEventProcessingResult;
@@ -268,6 +269,9 @@ class CONTENT_EXPORT RenderWidgetHostDelegate {
   // Return this object cast to a WebContents, if it is one. If the object is
   // not a WebContents, returns nullptr.
   virtual WebContents* GetAsWebContents();
+
+  virtual SyntheticGestureTarget* CreateSyntheticGestureTarget(
+      RenderWidgetHostImpl* render_widget_host);
 
   // Notifies that a CompositorFrame was received from the renderer.
   virtual void DidReceiveCompositorFrame() {}

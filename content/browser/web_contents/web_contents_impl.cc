@@ -5445,6 +5445,12 @@ service_manager::InterfaceProvider* WebContentsImpl::GetJavaInterfaces() {
   return java_interfaces_.get();
 }
 
+SyntheticGestureTarget* WebContentsImpl::CreateSyntheticGestureTarget(
+    RenderWidgetHostImpl* render_widget_host) {
+  return GetWebContentsAndroid()->CreateSyntheticGestureTarget(
+      render_widget_host);
+}
+
 #elif defined(OS_MACOSX)
 
 void WebContentsImpl::SetAllowOtherViews(bool allow) {

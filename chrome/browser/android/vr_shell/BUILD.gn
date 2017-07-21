@@ -51,7 +51,6 @@ static_library("vr_android") {
     "//chrome:resources",
     "//chrome/browser/vr:vr_common",
     "//components/rappor",
-    "//content/public/android:jni",
     "//content/public/browser",
     "//content/public/common",
     "//device/gamepad",
@@ -79,6 +78,7 @@ static_library("vr_android") {
 
 generate_jni("vr_shell_jni_headers") {
   sources = [
+    "//chrome/android/java/src/org/chromium/chrome/browser/vr_shell/AndroidUiGestureTarget.java",
     "//chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrCoreInfo.java",
     "//chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
     "//chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
