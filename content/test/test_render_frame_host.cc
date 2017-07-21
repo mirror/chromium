@@ -20,6 +20,7 @@
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/url_constants.h"
 #include "content/public/test/browser_side_navigation_test_utils.h"
+#include "content/public/test/navigation_simulator.h"
 #include "content/test/test_navigation_url_loader.h"
 #include "content/test/test_render_view_host.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
@@ -252,19 +253,12 @@ void TestRenderFrameHost::SimulateSwapOutACK() {
   OnSwappedOut();
 }
 
+// DEPRECATED: Use NavigationSimulator instead.
 void TestRenderFrameHost::NavigateAndCommitRendererInitiated(
     bool did_create_new_entry,
     const GURL& url) {
-  SendRendererInitiatedNavigationRequest(url, false);
-  // PlzNavigate: If no network request is needed by the navigation, then there
-  // will be no NavigationRequest, nor is it necessary to simulate the network
-  // stack commit.
-  if (frame_tree_node()->navigation_request())
-    PrepareForCommit();
-  bool browser_side_navigation = IsBrowserSideNavigationEnabled();
-  CHECK(!browser_side_navigation || is_loading());
-  CHECK(!browser_side_navigation || !frame_tree_node()->navigation_request());
-  SendNavigate(0, did_create_new_entry, url);
+  (void)did_create_new_entry;  // not used.
+  NavigationSimulator(url, this).Commit();
 }
 
 void TestRenderFrameHost::SimulateFeaturePolicyHeader(
