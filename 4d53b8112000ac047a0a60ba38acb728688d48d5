@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "73ab8f43_87950f9b",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_util.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-07-21T22:59:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7712bcf_181da507",
+      "revId": "4d53b8112000ac047a0a60ba38acb728688d48d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fbb87b1_0215d7a2",
         "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_util.h",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-21T21:08:36Z",
       "side": 1,
       "message": "I don\u0027t think we need this second function since it\u0027s just a trivial pass-through call to NotifyNewTabEvent().  Instead of using this function, you could just do \"NotifyNewTabEvent(browserState, command.incognito)\", which adds a bit more context to future readers of the code.",
+      "revId": "4d53b8112000ac047a0a60ba38acb728688d48d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3c9cd5d_940346a1",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_util.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-07-21T22:59:35Z",
+      "side": 1,
+      "message": "It doesn\u0027t directly pass through |command.incognito|. It wraps the call in an if statement so only user initiated new tab events (based on |command.userInitiated|) notify the FeatureEngagementTracker. I\u0027m not completely sold on that because it kind of obfuscates that only user initiated new tabs should fire events.",
+      "parentUuid": "3fbb87b1_0215d7a2",
       "revId": "4d53b8112000ac047a0a60ba38acb728688d48d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -64,6 +100,24 @@
       "writtenOn": "2017-07-21T21:08:36Z",
       "side": 1,
       "message": "This comment is confusing because the tracker will be notified of an event regardless of |command|.  How about \"Send either the \"New Tab Opened\" or \"Incognito Tab Opened\" event to the FeatureEngagementTracker ...\"?",
+      "revId": "4d53b8112000ac047a0a60ba38acb728688d48d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd821c37_be2c2b79",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-07-21T22:59:35Z",
+      "side": 1,
+      "message": "NotifyNewTabEventForCommand only triggers the event if |command.isUserInitiated| is |true|. If |command.isUserInitiated| is |false|, then the call does nothing. Regardless, I\u0027m not 100% sold on the comment. \"Either send or don\u0027t send\" sounds awkward, but changing \"NotifyNewTabEventForCommand\" to \"MaybeNotifyNewTabEventForCommand\" or \"NotifyNewTabEventForUserInitiatedCommand\" don\u0027t seem better.",
+      "parentUuid": "1ceb75e1_96938e2a",
       "revId": "4d53b8112000ac047a0a60ba38acb728688d48d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
