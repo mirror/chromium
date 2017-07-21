@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4eb6b5a3_62631ce6",
+        "filename": "third_party/WebKit/LayoutTests/fast/forms/week-multiple-fields/week-multiple-fields-mouse-events-expected.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1207755
+      },
+      "writtenOn": "2017-07-21T15:32:24Z",
+      "side": 1,
+      "message": "Automatic rebaselining didn\u0027t work out well here...\n\nCanStartSelection() of \u003cinput type\u003d\"week\"\u003e answered true.\n\nSame went for type \u003d \"date\", \"datetime\", \"month\", \"slider\" ... When hovering these elements an I-beam was displayed. I guess we don\u0027t want that? :) It makes no sense because these elements cannot carry a visible cursor...\n\nIn DevTools I saw that user agent stylesheet of \u003cinput\u003e had user-select: text. I think it needs to be `auto` instead. I fixed this in PS12 by updating core/css/html.css. nainar@ or bokan@ PTAL.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 4
+      },
+      "revId": "20d141568dbb82ee7e594cc7050b6f867863004b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
