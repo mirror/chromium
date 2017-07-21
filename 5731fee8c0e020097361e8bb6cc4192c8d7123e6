@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce81cc32_dc961e73",
+        "filename": "content/browser/webui/web_ui_url_loader_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-07-21T20:02:37Z",
+      "side": 0,
+      "message": "browserthread is still used, so leave the include per IWYU",
+      "revId": "5731fee8c0e020097361e8bb6cc4192c8d7123e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
