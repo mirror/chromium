@@ -65,6 +65,24 @@
     },
     {
       "key": {
+        "uuid": "e2efb32a_a86bbfbd",
+        "filename": "components/metrics/metrics_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-07-21T22:15:56Z",
+      "side": 1,
+      "message": "The sole usage appears to be in iOS:\nios/chrome/browser/metrics/mobile_session_shutdown_metrics_provider.h",
+      "parentUuid": "8be4a210_a8541192",
+      "revId": "8611cbab42c10f517a89b67b8f46fc9ea9fc613a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "705e9c0b_cf8bf236",
         "filename": "components/metrics/metrics_provider.h",
         "patchSetId": 2
