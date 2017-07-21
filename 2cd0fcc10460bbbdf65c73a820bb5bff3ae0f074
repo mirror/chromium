@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "649a8d52_3f6aaf79",
+        "filename": "chrome/browser/resources/help/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-21T21:53:46Z",
+      "side": 0,
+      "message": "Can you add someone else here? What happens if I am OOO?",
+      "revId": "2cd0fcc10460bbbdf65c73a820bb5bff3ae0f074",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63a42e41_f543035d",
+        "filename": "chrome/browser/resources/options/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-21T21:53:46Z",
+      "side": 0,
+      "message": "Same here. Can we add a 2nd OWNER, especially because of the noparent (maybe michaelpg@ since this is CrOS only)?",
+      "revId": "2cd0fcc10460bbbdf65c73a820bb5bff3ae0f074",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bc090f4_09d96636",
+        "filename": "chrome/browser/ui/webui/options/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-21T21:53:46Z",
+      "side": 0,
+      "message": "And here.",
+      "revId": "2cd0fcc10460bbbdf65c73a820bb5bff3ae0f074",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
