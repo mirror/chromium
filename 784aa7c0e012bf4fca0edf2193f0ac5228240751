@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c826fd51_177e510f",
+        "filename": "third_party/WebKit/LayoutTests/editing/undo/undo-smart-delete-word.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-21T04:05:18Z",
+      "side": 1,
+      "message": "Just curiosity, why do we need to have this change?",
+      "revId": "784aa7c0e012bf4fca0edf2193f0ac5228240751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2a5f9a8_d57cf30e",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTextNodeHandler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-21T04:05:18Z",
+      "side": 1,
+      "message": "Can we use bool flag for checking where we are processing Layout NG or legacy rather?\n\nSince TextIteratorTextNodeHandler::HandleTextNodeWithLayoutNG() uses\nAssociatedLayoutObjectOf(), It is better than getting NGInlineNode  along\nwith getting LayoutObject.",
+      "revId": "784aa7c0e012bf4fca0edf2193f0ac5228240751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
