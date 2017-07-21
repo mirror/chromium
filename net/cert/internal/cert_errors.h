@@ -133,6 +133,7 @@ class NET_EXPORT CertPathErrors {
   // specified index. It is expected that |cert_index| is the corresponding
   // index in a certificate chain (with 0 being the target).
   CertErrors* GetErrorsForCert(size_t cert_index);
+  const CertErrors* GetErrorsForCert(size_t cert_index) const;
 
   // Returns a bucket to put errors that are not associated with a particular
   // certificate.
