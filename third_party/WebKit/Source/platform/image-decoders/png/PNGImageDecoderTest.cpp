@@ -132,7 +132,7 @@ void CompareFrameWithExpectation(const PublicFrameInfo& expected,
                                  size_t index) {
   EXPECT_EQ(expected.duration, decoder->FrameDurationAtIndex(index));
 
-  const auto* frame = decoder->FrameBufferAtIndex(index);
+  const auto* frame = decoder->DecodeFrameBufferAtIndex(index);
   ASSERT_TRUE(frame);
 
   EXPECT_EQ(expected.duration, frame->Duration());
@@ -167,7 +167,7 @@ static void ExpectStatic(ImageDecoder* decoder) {
   EXPECT_EQ(1u, decoder->FrameCount());
   EXPECT_FALSE(decoder->Failed());
 
-  ImageFrame* frame = decoder->FrameBufferAtIndex(0);
+  ImageFrame* frame = decoder->DecodeFrameBufferAtIndex(0);
   ASSERT_NE(nullptr, frame);
   EXPECT_EQ(ImageFrame::kFrameComplete, frame->GetStatus());
   EXPECT_FALSE(decoder->Failed());
@@ -232,7 +232,7 @@ void TestProgressiveDecodingContinuesAfterFullData(
   decoder_upfront->SetData(full_data.Get(), true);
   EXPECT_GE(decoder_upfront->FrameCount(), 1u);
   const ImageFrame* const frame_upfront =
-      decoder_upfront->FrameBufferAtIndex(0);
+      decoder_upfront->DecodeFrameBufferAtIndex(0);
   ASSERT_EQ(ImageFrame::kFrameComplete, frame_upfront->GetStatus());
   const unsigned hash_upfront = HashBitmap(frame_upfront->Bitmap());
 
@@ -242,12 +242,12 @@ void TestProgressiveDecodingContinuesAfterFullData(
   decoder->SetData(partial_data, false);
 
   EXPECT_EQ(1u, decoder->FrameCount());
-  const ImageFrame* frame = decoder->FrameBufferAtIndex(0);
+  const ImageFrame* frame = decoder->DecodeFrameBufferAtIndex(0);
   EXPECT_EQ(frame->GetStatus(), ImageFrame::kFramePartial);
   const unsigned hash_partial = HashBitmap(frame->Bitmap());
 
   decoder->SetData(full_data.Get(), true);
-  frame = decoder->FrameBufferAtIndex(0);
+  frame = decoder->DecodeFrameBufferAtIndex(0);
   EXPECT_EQ(frame->GetStatus(), ImageFrame::kFrameComplete);
   const unsigned hash_full = HashBitmap(frame->Bitmap());
 
@@ -280,7 +280,7 @@ void TestFailureDuringDecode(const char* file,
 
   EXPECT_EQ(expected_frame_count, decoder->FrameCount());
 
-  decoder->FrameBufferAtIndex(frame_index);
+  decoder->DecodeFrameBufferAtIndex(frame_index);
   ASSERT_EQ(true, decoder->Failed());
 
   EXPECT_EQ(expected_frame_count, decoder->FrameCount());
@@ -337,7 +337,7 @@ TEST(AnimatedPNGTests, EmptyFrame) {
   EXPECT_EQ(2u, decoder->FrameCount());
   EXPECT_FALSE(decoder->Failed());
 
-  ImageFrame* frame = decoder->FrameBufferAtIndex(1);
+  ImageFrame* frame = decoder->DecodeFrameBufferAtIndex(1);
   EXPECT_TRUE(decoder->Failed());
   ASSERT_NE(nullptr, frame);
   EXPECT_EQ(ImageFrame::kFrameEmpty, frame->GetStatus());
@@ -507,7 +507,7 @@ TEST(AnimatedPNGTests, ActlErrors) {
       EXPECT_EQ(1u, decoder->FrameCount());
       EXPECT_FALSE(decoder->Failed());
       EXPECT_EQ(kAnimationNone, decoder->RepetitionCount());
-      EXPECT_NE(nullptr, decoder->FrameBufferAtIndex(0));
+      EXPECT_NE(nullptr, decoder->DecodeFrameBufferAtIndex(0));
       EXPECT_FALSE(decoder->Failed());
     }
   }
@@ -691,7 +691,7 @@ TEST(AnimatedPNGTests, FailureMissingIendChunk) {
 
   for (size_t i = 0; i < kExpectedFramesAfterAllExcept12Bytes; i++) {
     EXPECT_FALSE(decoder->Failed());
-    decoder->FrameBufferAtIndex(i);
+    decoder->DecodeFrameBufferAtIndex(i);
   }
 
   EXPECT_TRUE(decoder->Failed());
@@ -835,19 +835,19 @@ TEST(AnimatedPNGTests, VerifySuccessfulFirstFrameDecodeAfterLaterFrame) {
 
   ASSERT_EQ(1u, decoder->FrameCount());
   ASSERT_EQ(ImageFrame::kFramePartial,
-            decoder->FrameBufferAtIndex(0)->GetStatus());
+            decoder->DecodeFrameBufferAtIndex(0)->GetStatus());
 
   decoder->SetData(full_data.Get(), true);
   ASSERT_EQ(3u, decoder->FrameCount());
   ASSERT_EQ(ImageFrame::kFrameComplete,
-            decoder->FrameBufferAtIndex(1)->GetStatus());
+            decoder->DecodeFrameBufferAtIndex(1)->GetStatus());
   // The point is that this call does not decode frame 0, which it won't do if
   // it does not have it as its required previous frame.
   ASSERT_EQ(kNotFound,
-            decoder->FrameBufferAtIndex(1)->RequiredPreviousFrameIndex());
+            decoder->DecodeFrameBufferAtIndex(1)->RequiredPreviousFrameIndex());
 
   EXPECT_EQ(ImageFrame::kFrameComplete,
-            decoder->FrameBufferAtIndex(0)->GetStatus());
+            decoder->DecodeFrameBufferAtIndex(0)->GetStatus());
   EXPECT_FALSE(decoder->Failed());
 }
 
@@ -885,11 +885,11 @@ TEST(AnimatedPNGTests, DecodeFromIndependentFrame) {
   ASSERT_EQ(4u, decoder->FrameCount());
   ASSERT_FALSE(decoder->Failed());
 
-  auto* frame = decoder->FrameBufferAtIndex(0);
+  auto* frame = decoder->DecodeFrameBufferAtIndex(0);
   ASSERT_TRUE(frame);
   ASSERT_EQ(ImageFrame::kDisposeOverwriteBgcolor, frame->GetDisposalMethod());
 
-  frame = decoder->FrameBufferAtIndex(1);
+  frame = decoder->DecodeFrameBufferAtIndex(1);
   ASSERT_TRUE(frame);
   ASSERT_FALSE(decoder->Failed());
   ASSERT_NE(IntRect({}, decoder->Size()), frame->OriginalFrameRect());
@@ -901,7 +901,7 @@ TEST(AnimatedPNGTests, DecodeFromIndependentFrame) {
   decoder = CreateDecoder();
   decoder->SetData(data.Get(), true);
 
-  frame = decoder->FrameBufferAtIndex(1);
+  frame = decoder->DecodeFrameBufferAtIndex(1);
   ASSERT_TRUE(frame);
   EXPECT_EQ(hash, HashBitmap(frame->Bitmap()));
 }
@@ -1018,7 +1018,7 @@ TEST(PNGTests, VerifyFrameCompleteBehavior) {
 
     // Frame is not complete, even after decoding partially.
     EXPECT_FALSE(decoder->FrameIsReceivedAtIndex(0));
-    auto* frame = decoder->FrameBufferAtIndex(0);
+    auto* frame = decoder->DecodeFrameBufferAtIndex(0);
     ASSERT_TRUE(frame);
     EXPECT_NE(ImageFrame::kFrameComplete, frame->GetStatus());
     EXPECT_FALSE(decoder->FrameIsReceivedAtIndex(0));
@@ -1040,7 +1040,7 @@ TEST(PNGTests, VerifyFrameCompleteBehavior) {
     for (size_t i = 0; i < frame_count; ++i)
       EXPECT_TRUE(decoder->FrameIsReceivedAtIndex(i));
 
-    frame = decoder->FrameBufferAtIndex(0);
+    frame = decoder->DecodeFrameBufferAtIndex(0);
     ASSERT_TRUE(frame);
     EXPECT_EQ(ImageFrame::kFrameComplete, frame->GetStatus());
     EXPECT_TRUE(decoder->FrameIsReceivedAtIndex(0));

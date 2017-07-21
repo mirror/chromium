@@ -129,11 +129,12 @@ size_t ImageDecoder::FrameCount() {
   return new_size;
 }
 
-ImageFrame* ImageDecoder::FrameBufferAtIndex(size_t index) {
+ImageFrame* ImageDecoder::DecodeFrameBufferAtIndex(size_t index) {
   if (index >= FrameCount())
-    return 0;
-
+    return nullptr;
   ImageFrame* frame = &frame_buffer_cache_[index];
+  if (!frame)
+    return nullptr;
   if (frame->GetStatus() != ImageFrame::kFrameComplete) {
     PlatformInstrumentation::WillDecodeImage(FilenameExtension());
     Decode(index);
