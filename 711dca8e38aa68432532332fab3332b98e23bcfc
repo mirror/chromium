@@ -497,6 +497,30 @@
     },
     {
       "key": {
+        "uuid": "57b901d0_84f2eb74",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-21T15:49:00Z",
+      "side": 1,
+      "message": "The cache seems to potentially break those assumptions.  I\u0027m concerned we\u0027ll get numbers here, and have no ability how to interpret them meaningfully (Or worse, draw the wrong conclusions from them, since we don\u0027t understand what the numbers actually mean).",
+      "parentUuid": "cf830642_beb7d135",
+      "range": {
+        "startLine": 444,
+        "startChar": 58,
+        "endLine": 444,
+        "endChar": 0
+      },
+      "revId": "711dca8e38aa68432532332fab3332b98e23bcfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a21e21da_80a40441",
         "filename": "content/browser/loader/resource_scheduler.cc",
         "patchSetId": 8
