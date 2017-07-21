@@ -382,4 +382,11 @@ void V8Window::namedPropertyGetterCustom(
   }
 }
 
+void V8Window::namedPropertyEnumeratorCustom(
+    const v8::PropertyCallbackInfo<v8::Array>& info) {}
+
+void V8Window::namedPropertyQueryCustom(
+    const AtomicString& name,
+    const v8::PropertyCallbackInfo<v8::Integer>& info) {}
+
 }  // namespace blink

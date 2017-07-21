@@ -520,7 +520,7 @@ static void install{{v8_class}}Template(
       v8::External::New(isolate, const_cast<WrapperTypeInfo*>(&{{v8_class}}::wrapperTypeInfo)));
   {% endif %}
 
-  {% if (indexed_property_getter or named_property_getter) and not is_partial %}
+  {% if indexed_property_getter and not is_partial %}
   // Indexed properties
   {{install_indexed_property_handler('instanceTemplate') | indent(2)}}
   {% endif %}

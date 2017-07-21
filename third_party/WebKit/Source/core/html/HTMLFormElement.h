@@ -102,6 +102,13 @@ class CORE_EXPORT HTMLFormElement final : public HTMLElement {
   const HeapVector<Member<HTMLImageElement>>& ImageElements();
 
   void AnonymousNamedGetter(const AtomicString& name, RadioNodeListOrElement&);
+  void NamedPropertyEnumerator(Vector<String>&, ExceptionState&) const {
+    // See https://github.com/whatwg/html/issues/1731
+  }
+  bool NamedPropertyQuery(const AtomicString&, ExceptionState&) const {
+    // See https://github.com/whatwg/html/issues/1731
+    return false;
+  }
   void InvalidateDefaultButtonStyle() const;
 
  private:

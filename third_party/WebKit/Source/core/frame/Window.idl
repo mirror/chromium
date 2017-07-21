@@ -30,6 +30,7 @@
 [
     CheckSecurity=Receiver,
     ImplementedAs=DOMWindow,
+    LegacyUnenumerableNamedProperties,
     PrimaryGlobal
 ] interface Window : EventTarget {
     // the current browsing context
@@ -67,10 +68,10 @@
 
     // indexed properties
     // https://html.spec.whatwg.org/C/browsers.html#windowproxy-getownproperty
-    [NotEnumerable, CrossOrigin] getter Window (unsigned long index);
+    [CrossOrigin] getter Window (unsigned long index);
 
     // named properties
-    [Custom, NotEnumerable, CrossOrigin] getter object (DOMString name);
+    [Custom=(PropertyEnumerator,PropertyGetter,PropertyQuery), CrossOrigin] getter object (DOMString name);
 
     // the user agent
     [LogActivity=GetterOnly] readonly attribute Navigator navigator;
