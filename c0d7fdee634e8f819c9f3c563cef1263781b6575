@@ -518,6 +518,30 @@
       "revId": "c0d7fdee634e8f819c9f3c563cef1263781b6575",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef068539_95ddbd6c",
+        "filename": "components/signin/core/browser/scoped_account_consistency.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-21T04:23:14Z",
+      "side": 1,
+      "message": "I do agree that the Feature API is somewhat awkward to use with parameters, as they were bolted on rather than designed in from the get-go.  However, I don\u0027t think that the test API needs to be as awkward to use, nor do I think it\u0027s important for the test API to match the non-test code\u0027s API.  In other words, I\u0027m ok with having ScopedFeatureList do extra heavy lifting to hide away the details of activating some field trial params.  I don\u0027t think there\u0027s a need for a separate class, and I\u0027d prefer to implement that as part of this CL (since it\u0027s the motivating ... feature \u003d]).\n\nThat said, if you\u0027re not game for rewriting this CL to make direct use of params easy, I can still review this as-is.  I do think it\u0027s a step forward either way.",
+      "parentUuid": "433d40f8_6e1e692d",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 51
+      },
+      "revId": "c0d7fdee634e8f819c9f3c563cef1263781b6575",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
