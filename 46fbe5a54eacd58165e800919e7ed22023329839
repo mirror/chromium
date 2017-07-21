@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32934ef8_44e37b9d",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-21T20:32:49Z",
+      "side": 1,
+      "message": "nit: This should be declared first, before the Create method. Also, document what this represents.",
+      "revId": "46fbe5a54eacd58165e800919e7ed22023329839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
