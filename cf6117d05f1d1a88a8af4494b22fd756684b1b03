@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0a67945_f9e7b37d",
+        "filename": "components/browser_watcher/watcher_client_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-07-21T18:41:46Z",
+      "side": 1,
+      "message": "nit: remove \"only\".",
+      "range": {
+        "startLine": 45,
+        "startChar": 41,
+        "endLine": 45,
+        "endChar": 46
+      },
+      "revId": "cf6117d05f1d1a88a8af4494b22fd756684b1b03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
