@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe9611d7_0b548b30",
+        "filename": "content/browser/renderer_host/input/synthetic_gesture_target_android.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-21T18:22:54Z",
+      "side": 1,
+      "message": "don\u0027t need this arg?",
+      "revId": "054df62211b06229a9376edcba67428872c75e11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25314fc7_270e549d",
+        "filename": "content/browser/renderer_host/input/synthetic_gesture_target_android.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-21T18:22:54Z",
+      "side": 1,
+      "message": "if you keep a copy of scale factor, then you need to listen for when it changes. I think the old code to have a \"WindowAndroidProvider\" is actually the easiest most correct thing to do, because you probably window can change as well. so most correct thing is just get the current thing every time it\u0027s needed",
+      "revId": "054df62211b06229a9376edcba67428872c75e11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b7f0c75_ce8bf40d",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1153,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-21T18:22:54Z",
+      "side": 1,
+      "message": "you shouldn\u0027t need to go through WebContents at all now, right? RWHVA should have everything it needs to create SyntheticGestureTarget",
+      "revId": "054df62211b06229a9376edcba67428872c75e11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
