@@ -154,7 +154,7 @@ class ShelfItemSelectionTracker : public ShelfItemDelegate {
     item_selected_count_++;
     std::move(callback).Run(item_selected_action_, base::nullopt);
   }
-  void ExecuteCommand(uint32_t command_id, int32_t event_flags) override {}
+  void ExecuteCommand(bool, uint32_t, int32_t, int64_t) override {}
   void Close() override {}
 
  private:
@@ -2095,7 +2095,7 @@ class ListMenuShelfItemDelegate : public ShelfItemDelegate {
     items.push_back(mojom::MenuItem::New());
     std::move(callback).Run(SHELF_ACTION_NONE, std::move(items));
   }
-  void ExecuteCommand(uint32_t command_id, int32_t event_flags) override {}
+  void ExecuteCommand(bool, uint32_t, int32_t, int64_t) override {}
   void Close() override {}
 
   DISALLOW_COPY_AND_ASSIGN(ListMenuShelfItemDelegate);

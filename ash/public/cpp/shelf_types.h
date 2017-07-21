@@ -88,6 +88,32 @@ enum ShelfAction {
 
   // The app list launcher menu was shown.
   SHELF_ACTION_APP_LIST_SHOWN,
+
+  // No action was taken, but an application menu should be shown.
+  SHELF_ACTION_SHOW_APPLICATION_MENU,
+
+  // No action was taken, but a context menu should be shown.
+  SHELF_ACTION_SHOW_CONTEXT_MENU,
+};
+
+// Shelf context menu item command ids.
+enum ShelfContextMenuItem {
+  MENU_OPEN_NEW,
+  MENU_CLOSE,
+  MENU_PIN,
+  LAUNCH_TYPE_PINNED_TAB,
+  LAUNCH_TYPE_REGULAR_TAB,
+  LAUNCH_TYPE_FULLSCREEN,
+  LAUNCH_TYPE_WINDOW,
+  MENU_AUTO_HIDE,
+  MENU_NEW_WINDOW,
+  MENU_NEW_INCOGNITO_WINDOW,
+  MENU_ALIGNMENT_MENU,
+  MENU_ALIGNMENT_LEFT,
+  MENU_ALIGNMENT_RIGHT,
+  MENU_ALIGNMENT_BOTTOM,
+  MENU_CHANGE_WALLPAPER,
+  MENU_ITEM_COUNT
 };
 
 // The type of a shelf item.

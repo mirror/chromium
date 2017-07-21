@@ -169,8 +169,10 @@ bool ExtensionLauncherContextMenu::IsCommandIdEnabled(int command_id) const {
   }
 }
 
-void ExtensionLauncherContextMenu::ExecuteCommand(int command_id,
-                                                  int event_flags) {
+void ExtensionLauncherContextMenu::ExecuteCommand(bool from_context_menu,
+                                                  uint32_t command_id,
+                                                  int32_t event_flags,
+                                                  int64_t display_id) {
   if (ExecuteCommonCommand(command_id, event_flags))
     return;
   switch (static_cast<MenuItem>(command_id)) {

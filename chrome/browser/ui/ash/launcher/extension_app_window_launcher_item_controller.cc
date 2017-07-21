@@ -5,12 +5,12 @@
 #include "chrome/browser/ui/ash/launcher/extension_app_window_launcher_item_controller.h"
 
 #include "ash/public/cpp/shelf_item_delegate.h"
+#include "ash/shelf/shelf_context_menu_model.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
 #include "base/memory/ptr_util.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/ash/launcher/chrome_launcher_controller.h"
-#include "chrome/browser/ui/ash/launcher/launcher_context_menu.h"
 #include "components/favicon/content/content_favicon_driver.h"
 #include "content/public/browser/web_contents.h"
 #include "extensions/browser/app_window/app_window.h"
@@ -76,8 +76,10 @@ ash::MenuItemList ExtensionAppWindowLauncherItemController::GetAppMenuItems(
 }
 
 void ExtensionAppWindowLauncherItemController::ExecuteCommand(
+    bool from_context_menu,
     uint32_t command_id,
-    int32_t event_flags) {
+    int32_t event_flags,
+    int64_t display_id) {
   ChromeLauncherController::instance()->ActivateShellApp(app_id(), command_id);
 }
 

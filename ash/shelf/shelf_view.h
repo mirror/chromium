@@ -299,7 +299,7 @@ class ASH_EXPORT ShelfView : public views::View,
   // optionally shows an application menu with the given |menu_items|.
   void AfterItemSelected(
       const ShelfItem& item,
-      views::Button* sender,
+      views::View* sender,
       std::unique_ptr<ui::Event> event,
       views::InkDrop* ink_drop,
       ShelfAction action,

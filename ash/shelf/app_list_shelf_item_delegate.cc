@@ -24,8 +24,10 @@ void AppListShelfItemDelegate::ItemSelected(std::unique_ptr<ui::Event> event,
   std::move(callback).Run(SHELF_ACTION_APP_LIST_SHOWN, base::nullopt);
 }
 
-void AppListShelfItemDelegate::ExecuteCommand(uint32_t command_id,
-                                              int32_t event_flags) {
+void AppListShelfItemDelegate::ExecuteCommand(bool from_context_menu,
+                                              uint32_t command_id,
+                                              int32_t event_flags,
+                                              int64_t display_id) {
   // This delegate does not support showing an application menu.
   NOTIMPLEMENTED();
 }
