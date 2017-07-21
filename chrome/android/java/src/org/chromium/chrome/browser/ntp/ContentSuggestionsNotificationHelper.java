@@ -168,8 +168,8 @@ public class ContentSuggestionsNotificationHelper {
                 0);
         ChromeNotificationBuilder builder =
                 NotificationBuilderFactory
-                        .createChromeNotificationBuilder(
-                                true /* preferCompat */, ChannelDefinitions.CHANNEL_ID_BROWSER)
+                        .createChromeNotificationBuilder(true /* preferCompat */,
+                                ChannelDefinitions.CHANNEL_ID_CONTENT_SUGGESTIONS)
                         .setContentIntent(contentIntent)
                         .setDeleteIntent(deleteIntent)
                         .setContentTitle(title)
@@ -183,7 +183,8 @@ public class ContentSuggestionsNotificationHelper {
         }
         manager.notify(NOTIFICATION_TAG, nextId, builder.build());
         NotificationUmaTracker.getInstance().onNotificationShown(
-                NotificationUmaTracker.CONTENT_SUGGESTION, ChannelDefinitions.CHANNEL_ID_BROWSER);
+                NotificationUmaTracker.CONTENT_SUGGESTION,
+                ChannelDefinitions.CHANNEL_ID_CONTENT_SUGGESTIONS);
         addActiveNotification(new ActiveNotification(nextId, category, idWithinCategory, uri));
 
         // Set timeout.

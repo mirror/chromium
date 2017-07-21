@@ -10,6 +10,8 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.support.annotation.StringDef;
 
+import org.chromium.chrome.browser.ChromeFeatureList;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.Collections;
@@ -30,6 +32,7 @@ public class ChannelDefinitions {
     public static final String CHANNEL_ID_DOWNLOADS = "downloads";
     public static final String CHANNEL_ID_INCOGNITO = "incognito";
     public static final String CHANNEL_ID_MEDIA = "media";
+    public static final String CHANNEL_ID_CONTENT_SUGGESTIONS = "contentsuggestions";
     // TODO(crbug.com/700377): Deprecate the 'sites' channel.
     public static final String CHANNEL_ID_SITES = "sites";
     public static final String CHANNEL_ID_PREFIX_SITES = "web:";
@@ -49,7 +52,7 @@ public class ChannelDefinitions {
      * Predefined Channels.MAP, and add the ID to the LEGACY_CHANNELS_ID array below.
      */
     @StringDef({CHANNEL_ID_BROWSER, CHANNEL_ID_DOWNLOADS, CHANNEL_ID_INCOGNITO, CHANNEL_ID_MEDIA,
-            CHANNEL_ID_SITES})
+            CHANNEL_ID_CONTENT_SUGGESTIONS, CHANNEL_ID_SITES})
     @Retention(RetentionPolicy.SOURCE)
     public @interface ChannelId {}
 
@@ -84,6 +87,13 @@ public class ChannelDefinitions {
                     new PredefinedChannel(CHANNEL_ID_MEDIA,
                             org.chromium.chrome.R.string.notification_category_media,
                             NotificationManager.IMPORTANCE_LOW, CHANNEL_GROUP_ID_GENERAL));
+            if (ChromeFeatureList.isEnabled(ChromeFeatureList.CONTENT_SUGGESTIONS_NOTIFICATIONS)) {
+                map.put(CHANNEL_ID_CONTENT_SUGGESTIONS,
+                        new PredefinedChannel(CHANNEL_ID_CONTENT_SUGGESTIONS,
+                                org.chromium.chrome.R.string
+                                        .notification_category_content_suggestions,
+                                NotificationManager.IMPORTANCE_LOW, CHANNEL_GROUP_ID_GENERAL));
+            }
             map.put(CHANNEL_ID_SITES,
                     new PredefinedChannel(CHANNEL_ID_SITES,
                             org.chromium.chrome.R.string.notification_category_sites,
