@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0397223_488c1873",
+        "filename": "content/public/common/content_features.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-21T19:39:54Z",
+      "side": 1,
+      "message": "nit: RasterInducingScrolling. Raster induced implies the scrolling was caused by raster :-).",
+      "range": {
+        "startLine": 228,
+        "startChar": 45,
+        "endLine": 228,
+        "endChar": 67
+      },
+      "revId": "e6ecd7f9c4f702c04ed459d4ec9f8a4f80e7317a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
