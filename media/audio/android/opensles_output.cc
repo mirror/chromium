@@ -23,6 +23,27 @@
     }                                           \
   } while (0)
 
+// On N MR1+ we want to use high buffer sizes for power saving.
+#if __ANDROID_API__ < 25
+/** Audio Performance mode key */
+#define SL_ANDROID_KEY_PERFORMANCE_MODE \
+  ((const SLchar*)"androidPerformanceMode")
+
+/** Audio performance values */
+/*      No specific performance requirement. Allows HW and SW pre/post
+ * processing. */
+#define SL_ANDROID_PERFORMANCE_NONE ((SLuint32)0x00000000)
+/*      Priority given to latency. No HW or software pre/post processing.
+ *      This is the default if no performance mode is specified. */
+#define SL_ANDROID_PERFORMANCE_LATENCY ((SLuint32)0x00000001)
+/*      Priority given to latency while still allowing HW pre and post
+ * processing. */
+#define SL_ANDROID_PERFORMANCE_LATENCY_EFFECTS ((SLuint32)0x00000002)
+/*      Priority given to power saving if latency is not a concern.
+ *      Allows HW and SW pre/post processing. */
+#define SL_ANDROID_PERFORMANCE_POWER_SAVING ((SLuint32)0x00000003)
+#endif
+
 namespace media {
 
 OpenSLESOutputStream::OpenSLESOutputStream(AudioManagerAndroid* manager,
@@ -52,6 +73,9 @@ OpenSLESOutputStream::OpenSLESOutputStream(AudioManagerAndroid* manager,
       buffer_size_bytes_(have_float_output_
                              ? bytes_per_frame_ * params.frames_per_buffer()
                              : params.GetBytesPerBuffer()),
+      use_high_latency_(base::android::BuildInfo::GetInstance()->sdk_int() >=
+                            base::android::SDK_VERSION_NOUGAT_MR1 &&
+                        params.latency_tag() == AudioLatency::LATENCY_PLAYBACK),
       delay_calculator_(samples_per_second_) {
   DVLOG(2) << "OpenSLESOutputStream::OpenSLESOutputStream("
            << "stream_type=" << stream_type << ")";
@@ -307,11 +331,20 @@ bool OpenSLESOutputStream::CreatePlayer() {
 
   // Set configuration using the stream type provided at construction.
   LOG_ON_FAILURE_AND_RETURN(
-      (*player_config)->SetConfiguration(player_config,
-                                         SL_ANDROID_KEY_STREAM_TYPE,
-                                         &stream_type_,
-                                         sizeof(SLint32)),
+      (*player_config)
+          ->SetConfiguration(player_config, SL_ANDROID_KEY_STREAM_TYPE,
+                             &stream_type_, sizeof(SLint32)),
       false);
+
+  // Set configuration using the stream type provided at construction.
+  if (use_high_latency_) {
+    SLuint32 perf_mode = SL_ANDROID_PERFORMANCE_POWER_SAVING;
+    LOG_ON_FAILURE_AND_RETURN(
+        (*player_config)
+            ->SetConfiguration(player_config, SL_ANDROID_KEY_PERFORMANCE_MODE,
+                               &perf_mode, sizeof(SLuint32)),
+        false);
+  }
 
   // Realize the player object in synchronous mode.
   LOG_ON_FAILURE_AND_RETURN(

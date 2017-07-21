@@ -339,8 +339,13 @@ AudioParameters AudioManagerAndroid::GetPreferredOutputStreamParameters(
       channel_layout = input_params.channel_layout();
     }
 
-    buffer_size = GetOptimalOutputFrameSize(
-        sample_rate, ChannelLayoutToChannelCount(channel_layout));
+    // For high latency playback, pass through the requested buffer size.
+    if (input_params.latency_tag() == AudioLatency::LATENCY_PLAYBACK) {
+      buffer_size = input_params.frames_per_buffer();
+    } else {
+      buffer_size = GetOptimalOutputFrameSize(
+          sample_rate, ChannelLayoutToChannelCount(channel_layout));
+    }
   }
 
   int user_buffer_size = GetUserBufferSize();
