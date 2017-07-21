@@ -8,12 +8,16 @@
 #include <memory>
 
 #include "base/task/cancelable_task_tracker.h"
+#include "base/threading/thread_checker.h"
 #include "base/timer/timer.h"
 #include "components/browsing_data/core/counters/browsing_data_counter.h"
 #include "components/browsing_data/core/counters/sync_tracker.h"
-#include "components/history/core/browser/history_service.h"
 #include "components/history/core/browser/web_history_service.h"
 #include "components/sync/driver/sync_service.h"
+
+namespace history {
+class HistoryService;
+}  // namespace history
 
 namespace browsing_data {
 
