@@ -8,3 +8,4 @@ layer at (0,0) size 800x600
           LayoutBlockFlow {DIV} at (0,0) size 129x21
             LayoutBlockFlow {DIV} at (118,0) size 11x21
       LayoutText {#text} at (0,0) size 0x0
+caret: position 0 of child 0 {DIV} of child 0 {DIV} of child 0 {DIV} of {#document-fragment} of child 1 {INPUT} of body

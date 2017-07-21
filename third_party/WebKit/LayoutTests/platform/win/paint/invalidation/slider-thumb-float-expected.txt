@@ -7,3 +7,4 @@ layer at (0,0) size 800x600
         LayoutFlexibleBox {DIV} at (0,0) size 100x10
           LayoutBlockFlow {DIV} at (0,0) size 100x10
             LayoutBlockFlow {DIV} at (90,0) size 10x10 [bgcolor=#008000]
+caret: position 0 of child 0 {DIV} of child 0 {DIV} of child 0 {DIV} of {#document-fragment} of child 1 {INPUT} of body
