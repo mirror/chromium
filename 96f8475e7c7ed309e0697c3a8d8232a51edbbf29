@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9948fb88_f276f30a",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-21T01:24:48Z",
+      "side": 1,
+      "message": "nit: s/selection_start++/++selection_start/\nThere is no rule for the placement of |++| for scalar.\nHowever, rest of editing code always place |++| before location,\nand we are attempting to do so.\n\nCould you put |++| before location?\nThanks for your cooperation.",
+      "revId": "96f8475e7c7ed309e0697c3a8d8232a51edbbf29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
