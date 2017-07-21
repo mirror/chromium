@@ -121,6 +121,30 @@
       "revId": "d6bbffc34b5dd8789dcc05a4ab2021621665cbeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33294611_1bf11b12",
+        "filename": "components/error_page/renderer/net_error_helper_core.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-21T12:18:38Z",
+      "side": 1,
+      "message": "Sorry, I was talking about NetErrorHelper::GetDomainString in chrome/renderer/net.",
+      "parentUuid": "cca13d36_dcd55fc5",
+      "range": {
+        "startLine": 132,
+        "startChar": 43,
+        "endLine": 132,
+        "endChar": 44
+      },
+      "revId": "d6bbffc34b5dd8789dcc05a4ab2021621665cbeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
