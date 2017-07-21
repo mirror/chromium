@@ -22,6 +22,30 @@
       "revId": "f885b2dbe09a4627e0c5948d5037d49a118ff5d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ff79e9c_6b5a3d51",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/payments/PaymentRequestJourneyLoggerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-21T18:10:39Z",
+      "side": 1,
+      "message": "I not sure I understand what you mean?",
+      "parentUuid": "b01b124a_fdd23aeb",
+      "range": {
+        "startLine": 593,
+        "startChar": 32,
+        "endLine": 593,
+        "endChar": 64
+      },
+      "revId": "f885b2dbe09a4627e0c5948d5037d49a118ff5d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
