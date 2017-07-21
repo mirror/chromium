@@ -66,6 +66,12 @@ Polymer({
     },
 
     /** @private */
+    showLearnMore_: {
+      type: Boolean,
+      value: false,
+    },
+
+    /** @private */
     showLogsPermission_: {
       type: Boolean,
       value: false,
@@ -118,12 +124,6 @@ Polymer({
 
   /** @private {?function()} */
   doAction_: null,
-
-  /**
-   * If true, this settings page is waiting for cleanup results.
-   * @private {boolean}
-   */
-  waitingForCleanupResults_: false,
 
   /** @override */
   attached: function() {
@@ -196,6 +196,7 @@ Polymer({
       this.enableActionButton_(
           this.i18n('chromeCleanupDoneButtonLabel'), this.dismiss_.bind(this));
       this.setIconDone_();
+      this.showLearnMore_ = false;
     } else if (idleReason == settings.ChromeCleanupIdleReason.INITIAL) {
       this.dismiss_();
     } else {
@@ -209,7 +210,6 @@ Polymer({
 
     this.isRemoving_ = false;
     this.disableDetails_();
-    this.waitingForCleanupResults_ = false;
   },
 
   /**
@@ -249,7 +249,6 @@ Polymer({
    * @private
    */
   onCleaning_: function(files) {
-    this.waitingForCleanupResults_ = true;
     this.title_ = this.i18n('chromeCleanupTitleRemoving');
     this.isRemoving_ = true;
     this.resetIcon_();
@@ -267,7 +266,8 @@ Polymer({
   onRebootRequired_: function() {
     this.title_ = this.i18n('chromeCleanupTitleRestart');
     this.isRemoving_ = false;
-    this.setIconWarning_();
+    this.showLearnMore_ = false;
+    this.setIconDone_();
     this.enableActionButton_(
         this.i18n('chromeCleanupRestartButtonLabel'),
         this.restartComputer_.bind(this));
@@ -354,6 +354,7 @@ Polymer({
   enableDetails_: function(files) {
     this.showDetails_ = true;
     this.showLogsPermission_ = true;
+    this.showLearnMore_ = true;
     // Note: doesn't change the state of this.showFilesToRemove_.
     this.filesToRemove_ = files;
   },
@@ -385,8 +386,7 @@ Polymer({
   },
 
   /**
-   * Sets the card's icon as a warning (in case of computer restart required
-   * or failure).
+   * Sets the card's icon as a warning (in case of failure).
    * @private
    */
   setIconWarning_: function() {
@@ -395,7 +395,7 @@ Polymer({
   },
 
   /**
-   * Sets the card's icon as a completed indication.
+   * Sets the card's icon as a completed or reboot required indication.
    * @private
    */
   setIconDone_: function() {
