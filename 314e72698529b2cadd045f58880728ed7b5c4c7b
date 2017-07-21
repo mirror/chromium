@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c3130c7_6d9a3890",
+        "filename": "content/browser/memory/swap_metrics_driver.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-21T15:37:46Z",
+      "side": 1,
+      "message": "The threading model needs documentation. Please document on which sequence the driver does it\u0027s work. I assume it will run its timer on the sequence on which it was created, and subsequently invoke callbacks on the same sequence?",
+      "range": {
+        "startLine": 25,
+        "startChar": 21,
+        "endLine": 25,
+        "endChar": 38
+      },
+      "revId": "314e72698529b2cadd045f58880728ed7b5c4c7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac687d30_de5c722a",
+        "filename": "content/browser/memory/swap_metrics_driver.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-21T15:37:46Z",
+      "side": 1,
+      "message": "Document that the driver will stop itself if it fails to get the system metrics. Maybe you also need the ability to query IsRunning?",
+      "revId": "314e72698529b2cadd045f58880728ed7b5c4c7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20d93e99_4c09e589",
+        "filename": "content/browser/memory/swap_metrics_driver_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-21T15:37:46Z",
+      "side": 1,
+      "message": "mocks what ... drivers do\n      ^^^^           ^",
+      "range": {
+        "startLine": 19,
+        "startChar": 59,
+        "endLine": 19,
+        "endChar": 60
+      },
+      "revId": "314e72698529b2cadd045f58880728ed7b5c4c7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

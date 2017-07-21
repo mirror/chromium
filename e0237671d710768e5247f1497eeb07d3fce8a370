@@ -37,6 +37,29 @@
     },
     {
       "key": {
+        "uuid": "22fe4620_95d97c3d",
+        "filename": "content/browser/memory/swap_metrics_driver.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-21T15:37:46Z",
+      "side": 1,
+      "message": "Initialize",
+      "range": {
+        "startLine": 40,
+        "startChar": 5,
+        "endLine": 40,
+        "endChar": 15
+      },
+      "revId": "e0237671d710768e5247f1497eeb07d3fce8a370",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac461416_c63cb10d",
         "filename": "content/browser/memory/swap_metrics_driver_mac.cc",
         "patchSetId": 6
