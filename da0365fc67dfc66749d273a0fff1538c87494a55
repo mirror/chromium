@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4fb3d79_68c256e7",
+        "filename": "ash/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-21T18:26:22Z",
+      "side": 1,
+      "message": "nit: cite a bug?",
+      "revId": "da0365fc67dfc66749d273a0fff1538c87494a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71301535_f4703003",
+        "filename": "ash/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-21T18:26:22Z",
+      "side": 1,
+      "message": "nit: cite a bug?",
+      "revId": "da0365fc67dfc66749d273a0fff1538c87494a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "813c909a_4fcbfb9a",
+        "filename": "ash/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-21T18:26:22Z",
+      "side": 1,
+      "message": "nit: comment here whether this dep is okay or not? note a plan? cite a bug?",
+      "revId": "da0365fc67dfc66749d273a0fff1538c87494a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
