@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fb9a921b_1efa790e",
+        "filename": "ui/display/win/screen_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-07-21T00:45:31Z",
+      "side": 1,
+      "message": "Yeah, it is weird, but there\u0027s a lot of plumbing that needs to be sent through in order to get the correct behavior ... this temporary flag seemed like a reasonable way to do.\n\nThis will actually be unneeded if we first add the color space plumbing\n- from GpuBrowserCompositorOutputSurface::Reshape\n- to DirectCompositionSurfaceWin::Resize\n\nI\u0027ll put that part of the plumbing in, then we can switch this to just doing\n  --enable-hdr\nor\n  --force-hdr",
+      "parentUuid": "fdc67de2_afe26b30",
+      "revId": "4ecba5668ba682afa0ac65667a9b5e3d855bfbca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f7fed88_b7d8034a",
         "filename": "ui/display/win/screen_win.cc",
         "patchSetId": 3
