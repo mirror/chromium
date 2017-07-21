@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73c07621_b09a7f9a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1153089
+      },
+      "writtenOn": "2017-07-21T09:29:37Z",
+      "side": 1,
+      "message": "IIUC correct you are saying that the content test launcher is changing the reported test name when it sees this prefix. I wonder if we can somehow fix the content test launcher not to use a different name? It does not have to be done as part of this CL, but I\u0027d love to see a bug filed for this and referenced from the code.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 50
+      },
+      "revId": "5975a92a230d72b1cd6663d565bd9ff079b326a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "149d6d79_efdd1269",
+        "filename": "base/test/launcher/test_launcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 1153089
+      },
+      "writtenOn": "2017-07-21T09:29:37Z",
+      "side": 1,
+      "message": "To be consistent with other methods, I\u0027d call this \"AddShardTest\".",
+      "range": {
+        "startLine": 1042,
+        "startChar": 21,
+        "endLine": 1042,
+        "endChar": 32
+      },
+      "revId": "5975a92a230d72b1cd6663d565bd9ff079b326a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48bcb36a_a96a3d0c",
+        "filename": "base/test/launcher/test_results_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1153089
+      },
+      "writtenOn": "2017-07-21T09:29:37Z",
+      "side": 1,
+      "message": "IMHO this needs a comment explaining why this is necessary.",
+      "revId": "5975a92a230d72b1cd6663d565bd9ff079b326a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5df1261_027ecaf2",
+        "filename": "base/test/launcher/test_results_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1153089
+      },
+      "writtenOn": "2017-07-21T09:29:37Z",
+      "side": 1,
+      "message": "ditto: this needs a comment explaining why this is necessary",
+      "revId": "5975a92a230d72b1cd6663d565bd9ff079b326a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
