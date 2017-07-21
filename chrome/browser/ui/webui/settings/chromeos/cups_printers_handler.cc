@@ -77,6 +77,8 @@ std::unique_ptr<base::DictionaryValue> GetPrinterInfo(const Printer& printer) {
   printer_info->SetString("printerManufacturer", printer.manufacturer());
   printer_info->SetString("printerModel", printer.model());
   printer_info->SetString("printerMakeAndModel", printer.make_and_model());
+  printer_info->SetString("ppdManufacturer", printer.manufacturer());
+  printer_info->SetString("ppdModel", printer.model());
   // Get protocol, ip address and queue from the printer's URI.
   const std::string printer_uri = printer.uri();
   url::Parsed parsed;

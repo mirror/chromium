@@ -344,8 +344,6 @@ cr.define('settings', function() {
       r.CLOUD_PRINTERS = r.PRINTING.createChild('/cloudPrinters');
       // <if expr="chromeos">
       r.CUPS_PRINTERS = r.PRINTING.createChild('/cupsPrinters');
-      r.CUPS_PRINTER_DETAIL =
-          r.CUPS_PRINTERS.createChild('/cupsPrinterDetails');
 
       r.MULTIDEVICE = r.ADVANCED.createSection('/multidevice', 'multidevice');
       // </if>

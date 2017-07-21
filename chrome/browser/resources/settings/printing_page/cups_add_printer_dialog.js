@@ -571,6 +571,11 @@ Polymer({
    * @private
    */
   onAddPrinter_: function(success, printerName) {
+    // 'on-add-cups-printer' event might be triggered by editing an existing
+    // printer, in which case there is no configuring dialog.
+    if (!this.$$('add-printer-configuring-dialog'))
+      return;
+
     this.$$('add-printer-configuring-dialog').close();
     if (success)
       return;
