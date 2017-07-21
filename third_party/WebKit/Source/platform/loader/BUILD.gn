@@ -21,6 +21,8 @@ source_set("loader") {
   sources = [
     "LinkHeader.cpp",
     "LinkHeader.h",
+    "SubresourceIntegrity.cpp",
+    "SubresourceIntegrity.h",
     "fetch/AccessControlStatus.h",
     "fetch/BufferingDataPipeWriter.cpp",
     "fetch/BufferingDataPipeWriter.h",
@@ -118,6 +120,7 @@ source_set("unit_tests") {
   # Source files for blink_platform_unittests.
   sources = [
     "LinkHeaderTest.cpp",
+    "SubresourceIntegrityTest.cpp",
     "fetch/BufferingDataPipeWriterTest.cpp",
     "fetch/ClientHintsPreferencesTest.cpp",
     "fetch/CrossOriginAccessControlTest.cpp",
@@ -156,6 +159,7 @@ source_set("test_support") {
   # Source files that can be called from blink_platform_unittests and
   # webkit_unit_tests.
   sources = [
+    "testing/CryptoTestingPlatformSupport.h",
     "testing/FetchTestingPlatformSupport.cpp",
     "testing/FetchTestingPlatformSupport.h",
     "testing/MockFetchContext.h",
@@ -173,6 +177,7 @@ source_set("test_support") {
   ]
 
   deps = [
+    "//testing/gmock",
     "//third_party/WebKit/Source/platform",
   ]
 }
