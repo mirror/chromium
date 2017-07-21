@@ -19,6 +19,52 @@
     },
     {
       "key": {
+        "uuid": "34bd6638_e3985346",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 2860,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-21T17:26:22Z",
+      "side": 1,
+      "message": "and this object will be deleted when the RenderFrameHostImpl is destroyed.",
+      "range": {
+        "startLine": 2859,
+        "startChar": 69,
+        "endLine": 2860,
+        "endChar": 74
+      },
+      "revId": "766cb4fae77fc909e800f746d8376b5a3ec36a14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e58c9f00_5f910641",
+        "filename": "content/browser/geolocation/geolocation_service_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-21T17:26:22Z",
+      "side": 1,
+      "message": "This is normally written using initialization syntax:\n\nGeolocationServiceImplContext::GeolocationServiceImplContext(\n    PermissionManager* permission_manager)\n  : permission_manager_(permission_manager),\n    request_id_(PermissionManager::kNoPendingOperation) {}",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 1
+      },
+      "revId": "766cb4fae77fc909e800f746d8376b5a3ec36a14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "adc46cc1_a5bfaa6b",
         "filename": "content/browser/geolocation/geolocation_service_impl.cc",
         "patchSetId": 16
@@ -36,6 +82,69 @@
         "endLine": 33,
         "endChar": 47
       },
+      "revId": "766cb4fae77fc909e800f746d8376b5a3ec36a14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12a11632_d47a94bc",
+        "filename": "content/browser/geolocation/geolocation_service_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-21T17:26:22Z",
+      "side": 1,
+      "message": "passe -\u003e bind",
+      "range": {
+        "startLine": 86,
+        "startChar": 44,
+        "endLine": 86,
+        "endChar": 49
+      },
+      "revId": "766cb4fae77fc909e800f746d8376b5a3ec36a14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2135bd0a_181d19b9",
+        "filename": "content/browser/geolocation/geolocation_service_impl_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-21T17:26:22Z",
+      "side": 1,
+      "message": "nit: base::Callback\u003cvoid()\u003e can be written as base::Closure.",
+      "range": {
+        "startLine": 61,
+        "startChar": 31,
+        "endLine": 61,
+        "endChar": 53
+      },
+      "revId": "766cb4fae77fc909e800f746d8376b5a3ec36a14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "023f7e14_dae8f967",
+        "filename": "content/browser/geolocation/geolocation_service_impl_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-21T17:26:22Z",
+      "side": 1,
+      "message": "This should just be the default.",
       "revId": "766cb4fae77fc909e800f746d8376b5a3ec36a14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
