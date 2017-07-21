@@ -199,18 +199,6 @@ TEST_F(NetworkSessionConfiguratorTest,
   EXPECT_EQ(10, params_.quic_reduced_ping_timeout_seconds);
 }
 
-TEST_F(NetworkSessionConfiguratorTest,
-       QuicPacketReaderYieldAfterDurationMillisecondsFieldTrialParams) {
-  std::map<std::string, std::string> field_trial_params;
-  field_trial_params["packet_reader_yield_after_duration_milliseconds"] = "10";
-  variations::AssociateVariationParams("QUIC", "Enabled", field_trial_params);
-  base::FieldTrialList::CreateFieldTrial("QUIC", "Enabled");
-
-  ParseFieldTrials();
-
-  EXPECT_EQ(10, params_.quic_packet_reader_yield_after_duration_milliseconds);
-}
-
 TEST_F(NetworkSessionConfiguratorTest, QuicRaceCertVerification) {
   std::map<std::string, std::string> field_trial_params;
   field_trial_params["race_cert_verification"] = "true";
