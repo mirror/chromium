@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbe9763c_878141ee",
+        "filename": "cc/paint/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-21T20:52:41Z",
+      "side": 1,
+      "message": "Does this import it for everything? Is there any way to scope that just for the fuzzer part? (noideadog about gn)",
+      "revId": "4da60a00c6f643ef65770f1b854842c7721502b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
