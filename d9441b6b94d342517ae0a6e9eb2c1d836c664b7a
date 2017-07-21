@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c24925fe_d1dbb19c",
+        "filename": "content/browser/frame_host/navigator_impl_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-07-21T11:56:46Z",
+      "side": 1,
+      "message": "We should not transition this test until we have a ReadyToCommit stage in NavigationSimulator. We are removing a lot of expectations otherwise.",
+      "revId": "d9441b6b94d342517ae0a6e9eb2c1d836c664b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "654bae02_6b39a06e",
+        "filename": "content/browser/frame_host/navigator_impl_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-07-21T11:56:46Z",
+      "side": 1,
+      "message": "Again we\u0027re changing the test. All the tests in this file touch the internals of navigation, they are not a priority for switching to NavigationSimulator since they require very precise timings.",
+      "revId": "d9441b6b94d342517ae0a6e9eb2c1d836c664b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59247f14_3041169d",
+        "filename": "content/browser/frame_host/navigator_impl_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-07-21T11:56:46Z",
+      "side": 1,
+      "message": "nit: s/an user-initiated/a user-initiated\n(same below).",
+      "revId": "d9441b6b94d342517ae0a6e9eb2c1d836c664b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
