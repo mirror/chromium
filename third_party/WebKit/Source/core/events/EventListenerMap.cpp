@@ -68,7 +68,7 @@ bool EventListenerMap::Contains(const AtomicString& event_type) const {
 bool EventListenerMap::ContainsCapturing(const AtomicString& event_type) const {
   for (const auto& entry : entries_) {
     if (entry.first == event_type) {
-      for (const auto& event_listener : *entry.second) {
+      for (const auto& event_listener : entry.second) {
         if (event_listener.Capture())
           return true;
       }
@@ -112,14 +112,14 @@ bool EventListenerMap::Add(const AtomicString& event_type,
                            RegisteredEventListener* registered_listener) {
   CheckNoActiveIterators();
 
-  for (const auto& entry : entries_) {
+  for (auto& entry : entries_) {
     if (entry.first == event_type)
-      return AddListenerToVector(entry.second.Get(), listener, options,
+      return AddListenerToVector(&entry.second, listener, options,
                                  registered_listener);
   }
 
-  entries_.push_back(std::make_pair(event_type, new EventListenerVector));
-  return AddListenerToVector(entries_.back().second.Get(), listener, options,
+  entries_.push_back(std::make_pair(event_type, EventListenerVector()));
+  return AddListenerToVector(&entries_.back().second, listener, options,
                              registered_listener);
 }
 
@@ -160,9 +160,9 @@ bool EventListenerMap::Remove(const AtomicString& event_type,
   for (unsigned i = 0; i < entries_.size(); ++i) {
     if (entries_[i].first == event_type) {
       bool was_removed = RemoveListenerFromVector(
-          entries_[i].second.Get(), listener, options,
-          index_of_removed_listener, registered_listener);
-      if (entries_[i].second->IsEmpty())
+          &entries_[i].second, listener, options, index_of_removed_listener,
+          registered_listener);
+      if (entries_[i].second.IsEmpty())
         entries_.erase(i);
       return was_removed;
     }
@@ -174,9 +174,9 @@ bool EventListenerMap::Remove(const AtomicString& event_type,
 EventListenerVector* EventListenerMap::Find(const AtomicString& event_type) {
   CheckNoActiveIterators();
 
-  for (const auto& entry : entries_) {
+  for (auto& entry : entries_) {
     if (entry.first == event_type)
-      return entry.second.Get();
+      return &entry.second;
   }
 
   return nullptr;
@@ -198,9 +198,9 @@ void EventListenerMap::CopyEventListenersNotCreatedFromMarkupToTarget(
     EventTarget* target) {
   CheckNoActiveIterators();
 
-  for (const auto& event_listener : entries_) {
-    CopyListenersNotCreatedFromMarkupToTarget(
-        event_listener.first, event_listener.second.Get(), target);
+  for (auto& event_listener : entries_) {
+    CopyListenersNotCreatedFromMarkupToTarget(event_listener.first,
+                                              &event_listener.second, target);
   }
 }
 
@@ -240,7 +240,7 @@ EventListener* EventListenerIterator::NextListener() {
     return nullptr;
 
   for (; entry_index_ < map_->entries_.size(); ++entry_index_) {
-    EventListenerVector& listeners = *map_->entries_[entry_index_].second;
+    EventListenerVector& listeners = map_->entries_[entry_index_].second;
     if (index_ < listeners.size())
       return listeners[index_++].Listener();
     index_ = 0;
