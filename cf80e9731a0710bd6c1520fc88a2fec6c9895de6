@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b8304df_142315fd",
+        "filename": "third_party/sqlite/README.chromium",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-21T20:05:10Z",
+      "side": 1,
+      "message": "Since this list is sorted in logical order (which is awesome and makes it even easier to read) maybe sort with all the amalgamation entries together?\n\n(Or put another way - move fuzz/ to the bottom, so then it\u0027s: upstream src, patches, src+patches, amalgamation stuff, header, fuzz",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 14
+      },
+      "revId": "cf80e9731a0710bd6c1520fc88a2fec6c9895de6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "037ef54e_5e2874c6",
+        "filename": "third_party/sqlite/README.chromium",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-21T20:05:10Z",
+      "side": 1,
+      "message": "I don\u0027t think you need to doc this one",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 12
+      },
+      "revId": "cf80e9731a0710bd6c1520fc88a2fec6c9895de6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
