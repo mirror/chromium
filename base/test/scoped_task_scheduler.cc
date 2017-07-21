@@ -70,7 +70,7 @@ class TestTaskScheduler : public TaskScheduler {
       SingleThreadTaskRunnerThreadMode thread_mode) override;
 #endif  // defined(OS_WIN)
   std::vector<const HistogramBase*> GetHistograms() const override;
-  int GetMaxConcurrentTasksWithTraitsDeprecated(
+  int GetMaxConcurrentNonBlockedTasksWithTraitsDeprecated(
       const TaskTraits& traits) const override;
   void Shutdown() override;
   void FlushForTesting() override;
@@ -222,7 +222,7 @@ std::vector<const HistogramBase*> TestTaskScheduler::GetHistograms() const {
   return std::vector<const HistogramBase*>();
 }
 
-int TestTaskScheduler::GetMaxConcurrentTasksWithTraitsDeprecated(
+int TestTaskScheduler::GetMaxConcurrentNonBlockedTasksWithTraitsDeprecated(
     const TaskTraits& traits) const {
   return 1;
 }
