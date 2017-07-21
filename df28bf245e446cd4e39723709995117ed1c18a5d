@@ -22,6 +22,30 @@
       "revId": "df28bf245e446cd4e39723709995117ed1c18a5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adcd717f_f2bc55e7",
+        "filename": "extensions/browser/extension_function_dispatcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-21T23:00:25Z",
+      "side": 1,
+      "message": "Ya I thought about it first, given you also had that same idea, I\u0027m doing this in this CL.",
+      "parentUuid": "c97782e3_f188ae60",
+      "range": {
+        "startLine": 384,
+        "startChar": 44,
+        "endLine": 384,
+        "endChar": 61
+      },
+      "revId": "df28bf245e446cd4e39723709995117ed1c18a5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
