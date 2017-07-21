@@ -14,6 +14,7 @@
 #include "net/cert/internal/test_helpers.h"
 #include "net/cert/scoped_nss_types.h"
 #include "net/cert/x509_certificate.h"
+#include "net/cert/x509_util_nss.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace net {
@@ -60,8 +61,8 @@ class TrustStoreNSSTest : public testing::Test {
   void AddCertToNSS(const ParsedCertificate* cert) {
     std::string nickname = GetUniqueNickname();
     ScopedCERTCertificate nss_cert(
-        X509Certificate::CreateOSCertHandleFromBytesWithNickname(
-            cert->der_cert().AsStringPiece().data(), cert->der_cert().Length(),
+        x509_util::CreateCERTCertificateFromBytesWithNickname(
+            cert->der_cert().UnsafeData(), cert->der_cert().Length(),
             nickname.c_str()));
     ASSERT_TRUE(nss_cert);
     SECStatus srv =
@@ -248,8 +249,8 @@ class TrustStoreNSSTestDelegate {
     ASSERT_TRUE(test_nssdb_.is_open());
     std::string nickname = GetUniqueNickname();
     ScopedCERTCertificate nss_cert(
-        X509Certificate::CreateOSCertHandleFromBytesWithNickname(
-            cert->der_cert().AsStringPiece().data(), cert->der_cert().Length(),
+        x509_util::CreateCERTCertificateFromBytesWithNickname(
+            cert->der_cert().UnsafeData(), cert->der_cert().Length(),
             nickname.c_str()));
     ASSERT_TRUE(nss_cert);
     SECStatus srv =
