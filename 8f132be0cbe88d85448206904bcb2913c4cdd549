@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4894e369_212b9a0f",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-07-21T04:35:16Z",
+      "side": 1,
+      "message": "I know that the real pref will be sent over shortly after this happens, but shouldn’t we set this to the OS default (true) on macOS, which is more likely to be correct in more cases?",
+      "revId": "8f132be0cbe88d85448206904bcb2913c4cdd549",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
