@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5d43d8d_d6e913e2",
+        "filename": "net/spdy/core/spdy_framer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-07-21T15:39:21Z",
+      "side": 1,
+      "message": "Change of macro will need to be backported.",
+      "range": {
+        "startLine": 113,
+        "startChar": 4,
+        "endLine": 113,
+        "endChar": 12
+      },
+      "revId": "eedd2e1d04d86a28d3034c85f9e17b99ca60548b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
