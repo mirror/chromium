@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "6ea6c6df_d603fb90",
+        "filename": "third_party/WebKit/Source/platform/wtf/text/StringToNumber.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-07-21T03:35:21Z",
+      "side": 1,
+      "message": "What do you mean by \u0027legacy\u0027?",
+      "revId": "07cbd5b3380ca92d2a14af5cb8dab3b2be349a47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2817286b_ffc61df9",
         "filename": "third_party/WebKit/Source/platform/wtf/text/StringToNumber.h",
         "patchSetId": 3
@@ -13,6 +30,24 @@
       "writtenOn": "2017-07-21T02:21:36Z",
       "side": 1,
       "message": "For a function like foo(NumberParsingOptions), we can write\n  foo(NumberPasingOptions::kStrict);\nas well as\n  foo(42);\n\nIf we make the constructor \u0027explicit\u0027, we need to write\n  foo(NumberParsingOptions(NumberParsingOptions::kStrict));\nand can\u0027t do\n  foo(42);\n\nIMO, implicit conversion is better though it accepts unexpected unsigned values.",
+      "revId": "07cbd5b3380ca92d2a14af5cb8dab3b2be349a47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45724887_92498973",
+        "filename": "third_party/WebKit/Source/platform/wtf/text/StringToNumber.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-07-21T03:35:21Z",
+      "side": 1,
+      "message": "Yeah, even with \u0027explicit\u0027 you can write foo(NumberParsingOptions(42)) anyway.\nAt best, you can DCHECK() in the constructor.",
+      "parentUuid": "2817286b_ffc61df9",
       "revId": "07cbd5b3380ca92d2a14af5cb8dab3b2be349a47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
