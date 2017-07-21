@@ -34,6 +34,24 @@
       "revId": "db332f89dc606025ab2cb75d4cf79c6288f0ac1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8670607e_529a0540",
+        "filename": "media/gpu/dxva_picture_buffer_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-07-21T15:50:18Z",
+      "side": 1,
+      "message": "This is not my favourite thing. It\u0027s a histogram that really only one person knows how to use, and is hard to use with our tools. Is this expected to be a long lived histogram, or is this for a short term investigation?\n\nAn alternative would be to hash the log messages and report that. If they are unique to their lines, and don\u0027t change often, it would be an approach that works across versions. You could either not define an enum for it, or generate it from code (prefered).",
+      "parentUuid": "84af3364_3deee63e",
+      "revId": "db332f89dc606025ab2cb75d4cf79c6288f0ac1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
