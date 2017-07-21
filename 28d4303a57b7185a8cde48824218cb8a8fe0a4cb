@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5064d6a3_52c6cc9e",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-21T21:00:08Z",
+      "side": 1,
+      "message": "Comments need to be updated to reflect new methods.",
+      "revId": "28d4303a57b7185a8cde48824218cb8a8fe0a4cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18e9652b_fa13d76d",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-21T21:00:08Z",
+      "side": 1,
+      "message": "Need break statements for each case.",
+      "revId": "28d4303a57b7185a8cde48824218cb8a8fe0a4cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "891bab16_a8979588",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-21T21:00:08Z",
+      "side": 1,
+      "message": "Break statements here too.",
+      "revId": "28d4303a57b7185a8cde48824218cb8a8fe0a4cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58bb1ecb_15aba162",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-21T21:00:08Z",
+      "side": 1,
+      "message": "Comments would be helpful here as well.",
+      "revId": "28d4303a57b7185a8cde48824218cb8a8fe0a4cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b88cd60_ece9e011",
+        "filename": "ios/showcase/bubble/sc_bubble_coordinator.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-21T21:00:08Z",
+      "side": 1,
+      "message": "Should define property as strong or weak",
+      "revId": "28d4303a57b7185a8cde48824218cb8a8fe0a4cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a44323d8_994bb8ec",
+        "filename": "ios/showcase/bubble/sc_bubble_coordinator.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-21T21:00:08Z",
+      "side": 1,
+      "message": "Either need comment explaining why 2/3 is used, or better, it can be abstracted out to a separate constant (that is just locally available in the file).",
+      "revId": "28d4303a57b7185a8cde48824218cb8a8fe0a4cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81bb8150_08874c2a",
+        "filename": "ios/showcase/bubble/sc_bubble_coordinator.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-21T21:00:08Z",
+      "side": 1,
+      "message": "Why is bounding width divided by 2?",
+      "revId": "28d4303a57b7185a8cde48824218cb8a8fe0a4cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be7ba731_ed1a6841",
+        "filename": "ios/showcase/bubble/sc_bubble_coordinator.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-21T21:00:08Z",
+      "side": 1,
+      "message": "Comment?",
+      "revId": "28d4303a57b7185a8cde48824218cb8a8fe0a4cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
