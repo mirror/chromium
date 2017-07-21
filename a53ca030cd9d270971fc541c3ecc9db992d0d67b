@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0ae6cb34_423c8a14",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/dangling-markup/link-prefetch.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003312
+      },
+      "writtenOn": "2017-07-21T22:26:58Z",
+      "side": 1,
+      "message": "(But, we can worry about that in a later CL. I still think it\u0027s a clear improvement to land this CL.)",
+      "parentUuid": "227aecd5_435ba6ef",
+      "revId": "a53ca030cd9d270971fc541c3ecc9db992d0d67b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a06445d2_3c2f2bdc",
         "filename": "third_party/WebKit/Source/core/loader/LinkLoader.cpp",
         "patchSetId": 2
