@@ -4,10 +4,12 @@
 
 #include "chrome/browser/devtools/global_confirm_info_bar.h"
 
+#include <memory>
 #include <utility>
 
 #include "base/macros.h"
 #include "base/stl_util.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "components/infobars/core/infobar.h"
@@ -159,6 +161,7 @@ GlobalConfirmInfoBar::GlobalConfirmInfoBar(
     std::unique_ptr<ConfirmInfoBarDelegate> delegate)
     : delegate_(std::move(delegate)),
       browser_tab_strip_tracker_(this, nullptr, nullptr),
+      is_closing_(false),
       weak_factory_(this) {
   browser_tab_strip_tracker_.Init();
 }
@@ -217,8 +220,26 @@ void GlobalConfirmInfoBar::MaybeAddInfoBar(content::WebContents* web_contents) {
   infobars::InfoBar* added_bar = infobar_service->AddInfoBar(
       infobar_service->CreateConfirmInfoBar(std::move(proxy)));
 
+  // If AddInfoBar() fails, either infobars are globally disabled, or something
+  // strange has gone wrong and we can't show the infobar on every tab. In
+  // either case, it doesn't make sense to keep the global object open,
+  // especially since some callers expect it to delete itself when a user acts
+  // on the underlying infobars.
+  //
+  // Asynchronously delete the global object because the BrowserTabStripTracker
+  // doesn't support being deleted while iterating over the existing tabs.
+  if (!added_bar) {
+    if (!is_closing_) {
+      is_closing_ = true;
+
+      base::SequencedTaskRunnerHandle::Get()->PostTask(
+          FROM_HERE,
+          base::Bind(&GlobalConfirmInfoBar::Close, weak_factory_.GetWeakPtr()));
+    }
+    return;
+  }
+
   proxy_ptr->info_bar_ = added_bar;
-  DCHECK(added_bar);
   proxies_[infobar_service] = proxy_ptr;
   infobar_service->AddObserver(this);
 }
