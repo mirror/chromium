@@ -16,6 +16,24 @@
       "revId": "52d3b485d599147a4552185df47875347cff7067",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b1ddf6e_06798b8c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/devtools-js/console/console-big-array-expected.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-07-21T22:25:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2629fca7_1f52fbad",
+      "revId": "52d3b485d599147a4552185df47875347cff7067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
