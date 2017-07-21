@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1e66d66_fdfdc241",
+        "filename": "components/ntp_tiles/most_visited_sites.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-21T09:50:59Z",
+      "side": 1,
+      "message": "Hm, so this will force a TopSites update even if we\u0027ll end up showing MostLikely. I guess we\u0027re okay with that? Maybe add a TODO?",
+      "revId": "28109e1ef9c30095e866eb5d4d6e2774117e5c48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
