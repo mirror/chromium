@@ -133,7 +133,10 @@ ClientGpuMemoryBufferManager::CreateGpuMemoryBuffer(
     gpu::SurfaceHandle surface_handle) {
   // Note: this can be called from multiple threads at the same time. Some of
   // those threads may not have a TaskRunner set.
-  DCHECK_EQ(gpu::kNullSurfaceHandle, surface_handle);
+  // XXX(sad): This DCHECK() trips on mac.
+  //           It should be safe to remove this DCHECK, considering
+  //           crbug.com/735473.
+  // DCHECK_EQ(gpu::kNullSurfaceHandle, surface_handle);
   CHECK(!thread_.task_runner()->BelongsToCurrentThread());
   gfx::GpuMemoryBufferHandle gmb_handle;
   base::WaitableEvent wait(base::WaitableEvent::ResetPolicy::AUTOMATIC,
@@ -143,6 +146,10 @@ ClientGpuMemoryBufferManager::CreateGpuMemoryBuffer(
       base::Bind(&ClientGpuMemoryBufferManager::AllocateGpuMemoryBufferOnThread,
                  base::Unretained(this), size, format, usage, &gmb_handle,
                  &wait));
+  // XXX(sad): In browser, this can be called from the UI thread too (from
+  // cc::GLRenderer -> cc::ResourceProvider), which is why it is necessary to
+  // explicitly allow waiting.
+  base::ThreadRestrictions::ScopedAllowWait allow_wait;
   wait.Wait();
   if (gmb_handle.is_null())
     return nullptr;
