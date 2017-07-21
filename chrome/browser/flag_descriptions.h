@@ -727,6 +727,9 @@ extern const char kSyncSandboxDescription[];
 extern const char kTabAudioMutingName[];
 extern const char kTabAudioMutingDescription[];
 
+extern const char kTabsInCbdName[];
+extern const char kTabsInCbdDescription[];
+
 extern const char kTcpFastOpenName[];
 extern const char kTcpFastOpenDescription[];
 
@@ -1103,9 +1106,6 @@ extern const char kSetMarketUrlForTestingDescription[];
 
 extern const char kSpannableInlineAutocompleteName[];
 extern const char kSpannableInlineAutocompleteDescription[];
-
-extern const char kTabsInCbdName[];
-extern const char kTabsInCbdDescription[];
 
 extern const char kTranslateCompactUIName[];
 extern const char kTranslateCompactUIDescription[];
