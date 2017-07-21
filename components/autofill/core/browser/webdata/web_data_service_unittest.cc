@@ -133,7 +133,7 @@ class WebDataServiceTest : public testing::Test {
   void WaitForDatabaseThread() {
     base::WaitableEvent done(base::WaitableEvent::ResetPolicy::AUTOMATIC,
                              base::WaitableEvent::InitialState::NOT_SIGNALED);
-    db_thread_.task_runner()->PostTask(
+    wds_->GetTaskRunner()->PostTask(
         FROM_HERE,
         base::Bind(&base::WaitableEvent::Signal, base::Unretained(&done)));
     done.Wait();
@@ -168,7 +168,7 @@ class WebDataServiceAutofillTest : public WebDataServiceTest {
     void(AutofillWebDataService::*add_observer_func)(
         AutofillWebDataServiceObserverOnDBThread*) =
         &AutofillWebDataService::AddObserver;
-    db_thread_.task_runner()->PostTask(
+    wds_->GetTaskRunner()->PostTask(
         FROM_HERE, base::Bind(add_observer_func, wds_, &observer_));
     WaitForDatabaseThread();
   }
@@ -177,9 +177,8 @@ class WebDataServiceAutofillTest : public WebDataServiceTest {
     void(AutofillWebDataService::*remove_observer_func)(
         AutofillWebDataServiceObserverOnDBThread*) =
         &AutofillWebDataService::RemoveObserver;
-    db_thread_.task_runner()->PostTask(
+    wds_->GetTaskRunner()->PostTask(
         FROM_HERE, base::Bind(remove_observer_func, wds_, &observer_));
-    WaitForDatabaseThread();
 
     WebDataServiceTest::TearDown();
   }
