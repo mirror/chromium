@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7079c513_e237c312",
+        "filename": "chromeos/components/tether/host_scanner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-21T22:45:29Z",
+      "side": 1,
+      "message": "Same nit here",
+      "range": {
+        "startLine": 102,
+        "startChar": 49,
+        "endLine": 102,
+        "endChar": 50
+      },
+      "revId": "b3b61fcad95b95839b1f54943ca0fddc0424b4c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
