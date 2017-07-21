@@ -114,6 +114,126 @@
       "revId": "d4d2833943b8b27e847d5490c7270d305e2d2f40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "196f7216_dbaba539",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3005,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-21T00:30:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da8cd9f0_add974e2",
+      "range": {
+        "startLine": 3005,
+        "startChar": 219,
+        "endLine": 3005,
+        "endChar": 228
+      },
+      "revId": "d4d2833943b8b27e847d5490c7270d305e2d2f40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cb150672_b6c81c25",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3005,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-21T00:30:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cb8a2b4_62043efb",
+      "range": {
+        "startLine": 3005,
+        "startChar": 269,
+        "endLine": 3005,
+        "endChar": 283
+      },
+      "revId": "d4d2833943b8b27e847d5490c7270d305e2d2f40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a284a78_352ea25b",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3005,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-21T00:30:32Z",
+      "side": 1,
+      "message": "yeah, it applies only to the last note taken on the lock screen.\n\n(if there is no set, the app would show (create) an empty note)",
+      "parentUuid": "d27abb13_deb67bcf",
+      "range": {
+        "startLine": 3005,
+        "startChar": 198,
+        "endLine": 3005,
+        "endChar": 218
+      },
+      "revId": "d4d2833943b8b27e847d5490c7270d305e2d2f40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15d05f2a_24e647cb",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3005,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-21T00:30:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ea08cac_46ae8663",
+      "range": {
+        "startLine": 3005,
+        "startChar": 144,
+        "endLine": 3005,
+        "endChar": 145
+      },
+      "revId": "d4d2833943b8b27e847d5490c7270d305e2d2f40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e143809b_1bb500e0",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3005,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-21T00:30:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db20ed49_f80ca5f8",
+      "range": {
+        "startLine": 3005,
+        "startChar": 206,
+        "endLine": 3005,
+        "endChar": 207
+      },
+      "revId": "d4d2833943b8b27e847d5490c7270d305e2d2f40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
