@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe352a14_bfe5c7e0",
+        "filename": "base/process/launch_posix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1117355
+      },
+      "writtenOn": "2017-07-21T22:52:44Z",
+      "side": 1,
+      "message": "As I mentioned below, we should only do this in NamespaceSandbox::ForkInNewPidNamespace. LaunchProcess can be called from a multi-threaded context, so we can only run async-signal-safe code in between the fork and the exec. While these calls are probably OK today in practice, there is nothing that says glibc can\u0027t change say, pthread_mutex_init to do allocations internally. If LaunchProcess were called while some other thread held some malloc lock, this could lead to deadlocks and other badness.\n\nLuckily, none of this is an issue if we do this in NamespaceSandbox::ForkInNewPidNamespace. There, we are known to be single-threaded at the time that we fork, so doing all of this should be safe.",
+      "revId": "1acf36650799ea952000301c8a864f5e5ddebdba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea796d55_b91dfb17",
+        "filename": "base/process/launch_posix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1117355
+      },
+      "writtenOn": "2017-07-21T22:52:44Z",
+      "side": 1,
+      "message": "this should be ptrdiff_t, though I\u0027d probably still prefer this style, ideally along with references to where in the glibc source code this comes from:\n\n// struct pthread in https://sourceware.org/git/?p\u003dglibc.git;a\u003dblob;f\u003dnptl/descr.h\nstruct glibc_pthread {\n  struct header {\n#if defined(ARCH_X86_64) || defined(ARCH_X86)\n    // tcbhead_t in sysdeps/x86_64/nptl/tls.h\n    void* data[24];\n    char padding[512];\n#elif ...\n    // On these architectures, tcbhead_t is smaller\n    // than the padding in struct pthread.\n    void* padding[24];\n#else\n#error \"Unsupported architecture\"\n#endif\n  } header;\n  void* list[2];\n  pid_t tid;\n};\nreinterpret_cast\u003cstruct glibc_pthread*\u003e(pthread_self())-\u003etid \u003d tid;\n\nsince it makes it easier to understand and update in the future.",
+      "range": {
+        "startLine": 752,
+        "startChar": 0,
+        "endLine": 752,
+        "endChar": 3
+      },
+      "revId": "1acf36650799ea952000301c8a864f5e5ddebdba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e185cb7_24958843",
+        "filename": "base/process/launch_posix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1117355
+      },
+      "writtenOn": "2017-07-21T22:52:44Z",
+      "side": 1,
+      "message": "I see, so tcbhead_t ended up being 512 bytes larger than the 24*8 byte padding field in the union.\n\nI believe this applies to x86 as well. for consistency, let\u0027s use ARCH_CPU_X86 and ARCH_CPU_X86_64. I also recommend manually listing out all architectures we have verified this for explicitly so that other architectures don\u0027t find out the hard way if something is different:\n\n#if defined(ARCH_CPU_X86) || defined(ARCH_CPU_X86_64)\n...\n#elif defined(...)\n...\n#else\n#error \"Unsupported architecture\"\n#endif\n\nSee https://cs.chromium.org/chromium/src/sandbox/linux/seccomp-bpf/syscall.cc for an approximate list of architectures our sandbox supports.",
+      "revId": "1acf36650799ea952000301c8a864f5e5ddebdba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d951306a_07964455",
+        "filename": "base/process/launch_posix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 1117355
+      },
+      "writtenOn": "2017-07-21T22:52:44Z",
+      "side": 1,
+      "message": "I would still put this change in NamespaceSandbox::ForkInNewPidNamespace instead. It isn\u0027t necessary here, since we will be execveing soon, and there are no thread calls (in fact, none are allowed) between the fork and execve.",
+      "revId": "1acf36650799ea952000301c8a864f5e5ddebdba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50542854_b5aa603b",
+        "filename": "base/process/launch_posix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 811,
+      "author": {
+        "id": 1117355
+      },
+      "writtenOn": "2017-07-21T22:52:44Z",
+      "side": 1,
+      "message": "Are you sure about 2.24 here? I thought it was 2.25. Also, on 2.25, the PID field is no longer used, so since this is already a little hacky and dangerous, let\u0027s not write it if we don\u0027t have to.\n\nI could be mistaken here though - it wouldn\u0027t shock me if some distros backported this patch in some weird way :-(",
+      "range": {
+        "startLine": 811,
+        "startChar": 11,
+        "endLine": 811,
+        "endChar": 15
+      },
+      "revId": "1acf36650799ea952000301c8a864f5e5ddebdba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
