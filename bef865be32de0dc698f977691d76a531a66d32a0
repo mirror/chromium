@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9da60877_9c80f9cf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-07-21T18:31:58Z",
+      "side": 1,
+      "message": "There is no black screen when we\u0027re downscaling overlays in youtube. This is just misleading, please remove.",
+      "revId": "bef865be32de0dc698f977691d76a531a66d32a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01f6548c_9008e788",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-07-21T18:31:58Z",
+      "side": 1,
+      "message": "Are you sure this CL is affecting any of those bugs? AFAIK src_pos is always 0,0. So this is not fixing those bugs.",
+      "revId": "bef865be32de0dc698f977691d76a531a66d32a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
