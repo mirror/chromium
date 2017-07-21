@@ -22,6 +22,30 @@
       "revId": "f94c6ceb4fcb6625bffa3bb0b496eaa4e96aedb4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd0a0e1c_4bec43f5",
+        "filename": "chrome/browser/extensions/api/music_manager_private/device_id_linux.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-21T02:06:31Z",
+      "side": 1,
+      "message": "re: user visible things: answer: no guarantee for one way or the other.\n\nThis is called from extension API chrome.musicManagerPrivate.getDeviceId(). There\u0027s no guarantee for user visible thing or otherwise: the extension can use it in UI with user gesture or from background.\n\nSo I have two options then: USER_VISIBLE or default.\nTo err on the side of caution, I\u0027ve changed this to USER_VISIBLE (e.g. if the app using the api relies on getDevice on startup)\n\nAlso pulled this traits value to common device_id.h, so it would be easier to change if we need to reconsider.",
+      "parentUuid": "aa32a4ad_3596e7f1",
+      "range": {
+        "startLine": 200,
+        "startChar": 36,
+        "endLine": 200,
+        "endChar": 66
+      },
+      "revId": "f94c6ceb4fcb6625bffa3bb0b496eaa4e96aedb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
