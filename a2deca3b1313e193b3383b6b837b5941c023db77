@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "c73e468b_853b67ba",
+        "filename": "ui/file_manager/file_manager/foreground/css/file_manager.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 583,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-21T07:08:37Z",
+      "side": 1,
+      "message": "I don\u0027t see \"flex: none\" on the arrow icon. Was it unnecessary?",
+      "parentUuid": "ba3ad504_066ad317",
+      "revId": "a2deca3b1313e193b3383b6b837b5941c023db77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05a1024e_de9c3bdf",
         "filename": "ui/file_manager/file_manager/foreground/css/file_manager.css",
         "patchSetId": 2
@@ -148,6 +166,24 @@
       "side": 1,
       "message": "I think it is necessary because otherwise the label will not grow when there will be more space than label+arrow require and they will stay in the middle div.",
       "parentUuid": "662e4f79_afc9c719",
+      "revId": "a2deca3b1313e193b3383b6b837b5941c023db77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b82225de_0cff7c12",
+        "filename": "ui/file_manager/file_manager/foreground/css/file_manager.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-21T07:08:37Z",
+      "side": 1,
+      "message": "OK, then please use the shorthand \"flex: auto\" for consistency.",
+      "parentUuid": "38a29c5a_dccb6575",
       "revId": "a2deca3b1313e193b3383b6b837b5941c023db77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

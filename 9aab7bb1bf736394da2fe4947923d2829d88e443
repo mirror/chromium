@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "111f4177_28476bb6",
+        "filename": "ui/file_manager/file_manager/foreground/css/file_manager.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-21T07:08:37Z",
+      "side": 1,
+      "message": "Remove additional blank line.",
+      "revId": "9aab7bb1bf736394da2fe4947923d2829d88e443",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
