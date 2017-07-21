@@ -737,6 +737,38 @@ NOINLINE pid_t CloneAndLongjmpInChild(unsigned long flags,
   return clone(&CloneHelper, stack, flags, env, ptid, nullptr, ctid);
 }
 
+#if defined(OS_LINUX)
+pid_t GetGlibcCachedTid() {
+  pid_t tid;
+  pthread_mutex_t lock;
+  CHECK_EQ(0, pthread_mutex_init(&lock, NULL));
+  CHECK_EQ(0, pthread_mutex_lock(&lock));
+  tid = lock.__data.__owner;
+  CHECK_EQ(0, pthread_mutex_unlock(&lock));
+  CHECK_EQ(0, pthread_mutex_destroy(&lock));
+  return tid;
+}
+
+int GetGlibcTidOffset() {
+// Valid for glibc versions >= 2.11.
+#ifdef __x86_64__
+  return 26 * sizeof(void*) + 512;
+#else
+  return 26 * sizeof(void*);
+#endif
+}
+
+pid_t* GetGlibcTidPtr() {
+  char* self = reinterpret_cast<char*>(pthread_self());
+  self += GetGlibcTidOffset();
+  return reinterpret_cast<pid_t*>(self);
+}
+
+pid_t* GetGlibcPidPtr() {
+  return GetGlibcTidPtr() + 1;
+}
+#endif
+
 }  // anonymous namespace
 
 pid_t ForkWithFlags(unsigned long flags, pid_t* ptid, pid_t* ctid) {
@@ -774,6 +806,20 @@ pid_t ForkWithFlags(unsigned long flags, pid_t* ptid, pid_t* ctid) {
   if (setjmp(env) == 0) {
     return CloneAndLongjmpInChild(flags, ptid, ctid, &env);
   }
+
+#if defined(OS_LINUX)
+  // Glibc 2.24 and later does not reset the cached TID/PID on
+  // clone(), but pthread depends on it being up-to-date.  This is a
+  // workaround that updates the cache manually.
+  pid_t tid = syscall(__NR_gettid);
+  pid_t pid = syscall(__NR_getpid);
+  if (GetGlibcCachedTid() != tid || getpid() != pid) {
+    *GetGlibcTidPtr() = tid;
+    *GetGlibcPidPtr() = pid;
+    CHECK_EQ(tid, GetGlibcCachedTid());
+    CHECK_EQ(pid, getpid());
+  }
+#endif  // defined(OS_LINUX)
 
   return 0;
 }
