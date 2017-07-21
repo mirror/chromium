@@ -68,6 +68,24 @@
       "revId": "c0042082605ffb239ed559454a2ac120ed90e566",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddebfc90_a6369787",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-21T21:49:39Z",
+      "side": 1,
+      "message": "Ok. Then it sounds that it should be safe to only register this handler if IsVoiceInteractionEnabled() is true.",
+      "parentUuid": "571e390b_9ca6508f",
+      "revId": "c0042082605ffb239ed559454a2ac120ed90e566",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
