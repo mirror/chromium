@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b6b63b23_5a57972a",
+        "filename": "chrome/browser/resources/help/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-07-21T22:13:04Z",
+      "side": 0,
+      "message": "\u003e Can you add someone else here?\n\nI\u0027m not really doing reviews any more, but the code says I am.  That\u0027s a bug.  This CL fixes that bug.\n\nIf you feel there are too few owners, that\u0027s an existing bug that I\u0027m not making worse.\n\n\u003e What happens if I am OOO?\n\nFolks will use higher level owners.\n\nThere\u0027s only problems with single owners when:\n* set noparent is used\n* it\u0027s in like src/OWNERS\n* it\u0027s a new third_party/ thing that only some people can understand\n\nIf you don\u0027t trust the owners of src/chrome/browser/resources, src/chrome/browser, src/chrome, or src/, that\u0027s another problem.",
+      "parentUuid": "649a8d52_3f6aaf79",
+      "revId": "2cd0fcc10460bbbdf65c73a820bb5bff3ae0f074",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63a42e41_f543035d",
         "filename": "chrome/browser/resources/options/OWNERS",
         "patchSetId": 2
