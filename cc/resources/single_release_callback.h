@@ -7,17 +7,23 @@
 
 #include <memory>
 
+#include "base/callback.h"
 #include "base/memory/ptr_util.h"
 #include "cc/cc_export.h"
-#include "cc/resources/release_callback.h"
+
+namespace gpu {
+struct SyncToken;
+}  // namespace gpu
 
 namespace cc {
 
 class CC_EXPORT SingleReleaseCallback {
  public:
-  static std::unique_ptr<SingleReleaseCallback> Create(
-      const ReleaseCallback& cb) {
-    return base::WrapUnique(new SingleReleaseCallback(cb));
+  using CallbackType =
+      base::OnceCallback<void(const gpu::SyncToken& sync_token, bool is_lost)>;
+
+  static std::unique_ptr<SingleReleaseCallback> Create(CallbackType cb) {
+    return base::WrapUnique(new SingleReleaseCallback(std::move(cb)));
   }
 
   ~SingleReleaseCallback();
@@ -25,9 +31,9 @@ class CC_EXPORT SingleReleaseCallback {
   void Run(const gpu::SyncToken& sync_token, bool is_lost);
 
  private:
-  explicit SingleReleaseCallback(const ReleaseCallback& callback);
+  explicit SingleReleaseCallback(CallbackType callback);
 
-  ReleaseCallback callback_;
+  CallbackType callback_;
 };
 
 }  // namespace cc

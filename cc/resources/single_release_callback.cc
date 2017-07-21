@@ -9,8 +9,8 @@
 
 namespace cc {
 
-SingleReleaseCallback::SingleReleaseCallback(const ReleaseCallback& callback)
-    : callback_(callback) {
+SingleReleaseCallback::SingleReleaseCallback(CallbackType callback)
+    : callback_(std::move(callback)) {
   DCHECK(!callback_.is_null())
       << "Use a NULL SingleReleaseCallback for an empty callback.";
 }

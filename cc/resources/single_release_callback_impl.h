@@ -7,17 +7,26 @@
 
 #include <memory>
 
+#include "base/callback.h"
 #include "base/memory/ptr_util.h"
 #include "cc/cc_export.h"
-#include "cc/resources/release_callback_impl.h"
+
+namespace gpu {
+struct SyncToken;
+}  // namespace gpu
 
 namespace cc {
+class BlockingTaskRunner;
 
 class CC_EXPORT SingleReleaseCallbackImpl {
  public:
-  static std::unique_ptr<SingleReleaseCallbackImpl> Create(
-      const ReleaseCallbackImpl& cb) {
-    return base::WrapUnique(new SingleReleaseCallbackImpl(cb));
+  using CallbackType =
+      base::OnceCallback<void(const gpu::SyncToken& sync_token,
+                              bool is_lost,
+                              BlockingTaskRunner* main_thread_task_runner)>;
+
+  static std::unique_ptr<SingleReleaseCallbackImpl> Create(CallbackType cb) {
+    return base::WrapUnique(new SingleReleaseCallbackImpl(std::move(cb)));
   }
 
   ~SingleReleaseCallbackImpl();
@@ -27,9 +36,9 @@ class CC_EXPORT SingleReleaseCallbackImpl {
            BlockingTaskRunner* main_thread_task_runner);
 
  private:
-  explicit SingleReleaseCallbackImpl(const ReleaseCallbackImpl& callback);
+  explicit SingleReleaseCallbackImpl(CallbackType callback);
 
-  ReleaseCallbackImpl callback_;
+  CallbackType callback_;
 };
 
 }  // namespace cc
