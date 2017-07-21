@@ -14,6 +14,7 @@
 #include "base/logging.h"
 #include "base/stl_util.h"
 #include "base/sync_socket.h"
+#include "base/task_scheduler/post_task.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/child_process_data.h"
 #include "content/public/browser/notification_service.h"
@@ -162,8 +163,10 @@ void AwBrowserTerminator::OnChildExit(
     return;
   OnRenderProcessGone(child_process_id);
   DCHECK(pipe->handle() != base::SyncSocket::kInvalidHandle);
-  BrowserThread::PostTask(
-      BrowserThread::FILE, FROM_HERE,
+  base::PostTaskWithTraits(
+      FROM_HERE,
+      {base::MayBlock(), base::TaskPriority::USER_VISIBLE,
+       base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN},
       base::Bind(&AwBrowserTerminator::ProcessTerminationStatus,
                  child_process_id, pid, base::Passed(std::move(pipe))));
 }
