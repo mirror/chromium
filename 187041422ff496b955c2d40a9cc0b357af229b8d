@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7355af48_e79b47f7",
+        "filename": "chrome/browser/vr/test/ui_scene_manager_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-21T19:54:28Z",
+      "side": 1,
+      "message": "The test will fail if we deref the nullptr on the following line, right?\nDo the nullity expectations help annotate the failures in the tests? (Here and elsewhere).",
+      "revId": "187041422ff496b955c2d40a9cc0b357af229b8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbbb4031_4f5649b2",
+        "filename": "chrome/browser/vr/ui_scene.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-21T19:54:28Z",
+      "side": 1,
+      "message": "nit (that you should feel free to ignore): took me a moment to wrap my head around this name. Could it work to store the background_draw_phase?",
+      "revId": "187041422ff496b955c2d40a9cc0b357af229b8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "288bc7c6_2b02cdff",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-21T19:54:28Z",
+      "side": 1,
+      "message": "The DrawPhase() is very clean, but I find it tough to reason about since the creation is housed in helper functions and it\u0027s not clear what order they\u0027ll be called in without looking at the callsites.\n\nI think I\u0027d prefer an enum with clearly named phases. That way you can see at a glance that thing Foo is part of the kBackgroundPhase, or whatever.",
+      "revId": "187041422ff496b955c2d40a9cc0b357af229b8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf9f3978_43fd4b8f",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-21T19:54:28Z",
+      "side": 1,
+      "message": "This is pretty slick. I presume that one day we could have the left-eye/right-eye textures specified here, too if we did stereo cube maps?",
+      "revId": "187041422ff496b955c2d40a9cc0b357af229b8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
