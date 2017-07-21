@@ -7,15 +7,16 @@
 
 #include <memory>
 
-#include "cc/ipc/compositor_frame_sink.mojom.h"
-#include "cc/ipc/frame_sink_manager.mojom.h"
 #include "components/viz/common/surfaces/local_surface_id.h"
 #include "components/viz/common/surfaces/surface_id.h"
 #include "components/viz/service/display/display_client.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support_client.h"
 #include "components/viz/service/frame_sinks/gpu_compositor_frame_sink_delegate.h"
+#include "components/viz/service/hit_test/hit_test_aggregator.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
 #include "mojo/public/cpp/bindings/binding.h"
+#include "services/viz/public/interfaces/frame_sinks/compositor_frame_sink.mojom.h"
+#include "services/viz/public/interfaces/frame_sinks/frame_sink_manager.mojom.h"
 
 namespace cc {
 class BeginFrameSource;
@@ -30,9 +31,9 @@ class GpuCompositorFrameSinkDelegate;
 
 class GpuRootCompositorFrameSink
     : public NON_EXPORTED_BASE(CompositorFrameSinkSupportClient),
-      public NON_EXPORTED_BASE(cc::mojom::CompositorFrameSink),
-      public NON_EXPORTED_BASE(cc::mojom::CompositorFrameSinkPrivate),
-      public NON_EXPORTED_BASE(cc::mojom::DisplayPrivate),
+      public NON_EXPORTED_BASE(mojom::CompositorFrameSink),
+      public NON_EXPORTED_BASE(mojom::CompositorFrameSinkPrivate),
+      public NON_EXPORTED_BASE(mojom::DisplayPrivate),
       public NON_EXPORTED_BASE(DisplayClient) {
  public:
   GpuRootCompositorFrameSink(
@@ -41,14 +42,14 @@ class GpuRootCompositorFrameSink
       const FrameSinkId& frame_sink_id,
       std::unique_ptr<Display> display,
       std::unique_ptr<cc::BeginFrameSource> begin_frame_source,
-      cc::mojom::CompositorFrameSinkAssociatedRequest request,
-      cc::mojom::CompositorFrameSinkPrivateRequest private_request,
-      cc::mojom::CompositorFrameSinkClientPtr client,
-      cc::mojom::DisplayPrivateAssociatedRequest display_private_request);
+      mojom::CompositorFrameSinkAssociatedRequest request,
+      mojom::CompositorFrameSinkPrivateRequest private_request,
+      mojom::CompositorFrameSinkClientPtr client,
+      mojom::DisplayPrivateAssociatedRequest display_private_request);
 
   ~GpuRootCompositorFrameSink() override;
 
-  // cc::mojom::DisplayPrivate:
+  // mojom::DisplayPrivate:
   void SetDisplayVisible(bool visible) override;
   void ResizeDisplay(const gfx::Size& size) override;
   void SetDisplayColorSpace(const gfx::ColorSpace& color_space) override;
@@ -56,13 +57,13 @@ class GpuRootCompositorFrameSink
   void SetLocalSurfaceId(const LocalSurfaceId& local_surface_id,
                          float scale_factor) override;
 
-  // cc::mojom::CompositorFrameSink:
+  // mojom::CompositorFrameSink:
   void SetNeedsBeginFrame(bool needs_begin_frame) override;
   void SubmitCompositorFrame(const LocalSurfaceId& local_surface_id,
                              cc::CompositorFrame frame) override;
   void DidNotProduceFrame(const cc::BeginFrameAck& begin_frame_ack) override;
 
-  // cc::mojom::CompositorFrameSinkPrivate:
+  // mojom::CompositorFrameSinkPrivate:
   void ClaimTemporaryReference(const SurfaceId& surface_id) override;
   void RequestCopyOfSurface(
       std::unique_ptr<cc::CopyOutputRequest> request) override;
@@ -94,12 +95,14 @@ class GpuRootCompositorFrameSink
   std::unique_ptr<cc::BeginFrameSource> display_begin_frame_source_;
   std::unique_ptr<Display> display_;
 
-  cc::mojom::CompositorFrameSinkClientPtr client_;
-  mojo::AssociatedBinding<cc::mojom::CompositorFrameSink>
+  mojom::CompositorFrameSinkClientPtr client_;
+  mojo::AssociatedBinding<mojom::CompositorFrameSink>
       compositor_frame_sink_binding_;
-  mojo::Binding<cc::mojom::CompositorFrameSinkPrivate>
+  mojo::Binding<mojom::CompositorFrameSinkPrivate>
       compositor_frame_sink_private_binding_;
-  mojo::AssociatedBinding<cc::mojom::DisplayPrivate> display_private_binding_;
+  mojo::AssociatedBinding<mojom::DisplayPrivate> display_private_binding_;
+
+  HitTestAggregator hit_test_aggregator_;
 
   DISALLOW_COPY_AND_ASSIGN(GpuRootCompositorFrameSink);
 };

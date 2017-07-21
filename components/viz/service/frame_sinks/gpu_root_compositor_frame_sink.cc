@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "base/command_line.h"
 #include "components/viz/service/display/display.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
 #include "components/viz/service/frame_sinks/frame_sink_manager.h"
@@ -18,11 +19,11 @@ GpuRootCompositorFrameSink::GpuRootCompositorFrameSink(
     const FrameSinkId& frame_sink_id,
     std::unique_ptr<Display> display,
     std::unique_ptr<cc::BeginFrameSource> begin_frame_source,
-    cc::mojom::CompositorFrameSinkAssociatedRequest request,
-    cc::mojom::CompositorFrameSinkPrivateRequest
+    mojom::CompositorFrameSinkAssociatedRequest request,
+    mojom::CompositorFrameSinkPrivateRequest
         compositor_frame_sink_private_request,
-    cc::mojom::CompositorFrameSinkClientPtr client,
-    cc::mojom::DisplayPrivateAssociatedRequest display_private_request)
+    mojom::CompositorFrameSinkClientPtr client,
+    mojom::DisplayPrivateAssociatedRequest display_private_request)
     : delegate_(delegate),
       support_(CompositorFrameSinkSupport::Create(
           this,
@@ -118,7 +119,9 @@ void GpuRootCompositorFrameSink::DisplayOutputSurfaceLost() {
 
 void GpuRootCompositorFrameSink::DisplayWillDrawAndSwap(
     bool will_draw_and_swap,
-    const cc::RenderPassList& render_pass) {}
+    const cc::RenderPassList& render_pass) {
+  hit_test_aggregator_.PostTaskAggregate(display_->CurrentSurfaceId());
+}
 
 void GpuRootCompositorFrameSink::DisplayDidDrawAndSwap() {}
 
@@ -129,6 +132,7 @@ void GpuRootCompositorFrameSink::DidReceiveCompositorFrameAck(
 }
 
 void GpuRootCompositorFrameSink::OnBeginFrame(const cc::BeginFrameArgs& args) {
+  hit_test_aggregator_.Swap();
   if (client_)
     client_->OnBeginFrame(args);
 }

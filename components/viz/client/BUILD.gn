@@ -21,5 +21,6 @@ viz_source_set("client") {
     "//cc/surfaces",
     "//components/viz/common",
     "//mojo/public/cpp/bindings",
+    "//services/viz/public/interfaces/frame_sinks:interfaces",
   ]
 }

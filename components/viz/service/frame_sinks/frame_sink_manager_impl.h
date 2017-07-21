@@ -13,7 +13,6 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/threading/thread_checker.h"
-#include "cc/ipc/frame_sink_manager.mojom.h"
 #include "cc/surfaces/surface_observer.h"
 #include "components/viz/common/surfaces/frame_sink_id.h"
 #include "components/viz/service/frame_sinks/frame_sink_manager.h"
@@ -21,6 +20,7 @@
 #include "components/viz/service/viz_service_export.h"
 #include "gpu/ipc/common/surface_handle.h"
 #include "mojo/public/cpp/bindings/binding.h"
+#include "services/viz/public/interfaces/frame_sinks/frame_sink_manager.mojom.h"
 
 namespace base {
 class SingleThreadTaskRunner;
@@ -41,38 +41,37 @@ class DisplayProvider;
 class VIZ_SERVICE_EXPORT FrameSinkManagerImpl
     : public cc::SurfaceObserver,
       public NON_EXPORTED_BASE(GpuCompositorFrameSinkDelegate),
-      public NON_EXPORTED_BASE(cc::mojom::FrameSinkManager) {
+      public NON_EXPORTED_BASE(mojom::FrameSinkManager) {
  public:
   FrameSinkManagerImpl(bool use_surface_references,
                        DisplayProvider* display_provider);
   ~FrameSinkManagerImpl() override;
 
-  viz::FrameSinkManager* frame_sink_manager() { return &manager_; }
+  FrameSinkManager* frame_sink_manager() { return &manager_; }
 
   // Binds |this| as a FrameSinkManager for |request| on |task_runner|. On Mac
   // |task_runner| will be the resize helper task runner. May only be called
   // once.
-  void BindAndSetClient(cc::mojom::FrameSinkManagerRequest request,
+  void BindAndSetClient(mojom::FrameSinkManagerRequest request,
                         scoped_refptr<base::SingleThreadTaskRunner> task_runner,
-                        cc::mojom::FrameSinkManagerClientPtr client);
+                        mojom::FrameSinkManagerClientPtr client);
 
   // Sets up a direction connection to |client| without using Mojo.
-  void SetLocalClient(cc::mojom::FrameSinkManagerClient* client);
+  void SetLocalClient(mojom::FrameSinkManagerClient* client);
 
-  // cc::mojom::FrameSinkManager implementation:
+  // mojom::FrameSinkManager implementation:
   void CreateRootCompositorFrameSink(
       const FrameSinkId& frame_sink_id,
       gpu::SurfaceHandle surface_handle,
-      cc::mojom::CompositorFrameSinkAssociatedRequest request,
-      cc::mojom::CompositorFrameSinkPrivateRequest private_request,
-      cc::mojom::CompositorFrameSinkClientPtr client,
-      cc::mojom::DisplayPrivateAssociatedRequest display_private_request)
-      override;
+      mojom::CompositorFrameSinkAssociatedRequest request,
+      mojom::CompositorFrameSinkPrivateRequest private_request,
+      mojom::CompositorFrameSinkClientPtr client,
+      mojom::DisplayPrivateAssociatedRequest display_private_request) override;
   void CreateCompositorFrameSink(
       const FrameSinkId& frame_sink_id,
-      cc::mojom::CompositorFrameSinkRequest request,
-      cc::mojom::CompositorFrameSinkPrivateRequest private_request,
-      cc::mojom::CompositorFrameSinkClientPtr client) override;
+      mojom::CompositorFrameSinkRequest request,
+      mojom::CompositorFrameSinkPrivateRequest private_request,
+      mojom::CompositorFrameSinkClientPtr client) override;
   void RegisterFrameSinkHierarchy(
       const FrameSinkId& parent_frame_sink_id,
       const FrameSinkId& child_frame_sink_id) override;
@@ -106,13 +105,13 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl
   // FrameSinkManager should be the first object constructed and the last object
   // destroyed in order to ensure that all other objects that depend on it have
   // access to a valid pointer for the entirety of their lifetimes.
-  viz::FrameSinkManager manager_;
+  FrameSinkManager manager_;
 
   // Provides a Display for CreateRootCompositorFrameSink().
   DisplayProvider* const display_provider_;
 
   std::unordered_map<FrameSinkId,
-                     std::unique_ptr<cc::mojom::CompositorFrameSink>,
+                     std::unique_ptr<mojom::CompositorFrameSink>,
                      FrameSinkIdHash>
       compositor_frame_sinks_;
 
@@ -120,10 +119,10 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl
 
   // This will point to |client_ptr_| if using Mojo or a provided client if
   // directly connected. Use this to make function calls.
-  cc::mojom::FrameSinkManagerClient* client_ = nullptr;
+  mojom::FrameSinkManagerClient* client_ = nullptr;
 
-  cc::mojom::FrameSinkManagerClientPtr client_ptr_;
-  mojo::Binding<cc::mojom::FrameSinkManager> binding_;
+  mojom::FrameSinkManagerClientPtr client_ptr_;
+  mojo::Binding<mojom::FrameSinkManager> binding_;
 
   DISALLOW_COPY_AND_ASSIGN(FrameSinkManagerImpl);
 };

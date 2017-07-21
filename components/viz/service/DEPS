@@ -1,5 +1,6 @@
 include_rules = [
   "+cc",
+  "+services/viz/public/interfaces/frame_sinks"
   "+third_party/skia",
   "+ui/gfx",
   "+ui/gfx/geometry",

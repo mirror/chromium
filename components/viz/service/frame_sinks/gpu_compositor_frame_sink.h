@@ -10,39 +10,39 @@
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "cc/ipc/compositor_frame_sink.mojom.h"
 #include "components/viz/common/surfaces/local_surface_id.h"
 #include "components/viz/common/surfaces/surface_id.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support_client.h"
 #include "components/viz/service/frame_sinks/gpu_compositor_frame_sink_delegate.h"
 #include "mojo/public/cpp/bindings/binding.h"
+#include "services/viz/public/interfaces/frame_sinks/compositor_frame_sink.mojom.h"
 
 namespace viz {
 
 // Server side representation of a WindowSurface.
 class GpuCompositorFrameSink
     : public NON_EXPORTED_BASE(CompositorFrameSinkSupportClient),
-      public NON_EXPORTED_BASE(cc::mojom::CompositorFrameSink),
-      public NON_EXPORTED_BASE(cc::mojom::CompositorFrameSinkPrivate) {
+      public NON_EXPORTED_BASE(mojom::CompositorFrameSink),
+      public NON_EXPORTED_BASE(mojom::CompositorFrameSinkPrivate) {
  public:
   GpuCompositorFrameSink(
       GpuCompositorFrameSinkDelegate* delegate,
       FrameSinkManager* frame_sink_manager,
       const FrameSinkId& frame_sink_id,
-      cc::mojom::CompositorFrameSinkRequest request,
-      cc::mojom::CompositorFrameSinkPrivateRequest private_request,
-      cc::mojom::CompositorFrameSinkClientPtr client);
+      mojom::CompositorFrameSinkRequest request,
+      mojom::CompositorFrameSinkPrivateRequest private_request,
+      mojom::CompositorFrameSinkClientPtr client);
 
   ~GpuCompositorFrameSink() override;
 
-  // cc::mojom::CompositorFrameSink:
+  // mojom::CompositorFrameSink:
   void SetNeedsBeginFrame(bool needs_begin_frame) override;
   void SubmitCompositorFrame(const LocalSurfaceId& local_surface_id,
                              cc::CompositorFrame frame) override;
   void DidNotProduceFrame(const cc::BeginFrameAck& begin_frame_ack) override;
 
-  // cc::mojom::CompositorFrameSinkPrivate:
+  // mojom::CompositorFrameSinkPrivate:
   void ClaimTemporaryReference(const SurfaceId& surface_id) override;
   void RequestCopyOfSurface(
       std::unique_ptr<cc::CopyOutputRequest> request) override;
@@ -63,9 +63,9 @@ class GpuCompositorFrameSink
   GpuCompositorFrameSinkDelegate* const delegate_;
   std::unique_ptr<CompositorFrameSinkSupport> support_;
 
-  cc::mojom::CompositorFrameSinkClientPtr client_;
-  mojo::Binding<cc::mojom::CompositorFrameSink> compositor_frame_sink_binding_;
-  mojo::Binding<cc::mojom::CompositorFrameSinkPrivate>
+  mojom::CompositorFrameSinkClientPtr client_;
+  mojo::Binding<mojom::CompositorFrameSink> compositor_frame_sink_binding_;
+  mojo::Binding<mojom::CompositorFrameSinkPrivate>
       compositor_frame_sink_private_binding_;
 
   DISALLOW_COPY_AND_ASSIGN(GpuCompositorFrameSink);

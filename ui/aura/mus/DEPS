@@ -1,6 +1,5 @@
 include_rules = [
   "+cc/base/switches.h",
-  "+cc/ipc/compositor_frame_sink.mojom.h",
   "+cc/output/layer_tree_frame_sink_client.h",
   "+cc/output/layer_tree_frame_sink.h",
   "+cc/scheduler/begin_frame_source.h",
@@ -21,5 +20,6 @@ include_rules = [
   "+services/ui/public/cpp/property_type_converters.h",
   "+services/ui/public/cpp/raster_thread_helper.h",
   "+services/ui/public/cpp/client_layer_tree_frame_sink.h",
+  "+services/viz/public/interfaces/frame_sinks/compositor_frame_sink.mojom.h"
   "+ui/gl/gl_bindings.h",
 ]

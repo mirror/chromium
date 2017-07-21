@@ -298,8 +298,8 @@ void GpuChildThread::CreateGpuService(
 }
 
 void GpuChildThread::CreateFrameSinkManager(
-    cc::mojom::FrameSinkManagerRequest request,
-    cc::mojom::FrameSinkManagerClientPtr client) {
+    viz::mojom::FrameSinkManagerRequest request,
+    viz::mojom::FrameSinkManagerClientPtr client) {
   NOTREACHED();
 }
 
