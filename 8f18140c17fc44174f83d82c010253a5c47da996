@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5b47d0c_df7191dd",
+        "filename": "cc/resources/single_release_callback.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-21T15:29:20Z",
+      "side": 1,
+      "message": "So high level what was going on is ReleaseCallback was a typedef to specify the arguments. But it\u0027s always called only once, so we wrapped it in SingleReleaseCallback to make 2 types.\n\nI think ReleaseCallback should be a OnceCallback now. And if that worked, we can probably remove the type and only use SingleReleaseCallback.\n\nDo you wanna make ReleaseCallback a OnceCallback first and then see where that takes us?",
+      "revId": "8f18140c17fc44174f83d82c010253a5c47da996",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
