@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4184d56_0f4367e0",
+        "filename": "base/memory/ref_counted.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-21T16:06:47Z",
+      "side": 1,
+      "message": "nit: I\u0027d riff off the CalledOnValidSequence name more so it\u0027s more recognizable, like IsOnValidSequence or something.",
+      "revId": "4d53784bd5d0811f7b8b99772cf03c644b832c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
