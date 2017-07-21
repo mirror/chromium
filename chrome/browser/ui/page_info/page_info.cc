@@ -113,6 +113,7 @@ ContentSettingsType kPermissionType[] = {
     CONTENT_SETTINGS_TYPE_AUTOMATIC_DOWNLOADS,
     CONTENT_SETTINGS_TYPE_AUTOPLAY,
     CONTENT_SETTINGS_TYPE_MIDI_SYSEX,
+    CONTENT_SETTINGS_TYPE_SOUND,  // TODO(steimel): ordering?
 };
 
 // Determines whether to show permission |type| in the Page Info UI. Only
@@ -137,6 +138,10 @@ bool ShouldShowPermission(ContentSettingsType type,
     return content_settings->GetWebsiteSetting(
                site_url, GURL(), CONTENT_SETTINGS_TYPE_ADS_DATA, std::string(),
                nullptr) != nullptr;
+  }
+
+  if (type == CONTENT_SETTINGS_TYPE_SOUND) {
+    return base::FeatureList::IsEnabled(features::kSoundContentSetting);
   }
 
   return true;

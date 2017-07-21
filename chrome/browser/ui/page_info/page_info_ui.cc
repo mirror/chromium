@@ -131,6 +131,8 @@ const PermissionsUIInfo kPermissionsUIInfo[] = {
     {CONTENT_SETTINGS_TYPE_AUTOPLAY, IDS_PAGE_INFO_TYPE_AUTOPLAY, 0, 0},
     {CONTENT_SETTINGS_TYPE_ADS, IDS_PAGE_INFO_TYPE_ADS, IDR_BLOCKED_ADS,
      IDR_ALLOWED_ADS},
+    {CONTENT_SETTINGS_TYPE_SOUND, IDS_PAGE_INFO_TYPE_SOUND,
+     IDR_BLOCKED_JAVASCRIPT, IDR_ALLOWED_JAVASCRIPT},  // TODO(steimel): images.
 };
 
 std::unique_ptr<PageInfoUI::SecurityDescription> CreateSecurityDescription(
