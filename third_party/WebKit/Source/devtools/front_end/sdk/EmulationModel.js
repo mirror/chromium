@@ -19,6 +19,7 @@ SDK.EmulationModel = class extends SDK.SDKModel {
     var disableJavascriptSetting = Common.settings.moduleSetting('javaScriptDisabled');
     disableJavascriptSetting.addChangeListener(
         () => this._emulationAgent.setScriptExecutionDisabled(disableJavascriptSetting.get()));
+
     if (disableJavascriptSetting.get())
       this._emulationAgent.setScriptExecutionDisabled(true);
 

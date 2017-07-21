@@ -17,6 +17,7 @@
 #include "chrome/browser/extensions/extension_tab_util.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
+#include "chrome/browser/subresource_filter/chrome_subresource_filter_client.h"
 #include "chrome/browser/ui/browser_navigator.h"
 #include "chrome/browser/ui/browser_navigator_params.h"
 #include "chrome/browser/ui/browser_window.h"
@@ -275,6 +276,42 @@ ChromeDevToolsManagerDelegate::SetWindowBounds(int id,
 }
 
 std::unique_ptr<base::DictionaryValue>
+ChromeDevToolsManagerDelegate::PageEnable(
+    bool enable,
+    content::DevToolsAgentHost* agent_host,
+    int id) {
+  page_enable_ = enable;
+  if (!page_enable_)
+    ToggleAdBlocking(false /* enable */, agent_host);
+  return DevToolsProtocol::CreateSuccessResponse(id, nullptr);
+}
+
+std::unique_ptr<base::DictionaryValue>
+ChromeDevToolsManagerDelegate::EnableAdBlocking(
+    content::DevToolsAgentHost* agent_host,
+    int id,
+    base::DictionaryValue* params) {
+  if (!page_enable_)
+    return DevToolsProtocol::CreateErrorResponse(id, "Page domain disabled");
+  bool enabled = false;
+  params->GetBoolean("enabled", &enabled);
+  ToggleAdBlocking(enabled, agent_host);
+  return DevToolsProtocol::CreateSuccessResponse(id, nullptr);
+}
+
+// static
+void ChromeDevToolsManagerDelegate::ToggleAdBlocking(
+    bool enabled,
+    content::DevToolsAgentHost* agent_host) {
+  if (content::WebContents* web_contents = agent_host->GetWebContents()) {
+    if (auto* client =
+            ChromeSubresourceFilterClient::FromWebContents(web_contents)) {
+      client->ToggleForceActivationInCurrentWebContents(enabled);
+    }
+  }
+}
+
+std::unique_ptr<base::DictionaryValue>
 ChromeDevToolsManagerDelegate::HandleBrowserCommand(
     int id,
     std::string method,
@@ -330,6 +367,14 @@ base::DictionaryValue* ChromeDevToolsManagerDelegate::HandleCommand(
   if (agent_host->GetType() == DevToolsAgentHost::kTypeBrowser &&
       method.find("Browser.") == 0)
     return HandleBrowserCommand(id, method, params).release();
+
+  if (method == chrome::devtools::Page::enable::kName)
+    return PageEnable(true /* enable */, agent_host, id).release();
+  if (method == chrome::devtools::Page::disable::kName)
+    return PageEnable(false /* enable */, agent_host, id).release();
+
+  if (method == chrome::devtools::Page::setAdBlockingEnabled::kName)
+    return EnableAdBlocking(agent_host, id, params).release();
 
   if (method == chrome::devtools::Target::setRemoteLocations::kName)
     return SetRemoteLocations(agent_host, id, params).release();
