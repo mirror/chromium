@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f24af7a5_38bf4d93",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer_unittest.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-21T22:23:52Z",
+      "side": 1,
+      "message": "Now the unit tests also assert that the patch is transformed and applied in wpt.",
+      "revId": "84515a96bbf9003b5182c84f512fbc9063dc975d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
