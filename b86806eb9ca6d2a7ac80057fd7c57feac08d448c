@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eeb41ee8_e9c49e2f",
+        "filename": "dbus/object_proxy.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-21T06:02:11Z",
+      "side": 1,
+      "message": "nit/optional: How about moving this to L177, just before posting this.\n\n(optional) Or, you can inline the BindOnce (ditto for other place, but is this dbus\u0027s style?)",
+      "revId": "b86806eb9ca6d2a7ac80057fd7c57feac08d448c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
