@@ -34,6 +34,24 @@
       "revId": "4a4a734896cc777dd9fb69675e21dbd7c2886f30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4871588_1700498e",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletMessagingProxy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-21T08:49:13Z",
+      "side": 0,
+      "message": "Yeah, this should compile without the inclusion because the header file indirectly included by other files. However, it\u0027s better to avoid such an indirect inclusion because once other files stop including the header, it may emit a bunch of compile failures (*). I guess \u0027git cl lint\u0027 complains if we don\u0027t include \u003cmemory\u003e in this file.\n\nRegarding ThreadedWorkletMessagingProxy, we should have included \u003cmemory\u003e in that, too.\n\n(*) Regarding \u003cmemory\u003e, it\u0027s widely included, so such a situation may not happen though.",
+      "parentUuid": "25c540ca_edc1b5db",
+      "revId": "4a4a734896cc777dd9fb69675e21dbd7c2886f30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
