@@ -39,6 +39,8 @@
 #include "ui/gl/gl_surface.h"
 #include "ui/gl/init/gl_factory.h"
 
+#define USE_VSYNC_ALIGN 0
+
 namespace vr_shell {
 
 namespace {
@@ -1088,10 +1090,14 @@ void VrShellGl::OnVSync() {
 }
 
 void VrShellGl::GetVSync(GetVSyncCallback callback) {
+#if USE_VSYNC_ALIGN
   // In surfaceless (reprojecting) rendering, stay locked
   // to vsync intervals. Otherwise, for legacy Cardboard mode,
   // run requested animation frames now if it missed a vsync.
   if (surfaceless_rendering_ || !pending_vsync_) {
+#else
+  if (!pending_vsync_) {
+#endif
     if (!callback_.is_null()) {
       mojo::ReportBadMessage(
           "Requested VSync before waiting for response to previous request.");
