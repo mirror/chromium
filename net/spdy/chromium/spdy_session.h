@@ -537,17 +537,11 @@ class NET_EXPORT SpdySession : public BufferedSpdyFramerVisitorInterface,
     return pooled_aliases_;
   }
 
-  size_t GetDataFrameMinimumSize() const {
-    return buffered_spdy_framer_->GetDataFrameMinimumSize();
-  }
+  size_t GetDataFrameMinimumSize() const { return kDataFrameMinimumSize; }
 
-  size_t GetFrameHeaderSize() const {
-    return buffered_spdy_framer_->GetFrameHeaderSize();
-  }
+  size_t GetFrameHeaderSize() const { return kFrameHeaderSize; }
 
-  size_t GetFrameMinimumSize() const {
-    return buffered_spdy_framer_->GetFrameMinimumSize();
-  }
+  size_t GetFrameMinimumSize() const { return kFrameMinimumSize; }
 
   size_t GetFrameMaximumSize() const {
     return buffered_spdy_framer_->GetFrameMaximumSize();
