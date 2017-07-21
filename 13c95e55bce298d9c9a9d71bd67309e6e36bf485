@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36456f88_d02fdeb8",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-07-21T05:33:44Z",
+      "side": 1,
+      "message": "Nit: Should this definition live in types.js, with the original definition of DragData?",
+      "revId": "13c95e55bce298d9c9a9d71bd67309e6e36bf485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46960721_ff518185",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-07-21T05:33:44Z",
+      "side": 1,
+      "message": "nit: extra space",
+      "range": {
+        "startLine": 307,
+        "startChar": 31,
+        "endLine": 307,
+        "endChar": 32
+      },
+      "revId": "13c95e55bce298d9c9a9d71bd67309e6e36bf485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
