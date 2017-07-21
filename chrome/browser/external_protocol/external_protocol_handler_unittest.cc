@@ -6,12 +6,14 @@
 
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
+#include "base/threading/thread_restrictions.h"
 #include "chrome/browser/prefs/browser_prefs.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/test/base/testing_browser_process.h"
 #include "chrome/test/base/testing_profile.h"
 #include "components/prefs/testing_pref_service.h"
 #include "content/public/test/test_browser_thread_bundle.h"
+#include "content/public/test/test_utils.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 class FakeExternalProtocolHandlerWorker
@@ -110,9 +112,7 @@ class FakeExternalProtocolHandlerDelegate
 
 class ExternalProtocolHandlerTest : public testing::Test {
  protected:
-  ExternalProtocolHandlerTest()
-      : test_browser_thread_bundle_(
-            content::TestBrowserThreadBundle::REAL_FILE_THREAD) {}
+  ExternalProtocolHandlerTest() {}
 
   void SetUp() override {
     local_state_.reset(new TestingPrefServiceSimple);
@@ -143,7 +143,7 @@ class ExternalProtocolHandlerTest : public testing::Test {
     ExternalProtocolHandler::LaunchUrlWithDelegate(
         url, 0, 0, ui::PAGE_TRANSITION_LINK, true, &delegate_);
     if (block_state != ExternalProtocolHandler::BLOCK)
-      base::RunLoop().Run();
+      content::RunAllBlockingPoolTasksUntilIdle();
 
     ASSERT_EQ(should_prompt, delegate_.has_prompted());
     ASSERT_EQ(should_launch, delegate_.has_launched());
@@ -156,6 +156,7 @@ class ExternalProtocolHandlerTest : public testing::Test {
 
   std::unique_ptr<TestingPrefServiceSimple> local_state_;
   std::unique_ptr<TestingProfile> profile_;
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
 };
 
 TEST_F(ExternalProtocolHandlerTest, TestLaunchSchemeBlockedChromeDefault) {
