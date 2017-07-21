@@ -22,6 +22,30 @@
       "revId": "3c6636a761905c816066405c8646c00d7bb798c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08cf1431_9864a278",
+        "filename": "chrome/browser/ui/cocoa/passwords/pending_password_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-07-21T08:01:12Z",
+      "side": 1,
+      "message": "Yeap, I usually write things in one long line and then run git cl format to be consistent. Tried same method again just to be sure, same result. I am leaving it as it is. :)",
+      "parentUuid": "118089c1_8796c30a",
+      "range": {
+        "startLine": 128,
+        "startChar": 32,
+        "endLine": 128,
+        "endChar": 33
+      },
+      "revId": "3c6636a761905c816066405c8646c00d7bb798c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
