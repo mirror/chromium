@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "209f8ed6_2ef48de1",
+        "filename": "ash/login/ui/lock_screen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-21T01:38:54Z",
+      "side": 1,
+      "message": "nit: Don\u0027t use auto when type is not immediately obvious",
+      "revId": "77464cc2e860f9cde77f2de5103a3a40755b74b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a3ba320_d9a2d1d7",
+        "filename": "ash/login/ui/lock_screen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-21T01:38:54Z",
+      "side": 1,
+      "message": "Does this work?\n\n  instance_-\u003einitial_blur_[layer] \u003d layer-\u003elayer_blur()",
+      "revId": "77464cc2e860f9cde77f2de5103a3a40755b74b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba7920a3_ec322bdf",
+        "filename": "ash/login/ui/lock_screen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-21T01:38:54Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "77464cc2e860f9cde77f2de5103a3a40755b74b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eafb52a1_09d131e5",
+        "filename": "ash/login/ui/lock_screen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-21T01:38:54Z",
+      "side": 1,
+      "message": "nit: iter -\u003e it",
+      "revId": "77464cc2e860f9cde77f2de5103a3a40755b74b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
