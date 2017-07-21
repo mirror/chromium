@@ -46,6 +46,30 @@
       "revId": "d6832e79542d8558f86f0515f8be0051a24e5d68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "743e03eb_4a792660",
+        "filename": "tools/perf/benchmarks/rasterize_and_record_micro.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-07-21T18:55:37Z",
+      "side": 1,
+      "message": "We talked offline, that would be an issue. The solution is to separate this benchmarks story expectations from the others. Something I\u0027ve been meaning to do in a refactoring. The change in this CL should just be this:\n\n\ndef GetExpectations(self):\n    class StoryExpectations(story.expectations.StoryExpectations):\n      def SetExpectations(self):\n          self.DisableStory(\n              \u0027http://www.cnn.com\u0027, [story.expectations.ALL], \u0027crbug.com/528472\u0027)\n          self.DisableStory(\u0027https://mail.google.com/mail/\u0027,\n                            [story.expectations.ALL_LINUX],\n                            \u0027crbug.com/747021\u0027)\n    return StoryExpectations()",
+      "parentUuid": "0b923f55_bbd3f70b",
+      "range": {
+        "startLine": 62,
+        "startChar": 9,
+        "endLine": 62,
+        "endChar": 10
+      },
+      "revId": "d6832e79542d8558f86f0515f8be0051a24e5d68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
