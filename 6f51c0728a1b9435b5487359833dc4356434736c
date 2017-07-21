@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d90470f_ff4a00e4",
+        "filename": "gpu/config/gpu_driver_bug_workaround_type.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-07-21T15:53:14Z",
+      "side": 1,
+      "message": "I might be missing how this works. Aren\u0027t you supposed to check workarounds.avoid_using_image_flush_external_with_egl_create_image somewhere?\n\nOr is this CL just re-enabling GL_EXT_image_flush_external and then the idea is to land the actual logic of the new workaround later?",
+      "revId": "6f51c0728a1b9435b5487359833dc4356434736c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
