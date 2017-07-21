@@ -93,6 +93,7 @@ void AppListPresenterImpl::Dismiss() {
   if (app_list_) {
     app_list_->OnTargetVisibilityChanged(GetTargetVisibility());
     app_list_->OnVisibilityChanged(GetTargetVisibility(), GetDisplayId());
+    view_->OnDismissed();
   }
   // The dismissal may have occurred in response to the app list losing
   // activation. Otherwise, our widget is currently active. When the animation
