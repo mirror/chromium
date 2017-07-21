@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b747af4_f947998a",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-21T20:01:40Z",
+      "side": 1,
+      "message": "nit: I would have used the if else blocks, so its straightforward to assert that it is always a new_decoder in the low end device case. The |using_external_allocator| bit you set here should make sure that the caller discards the decoder.",
+      "range": {
+        "startLine": 348,
+        "startChar": 17,
+        "endLine": 348,
+        "endChar": 24
+      },
+      "revId": "11f83906ee8c866df3c2c91bfb2ae61dd1f246be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
