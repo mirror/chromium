@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "19be3d28_747e2dfa",
+        "filename": "components/exo/data_device_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-21T05:51:07Z",
+      "side": 1,
+      "message": "I updated the code to put DataDeviceManager in Display.",
+      "parentUuid": "0ff374e1_df8decb6",
+      "revId": "4aa6777941d9ad4bd6eb42a216eb5bb8b19ea44b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9c37700_82ddf3e4",
         "filename": "components/exo/wayland/server.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-20T13:40:28Z",
       "side": 1,
       "message": "fyi, this will be called multiple times. multiple times for the same client is even possible.",
+      "revId": "4aa6777941d9ad4bd6eb42a216eb5bb8b19ea44b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b99c31f_3b8093c2",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2983,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-21T05:51:07Z",
+      "side": 1,
+      "message": "Haven\u0027t noticed about it. Thanks!",
+      "parentUuid": "b9c37700_82ddf3e4",
       "revId": "4aa6777941d9ad4bd6eb42a216eb5bb8b19ea44b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
