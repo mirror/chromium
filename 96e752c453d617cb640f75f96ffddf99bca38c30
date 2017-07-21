@@ -22,6 +22,30 @@
       "revId": "96e752c453d617cb640f75f96ffddf99bca38c30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "049328d7_931f252d",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 856,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-21T08:27:16Z",
+      "side": 1,
+      "message": "Not sure if there\u0027s a style guide about this: I\u0027ve seen much code use the getter instead of the member directly, possibly to exercise the DCHECKs of the getter. I\u0027ll just leave it like this unless you have a strong opinion.",
+      "parentUuid": "4f903e86_ae39da46",
+      "range": {
+        "startLine": 856,
+        "startChar": 48,
+        "endLine": 856,
+        "endChar": 56
+      },
+      "revId": "96e752c453d617cb640f75f96ffddf99bca38c30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
