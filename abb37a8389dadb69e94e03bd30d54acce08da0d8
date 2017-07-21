@@ -22,6 +22,30 @@
       "revId": "abb37a8389dadb69e94e03bd30d54acce08da0d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8033f6e5_8e5ec716",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-07-21T18:22:49Z",
+      "side": 1,
+      "message": "I\u0027ve updated them to follow the rules in the style guide.",
+      "parentUuid": "a279de87_65319402",
+      "range": {
+        "startLine": 703,
+        "startChar": 44,
+        "endLine": 703,
+        "endChar": 0
+      },
+      "revId": "abb37a8389dadb69e94e03bd30d54acce08da0d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
