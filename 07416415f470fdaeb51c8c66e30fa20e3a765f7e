@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c418f03_b7c665e6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-21T23:13:43Z",
+      "side": 1,
+      "message": "Do you have a 1-page design doc? Please link it.\n\nIt seems like we can trigger the Bookmarks UI even for users who have imported bookmarks via sync, but haven\u0027t explicitly created a new bookmark. We should probably not trigger the UI if the user has any bookmarks.",
+      "revId": "07416415f470fdaeb51c8c66e30fa20e3a765f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c39033e_932b8aa6",
+        "filename": "chrome/browser/feature_engagement_tracker/bookmark/bookmark_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-21T23:13:43Z",
+      "side": 1,
+      "message": "s/ellapsed/elapsed",
+      "revId": "07416415f470fdaeb51c8c66e30fa20e3a765f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea6f4f44_07f4e7ae",
+        "filename": "chrome/browser/feature_engagement_tracker/bookmark/bookmark_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-21T23:13:43Z",
+      "side": 1,
+      "message": "There\u0027s a lot of copy-pasted code between this and NewTabTracker. Much of this should be refactored to share more logic. I\u0027ll let you decide the best way of doing that.",
+      "revId": "07416415f470fdaeb51c8c66e30fa20e3a765f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c46a818c_a3343d21",
+        "filename": "chrome/browser/feature_engagement_tracker/bookmark/bookmark_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-21T23:13:43Z",
+      "side": 1,
+      "message": "I realize this is copy-pasted from catherine\u0027s code, but this is missing a corresponding RemoveObserver() in the destructor. This is a pretty big oversight. Please let catherine know so she can fix the corresponding class.",
+      "revId": "07416415f470fdaeb51c8c66e30fa20e3a765f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "880054c4_1c3bdd16",
+        "filename": "chrome/browser/feature_engagement_tracker/bookmark/bookmark_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-21T23:13:43Z",
+      "side": 1,
+      "message": "we shouldn\u0027t clear the flag until the promo is dismissed, right?",
+      "revId": "07416415f470fdaeb51c8c66e30fa20e3a765f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "188998f4_d3f2f4ec",
+        "filename": "chrome/browser/feature_engagement_tracker/bookmark/bookmark_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-21T23:13:43Z",
+      "side": 1,
+      "message": "Hm. Why are we storing this in minutes rather than seconds? It seems like we are losing granularity for no good reason here.",
+      "revId": "07416415f470fdaeb51c8c66e30fa20e3a765f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "090faf09_50397d37",
+        "filename": "chrome/browser/feature_engagement_tracker/bookmark/bookmark_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-21T23:13:43Z",
+      "side": 1,
+      "message": "what tests?",
+      "revId": "07416415f470fdaeb51c8c66e30fa20e3a765f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc3dd8d5_52bbc043",
+        "filename": "chrome/browser/feature_engagement_tracker/bookmark/bookmark_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-21T23:13:43Z",
+      "side": 1,
+      "message": "Actually I think neither of these pointers are owned by this class.",
+      "revId": "07416415f470fdaeb51c8c66e30fa20e3a765f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66320bf9_577b4035",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 3860,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-21T23:13:43Z",
+      "side": 1,
+      "message": "did you forget to include this file?",
+      "revId": "07416415f470fdaeb51c8c66e30fa20e3a765f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35b3686c_a9413e08",
+        "filename": "components/feature_engagement_tracker/public/event_constants.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-21T23:13:43Z",
+      "side": 1,
+      "message": "normally we line-wrap to 80 columns.\n\nAlso, \"for the Bookmarks...\" feature (?) button (?). Seems like an incomplete sentence.",
+      "revId": "07416415f470fdaeb51c8c66e30fa20e3a765f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5909eaff_68a13f27",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 5240,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-21T23:13:43Z",
+      "side": 1,
+      "message": "you should make sure these engineers are okay with being the OWNER of this. :)",
+      "revId": "07416415f470fdaeb51c8c66e30fa20e3a765f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
