@@ -11,6 +11,7 @@
 #include "ash/shell.h"
 #include "ash/wm/screen_pinning_controller.h"
 #include "ash/wm/splitview/split_view_controller.h"
+#include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "ash/wm/tablet_mode/tablet_mode_window_manager.h"
 #include "ash/wm/window_animation_types.h"
 #include "ash/wm/window_properties.h"
@@ -78,7 +79,7 @@ bool CanSnap(wm::WindowState* window_state) {
 }
 
 // Returns the maximized/full screen and/or centered bounds of a window.
-gfx::Rect GetBoundsInMaximizedMode(wm::WindowState* state_object) {
+gfx::Rect GetBoundsInTabletMode(wm::WindowState* state_object) {
   if (state_object->IsFullscreen() || state_object->IsPinned())
     return ScreenUtil::GetDisplayBoundsInParent(state_object->window());
 
@@ -129,7 +130,7 @@ gfx::Rect GetRestoreBounds(wm::WindowState* window_state) {
 // static
 void TabletModeWindowState::UpdateWindowPosition(
     wm::WindowState* window_state) {
-  gfx::Rect bounds_in_parent = GetBoundsInMaximizedMode(window_state);
+  gfx::Rect bounds_in_parent = GetBoundsInTabletMode(window_state);
   if (bounds_in_parent == window_state->window()->bounds())
     return;
   window_state->SetBoundsDirect(bounds_in_parent);
@@ -168,12 +169,16 @@ void TabletModeWindowState::SetDeferBoundsUpdates(bool defer_bounds_updates) {
 void TabletModeWindowState::OnWMEvent(wm::WindowState* window_state,
                                       const wm::WMEvent* event) {
   // Ignore events that are sent during the exit transition.
-  if (ignore_wm_events_) {
+  if (ignore_wm_events_ && event->type() != wm::WM_EVENT_MAXIMIZE) {
     return;
   }
 
   switch (event->type()) {
     case wm::WM_EVENT_TOGGLE_FULLSCREEN:
+      // Do not allow toggling fullscreen if the flag to hide titlebars (which
+      // means we will enter fullscreen automatically in tablet mode) is set.
+      if (Shell::Get()->tablet_mode_controller()->ShouldHideTitlebars())
+        return;
       ToggleFullScreen(window_state, window_state->delegate());
       break;
     case wm::WM_EVENT_FULLSCREEN:
@@ -195,10 +200,19 @@ void TabletModeWindowState::OnWMEvent(wm::WindowState* window_state,
     case wm::WM_EVENT_CYCLE_SNAP_RIGHT:
     case wm::WM_EVENT_CENTER:
     case wm::WM_EVENT_NORMAL:
-    case wm::WM_EVENT_MAXIMIZE:
+    case wm::WM_EVENT_MAXIMIZE: {
+      const wm::WindowStateType old_state_type = current_state_type_;
       UpdateWindow(window_state, GetMaximizedOrCenteredWindowType(window_state),
                    true);
+      // Turn on full screen if the window was previously minimized and we want
+      // to hide titlebars.
+      if (old_state_type == wm::WINDOW_STATE_TYPE_MINIMIZED &&
+          Shell::Get()->tablet_mode_controller()->ShouldHideTitlebars()) {
+        window_state->set_in_immersive_fullscreen(true);
+        ToggleFullScreen(window_state, window_state->delegate());
+      }
       return;
+    }
     case wm::WM_EVENT_SNAP_LEFT:
       UpdateWindow(window_state,
                    GetSnappedWindowStateType(
@@ -293,9 +307,22 @@ void TabletModeWindowState::AttachState(
   }
 
   window_state->set_can_be_dragged(false);
+
+  if (Shell::Get()->tablet_mode_controller()->ShouldHideTitlebars()) {
+    originally_fullscreen_ = window_state->IsFullscreen();
+    if (!originally_fullscreen_ && !window_state->IsMinimized()) {
+      window_state->set_in_immersive_fullscreen(true);
+      ToggleFullScreen(window_state, window_state->delegate());
+    }
+  }
 }
 
 void TabletModeWindowState::DetachState(wm::WindowState* window_state) {
+  if (Shell::Get()->tablet_mode_controller()->ShouldHideTitlebars()) {
+    if (!originally_fullscreen_ && window_state->IsFullscreen())
+      ToggleFullScreen(window_state, window_state->delegate());
+  }
+
   // From now on, we can use the default session restore mechanism again.
   SetWindowRestoreOverrides(window_state->window(), gfx::Rect(),
                             ui::SHOW_STATE_NORMAL);
@@ -384,7 +411,7 @@ void TabletModeWindowState::UpdateBounds(wm::WindowState* window_state,
                                          bool animated) {
   if (defer_bounds_updates_)
     return;
-  gfx::Rect bounds_in_parent = GetBoundsInMaximizedMode(window_state);
+  gfx::Rect bounds_in_parent = GetBoundsInTabletMode(window_state);
   // If we have a target bounds rectangle, we center it and set it
   // accordingly.
   if (!bounds_in_parent.IsEmpty() &&
