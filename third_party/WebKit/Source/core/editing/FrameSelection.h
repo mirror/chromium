@@ -120,7 +120,8 @@ class CORE_EXPORT FrameSelection final
                     SetSelectionOptions = kCloseTyping | kClearTypingStyle,
                     CursorAlignOnScroll = CursorAlignOnScroll::kIfNeeded,
                     TextGranularity = TextGranularity::kCharacter);
-  void SelectAll(SetSelectionBy = SetSelectionBy::kSystem);
+  void SelectAll(SetSelectionBy);
+  void SelectAll();
   void Clear();
   bool IsHidden() const;
 
