@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34164b13_8089e32f",
+        "filename": "components/offline_pages/core/page_renovation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-07-21T18:26:58Z",
+      "side": 1,
+      "message": "grammar nit \"should run\" -\u003e \"that should run\"",
+      "range": {
+        "startLine": 18,
+        "startChar": 47,
+        "endLine": 18,
+        "endChar": 53
+      },
+      "revId": "0f9b48fa2e7ad61928909983dc490f58ad6c01e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6647a814_5ee4f098",
+        "filename": "components/offline_pages/core/page_renovation_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-07-21T18:26:58Z",
+      "side": 1,
+      "message": "Why do we have this?  If loading fails, we should probably not run anything, right?  I would have expected this to be an empty string.  If this is just a placeholder until we have scripts, add a TODO to remove it once we get scripts.",
+      "range": {
+        "startLine": 24,
+        "startChar": 11,
+        "endLine": 24,
+        "endChar": 23
+      },
+      "revId": "0f9b48fa2e7ad61928909983dc490f58ad6c01e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2385b1fe_60e19e8e",
+        "filename": "components/offline_pages/core/page_renovation_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-07-21T18:26:58Z",
+      "side": 1,
+      "message": "Would it make sense to do this instead when we get the scripts (and maybe rename LoadSource to Initialize)?  Bad things happen if an exception is thrown during object construction, so I prefer designs which avoid calling meaty functions in constructors where possible.  We could start with an empty vector here, and add to it when making the renovation list.",
+      "range": {
+        "startLine": 29,
+        "startChar": 19,
+        "endLine": 29,
+        "endChar": 37
+      },
+      "revId": "0f9b48fa2e7ad61928909983dc490f58ad6c01e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ba86865_a0639a78",
+        "filename": "components/offline_pages/core/page_renovation_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-07-21T18:26:58Z",
+      "side": 1,
+      "message": "renovations might be better named renovation_name, or renovation_function_name.  These aren\u0027t renovation objects, but the names of renovation functions to call.",
+      "range": {
+        "startLine": 36,
+        "startChar": 36,
+        "endLine": 36,
+        "endChar": 47
+      },
+      "revId": "0f9b48fa2e7ad61928909983dc490f58ad6c01e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32ae53f4_79e04b4c",
+        "filename": "components/offline_pages/core/page_renovation_loader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-07-21T18:26:58Z",
+      "side": 1,
+      "message": "Let\u0027s add a comment about why we are using string16 here (JS requires it for scripts, right)?",
+      "range": {
+        "startLine": 25,
+        "startChar": 21,
+        "endLine": 25,
+        "endChar": 31
+      },
+      "revId": "0f9b48fa2e7ad61928909983dc490f58ad6c01e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4767daa_274f027b",
+        "filename": "components/offline_pages/core/page_renovation_loader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-07-21T18:26:58Z",
+      "side": 1,
+      "message": "renovations -\u003e renovation_keys ?",
+      "range": {
+        "startLine": 27,
+        "startChar": 38,
+        "endLine": 27,
+        "endChar": 49
+      },
+      "revId": "0f9b48fa2e7ad61928909983dc490f58ad6c01e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
