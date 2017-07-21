@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8c9fd6a9_411d4fd4",
+        "filename": "ash/system/tray/tray_info_label_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1206355
+      },
+      "writtenOn": "2017-07-21T00:16:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ab4deae_06f9716c",
+      "range": {
+        "startLine": 69,
+        "startChar": 7,
+        "endLine": 69,
+        "endChar": 18
+      },
+      "revId": "72381c6d5fa1a70ecdb05836fc83ef58181fd351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ef8f914_c7a71ede",
         "filename": "ash/system/tray/tray_info_label_unittest.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-20T23:58:07Z",
       "side": 1,
       "message": "If someone touches this class later on and changes the name label_ or changes the type of label_, this test would fail even if the TrayInfoLabel still worked correctly.\n\nIn general, we should only test the public API of a class, so please remove this line.",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 59
+      },
+      "revId": "72381c6d5fa1a70ecdb05836fc83ef58181fd351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28311edd_f2703981",
+        "filename": "ash/system/tray/tray_info_label_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1206355
+      },
+      "writtenOn": "2017-07-21T00:16:58Z",
+      "side": 1,
+      "message": "I followed your suggestion, but FWIW, it makes a lot of sense to me to ensure that the accessible name is the same as the name that\u0027s being displayed. Also, I\u0027m pretty sure there\u0027s a way to do this using the public API via GetChildren.",
+      "parentUuid": "8ef8f914_c7a71ede",
       "range": {
         "startLine": 73,
         "startChar": 0,
