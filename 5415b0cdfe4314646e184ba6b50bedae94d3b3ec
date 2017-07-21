@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d45367e5_d5487a93",
+        "filename": "content/browser/web_contents/aura/overscroll_window_animation.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-21T17:35:27Z",
+      "side": 1,
+      "message": "Maybe have a const method to return the content width instead.",
+      "revId": "5415b0cdfe4314646e184ba6b50bedae94d3b3ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
