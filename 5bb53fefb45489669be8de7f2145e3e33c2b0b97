@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6bb74d4d_09a4703a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-07-21T19:55:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62ce06dc_6f2e98a4",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 86
+      },
+      "revId": "5bb53fefb45489669be8de7f2145e3e33c2b0b97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa2b3d2e_a8a931e5",
         "filename": "services/device/generic_sensor/platform_sensor.h",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "352a73ff_2a9faf93",
+        "filename": "services/device/generic_sensor/platform_sensor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-07-21T19:55:51Z",
+      "side": 1,
+      "message": "After some further thinking, the PlatformSensor needs to make its |shared_buffer_mapping_| available to its subclasses to construct a reader. I think the alternative is to modify PlatformSensor constructor to take a mojo::ScopedSharedBufferHandle as an input, and since each PlatformSensor knows its type, it knows which part of the shared memory to read. Then the reader can be moved to PlatformSensorFusion.\n\nI think the above solution can be a follow-up CL since the above change will need to modify a lot more files, which is beyond the scope of this CL. So for now I think adding this reader here is cleaner so that subclasses of PlatformSensor such as PlatformSensorFusion does\u0027t need to handle that. It just needs to call PlatformSensor::GetLatestReading() from its source sensors to get the latest sensor data.\n\nWhat do you think?",
+      "parentUuid": "fa2b3d2e_a8a931e5",
+      "revId": "5bb53fefb45489669be8de7f2145e3e33c2b0b97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7ac6656_3f10f502",
         "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
         "patchSetId": 1
@@ -53,6 +95,24 @@
       "writtenOn": "2017-07-20T15:30:56Z",
       "side": 1,
       "message": "It would be nice to know which sensor had a reading change. Fusion sensor algorithms may update different parts of their internal state depending on which sensor has changed.",
+      "revId": "5bb53fefb45489669be8de7f2145e3e33c2b0b97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ee155f4_22e04409",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-07-21T19:55:51Z",
+      "side": 1,
+      "message": "After some further thinking, I think reading all source sensors data here is a simpler and cleaner solution, since source sensors can have different reporting mode: ON_CHANGE or CONTINUOUS. Even when one ON_CHANGE sensor changes its data and this method PlatformSensorFusion::OnSensorReadingChanged() is called, we still need to read all the latest data from sensors which are CONTINUOUS since those data may change anytime and PlatformSensorFusion::OnSensorReadingChanged() won\u0027t be called. The code at:\n//device/sensors/android/java/src/org/chromium/device/sensors/DeviceSensors.java\ndoesn\u0027t need to do that since all the sensors there are ON_CHANGE.\n\nRealizing that I also add a timer in this class to handle the situation if all the source sensors are CONTINUOUS mode since PlatformSensorFusion::OnSensorReadingChanged() won\u0027t be called in that case.\n\nWhat do you think?",
+      "parentUuid": "f7ac6656_3f10f502",
       "revId": "5bb53fefb45489669be8de7f2145e3e33c2b0b97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "9be0d15d_8c7cde8a",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-07-21T19:55:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d1b7a94_0ac8e863",
+      "range": {
+        "startLine": 126,
+        "startChar": 0,
+        "endLine": 129,
+        "endChar": 5
+      },
+      "revId": "5bb53fefb45489669be8de7f2145e3e33c2b0b97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39c48101_67c7132e",
         "filename": "services/device/generic_sensor/platform_sensor_fusion.h",
         "patchSetId": 1
@@ -102,6 +186,30 @@
       "revId": "5bb53fefb45489669be8de7f2145e3e33c2b0b97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da2aa68d_9ad8b80f",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-07-21T19:55:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39c48101_67c7132e",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 78
+      },
+      "revId": "5bb53fefb45489669be8de7f2145e3e33c2b0b97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
