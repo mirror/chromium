@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "2c8d603e_89e3a700",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-21T00:47:15Z",
+      "side": 1,
+      "message": "Good idea, done.",
+      "parentUuid": "8699c64a_8d7e3408",
+      "range": {
+        "startLine": 225,
+        "startChar": 11,
+        "endLine": 225,
+        "endChar": 26
+      },
+      "revId": "165c969061564be565e24ad9561959c9b2313af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56f5f1a9_2a727b84",
         "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
         "patchSetId": 5
@@ -59,6 +83,30 @@
       "writtenOn": "2017-07-20T15:44:26Z",
       "side": 1,
       "message": "Instead of adding an 8th parameter to Decode, how would you feel about adding a method on ExternalAllocator that reports whether it was used?\n\nYou\u0027d also need to change the |allocator| parameter to be the specific subclass.",
+      "range": {
+        "startLine": 226,
+        "startChar": 7,
+        "endLine": 226,
+        "endChar": 31
+      },
+      "revId": "165c969061564be565e24ad9561959c9b2313af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16438314_8ba6aa50",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-21T00:47:15Z",
+      "side": 1,
+      "message": "I tried that, and also another version where I tried to detect the allocator before\nnulling it later on. I don\u0027t like the former because it\u0027s intrusive, and also needs\nto store a bit which indicates \"used\" on an allocator and has a possibly unclear\nmeaning. The latter introduced too many confusing branches in the code IMO.",
+      "parentUuid": "56f5f1a9_2a727b84",
       "range": {
         "startLine": 226,
         "startChar": 7,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "a2536c90_af00108a",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-21T00:47:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d32ac0cb_83b1f8e0",
+      "range": {
+        "startLine": 241,
+        "startChar": 6,
+        "endLine": 241,
+        "endChar": 30
+      },
+      "revId": "165c969061564be565e24ad9561959c9b2313af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85b6b78d_fd795caf",
         "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
         "patchSetId": 5
@@ -108,6 +180,24 @@
       "revId": "165c969061564be565e24ad9561959c9b2313af3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73a54357_afaedcdd",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-21T00:47:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85b6b78d_fd795caf",
+      "revId": "165c969061564be565e24ad9561959c9b2313af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "2875a9aa_4257d231",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-21T00:47:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4a48726_a90090a1",
+      "revId": "165c969061564be565e24ad9561959c9b2313af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6adc6fcb_38061389",
         "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
         "patchSetId": 5
@@ -139,6 +247,30 @@
       "writtenOn": "2017-07-20T15:44:26Z",
       "side": 1,
       "message": "Currently we take this branch if all_data_received, since even if the image is not complete we won\u0027t need the decoder to continue decoding.\n\nI think I see what\u0027s happening, though. If all_data_received, using_external_allocator will also be true, so we\u0027ll take the second branch and still remove the decoder. That seems a little fragile, though. (This code relies on the fact that it knows that Decode() would have set using_external_allocator to true if all_data_received.)\n\nIn addition, if Khushal is right and we\u0027re not going to use the external allocator for multi-frame images, this means we won\u0027t call ClearCacheExceptFrame if the final frame is incomplete. That should only happen if there was an error, since we only try to decode frames which have all their data available (except for the first frame). (As an aside, this class only checks for failure if the Frame was Empty, but I wonder if it should in other cases?)\n\nDecode() already calls ClearCacheExceptFrame(index_we_decoded), so the downside to this change is that we\u0027ll hang onto that final frame unnecessarily.",
+      "range": {
+        "startLine": 260,
+        "startChar": 8,
+        "endLine": 260,
+        "endChar": 64
+      },
+      "revId": "165c969061564be565e24ad9561959c9b2313af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33f00450_88aaed4d",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-21T00:47:15Z",
+      "side": 1,
+      "message": "Hmm. Not sure if I understand the full content of the above. Are you just saying in the end\nthat there is a potential to not remove the cache for the last frame of a failed animation?\nOr is there another bug I need to fix?",
+      "parentUuid": "6adc6fcb_38061389",
       "range": {
         "startLine": 260,
         "startChar": 8,
@@ -171,6 +303,30 @@
       "revId": "165c969061564be565e24ad9561959c9b2313af3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4f688d5_376e97b6",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-21T00:47:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87572aa8_938d0203",
+      "range": {
+        "startLine": 342,
+        "startChar": 4,
+        "endLine": 342,
+        "endChar": 28
+      },
+      "revId": "165c969061564be565e24ad9561959c9b2313af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +365,24 @@
     },
     {
       "key": {
+        "uuid": "95677e54_9f91657c",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-21T00:47:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b389b591_43a08555",
+      "revId": "165c969061564be565e24ad9561959c9b2313af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb127f7d_6cd9fcdb",
         "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
         "patchSetId": 5
@@ -232,6 +406,30 @@
     },
     {
       "key": {
+        "uuid": "54b2330d_3375d8e3",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-21T00:47:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb127f7d_6cd9fcdb",
+      "range": {
+        "startLine": 349,
+        "startChar": 7,
+        "endLine": 349,
+        "endChar": 50
+      },
+      "revId": "165c969061564be565e24ad9561959c9b2313af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f93cbdc1_9f09f9b5",
         "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
         "patchSetId": 5
@@ -252,6 +450,30 @@
       "revId": "165c969061564be565e24ad9561959c9b2313af3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c79f19c_c3ad54c6",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-21T00:47:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f93cbdc1_9f09f9b5",
+      "range": {
+        "startLine": 371,
+        "startChar": 6,
+        "endLine": 371,
+        "endChar": 32
+      },
+      "revId": "165c969061564be565e24ad9561959c9b2313af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -302,6 +524,30 @@
     },
     {
       "key": {
+        "uuid": "c4daf287_bbe0df4e",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-21T00:47:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68588ecf_d2a32864",
+      "range": {
+        "startLine": 141,
+        "startChar": 42,
+        "endLine": 141,
+        "endChar": 60
+      },
+      "revId": "165c969061564be565e24ad9561959c9b2313af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ef59cb2_fe4b9054",
         "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.h",
         "patchSetId": 5
@@ -325,6 +571,30 @@
     },
     {
       "key": {
+        "uuid": "e03b328d_588e698a",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-21T00:47:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ef59cb2_fe4b9054",
+      "range": {
+        "startLine": 161,
+        "startChar": 34,
+        "endLine": 161,
+        "endChar": 46
+      },
+      "revId": "165c969061564be565e24ad9561959c9b2313af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f8c9275_169c8f5b",
         "filename": "third_party/WebKit/public/platform/Platform.h",
         "patchSetId": 5
@@ -336,6 +606,30 @@
       "writtenOn": "2017-07-20T15:44:26Z",
       "side": 1,
       "message": "Add a comment about what this means? It seems we really want to know whether it\u0027s a device with a small amount of RAM (by some standard). \"LowEnd\" might refer to other properties, but I see that base::SysInfo::IsLowEndDevice (same name) explicitly refers to having \u003c 512 MB memory \"in the current implementation\".",
+      "range": {
+        "startLine": 318,
+        "startChar": 15,
+        "endLine": 318,
+        "endChar": 29
+      },
+      "revId": "165c969061564be565e24ad9561959c9b2313af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba398282_cafe58e6",
+        "filename": "third_party/WebKit/public/platform/Platform.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-21T00:47:15Z",
+      "side": 1,
+      "message": "Done. The 512MB comment is actually wrong, it\u0027s 1GB on Android O+, but is in general a\nconfigurable property per-device. I also updated sys_info.h",
+      "parentUuid": "4f8c9275_169c8f5b",
       "range": {
         "startLine": 318,
         "startChar": 15,
