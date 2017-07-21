@@ -43,7 +43,6 @@ namespace blink {
 template <typename Strategy>
 VisibleSelectionTemplate<Strategy>::VisibleSelectionTemplate()
     : affinity_(TextAffinity::kDownstream),
-      selection_type_(kNoSelection),
       base_is_first_(true),
       is_directional_(false) {}
 
@@ -52,7 +51,6 @@ VisibleSelectionTemplate<Strategy>::VisibleSelectionTemplate(
     const SelectionTemplate<Strategy>& selection,
     TextGranularity granularity)
     : affinity_(selection.Affinity()),
-      selection_type_(kNoSelection),
       is_directional_(selection.IsDirectional()) {
   Validate(selection, granularity);
 }
@@ -94,13 +92,18 @@ VisibleSelectionInFlatTree CreateVisibleSelectionWithGranularity(
 }
 
 template <typename Strategy>
+SelectionType VisibleSelectionTemplate<Strategy>::GetSelectionType() const {
+  if (base_.IsNull())
+    return kNoSelection;
+  return base_ == extent_ ? kCaretSelection : kRangeSelection;
+}
+
+template <typename Strategy>
 static SelectionType ComputeSelectionType(
     const PositionTemplate<Strategy>& start,
     const PositionTemplate<Strategy>& end) {
-  if (start.IsNull()) {
-    DCHECK(end.IsNull());
-    return kNoSelection;
-  }
+  DCHECK(start.IsNotNull());
+  DCHECK(end.IsNotNull());
   DCHECK(!NeedsLayoutTreeUpdate(start)) << start << ' ' << end;
   if (start == end)
     return kCaretSelection;
@@ -117,7 +120,6 @@ VisibleSelectionTemplate<Strategy>::VisibleSelectionTemplate(
       start_(other.start_),
       end_(other.end_),
       affinity_(other.affinity_),
-      selection_type_(other.selection_type_),
       base_is_first_(other.base_is_first_),
       is_directional_(other.is_directional_) {}
 
@@ -129,7 +131,6 @@ operator=(const VisibleSelectionTemplate<Strategy>& other) {
   start_ = other.start_;
   end_ = other.end_;
   affinity_ = other.affinity_;
-  selection_type_ = other.selection_type_;
   base_is_first_ = other.base_is_first_;
   is_directional_ = other.is_directional_;
   return *this;
@@ -439,15 +440,6 @@ PositionInFlatTree ComputeEndRespectingGranularity(
   return ComputeEndRespectingGranularityAlgorithm(start, end, granularity);
 }
 
-template <typename Strategy>
-void VisibleSelectionTemplate<Strategy>::UpdateSelectionType() {
-  selection_type_ = ComputeSelectionType(start_, end_);
-
-  // Affinity only makes sense for a caret
-  if (selection_type_ != kCaretSelection)
-    affinity_ = TextAffinity::kDownstream;
-}
-
 // TODO(editing-dev): Once we move all static functions into anonymous
 // namespace, we should get rid of this forward declaration.
 template <typename Strategy>
@@ -470,7 +462,7 @@ void VisibleSelectionTemplate<Strategy>::Validate(
   if (canonicalized_selection.IsNone()) {
     base_ = extent_ = start_ = end_ = PositionTemplate<Strategy>();
     base_is_first_ = true;
-    UpdateSelectionType();
+    affinity_ = TextAffinity::kDownstream;
     return;
   }
 
@@ -505,21 +497,26 @@ void VisibleSelectionTemplate<Strategy>::Validate(
           EphemeralRangeTemplate<Strategy>(start_, end_), base_);
   start_ = editing_adjusted_range.StartPosition();
   end_ = editing_adjusted_range.EndPosition();
-  UpdateSelectionType();
 
-  if (GetSelectionType() == kRangeSelection) {
-    // "Constrain" the selection to be the smallest equivalent range of
-    // nodes. This is a somewhat arbitrary choice, but experience shows that
-    // it is useful to make to make the selection "canonical" (if only for
-    // purposes of comparing selections). This is an ideal point of the code
-    // to do this operation, since all selection changes that result in a
-    // RANGE come through here before anyone uses it.
-    // TODO(yosin) Canonicalizing is good, but haven't we already done it
-    // (when we set these two positions to |VisiblePosition|
-    // |DeepEquivalent()|s above)?
-    start_ = MostForwardCaretPosition(start_);
-    end_ = MostBackwardCaretPosition(end_);
+  if (ComputeSelectionType(start_, end_) == kCaretSelection) {
+    base_ = extent_ = end_ = start_;
+    base_is_first_ = true;
+    return;
   }
+
+  // Affinity only makes sense for a caret
+  affinity_ = TextAffinity::kDownstream;
+  // "Constrain" the selection to be the smallest equivalent range of
+  // nodes. This is a somewhat arbitrary choice, but experience shows that
+  // it is useful to make to make the selection "canonical" (if only for
+  // purposes of comparing selections). This is an ideal point of the code
+  // to do this operation, since all selection changes that result in a
+  // RANGE come through here before anyone uses it.
+  // TODO(yosin) Canonicalizing is good, but haven't we already done it
+  // (when we set these two positions to |VisiblePosition|
+  // |DeepEquivalent()|s above)?
+  start_ = MostForwardCaretPosition(start_);
+  end_ = MostBackwardCaretPosition(end_);
   base_ = base_is_first_ ? start_ : end_;
   extent_ = base_is_first_ ? end_ : start_;
 }
@@ -562,14 +559,12 @@ VisibleSelectionTemplate<Strategy>::CreateWithoutValidationDeprecated(
     visible_selection.end_ = base;
   }
   if (base == extent) {
-    visible_selection.selection_type_ = kCaretSelection;
     visible_selection.affinity_ = affinity;
     return visible_selection;
   }
   // Since |affinity_| for non-|CaretSelection| is always |kDownstream|,
   // we should keep this invariant. Note: This function can be called with
   // |affinity_| is |kUpstream|.
-  visible_selection.selection_type_ = kRangeSelection;
   visible_selection.affinity_ = TextAffinity::kDownstream;
   return visible_selection;
 }
