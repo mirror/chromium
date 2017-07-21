@@ -69,6 +69,24 @@
       "revId": "2504a44b5034ab6126f1a06c5c69cc714d3fa4f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a472820_0af38ff6",
+        "filename": "content/browser/renderer_host/native_web_keyboard_event_aura.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-21T20:10:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a583dbc0_c39387c2",
+      "revId": "2504a44b5034ab6126f1a06c5c69cc714d3fa4f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
