@@ -2259,4 +2259,10 @@ public class ChromeTabbedActivity
                 FeatureUtilities.isChromeHomeEnabled() ? 0 : yInsetPx);
         textBubble.show();
     }
+
+    public long getTimeSinceLastBackgroundedMs() {
+        long lastBackgroundedTimeMs =
+                ContextUtils.getAppSharedPreferences().getLong(LAST_BACKGROUNDED_TIME_MS_PREF, -1);
+        return System.currentTimeMillis() - lastBackgroundedTimeMs;
+    }
 }

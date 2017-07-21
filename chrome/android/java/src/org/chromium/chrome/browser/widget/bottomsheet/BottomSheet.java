@@ -35,6 +35,7 @@ import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ChromeSwitches;
+import org.chromium.chrome.browser.ChromeTabbedActivity;
 import org.chromium.chrome.browser.NativePageHost;
 import org.chromium.chrome.browser.TabLoadStatus;
 import org.chromium.chrome.browser.compositor.layouts.LayoutManagerChrome;
@@ -125,6 +126,12 @@ public class BottomSheet
     private static final float SWIPE_ALLOWED_FRACTION = 0.2f;
 
     /**
+     * Time in ms from when we last backgrounded Chrome until we show the bottom sheet at half.
+     * Time is 3 hours.
+     */
+    private static final long TIME_SINCE_BACKGROUNDED_TO_SHOW_BOTTOM_SHEET_HALF_MS = 10800000L;
+
+    /**
      * Information about the different scroll states of the sheet. Order is important for these,
      * they go from smallest to largest.
      */
@@ -191,6 +198,13 @@ public class BottomSheet
     @SheetState
     private int mTargetState = SHEET_STATE_NONE;
 
+    /**
+     * Optional:
+     * The pending starting sheet state, to be set when the browser is fully initialized.
+     */
+    @SheetState
+    private int mPendingStartState = SHEET_STATE_NONE;
+
     /** Used for getting the current tab. */
     private TabModelSelector mTabModelSelector;
 
@@ -247,6 +261,8 @@ public class BottomSheet
 
     /** Whether {@link #destroy()} has been called. **/
     private boolean mIsDestroyed;
+
+    private boolean mBrowserStarted;
 
     /**
      * An interface defining content that can be displayed inside of the bottom sheet for Chrome
@@ -485,13 +501,21 @@ public class BottomSheet
         mGestureDetector.setIsLongpressEnabled(false);
 
         mMetrics = new BottomSheetMetrics();
-        addObserver(mMetrics);
 
         BrowserStartupController.get(LibraryProcessType.PROCESS_BROWSER)
                 .addStartupCompletedObserver(new BrowserStartupController.StartupCallback() {
                     @Override
                     public void onSuccess(boolean alreadyStarted) {
                         mIsTouchEnabled = true;
+
+                        // Set the sheet state before we add the metrics observer, otherwise it will
+                        // be recorded as a user action.
+                        if (mPendingStartState != SHEET_STATE_NONE) {
+                            setSheetState(mPendingStartState, true);
+                        }
+                        addObserver(mMetrics);
+
+                        mBrowserStarted = true;
                     }
 
                     @Override
@@ -694,6 +718,14 @@ public class BottomSheet
         mActionBarDelegate = new ViewShiftingActionBarDelegate(mActivity, this);
 
         mBottomSheetContentContainer = (FrameLayout) findViewById(R.id.bottom_sheet_content);
+
+        if (activity instanceof ChromeTabbedActivity) {
+            ChromeTabbedActivity tabbedActivity = (ChromeTabbedActivity) activity;
+            if (tabbedActivity.getTimeSinceLastBackgroundedMs()
+                    >= TIME_SINCE_BACKGROUNDED_TO_SHOW_BOTTOM_SHEET_HALF_MS) {
+                setPendingStartupSheetState(SHEET_STATE_HALF);
+            }
+        }
 
         // Listen to height changes on the root.
         root.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
@@ -1264,6 +1296,24 @@ public class BottomSheet
                 o.onTransitionPeekToHalf(peekHalfRatio);
             }
         }
+    }
+
+    /**
+     * Sets a pending state to move the bottom sheet to pending full browser initialization.
+     *
+     * This is useful when calling initialization code that needs to set an initial state before the
+     * browser is fully initialized
+     * @param state state The state to move the panel to. This cannot be SHEET_STATE_SCROLLING or
+     *              SHEET_STATE_NONE.
+     */
+    private void setPendingStartupSheetState(@SheetState int state) {
+        assert state != SHEET_STATE_SCROLLING && state != SHEET_STATE_NONE;
+
+        if (mBrowserStarted) {
+            setSheetState(state, true);
+            return;
+        }
+        mPendingStartState = state;
     }
 
     /**
