@@ -230,4 +230,12 @@ std::unique_ptr<NotificationSurface> Display::CreateNotificationSurface(
                                                surface, notification_key);
 }
 
+void Display::AddDataDevice(DataDevice* data_device) {
+  data_devices_.insert(data_device);
+}
+
+void Display::RemoveDataDevice(DataDevice* data_device) {
+  data_devices_.erase(data_device);
+}
+
 }  // namespace exo
