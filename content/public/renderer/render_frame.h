@@ -163,10 +163,6 @@ class CONTENT_EXPORT RenderFrame : public IPC::Listener,
   // Return true if this frame is hidden.
   virtual bool IsHidden() = 0;
 
-  // Returns the BinderRegistry that this process uses to expose interfaces
-  // to the application running in this frame.
-  virtual service_manager::BinderRegistry* GetInterfaceRegistry() = 0;
-
   // Returns the InterfaceProvider that this process can use to bind
   // interfaces exposed to it by the application running in this frame.
   virtual service_manager::InterfaceProvider* GetRemoteInterfaces() = 0;

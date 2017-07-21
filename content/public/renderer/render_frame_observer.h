@@ -131,6 +131,12 @@ class CONTENT_EXPORT RenderFrameObserver : public IPC::Listener,
   // Called when a worker fetch context will be created.
   virtual void WillCreateWorkerFetchContext(blink::WebWorkerFetchContext*) {}
 
+  // Called to give the embedder an opportunity to bind an interface request
+  // from a frame. If the request can be bound, |interface_pipe| will be taken.
+  virtual void OnInterfaceRequestFromFrame(
+      const std::string& interface_name,
+      mojo::ScopedMessagePipeHandle* interface_pipe) {}
+
   // IPC::Listener implementation.
   bool OnMessageReceived(const IPC::Message& message) override;
 

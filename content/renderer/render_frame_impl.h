@@ -432,7 +432,6 @@ class CONTENT_EXPORT RenderFrameImpl
   void ExecuteJavaScript(const base::string16& javascript) override;
   bool IsMainFrame() override;
   bool IsHidden() override;
-  service_manager::BinderRegistry* GetInterfaceRegistry() override;
   service_manager::InterfaceProvider* GetRemoteInterfaces() override;
   AssociatedInterfaceRegistry* GetAssociatedInterfaceRegistry() override;
   AssociatedInterfaceProvider* GetRemoteAssociatedInterfaces() override;
@@ -1309,7 +1308,7 @@ class CONTENT_EXPORT RenderFrameImpl
   // The PushMessagingClient attached to this frame, lazily initialized.
   PushMessagingClient* push_messaging_client_;
 
-  std::unique_ptr<service_manager::BinderRegistry> interface_registry_;
+  service_manager::BinderRegistry registry_;
   std::unique_ptr<service_manager::InterfaceProvider> remote_interfaces_;
   std::unique_ptr<BlinkInterfaceRegistryImpl> blink_interface_registry_;
   service_manager::mojom::InterfaceProviderRequest

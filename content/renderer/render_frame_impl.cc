@@ -2657,10 +2657,6 @@ void RenderFrameImpl::ExecuteJavaScript(const base::string16& javascript) {
   OnJavaScriptExecuteRequest(javascript, 0, false);
 }
 
-service_manager::BinderRegistry* RenderFrameImpl::GetInterfaceRegistry() {
-  return interface_registry_.get();
-}
-
 service_manager::InterfaceProvider* RenderFrameImpl::GetRemoteInterfaces() {
   return remote_interfaces_.get();
 }
@@ -6300,7 +6296,7 @@ void RenderFrameImpl::InitializeUserMediaClient() {
       this, RenderThreadImpl::current()->GetPeerConnectionDependencyFactory(),
       base::MakeUnique<MediaStreamDispatcher>(this),
       render_thread->GetWorkerTaskRunner());
-  GetInterfaceRegistry()->AddInterface(
+  registry_.AddInterface(
       base::Bind(&MediaDevicesListenerImpl::Create, GetRoutingID()));
 #endif
 }
@@ -6684,13 +6680,13 @@ void RenderFrameImpl::RegisterMojoInterfaces() {
   GetAssociatedInterfaceRegistry()->AddInterface(base::Bind(
       &RenderFrameImpl::BindFrameBindingsControl, weak_factory_.GetWeakPtr()));
 
-  GetInterfaceRegistry()->AddInterface(base::Bind(
-      &FrameInputHandlerImpl::CreateMojoService, weak_factory_.GetWeakPtr()));
+  registry_.AddInterface(base::Bind(&FrameInputHandlerImpl::CreateMojoService,
+                                    weak_factory_.GetWeakPtr()));
 
   if (!frame_->Parent()) {
     // Only main frame have ImageDownloader service.
-    GetInterfaceRegistry()->AddInterface(base::Bind(
-        &ImageDownloaderImpl::CreateMojoService, base::Unretained(this)));
+    registry_.AddInterface(base::Bind(&ImageDownloaderImpl::CreateMojoService,
+                                      base::Unretained(this)));
 
     // Host zoom is per-page, so only added on the main frame.
     GetAssociatedInterfaceRegistry()->AddInterface(base::Bind(
