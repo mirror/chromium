@@ -31,7 +31,8 @@ AnimationPlayer::AnimationPlayer(int id)
       needs_push_properties_(false),
       needs_to_start_animations_(false),
       is_ticking_(false),
-      scroll_offset_animation_was_interrupted_(false) {
+      scroll_offset_animation_was_interrupted_(false),
+      will_change_animating_properties_(false) {
   DCHECK(id_);
 }
 
@@ -1023,6 +1024,14 @@ bool AnimationPlayer::IsCurrentlyAnimatingProperty(
     }
   }
   return false;
+}
+
+bool AnimationPlayer::WillChangeAnimatingProperties() const {
+  return will_change_animating_properties_;
+}
+
+void AnimationPlayer::SetWillChangeAnimatingProperties(bool value) {
+  will_change_animating_properties_ = value;
 }
 
 bool AnimationPlayer::HasElementInActiveList() const {
