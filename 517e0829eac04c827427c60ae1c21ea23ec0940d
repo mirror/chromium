@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31726ad9_e0dd1b69",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-21T17:30:18Z",
+      "side": 1,
+      "message": "We should let Daniel\u0027s https://chromium-review.googlesource.com/c/579031/ land first, since he may need to merge his.  We can rebase this on top and use version 26 in this CL.",
+      "revId": "517e0829eac04c827427c60ae1c21ea23ec0940d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b713959_964acf6e",
+        "filename": "content/common/page_state_serialization.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-21T17:30:18Z",
+      "side": 1,
+      "message": "Note: We\u0027ve found that ExplodedFrameStates can get extremely large in memory due to these various strings being unbounded in size.  (For example, the frame\u0027s unique name is stored in |target|, and reaches hundreds of KB in practice due to ads putting JS code into the name.)\n\nDaniel\u0027s trying to mitigate this by setting a max size for |target| in https://crbug.com/626202 and https://chromium-review.googlesource.com/c/579031/.  Unclear yet if we need to do this for any of the other strings, but I want to be careful before we add more.\n\nIs it possible for scroll_anchor_selectors to be large in practice?",
+      "revId": "517e0829eac04c827427c60ae1c21ea23ec0940d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
