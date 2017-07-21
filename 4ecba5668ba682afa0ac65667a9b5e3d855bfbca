@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c479f9fd_31a9f54e",
+        "filename": "ui/display/win/screen_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-07-21T04:13:03Z",
+      "side": 1,
+      "message": "How about we avoid the weirdness by making a cl that renames --enable-hdr to --force-hdr first?",
+      "parentUuid": "fb9a921b_1efa790e",
+      "revId": "4ecba5668ba682afa0ac65667a9b5e3d855bfbca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f7fed88_b7d8034a",
         "filename": "ui/display/win/screen_win.cc",
         "patchSetId": 3
