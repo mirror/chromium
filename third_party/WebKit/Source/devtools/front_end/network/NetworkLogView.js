@@ -1452,17 +1452,14 @@ Network.NetworkLogView = class extends UI.VBox {
    */
   _createTextFilter(text) {
     var negative = false;
-    /** @type {?RegExp} */
-    var regex;
-    if (!this._textFilterUI.isRegexChecked() && text[0] === '-' && text.length > 1) {
-      negative = true;
-      text = text.substring(1);
-      regex = new RegExp(text.escapeForRegExp(), 'i');
-    } else {
-      regex = this._textFilterUI.regex();
+    if (!this._textFilterUI.isRegexChecked()) {
+      if (text.length > 1 && text[0] === '-') {
+        negative = true;
+        text = text.substring(1);
+      }
+      text = text.escapeForRegExp();
     }
-
-    var filter = Network.NetworkLogView._requestPathFilter.bind(null, regex);
+    var filter = Network.NetworkLogView._requestPathFilter.bind(null, new RegExp(text, 'i'));
     if (negative)
       filter = Network.NetworkLogView._negativeFilter.bind(null, filter);
     return filter;
