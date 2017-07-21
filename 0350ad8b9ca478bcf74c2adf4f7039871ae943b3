@@ -1,0 +1,237 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84cdb114_e283c950",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-21T23:36:48Z",
+      "side": 1,
+      "message": "this looks no op?",
+      "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e00333f_eaecb7ee",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-21T23:36:48Z",
+      "side": 1,
+      "message": "nit: /* animate */\nsame for the rest",
+      "range": {
+        "startLine": 203,
+        "startChar": 49,
+        "endLine": 203,
+        "endChar": 54
+      },
+      "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "450a1582_dfe6d24f",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-21T23:36:48Z",
+      "side": 1,
+      "message": "DCHECK_EQ",
+      "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44e45008_ef10f90d",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-21T23:36:48Z",
+      "side": 1,
+      "message": "optoinal: a comment on argument is used for bool. You may keep it if you prefer though.",
+      "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47c1e64e_33bfc513",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-21T23:36:48Z",
+      "side": 1,
+      "message": "move to 388",
+      "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fc5c807_3858dae9",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-21T23:36:48Z",
+      "side": 1,
+      "message": "is there reason why we don\u0027t set this in creation/init time?",
+      "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eceb10e_b035c931",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-21T23:36:48Z",
+      "side": 1,
+      "message": "..._start_in_screen;",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 79,
+        "endChar": 22
+      },
+      "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d733d792_547d4920",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-21T23:36:48Z",
+      "side": 1,
+      "message": "optional: Alternatively, if the view is backed by layer, you can simply set the opacity of the layer to 0 without affecting layout manager.",
+      "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d9c81ce_bab76473",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-21T23:36:48Z",
+      "side": 1,
+      "message": "just curious. what was the reason layer animation didn\u0027t work for this case?",
+      "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bd98ca1_80cce99a",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-21T23:36:48Z",
+      "side": 1,
+      "message": "didn\u0027t ScopedLayerAnimationSetting work?",
+      "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54c07a07_8d26e945",
+        "filename": "ash/login/ui/login_auth_user_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-21T23:36:48Z",
+      "side": 1,
+      "message": "so layer animation didn\u0027t work for this case?",
+      "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebeda744_752f0f6b",
+        "filename": "ash/login/ui/login_auth_user_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-21T23:36:48Z",
+      "side": 1,
+      "message": "base::Callback\u003cvoid()\u003e ?",
+      "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a92e296_278fbe2c",
+        "filename": "ash/login/ui/login_user_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-21T23:36:48Z",
+      "side": 1,
+      "message": "Have you considered using PreemptionStrategy instead of stopping?",
+      "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
