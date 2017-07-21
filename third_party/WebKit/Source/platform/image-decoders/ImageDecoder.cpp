@@ -129,11 +129,18 @@ size_t ImageDecoder::FrameCount() {
   return new_size;
 }
 
-ImageFrame* ImageDecoder::FrameBufferAtIndex(size_t index) {
+ImageFrame* ImageDecoder::GetFrame(size_t index) {
   if (index >= FrameCount())
-    return 0;
+    return nullptr;
+  return &frame_buffer_cache_[index];
+}
 
-  ImageFrame* frame = &frame_buffer_cache_[index];
+bool ImageDecoder::HasFrame(size_t index) {
+  return GetFrame(index);
+}
+
+ImageFrame* ImageDecoder::FrameBufferAtIndex(size_t index) {
+  ImageFrame* frame = GetFrame(index);
   if (frame->GetStatus() != ImageFrame::kFrameComplete) {
     PlatformInstrumentation::WillDecodeImage(FilenameExtension());
     Decode(index);

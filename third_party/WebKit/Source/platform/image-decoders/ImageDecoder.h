@@ -187,6 +187,10 @@ class PLATFORM_EXPORT ImageDecoder {
   // ImageDecoder-owned pointer.
   ImageFrame* FrameBufferAtIndex(size_t);
 
+  // Returns whether an ImageFrame exists for the given index, with any
+  // status.
+  bool HasFrame(size_t);
+
   // Whether the requested frame has alpha.
   virtual bool FrameHasAlphaAtIndex(size_t) const;
 
@@ -263,7 +267,7 @@ class PLATFORM_EXPORT ImageDecoder {
   // and returns true. Otherwise returns false.
   virtual bool HotSpot(IntPoint&) const { return false; }
 
-  void SetMemoryAllocator(SkBitmap::Allocator* allocator) {
+  virtual void SetMemoryAllocator(SkBitmap::Allocator* allocator) {
     // FIXME: this doesn't work for images with multiple frames.
     if (frame_buffer_cache_.IsEmpty()) {
       // Ensure that InitializeNewFrame is called, after parsing if
@@ -417,6 +421,8 @@ class PLATFORM_EXPORT ImageDecoder {
   // Called by InitFrameBuffer to determine if it can take the bitmap of the
   // previous frame. This condition is different for GIF and WEBP.
   virtual bool CanReusePreviousFrameBuffer(size_t) const { return false; }
+
+  ImageFrame* GetFrame(size_t);
 
   IntSize size_;
   bool size_available_ = false;
