@@ -81,7 +81,7 @@ class DiscardableImageGenerator {
     if (!buffer->HasDiscardableImages())
       return;
 
-    SkMatrix original = canvas_.getTotalMatrix();
+    PlaybackParams params(nullptr, canvas_.getTotalMatrix());
     canvas_.save();
     // TODO(khushalsagar): Optimize out save/restore blocks if there are no
     // images in the draw ops between them.
@@ -154,7 +154,7 @@ class DiscardableImageGenerator {
             NOTREACHED();
         }
       } else {
-        op->Raster(&canvas_, original);
+        op->Raster(&canvas_, params);
       }
     }
     canvas_.restore();
