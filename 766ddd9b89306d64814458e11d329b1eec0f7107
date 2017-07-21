@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c42b64a6_c5655369",
+        "filename": "android_webview/browser/aw_browser_terminator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-21T21:31:35Z",
+      "side": 1,
+      "message": "\u003e The answer is: it doesn\u0027t. :-/\n\u003e \n\u003e In my original CL it was immediately before a LOG(FATAL) https://codereview.chromium.org/2635493002 which is fine. It needs to be moved to immediately before line 74.\n\no_O\n\nI\u0027ll send you another cl..",
+      "parentUuid": "a15dcd80_2ad147a9",
+      "revId": "766ddd9b89306d64814458e11d329b1eec0f7107",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5b8502d_72ace4a2",
         "filename": "android_webview/browser/aw_browser_terminator.cc",
         "patchSetId": 1
@@ -48,6 +66,30 @@
       "writtenOn": "2017-07-21T21:23:24Z",
       "side": 1,
       "message": "I don\u0027t know how this new task management works (is there a doc?) but there\u0027s a hidden requirement here, which is that posting to the FILE thread for both this and minidump handling ensures that this happens after we\u0027ve processed minidumps. I guess both need to change to the new style, and there needs to be some sequencing between the two tasks.",
+      "range": {
+        "startLine": 166,
+        "startChar": 2,
+        "endLine": 166,
+        "endChar": 6
+      },
+      "revId": "766ddd9b89306d64814458e11d329b1eec0f7107",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d67d523_c706a1bf",
+        "filename": "android_webview/browser/aw_browser_terminator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-21T21:31:35Z",
+      "side": 1,
+      "message": "\u003e I don\u0027t know how this new task management works (is there a doc?) but there\u0027s a hidden requirement here, which is that posting to the FILE thread for both this and minidump handling ensures that this happens after we\u0027ve processed minidumps. I guess both need to change to the new style, and there needs to be some sequencing between the two tasks.\n\nOk, then this is not correct. Where is the minidump handling code?\n\nThere\u0027s extensive documentation:\nhttps://chromium.googlesource.com/chromium/src/+/master/docs/threading_and_tasks.md\nhttps://chromium.googlesource.com/chromium/src/+/master/docs/task_scheduler_migration.md\n\nbut for this problem, summary is tasks that need to be ordered need to be on the same sequence",
+      "parentUuid": "b5b8502d_72ace4a2",
       "range": {
         "startLine": 166,
         "startChar": 2,
