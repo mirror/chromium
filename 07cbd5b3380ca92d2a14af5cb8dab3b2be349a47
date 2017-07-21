@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "fa7c5c4b_39429db6",
+        "filename": "third_party/WebKit/Source/platform/wtf/text/StringToNumber.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-07-21T05:09:13Z",
+      "side": 1,
+      "message": "Thanks for the explanation.\n\nAs we make progress, anything will become legacy some time - I was afraid that\nthis comment gets stale without changing any code, as \"legacy\" is somewhat\nrelative to now.",
+      "parentUuid": "f1fb60be_fdfcceb3",
+      "revId": "07cbd5b3380ca92d2a14af5cb8dab3b2be349a47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2817286b_ffc61df9",
         "filename": "third_party/WebKit/Source/platform/wtf/text/StringToNumber.h",
         "patchSetId": 3
