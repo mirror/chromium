@@ -36,11 +36,9 @@ class MediaPathFilter;
 
 class MediaFileSystemBackend : public storage::FileSystemBackend {
  public:
-  static const char kMediaTaskRunnerName[];
-
   MediaFileSystemBackend(
       const base::FilePath& profile_path,
-      base::SequencedTaskRunner* media_task_runner);
+      scoped_refptr<base::SequencedTaskRunner> media_task_runner);
   ~MediaFileSystemBackend() override;
 
   // Asserts that the current task is sequenced with any other task that calls

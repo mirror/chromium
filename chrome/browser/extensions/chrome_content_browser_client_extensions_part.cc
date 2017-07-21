@@ -16,7 +16,6 @@
 #include "base/debug/dump_without_crashing.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
-#include "base/threading/sequenced_worker_pool.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/extensions/extension_web_ui.h"
@@ -862,12 +861,8 @@ void ChromeContentBrowserClientExtensionsPart::GetAdditionalFileSystemBackends(
     const base::FilePath& storage_partition_path,
     std::vector<std::unique_ptr<storage::FileSystemBackend>>*
         additional_backends) {
-  base::SequencedWorkerPool* pool = content::BrowserThread::GetBlockingPool();
-  auto sequence_token =
-      pool->GetNamedSequenceToken(MediaFileSystemBackend::kMediaTaskRunnerName);
   additional_backends->push_back(base::MakeUnique<MediaFileSystemBackend>(
-      storage_partition_path,
-      pool->GetSequencedTaskRunner(sequence_token).get()));
+      storage_partition_path, MediaFileSystemBackend::MediaTaskRunner()));
 
   additional_backends->push_back(
       base::MakeUnique<sync_file_system::SyncFileSystemBackend>(

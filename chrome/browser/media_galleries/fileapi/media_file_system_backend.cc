@@ -16,7 +16,7 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
-#include "base/threading/sequenced_worker_pool.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
@@ -65,6 +65,9 @@ const char kMediaGalleryMountPrefix[] = "media_galleries-";
 base::LazyInstance<base::SequenceChecker>::Leaky g_media_sequence_checker =
     LAZY_INSTANCE_INITIALIZER;
 #endif
+
+base::LazyInstance<scoped_refptr<base::SequencedTaskRunner>>::Leaky
+    g_media_task_runner = LAZY_INSTANCE_INITIALIZER;
 
 void OnPreferencesInit(
     const content::ResourceRequestInfo::WebContentsGetter& web_contents_getter,
@@ -129,14 +132,11 @@ void AttemptAutoMountOnUIThread(
 
 }  // namespace
 
-const char MediaFileSystemBackend::kMediaTaskRunnerName[] =
-    "media-task-runner";
-
 MediaFileSystemBackend::MediaFileSystemBackend(
     const base::FilePath& profile_path,
-    base::SequencedTaskRunner* media_task_runner)
+    scoped_refptr<base::SequencedTaskRunner> media_task_runner)
     : profile_path_(profile_path),
-      media_task_runner_(media_task_runner),
+      media_task_runner_(std::move(media_task_runner)),
       media_path_filter_(new MediaPathFilter),
       media_copy_or_move_file_validator_factory_(new MediaFileValidatorFactory),
       native_media_file_util_(new NativeMediaFileUtil(media_path_filter_.get()))
@@ -169,10 +169,12 @@ void MediaFileSystemBackend::AssertCurrentlyOnMediaSequence() {
 // static
 scoped_refptr<base::SequencedTaskRunner>
 MediaFileSystemBackend::MediaTaskRunner() {
-  base::SequencedWorkerPool* pool = content::BrowserThread::GetBlockingPool();
-  base::SequencedWorkerPool::SequenceToken media_sequence_token =
-      pool->GetNamedSequenceToken(kMediaTaskRunnerName);
-  return pool->GetSequencedTaskRunner(media_sequence_token);
+  auto& media_task_runner = g_media_task_runner.Get();
+  if (!media_task_runner) {
+    media_task_runner =
+        base::CreateSequencedTaskRunnerWithTraits({base::MayBlock()});
+  }
+  return media_task_runner;
 }
 
 // static
