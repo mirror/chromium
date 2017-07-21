@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "147debed_02a2d204",
+        "filename": "components/error_page/renderer/net_error_helper_core.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-21T19:20:17Z",
+      "side": 1,
+      "message": "The fact we\u0027re using one set of error messages here, and another in LocalizedError seems weird...But it looks like only chrome is actually using this class.  If we move this class over to where chrome/renderer/net/net_error_helper.cc is (Along with its test), the layering seems more sane to me.  Mind doing that in this CL?",
+      "range": {
+        "startLine": 132,
+        "startChar": 15,
+        "endLine": 132,
+        "endChar": 21
+      },
+      "revId": "0e9c0d4bf7cc857aacce39c57a789d34acc9c46d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
