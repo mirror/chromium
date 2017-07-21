@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb4c1ddd_0a7e1474",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-21T12:28:13Z",
+      "side": 1,
+      "message": "Nit: Maybe move this method after the members?",
+      "range": {
+        "startLine": 47,
+        "startChar": 4,
+        "endLine": 47,
+        "endChar": 41
+      },
+      "revId": "6be2472d12426d8122f799610afc985cdde615f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd109fc1_69aa39e9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 16
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-21T12:28:13Z",
+      "side": 1,
+      "message": "Wait, both buttons do the same thing?",
+      "range": {
+        "startLine": 153,
+        "startChar": 16,
+        "endLine": 153,
+        "endChar": 64
+      },
+      "revId": "6be2472d12426d8122f799610afc985cdde615f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

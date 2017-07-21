@@ -413,6 +413,30 @@
     },
     {
       "key": {
+        "uuid": "b6046490_0d0927b7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-21T12:28:13Z",
+      "side": 1,
+      "message": "OK, but won\u0027t this code throw an assertion when calling ProfileDataCache.update() because there is no observer yet? Also, can you add a TODO for subscribing to the ProfileDataCache, Iulia?",
+      "parentUuid": "18a46a18_2fc1172a",
+      "range": {
+        "startLine": 136,
+        "startChar": 32,
+        "endLine": 136,
+        "endChar": 72
+      },
+      "revId": "a39dc7f5ac33cac0ff922be412e2cee4d94aa932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c5d1976_c492d9d9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoMediator.java",
         "patchSetId": 14
