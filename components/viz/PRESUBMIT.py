@@ -230,7 +230,7 @@ def FindNamespaceInBlock(pos, namespace, contents, whitelist=[]):
     pos = next + 1
   return False
 
-# Checks for the use of viz:: within the viz namespace, which is usually
+# Checks for the use of  within the viz namespace, which is usually
 # redundant.
 def CheckNamespace(input_api, output_api):
   errors = []
@@ -246,7 +246,7 @@ def CheckNamespace(input_api, output_api):
 
   if errors:
     return [output_api.PresubmitError(
-      'Do not use viz:: inside of the viz namespace.',
+      'Do not use  inside of the viz namespace.',
       items=errors)]
   return []
 
