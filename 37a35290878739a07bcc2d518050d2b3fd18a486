@@ -46,6 +46,30 @@
       "revId": "37a35290878739a07bcc2d518050d2b3fd18a486",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6084a19c_b29fc024",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 959,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-07-21T17:33:03Z",
+      "side": 1,
+      "message": "\u003e (just blindly doing compositing inputs clean on any text input would be too expensive.) \n\nAre you sure about this?  We\u0027re already doing style and layout clean, I\u0027d be surprised that the compositing update adds that much overhead.\n\n\u003e We\u0027re not familiar with this \u0027VisibleSelection\u0027 concept, so for now we are attempting to use the start.AnchorNode() which seems to work for basic tests. If there is a better Node (or set of Nodes) to check please let us know :).\n\nSomeone from the editing team should answer this.  +yosin, xiaochengh",
+      "parentUuid": "e9e9fae5_3b76140f",
+      "range": {
+        "startLine": 959,
+        "startChar": 16,
+        "endLine": 959,
+        "endChar": 51
+      },
+      "revId": "37a35290878739a07bcc2d518050d2b3fd18a486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
