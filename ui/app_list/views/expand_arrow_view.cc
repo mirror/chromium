@@ -97,6 +97,16 @@ void ExpandArrowView::Layout() {
   icon_->SetBoundsRect(rect);
 }
 
+bool ExpandArrowView::OnKeyPressed(const ui::KeyEvent& event) {
+  if (event.key_code() != ui::VKEY_RETURN)
+    return false;
+  UMA_HISTOGRAM_ENUMERATION(kPageOpenedHistogram, AppListModel::STATE_APPS,
+                            AppListModel::STATE_LAST);
+  contents_view_->SetActiveState(AppListModel::STATE_APPS);
+  app_list_view_->SetState(AppListView::FULLSCREEN_ALL_APPS);
+  return true;
+}
+
 std::unique_ptr<views::InkDrop> ExpandArrowView::CreateInkDrop() {
   std::unique_ptr<views::InkDropImpl> ink_drop =
       CustomButton::CreateDefaultInkDropImpl();

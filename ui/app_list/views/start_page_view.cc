@@ -310,15 +310,18 @@ bool StartPageView::OnKeyPressed(const ui::KeyEvent& event) {
         (event.key_code() == ui::VKEY_TAB && !event.IsShiftDown())) {
       expand_arrow_view_->SetSelected(false);
       suggestions_container_->SetSelectedIndex(0);
-    } else if (event.key_code() == ui::VKEY_LEFT ||
-               event.key_code() == ui::VKEY_UP ||
-               (event.key_code() == ui::VKEY_TAB && event.IsShiftDown())) {
+      return true;
+    }
+
+    if (event.key_code() == ui::VKEY_LEFT || event.key_code() == ui::VKEY_UP ||
+        (event.key_code() == ui::VKEY_TAB && event.IsShiftDown())) {
       expand_arrow_view_->SetSelected(false);
       suggestions_container_->SetSelectedIndex(
           suggestions_container_->num_results() - 1);
+      return true;
     }
 
-    return true;
+    return false;
   }
 
   if (custom_launcher_page_background_->selected()) {
