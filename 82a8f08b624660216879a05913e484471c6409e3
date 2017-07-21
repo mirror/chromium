@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf160a28_96d36c6f",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/app_manager_impl_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-21T01:28:57Z",
+      "side": 1,
+      "message": "Does ordering matter here? If so, please add a comment. Otherwise, a nit: the code would read slightly better if the Shutdown() methods were grouped (ie, move the app_manager_.reset() line below NoteTakingHelper::Shutdown()).",
+      "revId": "82a8f08b624660216879a05913e484471c6409e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7ad8bc4_d9dc304d",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/app_manager_impl_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-21T01:28:57Z",
+      "side": 1,
+      "message": "Can you add some comments to make this test easier/faster to read/understand?",
+      "revId": "82a8f08b624660216879a05913e484471c6409e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5d59f49_68b2cb65",
+        "filename": "chrome/browser/chromeos/note_taking_helper.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-21T01:28:57Z",
+      "side": 1,
+      "message": "nit: spell out type instead of auto",
+      "revId": "82a8f08b624660216879a05913e484471c6409e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bafe6be_40e6bdf7",
+        "filename": "chrome/browser/chromeos/note_taking_helper_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-21T01:28:57Z",
+      "side": 1,
+      "message": "nit: /*avatar_id*/, /*supervised_user_id*/ (follow existing style)",
+      "revId": "82a8f08b624660216879a05913e484471c6409e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06a56bf6_1c6aee1a",
+        "filename": "chrome/browser/chromeos/note_taking_helper_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 1364,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-21T01:28:57Z",
+      "side": 1,
+      "message": "nit: notification",
+      "revId": "82a8f08b624660216879a05913e484471c6409e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9896eaf5_88db862a",
+        "filename": "chrome/browser/chromeos/note_taking_helper_unittest.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 1397,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-21T01:28:57Z",
+      "side": 1,
+      "message": "All of these tests would be much easier to read if you add comments describing a high-level flow of what\u0027s happening as you do it. It is hard to infer expectations from huge blocks of code - ie, I have no understanding of the \"why\" this is important to test.",
+      "revId": "82a8f08b624660216879a05913e484471c6409e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44610f91_e181139c",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/device_stylus_handler.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-21T01:28:57Z",
+      "side": 1,
+      "message": "Perhaps assign these values directly in the enum and add a comment saying be careful reordering or removing, as they are shared constants in settings JS? Even better would be defining it in mojo :)",
+      "revId": "82a8f08b624660216879a05913e484471c6409e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
