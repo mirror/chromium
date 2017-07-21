@@ -16,10 +16,10 @@ using ::showcase_utils::Open;
 using ::showcase_utils::Close;
 }
 
-@interface TextBadgeViewTestCase : ShowcaseTestCase
+@interface SCTextBadgeViewTestCase : ShowcaseTestCase
 @end
 
-@implementation TextBadgeViewTestCase
+@implementation SCTextBadgeViewTestCase
 
 // Tests that the accessibility label matches the display text.
 - (void)testTextBadgeAccessibilityLabel {

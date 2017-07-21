@@ -8,19 +8,23 @@
 
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/gtest_mac.h"
+#include "testing/platform_test.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
 
+// Fixture to test TextBadgeView.
+class TextBadgeViewTest : public PlatformTest {};
+
 // Tests the badge's intrinsic content size given short display text.
-TEST(TextBadgeViewTest, BadgeSizeShortLabel) {}
+TEST_F(TextBadgeViewTest, BadgeSizeShortLabel) {}
 
 // Tests the badge's intrinsic content size given long display text.
-TEST(TextBadgeViewTest, BadgeSizeLongLabel) {}
+TEST_F(TextBadgeViewTest, BadgeSizeLongLabel) {}
 
 // Tests that text and layout flip for RTL languages.
-TEST(TextBadgeViewTest, RTL) {}
+TEST_F(TextBadgeViewTest, RTL) {}
 
 // Tests that the accessibility label matches the display text.
-TEST(TextBadgeViewTest, Accessibility) {}
+TEST_F(TextBadgeViewTest, Accessibility) {}
