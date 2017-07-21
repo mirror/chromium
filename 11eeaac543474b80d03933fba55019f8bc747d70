@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e487e23f_ec0ef169",
+        "filename": "tools/perf/convert_legacy_wpr_archive",
+        "patchSetId": 3
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-07-21T21:23:45Z",
+      "side": 1,
+      "message": "you can use tools/perf/core/path_util.py :-)",
+      "parentUuid": "f495d716_d83e2761",
+      "range": {
+        "startLine": 476,
+        "startChar": 28,
+        "endLine": 476,
+        "endChar": 29
+      },
+      "revId": "11eeaac543474b80d03933fba55019f8bc747d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4536bcf4_f7ad055d",
         "filename": "tools/perf/convert_legacy_wpr_archive",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-21T20:58:06Z",
       "side": 1,
       "message": "Is there a way to get wpr binary from binary_manager in this file?",
+      "range": {
+        "startLine": 482,
+        "startChar": 19,
+        "endLine": 482,
+        "endChar": 40
+      },
+      "revId": "11eeaac543474b80d03933fba55019f8bc747d70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64a4453a_e341bbc3",
+        "filename": "tools/perf/convert_legacy_wpr_archive",
+        "patchSetId": 3
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-07-21T21:23:45Z",
+      "side": 1,
+      "message": "You can use: https://cs.chromium.org/chromium/src/third_party/catapult/telemetry/telemetry/internal/util/webpagereplay_go_server.py?rcl\u003d950ede098bcd7d430c881a8a5cd0937ffdd1fda2\u0026l\u003d81",
+      "parentUuid": "4536bcf4_f7ad055d",
       "range": {
         "startLine": 482,
         "startChar": 19,
