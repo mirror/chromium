@@ -865,17 +865,6 @@ class TaskSchedulerWorkerPoolBlockedUnblockedTest
   void TearDown() override {}
 
  protected:
-  // Adjusts worker capacity for tasks that have called TaskBlocked().
-  void AdjustWorkerCapacity() {
-    for (size_t i = 0; i < kNumWorkersInWorkerPool; ++i) {
-      if (!DidIncreaseCapacitySinceBlocked(i) &&
-          !BlockedStartTime(i)->is_null()) {
-        SetDidIncreaseCapacitySinceBlocked(i);
-        IncrementWorkerCapacity();
-      }
-    }
-  }
-
   // Saturates the worker pool with a task that first blocks, waits to be
   // unblocked, then exits.
   void SaturateWithBlockingTasks() {
@@ -921,33 +910,25 @@ class TaskSchedulerWorkerPoolBlockedUnblockedTest
       threads_unblocked_cv->Wait();
   }
 
+  // Keeps polling for the pool's worker capacity until it equals
+  // |expected_worker_capacity|
+  void PollForWorkerCapacity(size_t expected_worker_capacity) {
+    PlatformThread::Sleep(SchedulerWorkerPoolImpl::BlockedWorkersPollPeriod() +
+                          TestTimeouts::tiny_timeout());
+    while (worker_pool_->WorkerCapacityForTesting() !=
+           expected_worker_capacity) {
+      LOG(WARNING) << "Expected WorkerCapacityForTesting() to be "
+                   << expected_worker_capacity << " but is "
+                   << worker_pool_->WorkerCapacityForTesting();
+      PlatformThread::Sleep(
+          SchedulerWorkerPoolImpl::BlockedWorkersPollPeriod() +
+          TestTimeouts::tiny_timeout());
+    }
+  }
+
   scoped_refptr<TaskRunner> task_runner;
 
  private:
-  SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl* GetDelegate(int index) {
-    return static_cast<SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl*>(
-        worker_pool_->workers_[index]->delegate());
-  }
-  bool DidIncreaseCapacitySinceBlocked(int index) {
-    SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl* delegate =
-        GetDelegate(index);
-    return delegate->increased_capacity_since_blocked_;
-  }
-
-  void SetDidIncreaseCapacitySinceBlocked(int index) {
-    SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl* delegate =
-        GetDelegate(index);
-    delegate->increased_capacity_since_blocked_ = true;
-  }
-
-  TimeTicks* BlockedStartTime(int index) {
-    SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl* delegate =
-        GetDelegate(index);
-    return &delegate->blocked_start_time_;
-  }
-
-  void IncrementWorkerCapacity() { ++worker_pool_->worker_capacity_; }
-
   WaitableEvent blocking_thread_running;
   WaitableEvent blocking_thread_continue;
   SchedulerLock threads_unblocked_lock;
@@ -961,9 +942,10 @@ class TaskSchedulerWorkerPoolBlockedUnblockedTest
 // TaskUnblocked() decreases worker capacity after an increase.
 TEST_F(TaskSchedulerWorkerPoolBlockedUnblockedTest, TaskBlockedUnblocked) {
   ASSERT_EQ(worker_pool_->WorkerCapacityForTesting(), kNumWorkersInWorkerPool);
+
   SaturateWithBlockingTasks();
 
-  AdjustWorkerCapacity();
+  PollForWorkerCapacity(2 * kNumWorkersInWorkerPool);
   EXPECT_EQ(worker_pool_->WorkerCapacityForTesting(),
             2 * kNumWorkersInWorkerPool);
 
@@ -981,13 +963,14 @@ TEST_F(TaskSchedulerWorkerPoolBlockedUnblockedTest, TaskBlockedUnblocked) {
 TEST_F(TaskSchedulerWorkerPoolBlockedUnblockedTest,
        WorkersSuspendedWhenOvercapacity) {
   ASSERT_EQ(worker_pool_->WorkerCapacityForTesting(), kNumWorkersInWorkerPool);
+
   SaturateWithBlockingTasks();
 
-  AdjustWorkerCapacity();
+  PollForWorkerCapacity(2 * kNumWorkersInWorkerPool);
   EXPECT_EQ(worker_pool_->WorkerCapacityForTesting(),
             2 * kNumWorkersInWorkerPool);
   EXPECT_EQ(worker_pool_->NumberOfAliveWorkersForTesting(),
-            kNumWorkersInWorkerPool);
+            kNumWorkersInWorkerPool + 1);
 
   WaitableEvent thread_running(WaitableEvent::ResetPolicy::AUTOMATIC,
                                WaitableEvent::InitialState::NOT_SIGNALED);
