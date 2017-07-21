@@ -9,6 +9,9 @@ namespace feature_engagement_tracker {
 namespace events {
 
 #if defined(OS_WIN) || defined(OS_LINUX)
+const char kBookmarkAdded[] = "bookmark_added";
+const char kVisitedKnownURL[] = "visited_known_url";
+
 const char kOmniboxInteraction[] = "omnibox_used";
 
 const char kHistoryDeleted[] = "history_deleted";
