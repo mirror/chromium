@@ -4,17 +4,21 @@
 
 #include "ash/system/session/logout_button_tray.h"
 
+#include "ash/public/cpp/ash_pref_names.h"
 #include "ash/public/cpp/ash_typography.h"
 #include "ash/resources/vector_icons/vector_icons.h"
+#include "ash/session/session_controller.h"
 #include "ash/shelf/shelf.h"
 #include "ash/shell.h"
 #include "ash/system/session/logout_confirmation_controller.h"
 #include "ash/system/status_area_widget.h"
 #include "ash/system/tray/system_tray_controller.h"
-#include "ash/system/tray/system_tray_notifier.h"
 #include "ash/system/tray/tray_constants.h"
 #include "ash/system/tray/tray_container.h"
 #include "ash/system/user/login_status.h"
+#include "components/prefs/pref_change_registrar.h"
+#include "components/prefs/pref_registry_simple.h"
+#include "components/prefs/pref_service.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/gfx/color_palette.h"
 #include "ui/gfx/geometry/size.h"
@@ -38,12 +42,23 @@ LogoutButtonTray::LogoutButtonTray(Shelf* shelf)
   button_->SetBgColorOverride(gfx::kGoogleRed700);
 
   container_->AddChildView(button_);
-  Shell::Get()->system_tray_notifier()->AddLogoutButtonObserver(this);
+  Shell::Get()->session_controller()->AddObserver(this);
   SetVisible(false);
 }
 
 LogoutButtonTray::~LogoutButtonTray() {
-  Shell::Get()->system_tray_notifier()->RemoveLogoutButtonObserver(this);
+  Shell::Get()->session_controller()->RemoveObserver(this);
+}
+
+// static
+void LogoutButtonTray::RegisterProfilePrefs(PrefRegistrySimple *registry) {
+//
+// I think this is broken. The registry on classic ash is a PrefServiceSyncable
+// but on mash it might not be.
+//
+  LOG(ERROR) << "JAMES RegisterProfilePrefs in ash";
+  registry->RegisterBooleanPref(prefs::kShowLogoutButtonInTray, false);
+  registry->RegisterIntegerPref(prefs::kLogoutDialogDurationMs, 20000);
 }
 
 void LogoutButtonTray::UpdateAfterShelfAlignmentChange() {
@@ -66,18 +81,52 @@ void LogoutButtonTray::ButtonPressed(views::Button* sender,
   }
 }
 
+// SessionObserver:
+void LogoutButtonTray::OnActiveUserSessionChanged(const AccountId& account_id) {
+  // JAMES do this on init? what about secondary monitor?
+  // JAMES extract to method?
+  PrefService* prefs = Shell::Get()->GetActiveUserPrefService();
+  LOG(ERROR) << "JAMES ActiveUserSessionChanged, observing prefs " << prefs;
+  if (!prefs)  // Null on mash startup and in tests.
+    return;
+  pref_change_registrar_ = base::MakeUnique<PrefChangeRegistrar>();
+  pref_change_registrar_->Init(prefs);
+  pref_change_registrar_->Add(
+      prefs::kShowLogoutButtonInTray,
+      base::Bind(&LogoutButtonTray::UpdateShowLogoutButtonInTray,
+                 base::Unretained(this)));
+  pref_change_registrar_->Add(
+      prefs::kLogoutDialogDurationMs,
+      base::Bind(&LogoutButtonTray::UpdateLogoutDialogDuration,
+                 base::Unretained(this)));
+
+  // Read the initial values.
+  UpdateShowLogoutButtonInTray();
+  UpdateLogoutDialogDuration();
+}
+
 void LogoutButtonTray::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   View::GetAccessibleNodeData(node_data);
   node_data->SetName(button_->GetText());
 }
 
-void LogoutButtonTray::OnShowLogoutButtonInTrayChanged(bool show) {
-  show_logout_button_in_tray_ = show;
+//JAMES rename this
+void LogoutButtonTray::UpdateShowLogoutButtonInTray() {
+  // show_logout_button_in_tray_ = show;
+  show_logout_button_in_tray_ = pref_change_registrar_->prefs()->GetBoolean(
+      prefs::kShowLogoutButtonInTray);
+  LOG(ERROR) << "JAMES OnShowLogoutButtonInTrayChanged "
+             << show_logout_button_in_tray_;
+  base::debug::StackTrace().Print();
+
   UpdateVisibility();
 }
 
-void LogoutButtonTray::OnLogoutDialogDurationChanged(base::TimeDelta duration) {
-  dialog_duration_ = duration;
+void LogoutButtonTray::UpdateLogoutDialogDuration() {
+  const int duration_ms = pref_change_registrar_->prefs()->GetInteger(
+      prefs::kLogoutDialogDurationMs);
+  LOG(ERROR) << "JAMES UpdateLogoutDialogDuration " << duration_ms;
+  dialog_duration_ = base::TimeDelta::FromMilliseconds(duration_ms);
 }
 
 void LogoutButtonTray::UpdateAfterLoginStatusChange() {

@@ -109,6 +109,7 @@ ConfigurationPolicyPrefStore::~ConfigurationPolicyPrefStore() {
 }
 
 void ConfigurationPolicyPrefStore::Refresh() {
+  LOG(ERROR) << "JAMES ConfigurationPolicyPrefStore::Refresh";
   std::unique_ptr<PrefValueMap> new_prefs(CreatePreferencesFromPolicies());
   std::vector<std::string> changed_prefs;
   new_prefs->GetDifferingKeys(prefs_.get(), &changed_prefs);

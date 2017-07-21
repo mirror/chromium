@@ -185,6 +185,7 @@ void PolicyServiceImpl::NotifyNamespaceUpdated(
 }
 
 void PolicyServiceImpl::MergeAndTriggerUpdates() {
+  LOG(ERROR) << "JAMES MergeAndTriggerUpdates";
   // Merge from each provider in their order of priority.
   const PolicyNamespace chrome_namespace(POLICY_DOMAIN_CHROME, std::string());
   PolicyBundle bundle;

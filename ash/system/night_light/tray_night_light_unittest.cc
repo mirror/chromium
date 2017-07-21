@@ -30,7 +30,7 @@ class TrayNightLightTest : public AshTestBase {
     AshTestBase::SetUp();
     GetSessionControllerClient()->Reset();
     GetSessionControllerClient()->AddUserSession(kFakeUserEmail);
-    Shell::RegisterPrefs(pref_service_.registry());
+    Shell::RegisterProfilePrefs(pref_service_.registry());
 
     ash_test_helper()->test_shell_delegate()->set_active_user_pref_service(
         &pref_service_);

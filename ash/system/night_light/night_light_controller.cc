@@ -135,7 +135,7 @@ bool NightLightController::IsFeatureEnabled() {
 }
 
 // static
-void NightLightController::RegisterPrefs(PrefRegistrySimple* registry) {
+void NightLightController::RegisterProfilePrefs(PrefRegistrySimple* registry) {
   registry->RegisterBooleanPref(prefs::kNightLightEnabled, false);
   registry->RegisterDoublePref(prefs::kNightLightTemperature,
                                kDefaultColorTemperature);
@@ -279,6 +279,8 @@ void NightLightController::SetDelegateForTesting(
 }
 
 void NightLightController::RefreshLayersTemperature() {
+  // base::debug::StackTrace().Print();
+
   ApplyColorTemperatureToLayers(GetEnabled() ? GetColorTemperature() : 0.0f,
                                 animation_duration_ == AnimationDuration::kShort
                                     ? kManualAnimationDuration

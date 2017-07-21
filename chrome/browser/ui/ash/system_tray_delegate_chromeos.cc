@@ -18,7 +18,6 @@
 #include "ash/shell_delegate.h"
 #include "ash/system/date/clock_observer.h"
 #include "ash/system/power/power_status.h"
-#include "ash/system/session/logout_button_observer.h"
 #include "ash/system/tray/system_tray_notifier.h"
 #include "ash/system/tray_accessibility.h"
 #include "base/callback.h"
@@ -51,6 +50,8 @@
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/l10n/time_format.h"
 #include "ui/chromeos/events/pref_names.h"
+
+#include "ash/public/cpp/ash_pref_names.h"//JAMES
 
 namespace chromeos {
 
@@ -128,6 +129,8 @@ void SystemTrayDelegateChromeOS::SetProfile(Profile* profile) {
   // Start observing the AppWindowRegistry of the newly set |user_profile_|.
   extensions::AppWindowRegistry::Get(user_profile_)->AddObserver(this);
 
+  // TODO(jamescook): Move all these prefs into ash. See LogoutButtonTray for
+  // an example of how to do this.
   PrefService* prefs = profile->GetPrefs();
   user_pref_registrar_.reset(new PrefChangeRegistrar);
   user_pref_registrar_->Init(prefs);
@@ -136,13 +139,13 @@ void SystemTrayDelegateChromeOS::SetProfile(Profile* profile) {
       base::Bind(&SystemTrayDelegateChromeOS::OnLanguageRemapSearchKeyToChanged,
                  base::Unretained(this)));
   user_pref_registrar_->Add(
-      prefs::kShowLogoutButtonInTray,
+      ash::prefs::kShowLogoutButtonInTray,
       base::Bind(&SystemTrayDelegateChromeOS::UpdateShowLogoutButtonInTray,
                  base::Unretained(this)));
-  user_pref_registrar_->Add(
-      prefs::kLogoutDialogDurationMs,
-      base::Bind(&SystemTrayDelegateChromeOS::UpdateLogoutDialogDuration,
-                 base::Unretained(this)));
+  // user_pref_registrar_->Add(
+  //     prefs::kLogoutDialogDurationMs,
+  //     base::Bind(&SystemTrayDelegateChromeOS::UpdateLogoutDialogDuration,
+  //                base::Unretained(this)));
   user_pref_registrar_->Add(
       prefs::kAccessibilityLargeCursorEnabled,
       base::Bind(&SystemTrayDelegateChromeOS::OnAccessibilityModeChanged,
@@ -156,8 +159,8 @@ void SystemTrayDelegateChromeOS::SetProfile(Profile* profile) {
       base::Bind(&SystemTrayDelegateChromeOS::OnAccessibilityModeChanged,
                  base::Unretained(this), ash::A11Y_NOTIFICATION_NONE));
 
-  UpdateShowLogoutButtonInTray();
-  UpdateLogoutDialogDuration();
+  // UpdateShowLogoutButtonInTray();
+  // UpdateLogoutDialogDuration();
   search_key_mapped_to_ =
       profile->GetPrefs()->GetInteger(prefs::kLanguageRemapSearchKeyTo);
 }
@@ -171,17 +174,23 @@ bool SystemTrayDelegateChromeOS::UnsetProfile(Profile* profile) {
 }
 
 void SystemTrayDelegateChromeOS::UpdateShowLogoutButtonInTray() {
-  GetSystemTrayNotifier()->NotifyShowLoginButtonChanged(
-      user_pref_registrar_->prefs()->GetBoolean(
-          prefs::kShowLogoutButtonInTray));
+  LOG(ERROR) << "JAMES chrome got ShowLogoutButtonInTray "
+             << user_pref_registrar_->prefs()->GetBoolean(
+                    ash::prefs::kShowLogoutButtonInTray);
+  base::debug::StackTrace().Print();
+
+
+  // GetSystemTrayNotifier()->NotifyShowLoginButtonChanged(
+  //     user_pref_registrar_->prefs()->GetBoolean(
+  //         prefs::kShowLogoutButtonInTray));
 }
 
-void SystemTrayDelegateChromeOS::UpdateLogoutDialogDuration() {
-  const int duration_ms =
-      user_pref_registrar_->prefs()->GetInteger(prefs::kLogoutDialogDurationMs);
-  GetSystemTrayNotifier()->NotifyLogoutDialogDurationChanged(
-      base::TimeDelta::FromMilliseconds(duration_ms));
-}
+// void SystemTrayDelegateChromeOS::UpdateLogoutDialogDuration() {
+//   const int duration_ms =
+//       user_pref_registrar_->prefs()->GetInteger(prefs::kLogoutDialogDurationMs);
+//   GetSystemTrayNotifier()->NotifyLogoutDialogDurationChanged(
+//       base::TimeDelta::FromMilliseconds(duration_ms));
+// }
 
 void SystemTrayDelegateChromeOS::StopObservingAppWindowRegistry() {
   if (!user_profile_)
