@@ -16,6 +16,24 @@
       "revId": "9fece5c53d1a9a7d7fcbc64dded55854002c44d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80c1d0ea_b265a170",
+        "filename": "cc/resources/video_resource_updater.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-07-21T20:50:41Z",
+      "side": 1,
+      "message": "The compositor always sees a dependency on the previous release sync token (sync_token param to WaitSyncToken) but not on sync_token_. In CopyPlaneToTexture, sync_token_ is empty because we want to force generate a new sync token after the copy. In ReturnResource, the compositor doesn\u0027t need a dependency on the incoming sync token so we skip generating a new sync token by providing a pass through sync token (sync_token_). Are you saying that the compositor needs to wait for sync_token_ when returning the resource? Why?",
+      "parentUuid": "17083c82_16e38111",
+      "revId": "9fece5c53d1a9a7d7fcbc64dded55854002c44d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
