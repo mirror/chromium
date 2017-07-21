@@ -63,6 +63,7 @@ CONTENT_EXPORT extern const base::Feature kPointerEvents;
 CONTENT_EXPORT extern const base::Feature kPurgeAndSuspend;
 CONTENT_EXPORT extern const base::Feature kRafAlignedMouseInputEvents;
 CONTENT_EXPORT extern const base::Feature kRafAlignedTouchInputEvents;
+CONTENT_EXPORT extern const base::Feature kRasterInducingScrolling;
 CONTENT_EXPORT extern const base::Feature kRenderingPipelineThrottling;
 CONTENT_EXPORT extern const base::Feature kReportRendererPeakMemoryStats;
 CONTENT_EXPORT extern const base::Feature
