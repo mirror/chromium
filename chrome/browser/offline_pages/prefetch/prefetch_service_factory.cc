@@ -12,6 +12,7 @@
 #include "base/memory/singleton.h"
 #include "base/sequenced_task_runner.h"
 #include "base/task_scheduler/post_task.h"
+#include "build/build_config.h"
 #include "chrome/browser/download/download_service_factory.h"
 #include "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h"
 #include "chrome/browser/offline_pages/prefetch/prefetch_instance_id_proxy.h"
@@ -28,6 +29,10 @@
 #include "components/offline_pages/core/prefetch/store/prefetch_store.h"
 #include "components/offline_pages/core/prefetch/suggested_articles_observer.h"
 #include "content/public/browser/browser_context.h"
+
+#if defined(OS_ANDROID)
+#include "chrome/browser/offline_pages/android/prefetch_background_task_handler_impl.h"
+#endif
 
 namespace offline_pages {
 
@@ -82,11 +87,21 @@ KeyedService* PrefetchServiceFactory::BuildServiceInstanceFor(
       DownloadServiceFactory::GetForBrowserContext(context),
       chrome::GetChannel());
 
+  std::unique_ptr<PrefetchBackgroundTaskHandler>
+      prefetch_background_task_handler;
+#if defined(OS_ANDROID)
+  prefetch_background_task_handler =
+      base::MakeUnique<PrefetchBackgroundTaskHandlerImpl>(profile);
+#else
+#error "Background task handler not defined on this platform."
+#endif
+
   return new PrefetchServiceImpl(
       std::move(offline_metrics_collector), std::move(prefetch_dispatcher),
       std::move(prefetch_gcm_app_handler),
       std::move(prefetch_network_request_factory), std::move(prefetch_store),
-      std::move(suggested_articles_observer), std::move(prefetch_downloader));
+      std::move(suggested_articles_observer), std::move(prefetch_downloader),
+      std::move(prefetch_background_task_handler));
 }
 
 }  // namespace offline_pages

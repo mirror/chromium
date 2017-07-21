@@ -9,6 +9,7 @@
 
 #include "base/macros.h"
 #include "components/offline_pages/core/offline_event_logger.h"
+#include "components/offline_pages/core/prefetch/prefetch_background_task_handler.h"
 #include "components/offline_pages/core/prefetch/prefetch_service.h"
 #include "components/offline_pages/core/prefetch/prefetch_types.h"
 
@@ -23,7 +24,9 @@ class PrefetchServiceImpl : public PrefetchService {
       std::unique_ptr<PrefetchNetworkRequestFactory> network_request_factory,
       std::unique_ptr<PrefetchStore> prefetch_store,
       std::unique_ptr<SuggestedArticlesObserver> suggested_articles_observer,
-      std::unique_ptr<PrefetchDownloader> prefetch_downloader);
+      std::unique_ptr<PrefetchDownloader> prefetch_downloader,
+      std::unique_ptr<PrefetchBackgroundTaskHandler> background_task_handler);
+
   ~PrefetchServiceImpl() override;
 
   // PrefetchService implementation:
@@ -35,6 +38,7 @@ class PrefetchServiceImpl : public PrefetchService {
   SuggestedArticlesObserver* GetSuggestedArticlesObserver() override;
   OfflineEventLogger* GetLogger() override;
   PrefetchDownloader* GetPrefetchDownloader() override;
+  PrefetchBackgroundTaskHandler* GetPrefetchBackgroundTaskHandler() override;
 
   // KeyedService implementation:
   void Shutdown() override;
@@ -52,6 +56,8 @@ class PrefetchServiceImpl : public PrefetchService {
   std::unique_ptr<PrefetchStore> prefetch_store_;
   std::unique_ptr<SuggestedArticlesObserver> suggested_articles_observer_;
   std::unique_ptr<PrefetchDownloader> prefetch_downloader_;
+  std::unique_ptr<PrefetchBackgroundTaskHandler>
+      prefetch_background_task_handler_;
 
   DISALLOW_COPY_AND_ASSIGN(PrefetchServiceImpl);
 };

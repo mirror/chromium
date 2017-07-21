@@ -5,11 +5,13 @@
 #ifndef COMPONENTS_OFFLINE_PAGES_CORE_PREFETCH_PREFETCH_SERVICE_H_
 #define COMPONENTS_OFFLINE_PAGES_CORE_PREFETCH_PREFETCH_SERVICE_H_
 
+#include "base/callback.h"
 #include "components/keyed_service/core/keyed_service.h"
 
 namespace offline_pages {
 class OfflineEventLogger;
 class OfflineMetricsCollector;
+class PrefetchBackgroundTaskHandler;
 class PrefetchDispatcher;
 class PrefetchDownloader;
 class PrefetchGCMHandler;
@@ -35,6 +37,7 @@ class PrefetchService : public KeyedService {
   virtual PrefetchNetworkRequestFactory* GetPrefetchNetworkRequestFactory() = 0;
   virtual PrefetchDownloader* GetPrefetchDownloader() = 0;
   virtual PrefetchStore* GetPrefetchStore() = 0;
+  virtual PrefetchBackgroundTaskHandler* GetPrefetchBackgroundTaskHandler() = 0;
 
   // May be |nullptr| in tests.  The PrefetchService does not depend on the
   // SuggestedArticlesObserver, it merely owns it for lifetime purposes.
