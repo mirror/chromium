@@ -438,4 +438,10 @@ void WebRuntimeFeatures::EnableLazyInitializeMediaControls(bool enable) {
   RuntimeEnabledFeatures::SetLazyInitializeMediaControlsEnabled(enable);
 }
 
+void WebRuntimeFeatures::EnableMediaEngagementBypassAutoplayPolicies(
+    bool enable) {
+  RuntimeEnabledFeatures::SetMediaEngagementBypassAutoplayPoliciesEnabled(
+      enable);
+}
+
 }  // namespace blink
