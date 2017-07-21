@@ -117,18 +117,47 @@ CSSValue* CSSPropertyFontUtils::ConsumeFontStretch(CSSParserTokenRange& range) {
   return CSSPropertyParserHelpers::ConsumePercent(range, kValueRangeAll);
 }
 
-CSSValue* CSSPropertyFontUtils::ConsumeFontWeight(CSSParserTokenRange& range) {
+CSSValue* CSSPropertyFontUtils::ConsumeFontWeight(
+    CSSParserTokenRange& range,
+    const CSSParserMode& parser_mode) {
   const CSSParserToken& token = range.Peek();
   if (token.Id() >= CSSValueNormal && token.Id() <= CSSValueLighter)
     return CSSPropertyParserHelpers::ConsumeIdent(range);
   if (token.GetType() != kNumberToken)
     return nullptr;
-  float weight = token.NumericValue();
-  if (weight < 1 || weight > 1000)
+  CSSPrimitiveValue* start_weight = nullptr;
+  CSSPrimitiveValue* end_weight = nullptr;
+  start_weight =
+      CSSPropertyParserHelpers::ConsumeNumber(range, kValueRangeNonNegative);
+  if (!start_weight || start_weight->GetFloatValue() < 1 ||
+      start_weight->GetFloatValue() > 1000)
     return nullptr;
-  range.ConsumeIncludingWhitespace();
-  return CSSPrimitiveValue::Create(weight,
-                                   CSSPrimitiveValue::UnitType::kNumber);
+  if (range.Peek().GetType() == kNumberToken) {
+    if (parser_mode == kCSSFontFaceRuleMode) {
+      end_weight = CSSPropertyParserHelpers::ConsumeNumber(
+          range, kValueRangeNonNegative);
+      if (!end_weight || end_weight->GetFloatValue() < 1 ||
+          end_weight->GetFloatValue() > 1000)
+        return nullptr;
+    }
+    // In a non-font-face context, two numbers are not allowed.
+    return nullptr;
+  }
+
+  if (start_weight && end_weight) {
+    if (end_weight->GetFloatValue() < start_weight->GetFloatValue())
+      return nullptr;
+    CSSValueList* value_list = CSSValueList::CreateSpaceSeparated();
+    value_list->Append(*start_weight);
+    value_list->Append(*end_weight);
+    return value_list;
+  }
+
+  if (start_weight) {
+    return start_weight;
+  }
+
+  return nullptr;
 }
 
 // TODO(bugsnash): move this to the FontFeatureSettings API when it is no longer
