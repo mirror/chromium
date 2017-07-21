@@ -1,0 +1,498 @@
+#!/usr/bin/env python
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+"""
+Takes in a page set json file. Iterate through all .wpr archives and convert
+them to .wprgo archive format.
+
+tools/perf/convert_legacy_wpr_archive /path/to/page_sets_json_file
+
+"""
+
+import cPickle
+import difflib
+import json
+import logging
+import optparse
+import os
+import StringIO
+import subprocess
+import sys
+import tempfile
+import time
+import urlparse
+from collections import defaultdict
+import base64
+import re
+
+class JsonObject:
+  def toJSON(self):
+      return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+
+
+class HttpArchiveException(Exception):
+  """Base class for all exceptions in httparchive."""
+  pass
+
+
+class HttpArchive(dict):
+  """Dict with ArchivedHttpRequest keys and ArchivedHttpResponse values.
+
+  Attributes:
+    responses_by_host: dict of {hostname, {request: response}}. This must remain
+        in sync with the underlying dict of self. It is used as an optimization
+        so that get_requests() doesn't have to linearly search all requests in
+        the archive to find potential matches.
+  """
+
+  def __init__(self):  # pylint: disable=super-init-not-called
+    self.responses_by_host = defaultdict(dict)
+
+  def __setstate__(self, state):
+    """Influence how to unpickle.
+
+    Args:
+      state: a dictionary for __dict__
+    """
+    self.__dict__.update(state)
+    self.responses_by_host = defaultdict(dict)
+    for request in self:
+      self.responses_by_host[request.host][request] = self[request]
+
+  def __getstate__(self):
+    """Influence how to pickle.
+
+    Returns:
+      a dict to use for pickling
+    """
+    state = self.__dict__.copy()
+    del state['responses_by_host']
+    return state
+
+  def __setitem__(self, key, value):
+    super(HttpArchive, self).__setitem__(key, value)
+    if hasattr(self, 'responses_by_host'):
+      self.responses_by_host[key.host][key] = value
+
+  def __delitem__(self, key):
+    super(HttpArchive, self).__delitem__(key)
+    del self.responses_by_host[key.host][key]
+
+  def get(self, request, default=None):
+    """Return the archived response for a given request.
+
+    Does extra checking for handling some HTTP request headers.
+
+    Args:
+      request: instance of ArchivedHttpRequest
+      default: default value to return if request is not found
+
+    Returns:
+      Instance of ArchivedHttpResponse or default if no matching
+      response is found
+    """
+    if request in self:
+      return self[request]
+    return self.get_conditional_response(request, default)
+
+  def get_requests(self, command=None, host=None, full_path=None, is_ssl=None,
+                   use_query=True):
+    """Return a list of requests that match the given args."""
+    if host:
+      return [r for r in self.responses_by_host[host]
+              if r.matches(command, None, full_path, is_ssl,
+                           use_query=use_query)]
+    else:
+      return [r for r in self
+              if r.matches(command, host, full_path, is_ssl,
+                           use_query=use_query)]
+
+  def ls(self, command=None, host=None, full_path=None):
+    """List all URLs that match given params."""
+    return ''.join(sorted(
+        '%s\n' % r for r in self.get_requests(command, host, full_path)))
+
+  def json(self):
+    """List all URLs that match given params."""
+    requests = '['
+    requests_added = False
+    for r in self.get_requests(command, host, full_path):
+        requests_added = True
+        req = JsonObject()
+        scheme = 'https' if r.is_ssl else 'http'
+        req.url = '%s://%s%s' % (scheme, r.host, r.full_path)
+        req.method = r.command
+        req.headers = []
+        for k in r.headers:
+            h = JsonObject()
+            h.key = k
+            h.val = r.headers[k]
+            req.headers.append(h)
+        if r.request_body:
+          req.body = base64.encodestring(r.request_body)
+        requests += req.toJSON() + ',\n'
+    if requests_added:
+      requests = requests[:-2]
+    requests += ']'
+    return requests
+
+  @classmethod
+  def AssertWritable(cls, filename):
+    """Raises an IOError if filename is not writable."""
+    persist_dir = os.path.dirname(os.path.abspath(filename))
+    if not os.path.exists(persist_dir):
+      raise IOError('Directory does not exist: %s' % persist_dir)
+    if os.path.exists(filename):
+      if not os.access(filename, os.W_OK):
+        raise IOError('Need write permission on file: %s' % filename)
+    elif not os.access(persist_dir, os.W_OK):
+      raise IOError('Need write permission on directory: %s' % persist_dir)
+
+  @classmethod
+  def Load(cls, filename):
+    """Load an instance from filename."""
+    return cPickle.load(open(filename, 'rb'))
+
+  def Persist(self, filename):
+    """Persist all state to filename."""
+    try:
+      original_checkinterval = sys.getcheckinterval()
+      sys.setcheckinterval(2**31-1)  # Lock out other threads so nothing can
+                                     # modify |self| during pickling.
+      pickled_self = cPickle.dumps(self, cPickle.HIGHEST_PROTOCOL)
+    finally:
+      sys.setcheckinterval(original_checkinterval)
+    with open(filename, 'wb') as f:
+      f.write(pickled_self)
+
+
+class ArchivedHttpRequest(object):
+  """Record all the state that goes into a request.
+
+  ArchivedHttpRequest instances are considered immutable so they can
+  serve as keys for HttpArchive instances.
+  (The immutability is not enforced.)
+
+  Upon creation, the headers are "trimmed" (i.e. edited or dropped)
+  and saved to self.trimmed_headers to allow requests to match in a wider
+  variety of playback situations (e.g. using different user agents).
+
+  For unpickling, 'trimmed_headers' is recreated from 'headers'. That
+  allows for changes to the trim function and can help with debugging.
+  """
+  CONDITIONAL_HEADERS = [
+      'if-none-match', 'if-match',
+      'if-modified-since', 'if-unmodified-since']
+
+  def __init__(self, command, host, full_path, request_body, headers,
+               is_ssl=False):
+    """Initialize an ArchivedHttpRequest.
+
+    Args:
+      command: a string (e.g. 'GET' or 'POST').
+      host: a host name (e.g. 'www.google.com').
+      full_path: a request path.  Includes everything after the host & port in
+          the URL (e.g. '/search?q=dogs').
+      request_body: a request body string for a POST or None.
+      headers: {key: value, ...} where key and value are strings.
+      is_ssl: a boolean which is True iff request is make via SSL.
+    """
+    self.command = command
+    self.host = host
+    self.full_path = full_path
+    parsed_url = urlparse.urlparse(full_path) if full_path else None
+    self.path = parsed_url.path if parsed_url else None
+    self.request_body = request_body
+    self.headers = headers
+    self.is_ssl = is_ssl
+    self.trimmed_headers = self._TrimHeaders(headers)
+    self.formatted_request = self._GetFormattedRequest()
+    self.cmp_seq = self._GetCmpSeq(parsed_url.query if parsed_url else None)
+
+  def __str__(self):
+    scheme = 'https' if self.is_ssl else 'http'
+    return '%s %s://%s%s %s' % (
+        self.command, scheme, self.host, self.full_path, self.trimmed_headers)
+
+  def __repr__(self):
+    return repr((self.command, self.host, self.full_path, self.request_body,
+                 self.trimmed_headers, self.is_ssl))
+
+  def __hash__(self):
+    """Return a integer hash to use for hashed collections including dict."""
+    return hash(repr(self))
+
+  def __eq__(self, other):
+    """Define the __eq__ method to match the hash behavior."""
+    return repr(self) == repr(other)
+
+  def __setstate__(self, state):
+    """Influence how to unpickle.
+
+    "headers" are the original request headers.
+    "trimmed_headers" are the trimmed headers used for matching requests
+    during replay.
+
+    Args:
+      state: a dictionary for __dict__
+    """
+    if 'full_headers' in state:
+      # Fix older version of archive.
+      state['headers'] = state['full_headers']
+      del state['full_headers']
+    if 'headers' not in state:
+      raise HttpArchiveException(
+          'Archived HTTP request is missing "headers". The HTTP archive is'
+          ' likely from a previous version and must be re-recorded.')
+    if 'path' in state:
+      # before, 'path' and 'path_without_query' were used and 'path' was
+      # pickled.  Now, 'path' has been renamed to 'full_path' and
+      # 'path_without_query' has been renamed to 'path'.  'full_path' is
+      # pickled, but 'path' is not.  If we see 'path' here it means we are
+      # dealing with an older archive.
+      state['full_path'] = state['path']
+      del state['path']
+    state['trimmed_headers'] = self._TrimHeaders(dict(state['headers']))
+    if 'is_ssl' not in state:
+      state['is_ssl'] = False
+    self.__dict__.update(state)
+    parsed_url = urlparse.urlparse(self.full_path)
+    self.path = parsed_url.path
+    self.formatted_request = self._GetFormattedRequest()
+    self.cmp_seq = self._GetCmpSeq(parsed_url.query)
+
+  def __getstate__(self):
+    """Influence how to pickle.
+
+    Returns:
+      a dict to use for pickling
+    """
+    state = self.__dict__.copy()
+    del state['trimmed_headers']
+    del state['path']
+    del state['formatted_request']
+    del state['cmp_seq']
+    return state
+
+  def _GetFormattedRequest(self):
+    """Format request to make diffs easier to read.
+
+    Returns:
+      A string consisting of the request. Example:
+      'GET www.example.com/path\nHeader-Key: header value\n'
+    """
+    parts = ['%s %s%s\n' % (self.command, self.host, self.full_path)]
+    if self.request_body:
+      parts.append('%s\n' % self.request_body)
+    for k, v in self.trimmed_headers:
+      k = '-'.join(x.capitalize() for x in k.split('-'))
+      parts.append('%s: %s\n' % (k, v))
+    return ''.join(parts)
+
+  def _GetCmpSeq(self, query=None):
+    """Compute a sequence out of query and header for difflib to compare.
+    For example:
+      [('q1', 'a1'), ('q2', 'a2'), ('k1', 'v1'), ('k2', 'v2')]
+    will be returned for a request with URL:
+      http://example.com/index.html?q1=a2&q2=a2
+    and header:
+      k1: v1
+      k2: v2
+
+    Args:
+      query: the query string in the URL.
+
+    Returns:
+      A sequence for difflib to compare.
+    """
+    if not query:
+      return self.trimmed_headers
+    return sorted(urlparse.parse_qsl(query)) + self.trimmed_headers
+
+  def matches(self, command=None, host=None, full_path=None, is_ssl=None,
+              use_query=True):
+    """Returns true iff the request matches all parameters.
+
+    Args:
+      command: a string (e.g. 'GET' or 'POST').
+      host: a host name (e.g. 'www.google.com').
+      full_path: a request path with query string (e.g. '/search?q=dogs')
+      is_ssl: whether the request is secure.
+      use_query:
+        If use_query is True, request matching uses both the hierarchical path
+        and query string component.
+        If use_query is False, request matching only uses the hierarchical path
+
+        e.g. req1 = GET www.test.com/index?aaaa
+             req2 = GET www.test.com/index?bbbb
+
+        If use_query is True, req1.matches(req2) evaluates to False
+        If use_query is False, req1.matches(req2) evaluates to True
+
+    Returns:
+      True iff the request matches all parameters
+    """
+    if command is not None and command != self.command:
+      return False
+    if is_ssl is not None and is_ssl != self.is_ssl:
+      return False
+    if host is not None and host != self.host:
+      return False
+    if full_path is None:
+      return True
+    if use_query:
+      return full_path == self.full_path
+    else:
+      return self.path == urlparse.urlparse(full_path).path
+
+class ArchivedHttpResponse(object):
+  """All the data needed to recreate all HTTP response.
+
+  Upon creation, the headers are "trimmed" (i.e. edited or dropped).
+  The original headers are saved to self.original_headers, while the
+  trimmed ones are used to allow responses to match in a wider variety
+  of playback situations.
+
+  For pickling, 'original_headers' are stored in the archive.  For unpickling
+  the headers are trimmed again. That allows for changes to the trim
+  function and can help with debugging.
+  """
+
+  def __init__(self, version, status, reason, headers, response_data,
+               delays=None, request_time=None):
+    """Initialize an ArchivedHttpResponse.
+
+    Args:
+      version: HTTP protocol version used by server.
+          10 for HTTP/1.0, 11 for HTTP/1.1 (same as httplib).
+      status: Status code returned by server (e.g. 200).
+      reason: Reason phrase returned by server (e.g. "OK").
+      headers: list of (header, value) tuples.
+      response_data: list of content chunks.
+          Concatenating the chunks gives the complete contents
+          (i.e. the chunks do not have any lengths or delimiters).
+          Do not include the final, zero-length chunk that marks the end.
+      delays: dict of (ms) delays for 'connect', 'headers' and 'data'.
+          e.g. {'connect': 50, 'headers': 150, 'data': [0, 10, 10]}
+          connect - The time to connect to the server.
+            Each resource has a value because Replay's record mode captures it.
+            This includes the time for the SYN and SYN/ACK (1 rtt).
+          headers - The time elapsed between the TCP connect and the headers.
+            This typically includes all the server-time to generate a response.
+          data - If the response is chunked, these are the times for each chunk.
+    """
+    self.version = version
+    self.status = status
+    self.reason = reason
+    self.original_headers = headers
+    self.headers = self._TrimHeaders(headers)
+    self.response_data = response_data
+    self.delays = delays
+    self.request_time = (
+        request_time or ArchivedHttpResponse.DEFAULT_REQUEST_TIME
+    )
+
+  def __repr__(self):
+    return repr((self.version, self.status, self.reason, sorted(self.headers),
+                 self.response_data, self.request_time))
+
+  def __hash__(self):
+    """Return a integer hash to use for hashed collections including dict."""
+    return hash(repr(self))
+
+  def __eq__(self, other):
+    """Define the __eq__ method to match the hash behavior."""
+    return repr(self) == repr(other)
+
+  def __setstate__(self, state):
+    """Influence how to unpickle.
+
+    "original_headers" are the original request headers.
+    "headers" are the trimmed headers used for replaying responses.
+
+    Args:
+      state: a dictionary for __dict__
+    """
+    if 'server_delays' in state:
+      state['delays'] = {
+          'connect': 0,
+          'headers': 0,
+          'data': state['server_delays']
+          }
+      del state['server_delays']
+    elif 'delays' not in state:
+      state['delays'] = None
+    # Set to date that was hardcoded in deterministic.js originally.
+    state.setdefault('request_time', ArchivedHttpResponse.DEFAULT_REQUEST_TIME)
+    state['original_headers'] = state['headers']
+    state['headers'] = self._TrimHeaders(state['original_headers'])
+    self.__dict__.update(state)
+    self.fix_delays()
+
+  def __getstate__(self):
+    """Influence how to pickle.
+
+    Returns:
+      a dict to use for pickling
+    """
+    state = self.__dict__.copy()
+    state['headers'] = state['original_headers']
+    del state['original_headers']
+    return state
+
+def main():
+  option_parser = optparse.OptionParser()
+  _, args = option_parser.parse_args()
+
+  if len(args) < 1:
+    print 'args: %s' % args
+    option_parser.error('Must specify page_sets_json_file')
+
+  page_sets_json_file = args[0]
+
+  if not os.path.exists(page_sets_json_file):
+    option_parser.error('file "%s" does not exist' % page_sets_json_file)
+
+  dir_path = os.path.abspath(os.path.dirname(page_sets_json_file))
+  with open(page_sets_json_file, 'r+') as json_file:
+    content = json_file.read()
+    m = re.findall(r'"(\w*).wpr"', content)
+    if not m:
+      raise Exception("No .wpr files found in ", page_sets_json_file)
+    for f in m:
+      wpr_file = os.path.join(dir_path, f + ".wpr")
+      temp_file = os.path.join(dir_path, f + ".wprgotemp")
+      wprgo_file = os.path.join(dir_path, f + ".wprgo")
+      if not os.path.exists(wpr_file):
+        option_parser.error('file "%s" does not exist' % wpr_file)
+
+        http_archive = HttpArchive.Load(wpr_file)
+        with open(temp_file, 'w') as output:
+          output.write(http_archive.json())
+          wpr_cmd = ['/usr/local/google/home/xunjieli/web-page-replay/replay.py',
+                  '--port=8080', '--ssl_port=8089', '--no-dns_forward',
+                  wpr_file]
+          print wpr_cmd
+          process = subprocess.Popen(' '.join(wpr_cmd), shell=True)
+          go_cmd = ['go', 'run', 'src/legacyformatconvertor.go',
+                  '--input_file='+temp_file,
+                  '--output_file='+wprgo_file,
+                  '--http_port=8080',
+                  '--https_port=8089']
+          return_code = subprocess.call(go_cmd, stdout=subprocess.PIPE,
+                  cwd='/usr/local/google/home/xunjieli/catapult/web_page_replay_go')
+          process.kill()
+          if return_code != 0:
+            print "fail to start wpr go\n"
+            return 1
+      content = content.replace(f + ".wpr", f + ".wprgo")
+      print "successfully written %s \n" %  f + ".wprgo"
+    json_file.seek(0)
+    json_file.write(content)
+    json_file.truncate()
+  return 0
+
+if __name__ == '__main__':
+  sys.exit(main())
