@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d01aa9b_43dcbbd0",
+        "filename": "cc/output/gl_renderer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1116015
+      },
+      "writtenOn": "2017-07-21T14:28:52Z",
+      "side": 1,
+      "message": "It seems a little strange to be storing these outparams in this struct.",
+      "revId": "71dbacf1a58c401079c7990f4b498ac6b28ea043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0135238_d3d6c5ce",
+        "filename": "cc/output/gl_renderer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 949,
+      "author": {
+        "id": 1116015
+      },
+      "writtenOn": "2017-07-21T14:28:52Z",
+      "side": 1,
+      "message": "Nit: please skip this temporary and just \"return ApplyImageFilter...\"",
+      "revId": "71dbacf1a58c401079c7990f4b498ac6b28ea043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb926f30_eb5c4095",
+        "filename": "cc/output/gl_renderer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1156,
+      "author": {
+        "id": 1116015
+      },
+      "writtenOn": "2017-07-21T14:28:52Z",
+      "side": 1,
+      "message": "Unless I\u0027m missing something, these params doesn\u0027t seem to be read anywhere. This leads me to suspect it won\u0027t work if the filter returns an offset. Could you add a pixel test which exercises this case? An SkBlurImageFilter should do it. (Failing that, an SkOffsetImageFilter should, modulo crbug.com/744981.)",
+      "revId": "71dbacf1a58c401079c7990f4b498ac6b28ea043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0997ae1e_d3a7c6eb",
+        "filename": "cc/output/shader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1116015
+      },
+      "writtenOn": "2017-07-21T14:28:52Z",
+      "side": 1,
+      "message": "Could you add a test which exercises shader-based blending in conjunction with filters?",
+      "revId": "71dbacf1a58c401079c7990f4b498ac6b28ea043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
