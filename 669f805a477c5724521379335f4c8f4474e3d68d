@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb5b8c5a_1143be59",
+        "filename": "components/safe_browsing/web_ui/webui.proto",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-21T16:10:57Z",
+      "side": 1,
+      "message": "similar to time where we suffix micros to make the units clear, we should use _bytes here. Same for file_size below.",
+      "range": {
+        "startLine": 32,
+        "startChar": 19,
+        "endLine": 32,
+        "endChar": 32
+      },
+      "revId": "669f805a477c5724521379335f4c8f4474e3d68d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebf8b49b_5d0294e3",
+        "filename": "components/safe_browsing/web_ui/webui.proto",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-21T16:10:57Z",
+      "side": 1,
+      "message": "update_status",
+      "range": {
+        "startLine": 43,
+        "startChar": 30,
+        "endLine": 43,
+        "endChar": 42
+      },
+      "revId": "669f805a477c5724521379335f4c8f4474e3d68d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
