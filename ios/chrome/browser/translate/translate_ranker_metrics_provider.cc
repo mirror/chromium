@@ -4,14 +4,14 @@
 
 #include "ios/chrome/browser/translate/translate_ranker_metrics_provider.h"
 
-#include "components/metrics/proto/chrome_user_metrics_extension.pb.h"
-#include "components/metrics/proto/translate_event.pb.h"
 #include "components/translate/core/browser/translate_ranker.h"
 #include "ios/chrome/browser/application_context.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state_manager.h"
 #include "ios/chrome/browser/translate/translate_ranker_factory.h"
 #include "ios/web/public/browser_state.h"
+#include "services/metrics/public/proto/chrome_user_metrics_extension.pb.h"
+#include "services/metrics/public/proto/translate_event.pb.h"
 
 namespace translate {
 

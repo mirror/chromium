@@ -4,7 +4,7 @@
 
 #include "components/translate/core/browser/mock_translate_ranker.h"
 
-#include "components/metrics/proto/translate_event.pb.h"
+#include "services/metrics/public/proto/translate_event.pb.h"
 #include "url/gurl.h"
 
 namespace translate {

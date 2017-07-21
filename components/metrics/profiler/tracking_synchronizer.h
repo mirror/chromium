@@ -20,7 +20,7 @@
 #include "base/time/time.h"
 #include "base/tracked_objects.h"
 #include "components/metrics/profiler/tracking_synchronizer_delegate.h"
-#include "components/metrics/proto/chrome_user_metrics_extension.pb.h"
+#include "services/metrics/public/proto/chrome_user_metrics_extension.pb.h"
 
 // This class maintains state that is used to upload profiler data from the
 // various processes, into the browser process. Such transactions are usually

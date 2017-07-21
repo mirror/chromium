@@ -8,7 +8,7 @@
 
 #include "base/callback.h"
 #include "components/metrics/metrics_log_uploader.h"
-#include "components/metrics/proto/chrome_user_metrics_extension.pb.h"
+#include "services/metrics/public/proto/chrome_user_metrics_extension.pb.h"
 
 namespace metrics {
 
