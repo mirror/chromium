@@ -90,6 +90,23 @@
     },
     {
       "key": {
+        "uuid": "324afbf6_dd14790a",
+        "filename": "chrome/browser/resources/options/OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-21T23:07:38Z",
+      "side": 0,
+      "message": "@michaelpg: Would you be OK with being added as an OWNER here, given that these files are kept around only because CrOS is still depending on them, see https://bugs.chromium.org/p/chromium/issues/detail?id\u003d728353?\n\nTrying to avoid have folders with \"set noparent\" and only one OWNER.",
+      "revId": "2cd0fcc10460bbbdf65c73a820bb5bff3ae0f074",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0bc090f4_09d96636",
         "filename": "chrome/browser/ui/webui/options/OWNERS",
         "patchSetId": 2
@@ -101,6 +118,23 @@
       "writtenOn": "2017-07-21T21:53:46Z",
       "side": 0,
       "message": "And here.",
+      "revId": "2cd0fcc10460bbbdf65c73a820bb5bff3ae0f074",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d427c9c0_f9bce270",
+        "filename": "chrome/browser/ui/webui/options/OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-21T23:07:38Z",
+      "side": 0,
+      "message": "@michaelpg: Same question here.",
       "revId": "2cd0fcc10460bbbdf65c73a820bb5bff3ae0f074",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
