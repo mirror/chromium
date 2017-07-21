@@ -70,6 +70,40 @@
       "revId": "c4239670d23a31d20f7c9f4f3557047cb6ae851f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18a9bf4f_73dcd64b",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_content_file_system_async_file_util_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-21T04:24:19Z",
+      "side": 1,
+      "message": "You moved |profile_| because ChromeBrowserMainPartsChromeos::PostMainMessageLoopRun() first destructs Profile and then destructs ASM (via arc_service_launcher_.reset()), right? This modification is very subtle. Can you add a comment then? I\u0027d like to see something like the following:\n\n [blank line]\n // Use the same initialization/destruction order as ChromeBrowserMainPartsChromeos.\n std::unique_ptr\u003cArcServiceManager\u003e arc_service_manager_;\n std::unique_ptr\u003cTestingProfile\u003e profile_;\n [blank line]\n\nIf you agree, please do the same for all modifications in this CL.",
+      "revId": "c4239670d23a31d20f7c9f4f3557047cb6ae851f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39e35a08_210461fb",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-07-21T04:24:19Z",
+      "side": 1,
+      "message": "I agree that resetting ASM here doesn\u0027t make sense now, but at the same time, I\u0027m not really sure we want to keep the modified version. What are we testing here? Maybe add \u0027TODO(someone): Check if we should keep this test\u0027?",
+      "revId": "c4239670d23a31d20f7c9f4f3557047cb6ae851f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
