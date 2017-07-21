@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "80fadff3_92bdee44",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_cancel_pay_abort_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-21T18:25:37Z",
+      "side": 1,
+      "message": "PaymentRequest on iOS is only available on secure origins. The HTTP server on iOS hosts these files on localhost. The scheme is completely decorative only meant to make the url a valid one. Will change it to https to avoid confusion in the future.",
+      "parentUuid": "8f14522b_2a310b31",
+      "range": {
+        "startLine": 35,
+        "startChar": 5,
+        "endLine": 35,
+        "endChar": 9
+      },
+      "revId": "d2ceabea2a1b6a91cc8f41c358339e5c8907b7c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "974b498f_19d50c6c",
         "filename": "ios/chrome/browser/ui/payments/payment_request_cancel_pay_abort_egtest.mm",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "d2ceabea2a1b6a91cc8f41c358339e5c8907b7c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6163d035_8dd00b85",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_cancel_pay_abort_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-21T18:25:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "974b498f_19d50c6c",
+      "range": {
+        "startLine": 272,
+        "startChar": 0,
+        "endLine": 277,
+        "endChar": 0
+      },
+      "revId": "d2ceabea2a1b6a91cc8f41c358339e5c8907b7c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
