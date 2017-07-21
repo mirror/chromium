@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "44c7c381_f0c54ea5",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 2859,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-21T17:22:01Z",
+      "side": 1,
+      "message": "issue is not geolocation_service_ lifetime itself. The general danger with Unretained is the callback returned from bind only holds a raw pointer to an unretained argument, and the calling code has to guarantee that argument is in still alive when the callback is called.\n\nSo in this case, should say something like InterfaceRegistry (which presumably owns the callback) and gelocation_service are both owned by this object and destroyed together.\n\nActually, to be abundantly safe, should move the declaration of geolocation_service_ above interface_registry_ in the header, so interface_registry_ destructor can still safely access the callback (even though it probably doesn\u0027t happen)",
+      "revId": "766cb4fae77fc909e800f746d8376b5a3ec36a14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "adc46cc1_a5bfaa6b",
         "filename": "content/browser/geolocation/geolocation_service_impl.cc",
         "patchSetId": 16
