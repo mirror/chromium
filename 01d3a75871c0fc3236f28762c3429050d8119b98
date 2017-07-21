@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c6a3a6c_f921c517",
+        "filename": "services/viz/public/interfaces/frame_sinks/frame_sink_manager.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-21T18:31:48Z",
+      "side": 1,
+      "message": "Move FrameSinkManager to services/viz/frame_sinks/privileged/interfaces",
+      "revId": "01d3a75871c0fc3236f28762c3429050d8119b98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
