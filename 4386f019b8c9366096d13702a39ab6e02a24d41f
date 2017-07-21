@@ -42,6 +42,23 @@
     },
     {
       "key": {
+        "uuid": "5250fa64_acc07003",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-21T21:09:20Z",
+      "side": 1,
+      "message": "Let\u0027s instead register observers in CacheStorage:\n\nclass CacheStorage {\n...\nclass OriginObserver {\n  virtual ~OriginObserver() {}\n  virtual CacheStorageForOriginUpdated(const std::string\u0026 origin) \u003d 0;\n}\nvoid AddObserver(const std::string\u0026 origin, OriginObserver* observer);\nvoid RemoveObserver(const std::string\u0026 origin, OriginObserver* observer);\n...\n}\n\nThen instead of static collection, CacheStorage will have a list of observers.",
+      "revId": "4386f019b8c9366096d13702a39ab6e02a24d41f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9bda7008_58842657",
         "filename": "content/browser/devtools/protocol/storage_handler.cc",
         "patchSetId": 2
@@ -152,6 +169,29 @@
     },
     {
       "key": {
+        "uuid": "d1a21383_6dbee39c",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 4707,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-21T21:09:20Z",
+      "side": 1,
+      "message": "Protocol should not talk about handlers or any implementation details.",
+      "range": {
+        "startLine": 4707,
+        "startChar": 32,
+        "endLine": 4707,
+        "endChar": 76
+      },
+      "revId": "4386f019b8c9366096d13702a39ab6e02a24d41f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8092137d_73b57427",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/ServiceWorkerCacheModel.js",
         "patchSetId": 2
@@ -187,6 +227,30 @@
       "side": 1,
       "message": "javascript is sooooo decepetive to us c++ cave people :)",
       "parentUuid": "8092137d_73b57427",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 59
+      },
+      "revId": "4386f019b8c9366096d13702a39ab6e02a24d41f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b4d0a28_1fa710ce",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/ServiceWorkerCacheModel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-21T21:09:20Z",
+      "side": 1,
+      "message": "Yeah, we should just have notification cachesUpdated or something like that.",
+      "parentUuid": "0762e776_766e2552",
       "range": {
         "startLine": 61,
         "startChar": 0,
