@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "325e7837_7aa65017",
+        "filename": "chrome/browser/extensions/api/messaging/extension_message_port.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-21T22:32:22Z",
+      "side": 1,
+      "message": "I like that. This way the MessageService depends on the ExtensionMessagePort but not vice versa.",
+      "parentUuid": "ac93ec92_3fe98746",
+      "range": {
+        "startLine": 121,
+        "startChar": 6,
+        "endLine": 121,
+        "endChar": 27
+      },
+      "revId": "81ed7cb571818d81cdba74d840d3e6279f860bd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62637442_186e827e",
         "filename": "chrome/browser/extensions/api/messaging/message_port.h",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "81ed7cb571818d81cdba74d840d3e6279f860bd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37a46347_490ea1ab",
+        "filename": "chrome/browser/extensions/api/messaging/message_port.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-21T22:32:22Z",
+      "side": 1,
+      "message": "sure. per http://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Stop-inlining-code-in-headers I\u0027m going to move all inlined stuff into the .cc.",
+      "parentUuid": "62637442_186e827e",
+      "range": {
+        "startLine": 31,
+        "startChar": 15,
+        "endLine": 31,
+        "endChar": 33
+      },
+      "revId": "81ed7cb571818d81cdba74d840d3e6279f860bd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
