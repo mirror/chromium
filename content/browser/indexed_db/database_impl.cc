@@ -332,7 +332,7 @@ void DatabaseImpl::Put(
                             blob_info.size());
   uint64_t blob_size = 0;
   total_blob_size.AssignIfValid(&blob_size);
-  if (blob_size != 0) {
+  if (total_blob_size.AssignIfValid(&blob_size) && blob_size != 0) {
     // 1KB to 1GB.
     UMA_HISTOGRAM_COUNTS_1M("WebCore.IndexedDB.PutBlobsTotalSize",
                             blob_size / 1024);
