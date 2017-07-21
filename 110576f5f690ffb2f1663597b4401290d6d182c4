@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dcaba98f_9025c69b",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1984,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-21T01:03:13Z",
+      "side": 1,
+      "message": "Not sure why the spaces where added initially. Having said that, we should enforce spaces around arrows with http://eslint.org/docs/rules/arrow-spacing. I\u0027ll take that as a separate action item. Also, prefer not to tweak the check to not have the spaces in this CL.",
+      "parentUuid": "d941ce7f_d0310340",
+      "range": {
+        "startLine": 1984,
+        "startChar": 6,
+        "endLine": 1984,
+        "endChar": 10
+      },
+      "revId": "110576f5f690ffb2f1663597b4401290d6d182c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35c25981_88e52590",
         "filename": "PRESUBMIT.py",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d8aa993e_ee1302e6",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1985,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-21T01:03:13Z",
+      "side": 1,
+      "message": "This makes clearer which line is using which \"risky\" feature. Currently there is one message per line, and one per file, total 3 messages in this case. I don\u0027t mind as much about the exact format of the output, as long as it is something  likely to catch the attention of the developer.\n\nI pasted a full warning message in a previous message in this CL, re-pasting below:\n\n** Presubmit Warnings **\nui/webui/resources/js/cr.js:line 34, is using const/let keyword\n     let cur \u003d opt_objectToExportTo || global;\nui/webui/resources/js/cr.js:line 57, is using const/let keyword\n     const e \u003d new Event(propertyName + \u0027Change\u0027);\n\nUse of const/let keywords detected in:\nui/webui/resources/js/cr.js\nPlease ensure your code does not run on iOS9 because const/let is not fully\nsupported.\nhttps://chromium.googlesource.com/chromium/src/+/master/docs/es6_chromium.md#let-Block_Scoped-Variables\nhttps://chromium.googlesource.com/chromium/src/+/master/docs/es6_chromium.md#const-Block_Scoped-Constants",
+      "parentUuid": "35c25981_88e52590",
+      "range": {
+        "startLine": 1985,
+        "startChar": 19,
+        "endLine": 1985,
+        "endChar": 55
+      },
+      "revId": "110576f5f690ffb2f1663597b4401290d6d182c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27c95293_36a5efac",
         "filename": "PRESUBMIT.py",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-21T00:54:40Z",
       "side": 1,
       "message": "ditto",
+      "range": {
+        "startLine": 1991,
+        "startChar": 19,
+        "endLine": 1991,
+        "endChar": 49
+      },
+      "revId": "110576f5f690ffb2f1663597b4401290d6d182c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f2ec40c_535e929c",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1991,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-21T01:03:13Z",
+      "side": 1,
+      "message": "See previous answer.",
+      "parentUuid": "27c95293_36a5efac",
       "range": {
         "startLine": 1991,
         "startChar": 19,
