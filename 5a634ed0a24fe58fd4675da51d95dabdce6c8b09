@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "646756b3_85525b94",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4024,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-21T22:28:05Z",
+      "side": 1,
+      "message": "What about using:\n\nvoid CrawlDone(scoped_refptr\u003cIndexedDBBackingStore\u003e backing_store,\n               base::OnceClosure callback) {\n  backing_store-\u003eDeleteCrawler();\n  std::move(callback).Run();\n}\n\ninstead of RunCallbacksInOrder?",
+      "range": {
+        "startLine": 4024,
+        "startChar": 28,
+        "endLine": 4024,
+        "endChar": 47
+      },
+      "revId": "5a634ed0a24fe58fd4675da51d95dabdce6c8b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c73aafa8_138485fc",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-21T22:28:05Z",
+      "side": 1,
+      "message": "And the |done| closure above won\u0027t be called correct? Do we want that to happen?",
+      "range": {
+        "startLine": 596,
+        "startChar": 7,
+        "endLine": 596,
+        "endChar": 20
+      },
+      "revId": "5a634ed0a24fe58fd4675da51d95dabdce6c8b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a521001_18cc2e49",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-21T22:28:05Z",
+      "side": 1,
+      "message": "This is only a friend for access to db_ right? And that\u0027s guaranteed to outlive the crawler right? If so then why not just pass a raw pointer to the db to the crawler? to avoid this friendship?",
+      "range": {
+        "startLine": 635,
+        "startChar": 15,
+        "endLine": 635,
+        "endChar": 40
+      },
+      "revId": "5a634ed0a24fe58fd4675da51d95dabdce6c8b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5743ecc9_5ef465f2",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-21T22:28:05Z",
+      "side": 1,
+      "message": "This is extra right? Don\u0027t you only want crawler_?",
+      "range": {
+        "startLine": 704,
+        "startChar": 45,
+        "endLine": 704,
+        "endChar": 63
+      },
+      "revId": "5a634ed0a24fe58fd4675da51d95dabdce6c8b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a900f10_499d4665",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-21T22:28:05Z",
+      "side": 1,
+      "message": "line wrap.",
+      "range": {
+        "startLine": 114,
+        "startChar": 6,
+        "endLine": 114,
+        "endChar": 8
+      },
+      "revId": "5a634ed0a24fe58fd4675da51d95dabdce6c8b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "25198c5a_e55bc6b4",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-21T22:28:05Z",
+      "side": 1,
+      "message": "Nit: How about IsRunning to avoid double negative?",
+      "range": {
+        "startLine": 432,
+        "startChar": 57,
+        "endLine": 432,
+        "endChar": 66
+      },
+      "revId": "5a634ed0a24fe58fd4675da51d95dabdce6c8b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "52f52424_d4a212d4",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_crawler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-21T22:28:05Z",
+      "side": 1,
+      "message": "so → to",
+      "range": {
+        "startLine": 40,
+        "startChar": 43,
+        "endLine": 40,
+        "endChar": 45
+      },
+      "revId": "5a634ed0a24fe58fd4675da51d95dabdce6c8b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9c4e5f52_94cf1fde",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_crawler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-21T22:28:05Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 83,
+        "startChar": 8,
+        "endLine": 83,
+        "endChar": 13
+      },
+      "revId": "5a634ed0a24fe58fd4675da51d95dabdce6c8b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "03a8df28_c11bcefa",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_crawler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-21T22:28:05Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 86,
+        "startChar": 7,
+        "endLine": 86,
+        "endChar": 16
+      },
+      "revId": "5a634ed0a24fe58fd4675da51d95dabdce6c8b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5c5c2f4f_6d042097",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_crawler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-07-21T22:28:05Z",
+      "side": 1,
+      "message": "This seems weird (to me) as paused implies that it was once started. IDLE?",
+      "range": {
+        "startLine": 134,
+        "startChar": 24,
+        "endLine": 134,
+        "endChar": 30
+      },
+      "revId": "5a634ed0a24fe58fd4675da51d95dabdce6c8b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
