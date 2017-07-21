@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efdcac53_bcffe6fe",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/aom-actions.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-07-21T07:18:16Z",
+      "side": 1,
+      "message": "I don\u0027t know that we\u0027ve discussed having onAccessibleFoo properties?",
+      "revId": "d7d5ad3e8cf8c475414fcd975434a6ce07e173ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cbdb59b_89c337c7",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/aom-actions.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-07-21T07:18:16Z",
+      "side": 1,
+      "message": "So this just times out if the click event never occurs?",
+      "revId": "d7d5ad3e8cf8c475414fcd975434a6ce07e173ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0ba4d52_5c44f48c",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/aom-actions.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-07-21T07:18:16Z",
+      "side": 1,
+      "message": "This is making me feel weird - we haven\u0027t been explicit about AccessibleNodes being a tree, and you can\u0027t access the tree hierarchy directly, but the events bubble? What happens in the case of, say, aria-owns? Where does the event bubble to?",
+      "revId": "d7d5ad3e8cf8c475414fcd975434a6ce07e173ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86860c1b_f767a25e",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/aom-boolean-properties.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-07-21T07:18:16Z",
+      "side": 1,
+      "message": "Ugh, we should have just made master the pages branch, but I guess that ship has sailed. Thanks for updating this.",
+      "revId": "d7d5ad3e8cf8c475414fcd975434a6ce07e173ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ba1c471_22b6dbf2",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-07-21T07:18:16Z",
+      "side": 1,
+      "message": "Well I guess that answers my question about bubbling :)\n\nThis seems somewhat opinionated in the case of aria-owns - did we resolve that the \"Firefox\" way of modifying the tree will eventually be implemented by all browsers? Similarly, what happens in the case of role\u003dpresentation - does that not get an AccessibleNode, or do we just skip it for capture/bubble?",
+      "revId": "d7d5ad3e8cf8c475414fcd975434a6ce07e173ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "303ee925_193da657",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-07-21T07:18:16Z",
+      "side": 1,
+      "message": "Does this mean that next time this event fires on this node it *will* be in the event path?",
+      "revId": "d7d5ad3e8cf8c475414fcd975434a6ce07e173ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "245fe630_a443f25f",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-07-21T07:18:16Z",
+      "side": 1,
+      "message": "No targeting phase?",
+      "revId": "d7d5ad3e8cf8c475414fcd975434a6ce07e173ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
