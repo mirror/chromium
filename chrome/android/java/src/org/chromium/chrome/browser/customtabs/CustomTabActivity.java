@@ -57,6 +57,7 @@ import org.chromium.chrome.browser.compositor.bottombar.OverlayPanel.StateChange
 import org.chromium.chrome.browser.compositor.layouts.LayoutManagerDocument;
 import org.chromium.chrome.browser.datausage.DataUseTabUIManager;
 import org.chromium.chrome.browser.document.ChromeLauncherActivity;
+import org.chromium.chrome.browser.dom_distiller.ReaderModeManager;
 import org.chromium.chrome.browser.externalnav.ExternalNavigationDelegateImpl;
 import org.chromium.chrome.browser.firstrun.FirstRunSignInProcessor;
 import org.chromium.chrome.browser.fullscreen.BrowserStateBrowserControlsVisibilityDelegate;
@@ -661,6 +662,11 @@ public class CustomTabActivity extends ChromeActivity {
     public void initializeCompositor() {
         super.initializeCompositor();
         getTabModelSelector().onNativeLibraryReady(getTabContentManager());
+        // Notify Reader Mode that this is a custom tab.
+        if (ReaderModeManager.isEnabled(this)) {
+            mReaderModeManager.setIsCustomTab();
+            getToolbarManager().setUrlBarHidden(true);
+        }
     }
 
     private void recordClientPackageName() {
