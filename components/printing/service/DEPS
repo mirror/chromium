@@ -5,6 +5,7 @@ include_rules = [
   "+mojo/public/cpp",
   "+printing/common",
   "+services/service_manager/public/cpp",
+  "+services/service_manager/public/c",    # For tests only.
   "+skia",
   "+third_party/skia",
 ]
