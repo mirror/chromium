@@ -116,6 +116,8 @@
 #include "services/resource_coordinator/memory_instrumentation/coordinator_impl.h"
 #include "services/resource_coordinator/public/cpp/memory_instrumentation/client_process_impl.h"
 #include "services/service_manager/runner/common/client_util.h"
+#include "services/ui/public/cpp/gpu/gpu.h"
+#include "services/ui/public/interfaces/constants.mojom.h"
 #include "skia/ext/event_tracer_impl.h"
 #include "skia/ext/skia_memory_dump_provider.h"
 #include "sql/sql_memory_dump_provider.h"
@@ -950,7 +952,8 @@ BrowserMainLoop::GetResizeTaskRunner() {
 
 gpu::GpuChannelEstablishFactory*
 BrowserMainLoop::gpu_channel_establish_factory() const {
-  return BrowserGpuChannelHostFactory::instance();
+  return gpu_ ? gpu_.get()
+              : GetContentClient()->browser()->GetGpuChannelEstablishFactory();
 }
 
 #if defined(OS_ANDROID)
@@ -1251,9 +1254,8 @@ void BrowserMainLoop::ShutdownThreadsAndCleanUp() {
   device_monitor_mac_.reset();
 #endif
 
-  if (BrowserGpuChannelHostFactory::instance()) {
-    BrowserGpuChannelHostFactory::instance()->CloseChannel();
-  }
+  if (gpu_)
+    gpu_->CloseChannel();
 
   // Shutdown the Service Manager and IPC.
   service_manager_context_.reset();
@@ -1348,14 +1350,7 @@ void BrowserMainLoop::ShutdownThreadsAndCleanUp() {
     }
   }
 
-  // Must happen after the IO thread is shutdown since this may be accessed from
-  // it.
-  {
-    TRACE_EVENT0("shutdown", "BrowserMainLoop::Subsystem:GPUChannelFactory");
-    if (BrowserGpuChannelHostFactory::instance()) {
-      BrowserGpuChannelHostFactory::Terminate();
-    }
-  }
+  gpu_ = nullptr;
 
   // Must happen after the I/O thread is shutdown since this class lives on the
   // I/O thread and isn't threadsafe.
@@ -1445,6 +1440,7 @@ int BrowserMainLoop::BrowserThreadsStarted() {
   }
 #endif
 
+  // XXX(sad): This should move into the embedded UI service.
   // Initialize the GPU shader cache. This needs to be initialized before
   // BrowserGpuChannelHostFactory below, since that depends on an initialized
   // ShaderCacheFactory.
@@ -1458,7 +1454,6 @@ int BrowserMainLoop::BrowserThreadsStarted() {
   // TODO(crbug.com/439322): This should be set to |true|.
   established_gpu_channel = false;
   always_uses_gpu = ShouldStartGpuProcessOnBrowserStartup();
-  BrowserGpuChannelHostFactory::Initialize(established_gpu_channel);
 #elif defined(USE_AURA) || defined(OS_MACOSX)
   established_gpu_channel = true;
   if (!GpuDataManagerImpl::GetInstance()->CanUseGpuBrowserCompositor() ||
@@ -1466,11 +1461,20 @@ int BrowserMainLoop::BrowserThreadsStarted() {
       service_manager::ServiceManagerIsRemote()) {
     established_gpu_channel = always_uses_gpu = false;
   }
+#endif
+
   gpu::GpuChannelEstablishFactory* factory =
       GetContentClient()->browser()->GetGpuChannelEstablishFactory();
   if (!factory) {
-    BrowserGpuChannelHostFactory::Initialize(established_gpu_channel);
-    factory = BrowserGpuChannelHostFactory::instance();
+    // Note that the UI service may be running as an embedded service in the
+    // same process.
+    gpu_ = ui::Gpu::Create(
+        content::ServiceManagerConnection::GetForProcess()->GetConnector(),
+        ui::mojom::kServiceName);
+    if (established_gpu_channel)
+      gpu_->EstablishGpuChannel(
+          base::Bind([](scoped_refptr<gpu::GpuChannelHost> channel) {}));
+    factory = gpu_.get();
   }
 #if !defined(OS_ANDROID)
   if (!service_manager::ServiceManagerIsRemote()) {
@@ -1486,15 +1490,18 @@ int BrowserMainLoop::BrowserThreadsStarted() {
 #endif
 
   DCHECK(factory);
+
+#if defined(USE_AURA) || defined(OS_MACOSX)
   ImageTransportFactory::Initialize(GetResizeTaskRunner());
   ImageTransportFactory::GetInstance()->SetGpuChannelEstablishFactory(factory);
+#endif  // defined(USE_AURA) || defined(OS_MACOSX)
+
 #if defined(USE_AURA)
   if (env_->mode() == aura::Env::Mode::LOCAL) {
     env_->set_context_factory(GetContextFactory());
     env_->set_context_factory_private(GetContextFactoryPrivate());
   }
 #endif  // defined(USE_AURA)
-#endif  // defined(OS_ANDROID)
 
 #if defined(OS_ANDROID)
   base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(

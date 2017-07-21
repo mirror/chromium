@@ -42,7 +42,7 @@ class CONTENT_EXPORT BrowserGpuChannelHostFactory
 
   // Closes the channel to the GPU process. This should be called before the IO
   // thread stops.
-  void CloseChannel();
+  void CloseChannel() override;
 
   // Overridden from gpu::GpuChannelEstablishFactory:
   // The factory will return a null GpuChannelHost in the callback during

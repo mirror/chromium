@@ -44,6 +44,9 @@ class Gpu : public gpu::GpuChannelHostFactory,
   scoped_refptr<viz::ContextProvider> CreateContextProvider(
       scoped_refptr<gpu::GpuChannelHost> gpu_channel);
 
+  // Returns a connected GpuChannelHost, or null.
+  scoped_refptr<gpu::GpuChannelHost> GetGpuChannel();
+
   void CreateJpegDecodeAccelerator(
       media::mojom::GpuJpegDecodeAcceleratorRequest jda_request);
   void CreateVideoEncodeAccelerator(
@@ -54,6 +57,7 @@ class Gpu : public gpu::GpuChannelHostFactory,
       const gpu::GpuChannelEstablishedCallback& callback) override;
   scoped_refptr<gpu::GpuChannelHost> EstablishGpuChannelSync() override;
   gpu::GpuMemoryBufferManager* GetGpuMemoryBufferManager() override;
+  void CloseChannel() override;
 
  private:
   friend class GpuTest;
@@ -62,7 +66,6 @@ class Gpu : public gpu::GpuChannelHostFactory,
   Gpu(GpuPtrFactory factory,
       scoped_refptr<base::SingleThreadTaskRunner> task_runner);
 
-  scoped_refptr<gpu::GpuChannelHost> GetGpuChannel();
   void OnEstablishedGpuChannel(int client_id,
                                mojo::ScopedMessagePipeHandle channel_handle,
                                const gpu::GPUInfo& gpu_info);

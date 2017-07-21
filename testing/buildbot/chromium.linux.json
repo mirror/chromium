@@ -1,7 +1,7 @@
 {
   "Android Arm64 Builder (dbg)": {
     "additional_compile_targets": [
-      "all"
+      "All"
     ]
   },
   "Android Builder": {
@@ -17,7 +17,7 @@
   },
   "Android Clang Builder (dbg)": {
     "additional_compile_targets": [
-      "all"
+      "All"
     ]
   },
   "Android Tests": {

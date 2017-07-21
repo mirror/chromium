@@ -48,7 +48,6 @@ struct ChannelHandle;
 
 namespace gpu {
 class ShaderDiskCache;
-struct SyncToken;
 }
 
 namespace content {

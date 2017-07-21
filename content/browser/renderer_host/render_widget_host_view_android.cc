@@ -43,6 +43,7 @@
 #include "content/browser/android/overscroll_controller_android.h"
 #include "content/browser/android/selection_popup_controller.h"
 #include "content/browser/android/synchronous_compositor_host.h"
+#include "content/browser/browser_main_loop.h"
 #include "content/browser/compositor/surface_utils.h"
 #include "content/browser/devtools/render_frame_devtools_agent_host.h"
 #include "content/browser/gpu/browser_gpu_channel_host_factory.h"
@@ -80,6 +81,7 @@
 #include "gpu/config/gpu_driver_bug_workaround_type.h"
 #include "ipc/ipc_message_macros.h"
 #include "ipc/ipc_message_start.h"
+#include "services/ui/public/cpp/gpu/gpu.h"
 #include "skia/ext/image_operations.h"
 #include "third_party/khronos/GLES2/gl2.h"
 #include "third_party/khronos/GLES2/gl2ext.h"
@@ -176,8 +178,8 @@ GLHelperHolder* GLHelperHolder::Create() {
 }
 
 void GLHelperHolder::Initialize() {
-  auto* factory = BrowserGpuChannelHostFactory::instance();
-  scoped_refptr<gpu::GpuChannelHost> gpu_channel_host(factory->GetGpuChannel());
+  auto* gpu = BrowserMainLoop::GetInstance()->gpu();
+  scoped_refptr<gpu::GpuChannelHost> gpu_channel_host(gpu->GetGpuChannel());
 
   // The Browser Compositor is in charge of reestablishing the channel if its
   // missing.
