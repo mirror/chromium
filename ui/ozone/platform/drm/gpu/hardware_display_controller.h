@@ -124,6 +124,7 @@ class HardwareDisplayController {
   bool TestPageFlip(const OverlayPlaneList& plane_list);
 
   bool IsFormatSupported(uint32_t fourcc_format, uint32_t z_order) const;
+  bool IsSizeSupported(const gfx::Size& size) const;
 
   // Return the supported modifiers for |fourcc_format| for this
   // controller.

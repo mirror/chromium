@@ -6,6 +6,7 @@
 
 #include <drm_fourcc.h>
 
+#include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/geometry/size_conversions.h"
 #include "ui/ozone/platform/drm/common/drm_util.h"
 #include "ui/ozone/platform/drm/gpu/drm_device.h"
@@ -80,6 +81,14 @@ std::vector<OverlayCheckReturn_Params> DrmOverlayValidator::TestPageFlip(
             : GetFourCCFormatForOpaqueFramebuffer(params[i].format);
     if (!controller->IsFormatSupported(original_format,
                                        params[i].plane_z_order)) {
+      returns[i].status = OVERLAY_STATUS_NOT;
+      continue;
+    }
+
+    gfx::RectF crop_rect = params[i].crop_rect;
+    crop_rect.Scale(params[i].buffer_size.width(),
+                    params[i].buffer_size.height());
+    if (!controller->IsSizeSupported(gfx::ToEnclosedRect(crop_rect).size())) {
       returns[i].status = OVERLAY_STATUS_NOT;
       continue;
     }

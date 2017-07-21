@@ -145,6 +145,16 @@ bool HardwareDisplayController::IsFormatSupported(uint32_t fourcc_format,
   return true;
 }
 
+bool HardwareDisplayController::IsSizeSupported(const gfx::Size& size) const {
+  for (size_t i = 0; i < crtc_controllers_.size(); ++i) {
+    // Make sure all displays have overlay to support the size.
+    if (!crtc_controllers_[i]->IsSizeSupported(size))
+      return false;
+  }
+
+  return true;
+}
+
 std::vector<uint64_t> HardwareDisplayController::GetFormatModifiers(
     uint32_t format) {
   std::vector<uint64_t> modifiers;

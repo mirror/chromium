@@ -120,6 +120,10 @@ bool CrtcController::IsFormatSupported(uint32_t fourcc_format,
                                                   crtc_);
 }
 
+bool CrtcController::IsSizeSupported(const gfx::Size& size) const {
+  return mode_.htotal >= size.width();
+}
+
 std::vector<uint64_t> CrtcController::GetFormatModifiers(uint32_t format) {
   return drm_->plane_manager()->GetFormatModifiers(crtc_, format);
 }

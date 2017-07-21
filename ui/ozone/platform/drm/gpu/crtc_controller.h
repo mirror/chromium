@@ -58,6 +58,9 @@ class CrtcController : public base::SupportsWeakPtr<CrtcController> {
   // |fourcc_format| format.
   bool IsFormatSupported(uint32_t fourcc_format, uint32_t z_order) const;
 
+  // Returns true if crtc can support the given |size| plane.
+  bool IsSizeSupported(const gfx::Size& size) const;
+
   // Returns a vector of format modifiers for the given fourcc format
   // on this CRTCs primary plane. A format modifier describes the
   // actual layout of the buffer, such as whether it's linear, tiled
