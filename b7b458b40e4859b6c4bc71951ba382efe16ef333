@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "817c84ff_3e56e2eb",
+        "filename": "third_party/WebKit/Source/core/CoreInitializer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-07-21T06:03:12Z",
+      "side": 1,
+      "message": "without public setters all of these aliases should be protected",
+      "revId": "b7b458b40e4859b6c4bc71951ba382efe16ef333",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8139b6f2_283a21b9",
+        "filename": "third_party/WebKit/Source/core/CoreInitializer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-07-21T06:03:12Z",
+      "side": 1,
+      "message": "can\u0027t all of these methods be const?",
+      "revId": "b7b458b40e4859b6c4bc71951ba382efe16ef333",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
