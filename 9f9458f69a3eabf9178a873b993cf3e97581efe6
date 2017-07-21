@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5b17c0aa_f21585c8",
+        "filename": "chrome/browser/web_applications/web_app_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-21T03:40:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "14764010_78e4531d",
+      "revId": "9f9458f69a3eabf9178a873b993cf3e97581efe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e96dca93_e8c43ed9",
         "filename": "chrome/browser/web_applications/web_app_mac.mm",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "9f9458f69a3eabf9178a873b993cf3e97581efe6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b326eb2b_4fdde6ab",
+        "filename": "chrome/browser/web_applications/web_app_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-21T03:40:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e96dca93_e8c43ed9",
+      "revId": "9f9458f69a3eabf9178a873b993cf3e97581efe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "9f9458f69a3eabf9178a873b993cf3e97581efe6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dafcc77_647a0256",
+        "filename": "chrome/browser/web_applications/web_app_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-21T03:40:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bb31bc6_f5217558",
+      "range": {
+        "startLine": 434,
+        "startChar": 50,
+        "endLine": 434,
+        "endChar": 57
+      },
+      "revId": "9f9458f69a3eabf9178a873b993cf3e97581efe6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
