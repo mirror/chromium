@@ -213,6 +213,30 @@
       "revId": "1988d19cc548e4ae3d1d99cf72a71c64de020751",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d60bf2a_88fcc6bd",
+        "filename": "net/disk_cache/blockfile/backend_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-21T19:11:23Z",
+      "side": 1,
+      "message": "Oh, MayBlock() sets ThreadRestrictions::SetIOAllowed() for the thread, but does not create a message loop of TYPE_IO...  We need 2 or 3 more different thread properties named \"IO\" with no other meaningful value in their description, just to make things clearer.",
+      "parentUuid": "d93a6915_bea12329",
+      "range": {
+        "startLine": 120,
+        "startChar": 22,
+        "endLine": 120,
+        "endChar": 29
+      },
+      "revId": "1988d19cc548e4ae3d1d99cf72a71c64de020751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
