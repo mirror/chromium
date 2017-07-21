@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "75c811d6_0ab5c7cf",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_controller_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-07-21T21:37:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3030c2e_98b0847a",
+      "revId": "d19ac399787db2c79361fde5ea48cfceea5a264c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af488ee2_d603ad90",
         "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_controller_egtest.mm",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-07-21T16:04:23Z",
       "side": 1,
       "message": "Similar to the condition in the other test, I just want to confirm that this should be !IsIPadIdiom(), or if IsCompact() would be more accurate. We removed most uses of IsIpadIdiom(), but if it makes sense here, then it\u0027s fine.",
+      "range": {
+        "startLine": 315,
+        "startChar": 18,
+        "endLine": 315,
+        "endChar": 19
+      },
+      "revId": "d19ac399787db2c79361fde5ea48cfceea5a264c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99639062_d2e8c9a8",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_switcher_controller_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-07-21T21:37:30Z",
+      "side": 1,
+      "message": "Nope, this is one of the few places where we still use IsIPadIdiom():\n\nhttps://cs.chromium.org/chromium/src/ios/chrome/app/main_controller.mm?q\u003dmain_controller.m\u0026sq\u003dpackage:chromium\u0026l\u003d1691",
+      "parentUuid": "af488ee2_d603ad90",
       "range": {
         "startLine": 315,
         "startChar": 18,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "49315bc3_008029c5",
+        "filename": "ios/web/public/test/http_server/blank_page_response_provider.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-07-21T21:37:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fe18af1_adf1e958",
+      "range": {
+        "startLine": 5,
+        "startChar": 1,
+        "endLine": 5,
+        "endChar": 7
+      },
+      "revId": "d19ac399787db2c79361fde5ea48cfceea5a264c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "145fce61_4db4bfdf",
         "filename": "ios/web/public/test/http_server/blank_page_response_provider.mm",
         "patchSetId": 2
@@ -85,6 +151,30 @@
       "revId": "d19ac399787db2c79361fde5ea48cfceea5a264c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3e9c944_4a5c6712",
+        "filename": "ios/web/public/test/http_server/blank_page_response_provider.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-07-21T21:37:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "145fce61_4db4bfdf",
+      "range": {
+        "startLine": 17,
+        "startChar": 11,
+        "endLine": 17,
+        "endChar": 29
+      },
+      "revId": "d19ac399787db2c79361fde5ea48cfceea5a264c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

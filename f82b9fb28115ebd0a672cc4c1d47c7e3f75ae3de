@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "6eba0b0e_929f8c1c",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-07-21T21:37:30Z",
+      "side": 1,
+      "message": "I thought it would hang because JS execution on the tab that\u0027s closed is halted since the dialog is never displayed before it\u0027s closed.  I switched it out and it works fine though :)",
+      "parentUuid": "5518157d_d54b0428",
+      "range": {
+        "startLine": 305,
+        "startChar": 6,
+        "endLine": 305,
+        "endChar": 33
+      },
+      "revId": "f82b9fb28115ebd0a672cc4c1d47c7e3f75ae3de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "089d15d4_e7bfcbf6",
         "filename": "ios/web/public/test/http_server/blank_page_response_provider.h",
         "patchSetId": 1
