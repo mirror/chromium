@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "2bda0dda_32b2c4e6",
+        "filename": "content/gpu/gpu_main.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-07-21T06:51:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "240a830a_4eed461d",
+      "range": {
+        "startLine": 87,
+        "startChar": 12,
+        "endLine": 87,
+        "endChar": 21
+      },
+      "revId": "865c9cf85c3b248af71291a3e86cefa140db800e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "037f10c0_c853053b",
         "filename": "media/gpu/BUILD.gn",
         "patchSetId": 19
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "6d667e58_81a354a4",
+        "filename": "media/gpu/BUILD.gn",
+        "patchSetId": 19
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-07-21T06:51:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "037f10c0_c853053b",
+      "range": {
+        "startLine": 108,
+        "startChar": 16,
+        "endLine": 108,
+        "endChar": 30
+      },
+      "revId": "865c9cf85c3b248af71291a3e86cefa140db800e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e5ee22c_f10f5994",
         "filename": "media/gpu/args.gni",
         "patchSetId": 19
@@ -92,6 +140,30 @@
       "revId": "865c9cf85c3b248af71291a3e86cefa140db800e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06be072d_852fc11a",
+        "filename": "media/gpu/args.gni",
+        "patchSetId": 19
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-07-21T06:51:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e5ee22c_f10f5994",
+      "range": {
+        "startLine": 13,
+        "startChar": 4,
+        "endLine": 13,
+        "endChar": 13
+      },
+      "revId": "865c9cf85c3b248af71291a3e86cefa140db800e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
