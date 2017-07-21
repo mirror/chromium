@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8348be9_9519526f",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/custom/V8IntersectionObserverCustom.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-07-21T11:29:18Z",
+      "side": 1,
+      "message": "In a follow-up CL we should remove this custom bindings.",
+      "revId": "4409dccbd3004d94dc15ef21eb3ca200741f8852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
