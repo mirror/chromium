@@ -468,37 +468,20 @@ DataReductionProxyTypeInfo::DataReductionProxyTypeInfo(
 DataReductionProxyTypeInfo::~DataReductionProxyTypeInfo() {}
 
 DataReductionProxyParams::DataReductionProxyParams()
-    : use_override_proxies_for_http_(false) {
+    : use_override_proxies_for_http_(
+          params::GetOverrideProxiesForHttpFromCommandLine(
+              &proxies_for_http_)) {
   static const char kDefaultSpdyOrigin[] = "https://proxy.googlezip.net:443";
   static const char kDefaultFallbackOrigin[] = "compress.googlezip.net:80";
 
-  use_override_proxies_for_http_ =
-      params::GetOverrideProxiesForHttpFromCommandLine(
-          &override_data_reduction_proxy_servers_);
+  if (!use_override_proxies_for_http_) {
+    net::ProxyServer origin_proxy_server = net::ProxyServer::FromURI(
+        kDefaultSpdyOrigin, net::ProxyServer::SCHEME_HTTP);
+    net::ProxyServer fallback_proxy_server = net::ProxyServer::FromURI(
+        kDefaultFallbackOrigin, net::ProxyServer::SCHEME_HTTP);
 
-  const base::CommandLine& command_line =
-      *base::CommandLine::ForCurrentProcess();
-  std::string origin =
-      command_line.GetSwitchValueASCII(switches::kDataReductionProxy);
-  std::string fallback_origin =
-      command_line.GetSwitchValueASCII(switches::kDataReductionProxyFallback);
-
-  // Set from preprocessor constants those params that are not specified on the
-  // command line.
-  if (origin.empty())
-    origin = kDefaultSpdyOrigin;
-  if (fallback_origin.empty())
-    fallback_origin = kDefaultFallbackOrigin;
-
-  net::ProxyServer origin_proxy_server =
-      net::ProxyServer::FromURI(origin, net::ProxyServer::SCHEME_HTTP);
-  net::ProxyServer fallback_proxy_server =
-      net::ProxyServer::FromURI(fallback_origin, net::ProxyServer::SCHEME_HTTP);
-  if (origin_proxy_server.is_valid()) {
     proxies_for_http_.push_back(
         DataReductionProxyServer(origin_proxy_server, ProxyServer::CORE));
-  }
-  if (fallback_proxy_server.is_valid()) {
     proxies_for_http_.push_back(
         DataReductionProxyServer(fallback_proxy_server, ProxyServer::CORE));
   }
@@ -513,8 +496,6 @@ void DataReductionProxyParams::SetProxiesForHttpForTesting(
 
 const std::vector<DataReductionProxyServer>&
 DataReductionProxyParams::proxies_for_http() const {
-  if (use_override_proxies_for_http_)
-    return override_data_reduction_proxy_servers_;
   return proxies_for_http_;
 }
 
