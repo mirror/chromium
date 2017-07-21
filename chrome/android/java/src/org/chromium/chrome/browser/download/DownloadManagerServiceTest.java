@@ -92,8 +92,7 @@ public class DownloadManagerServiceTest {
                 @Override
                 public void run() {
                     mService = new MockDownloadNotificationService();
-                    mService.setContext(new AdvancedMockContext(
-                            mContext.getApplicationContext()));
+                    mService.setContext(new AdvancedMockContext(mContext.getApplicationContext()));
                     mService.onCreate();
                 }
             });
@@ -139,18 +138,17 @@ public class DownloadManagerServiceTest {
         }
 
         @Override
-        public void notifyDownloadSuccessful(DownloadInfo downloadInfo,
-                long systemDownloadId, boolean canResolve, boolean isSupportedMimeType) {
+        public void notifyDownloadSuccessful(DownloadInfo downloadInfo, long systemDownloadId,
+                boolean canResolve, boolean isSupportedMimeType) {
             assertCorrectExpectedCall(MethodID.DOWNLOAD_SUCCESSFUL, downloadInfo, false);
             Assert.assertEquals("application/unknown", downloadInfo.getMimeType());
-            super.notifyDownloadSuccessful(downloadInfo, systemDownloadId, canResolve,
-                    isSupportedMimeType);
+            super.notifyDownloadSuccessful(
+                    downloadInfo, systemDownloadId, canResolve, isSupportedMimeType);
         }
 
         @Override
         public void notifyDownloadFailed(DownloadInfo downloadInfo) {
             assertCorrectExpectedCall(MethodID.DOWNLOAD_FAILED, downloadInfo, true);
-
         }
 
         @Override
@@ -200,9 +198,8 @@ public class DownloadManagerServiceTest {
         }
 
         @Override
-        public void onDownloadSucceeded(
-                DownloadInfo downloadInfo, int notificationId, long downloadId,
-                boolean canBeResolved, boolean usesAndroidDownloadManager) {
+        public void onDownloadSucceeded(DownloadInfo downloadInfo, int notificationId,
+                long downloadId, boolean canBeResolved, boolean usesAndroidDownloadManager) {
             mSucceeded = true;
         }
 
@@ -259,8 +256,8 @@ public class DownloadManagerServiceTest {
     private static class DownloadManagerServiceForTest extends DownloadManagerService {
         boolean mResumed;
 
-        public DownloadManagerServiceForTest(Context context, MockDownloadNotifier mockNotifier,
-                long updateDelayInMillis) {
+        public DownloadManagerServiceForTest(
+                Context context, MockDownloadNotifier mockNotifier, long updateDelayInMillis) {
             super(context, mockNotifier, getTestHandler(), updateDelayInMillis);
         }
 
