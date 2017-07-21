@@ -16,6 +16,24 @@
       "revId": "4da60a00c6f643ef65770f1b854842c7721502b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4564fd75_e6ddd787",
+        "filename": "cc/paint/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-07-21T20:55:35Z",
+      "side": 1,
+      "message": "It\u0027s a small GN template that can either be used below in the file or not. Just like a header with some helper function. It is used everywhere for fuzz targets: https://cs.chromium.org/search/?q\u003dtesting/libfuzzer/fuzzer_test.gni\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "parentUuid": "cbe9763c_878141ee",
+      "revId": "4da60a00c6f643ef65770f1b854842c7721502b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
