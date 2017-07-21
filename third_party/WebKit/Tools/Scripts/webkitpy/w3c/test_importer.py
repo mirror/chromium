@@ -15,7 +15,7 @@ import argparse
 import logging
 
 from webkitpy.common.net.buildbot import current_build_link
-from webkitpy.common.net.git_cl import GitCL, TryJobStatus
+from webkitpy.common.net.git_cl import GitCL
 from webkitpy.common.path_finder import PathFinder
 from webkitpy.layout_tests.models.test_expectations import TestExpectations, TestExpectationParser
 from webkitpy.layout_tests.port.base import Port
@@ -357,7 +357,6 @@ class TestImporter(object):
         _log.info('Gathering directory owners emails to CC.')
         changed_files = self.host.git().changed_files()
         extractor = DirectoryOwnersExtractor(self.fs)
-        extractor.read_owner_map()
         return extractor.list_owners(changed_files)
 
     def _cl_description(self, directory_owners):
