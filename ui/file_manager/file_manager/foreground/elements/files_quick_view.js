@@ -35,7 +35,7 @@ var FilesQuickView = Polymer({
   },
 
   listeners: {
-    'iron-overlay-closed': 'clear',
+    'close': 'clear',
     'files-safe-media-tap-outside': 'close',
   },
 
@@ -58,8 +58,13 @@ var FilesQuickView = Polymer({
 
   // Opens the dialog.
   open: function() {
-    if (!this.isOpened())
+    if (!this.isOpened()) {
       this.$.dialog.showModal();
+      if (this.hasTask)
+        this.$.openButton.blur();
+      else
+        this.$.metadataButton.blur();
+    }
   },
 
   // Closes the dialog.

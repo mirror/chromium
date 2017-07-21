@@ -76,7 +76,7 @@ paper-button:focus:not(:active) {
   margin-left: 320px;
 }
 
-#metadata-button {
+#metadataButton {
   background: -webkit-image-set(
       url(../images/files/ui/quick_view/info_outline.png) 1x,
       url(../images/files/ui/quick_view/2x/info_outline.png) 2x)
@@ -123,7 +123,7 @@ paper-button:focus:not(:active) {
   z-index: 1;
 }
 
-#metadata-button {
+#metadataButton {
   --files-toggle-ripple: {
     background-color: white;
   };
