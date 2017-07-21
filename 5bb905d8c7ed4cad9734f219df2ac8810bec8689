@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9adc4f6_5d3c4c4d",
+        "filename": "components/arc/ime/arc_ime_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-21T21:49:01Z",
+      "side": 1,
+      "message": "Is this needed? This function is only called when a new window is initialized and I\u0027d expect this instance to always exist in that case. DCHECK(exo::WMHelper::HasInstance()) instead?",
+      "revId": "5bb905d8c7ed4cad9734f219df2ac8810bec8689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa0f56b6_962f2c4f",
+        "filename": "components/arc/ime/arc_ime_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-21T21:49:01Z",
+      "side": 1,
+      "message": "nit: please file a bug and add a TODO here about fixing destruction order in the future",
+      "revId": "5bb905d8c7ed4cad9734f219df2ac8810bec8689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
