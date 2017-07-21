@@ -131,6 +131,8 @@ void ExtensionViewViews::PreferredSizeChanged() {
 void ExtensionViewViews::OnWebContentsAttached() {
   host_->CreateRenderViewSoon();
   SetVisible(false);
+  DCHECK(GetWidget());
+  holder()->set_corner_radius(20 /* get the actual radius.. */);
 }
 
 namespace extensions {

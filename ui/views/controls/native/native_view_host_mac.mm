@@ -125,8 +125,14 @@ void NativeViewHostMac::ShowWidget(int x, int y, int w, int h) {
   // coordinates of the hosted view's frame is based.
   NSRect container_rect =
       [[host_->native_view() superview] convertRect:window_rect fromView:nil];
-  [host_->native_view() setFrame:container_rect];
-  [host_->native_view() setHidden:NO];
+  NSView* view = host_->native_view();
+  [view setFrame:container_rect];
+  [view setHidden:NO];
+  if (host_->corner_radius() != 0) {
+    [view setWantsLayer:YES];
+    [[view layer] setCornerRadius:host_->corner_radius()];
+    [[view layer] setMasksToBounds:YES];
+  }
 }
 
 void NativeViewHostMac::HideWidget() {

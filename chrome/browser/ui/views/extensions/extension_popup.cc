@@ -174,10 +174,12 @@ void ExtensionPopup::ViewHierarchyChanged(
   widget_initialized_ |= details.child == this && details.is_add && GetWidget();
   CHECK(GetWidget() || !widget_initialized_);
 
+#if defined(USE_AURA)
   if (widget_initialized_) {
     mask_.set_corner_radius(
         GetBubbleFrameView()->bubble_border()->GetBorderCornerRadius());
   }
+#endif
 }
 
 void ExtensionPopup::OnWidgetActivationChanged(views::Widget* widget,

@@ -65,6 +65,9 @@ class VIEWS_EXPORT NativeViewHost : public View {
     resize_background_color_ = resize_background_color;
   }
 
+  int corner_radius() const { return corner_radius_; }
+  void set_corner_radius(int corner_radius) { corner_radius_ = corner_radius; }
+
   // Value of fast_resize() the last time Layout() was invoked.
   bool fast_resize_at_last_layout() const {
     return fast_resize_at_last_layout_;
@@ -112,6 +115,9 @@ class VIEWS_EXPORT NativeViewHost : public View {
 
   // The preferred size of this View
   gfx::Size preferred_size_;
+
+  // The corner radius to apply to the clipping layer.
+  int corner_radius_ = 0;
 
   // True if the native view is being resized using the fast method described
   // in the setter/accessor above.
