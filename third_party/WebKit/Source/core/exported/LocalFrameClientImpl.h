@@ -32,6 +32,7 @@
 #ifndef LocalFrameClientImpl_h
 #define LocalFrameClientImpl_h
 
+#include "core/CoreExport.h"
 #include "core/frame/LocalFrameClient.h"
 #include "core/frame/WebLocalFrameBase.h"
 #include "platform/heap/Handle.h"
@@ -47,7 +48,7 @@ class WebDevToolsAgentImpl;
 class WebLocalFrameBase;
 class WebSpellCheckPanelHostClient;
 
-class LocalFrameClientImpl final : public LocalFrameClient {
+class CORE_EXPORT LocalFrameClientImpl final : public LocalFrameClient {
  public:
   static LocalFrameClientImpl* Create(WebLocalFrameBase*);
 

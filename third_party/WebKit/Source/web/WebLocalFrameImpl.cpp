@@ -1598,8 +1598,7 @@ WebLocalFrameImpl::WebLocalFrameImpl(
     WebFrameClient* client,
     blink::InterfaceRegistry* interface_registry)
     : WebLocalFrameBase(scope),
-      local_frame_client_(
-          WebFactory::GetInstance().CreateLocalFrameClient(this)),
+      local_frame_client_(LocalFrameClientImpl::Create(this)),
       client_(client),
       autofill_client_(0),
       input_events_scale_factor_for_emulation_(1),

@@ -61,6 +61,7 @@ blink_core_sources("frame") {
     "LocalDOMWindow.h",
     "LocalFrame.cpp",
     "LocalFrame.h",
+    "LocalFrameClient.cpp",
     "LocalFrameClient.h",
     "LocalFrameView.cpp",
     "LocalFrameView.h",

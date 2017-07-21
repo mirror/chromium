@@ -13,6 +13,12 @@
 
 namespace blink {
 
+const WebInputEvent* WebViewBase::current_input_event_ = nullptr;
+
+const WebInputEvent* WebViewBase::CurrentInputEvent() {
+  return current_input_event_;
+}
+
 // Used to defer all page activity in cases where the embedder wishes to run
 // a nested event loop. Using a stack enables nesting of message loop
 // invocations.
