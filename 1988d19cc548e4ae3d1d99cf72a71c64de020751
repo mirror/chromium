@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "778e8240_0d302bd4",
+        "filename": "net/disk_cache/blockfile/backend_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-07-21T14:10:16Z",
+      "side": 1,
+      "message": "Done with using LazyInstance. \n\n(The diff is that you can only have one-ish Singleton of the type... which didn\u0027t seem reasonable until I subclassed anyway).",
+      "parentUuid": "e5efdf91_50571347",
+      "range": {
+        "startLine": 113,
+        "startChar": 40,
+        "endLine": 113,
+        "endChar": 47
+      },
+      "revId": "1988d19cc548e4ae3d1d99cf72a71c64de020751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48ff59a5_0885d7e8",
         "filename": "net/disk_cache/blockfile/backend_impl.cc",
         "patchSetId": 4
