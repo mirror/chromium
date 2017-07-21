@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9dca49f7_6efa4a77",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/streams/chromium/deep-recursion-getwriter.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-21T06:50:51Z",
+      "side": 1,
+      "message": "Could you please write the actual sequence (part of what you just drew on the whiteboard to explain it to me) here?",
+      "revId": "35f16f0b7cb9c51b0aaeefb3992a01b0556ee43b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f1c8ec9_44ce1b8a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/streams/chromium/deep-recursion-getwriter.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-21T06:50:51Z",
+      "side": 1,
+      "message": "Add a comment explaining why this is needed.",
+      "revId": "35f16f0b7cb9c51b0aaeefb3992a01b0556ee43b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
