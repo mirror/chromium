@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5c5b784e_004f0805",
+        "filename": "chrome/browser/resources/settings/settings_page/settings_section.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-21T21:33:32Z",
+      "side": 1,
+      "message": "Hector, Tommy, and I think it\u0027s fine, but I\u0027d love to hear more about your thoughts/reasoning for preferring the mutation observer. To be honest, I don\u0027t know the details of exactly how to use the mutation observer since I don\u0027t know the details of how the settings-ui element changes based on the url. Would be happy to look into it if it\u0027s decided that firing an event should not happen.",
+      "parentUuid": "246849a1_4d022aa7",
+      "range": {
+        "startLine": 98,
+        "startChar": 5,
+        "endLine": 98,
+        "endChar": 6
+      },
+      "revId": "928d7fce09a81aec0c82fd67c4baad86d2e7b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9edec3a2_1a642a22",
         "filename": "chrome/test/BUILD.gn",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-20T21:47:46Z",
       "side": 1,
       "message": "Would it make sense to move this to the other BUILD.gn file since it\u0027s only needed by the test?",
+      "range": {
+        "startLine": 1716,
+        "startChar": 6,
+        "endLine": 1716,
+        "endChar": 38
+      },
+      "revId": "928d7fce09a81aec0c82fd67c4baad86d2e7b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35ebaf67_78a1e41f",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 1716,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-21T21:33:32Z",
+      "side": 1,
+      "message": "Made the change--should not be breaking, but doing a dry run to check.",
+      "parentUuid": "9edec3a2_1a642a22",
       "range": {
         "startLine": 1716,
         "startChar": 6,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "c2b2278e_9be98901",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-21T21:33:32Z",
+      "side": 1,
+      "message": "Yep!",
+      "parentUuid": "5f17e1f6_42988fde",
+      "revId": "928d7fce09a81aec0c82fd67c4baad86d2e7b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee09fe36_f6d9ba20",
         "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
         "patchSetId": 9
@@ -79,6 +145,24 @@
       "revId": "928d7fce09a81aec0c82fd67c4baad86d2e7b3a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34a21de8_7dc691d5",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-21T21:33:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee09fe36_f6d9ba20",
+      "revId": "928d7fce09a81aec0c82fd67c4baad86d2e7b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "1165ed7d_7bc93a03",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-21T21:33:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bad4af6d_7effea84",
+      "range": {
+        "startLine": 28,
+        "startChar": 46,
+        "endLine": 28,
+        "endChar": 60
+      },
+      "revId": "928d7fce09a81aec0c82fd67c4baad86d2e7b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bab5e298_d5d1293a",
         "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
         "patchSetId": 9
@@ -116,6 +224,24 @@
       "writtenOn": "2017-07-20T22:54:36Z",
       "side": 1,
       "message": "nit: stray space in \"function (\" \n\n(out of curiosity, is there no style linting that runs on presubmit for this code?)",
+      "revId": "928d7fce09a81aec0c82fd67c4baad86d2e7b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50f639b7_21e5797f",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-21T21:33:32Z",
+      "side": 1,
+      "message": "Not that I know of, but there is a git cl format --js I could use",
+      "parentUuid": "bab5e298_d5d1293a",
       "revId": "928d7fce09a81aec0c82fd67c4baad86d2e7b3a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -139,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "f90f608e_f3993f7e",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-21T21:33:32Z",
+      "side": 1,
+      "message": "I think it\u0027s a good idea to go w/ reject--thanks!",
+      "parentUuid": "3a0ff631_bf3d0264",
+      "revId": "928d7fce09a81aec0c82fd67c4baad86d2e7b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5a8b5c1_c7bcffe5",
         "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
         "patchSetId": 9
@@ -156,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "90536c20_d350556f",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-21T21:33:32Z",
+      "side": 1,
+      "message": "It does--but not because its part of Mocha. The reject indicates that in the execution of the Promise there was a failure, which gets passed to Mocha as a failure of the test",
+      "parentUuid": "f5a8b5c1_c7bcffe5",
+      "revId": "928d7fce09a81aec0c82fd67c4baad86d2e7b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da7d8f9c_a8068487",
         "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
         "patchSetId": 9
@@ -167,6 +329,30 @@
       "writtenOn": "2017-07-20T21:47:46Z",
       "side": 1,
       "message": "nit: // TODO",
+      "range": {
+        "startLine": 11,
+        "startChar": 2,
+        "endLine": 11,
+        "endChar": 8
+      },
+      "revId": "928d7fce09a81aec0c82fd67c4baad86d2e7b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89175f8b_03f21cbc",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-21T21:33:32Z",
+      "side": 1,
+      "message": "removed todo as per our discussion",
+      "parentUuid": "da7d8f9c_a8068487",
       "range": {
         "startLine": 11,
         "startChar": 2,
@@ -202,6 +388,30 @@
     },
     {
       "key": {
+        "uuid": "a729bccf_2a6827db",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-21T21:33:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8943ea93_bdfe98bf",
+      "range": {
+        "startLine": 20,
+        "startChar": 41,
+        "endLine": 20,
+        "endChar": 45
+      },
+      "revId": "928d7fce09a81aec0c82fd67c4baad86d2e7b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "315d0ed1_b8a100db",
         "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
         "patchSetId": 9
@@ -216,6 +426,24 @@
       "revId": "928d7fce09a81aec0c82fd67c4baad86d2e7b3a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1626f97a_4c2a080f",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-21T21:33:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "315d0ed1_b8a100db",
+      "revId": "928d7fce09a81aec0c82fd67c4baad86d2e7b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -236,6 +464,24 @@
     },
     {
       "key": {
+        "uuid": "f69dbac1_8445cc17",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-21T21:33:32Z",
+      "side": 1,
+      "message": "navigateTo doesn\u0027t work here because it conflicts with using the Mock APIs to provide fake data.\n\nThe settings.routes object is not available at the time in which this test is defined since the file is included as an extra library on the SettingsAccessibilityTest test fixture. The first time the settings.routes object is available is in the setup of the SettingsAccessibilityTest test fixture (after the preload occurs).",
+      "parentUuid": "1bf32fa8_3f4cf00b",
+      "revId": "928d7fce09a81aec0c82fd67c4baad86d2e7b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c32d91d_7ce639bb",
         "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
         "patchSetId": 9
@@ -247,6 +493,24 @@
       "writtenOn": "2017-07-20T22:54:36Z",
       "side": 1,
       "message": "What will cause the section to be expanded in the test?",
+      "revId": "928d7fce09a81aec0c82fd67c4baad86d2e7b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "512c21a5_a88c35ca",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-21T21:33:32Z",
+      "side": 1,
+      "message": "The settings section will expand to load the MANAGE_PASSWORDS route (based on the URL set above) once the settings-ui element is attached to the DOM.",
+      "parentUuid": "7c32d91d_7ce639bb",
       "revId": "928d7fce09a81aec0c82fd67c4baad86d2e7b3a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -296,6 +560,30 @@
       "revId": "928d7fce09a81aec0c82fd67c4baad86d2e7b3a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f65e0c6_ebe50648",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-21T21:33:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78edf60f_e231ef8c",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 64
+      },
+      "revId": "928d7fce09a81aec0c82fd67c4baad86d2e7b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
