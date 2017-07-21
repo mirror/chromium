@@ -66,6 +66,8 @@ class LayerTreeHostClient {
   // renders in a different process its ancestors; this returns true in
   // that case.
   virtual bool IsForSubframe() = 0;
+  // This returns true if the LayerTree is for a guest.
+  virtual bool IsForGuest() = 0;
 
  protected:
   virtual ~LayerTreeHostClient() {}

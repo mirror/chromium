@@ -3414,7 +3414,10 @@ void LayerTreeHostImpl::DistributeScrollDelta(ScrollState* scroll_state) {
         // reach that, we should scroll the viewport which is represented by the
         // main viewport scroll layer.
         DCHECK(viewport_scroll_node);
-        current_scroll_chain.push_front(viewport_scroll_node);
+        if (viewport()->IsTopLevelViewport() ||
+            viewport()->CanConsumeDelta(*scroll_state)) {
+          current_scroll_chain.push_front(viewport_scroll_node);
+        }
         break;
       }
 

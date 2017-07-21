@@ -561,6 +561,7 @@ RenderViewImpl::RenderViewImpl(CompositorDependencies* compositor_deps,
       session_storage_namespace_id_(params.session_storage_namespace_id),
       weak_ptr_factory_(this) {
   GetWidget()->set_owner_delegate(this);
+  for_guest_ = params.for_guest;
 }
 
 void RenderViewImpl::Initialize(

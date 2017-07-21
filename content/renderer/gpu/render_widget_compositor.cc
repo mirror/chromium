@@ -264,6 +264,7 @@ RenderWidgetCompositor::RenderWidgetCompositor(
       threaded_(!!compositor_deps_->GetCompositorImplThreadTaskRunner()),
       never_visible_(false),
       is_for_oopif_(false),
+      is_for_guest_(false),
       layout_and_paint_async_callback_(nullptr),
       weak_factory_(this) {}
 
@@ -288,7 +289,8 @@ std::unique_ptr<cc::LayerTreeHost> RenderWidgetCompositor::CreateLayerTreeHost(
     const ScreenInfo& screen_info) {
   base::CommandLine* cmd = base::CommandLine::ForCurrentProcess();
   cc::LayerTreeSettings settings = GenerateLayerTreeSettings(
-      *cmd, deps, device_scale_factor, client->IsForSubframe(), screen_info);
+      *cmd, deps, device_scale_factor, client->IsForSubframe(),
+      client->IsForGuest(), screen_info);
 
   const bool is_threaded = !!deps->GetCompositorImplThreadTaskRunner();
 
@@ -326,10 +328,12 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
     CompositorDependencies* compositor_deps,
     float device_scale_factor,
     bool is_for_subframe,
+    bool is_for_guest,
     const ScreenInfo& screen_info) {
   cc::LayerTreeSettings settings;
 
   settings.is_layer_tree_for_subframe = is_for_subframe;
+  settings.is_layer_tree_for_guest = is_for_guest;
 
   // For web contents, layer transforms should scale up the contents of layers
   // to keep content always crisp when possible.
@@ -1223,6 +1227,10 @@ bool RenderWidgetCompositor::IsForSubframe() {
   return is_for_oopif_;
 }
 
+bool RenderWidgetCompositor::IsForGuest() {
+  return is_for_guest_;
+}
+
 void RenderWidgetCompositor::RequestScheduleAnimation() {
   delegate_->RequestScheduleAnimation();
 }
@@ -1248,6 +1256,10 @@ void RenderWidgetCompositor::SetRasterColorSpace(
 
 void RenderWidgetCompositor::SetIsForOopif(bool is_for_oopif) {
   is_for_oopif_ = is_for_oopif;
+}
+
+void RenderWidgetCompositor::SetIsForGuest(bool is_for_guest) {
+  is_for_guest_ = is_for_guest;
 }
 
 void RenderWidgetCompositor::SetContentSourceId(uint32_t id) {
