@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "369bd74d_7ea3a1e3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-21T09:23:52Z",
+      "side": 1,
+      "message": "please add a \u003c70c first line summary and wrap the rest of the CL description as well",
+      "revId": "94bf25561a03f90f85b256c20bb2e6fb2e338d6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06ae43cb_818e8552",
+        "filename": "third_party/WebKit/public/platform/WebMediaPlayerClient.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-21T09:23:52Z",
+      "side": 1,
+      "message": "nit why not pure virtual?",
+      "revId": "94bf25561a03f90f85b256c20bb2e6fb2e338d6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
