@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48a690ef_0697b583",
+        "filename": "build/android/resource_sizes.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-21T01:59:58Z",
+      "side": 1,
+      "message": "Use out_dir since you already have it.",
+      "range": {
+        "startLine": 765,
+        "startChar": 32,
+        "endLine": 765,
+        "endChar": 60
+      },
+      "revId": "76f182d1b2d503171fc42267b4dc107d349e9643",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7419fdfd_58596157",
+        "filename": "build/android/resource_sizes.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-21T01:59:58Z",
+      "side": 1,
+      "message": "nit: I think this is not plural in most other places \"tool_prefix\"",
+      "range": {
+        "startLine": 765,
+        "startChar": 4,
+        "endLine": 765,
+        "endChar": 16
+      },
+      "revId": "76f182d1b2d503171fc42267b4dc107d349e9643",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "641c6e08_33c27788",
+        "filename": "tools/binary_size/diagnose_bloat.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-21T01:59:58Z",
+      "side": 1,
+      "message": "rename this? I doesn\u0027t run it anymore.",
+      "range": {
+        "startLine": 186,
+        "startChar": 6,
+        "endLine": 186,
+        "endChar": 23
+      },
+      "revId": "76f182d1b2d503171fc42267b4dc107d349e9643",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
