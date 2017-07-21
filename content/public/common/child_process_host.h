@@ -34,7 +34,7 @@ class CONTENT_EXPORT ChildProcessHost : public IPC::Sender {
 
   // This is a value never returned as the unique id of any child processes of
   // any kind, including the values returned by RenderProcessHost::GetID().
-  static int kInvalidUniqueID;
+  static const int kInvalidUniqueID;
 
   // Used to create a child process host. The delegate must outlive this object.
   static ChildProcessHost* Create(ChildProcessHostDelegate* delegate);

@@ -21,8 +21,8 @@
 namespace android_webview {
 
 // static
-const void* AwSafeBrowsingResourceThrottle::kUserDataKey =
-    static_cast<void*>(&AwSafeBrowsingResourceThrottle::kUserDataKey);
+const void* const AwSafeBrowsingResourceThrottle::kUserDataKey =
+    static_cast<const void*>(&AwSafeBrowsingResourceThrottle::kUserDataKey);
 
 // static
 AwSafeBrowsingResourceThrottle* AwSafeBrowsingResourceThrottle::MaybeCreate(

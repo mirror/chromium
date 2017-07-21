@@ -826,7 +826,7 @@ const char OmniboxFieldTrial::kUIMaxAutocompleteMatchesParam[] =
 const char OmniboxFieldTrial::kUIVerticalMarginParam[] = "UIVerticalMargin";
 
 // static
-int OmniboxFieldTrial::kDefaultMinimumTimeBetweenSuggestQueriesMs = 100;
+const int OmniboxFieldTrial::kDefaultMinimumTimeBetweenSuggestQueriesMs = 100;
 
 // Background and implementation details:
 //

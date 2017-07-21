@@ -35,7 +35,7 @@ const char kTranslateLanguageDetectionConflict[] =
 namespace {
 
 // Page languages for which we track CLD3 language conflicts.
-const char* kLanguageDetectionConflictPageLangs[] = {
+const char* const kLanguageDetectionConflictPageLangs[] = {
     "en", "en-US", "en-GB", "en-CA", "en-AU", "en-NZ", "en-ZA", "en-IN"};
 
 LanguageCheckType GetLanguageCheckMetric(const std::string& provided_code,

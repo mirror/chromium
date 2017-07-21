@@ -13,7 +13,8 @@ using content::WebUIController;
 
 namespace {
 
-WebUI::TypeID kSafeBrowsingID = &kSafeBrowsingID;
+const WebUI::TypeID kSafeBrowsingID =
+    static_cast<WebUI::TypeID>(&kSafeBrowsingID);
 
 // A function for creating a new WebUI. The caller owns the return value, which
 // may be nullptr (for example, if the URL refers to an non-existent extension).
