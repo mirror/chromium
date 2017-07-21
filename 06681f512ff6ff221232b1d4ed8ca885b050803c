@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "44cf2f05_79252977",
+        "filename": "chrome/browser/resources/md_downloads/action_service.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-21T18:12:28Z",
+      "side": 1,
+      "message": "Per my interpretation of the \"definition of a \"constant\" in the styleguide it should not. Explaining below:\n\n\"Before choosing constant case, consider whether the field really feels like a deeply immutable constant. For example, if any of that instance\u0027s observable state can change, it is almost certainly not a constant.\"\n\nThe state of an Array\u003cstring\u003e can be changed (for example using push/splice).\n\n\"Merely intending to never mutate the object is generally not enough.\"\n\nWhich means that even though we don\u0027t mutate the array in this case, the fact that it can be mutated makes it not a constant that requires THIS_NAMING. In other words this falls under the following category:\n\n\"not all @const static properties and module-local consts are constants\"",
+      "parentUuid": "f41ad966_8e5e373b",
+      "range": {
+        "startLine": 116,
+        "startChar": 12,
+        "endLine": 116,
+        "endChar": 23
+      },
+      "revId": "06681f512ff6ff221232b1d4ed8ca885b050803c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18d5e119_5ebb68ca",
         "filename": "docs/es6_chromium.md",
         "patchSetId": 5
