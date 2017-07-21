@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5895f04a_ff45e648",
+        "filename": "ios/web/web_state/js/context_menu_js_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-21T00:38:34Z",
+      "side": 1,
+      "message": "ASSERT_TRUE([result isKindOfClass:[NSDictionary class]])\n\nOtherwise this may crash if result is NSNull",
+      "range": {
+        "startLine": 218,
+        "startChar": 2,
+        "endLine": 218,
+        "endChar": 13
+      },
+      "revId": "e541395cbd6a17eeafeac2ed55a0cbe115ab0aea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
