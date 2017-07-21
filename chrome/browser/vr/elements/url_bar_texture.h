@@ -59,6 +59,8 @@ class UrlBarTexture : public UiTexture {
                               security_state::SecurityLevel security_level,
                               vr::RenderTextWrapper* render_text,
                               const ColorScheme& color_scheme);
+  virtual void RenderUrl(const gfx::Size& texture_size,
+                         const gfx::Rect& bounds);
 
   std::unique_ptr<gfx::RenderText> url_render_text_;
   base::string16 url_text_;
@@ -68,7 +70,6 @@ class UrlBarTexture : public UiTexture {
   float ToPixels(float meters) const;
   float ToMeters(float pixels) const;
   bool HitsTransparentRegion(const gfx::PointF& meters, bool left) const;
-  void RenderUrl(const gfx::Size& texture_size, const gfx::Rect& bounds);
   void OnSetMode() override;
   SkColor GetLeftCornerColor() const;
 
