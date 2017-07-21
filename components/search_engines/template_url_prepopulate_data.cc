@@ -481,29 +481,23 @@ const PrepopulatedEngine* engines_ZW[] =
     { &google, &bing, &yahoo, &ask, };
 
 // A list of all the engines that we know about.
-const PrepopulatedEngine* kAllEngines[] = {
-  // Prepopulated engines:
-  &aol,          &ask,          &ask_br,       &ask_uk,       &baidu,
-  &bing,         &daum,         &google,       &kvasir,       &mail_ru,
-  &najdi,        &naver,        &onet,         &seznam,       &sogou,
-  &vinden,       &virgilio,     &yahoo,        &yahoo_ar,     &yahoo_at,
-  &yahoo_au,     &yahoo_br,     &yahoo_ca,     &yahoo_ch,     &yahoo_cl,
-  &yahoo_co,     &yahoo_de,     &yahoo_dk,     &yahoo_es,     &yahoo_fi,
-  &yahoo_fr,     &yahoo_gr,     &yahoo_hk,     &yahoo_id,     &yahoo_in,
-  &yahoo_jp,     &yahoo_maktoob,&yahoo_mx,     &yahoo_my,     &yahoo_nl,
-  &yahoo_nz,     &yahoo_pe,     &yahoo_ph,     &yahoo_qc,     &yahoo_ro,
-  &yahoo_se,     &yahoo_sg,     &yahoo_th,     &yahoo_tr,     &yahoo_tw,
-  &yahoo_uk,     &yahoo_ve,     &yahoo_vn,     &yandex_by,    &yandex_kz,
-  &yandex_ru,    &yandex_tr,    &yandex_ua,
+const PrepopulatedEngine* const kAllEngines[] = {
+    // Prepopulated engines:
+    &aol, &ask, &ask_br, &ask_uk, &baidu, &bing, &daum, &google, &kvasir,
+    &mail_ru, &najdi, &naver, &onet, &seznam, &sogou, &vinden, &virgilio,
+    &yahoo, &yahoo_ar, &yahoo_at, &yahoo_au, &yahoo_br, &yahoo_ca, &yahoo_ch,
+    &yahoo_cl, &yahoo_co, &yahoo_de, &yahoo_dk, &yahoo_es, &yahoo_fi, &yahoo_fr,
+    &yahoo_gr, &yahoo_hk, &yahoo_id, &yahoo_in, &yahoo_jp, &yahoo_maktoob,
+    &yahoo_mx, &yahoo_my, &yahoo_nl, &yahoo_nz, &yahoo_pe, &yahoo_ph, &yahoo_qc,
+    &yahoo_ro, &yahoo_se, &yahoo_sg, &yahoo_th, &yahoo_tr, &yahoo_tw, &yahoo_uk,
+    &yahoo_ve, &yahoo_vn, &yandex_by, &yandex_kz, &yandex_ru, &yandex_tr,
+    &yandex_ua,
 
-  // UMA-only engines:
-  &atlas_cz,     &atlas_sk,     &avg,          &babylon,      &conduit,
-  &delfi_lt,     &delfi_lv,     &delta,        &funmoods,     &goo,
-  &imesh,        &iminent,      &in,           &incredibar,   &libero,
-  &neti,         &nigma,        &ok,           &rambler,      &sapo,
-  &search_results, &searchnu,   &snapdo,       &softonic,     &sweetim,
-  &terra_ar,     &terra_es,     &tut,          &walla,        &wp,
-  &zoznam,
+    // UMA-only engines:
+    &atlas_cz, &atlas_sk, &avg, &babylon, &conduit, &delfi_lt, &delfi_lv,
+    &delta, &funmoods, &goo, &imesh, &iminent, &in, &incredibar, &libero, &neti,
+    &nigma, &ok, &rambler, &sapo, &search_results, &searchnu, &snapdo,
+    &softonic, &sweetim, &terra_ar, &terra_es, &tut, &walla, &wp, &zoznam,
 };
 
 // Please refer to ISO 3166-1 for information about the two-character country

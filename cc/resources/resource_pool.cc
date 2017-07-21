@@ -55,7 +55,7 @@ bool ResourceMeetsSizeRequirements(const gfx::Size& requested_size,
 
 }  // namespace
 
-base::TimeDelta ResourcePool::kDefaultExpirationDelay =
+const base::TimeDelta ResourcePool::kDefaultExpirationDelay =
     base::TimeDelta::FromSeconds(5);
 
 void ResourcePool::PoolResource::OnMemoryDump(
