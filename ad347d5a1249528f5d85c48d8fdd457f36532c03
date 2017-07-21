@@ -22,6 +22,30 @@
       "revId": "ad347d5a1249528f5d85c48d8fdd457f36532c03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f0b7f81_e2cf6a20",
+        "filename": "chrome/browser/resources/settings/chrome_cleanup_page/chrome_cleanup_page.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1223356
+      },
+      "writtenOn": "2017-07-21T18:25:55Z",
+      "side": 1,
+      "message": "Good point. I\u0027ll just explicitly set it to true here.",
+      "parentUuid": "7a957c4b_fd7ac1df",
+      "range": {
+        "startLine": 208,
+        "startChar": 29,
+        "endLine": 208,
+        "endChar": 0
+      },
+      "revId": "ad347d5a1249528f5d85c48d8fdd457f36532c03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
