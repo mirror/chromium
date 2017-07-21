@@ -118,6 +118,30 @@
       "revId": "be138e7e0d1d4c7638741e4a2597a9576832ca76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf250d0e_7f701a04",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-21T17:45:48Z",
+      "side": 1,
+      "message": "Oh maintaining a bool request_stopped_ makes more sense to control this.\n\nAs for the re-enter queries question, we\u0027re already sure about something:\n- Each time there\u0027s a new query, |Stop| will always be called before |Start|.\n- When |Start| goes to the Android side, it cancels the previous request, and the previous request will return only empty list.\n\nBut something unsure to us is whether empty result list in |OnResuls| comes from a canceled request or a request that returns nothing.\n\nSo I think we should skip empty results for UMA. Do you think so?",
+      "parentUuid": "4b98683a_129a3a14",
+      "range": {
+        "startLine": 65,
+        "startChar": 7,
+        "endLine": 65,
+        "endChar": 24
+      },
+      "revId": "be138e7e0d1d4c7638741e4a2597a9576832ca76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
