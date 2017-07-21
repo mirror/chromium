@@ -166,6 +166,7 @@ class DiscardableImageGenerator {
   base::flat_map<PaintImage::Id, gfx::Rect> TakeImageIdToRectMap() {
     return std::move(image_id_to_rect_);
   }
+  bool has_non_srgb_lazy_images() const { return has_non_srgb_lazy_images_; }
 
  private:
   void AddImageFromFlags(const SkRect& rect, const PaintFlags& flags) {
@@ -235,6 +236,12 @@ class DiscardableImageGenerator {
     // raster the picture (using device clip bounds that are outset).
     image_rect.Inset(-1, -1);
 
+    // Make a note if any image was originally specified in a non-sRGB color
+    // space.
+    SkColorSpace* source_color_space = paint_image.sk_image()->colorSpace();
+    has_non_srgb_lazy_images_ |=
+        source_color_space && !source_color_space->isSRGB();
+
     // The true target color space will be assigned when it is known, in
     // GetDiscardableImagesInRect.
     gfx::ColorSpace target_color_space;
@@ -254,6 +261,7 @@ class DiscardableImageGenerator {
   // non-drawing ops.
   PaintTrackingCanvas canvas_;
   std::vector<std::pair<DrawImage, gfx::Rect>> image_set_;
+  bool has_non_srgb_lazy_images_ = false;
   base::flat_map<PaintImage::Id, gfx::Rect> image_id_to_rect_;
 };
 
@@ -272,6 +280,7 @@ void DiscardableImageMap::Generate(const PaintOpBuffer* paint_op_buffer,
   DiscardableImageGenerator generator(bounds.right(), bounds.bottom());
   generator.GatherDiscardableImages(paint_op_buffer);
   image_id_to_rect_ = generator.TakeImageIdToRectMap();
+  has_non_srgb_lazy_images_ = generator.has_non_srgb_lazy_images();
   auto images = generator.TakeImages();
   images_rtree_.Build(
       images,
