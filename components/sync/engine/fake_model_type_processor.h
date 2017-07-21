@@ -23,6 +23,8 @@ class FakeModelTypeProcessor : public ModelTypeProcessor {
                          const CommitResponseDataList& response_list) override;
   void OnUpdateReceived(const sync_pb::ModelTypeState& type_state,
                         const UpdateResponseDataList& updates) override;
+  void ProcessGetUpdatesResponse(
+      const sync_pb::DataTypeProgressMarker& progress_marker) override;
 };
 
 }  // namespace syncer
