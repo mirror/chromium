@@ -16,6 +16,24 @@
       "revId": "6f51c0728a1b9435b5487359833dc4356434736c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9026d061_28880ef8",
+        "filename": "gpu/config/gpu_driver_bug_workaround_type.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-21T16:29:42Z",
+      "side": 1,
+      "message": "Yes, the latter is the idea. ToT is broken in a way that matches this workaround. Fixing the brokenness requires having this workaround.",
+      "parentUuid": "5d90470f_ff4a00e4",
+      "revId": "6f51c0728a1b9435b5487359833dc4356434736c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
