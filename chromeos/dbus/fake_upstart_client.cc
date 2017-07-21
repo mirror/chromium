@@ -40,6 +40,14 @@ void FakeUpstartClient::StartMediaAnalytics(const UpstartCallback& callback) {
   callback.Run(true);
 }
 
+void FakeUpstartClient::RestartMediaAnalytics(const UpstartCallback& callback) {
+  FakeMediaAnalyticsClient* media_analytics_client =
+      static_cast<FakeMediaAnalyticsClient*>(
+          DBusThreadManager::Get()->GetMediaAnalyticsClient());
+  media_analytics_client->set_process_running(true);
+  callback.Run(true);
+}
+
 void FakeUpstartClient::StopMediaAnalytics() {
   FakeMediaAnalyticsClient* media_analytics_client =
       static_cast<FakeMediaAnalyticsClient*>(

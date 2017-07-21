@@ -38,6 +38,15 @@ class TestUpstartClient : public FakeUpstartClient {
     }
   }
 
+  // Overrides behavior to queue restart requests.
+  void RestartMediaAnalytics(const UpstartCallback& callback) override {
+    pending_upstart_request_callbacks_.push(callback);
+    if (!enqueue_requests_) {
+      HandleNextUpstartRequest(true);
+      return;
+    }
+  }
+
   // Triggers the next queue'd start request to succeed or fail.
   bool HandleNextUpstartRequest(bool should_succeed) {
     if (pending_upstart_request_callbacks_.empty())
@@ -165,6 +174,26 @@ TEST_F(MediaPerceptionAPIManagerTest, UpstartFailure) {
             SetStateAndWaitForResponse(manager_.get(), state));
 }
 
+TEST_F(MediaPerceptionAPIManagerTest, UpstartRestartFailure) {
+  upstart_client_->set_enqueue_requests(true);
+  media_perception::State state;
+  state.status = media_perception::STATUS_RESTARTED;
+
+  base::RunLoop run_loop;
+  CallbackStatus status;
+  manager_->SetState(state, base::Bind(&RecordStatusAndRunClosure,
+                                       run_loop.QuitClosure(), &status));
+  EXPECT_TRUE(upstart_client_->HandleNextUpstartRequest(false));
+  run_loop.Run();
+  EXPECT_EQ(CallbackStatus::PROCESS_IDLE_ERROR, status);
+
+  // Check that after a failed request, setState restarted will still go
+  // through.
+  upstart_client_->set_enqueue_requests(false);
+  EXPECT_EQ(CallbackStatus::SUCCESS,
+            SetStateAndWaitForResponse(manager_.get(), state));
+}
+
 TEST_F(MediaPerceptionAPIManagerTest, UpstartStall) {
   upstart_client_->set_enqueue_requests(true);
   media_perception::State state;
@@ -188,6 +217,33 @@ TEST_F(MediaPerceptionAPIManagerTest, UpstartStall) {
   EXPECT_EQ(CallbackStatus::SUCCESS,
             GetStateAndWaitForResponse(manager_.get()));
   state.status = media_perception::STATUS_SUSPENDED;
+  EXPECT_EQ(CallbackStatus::SUCCESS,
+            SetStateAndWaitForResponse(manager_.get(), state));
+}
+
+TEST_F(MediaPerceptionAPIManagerTest, UpstartRestartStall) {
+  upstart_client_->set_enqueue_requests(true);
+  media_perception::State state;
+  state.status = media_perception::STATUS_RESTARTED;
+
+  base::RunLoop run_loop;
+  CallbackStatus status;
+  manager_->SetState(state, base::Bind(&RecordStatusAndRunClosure,
+                                       run_loop.QuitClosure(), &status));
+
+  EXPECT_EQ(CallbackStatus::PROCESS_LAUNCHING_ERROR,
+            GetStateAndWaitForResponse(manager_.get()));
+  EXPECT_EQ(CallbackStatus::PROCESS_LAUNCHING_ERROR,
+            SetStateAndWaitForResponse(manager_.get(), state));
+  EXPECT_TRUE(upstart_client_->HandleNextUpstartRequest(true));
+  run_loop.Run();
+  EXPECT_EQ(CallbackStatus::SUCCESS, status);
+
+  // Verify that after the slow start, things works as normal.
+  upstart_client_->set_enqueue_requests(false);
+  EXPECT_EQ(CallbackStatus::SUCCESS,
+            GetStateAndWaitForResponse(manager_.get()));
+  state.status = media_perception::STATUS_RUNNING;
   EXPECT_EQ(CallbackStatus::SUCCESS,
             SetStateAndWaitForResponse(manager_.get(), state));
 }
