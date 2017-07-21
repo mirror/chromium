@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "073fce3a_d7945e39",
+        "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1284,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-07-21T08:57:33Z",
+      "side": 1,
+      "message": "Yes. In this case, I will update the subsequent CLs to use auto too.\nToo bad that it doesn\u0027t fit in a line :-) even with the auto.",
+      "parentUuid": "af72d5a4_3130360d",
+      "revId": "36e4781468b1cb67eeedacfaa5b1333dc86b1d23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e013ac9d_82c2b09a",
         "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "36e4781468b1cb67eeedacfaa5b1333dc86b1d23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fd89de7_49d6488b",
+        "filename": "content/browser/frame_host/navigation_controller_impl_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1291,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-07-21T08:57:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e013ac9d_82c2b09a",
+      "revId": "36e4781468b1cb67eeedacfaa5b1333dc86b1d23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
