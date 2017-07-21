@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bb6bd71_4e5abe58",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_list_prefs.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-21T14:27:52Z",
+      "side": 1,
+      "message": "nit: Mask of scale factors for which the app\u0027s icon needs invalidation.",
+      "range": {
+        "startLine": 459,
+        "startChar": 26,
+        "endLine": 459,
+        "endChar": 76
+      },
+      "revId": "c6a556053f20bd87dbed74911ba26a135033f84e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3883c43_082f3ad5",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_list_prefs.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-21T14:27:52Z",
+      "side": 1,
+      "message": "nit: invalidated_icon_scale_factor_mask_;",
+      "range": {
+        "startLine": 460,
+        "startChar": 6,
+        "endLine": 460,
+        "endChar": 28
+      },
+      "revId": "c6a556053f20bd87dbed74911ba26a135033f84e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "063530be_0f94f694",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_list_prefs.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-21T14:27:52Z",
+      "side": 1,
+      "message": "masks should be uint32_t or uint64_t. or std::bitset.",
+      "range": {
+        "startLine": 460,
+        "startChar": 2,
+        "endLine": 460,
+        "endChar": 5
+      },
+      "revId": "c6a556053f20bd87dbed74911ba26a135033f84e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
