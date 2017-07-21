@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25a08a66_9b1544b3",
+        "filename": "ui/file_manager/file_manager/foreground/elements/files_quick_view.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-21T05:16:56Z",
+      "side": 1,
+      "message": "this.$.openButton should work?\n\nBTW, this doesn\u0027t seem to work following cases.\n1) When there is not OPEN button (e.g. Files app can not open foobar.bin file so there is only \"File info\" button on the toolbar), the File info will get focused.\n2) When we open quick view and hit TAB key, \"File info\" will be focused even when there is \"Open\" button. The tab order should be \"Open\" -\u003e \"File info\".",
+      "revId": "6fbca93cbec44f5c81d702ac645fa8a4a207ad45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
