@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02ae94a4_20f28a75",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-21T15:45:08Z",
+      "side": 1,
+      "message": "nit: Do you really need this?",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 46
+      },
+      "revId": "d59fbffc3c899d688235f9934cd110a365b03a1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "006b10c0_24e97628",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-21T15:45:08Z",
+      "side": 1,
+      "message": "What if results are empty? In this case your test would pass but this would look wrong pass.\nI would prefer to check exact number of results. Is it possible?",
+      "range": {
+        "startLine": 60,
+        "startChar": 21,
+        "endLine": 60,
+        "endChar": 64
+      },
+      "revId": "d59fbffc3c899d688235f9934cd110a365b03a1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58c47bdf_08dc4930",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-21T15:45:08Z",
+      "side": 1,
+      "message": "nit: Check",
+      "range": {
+        "startLine": 60,
+        "startChar": 5,
+        "endLine": 60,
+        "endChar": 11
+      },
+      "revId": "d59fbffc3c899d688235f9934cd110a365b03a1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
