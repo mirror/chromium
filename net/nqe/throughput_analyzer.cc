@@ -9,6 +9,7 @@
 #include "base/location.h"
 #include "base/single_thread_task_runner.h"
 #include "net/base/host_port_pair.h"
+#include "net/base/load_timing_info.h"
 #include "net/base/network_activity_monitor.h"
 #include "net/base/url_util.h"
 #include "net/nqe/network_quality_estimator_params.h"
@@ -40,8 +41,6 @@ ThroughputAnalyzer::ThroughputAnalyzer(
     const NetworkQualityEstimatorParams* params,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
     ThroughputObservationCallback throughput_observation_callback,
-    bool use_local_host_requests_for_tests,
-    bool use_smaller_responses_for_tests,
     const NetLogWithSource& net_log)
     : params_(params),
       task_runner_(task_runner),
@@ -50,8 +49,8 @@ ThroughputAnalyzer::ThroughputAnalyzer(
       window_start_time_(base::TimeTicks()),
       bits_received_at_window_start_(0),
       disable_throughput_measurements_(false),
-      use_localhost_requests_for_tests_(use_local_host_requests_for_tests),
-      use_small_responses_for_tests_(use_smaller_responses_for_tests),
+      use_localhost_requests_for_tests_(false),
+      use_small_responses_for_tests_(false),
       net_log_(net_log) {
   DCHECK(params_);
   DCHECK(task_runner_);
@@ -120,8 +119,6 @@ void ThroughputAnalyzer::NotifyStartTransaction(const URLRequest& request) {
     accuracy_degrading_requests_.insert(&request);
 
     BoundRequestsSize();
-    if (disable_throughput_measurements_)
-      return;
 
     // Call EndThroughputObservationWindow since observations cannot be
     // recorded in the presence of requests that degrade throughput computation
