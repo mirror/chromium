@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e67642d9_1eba3483",
+        "filename": "cc/output/gl_renderer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1116015
+      },
+      "writtenOn": "2017-07-21T15:21:58Z",
+      "side": 1,
+      "message": "You\u0027re right. Since background_image is written into params at the same place, it makes sense to store the offset + subset in the params as well.",
+      "parentUuid": "834fcc6c_73aa27ca",
+      "revId": "71dbacf1a58c401079c7990f4b498ac6b28ea043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0135238_d3d6c5ce",
         "filename": "cc/output/gl_renderer.cc",
         "patchSetId": 2
@@ -107,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "599afcf6_a1cf28a3",
+        "filename": "cc/output/gl_renderer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1156,
+      "author": {
+        "id": 1116015
+      },
+      "writtenOn": "2017-07-21T15:21:58Z",
+      "side": 1,
+      "message": "Ahh, ok. Since background_image is written here, it makes sense to store the offset + subset in the params as well.",
+      "parentUuid": "641aeeaf_53efd74d",
+      "revId": "71dbacf1a58c401079c7990f4b498ac6b28ea043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0997ae1e_d3a7c6eb",
         "filename": "cc/output/shader.cc",
         "patchSetId": 2
@@ -136,6 +172,23 @@
       "side": 1,
       "message": "Ok.",
       "parentUuid": "0997ae1e_d3a7c6eb",
+      "revId": "71dbacf1a58c401079c7990f4b498ac6b28ea043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2a93b48_066f6128",
+        "filename": "cc/output/shader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1116015
+      },
+      "writtenOn": "2017-07-21T15:21:58Z",
+      "side": 1,
+      "message": "Could we do this divide once on the CPU instead, as foreground filters do (see https://cs.chromium.org/chromium/src/cc/output/gl_renderer.cc?q\u003dgl_renderer.cc\u0026sq\u003dpackage:chromium\u0026l\u003d1374), and then add a separate set of texture coords for the filtered backdrop? This would be faster than doing it per-fragment in the shader.",
       "revId": "71dbacf1a58c401079c7990f4b498ac6b28ea043",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
