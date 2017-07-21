@@ -34,12 +34,12 @@ CryptAuthGCMManagerImpl::CryptAuthGCMManagerImpl(gcm::GCMDriver* gcm_driver,
                                                  PrefService* pref_service)
     : gcm_driver_(gcm_driver),
       pref_service_(pref_service),
-      registration_in_progress_(false),
       weak_ptr_factory_(this) {
 }
 
 CryptAuthGCMManagerImpl::~CryptAuthGCMManagerImpl() {
-  if (gcm_driver_->GetAppHandler(kCryptAuthGCMAppId) == this)
+  if (!gcm_is_shutdown_ &&
+      gcm_driver_->GetAppHandler(kCryptAuthGCMAppId) == this)
     gcm_driver_->RemoveAppHandler(kCryptAuthGCMAppId);
 }
 
@@ -81,6 +81,7 @@ void CryptAuthGCMManagerImpl::RemoveObserver(Observer* observer) {
 }
 
 void CryptAuthGCMManagerImpl::ShutdownHandler() {
+  gcm_is_shutdown_ = true;
 }
 
 void CryptAuthGCMManagerImpl::OnStoreReset() {
