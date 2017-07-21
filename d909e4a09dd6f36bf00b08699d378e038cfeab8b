@@ -16,6 +16,24 @@
       "revId": "d909e4a09dd6f36bf00b08699d378e038cfeab8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce5cb93f_5bda76de",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-21T18:22:45Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "73cfceae_4525b41b",
+      "revId": "d909e4a09dd6f36bf00b08699d378e038cfeab8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
