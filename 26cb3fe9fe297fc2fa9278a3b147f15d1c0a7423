@@ -22,6 +22,30 @@
       "revId": "26cb3fe9fe297fc2fa9278a3b147f15d1c0a7423",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc77d81a_b3e2726c",
+        "filename": "components/history/core/browser/history_backend.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 493,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-21T09:03:14Z",
+      "side": 1,
+      "message": "Done, let me know if this is what you had in mind.",
+      "parentUuid": "af564d23_9342e9d8",
+      "range": {
+        "startLine": 493,
+        "startChar": 15,
+        "endLine": 493,
+        "endChar": 38
+      },
+      "revId": "26cb3fe9fe297fc2fa9278a3b147f15d1c0a7423",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
