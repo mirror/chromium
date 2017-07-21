@@ -411,6 +411,7 @@ void FragmentShader::Init(GLES2Interface* context,
     uniforms.push_back("s_backdropTexture");
     uniforms.push_back("s_originalBackdropTexture");
     uniforms.push_back("backdropRect");
+    uniforms.push_back("originalBackdropRect");
   }
   if (mask_mode_ != NO_MASK) {
     uniforms.push_back("s_mask");
@@ -467,6 +468,7 @@ void FragmentShader::Init(GLES2Interface* context,
     backdrop_location_ = locations[index++];
     original_backdrop_location_ = locations[index++];
     backdrop_rect_location_ = locations[index++];
+    original_backdrop_rect_location_ = locations[index++];
   }
   if (mask_mode_ != NO_MASK) {
     mask_sampler_location_ = locations[index++];
@@ -528,21 +530,26 @@ std::string FragmentShader::SetBlendModeFunctions(
     uniform sampler2D s_backdropTexture;
     uniform sampler2D s_originalBackdropTexture;
     uniform TexCoordPrecision vec4 backdropRect;
+    uniform TexCoordPrecision vec4 originalBackdropRect;
   });
 
   std::string mixFunction;
   if (mask_for_background_) {
     mixFunction = SHADER0([]() {
-      vec4 MixBackdrop(TexCoordPrecision vec2 bgTexCoord, float mask) {
+      vec4 MixBackdrop(TexCoordPrecision vec2 bgTexCoord,
+                       TexCoordPrecision vec2 origBgTexCoord,
+                       float mask) {
         vec4 backdrop = texture2D(s_backdropTexture, bgTexCoord);
         vec4 original_backdrop =
-            texture2D(s_originalBackdropTexture, bgTexCoord);
+            texture2D(s_originalBackdropTexture, origBgTexCoord);
         return mix(original_backdrop, backdrop, mask);
       }
     });
   } else {
     mixFunction = SHADER0([]() {
-      vec4 MixBackdrop(TexCoordPrecision vec2 bgTexCoord, float mask) {
+      vec4 MixBackdrop(TexCoordPrecision vec2 bgTexCoord,
+                       TexCoordPrecision vec2 origBgTexCoord,
+                       float mask) {
         return texture2D(s_backdropTexture, bgTexCoord);
       }
     });
@@ -553,7 +560,11 @@ std::string FragmentShader::SetBlendModeFunctions(
       TexCoordPrecision vec2 bgTexCoord = gl_FragCoord.xy - backdropRect.xy;
       bgTexCoord.x /= backdropRect.z;
       bgTexCoord.y /= backdropRect.w;
-      return MixBackdrop(bgTexCoord, mask);
+      TexCoordPrecision vec2 origBgTexCoord =
+          gl_FragCoord.xy - originalBackdropRect.xy;
+      origBgTexCoord.x /= originalBackdropRect.z;
+      origBgTexCoord.y /= originalBackdropRect.w;
+      return MixBackdrop(bgTexCoord, origBgTexCoord, mask);
     }
 
     vec4 ApplyBlendMode(vec4 src, float mask) {
