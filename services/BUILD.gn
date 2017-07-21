@@ -45,7 +45,7 @@ service_test("services_unittests") {
       deps += [ "//services/ui/demo:tests" ]
     }
 
-    if (use_ozone || (!is_chromeos && !is_mac && !is_ios)) {
+    if (use_ozone || !is_chromeos) {
       deps += [ "//services/ui/ws:tests" ]
     }
   }
@@ -102,7 +102,7 @@ catalog("services_unittests_catalog") {
       catalog_deps += [ "//services/ui/demo:tests_catalog" ]
     }
 
-    if (use_ozone || (!is_chromeos && !is_ios)) {
+    if (use_ozone || !is_chromeos) {
       catalog_deps += [ "//services/ui/ws:tests_catalog" ]
     }
   }

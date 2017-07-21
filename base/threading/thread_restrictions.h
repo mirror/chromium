@@ -64,11 +64,6 @@ namespace edk {
 class ScopedIPCSupport;
 }
 }
-namespace ui {
-class CommandBufferClientImpl;
-class CommandBufferLocal;
-class GpuState;
-}
 namespace net {
 class NetworkChangeNotifierMac;
 namespace internal {
@@ -81,6 +76,7 @@ class AutoThread;
 }
 
 namespace ui {
+class ClientGpuMemoryBufferManager;
 class WindowResizeHelperMac;
 }
 
@@ -206,6 +202,7 @@ class BASE_EXPORT ThreadRestrictions {
   friend class cc::SingleThreadTaskGraphRunner;
   friend class content::CategorizedWorkerPool;
   friend class remoting::AutoThread;
+  friend class ui::ClientGpuMemoryBufferManager;
   friend class ui::WindowResizeHelperMac;
   friend class MessagePumpDefault;
   friend class SequencedWorkerPool;
@@ -216,9 +213,6 @@ class BASE_EXPORT ThreadRestrictions {
   friend class android::JavaHandlerThread;
   friend class mojo::SyncCallRestrictions;
   friend class mojo::edk::ScopedIPCSupport;
-  friend class ui::CommandBufferClientImpl;
-  friend class ui::CommandBufferLocal;
-  friend class ui::GpuState;
 
   // END ALLOWED USAGE.
   // BEGIN USAGE THAT NEEDS TO BE FIXED.

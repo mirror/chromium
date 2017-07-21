@@ -206,6 +206,7 @@ BrowserGpuChannelHostFactory::BrowserGpuChannelHostFactory()
       gpu_memory_buffer_manager_(
           new BrowserGpuMemoryBufferManager(gpu_client_id_,
                                             gpu_client_tracing_id_)) {
+  // XXX(sad): This should move into the embedded ui service.
   if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kDisableGpuShaderDiskCache)) {
     DCHECK(GetContentClient());

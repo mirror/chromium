@@ -4,6 +4,7 @@
   "interface_provider_specs": {
     "service_manager:connector": {
       "provides": {
+        "browser": [ "ui::mojom::Gpu" ],
         "gpu": [
           "content::mojom::FieldTrialRecorder",
           "media::mojom::AndroidOverlayProvider"
@@ -68,6 +69,7 @@
           "ash",
           "display",
           "memory_instrumentation",
+          "ui",
           "url_keyed_metrics",
           "geolocation_config"
         ],

@@ -9,10 +9,6 @@ import("//services/service_manager/public/cpp/service.gni")
 import("//services/service_manager/public/service_manifest.gni")
 import("//services/service_manager/public/tools/test/service_test.gni")
 
-# In external window mode, top-level windows are native platform windows i.e.
-# not children of a Chrome OS window manager's root window.
-is_external_mode = use_ozone && !is_chromeos
-
 static_library("lib") {
   sources = [
     "accelerator.cc",
@@ -194,124 +190,130 @@ static_library("test_interface") {
   ]
 }
 
-static_library("test_support") {
-  testonly = true
+if (use_aura) {
+  # In external window mode, top-level windows are native platform windows i.e.
+  # not children of a Chrome OS window manager's root window.
+  is_external_mode = use_ozone && !is_chromeos
 
-  sources = [
-    "test_change_tracker.cc",
-    "test_change_tracker.h",
-    "window_server_service_test_base.cc",
-    "window_server_service_test_base.h",
-  ]
+  static_library("test_support") {
+    testonly = true
 
-  if (!is_external_mode) {
-    # WindowServerTestBase assumes an initial display (and root) is provided
-    # at startup, which is not the case on platforms running external window
-    # mode.
-    sources += [
-      "window_server_test_base.cc",
-      "window_server_test_base.h",
+    sources = [
+      "test_change_tracker.cc",
+      "test_change_tracker.h",
+      "window_server_service_test_base.cc",
+      "window_server_service_test_base.h",
+    ]
+
+    if (!is_external_mode) {
+      # WindowServerTestBase assumes an initial display (and root) is provided
+      # at startup, which is not the case on platforms running external window
+      # mode.
+      sources += [
+        "window_server_test_base.cc",
+        "window_server_test_base.h",
+      ]
+    }
+
+    deps = [
+      "//base",
+      "//base/test:test_config",
+      "//components/viz/test:test_support",
+      "//mojo/common",
+      "//mojo/public/cpp/bindings:bindings",
+      "//services/service_manager/public/cpp",
+      "//services/service_manager/public/cpp:service_test_support",
+      "//services/ui/common:mus_common",
+      "//services/ui/public/cpp",
+      "//services/ui/public/interfaces",
+      "//testing/gtest",
+      "//ui/aura",
+      "//ui/display:test_support",
+      "//ui/gfx/geometry/mojo",
+      "//ui/gl",
+      "//ui/wm",
     ]
   }
 
-  deps = [
-    "//base",
-    "//base/test:test_config",
-    "//components/viz/test:test_support",
-    "//mojo/common",
-    "//mojo/public/cpp/bindings:bindings",
-    "//services/service_manager/public/cpp",
-    "//services/service_manager/public/cpp:service_test_support",
-    "//services/ui/common:mus_common",
-    "//services/ui/public/cpp",
-    "//services/ui/public/interfaces",
-    "//testing/gtest",
-    "//ui/aura",
-    "//ui/display:test_support",
-    "//ui/gfx/geometry/mojo",
-    "//ui/gl",
-    "//ui/wm",
-  ]
-}
+  source_set("tests") {
+    testonly = true
 
-source_set("tests") {
-  testonly = true
+    sources = [
+      "cursor_location_manager_unittest.cc",
+      "cursor_state_unittest.cc",
+      "cursor_unittest.cc",
+      "display_unittest.cc",
+      "drag_controller_unittest.cc",
+      "event_dispatcher_unittest.cc",
+      "event_matcher_unittest.cc",
+      "focus_controller_unittest.cc",
+      "frame_generator_unittest.cc",
+      "gpu_host_unittest.cc",
+      "server_window_drawn_tracker_unittest.cc",
+      "test_server_window_delegate.cc",
+      "test_server_window_delegate.h",
+      "test_utils.cc",
+      "test_utils.h",
+      "transient_windows_unittest.cc",
+      "user_activity_monitor_unittest.cc",
+      "user_display_manager_unittest.cc",
+      "window_finder_unittest.cc",
+      "window_manager_state_unittest.cc",
+      "window_tree_client_unittest.cc",
+      "window_tree_unittest.cc",
+    ]
 
-  sources = [
-    "cursor_location_manager_unittest.cc",
-    "cursor_state_unittest.cc",
-    "cursor_unittest.cc",
-    "display_unittest.cc",
-    "drag_controller_unittest.cc",
-    "event_dispatcher_unittest.cc",
-    "event_matcher_unittest.cc",
-    "focus_controller_unittest.cc",
-    "frame_generator_unittest.cc",
-    "gpu_host_unittest.cc",
-    "server_window_drawn_tracker_unittest.cc",
-    "test_server_window_delegate.cc",
-    "test_server_window_delegate.h",
-    "test_utils.cc",
-    "test_utils.h",
-    "transient_windows_unittest.cc",
-    "user_activity_monitor_unittest.cc",
-    "user_display_manager_unittest.cc",
-    "window_finder_unittest.cc",
-    "window_manager_state_unittest.cc",
-    "window_tree_client_unittest.cc",
-    "window_tree_unittest.cc",
-  ]
+    if (!is_external_mode) {
+      # A window manager client is not needed on platforms running external
+      # window mode, since the host system is always the window manager.
+      sources += [ "window_manager_client_unittest.cc" ]
+    }
 
-  if (!is_external_mode) {
-    # A window manager client is not needed on platforms running external
-    # window mode, since the host system is always the window manager.
-    sources += [ "window_manager_client_unittest.cc" ]
+    # TODO(jamescook): Run this test on non-ozone platforms. This will require
+    # initializing all the platform-specific windowing support.
+    if (use_ozone) {
+      sources += [ "platform_display_default_unittest.cc" ]
+    }
+
+    deps = [
+      ":lib",
+      ":test_support",
+      "//base",
+      "//base/test:test_config",
+      "//base/test:test_support",
+      "//cc:cc",
+      "//cc:test_support",
+      "//components/viz/test:test_support",
+      "//gpu/ipc/client",
+      "//mojo/public/cpp/bindings:bindings",
+      "//services/service_manager/public/cpp",
+      "//services/service_manager/public/cpp:service_test_support",
+      "//services/service_manager/public/interfaces",
+      "//services/ui/common:mus_common",
+      "//services/ui/common:task_runner_test_base",
+      "//services/ui/gpu:gpu",
+      "//services/ui/public/cpp",
+      "//services/ui/public/interfaces",
+      "//testing/gtest",
+      "//third_party/mesa:osmesa",
+      "//ui/aura",
+      "//ui/aura:test_support",
+      "//ui/events",
+      "//ui/gfx",
+      "//ui/gfx:test_support",
+      "//ui/gfx/geometry",
+      "//ui/gfx/geometry/mojo",
+      "//ui/gl",
+    ]
   }
 
-  # TODO(jamescook): Run this test on non-ozone platforms. This will require
-  # initializing all the platform-specific windowing support.
-  if (use_ozone) {
-    sources += [ "platform_display_default_unittest.cc" ]
+  service_manifest("unittests_manifest") {
+    name = "ui_service_unittests"
+    source = "test_manifest.json"
   }
 
-  deps = [
-    ":lib",
-    ":test_support",
-    "//base",
-    "//base/test:test_config",
-    "//base/test:test_support",
-    "//cc:cc",
-    "//cc:test_support",
-    "//components/viz/test:test_support",
-    "//gpu/ipc/client",
-    "//mojo/public/cpp/bindings:bindings",
-    "//services/service_manager/public/cpp",
-    "//services/service_manager/public/cpp:service_test_support",
-    "//services/service_manager/public/interfaces",
-    "//services/ui/common:mus_common",
-    "//services/ui/common:task_runner_test_base",
-    "//services/ui/gpu:gpu",
-    "//services/ui/public/cpp",
-    "//services/ui/public/interfaces",
-    "//testing/gtest",
-    "//third_party/mesa:osmesa",
-    "//ui/aura",
-    "//ui/aura:test_support",
-    "//ui/events",
-    "//ui/gfx",
-    "//ui/gfx:test_support",
-    "//ui/gfx/geometry",
-    "//ui/gfx/geometry/mojo",
-    "//ui/gl",
-  ]
-}
-
-service_manifest("unittests_manifest") {
-  name = "ui_service_unittests"
-  source = "test_manifest.json"
-}
-
-catalog("tests_catalog") {
-  testonly = true
-  embedded_services = [ ":unittests_manifest" ]
+  catalog("tests_catalog") {
+    testonly = true
+    embedded_services = [ ":unittests_manifest" ]
+  }
 }

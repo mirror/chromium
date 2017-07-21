@@ -13,8 +13,11 @@ group("all") {
   deps = [
     ":ui",
     "//services/ui/ime/test_ime_driver",
-    "//services/ui/test_wm",
   ]
+
+  if (use_aura) {
+    deps += [ "//services/ui/test_wm" ]
+  }
 }
 
 service("ui") {

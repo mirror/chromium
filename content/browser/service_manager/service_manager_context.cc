@@ -18,10 +18,13 @@
 #include "base/process/process_handle.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/trace_event/memory_dump_manager.h"
 #include "content/browser/child_process_launcher.h"
+#include "content/browser/gpu/gpu_client.h"
 #include "content/browser/gpu/gpu_process_host.h"
 #include "content/browser/service_manager/common_browser_interfaces.h"
 #include "content/browser/wake_lock/wake_lock_context_host.h"
+#include "content/common/child_process_host_impl.h"
 #include "content/common/service_manager/service_manager_connection_impl.h"
 #include "content/grit/content_resources.h"
 #include "content/public/browser/browser_thread.h"
@@ -56,6 +59,7 @@
 #include "services/service_manager/runner/host/service_process_launcher.h"
 #include "services/service_manager/service_manager.h"
 #include "services/shape_detection/public/interfaces/constants.mojom.h"
+#include "services/ui/public/interfaces/constants.mojom.h"
 #include "services/video_capture/public/cpp/constants.h"
 #include "services/video_capture/public/interfaces/constants.mojom.h"
 
@@ -64,6 +68,8 @@
 #include "base/android/scoped_java_ref.h"
 #include "jni/ContentNfcDelegate_jni.h"
 #endif
+
+#include "content/browser/gpu/browser_gpu_memory_buffer_manager.h"
 
 namespace content {
 
@@ -157,6 +163,64 @@ class BuiltinManifestProvider : public catalog::ManifestProvider {
   std::map<std::string, std::unique_ptr<base::Value>> manifests_;
 
   DISALLOW_COPY_AND_ASSIGN(BuiltinManifestProvider);
+};
+
+// Created and lives on the IO thread.
+class EmbeddedUIService : public service_manager::Service {
+ public:
+  EmbeddedUIService()
+      : browser_client_id_(
+            ChildProcessHostImpl::GenerateChildProcessUniqueId()),
+        gpu_memory_buffer_manager_(
+            new BrowserGpuMemoryBufferManager(browser_client_id_, 1)),
+        weak_ptr_factory_(this) {
+    DCHECK_CURRENTLY_ON(BrowserThread::IO);
+    base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
+        gpu_memory_buffer_manager_.get(), "BrowserGpuMemoryBufferManager",
+        base::ThreadTaskRunnerHandle::Get());
+  }
+
+  ~EmbeddedUIService() override {
+    DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+    base::trace_event::MemoryDumpManager::GetInstance()->UnregisterDumpProvider(
+        gpu_memory_buffer_manager_.get());
+  }
+
+  // service_manager::Service:
+  void OnStart() override {
+    DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+    registry_.AddInterface(
+        base::Bind(&EmbeddedUIService::BindGpuRequest,
+                   weak_ptr_factory_.GetWeakPtr()),
+        BrowserThread::GetTaskRunnerForThread(BrowserThread::IO));
+  }
+
+  void OnBindInterface(const service_manager::BindSourceInfo& remote_info,
+                       const std::string& interface_name,
+                       mojo::ScopedMessagePipeHandle handle) override {
+    DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+    CHECK_EQ(remote_info.identity.name(), mojom::kBrowserServiceName);
+    registry_.BindInterface(interface_name, std::move(handle));
+  }
+
+ private:
+  void BindGpuRequest(ui::mojom::GpuRequest request) {
+    DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+    if (!gpu_client_) {
+      constexpr bool privileged_client = true;
+      gpu_client_.reset(new GpuClient(browser_client_id_, privileged_client));
+    }
+    gpu_client_->Add(std::move(request));
+  }
+
+  const int browser_client_id_;
+  service_manager::BinderRegistry registry_;
+  std::unique_ptr<BrowserGpuMemoryBufferManager> gpu_memory_buffer_manager_;
+  std::unique_ptr<GpuClient> gpu_client_;
+  THREAD_CHECKER(thread_checker_);
+  base::WeakPtrFactory<EmbeddedUIService> weak_ptr_factory_;
+
+  DISALLOW_COPY_AND_ASSIGN(EmbeddedUIService);
 };
 
 class NullServiceProcessLauncherFactory
@@ -316,6 +380,18 @@ ServiceManagerContext::ServiceManagerContext() {
   device_info.task_runner = base::ThreadTaskRunnerHandle::Get();
   packaged_services_connection_->AddEmbeddedService(device::mojom::kServiceName,
                                                     device_info);
+
+  if (!service_manager::ServiceManagerIsRemote()) {
+    service_manager::EmbeddedServiceInfo ui_info;
+    ui_info.factory = base::Bind([] {
+      return std::unique_ptr<service_manager::Service>(
+          base::MakeUnique<EmbeddedUIService>());
+    });
+    ui_info.task_runner =
+        BrowserThread::GetTaskRunnerForThread(BrowserThread::IO);
+    packaged_services_connection_->AddEmbeddedService(ui::mojom::kServiceName,
+                                                      ui_info);
+  }
 
   if (base::FeatureList::IsEnabled(features::kGlobalResourceCoordinator)) {
     service_manager::EmbeddedServiceInfo resource_coordinator_info;

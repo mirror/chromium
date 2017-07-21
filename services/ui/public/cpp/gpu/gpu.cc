@@ -151,6 +151,13 @@ gpu::GpuMemoryBufferManager* Gpu::GetGpuMemoryBufferManager() {
   return gpu_memory_buffer_manager_.get();
 }
 
+void Gpu::CloseChannel() {
+  if (gpu_channel_) {
+    gpu_channel_->DestroyChannel();
+    gpu_channel_ = nullptr;
+  }
+}
+
 scoped_refptr<gpu::GpuChannelHost> Gpu::GetGpuChannel() {
   DCHECK(IsMainThread());
   if (gpu_channel_ && gpu_channel_->IsLost()) {

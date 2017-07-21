@@ -82,6 +82,10 @@ class ClientNativePixmapFactory;
 }  // namespace gfx
 #endif
 
+namespace ui {
+class Gpu;
+}
+
 namespace viz {
 class FrameSinkManagerImpl;
 class HostFrameSinkManager;
@@ -178,6 +182,7 @@ class CONTENT_EXPORT BrowserMainLoop {
   scoped_refptr<base::SingleThreadTaskRunner> GetResizeTaskRunner();
 
   gpu::GpuChannelEstablishFactory* gpu_channel_establish_factory() const;
+  ui::Gpu* gpu() const { return gpu_.get(); }
 
 #if defined(OS_ANDROID)
   void SynchronouslyFlushStartupTasks();
@@ -326,6 +331,7 @@ class CONTENT_EXPORT BrowserMainLoop {
   // Members initialized in |BrowserThreadsStarted()| --------------------------
   std::unique_ptr<ServiceManagerContext> service_manager_context_;
   std::unique_ptr<mojo::edk::ScopedIPCSupport> mojo_ipc_support_;
+  std::unique_ptr<ui::Gpu> gpu_;
 
   // |user_input_monitor_| has to outlive |audio_manager_|, so declared first.
   std::unique_ptr<media::UserInputMonitor> user_input_monitor_;
