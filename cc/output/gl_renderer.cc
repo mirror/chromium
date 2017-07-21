@@ -225,6 +225,8 @@ struct DrawRenderPassDrawQuadParams {
 
   // Backdrop bounding box.
   gfx::Rect background_rect;
+  SkIPoint background_offset = {0, 0};
+  SkIRect background_subset = {0, 0, 0, 0};
 
   // Filtered background texture.
   sk_sp<SkImage> background_image;
@@ -924,9 +926,11 @@ sk_sp<SkImage> GLRenderer::ApplyBackgroundFilters(
     const FilterOperations& background_filters,
     ScopedResource* background_texture,
     const gfx::RectF& rect,
-    const gfx::RectF& unclipped_rect) {
+    const gfx::RectF& unclipped_rect,
+    SkIPoint* offset,
+    SkIRect* subset,
+    bool flip_texture) {
   DCHECK(ShouldApplyBackgroundFilters(quad, &background_filters));
-  auto use_gr_context = ScopedUseGrContext::Create(this);
 
   gfx::Vector2dF clipping_offset =
       (rect.top_right() - unclipped_rect.top_right()) +
@@ -935,58 +939,14 @@ sk_sp<SkImage> GLRenderer::ApplyBackgroundFilters(
       background_filters, gfx::SizeF(background_texture->size()),
       clipping_offset);
 
-  // TODO(senorblanco): background filters should be moved to the
-  // makeWithFilter fast-path, and go back to calling ApplyImageFilter().
-  // See http://crbug.com/613233.
-  if (!filter || !use_gr_context)
-    return nullptr;
+  ResourceProvider::ScopedReadLockGL prefilter_contents_texture_lock(
+      resource_provider_, background_texture->id());
+  sk_sp<SkImage> background_with_filters = ApplyImageFilter(
+      ScopedUseGrContext::Create(this), rect, rect,
+      quad->filters_scale, std::move(filter), prefilter_contents_texture_lock,
+      offset, subset, flip_texture, quad->filters_origin);
 
-  ResourceProvider::ScopedReadLockGL lock(resource_provider_,
-                                          background_texture->id());
-
-  bool flip_texture = true;
-  sk_sp<SkImage> src_image =
-      WrapTexture(lock, use_gr_context->context(), flip_texture);
-  if (!src_image) {
-    TRACE_EVENT_INSTANT0(
-        "cc", "ApplyBackgroundFilters wrap background texture failed",
-        TRACE_EVENT_SCOPE_THREAD);
-    return nullptr;
-  }
-
-  // Create surface to draw into.
-  SkImageInfo dst_info =
-      SkImageInfo::MakeN32Premul(rect.width(), rect.height());
-  sk_sp<SkSurface> surface = SkSurface::MakeRenderTarget(
-      use_gr_context->context(), SkBudgeted::kYes, dst_info);
-  if (!surface) {
-    TRACE_EVENT_INSTANT0("cc",
-                         "ApplyBackgroundFilters surface allocation failed",
-                         TRACE_EVENT_SCOPE_THREAD);
-    return nullptr;
-  }
-
-  // Big filters can sometimes fallback to CPU. Therefore, we need
-  // to disable subnormal floats for performance and security reasons.
-  ScopedSubnormalFloatDisabler disabler;
-  SkMatrix local_matrix;
-  local_matrix.setScale(quad->filters_scale.x(), quad->filters_scale.y());
-
-  SkPaint paint;
-  paint.setImageFilter(filter->makeWithLocalMatrix(local_matrix));
-  surface->getCanvas()->translate(-rect.x(), -rect.y());
-  surface->getCanvas()->drawImage(src_image, rect.x(), rect.y(), &paint);
-  // Flush the drawing before source texture read lock goes out of scope.
-  // Skia API does not guarantee that when the SkImage goes out of scope,
-  // its externally referenced resources would force the rendering to be
-  // flushed.
-  surface->getCanvas()->flush();
-  sk_sp<SkImage> image = surface->makeImageSnapshot();
-  if (!image || !image->isTextureBacked()) {
-    return nullptr;
-  }
-
-  return image;
+  return background_with_filters;
 }
 
 // Map device space quad to local space. Device_transform has no 3d
@@ -1192,7 +1152,9 @@ void GLRenderer::UpdateRPDQShadersForBlending(
         // pixels' coordinate space.
         params->background_image = ApplyBackgroundFilters(
             quad, *params->background_filters, params->background_texture.get(),
-            gfx::RectF(params->background_rect), gfx::RectF(unclipped_rect));
+            gfx::RectF(params->background_rect), gfx::RectF(unclipped_rect),
+            &params->background_offset, &params->background_subset,
+            params->flip_texture);
         if (params->background_image) {
           params->background_image_id =
               skia::GrBackendObjectToGrGLTextureInfo(
@@ -1209,7 +1171,9 @@ void GLRenderer::UpdateRPDQShadersForBlending(
       params->use_shaders_for_blending = false;
     } else if (params->background_image_id) {
       // Reset original background texture if there is not any mask
-      if (!quad->mask_resource_id())
+      // and params->background_image is not equal params->background_texture.
+      if (!quad->mask_resource_id() &&
+          params->background_texture->id() != params->background_image_id)
         params->background_texture.reset();
     } else if (CanApplyBlendModeUsingBlendFunc(blend_mode) &&
                ShouldApplyBackgroundFilters(quad, params->background_filters)) {
@@ -1451,10 +1415,29 @@ void GLRenderer::UpdateRPDQUniforms(DrawRenderPassDrawQuadParams* params) {
 
     gl_->Uniform1i(current_program_->backdrop_location(), ++last_texture_unit);
 
-    gl_->Uniform4f(current_program_->backdrop_rect_location(),
+    gfx::Size bg_texture_size;
+    gfx::RectF tex_rect(params->background_rect);
+    if (params->background_image) {
+      bg_texture_size.set_width(params->background_image->width());
+      bg_texture_size.set_height(params->background_image->height());
+
+      tex_rect.set_width(bg_texture_size.width());
+      tex_rect.set_height(bg_texture_size.height());
+      tex_rect.set_x(
+          params->background_rect.x() - params->background_subset.x());
+      tex_rect.set_y(
+          params->background_rect.y() + params->background_subset.y() -
+          (bg_texture_size.height() - params->background_subset.height()));
+    }
+
+    gl_->Uniform4f(current_program_->original_backdrop_rect_location(),
                    params->background_rect.x(), params->background_rect.y(),
                    params->background_rect.width(),
                    params->background_rect.height());
+
+    gl_->Uniform4f(current_program_->backdrop_rect_location(),
+                   tex_rect.x(), tex_rect.y(),
+                   tex_rect.width(), tex_rect.height());
 
     if (params->background_image_id) {
       gl_->ActiveTexture(GL_TEXTURE0 + last_texture_unit);
