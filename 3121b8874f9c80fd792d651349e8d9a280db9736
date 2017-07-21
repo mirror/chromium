@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9d019292_1a1e1f45",
+        "filename": "cc/animation/animation_player.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 748,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-21T15:13:05Z",
+      "side": 1,
+      "message": "Great point. Done.",
+      "parentUuid": "e6cb0ad7_dd9a7840",
+      "revId": "3121b8874f9c80fd792d651349e8d9a280db9736",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3041e6f1_8e28bcc5",
         "filename": "cc/trees/target_property.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "3121b8874f9c80fd792d651349e8d9a280db9736",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcdf4691_345c75b6",
+        "filename": "cc/trees/target_property.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-21T15:13:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3041e6f1_8e28bcc5",
+      "revId": "3121b8874f9c80fd792d651349e8d9a280db9736",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "eecf1532_bccc1732",
+        "filename": "chrome/browser/vr/elements/transient_url_bar.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-21T15:13:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e583716d_4c59663d",
+      "revId": "3121b8874f9c80fd792d651349e8d9a280db9736",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91be8f9d_468ba304",
         "filename": "chrome/browser/vr/ui_scene_manager.cc",
         "patchSetId": 7
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "01a9f0a7_18f0b746",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-21T15:13:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91be8f9d_468ba304",
+      "revId": "3121b8874f9c80fd792d651349e8d9a280db9736",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8075daf_485a88c3",
         "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
         "patchSetId": 7
@@ -84,6 +156,24 @@
       "revId": "3121b8874f9c80fd792d651349e8d9a280db9736",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15c3c14e_05365b8d",
+        "filename": "chrome/browser/vr/ui_scene_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-21T15:13:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8075daf_485a88c3",
+      "revId": "3121b8874f9c80fd792d651349e8d9a280db9736",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
