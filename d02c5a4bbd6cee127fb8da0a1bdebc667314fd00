@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c66acf9_b586c5e6",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-21T18:50:31Z",
+      "side": 1,
+      "message": "Pass ints by value, since they are small and the indirection of a const ref is just an efficiency loss.",
+      "revId": "d02c5a4bbd6cee127fb8da0a1bdebc667314fd00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d981663e_952bd720",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-21T18:50:31Z",
+      "side": 1,
+      "message": "How tightly do you control the pipeline to this function?  If the original value here is coming from Finch, will you be validating it locally art the receiver side to ensure that it\u0027s a meaningful number even in the face of server/network issues?\n\nIf so, this code is fine -- preferable to being defensive.  If the receiving code won\u0027t be doing that validation, you\u0027ll want to fall back to a safe default here.",
+      "revId": "d02c5a4bbd6cee127fb8da0a1bdebc667314fd00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3427a2b4_867d2f0e",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo_dialog_browsertest.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-21T18:50:31Z",
+      "side": 1,
+      "message": "Nit: Remove \"the following\", add trailing period.",
+      "revId": "d02c5a4bbd6cee127fb8da0a1bdebc667314fd00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

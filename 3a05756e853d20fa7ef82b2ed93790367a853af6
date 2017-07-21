@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "b3fc62bd_19b8f68c",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-21T18:50:31Z",
+      "side": 1,
+      "message": "And you\u0027d have to carry the specifier around?  That\u0027d still be less memory overhead than carrying the whole string, but point taken.  Why not move this AddChildView() call to the constructor, then?  In fact in general it seems like everything in Init() could just go there and you could drop this override.",
+      "parentUuid": "e1f00141_7ba84331",
+      "revId": "3a05756e853d20fa7ef82b2ed93790367a853af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dde56e1b_99493056",
         "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
         "patchSetId": 24
