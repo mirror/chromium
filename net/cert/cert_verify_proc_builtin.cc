@@ -221,7 +221,7 @@ void DoVerify(X509Certificate* input_cert,
       verification_time, KeyPurpose::SERVER_AUTH, InitialExplicitPolicy::kFalse,
       {AnyPolicy()} /* user_initial_policy_set*/,
       InitialPolicyMappingInhibit::kFalse, InitialAnyPolicyInhibit::kFalse,
-      &result);
+      nullptr, &result);
 
   // Allow the path builder to discover the explicitly provided intermediates in
   // |input_cert|.

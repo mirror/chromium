@@ -47,7 +47,7 @@ class PathBuilderDelegate {
         test.chain.front(), &trust_store, &signature_policy, test.time,
         test.key_purpose, test.initial_explicit_policy,
         test.user_initial_policy_set, test.initial_policy_mapping_inhibit,
-        test.initial_any_policy_inhibit, &result);
+        test.initial_any_policy_inhibit, nullptr, &result);
     path_builder.AddCertIssuerSource(&intermediate_cert_issuer_source);
 
     path_builder.Run();

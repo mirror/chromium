@@ -350,6 +350,8 @@ const ParsedCertificate* CertPath::GetTrustedCert() const {
   return nullptr;
 }
 
+PathChecker::~PathChecker() = default;
+
 // CertPathIter generates possible paths from |cert| to a trust anchor in
 // |trust_store|, using intermediates from the |cert_issuer_source| objects if
 // necessary.
@@ -555,6 +557,7 @@ CertPathBuilder::CertPathBuilder(
     const std::set<der::Input>& user_initial_policy_set,
     InitialPolicyMappingInhibit initial_policy_mapping_inhibit,
     InitialAnyPolicyInhibit initial_any_policy_inhibit,
+    PathChecker* post_verification_checker,
     Result* result)
     : cert_path_iter_(new CertPathIter(std::move(cert), trust_store)),
       signature_policy_(signature_policy),
@@ -565,6 +568,7 @@ CertPathBuilder::CertPathBuilder(
       initial_policy_mapping_inhibit_(initial_policy_mapping_inhibit),
       initial_any_policy_inhibit_(initial_any_policy_inhibit),
       next_state_(STATE_NONE),
+      post_verification_checker_(post_verification_checker),
       out_result_(result) {
   result->Clear();
   // The TrustStore also implements the CertIssuerSource interface.
@@ -614,17 +618,27 @@ void CertPathBuilder::DoGetNextPathComplete() {
 
   // Verify the entire certificate chain.
   auto result_path = base::MakeUnique<ResultPath>();
+  result_path->path = next_path_;
   VerifyCertificateChain(
-      next_path_.certs, next_path_.last_cert_trust, signature_policy_, time_,
-      key_purpose_, initial_explicit_policy_, user_initial_policy_set_,
-      initial_policy_mapping_inhibit_, initial_any_policy_inhibit_,
-      &result_path->user_constrained_policy_set, &result_path->errors);
+      result_path->path.certs, result_path->path.last_cert_trust,
+      signature_policy_, time_, key_purpose_, initial_explicit_policy_,
+      user_initial_policy_set_, initial_policy_mapping_inhibit_,
+      initial_any_policy_inhibit_, &result_path->user_constrained_policy_set,
+      &result_path->errors);
   bool verify_result = !result_path->errors.ContainsHighSeverityErrors();
 
   DVLOG(1) << "CertPathBuilder VerifyCertificateChain result = "
            << verify_result << "\n"
-           << result_path->errors.ToDebugString(next_path_.certs);
-  result_path->path = next_path_;
+           << result_path->errors.ToDebugString(result_path->path.certs);
+
+  // If the path looks good so far, and a custom post-verification hook was
+  // given, run it.
+  if (verify_result && post_verification_checker_) {
+    post_verification_checker_->CheckPath(result_path->path,
+                                          &result_path->errors);
+    verify_result = !result_path->errors.ContainsHighSeverityErrors();
+  }
+
   AddResultPath(std::move(result_path));
 
   if (verify_result) {

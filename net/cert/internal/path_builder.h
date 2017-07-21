@@ -57,6 +57,14 @@ struct NET_EXPORT CertPath {
   const ParsedCertificate* GetTrustedCert() const;
 };
 
+// PathChecker is a simple interface for checking |path| and adding
+// warnings/errors to |errors|.
+class NET_EXPORT PathChecker {
+ public:
+  virtual ~PathChecker();
+  virtual void CheckPath(const CertPath& path, CertPathErrors* errors) = 0;
+};
+
 // Checks whether a certificate is trusted by building candidate paths to trust
 // anchors and verifying those paths according to RFC 5280. Each instance of
 // CertPathBuilder is used for a single verification.
@@ -115,18 +123,26 @@ class NET_EXPORT CertPathBuilder {
     DISALLOW_COPY_AND_ASSIGN(Result);
   };
 
-  // TODO(mattm): allow caller specified hook/callback to extend path
-  // verification.
-  //
   // Creates a CertPathBuilder that attempts to find a path from |cert| to a
-  // trust anchor in |trust_store|, which satisfies |signature_policy| and is
-  // valid at |time|.  Details of attempted path(s) are stored in |*result|.
+  // trust anchor in |trust_store|, which satisfies |signature_policy|, is
+  // valid at |time|, and is accepted by |post_verification_checker|.  Details
+  // of attempted path(s) are stored in |*result|.
   //
-  // The caller must keep |trust_store|, |signature_policy|, and |*result| valid
-  // for the lifetime of the CertPathBuilder.
+  // The caller must keep |trust_store|, |signature_policy|,
+  // |post_verification_checker|, and |*result| valid for the lifetime of the
+  // CertPathBuilder.
   //
   // See VerifyCertificateChain() for a more detailed explanation of the
-  // same-named parameters.
+  // same-named parameters not defined below.
+  //
+  // * |result|: Storage for the result of path building.
+  // * |post_verification_checker|: If non-null,
+  //      |post_verification_checker->CheckPath(path, errors)| will be called
+  //      for each candidate path that has passed internal verification. This
+  //      hook enables consumers to add errors to a candidate path, causing path
+  //      building to continue searching for valid paths. To mark a path as
+  //      failed, |CheckPath()| should add high-severity errors to the given
+  //      path.
   CertPathBuilder(scoped_refptr<ParsedCertificate> cert,
                   TrustStore* trust_store,
                   const SignaturePolicy* signature_policy,
@@ -136,6 +152,7 @@ class NET_EXPORT CertPathBuilder {
                   const std::set<der::Input>& user_initial_policy_set,
                   InitialPolicyMappingInhibit initial_policy_mapping_inhibit,
                   InitialAnyPolicyInhibit initial_any_policy_inhibit,
+                  PathChecker* post_verification_checker,
                   Result* result);
   ~CertPathBuilder();
 
@@ -184,6 +201,10 @@ class NET_EXPORT CertPathBuilder {
   // certificate issued by trust anchor.)
   CertPath next_path_;
   State next_state_;
+
+  // Possibly null hook for checking a candidate path after the standard checks
+  // have completed.
+  PathChecker* post_verification_checker_;
 
   Result* out_result_;
 
