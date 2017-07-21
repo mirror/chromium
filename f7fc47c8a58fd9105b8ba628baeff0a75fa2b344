@@ -1,0 +1,198 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb57e7aa_33a4f749",
+        "filename": "media/gpu/v4l2_slice_video_decode_accelerator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-07-21T06:30:07Z",
+      "side": 1,
+      "message": "Should we change LOG(ERROR) to VLOG(1). As this is going to change the behavior on release build.",
+      "revId": "f7fc47c8a58fd9105b8ba628baeff0a75fa2b344",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2a990f6_d9f4e5a8",
+        "filename": "media/gpu/v4l2_slice_video_decode_accelerator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 940,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-07-21T06:30:07Z",
+      "side": 1,
+      "message": "looks like should be same as l.947. DVLOGF(4).",
+      "revId": "f7fc47c8a58fd9105b8ba628baeff0a75fa2b344",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acf58f12_fc49e62c",
+        "filename": "media/gpu/v4l2_slice_video_decode_accelerator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 957,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-07-21T06:30:07Z",
+      "side": 1,
+      "message": "This is a useful info, let\u0027s make it 3.",
+      "range": {
+        "startLine": 957,
+        "startChar": 10,
+        "endLine": 957,
+        "endChar": 11
+      },
+      "revId": "f7fc47c8a58fd9105b8ba628baeff0a75fa2b344",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8034049b_03f9dc3d",
+        "filename": "media/gpu/v4l2_slice_video_decode_accelerator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1001,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-07-21T06:30:07Z",
+      "side": 1,
+      "message": "DVLOGF. Please also check other places that we use VLOGF(x) only for x \u003c\u003d 2.",
+      "revId": "f7fc47c8a58fd9105b8ba628baeff0a75fa2b344",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8745287_7c3c5298",
+        "filename": "media/gpu/v4l2_slice_video_decode_accelerator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1693,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-07-21T06:30:07Z",
+      "side": 1,
+      "message": "We don\u0027t create EGL for every video frame. Make it 3.",
+      "range": {
+        "startLine": 1693,
+        "startChar": 25,
+        "endLine": 1693,
+        "endChar": 26
+      },
+      "revId": "f7fc47c8a58fd9105b8ba628baeff0a75fa2b344",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47632a92_9a59dc8e",
+        "filename": "media/gpu/v4l2_slice_video_decode_accelerator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1698,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-07-21T06:30:07Z",
+      "side": 1,
+      "message": "I am still hesitate of using LOG(ERROR). \n\nIt looks like we should still keep them as DLOG(ERROR) and tried to have a DCHECK_ALWAYS_ON unittest for testing.\n\nPawel, any suggestions?",
+      "revId": "f7fc47c8a58fd9105b8ba628baeff0a75fa2b344",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9e8e806_92f36f5c",
+        "filename": "media/gpu/v4l2_slice_video_decode_accelerator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1734,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-07-21T06:30:07Z",
+      "side": 1,
+      "message": "I think 3 is correct.",
+      "range": {
+        "startLine": 1734,
+        "startChar": 15,
+        "endLine": 1734,
+        "endChar": 20
+      },
+      "revId": "f7fc47c8a58fd9105b8ba628baeff0a75fa2b344",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa6f9b99_b46d9e82",
+        "filename": "media/gpu/v4l2_slice_video_decode_accelerator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1902,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-07-21T06:30:07Z",
+      "side": 1,
+      "message": "How about 3 for this. Since DismissPicture is in level 3.",
+      "revId": "f7fc47c8a58fd9105b8ba628baeff0a75fa2b344",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fbe084c_f84affcb",
+        "filename": "media/gpu/v4l2_slice_video_decode_accelerator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1969,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-07-21T06:30:07Z",
+      "side": 1,
+      "message": "We will call ProcessPendingEventsIfNeeded whenever we dequeue a buffer. So, make it 4.",
+      "revId": "f7fc47c8a58fd9105b8ba628baeff0a75fa2b344",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc669217_4022f7ac",
+        "filename": "media/gpu/v4l2_slice_video_decode_accelerator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2036,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-07-21T06:30:07Z",
+      "side": 1,
+      "message": "Same as FinishFlush. Make it 4.",
+      "range": {
+        "startLine": 2036,
+        "startChar": 9,
+        "endLine": 2036,
+        "endChar": 10
+      },
+      "revId": "f7fc47c8a58fd9105b8ba628baeff0a75fa2b344",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
