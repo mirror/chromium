@@ -16,6 +16,23 @@
       "revId": "fbe103ad841edf01aa1a60bd7c06d3ac8a012984",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5267d598_2d6a8755",
+        "filename": "chrome/browser/ui/views/extensions/extension_popup.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-21T03:58:07Z",
+      "side": 1,
+      "message": "note this reimplements TrayBubbleContentMask in ui/views/bubble/tray_bubble_view.cc -- can we make a class called something like `RoundedRectLayerMask`?",
+      "revId": "fbe103ad841edf01aa1a60bd7c06d3ac8a012984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
