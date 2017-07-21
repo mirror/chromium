@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf0fcfae_da34333d",
+        "filename": "base/numerics/checked_math.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-21T17:22:17Z",
+      "side": 1,
+      "message": "Chromium devs typically use\n\nWARN_UNUSED_RESULT [787 results]\nhttps://cs.chromium.org/search/?q\u003dWARN_UNUSED_RESULT\u0026sq\u003dpackage:chromium\u0026type\u003dcs\n\ninstead of directly using __attribute__((warn_unused_result)) [[19 results]\nhttps://cs.chromium.org/search/?q\u003d%22_attribute__((warn_unused_result))%22\u0026sq\u003dpackage:chromium\u0026type\u003dcs\n\nThat being said, the former doesn\u0027t specify anything for MSVC!! Oversight? Either way, let\u0027s be consistent for now and use WARN_UNUSED_RESULT. I\u0027ve filed a bug to update WARN_UNUSED_RESULT.\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d747463",
+      "revId": "46ed4ac03396f9cec4f3c7f92bacc66b7582821d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
