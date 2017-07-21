@@ -251,9 +251,6 @@ extern const char kEnableNetworkServiceDescription[];
 extern const char kEnablePictureInPictureName[];
 extern const char kEnablePictureInPictureDescription[];
 
-extern const char kEnableSuggestionsHomeModernLayoutName[];
-extern const char kEnableSuggestionsHomeModernLayoutDescription[];
-
 extern const char kEnableTokenBindingName[];
 extern const char kEnableTokenBindingDescription[];
 
@@ -872,6 +869,9 @@ extern const char kBackgroundLoaderForDownloadsDescription[];
 
 extern const char kChromeHomeExpandButtonName[];
 extern const char kChromeHomeExpandButtonDescription[];
+
+extern const char kChromeHomeModernLayoutName[];
+extern const char kChromeHomeModernLayoutDescription[];
 
 extern const char kChromeHomeSwipeLogicName[];
 extern const char kChromeHomeSwipeLogicDescription[];
