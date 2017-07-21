@@ -22,6 +22,30 @@
       "revId": "899d45794064d63a2c8549a393c30417ad8c0adc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c5991fe_df8d7314",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-07-21T02:34:36Z",
+      "side": 1,
+      "message": "Such as space characters. Is it more likely to run faster without \"if\" for such non-common case?",
+      "parentUuid": "15ad9f83_a465d285",
+      "range": {
+        "startLine": 425,
+        "startChar": 9,
+        "endLine": 425,
+        "endChar": 21
+      },
+      "revId": "899d45794064d63a2c8549a393c30417ad8c0adc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
