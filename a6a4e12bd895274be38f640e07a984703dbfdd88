@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4e2e631_133fc90e",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-07-21T19:04:20Z",
+      "side": 1,
+      "message": "nit: AFAIK, Timer dtor stops itself",
+      "revId": "a6a4e12bd895274be38f640e07a984703dbfdd88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02e574b4_8b63abfd",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-07-21T19:04:20Z",
+      "side": 1,
+      "message": "Should these methods be removed then from MediaObserver?",
+      "revId": "a6a4e12bd895274be38f640e07a984703dbfdd88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "696d78e8_b815b730",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-07-21T19:04:20Z",
+      "side": 1,
+      "message": "nit: This logic seems to become pretty complicated. Do you think it could be simplified (maybe by combining is_encrypted_ checks together? just guessing)?\n\nPerhaps you could introduce a state instead of a bool:\n\nkLocalRendering,\nkStabilityDetecting,\nkRemoteRendering,\n\nShouldBeRemoting (renamed to GetRemotingState() would return the new state and if it\u0027s different from current_state_, it would do the switch: stop, start the timer or start remoting).",
+      "revId": "a6a4e12bd895274be38f640e07a984703dbfdd88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7666f98e_6c5a98ce",
+        "filename": "media/remoting/renderer_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-07-21T19:04:20Z",
+      "side": 1,
+      "message": "nit: this method now doesn\u0027t switch immediately, unless encrypted?",
+      "revId": "a6a4e12bd895274be38f640e07a984703dbfdd88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2504affa_d692027c",
+        "filename": "media/remoting/renderer_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-07-21T19:04:20Z",
+      "side": 1,
+      "message": "nit: s/indicatates/indicates",
+      "revId": "a6a4e12bd895274be38f640e07a984703dbfdd88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
