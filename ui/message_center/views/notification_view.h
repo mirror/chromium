@@ -111,8 +111,10 @@ class MESSAGE_CENTER_EXPORT NotificationView
   views::ProgressBar* progress_bar_view_ = nullptr;
   std::vector<NotificationButton*> action_buttons_;
   std::vector<views::View*> separators_;
-  std::unique_ptr<views::ImageView> small_image_view_;
   NotificationControlButtonsView* control_buttons_view_;
+
+  // Owned NotificationView descendants.
+  std::unique_ptr<views::ImageView> small_image_view_;
 
   DISALLOW_COPY_AND_ASSIGN(NotificationView);
 };
