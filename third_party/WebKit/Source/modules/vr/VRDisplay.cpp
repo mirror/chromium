@@ -38,6 +38,8 @@
 #include <array>
 #include "core/dom/ExecutionContext.h"
 
+#define EARLY_RENDER_WAIT 1
+
 namespace blink {
 
 namespace {
@@ -644,6 +646,23 @@ void VRDisplay::submitFrame() {
     return;
   }
 
+#if EARLY_RENDER_WAIT
+  // Wait for the previous render to finish, to avoid losing frames in the
+  // Android Surface / GLConsumer pair. TODO(klausw): make this tunable?
+  // Other devices may have different preferences. Do this step as late
+  // as possible before SubmitFrame to ensure we can do as much work as
+  // possible in parallel with the previous frame's rendering.
+  {
+    TRACE_EVENT0("gpu", "waitForPreviousRenderToFinish");
+    while (pending_previous_frame_render_) {
+      if (!submit_frame_client_binding_.WaitForIncomingMethodCall()) {
+        DLOG(ERROR) << "Failed to receive SubmitFrame response";
+        break;
+      }
+    }
+  }
+#endif
+
   TRACE_EVENT_BEGIN0("gpu", "VRDisplay::Flush_1");
   context_gl_->Flush();
   TRACE_EVENT_END0("gpu", "VRDisplay::Flush_1");
@@ -719,6 +738,7 @@ void VRDisplay::submitFrame() {
   TRACE_EVENT_END0("gpu", "VRDisplay::Flush_2");
   auto sync_token = static_image->GetSyncToken();
 
+#if !EARLY_RENDER_WAIT
   // Wait for the previous render to finish, to avoid losing frames in the
   // Android Surface / GLConsumer pair. TODO(klausw): make this tunable?
   // Other devices may have different preferences. Do this step as late
@@ -733,6 +753,7 @@ void VRDisplay::submitFrame() {
       }
     }
   }
+#endif
 
   pending_previous_frame_render_ = true;
   pending_submit_frame_ = true;
