@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e85bef9d_0ffbfeb8",
+        "filename": "content/browser/web_contents/aura/gesture_nav_simple.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-21T21:23:36Z",
+      "side": 1,
+      "message": "For touchpad, does the delta depend on the touchpad velocity? i.e. can this still be larger than max_delta_?",
+      "revId": "24f228e1bae45e75837faebc5fabf313fbc71630",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98c42c07_5fa333aa",
+        "filename": "content/browser/web_contents/aura/gesture_nav_simple.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-21T21:23:36Z",
+      "side": 1,
+      "message": "Maybe add back some DCHECK()s for sanity checks?",
+      "revId": "24f228e1bae45e75837faebc5fabf313fbc71630",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
