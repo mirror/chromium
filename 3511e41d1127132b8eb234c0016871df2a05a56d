@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "101bb23f_d7e8de5d",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-21T00:05:49Z",
+      "side": 1,
+      "message": "Oh, good idea. And yeah I looked at the redlines again and it was actually 24.05px so you\u0027re probably right, whoops.",
+      "parentUuid": "5cbfb94d_1acea234",
+      "revId": "3511e41d1127132b8eb234c0016871df2a05a56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22821d6d_da2a46cc",
         "filename": "chrome/browser/resources/settings/site_settings/site_details.html",
         "patchSetId": 5
@@ -65,6 +83,54 @@
     },
     {
       "key": {
+        "uuid": "f888dcea_939a1317",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-21T00:05:49Z",
+      "side": 1,
+      "message": "Ok, I\u0027ll leave it in for now and link owners this comment thread when this patch is ready.",
+      "parentUuid": "22821d6d_da2a46cc",
+      "range": {
+        "startLine": 123,
+        "startChar": 39,
+        "endLine": 123,
+        "endChar": 71
+      },
+      "revId": "3511e41d1127132b8eb234c0016871df2a05a56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d4562fd_7c7fe002",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-21T00:05:49Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "23dff89c_2ccc0a59",
+      "range": {
+        "startLine": 123,
+        "startChar": 10,
+        "endLine": 123,
+        "endChar": 38
+      },
+      "revId": "3511e41d1127132b8eb234c0016871df2a05a56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dce86aee_2c0577b5",
         "filename": "chrome/test/data/webui/settings/site_details_tests.js",
         "patchSetId": 5
@@ -79,6 +145,24 @@
       "revId": "3511e41d1127132b8eb234c0016871df2a05a56d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28698258_7935e88e",
+        "filename": "chrome/test/data/webui/settings/site_details_tests.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-21T00:05:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dce86aee_2c0577b5",
+      "revId": "3511e41d1127132b8eb234c0016871df2a05a56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
