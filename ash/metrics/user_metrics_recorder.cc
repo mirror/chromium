@@ -227,6 +227,9 @@ void UserMetricsRecorder::RecordUserMetricsAction(UserMetricsAction action) {
     case UMA_DRAG_MAXIMIZE_RIGHT:
       RecordAction(UserMetricsAction("WindowDrag_MaximizeRight"));
       break;
+    case UMA_IME_MENU_OPENED:
+      RecordAction(UserMetricsAction("Ime_MenuOpened"));
+      break;
     case UMA_LAUNCHER_BUTTON_PRESSED_WITH_MOUSE:
       RecordAction(UserMetricsAction("Launcher_ButtonPressed_Mouse"));
       break;

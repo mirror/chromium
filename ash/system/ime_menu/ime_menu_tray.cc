@@ -471,6 +471,7 @@ void ImeMenuTray::ShowBubble() {
     keyboard_controller->HideKeyboard(
         keyboard::KeyboardController::HIDE_REASON_AUTOMATIC);
   } else {
+    Shell::Get()->metrics()->RecordUserMetricsAction(UMA_IME_MENU_OPENED);
     ShowImeMenuBubbleInternal();
   }
 }
