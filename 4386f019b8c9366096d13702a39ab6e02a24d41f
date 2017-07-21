@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "5884fae9_09661d76",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-21T01:57:50Z",
+      "side": 1,
+      "message": "Would the url::Origin data type work here?\n\nWherever the map goes, assuming there aren\u0027t many StorageHandlers, take a look at base::flat_map\u003c\u003e and flat_set\u003c\u003e. And instead of typefs, can you switch to...\nusing HandlerMap \u003d std::flat_map\u003cOrigin, std::flat_set\u003cHandler\u003e\u003e\n\nAnother option is to have each Handler observe changes for all origins within a context, so each CacheStorageContext has an observer list (see base::ObserverListThreadSafe). And each Handler has a flat_set\u003c\u003e of url::Origins it cares about.",
+      "revId": "4386f019b8c9366096d13702a39ab6e02a24d41f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9bda7008_58842657",
         "filename": "content/browser/devtools/protocol/storage_handler.cc",
         "patchSetId": 2
@@ -36,6 +53,30 @@
       "writtenOn": "2017-07-20T21:43:35Z",
       "side": 1,
       "message": "please comment that you expect this to be used only on the UI thread.",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 61
+      },
+      "revId": "4386f019b8c9366096d13702a39ab6e02a24d41f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6216a1a7_c56372e9",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-21T01:57:50Z",
+      "side": 1,
+      "message": "fyi: i think we\u0027ve switch to prefering native statics for lazy instances likes this...\n\nTrackedHandlers* GetTrackedHandlers() {\n  static TrackedHandlers* instance \u003d new TrackedHandlers;\n  return instance;\n}",
+      "parentUuid": "9bda7008_58842657",
       "range": {
         "startLine": 25,
         "startChar": 0,
@@ -122,6 +163,30 @@
       "writtenOn": "2017-07-20T21:43:35Z",
       "side": 1,
       "message": "Unless I\u0027m wrong, this will pause the javascript forever? I\u0027ll defer to Dmitri on this part. I\u0027m guessing we just listen to the notifications instead?",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 59
+      },
+      "revId": "4386f019b8c9366096d13702a39ab6e02a24d41f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0762e776_766e2552",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/ServiceWorkerCacheModel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-21T01:57:50Z",
+      "side": 1,
+      "message": "javascript is sooooo decepetive to us c++ cave people :)",
+      "parentUuid": "8092137d_73b57427",
       "range": {
         "startLine": 61,
         "startChar": 0,
