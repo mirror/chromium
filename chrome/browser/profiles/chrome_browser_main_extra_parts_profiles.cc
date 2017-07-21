@@ -143,6 +143,7 @@
 #endif
 
 #if !defined(OS_ANDROID) && !defined(OS_CHROMEOS) && !defined(OS_MACOSX)
+#include "chrome/browser/feature_engagement_tracker/bookmark/bookmark_tracker_factory.h"
 #include "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker_factory.h"
 #endif
 
@@ -292,6 +293,7 @@ EnsureBrowserContextKeyedServiceFactoriesBuilt() {
 #endif
 #if !defined(OS_ANDROID) && !defined(OS_CHROMEOS) && !defined(OS_MACOSX)
   feature_engagement_tracker::NewTabTrackerFactory::GetInstance();
+  feature_engagement_tracker::BookmarkTrackerFactory::GetInstance();
 #endif
   ContentSuggestionsServiceFactory::GetInstance();
   PasswordStoreFactory::GetInstance();

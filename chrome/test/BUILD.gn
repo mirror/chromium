@@ -3856,7 +3856,10 @@ test("unit_tests") {
   }
 
   if ((is_linux && !is_chromeos) || is_win) {
-    sources += [ "../browser/feature_engagement_tracker/new_tab/new_tab_tracker_unittest.cc" ]
+    sources += [
+      "../browser/feature_engagement_tracker/bookmark/bookmark_tracker_unittest.cc",
+      "../browser/feature_engagement_tracker/new_tab/new_tab_tracker_unittest.cc",
+    ]
     deps += [ "//components/feature_engagement_tracker/test:test_support" ]
   }
 
