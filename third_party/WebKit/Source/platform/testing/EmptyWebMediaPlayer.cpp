@@ -21,6 +21,10 @@ WebSize EmptyWebMediaPlayer::NaturalSize() const {
   return WebSize(0, 0);
 }
 
+WebSize EmptyWebMediaPlayer::VisibleRect() {
+  return WebSize();
+}
+
 WebString EmptyWebMediaPlayer::GetErrorMessage() const {
   return WebString();
 }
