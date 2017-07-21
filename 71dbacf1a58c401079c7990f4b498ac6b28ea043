@@ -192,6 +192,24 @@
       "revId": "71dbacf1a58c401079c7990f4b498ac6b28ea043",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62ae90ff_f88abc1f",
+        "filename": "cc/output/shader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1116015
+      },
+      "writtenOn": "2017-07-21T15:30:16Z",
+      "side": 1,
+      "message": "That said, it\u0027ll need a new texture transform, new varyings, etc. I do think it\u0027s the right way to do it long-term, but if you want to be expedient about it, we could just keep the uniform you\u0027ve added here, recip the width \u0026 height on the CPU to get a scale, and multiply by the scale here instead (origBgTexCoord.x *\u003d originalBackdropRect.z, etc).",
+      "parentUuid": "a2a93b48_066f6128",
+      "revId": "71dbacf1a58c401079c7990f4b498ac6b28ea043",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
