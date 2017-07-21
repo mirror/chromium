@@ -46,6 +46,30 @@
       "revId": "be138e7e0d1d4c7638741e4a2597a9576832ca76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da995d9f_53557ea0",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-21T17:05:43Z",
+      "side": 1,
+      "message": "That looks not very correct. Because below you record other metrics. at L71,74,77.\n\nYou should handle Stop case and don\u0027t update any metrics to avoid UMA confusion.",
+      "parentUuid": "8da0d43b_6748690f",
+      "range": {
+        "startLine": 65,
+        "startChar": 7,
+        "endLine": 65,
+        "endChar": 24
+      },
+      "revId": "be138e7e0d1d4c7638741e4a2597a9576832ca76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
