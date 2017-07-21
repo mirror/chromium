@@ -46,6 +46,30 @@
       "revId": "a1031446e9aa872690bc3d15a0781abea9513c7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4bb0374_c733105d",
+        "filename": "components/cronet/android/java/src/org/chromium/net/impl/JavaUrlRequest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-07-21T17:50:03Z",
+      "side": 1,
+      "message": "I\u0027m not sure there\u0027s an easy way for JavaCronetEngine to know if the ExecutorService is finished executing tasks;  I think we\u0027d have to add a whole bunch of additional bookkeeping to figure out which JavaUrlRequests finished.  I like my proposed fix because SerializingExecutor doesn\u0027t really change the shutdown semantics:  All tasks submitted before shutdown() is called will execute.",
+      "parentUuid": "e7cc6ed2_42aaccc5",
+      "range": {
+        "startLine": 180,
+        "startChar": 59,
+        "endLine": 180,
+        "endChar": 0
+      },
+      "revId": "a1031446e9aa872690bc3d15a0781abea9513c7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
