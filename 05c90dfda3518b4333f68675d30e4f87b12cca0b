@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b746169_47f03370",
+        "filename": "content/test/data/accessibility/aria/aria-empty-string.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-21T04:35:01Z",
+      "side": 1,
+      "message": "This is going to be hard to maintain - every new attribute we add,\nand we\u0027ll definitely be adding them - will start showing up in this\nfile unless we explicitly deny it.\n\nEven though it\u0027s a long list, explicitly allowing all of the\nneeded properties will be more robust.",
+      "revId": "05c90dfda3518b4333f68675d30e4f87b12cca0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46ac4e99_c1ade8e9",
+        "filename": "content/test/data/accessibility/aria/aria-empty-string.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-21T04:35:01Z",
+      "side": 1,
+      "message": "How about \"Atomic empty\"?",
+      "revId": "05c90dfda3518b4333f68675d30e4f87b12cca0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2fa355c_399673f5",
+        "filename": "third_party/WebKit/Source/core/dom/AccessibleNode.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-21T04:35:01Z",
+      "side": 1,
+      "message": "Could you refactor this slightly so we\u0027re not doing the EqualIgnoringASCIICase twice?\n\nMaybe a helper like IsARIAAttributeValueUndefined, and\nyou could even add a link to the part of the spec that\ndescribes the \"undefined\" special case in the helper.",
+      "revId": "05c90dfda3518b4333f68675d30e4f87b12cca0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
