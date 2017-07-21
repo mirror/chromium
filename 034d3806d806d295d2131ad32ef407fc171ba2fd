@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "126cf139_fde87dd6",
+        "filename": "chrome/browser/devtools/global_confirm_info_bar.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-21T06:11:02Z",
+      "side": 1,
+      "message": "This comment is another clue that the asynchronicity really belongs in MaybeAddInfoBar().",
+      "revId": "034d3806d806d295d2131ad32ef407fc171ba2fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cb08c48_1ec1a08f",
+        "filename": "chrome/browser/devtools/global_confirm_info_bar.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-21T06:11:02Z",
+      "side": 1,
+      "message": "Nit: Honestly, rather than this you could just Bind to a lambda that does { delete ptr; }.",
+      "revId": "034d3806d806d295d2131ad32ef407fc171ba2fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f522096_13bd5c19",
+        "filename": "chrome/browser/devtools/global_confirm_info_bar.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-21T06:11:02Z",
+      "side": 1,
+      "message": "Nit: It\u0027s not immediately obvious to the reader why the first sentence is relevant, and the second seems to describe \"what\" rather than \"why\".  I would find it clearer to say something like: \"If AddInfoBar() fails, either infobars are globally disabled, or something strange has gone wrong and we can\u0027t show the infobar on every tab.  In either case, it doesn\u0027t make sense to keep the global object open, especially since some callers expect it to delete itself when a user acts on the underlying infobars.  Asynchronously delete the global object.\"\n\nThe end of this could be modified and extended with the comments from earlier about why this needs to be asynchronous.",
+      "revId": "034d3806d806d295d2131ad32ef407fc171ba2fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a5cb080_7d43bf23",
+        "filename": "chrome/browser/devtools/global_confirm_info_bar.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-21T06:11:02Z",
+      "side": 1,
+      "message": "It seems like Close() doesn\u0027t need to be async (because if a caller calls it it can be sync), just the invocation from MaybeAddInfoBar()?  This would avoid exposing asynchronicity into the API, which might also be good if someone calls Close() during a shutdown sequence and expects the infobar to be gone afterwards.",
+      "revId": "034d3806d806d295d2131ad32ef407fc171ba2fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf8db673_592e613d",
+        "filename": "chrome/browser/devtools/global_confirm_info_bar.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-21T06:11:02Z",
+      "side": 1,
+      "message": "Nit: No \u003dfalse, you init this in the constructor init list.",
+      "revId": "034d3806d806d295d2131ad32ef407fc171ba2fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
