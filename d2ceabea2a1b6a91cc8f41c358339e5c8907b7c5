@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f14522b_2a310b31",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_cancel_pay_abort_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-21T17:22:21Z",
+      "side": 1,
+      "message": "Can you use https://, file://, http://localhost or http://127.0.0.1 instead? Those are secure origins. PaymentRequest should not be available on http://\u003cnon-localhost\u003e. That\u0027s not a secure origin. Some background info here:\n\nhttps://www.chromium.org/Home/chromium-security/prefer-secure-origins-for-powerful-new-features",
+      "range": {
+        "startLine": 35,
+        "startChar": 5,
+        "endLine": 35,
+        "endChar": 9
+      },
+      "revId": "d2ceabea2a1b6a91cc8f41c358339e5c8907b7c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "974b498f_19d50c6c",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_cancel_pay_abort_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-21T17:22:21Z",
+      "side": 1,
+      "message": "Would you mind removing this empty test from the CL and adding it back only when it has some meat on bone?",
+      "range": {
+        "startLine": 272,
+        "startChar": 0,
+        "endLine": 277,
+        "endChar": 0
+      },
+      "revId": "d2ceabea2a1b6a91cc8f41c358339e5c8907b7c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
