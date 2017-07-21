@@ -19,6 +19,7 @@ import org.junit.runner.RunWith;
 
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.base.test.util.CommandLineFlags;
+import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.Feature;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeSwitches;
@@ -74,6 +75,7 @@ public class PaymentRequestJourneyLoggerTest implements MainActivityStartCallbac
     @Test
     @MediumTest
     @Feature({"Payments"})
+    @DisabledTest(message = "crbug.com/47201")
     public void testNumberOfSuggestionsShown_ShippingAddress_Completed()
             throws InterruptedException, ExecutionException, TimeoutException {
         createTestData();

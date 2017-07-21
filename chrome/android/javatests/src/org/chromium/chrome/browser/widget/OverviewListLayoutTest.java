@@ -22,6 +22,7 @@ import org.chromium.base.CommandLine;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.base.test.util.CommandLineFlags;
+import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.Restriction;
 import org.chromium.base.test.util.RetryOnFailure;
@@ -234,6 +235,7 @@ public class OverviewListLayoutTest {
     @Restriction(ChromeRestriction.RESTRICTION_TYPE_PHONE)
     @MediumTest
     @Feature({"Accessibility"})
+    @DisabledTest(message = "crbug.com/747134")
     public void testCanSwipeClosed() throws InterruptedException, TimeoutException {
         setupTabs();
 
