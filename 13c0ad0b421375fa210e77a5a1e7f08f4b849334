@@ -22,6 +22,30 @@
       "revId": "13c0ad0b421375fa210e77a5a1e7f08f4b849334",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03f1a57b_d8a6907a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-07-21T15:33:43Z",
+      "side": 0,
+      "message": "Thanks for clarifying! I misunderstood and thought it was to distinguish between images with the same filename, which was why I replaced the key with just the content ID. I\u0027ve reverted it back to include the thumbnail size with the content ID (instead of the filename).",
+      "parentUuid": "51405d7e_b890f2bc",
+      "range": {
+        "startLine": 43,
+        "startChar": 55,
+        "endLine": 43,
+        "endChar": 62
+      },
+      "revId": "13c0ad0b421375fa210e77a5a1e7f08f4b849334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
