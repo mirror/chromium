@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "08c582d8_e8f301c4",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1132401
+      },
+      "writtenOn": "2017-07-21T11:44:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e688358_db75e060",
+      "range": {
+        "startLine": 233,
+        "startChar": 13,
+        "endLine": 233,
+        "endChar": 14
+      },
+      "revId": "16ebe3de9bf58043dd91c160a912511c39c51c26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbde2dfa_1355431c",
         "filename": "chrome/browser/signin/easy_unlock_service_regular.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "16ebe3de9bf58043dd91c160a912511c39c51c26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24b24c3c_bc588868",
+        "filename": "chrome/browser/signin/easy_unlock_service_regular.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1132401
+      },
+      "writtenOn": "2017-07-21T11:44:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbde2dfa_1355431c",
+      "range": {
+        "startLine": 182,
+        "startChar": 36,
+        "endLine": 182,
+        "endChar": 70
+      },
+      "revId": "16ebe3de9bf58043dd91c160a912511c39c51c26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
