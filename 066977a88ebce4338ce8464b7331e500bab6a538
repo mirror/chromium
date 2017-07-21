@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a663e66f_9ac0743b",
+        "filename": "third_party/WebKit/Source/core/workers/Worklet.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-21T15:03:37Z",
+      "side": 1,
+      "message": "Done.\n\nnhiroki@: so I took the advice that majidvp@ gave. Basically in PaintWorklet class I now have a NextGlobalScopeId() function in an anonymous namespace, that keeps incrementing the kGlobalScopeId. In this case, even if a global scope gets torn down, the Id will just keep increasing and it will never get into the case where two ids are the same.\n\nmajidvp@ Could you take a look at PaintWorklet::CreateGlobalScope() and make sure that I am implementing what you suggested?",
+      "parentUuid": "c1f546a7_4e304ee4",
+      "revId": "066977a88ebce4338ce8464b7331e500bab6a538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c83d0840_846fa61c",
         "filename": "third_party/WebKit/Source/modules/csspaint/DocumentPaintDefinition.h",
         "patchSetId": 25
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "87cc9516_e5d64004",
+        "filename": "third_party/WebKit/Source/modules/csspaint/DocumentPaintDefinition.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-21T15:03:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c83d0840_846fa61c",
+      "revId": "066977a88ebce4338ce8464b7331e500bab6a538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3ff5bd8_0aaca608",
         "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
         "patchSetId": 25
@@ -50,6 +86,24 @@
       "revId": "066977a88ebce4338ce8464b7331e500bab6a538",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "704313d6_45d7556b",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-21T15:03:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3ff5bd8_0aaca608",
+      "revId": "066977a88ebce4338ce8464b7331e500bab6a538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
