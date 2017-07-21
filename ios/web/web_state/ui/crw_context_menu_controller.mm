@@ -7,6 +7,7 @@
 #import <objc/runtime.h>
 #include <stddef.h>
 
+#include "base/ios/ios_util.h"
 #include "base/logging.h"
 #include "base/mac/foundation_util.h"
 #include "base/metrics/histogram_macros.h"
@@ -22,12 +23,8 @@
 #endif
 
 namespace {
-// The long press detection duration must be shorter than the WKWebView's
-// long click gesture recognizer's minimum duration. That is 0.55s.
-// If our detection duration is shorter, our gesture recognizer will fire
-// first, and if it fails the long click gesture (processed simultaneously)
-// still is able to complete.
-const NSTimeInterval kLongPressDurationSeconds = 0.55 - 0.1;
+// The duration of the long press to trigger the context menu.
+const NSTimeInterval kLongPressDurationSeconds = 0.45;
 
 // If there is a movement bigger than |kLongPressMoveDeltaPixels|, the context
 // menu will not be triggered.
@@ -54,9 +51,10 @@ void CancelTouches(UIGestureRecognizer* gesture_recognizer) {
 // Returns the x, y offset the content has been scrolled.
 @property(nonatomic, readonly) CGPoint scrollPosition;
 
-// Called when the window has determined there was a long-press and context menu
-// must be shown.
-- (void)showContextMenu:(UIGestureRecognizer*)gestureRecognizer;
+// Called when the |_contextMenuRecognizer| finishes recognizing a long press.
+- (void)showCustomContextMenu:(UIGestureRecognizer*)gestureRecognizer;
+// Called when the context menu must be shown.
+- (void)showContextMenu;
 // Cancels all touch events in the web view (long presses, tapping, scrolling).
 - (void)cancelAllTouches;
 // Asynchronously fetches information about DOM element for the given point (in
@@ -81,6 +79,16 @@ void CancelTouches(UIGestureRecognizer* gesture_recognizer) {
   // be built on demand. May contain the keys defined in
   // ios/web/web_state/context_menu_constants.h. All values are strings.
   NSDictionary* _DOMElementForLastTouch;
+  // Whether or not the cotext menu should be displayed as soon as the DOM
+  // element details are returned. Since fetching the details from the |webView|
+  // of the element the user long pressed is asyncrounous, it may not be
+  // complete by the time the context menu gesture recognizer is complete.
+  // |_contextMenuNeedsDisplay| is set to YES to indicate the
+  // |_contextMenuRecognizer| finished, but couldn't yet show the context menu
+  // becuase the DOM element details were not yet available.
+  BOOL _contextMenuNeedsDisplay;
+  // The location of the last reconized long press in the |webView|.
+  CGPoint _locationForLastTouch;
 }
 
 @synthesize delegate = _delegate;
@@ -102,7 +110,8 @@ void CancelTouches(UIGestureRecognizer* gesture_recognizer) {
     // needed.
     _contextMenuRecognizer = [[UILongPressGestureRecognizer alloc]
         initWithTarget:self
-                action:@selector(showContextMenu:)];
+                action:@selector(showCustomContextMenu:)];
+
     [_contextMenuRecognizer setMinimumPressDuration:kLongPressDurationSeconds];
     [_contextMenuRecognizer setAllowableMovement:kLongPressMoveDeltaPixels];
     [_contextMenuRecognizer setDelegate:self];
@@ -130,23 +139,32 @@ void CancelTouches(UIGestureRecognizer* gesture_recognizer) {
   }
 }
 
-- (void)showContextMenu:(UIGestureRecognizer*)gestureRecognizer {
+- (void)showCustomContextMenu:(UIGestureRecognizer*)gestureRecognizer {
   // If the gesture has already been handled, ignore it.
   if ([gestureRecognizer state] != UIGestureRecognizerStateBegan)
     return;
 
-  if (![_DOMElementForLastTouch count])
+  if (![_delegate respondsToSelector:@selector(webView:handleContextMenu:)]) {
     return;
+  }
 
+  _locationForLastTouch = [gestureRecognizer locationInView:_webView];
+
+  [self cancelAllTouches];
+
+  if (![_DOMElementForLastTouch count]) {
+    _contextMenuNeedsDisplay = YES;
+    return;
+  }
+  [self showContextMenu];
+}
+
+- (void)showContextMenu {
   web::ContextMenuParams params =
       web::ContextMenuParamsFromElementDictionary(_DOMElementForLastTouch);
   params.view.reset(_webView);
-  params.location = [gestureRecognizer locationInView:_webView];
-  if ([_delegate webView:_webView handleContextMenu:params]) {
-    // Cancelling all touches has the intended side effect of suppressing the
-    // system's context menu.
-    [self cancelAllTouches];
-  }
+  params.location = _locationForLastTouch;
+  [_delegate webView:_webView handleContextMenu:params];
 }
 
 - (void)cancelAllTouches {
@@ -170,6 +188,9 @@ void CancelTouches(UIGestureRecognizer* gesture_recognizer) {
 
 - (void)setDOMElementForLastTouch:(NSDictionary*)element {
   _DOMElementForLastTouch = [element copy];
+  if (_contextMenuNeedsDisplay) {
+    [self showContextMenu];
+  }
 }
 
 #pragma mark -
@@ -194,6 +215,7 @@ void CancelTouches(UIGestureRecognizer* gesture_recognizer) {
   // menu and show another one. If for some reason context menu info is not
   // fetched - system context menu will be shown.
   [self setDOMElementForLastTouch:nil];
+  _contextMenuNeedsDisplay = NO;
   __weak CRWContextMenuController* weakSelf = self;
   [self fetchDOMElementAtPoint:[touch locationInView:_webView]
              completionHandler:^(NSDictionary* element) {
