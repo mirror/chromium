@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e02d78d8_7c569929",
+        "filename": "base/metrics/histogram.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-21T15:46:21Z",
+      "side": 1,
+      "message": "comments",
+      "revId": "84c0127aa7779b4e32dbc8f8367dc7fd582c8d1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce6f0403_b30b6e51",
+        "filename": "base/metrics/histogram_snapshot_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-21T15:46:21Z",
+      "side": 1,
+      "message": "so we\u0027re recording the last written to histogram in the crashkey - does it makes sense to also write the names of the histograms that have invalid content? Or do you think that\u0027s not as important a signal?",
+      "revId": "84c0127aa7779b4e32dbc8f8367dc7fd582c8d1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
