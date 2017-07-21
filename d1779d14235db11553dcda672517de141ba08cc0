@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b3ecbcd_a69df78c",
+        "filename": "ios/chrome/browser/ui/settings/settings_collection_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-21T08:34:31Z",
+      "side": 1,
+      "message": "I would add a message here:\n\n  DCHECK(_settingsHasBeenDismissed)\n      \u003c\u003c \"-settingsWillBeDismissed must be called before -dealloc\";",
+      "revId": "d1779d14235db11553dcda672517de141ba08cc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d89cac8_7459e9d9",
+        "filename": "ios/chrome/browser/ui/settings/settings_collection_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-07-21T08:34:31Z",
+      "side": 1,
+      "message": "Since -dealloc may be delayed, I think this call should also be moved to -settingsWillBeDismissed and the only thing left in -dealloc should be the DCHECK.",
+      "range": {
+        "startLine": 303,
+        "startChar": 8,
+        "endLine": 303,
+        "endChar": 40
+      },
+      "revId": "d1779d14235db11553dcda672517de141ba08cc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
