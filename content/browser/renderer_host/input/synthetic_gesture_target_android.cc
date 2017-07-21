@@ -28,15 +28,13 @@ SyntheticGestureTargetAndroid::~SyntheticGestureTargetAndroid() {
 void SyntheticGestureTargetAndroid::TouchSetPointer(
     JNIEnv* env, int index, int x, int y, int id) {
   TRACE_EVENT0("input", "SyntheticGestureTargetAndroid::TouchSetPointer");
-  Java_MotionEventSynthesizer_setPointer(env, touch_event_synthesizer_, index,
-                                         x, y, id);
+  TouchSetPointerHelper(env, touch_event_synthesizer_, index, x, y, id);
 }
 
 void SyntheticGestureTargetAndroid::TouchSetScrollDeltas(
     JNIEnv* env, int x, int y, int dx, int dy) {
   TRACE_EVENT0("input", "SyntheticGestureTargetAndroid::TouchSetScrollDeltas");
-  Java_MotionEventSynthesizer_setScrollDeltas(env, touch_event_synthesizer_, x,
-                                              y, dx, dy);
+  TouchSetScrollDeltasHelper(env, touch_event_synthesizer_, x, y, dx, dy);
 }
 
 void SyntheticGestureTargetAndroid::TouchInject(JNIEnv* env,
@@ -44,9 +42,8 @@ void SyntheticGestureTargetAndroid::TouchInject(JNIEnv* env,
                                                 int pointer_count,
                                                 int64_t time_in_ms) {
   TRACE_EVENT0("input", "SyntheticGestureTargetAndroid::TouchInject");
-  Java_MotionEventSynthesizer_inject(env, touch_event_synthesizer_,
-                                     static_cast<int>(action), pointer_count,
-                                     time_in_ms);
+  TouchInjectHelper(env, touch_event_synthesizer_, static_cast<int>(action),
+                    pointer_count, time_in_ms);
 }
 
 void SyntheticGestureTargetAndroid::DispatchWebTouchEventToPlatform(
@@ -88,7 +85,7 @@ void SyntheticGestureTargetAndroid::DispatchWebMouseWheelEventToPlatform(
   TouchSetScrollDeltas(env, web_wheel.PositionInWidget().x,
                        web_wheel.PositionInWidget().y, web_wheel.delta_x,
                        web_wheel.delta_y);
-  Java_MotionEventSynthesizer_inject(
+  TouchInjectHelper(
       env, touch_event_synthesizer_,
       static_cast<int>(SyntheticGestureTargetAndroid::ActionScroll), 1,
       static_cast<int64_t>(web_wheel.TimeStampSeconds() * 1000.0));
@@ -114,6 +111,36 @@ float SyntheticGestureTargetAndroid::GetMinScalingSpanInDips() const {
   // TODO(jdduke): Have all targets use the same ui::GestureConfiguration
   // codepath.
   return gfx::ViewConfiguration::GetMinScalingSpanInDips();
+}
+
+CONTENT_HELPER_EXPORT void TouchSetPointerHelper(
+    JNIEnv* env,
+    const base::android::JavaRef<jobject>& synthesizer,
+    int index,
+    int x,
+    int y,
+    int id) {
+  Java_MotionEventSynthesizer_setPointer(env, synthesizer, index, x, y, id);
+}
+
+CONTENT_HELPER_EXPORT void TouchSetScrollDeltasHelper(
+    JNIEnv* env,
+    const base::android::JavaRef<jobject>& synthesizer,
+    int x,
+    int y,
+    int dx,
+    int dy) {
+  Java_MotionEventSynthesizer_setScrollDeltas(env, synthesizer, x, y, dx, dy);
+}
+
+CONTENT_HELPER_EXPORT void TouchInjectHelper(
+    JNIEnv* env,
+    const base::android::JavaRef<jobject>& synthesizer,
+    int action,
+    int pointer_count,
+    int64_t time_in_ms) {
+  Java_MotionEventSynthesizer_inject(env, synthesizer, action, pointer_count,
+                                     time_in_ms);
 }
 
 }  // namespace content
