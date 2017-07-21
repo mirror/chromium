@@ -221,7 +221,7 @@ public class PrefetchBackgroundTaskTest {
     @Test
     @SmallTest
     public void testSchedule() throws Exception {
-        PrefetchBackgroundTask.scheduleTask(0);
+        PrefetchBackgroundTask.scheduleTask(0, true);
         mScheduler.waitForTaskStarted();
         TestPrefetchBackgroundTask task = validateAndGetScheduledTask(0);
         task.signalTaskFinished();
@@ -233,7 +233,7 @@ public class PrefetchBackgroundTaskTest {
     @SmallTest
     public void testScheduleWithAdditionalDelay() throws Exception {
         final int additionalDelaySeconds = 15;
-        PrefetchBackgroundTask.scheduleTask(additionalDelaySeconds);
+        PrefetchBackgroundTask.scheduleTask(additionalDelaySeconds, true);
         mScheduler.waitForTaskStarted();
         TestPrefetchBackgroundTask task = validateAndGetScheduledTask(additionalDelaySeconds);
         task.signalTaskFinished();
@@ -244,7 +244,7 @@ public class PrefetchBackgroundTaskTest {
     @Test
     @SmallTest
     public void testReschedule() throws Exception {
-        PrefetchBackgroundTask.scheduleTask(0);
+        PrefetchBackgroundTask.scheduleTask(0, true);
         mScheduler.waitForTaskStarted();
         TestPrefetchBackgroundTask task = validateAndGetScheduledTask(0);
 
