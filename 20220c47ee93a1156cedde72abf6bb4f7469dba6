@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d78ab076_36baff2f",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-21T01:40:20Z",
+      "side": 1,
+      "message": "Please file and reference a bug.",
+      "revId": "20220c47ee93a1156cedde72abf6bb4f7469dba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c598c962_fd7330c0",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-21T01:40:20Z",
+      "side": 1,
+      "message": "OobeUi \u003d\u003e OobeUI",
+      "revId": "20220c47ee93a1156cedde72abf6bb4f7469dba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9629b0fc_3be57253",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-21T01:40:20Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "20220c47ee93a1156cedde72abf6bb4f7469dba6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
