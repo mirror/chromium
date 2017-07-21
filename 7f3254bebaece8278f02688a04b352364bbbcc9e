@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1bfecef4_7dd5338c",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/directory_owners_extractor.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-21T21:23:02Z",
+      "side": 1,
+      "message": "Looks good to me, better than the email regexp used before (r\u0027\\S+@\\S+\u0027).",
+      "revId": "7f3254bebaece8278f02688a04b352364bbbcc9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9d2d0d69_34bb874f",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/directory_owners_extractor.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-21T21:23:02Z",
+      "side": 1,
+      "message": "Good catch, I think that this was incorrect before, but I didn\u0027t catch it because the FileSystem object was always passed.",
+      "range": {
+        "startLine": 21,
+        "startChar": 50,
+        "endLine": 21,
+        "endChar": 52
+      },
+      "revId": "7f3254bebaece8278f02688a04b352364bbbcc9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "91a9beb0_e8a8fc98",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/directory_owners_extractor.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-21T21:23:02Z",
+      "side": 1,
+      "message": "This docstring is good, although my personal preference would be to include less detail in the first line and more detail later on. For example, the first line could be something like:\n  Finds the first OWNERS file for a given path.\n\nAnd then the next paragraph could explain in more detail, e.g.:\n  Starting from the given start directory, checks parent directories\n  until an OWNERS file is found or the root of the repository is reached.",
+      "range": {
+        "startLine": 48,
+        "startChar": 5,
+        "endLine": 50,
+        "endChar": 55
+      },
+      "revId": "7f3254bebaece8278f02688a04b352364bbbcc9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40f89708_1f1fef33",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/directory_owners_extractor.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-21T21:23:02Z",
+      "side": 1,
+      "message": "It doesn\u0027t make a difference in this case, but I personally feel more nervous about functions that have `while True` or functions without a return at the end, so I would rephrase this code as:\n\n    directory \u003d start_directory\n    while directory:\n        owners_file \u003d self.filesystem.join(directory, \u0027OWNERS\u0027)\n        if self.filesystem.isfile(self.finder.path_from_chromium_base(owners_file)):\n            return owners_file\n        directory \u003d self.filesystem.dirname(directory)\n    return None\n\nAdditionally, in practice here we don\u0027t actually expect to reach any OWNERS files above the wpt dir. So if directory equals self.finder.path_from_layout_tests(\u0027external\u0027, \u0027wpt\u0027), we probably already want to stop and return None.\n\nAlso, if somebody passed an absolute directory then it will be stuck as \"/\" and will never equal empty string. Most of the methods in PathFinder return absolute paths, so we could also use absolute paths; this would also mean changing extract_owners, below. What do you think about something like:\n\n    directory \u003d self.finder.path_from_chromium_base(start_directory)\n    while directory !\u003d self.finder.path_from_layout_tests(\u0027external\u0027, \u0027wpt\u0027):\n        owners_file_path \u003d self.filesystem.join(directory, \u0027OWNERS\u0027)\n        if self.filesystem.isfile(owners_file_path):\n            return owners_file_path\n        parent \u003d self.filesystem.dirname(directory)\n        assert parent !\u003d directory\n        directory \u003d parent\n    return None",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 58
+      },
+      "revId": "7f3254bebaece8278f02688a04b352364bbbcc9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
