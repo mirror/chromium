@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c97782e3_f188ae60",
+        "filename": "extensions/browser/extension_function_dispatcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-21T20:38:28Z",
+      "side": 1,
+      "message": "Looks reasonable. \n\nCan we cache the RPH here and pass it to UIThreadWorkerResponseCallbackWrapper, which can then store a pointer to it. Then GetID() can be used on it to get the render process ID. Would prevent repeated ID lookups. Feel free to do this in followup though.",
+      "range": {
+        "startLine": 384,
+        "startChar": 44,
+        "endLine": 384,
+        "endChar": 61
+      },
+      "revId": "df28bf245e446cd4e39723709995117ed1c18a5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
