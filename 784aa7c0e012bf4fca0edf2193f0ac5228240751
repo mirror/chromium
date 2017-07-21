@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2b8ea136_506b15a0",
+        "filename": "third_party/WebKit/LayoutTests/editing/undo/undo-smart-delete-word.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-07-21T18:21:36Z",
+      "side": 1,
+      "message": "Seems that with LayoutNG enabled, the original coordinate is treated as outside the word.\n\nNot sure why this happens, but moving to the new coordinate solves the issue.",
+      "parentUuid": "c826fd51_177e510f",
+      "revId": "784aa7c0e012bf4fca0edf2193f0ac5228240751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2a5f9a8_d57cf30e",
         "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTextNodeHandler.cpp",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "784aa7c0e012bf4fca0edf2193f0ac5228240751",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70a8fd65_dce1ccfe",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTextNodeHandler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-07-21T18:21:36Z",
+      "side": 1,
+      "message": "|inline_node_| is also used in HandleTextNodeWithLayoutNG(). I\u0027m storing it to reduce repeated computation. With |inline_node_| already stored, I don\u0027t think an extra boolean flag is needed.\n\nOr did I misunderstand anything?",
+      "parentUuid": "e2a5f9a8_d57cf30e",
+      "revId": "784aa7c0e012bf4fca0edf2193f0ac5228240751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
