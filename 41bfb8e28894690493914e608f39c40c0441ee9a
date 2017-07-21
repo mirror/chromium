@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22c541c0_e7327970",
+        "filename": "chrome/browser/devtools/chrome_devtools_manager_delegate.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-21T18:46:36Z",
+      "side": 1,
+      "message": "this is all good.",
+      "revId": "41bfb8e28894690493914e608f39c40c0441ee9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e340f0c2_f5b6b589",
+        "filename": "chrome/browser/subresource_filter/chrome_subresource_filter_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-21T18:46:36Z",
+      "side": 1,
+      "message": "I don\u0027t think you need this state and the DevToolsAgentHostObserver, disable ad block from ChromeDevToolsManagerDelegate::DevToolsAgentHostDetached instead.\n\nSince you put your command into Page domain, protocol client expectations would be that it only takes effect between the Page.enable and Page.disable calls. (Chrome devtools will enable pain domain at all times). But this means that you need to track Page.enabe and Page.disable in ChromeDevToolsManagerDelegate::HandleBrowserCommand along with your command.",
+      "revId": "41bfb8e28894690493914e608f39c40c0441ee9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e518476_10fc4fb0",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorPageAgent.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-21T18:46:36Z",
+      "side": 1,
+      "message": "You won\u0027t need to touch core/.",
+      "revId": "41bfb8e28894690493914e608f39c40c0441ee9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d9c1186_496622ca",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-21T18:46:36Z",
+      "side": 1,
+      "message": "inline it",
+      "revId": "41bfb8e28894690493914e608f39c40c0441ee9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddcd7274_d92aa76a",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-21T18:46:36Z",
+      "side": 1,
+      "message": "Rename to setAdBlockingEnabled.",
+      "revId": "41bfb8e28894690493914e608f39c40c0441ee9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66291e15_0233fd55",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-21T18:46:36Z",
+      "side": 1,
+      "message": "enabled: boolean",
+      "revId": "41bfb8e28894690493914e608f39c40c0441ee9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a04359e1_17a5dc0b",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-21T18:46:36Z",
+      "side": 1,
+      "message": "drop the section.",
+      "revId": "41bfb8e28894690493914e608f39c40c0441ee9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56ab1350_6a94af07",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/EmulationModel.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-21T18:46:36Z",
+      "side": 1,
+      "message": "Move this code into Main.BackendSettingsSync. Do the same this._autoAttachSetting does there.",
+      "revId": "41bfb8e28894690493914e608f39c40c0441ee9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8074b3d_9567c46e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/module.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-21T18:46:36Z",
+      "side": 1,
+      "message": "move this into main/module.json.",
+      "revId": "41bfb8e28894690493914e608f39c40c0441ee9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "531f5b5b_6e50dd09",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/module.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-21T18:46:36Z",
+      "side": 1,
+      "message": "This means it is not persisted. Which is probably fine.",
+      "revId": "41bfb8e28894690493914e608f39c40c0441ee9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d4c8bd7_306a4cad",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/module.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-21T18:46:36Z",
+      "side": 1,
+      "message": "Is this on all sites? DevTools settings can affect only the page DevTools is opened for.",
+      "revId": "41bfb8e28894690493914e608f39c40c0441ee9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2f06f06_0cf88ded",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 35821,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-21T18:46:36Z",
+      "side": 1,
+      "message": "You can make it a part of devtools UMA bucket since it is invoked from devtools (depends on what you are willing to track).",
+      "revId": "41bfb8e28894690493914e608f39c40c0441ee9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
