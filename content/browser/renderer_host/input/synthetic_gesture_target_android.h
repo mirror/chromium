@@ -11,6 +11,7 @@
 #include "base/macros.h"
 #include "base/time/time.h"
 #include "content/browser/renderer_host/input/synthetic_gesture_target_base.h"
+#include "content/common/content_export.h"
 
 namespace content {
 
@@ -62,6 +63,29 @@ class SyntheticGestureTargetAndroid : public SyntheticGestureTargetBase {
 
   DISALLOW_COPY_AND_ASSIGN(SyntheticGestureTargetAndroid);
 };
+
+CONTENT_HELPER_EXPORT void TouchSetPointerHelper(
+    JNIEnv* env,
+    const base::android::JavaRef<jobject>& synthesizer,
+    int index,
+    int x,
+    int y,
+    int id);
+
+CONTENT_HELPER_EXPORT void TouchSetScrollDeltasHelper(
+    JNIEnv* env,
+    const base::android::JavaRef<jobject>& synthesizer,
+    int x,
+    int y,
+    int dx,
+    int dy);
+
+CONTENT_HELPER_EXPORT void TouchInjectHelper(
+    JNIEnv* env,
+    const base::android::JavaRef<jobject>& synthesizer,
+    int action,
+    int pointer_count,
+    int64_t time_in_ms);
 
 }  // namespace content
 

@@ -3,15 +3,15 @@
 // found in the LICENSE file.
 
 #include "chrome/browser/android/vr_shell/android_ui_gesture_target.h"
-
-#include "jni/MotionEventSynthesizer_jni.h"
+#include "content/browser/renderer_host/input/synthetic_gesture_target_android.h"
 
 namespace vr_shell {
 
-AndroidUiGestureTarget::AndroidUiGestureTarget(jobject event_synthesizer,
-                                               float scroll_ratio)
+AndroidUiGestureTarget::AndroidUiGestureTarget(
+    base::android::ScopedJavaGlobalRef<jobject> event_synthesizer,
+    float scroll_ratio)
     : event_synthesizer_(event_synthesizer), scroll_ratio_(scroll_ratio) {
-  DCHECK(event_synthesizer_);
+  DCHECK(!event_synthesizer_.is_null());
 }
 
 AndroidUiGestureTarget::~AndroidUiGestureTarget() = default;
@@ -90,8 +90,7 @@ void AndroidUiGestureTarget::DispatchWebInputEvent(
 }
 
 void AndroidUiGestureTarget::SetPointer(JNIEnv* env, int x, int y) {
-  content::Java_MotionEventSynthesizer_setPointer(env, event_synthesizer_, 0, x,
-                                                  y, 0);
+  content::TouchSetPointerHelper(env, event_synthesizer_, 0, x, y, 0);
 }
 
 void AndroidUiGestureTarget::SetScrollDeltas(JNIEnv* env,
@@ -99,16 +98,14 @@ void AndroidUiGestureTarget::SetScrollDeltas(JNIEnv* env,
                                              int y,
                                              int dx,
                                              int dy) {
-  content::Java_MotionEventSynthesizer_setScrollDeltas(env, event_synthesizer_,
-                                                       x, y, dx, dy);
+  content::TouchSetScrollDeltasHelper(env, event_synthesizer_, x, y, dx, dy);
 }
 
 void AndroidUiGestureTarget::Inject(JNIEnv* env,
                                     Action action,
                                     double time_in_seconds) {
-  content::Java_MotionEventSynthesizer_inject(
-      env, event_synthesizer_, static_cast<int>(action), 1,
-      static_cast<int64_t>(time_in_seconds * 1000.0));
+  content::TouchInjectHelper(env, event_synthesizer_, static_cast<int>(action),
+                             1, static_cast<int64_t>(time_in_seconds * 1000.0));
 }
 
 }  // namespace vr_shell

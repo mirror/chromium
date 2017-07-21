@@ -18,7 +18,9 @@ namespace vr_shell {
 
 class AndroidUiGestureTarget {
  public:
-  AndroidUiGestureTarget(jobject event_synthesizer, float dpr_ratio);
+  AndroidUiGestureTarget(
+      base::android::ScopedJavaGlobalRef<jobject> event_synthesizer,
+      float dpr_ratio);
   ~AndroidUiGestureTarget();
 
   void DispatchWebInputEvent(std::unique_ptr<blink::WebInputEvent> event);
@@ -41,7 +43,7 @@ class AndroidUiGestureTarget {
   void SetScrollDeltas(JNIEnv* env, int x, int y, int dx, int dy);
   void Inject(JNIEnv* env, Action action, double time_in_seconds);
 
-  jobject event_synthesizer_;
+  base::android::ScopedJavaGlobalRef<jobject> event_synthesizer_;
   int scroll_x_ = 0;
   int scroll_y_ = 0;
   float scroll_ratio_;
