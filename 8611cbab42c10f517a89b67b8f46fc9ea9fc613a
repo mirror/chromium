@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63d96179_c6571c3f",
+        "filename": "components/metrics/metrics_log.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-21T17:59:41Z",
+      "side": 1,
+      "message": "comments.\n\nI actually think PreviousSession is clear enough and don\u0027t think tombstone is a better name.",
+      "range": {
+        "startLine": 120,
+        "startChar": 7,
+        "endLine": 120,
+        "endChar": 32
+      },
+      "revId": "8611cbab42c10f517a89b67b8f46fc9ea9fc613a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0081014f_5767949a",
+        "filename": "components/metrics/metrics_log.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-21T17:59:41Z",
+      "side": 1,
+      "message": "remove these (and there\u0027s some comments that reference them)",
+      "range": {
+        "startLine": 137,
+        "startChar": 7,
+        "endLine": 137,
+        "endChar": 29
+      },
+      "revId": "8611cbab42c10f517a89b67b8f46fc9ea9fc613a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8be4a210_a8541192",
+        "filename": "components/metrics/metrics_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-21T17:59:41Z",
+      "side": 1,
+      "message": "I was looking into how \nProvideInitialStabilityMetrics is used, and I don\u0027t see any providers that actually use it.\n\nI see it was added in \nhttps://codereview.chromium.org/1117933002\nbut even that didn\u0027t seem to have any initial implementations. Maybe I\u0027m missing something somewhere... ?\n\nAlexei - do you remember the context?",
+      "revId": "8611cbab42c10f517a89b67b8f46fc9ea9fc613a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "705e9c0b_cf8bf236",
+        "filename": "components/metrics/metrics_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-21T17:59:41Z",
+      "side": 1,
+      "message": "nit - to keep symmetry and make this a bit more general I\u0027d think passing the uma_proto seems reasonable. but either way seems fine",
+      "revId": "8611cbab42c10f517a89b67b8f46fc9ea9fc613a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
