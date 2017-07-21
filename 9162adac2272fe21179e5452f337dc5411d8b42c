@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5f01784_25b15e08",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-07-21T07:04:44Z",
+      "side": 1,
+      "message": "heyyyyyyyy, what\u0027s this doing here.",
+      "range": {
+        "startLine": 307,
+        "startChar": 31,
+        "endLine": 307,
+        "endChar": 32
+      },
+      "revId": "9162adac2272fe21179e5452f337dc5411d8b42c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
