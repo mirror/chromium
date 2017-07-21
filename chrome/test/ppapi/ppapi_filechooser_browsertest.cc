@@ -22,7 +22,8 @@
 #include "ui/shell_dialogs/selected_file_info.h"
 
 #if defined(FULL_SAFE_BROWSING)
-#include "chrome/browser/safe_browsing/download_protection_service.h"
+#include "chrome/browser/safe_browsing/download_protection/download_check_enums.h"
+#include "chrome/browser/safe_browsing/download_protection/download_protection_service.h"
 #include "chrome/browser/safe_browsing/safe_browsing_service.h"
 #include "components/safe_browsing_db/test_database_manager.h"
 #include "content/public/test/test_download_request_handler.h"
@@ -139,10 +140,10 @@ class PPAPIFileChooserTest : public OutOfProcessPPAPITest {};
 
 struct SafeBrowsingTestConfiguration {
   std::map<base::FilePath::StringType,
-           DownloadProtectionService::DownloadCheckResult>
+           safe_browsing::DownloadCheckEnums::DownloadCheckResult>
       result_map;
-  DownloadProtectionService::DownloadCheckResult default_result =
-      DownloadProtectionService::SAFE;
+  safe_browsing::DownloadCheckEnums::DownloadCheckResult default_result =
+      safe_browsing::DownloadCheckEnums::SAFE;
 };
 
 class FakeDatabaseManager
@@ -400,10 +401,10 @@ IN_PROC_BROWSER_TEST_F(PPAPIFileChooserTestWithSBService,
                        FileChooser_SaveAs_DangerousExecutable_Allowed) {
   base::ThreadRestrictions::ScopedAllowIO allow_io;
   safe_browsing_test_configuration_.default_result =
-      DownloadProtectionService::DANGEROUS;
+      safe_browsing::DownloadCheckEnums::DANGEROUS;
   safe_browsing_test_configuration_.result_map.insert(
       std::make_pair(base::FilePath::StringType(FILE_PATH_LITERAL(".exe")),
-                     DownloadProtectionService::SAFE));
+                     safe_browsing::DownloadCheckEnums::SAFE));
 
   base::ScopedTempDir temp_dir;
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
@@ -428,10 +429,10 @@ IN_PROC_BROWSER_TEST_F(PPAPIFileChooserTestWithSBService,
 IN_PROC_BROWSER_TEST_F(PPAPIFileChooserTestWithSBService,
                        FileChooser_SaveAs_DangerousExecutable_Disallowed) {
   safe_browsing_test_configuration_.default_result =
-      DownloadProtectionService::SAFE;
+      safe_browsing::DownloadCheckEnums::SAFE;
   safe_browsing_test_configuration_.result_map.insert(
       std::make_pair(base::FilePath::StringType(FILE_PATH_LITERAL(".exe")),
-                     DownloadProtectionService::DANGEROUS));
+                     safe_browsing::DownloadCheckEnums::DANGEROUS));
 
   TestSelectFileDialogFactory test_dialog_factory(
       TestSelectFileDialogFactory::NOT_REACHED,
@@ -442,10 +443,10 @@ IN_PROC_BROWSER_TEST_F(PPAPIFileChooserTestWithSBService,
 IN_PROC_BROWSER_TEST_F(PPAPIFileChooserTestWithSBService,
                        FileChooser_SaveAs_DangerousExtensionList_Disallowed) {
   safe_browsing_test_configuration_.default_result =
-      DownloadProtectionService::SAFE;
+      safe_browsing::DownloadCheckEnums::SAFE;
   safe_browsing_test_configuration_.result_map.insert(
       std::make_pair(base::FilePath::StringType(FILE_PATH_LITERAL(".exe")),
-                     DownloadProtectionService::DANGEROUS));
+                     safe_browsing::DownloadCheckEnums::DANGEROUS));
 
   TestSelectFileDialogFactory test_dialog_factory(
       TestSelectFileDialogFactory::NOT_REACHED,
@@ -466,7 +467,7 @@ IN_PROC_BROWSER_TEST_F(PPAPIFileChooserTestWithSBService,
       base::WriteFile(existing_filename, kContents, sizeof(kContents) - 1));
 
   safe_browsing_test_configuration_.default_result =
-      DownloadProtectionService::DANGEROUS;
+      safe_browsing::DownloadCheckEnums::DANGEROUS;
 
   TestSelectFileDialogFactory::SelectedFileInfoList file_info_list;
   file_info_list.push_back(
