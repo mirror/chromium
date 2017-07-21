@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab55fc85_33d9d6c9",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-21T18:40:40Z",
+      "side": 1,
+      "message": "nit: You have to use {} in this case or even better.\n\nif (is_search_box_active_) {\n   keyboard_controller-\u003eShowKeyboard(false);\n   return;\n}\n\nkeyboard_controller-\u003eHideKeyboard(\n        keyboard::KeyboardController::HIDE_REASON_MANUAL);",
+      "range": {
+        "startLine": 420,
+        "startChar": 2,
+        "endLine": 420,
+        "endChar": 4
+      },
+      "revId": "29b01028729d6327456309bf305a4736593ca229",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
