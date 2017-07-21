@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6c50daa_e00bcd4c",
+        "filename": "chromecast/media/cma/backend/android/cast_media_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-07-21T17:31:21Z",
+      "side": 1,
+      "message": "this should be moved down into order",
+      "revId": "c28695338355ae5452940384d35607178f1ad385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1c43f06_92c9bf7a",
+        "filename": "chromecast/media/cma/backend/android/loopback_audio_observer_android.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-07-21T17:31:21Z",
+      "side": 1,
+      "message": "header needs include guards",
+      "revId": "c28695338355ae5452940384d35607178f1ad385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dfa7fde_f9b7d3ad",
+        "filename": "chromecast/media/cma/backend/android/loopback_audio_observer_android.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-07-21T17:31:21Z",
+      "side": 1,
+      "message": "nit: filename should match class?",
+      "revId": "c28695338355ae5452940384d35607178f1ad385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ec9ce84_da874917",
+        "filename": "chromecast/media/cma/backend/android/loopback_audio_observer_android.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-07-21T17:31:21Z",
+      "side": 1,
+      "message": "seems like most of these members are uninitialized?",
+      "revId": "c28695338355ae5452940384d35607178f1ad385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
