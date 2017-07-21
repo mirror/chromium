@@ -114,7 +114,7 @@ LayoutUnit RootInlineBox::PlaceEllipsis(const AtomicString& ellipsis_str,
                                         LayoutUnit block_right_edge,
                                         LayoutUnit ellipsis_width,
                                         LayoutUnit logical_left_offset,
-                                        bool found_box,
+                                        InlineBox*& found_box,
                                         ForceEllipsisOnLine force_ellipsis) {
   // Create an ellipsis box if we don't already have one. If we already have one
   // we're just here to blank out (truncate) the text boxes.
@@ -156,7 +156,7 @@ LayoutUnit RootInlineBox::PlaceEllipsisBox(bool ltr,
                                            LayoutUnit block_right_edge,
                                            LayoutUnit ellipsis_width,
                                            LayoutUnit& truncated_width,
-                                           bool& found_box,
+                                           InlineBox*& found_box,
                                            LayoutUnit logical_left_offset) {
   LayoutUnit result = InlineFlowBox::PlaceEllipsisBox(
       ltr, block_left_edge, block_right_edge, ellipsis_width, truncated_width,
