@@ -129,6 +129,7 @@ GpuChannel* GpuChannelManager::LookupChannel(int32_t client_id) const {
 GpuChannel* GpuChannelManager::EstablishChannel(int client_id,
                                                 uint64_t client_tracing_id,
                                                 bool is_gpu_host) {
+  LOG(ERROR) << "ssid establish channel";
   std::unique_ptr<GpuChannel> gpu_channel = base::MakeUnique<GpuChannel>(
       this, scheduler_, sync_point_manager_, share_group_,
       is_gpu_host ? preemption_flag_ : nullptr,

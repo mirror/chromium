@@ -428,11 +428,10 @@
 
 // Implementation detail: internal macro to trace a task execution with the
 // location where it was posted from.
-#define INTERNAL_TRACE_TASK_EXECUTION(run_function, task)                 \
-  TRACE_EVENT2("toplevel", run_function, "src_file",                      \
-               (task).posted_from.file_name(), "src_func",                \
-               (task).posted_from.function_name());                       \
-  TRACE_HEAP_PROFILER_API_SCOPED_TASK_EXECUTION INTERNAL_TRACE_EVENT_UID( \
+#define INTERNAL_TRACE_TASK_EXECUTION(run_function, task)                  \
+  TRACE_EVENT2("toplevel", (task).posted_from.function_name(), "src_file", \
+               (task).posted_from.file_name(), "src_func", run_function);  \
+  TRACE_HEAP_PROFILER_API_SCOPED_TASK_EXECUTION INTERNAL_TRACE_EVENT_UID(  \
       task_event)((task).posted_from.file_name());
 
 namespace trace_event_internal {
