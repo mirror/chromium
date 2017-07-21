@@ -186,7 +186,7 @@ class MediaGalleriesPreferences
   // Before the callback is run, other calls may not return the correct results.
   // Should be invoked on the UI thread; callbacks will be run on the UI thread.
   // This call also ensures that the StorageMonitor is initialized.
-  // Note for unit tests: This requires an active FILE thread and
+  // Note for unit tests: This requires an active ScopedTaskEnvironment and
   // EnsureMediaDirectoriesExists instance to complete reliably.
   void EnsureInitialized(base::Closure callback);
 
@@ -385,6 +385,8 @@ class MediaGalleriesPreferences
   DeviceIdPrefIdsMap device_map_;
 
   base::ObserverList<GalleryChangeObserver> gallery_change_observers_;
+
+  SEQUENCE_CHECKER(sequence_checker_);
 
   base::WeakPtrFactory<MediaGalleriesPreferences> weak_factory_;
 
