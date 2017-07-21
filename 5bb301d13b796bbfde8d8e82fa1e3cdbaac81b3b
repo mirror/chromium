@@ -2,6 +2,91 @@
   "comments": [
     {
       "key": {
+        "uuid": "bab8d1ce_0ab0f853",
+        "filename": "content/common/media/renderer_audio_input_stream_factory.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-07-21T11:03:39Z",
+      "side": 1,
+      "message": "It\u0027s a bit awkward that there\u0027s |shared_memory_count| when creating the stream and also a |segment_count| in the response. I\u0027ll have a look at if it\u0027s really needed later.",
+      "revId": "5bb301d13b796bbfde8d8e82fa1e3cdbaac81b3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efcf8650_14f508d1",
+        "filename": "content/renderer/media/mojo_audio_input_ipc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-07-21T11:03:39Z",
+      "side": 1,
+      "message": "nit: Move the callback.",
+      "revId": "5bb301d13b796bbfde8d8e82fa1e3cdbaac81b3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f02e48f_1b6c9f98",
+        "filename": "content/renderer/media/mojo_audio_input_ipc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-07-21T11:03:39Z",
+      "side": 1,
+      "message": "I\u0027m not a fan of the FactoryAccessor since it requires the factory to already exist. Instead, I\u0027d take a frame_id in the constructor, and post a task to the main thread from here. On the main thread, you could call something like RenderFrame::FromRoutingId(frame_id)-\u003eGetAudioInputStreamFactory(), which returns a lazily initialized factory*, and use that.",
+      "revId": "5bb301d13b796bbfde8d8e82fa1e3cdbaac81b3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43ab5628_bfa958ae",
+        "filename": "content/renderer/media/mojo_audio_input_ipc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-07-21T11:03:39Z",
+      "side": 1,
+      "message": "This Unretained doesn\u0027t look safe to me, since |factory| may outlive |this|. Should also be BindOnce.",
+      "revId": "5bb301d13b796bbfde8d8e82fa1e3cdbaac81b3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1afc47b_8404ff83",
+        "filename": "content/renderer/media/mojo_audio_input_ipc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-07-21T11:03:39Z",
+      "side": 1,
+      "message": "I\u0027d also set this error handler for |client_binding_|.",
+      "revId": "5bb301d13b796bbfde8d8e82fa1e3cdbaac81b3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea6081de_a44b2e10",
         "filename": "content/renderer/media/mojo_audio_input_ipc.cc",
         "patchSetId": 1
@@ -19,6 +104,24 @@
     },
     {
       "key": {
+        "uuid": "ca65e6b9_e6508863",
+        "filename": "content/renderer/media/mojo_audio_input_ipc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-07-21T11:03:39Z",
+      "side": 1,
+      "message": "It would be great if |length| could be eliminated. Just make sure there aren\u0027t any differences (e.g. requested length vs actual length), or that the users of this AudioInputIPC can deal with any differences.",
+      "parentUuid": "ea6081de_a44b2e10",
+      "revId": "5bb301d13b796bbfde8d8e82fa1e3cdbaac81b3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1feb52ab_25ae48b9",
         "filename": "content/renderer/media/mojo_audio_input_ipc.cc",
         "patchSetId": 1
@@ -30,6 +133,24 @@
       "writtenOn": "2017-07-21T09:36:04Z",
       "side": 1,
       "message": "I expect this will happen on the correct thread - AudioMessageFilter needs an explicit io_task_runner while MojoAudioOutputIPC doesn\u0027t - but I\u0027m not 100% sure.",
+      "revId": "5bb301d13b796bbfde8d8e82fa1e3cdbaac81b3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "402247a3_f59e2b76",
+        "filename": "content/renderer/media/mojo_audio_input_ipc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-07-21T11:03:39Z",
+      "side": 1,
+      "message": "This will be called on the thread on which you bound |client_binding_|, so this is fine.",
+      "parentUuid": "1feb52ab_25ae48b9",
       "revId": "5bb301d13b796bbfde8d8e82fa1e3cdbaac81b3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
