@@ -100,6 +100,7 @@ source_set("unit_tests") {
     "//media",
     "//media/base:test_support",
     "//media/cdm:cdm_api",
+    "//media/gpu:features",
     "//media/mojo/clients",
     "//media/mojo/common",
     "//media/mojo/common:mojo_shared_buffer_video_frame",
