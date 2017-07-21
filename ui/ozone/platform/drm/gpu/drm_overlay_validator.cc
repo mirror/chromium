@@ -75,9 +75,7 @@ std::vector<OverlayCheckReturn_Params> DrmOverlayValidator::TestPageFlip(
     }
 
     uint32_t original_format =
-        params[i].plane_z_order
-            ? GetFourCCFormatFromBufferFormat(params[i].format)
-            : GetFourCCFormatForOpaqueFramebuffer(params[i].format);
+        GetFourCCFormatFromBufferFormat(params[i].format);
     if (!controller->IsFormatSupported(original_format,
                                        params[i].plane_z_order)) {
       returns[i].status = OVERLAY_STATUS_NOT;
