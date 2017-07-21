@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0c9a7dd2_d02b60a5",
+        "filename": "net/spdy/chromium/buffered_spdy_framer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1222405
+      },
+      "writtenOn": "2017-07-21T23:36:58Z",
+      "side": 1,
+      "message": "Oops, I\u0027d meant to and totally forgot - thanks!",
+      "parentUuid": "2ec6e5d8_dc0a8ca7",
+      "range": {
+        "startLine": 215,
+        "startChar": 2,
+        "endLine": 219,
+        "endChar": 66
+      },
+      "revId": "b3cf2285c9e54726045cfc00bdf5a062f2ad9397",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0454321e_00e6505a",
         "filename": "net/spdy/chromium/spdy_session.h",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "b3cf2285c9e54726045cfc00bdf5a062f2ad9397",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3296218c_a9a3496f",
+        "filename": "net/spdy/chromium/spdy_session.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1222405
+      },
+      "writtenOn": "2017-07-21T23:36:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0454321e_00e6505a",
+      "range": {
+        "startLine": 540,
+        "startChar": 0,
+        "endLine": 540,
+        "endChar": 74
+      },
+      "revId": "b3cf2285c9e54726045cfc00bdf5a062f2ad9397",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
