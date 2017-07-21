@@ -9,6 +9,7 @@
 
 #include <map>
 #include <memory>
+#include <queue>
 #include <string>
 #include <unordered_map>
 #include <unordered_set>
@@ -18,6 +19,7 @@
 #include "base/timer/timer.h"
 #include "components/arc/arc_service.h"
 #include "components/arc/common/bluetooth.mojom.h"
+#include "components/arc/common/intent_helper.mojom.h"
 #include "components/arc/instance_holder.h"
 #include "device/bluetooth/bluetooth_adapter.h"
 #include "device/bluetooth/bluetooth_adapter_factory.h"
@@ -48,11 +50,13 @@ class ArcBluetoothBridge
 
   // Overridden from InstanceHolder<mojom::BluetoothInstance>::Observer:
   void OnInstanceReady() override;
-  void OnInstanceClosed() override;
 
   void OnAdapterInitialized(scoped_refptr<device::BluetoothAdapter> adapter);
 
-  // Overridden from device::BluetoothAdadpter::Observer
+  // Overridden from device::BluetoothAdapter::Observer
+  void AdapterPoweredChanged(device::BluetoothAdapter* adapter,
+                             bool powered) override;
+
   void DeviceAdded(device::BluetoothAdapter* adapter,
                    device::BluetoothDevice* device) override;
 
@@ -331,6 +335,33 @@ class ArcBluetoothBridge
       std::unique_ptr<device::BluetoothGattNotifySession> notify_session);
 
  private:
+  // IntentHelperObserver listens to the OnInstanceReady call on the intent
+  // helper which indicated ARC++ has been brought up and the initial powered
+  // state of Bluetooth adapter can be sent to Android.
+  class IntentHelperObserver
+      : public InstanceHolder<mojom::IntentHelperInstance>::Observer {
+   public:
+    explicit IntentHelperObserver(ArcBluetoothBridge* bluetooth_bridge);
+    ~IntentHelperObserver() override;
+
+   private:
+    // InstanceHolder<mojom::IntentHelperInstance>::Observer overrides
+    void OnInstanceReady() override;
+
+    ArcBluetoothBridge* bluetooth_bridge_;
+
+    DISALLOW_COPY_AND_ASSIGN(IntentHelperObserver);
+  };
+
+  bool IsInstanceUp() const;
+
+  // Called by IntentHelperObserver to send the initial power state.
+  void SendInitPowerChange();
+
+  // Manage the powered change intent sent to Android.
+  void EnqueuePowerIntent(bool powered);
+  void DequeuePowerIntent(bool powered);
+
   std::vector<mojom::BluetoothPropertyPtr> GetDeviceProperties(
       mojom::BluetoothPropertyType type,
       const device::BluetoothDevice* device) const;
@@ -351,6 +382,9 @@ class ArcBluetoothBridge
       mojom::BluetoothGattServiceIDPtr service_id,
       mojom::BluetoothGattIDPtr char_id,
       mojom::BluetoothGattIDPtr desc_id) const;
+
+  // Send the power status change to Android via an intent.
+  void SendBluetoothPoweredStateBroadcast(bool powered) const;
 
   // Propagates the list of paired device to Android.
   void SendCachedPairedDevices() const;
@@ -458,6 +492,15 @@ class ArcBluetoothBridge
   base::OneShotTimer discovery_off_timer_;
   // Timer to turn adapter discoverable off.
   base::OneShotTimer discoverable_off_timer_;
+
+  // Observer to listen the start-up of Intent Helper.
+  IntentHelperObserver intent_helper_observer_;
+  // Queue to track the powered state changes initiated by Android.
+  std::queue<bool> remote_power_changes_;
+  // Queue to track the powered state changes initiated by Chrome.
+  std::queue<bool> local_power_changes_;
+  // Timer to track the completion of power-changed intent sent to Android.
+  base::OneShotTimer power_intent_timer_;
 
   // Holds advertising data registered by the instance.
   //
