@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "698327c0_4f301c75",
+        "filename": "chrome/test/data/webui/settings/site_details_tests.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-21T03:06:57Z",
+      "side": 1,
+      "message": "nit: everything else here is hacker_case. Better to keep this consistent for now and fix it all at once when the tests are refactored.",
+      "range": {
+        "startLine": 117,
+        "startChar": 8,
+        "endLine": 117,
+        "endChar": 19
+      },
+      "revId": "5c2ae3ef17079eddb9db2b6ac56ee41ec6db1721",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
