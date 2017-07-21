@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5db11be8_7a408bcf",
+        "filename": "base/test/launcher/test_results_tracker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2017-07-21T13:23:59Z",
+      "side": 1,
+      "message": "nit: just \"run\" I think",
+      "range": {
+        "startLine": 237,
+        "startChar": 23,
+        "endLine": 237,
+        "endChar": 28
+      },
+      "revId": "8454d585b9f06fea554e89d2de0d830c2544e962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08e49e2e_801422f9",
+        "filename": "base/test/launcher/test_results_tracker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2017-07-21T13:23:59Z",
+      "side": 1,
+      "message": "nit: Same here (or just delete).",
+      "range": {
+        "startLine": 238,
+        "startChar": 35,
+        "endLine": 238,
+        "endChar": 41
+      },
+      "revId": "8454d585b9f06fea554e89d2de0d830c2544e962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e7d4dbd_a477d55a",
+        "filename": "base/test/launcher/test_results_tracker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2017-07-21T13:23:59Z",
+      "side": 1,
+      "message": "Since we do this anyway, can we avoid exposing AddShardTest externally, and just always do it implicitly here?",
+      "range": {
+        "startLine": 241,
+        "startChar": 2,
+        "endLine": 241,
+        "endChar": 14
+      },
+      "revId": "8454d585b9f06fea554e89d2de0d830c2544e962",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
