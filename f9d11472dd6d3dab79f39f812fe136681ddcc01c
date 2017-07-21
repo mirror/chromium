@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f507ab0_9a16c7ac",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutReplaced.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-07-21T16:50:49Z",
+      "side": 1,
+      "message": "add a comment why this is public now, see:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/layout/LayoutBlockFlow.h?q\u003dlayoutblockflow\u0026sq\u003dpackage:chromium\u0026l\u003d407",
+      "revId": "f9d11472dd6d3dab79f39f812fe136681ddcc01c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecaeff8e_c8b3099f",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-07-21T16:50:49Z",
+      "side": 1,
+      "message": "use StyleRef() here instead of Style().",
+      "revId": "f9d11472dd6d3dab79f39f812fe136681ddcc01c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "528a5d5f_73970f0b",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-07-21T16:50:49Z",
+      "side": 1,
+      "message": "what happens if:\n\ntop: 0; bottom: 0; height: auto; ?\n\ndoesn\u0027t this need a similar condition to inline size?",
+      "revId": "f9d11472dd6d3dab79f39f812fe136681ddcc01c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3205bae7_b7ddb727",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_absolute_utils_test.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-07-21T16:50:49Z",
+      "side": 1,
+      "message": "you may be able to drop the WTF namespace (just nullopt).",
+      "revId": "f9d11472dd6d3dab79f39f812fe136681ddcc01c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbdcb8bc_7d9d5935",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_constraint_space.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-07-21T16:50:49Z",
+      "side": 1,
+      "message": "might be able to drop WTF namespace - check.",
+      "revId": "f9d11472dd6d3dab79f39f812fe136681ddcc01c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40c0d80b_291b03bd",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_layout_input_node.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-07-21T16:50:49Z",
+      "side": 1,
+      "message": "move to below IsOutOfFlowPositioned.",
+      "revId": "f9d11472dd6d3dab79f39f812fe136681ddcc01c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0431920a_3ce1b55b",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_length_utils.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-07-21T16:50:49Z",
+      "side": 1,
+      "message": "can potentially remove this.",
+      "revId": "f9d11472dd6d3dab79f39f812fe136681ddcc01c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9fed4fd_ec43c49f",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_length_utils.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-07-21T16:50:49Z",
+      "side": 1,
+      "message": "I\u0027d be tempted to remove the NGIntrinsicSize struct as it isn\u0027t adding a lot of value, instead I\u0027d just:\n\nOptional\u003cLayoutUnit\u003e computed_block_size;\nOptional\u003cLayoutUnit\u003e computed_inline_size;\nnode.ReplacedIntrinsicComputedSize(\u0026computed_inline_size, \u0026computed_block_size);\nNGLogicalSize aspect_ratio \u003d node.ReplacedIntrinsicAspectRation();\nNGLogicalSize default_size \u003d node.ReplacedIntrinsicDefaultSize();",
+      "range": {
+        "startLine": 300,
+        "startChar": 18,
+        "endLine": 300,
+        "endChar": 32
+      },
+      "revId": "f9d11472dd6d3dab79f39f812fe136681ddcc01c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
