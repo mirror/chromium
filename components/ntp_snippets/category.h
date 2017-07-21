@@ -53,6 +53,9 @@ enum class KnownCategories {
 
   // Breaking News
   BREAKING_NEWS = 10008,
+
+  // Contextual suggestion.
+  CONTEXTUAL,
   // ****************** INSERT NEW REMOTE CATEGORIES HERE! ******************
 
   // Tracks the last known remote category
