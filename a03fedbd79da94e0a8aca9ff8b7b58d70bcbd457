@@ -45,6 +45,23 @@
       "revId": "a03fedbd79da94e0a8aca9ff8b7b58d70bcbd457",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e6069df_9cf88d4a",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-21T17:55:15Z",
+      "side": 1,
+      "message": "Ah, I see. We had this here because we wanted to test whether this would succeed or not. And we expected this did nothing.\n\nI think the right thing to do is to use EXPECT_DEATH here. And you can have a dedicated death test for this and then a normal test which does the right thing that do not crash.",
+      "revId": "a03fedbd79da94e0a8aca9ff8b7b58d70bcbd457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
