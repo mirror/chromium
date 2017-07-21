@@ -377,25 +377,10 @@ class ImageStorage : public base::RefCounted<ImageStorage> {
   }
 #endif  // defined(OS_MACOSX) && !defined(OS_IOS)
 
-  void DisableThreadChecking() {
-    DCHECK(thread_checking_disabled() || AccessIsThreadSafe());
-#if DCHECK_IS_ON()
-    thread_checking_disabled_ = true;
-#endif
-  }
-
  private:
   friend class base::RefCounted<ImageStorage>;
 
   ~ImageStorage() {}
-
-  bool thread_checking_disabled() const {
-#if DCHECK_IS_ON()
-    return thread_checking_disabled_;
-#else
-    return true;
-#endif
-  }
 
   // The type of image that was passed to the constructor. This key will always
   // exist in the |representations_| map.
@@ -412,10 +397,6 @@ class ImageStorage : public base::RefCounted<ImageStorage> {
   // All the representations of an Image. Size will always be at least one, with
   // more for any converted representations.
   Image::RepresentationMap representations_;
-
-#if DCHECK_IS_ON()
-  bool thread_checking_disabled_ = false;
-#endif
 
   DISALLOW_COPY_AND_ASSIGN(ImageStorage);
 };
