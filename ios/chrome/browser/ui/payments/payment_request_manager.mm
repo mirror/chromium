@@ -760,6 +760,12 @@ requestFullCreditCard:(const autofill::CreditCard&)creditCard
                                      resultDelegate:resultDelegate];
 }
 
+- (void)launchAppWithUniversalLink:(std::string)universalLink {
+  // TODO(crbug.com/602666): Implement this function to use a native app's
+  // universal link to open it from Chrome with several arguments supplied
+  // from the Payment Request object.
+}
+
 #pragma mark - PaymentRequestCoordinatorDelegate methods
 
 - (void)paymentRequestCoordinatorDidCancel:
