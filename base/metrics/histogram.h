@@ -208,7 +208,8 @@ class BASE_EXPORT Histogram : public HistogramBase {
   void WriteAscii(std::string* output) const override;
 
   // TODO(bcwhite): Remove this after crbug/736675.
-  void ValidateHistogramContents() const override;
+  bool ValidateHistogramContents(bool crash_if_invalid,
+                                 int corrupted_count) const override;
 
  protected:
   // This class, defined entirely within the .cc file, contains all the
