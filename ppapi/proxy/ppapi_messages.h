@@ -2,6 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#ifndef PPAPI_PROXY_PPAPI_MESSAGES_H_
+#define PPAPI_PROXY_PPAPI_MESSAGES_H_
+
 // Multiply-included message header, no traditional include guard.
 
 #include <stdint.h>
@@ -2551,3 +2554,5 @@ IPC_MESSAGE_CONTROL1(PpapiPluginMsg_VideoCapture_OnBufferReady,
                      uint32_t /* buffer */)
 
 #endif  // !defined(OS_NACL) && !defined(NACL_WIN64)
+
+#endif  // PPAPI_PROXY_PPAPI_MESSAGES_H_

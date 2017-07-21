@@ -2,6 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#ifndef CONTENT_COMMON_INPUT_MESSAGES_H_
+#define CONTENT_COMMON_INPUT_MESSAGES_H_
+
 // IPC messages for input events and other messages that require processing in
 // order relative to input events.
 // Multiply-included message file, hence no include guard.
@@ -366,3 +369,5 @@ IPC_MESSAGE_ROUTED2(InputHostMsg_ImeCompositionRangeChanged,
 // independent InputMsg, then ifdefs for platform specific InputMsg, then
 // platform independent InputHostMsg, then ifdefs for platform specific
 // InputHostMsg.
+
+#endif  // CONTENT_COMMON_INPUT_MESSAGES_H_
