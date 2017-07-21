@@ -325,7 +325,7 @@ Polymer({
    */
   resetPermissionForOrigin_: function(site) {
     assert(site);
-    this.browserProxy.resetCategoryPermissionForOrigin(
+    this.browserProxy.resetCategoryPermissionForPattern(
         site.origin, site.embeddingOrigin, this.category, site.incognito);
   },
 
@@ -335,7 +335,7 @@ Polymer({
    */
   setContentSettingForActionMenuSite_: function(contentSetting) {
     assert(this.actionMenuSite_);
-    this.browserProxy.setCategoryPermissionForOrigin(
+    this.browserProxy.setCategoryPermissionForPattern(
         this.actionMenuSite_.origin, this.actionMenuSite_.embeddingOrigin,
         this.category, contentSetting, this.actionMenuSite_.incognito);
   },
