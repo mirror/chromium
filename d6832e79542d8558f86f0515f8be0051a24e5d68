@@ -22,6 +22,30 @@
       "revId": "d6832e79542d8558f86f0515f8be0051a24e5d68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b923f55_bbd3f70b",
+        "filename": "tools/perf/benchmarks/rasterize_and_record_micro.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-21T18:47:28Z",
+      "side": 1,
+      "message": "Updated.\n\nBut I have a question. If I do the disable in Top25StoryExpectations, does that mean all benchmarking using Top25StoryExpectations would have gmail disabled? We only want to disbale rasterize_and_record_micro.top_25 gmail story, right?",
+      "parentUuid": "f9f798df_3d306e59",
+      "range": {
+        "startLine": 62,
+        "startChar": 9,
+        "endLine": 62,
+        "endChar": 10
+      },
+      "revId": "d6832e79542d8558f86f0515f8be0051a24e5d68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
