@@ -1,0 +1,361 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88eb46da_1cd1e7a0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-21T22:48:28Z",
+      "side": 1,
+      "message": "associated\n\nAlso, there aren\u0027t that many label managers, name them, and briefly describe them.",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "284b1b4e_395b336e",
+        "filename": "chrome/installer/zucchini/image_utils_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-21T22:48:28Z",
+      "side": 1,
+      "message": "test that after marking an index, IsMarked returns true, and after unmarking, IsMarked returns false.\n\nMaybe try some other values too likek 0xBEEF.",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82dbcb7a_dcdee09f",
+        "filename": "chrome/installer/zucchini/label_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-21T22:48:28Z",
+      "side": 1,
+      "message": "since you care so much about speed, probably want to rehash the labels_map_ before starting insertions. Amortized cost of resizing hash maps is fairly expensive.",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d8bd00e_96beda37",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-21T22:48:28Z",
+      "side": 1,
+      "message": "what is \"index\"? I think it\u0027s referring to the index of an offset in a target pool, as per the README. If so, please clarify this and also update the README with an example including labels, indices, and offsets.",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c71a0bb9_6b0c39ec",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-21T22:48:28Z",
+      "side": 1,
+      "message": "I think you\u0027re trying to say:\n\nFind labels in the old and new images with the same index. Define the pair [old offset, new offset] as a matched offset.",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "094717e1_9708a313",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-21T22:48:28Z",
+      "side": 1,
+      "message": "s/333/3333",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8b06ab4_ed02c5bb",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-21T22:48:28Z",
+      "side": 1,
+      "message": "Aren\u0027t offsets and indices distinct by definition?\n\nMaybe say: A LabelManager stores a list of Labels. By definition, all offsets and indices must be distinct.",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8cdd385_0cd557de",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-21T22:48:28Z",
+      "side": 1,
+      "message": "What does it mean to insert a label? How do you guarantee distinctness of offset/index?",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0abd98a8_0b3c6464",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-21T22:48:28Z",
+      "side": 1,
+      "message": "Why are we describing things that this cannot do? Is there an expectation that they should be able to do thsi?",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ada22024_25d8d150",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-21T22:48:28Z",
+      "side": 1,
+      "message": "and also indices as offsets, right?\n\nSo a LabelManager is a bijection between a set of indices and offsets?",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8afa89b1_285956f6",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-21T22:48:28Z",
+      "side": 1,
+      "message": "Why do we store them together, rather than separately?",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebde326f_64d7df9d",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-21T22:48:28Z",
+      "side": 1,
+      "message": "static assert that this is marked?",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3564b05a_6fc945fb",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-21T22:48:28Z",
+      "side": 1,
+      "message": "\"offset-of-index lookup\" terminology is a bit hard to wrap my head around. Maybe: Looking up and offset by index is O(1).",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6acab2f9_5bc2c716",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-21T22:48:28Z",
+      "side": 1,
+      "message": "The contract for this method is really odd.\n\nCommon patterns include: \n1) Return a (bool) that describes whether the marked index was found\n2) Return an invalid index if not found.",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3dba597_3c4c1df9",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-21T22:48:28Z",
+      "side": 1,
+      "message": "The implementation of this method guarantees uniqueness. This should probably be mentioned in a comment.",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95614e12_f8be31c7",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-21T22:48:28Z",
+      "side": 1,
+      "message": "to clarify, I think you\u0027re saying, for each \"Reference\", create a \"label\" and add it to \"labels_\". The offset of the label is the target of the reference. The index is [newly generated (?)]",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0443bef_bd1ee59e",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-21T22:48:28Z",
+      "side": 1,
+      "message": "newline? \"//\"\n\nProbably something like\" Requires that |labels| consists of unique offsets.",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "312426c2_13c38e44",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-21T22:48:28Z",
+      "side": 1,
+      "message": "Why does UnorderedLabelManager require uniqueness, but not OrderedLabelManager?",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cddfb1e_4c21aa76",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-21T22:48:28Z",
+      "side": 1,
+      "message": "Add comment: Behavior is undefined if |offset| is already stored?",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35fa4a1e_1a2a2be9",
+        "filename": "chrome/installer/zucchini/label_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-21T22:48:28Z",
+      "side": 1,
+      "message": "missing test for InsertTargets",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22857008_215abaf1",
+        "filename": "chrome/installer/zucchini/label_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-21T22:48:28Z",
+      "side": 1,
+      "message": "nit: one letter class? Can we just call this OffsetVector?\n\n[I don\u0027t care that much]",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
