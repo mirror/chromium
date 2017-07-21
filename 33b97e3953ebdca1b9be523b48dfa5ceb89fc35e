@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15847460_6c070af0",
+        "filename": "content/browser/accessibility/web_contents_accessibility_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-07-21T00:48:43Z",
+      "side": 1,
+      "message": "How was this number chosen? If there must be a hard limit, maybe we should log an error when it\u0027s exceeded, so as not to frustrate developers.",
+      "range": {
+        "startLine": 297,
+        "startChar": 10,
+        "endLine": 297,
+        "endChar": 37
+      },
+      "revId": "33b97e3953ebdca1b9be523b48dfa5ceb89fc35e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc9a6207_3b3a367f",
+        "filename": "content/browser/accessibility/web_contents_accessibility_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1135,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-07-21T00:48:43Z",
+      "side": 1,
+      "message": "What happens if start+len exceeds the text length? The preview docs say \"The RectF will be null for characters that either do not exist or are off the screen.\" It looks like the Java side creates a RectF for every index, though.",
+      "revId": "33b97e3953ebdca1b9be523b48dfa5ceb89fc35e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0defc232_8ec24a2e",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/OWebContentsAccessibility.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-07-21T00:48:43Z",
+      "side": 1,
+      "message": "Is it really possible for coords to be non-null, but of the wrong length? If not, then the length check should probably be an assert.",
+      "revId": "33b97e3953ebdca1b9be523b48dfa5ceb89fc35e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
