@@ -16,6 +16,24 @@
       "revId": "7a9e47cf1bf95fe6664f96a68c15e9d260ffeedb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6649598d_f87a0bd7",
+        "filename": "services/viz/public/interfaces/compositing/renderer_settings.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-21T17:56:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49b799e6_1ce7e16e",
+      "revId": "7a9e47cf1bf95fe6664f96a68c15e9d260ffeedb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
