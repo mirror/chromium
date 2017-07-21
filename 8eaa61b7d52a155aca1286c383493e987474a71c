@@ -187,6 +187,30 @@
       "revId": "8eaa61b7d52a155aca1286c383493e987474a71c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87973f1d_536fc708",
+        "filename": "components/ukm/ukm_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-21T20:30:37Z",
+      "side": 1,
+      "message": "I understand it\u0027s separate objects - so they shouldn\u0027t step on each other\u0027s toes. Still, it\u0027s doing the async init work twice as many times as would have been done before UKM.\n\nIn ideal world, it could be done once (i.e. by sharing global state somehow). I agree it\u0027s not trivial as we\u0027d have to look at individual providers to see how they can be managed, but my suggestion is to add a TODO about this for now.",
+      "parentUuid": "c13d91f0_db9ddf5e",
+      "range": {
+        "startLine": 224,
+        "startChar": 32,
+        "endLine": 224,
+        "endChar": 33
+      },
+      "revId": "8eaa61b7d52a155aca1286c383493e987474a71c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
