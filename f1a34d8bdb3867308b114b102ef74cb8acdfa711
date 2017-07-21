@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b175a6de_a1becf2c",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 17403,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-21T15:25:07Z",
+      "side": 1,
+      "message": "Please add back the description and two \u003cowners\u003e lines (you and Omri)",
+      "range": {
+        "startLine": 17403,
+        "startChar": 31,
+        "endLine": 17403,
+        "endChar": 32
+      },
+      "revId": "f1a34d8bdb3867308b114b102ef74cb8acdfa711",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
