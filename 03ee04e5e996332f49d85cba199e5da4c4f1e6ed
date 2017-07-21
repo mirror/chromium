@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e3e87f35_9505244e",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/io/blob-uuid.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-21T18:50:37Z",
+      "side": 1,
+      "message": "Done -- it wasn\u0027t quite evident this function expects description :-)",
+      "parentUuid": "fafc9adf_cce5bc34",
+      "range": {
+        "startLine": 2,
+        "startChar": 57,
+        "endLine": 2,
+        "endChar": 58
+      },
+      "revId": "03ee04e5e996332f49d85cba199e5da4c4f1e6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51af4fb1_0e6a7113",
         "filename": "third_party/WebKit/LayoutTests/inspector-protocol/io/blob-uuid.js",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b7a4470a_cb92932f",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/io/blob-uuid.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-21T18:50:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51af4fb1_0e6a7113",
+      "range": {
+        "startLine": 12,
+        "startChar": 44,
+        "endLine": 12,
+        "endChar": 52
+      },
+      "revId": "03ee04e5e996332f49d85cba199e5da4c4f1e6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e7c19a4_e2a407ee",
         "filename": "third_party/WebKit/Source/core/inspector/InspectorIOAgent.cpp",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-21T18:01:06Z",
       "side": 1,
       "message": "Not using context anywhere - pass nullptr?",
+      "range": {
+        "startLine": 27,
+        "startChar": 42,
+        "endLine": 27,
+        "endChar": 49
+      },
+      "revId": "03ee04e5e996332f49d85cba199e5da4c4f1e6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c40ce18a_24f3883b",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorIOAgent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-21T18:50:37Z",
+      "side": 1,
+      "message": "Not sure the implementation expects that ;)",
+      "parentUuid": "3e7c19a4_e2a407ee",
       "range": {
         "startLine": 27,
         "startChar": 42,
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "2f9d6dc1_c58955d8",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorIOAgent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-21T18:50:37Z",
+      "side": 1,
+      "message": "Fixed!",
+      "parentUuid": "f132eaee_b012aa97",
+      "revId": "03ee04e5e996332f49d85cba199e5da4c4f1e6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "88e40790_87415269",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 2
@@ -99,6 +189,24 @@
       "writtenOn": "2017-07-21T18:01:06Z",
       "side": 1,
       "message": "Add Runtime dependency.",
+      "revId": "03ee04e5e996332f49d85cba199e5da4c4f1e6ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "157189fe_c9c0dcf6",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 3471,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-21T18:50:37Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "88e40790_87415269",
       "revId": "03ee04e5e996332f49d85cba199e5da4c4f1e6ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
