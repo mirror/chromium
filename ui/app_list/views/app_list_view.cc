@@ -505,7 +505,6 @@ void AppListView::HandleClickOrTap() {
     case HALF:
     case FULLSCREEN_SEARCH:
       search_box_view_->ClearSearch();
-      SetState(app_list_state_ == HALF ? PEEKING : FULLSCREEN_ALL_APPS);
       break;
     case PEEKING:
     case FULLSCREEN_ALL_APPS:
@@ -882,10 +881,13 @@ void AppListView::SetState(AppListState new_state) {
   if (is_side_shelf_ || is_tablet_mode_) {
     // If side shelf or tablet mode are active, all transitions should be
     // made to the tablet mode/side shelf friendly versions.
-    if (new_state == PEEKING)
-      new_state_override = FULLSCREEN_ALL_APPS;
-    else if (new_state == HALF)
+    if (new_state == HALF) {
       new_state_override = FULLSCREEN_SEARCH;
+    } else if (new_state == PEEKING) {
+      // If the old state was already FULLSCREEN_ALL_APPS, then we should close.
+      new_state_override =
+          app_list_state_ == FULLSCREEN_ALL_APPS ? CLOSED : FULLSCREEN_ALL_APPS;
+    }
   }
 
   gfx::Rect new_widget_bounds = fullscreen_widget_->GetWindowBoundsInScreen();
@@ -904,7 +906,6 @@ void AppListView::SetState(AppListState new_state) {
           new_widget_bounds.set_y(peeking_app_list_y);
           app_list_main_view_->contents_view()->SetActiveState(
               AppListModel::STATE_START);
-          search_box_view()->ClearSearch();
           break;
         }
         case FULLSCREEN_SEARCH:
