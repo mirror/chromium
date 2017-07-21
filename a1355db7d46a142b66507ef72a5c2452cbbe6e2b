@@ -16,6 +16,24 @@
       "revId": "a1355db7d46a142b66507ef72a5c2452cbbe6e2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c60698ba_2d5d5982",
+        "filename": "chrome/browser/ui/webui/options/certificate_manager_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-21T16:49:15Z",
+      "side": 1,
+      "message": "I updated the comment. This one must block shutdown because it saves critical user data - which matches the guidance provided in task_traits.h",
+      "parentUuid": "09417b1f_63b714c2",
+      "revId": "a1355db7d46a142b66507ef72a5c2452cbbe6e2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
