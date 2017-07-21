@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34eea012_e33a1680",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console_counters/module.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-21T17:58:35Z",
+      "side": 1,
+      "message": "Let\u0027s use indent of 2.",
+      "revId": "47aba5706d3c3fe6f3de31244600a9e5ecaaf304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3818829b_ea66084c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console_test_runner/module.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-21T17:58:35Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "47aba5706d3c3fe6f3de31244600a9e5ecaaf304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "192c115c_70450344",
+        "filename": "third_party/WebKit/Source/devtools/front_end/inspector.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-21T17:58:35Z",
+      "side": 1,
+      "message": "do we really need autostart here? thought main\u0027s dependency should work for that.",
+      "revId": "47aba5706d3c3fe6f3de31244600a9e5ecaaf304",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
