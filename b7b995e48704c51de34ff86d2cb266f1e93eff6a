@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b84e68bf_91fd2d19",
+        "filename": "chrome/browser/ui/signin_view_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-21T07:14:02Z",
+      "side": 1,
+      "message": "Nit: Simpler, and no need for a bug reference:\n\nWhen the user has a proxy that requires HTTP auth, loading the sign-in dialog can trigger the HTTP auth dialog.  This means the signin view controller needs a dialog manager to handle any such dialog.",
+      "revId": "b7b995e48704c51de34ff86d2cb266f1e93eff6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb0dcc76_9c028187",
+        "filename": "chrome/browser/ui/signin_view_controller_delegate.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-21T07:14:02Z",
+      "side": 1,
+      "message": "Ugh, this is sort of a mess.\n\nAFAICT, only subclasses need this active tab.  And they really only need it to get at the top-level native window (to parent dialogs to) or the top-level dialog manager.  Mac in particular has a lot of APIs that pass around WebContents when really the endpoint classes don\u0027t really rely on a WebContents, but on e.g. a dialog manager; bad for dependency injection.\n\nIt seems like rather than supplying a Browser here it would be nice to supply the single top-level object to host dialogs in.  That would more accurately state what this class depends on and make things more testable.  However, it would take some refactoring to do this sort of thing.",
+      "revId": "b7b995e48704c51de34ff86d2cb266f1e93eff6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4be4f50e_1ab74c52",
+        "filename": "chrome/browser/ui/signin_view_controller_delegate.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-21T07:14:02Z",
+      "side": 1,
+      "message": "Declaration order must match definition order; see https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#Code-formatting .",
+      "revId": "b7b995e48704c51de34ff86d2cb266f1e93eff6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd1482cd_9f2c9531",
+        "filename": "chrome/browser/ui/signin_view_controller_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-21T07:14:02Z",
+      "side": 1,
+      "message": "Nit: Might be nice to place virtual and non-virtual functions grouped together.  The order here feels pretty random, I\u0027m not sure that would help much, but it\u0027d be something.",
+      "revId": "b7b995e48704c51de34ff86d2cb266f1e93eff6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "140b3b2e_0ad67388",
+        "filename": "chrome/browser/ui/signin_view_controller_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-21T07:14:02Z",
+      "side": 1,
+      "message": "Nit: You don\u0027t subclass WebContentsModalDialogManagerDelegate.  If this is coming from ChromeWebModalDialogManagerDelegate, just say \"// ChromeWebModalDialogManagerDelegate:\" , no \"overridden from\", for consistency with line 72.",
+      "revId": "b7b995e48704c51de34ff86d2cb266f1e93eff6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d91145e1_b94773c2",
+        "filename": "chrome/browser/ui/signin_view_controller_delegate.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-21T07:14:02Z",
+      "side": 1,
+      "message": "Nit: If you\u0027re going to align these two lines\u0027 comments, align all three.",
+      "revId": "b7b995e48704c51de34ff86d2cb266f1e93eff6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
