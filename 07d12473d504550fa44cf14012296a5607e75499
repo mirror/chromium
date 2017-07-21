@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d661655_c44b167b",
+        "filename": "ui/aura/mus/window_tree_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1373,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-21T16:20:41Z",
+      "side": 1,
+      "message": "Now that we don\u0027t have non-ozone x11 anymore, it should be possible to update ExtendedMouseWarpController to just deal with the event\u0027s location (and do necessary conversion) itself. Can we do that instead? (I have been meaning to remove Event::native_event() for a while, at least on chromeos/ozone. I think we are close to be able to do that)",
+      "revId": "07d12473d504550fa44cf14012296a5607e75499",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
