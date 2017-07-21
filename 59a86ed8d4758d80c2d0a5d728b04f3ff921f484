@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c34126bc_0529b4dd",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_chip.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-07-21T05:10:03Z",
+      "side": 1,
+      "message": "You can simplify this a little bit -- either remove this ID, or remove the chip-container class and change the CSS selector to #primary.",
+      "range": {
+        "startLine": 87,
+        "startChar": 13,
+        "endLine": 87,
+        "endChar": 20
+      },
+      "revId": "59a86ed8d4758d80c2d0a5d728b04f3ff921f484",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
