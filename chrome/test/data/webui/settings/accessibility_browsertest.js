@@ -55,7 +55,13 @@ SettingsAccessibilityTest.prototype = {
   extraLibraries: PolymerTest.getLibraries(ROOT_PATH).concat([
       'ensure_lazy_loaded.js',
       'passwords_and_autofill_fake_data.js',
-      'passwords_accessibility_test.js'
+      'passwords_accessibility_test.js',
+      '../test_browser_proxy.js',
+      'test_profile_info_browser_proxy.js',
+      'test_sync_browser_proxy.js',
+      'sign_out_accessibility_test.js',
+      'manage_profile_accessibility_test.js',
+      'edit_dictionary_accessibility_test.js'
   ]),
 
   // TODO(hcarmona): Remove once ADT is not longer in the testing infrastructure
@@ -66,13 +72,11 @@ SettingsAccessibilityTest.prototype = {
     settings.ensureLazyLoaded();
 
     /**
-     * Define a basic Mocha suite for testing a route given a specific path for
-     * accessibility.
+     * Define a basic Mocha suite for testing a route.
      *
-     * @param {!string} name Name of the suite.
-     * @param {!string} path Path associated with the route
+     * @param {!string} name Name of the route
      */
-    var defineSettingsAccessibilityTest = function(name, path) {
+    var defineSettingsAccessibilityTest = function(name) {
       //TODO(hcarmona): Remove duplicate iron-icons so that they do not violate
       // the duplicate ids audit rule.
       var auditOptions = {
@@ -93,9 +97,14 @@ SettingsAccessibilityTest.prototype = {
       });
     };
 
-    // Define test for all suites
+    // Define test suites for all routes except those that are defined elsewhere
+    // because they require the accessibility audit to be run with specific
+    // options or setup.
+    var excludedRoutes = ['MANAGE_PROFILE', 'EDIT_DICTIONARY', 'SIGN_OUT'];
+
     Object.keys(settings.routes).forEach(function(route) {
-      defineSettingsAccessibilityTest(route, settings.routes[route]);
+      if (excludedRoutes.indexOf(route) == -1)
+        defineSettingsAccessibilityTest(route);
     });
   },
 };
@@ -103,10 +112,9 @@ SettingsAccessibilityTest.prototype = {
 // Run each mocha test in isolation (within a new TEST_F() call). ADVANCED route
 // excluded because it only serves as a parent of subpages, and should not be
 // possible to navigate to it directly.
-// TODO(quacht): Add SIGN_OUT route once test is written.
-// TODO(quacht): Add SITE_SETTINGS_DATA_DETAILS route once test is written.
 var routes = [
   'BASIC',
+  // TODO(quacht): Enable once 'ABOUT' works on ChromeOS
   'ABOUT',
   'IMPORT_DATA',
   'APPEARANCE',
@@ -118,15 +126,14 @@ var routes = [
   'STARTUP_URLS',
   'PEOPLE',
   'SYNC',
-  // TODO(quacht): Enable once Polymer bug involving malformed ariadescribedby
-  // is resolved.
-  // 'MANAGE_PROFILE',,
+  'MANAGE_PROFILE',
   'CLEAR_BROWSER_DATA',
   'PRIVACY',
   'CERTIFICATES',
   // TODO(quacht): Enable SITE_SETTINGS after addressing how the RegExp looks
   // for all test suites whose name contains the expression--make it run all
   // SITE_SETTINGS_* mocha suites and thus become flaky (timeout).
+  // TODO(quacht): Add SITE_SETTINGS_DATA_DETAILS route once test is written.
   'SITE_SETTINGS_HANDLERS',
   'SITE_SETTINGS_ADS',
   'SITE_SETTINGS_AUTOMATIC_DOWNLOADS',
@@ -150,9 +157,7 @@ var routes = [
   'AUTOFILL',
   'MANAGE_PASSWORDS',
   'LANGUAGES',
-  // TODO(quacht): Enable once Polymer bug involving malformed ariadescribedby
-  // is resolved.
-  // 'EDIT_DICTIONARY',
+  'EDIT_DICTIONARY',
   'DOWNLOADS',
   'PRINTING',
   'CLOUD_PRINTERS',
@@ -167,3 +172,14 @@ var routes = [
     mocha.grep(route).run();
   });
 });
+
+
+// Do not test the SIGN_OUT route on Chrome OS since signing out is done at the
+// OS level, not within the Chrome Browser.
+GEN('#if !defined(OS_CHROMEOS)');
+
+TEST_F('SettingsAccessibilityTest', 'SIGN_OUT', function() {
+  mocha.grep('SIGN_OUT').run();
+});
+
+GEN('#endif  // defined(OS_CHROMEOS)');

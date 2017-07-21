@@ -27,8 +27,11 @@ var SettingsSectionElement = Polymer({
      */
     section: String,
 
-    /** Title for the section header. */
-    pageTitle: String,
+    /** Title for the section header. Initialize for accessibility. */
+    pageTitle: {
+      type: String,
+      value: '',
+    },
 
     /**
      * A CSS attribute used for temporarily hiding a SETTINGS-SECTION for the
@@ -279,4 +282,15 @@ var SettingsSectionElement = Polymer({
     return new settings.animation.Animation(
         this.$.card, [startFrame, endFrame], options);
   },
+
+/**
+ * Determine whether or not section heading should be aria-hidden.
+ * @param {string} pageTitle The page title of the settings-section element.
+ * @return {(boolean|string)} The value  to set the heading's aria-hidden
+ * attribute to
+ * @private
+ */
+  getHiddenStatus_: function(pageTitle) {
+    return pageTitle ? false : 'true';
+  }
 });
