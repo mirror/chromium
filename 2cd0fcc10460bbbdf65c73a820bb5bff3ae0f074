@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "7c8e191d_85126bbb",
+        "filename": "chrome/browser/resources/help/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-07-21T22:27:44Z",
+      "side": 0,
+      "message": "\u003e \u003e There\u0027s only problems with single owners when:\n\u003e \u003e set noparent is used\n\u003e \n\u003e There is a set noparent in this file, which is why I am asking about adding a replacement OWNER. I guess it\u0027s not your responsibility to add one, so yes you are fixing a bug, while creating another one. I\u0027ll look for a replacement OWNER, or maybe we should just remove set noparent here.\n\u003e \n\u003e \u003eIf you don\u0027t trust the owners of src/chrome/browser/resources, src/chrome/browser, src/chrome, or src/, that\u0027s another problem.\n\u003e \n\u003e I don\u0027t think this was implied anywhere in my response. Again, there is a \"set noparent\" in this file.\n\nRemoved \"set noparent\"",
+      "parentUuid": "f838aaca_8c493207",
+      "revId": "2cd0fcc10460bbbdf65c73a820bb5bff3ae0f074",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63a42e41_f543035d",
         "filename": "chrome/browser/resources/options/OWNERS",
         "patchSetId": 2
