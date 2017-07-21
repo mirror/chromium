@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "011051ef_805e9001",
+        "filename": "chromecast/media/cma/backend/android/cast_media_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1210554
+      },
+      "writtenOn": "2017-07-21T18:50:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6c50daa_e00bcd4c",
+      "revId": "c28695338355ae5452940384d35607178f1ad385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1c43f06_92c9bf7a",
         "filename": "chromecast/media/cma/backend/android/loopback_audio_observer_android.h",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "c28695338355ae5452940384d35607178f1ad385",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efe3f562_16c1c9c3",
+        "filename": "chromecast/media/cma/backend/android/loopback_audio_observer_android.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1210554
+      },
+      "writtenOn": "2017-07-21T18:50:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1c43f06_92c9bf7a",
+      "revId": "c28695338355ae5452940384d35607178f1ad385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "045dab98_307a6922",
+        "filename": "chromecast/media/cma/backend/android/loopback_audio_observer_android.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1210554
+      },
+      "writtenOn": "2017-07-21T18:50:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dfa7fde_f9b7d3ad",
+      "revId": "c28695338355ae5452940384d35607178f1ad385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ec9ce84_da874917",
         "filename": "chromecast/media/cma/backend/android/loopback_audio_observer_android.h",
         "patchSetId": 6
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-21T17:31:21Z",
       "side": 1,
       "message": "seems like most of these members are uninitialized?",
+      "revId": "c28695338355ae5452940384d35607178f1ad385",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29dac4dc_36ed84c0",
+        "filename": "chromecast/media/cma/backend/android/loopback_audio_observer_android.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1210554
+      },
+      "writtenOn": "2017-07-21T18:50:22Z",
+      "side": 1,
+      "message": "These are populated by function calls to AI2sDevice_getInputTimestamp, and after parsing the flag values.  Is there a convention I should be following to initialize variables with values I cannot know until later?",
+      "parentUuid": "1ec9ce84_da874917",
       "revId": "c28695338355ae5452940384d35607178f1ad385",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
