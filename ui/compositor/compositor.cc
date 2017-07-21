@@ -226,6 +226,10 @@ bool Compositor::IsForSubframe() {
   return false;
 }
 
+bool Compositor::IsForGuest() {
+  return false;
+}
+
 void Compositor::AddFrameSink(const viz::FrameSinkId& frame_sink_id) {
   if (!context_factory_private_)
     return;

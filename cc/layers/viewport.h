@@ -50,6 +50,10 @@ class CC_EXPORT Viewport {
                         bool affect_browser_controls,
                         bool scroll_outer_viewport);
 
+  bool CanConsumeDelta(const ScrollState& scroll_state);
+
+  bool IsTopLevelViewport() { return is_top_level_viewport_; }
+
   // Scrolls the viewport. Unlike the above method, scrolls the inner before
   // the outer viewport. Doesn't affect browser controls or return a result
   // since callers don't need it.
@@ -92,6 +96,8 @@ class CC_EXPORT Viewport {
   LayerTreeHostImpl* host_impl_;
 
   bool pinch_zoom_active_;
+
+  bool is_top_level_viewport_;
 
   // The pinch zoom anchor point is adjusted by this amount during a pinch. This
   // is used to "snap" a pinch-zoom to the edge of the screen.
