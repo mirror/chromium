@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb79d8a9_6826d703",
+        "filename": "dbus/object_proxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1170239
+      },
+      "writtenOn": "2017-07-21T05:37:02Z",
+      "side": 1,
+      "message": "nit: add a brief comment",
+      "range": {
+        "startLine": 221,
+        "startChar": 26,
+        "endLine": 221,
+        "endChar": 36
+      },
+      "revId": "315a5f722bbf38577a9785f3adba852577d1fe62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
