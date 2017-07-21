@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fe4e66d_a3541449",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadUpdate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-21T00:05:42Z",
+      "side": 1,
+      "message": "Yeah I think in the future we can get away with just passing in an OfflineItem instead of this class.  I\u0027m fine with this for now if it helps you rip apart the DownloadNotificationService though!",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 94
+      },
+      "revId": "1d59f48c7c3cde51312176687cd9124019c81e73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
