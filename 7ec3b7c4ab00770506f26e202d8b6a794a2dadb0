@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3ecd3ec5_6b55f63c",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-21T04:02:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "003f5905_05935340",
+      "range": {
+        "startLine": 96,
+        "startChar": 28,
+        "endLine": 96,
+        "endChar": 44
+      },
+      "revId": "7ec3b7c4ab00770506f26e202d8b6a794a2dadb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eec58857_909a2048",
         "filename": "chrome/browser/ui/webui/site_settings_helper.cc",
         "patchSetId": 15
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "7788454d_6e4d1cd2",
+        "filename": "chrome/browser/ui/webui/site_settings_helper.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-21T04:02:09Z",
+      "side": 1,
+      "message": "Yeah, I agree - done.",
+      "parentUuid": "eec58857_909a2048",
+      "revId": "7ec3b7c4ab00770506f26e202d8b6a794a2dadb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "593f1c26_ab1e1969",
         "filename": "chrome/browser/ui/webui/site_settings_helper.h",
         "patchSetId": 15
@@ -56,6 +98,24 @@
       "revId": "7ec3b7c4ab00770506f26e202d8b6a794a2dadb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89036c76_e939cee1",
+        "filename": "chrome/browser/ui/webui/site_settings_helper.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-21T04:02:09Z",
+      "side": 1,
+      "message": "Oh, thank you, I was following the guide from https://google.github.io/styleguide/cppguide.html#Enumerator_Names, but your link is more specific.",
+      "parentUuid": "593f1c26_ab1e1969",
+      "revId": "7ec3b7c4ab00770506f26e202d8b6a794a2dadb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
