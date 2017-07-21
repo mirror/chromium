@@ -10,6 +10,27 @@
 
 namespace WTF {
 
+enum class NumberParsingOptions : unsigned {
+  kNone = 0,
+  kAcceptTrailingGarbage = 1,
+  kAcceptLeadingPlus = 1 << 1,
+  kAcceptLeadingTrailingWhitespace = 1 << 2,
+  // TODO(tkent): Add kAcceptMinusZeroForUnsigned
+
+  // Legacy 'Strict' behavior.
+  kStrict = kAcceptLeadingPlus | kAcceptLeadingTrailingWhitespace,
+  // Legacy non-'Strict' behavior.
+  kLoose = kStrict | kAcceptTrailingGarbage,
+};
+
+inline bool operator&(const NumberParsingOptions& a,
+                      const NumberParsingOptions& b) {
+  return static_cast<unsigned>(a) & static_cast<unsigned>(b);
+}
+
+// TODO(tkent): Merge CharactersToFooStrict and CharactersToFoo by adding
+// NumberParsingOptions argument.
+
 // string -> int.
 WTF_EXPORT int CharactersToIntStrict(const LChar*, size_t, bool* ok);
 WTF_EXPORT int CharactersToIntStrict(const UChar*, size_t, bool* ok);
