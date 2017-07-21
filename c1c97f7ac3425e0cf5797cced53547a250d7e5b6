@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "f7efc0bb_5b0514f9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-07-21T17:48:26Z",
+      "side": 1,
+      "message": "storing the mRequest is bad, because if 2 async task are posted, the 2nd one will overwrite the mRequest from the first one. \nI would change onThumbnailRetrieved(String filePath, Bitmap bitmap) to onThumbnailRetrived(contentId, filepath, bitmap) so we don\u0027t need to store the mRequest.",
+      "revId": "c1c97f7ac3425e0cf5797cced53547a250d7e5b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d80cc49a_00188232",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
         "patchSetId": 5
@@ -88,6 +105,23 @@
         "endLine": 88,
         "endChar": 42
       },
+      "revId": "c1c97f7ac3425e0cf5797cced53547a250d7e5b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f93b8d82_f06b6605",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-07-21T17:48:26Z",
+      "side": 1,
+      "message": "Can we measure the performance gain here? see how much time retrieveThumbnail takes compared to reading from the storage. Not needed to be in the code, but you can add that stat to your design doc.",
       "revId": "c1c97f7ac3425e0cf5797cced53547a250d7e5b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -203,6 +237,23 @@
     },
     {
       "key": {
+        "uuid": "f62d111d_8113cc1f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-07-21T17:48:26Z",
+      "side": 1,
+      "message": "This is quite expensive as we need to decode the bitmap here. We just need the size right? So we can just write size, contentId, and filepath first, and then read those out without decoding the bitmap.",
+      "revId": "c1c97f7ac3425e0cf5797cced53547a250d7e5b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c494048_d7d7eab1",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
         "patchSetId": 5
@@ -243,6 +294,40 @@
         "endLine": 167,
         "endChar": 34
       },
+      "revId": "c1c97f7ac3425e0cf5797cced53547a250d7e5b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec43ac8c_13a51922",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-07-21T17:48:26Z",
+      "side": 1,
+      "message": "add @param for all the functions here, and @result for functions that apply",
+      "revId": "c1c97f7ac3425e0cf5797cced53547a250d7e5b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8689b25d_0f98d642",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-07-21T17:48:26Z",
+      "side": 1,
+      "message": "Add a todo that we will use a db to store all the fields later",
       "revId": "c1c97f7ac3425e0cf5797cced53547a250d7e5b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -329,6 +414,23 @@
       "writtenOn": "2017-07-21T17:25:00Z",
       "side": 1,
       "message": "You don\u0027t need this anymore, do you?",
+      "revId": "c1c97f7ac3425e0cf5797cced53547a250d7e5b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45ce3e1e_422f0367",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-07-21T17:48:26Z",
+      "side": 1,
+      "message": "no longer need this, right?",
       "revId": "c1c97f7ac3425e0cf5797cced53547a250d7e5b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
