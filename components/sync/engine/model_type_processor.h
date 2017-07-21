@@ -7,6 +7,7 @@
 
 #include <memory>
 
+#include "components/sync/base/syncer_error.h"
 #include "components/sync/engine/non_blocking_sync_common.h"
 #include "components/sync/protocol/model_type_state.pb.h"
 
@@ -40,6 +41,9 @@ class ModelTypeProcessor {
   // handle.
   virtual void OnUpdateReceived(const sync_pb::ModelTypeState& type_state,
                                 const UpdateResponseDataList& updates) = 0;
+
+  virtual void ProcessGetUpdatesResponse(
+      const sync_pb::DataTypeProgressMarker& progress_marker) = 0;
 };
 
 }  // namespace syncer

@@ -46,4 +46,11 @@ void ModelTypeProcessorProxy::OnUpdateReceived(
                             type_state, updates));
 }
 
+void ModelTypeProcessorProxy::ProcessGetUpdatesResponse(
+    const sync_pb::DataTypeProgressMarker& progress_marker) {
+  task_runner_->PostTask(
+      FROM_HERE, base::Bind(&ModelTypeProcessor::ProcessGetUpdatesResponse,
+                            processor_, progress_marker));
+}
+
 }  // namespace syncer

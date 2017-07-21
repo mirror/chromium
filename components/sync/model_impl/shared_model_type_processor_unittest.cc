@@ -21,6 +21,7 @@
 #include "components/sync/engine/commit_queue.h"
 #include "components/sync/model/fake_model_type_sync_bridge.h"
 #include "components/sync/test/engine/mock_model_type_worker.h"
+#include "components/sync/test/engine/single_type_mock_server.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 using sync_pb::EntitySpecifics;
@@ -223,6 +224,16 @@ class SharedModelTypeProcessorTest : public ::testing::Test {
     worker()->AckOnePendingCommit();
     EXPECT_EQ(0U, worker()->GetNumPendingCommits());
     return specifics;
+  }
+
+  void WriteItemAndAck(const std::string& key,
+                       std::unique_ptr<EntityData> entity_data) {
+    bridge()->WriteItem(key, std::move(entity_data));
+    worker()->VerifyPendingCommits(
+        {FakeModelTypeSyncBridge::TagHashFromKey(key)});
+    worker()->AckOnePendingCommit();
+    EXPECT_EQ(0U, worker()->GetNumPendingCommits());
+    return;
   }
 
   void ResetState(bool keep_db, bool commit_only = false) {
@@ -1521,6 +1532,33 @@ TEST_F(SharedModelTypeProcessorTest, UntrackEntity) {
   EXPECT_FALSE(db().HasMetadata(kHash1));
   EXPECT_EQ(0U, db().metadata_count());
   EXPECT_EQ(0, bridge()->get_storage_key_call_count());
+}
+
+TEST_F(SharedModelTypeProcessorTest, GarbageCollectionByAge) {
+  InitializeToReadyState();
+  SingleTypeMockServer mock_server(PREFERENCES);
+  std::unique_ptr<EntityData> entity_data =
+      bridge()->GenerateEntityData(kKey1, kValue1);
+  entity_data->modification_time =
+      base::Time::Now() - base::TimeDelta::FromDays(15);
+  WriteItemAndAck(kKey1, std::move(entity_data));
+  entity_data = bridge()->GenerateEntityData(kKey2, kValue2);
+  entity_data->modification_time =
+      base::Time::Now() - base::TimeDelta::FromDays(5);
+  WriteItemAndAck(kKey2, std::move(entity_data));
+  EXPECT_EQ(2U, ProcessorEntityCount());
+  EXPECT_EQ(2U, db().metadata_count());
+  EXPECT_EQ(2U, db().data_count());
+  EXPECT_EQ(0U, worker()->GetNumPendingCommits());
+
+  sync_pb::DataTypeProgressMarker progress = mock_server.GetProgress();
+  progress.mutable_gc_directive()->set_age_watermark_in_days(10);
+  type_processor()->ProcessGetUpdatesResponse(progress);
+
+  EXPECT_EQ(1U, ProcessorEntityCount());
+  EXPECT_EQ(1U, db().metadata_count());
+  EXPECT_EQ(2U, db().data_count());
+  EXPECT_EQ(0U, worker()->GetNumPendingCommits());
 }
 
 }  // namespace syncer

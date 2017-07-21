@@ -23,4 +23,7 @@ void FakeModelTypeProcessor::OnUpdateReceived(
     const sync_pb::ModelTypeState& type_state,
     const UpdateResponseDataList& updates) {}
 
+void FakeModelTypeProcessor::ProcessGetUpdatesResponse(
+    const sync_pb::DataTypeProgressMarker& progress_marker) {}
+
 }  // namespace syncer
