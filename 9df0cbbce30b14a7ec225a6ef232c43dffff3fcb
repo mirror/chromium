@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d62d90d7_892a2730",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/payments/PaymentRequestPaymentAppAndBasicCardWithModifiersTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-21T13:55:25Z",
+      "side": 1,
+      "message": "private",
+      "revId": "9df0cbbce30b14a7ec225a6ef232c43dffff3fcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dab132a_283f3e5a",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/payments/PaymentRequestPaymentAppAndBasicCardWithModifiersTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-21T13:55:25Z",
+      "side": 1,
+      "message": "private",
+      "revId": "9df0cbbce30b14a7ec225a6ef232c43dffff3fcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "704c5241_19edf89f",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/payments/PaymentRequestPaymentAppAndBasicCardWithModifiersTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-21T13:55:25Z",
+      "side": 1,
+      "message": "Please add comments for the meaning of all booleans and empty strings. See /* serverId */ below for example.",
+      "range": {
+        "startLine": 72,
+        "startChar": 72,
+        "endLine": 72,
+        "endChar": 76
+      },
+      "revId": "9df0cbbce30b14a7ec225a6ef232c43dffff3fcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
