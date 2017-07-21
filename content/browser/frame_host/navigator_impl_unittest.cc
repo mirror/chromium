@@ -632,7 +632,11 @@ TEST_F(NavigatorTestWithBrowserSideNavigation,
 
   // Now receive a renderer-initiated user-initiated request. It should replace
   // the current NavigationRequest.
-  main_test_rfh()->SendRendererInitiatedNavigationRequest(kUrl2, true);
+  auto navigation =
+      NavigationSimulator::CreateRendererInitiated(kUrl2, main_test_rfh());
+  navigation->SetTransition(ui::PAGE_TRANSITION_LINK);
+  navigation->SetHasUserGesture(true);
+  navigation->Start();
   NavigationRequest* request2 = node->navigation_request();
   ASSERT_TRUE(request2);
   EXPECT_EQ(kUrl2, request2->common_params().url);
@@ -651,18 +655,13 @@ TEST_F(NavigatorTestWithBrowserSideNavigation,
   }
 
   // Have the RenderFrameHost commit the navigation.
-  scoped_refptr<ResourceResponse> response(new ResourceResponse);
-  GetLoaderForNavigationRequest(request2)->CallOnResponseStarted(
-      response, MakeEmptyStream(), nullptr);
+  navigation->Commit();
   if (AreAllSitesIsolatedForTesting()) {
     EXPECT_TRUE(
         DidRenderFrameHostRequestCommit(GetSpeculativeRenderFrameHost(node)));
   } else {
     EXPECT_TRUE(DidRenderFrameHostRequestCommit(main_test_rfh()));
   }
-
-  // Commit the navigation.
-  main_test_rfh()->SendNavigate(0, true, kUrl2);
 
   // Confirm that the commit corresponds to the new request.
   ASSERT_TRUE(main_test_rfh());
@@ -684,7 +683,11 @@ TEST_F(NavigatorTestWithBrowserSideNavigation,
 
   // Start a renderer-initiated user-initiated navigation to the 1st URL.
   process()->sink().ClearMessages();
-  main_test_rfh()->SendRendererInitiatedNavigationRequest(kUrl1, true);
+  auto user_initiated_navigation =
+      NavigationSimulator::CreateRendererInitiated(kUrl1, main_test_rfh());
+  user_initiated_navigation->SetTransition(ui::PAGE_TRANSITION_LINK);
+  user_initiated_navigation->SetHasUserGesture(true);
+  user_initiated_navigation->Start();
   NavigationRequest* request1 = node->navigation_request();
   ASSERT_TRUE(request1);
   EXPECT_EQ(kUrl1, request1->common_params().url);
@@ -715,18 +718,13 @@ TEST_F(NavigatorTestWithBrowserSideNavigation,
   }
 
   // Have the RenderFrameHost commit the navigation.
-  scoped_refptr<ResourceResponse> response(new ResourceResponse);
-  GetLoaderForNavigationRequest(request2)->CallOnResponseStarted(
-      response, MakeEmptyStream(), nullptr);
+  user_initiated_navigation->Commit();
   if (AreAllSitesIsolatedForTesting()) {
     EXPECT_TRUE(
         DidRenderFrameHostRequestCommit(GetSpeculativeRenderFrameHost(node)));
   } else {
     EXPECT_TRUE(DidRenderFrameHostRequestCommit(main_test_rfh()));
   }
-
-  // Commit the navigation.
-  main_test_rfh()->SendNavigate(0, true, kUrl1);
   EXPECT_EQ(kUrl1, contents()->GetLastCommittedURL());
 }
 
@@ -842,9 +840,6 @@ TEST_F(NavigatorTestWithBrowserSideNavigation,
   } else {
     EXPECT_TRUE(DidRenderFrameHostRequestCommit(main_test_rfh()));
   }
-
-  // Commit the navigation.
-  main_test_rfh()->SendNavigate(0, true, kUrl2);
   EXPECT_EQ(kUrl2, contents()->GetLastCommittedURL());
 
   // The SiteInstance did not change.
@@ -1026,9 +1021,10 @@ TEST_F(NavigatorTestWithBrowserSideNavigation, DataUrls) {
 
   // Do a renderer-initiated navigation to a data url. The request should be
   // sent to the IO thread.
-  TestRenderFrameHost* main_rfh = main_test_rfh();
-  main_rfh->SendRendererInitiatedNavigationRequest(kUrl2, true);
-  EXPECT_TRUE(main_rfh->is_loading());
+  auto navigation_to_data_url =
+      NavigationSimulator::CreateRendererInitiated(kUrl2, main_test_rfh());
+  navigation_to_data_url->Start();
+  EXPECT_TRUE(main_test_rfh()->is_loading());
   EXPECT_TRUE(node->navigation_request());
   EXPECT_FALSE(GetSpeculativeRenderFrameHost(node));
 }
