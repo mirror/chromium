@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "60ca24f6_b55c10d5",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-07-21T06:36:32Z",
+      "side": 1,
+      "message": "Yeah, so when an error occurs, the returned value is 0 and error is logged just as CountResidentBytes does. Should I take a different way, like changing CountResidentBytesInSharedMemory to return a boolean value?",
+      "parentUuid": "d12db0e6_0f672109",
+      "revId": "e2f4c46b779108892e34a7191d39a7e3ac3d2522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d5996d9_ab651f96",
         "filename": "base/trace_event/process_memory_dump_unittest.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "e2f4c46b779108892e34a7191d39a7e3ac3d2522",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23da391c_6ce4b915",
+        "filename": "base/trace_event/process_memory_dump_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-07-21T06:36:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d5996d9_ab651f96",
+      "revId": "e2f4c46b779108892e34a7191d39a7e3ac3d2522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
