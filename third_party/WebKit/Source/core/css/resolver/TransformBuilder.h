@@ -38,6 +38,7 @@
 namespace blink {
 
 class CSSToLengthConversionData;
+class CSSFunctionValue;
 class CSSValue;
 class CSSValueList;
 
@@ -46,6 +47,7 @@ class TransformBuilder {
 
  public:
   static bool HasRelativeLengths(const CSSValueList&);
+  static bool HasRelativeLengths(const CSSFunctionValue&);
   static TransformOperations CreateTransformOperations(
       const CSSValue& in_value,
       const CSSToLengthConversionData&);
