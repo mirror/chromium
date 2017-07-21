@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d158b6a_9d0cdabc",
+        "filename": "chrome/browser/upgrade_detector_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-21T22:54:16Z",
+      "side": 1,
+      "message": "I\u0027m not sure if this will end up requiring a leak_annotations.h..\n\nPerhaps a base::LazyInstance\u003cUpgradeDetectorImpl\u003e::Leaky would be cleaner?",
+      "revId": "cb87c4f4e241b82a1bdaa3e8e03d4113c6879420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "259e0aa9_8e80ff18",
+        "filename": "chrome/browser/upgrade_detector_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-21T22:54:16Z",
+      "side": 1,
+      "message": "include ref_counted.h",
+      "range": {
+        "startLine": 83,
+        "startChar": 32,
+        "endLine": 83,
+        "endChar": 45
+      },
+      "revId": "cb87c4f4e241b82a1bdaa3e8e03d4113c6879420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89640d0f_cd909d85",
+        "filename": "chrome/browser/upgrade_detector_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-21T22:54:16Z",
+      "side": 1,
+      "message": "more specific name : blocking_task_runner_?\n\n(even more so since you have a |task_runner| param above which makes these two very much alike when reading code)",
+      "range": {
+        "startLine": 89,
+        "startChar": 43,
+        "endLine": 89,
+        "endChar": 55
+      },
+      "revId": "cb87c4f4e241b82a1bdaa3e8e03d4113c6879420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
