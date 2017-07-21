@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "782fd590_e5d6e9c1",
+        "filename": "components/safe_browsing/web_ui/webui.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-07-21T14:01:37Z",
+      "side": 1,
+      "message": "meta-comment (optional): I try to stay away from naming classes or code paths in comments like this, since they have a higher likelihood of becoming stale if the code gets updated. This can be a fine line, though, since cases like network_status_code or update_status contain useful info for the reader.",
+      "range": {
+        "startLine": 14,
+        "startChar": 3,
+        "endLine": 14,
+        "endChar": 25
+      },
+      "revId": "24430038d22eab6071c71e74b2803862e1430522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d215f24d_42eadfe0",
+        "filename": "components/safe_browsing/web_ui/webui.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-07-21T14:01:37Z",
+      "side": 1,
+      "message": "remove this comment, similar to update_info.",
+      "range": {
+        "startLine": 57,
+        "startChar": 18,
+        "endLine": 57,
+        "endChar": 29
+      },
+      "revId": "24430038d22eab6071c71e74b2803862e1430522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
