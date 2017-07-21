@@ -325,13 +325,12 @@ static void UpdateLayoutObjectState(const SelectionMarkingRange& new_range,
 
   // Have any of the old selected objects changed compared to the new selection?
   for (const auto& pair : old_selected_map.object_map) {
-    LayoutObject* obj = pair.key;
-    SelectionState new_selection_state = obj->GetSelectionState();
-    SelectionState old_selection_state = pair.value;
-    if (new_selection_state != old_selection_state) {
-      obj->SetShouldInvalidateSelection();
-      new_selected_map.object_map.erase(obj);
-    }
+    LayoutObject* const layout_object = pair.key;
+    const SelectionState new_selection_state =
+        layout_object->GetSelectionState();
+    const SelectionState old_selection_state = pair.value;
+    if (new_selection_state != old_selection_state)
+      layout_object->SetShouldInvalidateSelection();
   }
 
   // Any new objects that remain were not found in the old objects dict, and so
@@ -341,13 +340,11 @@ static void UpdateLayoutObjectState(const SelectionMarkingRange& new_range,
 
   // Have any of the old blocks changed?
   for (const auto& pair : old_selected_map.block_map) {
-    LayoutBlock* block = pair.key;
-    SelectionState new_selection_state = block->GetSelectionState();
-    SelectionState old_selection_state = pair.value;
-    if (new_selection_state != old_selection_state) {
+    LayoutBlock* const block = pair.key;
+    const SelectionState new_selection_state = block->GetSelectionState();
+    const SelectionState old_selection_state = pair.value;
+    if (new_selection_state != old_selection_state)
       block->SetShouldInvalidateSelection();
-      new_selected_map.block_map.erase(block);
-    }
   }
 
   // Any new blocks that remain were not found in the old blocks dict, and so
