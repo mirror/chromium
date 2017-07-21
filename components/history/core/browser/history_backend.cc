@@ -490,6 +490,14 @@ void HistoryBackend::AddPage(const HistoryAddPageArgs& request) {
     }
   }
 
+  // In the presence of client redirects, |request.redirects| can be a partial
+  // chain because previous calls to this function may have reported a redirect
+  // chain already. This is fine for the visits database where we'll just append
+  // data but insufficient for |recent_redirects_| (backpropagation of favicons
+  // and titles), where we'd like the full (extended) redirect chain. We use
+  // |extended_redirect_chain| to represent this.
+  RedirectList extended_redirect_chain;
+
   if (!has_redirects) {
     // The single entry is both a chain start and end.
     ui::PageTransition t = ui::PageTransitionFromInt(
@@ -554,6 +562,8 @@ void HistoryBackend::AddPage(const HistoryAddPageArgs& request) {
               visit_row.transition & ~ui::PAGE_TRANSITION_CHAIN_END);
           db_->UpdateVisitRow(visit_row);
         }
+
+        GetCachedRecentRedirects(request.referrer, &extended_redirect_chain);
       }
     }
 
@@ -588,8 +598,12 @@ void HistoryBackend::AddPage(const HistoryAddPageArgs& request) {
     }
 
     // Last, save this redirect chain for later so we can set titles & favicons
-    // on the redirected pages properly.
-    recent_redirects_.Put(request.url, redirects);
+    // on the redirected pages properly. For this we use the extended redirect
+    // chain, which includes URLs from chained redirects.
+    extended_redirect_chain.insert(extended_redirect_chain.end(),
+                                   std::make_move_iterator(redirects.begin()),
+                                   std::make_move_iterator(redirects.end()));
+    recent_redirects_.Put(request.url, extended_redirect_chain);
   }
 
   // TODO(brettw) bug 1140015: Add an "add page" notification so the history
