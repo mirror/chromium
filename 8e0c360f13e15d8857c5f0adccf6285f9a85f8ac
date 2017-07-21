@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cbdc1e5a_600d6b3a",
+        "filename": "cc/surfaces/surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-21T19:10:19Z",
+      "side": 1,
+      "message": "We don\u0027t fire up a new aggregated display frame immediately. It\u0027s not a big deal, I think...better than a crash. We can fix this, but I don\u0027t think it\u0027s worth improving the error case in the short term.",
+      "parentUuid": "e17e94f1_34aecc84",
+      "revId": "8e0c360f13e15d8857c5f0adccf6285f9a85f8ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "843bf595_cdd238a3",
         "filename": "components/viz/service/frame_sinks/surface_synchronization_unittest.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-21T19:05:30Z",
       "side": 1,
       "message": "In the crash, what is causing the CompositorFrameSinkSupport to be deleted? Should the CompositorFrameSinkSupport stay alive in this case?",
+      "revId": "8e0c360f13e15d8857c5f0adccf6285f9a85f8ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "961b3481_2cfa12c5",
+        "filename": "components/viz/service/frame_sinks/surface_synchronization_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1658,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-21T19:10:19Z",
+      "side": 1,
+      "message": "A FrameSink is destroyed when the client either throws away its CompositorFrameSink connection or when the client crashes. I don\u0027t think it makes sense to keep CompositorFrameSinkSupport alive longer because it\u0027s tied to the client connection.",
+      "parentUuid": "843bf595_cdd238a3",
       "revId": "8e0c360f13e15d8857c5f0adccf6285f9a85f8ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
