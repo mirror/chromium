@@ -17,7 +17,8 @@ namespace ui {
 // class from SurfaceFactoryOzone given an AcceleratedWidget.
 class OZONE_BASE_EXPORT OverlayCandidatesOzone {
  public:
-  typedef std::vector<OverlaySurfaceCandidate> OverlaySurfaceCandidateList;
+  using OverlaySurfaceCandidateList = std::vector<OverlaySurfaceCandidate>;
+  //  typedef std::vector<OverlaySurfaceCandidate> OverlaySurfaceCandidateList;
 
   // A list of possible overlay candidates is presented to this function.
   // The expected result is that those candidates that can be in a separate
