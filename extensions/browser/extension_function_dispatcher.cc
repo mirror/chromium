@@ -172,14 +172,15 @@ class ExtensionFunctionDispatcher::UIThreadWorkerResponseCallbackWrapper
  public:
   UIThreadWorkerResponseCallbackWrapper(
       const base::WeakPtr<ExtensionFunctionDispatcher>& dispatcher,
-      int render_process_id,
+      content::RenderProcessHost* render_process_host,
       int worker_thread_id)
       : dispatcher_(dispatcher),
         observer_(this),
-        render_process_id_(render_process_id),
+        render_process_id_(render_process_host->GetID()),
         worker_thread_id_(worker_thread_id),
         weak_ptr_factory_(this) {
-    observer_.Add(content::RenderProcessHost::FromID(render_process_id_));
+    observer_.Add(render_process_host);
+
     DCHECK(ExtensionsClient::Get()
                ->ExtensionAPIEnabledInExtensionServiceWorkers());
   }
@@ -378,6 +379,14 @@ void ExtensionFunctionDispatcher::Dispatch(
   } else {
     // Extension API from Service Worker.
     DCHECK_NE(kInvalidServiceWorkerVersionId, params.service_worker_version_id);
+
+    content::RenderProcessHost* rph =
+        content::RenderProcessHost::FromID(render_process_id);
+    // UIThreadWorkerResponseCallbackWrapper requires render process host to be
+    // around.
+    if (!rph)
+      return;
+
     WorkerResponseCallbackMapKey key(render_process_id,
                                      params.service_worker_version_id);
     UIThreadWorkerResponseCallbackWrapperMap::const_iterator iter =
@@ -385,7 +394,7 @@ void ExtensionFunctionDispatcher::Dispatch(
     UIThreadWorkerResponseCallbackWrapper* callback_wrapper = nullptr;
     if (iter == ui_thread_response_callback_wrappers_for_worker_.end()) {
       callback_wrapper = new UIThreadWorkerResponseCallbackWrapper(
-          AsWeakPtr(), render_process_id, params.worker_thread_id);
+          AsWeakPtr(), rph, params.worker_thread_id);
       ui_thread_response_callback_wrappers_for_worker_[key] =
           base::WrapUnique(callback_wrapper);
     } else {
