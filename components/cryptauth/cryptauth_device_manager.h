@@ -123,6 +123,11 @@ class CryptAuthDeviceManager : public SyncScheduler::Delegate,
     scheduler_ = std::move(sync_scheduler);
   }
 
+  void NotifySyncStarted();
+
+  void NotifySyncFinished(SyncResult sync_result,
+                          DeviceChangeResult device_change_result);
+
  private:
   // CryptAuthGCMManager::Observer:
   void OnResyncMessage() override;
