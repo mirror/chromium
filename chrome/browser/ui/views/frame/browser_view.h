@@ -271,6 +271,7 @@ class BrowserView : public BrowserWindow,
                           int index,
                           int reason) override;
   void ZoomChangedForActiveTab(bool can_show_bubble) override;
+  void RevealTabStripIfNeeded() override;
   gfx::Rect GetRestoredBounds() const override;
   ui::WindowShowState GetRestoredState() const override;
   gfx::Rect GetBounds() const override;

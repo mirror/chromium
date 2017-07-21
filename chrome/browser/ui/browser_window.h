@@ -150,6 +150,12 @@ class BrowserWindow : public ui::BaseWindow {
   // + or - in the app menu to change zoom).
   virtual void ZoomChangedForActiveTab(bool can_show_bubble) = 0;
 
+  // If the browser is in immersive full screen mode, it will reveal the
+  // tabstrip for a short duration. This is useful for shortcuts that perform
+  // tab navigations and need to give users a visual clue as to what tabs are
+  // affected.
+  virtual void RevealTabStripIfNeeded() = 0;
+
   // Windows and GTK remove the browser controls in fullscreen, but Mac and Ash
   // keep the controls in a slide-down panel.
   virtual bool ShouldHideUIForFullscreen() const = 0;

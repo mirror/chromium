@@ -190,6 +190,9 @@ const char* const kBrowserViewKey = "__BROWSER_VIEW__";
 // The number of milliseconds between loading animation frames.
 const int kLoadingAnimationFrameTimeMs = 30;
 
+// Deletes the given |revealer|.
+void DeleteRevealer(std::unique_ptr<ImmersiveRevealedLock> revealer) {}
+
 // Paints the horizontal border separating the Bookmarks Bar from the Toolbar
 // or page content according to |at_top| with |color|.
 void PaintDetachedBookmarkBar(gfx::Canvas* canvas,
@@ -810,6 +813,21 @@ void BrowserView::ZoomChangedForActiveTab(bool can_show_bubble) {
                           toolbar_->app_menu_button()->IsMenuShowing();
   GetLocationBarView()->ZoomChangedForActiveTab(can_show_bubble &&
                                                 !app_menu_showing);
+}
+
+void BrowserView::RevealTabStripIfNeeded() {
+  if (!immersive_mode_controller_->IsEnabled())
+    return;
+
+  std::unique_ptr<ImmersiveRevealedLock> revealer(
+      immersive_mode_controller_->GetRevealedLock(
+          ImmersiveModeController::ANIMATE_REVEAL_YES));
+
+  constexpr base::TimeDelta kTabstripRevealerDelay =
+      base::TimeDelta::FromMilliseconds(1000);
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      FROM_HERE, base::BindOnce(&DeleteRevealer, std::move(revealer)),
+      kTabstripRevealerDelay);
 }
 
 gfx::Rect BrowserView::GetRestoredBounds() const {
