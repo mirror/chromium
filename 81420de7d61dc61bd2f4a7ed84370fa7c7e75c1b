@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "84f43c53_e8aa68b8",
+        "filename": "third_party/WebKit/Source/core/CoreInitializer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-07-21T02:12:31Z",
+      "side": 1,
+      "message": "Sorry there was a bit of a typo in my reply.\n\nI tend to follow the single responsibility pattern - so i think it\u0027d be overall cleaner to have callback storage \u0026 invocation separated from runtime initialization. As we\u0027ll need some kind of factory anyway maybe you can just have this code in the factory.\n\nI also think it would be advantageous to have the class as a true singleton rather than a bunch of static methods - esp. if we have a factory interface it will provide loose coupling.",
+      "parentUuid": "a330ec2b_d376f4b5",
+      "revId": "81420de7d61dc61bd2f4a7ed84370fa7c7e75c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d8f1e45_0097d67e",
         "filename": "third_party/WebKit/Source/core/CoreInitializer.h",
         "patchSetId": 5
