@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c48b5cb7_eb9d0a1e",
+        "filename": "net/http/http_network_transaction_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 12817,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-21T22:11:15Z",
+      "side": 0,
+      "message": "what jkarlin@ said: I think we should change it to\nEXPECT_TRUE(response-\u003ewas_fetched_via_proxy());\n\nI do not remember what I was planning to do in that previous CL (may be I was planning to completely remove was_fetched_via_proxy()).",
+      "parentUuid": "fcb5d9de_b56e30c1",
+      "range": {
+        "startLine": 12817,
+        "startChar": 24,
+        "endLine": 12817,
+        "endChar": 45
+      },
+      "revId": "da0a4f9e5cabf886dc27ac4b7dcbd3057a42f248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd08ccf5_18d8a297",
         "filename": "net/http/http_network_transaction_unittest.cc",
         "patchSetId": 16
