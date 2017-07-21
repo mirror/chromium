@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "f8e64880_6d6440fc",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-21T21:32:56Z",
+      "side": 1,
+      "message": "Moved all of Init into the constructor and added an array that holds the specifier ID\u0027s as discussed offline.",
+      "parentUuid": "b3fc62bd_19b8f68c",
+      "revId": "3a05756e853d20fa7ef82b2ed93790367a853af6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dde56e1b_99493056",
         "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
         "patchSetId": 24
