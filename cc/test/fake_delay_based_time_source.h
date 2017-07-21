@@ -5,7 +5,10 @@
 #ifndef CC_TEST_FAKE_DELAY_BASED_TIME_SOURCE_H_
 #define CC_TEST_FAKE_DELAY_BASED_TIME_SOURCE_H_
 
+<<<<<<< HEAD
 #include "base/test/simple_test_tick_clock.h"
+=======
+>>>>>>> Updated
 #include "base/time/time.h"
 #include "cc/scheduler/delay_based_time_source.h"
 
