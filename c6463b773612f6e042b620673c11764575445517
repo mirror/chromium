@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e675ade1_d7d21b78",
+        "filename": "chrome/browser/web_applications/web_app_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-21T01:12:09Z",
+      "side": 1,
+      "message": "scoped_nsobject\u003cNSImageRep\u003e should work, and won\u0027t raise so many questions about lifetime\n\n\nalthough... NSImage is explicitly thread-unsafe according to\n\nhttps://developer.apple.com/library/content/documentation/Cocoa/Conceptual/Multithreading/ThreadSafetySummary/ThreadSafetySummary.html#//apple_ref/doc/uid/10000057i-CH12-126728\n\nbut that page is silent about NSImageReps (it does say \"Immutable objects are generally thread-safe\"). Probably its design is similar to Image/ImageSkiaRep. I think its OK. NSObject refcounts are atomic.",
+      "range": {
+        "startLine": 382,
+        "startChar": 40,
+        "endLine": 382,
+        "endChar": 50
+      },
+      "revId": "c6463b773612f6e042b620673c11764575445517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
