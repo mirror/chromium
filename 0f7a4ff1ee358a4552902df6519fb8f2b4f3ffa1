@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "219b8803_64c135fc",
+        "filename": "components/tracing/common/tracing_messages.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-07-21T16:44:22Z",
+      "side": 1,
+      "message": "This seems like a reasonable pattern in that inflicts the complexity onto the place where the \"unusual\" behaviour is required. I think we contemplated this once back in the day, but can\u0027t remember why we avoided it.  +jam@",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 52
+      },
+      "revId": "0f7a4ff1ee358a4552902df6519fb8f2b4f3ffa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cabb1c45_2ba2bdb4",
+        "filename": "components/tracing/common/tracing_messages.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-07-21T16:44:22Z",
+      "side": 1,
+      "message": "comments will have to change in many files, probably just\n\n// Multiply-included message header.",
+      "range": {
+        "startLine": 8,
+        "startChar": 35,
+        "endLine": 8,
+        "endChar": 66
+      },
+      "revId": "0f7a4ff1ee358a4552902df6519fb8f2b4f3ffa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
