@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3a4af30_a5d3e152",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-21T08:06:24Z",
+      "side": 1,
+      "message": "would it make sense to put the DCHECK(!scriptstreamingenabled) here now?",
+      "revId": "5a06b04f05b8c272621a21693eac703d6add9be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
