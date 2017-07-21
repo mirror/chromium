@@ -30,6 +30,11 @@ WMHelper* WMHelper::GetInstance() {
   return g_instance;
 }
 
+// static
+bool WMHelper::HasInstance() {
+  return g_instance != nullptr;
+}
+
 void WMHelper::AddActivationObserver(ActivationObserver* observer) {
   activation_observers_.AddObserver(observer);
 }
