@@ -154,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "f675fbdf_bee5d1f7",
+        "filename": "components/ntp_tiles/most_visited_sites.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-21T13:34:18Z",
+      "side": 1,
+      "message": "Great! I like it much better now, thanks.",
+      "parentUuid": "ede5e3cc_97a4c4fa",
+      "revId": "b434536e7487c8818cba04cbbfd21f8737250b88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18eb9f52_61591aed",
         "filename": "components/ntp_tiles/popular_sites.h",
         "patchSetId": 14
