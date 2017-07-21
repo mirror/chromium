@@ -372,6 +372,8 @@ blink_core_sources("layout") {
     "ng/inline/ng_line_breaker.h",
     "ng/inline/ng_line_height_metrics.cc",
     "ng/inline/ng_line_height_metrics.h",
+    "ng/inline/ng_offset_mapping_api.cc",
+    "ng/inline/ng_offset_mapping_api.h",
     "ng/inline/ng_offset_mapping_builder.cc",
     "ng/inline/ng_offset_mapping_builder.h",
     "ng/inline/ng_offset_mapping_result.h",
