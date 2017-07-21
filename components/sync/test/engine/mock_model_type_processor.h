@@ -47,6 +47,8 @@ class MockModelTypeProcessor : public ModelTypeProcessor {
                          const CommitResponseDataList& response_list) override;
   void OnUpdateReceived(const sync_pb::ModelTypeState& type_state,
                         const UpdateResponseDataList& response_list) override;
+  void ProcessGetUpdatesResponse(
+      const sync_pb::DataTypeProgressMarker& progress_marker) override;
 
   // By default, this object behaves as if all messages are processed
   // immediately.  Sometimes it is useful to defer work until later, as might

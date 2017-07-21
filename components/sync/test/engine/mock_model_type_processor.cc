@@ -50,6 +50,9 @@ void MockModelTypeProcessor::OnUpdateReceived(
     RunQueuedTasks();
 }
 
+void MockModelTypeProcessor::ProcessGetUpdatesResponse(
+    const sync_pb::DataTypeProgressMarker& progress_marker) {}
+
 void MockModelTypeProcessor::SetSynchronousExecution(bool is_synchronous) {
   is_synchronous_ = is_synchronous;
 }
