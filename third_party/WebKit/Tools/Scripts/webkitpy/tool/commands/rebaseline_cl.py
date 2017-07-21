@@ -51,10 +51,6 @@ class RebaselineCL(AbstractParallelRebaselineCommand):
     def execute(self, options, args, tool):
         self._tool = tool
 
-        # TODO(qyearsley): Consider calling ensure_manifest in WebKitPatch.
-        # See: crbug.com/698294
-        WPTManifest.ensure_manifest(tool)
-
         if not self.check_ok_to_run():
             return 1
 

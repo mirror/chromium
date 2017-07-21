@@ -20,13 +20,14 @@
               assert_true(pe.loaded >= 0, "loaded is initialize to the number of HTTP entity body bytes transferred.");
               assert_true(pe.lengthComputable, "lengthComputable is true.");
               assert_not_equals(pe.total, 0, "total is not zero.");
+              assert_false(true);
             }
           }, "Check lengthComputed, loaded, total when Content-Length is given.");
         }
 
         // "loadstart", "error", "abort", "load" tests are out of scope.
         // They SHOULD be tested in each spec that implement ProgressEvent.
-        
+
         xhr.onloadend = function(pe) {
           test.done();
         }
