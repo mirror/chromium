@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2bb7003b_b93045a8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-07-21T06:21:20Z",
+      "side": 1,
+      "message": "Can you please expand on which varieties?",
+      "revId": "c1c48a7487143f58ec7f77618a182e85dd9df17d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fcc1cf1_5d6fb8db",
+        "filename": "third_party/WebKit/PerformanceTests/CSS/ChangeStyleQualifiedDataAttributeSelector.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-07-21T06:21:20Z",
+      "side": 1,
+      "message": "super-nit: s/an qualified/a qualified",
+      "revId": "c1c48a7487143f58ec7f77618a182e85dd9df17d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e97e3fb0_6864187a",
+        "filename": "third_party/WebKit/PerformanceTests/CSS/resources/utils.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-07-21T06:21:20Z",
+      "side": 1,
+      "message": "Why this change? Just tidying up?",
+      "revId": "c1c48a7487143f58ec7f77618a182e85dd9df17d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
