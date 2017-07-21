@@ -16,6 +16,24 @@
       "revId": "ab9fc49ea373776aa35b54a58d563af017ab2421",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e5fd515_ab2c646f",
+        "filename": "docs/fuchsia_sdk_updates.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-21T18:17:07Z",
+      "side": 1,
+      "message": "I though we need it for net device drivers, but that\u0027s incorrect. Removed.",
+      "parentUuid": "ff8d9906_c1e05aa4",
+      "revId": "ab9fc49ea373776aa35b54a58d563af017ab2421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
