@@ -11,6 +11,7 @@
 #include "components/browser_sync/profile_sync_service.h"
 #include "components/keyed_service/core/service_access_type.h"
 #include "components/password_manager/core/browser/password_form_manager.h"
+#include "components/password_manager/core/browser/password_form_metrics_recorder.h"
 #include "components/password_manager/core/browser/password_manager_util.h"
 #include "components/password_manager/core/common/password_manager_pref_names.h"
 #include "components/signin/core/browser/signin_manager_base.h"
@@ -28,6 +29,7 @@
 #endif
 
 using password_manager::PasswordFormManager;
+using password_manager::PasswordFormMetricsRecorder;
 using password_manager::PasswordManagerMetricsRecorder;
 using password_manager::PasswordStore;
 using password_manager::PasswordSyncState;
@@ -79,6 +81,12 @@ bool IOSChromePasswordManagerClient::PromptUserToChooseCredentials(
 bool IOSChromePasswordManagerClient::PromptUserToSaveOrUpdatePassword(
     std::unique_ptr<PasswordFormManager> form_to_save,
     bool update_password) {
+  if (!update_password && form_to_save->GetMetricsRecorder()) {
+    from_to_save->GetMetricsRecorder()->RecordPasswordSaveBubbleSuppressed(
+        form_to_save->IsBlacklisted()
+            ? PasswordFormMetricsRecorder::BubbleSuppression::kBlacklisted
+            : PasswordFormMetricsRecorder::BubbleSuppression::kNotSuppressed);
+  }
   if (form_to_save->IsBlacklisted())
     return false;
 

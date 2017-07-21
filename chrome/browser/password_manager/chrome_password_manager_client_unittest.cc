@@ -16,20 +16,25 @@
 #include "base/strings/string16.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "build/build_config.h"
 #include "chrome/browser/metrics/chrome_metrics_service_accessor.h"
 #include "chrome/browser/sync/profile_sync_service_factory.h"
 #include "chrome/browser/sync/profile_sync_test_util.h"
+#include "chrome/browser/ui/passwords/manage_passwords_ui_controller_mock.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/test/base/chrome_render_view_host_test_harness.h"
 #include "chrome/test/base/testing_profile.h"
 #include "components/autofill/content/common/autofill_agent.mojom.h"
 #include "components/password_manager/content/browser/password_manager_internals_service_factory.h"
 #include "components/password_manager/core/browser/credentials_filter.h"
+#include "components/password_manager/core/browser/fake_form_fetcher.h"
 #include "components/password_manager/core/browser/log_manager.h"
 #include "components/password_manager/core/browser/log_receiver.h"
 #include "components/password_manager/core/browser/log_router.h"
 #include "components/password_manager/core/browser/password_manager_internals_service.h"
 #include "components/password_manager/core/browser/password_manager_test_utils.h"
+#include "components/password_manager/core/browser/stub_form_saver.h"
+#include "components/password_manager/core/browser/stub_password_manager_driver.h"
 #include "components/password_manager/core/common/credential_manager_types.h"
 #include "components/password_manager/core/common/password_manager_pref_names.h"
 #include "components/prefs/pref_registry_simple.h"
@@ -37,6 +42,8 @@
 #include "components/prefs/testing_pref_service.h"
 #include "components/sessions/content/content_record_password_state.h"
 #include "components/sync_preferences/testing_pref_service_syncable.h"
+#include "components/ukm/test_ukm_recorder.h"
+#include "components/ukm/ukm_source.h"
 #include "components/version_info/version_info.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/web_contents.h"
@@ -229,6 +236,11 @@ class ChromePasswordManagerClientTest : public ChromeRenderViewHostTestHarness {
     NavigateAndCommit(GURL("about:blank"));
   }
 
+  ManagePasswordsUIControllerMock* passwords_ui_controller() {
+    return static_cast<ManagePasswordsUIControllerMock*>(
+        ManagePasswordsUIController::FromWebContents(web_contents()));
+  }
+
  protected:
   ChromePasswordManagerClient* GetClient();
 
@@ -242,6 +254,8 @@ class ChromePasswordManagerClientTest : public ChromeRenderViewHostTestHarness {
   TestingPrefServiceSimple prefs_;
   base::FieldTrialList field_trial_list_;
   bool metrics_enabled_;
+  ukm::TestUkmRecorder test_ukm_recorder_;
+  autofill::PasswordForm test_form_;
 };
 
 void ChromePasswordManagerClientTest::SetUp() {
@@ -262,6 +276,12 @@ void ChromePasswordManagerClientTest::SetUp() {
   // Connect our bool for testing.
   ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(
       &metrics_enabled_);
+
+  test_form_.origin = GURL("https://example.com/");
+  test_form_.username_value = base::ASCIIToUTF16("username");
+  test_form_.password_value = base::ASCIIToUTF16("12345");
+
+  new ManagePasswordsUIControllerMock(web_contents());
 }
 
 void ChromePasswordManagerClientTest::TearDown() {
@@ -641,5 +661,116 @@ TEST_F(ChromePasswordManagerClientTest,
       .Times(1);
   client->CheckProtectedPasswordEntry(std::string("saved_domain.com"), true);
 }
+#endif  // defined(SAFE_BROWSING_DB_LOCAL)
 
-#endif
+// Verify that the kUkmSavingPromptSuppressed metric is recorded if a password
+// bubble is not suppressed.
+TEST_F(ChromePasswordManagerClientTest,
+       VerifyUKMForBubbleSuppressionNotSuppressed) {
+  NavigateAndCommit(test_form_.origin);
+  {
+    password_manager::PasswordManager password_manager(GetClient());
+    password_manager::StubPasswordManagerDriver driver;
+    password_manager::FakeFormFetcher fetcher;
+    std::unique_ptr<password_manager::PasswordFormManager> test_form_manager =
+        base::MakeUnique<password_manager::PasswordFormManager>(
+            &password_manager, GetClient(), driver.AsWeakPtr(), test_form_,
+            base::WrapUnique(new password_manager::StubFormSaver), &fetcher);
+
+    // Do not introduce a reason to suppress bubbles.
+
+    auto recorder =
+        base::MakeRefCounted<password_manager::PasswordFormMetricsRecorder>(
+            true /*is_main_frame_secure*/, &test_ukm_recorder_,
+            test_ukm_recorder_.GetNewSourceID(), test_form_.origin);
+    test_form_manager->Init(recorder);
+    GetClient()->PromptUserToSaveOrUpdatePassword(std::move(test_form_manager),
+                                                  false);
+    DeleteContents();
+  }
+  const auto* source =
+      test_ukm_recorder_.GetSourceForUrl(test_form_.origin.spec().c_str());
+  ASSERT_TRUE(source);
+  test_ukm_recorder_.ExpectMetric(
+      *source, "PasswordForm", password_manager::kUkmSavingPromptSuppressed,
+      static_cast<int64_t>(password_manager::PasswordFormMetricsRecorder::
+                               BubbleSuppression::kNotSuppressed));
+}
+
+// Verify that the kUkmSavingPromptSuppressed metric is recorded if a password
+// bubble suppressed because a form is blacklisted.
+TEST_F(ChromePasswordManagerClientTest,
+       VerifyUKMForBubbleSuppressionBlacklisted) {
+  NavigateAndCommit(test_form_.origin);
+  {
+    password_manager::PasswordManager password_manager(GetClient());
+    password_manager::StubPasswordManagerDriver driver;
+    password_manager::FakeFormFetcher fetcher;
+    std::unique_ptr<password_manager::PasswordFormManager> test_form_manager =
+        base::MakeUnique<password_manager::PasswordFormManager>(
+            &password_manager, GetClient(), driver.AsWeakPtr(), test_form_,
+            base::WrapUnique(new password_manager::StubFormSaver), &fetcher);
+
+    // Blacklist the form to suppress bubbles.
+    test_form_manager->PermanentlyBlacklist();
+
+    auto recorder =
+        base::MakeRefCounted<password_manager::PasswordFormMetricsRecorder>(
+            true /*is_main_frame_secure*/, &test_ukm_recorder_,
+            test_ukm_recorder_.GetNewSourceID(), test_form_.origin);
+    test_form_manager->Init(recorder);
+    GetClient()->PromptUserToSaveOrUpdatePassword(std::move(test_form_manager),
+                                                  false);
+    DeleteContents();
+  }
+  const auto* source =
+      test_ukm_recorder_.GetSourceForUrl(test_form_.origin.spec().c_str());
+  ASSERT_TRUE(source);
+  test_ukm_recorder_.ExpectMetric(
+      *source, "PasswordForm", password_manager::kUkmSavingPromptSuppressed,
+      static_cast<int64_t>(password_manager::PasswordFormMetricsRecorder::
+                               BubbleSuppression::kBlacklisted));
+}
+
+// Verify that the kUkmSavingPromptSuppressed metric is recorded if a password
+// bubble suppressed because a save prompt has been dismissed too often. This
+// feature is only implemented on Desktop versions of Chrome.
+#if !defined(OS_ANDROID)
+TEST_F(ChromePasswordManagerClientTest,
+       VerifyUKMForBubbleSuppressionDismissalThresholdReached) {
+  NavigateAndCommit(test_form_.origin);
+  {
+    password_manager::PasswordManager password_manager(GetClient());
+    password_manager::StubPasswordManagerDriver driver;
+    password_manager::FakeFormFetcher fetcher;
+    std::unique_ptr<password_manager::PasswordFormManager> test_form_manager =
+        base::MakeUnique<password_manager::PasswordFormManager>(
+            &password_manager, GetClient(), driver.AsWeakPtr(), test_form_,
+            base::WrapUnique(new password_manager::StubFormSaver), &fetcher);
+
+    // Suppress bubble by meeting dismissal threshold.
+    password_manager::InteractionsStats stats;
+    stats.origin_domain = test_form_.origin;
+    stats.username_value = test_form_.username_value;
+    stats.dismissal_count = 1000000;
+    EXPECT_CALL(*passwords_ui_controller(), GetCurrentInteractionStats())
+        .WillRepeatedly(Return(&stats));
+
+    auto recorder =
+        base::MakeRefCounted<password_manager::PasswordFormMetricsRecorder>(
+            true /*is_main_frame_secure*/, &test_ukm_recorder_,
+            test_ukm_recorder_.GetNewSourceID(), test_form_.origin);
+    test_form_manager->Init(recorder);
+    GetClient()->PromptUserToSaveOrUpdatePassword(std::move(test_form_manager),
+                                                  false);
+    DeleteContents();
+  }
+  const auto* source =
+      test_ukm_recorder_.GetSourceForUrl(test_form_.origin.spec().c_str());
+  ASSERT_TRUE(source);
+  test_ukm_recorder_.ExpectMetric(
+      *source, "PasswordForm", password_manager::kUkmSavingPromptSuppressed,
+      static_cast<int64_t>(password_manager::PasswordFormMetricsRecorder::
+                               BubbleSuppression::kDismissalThresholdReached));
+}
+#endif  // !defined(OS_ANDROID)
