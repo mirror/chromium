@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "a1106601_6bf0fb58",
+        "filename": "content/browser/geolocation/geolocation_service_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-21T16:49:36Z",
+      "side": 1,
+      "message": "There is GetLastCommittedURL method on RenderFrameHost, which will give you the URL directly. It might not handle some cases, but that is likely the existing behavior.",
+      "parentUuid": "2f56e4cd_507c4614",
+      "range": {
+        "startLine": 48,
+        "startChar": 6,
+        "endLine": 48,
+        "endChar": 59
+      },
+      "revId": "308f8534bb47fbc6af9575c54fd8c6a094eb3372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "702aebf3_d5cfdea6",
         "filename": "content/browser/geolocation/geolocation_service_impl.cc",
         "patchSetId": 15
@@ -128,6 +152,23 @@
       "revId": "308f8534bb47fbc6af9575c54fd8c6a094eb3372",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "64d781e6_0dfd5ee8",
+        "filename": "content/browser/geolocation/geolocation_service_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-21T16:49:36Z",
+      "side": 1,
+      "message": "Thanks for cleaning this up! The new code with the explicit context object looks much nicer!",
+      "revId": "308f8534bb47fbc6af9575c54fd8c6a094eb3372",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
