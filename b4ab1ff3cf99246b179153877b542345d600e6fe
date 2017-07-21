@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f9c0127_570fbdb4",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-21T05:52:53Z",
+      "side": 1,
+      "message": "Oftentimes written as just: !cached_ppd_index_",
+      "revId": "b4ab1ff3cf99246b179153877b542345d600e6fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26c5368f_c39250c9",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-21T05:52:53Z",
+      "side": 1,
+      "message": "No need for else right after a return.",
+      "revId": "b4ab1ff3cf99246b179153877b542345d600e6fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffad06af_e1672b60",
+        "filename": "chromeos/printing/ppd_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1005,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-21T05:52:53Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 1005,
+        "startChar": 12,
+        "endLine": 1005,
+        "endChar": 32
+      },
+      "revId": "b4ab1ff3cf99246b179153877b542345d600e6fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2095211f_35490647",
+        "filename": "chromeos/printing/ppd_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-21T05:52:53Z",
+      "side": 1,
+      "message": "nit: blank line after.",
+      "revId": "b4ab1ff3cf99246b179153877b542345d600e6fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
