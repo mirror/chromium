@@ -16,6 +16,24 @@
       "revId": "46ed4ac03396f9cec4f3c7f92bacc66b7582821d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6351b933_6b5bf940",
+        "filename": "base/numerics/checked_math.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002378
+      },
+      "writtenOn": "2017-07-21T17:34:18Z",
+      "side": 1,
+      "message": "Yup, I know about WARN_UNUSED_RESULT, but these headers cannot include base dependencies—since they get pulled into all sorts of other projects, I have to keep them dependency-free.\n\nAnd I wouldn\u0027t worry about the the MSVC thing, since we don\u0027t actually build Chrome with PreFast, and we\u0027re migrating Chrome to Windows with m62. I just did it to support third-parties that are using PreFast.",
+      "parentUuid": "bf0fcfae_da34333d",
+      "revId": "46ed4ac03396f9cec4f3c7f92bacc66b7582821d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
