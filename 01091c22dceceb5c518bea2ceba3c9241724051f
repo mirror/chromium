@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c60c7507_6c8fbc97",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/BackendItems.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-21T01:33:39Z",
+      "side": 1,
+      "message": "I\u0027m a bit surprised this can be null. In the StubbedHistoryProvider, it looks like the path is always set for the items that are created: https://cs.chromium.org/chromium/src/chrome/android/javatests/src/org/chromium/chrome/browser/download/ui/StubbedProvider.java?type\u003dcs\u0026q\u003dStubbedProvider.createDownloadItem\u0026sq\u003dpackage:chromium\u0026l\u003d222\n\n\nWhen does this get called w/ items that have null paths?",
+      "range": {
+        "startLine": 38,
+        "startChar": 16,
+        "endLine": 38,
+        "endChar": 32
+      },
+      "revId": "01091c22dceceb5c518bea2ceba3c9241724051f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
