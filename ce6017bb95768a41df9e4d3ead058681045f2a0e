@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "434324b7_f3f49c07",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8IntersectionObserverDelegate.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-07-21T12:00:45Z",
+      "side": 1,
+      "message": "2017?",
+      "revId": "ce6017bb95768a41df9e4d3ead058681045f2a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7b78517_82e06c82",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8IntersectionObserverDelegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-07-21T12:00:45Z",
+      "side": 1,
+      "message": "2017?",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "ce6017bb95768a41df9e4d3ead058681045f2a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9df650e_061758bb",
+        "filename": "third_party/WebKit/Source/core/intersection_observer/IntersectionObserverDelegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-07-21T12:00:45Z",
+      "side": 1,
+      "message": "2017?",
+      "revId": "ce6017bb95768a41df9e4d3ead058681045f2a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
