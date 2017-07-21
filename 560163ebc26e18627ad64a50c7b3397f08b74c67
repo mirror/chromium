@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "59c2ace7_0dfc31f6",
+        "filename": "chrome/browser/chromeos/net/network_portal_detector_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-07-21T00:22:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fed3eb1_cdcd6bf8",
+      "revId": "560163ebc26e18627ad64a50c7b3397f08b74c67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57dc3b05_5371e80b",
         "filename": "chrome/browser/chromeos/net/network_portal_detector_impl.h",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "560163ebc26e18627ad64a50c7b3397f08b74c67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "939aa0bb_1c4f2c34",
+        "filename": "chrome/browser/chromeos/net/network_portal_detector_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-07-21T00:22:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57dc3b05_5371e80b",
+      "revId": "560163ebc26e18627ad64a50c7b3397f08b74c67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
