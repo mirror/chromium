@@ -102,7 +102,8 @@ def AddToManifest(manifest_file, target_name, source, mapper):
 
 
 def BuildBootfs(output_directory, runtime_deps_path, test_name, child_args,
-                test_launcher_filter_file, dry_run):
+                test_launcher_filter_file, test_launcher_summary_output,
+                dry_run):
   with open(runtime_deps_path) as f:
     lines = f.readlines()
 
@@ -130,13 +131,17 @@ def BuildBootfs(output_directory, runtime_deps_path, test_name, child_args,
 
   if test_launcher_filter_file:
     test_launcher_filter_file = os.path.normpath(
-            os.path.join(output_directory, test_launcher_filter_file))
+        os.path.join(output_directory, test_launcher_filter_file))
     filter_file_on_device = MakeTargetImageName(
-          common_prefix, output_directory, test_launcher_filter_file)
+        common_prefix, output_directory, test_launcher_filter_file)
     child_args.append('--test-launcher-filter-file=/system/' +
-                       filter_file_on_device)
+                      filter_file_on_device)
     target_source_pairs.append(
         [filter_file_on_device, test_launcher_filter_file])
+
+  if test_launcher_summary_output:
+    child_args.append('--test-launcher-summary-output=' +
+                      '/system/summary_output.json')
 
   # Generate a little script that runs the test binaries and then shuts down
   # QEMU.
@@ -191,6 +196,20 @@ def BuildBootfs(output_directory, runtime_deps_path, test_name, child_args,
   return bootfs_name
 
 
+def NetCp(src, dest):
+  try:
+    with open(os.devnull, 'w') as null_output:
+      subprocess.check_call(
+          [os.path.join(SDK_ROOT, 'tools', 'netaddr'), '--fuchsia'],
+          stdout=null_output)
+      subprocess.check_call(
+          [os.path.join(SDK_ROOT, 'tools', 'netcp'), src, dest],
+          stdout=null_output,
+          stderr=subprocess.STDOUT)
+  except subprocess.CalledProcessError as e:
+    print 'Failed to pull %s from fuchsia to %s: %s' % (src, dest, str(e))
+
+
 def SymbolizeEntry(entry):
   addr2line_output = subprocess.check_output(
       ['addr2line', '-Cipf', '--exe=' + entry[1], entry[2]])
@@ -240,8 +259,9 @@ def main():
   parser.add_argument('--test-launcher-jobs',
                       type=int,
                       help='Sets the number of parallel test jobs.')
-  parser.add_argument('--test_launcher_summary_output',
-                      help='Currently ignored for 2-sided roll.')
+  parser.add_argument('--test-launcher-summary-output',
+                      '--test_launcher_summary_output',
+                      help='Retrieve JSON results from target process.')
   parser.add_argument('child_args', nargs='*',
                       help='Arguments for the test process.')
   args = parser.parse_args()
@@ -272,14 +292,14 @@ def main():
 
   bootfs = BuildBootfs(args.output_directory, args.runtime_deps_path,
                        args.test_name, child_args,
-                       args.test_launcher_filter_file, args.dry_run)
+                       args.test_launcher_filter_file,
+                       args.test_launcher_summary_output, args.dry_run)
 
   qemu_path = os.path.join(SDK_ROOT, 'qemu', 'bin', 'qemu-system-x86_64')
 
   qemu_command = [qemu_path,
        '-m', '2048',
        '-nographic',
-       '-net', 'none',
        '-smp', '4',
        '-machine', 'q35',
        '-kernel', os.path.join(SDK_ROOT, 'kernel', 'magenta.bin'),
@@ -297,6 +317,14 @@ def main():
     qemu_command += ['-enable-kvm', '-cpu', 'host,migratable=no']
   else:
     qemu_command += ['-cpu', 'Haswell,+smap,-check']
+
+  if args.test_launcher_summary_output:
+    qemu_command += [
+        '-netdev', 'type=tap,ifname=qemu,script=no,downscript=no,id=net0',
+        '-device', 'e1000,netdev=net0,mac=52:54:00:63:5e:7a',
+    ]
+  else:
+    qemu_command += [ '-net', 'none' ]
 
   if args.dry_run:
     print 'Run:', qemu_command
@@ -320,6 +348,10 @@ def main():
     # Element #2: memory offset within the executable.
     bt_entries = []
 
+    summary_json_re = re.compile(
+        r'Saved summary as JSON to ([^ ]+)')
+    summary_json = None
+
     success = False
     while True:
       line = qemu_popen.stdout.readline()
@@ -328,7 +360,11 @@ def main():
       print line,
       if 'SUCCESS: all tests passed.' in line:
         success = True
-      if bt_end_re.match(line.strip()):
+      l = line.strip()
+      m = summary_json_re.search(l)
+      if m:
+        NetCp(':%s' % m.group(1), args.test_launcher_summary_output)
+      if bt_end_re.match(l):
         if bt_entries:
           print '----- start symbolized stack'
           for processed in ParallelSymbolizeBacktrace(bt_entries):
@@ -336,7 +372,7 @@ def main():
           print '----- end symbolized stack'
         bt_entries = []
       else:
-        m = bt_with_offset_re.match(line.strip())
+        m = bt_with_offset_re.match(l)
         if m:
           bt_entries.append((m.group(1), args.test_name, m.group(4)))
     qemu_popen.wait()
