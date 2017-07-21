@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ba09b254_3705583a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/ChainedTasks.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-21T11:46:06Z",
+      "side": 1,
+      "message": "Kept the current interface as it\u0027s simpler for callers.",
+      "parentUuid": "2d96f173_34dbf0b0",
+      "range": {
+        "startLine": 37,
+        "startChar": 16,
+        "endLine": 37,
+        "endChar": 19
+      },
+      "revId": "4d47bd0d58e0bb992f3b705f905d63866ac62b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ce5bd57_e85b2e76",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/ChainedTasks.java",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1923da63_f16faab6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/ChainedTasks.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-21T11:46:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ce5bd57_e85b2e76",
+      "range": {
+        "startLine": 39,
+        "startChar": 12,
+        "endLine": 39,
+        "endChar": 22
+      },
+      "revId": "4d47bd0d58e0bb992f3b705f905d63866ac62b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "915545dd_99152f82",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/ChainedTasks.java",
         "patchSetId": 6
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-20T17:36:16Z",
       "side": 1,
       "message": "false?",
+      "range": {
+        "startLine": 55,
+        "startChar": 31,
+        "endLine": 55,
+        "endChar": 35
+      },
+      "revId": "4d47bd0d58e0bb992f3b705f905d63866ac62b49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a25c972_c46b03df",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/init/ChainedTasks.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-21T11:46:06Z",
+      "side": 1,
+      "message": "Thanks!\n\nDone.",
+      "parentUuid": "915545dd_99152f82",
       "range": {
         "startLine": 55,
         "startChar": 31,
