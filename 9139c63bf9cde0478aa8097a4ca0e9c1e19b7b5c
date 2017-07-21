@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc88552a_b776c83f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 36220,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-21T21:07:38Z",
+      "side": 1,
+      "message": "was any date ever emitted to \"Net.ContentDecodingFailed2.FilterType, or was that always in error?",
+      "range": {
+        "startLine": 36220,
+        "startChar": 20,
+        "endLine": 36220,
+        "endChar": 21
+      },
+      "revId": "9139c63bf9cde0478aa8097a4ca0e9c1e19b7b5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
