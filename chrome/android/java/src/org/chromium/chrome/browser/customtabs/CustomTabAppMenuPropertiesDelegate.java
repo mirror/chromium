@@ -6,6 +6,7 @@ package org.chromium.chrome.browser.customtabs;
 
 import static org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider.CUSTOM_TABS_UI_TYPE_MEDIA_VIEWER;
 import static org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider.CUSTOM_TABS_UI_TYPE_PAYMENT_REQUEST;
+import static org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider.CUSTOM_TABS_UI_TYPE_READER_MODE;
 
 import android.view.Menu;
 import android.view.MenuItem;
@@ -91,13 +92,23 @@ public class CustomTabAppMenuPropertiesDelegate extends AppMenuPropertiesDelegat
                 requestDesktopSiteVisible = false;
                 addToHomeScreenVisible = false;
             } else if (mUiType == CUSTOM_TABS_UI_TYPE_PAYMENT_REQUEST) {
-                // Only the icon row and 'find in page' are shown for openning payment request UI
+                // Only the icon row and 'find in page' are shown for opening payment request UI
                 // from Chrome.
                 openInChromeItemVisible = false;
                 requestDesktopSiteVisible = false;
                 addToHomeScreenVisible = false;
                 downloadItemVisible = false;
                 bookmarkItemVisible = false;
+            } else if (mUiType == CUSTOM_TABS_UI_TYPE_READER_MODE) {
+                // Only 'find in page' and the preference are shown for Reader Mode UI.
+                menu.findItem(R.id.icon_row_menu_id).setVisible(false);
+                bookmarkItemVisible = false; // Set to skip initialization.
+                downloadItemVisible = false; // Set to skip initialization.
+                openInChromeItemVisible = false;
+                requestDesktopSiteVisible = false;
+                addToHomeScreenVisible = false;
+
+                menu.findItem(R.id.reader_mode_prefs_id).setVisible(true);
             }
 
             if (!FirstRunStatus.getFirstRunFlowComplete()) {
