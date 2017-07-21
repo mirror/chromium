@@ -23,12 +23,15 @@ class MouseEvent;
 class NewTabPromo : public views::BubbleDialogDelegateView {
  public:
   // Returns a self owned raw pointer to the NewTabButton.
-  static NewTabPromo* CreateSelfOwned(const gfx::Rect& anchor_rect);
+  // |text_specifier| determines the text that the promo will show.
+  static NewTabPromo* CreateSelfOwned(const gfx::Rect& anchor_rect,
+                                      const int text_specifier);
 
  private:
   // Constructs NewTabPromo. Anchors the bubble to the NewTabButton.
   // The bubble widget and promo are owned by their native widget.
-  explicit NewTabPromo(const gfx::Rect& anchor_rect);
+
+  NewTabPromo(const gfx::Rect& anchor_rect, const int text_specifier);
   ~NewTabPromo() override;
 
   // BubbleDialogDelegateView:
@@ -36,7 +39,7 @@ class NewTabPromo : public views::BubbleDialogDelegateView {
   bool OnMousePressed(const ui::MouseEvent& event) override;
   void OnMouseEntered(const ui::MouseEvent& event) override;
   void OnMouseExited(const ui::MouseEvent& event) override;
-  void Init() override;
+  // void Init() override;
 
   // Closes the New Tab Promo.
   void CloseBubble();
