@@ -17,6 +17,7 @@ import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.compositor.bottombar.OverlayPanel.StateChangeReason;
 import org.chromium.chrome.browser.customtabs.CustomTabActivity;
+import org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider;
 import org.chromium.chrome.browser.document.ChromeLauncherActivity;
 import org.chromium.chrome.browser.infobar.ReaderModeInfoBar;
 import org.chromium.chrome.browser.tab.Tab;
@@ -487,6 +488,8 @@ public class ReaderModeManager extends TabModelSelectorTabObserver {
 
         customTabIntent.putExtra(
                 CustomTabsIntent.EXTRA_TITLE_VISIBILITY_STATE, CustomTabsIntent.SHOW_PAGE_TITLE);
+        customTabIntent.putExtra(CustomTabIntentDataProvider.EXTRA_UI_TYPE,
+                CustomTabIntentDataProvider.CUSTOM_TABS_UI_TYPE_READER_MODE);
 
         // Add the parent ID as an intent extra for back button functionality.
         customTabIntent.putExtra(EXTRA_READER_MODE_PARENT, mTabModelSelector.getCurrentTabId());

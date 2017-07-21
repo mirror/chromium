@@ -6,6 +6,7 @@ package org.chromium.chrome.browser.customtabs;
 
 import static org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider.CUSTOM_TABS_UI_TYPE_MEDIA_VIEWER;
 import static org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider.CUSTOM_TABS_UI_TYPE_PAYMENT_REQUEST;
+import static org.chromium.chrome.browser.customtabs.CustomTabIntentDataProvider.CUSTOM_TABS_UI_TYPE_READER_MODE;
 
 import android.view.Menu;
 import android.view.MenuItem;
@@ -98,6 +99,13 @@ public class CustomTabAppMenuPropertiesDelegate extends AppMenuPropertiesDelegat
                 addToHomeScreenVisible = false;
                 downloadItem.setVisible(false);
                 bookmarkItem.setVisible(false);
+            } else if (mUiType == CUSTOM_TABS_UI_TYPE_READER_MODE) {
+                // Only 'find in page' and the preference are shown for Reader Mode UI.
+                iconRow.setVisible(false);
+                openInChromeItem.setVisible(false);
+                menu.findItem(R.id.reader_mode_prefs_id).setVisible(true);
+                menu.findItem(R.id.request_desktop_site_row_menu_id).setVisible(false);
+                addToHomeScreenVisible = false;
             } else {
                 openInChromeItem.setTitle(
                         DefaultBrowserInfo.getTitleOpenInDefaultBrowser(mIsOpenedByChrome));
