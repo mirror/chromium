@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fe18af1_adf1e958",
+        "filename": "ios/web/public/test/http_server/blank_page_response_provider.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-21T02:31:53Z",
+      "side": 1,
+      "message": "nit: s/import/include",
+      "range": {
+        "startLine": 5,
+        "startChar": 1,
+        "endLine": 5,
+        "endChar": 7
+      },
+      "revId": "d19ac399787db2c79361fde5ea48cfceea5a264c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "145fce61_4db4bfdf",
+        "filename": "ios/web/public/test/http_server/blank_page_response_provider.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-21T02:31:53Z",
+      "side": 1,
+      "message": "nit: s/HTML/Html",
+      "range": {
+        "startLine": 17,
+        "startChar": 11,
+        "endLine": 17,
+        "endChar": 29
+      },
+      "revId": "d19ac399787db2c79361fde5ea48cfceea5a264c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "5518157d_d54b0428",
+        "filename": "ios/chrome/browser/ui/stack_view/stack_view_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-21T02:31:53Z",
+      "side": 1,
+      "message": "Is there any reason why you prefer |webStateToClose-\u003eExecuteJavaScript(UTF8ToUTF16(StringPrintf(kAlertFormat, kCancelledMessageText)));| to |chrome_test_util::ExecuteJavaScript(@\"alert(\u0027cancelled\u0027)\", nil);|? The latter way of script execution is common, shorter (1 line vs. 4 lines) and more reliable (actually waits until script execution is completed and alert is presented).",
+      "parentUuid": "5bf31efc_5e7e2292",
+      "range": {
+        "startLine": 305,
+        "startChar": 6,
+        "endLine": 305,
+        "endChar": 33
+      },
+      "revId": "f82b9fb28115ebd0a672cc4c1d47c7e3f75ae3de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "089d15d4_e7bfcbf6",
         "filename": "ios/web/public/test/http_server/blank_page_response_provider.h",
         "patchSetId": 1
