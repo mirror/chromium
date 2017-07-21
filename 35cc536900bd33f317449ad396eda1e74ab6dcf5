@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f87071c4_9e80a480",
+        "filename": "ash/public/interfaces/system_tray.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-07-21T20:48:17Z",
+      "side": 1,
+      "message": "Do you know what processes send and receive this message?\n\nMy goal is to avoid a situation in which an untrustworthy process (e.g. a renderer) sends a privileged process (e.g. the browser) an arbitrary string which the privileged process then blindly puts in the UX (potentially security-relevant UX?).\n\nIn general, we really prefer to use the most narrowly-scoped type possible in IPC messages. See https://www.chromium.org/Home/chromium-security/education/security-tips-for-ipc#TOC-Use-and-validate-specific-constrained-types-let-the-compiler-work-for-you. for background.",
+      "parentUuid": "619f5754_e904839e",
+      "revId": "35cc536900bd33f317449ad396eda1e74ab6dcf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc1cfa31_c3766c4a",
         "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.cc",
         "patchSetId": 9
