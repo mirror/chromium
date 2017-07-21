@@ -94,8 +94,14 @@ class DownloadItemNotification : public DownloadNotification,
   // be called only for downloads in progress.
   base::string16 GetInProgressSubStatusString() const;
 
+  // Get the sub status text. Can be called for downloads in all states.
+  // If the state does not have sub status string, it returns empty string.
+  base::string16 GetSubStatusString() const;
+
   // Get the status text.
-  base::string16 GetStatusString() const;
+  // short_form = true to return status string in shorter form,
+  // which does not include sub status text.
+  base::string16 GetStatusString(bool short_form) const;
 
   bool IsNotificationVisible() const;
 

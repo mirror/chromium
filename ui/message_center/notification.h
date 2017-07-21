@@ -109,6 +109,13 @@ class MESSAGE_CENTER_EXPORT RichNotificationData {
   // Progress, in range of [0-100], of NOTIFICATION_TYPE_PROGRESS notifications.
   int progress = 0;
 
+  // Status text strings shown in NOTIFICATION_TYPE_PROGRESS notifications.
+  // If one of status and sub_status is empty, then message will be used.
+  // If MD style notification is not enabled, these attributes are ignored and
+  // message is used.
+  base::string16 status;
+  base::string16 sub_status;
+
   // Buttons that should show up on the notification. A maximum of 16 buttons
   // is supported by the current implementation, but this may differ between
   // platforms.
@@ -275,6 +282,16 @@ class MESSAGE_CENTER_EXPORT Notification {
 
   int progress() const { return optional_fields_.progress; }
   void set_progress(int progress) { optional_fields_.progress = progress; }
+
+  base::string16 status() const { return optional_fields_.status; }
+  void set_status(const base::string16& status) {
+    optional_fields_.status = status;
+  }
+
+  base::string16 sub_status() const { return optional_fields_.sub_status; }
+  void set_sub_status(const base::string16& sub_status) {
+    optional_fields_.sub_status = sub_status;
+  }
   // End unpacked values.
 
   // Images fetched asynchronously.
