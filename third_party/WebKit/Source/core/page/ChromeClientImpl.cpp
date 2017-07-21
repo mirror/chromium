@@ -847,6 +847,11 @@ void ChromeClientImpl::RequestDecode(
                                                        std::move(callback));
 }
 
+void ChromeClientImpl::DidBlockFramebust(const KURL& destination_url,
+                                         const KURL& source_url) {
+  web_view_->Client()->DidBlockFramebust(destination_url, source_url);
+}
+
 void ChromeClientImpl::SetEventListenerProperties(
     LocalFrame* frame,
     WebEventListenerClass event_class,

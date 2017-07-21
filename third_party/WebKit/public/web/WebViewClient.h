@@ -112,6 +112,11 @@ class WebViewClient : protected WebWidgetClient {
   // in screen coordinates.
   virtual WebRect RootWindowRect() { return WebRect(); }
 
+  // A cross-origin child iframe tried to navigate its top level frame without
+  // ever having received a user gesture.
+  virtual void DidBlockFramebust(const WebURL& destination_url,
+                                 const WebURL& source_url) {}
+
   // Editing -------------------------------------------------------------
 
   // These methods allow the client to intercept and overrule editing
