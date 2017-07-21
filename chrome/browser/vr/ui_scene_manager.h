@@ -112,6 +112,7 @@ class UiSceneManager {
   UiElement* screen_dimmer_ = nullptr;
   UiElement* ceiling_ = nullptr;
   UiElement* floor_ = nullptr;
+  std::vector<UiElement*> panels_;
   UiElement* close_button_ = nullptr;
   SplashScreenIcon* splash_screen_icon_ = nullptr;
   UrlBar* url_bar_ = nullptr;
@@ -142,8 +143,8 @@ class UiSceneManager {
 
   int next_available_id_ = 1;
 
+  std::vector<UiElement*> background_panels_;
   std::vector<UiElement*> content_elements_;
-  std::vector<UiElement*> background_elements_;
   std::vector<UiElement*> control_elements_;
 
   base::WeakPtrFactory<UiSceneManager> weak_ptr_factory_;
