@@ -436,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "81d79daa_c3b6a070",
+        "filename": "components/offline_pages/core/page_renovation_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-21T21:22:09Z",
+      "side": 1,
+      "message": "Just to be clear, the rename is all I wanted here.",
+      "parentUuid": "a19e8e36_30c6184a",
+      "range": {
+        "startLine": 36,
+        "startChar": 36,
+        "endLine": 36,
+        "endChar": 47
+      },
+      "revId": "0f9b48fa2e7ad61928909983dc490f58ad6c01e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32ae53f4_79e04b4c",
         "filename": "components/offline_pages/core/page_renovation_loader.h",
         "patchSetId": 2
