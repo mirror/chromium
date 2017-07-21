@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "0956d11b_5d33bf61",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/worklet/webexposed/global-interface-listing-paint-worklet-expected.txt",
+        "patchSetId": 22
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-21T01:57:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26904072_7dff5d94",
+      "revId": "f85de54e03c642be774dcfdf319c1a03f813c1b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2dd5662_3cad64c1",
         "filename": "third_party/WebKit/Source/core/css/CSSSyntaxDescriptor.h",
         "patchSetId": 22
@@ -113,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "3e4951f6_6cfa1be8",
+        "filename": "third_party/WebKit/Source/core/css/CSSSyntaxDescriptor.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-21T01:57:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2dd5662_3cad64c1",
+      "range": {
+        "startLine": 63,
+        "startChar": 11,
+        "endLine": 63,
+        "endChar": 29
+      },
+      "revId": "f85de54e03c642be774dcfdf319c1a03f813c1b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26530d10_be6888e8",
         "filename": "third_party/WebKit/Source/core/workers/Worklet.cpp",
         "patchSetId": 22
@@ -127,6 +169,24 @@
       "revId": "f85de54e03c642be774dcfdf319c1a03f813c1b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78cb691f_9e12ee87",
+        "filename": "third_party/WebKit/Source/core/workers/Worklet.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-21T01:57:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26530d10_be6888e8",
+      "revId": "f85de54e03c642be774dcfdf319c1a03f813c1b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -162,6 +222,24 @@
       "revId": "f85de54e03c642be774dcfdf319c1a03f813c1b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db8a245c_85cbc21d",
+        "filename": "third_party/WebKit/Source/modules/csspaint/DocumentPaintDefinition.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-21T01:57:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06a32690_fb286bd3",
+      "revId": "f85de54e03c642be774dcfdf319c1a03f813c1b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -217,6 +295,24 @@
     },
     {
       "key": {
+        "uuid": "a17dbc29_e5531b42",
+        "filename": "third_party/WebKit/Source/modules/csspaint/DocumentPaintDefinition.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-21T01:57:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adb61c57_915e2ad1",
+      "revId": "f85de54e03c642be774dcfdf319c1a03f813c1b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54d1dc5c_bd0ac936",
         "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
         "patchSetId": 22
@@ -228,6 +324,24 @@
       "writtenOn": "2017-07-20T18:17:58Z",
       "side": 1,
       "message": "Is this check necessary? We shouldn\u0027t have any valid document definitions if we don\u0027t have any global scopes right? Or is there a concern that global scopes will go away?",
+      "revId": "f85de54e03c642be774dcfdf319c1a03f813c1b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3a30d05_253ae6bb",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-21T01:57:43Z",
+      "side": 1,
+      "message": "Removed, I don\u0027t think this is necessary.",
+      "parentUuid": "54d1dc5c_bd0ac936",
       "revId": "f85de54e03c642be774dcfdf319c1a03f813c1b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -248,6 +362,24 @@
       "revId": "f85de54e03c642be774dcfdf319c1a03f813c1b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96bcb569_53b443e6",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-21T01:57:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f0a726f_5d0fa7eb",
+      "revId": "f85de54e03c642be774dcfdf319c1a03f813c1b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -274,6 +406,30 @@
     },
     {
       "key": {
+        "uuid": "7063ee61_d7cb11d4",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-21T01:57:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb9e4d3b_2e342f3e",
+      "range": {
+        "startLine": 39,
+        "startChar": 29,
+        "endLine": 39,
+        "endChar": 31
+      },
+      "revId": "f85de54e03c642be774dcfdf319c1a03f813c1b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb483944_30d8520f",
         "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
         "patchSetId": 22
@@ -285,6 +441,24 @@
       "writtenOn": "2017-07-20T18:17:58Z",
       "side": 1,
       "message": "I think we should only increment after we know the definition matches.",
+      "revId": "f85de54e03c642be774dcfdf319c1a03f813c1b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a488a43_8874176c",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-21T01:57:43Z",
+      "side": 1,
+      "message": "Apply your other comments, which moves the increment implicitly in the RegisterAdditionalPaintDefinition() function.",
+      "parentUuid": "cb483944_30d8520f",
       "revId": "f85de54e03c642be774dcfdf319c1a03f813c1b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -308,6 +482,24 @@
     },
     {
       "key": {
+        "uuid": "a6e9c9fc_ccb78b53",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-21T01:57:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f0520e3_e92789ef",
+      "revId": "f85de54e03c642be774dcfdf319c1a03f813c1b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "217c80d1_3c9234cc",
         "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
         "patchSetId": 22
@@ -328,6 +520,30 @@
       "revId": "f85de54e03c642be774dcfdf319c1a03f813c1b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "480d3770_3d698384",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-21T01:57:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "217c80d1_3c9234cc",
+      "range": {
+        "startLine": 234,
+        "startChar": 72,
+        "endLine": 234,
+        "endChar": 74
+      },
+      "revId": "f85de54e03c642be774dcfdf319c1a03f813c1b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
