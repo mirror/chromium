@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8237967_7f5a3d37",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-07-21T18:11:10Z",
+      "side": 1,
+      "message": "We need to prevent textures held by the SkImage from being recycled because they may still be referenced by the compositor.  Find a way to get SkImage to release its texture, we may have to delete it manually, which would be fine.",
+      "range": {
+        "startLine": 164,
+        "startChar": 4,
+        "endLine": 164,
+        "endChar": 19
+      },
+      "revId": "3b81f87738d6044d1697f2f103b847de8430f790",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
