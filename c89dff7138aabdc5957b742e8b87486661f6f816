@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "facc66b5_56927cda",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2111,
+      "author": {
+        "id": 1000589
+      },
+      "writtenOn": "2017-07-21T19:00:07Z",
+      "side": 1,
+      "message": "Shouldn\u0027t you also be checking in this #else for defined(OS_CHROMEOS)?  Otherwise disable-accelerate-mjpeg-decode should get applied in other places it shouldn\u0027t I would think.",
+      "revId": "c89dff7138aabdc5957b742e8b87486661f6f816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "29c4a32b_85395ff5",
         "filename": "content/gpu/gpu_main.cc",
         "patchSetId": 10
