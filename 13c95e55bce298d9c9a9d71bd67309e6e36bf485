@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "af4207a4_83b9948b",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-21T06:33:53Z",
+      "side": 1,
+      "message": "I call YAGNI. This is a private type, and I don\u0027t thing it will ever be used outside of this file.",
+      "parentUuid": "36456f88_d02fdeb8",
+      "revId": "13c95e55bce298d9c9a9d71bd67309e6e36bf485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "46960721_ff518185",
         "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
         "patchSetId": 8
@@ -39,6 +57,30 @@
       "revId": "13c95e55bce298d9c9a9d71bd67309e6e36bf485",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "650e8941_be430ad2",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-21T06:33:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "46960721_ff518185",
+      "range": {
+        "startLine": 307,
+        "startChar": 31,
+        "endLine": 307,
+        "endChar": 32
+      },
+      "revId": "13c95e55bce298d9c9a9d71bd67309e6e36bf485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
