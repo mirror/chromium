@@ -5,15 +5,19 @@
 #ifndef CHROME_BROWSER_UPGRADE_DETECTOR_IMPL_H_
 #define CHROME_BROWSER_UPGRADE_DETECTOR_IMPL_H_
 
+#include "base/callback.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "base/sequence_checker.h"
 #include "base/timer/timer.h"
 #include "base/version.h"
+#include "build/build_config.h"
 #include "chrome/browser/upgrade_detector.h"
 #include "components/variations/service/variations_service.h"
 
 namespace base {
 template <typename T> struct DefaultSingletonTraits;
+class SequencedTaskRunner;
 }
 
 class UpgradeDetectorImpl : public UpgradeDetector,
@@ -23,7 +27,7 @@ class UpgradeDetectorImpl : public UpgradeDetector,
 
   // Returns the currently installed Chrome version, which may be newer than the
   // one currently running. Not supported on Android, iOS or ChromeOS. Must be
-  // run on a thread where I/O operations are allowed (e.g. FILE thread).
+  // run on a thread where I/O operations are allowed.
   static base::Version GetCurrentlyInstalledVersion();
 
   // Returns the singleton instance.
@@ -42,10 +46,18 @@ class UpgradeDetectorImpl : public UpgradeDetector,
  private:
   friend struct base::DefaultSingletonTraits<UpgradeDetectorImpl>;
 
+  // A callback that receives the results of |DetectUpgradeTask|.
+  using UpgradeDetectedCallback = base::OnceCallback<void(UpgradeAvailable)>;
+
+#if defined(OS_WIN) && defined(GOOGLE_CHROME_BUILD)
+  // A callback that receives the results of AreAutoupdatesEnabled.
+  void OnAutoupdatesEnabledResult(bool auto_updates_enabled);
+#endif
+
   // Start the timer that will call |CheckForUpgrade()|.
   void StartTimerForUpgradeCheck();
 
-  // Launches a task on the file thread to check if we have the latest version.
+  // Launches a background task to check if we have the latest version.
   void CheckForUpgrade();
 
   // Starts the upgrade notification timer that will check periodically whether
@@ -65,14 +77,15 @@ class UpgradeDetectorImpl : public UpgradeDetector,
   // user that a new version is available.
   void NotifyOnUpgrade();
 
-  // Called on the FILE thread to detect an upgrade. Calls back UpgradeDetected
-  // on the UI thread if so. Although it looks weird, this needs to be a static
-  // method receiving a WeakPtr<> to this object so that we can interrupt
-  // the UpgradeDetected callback before it runs. Having this method non-static
-  // and using |this| directly wouldn't be thread safe. And keeping it as a
-  // non-class function would prevent it from calling UpgradeDetected.
-  static void DetectUpgradeTask(
-      base::WeakPtr<UpgradeDetectorImpl> upgrade_detector);
+  // Determines whether or not an update is available, posting |callback| with
+  // the result to |task_runner| if so.
+  static void DetectUpgradeTask(scoped_refptr<base::TaskRunner> task_runner,
+                                UpgradeDetectedCallback callback);
+
+  SEQUENCE_CHECKER(sequence_checker_);
+
+  // A sequenced task runner on which blocking tasks run.
+  scoped_refptr<base::SequencedTaskRunner> task_runner_;
 
   // We periodically check to see if Chrome has been upgraded.
   base::RepeatingTimer detect_upgrade_timer_;
