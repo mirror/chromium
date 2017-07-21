@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a2dfae0_4a61a52c",
+        "filename": "components/sync/android/javatests/src/org/chromium/components/sync/AndroidSyncSettingsTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-07-21T14:52:25Z",
+      "side": 1,
+      "message": "There is more race condition than I thought in AndroidSyncSettingsTest. Each time, when one of many static APIs in AndroidSyncSettings is called in test setUp or a test method, AndroidSyncSettings#updateSyncability will end up getting called which will post a task on Ui thread that calls AccountManagerFacade.get(), yet sometimes instrumentation thread will reset the AccountManagerFacade static instance before AccountManagerFacade.get() getting called on UiThread. I think this wasn\u0027t an issue in JUnit3 because somehow Ui thread action ends up finished before instrumentation thread.\n\nFor updateAccount(), I was able to use callback to wait for all calls on UiThread (https://chromium-review.googlesource.com/c/567766/), but for the reset of the tests, I can only put the reset process also on UiThread due to lack of callback support.",
+      "revId": "37743d28e64d3005d37f44f619f995a2ba9c3fe0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
