@@ -70,6 +70,30 @@
       "revId": "37a35290878739a07bcc2d518050d2b3fd18a486",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1322708_f0f27059",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 959,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-07-21T17:44:21Z",
+      "side": 1,
+      "message": "\u003e \u003e (just blindly doing compositing inputs clean on any text input would be too expensive.) \n\u003e \n\u003e Are you sure about this?  We\u0027re already doing style and layout clean, I\u0027d be surprised that the compositing update adds that much overhead.\n\nIt\u0027s possible that just doing the compositing input step isn\u0027t too expensive - we haven\u0027t measured that sub-problem. Doing full compositing was definitely too expensive, see http://crbug.com/687589 which was a serious performance regression when I tried to avoid predicating the additional compositing on the element being position:sticky.",
+      "parentUuid": "6084a19c_b29fc024",
+      "range": {
+        "startLine": 959,
+        "startChar": 16,
+        "endLine": 959,
+        "endChar": 51
+      },
+      "revId": "37a35290878739a07bcc2d518050d2b3fd18a486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
