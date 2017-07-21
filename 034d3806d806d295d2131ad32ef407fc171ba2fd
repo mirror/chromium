@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "228f871c_9dabd5ad",
+        "filename": "chrome/browser/devtools/global_confirm_info_bar.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-21T18:54:33Z",
+      "side": 1,
+      "message": "Bind() supports lambdas as long as they don\u0027t have default captures.  You have to explicitly give arguments.",
+      "parentUuid": "64c29d1e_c6df76d0",
+      "revId": "034d3806d806d295d2131ad32ef407fc171ba2fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f522096_13bd5c19",
         "filename": "chrome/browser/devtools/global_confirm_info_bar.cc",
         "patchSetId": 11
