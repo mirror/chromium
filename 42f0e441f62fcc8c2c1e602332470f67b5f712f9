@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dad55bca_6f5b5c0a",
+        "filename": "base/test/launcher/test_results_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2017-07-21T12:26:58Z",
+      "side": 1,
+      "message": "Let\u0027s avoid code like this if possible. The specific pattern/smell is trying to compensate for some other place not putting expected data in all_tests_, or this piece referring to test which did not end up in all_tests_. Either way, it strongly suggests some pieces of logic are not in sync with each other, and if so, I\u0027d rather fix the root cause than apply this band-aid.",
+      "range": {
+        "startLine": 245,
+        "startChar": 2,
+        "endLine": 246,
+        "endChar": 33
+      },
+      "revId": "42f0e441f62fcc8c2c1e602332470f67b5f712f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17b7f9b5_b7a84a52",
+        "filename": "base/test/launcher/test_results_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2017-07-21T12:26:58Z",
+      "side": 1,
+      "message": "Why do we need a separate method where AddTestResult should be doing the same thing?",
+      "range": {
+        "startLine": 50,
+        "startChar": 7,
+        "endLine": 50,
+        "endChar": 19
+      },
+      "revId": "42f0e441f62fcc8c2c1e602332470f67b5f712f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6dd5bf0_8247bd21",
+        "filename": "base/test/launcher/test_results_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2017-07-21T12:26:58Z",
+      "side": 1,
+      "message": "Do we need two member variables to keep track of tests?\n\nper_iteration_data_ should already have tests which we actually ran.",
+      "range": {
+        "startLine": 126,
+        "startChar": 24,
+        "endLine": 126,
+        "endChar": 40
+      },
+      "revId": "42f0e441f62fcc8c2c1e602332470f67b5f712f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
