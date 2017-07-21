@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "984190cc_c4f0007f",
+        "filename": "base/debug/activity_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1374,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-21T23:00:25Z",
+      "side": 1,
+      "message": "@asvitkine: do we need to change the histogram name when changing the macro reporting it in this case (i.e. will it have a different distribution after this?)",
+      "range": {
+        "startLine": 1374,
+        "startChar": 30,
+        "endLine": 1374,
+        "endChar": 66
+      },
+      "revId": "be655ea1a14529727e948938be1f41db80624d36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b5be4f3_2deb0327",
         "filename": "components/sync_bookmarks/bookmark_model_associator.cc",
         "patchSetId": 7
