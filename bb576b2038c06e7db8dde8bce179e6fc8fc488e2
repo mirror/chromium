@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a63e76b3_a08fe53e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-07-21T17:28:56Z",
+      "side": 1,
+      "message": "So this is the codepath for loading a second intent coming to the same session directly without creating a new CustomTabActivity. As long as we are OK with reusing the path for the check I think that is fine. Should we update the javadoc though? It is a bit ContentHandler specific now.",
+      "range": {
+        "startLine": 237,
+        "startChar": 8,
+        "endLine": 237,
+        "endChar": 28
+      },
+      "revId": "bb576b2038c06e7db8dde8bce179e6fc8fc488e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
