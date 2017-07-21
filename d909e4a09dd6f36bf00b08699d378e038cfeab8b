@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73cfceae_4525b41b",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-07-21T15:22:15Z",
+      "side": 0,
+      "message": "Nit: Why did you remove this line?",
+      "revId": "d909e4a09dd6f36bf00b08699d378e038cfeab8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

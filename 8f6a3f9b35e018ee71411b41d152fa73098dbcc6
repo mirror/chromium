@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e5f9497_16c75a9d",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-07-21T15:22:15Z",
+      "side": 1,
+      "message": "Now that you return above when current_frame is null, there\u0027s no need for this check here.",
+      "range": {
+        "startLine": 263,
+        "startChar": 6,
+        "endLine": 263,
+        "endChar": 19
+      },
+      "revId": "8f6a3f9b35e018ee71411b41d152fa73098dbcc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6381fd01_6c68438a",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-07-21T15:22:15Z",
+      "side": 1,
+      "message": "This branch is unnecessary if we already set using_external_allocator to true. I see a few ways you could go with this, including:\n\n  if (!is_multi_frame_ \u0026\u0026 (IsLowEndDevice() ||\n                           (1u \u003d\u003d frame_count_ \u0026\u0026 all_data_received \u0026\u0026 etc)))\n\nor\n\n  if (!is_multi_frame_) {\n    if (IsLowEndDevice())\n      ...\n    else if (...)\n      ...\n  }\n\nor even\n\n  using_external_allocator \u003d !is_multi_frame \u0026\u0026 (IsLowEndDevice() || (etc));\n\nI especially like the last option, which reduces all this decision making to one statement. (Then we could even revive the comment about saving a memcpy, if we want.)",
+      "range": {
+        "startLine": 348,
+        "startChar": 7,
+        "endLine": 348,
+        "endChar": 22
+      },
+      "revId": "8f6a3f9b35e018ee71411b41d152fa73098dbcc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67d87c39_2d2b6ff5",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-07-21T15:22:15Z",
+      "side": 1,
+      "message": "This condition will never be true. if (all_data_received), FrameCount() will have been called (see line 339). FrameCount() sets frame_buffer_cache_ to have as many entries as the method returns. So if it returns 1u (and therefore frame_count_ \u003d\u003d 1u), HasFrame(0) will be true.\n\nnew_decoder is likely a better way to determine this.",
+      "range": {
+        "startLine": 348,
+        "startChar": 26,
+        "endLine": 349,
+        "endChar": 30
+      },
+      "revId": "8f6a3f9b35e018ee71411b41d152fa73098dbcc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7b17348_869b4a61",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-07-21T15:22:15Z",
+      "side": 1,
+      "message": "Maybe this should say\n\n  |index|\u0027s\n\n?",
+      "range": {
+        "startLine": 133,
+        "startChar": 30,
+        "endLine": 133,
+        "endChar": 45
+      },
+      "revId": "8f6a3f9b35e018ee71411b41d152fa73098dbcc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21bafd91_140541e3",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/ImageDecoder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-07-21T15:22:15Z",
+      "side": 1,
+      "message": "I started to point out that this is equivalent to\n\n  index \u003c FrameCount()\n\nbut you know that because that\u0027s basically the implementation :)\n\nGiven that it\u0027s the case, though, I\u0027m not convinced we need an extra API that effectively does the same thing.",
+      "range": {
+        "startLine": 192,
+        "startChar": 7,
+        "endLine": 192,
+        "endChar": 15
+      },
+      "revId": "8f6a3f9b35e018ee71411b41d152fa73098dbcc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e6c3af7_b7dc6c68",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/ImageDecoder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-07-21T15:22:15Z",
+      "side": 1,
+      "message": "Add a comment describing this? (Or maybe it\u0027s obvious enough what it does?)",
+      "range": {
+        "startLine": 425,
+        "startChar": 2,
+        "endLine": 425,
+        "endChar": 22
+      },
+      "revId": "8f6a3f9b35e018ee71411b41d152fa73098dbcc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

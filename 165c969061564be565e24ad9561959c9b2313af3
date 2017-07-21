@@ -283,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "a9bf84bd_fc462282",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-07-21T15:22:15Z",
+      "side": 1,
+      "message": "\u003e Hmm. Not sure if I understand the full content of the above. Are you just saying in the end\n\u003e that there is a potential to not remove the cache for the last frame of a failed animation?\n\nYes. Let\u0027s say we\u0027ve received all the data and we\u0027ve decoded the final frame in an animation, but the frame had an error, so it is not complete. Previously, |complete| would have been true, because all_data_received, and we would have come into this block and called\n\n  decoder-\u003eClearCacheExceptFrame(kNotFound)\n\nNow we do not. But there\u0027s an easy fix: add\n\n  || all_data_received\n\nto this condition.",
+      "parentUuid": "33f00450_88aaed4d",
+      "range": {
+        "startLine": 260,
+        "startChar": 8,
+        "endLine": 260,
+        "endChar": 64
+      },
+      "revId": "165c969061564be565e24ad9561959c9b2313af3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87572aa8_938d0203",
         "filename": "third_party/WebKit/Source/platform/graphics/ImageFrameGenerator.cpp",
         "patchSetId": 5
