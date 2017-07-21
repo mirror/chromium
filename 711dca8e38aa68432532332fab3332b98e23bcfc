@@ -378,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "349b806b_607b6f06",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-07-21T00:19:25Z",
+      "side": 1,
+      "message": "Agreed. In that case, I\u0027ll put this CL on hold till we have an idea about the number of delayable requests in-flight when a non-delayable request starts.",
+      "parentUuid": "5eff7976_a606b497",
+      "range": {
+        "startLine": 443,
+        "startChar": 17,
+        "endLine": 443,
+        "endChar": 34
+      },
+      "revId": "711dca8e38aa68432532332fab3332b98e23bcfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a0013a8_c6e441bb",
         "filename": "content/browser/loader/resource_scheduler.cc",
         "patchSetId": 8
@@ -446,6 +470,30 @@
       "revId": "711dca8e38aa68432532332fab3332b98e23bcfc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf830642_beb7d135",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-07-21T00:19:25Z",
+      "side": 1,
+      "message": "The assumption here was that it is often that there are non-delayable requests which come just after delayable requests, resulting in scenarios like https://www.webpagetest.org/result/170721_SD_V3/1/details/#waterfall_view_step1 Request #86. The delay to be introduced is expected to be in the order of a few hundred milliseconds, and this would also allow to tune that parameter. WDYT?",
+      "parentUuid": "2eab5ce2_e03d64cc",
+      "range": {
+        "startLine": 444,
+        "startChar": 58,
+        "endLine": 444,
+        "endChar": 0
+      },
+      "revId": "711dca8e38aa68432532332fab3332b98e23bcfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
