@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "873513c3_82b242fa",
+        "filename": "chrome/browser/extensions/api/networking_private/networking_private_crypto.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-21T19:45:10Z",
+      "side": 1,
+      "message": "nit: Prefer (foo \u003d\u003d 0) to (0 \u003d\u003d foo).\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#Code-formatting",
+      "revId": "fccb33ed98cdc4ccb8e4f2b012dc230e58e13ec5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
