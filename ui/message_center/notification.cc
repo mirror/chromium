@@ -43,6 +43,8 @@ RichNotificationData::RichNotificationData(const RichNotificationData& other)
       small_image(other.small_image),
       items(other.items),
       progress(other.progress),
+      status(other.status),
+      sub_status(other.sub_status),
       buttons(other.buttons),
       should_make_spoken_feedback_for_popup_updates(
           other.should_make_spoken_feedback_for_popup_updates),
