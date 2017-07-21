@@ -6,6 +6,7 @@ import("//mojo/public/tools/bindings/mojom.gni")
 
 mojom("interfaces") {
   sources = [
+    "renderer_settings.mojom",
     "resource_settings.mojom",
   ]
 
