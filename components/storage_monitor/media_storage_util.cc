@@ -79,8 +79,6 @@ void FilterAttachedDevicesOnFileThread(MediaStorageUtil::DeviceIdSet* devices) {
 
 // static
 bool MediaStorageUtil::HasDcim(const base::FilePath& mount_point) {
-  DCHECK(!content::BrowserThread::CurrentlyOn(content::BrowserThread::UI));
-
   base::FilePath::StringType dcim_dir(kDCIMDirectoryName);
   if (!base::DirectoryExists(mount_point.Append(dcim_dir))) {
     // Check for lowercase 'dcim' as well.
