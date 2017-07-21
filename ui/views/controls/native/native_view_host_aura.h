@@ -9,16 +9,40 @@
 #include "base/macros.h"
 #include "ui/aura/window.h"
 #include "ui/aura/window_observer.h"
+#include "ui/compositor/layer.h"
+#include "ui/compositor/layer_delegate.h"
 #include "ui/views/controls/native/native_view_host_wrapper.h"
+#include "ui/views/view_observer.h"
 #include "ui/views/views_export.h"
 
 namespace views {
 
 class NativeViewHost;
 
+namespace internal {
+
+// This thunk is necessary because LayerDelegate and aura::WindowObserver both
+// have an OnDelegatedFrameDamage method, meaning NativeViewHostAura can't
+// inherit from both.
+class LayerDelegateWrapper : public ui::LayerDelegate {
+ public:
+  void OnDelegatedFrameDamage(const gfx::Rect& damage_rect_in_dip) override;
+  void OnDeviceScaleFactorChanged(float device_scale_factor) override;
+
+ protected:
+  LayerDelegateWrapper() {}
+  ~LayerDelegateWrapper() override {}
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(LayerDelegateWrapper);
+};
+
+}  // namespace internal
+
 // Aura implementation of NativeViewHostWrapper.
 class VIEWS_EXPORT NativeViewHostAura : public NativeViewHostWrapper,
-                                        public aura::WindowObserver {
+                                        public aura::WindowObserver,
+                                        public internal::LayerDelegateWrapper {
  public:
   explicit NativeViewHostAura(NativeViewHost* host);
   ~NativeViewHostAura() override;
@@ -28,6 +52,7 @@ class VIEWS_EXPORT NativeViewHostAura : public NativeViewHostWrapper,
   void NativeViewDetaching(bool destroyed) override;
   void AddedToWidget() override;
   void RemovedFromWidget() override;
+  void SetMask(std::unique_ptr<views::Painter> painter) override;
   void InstallClip(int x, int y, int w, int h) override;
   bool HasInstalledClip() override;
   void UninstallClip() override;
@@ -37,14 +62,19 @@ class VIEWS_EXPORT NativeViewHostAura : public NativeViewHostWrapper,
   gfx::NativeViewAccessible GetNativeViewAccessible() override;
   gfx::NativeCursor GetCursor(int x, int y) override;
 
+  // internal::LayerDelegateWrapper
+  void OnPaintLayer(const ui::PaintContext& context) override;
+
  private:
   friend class NativeViewHostAuraTest;
-
   class ClippingWindowDelegate;
 
   // Overridden from aura::WindowObserver:
   void OnWindowDestroying(aura::Window* window) override;
   void OnWindowDestroyed(aura::Window* window) override;
+  void OnWindowBoundsChanged(aura::Window* window,
+                             const gfx::Rect& old_bounds,
+                             const gfx::Rect& new_bounds) override;
 
   // Reparents the native view with the clipping window existing between it and
   // its old parent, so that the fast resize path works.
@@ -53,6 +83,9 @@ class VIEWS_EXPORT NativeViewHostAura : public NativeViewHostWrapper,
   // If the native view has been reparented via AddClippingWindow, this call
   // undoes it.
   void RemoveClippingWindow();
+
+  // Sets or updates the mask layer on the native view's layer.
+  void InstallMask();
 
   // Our associated NativeViewHost.
   NativeViewHost* host_;
@@ -64,6 +97,9 @@ class VIEWS_EXPORT NativeViewHostAura : public NativeViewHostWrapper,
   // host_->GetWidget().
   aura::Window clipping_window_;
   std::unique_ptr<gfx::Rect> clip_rect_;
+
+  std::unique_ptr<ui::Layer> mask_layer_;
+  std::unique_ptr<views::Painter> mask_painter_;
 
   DISALLOW_COPY_AND_ASSIGN(NativeViewHostAura);
 };

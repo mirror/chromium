@@ -11,11 +11,23 @@
 #include "ui/aura/window_delegate.h"
 #include "ui/base/cursor/cursor.h"
 #include "ui/base/hit_test.h"
+#include "ui/compositor/paint_recorder.h"
 #include "ui/views/controls/native/native_view_host.h"
+#include "ui/views/painter.h"
 #include "ui/views/view_constants_aura.h"
 #include "ui/views/widget/widget.h"
 
 namespace views {
+
+namespace internal {
+
+void LayerDelegateWrapper::OnDelegatedFrameDamage(
+    const gfx::Rect& damage_rect_in_dip) {}
+
+void LayerDelegateWrapper::OnDeviceScaleFactorChanged(
+    float device_scale_factor) {}
+
+}  // namespace internal
 
 class NativeViewHostAura::ClippingWindowDelegate : public aura::WindowDelegate {
  public:
@@ -95,6 +107,7 @@ void NativeViewHostAura::AttachNativeView() {
   host_->native_view()->SetProperty(views::kHostViewKey,
       static_cast<View*>(host_));
   AddClippingWindow();
+  InstallMask();
 }
 
 void NativeViewHostAura::NativeViewDetaching(bool destroyed) {
@@ -130,6 +143,11 @@ void NativeViewHostAura::RemovedFromWidget() {
       host_->native_view()->parent()->RemoveChild(host_->native_view());
     RemoveClippingWindow();
   }
+}
+
+void NativeViewHostAura::SetMask(std::unique_ptr<views::Painter> painter) {
+  mask_painter_ = std::move(painter);
+  InstallMask();
 }
 
 void NativeViewHostAura::InstallClip(int x, int y, int w, int h) {
@@ -187,6 +205,17 @@ gfx::NativeCursor NativeViewHostAura::GetCursor(int x, int y) {
   return gfx::kNullCursor;
 }
 
+void NativeViewHostAura::OnPaintLayer(const ui::PaintContext& context) {
+  ui::PaintRecorder recorder(context, mask_layer_->size());
+  mask_painter_->Paint(recorder.canvas(), mask_layer_->size());
+}
+
+void NativeViewHostAura::OnWindowBoundsChanged(aura::Window* window,
+                                               const gfx::Rect& old_bounds,
+                                               const gfx::Rect& new_bounds) {
+  InstallMask();
+}
+
 void NativeViewHostAura::OnWindowDestroying(aura::Window* window) {
   DCHECK(window == host_->native_view());
   clipping_window_delegate_->set_native_view(NULL);
@@ -232,6 +261,19 @@ void NativeViewHostAura::RemoveClippingWindow() {
   }
   if (clipping_window_.parent())
     clipping_window_.parent()->RemoveChild(&clipping_window_);
+}
+
+void NativeViewHostAura::InstallMask() {
+  if (!mask_painter_)
+    return;
+  if (!mask_layer_) {
+    mask_layer_.reset(new ui::Layer(ui::LAYER_TEXTURED));
+    mask_layer_->set_delegate(this);
+  }
+  if (host_->native_view()) {
+    mask_layer_->SetBounds(gfx::Rect(host_->native_view()->bounds().size()));
+    host_->native_view()->layer()->SetMaskLayer(mask_layer_.get());
+  }
 }
 
 }  // namespace views
