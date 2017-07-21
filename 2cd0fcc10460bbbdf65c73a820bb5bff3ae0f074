@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "4cd04e1d_57bc8a66",
+        "filename": "chrome/browser/resources/options/OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-07-21T23:28:03Z",
+      "side": 0,
+      "message": "removed another set noparent",
+      "parentUuid": "324afbf6_dd14790a",
+      "revId": "2cd0fcc10460bbbdf65c73a820bb5bff3ae0f074",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0bc090f4_09d96636",
         "filename": "chrome/browser/ui/webui/options/OWNERS",
         "patchSetId": 2
@@ -135,6 +153,24 @@
       "writtenOn": "2017-07-21T23:07:38Z",
       "side": 0,
       "message": "@michaelpg: Same question here.",
+      "revId": "2cd0fcc10460bbbdf65c73a820bb5bff3ae0f074",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aac392d_e5a6b7bb",
+        "filename": "chrome/browser/ui/webui/options/OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-07-21T23:28:03Z",
+      "side": 0,
+      "message": "removed this \"set noparent\" as well",
+      "parentUuid": "d427c9c0_f9bce270",
       "revId": "2cd0fcc10460bbbdf65c73a820bb5bff3ae0f074",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
