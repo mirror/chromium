@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5f9fc3df_77ae8db4",
+        "filename": "cc/base/time_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-21T22:31:34Z",
+      "side": 1,
+      "message": "Done.\n\n(I was already on-the-fence about doing this, due to expanding the size/scope of this CL.)",
+      "parentUuid": "544ea00c_3b586e6e",
+      "revId": "070507a6f70cf700c383acced497de05a7c23c26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fba4426_3b67ca56",
         "filename": "cc/scheduler/begin_frame_source_unittest.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-20T15:32:08Z",
       "side": 1,
       "message": "What\u0027s fake about this? How about TicksFromMicroseconds()?",
+      "revId": "070507a6f70cf700c383acced497de05a7c23c26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c169b86b_38c83d97",
+        "filename": "cc/scheduler/begin_frame_source_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-21T22:31:34Z",
+      "side": 1,
+      "message": "It\u0027s fake because TimeTicks values are supposed to be created by sampling a specific clock, or doing math on existing values. Here, the test code is just making up its own values \"out of thin air,\" which is perfectly reasonable (but is something we should discourage in non-test code).\n\nI\u0027m fine with naming this as you suggest. Done.",
+      "parentUuid": "9fba4426_3b67ca56",
       "revId": "070507a6f70cf700c383acced497de05a7c23c26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "68a86336_30da292e",
+        "filename": "cc/scheduler/begin_frame_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-21T22:31:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fba720e5_f63d72a9",
+      "revId": "070507a6f70cf700c383acced497de05a7c23c26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c71fb803_6fccdf7d",
         "filename": "cc/scheduler/begin_frame_tracker.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "070507a6f70cf700c383acced497de05a7c23c26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01198901_dcb3940f",
+        "filename": "cc/scheduler/begin_frame_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-21T22:31:34Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "c71fb803_6fccdf7d",
+      "revId": "070507a6f70cf700c383acced497de05a7c23c26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "b73cfd28_5ba5cefd",
+        "filename": "cc/scheduler/delay_based_time_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-21T22:31:34Z",
+      "side": 1,
+      "message": "Done. I\u0027ve added a since_origin() method to the time classes.\n\nHad to think about this for a while, and agree that it\u0027s reasonable to add this convenience. It is a common use case, and it does not allow developers to easily \"manufacture\" TimeTicks values or otherwise subvert the type system. Basically, what I\u0027m more worried about is the inverse operation (TimeTicks::FromInternalValue()).\n\nI search-and-replaced all instances of \"(VALUE - base::TimeTicks())\" with \"VALUE.since_origin()\". Most of them were ones I was introducing in this CL already, but I caught a few extra. This also revealed that an interface method, cc::AnimationDelegate::NotifyAnimationTakeover(), is being inconsistent in passing both a TimeTicks in one arg, and a WebKit \"double\" in another arg. I\u0027ll fix that in a follow-up CL.",
+      "parentUuid": "31e0a1cb_ab2ba856",
+      "revId": "070507a6f70cf700c383acced497de05a7c23c26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5dff2da_4e6ed36a",
         "filename": "cc/trees/layer_tree_host_unittest_context.cc",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "070507a6f70cf700c383acced497de05a7c23c26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52b328b2_a74722f2",
+        "filename": "cc/trees/layer_tree_host_unittest_context.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-21T22:31:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5dff2da_4e6ed36a",
+      "revId": "070507a6f70cf700c383acced497de05a7c23c26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
