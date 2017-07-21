@@ -70,6 +70,30 @@
       "revId": "f885b2dbe09a4627e0c5948d5037d49a118ff5d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3e98d1a_a55f1921",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/payments/PaymentRequestJourneyLoggerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-21T18:27:25Z",
+      "side": 1,
+      "message": "Ah! I see :) It\u0027s because the events that are recorded are show, completion status etc. the other tests in this class are mostly for the number of suggestions shown and stuff like that for which there are no events logged. Does that make sense?",
+      "parentUuid": "d31c54e3_e38757ae",
+      "range": {
+        "startLine": 593,
+        "startChar": 32,
+        "endLine": 593,
+        "endChar": 64
+      },
+      "revId": "f885b2dbe09a4627e0c5948d5037d49a118ff5d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
