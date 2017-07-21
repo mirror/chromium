@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "34e2545d_9f9cbb19",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-07-21T11:25:18Z",
+      "side": 1,
+      "message": "Done.\n\nI think CountResidentBytes should be fixed in the same way, so I\u0027ll do in another CL if necessary.",
+      "parentUuid": "2034f495_06af6826",
+      "revId": "e2f4c46b779108892e34a7191d39a7e3ac3d2522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6d5996d9_ab651f96",
         "filename": "base/trace_event/process_memory_dump_unittest.cc",
         "patchSetId": 7
