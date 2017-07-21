@@ -5,15 +5,21 @@
 <link rel="help" href="https://w3c.github.io/webauthn/#iface-credential">
 <script src="/resources/testharness.js"></script>
 <script src="/resources/testharnessreport.js"></script>
-<script src=helpers.js></script>
+<script src="helpers.js"></script>
 <!-- for testing WebIDL -->
 <script src=/resources/WebIDLParser.js></script>
 <script src=/resources/idlharness.js></script>
 <body></body>
+<script type=text/plain id="untested_idls">
+    interface Credential {
+        readonly attribute USVString id;
+        readonly attribute DOMString type;
+    }
+</script>
 <script>
 standardSetup(function() {
     "use strict";
-
+    debugger;
     // loads an IDL file from the webserver
     function fetchIdl(idlUrl) {
         return new Promise(function(resolve, reject) {
@@ -34,17 +40,9 @@ standardSetup(function() {
     function runIdlTests(idls) {
         return new Promise(function(resolve, reject) {
             var idlArray = new window.IdlArray();
-
-            // static IDL tests
-            idlArray.add_untested_idls("interface Navigator { };");
-            // TODO: change to "tested" for real browsers?
-            idlArray.add_untested_idls("partial interface Navigator { readonly attribute WebAuthentication authentication; };");
-            idlArray.add_objects({
-                WebAuthentication: ["navigator.authentication"]
-            });
-
             // run test WebIDL tests loaded from the idls file
             idlArray.add_idls(idls);
+            idl_array.add_untested_idls(document.getElementById("untested_idls").textContent);
             return resolve(idlArray.test());
         });
     }

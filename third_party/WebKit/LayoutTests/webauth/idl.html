@@ -101,25 +101,15 @@ enum Transport {
     "ble"
 };
 
-interface WebAuthentication {
-    Promise<AuthenticatorAttestationResponse> makeCredential (
-        MakeCredentialOptions	                publicKey
-    );
-
-    Promise<AuthenticatorAssertionResponse> getAssertion (
-        PublicKeyCredentialRequestOptions     publicKey
-    );
-};
-
 </script>
 <script>
 (function() {
     "use strict";
     var idl_array = new IdlArray();
     idl_array.add_idls(document.querySelector('#tested').textContent);
-    idl_array.add_objects({
+    /*idl_array.add_objects({
       WebAuthentication: ['navigator.authentication']
-    });
+    }); */
     idl_array.test();
 })();
 </script>

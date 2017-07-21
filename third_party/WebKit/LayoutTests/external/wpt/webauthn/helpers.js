@@ -115,41 +115,57 @@ class TestCase {
 }
 
 /**
- * MakeCredentialTest
+ * CredentialsCreateTest
  *
- * tests the WebAuthn makeCredential() interface
+ * tests the WebAuthn credentials.create() interface
  */
-class MakeCredentialTest extends TestCase {
+class CredentialsCreateTest extends TestCase {
     constructor() {
         // initialize the parent class
         super();
 
         // the function to be tested
-        this.testFunction = navigator.authentication.makeCredential;
+        this.testFunction = navigator.credentials.create;
 
-        // the default object to pass to makeCredential, to be modified with modify() for various tests
+        // the default object to pass to create(), to be modified with modify() for various tests
         // var challenge = Uint8Array.from("Y2xpbWIgYSBtb3VudGFpbg");
         this.testObject = {
-            accountInformation: {
-                rpDisplayName: "ACME",
-                displayName: "John P. Smith",
-                name: "johnpsmith@example.com",
-                id: "1098237235409872",
-                imageUri: "https://pics.acme.com/00/p/aBjjjpqPb.png"
-            },
-            cryptoParameters: [{
-                type: "ScopedCred",
-                algorithm: "RSASSA-PKCS1-v1_5",
-            }],
-            attestationChallenge: Uint8Array.from([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]).buffer
+            publicKey: {
+                challenge: new TextEncoder().encode("climb a mountain"),
+                // Relying Party:
+                rp: {
+                    id: "1098237235409872",
+                    name: "Acme"
+                },
+
+                // User:
+                user: {
+                    id: "1098237235409872",
+                    name: "avery.j.jones@example.com",
+                    displayName: "Avery J. Jones",
+                    icon: "https://pics.acme.com/00/p/aBjjjpqPb.png"
+                },
+
+                // This Relying Party will accept either an ES256 or RS256 credential, but
+                // prefers an ES256 credential.
+                parameters: [{
+                    type: "public-key",
+                    alg: "ES256",
+                },
+                {
+                    type: "public-key",
+                    algorithm: "RS256",
+                },
+                ],
+
+                timeout: 60000,  // 1 minute
+                excludeList: [], // No excludeList
+            }
         };
 
-        // how to order the properties of testObject when passing them to makeCredential
+        // how to order the properties of testObject when passing them to create()
         this.argOrder = [
-            "accountInformation",
-            "cryptoParameters",
-            "attestationChallenge",
-            "options"
+            "publicKey",
         ];
 
         // enable the constructor to modify the default testObject
@@ -169,7 +185,7 @@ var debug = function() {};
 // AND if the polyfill script is found at the right path (i.e. - the polyfill is opt-in)
 function ensureInterface() {
     return new Promise(function(resolve, reject) {
-        if (typeof navigator.authentication !== "object") {
+        if (typeof navigator.credentials !== "object") {
             debug = console.log;
 
             // dynamic loading of polyfill script by creating new <script> tag and seeing the src=
