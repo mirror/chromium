@@ -1,0 +1,356 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51bd5a21_162fe681",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-21T17:45:05Z",
+      "side": 1,
+      "message": "Style nit: here you could add a space after the colon.",
+      "revId": "769758ddf3b2c9ffe8a9a70a19583788b490dc22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18785c81_66c75e15",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-21T17:45:05Z",
+      "side": 1,
+      "message": "Spacing after colons and semicolons in style attributes could be made more consistent here.",
+      "revId": "769758ddf3b2c9ffe8a9a70a19583788b490dc22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed5a1afb_cfecc3bf",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-21T17:45:05Z",
+      "side": 1,
+      "message": "Maybe accidentally added?",
+      "revId": "769758ddf3b2c9ffe8a9a70a19583788b490dc22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bd39b99_78b7f95e",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-21T17:45:05Z",
+      "side": 1,
+      "message": "Possible rephrasing: \"... to select the next test.\"",
+      "revId": "769758ddf3b2c9ffe8a9a70a19583788b490dc22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01a8a89d_4276371a",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-21T17:45:05Z",
+      "side": 1,
+      "message": "Possible rephrasing: \"To select the full name of the test under the cursor\".",
+      "revId": "769758ddf3b2c9ffe8a9a70a19583788b490dc22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1d09d0e_51c2cec3",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-21T17:45:05Z",
+      "side": 1,
+      "message": "To make this button bigger, you could replace with some longer text, e.g.:\n\n \"(help)\"\n \"(?)\"\n \"\u0026nbsp;?\u0026nbsp;\"\n \"(\u0026nbsp;?\u0026nbsp;)\"",
+      "revId": "769758ddf3b2c9ffe8a9a70a19583788b490dc22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7a627a7_78764468",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-21T17:45:05Z",
+      "side": 1,
+      "message": "Instead of \"details\" this could also be called \"counts\", perhaps.",
+      "revId": "769758ddf3b2c9ffe8a9a70a19583788b490dc22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3532b642_e5a71889",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-21T17:45:05Z",
+      "side": 1,
+      "message": "Nice, looking at flaky tests seems useful. Note, these two lines could be indented two spaces as above.",
+      "range": {
+        "startLine": 190,
+        "startChar": 0,
+        "endLine": 191,
+        "endChar": 34
+      },
+      "revId": "769758ddf3b2c9ffe8a9a70a19583788b490dc22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0398dcb_c57af191",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-21T17:45:05Z",
+      "side": 1,
+      "message": "In the file this is usually written with a capital F, as \"WontFix\". Other occurrences of \"Wontfix\" below could also be replaced with \"WontFix\".",
+      "revId": "769758ddf3b2c9ffe8a9a70a19583788b490dc22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94753f95_e88b568b",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-21T17:45:05Z",
+      "side": 1,
+      "message": "NEEDSREBASELINE has now been removed and is no longer a valid expectation, so this can be removed :-)",
+      "revId": "769758ddf3b2c9ffe8a9a70a19583788b490dc22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "037ae99f_81f421f5",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-21T17:45:05Z",
+      "side": 1,
+      "message": "Does this contain counts of different categories of tests, and if so would it make sense to call it counts instead of statistics?",
+      "revId": "769758ddf3b2c9ffe8a9a70a19583788b490dc22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cfe13ea_b8a8ddf1",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-21T17:45:05Z",
+      "side": 1,
+      "message": "Style note: I like to have braces (for for and if) even when a block only has one statement like here, although I know this is optional.",
+      "revId": "769758ddf3b2c9ffe8a9a70a19583788b490dc22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72c173bc_ac0e479a",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-21T17:45:05Z",
+      "side": 1,
+      "message": "This comment seems incomplete.",
+      "revId": "769758ddf3b2c9ffe8a9a70a19583788b490dc22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5643812_65161ece",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-21T17:45:05Z",
+      "side": 1,
+      "message": "Ah, so this is how Maps are used :-)",
+      "revId": "769758ddf3b2c9ffe8a9a70a19583788b490dc22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7380bd00_bbaa01e4",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-21T17:45:05Z",
+      "side": 1,
+      "message": "Property naming could be changed so that everything uses camelCase.",
+      "range": {
+        "startLine": 673,
+        "startChar": 0,
+        "endLine": 675,
+        "endChar": 46
+      },
+      "revId": "769758ddf3b2c9ffe8a9a70a19583788b490dc22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f1ebc8e_45834b55",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-21T17:45:05Z",
+      "side": 1,
+      "message": "Optionally you could make \"?\" also show help with something like:\ncase \"?\":\n  GUI.toggleVisibility(\"help\");\n  break;\n\nYou could also make \"escape\" close help if help is currently open.",
+      "revId": "769758ddf3b2c9ffe8a9a70a19583788b490dc22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e4048e9_0a2e1ad0",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-21T17:45:05Z",
+      "side": 1,
+      "message": "Omitting the default would be the same as having an empty default, right?",
+      "revId": "769758ddf3b2c9ffe8a9a70a19583788b490dc22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d26d17b_4d0d0fb5",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-21T17:45:05Z",
+      "side": 1,
+      "message": "Optionally, could add a space after the colon before the count (no space is also fine if you prefer it).",
+      "revId": "769758ddf3b2c9ffe8a9a70a19583788b490dc22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "716e8c4b_af59c7f8",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-21T17:45:05Z",
+      "side": 1,
+      "message": "Optionally (here and elsewhere) you could add periods at the end of comments like this.",
+      "revId": "769758ddf3b2c9ffe8a9a70a19583788b490dc22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fc0161c_f4d4f575",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-21T17:45:05Z",
+      "side": 1,
+      "message": "Style nit: you could remove the spaces before the colons here; optionally also you could change the properties to camelCase if it increases consistency.",
+      "revId": "769758ddf3b2c9ffe8a9a70a19583788b490dc22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
