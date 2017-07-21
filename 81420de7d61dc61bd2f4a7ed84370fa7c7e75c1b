@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "6eb1570b_8f698505",
+        "filename": "third_party/WebKit/Source/core/CoreInitializer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-07-21T01:29:11Z",
+      "side": 1,
+      "message": "All the more reason to have this in a separate class, don\u0027t you think? \n\nI don\u0027t think you want to have static methods either - but using a single that state shouldn\u0027t be static but contained in the instance.",
+      "parentUuid": "8e6c6c6f_da337600",
+      "revId": "81420de7d61dc61bd2f4a7ed84370fa7c7e75c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d8f1e45_0097d67e",
         "filename": "third_party/WebKit/Source/core/CoreInitializer.h",
         "patchSetId": 5
