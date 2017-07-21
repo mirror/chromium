@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "be85de5e_9cc1882c",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-21T09:09:54Z",
+      "side": 1,
+      "message": "I don\u0027t think making ArcFileSystemHostImpl standalone a good idea.\nFor obvious reasons, interfaces of FileSystemHost and FileSystemInstance are tightly coupled.\nFileSystemHost::OnDocumentChanged() doesn\u0027t make sense without FileSystemInstance\u0027s watcher API.\n\nIIUC almost all FooHost implementation classes are also responsible to interact with FooInstance, and I don\u0027t want to go far away from this style.\nI\u0027m just mechanically moving FileSystemHost-related parts of ArcFileSystemOperationRunner to a separate file because it\u0027s impossible to override OpenFileToRead() twice for FileSystemInstance and FileSystemHost in one class.\n\nIf you don\u0027t feel comfortable having ArcFileSystemImpl as a separate class, I\u0027ll add some redundant suffix to FileSystemHost\u0027s OpenFileToRead()\u0027s name to make it possible to implement FileSystemHost in ArcFileSystemOpreationRunner.",
+      "parentUuid": "4057e58d_fac68689",
+      "revId": "6df67fa052553fad61b7fa9aa027ec664e330952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "254f8e5b_915cac02",
         "filename": "chrome/browser/chromeos/arc/fileapi/file_system_host_impl.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-20T14:15:39Z",
       "side": 1,
       "message": "Often, security review requests you a real implementation to see how those APIs are actually used.",
+      "revId": "6df67fa052553fad61b7fa9aa027ec664e330952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eef3a40e_2015073a",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_system_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-21T09:09:54Z",
+      "side": 1,
+      "message": "ATM I cannot provide real impl as it requires a new Chrome OS service to get implemented with a new D-Bus client in Chromium repo, and the FileSystemHostImpl itself will be a bit complicated.\nDo I have to finish the implementation before submitting mojo CL?",
+      "parentUuid": "254f8e5b_915cac02",
       "revId": "6df67fa052553fad61b7fa9aa027ec664e330952",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "de792825_f2efc721",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_system_host_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-21T09:09:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a59c4c86_c5781275",
+      "revId": "6df67fa052553fad61b7fa9aa027ec664e330952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4ad1c8f_d9772b36",
         "filename": "components/arc/common/file_system.mojom",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-20T14:15:39Z",
       "side": 1,
       "message": "nit: please update.",
+      "revId": "6df67fa052553fad61b7fa9aa027ec664e330952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d967614a_8921a274",
+        "filename": "components/arc/common/file_system.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-21T09:09:54Z",
+      "side": 1,
+      "message": "Oops, done.",
+      "parentUuid": "a4ad1c8f_d9772b36",
       "revId": "6df67fa052553fad61b7fa9aa027ec664e330952",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "6df67fa052553fad61b7fa9aa027ec664e330952",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "594e75e9_d1fba469",
+        "filename": "components/arc/common/file_system.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-07-21T09:09:54Z",
+      "side": 1,
+      "message": "Oops, apparently I\u0027m not good at copy-and-pasting.\nDone.",
+      "parentUuid": "b090efb9_71b5efde",
+      "revId": "6df67fa052553fad61b7fa9aa027ec664e330952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
