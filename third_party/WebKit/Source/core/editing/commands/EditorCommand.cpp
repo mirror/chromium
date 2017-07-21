@@ -43,6 +43,7 @@
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/FrameSelection.h"
 #include "core/editing/SelectionModifier.h"
+#include "core/editing/SetSelectionData.h"
 #include "core/editing/commands/CreateLinkCommand.h"
 #include "core/editing/commands/EditorCommandNames.h"
 #include "core/editing/commands/FormatBlockCommand.h"
@@ -409,8 +410,11 @@ static bool ExpandSelectionToGranularity(LocalFrame& frame,
   if (new_range.IsCollapsed())
     return false;
   frame.Selection().SetSelection(
-      SelectionInDOMTree::Builder().SetBaseAndExtent(new_range).Build(),
-      FrameSelection::kCloseTyping);
+      SetSelectionData::Builder()
+          .SetSelection(
+              SelectionInDOMTree::Builder().SetBaseAndExtent(new_range).Build())
+          .SetShouldClearTypingStyle(false)
+          .Build());
   return true;
 }
 
@@ -813,11 +817,13 @@ static bool ExecuteDeleteToMark(LocalFrame& frame,
       frame.GetEditor().Mark().ToNormalizedEphemeralRange();
   if (mark.IsNotNull()) {
     frame.Selection().SetSelection(
-        SelectionInDOMTree::Builder()
-            .SetBaseAndExtent(
-                UnionEphemeralRanges(mark, frame.GetEditor().SelectedRange()))
-            .Build(),
-        FrameSelection::kCloseTyping);
+        SetSelectionData::Builder()
+            .SetSelection(SelectionInDOMTree::Builder()
+                              .SetBaseAndExtent(UnionEphemeralRanges(
+                                  mark, frame.GetEditor().SelectedRange()))
+                              .Build())
+            .SetShouldClearTypingStyle(false)
+            .Build());
   }
   frame.GetEditor().PerformDelete();
   frame.GetEditor().SetMark(
@@ -1239,13 +1245,14 @@ bool ModifySelectionyWithPageGranularity(
     return false;
   }
 
-  frame.Selection().SetSelection(selection_modifier.Selection().AsSelection(),
-                                 FrameSelection::kCloseTyping |
-                                     FrameSelection::kClearTypingStyle |
-                                     FrameSelection::kUserTriggered,
-                                 alter == SelectionModifyAlteration::kMove
-                                     ? CursorAlignOnScroll::kAlways
-                                     : CursorAlignOnScroll::kIfNeeded);
+  frame.Selection().SetSelection(
+      SetSelectionData::Builder()
+          .SetSelection(selection_modifier.Selection().AsSelection())
+          .SetSetSelectionBy(SetSelectionBy::kUser)
+          .SetCursorAlignOnScroll(alter == SelectionModifyAlteration::kMove
+                                      ? CursorAlignOnScroll::kAlways
+                                      : CursorAlignOnScroll::kIfNeeded)
+          .Build());
   return true;
 }
 
@@ -1838,10 +1845,13 @@ static bool ExecuteSelectToMark(LocalFrame& frame,
   if (mark.IsNull() || selection.IsNull())
     return false;
   frame.Selection().SetSelection(
-      SelectionInDOMTree::Builder()
-          .SetBaseAndExtent(UnionEphemeralRanges(mark, selection))
-          .Build(),
-      FrameSelection::kCloseTyping);
+      SetSelectionData::Builder()
+          .SetSelection(
+              SelectionInDOMTree::Builder()
+                  .SetBaseAndExtent(UnionEphemeralRanges(mark, selection))
+                  .Build())
+          .SetShouldClearTypingStyle(false)
+          .Build());
   return true;
 }
 
