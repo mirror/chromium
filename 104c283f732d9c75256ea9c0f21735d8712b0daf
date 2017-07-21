@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9c988bf_c4c73b25",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/ChannelDefinitions.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-21T13:26:25Z",
+      "side": 1,
+      "message": "Why do you not import org.chromium.chrome.R in this file?",
+      "range": {
+        "startLine": 93,
+        "startChar": 32,
+        "endLine": 93,
+        "endChar": 53
+      },
+      "revId": "104c283f732d9c75256ea9c0f21735d8712b0daf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
