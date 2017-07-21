@@ -1,0 +1,612 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "def81bdf_852bc06e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-21T17:25:00Z",
+      "side": 1,
+      "message": "Except when the browser restarts, at which point it\u0027s basically the order of files in the directory?",
+      "range": {
+        "startLine": 41,
+        "startChar": 57,
+        "endLine": 41,
+        "endChar": 89
+      },
+      "revId": "c1c97f7ac3425e0cf5797cced53547a250d7e5b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d80cc49a_00188232",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-21T17:25:00Z",
+      "side": 1,
+      "message": "Why does this need to be a member?",
+      "range": {
+        "startLine": 81,
+        "startChar": 23,
+        "endLine": 81,
+        "endChar": 32
+      },
+      "revId": "c1c97f7ac3425e0cf5797cced53547a250d7e5b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2f018ea_8a4c7767",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-21T17:25:00Z",
+      "side": 1,
+      "message": "And this one is the outer object, to which you have an implicit reference anyway.",
+      "range": {
+        "startLine": 82,
+        "startChar": 37,
+        "endLine": 82,
+        "endChar": 45
+      },
+      "revId": "c1c97f7ac3425e0cf5797cced53547a250d7e5b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "429b8fab_7b6c868e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-21T17:25:00Z",
+      "side": 1,
+      "message": "You should probably decide whether you want to access |mRequest| as a member or pass it in. You could also pass the parameters in when the DiskReadTask is constructed so you don\u0027t have to grab them out of the |params| array.",
+      "range": {
+        "startLine": 88,
+        "startChar": 34,
+        "endLine": 88,
+        "endChar": 42
+      },
+      "revId": "c1c97f7ac3425e0cf5797cced53547a250d7e5b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "423374ca_999d313d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-21T17:25:00Z",
+      "side": 1,
+      "message": "Isn\u0027t this method called in the background?",
+      "range": {
+        "startLine": 96,
+        "startChar": 12,
+        "endLine": 96,
+        "endChar": 32
+      },
+      "revId": "c1c97f7ac3425e0cf5797cced53547a250d7e5b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d1b42ef_0034df73",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-21T17:25:00Z",
+      "side": 1,
+      "message": "Javadoc for public methods please :)",
+      "range": {
+        "startLine": 107,
+        "startChar": 39,
+        "endLine": 107,
+        "endChar": 45
+      },
+      "revId": "c1c97f7ac3425e0cf5797cced53547a250d7e5b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9d32a97_678627e0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-21T17:25:00Z",
+      "side": 1,
+      "message": "This assumes you only ever have one request in flight, right? Maybe you should assert that.",
+      "revId": "c1c97f7ac3425e0cf5797cced53547a250d7e5b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13998b65_3c37614c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-21T17:25:00Z",
+      "side": 1,
+      "message": "Nit: {@link ...}",
+      "range": {
+        "startLine": 139,
+        "startChar": 19,
+        "endLine": 139,
+        "endChar": 33
+      },
+      "revId": "c1c97f7ac3425e0cf5797cced53547a250d7e5b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22a5fb8b_7b39f7bf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-21T17:25:00Z",
+      "side": 1,
+      "message": "We decode the bitmap just to get its size, which is stored on disk separately anyway?",
+      "range": {
+        "startLine": 155,
+        "startChar": 32,
+        "endLine": 155,
+        "endChar": 63
+      },
+      "revId": "c1c97f7ac3425e0cf5797cced53547a250d7e5b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c494048_d7d7eab1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-21T17:25:00Z",
+      "side": 1,
+      "message": "You usually want to close these in a `finally` block, to make sure that happens even if there is an exception. Then you need to deal with the fact that close() itself might throw an IOException (I know...), but luckily there\u0027s StreamUtil.closeQuietly() for that.",
+      "range": {
+        "startLine": 163,
+        "startChar": 16,
+        "endLine": 163,
+        "endChar": 25
+      },
+      "revId": "c1c97f7ac3425e0cf5797cced53547a250d7e5b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fe117e3_e0c56ed6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-21T17:25:00Z",
+      "side": 1,
+      "message": "You could just collapse all these exception handlers into a single one with `catch (FileNotFoundException|IOException|...)`.",
+      "range": {
+        "startLine": 167,
+        "startChar": 21,
+        "endLine": 167,
+        "endChar": 34
+      },
+      "revId": "c1c97f7ac3425e0cf5797cced53547a250d7e5b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc5688d9_2a5a61fb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-21T17:25:00Z",
+      "side": 1,
+      "message": "I think the code inside the assert is compiled out in Release builds (at least it should, so we don\u0027t have to pay the overhead cost). That means this won\u0027t do anything in a Release build. You need to extract the result to a variable and assert that.",
+      "range": {
+        "startLine": 186,
+        "startChar": 19,
+        "endLine": 186,
+        "endChar": 44
+      },
+      "revId": "c1c97f7ac3425e0cf5797cced53547a250d7e5b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f73c5d18_71b9fb75",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-21T17:25:00Z",
+      "side": 1,
+      "message": "This check isn\u0027t necessary -- trim() is a no-op if the cache is not too big.",
+      "range": {
+        "startLine": 211,
+        "startChar": 8,
+        "endLine": 211,
+        "endChar": 36
+      },
+      "revId": "c1c97f7ac3425e0cf5797cced53547a250d7e5b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c51c0736_70abb2be",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-21T17:25:00Z",
+      "side": 1,
+      "message": "You could make this a method on ThumbnailEntry :)",
+      "range": {
+        "startLine": 271,
+        "startChar": 17,
+        "endLine": 272,
+        "endChar": 52
+      },
+      "revId": "c1c97f7ac3425e0cf5797cced53547a250d7e5b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f6e7a88_896c4e1f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-21T17:25:00Z",
+      "side": 1,
+      "message": "You don\u0027t need this anymore, do you?",
+      "revId": "c1c97f7ac3425e0cf5797cced53547a250d7e5b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e14c11b2_f9446298",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-21T17:25:00Z",
+      "side": 1,
+      "message": "Wait, we use an external storage directory for the cache, where we directly deserialize objects? That seems like a really bad idea from a security standpoint. Generally, you have to treat data from any location that you (Chrome) don\u0027t have exclusive access to as potentially hostile, and Java Object serialization on untrusted data can run into a lot of issues.",
+      "revId": "c1c97f7ac3425e0cf5797cced53547a250d7e5b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "890526a2_de1af5b4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorage.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-21T17:25:00Z",
+      "side": 1,
+      "message": "If these methods aren\u0027t used in this class, consider naming them ...ForTesting(), to make it even clearer. Also, at that point, could you just expose |sDiskLruCache| to the test so it can do with it what it wants?",
+      "revId": "c1c97f7ac3425e0cf5797cced53547a250d7e5b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff64cc97_aadf4295",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailEntry.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-21T17:25:00Z",
+      "side": 1,
+      "message": "Is this class used anywhere outside of ThumbnailProviderDiskStorage? If not, you could just make it an inner class.",
+      "revId": "c1c97f7ac3425e0cf5797cced53547a250d7e5b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86ef5ca7_0054439f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailGenerator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-21T17:25:00Z",
+      "side": 1,
+      "message": "Wouldn\u0027t it be a programmer error to access this class after it has been destroyed? In that case, assert rather than silently handling it (see https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#CHECK_DCHECK_and-NOTREACHED).",
+      "range": {
+        "startLine": 38,
+        "startChar": 8,
+        "endLine": 38,
+        "endChar": 31
+      },
+      "revId": "c1c97f7ac3425e0cf5797cced53547a250d7e5b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4e56447_0be32a7a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailGenerator.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-21T17:25:00Z",
+      "side": 1,
+      "message": "You don\u0027t really need the request as a member.",
+      "range": {
+        "startLine": 40,
+        "startChar": 7,
+        "endLine": 40,
+        "endChar": 16
+      },
+      "revId": "c1c97f7ac3425e0cf5797cced53547a250d7e5b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c447f08_549cb0c8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-21T17:25:00Z",
+      "side": 1,
+      "message": "|contentId| is unused.",
+      "range": {
+        "startLine": 106,
+        "startChar": 55,
+        "endLine": 106,
+        "endChar": 71
+      },
+      "revId": "c1c97f7ac3425e0cf5797cced53547a250d7e5b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e00c7792_5b71093b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-21T17:25:00Z",
+      "side": 1,
+      "message": "You still need to change this back to filePath, no?",
+      "range": {
+        "startLine": 151,
+        "startChar": 32,
+        "endLine": 151,
+        "endChar": 62
+      },
+      "revId": "c1c97f7ac3425e0cf5797cced53547a250d7e5b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b612e3af_cb1c21b3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImplDelegate.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-21T17:25:00Z",
+      "side": 1,
+      "message": "I\u0027m not sure this abstraction is necessary. This interface is used by ThumbnailProviderImpl, but it knows about both classes that implement it, so it could just use them directly. Then you also wouldn\u0027t have to switch delegates depending on what kind of request you are currently serving.",
+      "range": {
+        "startLine": 10,
+        "startChar": 17,
+        "endLine": 10,
+        "endChar": 46
+      },
+      "revId": "c1c97f7ac3425e0cf5797cced53547a250d7e5b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5d4944c_ff2e6438",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorageTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-21T17:25:00Z",
+      "side": 1,
+      "message": "Nit: Maybe it\u0027s just personal style, but I like to use SHOUTING_CASE only for conceptual constants. This member happens to be static final, but I wouldn\u0027t consider it a constant.",
+      "range": {
+        "startLine": 39,
+        "startChar": 35,
+        "endLine": 39,
+        "endChar": 44
+      },
+      "revId": "c1c97f7ac3425e0cf5797cced53547a250d7e5b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2fc5eb9_512669c2",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorageTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-21T17:25:00Z",
+      "side": 1,
+      "message": "Can you make these classes private?",
+      "range": {
+        "startLine": 47,
+        "startChar": 4,
+        "endLine": 47,
+        "endChar": 10
+      },
+      "revId": "c1c97f7ac3425e0cf5797cced53547a250d7e5b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5827fa6_7a4a4111",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorageTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-21T17:25:00Z",
+      "side": 1,
+      "message": "Why synchronized?",
+      "range": {
+        "startLine": 112,
+        "startChar": 8,
+        "endLine": 112,
+        "endChar": 20
+      },
+      "revId": "c1c97f7ac3425e0cf5797cced53547a250d7e5b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "565026f2_9fb0c36b",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/ui/ThumbnailDiskStorageTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-21T17:25:00Z",
+      "side": 1,
+      "message": "Instead of using semaphores for synchronization, you could just use the existing methods in AsyncTask. onPostExecute() will be called on the main thread after the task has finished.",
+      "revId": "c1c97f7ac3425e0cf5797cced53547a250d7e5b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06dbfa0f_e960827b",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImplTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-21T17:25:00Z",
+      "side": 1,
+      "message": "ThumbnailStorage has a check for when the contentId is empty to skip the request, which wouldn\u0027t even be triggered here because shouldCacheToDisk() already returns false. Would it make sense to use a null contentId to indicate that the request shouldn\u0027t be cached on disk? For that matter, you could even have ThumbnailStorage decide to simply skip caching and forward the request to the ThumbnailGenerator directly if disk caching is disabled, so the ThumbnailProvider could just always send the request to the ThumbnailStorage and wouldn\u0027t need to decide.",
+      "range": {
+        "startLine": 211,
+        "startChar": 20,
+        "endLine": 211,
+        "endChar": 21
+      },
+      "revId": "c1c97f7ac3425e0cf5797cced53547a250d7e5b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
