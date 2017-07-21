@@ -25,7 +25,12 @@ namespace mediaPerceptionPrivate {
     // Analytics process is running and the media processing pipeline is ready
     // to be set to state RUNNING. The D-Bus communications are enabled but
     // the media processing pipeline is suspended.
-    SUSPENDED
+    SUSPENDED,
+
+    // Enum for restarting the media analytics process using upstart.
+    // Calling SetState RESTARTED will eventually put the process into
+    // state SUSPENDED, and wait for a command to start running again.
+    RESTARTED
   };
 
   // The system and configuration state of the analytics process.
@@ -165,7 +170,7 @@ namespace mediaPerceptionPrivate {
 
     // Sets the desired state of the system.
     // |state| : A dictionary with the desired new state. The only settable
-    // states are RUNNING and SUSPENDED.
+    // states are RUNNING, SUSPENDED, and RESTARTED.
     // |callback| : Invoked with the State of the system after setting it. Can
     // be used to verify the state was set as desired.
     static void setState(State state, StateCallback callback);
