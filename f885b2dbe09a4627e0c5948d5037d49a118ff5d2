@@ -94,6 +94,30 @@
       "revId": "f885b2dbe09a4627e0c5948d5037d49a118ff5d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dd482e1_0c17b091",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/payments/PaymentRequestJourneyLoggerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-21T18:42:46Z",
+      "side": 1,
+      "message": "Make sense, some of them do have relevant events logged, but I guess we no need duplicate them everywhere :-). Thanks for explanation.",
+      "parentUuid": "f3e98d1a_a55f1921",
+      "range": {
+        "startLine": 593,
+        "startChar": 32,
+        "endLine": 593,
+        "endChar": 64
+      },
+      "revId": "f885b2dbe09a4627e0c5948d5037d49a118ff5d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
