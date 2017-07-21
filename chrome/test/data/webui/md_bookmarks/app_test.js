@@ -34,7 +34,6 @@ suite('<bookmarks-app>', function() {
     replaceBody(app);
   });
 
-
   test('write and load closed folder state', function() {
     var closedFoldersList = ['1'];
     var closedFolders = new Set(closedFoldersList);
@@ -55,8 +54,7 @@ suite('<bookmarks-app>', function() {
   });
 
   test('write and load sidebar width', function() {
-    assertEquals(
-        getComputedStyle(app.$.sidebar).width, app.sidebarWidth_);
+    assertEquals(getComputedStyle(app.$.sidebar).width, app.sidebarWidth_);
 
     var sidebarWidth = '500px';
     app.$.sidebar.style.width = sidebarWidth;
@@ -68,5 +66,25 @@ suite('<bookmarks-app>', function() {
     replaceBody(app);
 
     assertEquals(sidebarWidth, app.$.sidebar.style.width);
+  });
+
+  test('focus ring hides and restores', function() {
+    return PolymerTest.flushTasks().then(() => {
+      var list = app.$$('bookmarks-list');
+      var item = list.root.querySelectorAll('bookmarks-item')[0];
+      var getFocusAttribute = () =>
+          app.getAttribute(bookmarks.HIDE_FOCUS_RING_ATTRIBUTE);
+
+      assertEquals(null, getFocusAttribute());
+
+      MockInteractions.tap(item);
+      assertEquals('', getFocusAttribute());
+
+      MockInteractions.keyDownOn(item, 16, [], 'Shift');
+      assertEquals('', getFocusAttribute());
+
+      MockInteractions.keyDownOn(item, 39, [], 'ArrowRight');
+      assertEquals(null, getFocusAttribute());
+    });
   });
 });
