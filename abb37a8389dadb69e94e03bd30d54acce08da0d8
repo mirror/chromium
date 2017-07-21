@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a279de87_65319402",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-21T16:57:33Z",
+      "side": 1,
+      "message": "Reference params that are not const are not allowed.",
+      "range": {
+        "startLine": 703,
+        "startChar": 44,
+        "endLine": 703,
+        "endChar": 0
+      },
+      "revId": "abb37a8389dadb69e94e03bd30d54acce08da0d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
