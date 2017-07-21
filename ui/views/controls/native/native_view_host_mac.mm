@@ -96,6 +96,10 @@ void NativeViewHostMac::RemovedFromWidget() {
   NativeViewDetaching(false);
 }
 
+void NativeViewHostMac::SetMask(std::unique_ptr<views::Painter> painter) {
+  NOTIMPLEMENTED();
+}
+
 void NativeViewHostMac::InstallClip(int x, int y, int w, int h) {
   NOTIMPLEMENTED();
 }

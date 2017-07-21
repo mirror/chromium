@@ -11,6 +11,7 @@
 namespace views {
 
 class NativeViewHost;
+class Painter;
 
 // An interface that implemented by an object that wraps a gfx::NativeView on
 // a specific platform, used to perform platform specific operations on that
@@ -38,6 +39,11 @@ class VIEWS_EXPORT NativeViewHostWrapper {
   // rooted at a valid Widget.
   virtual void RemovedFromWidget() = 0;
 
+  // Sets a clipping mask on the gfx::NativeView's layer. The painter will be
+  // used to define the part of the layer that should be visible.
+  virtual void SetMask(std::unique_ptr<views::Painter> painter) = 0;
+
+  // TODO(estade): remove clipping functions and use SetMask instead?
   // Installs a clip on the gfx::NativeView. These values are in the coordinate
   // space of the Widget, so if this method is called from ShowWidget
   // then the values need to be translated.
