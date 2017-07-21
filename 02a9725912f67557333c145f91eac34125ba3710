@@ -16,6 +16,24 @@
       "revId": "02a9725912f67557333c145f91eac34125ba3710",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4afb577e_f3661460",
+        "filename": "chrome/browser/browser_shutdown.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-21T15:16:50Z",
+      "side": 1,
+      "message": "Right, I\u0027ve just been making a habit of putting it everywhere for vars in anonymous namespace but I guess it doesn\u0027t do anything for obvious rodata.",
+      "parentUuid": "24c02c27_c2d678c4",
+      "revId": "02a9725912f67557333c145f91eac34125ba3710",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
