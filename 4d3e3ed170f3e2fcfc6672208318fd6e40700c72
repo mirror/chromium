@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51e56fa9_f16ff289",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-21T00:20:46Z",
+      "side": 1,
+      "message": "this needs some more context - or you might have QA thinking this CL is responsible for Blink regressions if it shows up in a bisect ;). E.g. something like,\n\nUpdate MdTextButton dialog button stroke alpha to cater for Harmony spec.\n\nApplies the appropriate alpha to the (enabled or disabled) text color\nin order to obtain correct target colors for stroke (black at 0.2 or\n0.1 alpha for disabled).",
+      "revId": "4d3e3ed170f3e2fcfc6672208318fd6e40700c72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d86c110_1da0e5e8",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-21T00:20:46Z",
+      "side": 1,
+      "message": "nit: It\u0027d be worth referring to the Harmony spec here as well, which asks for 000000 @ 0.1 alpha -\u003e #e6e6e6 for the disabled button stroke. Additionally with a note that the disabled text color is already lighter to explain why we\u0027re not just halving the alpha value being used above..",
+      "revId": "4d3e3ed170f3e2fcfc6672208318fd6e40700c72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7b9bff4_3272da9a",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-21T00:20:46Z",
+      "side": 1,
+      "message": "nit: curlies not required",
+      "range": {
+        "startLine": 296,
+        "startChar": 51,
+        "endLine": 296,
+        "endChar": 52
+      },
+      "revId": "4d3e3ed170f3e2fcfc6672208318fd6e40700c72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b10764e_2ed1f396",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-21T00:20:46Z",
+      "side": 1,
+      "message": "I\u0027m ok with this, but wait for peter to chime in. (i.e. I think it\u0027s fine since I don\u0027t know of any disabled buttons that should be subject to Chrome themes - and the few remaining cases of secondary UI with backgrounds that are not solid white/black are not worth adding complexity for).",
+      "revId": "4d3e3ed170f3e2fcfc6672208318fd6e40700c72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
