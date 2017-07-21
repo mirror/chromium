@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bd2d604f_df25e7ff",
+        "filename": "components/offline_pages/core/page_renovation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1225649
+      },
+      "writtenOn": "2017-07-21T19:33:43Z",
+      "side": 1,
+      "message": "My plan was for there to be a concrete implementation for each renovation. This way, each renovation could have its own logic for deciding whether to run. This may be worth changing, especially since we\u0027re only working on the Wikipedia renovation.",
+      "parentUuid": "821d995d_5224248a",
+      "revId": "0f9b48fa2e7ad61928909983dc490f58ad6c01e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34164b13_8089e32f",
         "filename": "components/offline_pages/core/page_renovation.h",
         "patchSetId": 2
@@ -59,6 +77,48 @@
     },
     {
       "key": {
+        "uuid": "6b863d95_186f3722",
+        "filename": "components/offline_pages/core/page_renovation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1225649
+      },
+      "writtenOn": "2017-07-21T19:33:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "34164b13_8089e32f",
+      "range": {
+        "startLine": 18,
+        "startChar": 47,
+        "endLine": 18,
+        "endChar": 53
+      },
+      "revId": "0f9b48fa2e7ad61928909983dc490f58ad6c01e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e052e14d_8e5644c7",
+        "filename": "components/offline_pages/core/page_renovation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1225649
+      },
+      "writtenOn": "2017-07-21T19:33:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "64a8e426_befd7d51",
+      "revId": "0f9b48fa2e7ad61928909983dc490f58ad6c01e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "035f830c_819c7431",
         "filename": "components/offline_pages/core/page_renovation.h",
         "patchSetId": 2
@@ -73,6 +133,24 @@
       "revId": "0f9b48fa2e7ad61928909983dc490f58ad6c01e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ba35636_0d4434c3",
+        "filename": "components/offline_pages/core/page_renovation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1225649
+      },
+      "writtenOn": "2017-07-21T19:33:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "035f830c_819c7431",
+      "revId": "0f9b48fa2e7ad61928909983dc490f58ad6c01e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "7be35137_bfa40596",
+        "filename": "components/offline_pages/core/page_renovation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1225649
+      },
+      "writtenOn": "2017-07-21T19:33:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8ec70de4_5958ba70",
+      "range": {
+        "startLine": 21,
+        "startChar": 27,
+        "endLine": 21,
+        "endChar": 30
+      },
+      "revId": "0f9b48fa2e7ad61928909983dc490f58ad6c01e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6647a814_5ee4f098",
         "filename": "components/offline_pages/core/page_renovation_loader.cc",
         "patchSetId": 2
@@ -110,6 +212,30 @@
       "writtenOn": "2017-07-21T18:26:58Z",
       "side": 1,
       "message": "Why do we have this?  If loading fails, we should probably not run anything, right?  I would have expected this to be an empty string.  If this is just a placeholder until we have scripts, add a TODO to remove it once we get scripts.",
+      "range": {
+        "startLine": 24,
+        "startChar": 11,
+        "endLine": 24,
+        "endChar": 23
+      },
+      "revId": "0f9b48fa2e7ad61928909983dc490f58ad6c01e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa19a3e7_341c4397",
+        "filename": "components/offline_pages/core/page_renovation_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1225649
+      },
+      "writtenOn": "2017-07-21T19:33:43Z",
+      "side": 1,
+      "message": "I put this here originally because I couldn\u0027t think of a sane way to return a failure. I figured returning a script that does nothing is fairly reasonable. The other option would be to return a success flag from GetRenovationScript. I change it to this.",
+      "parentUuid": "6647a814_5ee4f098",
       "range": {
         "startLine": 24,
         "startChar": 11,
@@ -162,6 +288,48 @@
     },
     {
       "key": {
+        "uuid": "0c9bd8f3_056eeafa",
+        "filename": "components/offline_pages/core/page_renovation_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1225649
+      },
+      "writtenOn": "2017-07-21T19:33:43Z",
+      "side": 1,
+      "message": "The latter; it will be built before loading anything from storage. This list will mirror the actual renovations in the script file.",
+      "parentUuid": "eeeeedc9_7bb1f089",
+      "revId": "0f9b48fa2e7ad61928909983dc490f58ad6c01e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd03abc3_4d4960e1",
+        "filename": "components/offline_pages/core/page_renovation_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1225649
+      },
+      "writtenOn": "2017-07-21T19:33:43Z",
+      "side": 1,
+      "message": "Yes, I can change it to that.",
+      "parentUuid": "2385b1fe_60e19e8e",
+      "range": {
+        "startLine": 29,
+        "startChar": 19,
+        "endLine": 29,
+        "endChar": 37
+      },
+      "revId": "0f9b48fa2e7ad61928909983dc490f58ad6c01e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d37c482a_1b7b7a87",
         "filename": "components/offline_pages/core/page_renovation_loader.cc",
         "patchSetId": 2
@@ -173,6 +341,24 @@
       "writtenOn": "2017-07-21T18:35:54Z",
       "side": 1,
       "message": "If this implies loading scripts form disk, then it is an async operation and requires a callback, because the script may not be ready to return synchronously.",
+      "revId": "0f9b48fa2e7ad61928909983dc490f58ad6c01e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c2e3a46_8be2353e",
+        "filename": "components/offline_pages/core/page_renovation_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1225649
+      },
+      "writtenOn": "2017-07-21T19:33:43Z",
+      "side": 1,
+      "message": "The interface that this will use for loading (ui::ResourceBundle) actually isn\u0027t asynchronous. My understanding is that it maps everything into memory at Chrome start-up.\n\nOther components do this too. Example: https://cs.chromium.org/chromium/src/components/dom_distiller/core/distillable_page_detector.cc?rcl\u003d4ddc452007c67c8280187415c5c4d3cdda061e51\u0026l\u003d19",
+      "parentUuid": "d37c482a_1b7b7a87",
       "revId": "0f9b48fa2e7ad61928909983dc490f58ad6c01e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -226,6 +412,30 @@
     },
     {
       "key": {
+        "uuid": "a19e8e36_30c6184a",
+        "filename": "components/offline_pages/core/page_renovation_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1225649
+      },
+      "writtenOn": "2017-07-21T19:33:43Z",
+      "side": 1,
+      "message": "Dmitry: that was the idea; this list is the list of renovation IDs. These IDs will be fetched from PageRenovator instances. I\u0027ll do that rename.",
+      "parentUuid": "7c2e946f_d9952830",
+      "range": {
+        "startLine": 36,
+        "startChar": 36,
+        "endLine": 36,
+        "endChar": 47
+      },
+      "revId": "0f9b48fa2e7ad61928909983dc490f58ad6c01e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32ae53f4_79e04b4c",
         "filename": "components/offline_pages/core/page_renovation_loader.h",
         "patchSetId": 2
@@ -237,6 +447,30 @@
       "writtenOn": "2017-07-21T18:26:58Z",
       "side": 1,
       "message": "Let\u0027s add a comment about why we are using string16 here (JS requires it for scripts, right)?",
+      "range": {
+        "startLine": 25,
+        "startChar": 21,
+        "endLine": 25,
+        "endChar": 31
+      },
+      "revId": "0f9b48fa2e7ad61928909983dc490f58ad6c01e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "720dd4cc_7dfda342",
+        "filename": "components/offline_pages/core/page_renovation_loader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1225649
+      },
+      "writtenOn": "2017-07-21T19:33:43Z",
+      "side": 1,
+      "message": "Yep, all code I\u0027ve seen in chrome that deals with JS stores it in string16\u0027s. I\u0027ll add that comment.",
+      "parentUuid": "32ae53f4_79e04b4c",
       "range": {
         "startLine": 25,
         "startChar": 21,
@@ -272,6 +506,30 @@
     },
     {
       "key": {
+        "uuid": "1db74d1d_4c0b5c39",
+        "filename": "components/offline_pages/core/page_renovation_loader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1225649
+      },
+      "writtenOn": "2017-07-21T19:33:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c4767daa_274f027b",
+      "range": {
+        "startLine": 27,
+        "startChar": 38,
+        "endLine": 27,
+        "endChar": 49
+      },
+      "revId": "0f9b48fa2e7ad61928909983dc490f58ad6c01e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9758449a_ec8d41db",
         "filename": "components/offline_pages/core/page_renovation_loader.h",
         "patchSetId": 2
@@ -286,6 +544,24 @@
       "revId": "0f9b48fa2e7ad61928909983dc490f58ad6c01e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e22b5fd_a03e39f2",
+        "filename": "components/offline_pages/core/page_renovation_loader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1225649
+      },
+      "writtenOn": "2017-07-21T19:33:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9758449a_ec8d41db",
+      "revId": "0f9b48fa2e7ad61928909983dc490f58ad6c01e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
