@@ -22,6 +22,30 @@
       "revId": "9ad8c059cd1320543564bda2ad24a6b379c044e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4908ba32_0997e39e",
+        "filename": "chrome/browser/media_galleries/gallery_watch_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-07-21T01:28:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fc765f9_4e56ccf9",
+      "range": {
+        "startLine": 119,
+        "startChar": 2,
+        "endLine": 119,
+        "endChar": 40
+      },
+      "revId": "9ad8c059cd1320543564bda2ad24a6b379c044e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
