@@ -63,19 +63,24 @@ class {name} : public ::ukm::internal::UkmEntryBuilderBase {{
   {name}(ukm::SourceId source_id);
   ~{name}() override;
 
+  static const char kEntryName[];
+
 {setters}
 }};
 """
 
 SETTER_DECL = """
+  static const char k{metric}Name[];
   {name}& Set{metric}(int64_t value);
 """
 
 BUILDER_IMPL = """
+const char {name}::kEntryName[] = "{raw}";
+
 {name}::{name}(ukm::SourceId source_id) :
   ::ukm::internal::UkmEntryBuilderBase(
       source_id,
-      base::HashMetricName("{raw}")) {{
+      base::HashMetricName(kEntryName)) {{
 }}
 
 {name}::~{name}() = default;
@@ -84,8 +89,10 @@ BUILDER_IMPL = """
 """
 
 SETTER_IMPL = """
+const char {name}::k{metric}Name[] = "{raw}";
+
 {name}& {name}::Set{metric}(int64_t value) {{
-  AddMetric(base::HashMetricName("{raw}"), value);
+  AddMetric(base::HashMetricName(k{metric}Name), value);
   return *this;
 }}
 """
