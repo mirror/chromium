@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0d737813_452719c0",
+        "filename": "android_webview/browser/aw_safe_browsing_resource_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-22T02:40:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccb1759a_45ef24e0",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d81c9262_a4c1f446",
         "filename": "android_webview/browser/aw_web_ui_controller_factory.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fd34092_482a6155",
+        "filename": "android_webview/browser/aw_web_ui_controller_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-22T02:40:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d81c9262_a4c1f446",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b8c786ad_830dafce",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-22T02:40:12Z",
+      "side": 1,
+      "message": "Changed to constexpr",
+      "parentUuid": "eab45cec_77497998",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "faa59243_a9ea02aa",
         "filename": "chrome/browser/data_usage/tab_id_provider.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aa97b4c_8fb8095b",
+        "filename": "chrome/browser/data_usage/tab_id_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-22T02:40:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "faa59243_a9ea02aa",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "107d1db8_12688ae5",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-22T02:40:12Z",
+      "side": 1,
+      "message": "Tried it out, but interestingly, it increased the size by 64 bytes, and made no difference to which sections things were in. I suspect the difference is that kUkmMetricVisitsTotalName is merged with another string when not made an array.\n\n\nHere\u0027s the diff:\n\n10 symbols added (+), 1 changed (~), 0 removed (-), 492659 unchanged (not shown)\nNumber of unique symbols 381370 -\u003e 381380 (+10)\n0 paths added, 0 removed, 1 changed\n\nShowing 11 symbols (aliases not grouped for diffs) with total pss: 64 bytes\n.text\u003d0 bytes    .rodata\u003d64 bytes   .data.rel.ro\u003d0 bytes    .data\u003d0 bytes    .bss\u003d0 bytes    total\u003d64 bytes\nNumber of unique paths: 15837\n\nSection Legend: t\u003d.text, r\u003d.rodata, R\u003d.data.rel.ro, d\u003d.data, b\u003d.bss\nIndex | Running Total | Section@Address | Δ PSS (Δ size_without_padding) | Path\n------------------------------------------------------------\n~ 0)       -210 (-328.1%) r@Group      -210 (3019000-\u003e3018790) {no path}\n               ** merge strings (count\u003d7)\n+ 1)       -144 (-225.0%) r@0x2c3e17a  +66 (0-\u003e66)        chrome/browser/media/media_engagement_contents_observer.cc\n               MediaEngagementContentsObserver::kHistogramSignificantNotAddedAfterFirstTimeName\n+ 2)        -83 (-129.7%) r@0x2c3e13d  +61 (0-\u003e61)        chrome/browser/media/media_engagement_contents_observer.cc\n               MediaEngagementContentsObserver::kHistogramSignificantNotAddedFirstTimeName\n+ 3)        -33 (-51.6%) r@0x2c3e1bc  +50 (0-\u003e50)        chrome/browser/media/media_engagement_contents_observer.cc\n               MediaEngagementContentsObserver::kHistogramSignificantRemovedName\n+ 4)          0 (0.0%)  r@0x2c3e0bd  +33 (0-\u003e33)        chrome/browser/media/media_engagement_contents_observer.cc\n               MediaEngagementContentsObserver::kHistogramScoreAtPlaybackName\n+ 5)         33 (51.6%) r@0x2c3e0de  +33 (0-\u003e33)        chrome/browser/media/media_engagement_contents_observer.cc\n               MediaEngagementContentsObserver::kUkmEntryName\n+ 6)          2 (3.1%)  r@0x0        -31 (0-\u003e0)         {no path}\n               ** aggregate padding of diff\u0027ed symbols\n+ 7)         19 (29.7%) r@0x2c3e11c  +17 (0-\u003e17)        chrome/browser/media/media_engagement_contents_observer.cc\n               MediaEngagementContentsObserver::kUkmMetricEngagementScoreName\n+ 8)         35 (54.7%) r@0x2c3e12d  +16 (0-\u003e16)        chrome/browser/media/media_engagement_contents_observer.cc\n               MediaEngagementContentsObserver::kUkmMetricPlaybacksDeltaName\n+ 9)         51 (79.7%) r@0x2c3e0ff  +16 (0-\u003e16)        chrome/browser/media/media_engagement_contents_observer.cc\n               MediaEngagementContentsObserver::kUkmMetricPlaybacksTotalName\n+ 10)        64 (100.0%) r@0x2c3e10f  +13 (0-\u003e13)        chrome/browser/media/media_engagement_contents_observer.cc\n               MediaEngagementContentsObserver::kUkmMetricVisitsTotalName",
+      "parentUuid": "8215542a_ba95ff4b",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5fe8c299_4db24f36",
         "filename": "components/domain_reliability/google_configs.cc",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca2ec5f9_5e4542f6",
+        "filename": "components/domain_reliability/google_configs.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-22T02:40:12Z",
+      "side": 1,
+      "message": "Going to leave as * to allow string merging (it doesn\u0027t look like the compiler is folding it currently, but presumably if the linker were to look at merging based on suffixes it could be merged with strings above.",
+      "parentUuid": "5fe8c299_4db24f36",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "c443af40_36dc0820",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-22T02:40:12Z",
+      "side": 1,
+      "message": "Looks like there\u0027s a chromium style check against this:\nerror: [chromium-style] auto variable type must not deduce to a raw pointer type.",
+      "parentUuid": "ef2b7a10_ef31ec10",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b8e0d6b_203a743e",
         "filename": "components/search_engines/template_url_prepopulate_data.cc",
         "patchSetId": 4
@@ -152,6 +278,24 @@
       "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "024b1199_b703ab86",
+        "filename": "components/search_engines/template_url_prepopulate_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-22T02:40:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b8e0d6b_203a743e",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +350,24 @@
     },
     {
       "key": {
+        "uuid": "72987f78_40bdd894",
+        "filename": "components/sync/engine_impl/cycle/nudge_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-22T02:40:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d462ee05_a7294eb1",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85fe5bb5_d93f2be1",
         "filename": "components/translate/core/common/translate_metrics.cc",
         "patchSetId": 4
@@ -220,6 +382,24 @@
       "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6898fc2d_9429db3f",
+        "filename": "components/translate/core/common/translate_metrics.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-22T02:40:12Z",
+      "side": 1,
+      "message": "Done (think you need 6 for the null byte though)",
+      "parentUuid": "85fe5bb5_d93f2be1",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -240,6 +420,24 @@
     },
     {
       "key": {
+        "uuid": "e952c55e_59d68f0d",
+        "filename": "components/update_client/request_sender.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-22T02:40:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0415421f_54466f7d",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c38d178_38350698",
         "filename": "content/browser/devtools/protocol/page_handler.cc",
         "patchSetId": 4
@@ -254,6 +452,24 @@
       "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38203cf5_666f574a",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-22T02:40:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c38d178_38350698",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -274,6 +490,24 @@
     },
     {
       "key": {
+        "uuid": "703f2649_ff97e470",
+        "filename": "content/browser/frame_host/navigation_entry_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-22T02:40:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03b28ebf_4343432b",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a1b6fbe_466f59e5",
         "filename": "content/common/net/url_request_service_worker_data.cc",
         "patchSetId": 4
@@ -288,6 +522,24 @@
       "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac60d071_68b90ad3",
+        "filename": "content/common/net/url_request_service_worker_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-22T02:40:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a1b6fbe_466f59e5",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -308,6 +560,24 @@
     },
     {
       "key": {
+        "uuid": "fbe2aa0f_4714f382",
+        "filename": "content/common/net/url_request_user_data.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-22T02:40:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7c08b09_25d01c34",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f28e7a7_c0d8fd25",
         "filename": "content/public/common/child_process_host.h",
         "patchSetId": 4
@@ -319,6 +589,24 @@
       "writtenOn": "2017-07-21T19:40:42Z",
       "side": 1,
       "message": "constexpr definition here and remove definition in .cc file?",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40871bc0_b7f286ec",
+        "filename": "content/public/common/child_process_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-22T02:40:12Z",
+      "side": 1,
+      "message": "Added constexpr, but had to define in the .cc due to:\n../../content/browser/service_worker/service_worker_client_utils.cc:0: error: undefined reference to \u0027content::ChildProcessHost::kInvalidUniqueID\u0027\n../../content/browser/service_worker/service_worker_client_utils.cc:0: error: undefined reference to \u0027content::ChildProcessHost::kInvalidUniqueID\u0027\n../../content/browser/service_worker/service_worker_client_utils.cc:0: error: undefined reference to \u0027content::ChildProcessHost::kInvalidUniqueID\u0027\n\n\nI don\u0027t see service_worker_client_utils.cc taking the address of it, but likely because it\u0027s passing it to base::Bind, which looks like:\nBind(Functor\u0026\u0026 functor, Args\u0026\u0026... args) {",
+      "parentUuid": "5f28e7a7_c0d8fd25",
       "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -342,6 +630,24 @@
     },
     {
       "key": {
+        "uuid": "293cef07_33da1a20",
+        "filename": "google_apis/gaia/gaia_auth_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-22T02:40:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b30c4635_c806b129",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66db892a_bad9393a",
         "filename": "gpu/command_buffer/service/gpu_tracer.cc",
         "patchSetId": 4
@@ -359,6 +665,24 @@
     },
     {
       "key": {
+        "uuid": "651127af_5f6ea92b",
+        "filename": "gpu/command_buffer/service/gpu_tracer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-22T02:40:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66db892a_bad9393a",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0165e66b_6b2c96c9",
         "filename": "sql/meta_table.h",
         "patchSetId": 4
@@ -373,6 +697,24 @@
       "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "855b142f_f43f336b",
+        "filename": "sql/meta_table.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-22T02:40:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0165e66b_6b2c96c9",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
