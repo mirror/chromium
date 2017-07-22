@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56332c52_baf02f90",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 2235,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-22T00:32:34Z",
+      "side": 1,
+      "message": "Same here (and in AddSearchStrings). This could be wrapped in an chromeos::switches::IsVoiceInteractionEnabled() block. Why sending unused strings to the UI, making the loadTimeData dictionary larger for no good reason?",
+      "revId": "3378137afde39e3a7684c1f153951934d54604e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
