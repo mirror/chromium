@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42d1d96f_776cea7b",
+        "filename": "chrome/browser/ui/views/frame/browser_window_property_manager_browsertest_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-22T03:36:41Z",
+      "side": 1,
+      "message": "Nit: This could probably be done inline with a lambda too.",
+      "revId": "08beda0d48426e73691a009c7f705a5e9445e022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "527ba3bd_f262e523",
+        "filename": "chrome/browser/ui/views/frame/browser_window_property_manager_browsertest_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-22T03:36:41Z",
+      "side": 1,
+      "message": "Do you need a RunAll between here and the Validate call below?\n\n(I am wondering this because I\u0027m wondering if it\u0027s Validate itself that should do the waiting.)",
+      "revId": "08beda0d48426e73691a009c7f705a5e9445e022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
