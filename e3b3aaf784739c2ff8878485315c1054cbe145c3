@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "80bae4ef_eedd607c",
+        "filename": "components/exo/data_device.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-22T07:57:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bab27013_41b679a7",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 10
+      },
+      "revId": "e3b3aaf784739c2ff8878485315c1054cbe145c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5f50ad0_9f1a39f2",
+        "filename": "components/exo/data_device.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-22T07:57:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b2eb612_572f3884",
+      "range": {
+        "startLine": 23,
+        "startChar": 41,
+        "endLine": 23,
+        "endChar": 48
+      },
+      "revId": "e3b3aaf784739c2ff8878485315c1054cbe145c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f157f95b_7619bfd8",
         "filename": "components/exo/data_device_manager.cc",
         "patchSetId": 11
@@ -62,6 +110,24 @@
       "revId": "e3b3aaf784739c2ff8878485315c1054cbe145c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be1ab487_48a3d15d",
+        "filename": "components/exo/data_device_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-22T07:57:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f157f95b_7619bfd8",
+      "revId": "e3b3aaf784739c2ff8878485315c1054cbe145c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "b69826dc_25345f1a",
+        "filename": "components/exo/data_device_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-22T07:57:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03aaed46_25344bbd",
+      "revId": "e3b3aaf784739c2ff8878485315c1054cbe145c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ea7abd0_e3d67567",
         "filename": "components/exo/display.h",
         "patchSetId": 11
@@ -93,6 +177,24 @@
       "writtenOn": "2017-07-21T21:39:44Z",
       "side": 1,
       "message": "It\u0027s surprising that we don\u0027t have one of these instances for each client side data device manager object. Should we have a CreateDataDeviceManager function similar to what we have for CreateSurface() instead of a single instance here?",
+      "revId": "e3b3aaf784739c2ff8878485315c1054cbe145c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "648defd4_bd38cd9c",
+        "filename": "components/exo/display.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-22T07:57:09Z",
+      "side": 1,
+      "message": "I wonder if we can avoid the confusion by renaming |DataDeviceManager| with |DataEventDispatcher|.\n\nIf we create multiple DataDeviceManager instances, |Display| will have a list of DataDeviceManager* as DataDeviceManager currently has a list of |DataDevice*|. Then we need to add methods like NotifyDragEnter to |Display| to dispatch events to all DataDevice through DataDeviceManager, but I feel having NotifyDragEnter is not a role of |Display|.",
+      "parentUuid": "5ea7abd0_e3d67567",
       "revId": "e3b3aaf784739c2ff8878485315c1054cbe145c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -113,6 +215,24 @@
       "revId": "e3b3aaf784739c2ff8878485315c1054cbe145c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d359bc50_f3259fa2",
+        "filename": "components/exo/wayland/server.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2872,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-22T07:57:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5075c09d_fc890228",
+      "revId": "e3b3aaf784739c2ff8878485315c1054cbe145c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
