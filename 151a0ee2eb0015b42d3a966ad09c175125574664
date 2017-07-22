@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26d7fb84_cd679857",
+        "filename": "chrome/browser/extensions/api/desktop_capture/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-22T01:12:45Z",
+      "side": 1,
+      "message": "Move this to the top",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 20
+      },
+      "revId": "151a0ee2eb0015b42d3a966ad09c175125574664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae15150b_6d2679ca",
+        "filename": "chrome/browser/media/webrtc/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-22T01:12:45Z",
+      "side": 1,
+      "message": "what about desktop_media_list_ash*?",
+      "range": {
+        "startLine": 16,
+        "startChar": 9,
+        "endLine": 16,
+        "endChar": 34
+      },
+      "revId": "151a0ee2eb0015b42d3a966ad09c175125574664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24de0577_726e2b65",
+        "filename": "content/browser/media/capture/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-22T01:12:45Z",
+      "side": 1,
+      "message": "I think you want to remove the period at the end to include unittests too",
+      "range": {
+        "startLine": 6,
+        "startChar": 9,
+        "endLine": 6,
+        "endChar": 32
+      },
+      "revId": "151a0ee2eb0015b42d3a966ad09c175125574664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
