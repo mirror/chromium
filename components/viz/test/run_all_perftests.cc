@@ -7,12 +7,12 @@
 #include "components/viz/test/viz_test_suite.h"
 
 int main(int argc, char** argv) {
-  VizTestSuite test_suite(argc, argv);
+  viz::VizTestSuite test_suite(argc, argv);
 
   // Always run the perf tests serially, to avoid distorting
   // perf measurements with randomness resulting from running
   // in parallel.
   return base::LaunchUnitTestsSerially(
       argc, argv,
-      base::Bind(&VizTestSuite::Run, base::Unretained(&test_suite)));
+      base::Bind(&viz::VizTestSuite::Run, base::Unretained(&test_suite)));
 }
