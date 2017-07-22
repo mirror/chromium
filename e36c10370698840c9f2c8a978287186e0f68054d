@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cab8206_f4343ffa",
+        "filename": "chrome/browser/extensions/api/messaging/message_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-22T02:08:48Z",
+      "side": 1,
+      "message": "return;",
+      "revId": "e36c10370698840c9f2c8a978287186e0f68054d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64f3c9cb_fda3e990",
+        "filename": "chrome/browser/extensions/api/messaging/messaging_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-22T02:08:48Z",
+      "side": 1,
+      "message": "nitty nit: reorder extension_id and receiver_port_id, so the order is the same as in CreateReceiverForNativeApp (if you feel like it)",
+      "revId": "e36c10370698840c9f2c8a978287186e0f68054d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
