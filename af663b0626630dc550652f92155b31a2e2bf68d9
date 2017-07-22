@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "360852e6_4e2b73cc",
+        "filename": "chrome/browser/ui/webui/print_preview/print_preview_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-22T00:47:51Z",
+      "side": 1,
+      "message": "Can\u0027t do this. Static initializer.",
+      "revId": "af663b0626630dc550652f92155b31a2e2bf68d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
