@@ -50,6 +50,7 @@
 #include "components/exo/buffer.h"
 #include "components/exo/data_device.h"
 #include "components/exo/data_device_delegate.h"
+#include "components/exo/data_event_dispatcher.h"
 #include "components/exo/data_offer.h"
 #include "components/exo/data_offer_delegate.h"
 #include "components/exo/data_source.h"
@@ -2868,6 +2869,11 @@ class WaylandDataDeviceDelegate : public DataDeviceDelegate {
     wl_data_device_send_selection(data_device_resource_,
                                   GetDataOfferResource(&data_offer));
   }
+  bool CanAcceptDataEventsForSurface(Surface* surface) const override {
+    wl_resource* surface_resource = GetSurfaceResource(surface);
+    return surface_resource &&
+           wl_resource_get_client(surface_resource) == client_;
+  }
 
  private:
   wl_client* const client_;
@@ -2922,9 +2928,11 @@ void data_device_manager_get_data_device(wl_client* client,
                                          wl_resource* seat_resource) {
   wl_resource* data_device_resource =
       wl_resource_create(client, &wl_data_device_interface, 1, id);
-  SetImplementation(data_device_resource, &data_device_implementation,
-                    base::MakeUnique<DataDevice>(new WaylandDataDeviceDelegate(
-                        client, data_device_resource)));
+  SetImplementation(
+      data_device_resource, &data_device_implementation,
+      base::MakeUnique<DataDevice>(
+          new WaylandDataDeviceDelegate(client, data_device_resource),
+          GetUserDataAs<Display>(resource)->data_event_dispatcher()));
 }
 
 const struct wl_data_device_manager_interface
@@ -2939,7 +2947,7 @@ void bind_data_device_manager(wl_client* client,
   wl_resource* resource =
       wl_resource_create(client, &wl_data_device_manager_interface, 1, id);
   wl_resource_set_implementation(resource, &data_device_manager_implementation,
-                                 nullptr, nullptr);
+                                 data, nullptr);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -12,6 +12,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/trace_event/trace_event.h"
 #include "base/trace_event/trace_event_argument.h"
+#include "components/exo/data_event_dispatcher.h"
 #include "components/exo/notification_surface.h"
 #include "components/exo/notification_surface_manager.h"
 #include "components/exo/shared_memory.h"
@@ -56,7 +57,8 @@ const gfx::BufferFormat kOverlayFormatsForDrmAtomic[] = {
 Display::Display() : Display(nullptr) {}
 
 Display::Display(NotificationSurfaceManager* notification_surface_manager)
-    : notification_surface_manager_(notification_surface_manager)
+    : notification_surface_manager_(notification_surface_manager),
+      data_event_dispatcher_(new DataEventDispatcher())
 #if defined(USE_OZONE)
       ,
       overlay_formats_(std::begin(kOverlayFormats), std::end(kOverlayFormats))
