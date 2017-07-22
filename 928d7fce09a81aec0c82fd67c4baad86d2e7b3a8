@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "950d61ca_4675b624",
+        "filename": "chrome/browser/resources/settings/settings_page/settings_section.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-22T00:51:22Z",
+      "side": 1,
+      "message": "In the console of my linux chromium build, I tried using a mutation observer on the settingsUi element,and injecting the element and loading the manage passwords view does not trigger the observer in any way that I can see.",
+      "parentUuid": "ba54faa6_25415076",
+      "range": {
+        "startLine": 98,
+        "startChar": 5,
+        "endLine": 98,
+        "endChar": 6
+      },
+      "revId": "928d7fce09a81aec0c82fd67c4baad86d2e7b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9edec3a2_1a642a22",
         "filename": "chrome/test/BUILD.gn",
         "patchSetId": 9
