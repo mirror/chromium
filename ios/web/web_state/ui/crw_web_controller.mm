@@ -359,8 +359,6 @@ NSError* WKWebViewErrorWithSource(NSError* error, WKWebViewErrorSource source) {
   // Set to YES when a hashchange event is manually dispatched for same-document
   // history navigations.
   BOOL _dispatchingSameDocumentHashChangeEvent;
-  // YES if the web process backing _wkWebView is believed to currently be dead.
-  BOOL _webProcessIsDead;
 
   // Object for loading POST requests with body.
   base::scoped_nsobject<CRWJSPOSTRequestLoader> _POSTRequestLoader;
@@ -942,6 +940,7 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
 @synthesize usePlaceholderOverlay = _usePlaceholderOverlay;
 @synthesize loadPhase = _loadPhase;
 @synthesize shouldSuppressDialogs = _shouldSuppressDialogs;
+@synthesize webProcessCrashed = _webProcessCrashed;
 
 - (instancetype)initWithWebState:(WebStateImpl*)webState {
   self = [super init];
@@ -1153,7 +1152,7 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
 }
 
 - (BOOL)isViewAlive {
-  return !_webProcessIsDead && [_containerView isViewAlive];
+  return !_webProcessCrashed && [_containerView isViewAlive];
 }
 
 - (BOOL)contentIsHTML {
@@ -4126,7 +4125,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
 }
 
 - (void)webViewWebProcessDidCrash {
-  _webProcessIsDead = YES;
+  _webProcessCrashed = YES;
   _webStateImpl->CancelDialogs();
   _webStateImpl->OnRenderProcessGone();
 }
@@ -4333,7 +4332,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
     decidePolicyForNavigationAction:(WKNavigationAction*)action
                     decisionHandler:
                         (void (^)(WKNavigationActionPolicy))decisionHandler {
-  _webProcessIsDead = NO;
+  _webProcessCrashed = NO;
   if (_isBeingDestroyed) {
     decisionHandler(WKNavigationActionPolicyCancel);
     return;
@@ -4877,7 +4876,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
 - (void)webViewTitleDidChange {
   // WKWebView's title becomes empty when the web process dies; ignore that
   // update.
-  if (_webProcessIsDead) {
+  if (_webProcessCrashed) {
     DCHECK_EQ([_webView title].length, 0U);
     return;
   }
