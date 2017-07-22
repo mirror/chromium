@@ -11,6 +11,177 @@
  */
 
 cr.define('login', function() {
+
+  /**
+   * @param element {!HTMLElement}
+   * @param swipeCallback {!function(Array<number>)}
+   */
+  function SwipeDetector(element, swipeCallback) {
+    element.addEventListener('touchstart', this.onTouchMove_.bind(this));
+    element.addEventListener('touchend', this.onTouchEnd_.bind(this));
+    element.addEventListener('touchcancel', this.cancelSwipe_.bind(this));
+    element.addEventListener('touchmove', this.onTouchMove_.bind(this));
+
+    /** @private {!function(Array<number>)} */
+    this.swipeCallback_ = swipeCallback;
+    this.element_ = element;
+  }
+
+  function TouchInfo(touch) {
+    this.x = touch.clientX;
+    this.y = touch.clientY;
+    this.time = Date.now();
+  }
+
+  SwipeDetector.prototype = {
+    /**
+     * @private {?{start: !TouchInfo, end: !TouchInfo}}
+     */
+    current_: null,
+    /**
+     * @private {?TouchInfo}
+     */
+    nextSrc_: null,
+
+    /** @private {number} */
+    touchId_: null,
+
+    /** @private {number} */
+    swipeTimeoutRequest_: undefined,
+
+    /** @private {boolean} */
+    enabled_: false,
+
+    /**
+     * @param enabled {boolean}
+     */
+    setEnabled: function(enabled) {
+      if (this.enabled_ == enabled)
+        return;
+      if (!enabled)
+        this.cancelSwipe_();
+      this.enabled_ = enabled;
+    },
+
+    /**
+     * @return {boolean}
+     */
+    started_: function() {
+      return !!this.nextStart_;
+    },
+
+    /**
+     * @param {!TouchInfo} touch
+     */
+    addTouch_: function(touch) {
+      if (this.nextStart_) {
+        if (Math.abs(this.nextStart_.x - touch.x) +
+                Math.abs(this.nextStart_.y - touch.y) <
+            5) {
+          this.nextStart_.time = touch.time;
+          return;
+        }
+        this.current_ = {start: this.nextStart_, end: touch};
+      }
+      this.nextStart_ = touch;
+    },
+
+    clearTrace_: function() {
+      if (!this.started_()) {
+        this.swipeTimeoutRequest_ = undefined;
+        return;
+      }
+
+      var now = Date.now();
+
+      var isValid = (function(touch) {
+                      var timeDelta = now - touch.time;
+                      return timeDelta < 300 && timeDelta >= 0;
+                    }).bind(this);
+
+      var timeout = -1;
+      if (this.current_ && isValid(this.current_.start)) {
+        timeout = now - this.current_.start.time;
+      } else if (isValid(this.nextStart_)) {
+        this.current_ = null;
+        timeout = now - this.nextStart_.time;
+      } else {
+        this.cancelSwipe_();
+        return;
+      }
+
+      this.swipeTimeoutRequest_ =
+          setTimeout(this.clearTrace_.bind(this), timeout);
+    },
+
+    cancelSwipe_: function() {
+      if (this.swipeTimeoutRequest_ !== undefined)
+        clearTimeout(this.swipeTimeoutRequest_);
+      this.swipeTimeoutRequest_ = undefined;
+      this.touchId_ = null;
+      this.current_ = null;
+      this.nextStart_ = null;
+    },
+
+    /**
+     * @param {TouchEvent} e
+     */
+    onTouchMove_: function(e) {
+      if (!this.enabled_)
+        return;
+
+      if (e.touches.length > 1) {
+        this.cancelSwipe_();
+        return;
+      }
+
+      var touch = e.touches[0];
+      if (!this.started_() || touch.identifier != this.touchId_) {
+        this.cancelSwipe_();
+
+        this.swipeTimeoutRequest_ =
+            setTimeout(this.clearTrace_.bind(this), 300);
+
+        this.touchId_ = touch.identifier;
+      }
+
+      this.addTouch_(new TouchInfo(touch));
+    },
+
+    /** @param {TouchEvent} e */
+    onTouchEnd_: function(e) {
+      if (!this.enabled_)
+        return;
+
+      if (e.changedTouches.length > 1 ||
+          e.changedTouches[0].identifier != this.touchId_) {
+        this.cancelSwipe_();
+        return;
+      }
+
+      this.addTouch_(new TouchInfo(e.changedTouches[0]));
+
+      var current = this.current_;
+      this.cancelSwipe_();
+
+      if (!current)
+        return;
+
+      var velocity = {
+        x: current.end.x - current.start.x,
+        y: current.end.y - current.start.y
+      };
+      if (!velocity.x && !velocity.y)
+        return;
+
+      var time = current.end.time - current.start.time;
+      if (!time)
+        return;
+
+      this.swipeCallback_({x: velocity.x / time, y: velocity.y / time});
+    }
+  };
+
   /**
    * Creates a header bar element shown at the top of the login screen.
    *
@@ -38,6 +209,9 @@ cr.define('login', function() {
      */
     lockScreenAppsState_: LOCK_SCREEN_APPS_STATE.NONE,
 
+    /** @private {SwipeDetector} */
+    swipeDetector_: null,
+
     set lockScreenAppsState(state) {
       if (this.lockScreenAppsState_ == state)
         return;
@@ -53,6 +227,8 @@ cr.define('login', function() {
       $('new-note-action')
           .addEventListener(
               'keydown', this.handleNewNoteActionKeyDown_.bind(this));
+      this.swipeDetector_ =
+          new SwipeDetector($('new-note-action'), this.handleSwipe_.bind(this));
     },
 
     /**
@@ -74,6 +250,9 @@ cr.define('login', function() {
               .classList.toggle('new-note-action-short-transition', false);
         });
       }
+
+      this.swipeDetector_.setEnabled(
+          this.lockScreenAppsState_ == LOCK_SCREEN_APPS_STATE.AVAILABLE);
 
       $('top-header-bar')
           .classList.toggle(
@@ -119,6 +298,21 @@ cr.define('login', function() {
     handleNewNoteActionKeyDown_: function(evt) {
       if (evt.code != 'Enter')
         return;
+      this.activateNoteAction_();
+    },
+
+    /**
+     * @param {!Array<number>} velocity
+     */
+    handleSwipe_: function(velocity) {
+      // Ignore swipes in direction other than down left (in ltr world).
+      if (velocity.x >= 0 || velocity.y <= 0)
+        return;
+      // Not fast enough - ignore.
+      var length = diag(velocity.x, velocity.y);
+      if (length < 1)
+        return;
+
       this.activateNoteAction_();
     },
 
