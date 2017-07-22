@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f64b7f53_5d62eac9",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/video-enter-exit-fullscreen-without-hovering-doesnt-show-controls.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-07-22T16:34:05Z",
+      "side": 1,
+      "message": "Instead of check `opacity`, if you care about visibility, shouldn\u0027t you use `isVisible()` from media-controls.js?",
+      "revId": "85e350bd6b3651a175c4c31b5d5f4afd72f3e74e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
