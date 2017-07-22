@@ -111,9 +111,9 @@ class ShapeCache {
 
  public:
   ShapeCache() : weak_factory_(this), version_(0) {
-    // We use 5% of the maximum word cache size as start value
-    // for the HashTable.
-    short_string_map_.ReserveCapacityForSize(500);
+    // TODO(cavalcantii): find an acceptable value to reserve
+    // space in the word shape cache HashTable as this reduces
+    // rehashes while loading a page.
   }
 
   ShapeCacheEntry* Add(const TextRun& run, ShapeCacheEntry entry) {
