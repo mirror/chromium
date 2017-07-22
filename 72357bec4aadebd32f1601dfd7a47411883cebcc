@@ -140,6 +140,30 @@
       "revId": "72357bec4aadebd32f1601dfd7a47411883cebcc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "de92cb73_8a8724ed",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-22T03:24:46Z",
+      "side": 1,
+      "message": "You give me too much credit :).  I binary-searched through git revision logs for the file until I found where this changed got introduced, then read my CL comments.",
+      "parentUuid": "50024cff_6c1ed60c",
+      "range": {
+        "startLine": 167,
+        "startChar": 1,
+        "endLine": 167,
+        "endChar": 0
+      },
+      "revId": "72357bec4aadebd32f1601dfd7a47411883cebcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2561baed_568d8d0b",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-22T03:24:46Z",
+      "side": 1,
+      "message": "Nit: I\u0027d put a blank line below this",
+      "revId": "15632eeae47fc842097ba6dd5a7da6ddb50c8b3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbec7a5a_abe58c9a",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-22T03:24:46Z",
+      "side": 1,
+      "message": "Nit: Const methods should not return non-const pointers; see https://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Use-const-correctly .",
+      "revId": "15632eeae47fc842097ba6dd5a7da6ddb50c8b3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9bead6f_1d41087b",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-22T03:24:46Z",
+      "side": 1,
+      "message": "Nit: Prefer \u003dMakeUnique to .reset(new(...",
+      "revId": "15632eeae47fc842097ba6dd5a7da6ddb50c8b3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1f53598_248b858f",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-22T03:24:46Z",
+      "side": 1,
+      "message": "Do you really need a thread bundle?  Usually at most a ScopedTaskEnvironment is needed, sometimes not even that (if no one posts tasks).",
+      "revId": "15632eeae47fc842097ba6dd5a7da6ddb50c8b3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
