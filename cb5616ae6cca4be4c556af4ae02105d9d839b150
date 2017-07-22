@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6433a507_6b0897c2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-07-22T00:44:16Z",
+      "side": 1,
+      "message": "Are you sure you are actually fixing any of this?\n743277 is easy to reproduce with a tiny Android app. I doubt it has anything to do with this patch.",
+      "revId": "cb5616ae6cca4be4c556af4ae02105d9d839b150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

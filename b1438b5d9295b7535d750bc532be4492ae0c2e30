@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc84fb62_f151c341",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_atomic.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-07-22T00:44:16Z",
+      "side": 0,
+      "message": "This is an (ugly) workaround that we need on rockchip until we address it properly (crbug.com/745998)\nWe added this since it was affecting stable.\n\nRemoving this workaround would break rockchip. Why did you remove it?",
+      "revId": "b1438b5d9295b7535d750bc532be4492ae0c2e30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
