@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3be36ab_9463f3a1",
+        "filename": "chrome/browser/android/download/ui/thumbnail_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-22T00:16:00Z",
+      "side": 1,
+      "message": "Optional nit: See comments below about early returns... If you change the style of not declaring early in ScaleDownBitmap, maybe return std::string() on line 40, and declare data just before reading into it?",
+      "revId": "6f3df4ba5e8252fd067fda528d207f96e8bf5f10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43c67258_6e8c3a85",
+        "filename": "chrome/browser/android/download/ui/thumbnail_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-22T00:16:00Z",
+      "side": 1,
+      "message": "Optional nit: How about flipping this conditional to remove the indent?",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 38
+      },
+      "revId": "6f3df4ba5e8252fd067fda528d207f96e8bf5f10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff33685c_52bb7ed9",
+        "filename": "chrome/browser/android/download/ui/thumbnail_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-22T00:16:00Z",
+      "side": 1,
+      "message": "Optional nit: You could at that point maybe even early return with a flipped check here too?",
+      "revId": "6f3df4ba5e8252fd067fda528d207f96e8bf5f10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2270f009_ff7328ce",
+        "filename": "chrome/browser/android/download/ui/thumbnail_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-22T00:16:00Z",
+      "side": 1,
+      "message": "Optional nit: And if you do that, you could just return Resize() here?",
+      "revId": "6f3df4ba5e8252fd067fda528d207f96e8bf5f10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cfe6769_1ea0fcde",
+        "filename": "chrome/browser/android/download/ui/thumbnail_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-22T00:16:00Z",
+      "side": 1,
+      "message": "Optional nit: Do we want a destructor with the same check, just to be 100% sure that we don\u0027t mess up?",
+      "revId": "6f3df4ba5e8252fd067fda528d207f96e8bf5f10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6df3066c_b065402a",
+        "filename": "chrome/browser/android/download/ui/thumbnail_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-22T00:16:00Z",
+      "side": 1,
+      "message": "Optional nit: Ordering-wise, does it make sense to keep OnLoadComplete before OnImageDecoded and friends?",
+      "revId": "6f3df4ba5e8252fd067fda528d207f96e8bf5f10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8487ca91_aa84f738",
+        "filename": "chrome/browser/android/download/ui/thumbnail_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-22T00:16:00Z",
+      "side": 1,
+      "message": "Optional nit: This is deprecated. The new hotness is to pass around std::vector\u003cuint8_t\u003e to avoid an extra copy. I couldn\u0027t find an API to read a file into std::vector\u003cuint8_t\u003e though :-/",
+      "revId": "6f3df4ba5e8252fd067fda528d207f96e8bf5f10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2b0c1fe_fee01107",
+        "filename": "chrome/browser/android/download/ui/thumbnail_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-22T00:16:00Z",
+      "side": 1,
+      "message": "Optional nit: Seeing new Foo in the wild always scares me. Could we add a short comment about the lifetime of this here and in a the comment above the class?",
+      "range": {
+        "startLine": 176,
+        "startChar": 18,
+        "endLine": 176,
+        "endChar": 22
+      },
+      "revId": "6f3df4ba5e8252fd067fda528d207f96e8bf5f10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
