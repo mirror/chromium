@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "cec1aabc_8a5984ae",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-07-22T01:00:14Z",
+      "side": 1,
+      "message": "Why do you continue mentioning a black screen when downscaling, when 746068 is about not scaling correctly, not about black screen, that AFAIK happens only with 4k videos fullscreen. But that\u0027s another issue, that is not 746068.",
+      "revId": "cb5616ae6cca4be4c556af4ae02105d9d839b150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6433a507_6b0897c2",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
