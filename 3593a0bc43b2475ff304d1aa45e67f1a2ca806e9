@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "7e7219f6_803dfddd",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_physical_text_fragment.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-07-22T01:14:13Z",
+      "side": 1,
+      "message": "Does it make sense to only do this on-demand? That is, is it semi-rare that we need the visual overflow?",
+      "revId": "3593a0bc43b2475ff304d1aa45e67f1a2ca806e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb9396ab_eb746344",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_physical_text_fragment.h",
         "patchSetId": 2
