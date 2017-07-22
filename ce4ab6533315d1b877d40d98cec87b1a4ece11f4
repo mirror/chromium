@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6015dba_53988247",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-22T00:21:12Z",
+      "side": 1,
+      "message": "nit: explicit",
+      "revId": "ce4ab6533315d1b877d40d98cec87b1a4ece11f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2657729d_d40e4d9e",
+        "filename": "content/renderer/gpu/render_widget_compositor.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-22T00:21:12Z",
+      "side": 1,
+      "message": "As mentioned out-of-band, it could be a bit better to express this via RenderWidget params, to remove the constraints that all RW in the same process need to have the same settings (as much as it might be true now for headless, it might not be true forever, and the constraint complicates refactoring), and to avoid parsing strings.",
+      "revId": "ce4ab6533315d1b877d40d98cec87b1a4ece11f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
