@@ -38,11 +38,14 @@ config("c++flags") {
       "m",
     ]
 
-    if (!is_mac) {
+    if (!is_mac && !is_fuchsia) {
       libs += [
         "gcc_s",
         "rt",
       ]
+    } else if (is_fuchsia) {
+      # TODO(fuchsia): We probably want to support more archs one day.
+      libs += [ "clang_rt.builtins-x86_64" ]
     }
 
     if (is_mac && using_sanitizer) {
