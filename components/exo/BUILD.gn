@@ -13,6 +13,8 @@ source_set("exo") {
     "data_device.cc",
     "data_device.h",
     "data_device_delegate.h",
+    "data_event_dispatcher.cc",
+    "data_event_dispatcher.h",
     "data_offer.cc",
     "data_offer.h",
     "data_offer_delegate.h",

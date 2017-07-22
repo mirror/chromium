@@ -13,6 +13,7 @@ namespace exo {
 
 class DataDeviceDelegate;
 class DataSource;
+class DataEventDispatcher;
 class Surface;
 
 enum class DndAction { kNone, kCopy, kMove, kAsk };
@@ -21,7 +22,8 @@ enum class DndAction { kNone, kCopy, kMove, kAsk };
 // mechanisms such as copy-and-paste and drag-and-drop.
 class DataDevice {
  public:
-  explicit DataDevice(DataDeviceDelegate* delegate);
+  DataDevice(DataDeviceDelegate* delegate,
+             DataEventDispatcher* data_event_dispatcher);
   ~DataDevice();
 
   // Starts drag-and-drop operation.
@@ -39,7 +41,12 @@ class DataDevice {
   // selection. |serial| is a unique number of event which tigers SetSelection.
   void SetSelection(const DataSource* source, uint32_t serial);
 
+  // This should return true if |surface| is a valid target for this data
+  // device. E.g. the surface is owned by the same client as the pointer.
+  bool CanAcceptDataEventsForSurface(Surface* surface) const;
+
  private:
+  DataEventDispatcher* const data_event_dispatcher_;
   DataDeviceDelegate* const delegate_;
 
   DISALLOW_COPY_AND_ASSIGN(DataDevice);
