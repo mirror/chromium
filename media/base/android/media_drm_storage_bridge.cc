@@ -15,6 +15,7 @@
 #include "base/bind.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "base/unguessable_token.h"
 #include "jni/MediaDrmStorageBridge_jni.h"
 #include "media/base/android/android_util.h"
 
@@ -44,12 +45,9 @@ void MediaDrmStorageBridge::Initialize(const url::Origin& origin,
   DCHECK(create_storage_cb);
   impl_ = create_storage_cb.Run();
 
-  // TODO(yucliu): MediaDrmStorage should generate and return origin id
-  // asynchronously in a callback.
-  impl_->Initialize(origin);
-  origin_id_ = origin.Serialize();
-
-  std::move(on_init).Run();
+  impl_->Initialize(
+      origin, base::BindOnce(&MediaDrmStorageBridge::OnInitialized,
+                             weak_factory_.GetWeakPtr(), std::move(on_init)));
 }
 
 void MediaDrmStorageBridge::OnProvisioned(
@@ -137,6 +135,18 @@ void MediaDrmStorageBridge::OnClearInfo(
 void MediaDrmStorageBridge::RunAndroidBoolCallback(JavaObjectPtr j_callback,
                                                    bool success) {
   RunCallbackAndroid(*j_callback, success);
+}
+
+void MediaDrmStorageBridge::OnInitialized(
+    base::OnceClosure on_init,
+    const base::UnguessableToken& origin_id) {
+  DCHECK(origin_id);
+
+  std::string id = origin_id.ToString();
+  DCHECK(origin_id_.empty() || id == origin_id_);
+
+  origin_id_ = std::move(id);
+  std::move(on_init).Run();
 }
 
 void MediaDrmStorageBridge::OnSessionDataLoaded(

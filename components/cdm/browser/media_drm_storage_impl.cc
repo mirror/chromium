@@ -17,7 +17,7 @@
 //
 // {
 //     $origin: {
-//         "origin_id": $origin_id
+//         "origin_id": [list of int which is serialized UnguessableToken]
 //         "creation_time": $creation_time
 //         "sessions" : {
 //             $session_id: {
@@ -40,13 +40,11 @@ const char kCreationTime[] = "creation_time";
 const char kSessions[] = "sessions";
 const char kKeySetId[] = "key_set_id";
 const char kMimeType[] = "mime_type";
+const char kOriginId[] = "origin_id";
 
-std::unique_ptr<base::DictionaryValue> CreateOriginDictionary() {
-  auto dict = base::MakeUnique<base::DictionaryValue>();
-  // TODO(xhwang): Create |origin_id|.
-  dict->SetDouble(kCreationTime, base::Time::Now().ToDoubleT());
-  return dict;
-}
+// UnguessableToken is serialized as two uint64_t, which is stored as a list of
+// int (32 bit).
+const size_t kOriginIdIntCount = 2 * sizeof(uint64_t) / sizeof(int);
 
 std::unique_ptr<base::DictionaryValue> CreateSessionDictionary(
     const std::vector<uint8_t>& key_set_id,
@@ -72,6 +70,60 @@ bool GetSessionData(const base::DictionaryValue* sesssion_dict,
 
   key_set_id->assign(key_set_id_string.begin(), key_set_id_string.end());
   return true;
+}
+
+base::UnguessableToken GetOriginId(const base::DictionaryValue* origin_dict) {
+  DCHECK(origin_dict);
+
+  const base::ListValue* origin_id_list = nullptr;
+  if (!origin_dict->GetList(kOriginId, &origin_id_list)) {
+    return base::UnguessableToken();
+  }
+
+  DCHECK(origin_id_list);
+
+  if (origin_id_list->GetSize() != kOriginIdIntCount) {
+    return base::UnguessableToken();
+  }
+
+  uint64_t origin_id[2] = {0};
+  for (size_t i = 0; i < kOriginIdIntCount; i++) {
+    size_t high_0_low_1 = 2 * i / kOriginIdIntCount;
+    size_t shift = (i % (kOriginIdIntCount / 2)) * sizeof(int) * 8;
+    origin_id[high_0_low_1] |= static_cast<uint64_t>(static_cast<unsigned int>(
+                                   origin_id_list->GetList()[i].GetInt()))
+                               << shift;
+  }
+
+  return base::UnguessableToken::Deserialize(origin_id[0], origin_id[1]);
+}
+
+void SetOriginId(base::DictionaryValue* origin_dict,
+                 const base::UnguessableToken& origin_id) {
+  DCHECK(origin_dict);
+  DCHECK(origin_id);
+  uint64_t id[2] = {origin_id.GetHighForSerialization(),
+                    origin_id.GetLowForSerialization()};
+
+  base::Value::ListStorage origin_id_list;
+  for (size_t i = 0; i < kOriginIdIntCount; i++) {
+    size_t high_0_low_1 = 2 * i / kOriginIdIntCount;
+    size_t shift = (i % (kOriginIdIntCount / 2)) * sizeof(int) * 8;
+    origin_id_list.emplace_back(static_cast<int>(id[high_0_low_1] >> shift));
+  }
+
+  origin_dict->Set(
+      kOriginId, base::MakeUnique<base::ListValue>(std::move(origin_id_list)));
+}
+
+std::unique_ptr<base::DictionaryValue> CreateOriginDictionary(
+    const base::UnguessableToken& origin_id) {
+  DCHECK(origin_id);
+
+  auto dict = base::MakeUnique<base::DictionaryValue>();
+  dict->SetDouble(kCreationTime, base::Time::Now().ToDoubleT());
+  SetOriginId(dict.get(), origin_id);
+  return dict;
 }
 
 #if DCHECK_IS_ON()
@@ -115,19 +167,43 @@ MediaDrmStorageImpl::~MediaDrmStorageImpl() {
 
 // TODO(xhwang): Update this function to return an origin ID. If the origin is
 // not the same as |origin_|, return an empty origin ID.
-void MediaDrmStorageImpl::Initialize(const url::Origin& origin) {
+void MediaDrmStorageImpl::Initialize(const url::Origin& origin,
+                                     InitializeCallback callback) {
   DVLOG(1) << __func__ << ": origin = " << origin;
   DCHECK(thread_checker_.CalledOnValidThread());
-  DCHECK(!initialized_);
+  DCHECK(!origin_id_);
 
-  initialized_ = true;
+  DictionaryPrefUpdate update(pref_service_, kMediaDrmStorage);
+  base::DictionaryValue* storage_dict = update.Get();
+  DCHECK(storage_dict);
+
+  base::DictionaryValue* origin_dict = nullptr;
+  // The origin string may contain dots. Do not use path expansion.
+  bool exist = storage_dict->GetDictionaryWithoutPathExpansion(origin_string_,
+                                                               &origin_dict);
+
+  base::UnguessableToken origin_id;
+  if (exist) {
+    DCHECK(origin_dict);
+    origin_id = GetOriginId(origin_dict);
+  }
+
+  // |origin_id| can be empty even if |origin_dict| exists. This can happen if
+  // |origin_dict| is created with an old version app.
+  if (origin_id.is_empty()) {
+    origin_id = base::UnguessableToken::Create();
+  }
+
+  origin_id_ = origin_id;
+
+  std::move(callback).Run(origin_id);
 }
 
 void MediaDrmStorageImpl::OnProvisioned(OnProvisionedCallback callback) {
   DVLOG(1) << __func__;
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  if (!initialized_) {
+  if (!initialized()) {
     DVLOG(1) << __func__ << ": Not initialized.";
     std::move(callback).Run(false);
     return;
@@ -143,7 +219,7 @@ void MediaDrmStorageImpl::OnProvisioned(OnProvisionedCallback callback) {
       << " already exists and will be cleared";
 
   storage_dict->SetWithoutPathExpansion(origin_string_,
-                                        CreateOriginDictionary());
+                                        CreateOriginDictionary(origin_id_));
   std::move(callback).Run(true);
 }
 
@@ -154,7 +230,7 @@ void MediaDrmStorageImpl::SavePersistentSession(
   DVLOG(2) << __func__;
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  if (!initialized_) {
+  if (!initialized()) {
     DVLOG(1) << __func__ << ": Not initialized.";
     std::move(callback).Run(false);
     return;
@@ -175,7 +251,7 @@ void MediaDrmStorageImpl::SavePersistentSession(
     DVLOG(1) << __func__ << ": Entry for origin " << origin_string_
              << " does not exist; create a new one.";
     storage_dict->SetWithoutPathExpansion(origin_string_,
-                                          CreateOriginDictionary());
+                                          CreateOriginDictionary(origin_id_));
     storage_dict->GetDictionaryWithoutPathExpansion(origin_string_,
                                                     &origin_dict);
     DCHECK(origin_dict);
@@ -205,7 +281,7 @@ void MediaDrmStorageImpl::LoadPersistentSession(
   DVLOG(2) << __func__;
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  if (!initialized_) {
+  if (!initialized()) {
     DVLOG(1) << __func__ << ": Not initialized.";
     std::move(callback).Run(nullptr);
     return;
@@ -258,7 +334,7 @@ void MediaDrmStorageImpl::RemovePersistentSession(
   DVLOG(2) << __func__;
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  if (!initialized_) {
+  if (!initialized()) {
     DVLOG(1) << __func__ << ": Not initialized.";
     std::move(callback).Run(false);
     return;
