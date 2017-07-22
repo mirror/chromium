@@ -38,7 +38,7 @@ config("c++flags") {
       "m",
     ]
 
-    if (!is_mac) {
+    if (!is_mac && !is_fuchsia) {
       libs += [
         "gcc_s",
         "rt",
