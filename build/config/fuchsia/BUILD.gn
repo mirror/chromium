@@ -4,6 +4,7 @@
 
 import("//build/config/fuchsia/config.gni")
 import("//build/config/sysroot.gni")
+import("//build/toolchain/toolchain.gni")
 
 assert(is_fuchsia)
 assert(is_posix)
@@ -32,7 +33,7 @@ config("compiler") {
   # the SDK, https://crbug.com/724204
   ldflags += [
     "-resource-dir",
-    rebase_path(fuchsia_sdk, root_build_dir) + "/toolchain_libs/clang/5.0.0",
+    rebase_path(fuchsia_sdk, root_build_dir) + "/toolchain_libs/clang/$clang_version",
   ]
 
   ldflags += [
