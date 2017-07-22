@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "33c5d6df_90821651",
+        "filename": "chrome/browser/resources/md_downloads/action_service.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-22T00:06:28Z",
+      "side": 1,
+      "message": "\u003e Per my interpretation of the \"definition of a \"constant\" in the styleguide it should not. Explaining below:\n\u003e \n\u003e \"Before choosing constant case, consider whether the field really feels like a deeply immutable constant. For example, if any of that instance\u0027s observable state can change, it is almost certainly not a constant.\"\n\u003e \n\u003e The state of an Array\u003cstring\u003e can be changed (for example using push/splice).\n\u003e \n\u003e \"Merely intending to never mutate the object is generally not enough.\"\n\u003e \n\u003e Which means that even though we don\u0027t mutate the array in this case, the fact that it can be mutated makes it not a constant that requires THIS_NAMING. In other words this falls under the following category:\n\u003e \n\u003e \"not all @const static properties and module-local consts are constants\"\n\nAnd that was only to qualify \"Every constant is a @const static property or a module-local const declaration\". This is NOT a \"@const static property\" (it\u0027s not a static member, just a variable that should only be set at declaration).\n\nCONSTANT_CASE is for logical constants, things like magic numbers. There\u0027s a reason for the case differentiation. We shouldn\u0027t consider CONSTANT_CASE for values that change in every execution of a function because they happen to be \"const\".",
+      "parentUuid": "44cf2f05_79252977",
+      "range": {
+        "startLine": 116,
+        "startChar": 12,
+        "endLine": 116,
+        "endChar": 23
+      },
+      "revId": "06681f512ff6ff221232b1d4ed8ca885b050803c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18d5e119_5ebb68ca",
         "filename": "docs/es6_chromium.md",
         "patchSetId": 5
