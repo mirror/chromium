@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1f7ec41d_384e720d",
+        "filename": "chrome/browser/upgrade_detector_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-22T08:02:32Z",
+      "side": 1,
+      "message": "\u003e I\u0027m not sure if this will end up requiring a leak_annotations.h..\n\nI don\u0027t think so. The memory is still reachable, so it isn\u0027t a leak in that sense. There are many, many occurrences of this pattern that do not include an annotation.\n\n\u003e Perhaps a base::LazyInstance\u003cUpgradeDetectorImpl\u003e::Leaky would be cleaner?\n\nThe new normal is to let C++ do it for us now that this pattern is thread-safe and simple. Leaky LazyInstances do have one advantage in that they avoid a heap allocation, but I think simpler is better.",
+      "parentUuid": "8d158b6a_9d0cdabc",
+      "revId": "cb87c4f4e241b82a1bdaa3e8e03d4113c6879420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "259e0aa9_8e80ff18",
         "filename": "chrome/browser/upgrade_detector_impl.h",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "01e23d25_529a0925",
+        "filename": "chrome/browser/upgrade_detector_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-22T08:02:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "259e0aa9_8e80ff18",
+      "range": {
+        "startLine": 83,
+        "startChar": 32,
+        "endLine": 83,
+        "endChar": 45
+      },
+      "revId": "cb87c4f4e241b82a1bdaa3e8e03d4113c6879420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89640d0f_cd909d85",
         "filename": "chrome/browser/upgrade_detector_impl.h",
         "patchSetId": 4
@@ -62,6 +104,30 @@
       "revId": "cb87c4f4e241b82a1bdaa3e8e03d4113c6879420",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94eea6f4_3794500d",
+        "filename": "chrome/browser/upgrade_detector_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-22T08:02:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89640d0f_cd909d85",
+      "range": {
+        "startLine": 89,
+        "startChar": 43,
+        "endLine": 89,
+        "endChar": 55
+      },
+      "revId": "cb87c4f4e241b82a1bdaa3e8e03d4113c6879420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
