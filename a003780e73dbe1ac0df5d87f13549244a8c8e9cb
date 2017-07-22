@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90dac3bd_0642a938",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-22T04:19:47Z",
+      "side": 1,
+      "message": "Can we use a ScopedObserver instead of manual Add/Remove calls?  Then in OnImmersiveModeControllerDestroyed() we can simply RemoveAll(), and eliminate controller_destroyed_ (this also depends on following my suggestion about removing the runloops).  This also lets us eliminate PostRunTestOnMainThread().",
+      "revId": "a003780e73dbe1ac0df5d87f13549244a8c8e9cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f57a09d8_0cd8b89e",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-22T04:19:47Z",
+      "side": 1,
+      "message": "Nit: I suggest moving each of these EXPECT_FALSE()s to directly below the WaitUntilRevealEnds() lines that ensure they\u0027re true (instead of being at the start of the next block).",
+      "revId": "a003780e73dbe1ac0df5d87f13549244a8c8e9cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7cb2c36_c9be2b6b",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-22T04:19:47Z",
+      "side": 1,
+      "message": "Nit: Should we EXPECT_TRUE(...IsRevealed()) after these?",
+      "revId": "a003780e73dbe1ac0df5d87f13549244a8c8e9cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98b6ede5_38aeee05",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 833,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-22T04:19:47Z",
+      "side": 1,
+      "message": "Nit Shorter:\n\n  constexpr auto kTabstripRevealerDelay \u003d base::TimeDelta::FromSeconds(1);",
+      "revId": "a003780e73dbe1ac0df5d87f13549244a8c8e9cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1843d18_963fa32e",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-22T04:19:47Z",
+      "side": 1,
+      "message": "Nit: Shorter:\n\n  constexpr auto kTabstripRevealerDelayForTests \u003d base::TimeDelta();",
+      "revId": "a003780e73dbe1ac0df5d87f13549244a8c8e9cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb3830ef_cdff31dc",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-22T04:19:47Z",
+      "side": 1,
+      "message": "Nit: Or just make this clear via a temp:\n\n  auto delete_revealer \u003d\n      base::BindOnce([](std::unique_ptr\u003cImmersiveRevealedLock\u003e) {},\n                     std::move(revealer));\n  base::ThreadTaskRunnerHandle::Get()-\u003ePostDelayedTask(\n      FROM_HERE, std::move(delete_revealer), ...",
+      "revId": "a003780e73dbe1ac0df5d87f13549244a8c8e9cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d828c569_519675ee",
+        "filename": "chrome/browser/ui/views/frame/browser_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-22T04:19:47Z",
+      "side": 1,
+      "message": "Nit: |disable| would be a clearer param name.",
+      "revId": "a003780e73dbe1ac0df5d87f13549244a8c8e9cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

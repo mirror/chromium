@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "f2963930_e0fccc79",
+        "filename": "chrome/browser/ui/cocoa/browser_window_cocoa.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-22T04:19:47Z",
+      "side": 1,
+      "message": "I don\u0027t think we have an \"immersive fullscreen\" called by that name on Mac, but we have something that can reveal tabstrips via animation, I thought.",
+      "parentUuid": "6386c3e4_b37b01f6",
+      "revId": "f7a42bf9bd55f284cea6205cbf9cb2e579722647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6517d64f_6b28df50",
         "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
         "patchSetId": 3
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "It seems that WaitableEvent is used when one thread wants to wait for something happening on another thread. In our case here everything is happening on the UI thread, so we cannot really put it to sleep. Is my understanding wrong?",
       "parentUuid": "6517d64f_6b28df50",
+      "revId": "f7a42bf9bd55f284cea6205cbf9cb2e579722647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92019619_2707229b",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-22T04:19:47Z",
+      "side": 1,
+      "message": "I thought about this more deeply.\n\nI think the OnImmersiveRevealXXX() functions aren\u0027t actually helping us.  They basically assert that, if you actually got the callback, the state is what you expect.  But presumably the likely way for all this to fail is to not get the callbacks at all, because the reveal didn\u0027t get triggered correctly.  In that case, the test just hangs.\n\nI think the safer pattern is to eliminate all the RunLoops and WaitUntil functions.  Instead, do something like this:\n\n  void OnImmersiveRevealStarted() override {\n    EXPECT_FALSE(reveal_started_);\n    EXPECT_FALSE(reveal_ended_);\n    reveal_started_ \u003d true;\n    EXPECT_TRUE(browser_view()-\u003eimmersive_mode_controller()-\u003eIsRevealed());\n    EXPECT_EQ(expected_index_,\n              browser()-\u003etab_strip_model()-\u003eactive_index());\n  }\n\n  void OnImmersiveRevealEnded() override {\n    EXPECT_TRUE(reveal_started_);\n    EXPECT_FALSE(reveal_ended_);\n    reveal_started_ \u003d false;\n    reveal_ended_ \u003d true;\n    EXPECT_FALSE(browser_view()-\u003eimmersive_mode_controller()-\u003eIsRevealed());\n  }\n\n  void RunTest(int command, int expected_index) {\n    reveal_started_ \u003d reveal_ended_ \u003d false;\n    expected_index_ \u003d expected_index;\n    browser()-\u003ecommand_controller()-\u003ecommand_updater()-\u003eExecuteCommand(\n        command);\n    base::RunLoop().RunUntilIdle();\n    EXPECT_TRUE(reveal_ended_);\n  }\n\n  int expected_index_;  // The tab that should be active while RunTest() runs.\n  ...\n\nIN_PROC_BROWSER_TEST_F(ImmersiveModeBrowserViewTest,\n                       TabNavigationAcceleratorsFullscreenBrowser) {\n  ...\n  struct TestData { int command; int expected_index; }\n  constexpr TestData test_data[] \u003d {{IDC_SELECT_LAST_TAB, 3}, ...};\n  for (auto datum : test_data)\n    RunTest(datum.command, datum.expected_index);\n}\n\nThis is less likely to be flaky/hang on error, and is less repetitive to boot.",
+      "parentUuid": "967831d6_5a453f07",
       "revId": "f7a42bf9bd55f284cea6205cbf9cb2e579722647",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -206,6 +242,24 @@
       "side": 1,
       "message": "unique_ptr ctor is marked explicit so I had to use base::WrapUnique instead.",
       "parentUuid": "32e31e11_0cbe4fc6",
+      "revId": "f7a42bf9bd55f284cea6205cbf9cb2e579722647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "61057f37_30036ce5",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-22T04:19:47Z",
+      "side": 1,
+      "message": "I see.  In that case () might have been better in the end.  I don\u0027t care much, use whatever you think is better :)",
+      "parentUuid": "4c0adec8_d7e656b7",
       "revId": "f7a42bf9bd55f284cea6205cbf9cb2e579722647",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
