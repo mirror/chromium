@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "aa621e4f_88497d64",
+        "filename": "base/test/scoped_feature_list.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-22T02:49:53Z",
+      "side": 1,
+      "message": "Yeah, that seems like a nice thing to add.  Thanks!",
+      "parentUuid": "952944e6_4215d43f",
+      "range": {
+        "startLine": 90,
+        "startChar": 52,
+        "endLine": 90,
+        "endChar": 78
+      },
+      "revId": "e69270b1fda0136b6123d3a2a4878b09820a8ca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f115198_0cb84bd6",
         "filename": "base/test/scoped_feature_list.cc",
         "patchSetId": 14
@@ -36,6 +60,70 @@
       "writtenOn": "2017-07-21T11:26:27Z",
       "side": 1,
       "message": "It would be nice here to check if there is a FieldTrialList, and if not create one here.\nIt does not seem to be possible with the current API though?\n\nIf we don\u0027t do this, then the client has to ensure a FieldTrialList exists before calling this method, and they would have the same problem (there is no way to know if one is already registered).\n\nIs it possible to check for the FieldTrialList? If not, should we add this capability?",
+      "revId": "e69270b1fda0136b6123d3a2a4878b09820a8ca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff38f62b_0422efc1",
+        "filename": "base/test/scoped_feature_list.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-22T02:49:53Z",
+      "side": 1,
+      "message": "It seems reasonable to add a ForTesting method that checks whether there is a FieldTrialList already.",
+      "parentUuid": "3f115198_0cb84bd6",
+      "revId": "e69270b1fda0136b6123d3a2a4878b09820a8ca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fdd4f68_ede77089",
+        "filename": "base/test/scoped_feature_list.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-22T02:49:53Z",
+      "side": 1,
+      "message": "nit: Let\u0027s move this method to be more prominent, and move the WithFieldTrial methods to be less prominent -- possibly even private -- since clients typically just care about enabling params, rather than specific trials.",
+      "range": {
+        "startLine": 106,
+        "startChar": 68,
+        "endLine": 106,
+        "endChar": 0
+      },
+      "revId": "e69270b1fda0136b6123d3a2a4878b09820a8ca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b28e506_ecf06db2",
+        "filename": "base/test/scoped_feature_list_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-22T02:49:53Z",
+      "side": 1,
+      "message": "The field trial group is activated here the FeatureList class: [ https://cs.chromium.org/chromium/src/base/feature_list.cc?l\u003d311-313 ].  Please add test coverage to verify that the specified group ends up active.",
+      "range": {
+        "startLine": 85,
+        "startChar": 62,
+        "endLine": 85,
+        "endChar": 0
+      },
       "revId": "e69270b1fda0136b6123d3a2a4878b09820a8ca4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
