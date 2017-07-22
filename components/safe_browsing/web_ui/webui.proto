@@ -36,7 +36,7 @@ message DatabaseManagerInfo {
       // The store file name.
       optional string file_name = 1;
 
-      // The store file size.
+      // The store file sizes.
       optional int64 file_size_bytes = 2;
 
       // The status of applying the updates fetched from the server to the
