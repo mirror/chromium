@@ -56,7 +56,7 @@ class Surface : public ui::ContextFactoryObserver,
                 public aura::WindowObserver,
                 public ui::PropertyHandler,
                 public ui::CompositorVSyncManager::Observer,
-                public cc::BeginFrameObserverBase {
+                public viz::BeginFrameObserverBase {
  public:
   using PropertyDeallocator = void (*)(int64_t value);
 
@@ -218,7 +218,7 @@ class Surface : public ui::ContextFactoryObserver,
     return pending_damage_.contains(gfx::RectToSkIRect(damage));
   }
 
-  // Overridden from cc::BeginFrameObserverBase:
+  // Overridden from viz::BeginFrameObserverBase:
   bool OnBeginFrameDerivedImpl(const viz::BeginFrameArgs& args) override;
   void OnBeginFrameSourcePausedChanged(bool paused) override {}
 
