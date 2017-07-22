@@ -35,6 +35,7 @@
 #include "services/device/public/interfaces/wake_lock_provider.mojom.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "third_party/libyuv/include/libyuv/scale_argb.h"
+#include "third_party/webrtc/modules/desktop_capture/cropped_desktop_frame.h"
 #include "third_party/webrtc/modules/desktop_capture/cropping_window_capturer.h"
 #include "third_party/webrtc/modules/desktop_capture/desktop_and_cursor_composer.h"
 #include "third_party/webrtc/modules/desktop_capture/desktop_capture_options.h"
@@ -150,8 +151,6 @@ class DesktopCaptureDevice::Core : public webrtc::DesktopCapturer::Callback {
   // The system time when we receive the first frame.
   base::TimeTicks first_ref_time_;
 
-  std::unique_ptr<webrtc::BasicDesktopFrame> black_frame_;
-
   // TODO(jiayl): Remove wake_lock_ when there is an API to keep the
   // screen from sleeping for the drive-by web.
   device::mojom::WakeLockPtr wake_lock_;
@@ -256,6 +255,24 @@ void DesktopCaptureDevice::Core::OnCaptureResult(
     UMA_HISTOGRAM_TIMES(kUmaWindowCaptureTime, capture_time);
   }
 
+  const int32_t frame_width = frame->size().width();
+  const int32_t frame_height = frame->size().height();
+  if (frame->size().equals(webrtc::DesktopSize(1, 1))) {
+    // On OSX/Win7 We receive a 1x1 frame when the shared window is
+    // minimized. It cannot be subsampled to I420 and will be dropped
+    // downstream. So we replace it with a 2x2 black frame to avoid the video
+    // appearing frozen at the last frame.
+    frame.reset(new webrtc::BasicDesktopFrame(webrtc::DesktopSize(2, 2)));
+    memset(frame->data(), 0, frame->stride() * frame->size().height());
+  } else if (frame_width & 1 || frame_height & 1) {
+    // Align to 2x2 pixel boundaries, as required by OnIncomingCapturedData()
+    // so it can convert the frame to I420 format. And this can avoid blurring
+    // from scaling frames with odd dimentions. See https://crbug.com/737278.
+    frame = webrtc::CreateCroppedDesktopFrame(
+        std::move(frame),
+        webrtc::DesktopRect::MakeWH(frame_width & ~1, frame_height & ~1));
+  }
+
   // If the frame size has changed, drop the output frame (if any), and
   // determine the new output size.
   if (!previous_frame_size_.equals(frame->size())) {
@@ -264,8 +281,7 @@ void DesktopCaptureDevice::Core::OnCaptureResult(
                                                  frame->size().height()));
     previous_frame_size_ = frame->size();
   }
-  // Align to 2x2 pixel boundaries, as required by OnIncomingCapturedData() so
-  // it can convert the frame to I420 format.
+
   const webrtc::DesktopSize output_size(
       resolution_chooser_->capture_size().width() & ~1,
       resolution_chooser_->capture_size().height() & ~1);
@@ -276,18 +292,7 @@ void DesktopCaptureDevice::Core::OnCaptureResult(
       webrtc::DesktopFrame::kBytesPerPixel;
   const uint8_t* output_data = nullptr;
 
-  if (frame->size().equals(webrtc::DesktopSize(1, 1))) {
-    // On OSX We receive a 1x1 frame when the shared window is minimized. It
-    // cannot be subsampled to I420 and will be dropped downstream. So we
-    // replace it with a black frame to avoid the video appearing frozen at the
-    // last frame.
-    if (!black_frame_ || !black_frame_->size().equals(output_size)) {
-      black_frame_.reset(new webrtc::BasicDesktopFrame(output_size));
-      memset(black_frame_->data(), 0,
-             black_frame_->stride() * black_frame_->size().height());
-    }
-    output_data = black_frame_->data();
-  } else if (!frame->size().equals(output_size)) {
+  if (!frame->size().equals(output_size)) {
     // Down-scale and/or letterbox to the target format if the frame does not
     // match the output size.
 
