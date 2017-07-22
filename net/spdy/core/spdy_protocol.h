@@ -833,9 +833,11 @@ class SPDY_EXPORT_PRIVATE SpdyUnknownIR : public SpdyFrameIR {
       : SpdyFrameIR(stream_id),
         type_(type),
         flags_(flags),
+        length_(payload.size()),
         payload_(std::move(payload)) {}
   uint8_t type() const { return type_; }
   uint8_t flags() const { return flags_; }
+  int length() const { return length_; }
   const SpdyString& payload() const { return payload_; }
 
   void Visit(SpdyFrameVisitor* visitor) const override;
@@ -844,9 +846,14 @@ class SPDY_EXPORT_PRIVATE SpdyUnknownIR : public SpdyFrameIR {
 
   int flow_control_window_consumed() const override;
 
+ protected:
+  // Allows subclasses to overwrite the default length.
+  void set_length(int length) { length_ = length; }
+
  private:
   uint8_t type_;
   uint8_t flags_;
+  int length_;
   const SpdyString payload_;
 
   DISALLOW_COPY_AND_ASSIGN(SpdyUnknownIR);
