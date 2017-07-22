@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d1f7c6f_fb56d42f",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 12
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-07-22T00:55:16Z",
+      "side": 1,
+      "message": "Why do some of these fail on linux only...?",
+      "revId": "b333a828222d97ecdb0d923b78bca2c7b7f09b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f515f43_45224cec",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-07-22T00:55:16Z",
+      "side": 1,
+      "message": "Can you add a comment that the reason shrink to fit does not need to be handled here is because we call SizesLogicalWidthToFitContent to determine whether we need to shrink-to-fit, and that always returns true for out-of-flow positioning?",
+      "revId": "b333a828222d97ecdb0d923b78bca2c7b7f09b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acc8aeca_f5a52cb9",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_absolute_utils.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-07-22T00:55:16Z",
+      "side": 1,
+      "message": "Add a comment that replaced_size should be set if (and only if) the element is a replaced element, and then set to its intrinsic size?",
+      "revId": "b333a828222d97ecdb0d923b78bca2c7b7f09b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7ff2f22_1325881e",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_layout_input_node.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-07-22T00:55:16Z",
+      "side": 1,
+      "message": "For all the sizes below, don\u0027t you have to transform them for the writing mode if it\u0027s not horizontal?",
+      "revId": "b333a828222d97ecdb0d923b78bca2c7b7f09b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "500a23b5_e2c3e030",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_layout_input_node.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-07-22T00:55:16Z",
+      "side": 1,
+      "message": "I\u0027m a little confused why aspect ratio is a size. Can you add a comment how that works and how it differs from default_intrinsic_size?",
+      "revId": "b333a828222d97ecdb0d923b78bca2c7b7f09b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c278951_32615a5c",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_length_utils.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-07-22T00:55:16Z",
+      "side": 1,
+      "message": "It doesn\u0027t compute the intrinsic size, since it takes the CSS-specified width and height into account. I think it just computes the size of a replaced element?",
+      "revId": "b333a828222d97ecdb0d923b78bca2c7b7f09b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
