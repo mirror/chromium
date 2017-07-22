@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c19b0cb_4a39de8f",
+        "filename": "third_party/WebKit/Source/platform/loader/testing/CryptoTestingPlatformSupport.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-22T02:20:42Z",
+      "side": 1,
+      "message": "nit: should dcheck Crypto() returns nullptr before setting?",
+      "revId": "2c32c48c1554a1779528311754ff47ed1c6adfb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03fedbfb_ed415e91",
+        "filename": "third_party/WebKit/Source/platform/testing/MockWebCrypto.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-22T02:20:42Z",
+      "side": 1,
+      "message": "optional: gmock is not super popular in chromium in general except for very simple ones, do you feel this mock class and matcher code might become simpler if it were written as a dumb c++ class? If so I might prefer a dumb class over gmock.",
+      "revId": "2c32c48c1554a1779528311754ff47ed1c6adfb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
