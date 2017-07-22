@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "ac944de1_0f1213dd",
+        "filename": "chrome/browser/resources/options/OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-07-22T00:20:50Z",
+      "side": 0,
+      "message": "\u003e Yes, please add me.\n\nDone.\n\n\u003e Assuming there\u0027s 2 of us, can we keep \"set noparent\" here and in /help since the logic still applies?\n\nI don\u0027t see a reason for the \"set noparent\" any more.  I have taken some heat (over the least year or two) because I added it.  You\u0027re welcome to add it back, but I don\u0027t want to be involved :).  I want every possible incentive for those depending on this code to stop doing that.",
+      "parentUuid": "618392ff_1fb87e94",
+      "revId": "2cd0fcc10460bbbdf65c73a820bb5bff3ae0f074",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0bc090f4_09d96636",
         "filename": "chrome/browser/ui/webui/options/OWNERS",
         "patchSetId": 2
@@ -207,6 +225,24 @@
       "side": 0,
       "message": "Yes. +me, +set noparent",
       "parentUuid": "4aac392d_e5a6b7bb",
+      "revId": "2cd0fcc10460bbbdf65c73a820bb5bff3ae0f074",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d629fdd4_242706f6",
+        "filename": "chrome/browser/ui/webui/options/OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-07-22T00:20:50Z",
+      "side": 0,
+      "message": "\u003e Yes. +me,\n\nDone.\n\n\u003e +set noparent\n\nYou can do.",
+      "parentUuid": "a13e6694_25a2b9a9",
       "revId": "2cd0fcc10460bbbdf65c73a820bb5bff3ae0f074",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
