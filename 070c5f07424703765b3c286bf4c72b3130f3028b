@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9732afb1_b674248d",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-22T03:33:03Z",
+      "side": 1,
+      "message": "Name this kTextIds.\n\nNit: I\u0027d define this in the constructor, since that\u0027s the only place it\u0027s used, and it\u0027s not related to something used somewhere else.  (This latter is why it\u0027s arguably OK to define the TimeDeltas up here; they\u0027re used in different functions but should likely be changed in unison.)",
+      "revId": "070c5f07424703765b3c286bf4c72b3130f3028b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cbc2e5b_5dee5e71",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-22T03:33:03Z",
+      "side": 1,
+      "message": "This DCHECK doesn\u0027t do what you want.  What you want is:\n\n  DCHECK_LT(text_specifier, arraysize(kTextIds));",
+      "revId": "070c5f07424703765b3c286bf4c72b3130f3028b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8d81e9e_03e99ebd",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-22T03:33:03Z",
+      "side": 1,
+      "message": "Remove this entirely.",
+      "revId": "070c5f07424703765b3c286bf4c72b3130f3028b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7748318_bb3fad3a",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo_dialog_browsertest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-22T03:33:03Z",
+      "side": 1,
+      "message": "Now that you\u0027re counting in an array, these need to be 0, 1, 2 instead of 1, 2, 3 (here and below, and in your Finch code).\n\nFor clarity, you should probably also change the actual string resource IDs to match that.",
+      "revId": "070c5f07424703765b3c286bf4c72b3130f3028b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
