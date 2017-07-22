@@ -4,6 +4,7 @@
 
 module media.mojom;
 
+import "mojo/common/unguessable_token.mojom";
 import "url/mojo/origin.mojom";
 
 struct SessionData {
@@ -16,7 +17,7 @@ struct SessionData {
 interface MediaDrmStorage {
   // Initializes |this| to be bound to the |origin|. This should not modify
   // anything in the storage.
-  Initialize(url.mojom.Origin origin);
+  Initialize(url.mojom.Origin origin) => (mojo.common.mojom.UnguessableToken origin_id);
 
   // Saves |origin| in the storage after MediaDrm is provisioned for |origin|.
   OnProvisioned() => (bool success);

@@ -17,6 +17,10 @@
 #include "media/base/media_export.h"
 #include "url/origin.h"
 
+namespace base {
+class UnguessableToken;
+}  // namespace base
+
 namespace media {
 
 // Allows MediaDrmBridge to store and retrieve persistent data. This is needed
@@ -39,17 +43,23 @@ class MEDIA_EXPORT MediaDrmStorage
   // Callback to return whether the operation succeeded.
   using ResultCB = base::OnceCallback<void(bool)>;
 
+  // Callback for storage initialization.
+  using InitCB =
+      base::OnceCallback<void(const base::UnguessableToken& origin_id)>;
+
   // Callback to return the result of LoadPersistentSession. |key_set_id| and
   // |mime_type| must be non-empty if |success| is true, and vice versa.
   using LoadPersistentSessionCB =
       base::OnceCallback<void(std::unique_ptr<SessionData> session_data)>;
 
   // Binds |this| to |origin|.
+  // Implementation should return a random origin id in |init_cb|. The id should
+  // be unique and persisted. If the function is called multiple times with the
+  // same |origin|, origin id returned should be identical.
+  //
   // TODO(xhwang): The host of the service should know about the last committed
   // origin. We should solely use that origin, or check the |origin| against it.
-  // TODO(xhwang): We should NOT use the real origin for provisioning. Use a
-  // random origin ID instead.
-  virtual void Initialize(const url::Origin& origin) = 0;
+  virtual void Initialize(const url::Origin& origin, InitCB init_cb) = 0;
 
   // Called when MediaDrm is provisioned for the origin bound to |this|.
   // The implementation should keep track of the storing time so that the
