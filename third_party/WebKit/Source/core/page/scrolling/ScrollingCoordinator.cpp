@@ -676,6 +676,8 @@ static void ProjectRectsToGraphicsLayerSpace(
     do {
       if (!layers_with_rects.insert(layer).is_new_entry)
         break;
+      if (touch_hanlder_in_child_frame)
+        break;
 
       if (layer->Parent()) {
         layer = layer->Parent();
