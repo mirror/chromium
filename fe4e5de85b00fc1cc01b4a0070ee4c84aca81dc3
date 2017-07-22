@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5978ebef_65800727",
+        "filename": "pdf/out_of_process_instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1443,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-22T06:51:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72985758_53e02989",
+      "range": {
+        "startLine": 1443,
+        "startChar": 5,
+        "endLine": 1443,
+        "endChar": 9
+      },
+      "revId": "fe4e5de85b00fc1cc01b4a0070ee4c84aca81dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d5e3e23_1add1b1f",
         "filename": "pdf/out_of_process_instance.cc",
         "patchSetId": 4
@@ -101,6 +125,24 @@
       "side": 1,
       "message": "In my mind, |preview_pages_info_| should be empty if there is only 1 page, but that\u0027s not how it actually behaves. Thus the DCHECK() does fail. Need to look into why that happens.",
       "parentUuid": "58b7668a_f624cd57",
+      "revId": "fe4e5de85b00fc1cc01b4a0070ee4c84aca81dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59148a9a_0500002f",
+        "filename": "pdf/out_of_process_instance.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1588,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-22T06:51:46Z",
+      "side": 1,
+      "message": "Fixed the wonky loading in https://crrev.com/488526. If the page count is 1, |preview_pages_info_| should not contain anything.",
+      "parentUuid": "65aad938_76ec70f7",
       "revId": "fe4e5de85b00fc1cc01b4a0070ee4c84aca81dc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
