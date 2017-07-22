@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "183b600f_8698fbba",
+        "filename": "remoting/host/remoting_me2me_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-22T03:23:14Z",
+      "side": 1,
+      "message": "For Windows (multi-process architecture) we have a Daemon process which is responsible for starting a child process which handles network traffic.  The code above will pass command line values (such as enable-vp9) to the Network process when it is started if that flag was sent to the Daemon process when it starts.",
+      "parentUuid": "017ee9c4_e7b2e3d5",
+      "range": {
+        "startLine": 181,
+        "startChar": 11,
+        "endLine": 181,
+        "endChar": 32
+      },
+      "revId": "d26c1cf59ae5a28926803e072dccc69c65d9700a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37a1b6a8_13f789f1",
         "filename": "remoting/protocol/webrtc_video_stream.cc",
         "patchSetId": 9
