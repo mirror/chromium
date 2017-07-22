@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "308f9d38_e3b478bc",
+        "filename": "extensions/shell/browser/shell_prefs.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-22T13:08:45Z",
+      "side": 1,
+      "message": "JsonPrefStore has exactly these as default params for last two params so you can replace this with JsonPrefStore(filepath); :)",
+      "revId": "479e4d0b040d683e99ca6ffbde85e483f8b9ab78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
