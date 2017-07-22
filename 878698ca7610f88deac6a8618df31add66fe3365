@@ -22,6 +22,30 @@
       "revId": "878698ca7610f88deac6a8618df31add66fe3365",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfbe3540_b7ac0972",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-07-22T00:54:43Z",
+      "side": 1,
+      "message": "If I understand correctly, the settings.routes object is not accessible at this scope since the page needs to be launched and loaded. Here, I am listing out each mocha test\u0027s name in order to run each on in its own TEST_F call, much like in the browser test for print preview. https://cs.chromium.org/chromium/src/chrome/test/data/webui/print_preview/print_preview_ui_browsertest.js?type\u003dcs\u0026q\u003dforEach+TEST_F+mocha.grep\u0026sq\u003dpackage:chromium\u0026l\u003d65",
+      "parentUuid": "19207fb2_bb468e29",
+      "range": {
+        "startLine": 165,
+        "startChar": 3,
+        "endLine": 165,
+        "endChar": 10
+      },
+      "revId": "878698ca7610f88deac6a8618df31add66fe3365",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
