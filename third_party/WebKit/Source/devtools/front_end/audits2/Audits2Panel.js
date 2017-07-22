@@ -9,8 +9,8 @@
 Audits2.Audits2Panel = class extends UI.Panel {
   constructor() {
     super('audits2');
-    this.registerRequiredCSS('audits2/audits2Panel.css');
     this.registerRequiredCSS('audits2/lighthouse/report-styles.css');
+    this.registerRequiredCSS('audits2/audits2Panel.css');
 
     this._protocolService = new Audits2.ProtocolService();
     this._protocolService.registerStatusCallback(msg => this._updateStatus(Common.UIString(msg)));
@@ -210,6 +210,7 @@ Audits2.Audits2Panel = class extends UI.Panel {
     var buttonsRow = uiElement.createChild('div', 'audits2-dialog-buttons hbox');
     this._startButton =
         UI.createTextButton(Common.UIString('Run audit'), this._start.bind(this), '', true /* primary */);
+    this._startButton.autofocus = true;
     this._updateStartButtonEnabled();
     buttonsRow.appendChild(this._startButton);
     this._cancelButton = UI.createTextButton(Common.UIString('Cancel'), this._cancel.bind(this));
@@ -230,7 +231,7 @@ Audits2.Audits2Panel = class extends UI.Panel {
     var statusView = launcherUIElement.createChild('div', 'audits2-status vbox hidden');
     this._statusIcon = statusView.createChild('div', 'icon');
     this._statusElement = statusView.createChild('div');
-    this._updateStatus(Common.UIString('Loading...'));
+    this._updateStatus(Common.UIString('Initializing...'));
     return statusView;
   }
 
@@ -398,6 +399,7 @@ Audits2.Audits2Panel = class extends UI.Panel {
     this._statusElement.createTextChild(Common.UIString('Ah, sorry! We ran into an error: '));
     this._statusElement.createChild('em').createTextChild(err.message);
     this._createBugReportLink(err, this._statusElement);
+    this._statusView.classList.toggle('hidden', true);
   }
 
   /**
@@ -537,8 +539,6 @@ Audits2.ProtocolService = class extends Common.Object {
   attach() {
     return SDK.targetManager.interceptMainConnection(this._dispatchProtocolMessage.bind(this)).then(rawConnection => {
       this._rawConnection = rawConnection;
-      this._rawConnection.sendMessage(
-          JSON.stringify({id: 0, method: 'Input.setIgnoreInputEvents', params: {ignore: true}}));
     });
   }
 
@@ -548,18 +548,19 @@ Audits2.ProtocolService = class extends Common.Object {
    * @return {!Promise<!ReportRenderer.ReportJSON>}
    */
   startLighthouse(inspectedURL, categoryIDs) {
+    this._status('Fetching Lighthouse module...');
     return this._send('start', {url: inspectedURL, categoryIDs});
   }
 
   /**
    * @return {!Promise<!Object|undefined>}
    */
-  detach() {
-    return Promise.resolve().then(() => this._send('stop')).then(() => this._backend.dispose()).then(() => {
-      delete this._backend;
-      delete this._backendPromise;
-      return this._rawConnection.disconnect();
-    });
+  async detach() {
+    await this._send('stop');
+    await this._backend.dispose();
+    delete this._backend;
+    delete this._backendPromise;
+    return this._rawConnection.disconnect();
   }
 
   /**
@@ -585,6 +586,9 @@ Audits2.ProtocolService = class extends Common.Object {
           this._backend.on('statusUpdate', result => this._status(result.message));
           this._backend.on('sendProtocolMessage', result => this._sendProtocolMessage(result.message));
         });
+    this._backendPromise.catch(e => {
+      debugger;
+    })
   }
 
   /**
@@ -715,7 +719,7 @@ Audits2.ReportSelector.Item = class {
       return;
     }
 
-    this._reportContainer = this._resultsView.createChild('div', 'report-container lh-vars lh-root lh-devtools');
+    this._reportContainer = this._resultsView.createChild('div', 'lh-vars lh-root lh-devtools');
 
     var dom = new DOM(/** @type {!Document} */ (this._resultsView.ownerDocument));
     var detailsRenderer = new Audits2.DetailsRenderer(dom);
