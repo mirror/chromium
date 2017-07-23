@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "65186582_7ca6e744",
+        "filename": "chrome/browser/extensions/api/desktop_capture/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-23T21:23:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26d7fb84_cd679857",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 20
+      },
+      "revId": "151a0ee2eb0015b42d3a966ad09c175125574664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae15150b_6d2679ca",
         "filename": "chrome/browser/media/webrtc/OWNERS",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "fa63f5c4_968d5498",
+        "filename": "chrome/browser/media/webrtc/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-23T21:23:09Z",
+      "side": 1,
+      "message": "DesktopMediaListAsh is for ash only, right?\nI have not made any change to this file pair yet. I may add myself as OWNERS once I need to make changes.",
+      "parentUuid": "ae15150b_6d2679ca",
+      "range": {
+        "startLine": 16,
+        "startChar": 9,
+        "endLine": 16,
+        "endChar": 34
+      },
+      "revId": "151a0ee2eb0015b42d3a966ad09c175125574664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24de0577_726e2b65",
         "filename": "content/browser/media/capture/OWNERS",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "151a0ee2eb0015b42d3a966ad09c175125574664",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2790481_6395180c",
+        "filename": "content/browser/media/capture/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-23T21:23:09Z",
+      "side": 1,
+      "message": "Ah, I would avoid _aura*. But yes, I should add _unittest.cc file.",
+      "parentUuid": "24de0577_726e2b65",
+      "range": {
+        "startLine": 6,
+        "startChar": 9,
+        "endLine": 6,
+        "endChar": 32
+      },
+      "revId": "151a0ee2eb0015b42d3a966ad09c175125574664",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
