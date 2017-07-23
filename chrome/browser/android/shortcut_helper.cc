@@ -66,15 +66,25 @@ void GetHomescreenIconAndSplashImageSizes() {
   DCHECK(g_minimum_splash_image_size <= g_ideal_splash_image_size);
 }
 
-// Adds a shortcut which opens in a fullscreen window to the launcher.
-// |splash_image_callback| will be invoked once the Java-side operation has
-// completed. This is necessary as Java will asynchronously create and
-// populate a WebappDataStorage object for standalone-capable sites. This must
-// exist before the splash image can be stored.
-void AddWebappWithSkBitmap(const ShortcutInfo& info,
-                           const std::string& webapp_id,
-                           const SkBitmap& icon_bitmap,
-                           const base::Closure& splash_image_callback) {
+}  // anonymous namespace
+
+// static
+void ShortcutHelper::InstallWebApkWithSkBitmap(
+    content::WebContents* web_contents,
+    const ShortcutInfo& info,
+    const SkBitmap& primary_icon_bitmap,
+    const SkBitmap& badge_icon_bitmap,
+    const WebApkInstallService::FinishCallback& callback) {
+  WebApkInstallService::Get(web_contents->GetBrowserContext())
+      ->InstallAsync(info, primary_icon_bitmap, badge_icon_bitmap, callback);
+}
+
+// static
+void ShortcutHelper::AddWebappWithSkBitmap(content::WebContents* web_contents,
+                                           const ShortcutInfo& info,
+                                           const SkBitmap& icon_bitmap) {
+  std::string webapp_id = base::GenerateGUID();
+
   // Send the data to the Java side to create the shortcut.
   JNIEnv* env = base::android::AttachCurrentThread();
   ScopedJavaLocalRef<jstring> java_webapp_id =
@@ -98,10 +108,12 @@ void AddWebappWithSkBitmap(const ShortcutInfo& info,
 
   // The callback will need to be run after shortcut creation completes in order
   // to download the splash image and save it to the WebappDataStorage. Create a
-  // copy of the callback here and send the pointer to Java, which will send it
+  // pointer to the callback and send the pointer to Java which will send it
   // back once the asynchronous shortcut creation process finishes.
-  uintptr_t callback_pointer =
-      reinterpret_cast<uintptr_t>(new base::Closure(splash_image_callback));
+  uintptr_t callback_pointer = reinterpret_cast<uintptr_t>(new base::Closure(
+      base::Bind(&ShortcutHelper::FetchSplashScreenImage, web_contents,
+                 info.splash_image_url, info.ideal_splash_image_size_in_px,
+                 info.minimum_splash_image_size_in_px, webapp_id)));
 
   Java_ShortcutHelper_addWebapp(
       env, java_webapp_id, java_url, java_scope_url, java_user_title, java_name,
@@ -110,10 +122,11 @@ void AddWebappWithSkBitmap(const ShortcutInfo& info,
       callback_pointer);
 }
 
-// Adds a shortcut which opens in a browser tab to the launcher.
-void AddShortcutWithSkBitmap(const ShortcutInfo& info,
-                             const std::string& id,
-                             const SkBitmap& icon_bitmap) {
+// static
+void ShortcutHelper::AddShortcutWithSkBitmap(const ShortcutInfo& info,
+                                             const SkBitmap& icon_bitmap) {
+  std::string id = base::GenerateGUID();
+
   JNIEnv* env = base::android::AttachCurrentThread();
   ScopedJavaLocalRef<jstring> java_id =
       base::android::ConvertUTF8ToJavaString(env, id);
@@ -127,37 +140,6 @@ void AddShortcutWithSkBitmap(const ShortcutInfo& info,
 
   Java_ShortcutHelper_addShortcut(env, java_id, java_url, java_user_title,
                                   java_bitmap, info.source);
-}
-
-}  // anonymous namespace
-
-// static
-void ShortcutHelper::AddToLauncherWithSkBitmap(
-    content::WebContents* web_contents,
-    const ShortcutInfo& info,
-    const SkBitmap& icon_bitmap) {
-  std::string webapp_id = base::GenerateGUID();
-  if (info.display == blink::kWebDisplayModeStandalone ||
-      info.display == blink::kWebDisplayModeFullscreen) {
-    AddWebappWithSkBitmap(
-        info, webapp_id, icon_bitmap,
-        base::Bind(&ShortcutHelper::FetchSplashScreenImage, web_contents,
-                   info.splash_image_url, info.ideal_splash_image_size_in_px,
-                   info.minimum_splash_image_size_in_px, webapp_id));
-    return;
-  }
-  AddShortcutWithSkBitmap(info, webapp_id, icon_bitmap);
-}
-
-// static
-void ShortcutHelper::InstallWebApkWithSkBitmap(
-    content::WebContents* web_contents,
-    const ShortcutInfo& info,
-    const SkBitmap& primary_icon_bitmap,
-    const SkBitmap& badge_icon_bitmap,
-    const WebApkInstallService::FinishCallback& callback) {
-  WebApkInstallService::Get(web_contents->GetBrowserContext())
-      ->InstallAsync(info, primary_icon_bitmap, badge_icon_bitmap, callback);
 }
 
 void ShortcutHelper::ShowWebApkInstallInProgressToast() {

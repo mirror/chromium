@@ -35,6 +35,15 @@ class ShortcutHelper {
                                         const ShortcutInfo& info,
                                         const SkBitmap& icon_bitmap);
 
+  // Adds a shortcut which opens in a fullscreen window to the launcher.
+  static void AddWebappWithSkBitmap(content::WebContents* web_contents,
+                                    const ShortcutInfo& info,
+                                    const SkBitmap& icon_bitmap);
+
+  // Adds a shortcut which opens in a browser tab to the launcher.
+  static void AddShortcutWithSkBitmap(const ShortcutInfo& info,
+                                      const SkBitmap& icon_bitmap);
+
   // Installs WebAPK and adds shortcut to the launcher.
   static void InstallWebApkWithSkBitmap(
       content::WebContents* web_contents,

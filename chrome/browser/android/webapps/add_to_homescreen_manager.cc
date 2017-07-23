@@ -17,6 +17,7 @@
 #include "chrome/browser/android/webapk/chrome_webapk_host.h"
 #include "chrome/browser/android/webapk/webapk_install_service.h"
 #include "chrome/browser/android/webapk/webapk_metrics.h"
+#include "chrome/browser/android/webapps/webapp_metrics.h"
 #include "chrome/browser/banners/app_banner_settings_helper.h"
 #include "chrome/browser/installable/installable_manager.h"
 #include "content/public/browser/browser_thread.h"
@@ -72,9 +73,19 @@ void AddToHomescreenManager::AddShortcut(
   data_fetcher_->shortcut_info().user_title = user_title;
 
   RecordAddToHomescreen();
-  ShortcutHelper::AddToLauncherWithSkBitmap(web_contents,
-                                            data_fetcher_->shortcut_info(),
+  const ShortcutInfo& shortcut_info = data_fetcher_->shortcut_info();
+  if (shortcut_info.display == blink::kWebDisplayModeStandalone ||
+      shortcut_info.display == blink::kWebDisplayModeFullscreen) {
+    webapp::RecordAddToHomescreenFromAppMenuType(
+        webapp::AddToHomescreenType::STANDALONE);
+    ShortcutHelper::AddWebappWithSkBitmap(web_contents, shortcut_info,
+                                          data_fetcher_->primary_icon());
+  } else {
+    webapp::RecordAddToHomescreenFromAppMenuType(
+        webapp::AddToHomescreenType::SHORTCUT);
+    ShortcutHelper::AddShortcutWithSkBitmap(shortcut_info,
                                             data_fetcher_->primary_icon());
+  }
 
   // Fire the appinstalled event.
   banners::AppBannerManagerAndroid* app_banner_manager =
