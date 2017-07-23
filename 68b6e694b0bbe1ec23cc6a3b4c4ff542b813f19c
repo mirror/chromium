@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "892e2a6f_0af23054",
+        "filename": "components/content_settings/core/browser/content_settings_registry.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-23T23:31:32Z",
+      "side": 1,
+      "message": "I would suggest having the list of ints inside of a base::DictionaryValue to match other website settings. This also gives extensibility if you ever need to store anything else in there.",
+      "parentUuid": "63c3bf1b_361a95c4",
+      "range": {
+        "startLine": 324,
+        "startChar": 11,
+        "endLine": 324,
+        "endChar": 24
+      },
+      "revId": "68b6e694b0bbe1ec23cc6a3b4c4ff542b813f19c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a040be8_af19fe33",
         "filename": "components/content_settings/core/common/content_settings_types.h",
         "patchSetId": 4
