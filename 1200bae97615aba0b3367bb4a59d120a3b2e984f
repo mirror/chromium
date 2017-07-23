@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddf725c6_4d07be41",
+        "filename": "third_party/WebKit/Source/core/dom/TaskRunnerHelper.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-23T12:22:13Z",
+      "side": 1,
+      "message": "Would you describe this change?",
+      "revId": "1200bae97615aba0b3367bb4a59d120a3b2e984f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e44924de_bdb5daad",
+        "filename": "third_party/WebKit/Source/core/workers/MainThreadWorkletGlobalScope.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-23T12:22:13Z",
+      "side": 1,
+      "message": "Why kUnspecedLoading?",
+      "revId": "1200bae97615aba0b3367bb4a59d120a3b2e984f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4f9a7a6_0bd488f8",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMapProxy.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-23T12:22:13Z",
+      "side": 1,
+      "message": "Wrap c-tor via Create?",
+      "revId": "1200bae97615aba0b3367bb4a59d120a3b2e984f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a9494ba_e1e2db14",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMapProxy.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-23T12:22:13Z",
+      "side": 1,
+      "message": "Wrap ctor via Create?",
+      "revId": "1200bae97615aba0b3367bb4a59d120a3b2e984f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f3a037a_5f4433ce",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/FetchParameters.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-23T12:22:13Z",
+      "side": 1,
+      "message": "Would you document this change?",
+      "revId": "1200bae97615aba0b3367bb4a59d120a3b2e984f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
