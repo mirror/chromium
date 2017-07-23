@@ -89279,6 +89279,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="WinJumplist.RatioAddCategoryTime" units="scaled ratio">
+  <obsolete>
+    Obsolete 07/23/2017 as it's no longer needed.
+  </obsolete>
   <owner>chengx@chromium.org</owner>
   <summary>
     The ratio of the duration spent adding the most-visited category compared to
