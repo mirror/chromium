@@ -51,6 +51,24 @@
       "revId": "3593a0bc43b2475ff304d1aa45e67f1a2ca806e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "637ef6fb_467e414f",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_physical_text_fragment.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-07-23T15:24:02Z",
+      "side": 1,
+      "message": "Right, assuming this function sets to NGPhysicalFragment, rather than return something. Probably we go the former way?",
+      "parentUuid": "bb9396ab_eb746344",
+      "revId": "3593a0bc43b2475ff304d1aa45e67f1a2ca806e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
