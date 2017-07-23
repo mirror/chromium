@@ -10,6 +10,7 @@
 #include "base/files/file_path.h"
 #include "base/synchronization/lock.h"
 #include "components/crash/content/browser/crash_dump_observer_android.h"
+#include "components/prefs/pref_service.h"
 
 namespace breakpad {
 
@@ -25,7 +26,9 @@ namespace breakpad {
 // terminates.
 class CrashDumpManager : public breakpad::CrashDumpObserver::Client {
  public:
-  CrashDumpManager(const base::FilePath& crash_dump_dir, int descriptor_id);
+  CrashDumpManager(const base::FilePath& crash_dump_dir,
+                   int descriptor_id,
+                   PrefService* pref_service);
   ~CrashDumpManager() override;
 
   // breakpad::CrashDumpObserver::Client implementation:
@@ -57,7 +60,8 @@ class CrashDumpManager : public breakpad::CrashDumpObserver::Client {
                               base::ProcessHandle pid,
                               content::ProcessType process_type,
                               base::TerminationStatus termination_status,
-                              base::android::ApplicationState app_state);
+                              base::android::ApplicationState app_state,
+                              PrefService* pref_service);
 
   // This map should only be accessed with its lock aquired as it is accessed
   // from the PROCESS_LAUNCHER and UI threads.
@@ -70,6 +74,10 @@ class CrashDumpManager : public breakpad::CrashDumpObserver::Client {
   // The id used to identify the file descriptor in the set of file
   // descriptor mappings passed to the child process.
   int descriptor_id_;
+
+  // We want to get and set the stability proto from the PrefService.
+  // The PrefService comes from the process which we don't have access here.
+  PrefService* pref_service_;
 
   DISALLOW_COPY_AND_ASSIGN(CrashDumpManager);
 };

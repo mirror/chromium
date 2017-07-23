@@ -77,7 +77,8 @@ int ChromeBrowserMainPartsAndroid::PreCreateThreads() {
     PathService::Get(chrome::DIR_CRASH_DUMPS, &crash_dump_dir);
     breakpad::CrashDumpObserver::GetInstance()->RegisterClient(
         base::MakeUnique<breakpad::CrashDumpManager>(
-            crash_dump_dir, kAndroidMinidumpDescriptor));
+            crash_dump_dir, kAndroidMinidumpDescriptor,
+            g_browser_process->local_state()));
   }
 
   // Auto-detect based on en-US whether secondary locale .pak files exist.
