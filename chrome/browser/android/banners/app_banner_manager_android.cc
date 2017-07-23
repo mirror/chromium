@@ -47,9 +47,9 @@ std::unique_ptr<ShortcutInfo> CreateShortcutInfo(
     shortcut_info->best_primary_icon_url = primary_icon_url;
     shortcut_info->best_badge_icon_url = badge_icon_url;
     if (is_webapk)
-      shortcut_info->UpdateSource(ShortcutInfo::SOURCE_APP_BANNER_WEBAPK);
+      shortcut_info->source = ShortcutInfo::SOURCE_APP_BANNER_WEBAPK;
     else
-      shortcut_info->UpdateSource(ShortcutInfo::SOURCE_APP_BANNER);
+      shortcut_info->source = ShortcutInfo::SOURCE_APP_BANNER;
   }
 
   shortcut_info->ideal_splash_image_size_in_px =

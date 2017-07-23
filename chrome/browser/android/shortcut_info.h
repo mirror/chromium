@@ -62,9 +62,6 @@ struct ShortcutInfo {
   // Updates the info based on the given |manifest|.
   void UpdateFromManifest(const content::Manifest& manifest);
 
-  // Updates the source of the shortcut.
-  void UpdateSource(const Source source);
-
   GURL manifest_url;
   GURL url;
   GURL scope;

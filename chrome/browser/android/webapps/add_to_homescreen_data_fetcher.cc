@@ -156,8 +156,6 @@ void AddToHomescreenDataFetcher::OnDidGetWebApplicationInfo(
   if (web_app_info.mobile_capable == WebApplicationInfo::MOBILE_CAPABLE ||
       web_app_info.mobile_capable == WebApplicationInfo::MOBILE_CAPABLE_APPLE) {
     shortcut_info_.display = blink::kWebDisplayModeStandalone;
-    shortcut_info_.UpdateSource(
-        ShortcutInfo::SOURCE_ADD_TO_HOMESCREEN_STANDALONE);
   }
 
   // Record what type of shortcut was added by the user.
@@ -283,7 +281,6 @@ void AddToHomescreenDataFetcher::OnDidPerformInstallableCheck(
 
   observer_->OnUserTitleAvailable(shortcut_info_.user_title);
   if (webapk_compatible) {
-    shortcut_info_.UpdateSource(ShortcutInfo::SOURCE_ADD_TO_HOMESCREEN_PWA);
     NotifyObserver(std::make_pair(raw_primary_icon_, false /* is_generated */));
   } else {
     CreateLauncherIcon(raw_primary_icon_);

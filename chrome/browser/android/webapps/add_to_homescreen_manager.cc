@@ -78,11 +78,13 @@ void AddToHomescreenManager::AddShortcut(
       shortcut_info->display == blink::kWebDisplayModeFullscreen) {
     webapp::RecordAddToHomescreenFromAppMenuType(
         webapp::AddToHomescreenType::STANDALONE);
+    shortcut_info->source = ShortcutInfo::SOURCE_ADD_TO_HOMESCREEN_STANDALONE;
     ShortcutHelper::AddWebappWithSkBitmap(web_contents, *shortcut_info,
                                           data_fetcher_->primary_icon());
   } else {
     webapp::RecordAddToHomescreenFromAppMenuType(
         webapp::AddToHomescreenType::SHORTCUT);
+    shortcut_info->source = ShortcutInfo::SOURCE_ADD_TO_HOMESCREEN_SHORTCUT;
     ShortcutHelper::AddShortcutWithSkBitmap(*shortcut_info,
                                             data_fetcher_->primary_icon());
   }
@@ -158,10 +160,15 @@ void AddToHomescreenManager::OnDataAvailable(const ShortcutInfo& info,
     WebApkInstallService* install_service =
         WebApkInstallService::Get(
             data_fetcher_->web_contents()->GetBrowserContext());
-    if (install_service->IsInstallInProgress(info.manifest_url))
+    if (install_service->IsInstallInProgress(info.manifest_url)) {
       ShortcutHelper::ShowWebApkInstallInProgressToast();
-    else
-      CreateInfoBarForWebApk(info, primary_icon, badge_icon);
+    } else {
+      std::unique_ptr<ShortcutInfo> info_for_webapk =
+          base::MakeUnique<ShortcutInfo>(info);
+      info_for_webapk->source = ShortcutInfo::SOURCE_ADD_TO_HOMESCREEN_PWA;
+      CreateInfoBarForWebApk(std::move(info_for_webapk), primary_icon,
+                             badge_icon);
+    }
 
     JNIEnv* env = base::android::AttachCurrentThread();
     Java_AddToHomescreenManager_onFinished(env, java_ref_);
@@ -177,14 +184,14 @@ void AddToHomescreenManager::OnDataAvailable(const ShortcutInfo& info,
 }
 
 void AddToHomescreenManager::CreateInfoBarForWebApk(
-    const ShortcutInfo& info,
+    std::unique_ptr<ShortcutInfo> info,
     const SkBitmap& primary_icon,
     const SkBitmap& badge_icon) {
   content::WebContents* web_contents = data_fetcher_->web_contents();
   banners::AppBannerManagerAndroid* app_banner_manager =
       banners::AppBannerManagerAndroid::FromWebContents(web_contents);
   banners::AppBannerInfoBarDelegateAndroid::Create(
-      web_contents, app_banner_manager->GetWeakPtr(),
-      base::MakeUnique<ShortcutInfo>(info), primary_icon, badge_icon,
-      true /* is_webapk */, webapk::INSTALL_SOURCE_MENU);
+      web_contents, app_banner_manager->GetWeakPtr(), std::move(info),
+      primary_icon, badge_icon, true /* is_webapk */,
+      webapk::INSTALL_SOURCE_MENU);
 }

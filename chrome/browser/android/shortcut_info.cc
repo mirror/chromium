@@ -8,7 +8,7 @@ ShortcutInfo::ShortcutInfo(const GURL& shortcut_url)
     : url(shortcut_url),
       display(blink::kWebDisplayModeBrowser),
       orientation(blink::kWebScreenOrientationLockDefault),
-      source(SOURCE_ADD_TO_HOMESCREEN_SHORTCUT),
+      source(SOURCE_UNKNOWN),
       theme_color(content::Manifest::kInvalidOrMissingColor),
       background_color(content::Manifest::kInvalidOrMissingColor),
       ideal_splash_image_size_in_px(0),
@@ -46,9 +46,6 @@ void ShortcutInfo::UpdateFromManifest(const content::Manifest& manifest) {
   // the source to be standalone if appropriate.
   if (manifest.display == blink::kWebDisplayModeMinimalUi) {
     display = blink::kWebDisplayModeBrowser;
-  } else if (display == blink::kWebDisplayModeStandalone ||
-             display == blink::kWebDisplayModeFullscreen) {
-    source = SOURCE_ADD_TO_HOMESCREEN_STANDALONE;
   }
 
   // Set the orientation based on the manifest value, if any.
@@ -74,8 +71,4 @@ void ShortcutInfo::UpdateFromManifest(const content::Manifest& manifest) {
   icon_urls.clear();
   for (const content::Manifest::Icon& icon : manifest.icons)
     icon_urls.push_back(icon.src.spec());
-}
-
-void ShortcutInfo::UpdateSource(const Source new_source) {
-  source = new_source;
 }
