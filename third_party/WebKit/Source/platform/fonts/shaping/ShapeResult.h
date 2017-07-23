@@ -77,6 +77,12 @@ class PLATFORM_EXPORT ShapeResult : public RefCounted<ShapeResult> {
     return static_cast<TextDirection>(direction_);
   }
   bool Rtl() const { return Direction() == TextDirection::kRtl; }
+  // True if this result in in horizontal flow. All runs in horizontal result
+  // are horizontal, but vertical result may have horizontal and vertical runs.
+  bool IsHorizontal() const;
+  // True if at least one glyph in this result has vertical offsets.
+  // Vertical result always has vertical offsets, but horizontal result may also
+  // have vertical offsets.
   bool HasVerticalOffsets() const { return has_vertical_offsets_; }
 
   // For memory reporting.
@@ -111,6 +117,12 @@ class PLATFORM_EXPORT ShapeResult : public RefCounted<ShapeResult> {
   void ApplySpacing(ShapeResultSpacing<TextContainerType>&,
                     const TextContainerType&,
                     bool is_rtl);
+  template <bool is_horizontal_run>
+  void PrepareRunToInsert(ShapeResult::RunInfo*,
+                          unsigned start_glyph,
+                          unsigned num_glyphs,
+                          hb_buffer_t*,
+                          FloatRect* glyph_bounding_box);
   void InsertRun(std::unique_ptr<ShapeResult::RunInfo>,
                  unsigned start_glyph,
                  unsigned num_glyphs,
