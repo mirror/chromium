@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "577761ba_d90ea0ea",
+        "filename": "components/security_state/content/content_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-07-23T17:24:00Z",
+      "side": 1,
+      "message": "nit: can you inline these variables where they\u0027re used below, since they\u0027re only used once?",
+      "range": {
+        "startLine": 260,
+        "startChar": 7,
+        "endLine": 260,
+        "endChar": 24
+      },
+      "revId": "79e2269723e7ec4321ddb41177342502ceccacc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa6ccb06_7e8031f8",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/security/security-summary.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-07-23T17:24:00Z",
+      "side": 1,
+      "message": "any reason you\u0027re not using insecureContentStatusForTesting here too?",
+      "range": {
+        "startLine": 9,
+        "startChar": 8,
+        "endLine": 9,
+        "endChar": 29
+      },
+      "revId": "79e2269723e7ec4321ddb41177342502ceccacc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
