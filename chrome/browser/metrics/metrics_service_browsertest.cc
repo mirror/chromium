@@ -158,7 +158,13 @@ IN_PROC_BROWSER_TEST_F(MetricsServiceBrowserTest, MAYBE_CrashRenderers) {
   EXPECT_EQ(1, prefs->GetInteger(metrics::prefs::kStabilityLaunchCount));
   // The three tabs from OpenTabs() and the one tab to open chrome://crash/.
   EXPECT_EQ(4, prefs->GetInteger(metrics::prefs::kStabilityPageLoadCount));
+#if defined(OS_ANDROID)
+  EXPECT_EQ(
+      1, (int)histogram_tester.GetAllSamples("Stability.Android.RendererCrash")
+             .size());
+#else
   EXPECT_EQ(1, prefs->GetInteger(metrics::prefs::kStabilityRendererCrashCount));
+#endif
 
 #if defined(OS_WIN)
   histogram_tester.ExpectUniqueSample(
@@ -181,7 +187,13 @@ IN_PROC_BROWSER_TEST_F(MetricsServiceBrowserTest, MAYBE_CheckCrashRenderers) {
   // The three tabs from OpenTabs() and the one tab to open
   // chrome://checkcrash/.
   EXPECT_EQ(4, prefs->GetInteger(metrics::prefs::kStabilityPageLoadCount));
+#if defined(OS_ANDROID)
+  EXPECT_EQ(
+      1, (int)histogram_tester.GetAllSamples("Stability.Android.RendererCrash")
+             .size());
+#else
   EXPECT_EQ(1, prefs->GetInteger(metrics::prefs::kStabilityRendererCrashCount));
+#endif
 
 #if defined(OS_WIN)
   histogram_tester.ExpectUniqueSample(
@@ -211,7 +223,13 @@ IN_PROC_BROWSER_TEST_F(MetricsServiceBrowserTest, OOMRenderers) {
   // The three tabs from OpenTabs() and the one tab to open
   // chrome://memory-exhaust/.
   EXPECT_EQ(4, prefs->GetInteger(metrics::prefs::kStabilityPageLoadCount));
+#if defined(OS_ANDROID)
+  EXPECT_EQ(
+      1, (int)histogram_tester.GetAllSamples("Stability.Android.RendererCrash")
+             .size());
+#else
   EXPECT_EQ(1, prefs->GetInteger(metrics::prefs::kStabilityRendererCrashCount));
+#endif
 
 // On 64-bit, the Job object should terminate the renderer on an OOM.
 #if defined(ARCH_CPU_64_BITS)
