@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f48fb21_4da3e70e",
+        "filename": "components/pdf/renderer/pepper_pdf_host.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-23T22:48:06Z",
+      "side": 1,
+      "message": "It looks like the instance isn\u0027t guaranteed to be alive here (based on the existing code) so may want to null-check these.",
+      "revId": "5c7ce03d648b9c386e37af4ac9b33815ef118b19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d51ecd5a_83e46ee5",
+        "filename": "ppapi/c/private/ppb_pdf.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-23T22:48:06Z",
+      "side": 1,
+      "message": "Would it be better to merge this with SetSelectedText?",
+      "revId": "5c7ce03d648b9c386e37af4ac9b33815ef118b19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
