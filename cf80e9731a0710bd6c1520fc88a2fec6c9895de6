@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5cf196bd_db635dc0",
+        "filename": "third_party/sqlite/README.chromium",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-07-23T13:41:06Z",
+      "side": 1,
+      "message": "Done.\n\nI was worried that it\u0027d be weird to not have the directories together in one place. I\u0027m glad you don\u0027t think so!",
+      "parentUuid": "5b8304df_142315fd",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 14
+      },
+      "revId": "cf80e9731a0710bd6c1520fc88a2fec6c9895de6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "037ef54e_5e2874c6",
         "filename": "third_party/sqlite/README.chromium",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "cf80e9731a0710bd6c1520fc88a2fec6c9895de6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c86b7d20_fbc09782",
+        "filename": "third_party/sqlite/README.chromium",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-07-23T13:41:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "037ef54e_5e2874c6",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 12
+      },
+      "revId": "cf80e9731a0710bd6c1520fc88a2fec6c9895de6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
