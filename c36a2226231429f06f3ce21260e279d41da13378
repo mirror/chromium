@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c475653_b820add6",
+        "filename": "media/blink/media_capabilities_reporter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-07-23T17:41:07Z",
+      "side": 1,
+      "message": "NTS: Extract StartNewRecord into method that does this + sets the offset_ fields (missing from this method)",
+      "range": {
+        "startLine": 71,
+        "startChar": 17,
+        "endLine": 71,
+        "endChar": 31
+      },
+      "revId": "c36a2226231429f06f3ce21260e279d41da13378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0760454_a4fcf3c4",
+        "filename": "media/blink/media_capabilities_reporter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-07-23T17:41:07Z",
+      "side": 1,
+      "message": "NTS: use this",
+      "range": {
+        "startLine": 159,
+        "startChar": 4,
+        "endLine": 159,
+        "endChar": 32
+      },
+      "revId": "c36a2226231429f06f3ce21260e279d41da13378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
