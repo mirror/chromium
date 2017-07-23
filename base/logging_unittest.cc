@@ -568,6 +568,27 @@ namespace nested_test {
   }
 }  // namespace nested_test
 
+#if DCHECK_IS_ON() && (defined(ADDRESS_SANITIZER) || defined(SYZYASAN))
+TEST_F(LoggingTest, AsanConditionalDCheck) {
+  // Verify that DCHECK* aren't hard-wired to crash on failure.
+  LOG_DCHECK = LOG_INFO;
+  DCHECK(false);
+  DCHECK_EQ(1, 2);
+
+  // Verify that DCHECK does crash if LOG_DCHECK is set to LOG_FATAL.
+  LOG_DCHECK = LOG_FATAL;
+
+  ::testing::StrictMock<MockLogAssertHandler> handler;
+  EXPECT_CALL(handler, HandleLogAssert(_, _, _, _)).Times(2);
+  {
+    logging::ScopedLogAssertHandler scoped_handler_b(base::Bind(
+        &MockLogAssertHandler::HandleLogAssert, base::Unretained(&handler)));
+    DCHECK(false);
+    DCHECK_EQ(1, 2);
+  }
+}
+#endif  // Stuff
+
 }  // namespace
 
 }  // namespace logging
