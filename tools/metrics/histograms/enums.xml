@@ -485,6 +485,11 @@ uploading your change for review.  These are checked by presubmit scripts.
       label="The user saw the dialog but closed it without adding an engine"/>
 </enum>
 
+<enum name="AddToHomescreenType">
+  <int value="0" label="Standalone"/>
+  <int value="1" label="Shortcut"/>
+</enum>
+
 <enum name="AffiliationFetchResult">
   <int value="0" label="Success"/>
   <int value="1" label="Network/server error"/>
