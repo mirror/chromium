@@ -1232,14 +1232,17 @@ int HttpNetworkTransaction::DoReadHeadersComplete(int result) {
 
   DCHECK(response_.headers.get());
 
-  if (response_.headers.get() && !ContentEncodingsValid())
+  net_log_.AddEvent(
+      NetLogEventType::HTTP_TRANSACTION_READ_RESPONSE_HEADERS,
+      base::Bind(&HttpResponseHeaders::NetLogCallback, response_.headers));
+
+  if (!ContentEncodingsValid())
     return ERR_CONTENT_DECODING_FAILED;
 
   // On a 408 response from the server ("Request Timeout") on a stale socket,
   // retry the request.
   // Headers can be NULL because of http://crbug.com/384554.
-  if (response_.headers.get() &&
-      response_.headers->response_code() == HTTP_REQUEST_TIMEOUT &&
+  if (response_.headers->response_code() == HTTP_REQUEST_TIMEOUT &&
       stream_->IsConnectionReused()) {
     net_log_.AddEventWithNetErrorCode(
         NetLogEventType::HTTP_TRANSACTION_RESTART_AFTER_ERROR,
@@ -1256,10 +1259,6 @@ int HttpNetworkTransaction::DoReadHeadersComplete(int result) {
     UMA_HISTOGRAM_ENUMERATION(
         "Net.HttpResponseCode_Nxx_MainFrame", response_code/100, 10);
   }
-
-  net_log_.AddEvent(
-      NetLogEventType::HTTP_TRANSACTION_READ_RESPONSE_HEADERS,
-      base::Bind(&HttpResponseHeaders::NetLogCallback, response_.headers));
 
   if (response_.headers->GetHttpVersion() < HttpVersion(1, 0)) {
     // HTTP/0.9 doesn't support the PUT method, so lack of response headers

@@ -1318,6 +1318,10 @@ int HttpCache::Transaction::DoCacheReadResponseComplete(int result) {
     return OnCacheReadError(result, true);
   }
 
+  net_log_.AddEvent(
+      NetLogEventType::HTTP_TRANSACTION_READ_RESPONSE_HEADERS,
+      base::Bind(&HttpResponseHeaders::NetLogCallback, response_.headers));
+
   // TODO(crbug.com/713354) Only get data size if there is no other transaction
   // currently writing the response body due to the data race mentioned in the
   // associated bug.
