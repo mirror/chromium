@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee17976d_5b5f2e6c",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 3522,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-23T19:16:16Z",
+      "side": 1,
+      "message": "Would enable_cdms_library make more sense?",
+      "range": {
+        "startLine": 3522,
+        "startChar": 6,
+        "endLine": 3522,
+        "endChar": 25
+      },
+      "revId": "d3b5769a733dbc54d7a9848a8f3aee7da0182110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
