@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "94d5ba62_b929a2b1",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_physical_text_fragment.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-07-23T15:21:41Z",
+      "side": 1,
+      "message": "In legacy, we do this 1) after layout, and 2) after transform was changed.\n\nLegacy has a flag that indicates children is known not to have overflow, and use it to skip unnecessary computation. I\u0027m learning how it\u0027s set and how we use it, but we\u0027ll need to check |shape_result-\u003eBounds()| at least once after it was shaped.\n\nSo, yes and no, we should be able to minimize the computation using flags when it\u0027s known. But we need to compute at least once per full layout. I\u0027ll learn more, but wish to defer optimization a bit later, after I understand how it should work better.\n\nHow rare. We need visual overflow always. Paint relies on it. How often text can visual overflow is rather rare, but not too rare. For instance, the \"T\" in Times has visual overflow on left, so if a line starts with \"T\", the line has visual overflow. This is called \"optical alignment\", human\u0027s eye has optical illusion to some specific shapes, and fonts have overflows so that it looks like left/right edges are aligned. If we don\u0027t compute this, \"T\" maybe clipped when repaint occurs.",
+      "parentUuid": "7e7219f6_803dfddd",
+      "revId": "3593a0bc43b2475ff304d1aa45e67f1a2ca806e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb9396ab_eb746344",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_physical_text_fragment.h",
         "patchSetId": 2
