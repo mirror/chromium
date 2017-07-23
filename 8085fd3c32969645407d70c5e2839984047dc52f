@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8e107c4_54985cbc",
+        "filename": "third_party/WebKit/Source/core/html/HTMLTextAreaElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-23T23:50:09Z",
+      "side": 0,
+      "message": "Please follow the specification.  It says:\n\nhttps://html.spec.whatwg.org/multipage/form-elements.html#dom-textarea-defaultvalue\n\u003e On setting, it must act as the setter for the element\u0027s textContent IDL attribute.\n\nSo, the should be:\n\n  setTextContent(default_value);\n  if (!is_dirty_)\n    ...\n\nWe should add a test that defaultValue setter does not normalize line endings to WPT.",
+      "revId": "8085fd3c32969645407d70c5e2839984047dc52f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
