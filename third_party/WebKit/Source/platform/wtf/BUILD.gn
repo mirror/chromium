@@ -109,6 +109,8 @@ component("wtf") {
     "RefVector.h",
     "RetainPtr.h",
     "SaturatedArithmetic.h",
+    "ScopedLogger.cpp",
+    "ScopedLogger.h",
     "SizeAssertions.h",
     "SizeLimits.cpp",
     "SpinLock.h",

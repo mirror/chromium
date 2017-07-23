@@ -4,6 +4,7 @@
 
 #include "platform/wtf/Assertions.h"
 
+#include "platform/wtf/ScopedLogger.h"
 #include "platform/wtf/text/StringBuilder.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include <stdio.h>
