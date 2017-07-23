@@ -16,7 +16,7 @@
 #include "base/message_loop/message_loop.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "cc/output/compositor_frame.h"
-#include "cc/test/compositor_frame_helpers.h"
+#include "components/viz/test/compositor_frame_helpers.h"
 #include "content/public/browser/android/synchronous_compositor.h"
 #include "content/public/test/test_synchronous_compositor_android.h"
 
