@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c65c1f4f_5640de95",
+        "filename": "base/android/java/src/org/chromium/base/JavaExceptionReporter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-07-23T23:27:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "546ecc43_c7656a87",
+      "range": {
+        "startLine": 61,
+        "startChar": 24,
+        "endLine": 61,
+        "endChar": 45
+      },
+      "revId": "52fee0cacbc9afba671a8595686ec0a38c8b781a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03e33f1f_0e422ace",
         "filename": "build/android/buildhooks/java/org/chromium/buildhooks/BuildHooks.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "caeda010_f187ea0a",
+        "filename": "build/android/buildhooks/java/org/chromium/buildhooks/BuildHooks.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-07-23T23:27:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03e33f1f_0e422ace",
+      "range": {
+        "startLine": 8,
+        "startChar": 12,
+        "endLine": 8,
+        "endChar": 21
+      },
+      "revId": "52fee0cacbc9afba671a8595686ec0a38c8b781a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fd6b7de_d83b54e7",
         "filename": "build/android/buildhooks/java/org/chromium/buildhooks/BuildHooks.java",
         "patchSetId": 2
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "b870c777_7192eaf1",
+        "filename": "build/android/buildhooks/java/org/chromium/buildhooks/BuildHooks.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-07-23T23:27:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fd6b7de_d83b54e7",
+      "revId": "52fee0cacbc9afba671a8595686ec0a38c8b781a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13c94b47_04bf8ae2",
         "filename": "build/android/buildhooks/java/org/chromium/buildhooks/BuildHooks.java",
         "patchSetId": 2
@@ -79,6 +145,24 @@
       "revId": "52fee0cacbc9afba671a8595686ec0a38c8b781a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75f43fc8_7e750cea",
+        "filename": "build/android/buildhooks/java/org/chromium/buildhooks/BuildHooks.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-07-23T23:27:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13c94b47_04bf8ae2",
+      "revId": "52fee0cacbc9afba671a8595686ec0a38c8b781a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "7a7f515d_8b1bda32",
+        "filename": "build/android/buildhooks/java/org/chromium/buildhooks/BuildHooks.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-07-23T23:27:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffe48cf4_8c2a088d",
+      "range": {
+        "startLine": 15,
+        "startChar": 75,
+        "endLine": 15,
+        "endChar": 96
+      },
+      "revId": "52fee0cacbc9afba671a8595686ec0a38c8b781a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58119a39_77c9bb7e",
         "filename": "build/android/buildhooks/java/org/chromium/buildhooks/Callback.java",
         "patchSetId": 2
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "6df241db_63d345b4",
+        "filename": "build/android/buildhooks/java/org/chromium/buildhooks/Callback.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-07-23T23:27:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58119a39_77c9bb7e",
+      "range": {
+        "startLine": 5,
+        "startChar": 21,
+        "endLine": 5,
+        "endChar": 31
+      },
+      "revId": "52fee0cacbc9afba671a8595686ec0a38c8b781a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11b0fa5f_eaf49444",
         "filename": "build/android/buildhooks/java/org/chromium/buildhooks/Callback.java",
         "patchSetId": 2
@@ -148,6 +280,30 @@
       "revId": "52fee0cacbc9afba671a8595686ec0a38c8b781a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1b141e9_3e7ba3a0",
+        "filename": "build/android/buildhooks/java/org/chromium/buildhooks/Callback.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-07-23T23:27:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11b0fa5f_eaf49444",
+      "range": {
+        "startLine": 10,
+        "startChar": 31,
+        "endLine": 10,
+        "endChar": 35
+      },
+      "revId": "52fee0cacbc9afba671a8595686ec0a38c8b781a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
