@@ -244,13 +244,12 @@ public class WebApkInfo extends WebappInfo {
         return mIconUrlToMurmur2HashMap;
     }
 
-    @Override
-    public void setWebappIntentExtras(Intent intent) {
-        // For launching a {@link WebApkActivity}.
-        intent.putExtra(ShortcutHelper.EXTRA_URL, uri().toString());
-        intent.putExtra(ShortcutHelper.EXTRA_SOURCE, source());
-        intent.putExtra(WebApkConstants.EXTRA_WEBAPK_PACKAGE_NAME, webApkPackageName());
-        intent.putExtra(WebApkConstants.EXTRA_WEBAPK_FORCE_NAVIGATION, mForceNavigation);
+    public static String getIdFromIntent(Intent intent) {
+        if (intent == null) return null;
+        String packageName =
+                IntentUtils.safeGetStringExtra(intent, WebApkConstants.EXTRA_WEBAPK_PACKAGE_NAME);
+        if (packageName == null) return null;
+        return WebApkConstants.WEBAPK_ID_PREFIX + packageName;
     }
 
     /**
