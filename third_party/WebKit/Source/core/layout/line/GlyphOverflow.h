@@ -45,9 +45,19 @@ struct GlyphOverflow {
   }
 
   void SetFromBounds(const FloatRect& bounds,
-                     float ascent,
-                     float descent,
+                     const Font& font,
                      float text_width) {
+    const SimpleFontData* font_data = font.PrimaryFont();
+    DCHECK(font_data);
+    float ascent = 0;
+    float descent = 0;
+    if (font_data) {
+      FontBaseline baseline = !font_data->PlatformData().IsVerticalAnyUpright()
+                                  ? kAlphabeticBaseline
+                                  : kIdeographicBaseline;
+      ascent = font_data->GetFontMetrics().FloatAscent(baseline);
+      descent = font_data->GetFontMetrics().FloatDescent(baseline);
+    }
     top = std::max(0.0f, -bounds.Y() - ascent);
     bottom = std::max(0.0f, bounds.MaxY() - descent);
     left = std::max(0.0f, -bounds.X());
