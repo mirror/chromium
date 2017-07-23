@@ -107,9 +107,9 @@ public class WebappInfo {
      * @param intent Intent containing info about the app.
      */
     public static WebappInfo create(Intent intent) {
-        String id = IntentUtils.safeGetStringExtra(intent, ShortcutHelper.EXTRA_ID);
-        String icon = IntentUtils.safeGetStringExtra(intent, ShortcutHelper.EXTRA_ICON);
+        String id = getIdFromIntent(intent);
         String url = urlFromIntent(intent);
+        String icon = IntentUtils.safeGetStringExtra(intent, ShortcutHelper.EXTRA_ICON);
         String scope = IntentUtils.safeGetStringExtra(intent, ShortcutHelper.EXTRA_SCOPE);
         int displayMode = IntentUtils.safeGetIntExtra(
                 intent, ShortcutHelper.EXTRA_DISPLAY_MODE, WebDisplayMode.STANDALONE);
@@ -296,24 +296,9 @@ public class WebappInfo {
         return mIsIconGenerated;
     }
 
-    /**
-     * Sets extras on an Intent that will launch a WebappActivity.
-     * @param intent Intent that will be used to launch a WebappActivity.
-     */
-    public void setWebappIntentExtras(Intent intent) {
-        intent.putExtra(ShortcutHelper.EXTRA_ID, id());
-        intent.putExtra(ShortcutHelper.EXTRA_URL, uri().toString());
-        intent.putExtra(ShortcutHelper.EXTRA_SCOPE, scopeUri().toString());
-        intent.putExtra(ShortcutHelper.EXTRA_ICON, encodedIcon());
-        intent.putExtra(ShortcutHelper.EXTRA_VERSION, ShortcutHelper.WEBAPP_SHORTCUT_VERSION);
-        intent.putExtra(ShortcutHelper.EXTRA_NAME, name());
-        intent.putExtra(ShortcutHelper.EXTRA_SHORT_NAME, shortName());
-        intent.putExtra(ShortcutHelper.EXTRA_DISPLAY_MODE, displayMode());
-        intent.putExtra(ShortcutHelper.EXTRA_ORIENTATION, orientation());
-        intent.putExtra(ShortcutHelper.EXTRA_SOURCE, source());
-        intent.putExtra(ShortcutHelper.EXTRA_THEME_COLOR, themeColor());
-        intent.putExtra(ShortcutHelper.EXTRA_BACKGROUND_COLOR, backgroundColor());
-        intent.putExtra(ShortcutHelper.EXTRA_IS_ICON_GENERATED, isIconGenerated());
+    public static String getIdFromIntent(Intent intent) {
+        if (intent == null) return null;
+        return IntentUtils.safeGetStringExtra(intent, ShortcutHelper.EXTRA_ID);
     }
 
     /**

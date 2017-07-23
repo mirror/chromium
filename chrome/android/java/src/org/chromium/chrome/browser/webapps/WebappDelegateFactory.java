@@ -20,6 +20,7 @@ import org.chromium.chrome.browser.tab.TabDelegateFactory;
 import org.chromium.chrome.browser.tab.TabWebContentsDelegateAndroid;
 import org.chromium.chrome.browser.util.IntentUtils;
 import org.chromium.webapk.lib.client.WebApkNavigationClient;
+import org.chromium.webapk.lib.common.WebApkConstants;
 
 /**
  * A {@link TabDelegateFactory} class to be used in all {@link Tab} instances owned by a
@@ -51,13 +52,19 @@ public class WebappDelegateFactory extends TabDelegateFactory {
             }
 
             Intent intent = new Intent();
+            WebappInfo webappInfo = mActivity.getWebappInfo();
+            if (webappInfo instanceof WebApkInfo) {
+                intent.putExtra(WebApkConstants.EXTRA_WEBAPK_PACKAGE_NAME, webApkPackageName);
+            } else {
+                intent.putExtra(ShortcutHelper.EXTRA_ID, mActivity.getWebappInfo().id());
+            }
+
             intent.setAction(WebappLauncherActivity.ACTION_START_WEBAPP);
             intent.setPackage(mActivity.getPackageName());
-            mActivity.getWebappInfo().setWebappIntentExtras(intent);
-
             intent.putExtra(
                     ShortcutHelper.EXTRA_MAC, ShortcutHelper.getEncodedMac(mActivity, startUrl));
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            WebappActivity.addWebappInfoToCache(webappInfo.getIdFromIntent(intent), webappInfo);
             IntentUtils.safeStartActivity(ContextUtils.getApplicationContext(), intent);
         }
     }

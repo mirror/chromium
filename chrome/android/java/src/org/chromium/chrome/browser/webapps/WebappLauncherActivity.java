@@ -57,9 +57,13 @@ public class WebappLauncherActivity extends Activity {
 
         WebappInfo webappInfo;
         if (validWebApk) {
-            webappInfo = WebApkInfo.create(intent);
+            webappInfo =
+                    WebappActivity.retrieveWebappInfoFromCache(WebApkInfo.getIdFromIntent(intent));
+            if (webappInfo == null) webappInfo = WebApkInfo.create(intent);
         } else {
-            webappInfo = WebappInfo.create(intent);
+            webappInfo =
+                    WebappActivity.retrieveWebappInfoFromCache(WebappInfo.getIdFromIntent(intent));
+            if (webappInfo == null) webappInfo = WebappInfo.create(intent);
         }
 
         // {@link WebApkInfo#create()} and {@link WebappInfo#create()} return null if the intent
@@ -88,6 +92,7 @@ public class WebappLauncherActivity extends Activity {
             if (validWebApk && (webappSource == ShortcutSource.UNKNOWN)) {
                 source = getWebApkSource(webappInfo);
             }
+            WebappActivity.addWebappInfoToCache(webappInfo.getIdFromIntent(intent), webappInfo);
             LaunchMetrics.recordHomeScreenLaunchIntoStandaloneActivity(webappUrl, source);
             Intent launchIntent = createWebappLaunchIntent(webappInfo, webappSource, validWebApk);
             startActivity(launchIntent);
@@ -188,7 +193,12 @@ public class WebappLauncherActivity extends Activity {
         // Create an intent to launch the Webapp in an unmapped WebappActivity.
         Intent launchIntent = new Intent();
         launchIntent.setClassName(this, activityName);
-        info.setWebappIntentExtras(launchIntent);
+        if (isWebApk) {
+            launchIntent.putExtra(
+                    WebApkConstants.EXTRA_WEBAPK_PACKAGE_NAME, info.webApkPackageName());
+        } else {
+            launchIntent.putExtra(ShortcutHelper.EXTRA_ID, info.id());
+        }
 
         // On L+, firing intents with the exact same data should relaunch a particular
         // Activity.
