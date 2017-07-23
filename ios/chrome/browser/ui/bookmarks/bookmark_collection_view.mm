@@ -763,6 +763,10 @@ const NSTimeInterval kShowEmptyBookmarksBackgroundRefreshDelay = 1.0;
   if (section == 0)
     return NO;
 
+  if (!IsIPadIdiom() && section - 1 == self.promoSection &&
+      experimental_flags::IsSigninPromoEnabled())
+    return NO;
+
   if ([self numberOfItemsInSection:(section - 1)] == 0)
     return NO;
 

@@ -5,6 +5,7 @@
 #import "ios/chrome/browser/ui/bookmarks/bookmark_signin_promo_cell.h"
 
 #import "ios/chrome/browser/ui/authentication/signin_promo_view.h"
+#import "ios/chrome/browser/ui/bookmarks/bookmark_utils_ios.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #include "ios/chrome/grit/ios_chromium_strings.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -36,8 +37,19 @@
     _signinPromoView = [[SigninPromoView alloc] initWithFrame:self.bounds];
     _signinPromoView.translatesAutoresizingMaskIntoConstraints = NO;
     [contentView addSubview:_signinPromoView];
-    AddSameConstraints(_signinPromoView, contentView);
-
+    if (IsIPadIdiom()) {
+      AddSameConstraints(_signinPromoView, contentView);
+    } else {
+      _signinPromoView.layer.borderColor =
+          bookmark_utils_ios::separatorColor().CGColor;
+      _signinPromoView.layer.borderWidth = 1.0f;
+      NSArray* visualConstraints = @[
+        @"V:|-0-[view]-8-|",
+        @"H:|-8-[view]-8-|",
+      ];
+      ApplyVisualConstraintsWithMetrics(visualConstraints,
+                                        @{@"view" : _signinPromoView}, nil);
+    }
     _signinPromoView.closeButton.hidden = NO;
     [_signinPromoView.closeButton addTarget:self
                                      action:@selector(closeButtonAction:)
