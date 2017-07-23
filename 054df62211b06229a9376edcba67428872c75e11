@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "18858867_89ebebe2",
+        "filename": "content/browser/renderer_host/input/synthetic_gesture_target_android.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-07-23T23:36:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe9611d7_0b548b30",
+      "revId": "054df62211b06229a9376edcba67428872c75e11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25314fc7_270e549d",
         "filename": "content/browser/renderer_host/input/synthetic_gesture_target_android.cc",
         "patchSetId": 16
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7f2d5569_e6f0d45a",
+        "filename": "content/browser/renderer_host/input/synthetic_gesture_target_android.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-07-23T23:36:55Z",
+      "side": 1,
+      "message": "Right, but let me handle it via ViewAndroid not via WindowAndroidProvider. We can get scale factor dynamically from VA too. And it is simpler.",
+      "parentUuid": "25314fc7_270e549d",
+      "revId": "054df62211b06229a9376edcba67428872c75e11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b7f0c75_ce8bf40d",
         "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
         "patchSetId": 16
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-21T18:22:54Z",
       "side": 1,
       "message": "you shouldn\u0027t need to go through WebContents at all now, right? RWHVA should have everything it needs to create SyntheticGestureTarget",
+      "revId": "054df62211b06229a9376edcba67428872c75e11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbf410c6_68b08020",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1153,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-07-23T23:36:55Z",
+      "side": 1,
+      "message": "Done. The CL got much slimmer now.",
+      "parentUuid": "3b7f0c75_ce8bf40d",
       "revId": "054df62211b06229a9376edcba67428872c75e11",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
