@@ -34,6 +34,24 @@
       "revId": "7ddb94f3d949baff6f14753e1f96e1c2a8f73ad8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ae680af_2dd1b1ee",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_offset_mapping_api.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-07-23T15:51:27Z",
+      "side": 1,
+      "message": "I think at some point you\u0027ll need to know either NGInlineItem or NGPhysicalTextFragment, and both have Style(). Can be later though.",
+      "parentUuid": "b7475c3e_dbb525f8",
+      "revId": "7ddb94f3d949baff6f14753e1f96e1c2a8f73ad8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
