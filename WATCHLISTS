@@ -233,9 +233,6 @@
     'browser_compositor': {
       'filepath': 'ui/compositor/'
     },
-    'browser_resources': {
-      'filepath': 'chrome/browser/resources/',
-    },
     'browser_resources_md': {
       'filepath': 'chrome/browser/resources/md_'\
                   '|chrome/browser/resources/settings/',
@@ -1924,7 +1921,6 @@
     'browser_components': ['browser-components-watch@chromium.org'],
     'browser_compositor': ['piman+watch@chromium.org',
                            'vollick@chromium.org'],
-    'browser_resources': ['arv+watch@chromium.org'],
     'browser_resources_md': ['michaelpg+watch-md-ui@chromium.org'],
     'browsing_data': ['markusheintz@chromium.org',
                       'msramek+watch@chromium.org'],
