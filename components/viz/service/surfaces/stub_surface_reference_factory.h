@@ -2,27 +2,26 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CC_SURFACES_STUB_SURFACE_REFERENCE_FACTORY_H_
-#define CC_SURFACES_STUB_SURFACE_REFERENCE_FACTORY_H_
+#ifndef COMPONENTS_VIZ_SERVICE_SURFACES_STUB_SURFACE_REFERENCE_FACTORY_H_
+#define COMPONENTS_VIZ_SERVICE_SURFACES_STUB_SURFACE_REFERENCE_FACTORY_H_
 
 #include "base/compiler_specific.h"
-#include "cc/surfaces/surfaces_export.h"
 #include "components/viz/common/surfaces/surface_reference_factory.h"
+#include "components/viz/service/surfaces/surfaces_export.h"
 
-namespace cc {
+namespace viz {
 
 // A stub implementation that creates a closure which does nothing.
 // TODO(kylechar): Delete this class and all usage of
-// viz::SurfaceReferenceFactory when surface references are enabled by default.
+// SurfaceReferenceFactory when surface references are enabled by default.
 class CC_SURFACES_EXPORT StubSurfaceReferenceFactory
-    : public NON_EXPORTED_BASE(viz::SurfaceReferenceFactory) {
+    : public NON_EXPORTED_BASE(SurfaceReferenceFactory) {
  public:
   StubSurfaceReferenceFactory() = default;
 
-  // viz::SurfaceReferenceFactory:
-  base::Closure CreateReference(
-      viz::SurfaceReferenceOwner* owner,
-      const viz::SurfaceId& surface_id) const override;
+  // SurfaceReferenceFactory:
+  base::Closure CreateReference(SurfaceReferenceOwner* owner,
+                                const SurfaceId& surface_id) const override;
 
  protected:
   ~StubSurfaceReferenceFactory() override = default;
@@ -30,6 +29,6 @@ class CC_SURFACES_EXPORT StubSurfaceReferenceFactory
   DISALLOW_COPY_AND_ASSIGN(StubSurfaceReferenceFactory);
 };
 
-}  // namespace cc
+}  // namespace viz
 
-#endif  // CC_SURFACES_STUB_SURFACE_REFERENCE_FACTORY_H_
+#endif  // COMPONENTS_VIZ_SERVICE_SURFACES_STUB_SURFACE_REFERENCE_FACTORY_H_

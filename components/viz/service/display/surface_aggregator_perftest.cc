@@ -7,8 +7,6 @@
 #include "cc/output/compositor_frame.h"
 #include "cc/quads/surface_draw_quad.h"
 #include "cc/quads/texture_draw_quad.h"
-#include "cc/surfaces/surface_manager.h"
-#include "cc/test/compositor_frame_helpers.h"
 #include "cc/test/fake_output_surface_client.h"
 #include "cc/test/fake_resource_provider.h"
 #include "cc/test/test_context_provider.h"
@@ -16,6 +14,8 @@
 #include "components/viz/service/display/surface_aggregator.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
 #include "components/viz/service/frame_sinks/frame_sink_manager_impl.h"
+#include "components/viz/service/surfaces/surface_manager.h"
+#include "components/viz/test/compositor_frame_helpers.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/perf/perf_test.h"
 
