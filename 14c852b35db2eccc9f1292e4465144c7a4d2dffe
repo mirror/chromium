@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef93a862_dfccec66",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/encoding/unsupported-encodings.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-23T23:56:47Z",
+      "side": 1,
+      "message": "should be not be -\u003e should not be?",
+      "revId": "14c852b35db2eccc9f1292e4465144c7a4d2dffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
