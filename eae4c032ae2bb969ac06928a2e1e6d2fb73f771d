@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17ec2227_3cc6bf82",
+        "filename": "tools/mb/mb.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-07-23T22:20:15Z",
+      "side": 1,
+      "message": "I feel like actually updating buildbucket.config is obscure enough that we\u0027d benefit from more explicit instructions here, something like:\n\nRun `mb gerrit-buildbucket-config \u003e buildbucket.config.new \u0026\u0026 git fetch origin refs/meta/config:refs/remotes/origin/meta/config \u0026\u0026 git checkout -t -b meta_config origin/meta/config \u0026\u0026 mv buildbucket.config.new buildbucket.config` to update the file.\n\nOr (possibly better) we could link to someplace where this is documented. Maybe add a MD file in //docs or we could add something in the infra docs?",
+      "revId": "eae4c032ae2bb969ac06928a2e1e6d2fb73f771d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0efb7885_5f02b6e9",
+        "filename": "tools/mb/mb.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-07-23T22:20:15Z",
+      "side": 1,
+      "message": "Can you add this to mb_config.pyl instead so we don\u0027t need the special case logic here?",
+      "revId": "eae4c032ae2bb969ac06928a2e1e6d2fb73f771d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
