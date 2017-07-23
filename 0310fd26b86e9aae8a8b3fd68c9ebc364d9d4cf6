@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5937d5e_7d350c08",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-23T22:53:32Z",
+      "side": 1,
+      "message": "based on the comment above, when OOPIF is enabled, each child frame may send the same feature, which means this DCHECK may fire. Do we need to perform these tests outside of a DCHECK to make sure we record features only once?",
+      "revId": "0310fd26b86e9aae8a8b3fd68c9ebc364d9d4cf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
