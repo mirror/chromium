@@ -5,4 +5,7 @@
 declare_args() {
   # Set to true to enable dcheck in Release builds.
   dcheck_always_on = false
+
+  # Set to less than 3 to have DCHECKs log rather than crash.
+  dcheck_severity = 3
 }

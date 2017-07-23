@@ -21,7 +21,8 @@
 // happen and as such executing the statement results in undefined behavior
 // (|statement| is compiled in unsupported configurations nonetheless).
 // Death tests misbehave on Android.
-#if DCHECK_IS_ON() && defined(GTEST_HAS_DEATH_TEST) && !defined(OS_ANDROID)
+#if DCHECK_IS_ON() && defined(GTEST_HAS_DEATH_TEST) && !defined(OS_ANDROID) && \
+    (DCHECK_SEVERITY == 3)
 
 // EXPECT/ASSERT_DCHECK_DEATH tests verify that a DCHECK is hit ("Check failed"
 // is part of the error message), but intentionally do not expose the gtest
