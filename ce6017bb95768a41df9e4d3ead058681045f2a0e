@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "931a0515_fde06375",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8IntersectionObserverDelegate.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-07-23T23:32:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "434324b7_f3f49c07",
+      "revId": "ce6017bb95768a41df9e4d3ead058681045f2a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7b78517_82e06c82",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8IntersectionObserverDelegate.h",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "ce6017bb95768a41df9e4d3ead058681045f2a0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c133a3a0_b9d47561",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8IntersectionObserverDelegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-07-23T23:32:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7b78517_82e06c82",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "ce6017bb95768a41df9e4d3ead058681045f2a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "08d04ad0_aed9fb0c",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8IntersectionObserverDelegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-07-23T23:32:44Z",
+      "side": 1,
+      "message": "As discussed offline, let me use ScriptState for now. Added TODO comment.",
+      "parentUuid": "a6a0a532_36536edc",
+      "range": {
+        "startLine": 38,
+        "startChar": 22,
+        "endLine": 38,
+        "endChar": 35
+      },
+      "revId": "ce6017bb95768a41df9e4d3ead058681045f2a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52f841db_ee0674e1",
         "filename": "third_party/WebKit/Source/bindings/core/v8/custom/V8IntersectionObserverCustom.cpp",
         "patchSetId": 2
@@ -76,6 +142,30 @@
       "writtenOn": "2017-07-21T12:07:14Z",
       "side": 1,
       "message": "The current context is the right context here, but if possible, could you use [ConstructorCallWith\u003dScriptState] rather than doing it for yourself?  (I knew that this CL doesn\u0027t touch this part, but could you give me a favor?)",
+      "range": {
+        "startLine": 52,
+        "startChar": 19,
+        "endLine": 52,
+        "endChar": 26
+      },
+      "revId": "ce6017bb95768a41df9e4d3ead058681045f2a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2f7c81e_7dbff94c",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/custom/V8IntersectionObserverCustom.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-07-23T23:32:44Z",
+      "side": 1,
+      "message": "As discussed offline, let me do this in a follow-up CL. The follow-up CL should remove this custom constructor :)",
+      "parentUuid": "52f841db_ee0674e1",
       "range": {
         "startLine": 52,
         "startChar": 19,
@@ -125,6 +215,24 @@
       "revId": "ce6017bb95768a41df9e4d3ead058681045f2a0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ab2fa9f_76ea635e",
+        "filename": "third_party/WebKit/Source/core/intersection_observer/IntersectionObserverDelegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-07-23T23:32:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9df650e_061758bb",
+      "revId": "ce6017bb95768a41df9e4d3ead058681045f2a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
