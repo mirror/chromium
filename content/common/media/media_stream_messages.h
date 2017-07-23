@@ -2,8 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#ifndef CONTENT_COMMON_MEDIA_MEDIA_STREAM_MESSAGES_H_
+#define CONTENT_COMMON_MEDIA_MEDIA_STREAM_MESSAGES_H_
+
 // IPC messages for the media streaming.
-// Multiply-included message file, hence no include guard.
 
 #include <string>
 
@@ -118,3 +120,5 @@ IPC_MESSAGE_CONTROL3(MediaStreamHostMsg_SetCapturingLinkSecured,
                      int,                      /* session_id */
                      content::MediaStreamType, /* type */
                      bool /* is_secure */)
+
+#endif  // CONTENT_COMMON_MEDIA_MEDIA_STREAM_MESSAGES_H_
