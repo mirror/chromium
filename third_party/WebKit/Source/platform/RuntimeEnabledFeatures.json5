@@ -629,6 +629,11 @@
     {
       name: "MediaDocumentDownloadButton",
     },
+    // Set to reflect the MediaEngagementBypassAutoplayPolicies feature.
+    {
+      name: "MediaEngagementBypassAutoplayPolicies",
+      status: "experimental",
+    },
     {
       name: "MediaQueryShape",
       status: "experimental",
