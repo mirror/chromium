@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5c31639_695e42cf",
+        "filename": "tools/perf/benchmarks/tab_switching.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-07-24T15:23:26Z",
+      "side": 1,
+      "message": "Note here the story_set has a single story where all pages are loaded.",
+      "revId": "d28596dcd199958cc408034922a63ffc55ce4a75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
