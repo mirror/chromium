@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c615d3e9_b8f711d6",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-24T21:48:18Z",
+      "side": 1,
+      "message": "nit: s/CheckForFieldTrialParamOverrides/UpdateWithFieldTrialParam/",
+      "range": {
+        "startLine": 99,
+        "startChar": 7,
+        "endLine": 99,
+        "endChar": 39
+      },
+      "revId": "d809df50b41ebd2a45365682e0579045eee6a8ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9db7864_212a23c0",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-24T21:48:18Z",
+      "side": 1,
+      "message": "There is no member called cpu_measurement_ticks_.",
+      "range": {
+        "startLine": 41,
+        "startChar": 13,
+        "endLine": 41,
+        "endChar": 35
+      },
+      "revId": "d809df50b41ebd2a45365682e0579045eee6a8ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7b2475d_42fe74d9",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-24T21:48:18Z",
+      "side": 1,
+      "message": "This should be private.",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 43
+      },
+      "revId": "d809df50b41ebd2a45365682e0579045eee6a8ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3c28878_db07b44e",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-24T21:48:18Z",
+      "side": 1,
+      "message": "This should be private.",
+      "range": {
+        "startLine": 50,
+        "startChar": 7,
+        "endLine": 50,
+        "endChar": 27
+      },
+      "revId": "d809df50b41ebd2a45365682e0579045eee6a8ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fad108c_3ec52fc9",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-24T21:48:18Z",
+      "side": 1,
+      "message": "nit: s/CheckForFieldTrialParamOverrides/UpdateWithFieldTrialParam/",
+      "range": {
+        "startLine": 74,
+        "startChar": 9,
+        "endLine": 74,
+        "endChar": 41
+      },
+      "revId": "d809df50b41ebd2a45365682e0579045eee6a8ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f86900dd_d7320ae1",
+        "filename": "services/resource_coordinator/public/cpp/resource_coordinator_features.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-24T21:48:18Z",
+      "side": 1,
+      "message": "Currently this is either always on or off, right? It is probably better to have the capability of dynamically enabling/disabling this. (Can be in follow-up CL if you have time.)",
+      "range": {
+        "startLine": 53,
+        "startChar": 48,
+        "endLine": 53,
+        "endChar": 77
+      },
+      "revId": "d809df50b41ebd2a45365682e0579045eee6a8ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4438a466_bd7e6a0d",
+        "filename": "services/resource_coordinator/public/cpp/resource_coordinator_features.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-24T21:48:18Z",
+      "side": 1,
+      "message": "s/Interval/Duration/",
+      "range": {
+        "startLine": 59,
+        "startChar": 45,
+        "endLine": 59,
+        "endChar": 53
+      },
+      "revId": "d809df50b41ebd2a45365682e0579045eee6a8ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9aac6ee_24079bbd",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 1046,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-24T21:48:18Z",
+      "side": 1,
+      "message": "How long is the interval between ticks? Is that defined by \"intervalMs\"? And the number of ticks defined as \"durationMs/intervalMs\"? Some comments are needed to clarify.",
+      "range": {
+        "startLine": 1046,
+        "startChar": 30,
+        "endLine": 1046,
+        "endChar": 40
+      },
+      "revId": "d809df50b41ebd2a45365682e0579045eee6a8ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
