@@ -43,8 +43,6 @@ class SurfaceAggregatorPerfTest : public testing::Test {
   void RunTest(int num_surfaces,
                int num_textures,
                float opacity,
-               bool optimize_damage,
-               bool full_damage,
                const std::string& name) {
     std::vector<std::unique_ptr<CompositorFrameSinkSupport>> child_supports(
         num_surfaces);
@@ -54,7 +52,7 @@ class SurfaceAggregatorPerfTest : public testing::Test {
           kHandlesFrameSinkIdInvalidation, kNeedsSyncPoints);
     }
     aggregator_ = base::MakeUnique<SurfaceAggregator>(
-        manager_.surface_manager(), resource_provider_.get(), optimize_damage);
+        manager_.surface_manager(), resource_provider_.get());
     for (int i = 0; i < num_surfaces; i++) {
       LocalSurfaceId local_surface_id(i + 1, kArbitraryToken);
 
@@ -122,11 +120,7 @@ class SurfaceAggregatorPerfTest : public testing::Test {
           cc::SurfaceDrawQuadType::PRIMARY, nullptr);
 
       pass->output_rect = gfx::Rect(0, 0, 100, 100);
-
-      if (full_damage)
-        pass->damage_rect = gfx::Rect(0, 0, 100, 100);
-      else
-        pass->damage_rect = gfx::Rect(0, 0, 1, 1);
+      pass->damage_rect = gfx::Rect(0, 0, 100, 100);
 
       frame.render_pass_list.push_back(std::move(pass));
 
@@ -156,31 +150,15 @@ class SurfaceAggregatorPerfTest : public testing::Test {
 };
 
 TEST_F(SurfaceAggregatorPerfTest, ManySurfacesOpaque) {
-  RunTest(20, 100, 1.f, false, true, "many_surfaces_opaque");
+  RunTest(20, 100, 1.f, "many_surfaces_opaque");
 }
 
 TEST_F(SurfaceAggregatorPerfTest, ManySurfacesTransparent) {
-  RunTest(20, 100, .5f, false, true, "many_surfaces_transparent");
+  RunTest(20, 100, .5f, "many_surfaces_transparent");
 }
 
 TEST_F(SurfaceAggregatorPerfTest, FewSurfaces) {
-  RunTest(3, 1000, 1.f, false, true, "few_surfaces");
-}
-
-TEST_F(SurfaceAggregatorPerfTest, ManySurfacesOpaqueDamageCalc) {
-  RunTest(20, 100, 1.f, true, true, "many_surfaces_opaque_damage_calc");
-}
-
-TEST_F(SurfaceAggregatorPerfTest, ManySurfacesTransparentDamageCalc) {
-  RunTest(20, 100, .5f, true, true, "many_surfaces_transparent_damage_calc");
-}
-
-TEST_F(SurfaceAggregatorPerfTest, FewSurfacesDamageCalc) {
-  RunTest(3, 1000, 1.f, true, true, "few_surfaces_damage_calc");
-}
-
-TEST_F(SurfaceAggregatorPerfTest, FewSurfacesAggregateDamaged) {
-  RunTest(3, 1000, 1.f, true, false, "few_surfaces_aggregate_damaged");
+  RunTest(3, 1000, 1.f, "few_surfaces");
 }
 
 }  // namespace

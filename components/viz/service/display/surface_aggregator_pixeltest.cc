@@ -90,7 +90,7 @@ TEST_F(SurfaceAggregatorPixelTest, DrawSimpleFrame) {
   support_->SubmitCompositorFrame(root_local_surface_id, std::move(root_frame));
 
   SurfaceAggregator aggregator(manager_.surface_manager(),
-                               resource_provider_.get(), true);
+                               resource_provider_.get());
   cc::CompositorFrame aggregated_frame = aggregator.Aggregate(root_surface_id);
 
   bool discard_alpha = false;
@@ -164,7 +164,7 @@ TEST_F(SurfaceAggregatorPixelTest, DrawSimpleAggregatedFrame) {
   }
 
   SurfaceAggregator aggregator(manager_.surface_manager(),
-                               resource_provider_.get(), true);
+                               resource_provider_.get());
   cc::CompositorFrame aggregated_frame = aggregator.Aggregate(root_surface_id);
 
   bool discard_alpha = false;
@@ -298,7 +298,7 @@ TEST_F(SurfaceAggregatorPixelTest, DrawAggregatedFrameWithSurfaceTransforms) {
   }
 
   SurfaceAggregator aggregator(manager_.surface_manager(),
-                               resource_provider_.get(), true);
+                               resource_provider_.get());
   cc::CompositorFrame aggregated_frame = aggregator.Aggregate(root_surface_id);
 
   bool discard_alpha = false;
