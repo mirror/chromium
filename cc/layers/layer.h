@@ -172,6 +172,9 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
   void SetIsContainerForFixedPositionLayers(bool container);
   bool IsContainerForFixedPositionLayers() const;
 
+  void SetIsResizedByBrowserControls(bool resized);
+  bool IsResizedByBrowserControls() const;
+
   void SetPositionConstraint(const LayerPositionConstraint& constraint);
   const LayerPositionConstraint& position_constraint() const {
     return inputs_.position_constraint;
@@ -592,6 +595,7 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
 
     TouchActionRegion touch_action_region;
 
+    bool is_resized_by_browser_controls : 1;
     bool is_container_for_fixed_position_layers : 1;
     LayerPositionConstraint position_constraint;
 
