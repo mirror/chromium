@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2536d5ba_f4b1c192",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-24T05:34:39Z",
+      "side": 1,
+      "message": "Thank you for explanation.\n\n\u003e For obvious reasons, interfaces of FileSystemHost and FileSystemInstance are tightly coupled.\nFileSystemHost::OnDocumentChanged() doesn\u0027t make sense without FileSystemInstance\u0027s watcher API.\n\nAgreed.\n\n\u003e IIUC almost all FooHost implementation classes are also responsible to interact with FooInstance, and I don\u0027t want to go far away from this style.\n\nAgreed, too.\n\n\u003e If you don\u0027t feel comfortable having ArcFileSystemImpl as a separate class, I\u0027ll add some redundant suffix to FileSystemHost\u0027s OpenFileToRead()\u0027s name to make it possible to implement FileSystemHost in ArcFileSystemOpreationRunner.\n\nIMO, at least for this case, this renaming would be better, because the platform of the target file is clearer for the caller.\nOf course, if we can abstract well (like, only one method for both platforms), it is not the case, but we cannot (or no much benefit IIUC) in this case.\n\nMaybe OpenChromeFileToRead()/OpenAndroidFileToRead() etc. would be clearer?\n\n(optional) Also, along with the change, I\u0027d suggest to rename ArcFileSystemOperationRunner then, because it changes the responsibility with your new concept, IMHO.\n\nWDYT?",
+      "parentUuid": "be85de5e_9cc1882c",
+      "revId": "6df67fa052553fad61b7fa9aa027ec664e330952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "254f8e5b_915cac02",
         "filename": "chrome/browser/chromeos/arc/fileapi/file_system_host_impl.cc",
         "patchSetId": 1
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "ATM I cannot provide real impl as it requires a new Chrome OS service to get implemented with a new D-Bus client in Chromium repo, and the FileSystemHostImpl itself will be a bit complicated.\nDo I have to finish the implementation before submitting mojo CL?",
       "parentUuid": "254f8e5b_915cac02",
+      "revId": "6df67fa052553fad61b7fa9aa027ec664e330952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "625b08b9_6e4e2a84",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_system_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-24T05:34:39Z",
+      "side": 1,
+      "message": "Up to security review owner, but AFAIK, yes.",
+      "parentUuid": "eef3a40e_2015073a",
       "revId": "6df67fa052553fad61b7fa9aa027ec664e330952",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
