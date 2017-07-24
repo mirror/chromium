@@ -387,6 +387,34 @@ TEST(GURLTest, GetWithEmptyPath) {
   }
 }
 
+TEST(GURLTest, GetWithoutFilename) {
+  struct TestCase {
+    const char* input;
+    const char* expected;
+  } cases[] = {
+    {"https://www.google.com",                    "https://www.google.com/"},
+    {"https://www.google.com/",                   "https://www.google.com/"},
+    {"https://www.google.com/maps.htm",           "https://www.google.com/"},
+    {"https://www.google.com/maps/",              "https://www.google.com/maps/"},
+    {"https://www.google.com/index.html",         "https://www.google.com/"},
+    {"https://www.google.com/index.html?q=maps",  "https://www.google.com/"},
+    {"https://www.google.com/index.html#maps/",   "https://www.google.com/"},
+    {"https://www.google.com/maps/au/index.html", "https://www.google.com/maps/au/"},
+    {"https://www.google.com/maps/au/north",      "https://www.google.com/maps/au/"},
+    {"https://www.google.com/maps/au/north/",     "https://www.google.com/maps/au/north/"},
+    {"https://www.google.com/maps/au/index.html?q=maps#fragment/",     "https://www.google.com/maps/au/"},
+    {"http://www.google.com:8000/maps/au/index.html?q=maps#fragment/", "http://www.google.com:8000/maps/au/"},
+    {"https://www.google.com/maps/au/north/?q=maps#fragment",          "https://www.google.com/maps/au/north/"},
+    {"https://www.google.com/maps/au/north?q=maps#fragment",           "https://www.google.com/maps/au/"}
+  };
+
+  for (size_t i = 0; i < arraysize(cases); i++) {
+    GURL url(cases[i].input);
+    GURL without_filename = url.GetWithoutFilename();
+    EXPECT_EQ(cases[i].expected, without_filename.spec()) << i;
+  }
+}
+
 TEST(GURLTest, Replacements) {
   // The URL canonicalizer replacement test will handle most of these case.
   // The most important thing to do here is to check that the proper
