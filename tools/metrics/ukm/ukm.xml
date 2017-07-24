@@ -1038,4 +1038,172 @@ be describing additional metrics about the same event.
   <metric name="TargetLanguage"/>
 </event>
 
+<event name="CPUUsage">
+  <owner>matthalp@google.com</owner>
+  <owner>oysteine@chromium.org</owner>
+  <summary>
+    Metrics related to CPU usage throughout the page load process. This will
+    primiarly correspond to a tick-based time-series measurements for CPU usage.
+    In addition, markers that denote when interesting events occur may also be
+    present. There is also some metadata stored to determine how faitful the CPU
+    usage measurement is (e.g. NumberOfCoresidentTabsInProcess).
+  </summary>
+  <metric name="0">
+    <summary>
+      CPU Usage measurement at tick 0
+    </summary>
+  </metric>
+  <metric name="1">
+    <summary>
+      CPU Usage measurement at tick 1
+    </summary>
+  </metric>
+  <metric name="10">
+    <summary>
+      CPU Usage measurement at tick 10
+    </summary>
+  </metric>
+  <metric name="11">
+    <summary>
+      CPU Usage measurement at tick 11
+    </summary>
+  </metric>
+  <metric name="12">
+    <summary>
+      CPU Usage measurement at tick 12
+    </summary>
+  </metric>
+  <metric name="13">
+    <summary>
+      CPU Usage measurement at tick 13
+    </summary>
+  </metric>
+  <metric name="14">
+    <summary>
+      CPU Usage measurement at tick 14
+    </summary>
+  </metric>
+  <metric name="15">
+    <summary>
+      CPU Usage measurement at tick 15
+    </summary>
+  </metric>
+  <metric name="16">
+    <summary>
+      CPU Usage measurement at tick 16
+    </summary>
+  </metric>
+  <metric name="17">
+    <summary>
+      CPU Usage measurement at tick 17
+    </summary>
+  </metric>
+  <metric name="18">
+    <summary>
+      CPU Usage measurement at tick 18
+    </summary>
+  </metric>
+  <metric name="19">
+    <summary>
+      CPU Usage measurement at tick 19
+    </summary>
+  </metric>
+  <metric name="2">
+    <summary>
+      CPU Usage measurement at tick 2
+    </summary>
+  </metric>
+  <metric name="20">
+    <summary>
+      CPU Usage measurement at tick 20
+    </summary>
+  </metric>
+  <metric name="21">
+    <summary>
+      CPU Usage measurement at tick 21
+    </summary>
+  </metric>
+  <metric name="22">
+    <summary>
+      CPU Usage measurement at tick 22
+    </summary>
+  </metric>
+  <metric name="23">
+    <summary>
+      CPU Usage measurement at tick 23
+    </summary>
+  </metric>
+  <metric name="24">
+    <summary>
+      CPU Usage measurement at tick 24
+    </summary>
+  </metric>
+  <metric name="25">
+    <summary>
+      CPU Usage measurement at tick 25
+    </summary>
+  </metric>
+  <metric name="26">
+    <summary>
+      CPU Usage measurement at tick 26
+    </summary>
+  </metric>
+  <metric name="27">
+    <summary>
+      CPU Usage measurement at tick 27
+    </summary>
+  </metric>
+  <metric name="28">
+    <summary>
+      CPU Usage measurement at tick 28
+    </summary>
+  </metric>
+  <metric name="29">
+    <summary>
+      CPU Usage measurement at tick 29
+    </summary>
+  </metric>
+  <metric name="3">
+    <summary>
+      CPU Usage measurement at tick 3
+    </summary>
+  </metric>
+  <metric name="4">
+    <summary>
+      CPU Usage measurement at tick 4
+    </summary>
+  </metric>
+  <metric name="5">
+    <summary>
+      CPU Usage measurement at tick 5
+    </summary>
+  </metric>
+  <metric name="6">
+    <summary>
+      CPU Usage measurement at tick 6
+    </summary>
+  </metric>
+  <metric name="7">
+    <summary>
+      CPU Usage measurement at tick 7
+    </summary>
+  </metric>
+  <metric name="8">
+    <summary>
+      CPU Usage measurement at tick 8
+    </summary>
+  </metric>
+  <metric name="9">
+    <summary>
+      CPU Usage measurement at tick 9
+    </summary>
+  </metric>
+  <metric name="NumberOfCoresidentTabsInProcess">
+    <summary>
+      Number of tabs that exist in the process while any of the CPU usaage
+      measurements are taken.
+    </summary>
+  </metric>
+</event>
+
 </ukm-configuration>

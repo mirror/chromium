@@ -37,6 +37,7 @@ void CoordinationUnitManager::OnStart(
 
 void CoordinationUnitManager::RegisterObserver(
     std::unique_ptr<CoordinationUnitGraphObserver> observer) {
+  observer->set_coordination_unit_manager(this);
   observers_.push_back(std::move(observer));
 }
 
@@ -56,10 +57,10 @@ void CoordinationUnitManager::OnBeforeCoordinationUnitDestroyed(
 }
 
 std::unique_ptr<ukm::UkmEntryBuilder>
-CoordinationUnitManager::CreateUkmEntryBuilder(const char* event_name) {
+CoordinationUnitManager::CreateUkmEntryBuilder(ukm::SourceId source_id,
+                                               const char* event_name) {
   DCHECK(ukm_recorder_ != nullptr);
-  return ukm_recorder_->GetEntryBuilder(ukm::UkmRecorder::GetNewSourceID(),
-                                        event_name);
+  return ukm_recorder_->GetEntryBuilder(source_id, event_name);
 }
 
 }  // namespace resource_coordinator
