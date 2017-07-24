@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ef025bbc_38bd42cd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-07-24T03:02:00Z",
+      "side": 1,
+      "message": "\u003e Could you give an example where the scope isn\u0027t \"/\"?\n\u003e \n\nDone.\n\n\u003e Also I was a bit confused by the phrasing here (I thought you meant that the site\u0027s manifest always defines scope as \"/\"). How about: \"For example, IF the user has installed ... AND the site\u0027s manifest ..., THEN when the user visits ...\".\n\nDone. Thanks for the suggestion!",
+      "parentUuid": "cbce40d3_7e1dede9",
+      "range": {
+        "startLine": 12,
+        "startChar": 10,
+        "endLine": 12,
+        "endChar": 11
+      },
+      "revId": "a0c18371742f3902ceb2ab7cf6997170f454bb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19d6b786_2ebe41ac",
         "filename": "/COMMIT_MSG",
         "patchSetId": 9
@@ -36,6 +60,24 @@
       "writtenOn": "2017-07-14T05:03:35Z",
       "side": 1,
       "message": "This spreadsheet is restricted to google.com; it\u0027s not ideal to include internal links in a commit message. You could move it to chromium.org.\n\nHowever, I think a commit message should be a permanent record so it probably shouldn\u0027t link to a sheet that\u0027s going to change (you might not want to keep that column there forever; we probably don\u0027t want a column for every patch). Can you just summarize the information here instead?",
+      "revId": "a0c18371742f3902ceb2ab7cf6997170f454bb64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b33dc2f_62eeeb88",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-07-24T03:02:00Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "19d6b786_2ebe41ac",
       "revId": "a0c18371742f3902ceb2ab7cf6997170f454bb64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
