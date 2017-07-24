@@ -167,7 +167,6 @@ class ObfuscatedFileUtilTest : public testing::Test {
 
     quota_manager_ = new storage::QuotaManager(
         false /* is_incognito */, data_dir_.GetPath(),
-        base::ThreadTaskRunnerHandle::Get().get(),
         base::ThreadTaskRunnerHandle::Get().get(), storage_policy_.get(),
         storage::GetQuotaSettingsFunc());
     storage::QuotaSettings settings;
