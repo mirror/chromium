@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7654630d_955f9468",
+        "filename": "sandbox/linux/services/namespace_sandbox.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-24T22:49:46Z",
+      "side": 1,
+      "message": "So what we really want here is to do these checks at runtime, right? Specifically, don\u0027t bother for NaCl, since NaCl is known to not use glibc. Should this really be #if !defined(OS_NACL) or OS_NACL_NONSFI then?",
+      "revId": "866981390236cda35837cf6de1ed46fbd897363f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41a0427d_5009ef42",
+        "filename": "sandbox/linux/services/namespace_sandbox.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-24T22:49:46Z",
+      "side": 1,
+      "message": "Do we want to mention some Linux distros backported this behavior to earlier versions?",
+      "revId": "866981390236cda35837cf6de1ed46fbd897363f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
