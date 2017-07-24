@@ -379,6 +379,30 @@
     },
     {
       "key": {
+        "uuid": "7656d17b_028dadfd",
+        "filename": "chrome/installer/zucchini/patch_writer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-24T23:07:31Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e1e79b7c_372902f2",
+      "range": {
+        "startLine": 175,
+        "startChar": 28,
+        "endLine": 175,
+        "endChar": 31
+      },
+      "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fdc6b42c_6d68f8c9",
         "filename": "chrome/installer/zucchini/patch_writer.h",
         "patchSetId": 14
@@ -741,6 +765,30 @@
       "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9092f7e_81a3338d",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-24T23:07:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1326b3cf_ccb0cef5",
+      "range": {
+        "startLine": 52,
+        "startChar": 2,
+        "endLine": 52,
+        "endChar": 10
+      },
+      "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -1236,6 +1284,30 @@
       "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28c834c0_4044e155",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-24T23:07:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1bcb1fe_f67b5724",
+      "range": {
+        "startLine": 111,
+        "startChar": 2,
+        "endLine": 111,
+        "endChar": 10
+      },
+      "revId": "a60b10ccb7b84cea04fa35e9a3e127e8d3f608f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

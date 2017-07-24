@@ -1,0 +1,291 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fcdad2e_69abc8ff",
+        "filename": "chrome/installer/zucchini/patch_read_write_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-24T23:07:31Z",
+      "side": 1,
+      "message": "\u003c\u003e instead of \"\"?",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 19
+      },
+      "revId": "449c4d52075f44795ac3477cff7ec7b99baf9b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "098f9bbc_aae4a914",
+        "filename": "chrome/installer/zucchini/patch_read_write_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-24T23:07:31Z",
+      "side": 1,
+      "message": "temporary",
+      "range": {
+        "startLine": 23,
+        "startChar": 52,
+        "endLine": 23,
+        "endChar": 60
+      },
+      "revId": "449c4d52075f44795ac3477cff7ec7b99baf9b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49ddd592_9102664d",
+        "filename": "chrome/installer/zucchini/patch_read_write_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-24T23:07:31Z",
+      "side": 1,
+      "message": "std::vector\u003cuint8_t\u003e since this is not raw data?",
+      "range": {
+        "startLine": 55,
+        "startChar": 22,
+        "endLine": 55,
+        "endChar": 25
+      },
+      "revId": "449c4d52075f44795ac3477cff7ec7b99baf9b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "049ab06a_1a241edc",
+        "filename": "chrome/installer/zucchini/patch_reader.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-24T23:07:31Z",
+      "side": 1,
+      "message": "These functions are similar and can share comment. Also, it\u0027s unclear that |source| gets consumed by parse. Suggestion:\n\n// The Parse*() functions below attempts to extract data of a specific type from the beginning of |source|. A parse function: On success, consumes the used portion of |source|, writes data into the output parameter, and returns source. Otherwise returns false and does not consume |source|.\n\nThen:\n\n// Parses |source| for the next an ElementMatch.\n// Parses |source| for the next embedded BufferSource.\n// Parses |source| for the next VarUInt.\n// Parses |source| for the next VarInt.",
+      "revId": "449c4d52075f44795ac3477cff7ec7b99baf9b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21d18c8c_6c01f395",
+        "filename": "chrome/installer/zucchini/patch_reader.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-24T23:07:31Z",
+      "side": 1,
+      "message": "Update this to match whatever ParseVarInt() does?",
+      "range": {
+        "startLine": 39,
+        "startChar": 12,
+        "endLine": 39,
+        "endChar": 63
+      },
+      "revId": "449c4d52075f44795ac3477cff7ec7b99baf9b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba383f5f_d5e48580",
+        "filename": "chrome/installer/zucchini/patch_reader.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-24T23:07:31Z",
+      "side": 1,
+      "message": "If this is the only place that DecodeVarInt() gets used, might be easier to just have it return the number of bytes read (0 on error), and pass the value to source-\u003eSkip() directly?",
+      "range": {
+        "startLine": 52,
+        "startChar": 2,
+        "endLine": 52,
+        "endChar": 44
+      },
+      "revId": "449c4d52075f44795ac3477cff7ec7b99baf9b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54244a8f_fdcd4ce6",
+        "filename": "chrome/installer/zucchini/patch_reader.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-24T23:07:31Z",
+      "side": 1,
+      "message": "Maybe have a templated super class for this, with nice high-level comment?\n\n// The super class for stateful parsers that extracts embedded BufferSource chunks from the owner\u0027s BufferSource (expected to remain valid for the lifetime of the parser), parses the obtained chunks, and provides an iterator to extract data units.\ntemplate \u003cclass UNIT\u003e\nclass StreamableSource {\n public:\n  StreamableSource() \u003d default;\n  virtual ~StreamableSource() \u003d default;\n  StreamableSource(const StreamableSource\u0026) \u003d default;\n\n  // Blah.\n  virtual bool Initialize(BufferSource* source) \u003d 0;\n\n  // Bleh.\n  base::Optional\u003cT\u003e GetNext() \u003d 0;\n\n  // Blih.\n  bool Done() const  \u003d 0;\n\n  // Copyable.\n};\n\n\nThen \n\nclass EquivalencedSource : public StreamableSource\u003cEquivalence\u003e {\n public:\n  ...\n  // StreamableSource:\n  bool Initialize(BufferSource* source) override;\n  base::Optional\u003cEquivalence\u003e GetNext() override;\n  bool Done() const() override;\n\n private:\n  ...\n};\n\n\netc.?",
+      "revId": "449c4d52075f44795ac3477cff7ec7b99baf9b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79b0eb4c_618d0b35",
+        "filename": "chrome/installer/zucchini/patch_reader.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-24T23:07:31Z",
+      "side": 1,
+      "message": "CRC32",
+      "range": {
+        "startLine": 263,
+        "startChar": 76,
+        "endLine": 263,
+        "endChar": 79
+      },
+      "revId": "449c4d52075f44795ac3477cff7ec7b99baf9b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef678c5f_29c88765",
+        "filename": "chrome/installer/zucchini/patch_reader.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-24T23:07:31Z",
+      "side": 1,
+      "message": "NIT: \"old / new\"?",
+      "range": {
+        "startLine": 263,
+        "startChar": 14,
+        "endLine": 263,
+        "endChar": 15
+      },
+      "revId": "449c4d52075f44795ac3477cff7ec7b99baf9b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c42bf167_6bb35159",
+        "filename": "chrome/installer/zucchini/patch_utils.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-24T23:07:31Z",
+      "side": 1,
+      "message": "stdint.h",
+      "range": {
+        "startLine": 8,
+        "startChar": 10,
+        "endLine": 8,
+        "endChar": 17
+      },
+      "revId": "449c4d52075f44795ac3477cff7ec7b99baf9b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "966e46a0_66926625",
+        "filename": "chrome/installer/zucchini/patch_writer.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-24T23:07:31Z",
+      "side": 1,
+      "message": "Comment should go into .h file.",
+      "range": {
+        "startLine": 131,
+        "startChar": 2,
+        "endLine": 133,
+        "endChar": 70
+      },
+      "revId": "449c4d52075f44795ac3477cff7ec7b99baf9b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ec8aab7_fb369b74",
+        "filename": "chrome/installer/zucchini/patch_writer.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-24T23:07:31Z",
+      "side": 1,
+      "message": "Comment should go in to .h file.",
+      "range": {
+        "startLine": 183,
+        "startChar": 0,
+        "endLine": 185,
+        "endChar": 42
+      },
+      "revId": "449c4d52075f44795ac3477cff7ec7b99baf9b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43727eda_a9ae2d0c",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-24T23:07:31Z",
+      "side": 1,
+      "message": "ascending",
+      "range": {
+        "startLine": 167,
+        "startChar": 8,
+        "endLine": 167,
+        "endChar": 16
+      },
+      "revId": "449c4d52075f44795ac3477cff7ec7b99baf9b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
