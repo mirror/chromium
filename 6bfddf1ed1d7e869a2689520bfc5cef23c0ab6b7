@@ -70,6 +70,30 @@
       "revId": "6bfddf1ed1d7e869a2689520bfc5cef23c0ab6b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "18a5b575_c617b0ee",
+        "filename": "content/browser/renderer_host/render_view_host_impl.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-07-24T21:49:06Z",
+      "side": 1,
+      "message": "https://cs.chromium.org/chromium/src/base/bind_internal.h?rcl\u003d5cf904450ddb7fba8448914af8ff4c4800481723\u0026l\u003d489\n\nThis assert fails if I don\u0027t use base::RetainedRef",
+      "parentUuid": "1b6c59d0_edd835f4",
+      "range": {
+        "startLine": 236,
+        "startChar": 18,
+        "endLine": 236,
+        "endChar": 28
+      },
+      "revId": "6bfddf1ed1d7e869a2689520bfc5cef23c0ab6b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
