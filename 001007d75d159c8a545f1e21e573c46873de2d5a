@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "53c261bb_14e256ae",
+        "filename": "cc/scheduler/begin_frame_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-07-24T22:31:26Z",
+      "side": 1,
+      "message": "This isn\u0027t the complete fix because it\u0027s still possible to get the same begin frame again in the ExternalBFS if the frame sink is recreated and forgets the last begin frame args. This fix is just so that different observers (past and present frame sink instances) don\u0027t get frame times out of order. They can still get the same frame e.g. past instance gets a frame (NORMAL or MISSED) and present instance sees that same frame as MISSED.\n\nThe main fix is the early out in ExternalBFS::OnBeginFrame.",
+      "parentUuid": "9585445f_c8bc9656",
+      "range": {
+        "startLine": 201,
+        "startChar": 6,
+        "endLine": 203,
+        "endChar": 66
+      },
+      "revId": "001007d75d159c8a545f1e21e573c46873de2d5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab91d57d_fb4b68fe",
         "filename": "cc/scheduler/begin_frame_source_unittest.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "001007d75d159c8a545f1e21e573c46873de2d5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "645c9aa0_a8d9fb8a",
+        "filename": "cc/scheduler/begin_frame_source_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-07-24T22:31:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab91d57d_fb4b68fe",
+      "range": {
+        "startLine": 520,
+        "startChar": 5,
+        "endLine": 520,
+        "endChar": 41
+      },
+      "revId": "001007d75d159c8a545f1e21e573c46873de2d5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
