@@ -166,9 +166,6 @@ class JourneyLogger {
   // return value.
   void SetCanMakePaymentValue(bool value);
 
-  // Records the fact that the Payment Request was shown to the user.
-  void SetShowCalled();
-
   // Records that an event occurred.
   void SetEventOccurred(Event event);
 

@@ -88,14 +88,6 @@ public class JourneyLogger {
     }
 
     /**
-     * Records the fact that the Payment Request was shown to the user.
-     */
-    public void setShowCalled() {
-        mWasShowCalled = true;
-        nativeSetShowCalled(mJourneyLoggerAndroid);
-    }
-
-    /**
      * Records that an event occurred.
      *
      * @param event The event that occured.
@@ -103,6 +95,9 @@ public class JourneyLogger {
     public void setEventOccurred(int event) {
         assert event >= 0;
         assert event < Event.ENUM_MAX;
+
+        if (event == Event.SHOWN || event == Event.SKIPPED_SHOW) mWasShowCalled = true;
+
         nativeSetEventOccurred(mJourneyLoggerAndroid, event);
     }
 
@@ -188,7 +183,6 @@ public class JourneyLogger {
     private native void nativeIncrementSelectionAdds(long nativeJourneyLoggerAndroid, int section);
     private native void nativeSetCanMakePaymentValue(
             long nativeJourneyLoggerAndroid, boolean value);
-    private native void nativeSetShowCalled(long nativeJourneyLoggerAndroid);
     private native void nativeSetEventOccurred(long nativeJourneyLoggerAndroid, int event);
     private native void nativeSetSelectedPaymentMethod(
             long nativeJourneyLoggerAndroid, int paymentMethod);
