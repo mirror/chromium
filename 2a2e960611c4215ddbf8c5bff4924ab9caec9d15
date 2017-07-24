@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88effba7_fca69977",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-24T21:19:04Z",
+      "side": 1,
+      "message": "Doesn\u0027t that mean the callback will never complete if resource coordinator isn\u0027t enabled? I guess that\u0027s OK?",
+      "range": {
+        "startLine": 144,
+        "startChar": 0,
+        "endLine": 149,
+        "endChar": 3
+      },
+      "revId": "2a2e960611c4215ddbf8c5bff4924ab9caec9d15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62cea862_5e294330",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-24T21:19:04Z",
+      "side": 1,
+      "message": "static const char[]?",
+      "range": {
+        "startLine": 162,
+        "startChar": 2,
+        "endLine": 162,
+        "endChar": 17
+      },
+      "revId": "2a2e960611c4215ddbf8c5bff4924ab9caec9d15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7def8fd_0ff9e2ea",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-24T21:19:04Z",
+      "side": 1,
+      "message": "What does it mean to create a UKM with no URL?",
+      "range": {
+        "startLine": 240,
+        "startChar": 0,
+        "endLine": 241,
+        "endChar": 37
+      },
+      "revId": "2a2e960611c4215ddbf8c5bff4924ab9caec9d15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecff2333_db19b19a",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-24T21:19:04Z",
+      "side": 1,
+      "message": "FWIW, it took me a little bit to parse this correctly: I thought this was saying the map was mapping ProfessInfoPtrs to pids which didn\u0027t seem right...\n\n(One way to make this slightly less ambiguous is to write ProcessInfoPtr::pid.)",
+      "range": {
+        "startLine": 80,
+        "startChar": 16,
+        "endLine": 80,
+        "endChar": 35
+      },
+      "revId": "2a2e960611c4215ddbf8c5bff4924ab9caec9d15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b352b32_763aae5a",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-24T21:19:04Z",
+      "side": 1,
+      "message": "Nit: static const char",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 5
+      },
+      "revId": "2a2e960611c4215ddbf8c5bff4924ab9caec9d15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bfae668_209d6e30",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 1311,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-24T21:19:04Z",
+      "side": 1,
+      "message": "As mentioned on chat, I would like to see the design evolve in a way that doesn\u0027t require copying URLs around like this (and turning them from GURLs to strings back to GURLs...). Especially since we have to send the entire map of process to GURLs back around... that\u0027s a lot of copying and conversion.",
+      "range": {
+        "startLine": 1305,
+        "startChar": 0,
+        "endLine": 1311,
+        "endChar": 3
+      },
+      "revId": "2a2e960611c4215ddbf8c5bff4924ab9caec9d15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
