@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fe661f9_21f3aca0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-07-24T23:48:04Z",
+      "side": 1,
+      "message": "Ideally we can find a way to just call setSheetStateHalfOnStartup so we don\u0027t duplicate logic. That might mean just early returning if mAlreadySetSheetToHalfOnStartUp is true.",
+      "range": {
+        "startLine": 514,
+        "startChar": 24,
+        "endLine": 517,
+        "endChar": 25
+      },
+      "revId": "4ae8aa4d7184f8efb7972037579971e58ba9676c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f14c8344_7c1c74fe",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-07-24T23:48:04Z",
+      "side": 1,
+      "message": "Does this still need to be moved here?",
+      "range": {
+        "startLine": 518,
+        "startChar": 24,
+        "endLine": 518,
+        "endChar": 35
+      },
+      "revId": "4ae8aa4d7184f8efb7972037579971e58ba9676c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f4db316_7a34f9b7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-07-24T23:48:04Z",
+      "side": 1,
+      "message": "Can this block now be moved to ChromeActivity? I think this is related to browser startup which shouldn\u0027t be controlled by the bottom sheet.",
+      "range": {
+        "startLine": 726,
+        "startChar": 8,
+        "endLine": 729,
+        "endChar": 9
+      },
+      "revId": "4ae8aa4d7184f8efb7972037579971e58ba9676c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
