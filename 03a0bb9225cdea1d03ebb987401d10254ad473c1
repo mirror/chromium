@@ -1,0 +1,423 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b7dce23_3067000c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-24T04:38:02Z",
+      "side": 1,
+      "message": "in-app",
+      "range": {
+        "startLine": 9,
+        "startChar": 44,
+        "endLine": 9,
+        "endChar": 50
+      },
+      "revId": "03a0bb9225cdea1d03ebb987401d10254ad473c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2b32f04_baa5eb65",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-24T04:38:02Z",
+      "side": 1,
+      "message": "I\u0027m not sure this is desirable but let\u0027s land it and experiment.",
+      "range": {
+        "startLine": 10,
+        "startChar": 42,
+        "endLine": 10,
+        "endChar": 76
+      },
+      "revId": "03a0bb9225cdea1d03ebb987401d10254ad473c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfe6455f_f25bbc38",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-24T04:38:02Z",
+      "side": 1,
+      "message": "omni",
+      "range": {
+        "startLine": 10,
+        "startChar": 69,
+        "endLine": 10,
+        "endChar": 71
+      },
+      "revId": "03a0bb9225cdea1d03ebb987401d10254ad473c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1272e7e1_3330b3f8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-24T04:38:02Z",
+      "side": 1,
+      "message": "wrap line",
+      "range": {
+        "startLine": 12,
+        "startChar": 76,
+        "endLine": 12,
+        "endChar": 82
+      },
+      "revId": "03a0bb9225cdea1d03ebb987401d10254ad473c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d049c9f_f510944c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-24T04:38:02Z",
+      "side": 1,
+      "message": ",",
+      "range": {
+        "startLine": 17,
+        "startChar": 47,
+        "endLine": 17,
+        "endChar": 48
+      },
+      "revId": "03a0bb9225cdea1d03ebb987401d10254ad473c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cd6d673_34be3c08",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-24T04:38:02Z",
+      "side": 1,
+      "message": ",",
+      "range": {
+        "startLine": 19,
+        "startChar": 43,
+        "endLine": 19,
+        "endChar": 44
+      },
+      "revId": "03a0bb9225cdea1d03ebb987401d10254ad473c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c9b356c_8516aa83",
+        "filename": "chrome/browser/apps/app_url_redirector.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-24T04:38:02Z",
+      "side": 1,
+      "message": ",",
+      "range": {
+        "startLine": 73,
+        "startChar": 51,
+        "endLine": 73,
+        "endChar": 52
+      },
+      "revId": "03a0bb9225cdea1d03ebb987401d10254ad473c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "692f1521_012336da",
+        "filename": "chrome/browser/apps/app_url_redirector.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-24T04:38:02Z",
+      "side": 1,
+      "message": "No else after return. (Just un-indent this code.)",
+      "revId": "03a0bb9225cdea1d03ebb987401d10254ad473c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4affbcad_d42ac3cd",
+        "filename": "chrome/browser/extensions/bookmark_app_helper.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-24T04:38:02Z",
+      "side": 1,
+      "message": "URL",
+      "range": {
+        "startLine": 359,
+        "startChar": 19,
+        "endLine": 359,
+        "endChar": 22
+      },
+      "revId": "03a0bb9225cdea1d03ebb987401d10254ad473c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91d9051d_ab845fb7",
+        "filename": "chrome/browser/extensions/bookmark_app_helper.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-24T04:38:02Z",
+      "side": 1,
+      "message": "Can you rephrase this? Perhaps just: \"Remove the \u0027*\u0027 character at the end of the domain + path (which was added by ____).\"",
+      "range": {
+        "startLine": 359,
+        "startChar": 32,
+        "endLine": 360,
+        "endChar": 22
+      },
+      "revId": "03a0bb9225cdea1d03ebb987401d10254ad473c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb89d72e_ad06ec8e",
+        "filename": "chrome/browser/extensions/bookmark_app_helper.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-24T04:38:02Z",
+      "side": 1,
+      "message": "Perhaps DCHECK_EQ(pattern_str.back(), \u0027*\u0027).",
+      "revId": "03a0bb9225cdea1d03ebb987401d10254ad473c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08e6b50c_28df4653",
+        "filename": "chrome/browser/extensions/convert_web_app.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-24T04:38:02Z",
+      "side": 1,
+      "message": ",",
+      "range": {
+        "startLine": 124,
+        "startChar": 48,
+        "endLine": 124,
+        "endChar": 49
+      },
+      "revId": "03a0bb9225cdea1d03ebb987401d10254ad473c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d0bd2d5_40a0ccde",
+        "filename": "chrome/browser/extensions/convert_web_app.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-24T04:38:02Z",
+      "side": 1,
+      "message": ",",
+      "range": {
+        "startLine": 125,
+        "startChar": 61,
+        "endLine": 125,
+        "endChar": 62
+      },
+      "revId": "03a0bb9225cdea1d03ebb987401d10254ad473c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b66e4e1b_e8ccbe66",
+        "filename": "chrome/browser/extensions/convert_web_app.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-24T04:38:02Z",
+      "side": 1,
+      "message": ",",
+      "range": {
+        "startLine": 125,
+        "startChar": 52,
+        "endLine": 125,
+        "endChar": 53
+      },
+      "revId": "03a0bb9225cdea1d03ebb987401d10254ad473c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62c6c498_d125943b",
+        "filename": "chrome/browser/extensions/convert_web_app.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-24T04:38:02Z",
+      "side": 1,
+      "message": ",",
+      "range": {
+        "startLine": 126,
+        "startChar": 41,
+        "endLine": 126,
+        "endChar": 42
+      },
+      "revId": "03a0bb9225cdea1d03ebb987401d10254ad473c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "946d7104_a4850fc6",
+        "filename": "chrome/browser/extensions/convert_web_app.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-24T04:38:02Z",
+      "side": 1,
+      "message": "Does this correctly apply to path segments (as opposed to just any string suffix)?\n\nFor example, if the scope is \"https://foo.com/scope\", this will make \"https://foo.com/scope*\" which will then match against \"https://foo.com/scopebad\" -- it should not. Maybe it\u0027s OK (e.g., if the path always ends in a \u0027/\u0027) but I\u0027m just checking.",
+      "range": {
+        "startLine": 131,
+        "startChar": 70,
+        "endLine": 131,
+        "endChar": 76
+      },
+      "revId": "03a0bb9225cdea1d03ebb987401d10254ad473c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "923266da_199224bc",
+        "filename": "chrome/browser/extensions/convert_web_app_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-24T04:38:02Z",
+      "side": 1,
+      "message": "Maybe test one that doesn\u0027t have a \u0027/\u0027 on the end for the case above.",
+      "range": {
+        "startLine": 112,
+        "startChar": 10,
+        "endLine": 112,
+        "endChar": 15
+      },
+      "revId": "03a0bb9225cdea1d03ebb987401d10254ad473c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f94c28f_0098126c",
+        "filename": "chrome/browser/ui/extensions/application_launch.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-24T04:38:02Z",
+      "side": 1,
+      "message": "This is a pretty gnarly DCHECK. Maybe write a function in #if DCHECK_IS_ON() that does this logic, and call it from the DCHECK?",
+      "range": {
+        "startLine": 137,
+        "startChar": 4,
+        "endLine": 137,
+        "endChar": 10
+      },
+      "revId": "03a0bb9225cdea1d03ebb987401d10254ad473c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e160ae80_625fdec3",
+        "filename": "chrome/common/web_application_info.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-24T04:38:02Z",
+      "side": 1,
+      "message": "Line wrap (can be on one line).",
+      "revId": "03a0bb9225cdea1d03ebb987401d10254ad473c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
