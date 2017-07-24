@@ -138,6 +138,24 @@
     },
     {
       "key": {
+        "uuid": "101536ae_f4fae009",
+        "filename": "third_party/WebKit/Source/platform/wtf/ScopedLogger.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-07-24T18:28:21Z",
+      "side": 1,
+      "message": "\u003e Copy the copyright header of Assertions.h.\n\nI think new files should use the current copyright header:\n\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#File-headers\n\n\"If the style changes, don‘t bother to update existing files to comply with the new style. For the same reason, don’t just blindly copy an existing file\u0027s header when creating a new file, since the existing file may use an outdated style.\"",
+      "parentUuid": "e61b2c18_f904d93d",
+      "revId": "78039a56445a5ce72238e6952129f295ed0b42a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8925cb32_7cf325da",
         "filename": "third_party/WebKit/Source/platform/wtf/ScopedLogger.h",
         "patchSetId": 2
