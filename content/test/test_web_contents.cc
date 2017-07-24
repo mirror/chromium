@@ -26,6 +26,7 @@
 #include "content/public/common/page_state.h"
 #include "content/public/test/browser_side_navigation_test_utils.h"
 #include "content/public/test/mock_render_process_host.h"
+#include "content/public/test/navigation_simulator.h"
 #include "content/test/test_render_view_host.h"
 #include "ui/base/page_transition_types.h"
 
@@ -246,15 +247,7 @@ WebContents* TestWebContents::Clone() {
 }
 
 void TestWebContents::NavigateAndCommit(const GURL& url) {
-  GetController().LoadURL(url, Referrer(), ui::PAGE_TRANSITION_LINK,
-                          std::string());
-  GURL loaded_url(url);
-  bool reverse_on_redirect = false;
-  BrowserURLHandlerImpl::GetInstance()->RewriteURLIfNecessary(
-      &loaded_url, GetBrowserContext(), &reverse_on_redirect);
-  // LoadURL created a navigation entry, now simulate the RenderView sending
-  // a notification that it actually navigated.
-  CommitPendingNavigation();
+  NavigationSimulator::NavigateAndCommitFromBrowser(url, this);
 }
 
 void TestWebContents::TestSetIsLoading(bool value) {
