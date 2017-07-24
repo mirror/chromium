@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "655f0418_b6edcfa3",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-24T21:09:49Z",
+      "side": 1,
+      "message": "Yes I believe so. Do you want me to move this code down into the if block?",
+      "parentUuid": "8de11ccc_4d547c48",
+      "range": {
+        "startLine": 522,
+        "startChar": 0,
+        "endLine": 524,
+        "endChar": 3
+      },
+      "revId": "bcf7377a5b32bd0ee7d7303596274722d1508b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4dddf651_7b7cb450",
         "filename": "content/browser/frame_host/render_frame_host_manager.cc",
         "patchSetId": 6
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "Why call it at all then?",
       "parentUuid": "4385815d_779a61a5",
+      "range": {
+        "startLine": 1700,
+        "startChar": 4,
+        "endLine": 1700,
+        "endChar": 64
+      },
+      "revId": "bcf7377a5b32bd0ee7d7303596274722d1508b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70f797f2_8ee849e6",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1700,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-24T21:09:49Z",
+      "side": 1,
+      "message": "Because the code in the RenderWidgetHostImpl was changed to always assume it had a WidgetPtr ie; it can\u0027t have a non-null object. What are you suggesting here?",
+      "parentUuid": "9a588126_ca831c5b",
       "range": {
         "startLine": 1700,
         "startChar": 4,
