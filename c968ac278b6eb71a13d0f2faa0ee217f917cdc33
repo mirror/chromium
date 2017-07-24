@@ -141,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "26ee2ca7_18b5529d",
+        "filename": "ui/chromeos/resources/default_100_percent/default_user_images/harmony/1-bird.png",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-24T22:24:34Z",
+      "side": 1,
+      "message": "What spec? I looked at how we actually use these over the weekend and lock screen is the highest resolution I\u0027ve found (not including the preview in the settings). Am I missing another use-case? Login/Lock screen is using 96dp at most so 192x192 on HiDPI device.",
+      "parentUuid": "5ffbac57_469b0ea4",
+      "revId": "c968ac278b6eb71a13d0f2faa0ee217f917cdc33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "599d371d_cde008a6",
         "filename": "ui/chromeos/resources/default_200_percent/default_user_images/harmony/1-bird.png",
         "patchSetId": 2
