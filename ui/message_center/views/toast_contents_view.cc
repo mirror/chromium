@@ -354,6 +354,10 @@ void ToastContentsView::UpdateNotificationSize(
     collection_->UpdateNotificationSize(notification_id);
 }
 
+base::string16 ToastContentsView::GetProductOSName() {
+  return collection_->GetProductOSName();
+}
+
 void ToastContentsView::RemoveNotification(
     const std::string& notification_id,
     bool by_user) {

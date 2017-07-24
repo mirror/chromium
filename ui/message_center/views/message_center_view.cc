@@ -463,6 +463,10 @@ void MessageCenterView::UpdateNotificationSize(
   UpdateNotification(notification_id);
 }
 
+base::string16 MessageCenterView::GetProductOSName() {
+  return tray_->delegate()->GetProductOSName();
+}
+
 void MessageCenterView::AnimationEnded(const gfx::Animation* animation) {
   DCHECK_EQ(animation, settings_transition_animation_.get());
 

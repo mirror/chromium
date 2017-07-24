@@ -69,6 +69,7 @@ class MESSAGE_CENTER_EXPORT MessagePopupCollection
                                  int button_index) override;
   void ClickOnSettingsButton(const std::string& notification_id) override;
   void UpdateNotificationSize(const std::string& notification_id) override;
+  base::string16 GetProductOSName() override;
 
   void MarkAllPopupsShown();
 

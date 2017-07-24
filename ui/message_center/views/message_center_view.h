@@ -99,6 +99,7 @@ class MESSAGE_CENTER_EXPORT MessageCenterView
                                  int button_index) override;
   void ClickOnSettingsButton(const std::string& notification_id) override;
   void UpdateNotificationSize(const std::string& notification_id) override;
+  base::string16 GetProductOSName() override;
 
   // Overridden from MessageListView::Observer:
   void OnAllNotificationsCleared() override;

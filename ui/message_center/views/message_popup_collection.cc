@@ -130,6 +130,10 @@ void MessagePopupCollection::UpdateNotificationSize(
   OnNotificationUpdated(notification_id);
 }
 
+base::string16 MessagePopupCollection::GetProductOSName() {
+  return tray_->delegate()->GetProductOSName();
+}
+
 void MessagePopupCollection::MarkAllPopupsShown() {
   std::set<std::string> closed_ids = CloseAllWidgets();
   for (std::set<std::string>::iterator iter = closed_ids.begin();
@@ -203,11 +207,11 @@ void MessagePopupCollection::UpdateWidgets() {
       // Override pinned status, since toasts should be closable even when it's
       // pinned.
       notification.set_pinned(false);
-      view = MessageViewFactory::Create(NULL, notification, true);
+      view = MessageViewFactory::Create(this, notification, true);
     } else
 #endif  // defined(OS_CHROMEOS)
     {
-      view = MessageViewFactory::Create(NULL, *(*iter), true);
+      view = MessageViewFactory::Create(this, *(*iter), true);
     }
 
     view->set_context_menu_controller(context_menu_controller_.get());

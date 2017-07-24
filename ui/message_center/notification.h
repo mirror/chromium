@@ -142,6 +142,9 @@ class MESSAGE_CENTER_EXPORT RichNotificationData {
 
   // An accessible description of the notification's contents.
   base::string16 accessible_name;
+
+  //
+  // SkColor accent_color = SkColorSetARGB(0, 0, 0, 0);
 };
 
 class MESSAGE_CENTER_EXPORT Notification {
@@ -337,6 +340,13 @@ class MESSAGE_CENTER_EXPORT Notification {
   const base::string16& accessible_name() const {
     return optional_fields_.accessible_name;
   }
+
+  /*
+  SkColor accent_color() const { return optional_fields_.accent_color; }
+  void set_accent_color(SkColor accent_color) {
+    optional_fields_.accent_color = accent_color;
+  }
+  */
 
   NotificationDelegate* delegate() const { return delegate_.get(); }
 

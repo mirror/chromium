@@ -519,6 +519,10 @@ base::string16 ChromeShellDelegate::GetProductName() const {
   return l10n_util::GetStringUTF16(IDS_PRODUCT_NAME);
 }
 
+base::string16 ChromeShellDelegate::GetProductOSName() const {
+  return l10n_util::GetStringUTF16(IDS_PRODUCT_OS_NAME);
+}
+
 void ChromeShellDelegate::OpenKeyboardShortcutHelpPage() const {
   Profile* profile = ProfileManager::GetActiveUserProfile();
   Browser* browser = chrome::FindTabbedBrowser(profile, false);
