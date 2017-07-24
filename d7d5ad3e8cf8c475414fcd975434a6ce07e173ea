@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "49476193_08a9aa9c",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/aom-actions.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-24T20:00:16Z",
+      "side": 1,
+      "message": "From what I understand they go hand-in-hand. If you have a web class\nFoo that\u0027s an event target and it can receive an event \u0027bar\u0027, then\nthese two are equivalent:\n\n  foo.addEventListener(\u0027bar\u0027, function() {})\n  foo.onbar \u003d function() {}",
+      "parentUuid": "efdcac53_bcffe6fe",
+      "revId": "d7d5ad3e8cf8c475414fcd975434a6ce07e173ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2cbdb59b_89c337c7",
         "filename": "third_party/WebKit/LayoutTests/accessibility/aom-actions.html",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-21T07:18:16Z",
       "side": 1,
       "message": "So this just times out if the click event never occurs?",
+      "revId": "d7d5ad3e8cf8c475414fcd975434a6ce07e173ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94dd5349_0dd96cf9",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/aom-actions.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-24T20:00:16Z",
+      "side": 1,
+      "message": "Actually it\u0027s synchronous. If the event handler is\nworking it\u0027s called immediately, so the test immediately\nsucceeds or fails.",
+      "parentUuid": "2cbdb59b_89c337c7",
       "revId": "d7d5ad3e8cf8c475414fcd975434a6ce07e173ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "01190fee_676baed6",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/aom-actions.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-24T20:00:16Z",
+      "side": 1,
+      "message": "Yeah, it bubbles up the accessibility tree, but since the\nevents can only be fired on DOM Elements currently, that\nisn\u0027t going to reveal any weird implementation details.\n\nI remember we had a discussion about this at the F2F, I\nthought there was general consensus that these events\nshould bubble.\n\nI think aria-owns should be respected in terms of the\nbubbling order.\n\nWe could consider not doing bubbling for now, but I sure\nthink it\u0027d be nice.",
+      "parentUuid": "a0ba4d52_5c44f48c",
+      "revId": "d7d5ad3e8cf8c475414fcd975434a6ce07e173ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "86860c1b_f767a25e",
         "filename": "third_party/WebKit/LayoutTests/accessibility/aom-boolean-properties.html",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "6b480d5c_fb443fc2",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/aom-boolean-properties.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-24T20:00:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "86860c1b_f767a25e",
+      "revId": "d7d5ad3e8cf8c475414fcd975434a6ce07e173ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ba1c471_22b6dbf2",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
         "patchSetId": 4
@@ -81,6 +153,24 @@
       "writtenOn": "2017-07-21T07:18:16Z",
       "side": 1,
       "message": "Well I guess that answers my question about bubbling :)\n\nThis seems somewhat opinionated in the case of aria-owns - did we resolve that the \"Firefox\" way of modifying the tree will eventually be implemented by all browsers? Similarly, what happens in the case of role\u003dpresentation - does that not get an AccessibleNode, or do we just skip it for capture/bubble?",
+      "revId": "d7d5ad3e8cf8c475414fcd975434a6ce07e173ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b16216b4_02a4cb4d",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-24T20:00:16Z",
+      "side": 1,
+      "message": "Good question about role\u003dpresentation. Right now it\u0027d be allowed\nto handle the event. role\u003dpresentation doesn\u0027t remove the AXObject,\nit just marks it as ignored.",
+      "parentUuid": "7ba1c471_22b6dbf2",
       "revId": "d7d5ad3e8cf8c475414fcd975434a6ce07e173ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "dca668f5_c36788ea",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-24T20:00:16Z",
+      "side": 1,
+      "message": "Yes, that\u0027s right, but the user shouldn\u0027t be able to\ndetect the difference.\n\nBasically we generally don\u0027t want to create an AccessibleNode\nwhen the user isn\u0027t using the AOM. But once they start\nactively using the AOM and add event listeners, then there\u0027s\nno reason not to create AccessibleNodes as needed.\n\nI think the alternative would be worse - if |target| was\nnull if that particular element didn\u0027t have an AccessibleNode,\nbut it was an AccessibleNode otherwise, that\u0027d be really\nconfusing for developers. It\u0027d be better to just not set\n|target| at all.",
+      "parentUuid": "303ee925_193da657",
+      "revId": "d7d5ad3e8cf8c475414fcd975434a6ce07e173ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "245fe630_a443f25f",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
         "patchSetId": 4
@@ -115,6 +223,24 @@
       "writtenOn": "2017-07-21T07:18:16Z",
       "side": 1,
       "message": "No targeting phase?",
+      "revId": "d7d5ad3e8cf8c475414fcd975434a6ce07e173ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecf6582a_f984ae73",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-24T20:00:16Z",
+      "side": 1,
+      "message": "Oops, you\u0027re right, I should have Event::kAtTarget.",
+      "parentUuid": "245fe630_a443f25f",
       "revId": "d7d5ad3e8cf8c475414fcd975434a6ce07e173ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
