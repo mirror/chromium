@@ -22,6 +22,30 @@
       "revId": "20f81bd039bb5b22429d90a1fbe5c9a17ac3fdc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e0130ff_1a0ac6a3",
+        "filename": "content/browser/renderer_host/input/synthetic_gesture_target_android.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-07-24T22:21:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a80490a_385c3667",
+      "range": {
+        "startLine": 20,
+        "startChar": 50,
+        "endLine": 20,
+        "endChar": 62
+      },
+      "revId": "20f81bd039bb5b22429d90a1fbe5c9a17ac3fdc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
