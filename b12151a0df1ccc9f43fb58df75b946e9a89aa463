@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b7c30f0_7474de78",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-24T03:19:30Z",
+      "side": 1,
+      "message": "nit: hit -\u003e hits",
+      "revId": "b12151a0df1ccc9f43fb58df75b946e9a89aa463",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16ae46cc_74eebc80",
+        "filename": "third_party/WebKit/Source/core/dom/TaskRunnerHelper.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-24T03:19:30Z",
+      "side": 1,
+      "message": "nit: a frame -\u003e the frame",
+      "revId": "b12151a0df1ccc9f43fb58df75b946e9a89aa463",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
