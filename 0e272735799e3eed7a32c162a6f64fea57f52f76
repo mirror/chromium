@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecd7359e_9d9b9605",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/sessions/dom-modification.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-07-24T21:10:43Z",
+      "side": 1,
+      "message": "why do you need to pump?",
+      "revId": "0e272735799e3eed7a32c162a6f64fea57f52f76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
