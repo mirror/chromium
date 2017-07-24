@@ -58,6 +58,7 @@ class ResourceResponse;
 class TouchEvent;
 class WebPlugin;
 class WheelEvent;
+class WebKeyboardEvent;
 struct WebPrintParams;
 struct WebPrintPresetOptions;
 
@@ -211,6 +212,9 @@ class CORE_EXPORT WebPluginContainerImpl final
   void HandleKeyboardEvent(KeyboardEvent*);
   void HandleTouchEvent(TouchEvent*);
   void HandleGestureEvent(GestureEvent*);
+
+  bool IsControlKeyDown(WebKeyboardEvent* web_event);
+  bool IsShiftKeyDown(WebKeyboardEvent* web_event);
 
   void SynthesizeMouseEventIfPossible(TouchEvent*);
 
