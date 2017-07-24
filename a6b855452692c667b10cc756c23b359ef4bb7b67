@@ -34,6 +34,24 @@
       "revId": "a6b855452692c667b10cc756c23b359ef4bb7b67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b3496e3_272ecde6",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 2852,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-24T22:06:33Z",
+      "side": 0,
+      "message": "Well, I\u0027m not seeing it in all places, as the permissions code still uses nullptr in some branches instead of the real RenderFrameHost value. https://cs.chromium.org/chromium/src/chrome/browser/permissions/permission_context_base.cc?rcl\u003d0240ffcc92d4646398ad076bb6ff1c034a8f0ddf\u0026l\u003d133. Is that restricted enough case that warrants removing this comment?",
+      "parentUuid": "1ea257fe_f59d9e32",
+      "revId": "a6b855452692c667b10cc756c23b359ef4bb7b67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
