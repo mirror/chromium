@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "10175731_aa9d4cca",
+        "filename": "content/public/common/service_worker_modes.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-24T13:53:37Z",
+      "side": 1,
+      "message": "Yes, to be honest, I don\u0027t 100% understand why we have so many duplicate enums, see:\nhttps://cs.chromium.org/chromium/src/content/common/service_worker/service_worker_fetch_request_struct_traits.cc\n\nSomething about content::ResourceRequest uses them and it can\u0027t directly use the blink mojo types? It might be easier after everything moves to \"mojo loading\". I am motivated to keep investigating this.",
+      "parentUuid": "99ce4eae_82aadc22",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 0
+      },
+      "revId": "6f5894effcce15aaa04608014394528d2f72ac49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ff83171_2d4a278a",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-24T11:06:57Z",
       "side": 1,
       "message": "Nit: omit default here so compiler can warn on new enumerators",
+      "range": {
+        "startLine": 355,
+        "startChar": 0,
+        "endLine": 356,
+        "endChar": 21
+      },
+      "revId": "6f5894effcce15aaa04608014394528d2f72ac49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb64c8e5_817d17ec",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-24T13:53:37Z",
+      "side": 1,
+      "message": "Good catch, done.",
+      "parentUuid": "4ff83171_2d4a278a",
       "range": {
         "startLine": 355,
         "startChar": 0,
