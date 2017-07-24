@@ -13,6 +13,7 @@
 #include "base/bind_helpers.h"
 #include "base/callback_forward.h"
 #include "base/callback_helpers.h"
+#include "base/guid.h"
 #include "base/json/json_writer.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_split.h"
@@ -20,7 +21,9 @@
 #include "base/task_scheduler/post_task.h"
 #include "base/task_scheduler/task_traits.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "base/time/time.h"
 #include "base/trace_event/trace_config.h"
+#include "base/trace_event/trace_event.h"
 #include "mojo/common/data_pipe_utils.h"
 #include "services/resource_coordinator/public/interfaces/tracing/tracing.mojom.h"
 #include "services/resource_coordinator/public/interfaces/tracing/tracing_constants.mojom.h"
@@ -32,9 +35,11 @@ namespace {
 
 const char kMetadataTraceLabel[] = "metadata";
 
-const char kStartTracingClosureName[] = "StartTracingClosure";
-const char kRequestBufferUsageClosureName[] = "RequestBufferUsageClosure";
 const char kGetCategoriesClosureName[] = "GetCategoriesClosure";
+const char kRequestBufferUsageClosureName[] = "RequestBufferUsageClosure";
+const char kRequestClockSyncMarkerClosureName[] =
+    "RequestClockSyncMarkerClosure";
+const char kStartTracingClosureName[] = "StartTracingClosure";
 
 tracing::Coordinator* g_coordinator = nullptr;
 
@@ -95,14 +100,15 @@ void Coordinator::SendStartTracingToAgent(
   agent_entry->AddDisconnectClosure(
       &kStartTracingClosureName,
       base::BindOnce(&Coordinator::OnTracingStarted, base::Unretained(this),
-                     base::Unretained(agent_entry)));
+                     base::Unretained(agent_entry), false));
   agent_entry->agent()->StartTracing(
       config_, base::BindRepeating(&Coordinator::OnTracingStarted,
                                    base::Unretained(this),
                                    base::Unretained(agent_entry)));
 }
 
-void Coordinator::OnTracingStarted(AgentRegistry::AgentEntry* agent_entry) {
+void Coordinator::OnTracingStarted(AgentRegistry::AgentEntry* agent_entry,
+                                   bool success) {
   bool removed =
       agent_entry->RemoveDisconnectClosure(&kStartTracingClosureName);
   DCHECK(removed);
@@ -113,13 +119,15 @@ void Coordinator::OnTracingStarted(AgentRegistry::AgentEntry* agent_entry) {
   }
 }
 
-void Coordinator::StopAndFlush(mojo::ScopedDataPipeProducerHandle stream) {
+void Coordinator::StopAndFlush(mojo::ScopedDataPipeProducerHandle stream,
+                               const StopAndFlushCallback& callback) {
   DCHECK(is_tracing_);
   DCHECK(!stream_.is_valid());
   DCHECK(stream.is_valid());
 
   // Do not send |StartTracing| to agents that connect from now on.
   agent_registry_->RemoveAgentInitializationCallback();
+  stop_and_flush_callback_ = callback;
   stream_ = std::move(stream);
   StopAndFlushInternal();
 }
@@ -137,6 +145,50 @@ void Coordinator::StopAndFlushInternal() {
     return;
   }
 
+  agent_registry_->ForAllAgents([this](AgentRegistry::AgentEntry* agent_entry) {
+    if (!agent_entry->supports_explicit_clock_sync())
+      return;
+    const std::string sync_id = base::GenerateGUID();
+    agent_entry->AddDisconnectClosure(
+        &kRequestClockSyncMarkerClosureName,
+        base::BindOnce(&Coordinator::OnRequestClockSyncMarkerResponse,
+                       base::Unretained(this), base::Unretained(agent_entry),
+                       sync_id, base::TimeTicks(), base::TimeTicks()));
+    agent_entry->agent()->RequestClockSyncMarker(
+        sync_id,
+        base::BindRepeating(&Coordinator::OnRequestClockSyncMarkerResponse,
+                            base::Unretained(this),
+                            base::Unretained(agent_entry), sync_id));
+  });
+  if (!agent_registry_->HasDisconnectClosure(
+          &kRequestClockSyncMarkerClosureName)) {
+    StopAndFlushAfterClockSync();
+  }
+}
+
+void Coordinator::OnRequestClockSyncMarkerResponse(
+    AgentRegistry::AgentEntry* agent_entry,
+    const std::string& sync_id,
+    base::TimeTicks issue_ts,
+    base::TimeTicks issue_end_ts) {
+  bool removed =
+      agent_entry->RemoveDisconnectClosure(&kRequestClockSyncMarkerClosureName);
+  DCHECK(removed);
+
+  // TODO(charliea): Change this function so that it can accept a boolean
+  // success indicator instead of having to rely on sentinel issue_ts and
+  // issue_end_ts values to signal failure.
+  if (!(issue_ts == base::TimeTicks() || issue_end_ts == base::TimeTicks()))
+    TRACE_EVENT_CLOCK_SYNC_ISSUER(sync_id, issue_ts, issue_end_ts);
+
+  if (!agent_registry_->HasDisconnectClosure(
+          &kRequestClockSyncMarkerClosureName)) {
+    StopAndFlushAfterClockSync();
+  }
+}
+
+void Coordinator::StopAndFlushAfterClockSync() {
+  metadata_.reset(new base::DictionaryValue());
   stream_header_written_ = false;
   streaming_label_.clear();
 
@@ -235,15 +287,15 @@ bool Coordinator::StreamEventsForCurrentLabel() {
 void Coordinator::StreamMetadata() {
   DCHECK(background_task_runner_->RunsTasksOnCurrentThread());
 
-  base::DictionaryValue metadata;
   for (const auto& key_value : recorders_) {
     for (const auto& recorder : key_value.second) {
-      metadata.MergeDictionary(&(recorder->metadata()));
+      metadata_->MergeDictionary(&(recorder->metadata()));
     }
   }
 
   std::string metadataJSON;
-  if (!metadata.empty() && base::JSONWriter::Write(metadata, &metadataJSON)) {
+  if (!metadata_->empty() &&
+      base::JSONWriter::Write(*metadata_, &metadataJSON)) {
     std::string prefix = stream_header_written_ ? ",\"" : "{\"";
     mojo::common::BlockingCopyFromString(
         prefix + std::string(kMetadataTraceLabel) + "\":" + metadataJSON,
@@ -255,6 +307,7 @@ void Coordinator::StreamMetadata() {
 void Coordinator::OnFlushDone() {
   recorders_.clear();
   stream_.reset();
+  stop_and_flush_callback_.Run(std::move(metadata_));
   is_tracing_ = false;
 }
 
