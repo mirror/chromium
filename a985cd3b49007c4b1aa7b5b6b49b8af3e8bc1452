@@ -51,6 +51,24 @@
       "revId": "a985cd3b49007c4b1aa7b5b6b49b8af3e8bc1452",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55be5fdf_27dd2bbe",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 2930,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-24T18:57:26Z",
+      "side": 0,
+      "message": "Oh - looks like android_manifest has to go on resources and not java_library. I think that means you should update the condition for including an android_resources() target to include !_scanned_files.is_manifest_empty",
+      "parentUuid": "9291e4e3_b079ec49",
+      "revId": "a985cd3b49007c4b1aa7b5b6b49b8af3e8bc1452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
