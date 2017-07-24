@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "1afdd74a_03dd435b",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-24T17:29:04Z",
+      "side": 1,
+      "message": "Unfortunately I don\u0027t think VC++ 2015 will handle that, so ultimately just tagging it as const may be the best we can do for now. The alternative is constexpr in the header file, which is annoying for different reasons.",
+      "parentUuid": "b8c786ad_830dafce",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "faa59243_a9ea02aa",
         "filename": "chrome/browser/data_usage/tab_id_provider.cc",
         "patchSetId": 4
@@ -177,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "66ab9b6d_25c6fe89",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-24T17:29:04Z",
+      "side": 1,
+      "message": "Ack - I had not considered the string folding implications.",
+      "parentUuid": "107d1db8_12688ae5",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5fe8c299_4db24f36",
         "filename": "components/domain_reliability/google_configs.cc",
         "patchSetId": 4
@@ -212,6 +248,24 @@
     },
     {
       "key": {
+        "uuid": "2412817f_22809dbb",
+        "filename": "components/domain_reliability/google_configs.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-24T17:29:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ca2ec5f9_5e4542f6",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "649a1784_da7cba09",
         "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
         "patchSetId": 4
@@ -223,6 +277,24 @@
       "writtenOn": "2017-07-21T19:40:42Z",
       "side": 1,
       "message": "These two could/should be arrays instead of pointers.",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b9a441a_a2ab158f",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-24T17:29:04Z",
+      "side": 1,
+      "message": "Feel free to ignore this suggestion.",
+      "parentUuid": "649a1784_da7cba09",
       "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -258,6 +330,24 @@
       "side": 1,
       "message": "Looks like there\u0027s a chromium style check against this:\nerror: [chromium-style] auto variable type must not deduce to a raw pointer type.",
       "parentUuid": "ef2b7a10_ef31ec10",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e2f2336b_f2dbb7f7",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-24T17:29:04Z",
+      "side": 1,
+      "message": "I thought that rule prohibited having auto x \u003d GetStringPointer(), requiring auto* x \u003d GetStringPointer(). Why does that affect putting const in front of auto*? But, no matter.",
+      "parentUuid": "c443af40_36dc0820",
       "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -316,6 +406,24 @@
     },
     {
       "key": {
+        "uuid": "270b7502_9bbadc9a",
+        "filename": "components/signin/core/browser/gaia_cookie_manager_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-24T17:29:04Z",
+      "side": 1,
+      "message": "Feel free to ignore.",
+      "parentUuid": "dd4f1af9_1041fdb3",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb219282_3cb39fdb",
         "filename": "components/sync/driver/sync_util.h",
         "patchSetId": 4
@@ -327,6 +435,24 @@
       "writtenOn": "2017-07-21T19:40:42Z",
       "side": 1,
       "message": "These two should be array instead of pointer.",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2deca068_ef00213e",
+        "filename": "components/sync/driver/sync_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-24T17:29:04Z",
+      "side": 1,
+      "message": "Feel free to ignore.",
+      "parentUuid": "fb219282_3cb39fdb",
       "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -397,6 +523,24 @@
       "side": 1,
       "message": "Done (think you need 6 for the null byte though)",
       "parentUuid": "85fe5bb5_d93f2be1",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "74b06ae9_2675ecde",
+        "filename": "components/translate/core/common/translate_metrics.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-24T17:29:04Z",
+      "side": 1,
+      "message": "Ah - yes. 6-byte arrays is what I meant to say.",
+      "parentUuid": "6898fc2d_9429db3f",
       "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -607,6 +751,24 @@
       "side": 1,
       "message": "Added constexpr, but had to define in the .cc due to:\n../../content/browser/service_worker/service_worker_client_utils.cc:0: error: undefined reference to \u0027content::ChildProcessHost::kInvalidUniqueID\u0027\n../../content/browser/service_worker/service_worker_client_utils.cc:0: error: undefined reference to \u0027content::ChildProcessHost::kInvalidUniqueID\u0027\n../../content/browser/service_worker/service_worker_client_utils.cc:0: error: undefined reference to \u0027content::ChildProcessHost::kInvalidUniqueID\u0027\n\n\nI don\u0027t see service_worker_client_utils.cc taking the address of it, but likely because it\u0027s passing it to base::Bind, which looks like:\nBind(Functor\u0026\u0026 functor, Args\u0026\u0026... args) {",
       "parentUuid": "5f28e7a7_c0d8fd25",
+      "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b18b367_3cc276fc",
+        "filename": "content/public/common/child_process_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-24T17:29:04Z",
+      "side": 1,
+      "message": "Sigh... Okay, this stuff is always more complicated than I expect.",
+      "parentUuid": "40871bc0_b7f286ec",
       "revId": "2bfc364406294a9996fecc771614f8536dcc934e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
