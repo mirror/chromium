@@ -125,7 +125,7 @@
 #include "services/resource_coordinator/public/cpp/resource_coordinator_interface.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
-#include "services/shape_detection/public/interfaces/barcodedetection.mojom.h"
+#include "services/shape_detection/public/interfaces/barcodedetection_provider.mojom.h"
 #include "services/shape_detection/public/interfaces/constants.mojom.h"
 #include "services/shape_detection/public/interfaces/facedetection_provider.mojom.h"
 #include "services/shape_detection/public/interfaces/textdetection.mojom.h"
@@ -2960,9 +2960,9 @@ void RenderFrameHostImpl::RegisterMojoInterfaces() {
 
   GetInterfaceRegistry()->AddInterface(base::Bind(&ImageCaptureImpl::Create));
 
-  GetInterfaceRegistry()->AddInterface(
-      base::Bind(&ForwardRequest<shape_detection::mojom::BarcodeDetection>,
-                 shape_detection::mojom::kServiceName));
+  GetInterfaceRegistry()->AddInterface(base::Bind(
+      &ForwardRequest<shape_detection::mojom::BarcodeDetectionProvider>,
+      shape_detection::mojom::kServiceName));
   GetInterfaceRegistry()->AddInterface(
       base::Bind(&ForwardRequest<shape_detection::mojom::FaceDetectionProvider>,
                  shape_detection::mojom::kServiceName));
