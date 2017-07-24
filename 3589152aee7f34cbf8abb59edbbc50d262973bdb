@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "f1f930f0_b5ffae01",
+        "filename": "net/disk_cache/blockfile/backend_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2134,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-24T15:03:46Z",
+      "side": 1,
+      "message": "Hmm, good point about the race concern. Fair enough. Looks good.",
+      "parentUuid": "aebdad7e_49946fdb",
+      "revId": "3589152aee7f34cbf8abb59edbbc50d262973bdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6ccc9bb_8c087753",
         "filename": "net/disk_cache/blockfile/backend_impl.h",
         "patchSetId": 5
