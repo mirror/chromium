@@ -69,6 +69,24 @@
       "revId": "f3d47869e95dd2e7e491dff2194f198108756afe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6346e017_724e6a88",
+        "filename": "components/offline_pages/core/renovations/page_renovation_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-07-24T21:05:18Z",
+      "side": 1,
+      "message": "sorry i didn\u0027t make myself clear enough. The unit test I meant is that if you call GetRenovationScript twice, check if the |script| be something like \"{script}{script}\". It looks trivial but I think it might be a good thing to check, since it will cover the status change of is_loaded_. WDYT?",
+      "parentUuid": "f811f116_bdd0a4cf",
+      "revId": "f3d47869e95dd2e7e491dff2194f198108756afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
