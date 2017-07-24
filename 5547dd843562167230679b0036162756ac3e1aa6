@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "5809134d_6d763fe2",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-24T14:57:42Z",
+      "side": 1,
+      "message": "I managed to solve this problem.\n\nThe issue was that ZeroSuggestProviderTest had a FakeAutocompleteProviderClient (inheriting from MockAutocompleteProviderClient) member variable which is instantiated before ZeroSuggestProviderTest::SetUp() runs, which is the responsible for creating a valid TemplateURLService.\n\nIn reality, ContextualSuggestionsService does not need TemplateURLService in its construction, it only needs it when it\u0027s actually used. Whoever uses it may depend on TempalteURLService for its own needs. We can then just move the TemplateURLService argument to the actual call to ContextualSuggestions::CreateContextualSuggestionsRequest() which makes it less stateful and more pure. This requires no modification to unit tests, only to the factory that constructs a ContextualSuggestionsService.\n\nI think this is a lot cleaner now. Please take a look.",
+      "parentUuid": "b3d5b152_8bf9c0a0",
+      "range": {
+        "startLine": 137,
+        "startChar": 2,
+        "endLine": 137,
+        "endChar": 39
+      },
+      "revId": "5547dd843562167230679b0036162756ac3e1aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3ab1fe7_33ef81e2",
         "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
         "patchSetId": 12
@@ -201,6 +225,30 @@
       "writtenOn": "2017-07-21T19:07:08Z",
       "side": 1,
       "message": "I agree 100% with you that this should only live in one place. Before I change here, I\u0027d like to clarify a few things.\n\n1) Purity: In this particular case I personally would strongly prefer a pure function like:\n\n// Returns a URL to fetch contextual suggestions from.\n// Returns an invalid GURL if there are errors such as\n// - blah\n// - bleh\n// - ...\nGURL ContextualSuggestionsServiceUrl(\n    const TemplateURLService* template_url_service,\n    const std::string\u0026 current_url);\n\n(alternatively with \"const TemplateURLService\u0026\" or with string_view/StringPiece)\n\nThe current URL must be passed to accommodate the overriding of current_page_url. Maybe you could also stick a \"Get\" in front of the function name although I personally prefer without it.\n\nThis obviously prevents us from using member variables from the enclosing class (which I claim makes reading easier).\n\n1) Location: Where should this live?\n\na) Separate free function: From the little I browsed the Chromium code base, it doesn\u0027t seem like it\u0027s common to have free functions, it seems vastly more common to stick them as static methods of classes. Maybe due to the reduced usage of namespaces? This makes ZeroSuggestProvider and ContextualSuggestionsService a bit more independent of each other. One (small) problem is that functions like this often end up in some sort of *_utils.h library, which is non-optimal.\n\nb) \"(public:) static GURL ContextualSuggestionsService::ServiceUrl(...);\". It doesn\u0027t seem super bad in my opinion, but then the dependency between ZeroSuggestProvider and ContextualSuggestionsService becomes inseparable.\n\nc) \"(public:) static GURL ZeroSuggestProvider::ContextSuggestionsServiceUrl();\". This I think it\u0027s really strange because the ContextualSuggestionsService class would be calling ZeroSuggestProvider to know where to fetch suggestions from.\n\nd) Separate free function inside contextual_suggestions_service.{h, cc}: Similar to a) and b) but on its own. I don\u0027t see many benefits to this actually because ZeroSuggestProvider would still be importing ContextualSuggestionsService anyway and would still be depending on it.\n\nWhat do you prefer for 1) and 2)?",
+      "range": {
+        "startLine": 140,
+        "startChar": 2,
+        "endLine": 150,
+        "endChar": 72
+      },
+      "revId": "5547dd843562167230679b0036162756ac3e1aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a873812_3d617b6f",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-24T14:57:42Z",
+      "side": 1,
+      "message": "I did 1) and 2)b). 2)b) can easily be moved somewhere else because it\u0027s now a pure function, but I think the current state is reasonable. Let me know what you think.",
+      "parentUuid": "f3ab1fe7_33ef81e2",
       "range": {
         "startLine": 140,
         "startChar": 2,
@@ -257,6 +305,30 @@
       "revId": "5547dd843562167230679b0036162756ac3e1aa6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cebeeeb_91d92fa8",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-24T14:57:42Z",
+      "side": 1,
+      "message": "I\u0027m marking this as resolved.",
+      "parentUuid": "11b8e030_104f0706",
+      "range": {
+        "startLine": 162,
+        "startChar": 2,
+        "endLine": 163,
+        "endChar": 28
+      },
+      "revId": "5547dd843562167230679b0036162756ac3e1aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
