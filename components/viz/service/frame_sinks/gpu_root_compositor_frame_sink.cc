@@ -18,10 +18,10 @@ GpuRootCompositorFrameSink::GpuRootCompositorFrameSink(
     const FrameSinkId& frame_sink_id,
     std::unique_ptr<Display> display,
     std::unique_ptr<cc::BeginFrameSource> begin_frame_source,
-    cc::mojom::CompositorFrameSinkAssociatedRequest request,
-    cc::mojom::CompositorFrameSinkPrivateRequest
+    mojom::CompositorFrameSinkAssociatedRequest request,
+    mojom::CompositorFrameSinkPrivateRequest
         compositor_frame_sink_private_request,
-    cc::mojom::CompositorFrameSinkClientPtr client,
+    mojom::CompositorFrameSinkClientPtr client,
     cc::mojom::DisplayPrivateAssociatedRequest display_private_request)
     : support_(CompositorFrameSinkSupport::Create(
           this,
