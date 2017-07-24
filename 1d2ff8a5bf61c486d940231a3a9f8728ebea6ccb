@@ -93,6 +93,30 @@
       "revId": "1d2ff8a5bf61c486d940231a3a9f8728ebea6ccb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be859b17_28334058",
+        "filename": "third_party/WebKit/public/web/WebSharedWorkerClient.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-24T10:52:20Z",
+      "side": 1,
+      "message": "Do workers not have an InterfaceProvider associated with them? If that doesn\u0027t exist, how hard is it to add this? I\u0027m not sure we should continue trying to Mojo-ify worker interfaces without this in place (since otherwise, we just end up sending everything through the process-global InterfaceProvider).",
+      "parentUuid": "3072fdf0_5a779326",
+      "range": {
+        "startLine": 93,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 33
+      },
+      "revId": "1d2ff8a5bf61c486d940231a3a9f8728ebea6ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

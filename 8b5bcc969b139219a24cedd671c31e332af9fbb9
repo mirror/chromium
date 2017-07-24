@@ -105,6 +105,24 @@
       "revId": "8b5bcc969b139219a24cedd671c31e332af9fbb9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fe695683_8acd4b18",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-24T10:52:20Z",
+      "side": 1,
+      "message": "Sorry, there\u0027s probably something else I\u0027m missing: why can\u0027t we pass them as origins over IPC? SecurityOrigin itself has a corresponding mojo type.",
+      "parentUuid": "d0f3195c_543c862e",
+      "revId": "8b5bcc969b139219a24cedd671c31e332af9fbb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
