@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c5549608_9721263d",
+        "filename": "chrome/browser/android/signin/signin_manager_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-24T14:56:49Z",
+      "side": 1,
+      "message": "I need this to run *before* |callback_|, so that I can wait for it in the test (RunLoop::QuitClosure).\n\nIf I leave it where it was (after |callback_|), the next point where I can hook up the QuitClosure is \"base::android::ScopedJavaGlobalRef\u003cjobject\u003e\u0026 callback\", which seems nontrivial to do in a C++ test.\n\nAs explained in the CL description, I\u0027m aware that this poses a risk of accidental breakage, but then again, this is exactly one of the few parts which are tested.",
+      "parentUuid": "f7a29f33_51e2d4f1",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 38
+      },
+      "revId": "80ec68273bfec5782ee46ddb1cca3753c3b3dd90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c021dd61_5a17f72d",
         "filename": "chrome/browser/android/signin/signin_manager_android_unittest.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "80ec68273bfec5782ee46ddb1cca3753c3b3dd90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f93218b_ae5fa598",
+        "filename": "chrome/browser/android/signin/signin_manager_android_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-24T14:56:49Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "c021dd61_5a17f72d",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 51
+      },
+      "revId": "80ec68273bfec5782ee46ddb1cca3753c3b3dd90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "06b37346_a3e47d00",
+        "filename": "chrome/browser/android/signin/signin_manager_android_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-24T14:56:49Z",
+      "side": 1,
+      "message": "Sort of. If bookmarks were deleted inside the delegate, this test would make no sense, but the bug I\u0027m fixing would also not have occurred. In my point of view, I\u0027m testing that bookmarks deletion behaves correctly *even though it\u0027s happening in the delegate*. So the implementation detail I\u0027m relying on is actually important.\n\nBut anyways. Unfortunately, there is at least one thing in the delegate which can\u0027t run in unittests: https://cs.chromium.org/chromium/src/chrome/browser/browsing_data/chrome_browsing_data_remover_delegate_unittest.cc?dr\u003dCSs\u0026l\u003d1039, possibly others. I\u0027d like to improve it, but fixing that would be a larger change, and I want to merge this.",
+      "parentUuid": "48bf8df2_65b2de5f",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 124,
+        "endChar": 73
+      },
+      "revId": "80ec68273bfec5782ee46ddb1cca3753c3b3dd90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92bc6fd0_2c127466",
         "filename": "chrome/browser/android/signin/signin_manager_android_unittest.cc",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-24T13:15:08Z",
       "side": 1,
       "message": "Nit: can this be a separate test?",
+      "range": {
+        "startLine": 152,
+        "startChar": 0,
+        "endLine": 155,
+        "endChar": 67
+      },
+      "revId": "80ec68273bfec5782ee46ddb1cca3753c3b3dd90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5924d931_73731afd",
+        "filename": "chrome/browser/android/signin/signin_manager_android_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-24T14:56:49Z",
+      "side": 1,
+      "message": "I made it a separate case, since I didn\u0027t like the amount of code that would be duplicated. But let me know if you\u0027d like it to be completely separate, even with the duplication :)",
+      "parentUuid": "92bc6fd0_2c127466",
       "range": {
         "startLine": 152,
         "startChar": 0,
