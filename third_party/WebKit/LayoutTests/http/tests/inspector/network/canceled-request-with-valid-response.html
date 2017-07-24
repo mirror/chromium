@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+<script src="../inspector-test.js"></script>
+<script src="../network-test.js"></script>
+<script>
+
+async function test() {
+  InspectorTest.recordNetwork();
+
+  InspectorTest.evaluateInPage(`fetch('resources/abe.png')`);
+  var request = await InspectorTest.waitForEvent(SDK.NetworkManager.Events.RequestFinished, InspectorTest.networkManager,
+      request => request.name() === 'abe.png');
+  // Force request to be canceled.
+  request.canceled = true;
+  var node = await InspectorTest.waitForNetworkLogViewNodeForRequest(request);
+  var element = document.createElement('div');
+  node._renderStatusCell(element);
+  InspectorTest.addResult('Request that was canceled status cell result: ' + element.textContent);
+  InspectorTest.completeTest();
+}
+</script>
+</head>
+<body onload="runTest()">
+<p>Tests to ensure requests that where canceled from javascript are shown as canceled. http://crbug.com/596320</p>
+</body>
+</html>

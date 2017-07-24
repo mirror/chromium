@@ -1,0 +1,4 @@
+Tests to ensure requests that where canceled from javascript are shown as canceled. http://crbug.com/596320
+
+Request that was canceled status cell result: (canceled)
+

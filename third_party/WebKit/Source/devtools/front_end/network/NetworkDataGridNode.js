@@ -877,14 +877,14 @@ Network.NetworkRequestNode = class extends Network.NetworkNode {
       } else {
         this._setTextAndTitle(cell, failText);
       }
+    } else if (this._request.canceled) {
+      this._setTextAndTitle(cell, Common.UIString('(canceled)'));
     } else if (this._request.statusCode) {
       cell.createTextChild('' + this._request.statusCode);
       this._appendSubtitle(cell, this._request.statusText);
       cell.title = this._request.statusCode + ' ' + this._request.statusText;
     } else if (this._request.parsedURL.isDataURL()) {
       this._setTextAndTitle(cell, Common.UIString('(data)'));
-    } else if (this._request.canceled) {
-      this._setTextAndTitle(cell, Common.UIString('(canceled)'));
     } else if (this._request.wasBlocked()) {
       var reason = Common.UIString('other');
       switch (this._request.blockedReason()) {
