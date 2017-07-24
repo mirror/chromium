@@ -797,9 +797,15 @@ TEST_F(ProcessUtilTest, LaunchProcess) {
 TEST_F(ProcessUtilTest, GetAppOutput) {
   std::string output;
 
-#if defined(OS_ANDROID)
+#if defined(OS_ANDROID) || defined(OS_FUCHSIA)
   std::vector<std::string> argv;
+#if defined(OS_FUCHSIA)
+  argv.push_back("/boot/bin/sh");
+#elif defined(OS_ANDROID)
   argv.push_back("sh");  // Instead of /bin/sh, force path search to find it.
+#else
+#error Port.
+#endif
   argv.push_back("-c");
 
   argv.push_back("exit 0");
