@@ -63,7 +63,16 @@ bool SharedMemoryTracker::OnMemoryDump(const trace_event::MemoryDumpArgs& args,
     AutoLock hold(usages_lock_);
     usages.reserve(usages_.size());
     for (const auto& usage : usages_) {
-      usages.emplace_back(usage.first->mapped_id(), usage.second);
+      const SharedMemory* shared_memory = usage.first;
+      size_t size = usage.second;
+#if defined(COUNT_RESIDENT_BYTES_SUPPORTED)
+      base::Optional<size_t> resident_size =
+          trace_event::ProcessMemoryDump::CountResidentBytesInSharedMemory(
+              *shared_memory);
+      if (resident_size.has_value())
+        size = resident_size.value();
+#endif
+      usages.emplace_back(shared_memory->mapped_id(), size);
     }
   }
   for (const auto& usage : usages) {
@@ -75,8 +84,6 @@ bool SharedMemoryTracker::OnMemoryDump(const trace_event::MemoryDumpArgs& args,
       continue;
     trace_event::MemoryAllocatorDump* local_dump =
         pmd->CreateAllocatorDump(dump_name);
-    // TODO(hajimehoshi): The size is not resident size but virtual size so far.
-    // Fix this to record resident size.
     local_dump->AddScalar(trace_event::MemoryAllocatorDump::kNameSize,
                           trace_event::MemoryAllocatorDump::kUnitsBytes, size);
     auto global_dump_guid = GetGlobalDumpIdForTracing(memory_guid);
