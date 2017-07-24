@@ -16,6 +16,24 @@
       "revId": "2f0fc250d39669bbd8da53fce73015ad4908d729",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2218aec4_25b16d44",
+        "filename": "ash/wm/lock_state_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-07-24T23:51:45Z",
+      "side": 1,
+      "message": "done.\n\nI planned to do this in two phases. For post lock immediate animation, that needs some time to do the code change to make sure everything is right.\nSo this CL fixes the bug, and is small enough for backporting to m61. What do you think?",
+      "parentUuid": "ab127c87_8c3298c4",
+      "revId": "2f0fc250d39669bbd8da53fce73015ad4908d729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
