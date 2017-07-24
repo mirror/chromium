@@ -17,6 +17,7 @@
         box-shadow: 0 0 16px rgba(0, 0, 0, 0.12),
                     0 16px 16px rgba(0, 0, 0, 0.24);
         color: inherit;
+        display: flex;
         overflow: auto;
         padding: 0;
         top: 0;
@@ -55,6 +56,7 @@
         font-size: calc(15 / 13 * 100%);
         line-height: 1;
         padding: 16px 16px;
+        @apply(--cr-dialog-title);
       }
 
       :host ::slotted([slot=button-container]) {
@@ -81,6 +83,7 @@
 
         display: flex;
         flex-direction: column;
+        flex-grow: 1;
         min-height: 60px; /* Minimum reasonably usable height. */
         overflow: auto;
 
@@ -99,6 +102,7 @@
         align-items: flex-start;
         display: flex;
         min-height: 47px;
+        @apply(--cr-dialog-top-container);
       }
 
       .title-container {
@@ -127,6 +131,7 @@
           on-keypress="onCloseKeypress_">
       </button>
     </div>
+    <content select=".below-title"></content>
     <div class="body-container">
       <span id="bodyTopMarker"></span>
       <slot name="body"></slot>
