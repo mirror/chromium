@@ -84,7 +84,8 @@ class DirectOutputSurface : public cc::OutputSurface {
                bool has_alpha,
                bool use_stencil) override {
     context_provider()->ContextGL()->ResizeCHROMIUM(
-        size.width(), size.height(), device_scale_factor, has_alpha);
+        size.width(), size.height(), device_scale_factor,
+        gl::GetGLColorSpace(color_space), has_alpha);
   }
   void SwapBuffers(cc::OutputSurfaceFrame frame) override {
     DCHECK(context_provider_.get());
