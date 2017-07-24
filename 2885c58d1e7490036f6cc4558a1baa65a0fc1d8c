@@ -16,6 +16,29 @@
       "revId": "2885c58d1e7490036f6cc4558a1baa65a0fc1d8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f1da4a1_57e0a5ca",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1688,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-07-24T23:52:45Z",
+      "side": 1,
+      "message": "nit: add {} for multi-line if clause\n\nAdd comment for this if, or move corresponding comment bits from the main comments for this section.",
+      "range": {
+        "startLine": 1688,
+        "startChar": 8,
+        "endLine": 1688,
+        "endChar": 14
+      },
+      "revId": "2885c58d1e7490036f6cc4558a1baa65a0fc1d8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
