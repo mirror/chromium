@@ -306,42 +306,45 @@ def main():
         'bt#(\d+): pc 0x[0-9a-f]+ sp (0x[0-9a-f]+) \((\S+),(0x[0-9a-f]+)\)$')
     bt_end_re = re.compile(prefix + 'bt#(\d+): end')
 
-    # We pass a separate stdin stream to qemu. Sharing stdin across processes
-    # leads to flakiness due to the OS prematurely killing the stream and the
-    # Python script panicking and aborting.
-    # The precise root cause is still nebulous, but this fix works.
-    # See crbug.com/741194 .
-    qemu_popen = subprocess.Popen(
-        qemu_command, stdout=subprocess.PIPE, stdin=open(os.devnull))
+    try:
+      # We pass a separate stdin stream to qemu. Sharing stdin across processes
+      # leads to flakiness due to the OS prematurely killing the stream and the
+      # Python script panicking and aborting.
+      # The precise root cause is still nebulous, but this fix works.
+      # See crbug.com/741194 .
+      qemu_popen = subprocess.Popen(
+          qemu_command, stdout=subprocess.PIPE, stdin=open(os.devnull))
 
-    # A buffer of backtrace entries awaiting symbolization, stored as tuples.
-    # Element #0: backtrace frame number (starting at 0).
-    # Element #1: path to executable code corresponding to the current frame.
-    # Element #2: memory offset within the executable.
-    bt_entries = []
+      # A buffer of backtrace entries awaiting symbolization, stored as tuples.
+      # Element #0: backtrace frame number (starting at 0).
+      # Element #1: path to executable code corresponding to the current frame.
+      # Element #2: memory offset within the executable.
+      bt_entries = []
 
-    success = False
-    while True:
-      line = qemu_popen.stdout.readline()
-      if not line:
-        break
-      print line,
-      if 'SUCCESS: all tests passed.' in line:
-        success = True
-      if bt_end_re.match(line.strip()):
-        if bt_entries:
-          print '----- start symbolized stack'
-          for processed in ParallelSymbolizeBacktrace(bt_entries):
-            print processed
-          print '----- end symbolized stack'
-        bt_entries = []
-      else:
-        m = bt_with_offset_re.match(line.strip())
-        if m:
-          bt_entries.append((m.group(1), args.test_name, m.group(4)))
-    qemu_popen.wait()
+      success = False
+      while True:
+        line = qemu_popen.stdout.readline()
+        if not line:
+          break
+        print line,
+        if 'SUCCESS: all tests passed.' in line:
+          success = True
+        if bt_end_re.match(line.strip()):
+          if bt_entries:
+            print '----- start symbolized stack'
+            for processed in ParallelSymbolizeBacktrace(bt_entries):
+              print processed
+            print '----- end symbolized stack'
+          bt_entries = []
+        else:
+          m = bt_with_offset_re.match(line.strip())
+          if m:
+            bt_entries.append((m.group(1), args.test_name, m.group(4)))
+      qemu_popen.wait()
 
-    return 0 if success else 1
+      return 0 if success else 1
+    except KeyboardInterrupt:
+      return 1
 
   return 0
 
