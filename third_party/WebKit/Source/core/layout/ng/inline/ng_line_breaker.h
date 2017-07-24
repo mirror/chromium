@@ -105,11 +105,10 @@ class CORE_EXPORT NGLineBreaker {
   LineBreakState HandleAtomicInline(const NGInlineItem&,
                                     NGInlineItemResult*,
                                     const NGLineInfo&);
-  void HandleFloat(const NGInlineItem&,
-                   NGInlineItemResults*);
+  LineBreakState HandleFloat(const NGInlineItem&, NGInlineItemResult*);
 
   void HandleOpenTag(const NGInlineItem&, NGInlineItemResult*);
-  void HandleCloseTag(const NGInlineItem&, NGInlineItemResult*);
+  void HandleCloseTag(const NGInlineItem&, NGInlineItemResults*);
 
   void HandleOverflow(NGLineInfo*);
   void Rewind(NGLineInfo*, unsigned new_end);
