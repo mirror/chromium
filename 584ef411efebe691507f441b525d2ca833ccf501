@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6f5ca5fc_c8510729",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webmidi/midi-default-feature-policy.https.sub.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-24T03:03:08Z",
+      "side": 1,
+      "message": "It is pretty trivial in terms of implementation but it could be useful to have it. It makes the test a bit more complicated though, so I might avoid adding it for now and we can add it later if needed. Does that sound ok to you?",
+      "parentUuid": "b231ebb6_cf97d9c7",
+      "range": {
+        "startLine": 13,
+        "startChar": 49,
+        "endLine": 13,
+        "endChar": 51
+      },
+      "revId": "584ef411efebe691507f441b525d2ca833ccf501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae7864b4_64ba5281",
         "filename": "third_party/WebKit/LayoutTests/http/tests/webmidi/resources/feature-policy-permissions-test.js",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "584ef411efebe691507f441b525d2ca833ccf501",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b819e566_dacf253c",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webmidi/resources/feature-policy-permissions-test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-24T03:03:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae7864b4_64ba5281",
+      "range": {
+        "startLine": 1,
+        "startChar": 40,
+        "endLine": 1,
+        "endChar": 46
+      },
+      "revId": "584ef411efebe691507f441b525d2ca833ccf501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a3a39171_f55df4f1",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webmidi/resources/feature-policy-permissions-test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-24T03:03:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f23af6e_13fab958",
+      "range": {
+        "startLine": 10,
+        "startChar": 2,
+        "endLine": 10,
+        "endChar": 5
+      },
+      "revId": "584ef411efebe691507f441b525d2ca833ccf501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14ca640b_228e5a0b",
         "filename": "third_party/WebKit/LayoutTests/http/tests/webmidi/resources/feature-policy-permissions-test.js",
         "patchSetId": 3
@@ -82,6 +154,24 @@
       "writtenOn": "2017-07-19T07:42:50Z",
       "side": 1,
       "message": "I remind a spec question on looking this line.\nSo, what are expectations of Permissions API if the feature policy is enabled?\nIt looks reasonable that Permissions API should return the result that also counts feature policy restrictions in. On the other hand, testRunner.setPermission has been used to emulate results of Permissions API and actual permission requests. I think it\u0027s ok to change what the setPermission does. It will set internal default permission for top frame and same origin iframes, then Permissions API and actual permission requests returns override results if it was made in a cross origin iframe.",
+      "revId": "584ef411efebe691507f441b525d2ca833ccf501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4457614_e3ad8359",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webmidi/resources/feature-policy-permissions-test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-24T03:03:08Z",
+      "side": 1,
+      "message": "Correct :) setPermission will basically just impact the user\u0027s notion of the permission.",
+      "parentUuid": "14ca640b_228e5a0b",
       "revId": "584ef411efebe691507f441b525d2ca833ccf501",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "d751ac96_f99d09ac",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webmidi/resources/feature-policy-permissions-test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-24T03:03:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13441ecf_206ebbfb",
+      "range": {
+        "startLine": 29,
+        "startChar": 4,
+        "endLine": 29,
+        "endChar": 20
+      },
+      "revId": "584ef411efebe691507f441b525d2ca833ccf501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab560e85_ff2e098b",
         "filename": "third_party/WebKit/LayoutTests/http/tests/webmidi/resources/feature-policy-permissions-test.js",
         "patchSetId": 3
@@ -122,6 +236,30 @@
       "writtenOn": "2017-07-19T07:42:50Z",
       "side": 1,
       "message": "Is this different from a simpler code below?\n\nfeature_promise_factory().then(\n  () \u003d\u003e window.parent.postMessage(...),\n  error \u003d\u003e window.parent.postMessage(...));\nreturn;",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 46
+      },
+      "revId": "584ef411efebe691507f441b525d2ca833ccf501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdec3b8f_a57f9796",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webmidi/resources/feature-policy-permissions-test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-24T03:03:08Z",
+      "side": 1,
+      "message": "Thanks :) My promise-foo isn\u0027t very good.",
+      "parentUuid": "ab560e85_ff2e098b",
       "range": {
         "startLine": 33,
         "startChar": 0,
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "8e579c76_d446d0aa",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webmidi/resources/feature-policy-permissions-test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-24T03:03:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2d26997_23d3513b",
+      "range": {
+        "startLine": 45,
+        "startChar": 42,
+        "endLine": 45,
+        "endChar": 48
+      },
+      "revId": "584ef411efebe691507f441b525d2ca833ccf501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e6d1935_3d004235",
         "filename": "third_party/WebKit/LayoutTests/http/tests/webmidi/resources/feature-policy-permissions-test.js",
         "patchSetId": 3
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "0795afd8_e9476bf7",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webmidi/resources/feature-policy-permissions-test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-24T03:03:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e6d1935_3d004235",
+      "range": {
+        "startLine": 57,
+        "startChar": 6,
+        "endLine": 57,
+        "endChar": 23
+      },
+      "revId": "584ef411efebe691507f441b525d2ca833ccf501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5599bd37_cf2ea5c5",
         "filename": "third_party/WebKit/LayoutTests/http/tests/webmidi/resources/feature-policy-permissions-test.js",
         "patchSetId": 3
@@ -200,6 +386,30 @@
       "revId": "584ef411efebe691507f441b525d2ca833ccf501",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "100989cb_d4051d25",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/webmidi/resources/feature-policy-permissions-test.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-24T03:03:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5599bd37_cf2ea5c5",
+      "range": {
+        "startLine": 66,
+        "startChar": 6,
+        "endLine": 66,
+        "endChar": 24
+      },
+      "revId": "584ef411efebe691507f441b525d2ca833ccf501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
