@@ -22,6 +22,30 @@
       "revId": "f41bf8b8ebfb25558af6d2ed164dc054fe422287",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f12312d_0f21ee25",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3264,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-07-24T09:28:00Z",
+      "side": 1,
+      "message": "Yes, it makes sense to add new parameter to CheckUploadedAutofillTypesAndSignature (don\u0027t change the name of function, it is already complicated). \n\nThe function checks autofill type and will also check the type of autofill type :)",
+      "parentUuid": "8e2b762b_44093ef7",
+      "range": {
+        "startLine": 3259,
+        "startChar": 2,
+        "endLine": 3264,
+        "endChar": 0
+      },
+      "revId": "f41bf8b8ebfb25558af6d2ed164dc054fe422287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
