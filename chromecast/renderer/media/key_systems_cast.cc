@@ -30,8 +30,8 @@ namespace chromecast {
 namespace media {
 namespace {
 
-#if defined(PLAYREADY_CDM_AVAILABLE) || \
-    (BUILDFLAG(IS_CAST_USING_CMA_BACKEND) && defined(WIDEVINE_CDM_AVAILABLE))
+#if BUILDFLAG(IS_CAST_USING_CMA_BACKEND)
+#if defined(PLAYREADY_CDM_AVAILABLE) || defined(WIDEVINE_CDM_AVAILABLE)
 SupportedCodecs GetCastEmeSupportedCodecs() {
   SupportedCodecs codecs =
       ::media::EME_CODEC_MP4_AAC | ::media::EME_CODEC_MP4_AVC1 |
@@ -79,11 +79,7 @@ class PlayReadyKeySystemProperties : public ::media::KeySystemProperties {
       EmeMediaType media_type,
       const std::string& requested_robustness) const override {
     if (requested_robustness.empty()) {
-#if defined(OS_ANDROID)
-      return EmeConfigRule::HW_SECURE_CODECS_REQUIRED;
-#else
       return EmeConfigRule::SUPPORTED;
-#endif
     }
 
     // Cast-specific PlayReady implementation does not currently recognize or
@@ -112,6 +108,7 @@ class PlayReadyKeySystemProperties : public ::media::KeySystemProperties {
   const bool persistent_license_support_;
 };
 #endif  // PLAYREADY_CDM_AVAILABLE
+#endif  // BUILDFLAG(IS_CAST_USING_CMA_BACKEND)
 
 }  // namespace
 
@@ -120,21 +117,13 @@ void AddChromecastKeySystems(
         key_systems_properties,
     bool enable_persistent_license_support,
     bool force_software_crypto) {
+#if BUILDFLAG(IS_CAST_USING_CMA_BACKEND)
 #if defined(PLAYREADY_CDM_AVAILABLE)
-  bool enable_persistent_license_playready = enable_persistent_license_support;
-#if defined(OS_ANDROID)
-  LOG_IF(WARNING, enable_persistent_license_playready)
-      << "Android doesn't support Playready persistent license.";
-  enable_persistent_license_playready = false;
-#endif
   key_systems_properties->emplace_back(
-      new PlayReadyKeySystemProperties(enable_persistent_license_playready));
+      new PlayReadyKeySystemProperties(enable_persistent_license_support));
 #endif  // defined(PLAYREADY_CDM_AVAILABLE)
 
 #if defined(WIDEVINE_CDM_AVAILABLE)
-#if defined(OS_ANDROID) && !BUILDFLAG(IS_CAST_USING_CMA_BACKEND)
-  cdm::AddAndroidWidevine(key_systems_properties);
-#else
   using Robustness = cdm::WidevineKeySystemProperties::Robustness;
 
   SupportedCodecs codecs = GetCastEmeSupportedCodecs();
@@ -150,8 +139,15 @@ void AddChromecastKeySystems(
       // Note: On Chromecast, all CDMs may have persistent state.
       EmeFeatureSupport::ALWAYS_ENABLED,    // Persistent state.
       EmeFeatureSupport::ALWAYS_ENABLED));  // Distinctive identifier.
-#endif  // defined(OS_ANDROID) && !BUILDFLAG(IS_CAST_USING_CMA_BACKEND)
 #endif  // defined(WIDEVINE_CDM_AVAILABLE)
+#elif defined(OS_ANDROID)
+#if defined(WIDEVINE_CDM_AVAILABLE)
+  cdm::AddAndroidWidevine(key_systems_properties);
+#endif  // defined(WIDEVINE_CDM_AVAILABLE)
+
+  // Add the other key system properties, including PlayReady.
+  cdm::AddAndroidPlatformKeySystems(key_systems_properties);
+#endif  // BUILDFLAG(IS_CAST_USING_CMA_BACKEND)
 }
 
 }  // namespace media

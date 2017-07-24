@@ -36,8 +36,11 @@ namespace {
 class AndroidPlatformKeySystemProperties : public KeySystemProperties {
  public:
   AndroidPlatformKeySystemProperties(const std::string& name,
-                                     SupportedCodecs supported_codecs)
-      : name_(name), supported_codecs_(supported_codecs) {}
+                                     SupportedCodecs supported_codecs,
+                                     SupportedCodecs supported_secure_codecs)
+      : name_(name),
+        supported_codecs_(supported_codecs),
+        supported_secure_codecs_(supported_secure_codecs) {}
 
   std::string GetKeySystemName() const override { return name_; }
 
@@ -65,12 +68,19 @@ class AndroidPlatformKeySystemProperties : public KeySystemProperties {
   SupportedCodecs GetSupportedCodecs() const override {
     return supported_codecs_;
   }
+  SupportedCodecs GetSupportedSecureCodecs() const override {
+    return supported_secure_codecs_;
+  }
 
   EmeConfigRule GetRobustnessConfigRule(
       media::EmeMediaType media_type,
       const std::string& requested_robustness) const override {
-    return requested_robustness.empty() ? EmeConfigRule::SUPPORTED
-                                        : EmeConfigRule::NOT_SUPPORTED;
+    if (!requested_robustness.empty())
+      return EmeConfigRule::NOT_SUPPORTED;
+
+    return supported_secure_codecs_ == media::EmeCodec::EME_CODEC_NONE
+               ? EmeConfigRule::SUPPORTED
+               : EmeConfigRule::HW_SECURE_CODECS_REQUIRED;
   }
 
   EmeSessionTypeSupport GetPersistentLicenseSessionSupport() const override {
@@ -90,6 +100,7 @@ class AndroidPlatformKeySystemProperties : public KeySystemProperties {
  private:
   const std::string name_;
   const SupportedCodecs supported_codecs_;
+  const SupportedCodecs supported_secure_codecs_;
 };
 
 SupportedKeySystemResponse QueryKeySystemSupport(
@@ -154,7 +165,7 @@ void AddAndroidPlatformKeySystems(
     SupportedKeySystemResponse response = QueryKeySystemSupport(*it);
     if (response.non_secure_codecs != media::EME_CODEC_NONE) {
       concrete_key_systems->emplace_back(new AndroidPlatformKeySystemProperties(
-          *it, response.non_secure_codecs));
+          *it, response.non_secure_codecs, response.secure_codecs));
     }
   }
 }
