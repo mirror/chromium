@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0d17dc5c_a4630e3f",
+        "filename": "third_party/WebKit/Source/core/layout/FlexibleBoxAlgorithm.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-07-24T18:16:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae4ba0ec_26c68678",
+      "revId": "1553dce2e5be6efbaedef1e64b8c0cc0dbfe0cc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52fe7320_8250ca33",
         "filename": "third_party/WebKit/Source/core/layout/FlexibleBoxAlgorithm.h",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c5b7d75d_2136e5a9",
+        "filename": "third_party/WebKit/Source/core/layout/FlexibleBoxAlgorithm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-07-24T18:16:02Z",
+      "side": 1,
+      "message": "Per recent chromium-dev discussion, I wanted to avoid using std::min/max in a header file because that uses \u003calgorithm\u003e which is slow. But I did make it const.",
+      "parentUuid": "52fe7320_8250ca33",
+      "revId": "1553dce2e5be6efbaedef1e64b8c0cc0dbfe0cc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8bdc51cc_e767a99f",
         "filename": "third_party/WebKit/Source/core/layout/LayoutFlexibleBox.cpp",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-24T14:37:56Z",
       "side": 1,
       "message": "Looks like this should be a const method.\n\nHmm... but then we also need to add constness to everything it calls.\n\nSo maybe in a separate CL then?",
+      "revId": "1553dce2e5be6efbaedef1e64b8c0cc0dbfe0cc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8e23199_5d3c58f3",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutFlexibleBox.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1191,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-07-24T18:16:02Z",
+      "side": 1,
+      "message": "OK, will look into that in a separate CL.",
+      "parentUuid": "8bdc51cc_e767a99f",
       "revId": "1553dce2e5be6efbaedef1e64b8c0cc0dbfe0cc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
