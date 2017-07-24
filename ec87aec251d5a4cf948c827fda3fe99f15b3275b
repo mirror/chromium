@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f00a859_09c92a27",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-24T19:21:16Z",
+      "side": 0,
+      "message": "I think this functional change (that fixes the bug from the postmortem) should be its own CL.",
+      "range": {
+        "startLine": 400,
+        "startChar": 6,
+        "endLine": 400,
+        "endChar": 0
+      },
+      "revId": "ec87aec251d5a4cf948c827fda3fe99f15b3275b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

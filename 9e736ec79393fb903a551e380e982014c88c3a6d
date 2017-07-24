@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9fdb442_68aaf475",
+        "filename": "components/variations/service/variations_field_trial_creator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-24T19:21:16Z",
+      "side": 1,
+      "message": "No need for variations:: here and below.",
+      "range": {
+        "startLine": 349,
+        "startChar": 8,
+        "endLine": 349,
+        "endChar": 18
+      },
+      "revId": "9e736ec79393fb903a551e380e982014c88c3a6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a50087c2_3b82830d",
+        "filename": "components/variations/service/variations_field_trial_creator.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-24T19:21:16Z",
+      "side": 1,
+      "message": "Combine this with line 397",
+      "range": {
+        "startLine": 399,
+        "startChar": 11,
+        "endLine": 399,
+        "endChar": 12
+      },
+      "revId": "9e736ec79393fb903a551e380e982014c88c3a6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4190d2d5_9180494d",
+        "filename": "components/variations/service/variations_field_trial_creator.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-24T19:21:16Z",
+      "side": 1,
+      "message": "Forward declare it instead and include the .h in the .cc file. This makes compiles faster since files including this header don\u0027t need the other header.",
+      "revId": "9e736ec79393fb903a551e380e982014c88c3a6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a189e776_aeb37753",
+        "filename": "components/variations/service/variations_field_trial_creator.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-24T19:21:16Z",
+      "side": 1,
+      "message": "Missed this before, but no need for a separate namespace section since it\u0027s the same namespace as below, so just move this line after line 23.",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 29
+      },
+      "revId": "9e736ec79393fb903a551e380e982014c88c3a6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5bf963e_15e481c6",
+        "filename": "components/variations/service/variations_field_trial_creator.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-24T19:21:16Z",
+      "side": 1,
+      "message": "Please add a comment.\n\nFor the string parameters, we usually pass them as const char* if they are coming from C strings, so use that syntax.",
+      "range": {
+        "startLine": 59,
+        "startChar": 35,
+        "endLine": 59,
+        "endChar": 57
+      },
+      "revId": "9e736ec79393fb903a551e380e982014c88c3a6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2325532_5d908153",
+        "filename": "components/variations/service/variations_field_trial_creator.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-24T19:21:16Z",
+      "side": 1,
+      "message": "This is already in namespace variations, so no need for variations:: prefix.",
+      "range": {
+        "startLine": 65,
+        "startChar": 36,
+        "endLine": 65,
+        "endChar": 55
+      },
+      "revId": "9e736ec79393fb903a551e380e982014c88c3a6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "227e65bf_820d16a2",
+        "filename": "components/variations/service/variations_field_trial_creator.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-24T19:21:16Z",
+      "side": 1,
+      "message": "This should be above other parameters that are being passed by pointer. i.e. non-const pointer params should be last.",
+      "range": {
+        "startLine": 66,
+        "startChar": 59,
+        "endLine": 66,
+        "endChar": 71
+      },
+      "revId": "9e736ec79393fb903a551e380e982014c88c3a6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
