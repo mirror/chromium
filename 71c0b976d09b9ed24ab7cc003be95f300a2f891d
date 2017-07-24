@@ -16,6 +16,24 @@
       "revId": "71c0b976d09b9ed24ab7cc003be95f300a2f891d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63bd6849_f0db8b81",
+        "filename": "media/gpu/v4l2_video_decode_accelerator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1171009
+      },
+      "writtenOn": "2017-07-24T18:21:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52f6aa79_9996eb4e",
+      "revId": "71c0b976d09b9ed24ab7cc003be95f300a2f891d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
