@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2112540c_8f2ed2b7",
+        "filename": "chrome/browser/ui/cocoa/fullscreen/fullscreen_menubar_tracker.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-24T00:13:52Z",
+      "side": 1,
+      "message": "Comment, E.g. (if correct) ~\"Since 10.12, AppKit drives the menubar animation from a nested runloop. Flush explicitly so that Chrome\u0027s UI updates as well.\"",
+      "revId": "3f65ced102eb45d98ce807cc83913b0377778832",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
