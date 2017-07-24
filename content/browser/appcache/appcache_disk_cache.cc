@@ -15,6 +15,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/stl_util.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/task_scheduler/post_task.h"
 #include "net/base/cache_type.h"
 #include "net/base/net_errors.h"
 
@@ -220,20 +221,16 @@ int AppCacheDiskCache::InitWithDiskBackend(
     const base::FilePath& disk_cache_directory,
     int disk_cache_size,
     bool force,
-    const scoped_refptr<base::SingleThreadTaskRunner>& cache_thread,
+    disk_cache::PostCleanupCallback post_cleanup_callback,
     const net::CompletionCallback& callback) {
-  return Init(net::APP_CACHE,
-              disk_cache_directory,
-              disk_cache_size,
-              force,
-              cache_thread,
-              callback);
+  return Init(net::APP_CACHE, disk_cache_directory, disk_cache_size, force,
+              std::move(post_cleanup_callback), callback);
 }
 
 int AppCacheDiskCache::InitWithMemBackend(
     int mem_cache_size, const net::CompletionCallback& callback) {
-  return Init(net::MEMORY_CACHE, base::FilePath(), mem_cache_size, false, NULL,
-              callback);
+  return Init(net::MEMORY_CACHE, base::FilePath(), mem_cache_size, false,
+              disk_cache::PostCleanupCallback(), callback);
 }
 
 void AppCacheDiskCache::Disable() {
@@ -345,7 +342,7 @@ int AppCacheDiskCache::Init(
     const base::FilePath& cache_directory,
     int cache_size,
     bool force,
-    const scoped_refptr<base::SingleThreadTaskRunner>& cache_thread,
+    disk_cache::PostCleanupCallback post_cleanup_callback,
     const net::CompletionCallback& callback) {
   DCHECK(!is_initializing_or_waiting_to_initialize() && !disk_cache_.get());
   is_disabled_ = false;
@@ -355,12 +352,9 @@ int AppCacheDiskCache::Init(
       cache_type,
       use_simple_cache_ ? net::CACHE_BACKEND_SIMPLE
                         : net::CACHE_BACKEND_DEFAULT,
-      cache_directory,
-      cache_size,
-      force,
-      cache_thread,
-      NULL,
+      cache_directory, cache_size, force, NULL,
       &(create_backend_callback_->backend_ptr_),
+      std::move(post_cleanup_callback),
       base::Bind(&CreateBackendCallbackShim::Callback,
                  create_backend_callback_));
   if (rv == net::ERR_IO_PENDING)

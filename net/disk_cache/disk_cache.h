@@ -24,7 +24,6 @@
 
 namespace base {
 class FilePath;
-class SingleThreadTaskRunner;
 
 namespace trace_event {
 class ProcessMemoryDump;
@@ -41,6 +40,8 @@ namespace disk_cache {
 
 class Entry;
 class Backend;
+
+using PostCleanupCallback = base::OnceCallback<void()>;
 
 // Returns an instance of a Backend of the given |type|. |path| points to a
 // folder where the cached data will be stored (if appropriate). This cache
@@ -63,10 +64,24 @@ NET_EXPORT int CreateCacheBackend(
     const base::FilePath& path,
     int max_bytes,
     bool force,
-    const scoped_refptr<base::SingleThreadTaskRunner>& thread,
     net::NetLog* net_log,
     std::unique_ptr<Backend>* backend,
     const net::CompletionCallback& callback);
+
+// Variant of the above ...
+// ### sequencing requirements...
+NET_EXPORT int CreateCacheBackend(net::CacheType type,
+                                  net::BackendType backend_type,
+                                  const base::FilePath& path,
+                                  int max_bytes,
+                                  bool force,
+                                  net::NetLog* net_log,
+                                  std::unique_ptr<Backend>* backend,
+                                  PostCleanupCallback post_cleanup_callback,
+                                  const net::CompletionCallback& callback);
+
+// ### comment
+NET_EXPORT void FlushCacheThreadForTesting();
 
 // The root interface for a disk cache instance.
 class NET_EXPORT Backend {

@@ -31,7 +31,6 @@ class GURL;
 
 namespace base {
 class FilePath;
-class SingleThreadTaskRunner;
 }
 
 namespace storage {
@@ -119,7 +118,6 @@ class CONTENT_EXPORT ServiceWorkerContextCore
       const base::FilePath& user_data_directory,
       std::unique_ptr<ServiceWorkerDatabaseTaskManager>
           database_task_runner_manager,
-      const scoped_refptr<base::SingleThreadTaskRunner>& disk_cache_thread,
       storage::QuotaManagerProxy* quota_manager_proxy,
       storage::SpecialStoragePolicy* special_storage_policy,
       base::WeakPtr<storage::BlobStorageContext> blob_context,
