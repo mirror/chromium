@@ -46,11 +46,9 @@ class TestUrlBarTexture : public UrlBarTexture {
 
   void DrawURL(const GURL& gurl) {
     unsupported_mode_ = UiUnsupportedMode::kCount;
-    ToolbarState state(gurl, SecurityLevel::DANGEROUS,
-                       &toolbar::kHttpsInvalidIcon,
-                       base::UTF8ToUTF16("Not secure"), true, false);
-    ASSERT_TRUE(state.should_display_url);
-    SetToolbarState(state);
+    state_.gurl = gurl;
+    ASSERT_TRUE(state_.should_display_url);
+    SetToolbarState(state_);
     gfx::Size texture_size = GetPreferredTextureSize(kUrlWidthPixels);
     sk_sp<SkSurface> surface = SkSurface::MakeRasterN32Premul(
         texture_size.width(), texture_size.height());
@@ -69,6 +67,12 @@ class TestUrlBarTexture : public UrlBarTexture {
   void SetForceFontFallbackFailure(bool force) {
     SetForceFontFallbackFailureForTesting(force);
   }
+
+  void SetSecurityLevel(security_state::SecurityLevel security_level) {
+    state_.security_level = security_level;
+  }
+
+  void SetOffline(bool offline) { state_.offline_page = offline; }
 
   size_t GetNumberOfFontFallbacksForURL(const GURL& gurl) {
     url::Parsed parsed;
@@ -91,18 +95,34 @@ class TestUrlBarTexture : public UrlBarTexture {
   gfx::RenderText* url_render_text() { return url_render_text_.get(); }
   const base::string16& url_text() { return url_text_; }
 
+  size_t render_count() const { return render_count_; }
+
  private:
+  void RenderUrl(const gfx::Size& texture_size,
+                 const gfx::Rect& bounds) override {
+    UrlBarTexture::RenderUrl(texture_size, bounds);
+    render_count_++;
+  }
+
   void OnUnsupportedFeature(UiUnsupportedMode mode) {
     unsupported_mode_ = mode;
   }
 
   UiUnsupportedMode unsupported_mode_ = UiUnsupportedMode::kCount;
+  size_t render_count_ = 0;
+  ToolbarState state_;
 };
 
 TestUrlBarTexture::TestUrlBarTexture()
     : UrlBarTexture(false,
                     base::Bind(&TestUrlBarTexture::OnUnsupportedFeature,
-                               base::Unretained(this))) {
+                               base::Unretained(this))),
+      state_(GURL(),
+             SecurityLevel::DANGEROUS,
+             &toolbar::kHttpsInvalidIcon,
+             base::UTF8ToUTF16("Not secure"),
+             true,
+             false) {
   gfx::FontList::SetDefaultFontDescription("Arial, Times New Roman, 15px");
 }
 
@@ -291,6 +311,35 @@ TEST(UrlBarTexture, EmptyURL) {
   TestUrlBarTexture texture;
   texture.DrawURL(GURL());
   EXPECT_EQ(UiUnsupportedMode::kCount, texture.unsupported_mode());
+}
+
+TEST(UrlBarTexture, RenderUrlCount) {
+  TestUrlBarTexture texture;
+  texture.DrawURL(GURL());
+  EXPECT_EQ(1lu, texture.render_count());
+
+  // Drew the same url. Should do nothing.
+  texture.DrawURL(GURL());
+  EXPECT_EQ(1lu, texture.render_count());
+
+  // Setting the security level to the same thing should have no effect.
+  texture.SetSecurityLevel(SecurityLevel::DANGEROUS);
+  texture.DrawURL(GURL());
+  EXPECT_EQ(1lu, texture.render_count());
+
+  // New URL will cause a render.
+  texture.DrawURL(GURL("https://short.com/"));
+  EXPECT_EQ(2lu, texture.render_count());
+
+  // New security level will, too.
+  texture.SetSecurityLevel(SecurityLevel::EV_SECURE);
+  texture.DrawURL(GURL("https://short.com/"));
+  EXPECT_EQ(3lu, texture.render_count());
+
+  // The addition of the offline chip should cause a render as well.
+  texture.SetOffline(true);
+  texture.DrawURL(GURL("https://short.com/"));
+  EXPECT_EQ(4lu, texture.render_count());
 }
 
 }  // namespace vr
