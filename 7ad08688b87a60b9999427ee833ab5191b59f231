@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8c14c3f8_2c2c1473",
+        "filename": "media/audio/android/audio_manager_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-24T17:54:52Z",
+      "side": 1,
+      "message": "I don\u0027t think it will affect this at all, but I\u0027ll give it a test to be sure. I would expect that is only affected by the transmission delay.",
+      "parentUuid": "73f92003_56e72bcf",
+      "range": {
+        "startLine": 346,
+        "startChar": 17,
+        "endLine": 346,
+        "endChar": 18
+      },
+      "revId": "7ad08688b87a60b9999427ee833ab5191b59f231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "41ef056d_5cb2d997",
         "filename": "media/audio/android/opensles_output.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-21T23:10:25Z",
       "side": 1,
       "message": "Let me double check that I understand. \n\nIt looks like the ndk level we use to compile may vary. When \u003c 25, these things aren\u0027t defined, so we\u0027re just making them to match what the \u003e\u003d 25 headers would specify. This would then make it possible to use this feature on \u003e 25 devices, regardless of the compile time ndk level. Am I right?",
+      "range": {
+        "startLine": 27,
+        "startChar": 4,
+        "endLine": 27,
+        "endChar": 19
+      },
+      "revId": "7ad08688b87a60b9999427ee833ab5191b59f231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a502127e_38381dfb",
+        "filename": "media/audio/android/opensles_output.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-24T17:54:52Z",
+      "side": 1,
+      "message": "Correct, though the Android team just confirmed this is missing from the the API 25 SDK, despite the functionality existing, so I\u0027ll probably just remove the API level check for now and force it to be updated when the API actually lands in the SDK...",
+      "parentUuid": "41ef056d_5cb2d997",
       "range": {
         "startLine": 27,
         "startChar": 4,
@@ -82,6 +130,30 @@
       "writtenOn": "2017-07-21T23:10:25Z",
       "side": 1,
       "message": "This appears to be the only one you\u0027re using. Do you need to also define the others?",
+      "range": {
+        "startLine": 44,
+        "startChar": 8,
+        "endLine": 44,
+        "endChar": 43
+      },
+      "revId": "7ad08688b87a60b9999427ee833ab5191b59f231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "968d8d65_0ccb29cf",
+        "filename": "media/audio/android/opensles_output.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-24T17:54:52Z",
+      "side": 1,
+      "message": "Probably not, but I\u0027ve just pasted all values for clarity. We may want to use EFFECTS for WebAudio/RTC.",
+      "parentUuid": "bbf164ad_456ffc30",
       "range": {
         "startLine": 44,
         "startChar": 8,
