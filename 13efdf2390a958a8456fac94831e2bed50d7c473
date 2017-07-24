@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f016a12d_54db3b28",
+        "filename": "chrome/browser/ui/cocoa/tabbed_browser_window_unittest.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-07-24T16:01:09Z",
+      "side": 1,
+      "message": "Nit: do these expectations get verified?",
+      "range": {
+        "startLine": 107,
+        "startChar": 61,
+        "endLine": 107,
+        "endChar": 0
+      },
+      "revId": "13efdf2390a958a8456fac94831e2bed50d7c473",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
