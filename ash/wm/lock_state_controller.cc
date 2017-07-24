@@ -166,6 +166,13 @@ void LockStateController::OnStartingLock() {
   StartImmediatePreLockAnimation(false /* request_lock_on_completion */);
 }
 
+void LockStateController::HideNonLockScreenContainersImmediately() {
+  animating_lock_ = true;
+  animator_->StartAnimation(SessionStateAnimator::NON_LOCK_SCREEN_CONTAINERS,
+                            SessionStateAnimator::ANIMATION_HIDE_IMMEDIATELY,
+                            SessionStateAnimator::ANIMATION_SPEED_IMMEDIATE);
+}
+
 void LockStateController::RequestShutdown(ShutdownReason reason) {
   if (shutting_down_)
     return;
