@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ab7f518_a185c3dd",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-24T17:02:39Z",
+      "side": 0,
+      "message": "locally_applied_commits could be an empty list, in which case we don\u0027t want to add anything to the commit message.",
+      "revId": "dc51f00f4f1a2247e94ee921e0b11d1fd4a7f33e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
