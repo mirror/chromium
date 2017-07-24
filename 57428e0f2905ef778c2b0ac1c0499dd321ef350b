@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06830e33_748dae21",
+        "filename": "cc/resources/resource_pool.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-24T17:40:25Z",
+      "side": 1,
+      "message": "I suspect that VC++ won\u0027t allow this. In fact this may be prohibited by the C++ standard - we\u0027ll see.",
+      "revId": "57428e0f2905ef778c2b0ac1c0499dd321ef350b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91f65ba4_66b5f0b4",
+        "filename": "chrome/browser/data_use_measurement/chrome_data_use_ascriber.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-24T17:40:25Z",
+      "side": 1,
+      "message": "Unneeded cast (should never need to cast to void*/const void*).",
+      "revId": "57428e0f2905ef778c2b0ac1c0499dd321ef350b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6663a5c9_7bf17d97",
+        "filename": "components/search_engines/template_url_prepopulate_data.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-24T17:40:25Z",
+      "side": 1,
+      "message": "Yeah!",
+      "revId": "57428e0f2905ef778c2b0ac1c0499dd321ef350b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17150cd2_a00cfab8",
+        "filename": "components/sync/engine_impl/cycle/nudge_tracker.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-24T17:40:25Z",
+      "side": 1,
+      "message": "Why constexpr const? It should be just one or the other, yes?\n\nAlso, I think VC++ won\u0027t let you do this. I think for now you either need to have a constexpr *definition* in the header file (outside of the class?) or else a const declaration in the header file and a const definition in the .cc file. But the try bots will tell you for sure.",
+      "revId": "57428e0f2905ef778c2b0ac1c0499dd321ef350b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64eee07b_b4770ac9",
+        "filename": "components/update_client/request_sender.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-24T17:40:25Z",
+      "side": 1,
+      "message": "In this case \"constexpr const\" is justified and in fact crucial. constexpr applies to the pointer, and const applies to the characters it points at. So this is perfect, if a bit confusing for readers who see it for the first time. I approve.",
+      "revId": "57428e0f2905ef778c2b0ac1c0499dd321ef350b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f451ffbc_97a2f0dc",
+        "filename": "components/update_client/request_sender.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-24T17:40:25Z",
+      "side": 1,
+      "message": "Same comment as previous constexpr const.",
+      "revId": "57428e0f2905ef778c2b0ac1c0499dd321ef350b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
