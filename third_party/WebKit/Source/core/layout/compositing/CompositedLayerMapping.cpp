@@ -52,6 +52,7 @@
 #include "core/page/ChromeClient.h"
 #include "core/page/Page.h"
 #include "core/page/scrolling/ScrollingCoordinator.h"
+#include "core/page/scrolling/SnapCoordinator.h"
 #include "core/page/scrolling/StickyPositionScrollingConstraints.h"
 #include "core/page/scrolling/TopDocumentRootScrollerController.h"
 #include "core/paint/FramePaintTiming.h"
@@ -1140,6 +1141,7 @@ void CompositedLayerMapping::UpdateGraphicsLayerGeometry(
   UpdateChildrenTransform();
   UpdateScrollParent(ScrollParent());
   RegisterScrollingLayers();
+  UpdateSnapOffsets();
 
   UpdateCompositingReasons();
 }
@@ -2472,6 +2474,15 @@ void CompositedLayerMapping::RegisterScrollingLayers() {
             layer, is_container);
       },
       kApplyToChildContainingLayers);
+}
+
+void CompositedLayerMapping::UpdateSnapOffsets() {
+  SnapCoordinator* snapCoordinator =
+      GetLayoutObject().GetDocument().GetSnapCoordinator();
+  WebSnapPointList offsets = snapCoordinator->SnapOffsets(
+      *ToContainerNode(GetLayoutObject().GetNode()));
+  if (scrolling_contents_layer_)
+    scrolling_contents_layer_->SetSnapOffsets(offsets);
 }
 
 bool CompositedLayerMapping::UpdateSquashingLayers(

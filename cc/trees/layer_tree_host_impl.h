@@ -177,6 +177,7 @@ class CC_EXPORT LayerTreeHostImpl
       base::TimeDelta delayed_by = base::TimeDelta()) override;
   void ApplyScroll(ScrollNode* scroll_node, ScrollState* scroll_state);
   InputHandlerScrollResult ScrollBy(ScrollState* scroll_state) override;
+  void SnapAfterGestureScroll(const gfx::Point&) override;
   void RequestUpdateForSynchronousInputHandler() override;
   void SetSynchronousInputHandlerRootScrollOffset(
       const gfx::ScrollOffset& root_offset) override;
@@ -679,6 +680,10 @@ class CC_EXPORT LayerTreeHostImpl
   void DistributeScrollDelta(ScrollState* scroll_state);
   bool CanConsumeDelta(ScrollNode* scroll_node,
                        const ScrollState& scroll_state);
+
+  void FindSnappedOffset(gfx::Vector2dF* snapped_offset,
+                         const gfx::Vector2dF& original_offset,
+                         bool is_snapped = false) override;
 
   bool AnimatePageScale(base::TimeTicks monotonic_time);
   bool AnimateScrollbars(base::TimeTicks monotonic_time);

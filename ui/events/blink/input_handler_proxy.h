@@ -187,6 +187,8 @@ class InputHandlerProxy
   EventDisposition HitTestTouchEvent(const blink::WebTouchEvent& touch_event,
                                      bool* is_touching_scrolling_layer);
 
+  bool AdjustFlingCurveToSnapPoints();
+
   std::unique_ptr<blink::WebGestureCurve> fling_curve_;
   // Parameters for the active fling animation, stored in case we need to
   // transfer it out later.

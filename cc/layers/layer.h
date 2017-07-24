@@ -24,6 +24,7 @@
 #include "cc/input/input_handler.h"
 #include "cc/layers/layer_collections.h"
 #include "cc/layers/layer_position_constraint.h"
+#include "cc/layers/snap_point_list.h"
 #include "cc/layers/touch_action_region.h"
 #include "cc/paint/paint_record.h"
 #include "cc/trees/element_id.h"
@@ -116,6 +117,9 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
 
   void SetMasksToBounds(bool masks_to_bounds);
   bool masks_to_bounds() const { return inputs_.masks_to_bounds; }
+
+  void SetScrollSnapOffsets(const SnapPointList& offsets);
+  SnapPointList snap_offsets() { return inputs_.snap_offsets; }
 
   void SetMaskLayer(Layer* mask_layer);
   Layer* mask_layer() { return inputs_.mask_layer.get(); }
@@ -605,6 +609,8 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
     LayerClient* client;
     base::Callback<void(const gfx::ScrollOffset&)> did_scroll_callback;
     std::vector<std::unique_ptr<CopyOutputRequest>> copy_requests;
+
+    SnapPointList snap_offsets;
   };
 
   Layer* parent_;

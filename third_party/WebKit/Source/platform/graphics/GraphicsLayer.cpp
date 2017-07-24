@@ -382,6 +382,10 @@ void GraphicsLayer::UpdateContentsRect() {
   }
 }
 
+void GraphicsLayer::SetSnapOffsets(const WebSnapPointList& offsets) {
+  layer_->Layer()->SetSnapOffsets(offsets);
+}
+
 static HashSet<int>* g_registered_layer_set;
 
 void GraphicsLayer::RegisterContentsLayer(WebLayer* layer) {

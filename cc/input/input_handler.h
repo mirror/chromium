@@ -153,6 +153,11 @@ class CC_EXPORT InputHandler {
   // ScrollBegin() returned SCROLL_STARTED.
   virtual InputHandlerScrollResult ScrollBy(ScrollState* scroll_state) = 0;
 
+  virtual void SnapAfterGestureScroll(const gfx::Point&) = 0;
+  virtual void FindSnappedOffset(gfx::Vector2dF* snapped_offset,
+                                 const gfx::Vector2dF& original_offset,
+                                 bool is_scaled = false) = 0;
+
   // Returns SCROLL_STARTED if a layer was actively being scrolled,
   // SCROLL_IGNORED if not.
   virtual ScrollStatus FlingScrollBegin() = 0;

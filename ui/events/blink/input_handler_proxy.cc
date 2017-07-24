@@ -961,6 +961,8 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HandleGestureScrollEnd(
   DCHECK(expect_scroll_update_end_);
   expect_scroll_update_end_ = false;
 #endif
+  input_handler_->SnapAfterGestureScroll(
+      gfx::Point(gesture_event.x, gesture_event.y));
   if (ShouldAnimate(gesture_event.data.scroll_end.delta_units !=
                     blink::WebGestureEvent::ScrollUnits::kPixels)) {
     // Do nothing if the scroll is being animated; the scroll animation will
@@ -1051,7 +1053,10 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HandleGestureFlingStart(
           WebPoint(gesture_event.global_x, gesture_event.global_y);
       fling_parameters_.modifiers = gesture_event.GetModifiers();
       fling_parameters_.source_device = gesture_event.source_device;
-      RequestAnimation();
+      if (AdjustFlingCurveToSnapPoints())
+        RequestAnimation();
+      else
+        fling_curve_.reset();
       return DID_HANDLE;
     }
     case cc::InputHandler::SCROLL_UNKNOWN:
@@ -1331,6 +1336,14 @@ void InputHandlerProxy::ExtendBoostedFlingTimeout(
   deferred_fling_cancel_time_seconds_ =
       event.TimeStampSeconds() + kFlingBoostTimeoutDelaySeconds;
   last_fling_boost_event_ = event;
+}
+
+bool InputHandlerProxy::AdjustFlingCurveToSnapPoints() {
+  gfx::Vector2dF original_offset;
+  fling_curve_->ComputeTotalScrollOffset(&original_offset);
+  gfx::Vector2dF snapped_offset;
+  input_handler_->FindSnappedOffset(&snapped_offset, original_offset, true);
+  return fling_curve_->ResetCurveBySnappedOffset(snapped_offset);
 }
 
 void InputHandlerProxy::Animate(base::TimeTicks time) {

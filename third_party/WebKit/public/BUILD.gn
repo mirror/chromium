@@ -321,6 +321,7 @@ source_set("blink_headers") {
     "platform/WebSelectionBound.h",
     "platform/WebSetSinkIdCallbacks.h",
     "platform/WebSize.h",
+    "platform/WebSnapPointList.h",
     "platform/WebSocketHandshakeThrottle.h",
     "platform/WebSourceBuffer.h",
     "platform/WebSourceBufferClient.h",

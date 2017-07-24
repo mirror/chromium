@@ -989,6 +989,14 @@ static inline bool UserScrollableVertical(LayerImpl* layer) {
   return layer->test_properties()->user_scrollable_vertical;
 }
 
+static inline SnapPointList SnapOffsets(Layer* layer) {
+  return layer->snap_offsets();
+}
+
+static inline SnapPointList SnapOffsets(LayerImpl* layer) {
+  return layer->test_properties()->snap_offsets;
+}
+
 template <typename LayerType>
 void SetHasTransformNode(LayerType* layer, bool val) {
   layer->SetHasTransformNode(val);
@@ -1047,6 +1055,7 @@ void AddScrollNodeIfNeeded(
     node.should_flatten = layer->should_flatten_transform_from_property_tree();
     node.user_scrollable_horizontal = UserScrollableHorizontal(layer);
     node.user_scrollable_vertical = UserScrollableVertical(layer);
+    node.snap_offsets = SnapOffsets(layer);
     node.element_id = layer->element_id();
     node.transform_id =
         data_for_children->transform_tree_parent->transform_tree_index();
