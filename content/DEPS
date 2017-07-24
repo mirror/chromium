@@ -11,6 +11,7 @@ include_rules = [
   "+content/public/test",
   "+content/test",
 
+  "+blink/modules/media_controls/resources/grit/media_controls_resources.h",
   "+blink/public/resources/grit",
 
   "+cc",
