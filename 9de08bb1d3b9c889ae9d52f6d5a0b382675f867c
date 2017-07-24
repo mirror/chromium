@@ -1,0 +1,242 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "371adb58_2f19e5ba",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-24T16:54:54Z",
+      "side": 1,
+      "message": "nit: \"const int kExpirationTimeForPendingKeyAcksMs \u003d 1000;\" and use base::TimeDelta::FromMilliseconds below at runtime when creation the callback. Maybe it\u0027s allowed to have global base::TimeDelta instances now but creating it at runtime is still more consistent with rest of exo code\n\nnit: maybe s/ExpirationTime/ExpirationDelay/ as it\u0027s a delta and not an absolute time",
+      "revId": "9de08bb1d3b9c889ae9d52f6d5a0b382675f867c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f8921cd_5be18d9c",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-24T16:54:54Z",
+      "side": 1,
+      "message": "nit: not a fan of a function that just does a null check. please restructure the code so this null check is done by the caller",
+      "revId": "9de08bb1d3b9c889ae9d52f6d5a0b382675f867c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e56e614_ba75afdb",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-24T16:54:54Z",
+      "side": 1,
+      "message": "nit: s/ui::KeyEvent*/const ui::KeyEvent*/ if there\u0027s no need to modify |event|\nnit: not a fan that it\u0027s valid to call this with surface\u003dnull, please move that check to the caller instead",
+      "revId": "9de08bb1d3b9c889ae9d52f6d5a0b382675f867c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98ab4f5c_461b37bb",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-24T16:54:54Z",
+      "side": 1,
+      "message": "q: while here, do you mind changing so it\u0027s only valid to call this with focus !\u003d null ?",
+      "revId": "9de08bb1d3b9c889ae9d52f6d5a0b382675f867c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75b650c6_236b6676",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-24T16:54:54Z",
+      "side": 1,
+      "message": "nit: only call ProcessAccelerator if focus_ !\u003d null",
+      "revId": "9de08bb1d3b9c889ae9d52f6d5a0b382675f867c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3c02598_0ec82ae1",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-24T16:54:54Z",
+      "side": 1,
+      "message": "nit: we should not refer to Android here. s/sending it to Android/passing it to the delegate/",
+      "revId": "9de08bb1d3b9c889ae9d52f6d5a0b382675f867c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4533deee_282d65a9",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-24T16:54:54Z",
+      "side": 1,
+      "message": "why call this here?",
+      "revId": "9de08bb1d3b9c889ae9d52f6d5a0b382675f867c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d418d631_5c18a9fb",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-24T16:54:54Z",
+      "side": 1,
+      "message": "please add a process_expired_pending_key_acks_pending_ member for this instead",
+      "revId": "9de08bb1d3b9c889ae9d52f6d5a0b382675f867c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb24b056_09f13eb5",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-24T16:54:54Z",
+      "side": 1,
+      "message": "please move to a ScheduleProcessExpiredPendingKeyAcks() function instead of duplicating code here and below",
+      "revId": "9de08bb1d3b9c889ae9d52f6d5a0b382675f867c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09e009e7_4b172177",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-24T16:54:54Z",
+      "side": 1,
+      "message": "can we avoid doing this and always use the pending callback? the posted callback should always fire at the right time or earlier. I\u0027m worried that we\u0027ll end up posting a lot of delayed callbacks otherwise.",
+      "revId": "9de08bb1d3b9c889ae9d52f6d5a0b382675f867c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d7c5fd0_fcc817c6",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-24T16:54:54Z",
+      "side": 1,
+      "message": "nit: s/iter/it/ as that\u0027s more common in exo code",
+      "revId": "9de08bb1d3b9c889ae9d52f6d5a0b382675f867c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f7400c8_984166b4",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-24T16:54:54Z",
+      "side": 1,
+      "message": "nit: s/delta/time_since_event_was_generated/",
+      "revId": "9de08bb1d3b9c889ae9d52f6d5a0b382675f867c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b98c539d_34df4cff",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-24T16:54:54Z",
+      "side": 1,
+      "message": "why do we need to keep iterating in this case? isn\u0027t pending_key_acks_.front() always going to contain the event that should expire next? maybe just break out of the loop above ProcessAccelerator if \"time_since_event_was_generated \u003c kExpirationTimeForPendingKeyAcks\"?",
+      "revId": "9de08bb1d3b9c889ae9d52f6d5a0b382675f867c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c732d34_bf3dc080",
+        "filename": "components/exo/keyboard.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-24T16:54:54Z",
+      "side": 1,
+      "message": "use ScheduleProcessExpiredPendingKeyAcks() function instead of duplicating code",
+      "revId": "9de08bb1d3b9c889ae9d52f6d5a0b382675f867c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
