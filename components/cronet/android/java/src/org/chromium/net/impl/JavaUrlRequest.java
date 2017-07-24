@@ -50,6 +50,7 @@ final class JavaUrlRequest extends UrlRequestBase {
     private static final int DEFAULT_UPLOAD_BUFFER_SIZE = 8192;
     private static final int DEFAULT_CHUNK_LENGTH = DEFAULT_UPLOAD_BUFFER_SIZE;
     private static final String USER_AGENT = "User-Agent";
+    private final JavaCronetEngine mJavaCronetEngine;
     private final AsyncUrlRequestCallback mCallbackAsync;
     private final Executor mExecutor;
     private final String mUserAgent;
@@ -175,8 +176,11 @@ final class JavaUrlRequest extends UrlRequestBase {
      * @param executor The executor used for reading and writing from sockets
      * @param userExecutor The executor used to dispatch to {@code callback}
      */
-    JavaUrlRequest(Callback callback, final Executor executor, Executor userExecutor, String url,
-            String userAgent, boolean allowDirectExecutor) {
+    JavaUrlRequest(JavaCronetEngine javaCronetEngine, Callback callback, final Executor executor,
+            Executor userExecutor, String url, String userAgent, boolean allowDirectExecutor) {
+        if (javaCronetEngine == null) {
+            throw new NullPointerException("JavaCronetEngine is required");
+        }
         if (url == null) {
             throw new NullPointerException("URL is required");
         }
@@ -190,6 +194,7 @@ final class JavaUrlRequest extends UrlRequestBase {
             throw new NullPointerException("userExecutor is required");
         }
 
+        this.mJavaCronetEngine = javaCronetEngine;
         this.mAllowDirectExecutor = allowDirectExecutor;
         this.mCallbackAsync = new AsyncUrlRequestCallback(callback, userExecutor);
         this.mTrafficStatsTag = TrafficStats.getThreadStatsTag();
@@ -506,6 +511,7 @@ final class JavaUrlRequest extends UrlRequestBase {
         if (setTerminalState(State.ERROR)) {
             fireDisconnect();
             fireCloseUploadDataProvider();
+            fireInformCronetEngineFinished();
             mCallbackAsync.onFailed(mUrlResponseInfo, error);
         }
     }
@@ -766,6 +772,7 @@ final class JavaUrlRequest extends UrlRequestBase {
             mResponseChannel.close();
             if (mState.compareAndSet(State.READING, State.COMPLETE)) {
                 fireDisconnect();
+                fireInformCronetEngineFinished();
                 mCallbackAsync.onSucceeded(mUrlResponseInfo);
             }
         }
@@ -790,6 +797,19 @@ final class JavaUrlRequest extends UrlRequestBase {
         });
     }
 
+    /**
+     * Inform parent JavaCronetEngine that this request is complete. After calling this method no
+     * more tasks should be posted to mExecutor as it may be shutdown.
+     */
+    private void fireInformCronetEngineFinished() {
+        mExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                mJavaCronetEngine.requestFinished();
+            }
+        });
+    }
+
     @Override
     public void cancel() {
         State oldState = mState.getAndSet(State.CANCELLED);
@@ -807,6 +827,7 @@ final class JavaUrlRequest extends UrlRequestBase {
             case READING:
                 fireDisconnect();
                 fireCloseUploadDataProvider();
+                fireInformCronetEngineFinished();
                 mCallbackAsync.onCanceled(mUrlResponseInfo);
                 break;
             // The rest are all termination cases - we're too late to cancel.
