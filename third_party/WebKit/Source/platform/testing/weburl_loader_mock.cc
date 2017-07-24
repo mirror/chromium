@@ -73,25 +73,18 @@ void WebURLLoaderMock::ServeAsynchronousRequest(
 WebURLRequest WebURLLoaderMock::ServeRedirect(
     const WebURLRequest& request,
     const WebURLResponse& redirect_response) {
-  KURL redirect_url(kParsedURLString,
-                    redirect_response.HttpHeaderField("Location"));
-
-  WebURLRequest new_request(redirect_url);
-  new_request.SetFirstPartyForCookies(redirect_url);
-  new_request.SetDownloadToFile(request.DownloadToFile());
-  new_request.SetUseStreamOnResponse(request.UseStreamOnResponse());
-  new_request.SetRequestContext(request.GetRequestContext());
-  new_request.SetFrameType(request.GetFrameType());
-  new_request.SetServiceWorkerMode(request.GetServiceWorkerMode());
-  new_request.SetShouldResetAppCache(request.ShouldResetAppCache());
-  new_request.SetFetchRequestMode(request.GetFetchRequestMode());
-  new_request.SetFetchCredentialsMode(request.GetFetchCredentialsMode());
-  new_request.SetHTTPMethod(request.HttpMethod());
-  new_request.SetHTTPBody(request.HttpBody());
+  // GURL redirect_url(redirect_response.HttpHeaderField("Location").Utf8());
+  WebURL redirect_url;
 
   WeakPtr<WebURLLoaderMock> self = weak_factory_.CreateWeakPtr();
 
-  bool follow = client_->WillFollowRedirect(new_request, redirect_response);
+  bool report_raw_headers = false;
+  bool follow = client_->WillFollowRedirect(
+      redirect_url, request.GetServiceWorkerMode(), redirect_url, WebString(),
+      kWebReferrerPolicyDefault, request.HttpMethod(), redirect_response,
+      report_raw_headers);
+  WebURLRequest new_request = request;
+  // new_request.SetURL();
   if (!follow)
     new_request = WebURLRequest();
 
