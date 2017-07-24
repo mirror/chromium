@@ -218,6 +218,15 @@ class ThreatDetails : public base::RefCountedThreadSafe<
   // associated with a parent Element in the parent frame.
   bool ambiguous_dom_;
 
+  // Whether this report should be trimmed down to only ad tags, not the entire
+  // page contents. Used for sampling ads.
+  bool trim_to_ad_tags_;
+
+  // A vector containing the IDs of the DOM Elements to trim to. If an element
+  // ID is in this list, then its siblings and its children should be included
+  // in the report. Only populated if this report will be trimmed.
+  std::set<int> trimmed_dom_element_ids_;
+
   // The factory used to instantiate SafeBrowsingBlockingPage objects.
   // Useful for tests, so they can provide their own implementation of
   // SafeBrowsingBlockingPage.
@@ -235,6 +244,7 @@ class ThreatDetails : public base::RefCountedThreadSafe<
   FRIEND_TEST_ALL_PREFIXES(ThreatDetailsTest, HTTPCache);
   FRIEND_TEST_ALL_PREFIXES(ThreatDetailsTest, ThreatDOMDetails_AmbiguousDOM);
   FRIEND_TEST_ALL_PREFIXES(ThreatDetailsTest, ThreatDOMDetails_MultipleFrames);
+  FRIEND_TEST_ALL_PREFIXES(ThreatDetailsTest, ThreatDOMDetails_TrimToAdTags);
   FRIEND_TEST_ALL_PREFIXES(ThreatDetailsTest, ThreatDOMDetails);
 
   DISALLOW_COPY_AND_ASSIGN(ThreatDetails);

@@ -151,6 +151,83 @@ CSBRR::SafeBrowsingUrlApiType GetUrlApiTypeForThreatSource(
   }
   return CSBRR::SAFE_BROWSING_URL_API_TYPE_UNSPECIFIED;
 }
+
+void TrimElements(const std::set<int> target_ids,
+                  ElementMap* elements,
+                  ResourceMap* resources) {
+  if (target_ids.empty()) {
+    elements->clear();
+    resources->clear();
+    return;
+  }
+
+  // First, scan over the elements and create a list ordered by element ID as
+  // well as a reverse mapping from element ID to its parent ID.
+  std::vector<HTMLElement*> elements_by_id(elements->size());
+  std::vector<int> element_id_to_parent_id(elements->size());
+  for (const auto& element_pair : *elements) {
+    HTMLElement* element = element_pair.second.get();
+    elements_by_id[element->id()] = element;
+
+    for (int child_id : element->child_ids()) {
+      element_id_to_parent_id[child_id] = element->id();
+    }
+  }
+
+  // Create a similar map for resources, ordered by resource ID.
+  std::vector<std::string> resource_id_to_url(resources->size());
+  for (const auto& resource_pair : *resources) {
+    const std::string& url = resource_pair.first;
+    ClientSafeBrowsingReportRequest::Resource* resource =
+        resource_pair.second.get();
+    resource_id_to_url[resource->id()] = url;
+  }
+
+  // A second pass looks at the target_ids and trims |elements| so that only the
+  // target_ids, their siblings, and their children are included.
+  std::vector<int> ids_to_keep;
+  for (int target_id : target_ids) {
+    ids_to_keep.push_back(element_id_to_parent_id[target_id]);
+  }
+
+  // Walk through |ids_to_keep| and append the children of each of element to
+  // |ids_to_keep|. This is effectively a breadth-first traversal of the tree.
+  // The list will stop growing when we reach the leaf nodes that have no more
+  // children.
+  for (size_t index = 0; index < ids_to_keep.size(); ++index) {
+    int cur_element_id = ids_to_keep[index];
+    const HTMLElement& element = *(elements_by_id[cur_element_id]);
+    for (int child_id : element.child_ids()) {
+      ids_to_keep.push_back(child_id);
+    }
+  }
+  std::sort(ids_to_keep.begin(), ids_to_keep.end());
+
+  // Now we know which elements we want to keep. Create parallel element and
+  // resource maps from just the IDs that we want to keep.
+  ElementMap result_elements;
+  ResourceMap result_resources;
+  for (auto element_iter = elements->begin();
+       element_iter != elements->end();) {
+    const HTMLElement& element = *element_iter->second;
+
+    // Delete any elements that we do not want to keep.
+    if (std::find(ids_to_keep.begin(), ids_to_keep.end(), element.id()) ==
+        ids_to_keep.end()) {
+      if (element.has_resource_id()) {
+        const std::string& resource_url =
+            resource_id_to_url[element.resource_id()];
+        resources->erase(resource_url);
+      }
+      element_iter = elements->erase(element_iter++);
+    } else {
+      ++element_iter;
+    }
+  }
+
+  elements->swap(result_elements);
+  resources->swap(result_resources);
+}
 }  // namespace
 
 // The default ThreatDetailsFactory.  Global, made a singleton so we
@@ -209,6 +286,8 @@ ThreatDetails::ThreatDetails(
       did_proceed_(false),
       num_visits_(0),
       ambiguous_dom_(false),
+      // DO NOT SUBMIT - this param needs to be set somehow.
+      trim_to_ad_tags_(false),
       cache_collector_(new ThreatDetailsCacheCollector) {
   redirects_collector_ = new ThreatDetailsRedirectsCollector(
       history_service ? history_service->AsWeakPtr()
@@ -336,6 +415,12 @@ void ThreatDetails::AddDomElement(
     HTMLElement::Attribute* attribute_pb = cur_element->add_attribute();
     attribute_pb->set_name(attribute.first);
     attribute_pb->set_value(attribute.second);
+
+    // Remember which the IDs of elements that represent ads so we can trim the
+    // report down to just those parts later.
+    if (trim_to_ad_tags_ && attribute_pb->name() == "data-google-query_id") {
+      trimmed_dom_element_ids_.insert(cur_element->id());
+    }
   }
 
   if (resource) {
@@ -544,6 +629,11 @@ void ThreatDetails::FinishCollection(bool did_proceed, int num_visit) {
       }
     }
   }
+
+//  if (trim_to_ad_tags_) {
+    TrimElements(trimmed_dom_element_ids_, &elements_, &resources_);
+//  }
+
   did_proceed_ = did_proceed;
   num_visits_ = num_visit;
   std::vector<GURL> urls;

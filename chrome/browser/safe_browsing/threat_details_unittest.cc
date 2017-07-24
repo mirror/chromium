@@ -872,6 +872,163 @@ TEST_F(ThreatDetailsTest, ThreatDOMDetails_AmbiguousDOM) {
   histograms.ExpectTotalCount(kAmbiguousDomMetric, 1);
 }
 
+// Tests creating a threat report when receiving data from multiple renderers.
+// We use three layers in this test:
+// kDOMParentURL
+//  \- <div data-google-query-id=outer>
+//    \- <iframe src=kDOMChildURL foo=bar>
+//      \- <div id=inner bar=baz/> - div and script are at the same level.
+//      \- <script src=kDOMChildURL2>
+TEST_F(ThreatDetailsTest, ThreatDOMDetails_TrimToAdTags) {
+  // Create a child renderer inside the main frame to house the inner iframe.
+  // Perform the navigation first in order to manipulate the frame tree.
+  content::WebContentsTester::For(web_contents())
+      ->NavigateAndCommit(GURL(kLandingURL));
+  content::RenderFrameHost* child_rfh =
+      content::RenderFrameHostTester::For(main_rfh())->AppendChild("subframe");
+
+  // Define two sets of DOM nodes - one for an outer page containing an iframe,
+  // and then another for the inner page containing the contents of that iframe.
+  std::vector<SafeBrowsingHostMsg_ThreatDOMDetails_Node> outer_params;
+  SafeBrowsingHostMsg_ThreatDOMDetails_Node outer_child_div;
+  outer_child_div.node_id = 1;
+  outer_child_div.child_node_ids.push_back(2);
+  outer_child_div.tag_name = "div";
+  outer_child_div.parent = GURL(kDOMParentURL);
+  outer_child_div.attributes.push_back(std::make_pair("div-data-google-query-id", "outer"));
+  outer_params.push_back(outer_child_div);
+
+  SafeBrowsingHostMsg_ThreatDOMDetails_Node outer_child_iframe;
+  outer_child_iframe.node_id = 2;
+  outer_child_iframe.parent_node_id = 1;
+  outer_child_iframe.url = GURL(kDOMChildURL);
+  outer_child_iframe.tag_name = "iframe";
+  outer_child_iframe.parent = GURL(kDOMParentURL);
+  outer_child_iframe.attributes.push_back(std::make_pair("src", kDOMChildURL));
+  outer_child_iframe.attributes.push_back(std::make_pair("foo", "bar"));
+  outer_child_iframe.child_frame_routing_id = child_rfh->GetRoutingID();
+  outer_params.push_back(outer_child_iframe);
+
+  SafeBrowsingHostMsg_ThreatDOMDetails_Node outer_summary_node;
+  outer_summary_node.url = GURL(kDOMParentURL);
+  outer_summary_node.children.push_back(GURL(kDOMChildURL));
+  outer_params.push_back(outer_summary_node);
+
+  // Now define some more nodes for the body of the iframe.
+  std::vector<SafeBrowsingHostMsg_ThreatDOMDetails_Node> inner_params;
+  SafeBrowsingHostMsg_ThreatDOMDetails_Node inner_child_div;
+  inner_child_div.node_id = 1;
+  inner_child_div.tag_name = "div";
+  inner_child_div.parent = GURL(kDOMChildURL);
+  inner_child_div.attributes.push_back(std::make_pair("id", "inner"));
+  inner_child_div.attributes.push_back(std::make_pair("bar", "baz"));
+  inner_params.push_back(inner_child_div);
+
+  SafeBrowsingHostMsg_ThreatDOMDetails_Node inner_child_script;
+  inner_child_script.node_id = 2;
+  inner_child_script.url = GURL(kDOMChildUrl2);
+  inner_child_script.tag_name = "script";
+  inner_child_script.parent = GURL(kDOMChildURL);
+  inner_child_script.attributes.push_back(std::make_pair("src", kDOMChildUrl2));
+  inner_params.push_back(inner_child_script);
+
+  SafeBrowsingHostMsg_ThreatDOMDetails_Node inner_summary_node;
+  inner_summary_node.url = GURL(kDOMChildURL);
+  inner_summary_node.children.push_back(GURL(kDOMChildUrl2));
+  inner_params.push_back(inner_summary_node);
+
+  ClientSafeBrowsingReportRequest expected;
+  expected.set_type(ClientSafeBrowsingReportRequest::URL_UNWANTED);
+  expected.mutable_client_properties()->set_url_api_type(
+      ClientSafeBrowsingReportRequest::PVER4_NATIVE);
+  expected.set_url(kThreatURL);
+  expected.set_page_url(kLandingURL);
+  expected.set_referrer_url("");
+  expected.set_did_proceed(false);
+  expected.set_repeat_visit(false);
+
+  ClientSafeBrowsingReportRequest::Resource* pb_resource =
+      expected.add_resources();
+  pb_resource->set_id(0);
+  pb_resource->set_url(kLandingURL);
+
+  pb_resource = expected.add_resources();
+  pb_resource->set_id(1);
+  pb_resource->set_url(kThreatURL);
+
+  ClientSafeBrowsingReportRequest::Resource* res_dom_child =
+      expected.add_resources();
+  res_dom_child->set_id(2);
+  res_dom_child->set_url(kDOMChildURL);
+  res_dom_child->set_parent_id(3);
+  res_dom_child->add_child_ids(4);
+
+  ClientSafeBrowsingReportRequest::Resource* res_dom_parent =
+      expected.add_resources();
+  res_dom_parent->set_id(3);
+  res_dom_parent->set_url(kDOMParentURL);
+  res_dom_parent->add_child_ids(2);
+
+  ClientSafeBrowsingReportRequest::Resource* res_dom_child2 =
+      expected.add_resources();
+  res_dom_child2->set_id(4);
+  res_dom_child2->set_url(kDOMChildUrl2);
+  res_dom_child2->set_parent_id(2);
+
+  expected.set_complete(false);  // Since the cache was missing.
+
+  HTMLElement* elem_dom_outer_div = expected.add_dom();
+  elem_dom_outer_div->set_id(0);
+  elem_dom_outer_div->set_tag("DIV");
+  elem_dom_outer_div->add_attribute()->set_name("id");
+  elem_dom_outer_div->mutable_attribute(0)->set_value("outer");
+  elem_dom_outer_div->add_child_ids(1);
+
+  HTMLElement* elem_dom_outer_iframe = expected.add_dom();
+  elem_dom_outer_iframe->set_id(1);
+  elem_dom_outer_iframe->set_tag("IFRAME");
+  elem_dom_outer_iframe->set_resource_id(res_dom_child->id());
+  elem_dom_outer_iframe->add_attribute()->set_name("src");
+  elem_dom_outer_iframe->mutable_attribute(0)->set_value(kDOMChildURL);
+  elem_dom_outer_iframe->add_attribute()->set_name("foo");
+  elem_dom_outer_iframe->mutable_attribute(1)->set_value("bar");
+  elem_dom_outer_iframe->add_child_ids(2);
+  elem_dom_outer_iframe->add_child_ids(3);
+
+  HTMLElement* elem_dom_inner_div = expected.add_dom();
+  elem_dom_inner_div->set_id(2);
+  elem_dom_inner_div->set_tag("DIV");
+  elem_dom_inner_div->add_attribute()->set_name("id");
+  elem_dom_inner_div->mutable_attribute(0)->set_value("inner");
+  elem_dom_inner_div->add_attribute()->set_name("bar");
+  elem_dom_inner_div->mutable_attribute(1)->set_value("baz");
+
+  HTMLElement* elem_dom_inner_script = expected.add_dom();
+  elem_dom_inner_script->set_id(3);
+  elem_dom_inner_script->set_tag("SCRIPT");
+  elem_dom_inner_script->set_resource_id(res_dom_child2->id());
+  elem_dom_inner_script->add_attribute()->set_name("src");
+  elem_dom_inner_script->mutable_attribute(0)->set_value(kDOMChildUrl2);
+
+  UnsafeResource resource;
+  InitResource(SB_THREAT_TYPE_URL_UNWANTED, ThreatSource::LOCAL_PVER4,
+               true /* is_subresource */, GURL(kThreatURL), &resource);
+
+  // Send both sets of nodes, from different render frames.
+  scoped_refptr<ThreatDetailsWrap> report = new ThreatDetailsWrap(
+      ui_manager_.get(), web_contents(), resource, NULL, history_service());
+
+  // Send both sets of nodes from different render frames.
+  report->OnReceivedThreatDOMDetails(main_rfh(), outer_params);
+  report->OnReceivedThreatDOMDetails(child_rfh, inner_params);
+
+  std::string serialized = WaitForSerializedReport(
+      report.get(), false /* did_proceed*/, 0 /* num_visit */);
+  ClientSafeBrowsingReportRequest actual;
+  actual.ParseFromString(serialized);
+  VerifyResults(actual, expected);
+}
+
 // Tests creating a threat report of a malware page where there are redirect
 // urls to an unsafe resource url.
 TEST_F(ThreatDetailsTest, ThreatWithRedirectUrl) {
