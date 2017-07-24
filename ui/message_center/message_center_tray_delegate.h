@@ -45,6 +45,8 @@ class MESSAGE_CENTER_EXPORT MessageCenterTrayDelegate {
   virtual void DisplayFirstRunBalloon() {}
 
   virtual MessageCenterTray* GetMessageCenterTray() = 0;
+
+  virtual base::string16 GetProductOSName() = 0;
 };
 
 }  // namespace message_center

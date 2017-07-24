@@ -11,6 +11,7 @@
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/color_palette.h"
 #include "ui/gfx/font_list.h"
+#include "ui/gfx/image/image_skia_operations.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/message_center/message_center_style.h"
 #include "ui/message_center/vector_icons.h"
@@ -52,6 +53,18 @@ constexpr int64_t kDayInMillis = 24LL * kHourInMillis;
 // In Android, DateUtils.YEAR_IN_MILLIS is 364 days.
 constexpr int64_t kYearInMillis = 364LL * kDayInMillis;
 
+// Foreground of small icon image.
+constexpr SkColor kSmallImageBackgroundColor = SK_ColorWHITE;
+
+const gfx::ImageSkia CreateSolidColorImage(int width,
+                                           int height,
+                                           SkColor color) {
+  SkBitmap bitmap;
+  bitmap.allocN32Pixels(width, height);
+  bitmap.eraseColor(color);
+  return gfx::ImageSkia::CreateFrom1xBitmap(bitmap);
+}
+
 // ExpandButtton forwards all mouse and key events to NotificationHeaderView,
 // but takes tab focus for accessibility purpose.
 class ExpandButton : public views::ImageView {
@@ -68,8 +81,6 @@ class ExpandButton : public views::ImageView {
 };
 
 ExpandButton::ExpandButton() {
-  SetImage(gfx::CreateVectorIcon(kNotificationExpandMoreIcon, kExpandIconSize,
-                                 gfx::kChromeIconGrey));
   focus_painter_ = views::Painter::CreateSolidFocusPainter(
       kFocusBorderColor, gfx::Insets(1, 2, 2, 2));
   SetFocusBehavior(FocusBehavior::ALWAYS);
@@ -132,6 +143,8 @@ NotificationHeaderView::NotificationHeaderView(views::ButtonListener* listener)
   set_ink_drop_base_color(kInkDropBaseColor);
   set_ink_drop_visible_opacity(kInkDropRippleVisibleOpacity);
 
+  accent_color_ = gfx::kChromeIconGrey;
+
   views::BoxLayout* layout = new views::BoxLayout(
       views::BoxLayout::kHorizontal, kHeaderPadding, kHeaderHorizontalSpacing);
   layout->set_cross_axis_alignment(
@@ -159,6 +172,7 @@ NotificationHeaderView::NotificationHeaderView(views::ButtonListener* listener)
   app_name_view_ = new views::Label(base::string16());
   app_name_view_->SetFontList(font_list);
   app_name_view_->SetHorizontalAlignment(gfx::ALIGN_LEFT);
+  app_name_view_->SetEnabledColor(accent_color_);
   app_info_container->AddChildView(app_name_view_);
 
   // Summary text divider
@@ -193,6 +207,7 @@ NotificationHeaderView::NotificationHeaderView(views::ButtonListener* listener)
 
   // Expand button view
   expand_button_ = new ExpandButton();
+  SetExpanded(is_expanded_);
   app_info_container->AddChildView(expand_button_);
 
   // Spacer between left-aligned views and right-aligned views
@@ -221,7 +236,28 @@ NotificationHeaderView::NotificationHeaderView(views::ButtonListener* listener)
 }
 
 void NotificationHeaderView::SetAppIcon(const gfx::ImageSkia& img) {
-  app_icon_view_->SetImage(img);
+  // Take the alpha channel of icon, mask it with the foreground,
+  // then add the masked foreground on top of the background
+  int width = img.width();
+  int height = img.height();
+
+  // Background color
+  const gfx::ImageSkia background = CreateSolidColorImage(
+      width, height, message_center::kSmallImageBackgroundColor);
+  // Foreground color
+  const gfx::ImageSkia foreground =
+      CreateSolidColorImage(width, height, accent_color_);
+  const gfx::ImageSkia masked_small_image =
+      gfx::ImageSkiaOperations::CreateMaskedImage(foreground, img);
+  gfx::ImageSkia masked_image =
+      gfx::ImageSkiaOperations::CreateSuperimposedImage(background,
+                                                        masked_small_image);
+
+  app_icon_view_->SetImage(masked_image);
+}
+
+void NotificationHeaderView::ClearAppIcon() {
+  app_icon_view_->SetImage(gfx::CreateVectorIcon(kProductIcon, accent_color_));
 }
 
 void NotificationHeaderView::SetAppName(const base::string16& name) {
@@ -277,10 +313,10 @@ void NotificationHeaderView::SetExpandButtonEnabled(bool enabled) {
 }
 
 void NotificationHeaderView::SetExpanded(bool expanded) {
-  expand_button_->SetImage(
-      gfx::CreateVectorIcon(
-          expanded ? kNotificationExpandLessIcon : kNotificationExpandMoreIcon,
-          kExpandIconSize, gfx::kChromeIconGrey));
+  is_expanded_ = expanded;
+  expand_button_->SetImage(gfx::CreateVectorIcon(
+      expanded ? kNotificationExpandLessIcon : kNotificationExpandMoreIcon,
+      kExpandIconSize, accent_color_));
 }
 
 void NotificationHeaderView::SetSettingsButtonEnabled(bool enabled) {
@@ -302,6 +338,18 @@ void NotificationHeaderView::SetControlButtonsVisible(bool visible) {
     is_control_buttons_visible_ = visible;
     UpdateControlButtonsVisibility();
   }
+}
+
+void NotificationHeaderView::SetAccentColor(SkColor color) {
+  accent_color_ = color;
+  app_name_view_->SetEnabledColor(accent_color_);
+  SetExpanded(is_expanded_);
+}
+
+void NotificationHeaderView::ClearAccentColor() {
+  accent_color_ = gfx::kChromeIconGrey;
+  app_name_view_->SetEnabledColor(accent_color_);
+  SetExpanded(is_expanded_);
 }
 
 bool NotificationHeaderView::IsExpandButtonEnabled() {

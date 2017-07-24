@@ -15,6 +15,7 @@
 #include "base/time/time.h"
 #include "base/values.h"
 #include "ui/gfx/image/image.h"
+#include "ui/gfx/skia_util.h"
 #include "ui/message_center/message_center_export.h"
 #include "ui/message_center/notification_delegate.h"
 #include "ui/message_center/notification_types.h"
@@ -142,6 +143,8 @@ class MESSAGE_CENTER_EXPORT RichNotificationData {
 
   // An accessible description of the notification's contents.
   base::string16 accessible_name;
+
+  SkColor accent_color = SkColorSetARGB(0, 0, 0, 0);
 };
 
 class MESSAGE_CENTER_EXPORT Notification {
@@ -336,6 +339,11 @@ class MESSAGE_CENTER_EXPORT Notification {
   // Gets a text for spoken feedback.
   const base::string16& accessible_name() const {
     return optional_fields_.accessible_name;
+  }
+
+  SkColor accent_color() const { return optional_fields_.accent_color; }
+  void set_accent_color(SkColor accent_color) {
+    optional_fields_.accent_color = accent_color;
   }
 
   NotificationDelegate* delegate() const { return delegate_.get(); }

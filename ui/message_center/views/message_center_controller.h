@@ -35,6 +35,8 @@ class MessageCenterController {
   // a notification changed in some way and needs to be laid out again.
   // See crbug.com/690813.
   virtual void UpdateNotificationSize(const std::string& notification_id) = 0;
+
+  virtual base::string16 GetProductOSName() = 0;
 };
 
 }  // namespace message_center
