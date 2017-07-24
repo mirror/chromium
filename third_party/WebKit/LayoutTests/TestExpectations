@@ -3031,7 +3031,10 @@ crbug.com/739559 virtual/gpu-rasterization/images/color-profile-svg-fill-text.ht
 crbug.com/739559 virtual/gpu-rasterization/images/color-profile-svg.html [ Failure Pass ]
 crbug.com/739559 virtual/gpu-rasterization/images/cross-fade-background-size.html [ Failure Pass ]
 crbug.com/739559 virtual/gpu-rasterization/images/cross-fade-overflow-position.html [ Failure Pass ]
-crbug.com/739559 virtual/gpu-rasterization/images/cross-fade-tiled.html [ Failure Pass ]
+#crbug.com/739559 virtual/gpu-rasterization/images/cross-fade-tiled.html [ Failure Pass ]
+
+crbug.com/747976 virtual/gpu-rasterization/images/cross-fade-tiled.html [ Failure Pass ]
+
 
 # These tests are failing on Mac-10.12 when using an Intel GPU.
 crbug.com/736177 [ Mac10.12 ] css2.1/t1202-counter-04-b.html [ Failure Pass ]
