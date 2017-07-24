@@ -46,6 +46,30 @@
       "revId": "b45a27b8e7799e961360b11839143ffa53676394",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab253105_803de5ef",
+        "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-24T19:42:02Z",
+      "side": 1,
+      "message": "Hmm, interesting... I think confused me because we dropping (but not really). I guess the relevant part of the spec here is probably https://html.spec.whatwg.org/multipage/dnd.html#drag-and-drop-processing-model (step 4 of \"User agents must, as soon as the drag operation is initiated and every 350ms (±200ms) thereafter for as long as the drag operation is ongoing, queue a task to perform the following steps in sequence:\")\n\nHowever, my concern about adding this here is that there are now three ways of dispatching a drag leave event. For example, the entire data transfer object should not be readable in dragleave--but it is here. It\u0027s also kind of special-cased into the \"navigate on drag drop\" setting (I guess this is hit testing to the guest view for a PDF plugin, which we don\u0027t want to navigate on drag/drop?), so it all just seems a bit orthogonal. For example, how does ConcludeEditDrag() handle CancelDragAndDrop() here?",
+      "parentUuid": "c7f8963c_30857089",
+      "range": {
+        "startLine": 297,
+        "startChar": 0,
+        "endLine": 302,
+        "endChar": 54
+      },
+      "revId": "b45a27b8e7799e961360b11839143ffa53676394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
