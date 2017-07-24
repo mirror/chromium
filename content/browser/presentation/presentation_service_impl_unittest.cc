@@ -582,9 +582,8 @@ TEST_F(PresentationServiceImplTest, ReconnectPresentationSuccess) {
               ReconnectPresentationInternal(_, _, presentation_urls_,
                                             kPresentationId, _, _))
       .WillOnce(SaveArgByMove<4>(&success_cb));
-  service_impl_->ReconnectPresentation(
-      presentation_urls_, base::Optional<std::string>(kPresentationId),
-      mock_presentation_cb.Get());
+  service_impl_->ReconnectPresentation(presentation_urls_, kPresentationId,
+                                       mock_presentation_cb.Get());
   EXPECT_FALSE(success_cb.is_null());
   EXPECT_CALL(mock_delegate_, ListenForConnectionStateChange(_, _, _, _))
       .Times(1);
@@ -600,9 +599,8 @@ TEST_F(PresentationServiceImplTest, ReconnectPresentationError) {
               ReconnectPresentationInternal(_, _, presentation_urls_,
                                             kPresentationId, _, _))
       .WillOnce(SaveArgByMove<5>(&error_cb));
-  service_impl_->ReconnectPresentation(
-      presentation_urls_, base::Optional<std::string>(kPresentationId),
-      mock_presentation_cb.Get());
+  service_impl_->ReconnectPresentation(presentation_urls_, kPresentationId,
+                                       mock_presentation_cb.Get());
   EXPECT_FALSE(error_cb.is_null());
   EXPECT_CALL(mock_presentation_cb, Run(OptionalIsNull(), OptionalIsNotNull()));
   std::move(error_cb).Run(
