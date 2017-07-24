@@ -23,7 +23,6 @@ class ProfilingProcess : public mojom::ProfilingControl {
   ~ProfilingProcess() override;
 
   void EnsureMojoStarted();
-  void AttachPipeServer(scoped_refptr<MemlogReceiverPipeServer> server);
 
   // ProfilingControl implementation.
   void AddNewSender(mojo::ScopedHandle sender_pipe,
@@ -36,7 +35,6 @@ class ProfilingProcess : public mojom::ProfilingControl {
   std::unique_ptr<mojo::edk::IncomingBrokerClientInvitation>
       control_invitation_;
 
-  scoped_refptr<MemlogReceiverPipeServer> server_;
   mojo::Binding<mojom::ProfilingControl> binding_;
 
   DISALLOW_COPY_AND_ASSIGN(ProfilingProcess);

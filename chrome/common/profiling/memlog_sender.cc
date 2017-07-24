@@ -5,6 +5,7 @@
 #include "chrome/common/profiling/memlog_sender.h"
 
 #include "base/command_line.h"
+#include "base/strings/string_number_conversions.h"
 #include "build/build_config.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/profiling/memlog_allocator_shim.h"
@@ -60,8 +61,14 @@ void InitMemlogSenderIfNecessary() {
 }
 
 void StartMemlogSender(const std::string& pipe_id) {
-  static MemlogSenderPipe pipe(pipe_id);
-  pipe.Connect();
+  int pipe_id_int = 0;
+  base::StringToInt(pipe_id, &pipe_id_int);
+
+#if defined(OS_WIN)
+  static MemlogSenderPipe pipe(reinterpret_cast<HANDLE>(pipe_id_int));
+#else
+  // FIXME(brettw)
+#endif
   memlog_sender_pipe = &pipe;
 
   StreamHeader header;

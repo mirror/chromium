@@ -65,6 +65,15 @@ base::CommandLine MakeProfilingCommandLine(const std::string& pipe_id) {
   return result;
 }
 
+enum class HandleShare {
+  SERVER_TO_CMDLINE,
+  CLIENT_TO_CMDLINE
+};
+void ShareHandleWithProfilingProcess(HandleShare share,
+                                     base::CommandLine* cmdline) {
+
+}
+
 }  // namespace
 
 ProfilingProcessHost::ProfilingProcessHost() {
@@ -101,6 +110,14 @@ void ProfilingProcessHost::AddSwitchesToChildCmdLine(
   if (!pph)
     return;
   pph->EnsureControlChannelExists();
+
+  // Create the socketpair for the low level memlog pipe.
+  mojo::edk::PlatformChannelPair data_channel;
+  pipe_id_ = data_channel.PrepareToPassClientHandleToChildProcessAsString(
+      &handle_passing_info);
+
+
+
 
   // TODO(brettw) this isn't correct for Posix. Redo when we can shave over
   // Mojo
