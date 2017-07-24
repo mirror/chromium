@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0344d271_f1c3c32a",
+        "filename": "media/cdm/cdm_adapter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-24T21:29:15Z",
+      "side": 1,
+      "message": "Aside: I wonder why we need to have two different enums...",
+      "range": {
+        "startLine": 39,
+        "startChar": 17,
+        "endLine": 39,
+        "endChar": 33
+      },
+      "revId": "6eb89d0f9d10c3f41292e1a5e7df3a7d4462f098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f62af157_7d51046a",
+        "filename": "media/mojo/services/mojo_cdm_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-24T21:29:15Z",
+      "side": 1,
+      "message": "Not sure if this would be possible, but it would be nice to document where this thing lives / how trusted it is. I guess it\u0027s not very trusted (but that\u0027s because I just reviewed the PPAPI version today).\n\n(I tried to figure this out from grepping the manifest.json files, but that\u0027s hard for media, because there\u0027s a single uber-interface that binds everything else that bypasses the normal service manifests? At least I couldn\u0027t find any mention of ContentDecryptionModule in the manifests?)",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 34
+      },
+      "revId": "6eb89d0f9d10c3f41292e1a5e7df3a7d4462f098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
