@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a80490a_385c3667",
+        "filename": "content/browser/renderer_host/input/synthetic_gesture_target_android.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-24T17:27:51Z",
+      "side": 1,
+      "message": "update comment",
+      "range": {
+        "startLine": 20,
+        "startChar": 50,
+        "endLine": 20,
+        "endChar": 62
+      },
+      "revId": "20f81bd039bb5b22429d90a1fbe5c9a17ac3fdc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
