@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e6f522cd_66b2a59e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-24T22:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88eb46da_1cd1e7a0",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "284b1b4e_395b336e",
         "filename": "chrome/installer/zucchini/image_utils_unittest.cc",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-21T22:48:28Z",
       "side": 1,
       "message": "test that after marking an index, IsMarked returns true, and after unmarking, IsMarked returns false.\n\nMaybe try some other values too likek 0xBEEF.",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b29a4a5_bc956fea",
+        "filename": "chrome/installer/zucchini/image_utils_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-24T22:38:21Z",
+      "side": 1,
+      "message": "Added tests for BEEF and some missing values.\nI don\u0027t think testing IsMarked on the result of MarkIndex is necessary, since we\u0027re already testing the with same value, ex:\nMarkIndex(0) \u003d\u003d 0x80000000 and IsMarked(0x80000000) \u003d\u003d true implies that IsMarked(MarkIndex(0)) \u003d\u003d true",
+      "parentUuid": "284b1b4e_395b336e",
       "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "83319bdf_553ced2a",
+        "filename": "chrome/installer/zucchini/label_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-24T22:38:21Z",
+      "side": 1,
+      "message": "I think reserve is more appropriate, because it starts empty.",
+      "parentUuid": "82dbcb7a_dcdee09f",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d8bd00e_96beda37",
         "filename": "chrome/installer/zucchini/label_manager.h",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7739d6d_c1e6f5b0",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-24T22:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d8bd00e_96beda37",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "236a71e2_12b97f87",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-24T22:38:21Z",
+      "side": 1,
+      "message": "This is confusing. I refactored definition, and moved it to README.",
+      "parentUuid": "c71a0bb9_6b0c39ec",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "094717e1_9708a313",
         "filename": "chrome/installer/zucchini/label_manager.h",
         "patchSetId": 8
@@ -101,6 +191,24 @@
       "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a57e20d_63c356fe",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-24T22:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "094717e1_9708a313",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "e5f3b41f_e4b9a1c5",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-24T22:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8b06ab4_ed02c5bb",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8cdd385_0cd557de",
         "filename": "chrome/installer/zucchini/label_manager.h",
         "patchSetId": 8
@@ -132,6 +258,24 @@
       "writtenOn": "2017-07-21T22:48:28Z",
       "side": 1,
       "message": "What does it mean to insert a label? How do you guarantee distinctness of offset/index?",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78cb8b40_c5393d1b",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-24T22:38:21Z",
+      "side": 1,
+      "message": "Create new labels actually. The label manager helps us with that.",
+      "parentUuid": "f8cdd385_0cd557de",
       "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "cddbe37f_acf7015c",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-24T22:38:21Z",
+      "side": 1,
+      "message": "Yeah, I don\u0027t think that this is relevant.",
+      "parentUuid": "0abd98a8_0b3c6464",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ada22024_25d8d150",
         "filename": "chrome/installer/zucchini/label_manager.h",
         "patchSetId": 8
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "dfbce6ef_57eecf8f",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-24T22:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ada22024_25d8d150",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8afa89b1_285956f6",
         "filename": "chrome/installer/zucchini/label_manager.h",
         "patchSetId": 8
@@ -183,6 +363,24 @@
       "writtenOn": "2017-07-21T22:48:28Z",
       "side": 1,
       "message": "Why do we store them together, rather than separately?",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc2444e7_b1a5b785",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-24T22:38:21Z",
+      "side": 1,
+      "message": "LabelManager only stores Labels. However, not all references have labels, so we sometimes represent (outside of LabelManager) references with their target as indices (if possible), or as the original offset.",
+      "parentUuid": "8afa89b1_285956f6",
       "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "dfa53ba8_92788cb0",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-24T22:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebde326f_64d7df9d",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3564b05a_6fc945fb",
         "filename": "chrome/installer/zucchini/label_manager.h",
         "patchSetId": 8
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "51fd18f7_0266f275",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-24T22:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3564b05a_6fc945fb",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6acab2f9_5bc2c716",
         "filename": "chrome/installer/zucchini/label_manager.h",
         "patchSetId": 8
@@ -234,6 +468,24 @@
       "writtenOn": "2017-07-21T22:48:28Z",
       "side": 1,
       "message": "The contract for this method is really odd.\n\nCommon patterns include: \n1) Return a (bool) that describes whether the marked index was found\n2) Return an invalid index if not found.",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b803410_c5127ec1",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-24T22:38:21Z",
+      "side": 1,
+      "message": "IndexOfOffset() is already doing (2).\nIt is more convenient to have something that always return a MarkedIndex though. That is because we will be using this function to convert a target (that can either be represented as offset of index) to a marked index. With a function that returns an invalid index, the caller has to do additional logic to achieve the conversion.",
+      "parentUuid": "6acab2f9_5bc2c716",
       "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "f6453b86_a1fb5ec3",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-24T22:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3dba597_3c4c1df9",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95614e12_f8be31c7",
         "filename": "chrome/installer/zucchini/label_manager.h",
         "patchSetId": 8
@@ -268,6 +538,24 @@
       "writtenOn": "2017-07-21T22:48:28Z",
       "side": 1,
       "message": "to clarify, I think you\u0027re saying, for each \"Reference\", create a \"label\" and add it to \"labels_\". The offset of the label is the target of the reference. The index is [newly generated (?)]",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b88a432b_e37a365b",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-24T22:38:21Z",
+      "side": 1,
+      "message": "I changed the comment a little bit.\nA label is created for each unique target from |refs|.",
+      "parentUuid": "95614e12_f8be31c7",
       "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -291,6 +579,24 @@
     },
     {
       "key": {
+        "uuid": "b97946a9_7a5621f0",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-24T22:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0443bef_bd1ee59e",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "312426c2_13c38e44",
         "filename": "chrome/installer/zucchini/label_manager.h",
         "patchSetId": 8
@@ -302,6 +608,24 @@
       "writtenOn": "2017-07-21T22:48:28Z",
       "side": 1,
       "message": "Why does UnorderedLabelManager require uniqueness, but not OrderedLabelManager?",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fff5139_47a9d6aa",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-24T22:38:21Z",
+      "side": 1,
+      "message": "Init is not analogous to InsertOffsets(). \nInsertOffsets() creates a new label for each unique offset found in |offsets|, so uniqueness is guaranteed.\nInit takes a vector of labels (in the form of a sequence of offsets), so it requires |labels| to be valid.",
+      "parentUuid": "312426c2_13c38e44",
       "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -325,6 +649,24 @@
     },
     {
       "key": {
+        "uuid": "1152c2e3_e9c0c4a1",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-24T22:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cddfb1e_4c21aa76",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35fa4a1e_1a2a2be9",
         "filename": "chrome/installer/zucchini/label_manager_unittest.cc",
         "patchSetId": 8
@@ -336,6 +678,24 @@
       "writtenOn": "2017-07-21T22:48:28Z",
       "side": 1,
       "message": "missing test for InsertTargets",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c428089_d7ded845",
+        "filename": "chrome/installer/zucchini/label_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-24T22:38:21Z",
+      "side": 1,
+      "message": "Yeah, that one requires a bit of work. We\u0027ll need a TestDisassembler that injects references.",
+      "parentUuid": "35fa4a1e_1a2a2be9",
       "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -356,6 +716,24 @@
       "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "859dc940_358aa791",
+        "filename": "chrome/installer/zucchini/label_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-24T22:38:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22857008_215abaf1",
+      "revId": "1e72280cbe211c65d1236ecda65a2245dbeee726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
