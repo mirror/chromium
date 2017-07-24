@@ -12,6 +12,7 @@
 #import "ios/web/shell/test/app/web_shell_test_util.h"
 #import "ios/web/shell/test/earl_grey/shell_earl_grey.h"
 #import "ios/web/shell/test/earl_grey/web_shell_test_case.h"
+#import "ios/web/shell/web_usage_controller.mojom.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "services/test/echo/public/interfaces/echo.mojom.h"
 #include "services/test/user_id/public/interfaces/user_id.mojom.h"
@@ -35,6 +36,16 @@ void OnEchoString(echo::mojom::EchoPtr echo,
              @"Unexpected string passed to echo callback: %s",
              echoed_input.c_str());
   *echo_callback_called_flag = true;
+}
+
+// Callback passed to web::mojom::WebUsageController::SetWebUsageEnabled().
+// sets |web_usage_controller_callback_called_flag| to true to indicate that
+// the callback was invoked. |web_usage_controller_id| is passed simply to
+// ensure that our connection to the implementation remains alive long enough
+// for the callback to reach us.
+void OnWebUsageSet(web::mojom::WebUsageControllerPtr web_usage_controller,
+                   bool* web_usage_controller_callback_called_flag) {
+  *web_usage_controller_callback_called_flag = true;
 }
 
 // Callback passed to user_id::mojom::UserId::GetUserId(). Verifies that the
@@ -112,6 +123,33 @@ void WaitForCallback(const std::string& callback_name,
       web::BrowserState::GetServiceUserIdFor(webState->GetBrowserState())));
 
   WaitForCallback("GetUserId", &userIDCallbackCalled);
+}
+
+// Tests that it is possible to connect to a per-WebState interface that is
+// provided by web_shell.
+- (void)testConnectionToWebStateInterface {
+  // Connect to the user ID service and bind a UserId instance.
+  web::mojom::WebUsageControllerPtr webUsageController;
+  web::WebState* webState = web::shell_test_util::GetCurrentWebState();
+  webState->SetWebUsageEnabled(false);
+  GREYAssert(!webState->IsWebUsageEnabled(),
+             @"WebState did not have expected initial state");
+  webState->BindInterfaceRequestFromMainFrame(
+      mojo::MakeRequest(&webUsageController));
+
+  // Call SetWebUsageEnabled(), making sure to keep our end of the connection
+  // alive until the callback is received.
+  web::mojom::WebUsageController* rawWebUsageController =
+      webUsageController.get();
+  bool webUsageControllerCallbackCalled = false;
+  rawWebUsageController->SetWebUsageEnabled(
+      true, base::BindOnce(&OnWebUsageSet, base::Passed(&webUsageController),
+                           &webUsageControllerCallbackCalled));
+
+  WaitForCallback("SetWebUsageEnabled", &webUsageControllerCallbackCalled);
+
+  GREYAssert(webState->IsWebUsageEnabled(),
+             @"WebState did not have expected final state");
 }
 
 @end
