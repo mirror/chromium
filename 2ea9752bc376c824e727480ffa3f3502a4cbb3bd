@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3b00ac6_e979d0b1",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-24T21:05:42Z",
+      "side": 1,
+      "message": "This function looks like a near-dupe of the one above, and if the provided disposition is CURRENT_TAB, it ought to behave the same way as the one above (see next comment).\n\nAccordingly, I\u0027d combine the two, by eliminating the one-arg version.",
+      "revId": "2ea9752bc376c824e727480ffa3f3502a4cbb3bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0300cbe9_824e6091",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-24T21:05:42Z",
+      "side": 1,
+      "message": "Why don\u0027t you need the SetWindowFeatures IPC here the way the other function does?",
+      "revId": "2ea9752bc376c824e727480ffa3f3502a4cbb3bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87a92417_0d354c29",
+        "filename": "chrome/browser/ui/cocoa/content_settings/content_setting_bubble_cocoa.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 1034,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-24T21:05:42Z",
+      "side": 1,
+      "message": "How come you are ORing in LEFT_MOUSE_BUTTON?  I suspect that\u0027s only because of the conditional in the bubble model, which I think we don\u0027t want; see comments there.",
+      "revId": "2ea9752bc376c824e727480ffa3f3502a4cbb3bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cb57e68_5eb7a579",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-24T21:05:42Z",
+      "side": 1,
+      "message": "Seems like you should be able to eliminate this conditional and always call the two-arg version, since the two-arg version needs to handle CURRENT_TAB correctly, and that\u0027s what will be returned if the user merely left-clicks.  See also comments on ShowBlockedPopup().",
+      "revId": "2ea9752bc376c824e727480ffa3f3502a4cbb3bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2e63bf7_e024f8be",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-24T21:05:42Z",
+      "side": 1,
+      "message": "Something in this file should probably be testing that if we modifier-click a blocked popup, it is opened with the correct disposition.",
+      "revId": "2ea9752bc376c824e727480ffa3f3502a4cbb3bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "273ea1d0_3f07c647",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-24T21:05:42Z",
+      "side": 1,
+      "message": "Why do we want to explicitly close here?  It seems like if I middle-click a popup link I\u0027d probably want the dropdown to stay open so I could middle-click another?",
+      "revId": "2ea9752bc376c824e727480ffa3f3502a4cbb3bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
