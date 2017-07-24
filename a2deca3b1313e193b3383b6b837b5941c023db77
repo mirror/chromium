@@ -187,6 +187,24 @@
       "revId": "a2deca3b1313e193b3383b6b837b5941c023db77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2988bc57_eb15fc21",
+        "filename": "ui/file_manager/file_manager/foreground/css/file_manager.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1232408
+      },
+      "writtenOn": "2017-07-24T00:39:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b82225de_0cff7c12",
+      "revId": "a2deca3b1313e193b3383b6b837b5941c023db77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
