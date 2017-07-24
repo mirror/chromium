@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "c7838c7c_abbf9e96",
+        "filename": "chrome/browser/android/signin/signin_manager_android_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-24T18:33:29Z",
+      "side": 1,
+      "message": "Thanks for clarification! I agree that this CL is probably not a best place for massive changes. Does it makes sense to extract this test for this as a separate CL? This way we\u0027d minimize changes that should be merged back to M61 while avoiding pitfall of adding test that relies on implementation details. I\u0027m afraid that current implementation of this test will impede refactoring instead of incentivising it. What do you think?",
+      "parentUuid": "06b37346_a3e47d00",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 124,
+        "endChar": 73
+      },
+      "revId": "80ec68273bfec5782ee46ddb1cca3753c3b3dd90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92bc6fd0_2c127466",
         "filename": "chrome/browser/android/signin/signin_manager_android_unittest.cc",
         "patchSetId": 1
