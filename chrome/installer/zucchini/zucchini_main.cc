@@ -2,9 +2,20 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <iostream>
+
+#include "base/at_exit.h"
+#include "base/bind.h"
 #include "base/command_line.h"
 #include "base/logging.h"
+#include "base/process/memory.h"
+#include "build/build_config.h"
 #include "chrome/installer/zucchini/main_utils.h"
+#include "chrome/installer/zucchini/zucchini.h"
+
+#if defined(OS_WIN)
+#include "base/win/process_startup_helper.h"
+#endif  // defined(OS_WIN)
 
 namespace {
 
@@ -18,21 +29,36 @@ void InitLogging() {
   CHECK(logging_res);
 }
 
+void InitErroHandling(const base::CommandLine& command_line) {
+  base::EnableTerminationOnHeapCorruption();
+  base::EnableTerminationOnOutOfMemory();
+#if defined(OS_WIN)
+  base::win::RegisterInvalidParamHandler();
+  base::win::SetupCRT(command_line);
+#endif  // defined(OS_WIN)
+}
+
 }  // namespace
 
 int main(int argc, const char* argv[]) {
-  ResourceUsageTracker tracker;
-  base::CommandLine::Init(argc, argv);
-  InitLogging();
+  base::AtExitManager exit_manager;
+  base::AtExitManager::RegisterTask(base::Bind(ResourceUsageTracker::Finish));
 
+  base::CommandLine::Init(argc, argv);
   const base::CommandLine& command_line =
       *base::CommandLine::ForCurrentProcess();
+  InitLogging();
+  InitErroHandling(command_line);
 
-  // Instantiate Command registry and register Zucchini features.
-  CommandRegistry registry;
-  registry.Register(&kCommandGen);
-  registry.Register(&kCommandApply);
-
-  registry.RunOrExit(command_line);
-  return 0;
+  // Register and dispatch commands.
+  CommandRegistry registry(&std::cerr);
+  registry.RegisterAll();
+  ResourceUsageTracker::Start();  // Skip overhead from above initialization.
+  auto ret = registry.Run(command_line);
+  if (!registry.DidRunCommand()) {
+    // If command never got run, then skip resource usage display to reduce
+    // visual noise for usage help text.
+    ResourceUsageTracker::Cancel();
+  }
+  return ret;
 }

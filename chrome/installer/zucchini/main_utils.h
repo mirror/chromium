@@ -6,42 +6,55 @@
 #define CHROME_INSTALLER_ZUCCHINI_MAIN_UTILS_H_
 
 #include <memory>
+#include <ostream>
 #include <vector>
 
 #include "base/callback.h"
+#include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/time/time.h"
+#include "chrome/installer/zucchini/zucchini.h"
+
+// Utilities to register Zucchini commands, to dispatch command based on
+// command-line input, to print help messages, and to log system resource usage.
 
 namespace base {
 
 class CommandLine;
-class FilePath;
 
 }  // namespace base
 
-// Class to track and print system resource usage. Should be instantiated early
-// in program flow to better track start time.
+// Colleciton of static functions and states to to track and log system resource
+// usage.
 class ResourceUsageTracker {
  public:
-  ResourceUsageTracker();
-  ~ResourceUsageTracker();
+  // Initializes states for tracking, should be called when program starts.
+  static void Start();
+
+  // Computes and prints usage. Should be called at end of program run, e.g.,
+  // using base::AtExitManager().
+  static void Finish();
+
+  // Cancels tracking, to prevent Finish() from producing output.
+  static void Cancel();
 
  private:
-  base::Time start_time_;
-
-  DISALLOW_COPY_AND_ASSIGN(ResourceUsageTracker);
+  // Static States: Should only store pointers or POD.
+  static bool is_tracking_;
+  static std::unique_ptr<base::Time> start_time_;
 };
 
 // Specs for a Zucchini command.
 struct Command {
-  using Fun = base::Callback<void(const base::CommandLine&,
-                                  const std::vector<base::FilePath>&)>;
+  using Fun = base::Callback<zucchini::status::Code(
+      const base::CommandLine&,
+      const std::vector<base::FilePath>&)>;
 
   Command(const char* name_in,
           const char* usage_in,
           int num_args_in,
           Fun fun_in);
-  explicit Command(const Command&);
+  Command(const Command&);
   ~Command();
 
   // Unique name of command. |-name| is used to select from command line.
@@ -57,30 +70,34 @@ struct Command {
   Fun fun;
 };
 
-// Registry of Commands to select the command to run and to handle errors.
+// Registry of avaible Commands, along with help text and error handling.
 class CommandRegistry {
  public:
-  CommandRegistry();
+  explicit CommandRegistry(std::ostream* out);
   ~CommandRegistry();
 
-  void Register(const Command* command);
+  // Registers all accessible commands.
+  void RegisterAll();
 
   // Uses |command_line| to find a Command instance. If a unique command is
-  // found, then runs it. Otherwise prints error and exits.
-  void RunOrExit(const base::CommandLine& command_line);
+  // found, then runs it. Otherwise prints help message (while suppressing
+  // resource usage printing). Returns error code (0 = success).
+  int Run(const base::CommandLine& command_line);
+
+  // Returns true if Run() actually led to command being called. Otherwise (may
+  // happen, e.g., of command line parsing fails) returns false.
+  bool DidRunCommand() const { return did_run_command_; }
 
  private:
-  void PrintUsageAndExit();
+  void PrintUsage();
 
-  std::vector<const Command*> commands_;
+  std::ostream* out_;
+
+  std::vector<Command> commands_;
+
+  bool did_run_command_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(CommandRegistry);
 };
-
-// Command: Patch generation.
-extern Command kCommandGen;
-
-// Command: Patch application.
-extern Command kCommandApply;
 
 #endif  // CHROME_INSTALLER_ZUCCHINI_MAIN_UTILS_H_

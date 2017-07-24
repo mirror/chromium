@@ -1,0 +1,25 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#ifndef CHROME_INSTALLER_ZUCCHINI_ZUCCHINI_H_
+#define CHROME_INSTALLER_ZUCCHINI_ZUCCHINI_H_
+
+// Definitions, structures, and interfaces for the Zucchini library.
+
+namespace zucchini {
+
+namespace status {
+
+// Zucchini error status codes.
+enum Code {
+  kStatusSuccess = 0,
+  kStatusMissingCommand = 1,
+  kStatusMissingFiles = 2,
+};
+
+}  // namespace status
+
+}  // namespace zucchini
+
+#endif  // CHROME_INSTALLER_ZUCCHINI_ZUCCHINI_H_

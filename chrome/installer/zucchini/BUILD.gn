@@ -24,6 +24,7 @@ static_library("zucchini_lib") {
     "patch_utils.h",
     "suffix_array.h",
     "typed_value.h",
+    "zucchini.h",
   ]
 
   deps = [
@@ -33,6 +34,8 @@ static_library("zucchini_lib") {
 
 executable("zucchini") {
   sources = [
+    "zucchini_commands.cc",
+    "zucchini_commands.h",
     "zucchini_main.cc",
   ]
 
