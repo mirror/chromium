@@ -1,0 +1,158 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e881078f_4f646aff",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-24T22:57:31Z",
+      "side": 1,
+      "message": "Update to reflect that number badge takes precedence.",
+      "revId": "4b81560e0bb0a38d1769cfd1429ec34ed60a0e92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aa2fd5e_3fe15ed1",
+        "filename": "ios/chrome/browser/ui/tools_menu/reading_list_menu_view_item.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-24T22:57:31Z",
+      "side": 1,
+      "message": "Remove from interface for now.",
+      "revId": "4b81560e0bb0a38d1769cfd1429ec34ed60a0e92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3b615b0_ba52c79e",
+        "filename": "ios/chrome/browser/ui/tools_menu/reading_list_menu_view_item.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-24T22:57:31Z",
+      "side": 1,
+      "message": "and the new feature badge is visible",
+      "range": {
+        "startLine": 27,
+        "startChar": 28,
+        "endLine": 27,
+        "endChar": 29
+      },
+      "revId": "4b81560e0bb0a38d1769cfd1429ec34ed60a0e92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "445bf97a_9c7353eb",
+        "filename": "ios/chrome/browser/ui/tools_menu/reading_list_menu_view_item.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-24T22:57:31Z",
+      "side": 1,
+      "message": "Need to specify that if number badge is visible, nothing happens.",
+      "revId": "4b81560e0bb0a38d1769cfd1429ec34ed60a0e92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba6190c2_2bc4b0fb",
+        "filename": "ios/chrome/browser/ui/tools_menu/reading_list_menu_view_item.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-24T22:57:31Z",
+      "side": 1,
+      "message": "Here and below, \"is\" should come first.",
+      "range": {
+        "startLine": 41,
+        "startChar": 46,
+        "endLine": 41,
+        "endChar": 66
+      },
+      "revId": "4b81560e0bb0a38d1769cfd1429ec34ed60a0e92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac5e61b6_e6038549",
+        "filename": "ios/chrome/browser/ui/tools_menu/reading_list_menu_view_item.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-24T22:57:31Z",
+      "side": 1,
+      "message": "Is this text capitalized?",
+      "revId": "4b81560e0bb0a38d1769cfd1429ec34ed60a0e92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f892c81_c877f3eb",
+        "filename": "ios/chrome/browser/ui/tools_menu/reading_list_menu_view_item_unittest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-24T22:57:31Z",
+      "side": 1,
+      "message": "If NumberBadgeIsVisible?",
+      "range": {
+        "startLine": 67,
+        "startChar": 36,
+        "endLine": 67,
+        "endChar": 69
+      },
+      "revId": "4b81560e0bb0a38d1769cfd1429ec34ed60a0e92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3a73bb8_e6210f17",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-07-24T22:57:31Z",
+      "side": 1,
+      "message": "Need to include here (and in toolsmenuconfiguration) that no ownership is taken and that |engagementTracker| must not be destroyed during lifetime of the tools menu view controller.",
+      "revId": "4b81560e0bb0a38d1769cfd1429ec34ed60a0e92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
