@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "8c9d7fc7_eef811aa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-07-24T06:50:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e4f80a7_8f798d38",
+      "revId": "8b5bcc969b139219a24cedd671c31e332af9fbb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e20c379c_4f975d36",
         "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.h",
         "patchSetId": 17
@@ -69,6 +87,24 @@
       "revId": "8b5bcc969b139219a24cedd671c31e332af9fbb9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0f3195c_543c862e",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-07-24T06:50:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e20c379c_4f975d36",
+      "revId": "8b5bcc969b139219a24cedd671c31e332af9fbb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
