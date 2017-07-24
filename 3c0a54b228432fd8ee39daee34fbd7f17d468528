@@ -1,0 +1,181 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "935512ca_b5a5ba0c",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-24T17:50:58Z",
+      "side": 1,
+      "message": "looking at this and wondering if this just removes crash reporting altogether for single process?",
+      "revId": "3c0a54b228432fd8ee39daee34fbd7f17d468528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81ac234d_fe19372e",
+        "filename": "chrome/browser/chrome_browser_main_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-24T17:50:58Z",
+      "side": 1,
+      "message": "wrong change",
+      "range": {
+        "startLine": 44,
+        "startChar": 9,
+        "endLine": 44,
+        "endChar": 34
+      },
+      "revId": "3c0a54b228432fd8ee39daee34fbd7f17d468528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "562336aa_18423a63",
+        "filename": "components/crash/content/browser/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-24T17:50:58Z",
+      "side": 1,
+      "message": "they need to be android-only",
+      "revId": "3c0a54b228432fd8ee39daee34fbd7f17d468528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41b6c017_536b580c",
+        "filename": "components/crash/content/browser/child_process_crash_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-24T17:50:58Z",
+      "side": 1,
+      "message": "empty fd?",
+      "range": {
+        "startLine": 30,
+        "startChar": 41,
+        "endLine": 30,
+        "endChar": 55
+      },
+      "revId": "3c0a54b228432fd8ee39daee34fbd7f17d468528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "586e3ca4_6912231a",
+        "filename": "components/crash/content/browser/child_process_crash_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-24T17:50:58Z",
+      "side": 1,
+      "message": "year",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "3c0a54b228432fd8ee39daee34fbd7f17d468528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a54d6f2_70c571da",
+        "filename": "components/crash/content/browser/crash_dump_manager_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-24T17:50:58Z",
+      "side": 1,
+      "message": "MinidumpFile? MinidumpPipe?",
+      "range": {
+        "startLine": 40,
+        "startChar": 43,
+        "endLine": 40,
+        "endChar": 51
+      },
+      "revId": "3c0a54b228432fd8ee39daee34fbd7f17d468528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1995edc5_7a4dba15",
+        "filename": "components/crash/content/browser/crash_dump_manager_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-24T17:50:58Z",
+      "side": 1,
+      "message": "assert breakpad::IsCrashReporterEnabled?",
+      "revId": "3c0a54b228432fd8ee39daee34fbd7f17d468528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10eb8a5a_502b5306",
+        "filename": "components/crash/content/browser/crash_dump_manager_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-24T17:50:58Z",
+      "side": 1,
+      "message": "base::ThreadRestrictions::AssertIOAllowed();",
+      "revId": "3c0a54b228432fd8ee39daee34fbd7f17d468528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "614681cf_51c6e330",
+        "filename": "components/crash/content/browser/crash_dump_manager_android.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-24T17:50:58Z",
+      "side": 1,
+      "message": "make constructor/destructors private if this is a singleton now, also move this up",
+      "revId": "3c0a54b228432fd8ee39daee34fbd7f17d468528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
