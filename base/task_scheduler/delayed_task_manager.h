@@ -51,6 +51,8 @@ class BASE_EXPORT DelayedTaskManager {
   void AddDelayedTask(std::unique_ptr<Task> task,
                       PostTaskNowCallback post_task_now_callback);
 
+  bool HasStarted() { return started_.IsSet(); }
+
  private:
   // Schedules a call to |post_task_now_callback| with |task| as argument when
   // |delay| expires. Start() must have been called before this.
