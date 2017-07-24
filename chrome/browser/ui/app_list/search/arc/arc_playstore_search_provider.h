@@ -29,7 +29,8 @@ class ArcPlayStoreSearchProvider : public SearchProvider {
   void Stop() override;
 
  private:
-  void OnResults(std::vector<arc::mojom::AppDiscoveryResultPtr> results);
+  void OnResults(arc::mojom::AppDiscoveryRequestState state,
+                 std::vector<arc::mojom::AppDiscoveryResultPtr> results);
 
   const int max_results_;
   // |profile_| is owned by ProfileInfo.
@@ -37,6 +38,10 @@ class ArcPlayStoreSearchProvider : public SearchProvider {
   // list_controller_ is owned by AppListServiceAsh and lives
   // until the service finishes.
   AppListControllerDelegate* const list_controller_;
+
+  // Time when the current query started.
+  base::Time query_start_time_;
+
   base::WeakPtrFactory<ArcPlayStoreSearchProvider> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ArcPlayStoreSearchProvider);
