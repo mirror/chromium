@@ -42,7 +42,6 @@
 #include "platform/wtf/ThreadSafeRefCounted.h"
 #include "third_party/skia/include/core/SkRefCnt.h"
 
-class SkImage;
 class SkMatrix;
 
 namespace cc {
@@ -169,7 +168,6 @@ class PLATFORM_EXPORT Image : public ThreadSafeRefCounted<Image> {
 
   enum TileRule { kStretchTile, kRoundTile, kSpaceTile, kRepeatTile };
 
-  virtual sk_sp<SkImage> ImageForCurrentFrame() = 0;
   virtual PassRefPtr<Image> ImageForDefaultFrame();
 
   PaintImage PaintImageForCurrentFrame();
@@ -236,6 +234,8 @@ class PLATFORM_EXPORT Image : public ThreadSafeRefCounted<Image> {
                            SkBlendMode,
                            const FloatRect&,
                            const FloatSize& repeat_spacing);
+
+  virtual void PopulateImageForCurrentFrame(PaintImageBuilder&) = 0;
 
  private:
   bool image_observer_disabled_;
