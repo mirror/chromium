@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "071f3047_608e69cd",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-24T18:29:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e1cf935_173d7f51",
+      "range": {
+        "startLine": 105,
+        "startChar": 41,
+        "endLine": 105,
+        "endChar": 45
+      },
+      "revId": "a03fedbd79da94e0a8aca9ff8b7b58d70bcbd457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e935821_8f0bd60b",
         "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.h",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "16a3fa85_5bacc31c",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-24T18:29:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e935821_8f0bd60b",
+      "range": {
+        "startLine": 106,
+        "startChar": 43,
+        "endLine": 106,
+        "endChar": 47
+      },
+      "revId": "a03fedbd79da94e0a8aca9ff8b7b58d70bcbd457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e6069df_9cf88d4a",
         "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl_unittest.cc",
         "patchSetId": 8
@@ -62,6 +110,24 @@
       "revId": "a03fedbd79da94e0a8aca9ff8b7b58d70bcbd457",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9e62f4a_413a1697",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-24T18:29:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e6069df_9cf88d4a",
+      "revId": "a03fedbd79da94e0a8aca9ff8b7b58d70bcbd457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
