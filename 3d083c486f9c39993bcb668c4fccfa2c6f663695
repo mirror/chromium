@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23ab2ed7_bbcaf272",
+        "filename": "chrome/browser/resources/settings/settings_page/settings_section.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-24T19:11:36Z",
+      "side": 1,
+      "message": "I assume this must be initialized so we can use the getHiddenStatus_ method? If so we should update the comment to make that more clear.",
+      "revId": "3d083c486f9c39993bcb668c4fccfa2c6f663695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f83dbaa0_cfee1a98",
+        "filename": "chrome/browser/resources/settings/settings_page/settings_section.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-24T19:11:36Z",
+      "side": 1,
+      "message": "isTitleHidden_? or getTitleHiddenStatus_? we should call out that it\u0027s the title somehow in the method name.",
+      "revId": "3d083c486f9c39993bcb668c4fccfa2c6f663695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
