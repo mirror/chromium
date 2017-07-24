@@ -99,6 +99,24 @@
       "revId": "a9c0959bed0a9a767a57b16474acb2155431087a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3efef996_fd4d9130",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ClientHintsPreferences.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-24T20:21:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "59435a26_afbf74fe",
+      "revId": "a9c0959bed0a9a767a57b16474acb2155431087a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
