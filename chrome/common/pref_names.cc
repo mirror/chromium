@@ -992,6 +992,9 @@ const char kInstantTetheringAllowed[] = "tether.allowed";
 
 // Boolean pref indicating whether a user has enabled Tether.
 const char kInstantTetheringEnabled[] = "tether.enabled";
+
+// Boolean pref indicating whether a user has enabled the bluetooth adapter.
+const char kBluetoothAdapterEnabled[] = "settings.bluetooth.adapter_enabled";
 #endif  // defined(OS_CHROMEOS)
 
 // A boolean pref set to true if a Home button to open the Home pages should be

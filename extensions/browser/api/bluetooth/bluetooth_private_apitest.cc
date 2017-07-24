@@ -9,6 +9,7 @@
 #include "base/memory/ref_counted.h"
 #include "build/build_config.h"
 #include "chrome/browser/extensions/extension_apitest.h"
+#include "components/prefs/testing_pref_service.h"
 #include "device/bluetooth/bluetooth_common.h"
 #include "device/bluetooth/test/mock_bluetooth_adapter.h"
 #include "device/bluetooth/test/mock_bluetooth_device.h"
@@ -18,6 +19,8 @@
 #include "extensions/browser/event_router.h"
 #include "extensions/common/api/bluetooth_private.h"
 #include "extensions/common/switches.h"
+#include "extensions/test/extension_test_message_listener.h"
+#include "extensions/test/result_catcher.h"
 #include "testing/gmock/include/gmock/gmock.h"
 
 using device::BluetoothDiscoveryFilter;
@@ -159,6 +162,12 @@ ACTION_TEMPLATE(InvokeCallbackArgument,
 }
 
 IN_PROC_BROWSER_TEST_F(BluetoothPrivateApiTest, SetAdapterState) {
+  ResultCatcher catcher;
+  catcher.RestrictToBrowserContext(browser()->profile());
+  PrefService* prefs = ExtensionsBrowserClient::Get()->GetPrefServiceForContext(
+      browser()->profile());
+  prefs->SetBoolean("settings.bluetooth.adapter_enabled", false);
+
   ON_CALL(*mock_adapter_, GetName())
       .WillByDefault(ReturnPointee(&adapter_name_));
   ON_CALL(*mock_adapter_, IsPowered())
@@ -176,8 +185,46 @@ IN_PROC_BROWSER_TEST_F(BluetoothPrivateApiTest, SetAdapterState) {
       .WillOnce(WithArgs<0, 1>(
           Invoke(this, &BluetoothPrivateApiTest::SetDiscoverable)));
 
-  ASSERT_TRUE(RunComponentExtensionTest("bluetooth_private/adapter_state"))
+  ASSERT_TRUE(LoadExtension(
+      test_data_dir_.AppendASCII("bluetooth_private/adapter_state")))
       << message_;
+  ExtensionTestMessageListener events_received("done", false);
+  EXPECT_TRUE(events_received.WaitUntilSatisfied());
+  ASSERT_FALSE(prefs->GetBoolean("settings.bluetooth.adapter_enabled"));
+  EXPECT_TRUE(catcher.GetNextResult()) << catcher.message();
+}
+
+IN_PROC_BROWSER_TEST_F(BluetoothPrivateApiTest, SetAdapterStateWithUserPref) {
+  ResultCatcher catcher;
+  catcher.RestrictToBrowserContext(browser()->profile());
+  PrefService* prefs = ExtensionsBrowserClient::Get()->GetPrefServiceForContext(
+      browser()->profile());
+  prefs->SetBoolean("settings.bluetooth.adapter_enabled", false);
+
+  ON_CALL(*mock_adapter_, GetName())
+      .WillByDefault(ReturnPointee(&adapter_name_));
+  ON_CALL(*mock_adapter_, IsPowered())
+      .WillByDefault(ReturnPointee(&adapter_powered_));
+  ON_CALL(*mock_adapter_, IsDiscoverable())
+      .WillByDefault(ReturnPointee(&adapter_discoverable_));
+
+  EXPECT_CALL(*mock_adapter_, SetName("Dome", _, _))
+      .WillOnce(
+          WithArgs<0, 1>(Invoke(this, &BluetoothPrivateApiTest::SetName)));
+  EXPECT_CALL(*mock_adapter_, SetPowered(true, _, _))
+      .WillOnce(
+          WithArgs<0, 1>(Invoke(this, &BluetoothPrivateApiTest::SetPowered)));
+  EXPECT_CALL(*mock_adapter_, SetDiscoverable(true, _, _))
+      .WillOnce(WithArgs<0, 1>(
+          Invoke(this, &BluetoothPrivateApiTest::SetDiscoverable)));
+
+  ASSERT_TRUE(LoadExtension(
+      test_data_dir_.AppendASCII("bluetooth_private/adapter_state_user_pref")))
+      << message_;
+  ExtensionTestMessageListener events_received("done", false);
+  EXPECT_TRUE(events_received.WaitUntilSatisfied());
+  ASSERT_TRUE(prefs->GetBoolean("settings.bluetooth.adapter_enabled"));
+  EXPECT_TRUE(catcher.GetNextResult()) << catcher.message();
 }
 
 IN_PROC_BROWSER_TEST_F(BluetoothPrivateApiTest, NoBluetoothAdapter) {
