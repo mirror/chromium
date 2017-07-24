@@ -1,0 +1,169 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7b8b54e_bbf2cbbf",
+        "filename": "chrome/browser/ui/views/extensions/extension_popup.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-24T04:12:09Z",
+      "side": 1,
+      "message": "Does this result in multiple calls to SetMask? (maybe check `details.child \u003d\u003d this`?)\n\n(I thought ExtensionViewViews::OnWebContentsAttached() might be a logical place when I tried out my fix for Mac..)",
+      "revId": "cdaabc6b38170e88fcb69f419a42caed5650a75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e6f418f_9891d4b5",
+        "filename": "chrome/browser/ui/views/extensions/extension_popup.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-24T04:12:09Z",
+      "side": 1,
+      "message": "this approach will also paint a 1 pixel border using SK_ColorTRANSPARENT - that might be nice to avoid.",
+      "revId": "cdaabc6b38170e88fcb69f419a42caed5650a75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb31b981_da98419a",
+        "filename": "ui/views/controls/native/native_view_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-24T04:12:09Z",
+      "side": 1,
+      "message": "I expect exposing the NativeViewHostWrapper* API outside of NativeViewHost would be a deal-breaker. But the NativeViewHostFoo implementations have easy access to NativeViewHost - does it make sense to store the members there instead?",
+      "revId": "cdaabc6b38170e88fcb69f419a42caed5650a75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44dc518b_fbdaa5e3",
+        "filename": "ui/views/controls/native/native_view_host_aura.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-24T04:12:09Z",
+      "side": 1,
+      "message": "Is this separate override needed, or can InstallClip() just call InstallMask()? (Maybe the call in AttachNativeView() isn\u0027t needed then as well?)\n\n(i.e. WebView already overrides OnBoundsChanged and calls holder_-\u003eSetBoundsRect. And NativeViewHost::OnVisibleBoundsChanged() calls NativeViewHost::Layout(), which will call InstallClip())",
+      "revId": "cdaabc6b38170e88fcb69f419a42caed5650a75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43e8dcfc_434001ec",
+        "filename": "ui/views/controls/native/native_view_host_aura.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-24T04:12:09Z",
+      "side": 1,
+      "message": "You didn\u0027t like my idea of re-using TrayBubbleContentMask ? This could then be a component instead being fed in via inheritance..",
+      "revId": "cdaabc6b38170e88fcb69f419a42caed5650a75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "598fad44_16e2ebab",
+        "filename": "ui/views/controls/native/native_view_host_aura.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-24T04:12:09Z",
+      "side": 1,
+      "message": "since LayerDelegateWrapper isn\u0027t exported, if you keep it it probably needs that NON_EXPORTED_BASE(..) thingo here.",
+      "range": {
+        "startLine": 45,
+        "startChar": 47,
+        "endLine": 45,
+        "endChar": 55
+      },
+      "revId": "cdaabc6b38170e88fcb69f419a42caed5650a75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13f931f9_b858c619",
+        "filename": "ui/views/controls/native/native_view_host_aura.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-24T04:12:09Z",
+      "side": 1,
+      "message": "I think you can resolve the ambiguity with something like\n\n  // ui::LayerDelegate:\n  using ui::LayerDelegate::OnDelegatedFrameDamage;\n  using ui::LayerDelegate::OnDeviceScaleFactorChanged;\n  void OnPaintLayer(const ui::PaintContext\u0026 context) override;\n  void OnDelegatedFrameDamage(const gfx::Rect\u0026 damage_rect_in_dip) override;\n  void OnDeviceScaleFactorChanged(float device_scale_factor) override;\n\nthen you might not need LayerDelegateWrapper",
+      "revId": "cdaabc6b38170e88fcb69f419a42caed5650a75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a84144d_ec6b37bf",
+        "filename": "ui/views/controls/native/native_view_host_aura.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-24T04:12:09Z",
+      "side": 1,
+      "message": "(When I\u0027d pictured it in my head, I\u0027d imagined re-using |clipping_window_| for this, and finding a nice way to switch it out ui::LAYER_NOT_DRAWN for something we can use as a mask. That way only one layer is doing masking/clipping, and there isn\u0027t yet another thing to resize. But I see the \"nice\" part could be tricky)",
+      "revId": "cdaabc6b38170e88fcb69f419a42caed5650a75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e040d319_b063472a",
+        "filename": "ui/views/controls/native/native_view_host_wrapper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-24T04:12:09Z",
+      "side": 1,
+      "message": "This API will be really hard to adapt to Mac. Sure, I like a challenge... but a `corner_radius` property on |holder()| like I had in https://chromium-review.googlesource.com/c/580113/ seems to expose less guts while still satisfying our current use cases (the Painter code just moves into NativeViewHostAura instead).\n\n(also nit: views:: not required)",
+      "range": {
+        "startLine": 44,
+        "startChar": 39,
+        "endLine": 44,
+        "endChar": 46
+      },
+      "revId": "cdaabc6b38170e88fcb69f419a42caed5650a75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
