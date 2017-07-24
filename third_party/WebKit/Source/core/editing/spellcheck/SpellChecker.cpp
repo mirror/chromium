@@ -379,7 +379,7 @@ void SpellChecker::MarkMisspellingsAfterApplyingCommand(
 
   if (!IsSpellCheckingEnabled())
     return;
-  if (!IsSpellCheckingEnabledFor(cmd.EndingSelection()))
+  if (!IsSpellCheckingEnabledFor(CreateVisibleSelection(cmd.EndingSelection())))
     return;
 
   // TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets

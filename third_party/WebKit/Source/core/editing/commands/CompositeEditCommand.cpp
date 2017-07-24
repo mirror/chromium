@@ -82,10 +82,12 @@ using namespace HTMLNames;
 
 CompositeEditCommand::CompositeEditCommand(Document& document)
     : EditCommand(document) {
-  SetStartingSelection(document.GetFrame()
-                           ->Selection()
-                           .ComputeVisibleSelectionInDOMTreeDeprecated());
-  SetEndingVisibleSelection(starting_selection_);
+  SetStartingSelection(
+      SelectionInUndoStep::From(document.GetFrame()
+                                    ->Selection()
+                                    .ComputeVisibleSelectionInDOMTree()
+                                    .AsSelection()));
+  SetEndingSelection(starting_selection_.AsSelection());
 }
 
 CompositeEditCommand::~CompositeEditCommand() {
@@ -94,7 +96,7 @@ CompositeEditCommand::~CompositeEditCommand() {
 
 bool CompositeEditCommand::Apply() {
   DCHECK(!IsCommandGroupWrapper());
-  if (!EndingSelection().IsContentRichlyEditable()) {
+  if (!CreateVisibleSelection(EndingSelection()).IsContentRichlyEditable()) {
     switch (GetInputType()) {
       case InputEvent::InputType::kInsertText:
       case InputEvent::InputType::kInsertLineBreak:
@@ -204,7 +206,7 @@ void CompositeEditCommand::ApplyCommandToComposite(
     const VisibleSelection& selection,
     EditingState* editing_state) {
   command->SetParent(this);
-  if (selection != command->EndingSelection()) {
+  if (selection != CreateVisibleSelection(command->EndingSelection())) {
     command->SetStartingSelection(selection);
     command->SetEndingVisibleSelection(selection);
   }
@@ -774,7 +776,7 @@ void CompositeEditCommand::
 }
 
 void CompositeEditCommand::RebalanceWhitespace() {
-  VisibleSelection selection = EndingSelection();
+  VisibleSelection selection = CreateVisibleSelection(EndingSelection());
   if (selection.IsNone())
     return;
 
@@ -1536,7 +1538,8 @@ void CompositeEditCommand::MoveParagraphs(
   GetDocument()
       .GetFrame()
       ->GetSpellChecker()
-      .MarkMisspellingsForMovingParagraphs(EndingSelection());
+      .MarkMisspellingsForMovingParagraphs(
+          CreateVisibleSelection(EndingSelection()));
 
   // If the selection is in an empty paragraph, restore styles from the old
   // empty paragraph to the new empty paragraph.
@@ -1895,7 +1898,7 @@ Node* CompositeEditCommand::SplitTreeToNode(Node* start,
 }
 
 void CompositeEditCommand::SetStartingSelection(
-    const VisibleSelection& selection) {
+    const SelectionInUndoStep& selection) {
   for (CompositeEditCommand* command = this;; command = command->Parent()) {
     if (UndoStep* undo_step = command->GetUndoStep()) {
       DCHECK(command->IsTopLevelCommand());
@@ -1907,22 +1910,30 @@ void CompositeEditCommand::SetStartingSelection(
   }
 }
 
+void CompositeEditCommand::SetStartingSelection(
+    const VisibleSelection& visible_selection) {
+  SetStartingSelection(
+      SelectionInUndoStep::From(visible_selection.AsSelection()));
+}
+
 // TODO(yosin): We will make |SelectionInDOMTree| version of
 // |setEndingSelection()| as primary function instead of wrapper, once
 // |EditCommand| holds other than |VisibleSelection|.
 void CompositeEditCommand::SetEndingSelection(
     const SelectionInDOMTree& selection) {
-  // TODO(editing-dev): The use of
-  // updateStyleAndLayoutIgnorePendingStylesheets
-  // needs to be audited.  See http://crbug.com/590369 for more details.
-  GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
-  SetEndingVisibleSelection(CreateVisibleSelection(selection));
+  SetEndingSelection(SelectionInUndoStep::From(selection));
 }
 
 // TODO(yosin): We will make |SelectionInDOMTree| version of
 // |setEndingSelection()| as primary function instead of wrapper.
 void CompositeEditCommand::SetEndingVisibleSelection(
-    const VisibleSelection& selection) {
+    const VisibleSelection& visible_selection) {
+  SetEndingSelection(
+      SelectionInUndoStep::From(visible_selection.AsSelection()));
+}
+
+void CompositeEditCommand::SetEndingSelection(
+    const SelectionInUndoStep& selection) {
   for (CompositeEditCommand* command = this; command;
        command = command->Parent()) {
     if (UndoStep* undo_step = command->GetUndoStep()) {
