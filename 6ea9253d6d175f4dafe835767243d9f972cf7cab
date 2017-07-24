@@ -16,6 +16,24 @@
       "revId": "6ea9253d6d175f4dafe835767243d9f972cf7cab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f1e19cf_f82a5db4",
+        "filename": "chrome/browser/profile_resetter/profile_resetter_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-24T06:11:47Z",
+      "side": 1,
+      "message": "It was needed when using website_settings_registry. Not needed anymore.",
+      "parentUuid": "bc82fee8_913395a6",
+      "revId": "6ea9253d6d175f4dafe835767243d9f972cf7cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
