@@ -22,6 +22,30 @@
       "revId": "d0e5dd0d59635dd198af22dd89519adbf76e523b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e801322_b993428c",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000770
+      },
+      "writtenOn": "2017-07-24T13:44:57Z",
+      "side": 1,
+      "message": "Right now there is no mechanism to detach a texture that Skia created from Skia\u0027s ownership. So Skia will think the texture is still valid and will either try to delete it itself or worse try to reuse it.\n\nI\u0027m wondering if for the C2DLB code a better model would be to snap the SkSurface to a GrBackendTexture that the C2DLB would fully own rather than a SkImage. Then we could also provide a function that could read adopt the texture back into Skia for recycling. One implication of such a system would be that when this new snap function is called C2DLB would have to specify that the SkSurface\u0027s contents must be preserved (which would trigger an immediate copy) or can be discarded.",
+      "parentUuid": "621001d1_87625514",
+      "range": {
+        "startLine": 166,
+        "startChar": 4,
+        "endLine": 176,
+        "endChar": 5
+      },
+      "revId": "d0e5dd0d59635dd198af22dd89519adbf76e523b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
