@@ -22,6 +22,30 @@
       "revId": "31f367b126540c1642d391e9d920b72534950281",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6f7a946_ab368e2d",
+        "filename": "content/browser/renderer_host/input/input_router_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-24T19:56:47Z",
+      "side": 1,
+      "message": "The list size matches the number of touch points on the screen. The common mutation is mutating a the coordinates of an entry that is already in the table.",
+      "parentUuid": "73c3716a_c1ab4ae1",
+      "range": {
+        "startLine": 216,
+        "startChar": 0,
+        "endLine": 217,
+        "endChar": 57
+      },
+      "revId": "31f367b126540c1642d391e9d920b72534950281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
