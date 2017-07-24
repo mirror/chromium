@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12cb15b7_3c933dd5",
+        "filename": "base/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-24T14:03:02Z",
+      "side": 1,
+      "message": "Revert this file?",
+      "revId": "557e7f81f7f7ac80b569963e750b672ebe3013e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecfe276c_0ee534de",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 10
+      },
+      "lineNbr": 2493,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-24T14:03:02Z",
+      "side": 1,
+      "message": "This should be the same conditions as on line 2406. Probably worth putting them in a variable:\n\n_add_build_hooks \u003d ...\nif (_add_build_hooks) ...",
+      "range": {
+        "startLine": 2493,
+        "startChar": 14,
+        "endLine": 2493,
+        "endChar": 31
+      },
+      "revId": "557e7f81f7f7ac80b569963e750b672ebe3013e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c905ff7_79f66198",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-24T14:03:02Z",
+      "side": 1,
+      "message": "Revert this file?a",
+      "revId": "557e7f81f7f7ac80b569963e750b672ebe3013e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "095661b1_8b398de5",
+        "filename": "chrome/android/webapk/libs/runtime_library/src/org/chromium/webapk/lib/runtime_library/WebApkServiceImpl.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-24T14:03:02Z",
+      "side": 1,
+      "message": "Should be fine to leave these asserts in now for webapks",
+      "revId": "557e7f81f7f7ac80b569963e750b672ebe3013e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daa85dfb_c98f87a1",
+        "filename": "chrome/android/webapk/shell_apk/shell_apk_version.gni",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-24T14:03:02Z",
+      "side": 1,
+      "message": "Revert this file?",
+      "revId": "557e7f81f7f7ac80b569963e750b672ebe3013e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
