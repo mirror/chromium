@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27a22f56_caa06b73",
+        "filename": "base/test/scoped_feature_list_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-07-24T11:06:31Z",
+      "side": 1,
+      "message": "Note: I did not find a way to de-activate a group.\nIt works here, because the FieldTrialList is deleted with the ScopedFeatureList, and all groups are de-activated.\n\nHowever, if there is a FieldTrialList pre-existing to the ScopedFeatureList, then ScopedFeatureList will activate a group in it, and never de-activate it.\nI don\u0027t know if this can be fixed. I think this is fine however, because this is test code, and tests in general don\u0027t care about leaking groups.",
+      "range": {
+        "startLine": 113,
+        "startChar": 2,
+        "endLine": 113,
+        "endChar": 38
+      },
+      "revId": "0bef4a9cb4871fd81afeef07ca49d5146aee4960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ff399593_5bafe302",
+        "filename": "base/test/scoped_feature_list.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-07-24T11:06:31Z",
+      "side": 1,
+      "message": "Done, although I did not clear the param from shared memory. This looked complicated, and I guess could be added later if needed.",
+      "parentUuid": "aa621e4f_88497d64",
+      "range": {
+        "startLine": 90,
+        "startChar": 52,
+        "endLine": 90,
+        "endChar": 78
+      },
+      "revId": "e69270b1fda0136b6123d3a2a4878b09820a8ca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f115198_0cb84bd6",
         "filename": "base/test/scoped_feature_list.cc",
         "patchSetId": 14
@@ -84,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "c39d2ddd_28b636cd",
+        "filename": "base/test/scoped_feature_list.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-07-24T11:06:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff38f62b_0422efc1",
+      "revId": "e69270b1fda0136b6123d3a2a4878b09820a8ca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fdd4f68_ede77089",
         "filename": "base/test/scoped_feature_list.h",
         "patchSetId": 14
@@ -107,6 +149,30 @@
     },
     {
       "key": {
+        "uuid": "96141136_74e42088",
+        "filename": "base/test/scoped_feature_list.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-07-24T11:06:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fdd4f68_ede77089",
+      "range": {
+        "startLine": 106,
+        "startChar": 68,
+        "endLine": 106,
+        "endChar": 0
+      },
+      "revId": "e69270b1fda0136b6123d3a2a4878b09820a8ca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b28e506_ecf06db2",
         "filename": "base/test/scoped_feature_list_unittest.cc",
         "patchSetId": 14
@@ -118,6 +184,30 @@
       "writtenOn": "2017-07-22T02:49:53Z",
       "side": 1,
       "message": "The field trial group is activated here the FeatureList class: [ https://cs.chromium.org/chromium/src/base/feature_list.cc?l\u003d311-313 ].  Please add test coverage to verify that the specified group ends up active.",
+      "range": {
+        "startLine": 85,
+        "startChar": 62,
+        "endLine": 85,
+        "endChar": 0
+      },
+      "revId": "e69270b1fda0136b6123d3a2a4878b09820a8ca4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cda702d_8f1596e9",
+        "filename": "base/test/scoped_feature_list_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-07-24T11:06:31Z",
+      "side": 1,
+      "message": "Done (although this comment is mostly obsolete now that this function is private and that code is deleted).\n\nI added a test that a group was made active in the  test for InitAndEnableFeatureWithParameters().",
+      "parentUuid": "0b28e506_ecf06db2",
       "range": {
         "startLine": 85,
         "startChar": 62,
