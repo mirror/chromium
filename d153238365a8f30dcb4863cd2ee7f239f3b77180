@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "358d2173_54bea8db",
+        "filename": "components/ntp_snippets/category.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-24T12:36:45Z",
+      "side": 1,
+      "message": "To me, the whole point of REMOTE_CATEGORIES is to allow categories unknown by the client that are _defined_ remotely. This CONTEXTUAL category feels like a category that can be defined locally. Why not simply adding it after READING_LIST?\n(the comment for the KnownCategories enum would have to be updated)\n\nBtw, BREAKING_NEWS is similar in this respect but it is something that we might want to serve in standard pull remote_suggestions requests, later. I believe that was the reason why we\u0027ve included it in the REMOTE_CATEGORIES section.",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 58,
+        "endChar": 21
+      },
+      "revId": "d153238365a8f30dcb4863cd2ee7f239f3b77180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b426728_69c5a08a",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-24T12:36:45Z",
+      "side": 1,
+      "message": "I am not happy about code duplication. Cannot we somehow extract common parts of the logic (such as fetching the access tokens) into some helper classes?\n\nI am happy to chat about this offline, I did not analyze the classes in detail to understand precisely the potential of sharing some code.",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 34
+      },
+      "revId": "d153238365a8f30dcb4863cd2ee7f239f3b77180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25a54a54_1e325d41",
+        "filename": "components/ntp_snippets/remote/remote_suggestion.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-24T12:36:45Z",
+      "side": 1,
+      "message": "nit: Isn\u0027t the following simpler to read?:\nstd::vector\u003cstd::string\u003e parsed_ids{primary_id};",
+      "range": {
+        "startLine": 297,
+        "startChar": 37,
+        "endLine": 297,
+        "endChar": 53
+      },
+      "revId": "d153238365a8f30dcb4863cd2ee7f239f3b77180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "266fdfee_1b96d3fe",
+        "filename": "components/ntp_snippets/remote/remote_suggestion.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-24T12:36:45Z",
+      "side": 1,
+      "message": "nit: Can you name it, e.g., remote_suggestion? (\"snippet\" naming is long deprecated)",
+      "range": {
+        "startLine": 298,
+        "startChar": 7,
+        "endLine": 298,
+        "endChar": 14
+      },
+      "revId": "d153238365a8f30dcb4863cd2ee7f239f3b77180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44515161_0c441a2e",
+        "filename": "components/ntp_snippets/remote/remote_suggestion.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-24T12:36:45Z",
+      "side": 1,
+      "message": "I am puzzled by the constant \"2\". Where does it come from?",
+      "range": {
+        "startLine": 298,
+        "startChar": 40,
+        "endLine": 298,
+        "endChar": 64
+      },
+      "revId": "d153238365a8f30dcb4863cd2ee7f239f3b77180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
