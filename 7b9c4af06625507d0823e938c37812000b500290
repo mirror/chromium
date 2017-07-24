@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2c9641a9_45559cd1",
+        "filename": "media/filters/audio_video_metadata_extractor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-07-24T16:35:35Z",
+      "side": 1,
+      "message": "Let\u0027s stick with -1, in case someone has some reliance upon that value previously in this API. For example, without the has_duration() check added in this CL to the media galleries usage of this API, 0.0 would have been seen as a *valid* duration, but -1 wouldn\u0027t have.",
+      "parentUuid": "81bdf6d0_8123da9a",
+      "revId": "7b9c4af06625507d0823e938c37812000b500290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de9d9272_9d82ced9",
         "filename": "media/filters/audio_video_metadata_extractor.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "7b9c4af06625507d0823e938c37812000b500290",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60916a57_1b827f21",
+        "filename": "media/filters/audio_video_metadata_extractor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-07-24T16:35:35Z",
+      "side": 1,
+      "message": "I wanted to flush out at least on the bots any obvious mis-uses of this API. Since those passed with this CHECK, I\u0027ll change it to DCHECK.",
+      "parentUuid": "de9d9272_9d82ced9",
+      "revId": "7b9c4af06625507d0823e938c37812000b500290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "7b9c4af06625507d0823e938c37812000b500290",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37a2a4fe_fb3fae71",
+        "filename": "media/filters/audio_video_metadata_extractor.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-07-24T16:35:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "810c7ae3_a41a2b18",
+      "range": {
+        "startLine": 49,
+        "startChar": 5,
+        "endLine": 49,
+        "endChar": 12
+      },
+      "revId": "7b9c4af06625507d0823e938c37812000b500290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
