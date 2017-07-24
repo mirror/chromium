@@ -94,6 +94,30 @@
       "revId": "a1031446e9aa872690bc3d15a0781abea9513c7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc8b8671_6afb4009",
+        "filename": "components/cronet/android/java/src/org/chromium/net/impl/JavaUrlRequest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-07-24T13:04:02Z",
+      "side": 1,
+      "message": "I prototyped the extra bookkeeping way: https://chromium-review.googlesource.com/c/582397\nIMHO the extra bookkeeping way feels like a band-aid for the broken SerializingExecutor shutdown behavior.  It adds a fair bit of complexity.\nMy vote is for this CL, and not the extra bookkeeping way.  WDYT?",
+      "parentUuid": "90c1aa8d_11ed569b",
+      "range": {
+        "startLine": 180,
+        "startChar": 59,
+        "endLine": 180,
+        "endChar": 0
+      },
+      "revId": "a1031446e9aa872690bc3d15a0781abea9513c7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
