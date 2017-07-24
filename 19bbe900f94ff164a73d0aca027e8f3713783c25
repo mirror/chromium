@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc6ba1f6_608289ca",
+        "filename": "docs/speed/apk_size_regressions.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-24T19:14:29Z",
+      "side": 1,
+      "message": "suggestion:\n\nYou can verify locally that no static initializers are added by running the\nfollowing from within an Android checkout:",
+      "revId": "19bbe900f94ff164a73d0aca027e8f3713783c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5795258c_31c3cbe1",
+        "filename": "docs/speed/apk_size_regressions.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-24T19:14:29Z",
+      "side": 1,
+      "message": "Maybe also add in:\n\nCommon fixes include:\n * Add constexpr,\n * Use LazyInstance\u003c\u003e,\n * Use a getter returns a local static variable.",
+      "revId": "19bbe900f94ff164a73d0aca027e8f3713783c25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
