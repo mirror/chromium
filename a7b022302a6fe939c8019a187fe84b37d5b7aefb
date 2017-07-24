@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae7ae857_0f638809",
+        "filename": "components/safe_browsing/common/safe_browsing.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-24T21:50:33Z",
+      "side": 1,
+      "message": "One thing for discussion:\nI decided to use a string here because that is what content::ResourceRequest does (which is used in IPC messages such as content::mojom::URLLoaderFactory). That makes me think that it is acceptable to pass a string.\n\nBesides, this field is not always used at the service side (at the moment, Chrome never uses it; only Android WebView uses it). So we avoid the extra cost of parsing it when it is not used.\n\nWDYT?",
+      "revId": "a7b022302a6fe939c8019a187fe84b37d5b7aefb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
