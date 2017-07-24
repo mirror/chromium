@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f86dccd8_44f66da0",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-24T02:35:17Z",
+      "side": 1,
+      "message": "Put all #include \u003c...\u003e before line 7. and order them alphabetically .",
+      "revId": "7a7a56865f548f59ae81a3a21089222cfb8ea3e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19183fab_c1691e61",
+        "filename": "components/safe_browsing/web_ui/webui.proto",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-24T02:35:17Z",
+      "side": 1,
+      "message": "it seems to be a single value. Is this change intensional?",
+      "revId": "7a7a56865f548f59ae81a3a21089222cfb8ea3e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0343c3b0_96166294",
+        "filename": "components/safe_browsing_db/v4_database.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-24T02:35:17Z",
+      "side": 1,
+      "message": "it can be simplified. e.g.\ndatabase_update_successful \u003d !pending_store_updates_;",
+      "revId": "7a7a56865f548f59ae81a3a21089222cfb8ea3e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8015c91_db7d4646",
+        "filename": "components/safe_browsing_db/v4_database.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-24T02:35:17Z",
+      "side": 1,
+      "message": "comment starts with \"//\"",
+      "revId": "7a7a56865f548f59ae81a3a21089222cfb8ea3e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a21e0b1_dd9f292a",
+        "filename": "components/safe_browsing_db/v4_database.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-24T02:35:17Z",
+      "side": 1,
+      "message": "Move member variable to either protected or private. And the name of member variable should end with \"_\" (e.g. database_update_successful_).",
+      "revId": "7a7a56865f548f59ae81a3a21089222cfb8ea3e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6544153a_c503613c",
+        "filename": "components/safe_browsing_db/v4_local_database_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-24T02:35:17Z",
+      "side": 1,
+      "message": "member variable ends with \"_\".",
+      "revId": "7a7a56865f548f59ae81a3a21089222cfb8ea3e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37197c8a_041bdf4d",
+        "filename": "components/safe_browsing_db/v4_store.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-24T02:35:17Z",
+      "side": 1,
+      "message": "\"_\" at the end of variable name.",
+      "revId": "7a7a56865f548f59ae81a3a21089222cfb8ea3e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66a055dd_3a176957",
+        "filename": "components/safe_browsing_db/v4_update_protocol_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-24T02:35:17Z",
+      "side": 1,
+      "message": "Is this change intentional?",
+      "revId": "7a7a56865f548f59ae81a3a21089222cfb8ea3e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b71a225c_24802556",
+        "filename": "components/safe_browsing_db/v4_update_protocol_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-24T02:35:17Z",
+      "side": 1,
+      "message": "Prefer to leave it in protected or private. You can create a public getter and/or setter for it.",
+      "revId": "7a7a56865f548f59ae81a3a21089222cfb8ea3e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2c4845b_7b7200f1",
+        "filename": "components/safe_browsing_db/v4_update_protocol_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-24T02:35:17Z",
+      "side": 1,
+      "message": "\"_\" at the end of variable name.  Can you make it protected or private?",
+      "revId": "7a7a56865f548f59ae81a3a21089222cfb8ea3e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
