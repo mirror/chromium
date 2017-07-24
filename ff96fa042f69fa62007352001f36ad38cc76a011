@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "9a836fa3_892e1aee",
+        "filename": "components/content_settings/core/common/content_settings_types.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-24T21:38:07Z",
+      "side": 1,
+      "message": "I meant that we probably don\u0027t need \"Link to the\", since it is a link : ) but it was very much a nit, so leave so you think is best.",
+      "parentUuid": "86640b8d_a642856f",
+      "range": {
+        "startLine": 80,
+        "startChar": 30,
+        "endLine": 80,
+        "endChar": 46
+      },
+      "revId": "ff96fa042f69fa62007352001f36ad38cc76a011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47fc681b_0d2ef4ed",
         "filename": "components/content_settings/core/common/content_settings_types.h",
         "patchSetId": 8
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "Separately, raymes@ had suggested that I use dictionary (instead of List). I have updated the comment. Hopefully, it is clearer?",
       "parentUuid": "47fc681b_0d2ef4ed",
+      "range": {
+        "startLine": 82,
+        "startChar": 62,
+        "endLine": 84,
+        "endChar": 30
+      },
+      "revId": "ff96fa042f69fa62007352001f36ad38cc76a011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "361aaada_d7fa3d1e",
+        "filename": "components/content_settings/core/common/content_settings_types.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-24T21:38:07Z",
+      "side": 1,
+      "message": "Yes, this is more clear. Thanks!",
+      "parentUuid": "6e2d74bf_1e6387f0",
       "range": {
         "startLine": 82,
         "startChar": 62,
