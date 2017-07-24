@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "267226b3_bf22e383",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1660,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-24T18:51:46Z",
+      "side": 0,
+      "message": "is it ok to just ignore this now? shadow_underlay_in_surface_ determine what coordinate space the underlay is in. maybe we can remove shadow_underlay_in_surface_ if we no longer need it.",
+      "revId": "cb70129cf086ba88f7fd3ec4d4bd7437251ea4f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "30a8de98_95cb31f9",
         "filename": "components/exo/shell_surface.cc",
         "patchSetId": 3
