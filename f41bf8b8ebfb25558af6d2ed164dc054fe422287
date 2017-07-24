@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e2b762b_44093ef7",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 3264,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-07-24T09:22:19Z",
+      "side": 1,
+      "message": "I am not sure what I need to do next. Should I add expected_username_vote_type as a parameter to a function like this one : CheckUploadedAutofillTypesAndSignature ?",
+      "range": {
+        "startLine": 3259,
+        "startChar": 2,
+        "endLine": 3264,
+        "endChar": 0
+      },
+      "revId": "f41bf8b8ebfb25558af6d2ed164dc054fe422287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
