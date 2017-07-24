@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "862b5c27_907e8794",
+        "filename": "components/download/internal/test/test_download_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-07-24T23:33:07Z",
+      "side": 1,
+      "message": "If start callback is called with error, there is no need to trigger OnDownloadFailed.\n\n\nI think we need to restructure the while code like:\n\nvoid TestDownloadService::StartDownload(const DownloadParams\u0026 params) {\n  base::ThreadTaskRunnerHandle::Get()-\u003ePostTask(\n      \u0026TestDownloadService::HandleStartDownload, base::Unretained(this), params);\n}\n\nvoid TestDownloadService::HandleStartDownload(const DownloadParams\u0026 params) {\n  if (!is_ready_) {\n    params.callback.Run(params.guid, DownloadParams::StartResult::INTERNAL_ERROR);\n    return;\n  }\n\n  if (!failed_download_id_.empty() \u0026\u0026 fail_at_start_) {\n    params.callback.Run(params.guid, DownloadParams::StartResult:: UNEXPECTED_GUID);\n    return;\n  }\n\n  params.callback.Run(params.guid, DownloadParams::StartResult:: ACCEPTED);\n\n  downloads_.push_back(params);\n  base::ThreadTaskRunnerHandle::Get()-\u003ePostTask(\n      \u0026TestDownloadService::ProcessDownload, base::Unretained(this)); \n}\n\nvoid TestDownloadService::ProcessDownload(const DownloadParams\u0026 params) {\n  DCHECK(!fail_at_start_);\n\n  ...\n  DownloadParams params \u003d downloads_.front();\n  ...\n\n  if (failed_download_id_.empty()) {\n    OnDownloadSucceeded(params.guid, base::FilePath(), file_size_);\n  } else {\n    OnDownloadFailed(params.guid, Client::FailureReason::ABORTED);\n  }\n}",
+      "revId": "7a593e29fa42c27c68e4527a2330a15f8e706622",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2313f184_425d8bb4",
         "filename": "components/download/internal/test/test_download_service.h",
         "patchSetId": 12
@@ -30,6 +47,23 @@
       "writtenOn": "2017-07-24T22:44:08Z",
       "side": 1,
       "message": "nit: add explicit",
+      "revId": "7a593e29fa42c27c68e4527a2330a15f8e706622",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63008e24_bc1b55d0",
+        "filename": "components/download/internal/test/test_download_service.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-07-24T23:33:07Z",
+      "side": 1,
+      "message": "This can be changed to the following in order to support 2 flows:\n  void SetFailedDownload(const std::string failed_download_id, bool fail_at_start)",
       "revId": "7a593e29fa42c27c68e4527a2330a15f8e706622",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
