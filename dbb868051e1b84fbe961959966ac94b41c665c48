@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e70883e4_c5fb1486",
+        "filename": "chrome/browser/profiles/profile_io_data.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1422,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-24T19:34:05Z",
+      "side": 1,
+      "message": "This is the logic accidentally bypassed.",
+      "range": {
+        "startLine": 1422,
+        "startChar": 23,
+        "endLine": 1422,
+        "endChar": 27
+      },
+      "revId": "dbb868051e1b84fbe961959966ac94b41c665c48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
