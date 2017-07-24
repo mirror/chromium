@@ -72,6 +72,12 @@ const int kDefaultImageResourceIDs[] = {
     IDR_LOGIN_DEFAULT_USER_45,
     IDR_LOGIN_DEFAULT_USER_46,
     IDR_LOGIN_DEFAULT_USER_47,
+    IDR_LOGIN_DEFAULT_USER_48,
+    IDR_LOGIN_DEFAULT_USER_49,
+    IDR_LOGIN_DEFAULT_USER_50,
+    IDR_LOGIN_DEFAULT_USER_51,
+    IDR_LOGIN_DEFAULT_USER_52,
+    IDR_LOGIN_DEFAULT_USER_53,
 };
 
 const int kDefaultImageAuthorIDs[] = {
@@ -123,6 +129,12 @@ const int kDefaultImageAuthorIDs[] = {
     0,  // No author for user image 45.
     0,  // No author for user image 46.
     0,  // No author for user image 47.
+    0,  // No author for user image 48.
+    0,  // No author for user image 49.
+    0,  // No author for user image 50.
+    0,  // No author for user image 51.
+    0,  // No author for user image 52.
+    0,  // No author for user image 53.
 };
 
 const int kDefaultImageWebsiteIDs[] = {
@@ -174,6 +186,12 @@ const int kDefaultImageWebsiteIDs[] = {
     0,  // No website for user image 45.
     0,  // No website for user image 46.
     0,  // No website for user image 47.
+    0,  // No website for user image 48.
+    0,  // No website for user image 49.
+    0,  // No website for user image 50.
+    0,  // No website for user image 51.
+    0,  // No website for user image 52.
+    0,  // No website for user image 53.
 };
 
 const int kDefaultImagesCount = arraysize(kDefaultImageResourceIDs);
@@ -245,6 +263,12 @@ const int kDefaultImageDescriptions[] = {
     IDS_LOGIN_DEFAULT_USER_DESC_45,
     IDS_LOGIN_DEFAULT_USER_DESC_46,
     IDS_LOGIN_DEFAULT_USER_DESC_47,
+    IDS_LOGIN_DEFAULT_USER_DESC_48,
+    IDS_LOGIN_DEFAULT_USER_DESC_49,
+    IDS_LOGIN_DEFAULT_USER_DESC_50,
+    IDS_LOGIN_DEFAULT_USER_DESC_51,
+    IDS_LOGIN_DEFAULT_USER_DESC_52,
+    IDS_LOGIN_DEFAULT_USER_DESC_53,
 };
 
 // Returns a string consisting of the prefix specified and the index of the

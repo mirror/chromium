@@ -68,6 +68,12 @@
       <structure type="chrome_scaled_image" name="IDR_LOGIN_DEFAULT_USER_45" file="default_user_images/origami/avatar_panda.png" />
       <structure type="chrome_scaled_image" name="IDR_LOGIN_DEFAULT_USER_46" file="default_user_images/origami/avatar_unicorn.png" />
       <structure type="chrome_scaled_image" name="IDR_LOGIN_DEFAULT_USER_47" file="default_user_images/origami/avatar_butterflies.png" />
+      <structure type="chrome_scaled_image" name="IDR_LOGIN_DEFAULT_USER_48" file="default_user_images/geo/avatar_geo1.png" />
+      <structure type="chrome_scaled_image" name="IDR_LOGIN_DEFAULT_USER_49" file="default_user_images/geo/avatar_geo2.png" />
+      <structure type="chrome_scaled_image" name="IDR_LOGIN_DEFAULT_USER_50" file="default_user_images/geo/avatar_geo3.png" />
+      <structure type="chrome_scaled_image" name="IDR_LOGIN_DEFAULT_USER_51" file="default_user_images/geo/avatar_geo4.png" />
+      <structure type="chrome_scaled_image" name="IDR_LOGIN_DEFAULT_USER_52" file="default_user_images/geo/avatar_geo5.png" />
+      <structure type="chrome_scaled_image" name="IDR_LOGIN_DEFAULT_USER_53" file="default_user_images/geo/avatar_geo6.png" />
 
       <!-- Print Job Notification images. -->
       <structure type="chrome_scaled_image" name="IDR_PRINT_NOTIFICATION_CANCEL" file="print_notification/cancel.png" />
