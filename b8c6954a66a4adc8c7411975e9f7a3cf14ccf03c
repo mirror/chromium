@@ -81,6 +81,30 @@
       "revId": "b8c6954a66a4adc8c7411975e9f7a3cf14ccf03c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1a7d97e9_8548f3e9",
+        "filename": "components/arc/common/app.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-24T19:10:21Z",
+      "side": 1,
+      "message": "In the future it would be hard to change UMA/mojom. Can we please do it now? I see in your Android CL that you send this from OnFailure step. So it is bit unclear whether this error or cancel.\nhttps://googleplex-android-review.git.corp.google.com/#/c/2579100/2/ArcAppLauncher/src/org/chromium/arc/applauncher/util/PlayStoreAppSearchHelper.java",
+      "parentUuid": "fca4bc77_0194f7a7",
+      "range": {
+        "startLine": 256,
+        "startChar": 16,
+        "endLine": 256,
+        "endChar": 23
+      },
+      "revId": "b8c6954a66a4adc8c7411975e9f7a3cf14ccf03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
