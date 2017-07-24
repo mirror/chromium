@@ -1,0 +1,192 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b0f935c_77c5c470",
+        "filename": "chrome/browser/password_manager/credential_manager_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-24T14:00:03Z",
+      "side": 1,
+      "message": "nit: CreatePublicKeyCredentialAndExpectFailureWithReason",
+      "range": {
+        "startLine": 75,
+        "startChar": 7,
+        "endLine": 75,
+        "endChar": 67
+      },
+      "revId": "01052988ac09e3401ecc28b80eaf48f4a629f5a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80cb597c_c23bc3e1",
+        "filename": "chrome/browser/password_manager/credential_manager_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-24T14:00:03Z",
+      "side": 1,
+      "message": "format nit: Could you please indent the members inside the string literals by 2 spaces per level?",
+      "revId": "01052988ac09e3401ecc28b80eaf48f4a629f5a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e452dea0_7b8c2601",
+        "filename": "chrome/browser/password_manager/credential_manager_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-24T14:00:03Z",
+      "side": 1,
+      "message": "As discussed off-line, you can use:\n\ncommand_line-\u003eAppendSwitch(switches::kEnableExperimentalWebPlatformFeatures);",
+      "range": {
+        "startLine": 666,
+        "startChar": 2,
+        "endLine": 667,
+        "endChar": 76
+      },
+      "revId": "01052988ac09e3401ecc28b80eaf48f4a629f5a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ed05bb5_86155c2e",
+        "filename": "content/browser/webauth/authenticator_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-24T14:00:03Z",
+      "side": 1,
+      "message": "Have you considered moving these helpers as functions into the unnamed namespace above? Or are you planning to extend them in a way that will access members of the test fixture?",
+      "revId": "01052988ac09e3401ecc28b80eaf48f4a629f5a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d8e8617_cba1464b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/credential-management/credentialscontainer-create-basics.https.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-24T14:00:03Z",
+      "side": 1,
+      "message": "What would it take (in terms of work on either extending the MockCredentialManagerClient or creating its counterpart for WebAuth) to have at least one layout test where this call for PK credentials succeeds?",
+      "revId": "01052988ac09e3401ecc28b80eaf48f4a629f5a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0012245c_23d2ff66",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webauthn/helpers.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-24T14:00:03Z",
+      "side": 1,
+      "message": "Do you know why we have this wrapper over testharness.js?  This is literally the only component in WPT that does this. Looks like it only provides JSON manipulation helpers... maybe it should not aspire to do more than that?",
+      "revId": "01052988ac09e3401ecc28b80eaf48f4a629f5a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a71bd34c_9874b13d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/webauthn/interfaces.https.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-24T14:00:03Z",
+      "side": 1,
+      "message": "Don\u0027t forget to remove this.",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 12
+      },
+      "revId": "01052988ac09e3401ecc28b80eaf48f4a629f5a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e8a26e2_9418cdf2",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/credentialmanager/credentialscontainer-create-basics.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-24T14:00:03Z",
+      "side": 1,
+      "message": "Hmm, we have this exact same test as part of WPT as well. If the expectations here can be derived from the spec, we should probably have it only in WPT, otherwise have it only here.",
+      "revId": "01052988ac09e3401ecc28b80eaf48f4a629f5a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceed4bd8_05f90afb",
+        "filename": "third_party/WebKit/LayoutTests/webauth/idl.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-24T14:00:03Z",
+      "side": 1,
+      "message": "Can we also create a PKCredential object and verify that it conforms to the IDL?",
+      "revId": "01052988ac09e3401ecc28b80eaf48f4a629f5a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a7e93ad_4633ce37",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/CredentialsContainer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-24T14:00:03Z",
+      "side": 1,
+      "message": "nit: Can this message be more specific? We have kWebCredentialManagerNotAllowedError that is quite similar.",
+      "revId": "01052988ac09e3401ecc28b80eaf48f4a629f5a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
