@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "304b794d_f78027ae",
+        "filename": "content/public/common/content_switches.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-07-24T13:46:50Z",
+      "side": 1,
+      "message": "This file was removed.",
+      "parentUuid": "8c01df5e_89691682",
+      "range": {
+        "startLine": 352,
+        "startChar": 23,
+        "endLine": 352,
+        "endChar": 28
+      },
+      "revId": "719edae21329593b75fea2674c281bb292a76932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8d2f1bd_094b2ede",
         "filename": "content/public/common/content_switches.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-21T17:25:41Z",
       "side": 1,
       "message": "nit: Align vertically with the other lines.",
+      "range": {
+        "startLine": 354,
+        "startChar": 43,
+        "endLine": 354,
+        "endChar": 44
+      },
+      "revId": "719edae21329593b75fea2674c281bb292a76932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df48f088_5df90d5b",
+        "filename": "content/public/common/content_switches.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-07-24T13:46:50Z",
+      "side": 1,
+      "message": "This file was removed.",
+      "parentUuid": "f8d2f1bd_094b2ede",
       "range": {
         "startLine": 354,
         "startChar": 43,
