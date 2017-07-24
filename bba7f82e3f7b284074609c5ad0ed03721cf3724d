@@ -71,6 +71,75 @@
     },
     {
       "key": {
+        "uuid": "156b6bf3_5d6e325a",
+        "filename": "chrome/installer/zucchini/main_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-24T20:27:57Z",
+      "side": 1,
+      "message": "can you use a simple function pointer here rather than a callback? if you did so, could you make the Command ctor constexpr? if so, maybe you can have the Command instances in static initialization, but do the registration in the RegisterAll fn.",
+      "range": {
+        "startLine": 49,
+        "startChar": 20,
+        "endLine": 49,
+        "endChar": 28
+      },
+      "revId": "bba7f82e3f7b284074609c5ad0ed03721cf3724d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "765eb3b9_67d5b5eb",
+        "filename": "chrome/installer/zucchini/main_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-24T20:27:57Z",
+      "side": 1,
+      "message": "\"Fun\" alone is an abbreviation, which is anti-style.\n\nalternatively, i suppose you could have been making a statement that commands are Fun! :-)",
+      "range": {
+        "startLine": 49,
+        "startChar": 8,
+        "endLine": 49,
+        "endChar": 11
+      },
+      "revId": "bba7f82e3f7b284074609c5ad0ed03721cf3724d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd8f843b_e488d415",
+        "filename": "chrome/installer/zucchini/main_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-24T20:27:57Z",
+      "side": 1,
+      "message": "?  const char* const name;?\n\n(below for \"usage\" too)",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 18
+      },
+      "revId": "bba7f82e3f7b284074609c5ad0ed03721cf3724d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62271dfc_40190d98",
         "filename": "chrome/installer/zucchini/main_utils.h",
         "patchSetId": 1
@@ -117,6 +186,75 @@
     },
     {
       "key": {
+        "uuid": "c79d044a_fe04b103",
+        "filename": "chrome/installer/zucchini/zucchini.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-24T20:27:57Z",
+      "side": 1,
+      "message": "the \u00270\u0027 code represents success, so how about calling this \"Zucchini process exit codes.\"?",
+      "range": {
+        "startLine": 14,
+        "startChar": 12,
+        "endLine": 14,
+        "endChar": 18
+      },
+      "revId": "bba7f82e3f7b284074609c5ad0ed03721cf3724d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2dd0632_fae5e6e6",
+        "filename": "chrome/installer/zucchini/zucchini_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-24T20:27:57Z",
+      "side": 1,
+      "message": "i think chromium generally prefers {static,reinterpret}_cast over function-style casting",
+      "range": {
+        "startLine": 21,
+        "startChar": 11,
+        "endLine": 21,
+        "endChar": 17
+      },
+      "revId": "bba7f82e3f7b284074609c5ad0ed03721cf3724d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa97cef8_15a81226",
+        "filename": "chrome/installer/zucchini/zucchini_commands.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-24T20:27:57Z",
+      "side": 1,
+      "message": "why the new namespace? why isn\u0027t this in the zucchini namespace?",
+      "range": {
+        "startLine": 21,
+        "startChar": 10,
+        "endLine": 21,
+        "endChar": 17
+      },
+      "revId": "bba7f82e3f7b284074609c5ad0ed03721cf3724d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80c21944_954efe5e",
         "filename": "chrome/installer/zucchini/zucchini_main.cc",
         "patchSetId": 1
@@ -133,6 +271,46 @@
         "startChar": 24,
         "endLine": 56,
         "endChar": 29
+      },
+      "revId": "bba7f82e3f7b284074609c5ad0ed03721cf3724d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd006551_6c52d7df",
+        "filename": "chrome/installer/zucchini/zucchini_main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-24T20:27:57Z",
+      "side": 1,
+      "message": "since you prefer to skip the process creation time, i think it\u0027s best to use a stack-based object rather than the AtExit approach. it seems cleaner to me to have:\n\n  ResourceUsageTracker resource_usage_tracker;\n  ...\n  if (something bad happened)\n    resource_usage_tracker.Cancel();\n\nand avoid globals",
+      "revId": "bba7f82e3f7b284074609c5ad0ed03721cf3724d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50a19fa3_d01c6e5f",
+        "filename": "chrome/installer/zucchini/zucchini_main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-24T20:27:57Z",
+      "side": 1,
+      "message": "ret -\u003e exit_code or something else that isn\u0027t an abbreviation",
+      "range": {
+        "startLine": 57,
+        "startChar": 7,
+        "endLine": 57,
+        "endChar": 10
       },
       "revId": "bba7f82e3f7b284074609c5ad0ed03721cf3724d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
