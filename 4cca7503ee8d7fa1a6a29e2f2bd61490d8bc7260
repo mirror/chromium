@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "03bff31d_71538fd8",
+        "filename": "components/content_settings/core/browser/host_content_settings_map.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-24T10:12:05Z",
+      "side": 1,
+      "message": "No need for the assignment, that\u0027s done implicitly.",
+      "revId": "4cca7503ee8d7fa1a6a29e2f2bd61490d8bc7260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b041460b_2f294d4b",
+        "filename": "components/content_settings/core/browser/host_content_settings_map.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-24T10:12:05Z",
+      "side": 1,
+      "message": "Just return |most_recent_time|",
+      "revId": "4cca7503ee8d7fa1a6a29e2f2bd61490d8bc7260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a6154055_ae1ce3ef",
         "filename": "components/content_settings/core/browser/host_content_settings_map.h",
         "patchSetId": 4
