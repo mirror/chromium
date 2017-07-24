@@ -31,6 +31,7 @@ public class BottomSheetMetrics extends EmptyBottomSheetObserver {
     public static final int OPENED_BY_NEW_TAB_CREATION = 2;
     public static final int OPENED_BY_EXPAND_BUTTON = 3;
     private static final int OPENED_BY_BOUNDARY = 4;
+    public static final int OPENED_BY_STARTUP = 5;
 
     /** The different ways that the bottom sheet can be closed. */
     @IntDef({CLOSED_BY_NONE, CLOSED_BY_SWIPE, CLOSED_BY_BACK_PRESS, CLOSED_BY_TAP_SCRIM,
@@ -159,6 +160,9 @@ public class BottomSheetMetrics extends EmptyBottomSheetObserver {
                 break;
             case OPENED_BY_EXPAND_BUTTON:
                 RecordUserAction.record("Android.ChromeHome.OpenedByExpandButton");
+                break;
+            case OPENED_BY_STARTUP:
+                RecordUserAction.record("Android.ChromeHome.OpenedByStartup");
                 break;
             default:
                 assert false;

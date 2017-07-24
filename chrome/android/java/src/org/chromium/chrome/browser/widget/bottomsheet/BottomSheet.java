@@ -126,6 +126,12 @@ public class BottomSheet
     private static final float SWIPE_ALLOWED_FRACTION = 0.2f;
 
     /**
+     * Time in ms from when we last backgrounded Chrome until we show the bottom sheet at half.
+     * Time is 3 hours.
+     */
+    private static final long TIME_SINCE_BACKGROUNDED_TO_SHOW_BOTTOM_SHEET_HALF_MS = 10800000L;
+
+    /**
      * Information about the different scroll states of the sheet. Order is important for these,
      * they go from smallest to largest.
      */
@@ -192,6 +198,12 @@ public class BottomSheet
     @SheetState
     private int mTargetState = SHEET_STATE_NONE;
 
+    /**
+     * Whether or not we want to start the bottom sheet at half because we've been backgrounded for
+     * a certain length of time.
+     */
+    private boolean mSheetStateHalfOnStartup;
+
     /** Used for getting the current tab. */
     private TabModelSelector mTabModelSelector;
 
@@ -248,6 +260,10 @@ public class BottomSheet
 
     /** Whether {@link #destroy()} has been called. **/
     private boolean mIsDestroyed;
+
+    private boolean mBrowserStarted;
+
+    private boolean mAlreadySetSheetToHalfOnStartup;
 
     /**
      * An interface defining content that can be displayed inside of the bottom sheet for Chrome
@@ -486,13 +502,22 @@ public class BottomSheet
         mGestureDetector.setIsLongpressEnabled(false);
 
         mMetrics = new BottomSheetMetrics();
-        addObserver(mMetrics);
 
         BrowserStartupController.get(LibraryProcessType.PROCESS_BROWSER)
                 .addStartupCompletedObserver(new BrowserStartupController.StartupCallback() {
                     @Override
                     public void onSuccess(boolean alreadyStarted) {
                         mIsTouchEnabled = true;
+
+                        // Set the sheet state before we add the metrics observer, otherwise it will
+                        // be recorded as a user action.
+                        if (mSheetStateHalfOnStartup) {
+                            setSheetState(SHEET_STATE_HALF, true);
+                            mAlreadySetSheetToHalfOnStartup = true;
+                        }
+                        addObserver(mMetrics);
+
+                        mBrowserStarted = true;
                     }
 
                     @Override
@@ -697,6 +722,11 @@ public class BottomSheet
         mActionBarDelegate = new ViewShiftingActionBarDelegate(mActivity, this);
 
         mBottomSheetContentContainer = (FrameLayout) findViewById(R.id.bottom_sheet_content);
+
+        if (activity.getTimeSinceLastBackgroundedMs()
+                >= TIME_SINCE_BACKGROUNDED_TO_SHOW_BOTTOM_SHEET_HALF_MS) {
+            setSheetStateHalfOnStartup();
+        }
 
         // Listen to height changes on the root.
         root.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
@@ -1295,6 +1325,20 @@ public class BottomSheet
                 o.onTransitionPeekToHalf(peekHalfRatio);
             }
         }
+    }
+
+    /**
+     * Tells the bottom sheet to set its state to half after the browser is initialized.
+     */
+    private void setSheetStateHalfOnStartup() {
+        assert !mAlreadySetSheetToHalfOnStartup;
+
+        if (mBrowserStarted) {
+            setSheetState(SHEET_STATE_HALF, true);
+            mAlreadySetSheetToHalfOnStartup = true;
+            return;
+        }
+        mSheetStateHalfOnStartup = true;
     }
 
     /**

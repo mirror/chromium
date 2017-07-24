@@ -220,6 +220,9 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
         }
     };
 
+    protected static final String LAST_BACKGROUNDED_TIME_MS_PREF =
+            "ChromeActivity.BackgroundTimeMs";
+
     private TabModelSelector mTabModelSelector;
     private TabModelSelectorTabObserver mTabModelSelectorTabObserver;
     private TabCreatorManager.TabCreator mRegularTabCreator;
@@ -2273,5 +2276,14 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
      */
     public DiscardableReferencePool getReferencePool() {
         return mReferencePool;
+    }
+
+    /**
+     * Returns the number of milliseconds since Chrome was last backgrounded.
+     */
+    public long getTimeSinceLastBackgroundedMs() {
+        long lastBackgroundedTimeMs =
+                ContextUtils.getAppSharedPreferences().getLong(LAST_BACKGROUNDED_TIME_MS_PREF, -1);
+        return System.currentTimeMillis() - lastBackgroundedTimeMs;
     }
 }
