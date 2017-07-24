@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "767e3149_0594c50e",
+        "filename": "third_party/WebKit/Source/core/layout/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-24T17:43:42Z",
+      "side": 1,
+      "message": "nits: there are few places where this pair of extra brackets are not needed. Please remove them.",
+      "range": {
+        "startLine": 594,
+        "startChar": 6,
+        "endLine": 594,
+        "endChar": 7
+      },
+      "revId": "671f36339469df8e40973d151c0569750bd79f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1971015a_e5d0a75f",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-24T17:43:42Z",
+      "side": 1,
+      "message": "I believe 1 means this variable uses only 1 bit for storage, so that should remain the same.",
+      "range": {
+        "startLine": 584,
+        "startChar": 2,
+        "endLine": 584,
+        "endChar": 77
+      },
+      "revId": "671f36339469df8e40973d151c0569750bd79f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
