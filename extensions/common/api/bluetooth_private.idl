@@ -83,6 +83,9 @@ namespace bluetoothPrivate {
 
     // Whether the adapter is discoverable by other devices.
     boolean? discoverable;
+
+    // Whether the new adapter state is initiated by user changing preference.
+    boolean? is_user_pref;
   };
 
   dictionary SetPairingResponseOptions {
