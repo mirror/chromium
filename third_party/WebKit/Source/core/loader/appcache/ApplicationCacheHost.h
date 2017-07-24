@@ -162,8 +162,8 @@ class CORE_EXPORT ApplicationCacheHost final
  private:
   explicit ApplicationCacheHost(DocumentLoader*);
 
-  void WillStartLoadingMainResource(ResourceRequest&);
-  void WillStartLoadingResource(ResourceRequest&);
+  void WillStartLoadingMainResource(const KURL&, const String&, int&);
+  void WillStartLoadingResource(int&);
 
   // WebApplicationCacheHostClient implementation
   void DidChangeCacheAssociation() final;
