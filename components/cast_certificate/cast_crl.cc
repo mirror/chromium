@@ -17,7 +17,7 @@
 #include "net/cert/internal/parsed_certificate.h"
 #include "net/cert/internal/path_builder.h"
 #include "net/cert/internal/signature_algorithm.h"
-#include "net/cert/internal/signature_policy.h"
+#include "net/cert/internal/simple_path_builder_delegate.h"
 #include "net/cert/internal/trust_store_in_memory.h"
 #include "net/cert/internal/verify_certificate_chain.h"
 #include "net/cert/internal/verify_signed_data.h"
@@ -87,13 +87,6 @@ bool ConvertTimeSeconds(uint64_t seconds,
                                                generalized_time);
 }
 
-// Specifies the signature verification policy.
-// The required algorithms are:
-// RSASSA PKCS#1 v1.5 with SHA-256, using RSA keys 2048-bits or longer.
-std::unique_ptr<net::SignaturePolicy> CreateCastSignaturePolicy() {
-  return base::MakeUnique<net::SimpleSignaturePolicy>(2048);
-}
-
 // Verifies the CRL is signed by a trusted CRL authority at the time the CRL
 // was issued. Verifies the signature of |tbs_crl| is valid based on the
 // certificate and signature in |crl|. The validity of |tbs_crl| is verified
@@ -121,17 +114,18 @@ bool VerifyCRL(const Crl& crl,
   net::der::BitString signature_value_bit_string = net::der::BitString(
       net::der::Input(base::StringPiece(crl.signature())), 0);
 
+  // SimplePathBuilderDelegate will enforce required signature algorithms of
+  // RSASSA PKCS#1 v1.5 with SHA-256, and RSA keys 2048-bits or longer.
+  net::SimplePathBuilderDelegate path_builder_delegate(2048);
+
   // Verify the signature.
-  auto signature_policy = CreateCastSignaturePolicy();
   std::unique_ptr<net::SignatureAlgorithm> signature_algorithm_type =
       net::SignatureAlgorithm::CreateRsaPkcs1(net::DigestAlgorithm::Sha256);
   net::CertErrors verify_errors;
-  if (!VerifySignedData(*signature_algorithm_type,
-                        net::der::Input(&crl.tbs_crl()),
-                        signature_value_bit_string, parsed_cert->tbs().spki_tlv,
-                        signature_policy.get(), &verify_errors)) {
-    VLOG(2) << "CRL - Signature verification failed:\n"
-            << verify_errors.ToDebugString();
+  if (!VerifySignedData(
+          *signature_algorithm_type, net::der::Input(&crl.tbs_crl()),
+          signature_value_bit_string, parsed_cert->tbs().spki_tlv)) {
+    VLOG(2) << "CRL - Signature verification failed";
     return false;
   }
 
@@ -143,7 +137,7 @@ bool VerifyCRL(const Crl& crl,
   }
   net::CertPathBuilder::Result result;
   net::CertPathBuilder path_builder(
-      parsed_cert.get(), trust_store, signature_policy.get(), verification_time,
+      parsed_cert.get(), trust_store, &path_builder_delegate, verification_time,
       net::KeyPurpose::ANY_EKU, net::InitialExplicitPolicy::kFalse,
       {net::AnyPolicy()}, net::InitialPolicyMappingInhibit::kFalse,
       net::InitialAnyPolicyInhibit::kFalse, &result);
