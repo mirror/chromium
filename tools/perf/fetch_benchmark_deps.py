@@ -80,6 +80,15 @@ def FetchDepsForBenchmark(benchmark, output):
     print >> output, dep
 
 
+def GetStorySet(benchmark):
+  # Create a dummy options object which hold default values that are expected
+  # by Benchmark.CreateStorySet(options) method.
+  parser = optparse.OptionParser()
+  benchmark.AddBenchmarkCommandLineArgs(parser)
+  options, _ = parser.parse_args([])
+  return benchmark().CreateStorySet(options)
+
+
 def main(args, output):
   parser = argparse.ArgumentParser(
          description='Fetch the dependencies of perf benchmark(s).')
@@ -101,13 +110,10 @@ def main(args, output):
       raise ValueError('No such benchmark: %s' % options.benchmark_name)
     FetchDepsForBenchmark(benchmark, output)
   else:
-    if not options.force:
-      raw_input(
-          'No benchmark name is specified. Fetching all benchmark deps. '
-          'Press enter to continue...')
     for b in benchmark_finders.GetAllPerfBenchmarks():
-      print >> output, ('Fetch dependencies for benchmark %s' % b.Name())
-      FetchDepsForBenchmark(b, output)
+      print GetStorySet(b).__class__.__name__, b.Name()
+      # print >> output, ('Fetch dependencies for benchmark %s' % b.Name())
+      # FetchDepsForBenchmark(b, output)
 
 if __name__ == '__main__':
   main(sys.argv[1:], sys.stdout)
