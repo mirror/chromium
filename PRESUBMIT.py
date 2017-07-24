@@ -342,10 +342,50 @@ _BANNED_CPP_FUNCTIONS = (
       (),
     ),
     (
-      'BrowserThread::(FILE|FILE_USER_BLOCKING|DB|PROCESS_LAUNCHER|CACHE)',
+      'BrowserThread::FILE',
       (
-        'The non-UI/IO BrowserThreads are deprecated, please migrate this',
-        'code to TaskScheduler. See https://goo.gl/mDSxKl for details.',
+        'The FILE thread is deprecated, please migrate this code '
+        'to TaskScheduler. See https://goo.gl/mDSxKl for details.',
+        'For questions, contact base/task_scheduler/OWNERS.',
+      ),
+      True,
+      (),
+    ),
+    (
+      'BrowserThread::FILE_USER_BLOCKING',
+      (
+        'The FILE_USER_BLOCKING thread is deprecated, please migrate this code '
+        'to TaskScheduler. See https://goo.gl/mDSxKl for details.',
+        'For questions, contact base/task_scheduler/OWNERS.',
+      ),
+      True,
+      (),
+    ),
+    (
+      'BrowserThread::DB',
+      (
+        'The DB thread is deprecated, please migrate this code '
+        'to TaskScheduler. See https://goo.gl/mDSxKl for details.',
+        'For questions, contact base/task_scheduler/OWNERS.',
+      ),
+      True,
+      (),
+    ),
+    (
+      'BrowserThread::PROCESS_LAUNCHER',
+      (
+        'The PROCESS_LAUNCHER thread is deprecated, please migrate this code '
+        'to TaskScheduler. See https://goo.gl/mDSxKl for details.',
+        'For questions, contact base/task_scheduler/OWNERS.',
+      ),
+      True,
+      (),
+    ),
+    (
+      'BrowserThread::CACHE',
+      (
+        'The CACHE thread is deprecated, please migrate this code '
+        'to TaskScheduler. See https://goo.gl/mDSxKl for details.',
         'For questions, contact base/task_scheduler/OWNERS.',
       ),
       True,
