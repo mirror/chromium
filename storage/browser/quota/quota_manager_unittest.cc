@@ -110,7 +110,6 @@ class QuotaManagerTest : public testing::Test {
   void ResetQuotaManager(bool is_incognito) {
     quota_manager_ = new QuotaManager(is_incognito, data_dir_.GetPath(),
                                       base::ThreadTaskRunnerHandle::Get().get(),
-                                      base::ThreadTaskRunnerHandle::Get().get(),
                                       mock_special_storage_policy_.get(),
                                       storage::GetQuotaSettingsFunc());
     SetQuotaSettings(kDefaultPoolSize, kDefaultPerHostQuota,
