@@ -8,6 +8,7 @@ import("//third_party/WebKit/public/public_features.gni")
 import("//third_party/WebKit/Source/config.gni")
 import("//third_party/WebKit/Source/core/core.gni")
 import("//tools/grit/grit_rule.gni")
+import("//tools/grit/repack.gni")
 
 if (is_android) {
   import("//build/config/android/rules.gni")
@@ -707,6 +708,35 @@ grit("image_resources") {
     "grit/blink_image_resources.h",
     "blink_image_resources_100_percent.pak",
     "blink_image_resources_200_percent.pak",
+  ]
+}
+
+group("scaled_resources") {
+  public_deps = [
+    ":image_resources_grit",
+    "//third_party/WebKit/Source/modules/media_controls:media_controls_resources_grit",
+  ]
+}
+
+repack("scaled_resources_100_percent") {
+  output = "$root_gen_dir/blink/public/resources/blink_scaled_resources_100_percent.pak"
+  sources = [
+    "$root_gen_dir/blink/modules/media_controls/resources/media_controls_resources_100_percent.pak",
+    "$root_gen_dir/blink/public/resources/blink_image_resources_100_percent.pak",
+  ]
+  deps = [
+    ":scaled_resources",
+  ]
+}
+
+repack("scaled_resources_200_percent") {
+  output = "$root_gen_dir/blink/public/resources/blink_scaled_resources_200_percent.pak"
+  sources = [
+    "$root_gen_dir/blink/modules/media_controls/resources/media_controls_resources_200_percent.pak",
+    "$root_gen_dir/blink/public/resources/blink_image_resources_200_percent.pak",
+  ]
+  deps = [
+    ":scaled_resources",
   ]
 }
 
