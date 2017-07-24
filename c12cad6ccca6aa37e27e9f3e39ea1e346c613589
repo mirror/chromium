@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7bf14f7e_af08a1fd",
+        "filename": "chrome/browser/ui/cocoa/tabbed_browser_window.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-24T01:05:43Z",
+      "side": 1,
+      "message": "nit: Private -\u003e PrivateAPI   (some classes use a (Private) category in place of a empty () category.. to mean _our_ private interface bits)",
+      "range": {
+        "startLine": 42,
+        "startChar": 21,
+        "endLine": 42,
+        "endChar": 28
+      },
+      "revId": "c12cad6ccca6aa37e27e9f3e39ea1e346c613589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9ca296f_f2597657",
+        "filename": "chrome/browser/ui/cocoa/tabbed_browser_window.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-24T01:05:43Z",
+      "side": 1,
+      "message": "Private -\u003e PrivateAPI",
+      "range": {
+        "startLine": 153,
+        "startChar": 13,
+        "endLine": 153,
+        "endChar": 20
+      },
+      "revId": "c12cad6ccca6aa37e27e9f3e39ea1e346c613589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39bb00e1_17153f93",
+        "filename": "chrome/browser/ui/cocoa/tabbed_browser_window_unittest.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-24T01:05:43Z",
+      "side": 1,
+      "message": "should this be weak too?",
+      "revId": "c12cad6ccca6aa37e27e9f3e39ea1e346c613589",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

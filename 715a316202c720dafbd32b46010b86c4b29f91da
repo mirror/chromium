@@ -505,6 +505,24 @@
     },
     {
       "key": {
+        "uuid": "7e32ae3f_bd28e5dc",
+        "filename": "chrome/browser/ui/cocoa/tabbed_browser_window.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-24T01:05:43Z",
+      "side": 1,
+      "message": "hrmh. I guess it\u0027s random (checked `git grep -C10 \u0027^+\u0027 -- \u0027*.h\u0027`). I still think it\u0027s weird :p. \n\nE.g. feels weird when supporting the ObjCism of having constructor-like class methods like +[NSArray arrayWithFoo:] to all appear above the initializers they gotta call.",
+      "parentUuid": "0c17395e_da2d06bf",
+      "revId": "715a316202c720dafbd32b46010b86c4b29f91da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "55bdef9f_dbad59c8",
         "filename": "chrome/browser/ui/cocoa/tabbed_browser_window.mm",
         "patchSetId": 10
@@ -575,6 +593,30 @@
       "side": 1,
       "message": "In the past, I\u0027ve been told that ObjCCastStrict is intended for cases where a mismatched class should DCHECK in debug builds and silently return nil in release builds. In this case, there\u0027s a contract that the controller will always be a BWC, so I would prefer to skip the runtime check (and crash if the contract is broken). Thoughts?",
       "parentUuid": "1b73d070_ac5bea6d",
+      "range": {
+        "startLine": 181,
+        "startChar": 14,
+        "endLine": 181,
+        "endChar": 25
+      },
+      "revId": "715a316202c720dafbd32b46010b86c4b29f91da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f63f209_a2122dc7",
+        "filename": "chrome/browser/ui/cocoa/tabbed_browser_window.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-24T01:05:43Z",
+      "side": 1,
+      "message": "yeah crashing with an exception sgtm",
+      "parentUuid": "d6e7c3a1_df88a42f",
       "range": {
         "startLine": 181,
         "startChar": 14,
@@ -768,6 +810,24 @@
       "side": 1,
       "message": "I think I did this correctly. Mind checking?",
       "parentUuid": "08f8c257_0c40458c",
+      "revId": "715a316202c720dafbd32b46010b86c4b29f91da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a9ea0809_b821e73a",
+        "filename": "chrome/browser/ui/cocoa/tabbed_browser_window_unittest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-24T01:05:43Z",
+      "side": 1,
+      "message": "yup (adding DISALLOW_FOO always needs at least one constructor declared)",
+      "parentUuid": "b505a814_5d883a1a",
       "revId": "715a316202c720dafbd32b46010b86c4b29f91da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
