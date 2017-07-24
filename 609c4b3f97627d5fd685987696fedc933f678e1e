@@ -52,6 +52,24 @@
       "revId": "609c4b3f97627d5fd685987696fedc933f678e1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "225befe7_58e28db3",
+        "filename": "content/browser/android/dialog_overlay_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-07-24T21:42:16Z",
+      "side": 1,
+      "message": "\u003e Correct. This is enforced by MAX_OVERLAY in AndroidOverlayProviderImpl. We have added measures to make sure that the only overlays that exist are ones that are visible on screen (or rather, in shown WebContents and current frames).\n\u003e \n\u003e We are making this assumption right now because there is a very real chance that we will never support more than one AndroidOverlay. Not baking in this assumption here involves writing code that might never be used, and there would be bigger barriers to supporting multiple overlays that would have to be worked out first.\n\u003e \n\u003e Liberato@ and I are comfortable revisiting this if we do support more than one overlay.\n\nI guess can leave a comment near MAX_OVERLAY that this code assumes MAX_OVERLAY is 1.",
+      "parentUuid": "3086a2c9_02cb3051",
+      "revId": "609c4b3f97627d5fd685987696fedc933f678e1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
