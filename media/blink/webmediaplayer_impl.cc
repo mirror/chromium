@@ -191,7 +191,7 @@ WebMediaPlayerImpl::WebMediaPlayerImpl(
       ready_state_(WebMediaPlayer::kReadyStateHaveNothing),
       highest_ready_state_(WebMediaPlayer::kReadyStateHaveNothing),
       preload_(MultibufferDataSource::AUTO),
-      main_task_runner_(frame->LoadingTaskRunner()),
+      main_task_runner_(base::ThreadTaskRunnerHandle::Get()),
       media_task_runner_(params->media_task_runner()),
       worker_task_runner_(params->worker_task_runner()),
       media_log_(params->take_media_log()),
@@ -283,12 +283,12 @@ WebMediaPlayerImpl::WebMediaPlayerImpl(
   delegate_id_ = delegate_->AddObserver(this);
   delegate_->SetIdle(delegate_id_, true);
 
-  media_log_->AddEvent(media_log_->CreateCreatedEvent(
-      url::Origin(frame_->GetSecurityOrigin()).GetURL().spec()));
-  media_log_->SetStringProperty("frame_url",
-                                frame_->GetDocument().Url().GetString().Utf8());
-  media_log_->SetStringProperty("frame_title",
-                                frame_->GetDocument().Title().Utf8());
+  // media_log_->AddEvent(media_log_->CreateCreatedEvent(
+  //     url::Origin(frame_->GetSecurityOrigin()).GetURL().spec()));
+  // media_log_->SetStringProperty("frame_url",
+  //                               frame_->GetDocument().Url().GetString().Utf8());
+  // media_log_->SetStringProperty("frame_title",
+  //                               frame_->GetDocument().Title().Utf8());
 
   if (params->initial_cdm())
     SetCdm(params->initial_cdm());
@@ -490,7 +490,8 @@ void WebMediaPlayerImpl::DoLoad(LoadType load_type,
   DCHECK(main_task_runner_->BelongsToCurrentThread());
 
   GURL gurl(url);
-  ReportMetrics(load_type, gurl, frame_->GetSecurityOrigin(), media_log_.get());
+  // ReportMetrics(load_type, gurl, frame_->GetSecurityOrigin(),
+  // media_log_.get());
 
   // Set subresource URL for crash reporting.
   base::debug::SetCrashKeyValue("subresource_url", gurl.spec());

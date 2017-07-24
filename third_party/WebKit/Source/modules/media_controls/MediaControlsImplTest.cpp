@@ -205,7 +205,7 @@ class MediaControlsImplTest : public ::testing::Test {
   HistogramTester& GetHistogramTester() { return histogram_tester_; }
 
   void LoadMediaWithDuration(double duration) {
-    MediaControls().MediaElement().SetSrc("https://example.com/foo.mp4");
+    MediaControls().MediaElement().setSrc("https://example.com/foo.mp4");
     testing::RunPendingTasks();
     WebTimeRange time_range(0.0, duration);
     WebMediaPlayer()->seekable_.Assign(&time_range, 1);
@@ -440,7 +440,7 @@ TEST_F(MediaControlsImplTest, KeepControlsVisibleIfOverflowListVisible) {
                                               "-webkit-media-controls-panel");
   ASSERT_NE(nullptr, panel);
 
-  MediaControls().MediaElement().SetSrc("http://example.com");
+  MediaControls().MediaElement().setSrc("http://example.com");
   MediaControls().MediaElement().Play();
   testing::RunPendingTasks();
 
@@ -460,7 +460,7 @@ TEST_F(MediaControlsImplTest, DownloadButtonDisplayed) {
       MediaControls(), "-internal-media-controls-download-button");
   ASSERT_NE(nullptr, download_button);
 
-  MediaControls().MediaElement().SetSrc("https://example.com/foo.mp4");
+  MediaControls().MediaElement().setSrc("https://example.com/foo.mp4");
   testing::RunPendingTasks();
   SimulateLoadedMetadata();
 
@@ -476,7 +476,7 @@ TEST_F(MediaControlsImplTest, DownloadButtonNotDisplayedEmptyUrl) {
   ASSERT_NE(nullptr, download_button);
 
   // Download button should not be displayed when URL is empty.
-  MediaControls().MediaElement().SetSrc("");
+  MediaControls().MediaElement().setSrc("");
   testing::RunPendingTasks();
   SimulateLoadedMetadata();
   EXPECT_FALSE(IsElementVisible(*download_button));
@@ -489,7 +489,7 @@ TEST_F(MediaControlsImplTest, DownloadButtonNotDisplayedInfiniteDuration) {
       MediaControls(), "-internal-media-controls-download-button");
   ASSERT_NE(nullptr, download_button);
 
-  MediaControls().MediaElement().SetSrc("https://example.com/foo.mp4");
+  MediaControls().MediaElement().setSrc("https://example.com/foo.mp4");
   testing::RunPendingTasks();
 
   // Download button should not be displayed when duration is infinite.
@@ -507,7 +507,7 @@ TEST_F(MediaControlsImplTest, DownloadButtonNotDisplayedHLS) {
   ASSERT_NE(nullptr, download_button);
 
   // Download button should not be displayed for HLS streams.
-  MediaControls().MediaElement().SetSrc("https://example.com/foo.m3u8");
+  MediaControls().MediaElement().setSrc("https://example.com/foo.m3u8");
   testing::RunPendingTasks();
   SimulateLoadedMetadata();
   EXPECT_FALSE(IsElementVisible(*download_button));
@@ -580,7 +580,7 @@ TEST_F(MediaControlsImplTest, VolumeSliderPaintInvalidationOnInput) {
 }
 
 TEST_F(MediaControlsImplTest, TimelineMetricsWidth) {
-  MediaControls().MediaElement().SetSrc("https://example.com/foo.mp4");
+  MediaControls().MediaElement().setSrc("https://example.com/foo.mp4");
   testing::RunPendingTasks();
   SetReady();
   EnsureSizing();
@@ -774,7 +774,7 @@ TEST_F(MediaControlsImplTestWithMockScheduler,
 
   MediaControls().MediaElement().SetBooleanAttribute(HTMLNames::controlsAttr,
                                                      true);
-  MediaControls().MediaElement().SetSrc("http://example.com");
+  MediaControls().MediaElement().setSrc("http://example.com");
   MediaControls().MediaElement().Play();
 
   // Controls start out visible.
