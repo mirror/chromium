@@ -61,8 +61,12 @@ class ModalWindowController : public ServerWindowObserver,
   // recently, if any.
   ServerWindow* GetActiveSystemModalWindow() const;
 
+  void RemoveWindow(ServerWindow* window);
+
   // ServerWindowObserver:
   void OnWindowDestroyed(ServerWindow* window) override;
+  void OnWindowModalTypeChanged(ServerWindow* window,
+                                ModalType old_modal_type) override;
 
   // ServerWindowDrawnTrackerObserver:
   void OnDrawnStateChanged(ServerWindow* ancestor,
