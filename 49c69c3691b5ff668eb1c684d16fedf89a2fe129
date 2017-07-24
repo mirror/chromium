@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4739f6b5_6b5651b9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-24T08:16:39Z",
+      "side": 1,
+      "message": "\"Make it make more sense\" is poorly written but correct (\u003d\"Change it to make more sense\")... not sure how to improve it.",
+      "parentUuid": "fa1b5e86_638a511c",
+      "revId": "49c69c3691b5ff668eb1c684d16fedf89a2fe129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5910a54a_2224899f",
         "filename": "content/renderer/service_worker/service_worker_context_client.h",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9c3292b5_6c82a4b1",
+        "filename": "content/renderer/service_worker/service_worker_context_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-24T08:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5910a54a_2224899f",
+      "revId": "49c69c3691b5ff668eb1c684d16fedf89a2fe129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4a3662a_58d9a84c",
         "filename": "content/renderer/service_worker/service_worker_context_client.h",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-24T08:03:22Z",
       "side": 1,
       "message": "|client_id| would be more readable.\n\n... ah, I see. This |id| comes from the spec (I\u0027m now reading WebServiceWorkerContextClient.h). Then \"id\" is fine with me.",
+      "revId": "49c69c3691b5ff668eb1c684d16fedf89a2fe129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "285a9634_f4bffb27",
+        "filename": "content/renderer/service_worker/service_worker_context_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-24T08:16:39Z",
+      "side": 1,
+      "message": "agree, client_id is more readable. Done.",
+      "parentUuid": "e4a3662a_58d9a84c",
       "revId": "49c69c3691b5ff668eb1c684d16fedf89a2fe129",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "ac84117d_2e8afc20",
+        "filename": "third_party/WebKit/public/web/modules/serviceworker/WebServiceWorkerContextClient.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-24T08:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e887aaa9_d727d795",
+      "revId": "49c69c3691b5ff668eb1c684d16fedf89a2fe129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb56d58f_d78a06dc",
         "filename": "third_party/WebKit/public/web/modules/serviceworker/WebServiceWorkerContextClient.h",
         "patchSetId": 4
@@ -81,6 +153,30 @@
       "writtenOn": "2017-07-24T08:03:22Z",
       "side": 1,
       "message": "Optional: How about adding a link to the corresponding spec?",
+      "range": {
+        "startLine": 75,
+        "startChar": 15,
+        "endLine": 75,
+        "endChar": 16
+      },
+      "revId": "49c69c3691b5ff668eb1c684d16fedf89a2fe129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77e2e1d3_6a284fda",
+        "filename": "third_party/WebKit/public/web/modules/serviceworker/WebServiceWorkerContextClient.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-24T08:16:39Z",
+      "side": 1,
+      "message": "Hmm, I think I\u0027ll leave out the link because they really should belong in the Clients.h or whatever, and this is just the partial implementation. Also the spec is often unreadable. I\u0027ll change \"Implementation of\" to \"For\" and add what the embedder is requested to do. For this function and below.",
+      "parentUuid": "fb56d58f_d78a06dc",
       "range": {
         "startLine": 75,
         "startChar": 15,
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "8f07a68a_f90194f8",
+        "filename": "third_party/WebKit/public/web/modules/serviceworker/WebServiceWorkerContextClient.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-24T08:16:39Z",
+      "side": 1,
+      "message": "Yea, lots of typos :O  Done.",
+      "parentUuid": "f5e5949a_b7996b73",
+      "revId": "49c69c3691b5ff668eb1c684d16fedf89a2fe129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a7e1104_6d73af10",
         "filename": "third_party/WebKit/public/web/modules/serviceworker/WebServiceWorkerContextClient.h",
         "patchSetId": 4
@@ -121,6 +235,24 @@
       "writtenOn": "2017-07-24T08:03:22Z",
       "side": 1,
       "message": "Acked. I\u0027ll work on this after this CL.",
+      "revId": "49c69c3691b5ff668eb1c684d16fedf89a2fe129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50bf4fd4_ffebc6f1",
+        "filename": "third_party/WebKit/public/web/modules/serviceworker/WebServiceWorkerContextClient.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-24T08:16:39Z",
+      "side": 1,
+      "message": "Thanks!!",
+      "parentUuid": "3a7e1104_6d73af10",
       "revId": "49c69c3691b5ff668eb1c684d16fedf89a2fe129",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "bf9ba9dc_80218f3a",
+        "filename": "third_party/WebKit/public/web/modules/serviceworker/WebServiceWorkerContextClient.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-24T08:16:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79a4f6bc_23a36d2f",
+      "revId": "49c69c3691b5ff668eb1c684d16fedf89a2fe129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc04eec1_f5a8c2ba",
         "filename": "third_party/WebKit/public/web/modules/serviceworker/WebServiceWorkerContextClient.h",
         "patchSetId": 4
@@ -155,6 +305,24 @@
       "writtenOn": "2017-07-24T08:03:22Z",
       "side": 1,
       "message": "Can we clarify this ownership transfer using std::unique_ptr etc?",
+      "revId": "49c69c3691b5ff668eb1c684d16fedf89a2fe129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc93cb80_6241f8ef",
+        "filename": "third_party/WebKit/public/web/modules/serviceworker/WebServiceWorkerContextClient.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-24T08:16:39Z",
+      "side": 1,
+      "message": "out of scope :) I\u0027ll consider it a TODO.",
+      "parentUuid": "fc04eec1_f5a8c2ba",
       "revId": "49c69c3691b5ff668eb1c684d16fedf89a2fe129",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
