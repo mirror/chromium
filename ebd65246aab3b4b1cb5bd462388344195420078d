@@ -22,6 +22,30 @@
       "revId": "ebd65246aab3b4b1cb5bd462388344195420078d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e64789eb_acbfa2ca",
+        "filename": "components/update_client/configurator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-07-24T16:43:30Z",
+      "side": 0,
+      "message": "This function was called in production code but we landed https://chromium-review.googlesource.com/c/581828 which fixed the call sites, and this change is just removing dead code now.",
+      "parentUuid": "46469fa9_5ea7b895",
+      "range": {
+        "startLine": 120,
+        "startChar": 51,
+        "endLine": 120,
+        "endChar": 73
+      },
+      "revId": "ebd65246aab3b4b1cb5bd462388344195420078d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
