@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e16196ca_c288c536",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/service/reconnect-during.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-07-24T23:09:23Z",
+      "side": 1,
+      "message": "This rewrite hasn\u0027t preserved the test\u0027s mechanism. The call to get characteristics should succeed, except that the device has been disconnected before they are made.\n\nget device\nconnect\nget service\ndisconnect\nattempt to get characteristic on a disconnected device\nexpect fail.",
+      "revId": "89ff7b4fdd5c2ff51c5cee09999d41541f417d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
