@@ -70,6 +70,24 @@
       "revId": "d16e288f9f5c6d74d6c05d284ce1beaad4fe9d4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0c43ab9_40edf460",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2827,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-24T19:30:30Z",
+      "side": 1,
+      "message": "#1 is impossible. Due to the ordering requirements of IPC Channel and associated interfaces, we do not allow Channel-associated interfaces to be unbound: doing so would require all incoming messages to be blocked (because of how associated interfaces are specified) and we don\u0027t want arbitrary legacy IPC messages to be blocked.\n\n#2 borders on acceptable but seems kind of messy.\n\n#3 would not be feasible without some dubious refactoring. Otherwise you would be manually parsing the message and I don\u0027t think that\u0027s acceptable.\n\n#4 what about just adding a special testing API to allow overriding how FrameHost requests are handled, and have explicit logic in RFHI to forward to an overriding binder if set?",
+      "parentUuid": "f03a63c2_65ee8911",
+      "revId": "d16e288f9f5c6d74d6c05d284ce1beaad4fe9d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
