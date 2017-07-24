@@ -1398,9 +1398,21 @@ void CacheStorageCache::KeysDidQueryCache(
 void CacheStorageCache::CloseImpl(base::OnceClosure callback) {
   DCHECK_NE(BACKEND_CLOSED, backend_state_);
 
-  backend_state_ = BACKEND_CLOSED;
+  if (backend_ && !memory_only_)
+    waiting_for_backend_close_ = std::move(callback);
   backend_.reset();
-  std::move(callback).Run();
+  if (!callback.is_null()) {
+    backend_state_ = BACKEND_CLOSED;
+    std::move(callback).Run();
+  }
+}
+
+void CacheStorageCache::DeleteBackendCompletedIO() {
+  if (!waiting_for_backend_close_.is_null()) {
+    DCHECK_NE(BACKEND_CLOSED, backend_state_);
+    backend_state_ = BACKEND_CLOSED;
+    std::move(waiting_for_backend_close_).Run();
+  }
 }
 
 void CacheStorageCache::SizeImpl(SizeCallback callback) {
@@ -1434,12 +1446,14 @@ void CacheStorageCache::CreateBackend(ErrorCallback callback) {
                          base::Passed(std::move(backend_ptr))));
 
   // TODO(jkarlin): Use the cache task runner that ServiceWorkerCacheCore
-  // has for disk caches.
+  // has for disk caches. ### check the reasoning behind this
   int rv = disk_cache::CreateCacheBackend(
       cache_type, net::CACHE_BACKEND_SIMPLE, path_, kMaxCacheBytes,
       false, /* force */
-      BrowserThread::GetTaskRunnerForThread(BrowserThread::CACHE).get(), NULL,
-      backend, create_cache_callback);
+      NULL, backend,
+      base::BindRepeating(&CacheStorageCache::DeleteBackendCompletedIO,
+                          weak_ptr_factory_.GetWeakPtr()),
+      create_cache_callback);
   if (rv != net::ERR_IO_PENDING)
     create_cache_callback.Run(rv);
 }

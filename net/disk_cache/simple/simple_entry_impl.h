@@ -35,6 +35,7 @@ class NetLog;
 
 namespace disk_cache {
 
+class CleanupContext;
 class SimpleBackendImpl;
 class SimpleSynchronousEntry;
 class SimpleEntryStat;
@@ -74,6 +75,7 @@ class NET_EXPORT_PRIVATE SimpleEntryImpl : public Entry,
 
   SimpleEntryImpl(net::CacheType cache_type,
                   const base::FilePath& path,
+                  CleanupContext* cleanup_context,
                   uint64_t entry_hash,
                   OperationsMode operations_mode,
                   SimpleBackendImpl* backend,
@@ -328,6 +330,9 @@ class NET_EXPORT_PRIVATE SimpleEntryImpl : public Entry,
                   int offset,
                   int length,
                   int stream_index);
+
+  // We want all async I/O on entries to complete before recycling the dir.
+  scoped_refptr<CleanupContext> cleanup_context_;
 
   std::unique_ptr<ActiveEntryProxy> active_entry_proxy_;
 
