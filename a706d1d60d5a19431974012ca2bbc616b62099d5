@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c119148f_3e8a97ba",
+        "filename": "chrome/browser/ui/toolbar/media_router_contextual_menu.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-24T19:20:48Z",
+      "side": 1,
+      "message": "Move this check to the constructor so this item isn\u0027t shown at all in guest mode.",
+      "range": {
+        "startLine": 118,
+        "startChar": 78,
+        "endLine": 118,
+        "endChar": 0
+      },
+      "revId": "a706d1d60d5a19431974012ca2bbc616b62099d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b724d8e7_1e7f6017",
+        "filename": "chrome/browser/ui/toolbar/media_router_contextual_menu.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-24T19:20:48Z",
+      "side": 1,
+      "message": "Right now, this is crashing because |request_manager| is nullptr on incognito mode. We should make EventPageRequestManagerFactory redirect incognito contexts similar to MediaRouterFactory.",
+      "range": {
+        "startLine": 191,
+        "startChar": 58,
+        "endLine": 191,
+        "endChar": 0
+      },
+      "revId": "a706d1d60d5a19431974012ca2bbc616b62099d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
