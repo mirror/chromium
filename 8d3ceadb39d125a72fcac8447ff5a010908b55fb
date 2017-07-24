@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9dca763_b00b87b5",
+        "filename": "content/browser/media/capture/desktop_capture_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-24T18:04:15Z",
+      "side": 0,
+      "message": "Even scaling from odd dimension to even causes blurring, you can still put the logic in this else condition paragraph. Maybe something like,\n} else if (!frame-\u003esize().equals(output_size)) {\n  if (frame_width \u0026 1 || frame_height \u0026 1) {\n    frame \u003d webrtc::CreateCroppedDesktopFrame( ... );\n  }\n\n  if (!frame-\u003esize().equals(output_size)) {\n    // Scales the |frame|.\n  }\n}\n\nIt would be pretty clear, both cropping and scaling are expected.\n\nIs this the behavior you expected?",
+      "range": {
+        "startLine": 290,
+        "startChar": 2,
+        "endLine": 290,
+        "endChar": 50
+      },
+      "revId": "8d3ceadb39d125a72fcac8447ff5a010908b55fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

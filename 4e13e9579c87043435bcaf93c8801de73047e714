@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84ab6edf_e9dfdd5a",
+        "filename": "content/browser/media/capture/desktop_capture_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-24T18:04:15Z",
+      "side": 1,
+      "message": "This still changes the behavior: the original implementation will return a min_size x min_size (controlled by resolution_chooser) black frame. But after this change, a 2 x 2 will be returned.",
+      "range": {
+        "startLine": 265,
+        "startChar": 4,
+        "endLine": 265,
+        "endChar": 74
+      },
+      "revId": "4e13e9579c87043435bcaf93c8801de73047e714",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
