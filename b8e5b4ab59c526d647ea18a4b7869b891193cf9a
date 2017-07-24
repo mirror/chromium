@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d211331e_01730772",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-07-24T17:19:15Z",
+      "side": 1,
+      "message": "Can we include this from somewhere else instead of re-declaring it multiple places?",
+      "revId": "b8e5b4ab59c526d647ea18a4b7869b891193cf9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28853804_a69c315a",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_graph_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-07-24T17:19:15Z",
+      "side": 1,
+      "message": "nit: newline",
+      "revId": "b8e5b4ab59c526d647ea18a4b7869b891193cf9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd5af9d9_6bf6e9ac",
+        "filename": "services/resource_coordinator/public/cpp/resource_coordinator_features.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-07-24T17:19:15Z",
+      "side": 1,
+      "message": "Maybe make the callsite supply the default value instead?",
+      "revId": "b8e5b4ab59c526d647ea18a4b7869b891193cf9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f4340c0_db910ac1",
+        "filename": "services/resource_coordinator/public/cpp/resource_coordinator_features.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-07-24T17:19:15Z",
+      "side": 1,
+      "message": "nit: newline",
+      "revId": "b8e5b4ab59c526d647ea18a4b7869b891193cf9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
