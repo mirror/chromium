@@ -6,6 +6,7 @@
 
 #include <string>
 
+#include "base/logging.h"
 #include "base/macros.h"
 #include "base/test/scoped_feature_list.h"
 #include "base/time/time.h"
@@ -14,6 +15,7 @@
 #include "components/cast_certificate/cast_crl.h"
 #include "components/cast_certificate/proto/test_suite.pb.h"
 #include "components/cast_channel/proto/cast_channel.pb.h"
+#include "net/cert/internal/signature_algorithm.h"
 #include "net/cert/internal/trust_store_in_memory.h"
 #include "net/cert/x509_certificate.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -29,7 +31,9 @@ class CastAuthUtilTest : public testing::Test {
   void SetUp() override {}
 
  protected:
-  static AuthResponse CreateAuthResponse(std::string* signed_data) {
+  static AuthResponse CreateAuthResponse(
+      std::string* signed_data,
+      net::DigestAlgorithm digest_algorithm) {
     auto chain = cast_certificate::testing::ReadCertificateChainFromFile(
         "certificates/chromecast_gen1.pem");
     CHECK(!chain.empty());
@@ -43,7 +47,18 @@ class CastAuthUtilTest : public testing::Test {
     for (size_t i = 1; i < chain.size(); ++i)
       response.add_intermediate_certificate(chain[i]);
 
-    response.set_signature(signature_data.signature_sha1);
+    switch (digest_algorithm) {
+      case net::DigestAlgorithm::Sha1:
+        response.set_signature(signature_data.signature_sha1);
+        response.set_hash_algorithm(SHA1);
+        break;
+      case net::DigestAlgorithm::Sha256:
+        response.set_signature(signature_data.signature_sha256);
+        response.set_hash_algorithm(SHA256);
+        break;
+      default:
+        NOTREACHED();
+    }
     *signed_data = signature_data.message;
 
     return response;
@@ -58,7 +73,8 @@ class CastAuthUtilTest : public testing::Test {
 // being verified doesn't expire until 2032!
 TEST_F(CastAuthUtilTest, VerifySuccess) {
   std::string signed_data;
-  AuthResponse auth_response = CreateAuthResponse(&signed_data);
+  AuthResponse auth_response =
+      CreateAuthResponse(&signed_data, net::DigestAlgorithm::Sha256);
   base::Time now = base::Time::Now();
   AuthResult result = VerifyCredentialsForTest(
       auth_response, signed_data, cast_certificate::CRLPolicy::CRL_OPTIONAL,
@@ -69,7 +85,8 @@ TEST_F(CastAuthUtilTest, VerifySuccess) {
 
 TEST_F(CastAuthUtilTest, VerifyBadCA) {
   std::string signed_data;
-  AuthResponse auth_response = CreateAuthResponse(&signed_data);
+  AuthResponse auth_response =
+      CreateAuthResponse(&signed_data, net::DigestAlgorithm::Sha256);
   MangleString(auth_response.mutable_intermediate_certificate(0));
   AuthResult result = VerifyCredentials(auth_response, signed_data);
   EXPECT_FALSE(result.success());
@@ -78,7 +95,8 @@ TEST_F(CastAuthUtilTest, VerifyBadCA) {
 
 TEST_F(CastAuthUtilTest, VerifyBadClientAuthCert) {
   std::string signed_data;
-  AuthResponse auth_response = CreateAuthResponse(&signed_data);
+  AuthResponse auth_response =
+      CreateAuthResponse(&signed_data, net::DigestAlgorithm::Sha256);
   MangleString(auth_response.mutable_client_auth_certificate());
   AuthResult result = VerifyCredentials(auth_response, signed_data);
   EXPECT_FALSE(result.success());
@@ -88,16 +106,54 @@ TEST_F(CastAuthUtilTest, VerifyBadClientAuthCert) {
 
 TEST_F(CastAuthUtilTest, VerifyBadSignature) {
   std::string signed_data;
-  AuthResponse auth_response = CreateAuthResponse(&signed_data);
+  AuthResponse auth_response =
+      CreateAuthResponse(&signed_data, net::DigestAlgorithm::Sha256);
   MangleString(auth_response.mutable_signature());
   AuthResult result = VerifyCredentials(auth_response, signed_data);
   EXPECT_FALSE(result.success());
   EXPECT_EQ(AuthResult::ERROR_SIGNED_BLOBS_MISMATCH, result.error_type);
 }
 
+TEST_F(CastAuthUtilTest, VerifyEmptySignature) {
+  std::string signed_data;
+  AuthResponse auth_response =
+      CreateAuthResponse(&signed_data, net::DigestAlgorithm::Sha256);
+  auth_response.mutable_signature()->clear();
+  AuthResult result = VerifyCredentials(auth_response, signed_data);
+  EXPECT_FALSE(result.success());
+  EXPECT_EQ(AuthResult::ERROR_SIGNATURE_EMPTY, result.error_type);
+}
+
+TEST_F(CastAuthUtilTest, VerifyUnsupportedDigest) {
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitAndEnableFeature(
+      base::Feature{"CastSHA256Enforced", base::FEATURE_DISABLED_BY_DEFAULT});
+  std::string signed_data;
+  AuthResponse auth_response =
+      CreateAuthResponse(&signed_data, net::DigestAlgorithm::Sha1);
+  base::Time now = base::Time::Now();
+  AuthResult result = VerifyCredentialsForTest(
+      auth_response, signed_data, cast_certificate::CRLPolicy::CRL_OPTIONAL,
+      nullptr, nullptr, now);
+  EXPECT_FALSE(result.success());
+  EXPECT_EQ(AuthResult::ERROR_DIGEST_UNSUPPORTED, result.error_type);
+}
+
+TEST_F(CastAuthUtilTest, VerifyBackwardsCompatibleDigest) {
+  std::string signed_data;
+  AuthResponse auth_response =
+      CreateAuthResponse(&signed_data, net::DigestAlgorithm::Sha1);
+  base::Time now = base::Time::Now();
+  AuthResult result = VerifyCredentialsForTest(
+      auth_response, signed_data, cast_certificate::CRLPolicy::CRL_OPTIONAL,
+      nullptr, nullptr, now);
+  EXPECT_TRUE(result.success());
+}
+
 TEST_F(CastAuthUtilTest, VerifyBadPeerCert) {
   std::string signed_data;
-  AuthResponse auth_response = CreateAuthResponse(&signed_data);
+  AuthResponse auth_response =
+      CreateAuthResponse(&signed_data, net::DigestAlgorithm::Sha256);
   MangleString(&signed_data);
   AuthResult result = VerifyCredentials(auth_response, signed_data);
   EXPECT_FALSE(result.success());
