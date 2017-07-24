@@ -22,6 +22,30 @@
       "revId": "66a983db5d254a223301736818b2ae87f98b8e9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92bce6f1_66640e7f",
+        "filename": "net/disk_cache/simple/simple_index_file_posix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-24T18:21:39Z",
+      "side": 1,
+      "message": "I think this is equivalent to what I had before I added EINTR check. This code is executed only after readdir() returned NULL, i.e. we ignore errno after successful readdir() calls. The code you suggest doesn\u0027t handle errno\u003dEINTR returned at the end of the directory, which AFAIU we want to handle for older versions of Bionic. What am I missing?",
+      "parentUuid": "aae38f80_0c84f75b",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 32
+      },
+      "revId": "66a983db5d254a223301736818b2ae87f98b8e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

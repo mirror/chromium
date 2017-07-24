@@ -70,6 +70,30 @@
       "revId": "b5f67e08a2b9045ab0a33dede33453e79e1ad937",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60d41ad3_aacf156e",
+        "filename": "net/disk_cache/simple/simple_index_file_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-24T18:21:39Z",
+      "side": 1,
+      "message": "Moved error handling inside the loop to make it less confusing.",
+      "parentUuid": "72d3bbf9_d8c446b2",
+      "range": {
+        "startLine": 57,
+        "startChar": 6,
+        "endLine": 57,
+        "endChar": 11
+      },
+      "revId": "b5f67e08a2b9045ab0a33dede33453e79e1ad937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
