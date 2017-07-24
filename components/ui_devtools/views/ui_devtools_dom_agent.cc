@@ -4,6 +4,7 @@
 
 #include "components/ui_devtools/views/ui_devtools_dom_agent.h"
 
+#include "base/strings/utf_string_conversions.h"
 #include "components/ui_devtools/devtools_server.h"
 #include "components/ui_devtools/views/ui_devtools_overlay_agent.h"
 #include "components/ui_devtools/views/ui_element.h"
@@ -16,6 +17,7 @@
 #include "ui/aura/env.h"
 #include "ui/aura/window.h"
 #include "ui/aura/window_tree_host.h"
+#include "ui/base/resource/resource_bundle.h"
 #include "ui/compositor/paint_recorder.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
@@ -151,6 +153,7 @@ int FindUIElementIdForWindow(UIElement* root, aura::Window* element) {
 }  // namespace
 
 UIDevToolsDOMAgent::UIDevToolsDOMAgent() : is_building_tree_(false) {
+  show_size_on_canvas_ = false;
   aura::Env::GetInstance()->AddObserver(this);
 }
 
@@ -242,7 +245,9 @@ UIElement* UIDevToolsDOMAgent::GetElementFromNodeId(int node_id) {
   return node_id_to_ui_element_[node_id];
 }
 
-ui_devtools::protocol::Response UIDevToolsDOMAgent::HighlightNode(int node_id) {
+ui_devtools::protocol::Response UIDevToolsDOMAgent::HighlightNode(
+    int node_id,
+    bool show_size) {
   std::pair<aura::Window*, gfx::Rect> window_and_bounds =
       node_id_to_ui_element_.count(node_id)
           ? node_id_to_ui_element_[node_id]->GetNodeWindowAndBounds()
@@ -251,6 +256,7 @@ ui_devtools::protocol::Response UIDevToolsDOMAgent::HighlightNode(int node_id) {
   if (!window_and_bounds.first)
     return ui_devtools::protocol::Response::Error("No node found with that id");
 
+  show_size_on_canvas_ = show_size;
   UpdateHighlight(window_and_bounds);
 
   if (!layer_for_highlighting_->visible())
@@ -326,6 +332,28 @@ void UIDevToolsDOMAgent::OnPaintLayer(const ui::PaintContext& context) {
 
   // Draw ui element bounds.
   canvas_->DrawRect(rect, SK_ColorBLUE);
+
+  if (show_size_on_canvas_) {
+    const int kTextHeight = 12;
+    const int kCharacterPerPixel = 5;
+    const int kTextWidth =
+        kCharacterPerPixel * hovered_element_bounds.size().ToString().length();
+
+    base::string16 utf16_text =
+        base::UTF8ToUTF16(hovered_element_bounds.size().ToString());
+    ResourceBundle* rb = &ResourceBundle::GetSharedInstance();
+    gfx::FontList base_font = rb->GetFontList(ResourceBundle::BaseFont)
+                                  .DeriveWithHeightUpperBound(kTextHeight);
+    gfx::Point text_top_left_point(hovered_element_bounds.x() + 1,
+                                   hovered_element_bounds.height() / 2 -
+                                       kTextHeight / 2 +
+                                       hovered_element_bounds.y());
+    canvas_->FillRect(
+        gfx::Rect(text_top_left_point, gfx::Size(kTextWidth, kTextHeight)),
+        SK_ColorWHITE, SkBlendMode::kColor);
+    canvas_->DrawStringRect(utf16_text, base_font, SK_ColorRED,
+                            hovered_element_bounds);
+  }
 }
 
 void UIDevToolsDOMAgent::OnHostInitialized(aura::WindowTreeHost* host) {
