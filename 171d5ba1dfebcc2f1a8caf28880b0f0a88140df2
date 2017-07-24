@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a340524_98912f2a",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollingCoordinator.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 803,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-24T18:29:11Z",
+      "side": 1,
+      "message": "Nit: checking .Contains and then .at requires two hashmap lookups but you can do this in one using an iterator. The pattern is something like:\nauto layer_touch_action \u003d paint_layer_touch_action.Find(graphics_layer)\nif (layer_touch_action !\u003d paint_layer_touch_action.end())\n  effective_touch_action \u003d layer_touch_action.value();",
+      "revId": "171d5ba1dfebcc2f1a8caf28880b0f0a88140df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
