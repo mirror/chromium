@@ -41,7 +41,7 @@
 }
 
 /************* Network Selection Screen **************/
-#networkSelectionScreen .footer {
+#networkSelectionScreen [slot=footer] {
   max-height: 313px;
 }
 
