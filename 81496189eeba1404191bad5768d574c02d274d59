@@ -1,0 +1,360 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "addbf1e4_49fc7671",
+        "filename": "ios/web/navigation/crw_navigation_item_holder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-24T23:13:49Z",
+      "side": 1,
+      "message": "Could you please write a unit test for this class.",
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11f328b5_2b98cbdc",
+        "filename": "ios/web/navigation/crw_navigation_item_holder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-24T23:13:49Z",
+      "side": 1,
+      "message": "nit: add a linebreak after library includes",
+      "range": {
+        "startLine": 8,
+        "startChar": 17,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ce9c641_1428f7d5",
+        "filename": "ios/web/navigation/crw_navigation_item_holder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-24T23:13:49Z",
+      "side": 1,
+      "message": "nit: Do you move association code here? So this class will have convenience method like this:\n\n+ (nonnull instancetype)holderWithBackForwardListItem:(KBackForwardListItem*)item {\n  // get associated object\n  // add associated object if did not exist\n  // return associated object\n}\n\nThis way this code class will not be a dummy holder and the code will be more testable (it is easier to test this class than NavigationManager). WDYT?",
+      "range": {
+        "startLine": 18,
+        "startChar": 24,
+        "endLine": 18,
+        "endChar": 46
+      },
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb9c7755_bcdec808",
+        "filename": "ios/web/navigation/crw_navigation_item_holder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-24T23:13:49Z",
+      "side": 1,
+      "message": "Really nit: s/navItem/navigationItem\n\nFrom Style Guide: \"Names should be as descriptive as possible, within reason. Avoid non-standard abbreviations\"",
+      "range": {
+        "startLine": 19,
+        "startChar": 46,
+        "endLine": 19,
+        "endChar": 53
+      },
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "996d3b8b_ee85a980",
+        "filename": "ios/web/navigation/crw_navigation_item_holder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-24T23:13:49Z",
+      "side": 1,
+      "message": "add - (instancetype)init NS_UNAVAILABLE;",
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab43e2af_eeab3a30",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-24T23:13:49Z",
+      "side": 1,
+      "message": "Should this comment be a part of class description? Seems like documentation for implementation details.",
+      "range": {
+        "startLine": 52,
+        "startChar": 3,
+        "endLine": 52,
+        "endChar": 41
+      },
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83e2511b_ded7916e",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-24T23:13:49Z",
+      "side": 1,
+      "message": "The logic for this method is very different from -[WKBackForwardList itemAtIndex:], which uses 0 as current item. Could you please document the valid range for |GetWKItemAtIndex|.",
+      "range": {
+        "startLine": 125,
+        "startChar": 17,
+        "endLine": 125,
+        "endChar": 33
+      },
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8463b6ab_8420bc15",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-24T23:13:49Z",
+      "side": 1,
+      "message": "nit: Is there value in marking return pointer as const?",
+      "range": {
+        "startLine": 127,
+        "startChar": 2,
+        "endLine": 127,
+        "endChar": 7
+      },
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4303d728_570e5dea",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-24T23:13:49Z",
+      "side": 1,
+      "message": "nit: s/Returns nullptr/nullptr",
+      "range": {
+        "startLine": 129,
+        "startChar": 45,
+        "endLine": 129,
+        "endChar": 52
+      },
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40e0888f_e1d56daf",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-24T23:13:49Z",
+      "side": 1,
+      "message": "This compares pointers not URLs, so you want to use isEqual: instead.",
+      "range": {
+        "startLine": 139,
+        "startChar": 24,
+        "endLine": 139,
+        "endChar": 25
+      },
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7502338_731a655f",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-24T23:13:49Z",
+      "side": 1,
+      "message": "Do you want to use a local variable for |proxy.backForwardList.currentItem.URL|?",
+      "range": {
+        "startLine": 141,
+        "startChar": 35,
+        "endLine": 141,
+        "endChar": 50
+      },
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbd4b7a7_57040709",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-24T23:13:49Z",
+      "side": 1,
+      "message": "What if pending_item_index_ !\u003d -1? In that case we probably don\u0027t want to change NavigationItem, right?",
+      "range": {
+        "startLine": 166,
+        "startChar": 2,
+        "endLine": 166,
+        "endChar": 27
+      },
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ed4c115_6a1b5657",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-24T23:13:49Z",
+      "side": 1,
+      "message": "nit: Is there a value in making wk_item a pointer to constant?",
+      "range": {
+        "startLine": 249,
+        "startChar": 8,
+        "endLine": 249,
+        "endChar": 29
+      },
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffa8b388_fee9b201",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-24T23:13:49Z",
+      "side": 1,
+      "message": "Why do we need to call SyncNavigationItemsToWKBackForwardList? Should we simply create a new NavigationItem for this WKBackForwardListItem and return it?\n\nThe issue with this code is linear performance, which will turn into quadratic performance with the following completely legitimate code:\n\nfor (int i \u003d 0; i \u003c nm-\u003eGetItemCount(); i++)\n  DoSomething(nm-\u003eGetItemAtIndex(i));\n\nSome users unfortunately have very large sessions so this code will turn into a bottleneck.",
+      "range": {
+        "startLine": 258,
+        "startChar": 8,
+        "endLine": 258,
+        "endChar": 46
+      },
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c9c3bcf_8792d822",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-24T23:13:49Z",
+      "side": 1,
+      "message": "Should we do this lazily in GetLastCommittedItemIndex() ?",
+      "range": {
+        "startLine": 365,
+        "startChar": 4,
+        "endLine": 365,
+        "endChar": 30
+      },
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d408636f_7ebdd3ef",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-24T23:13:49Z",
+      "side": 1,
+      "message": "Do we need this cast? If so, please use C++ casting operator.\n\nSame comment for other 2 places.",
+      "range": {
+        "startLine": 174,
+        "startChar": 16,
+        "endLine": 174,
+        "endChar": 30
+      },
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
