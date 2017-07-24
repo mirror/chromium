@@ -6,6 +6,7 @@
 #define COMPONENTS_UI_DEVTOOLS_VIEWS_UI_DEVTOOLS_DOM_AGENT_H_
 
 #include "components/ui_devtools/DOM.h"
+#include "components/ui_devtools/Overlay.h"
 #include "components/ui_devtools/devtools_base_agent.h"
 #include "components/ui_devtools/views/ui_element_delegate.h"
 #include "ui/aura/env_observer.h"
@@ -38,11 +39,10 @@ class UIDevToolsDOMAgent : public ui_devtools::UiDevToolsBaseAgent<
   ui_devtools::protocol::Response disable() override;
   ui_devtools::protocol::Response getDocument(
       std::unique_ptr<ui_devtools::protocol::DOM::Node>* out_root) override;
-  ui_devtools::protocol::Response highlightNode(
-      std::unique_ptr<ui_devtools::protocol::DOM::HighlightConfig>
-          highlight_config,
-      ui_devtools::protocol::Maybe<int> node_id) override;
   ui_devtools::protocol::Response hideHighlight() override;
+  ui_devtools::protocol::Response pushNodesByBackendIdsToFrontend(
+      std::unique_ptr<protocol::Array<int>> backend_node_ids,
+      std::unique_ptr<protocol::Array<int>>* result) override;
 
   // UIElementDelegate:
   void OnUIElementAdded(UIElement* parent, UIElement* child) override;
@@ -57,6 +57,11 @@ class UIDevToolsDOMAgent : public ui_devtools::UiDevToolsBaseAgent<
   const std::vector<aura::Window*>& root_windows() const {
     return root_windows_;
   };
+  ui_devtools::protocol::Response HighlightNode(
+      std::unique_ptr<ui_devtools::protocol::Overlay::HighlightConfig>
+          highlight_config,
+      int node_id);
+  void FindElementByEventHandler(const gfx::Point& p, int* element_id);
 
  private:
   // aura::EnvObserver:
@@ -78,14 +83,9 @@ class UIDevToolsDOMAgent : public ui_devtools::UiDevToolsBaseAgent<
       views::View* view);
   void RemoveDomNode(UIElement* ui_element);
   void Reset();
-  void InitializeHighlightingWidget();
   void UpdateHighlight(
       const std::pair<aura::Window*, gfx::Rect>& window_and_bounds,
       SkColor background);
-  ui_devtools::protocol::Response HighlightNode(
-      std::unique_ptr<ui_devtools::protocol::DOM::HighlightConfig>
-          highlight_config,
-      int node_id);
 
   bool is_building_tree_;
   std::unique_ptr<UIElement> window_element_root_;
