@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa1b5e86_638a511c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-24T08:03:22Z",
+      "side": 1,
+      "message": "Make it make more sense -\u003e Make it more sense ?",
+      "revId": "49c69c3691b5ff668eb1c684d16fedf89a2fe129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5910a54a_2224899f",
+        "filename": "content/renderer/service_worker/service_worker_context_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-24T08:03:22Z",
+      "side": 1,
+      "message": "\"ServiceWorkerGlobalScope\" would be simpler than \"ServiceWorker\u0027s WorkerGlobalScope\".",
+      "revId": "49c69c3691b5ff668eb1c684d16fedf89a2fe129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4a3662a_58d9a84c",
+        "filename": "content/renderer/service_worker/service_worker_context_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-24T08:03:22Z",
+      "side": 1,
+      "message": "|client_id| would be more readable.\n\n... ah, I see. This |id| comes from the spec (I\u0027m now reading WebServiceWorkerContextClient.h). Then \"id\" is fine with me.",
+      "revId": "49c69c3691b5ff668eb1c684d16fedf89a2fe129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e887aaa9_d727d795",
+        "filename": "third_party/WebKit/public/web/modules/serviceworker/WebServiceWorkerContextClient.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-24T08:03:22Z",
+      "side": 1,
+      "message": "only by -\u003e used only by ?",
+      "revId": "49c69c3691b5ff668eb1c684d16fedf89a2fe129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb56d58f_d78a06dc",
+        "filename": "third_party/WebKit/public/web/modules/serviceworker/WebServiceWorkerContextClient.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-24T08:03:22Z",
+      "side": 1,
+      "message": "Optional: How about adding a link to the corresponding spec?",
+      "range": {
+        "startLine": 75,
+        "startChar": 15,
+        "endLine": 75,
+        "endChar": 16
+      },
+      "revId": "49c69c3691b5ff668eb1c684d16fedf89a2fe129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5e5949a_b7996b73",
+        "filename": "third_party/WebKit/public/web/modules/serviceworker/WebServiceWorkerContextClient.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-24T08:03:22Z",
+      "side": 1,
+      "message": "asked to terminated -\u003e asked to terminate (or \"asked to be terminated\") ?",
+      "revId": "49c69c3691b5ff668eb1c684d16fedf89a2fe129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a7e1104_6d73af10",
+        "filename": "third_party/WebKit/public/web/modules/serviceworker/WebServiceWorkerContextClient.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-24T08:03:22Z",
+      "side": 1,
+      "message": "Acked. I\u0027ll work on this after this CL.",
+      "revId": "49c69c3691b5ff668eb1c684d16fedf89a2fe129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79a4f6bc_23a36d2f",
+        "filename": "third_party/WebKit/public/web/modules/serviceworker/WebServiceWorkerContextClient.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-24T08:03:22Z",
+      "side": 1,
+      "message": "Can you add a blank line here?",
+      "revId": "49c69c3691b5ff668eb1c684d16fedf89a2fe129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc04eec1_f5a8c2ba",
+        "filename": "third_party/WebKit/public/web/modules/serviceworker/WebServiceWorkerContextClient.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-24T08:03:22Z",
+      "side": 1,
+      "message": "Can we clarify this ownership transfer using std::unique_ptr etc?",
+      "revId": "49c69c3691b5ff668eb1c684d16fedf89a2fe129",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
