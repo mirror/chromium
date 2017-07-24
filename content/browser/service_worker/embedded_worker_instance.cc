@@ -15,6 +15,7 @@
 #include "content/browser/devtools/service_worker_devtools_manager.h"
 #include "content/browser/service_worker/embedded_worker_registry.h"
 #include "content/browser/service_worker/embedded_worker_status.h"
+#include "content/browser/service_worker/service_worker_content_settings_proxy_impl.h"
 #include "content/browser/service_worker/service_worker_context_core.h"
 #include "content/common/content_switches_internal.h"
 #include "content/common/service_worker/embedded_worker_messages.h"
@@ -649,11 +650,16 @@ ServiceWorkerStatusCode EmbeddedWorkerInstance::SendStartWorker(
   mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo host_ptr_info;
   instance_host_binding_.Bind(mojo::MakeRequest(&host_ptr_info));
 
+  mojom::ServiceWorkerContentSettingsProxyPtr content_settings_proxy_ptr_info;
+  ServiceWorkerContentSettingsProxyImpl::Create(
+      mojo::MakeRequest(&content_settings_proxy_ptr_info), context_);
+
   const bool is_script_streaming = !pending_installed_scripts_info_.is_null();
   inflight_start_task_->set_start_worker_sent_time(base::TimeTicks::Now());
   client_->StartWorker(*params, std::move(pending_dispatcher_request_),
                        std::move(pending_installed_scripts_info_),
-                       std::move(host_ptr_info));
+                       std::move(host_ptr_info),
+                       std::move(content_settings_proxy_ptr_info));
   registry_->BindWorkerToProcess(process_id(), embedded_worker_id());
   OnStartWorkerMessageSent(is_script_streaming);
   return SERVICE_WORKER_OK;
