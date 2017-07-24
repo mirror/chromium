@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "337cd98c_70b0545c",
+        "filename": "remoting/host/evaluate_capability.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-24T22:37:45Z",
+      "side": 1,
+      "message": "The gist is that this isn\u0027t needed in production code (regardless of the mechanism to conditionally compile it).",
+      "parentUuid": "385c6bf6_1fb5039c",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 1
+      },
+      "revId": "54ad5ee2e156610aafcb06f25cd4a83f94ae7c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c47d46e_6646a940",
         "filename": "remoting/host/evaluate_capability.cc",
         "patchSetId": 8
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "This function should be removed, because we can be smarter here to decide which binary we should use. We have a very limited binary set, so it\u0027s not hard to check current binary name against the set. See the newly add BuildHostBinaryPath() function.\n\nFor the case where output \u003d\u003d nullptr, I think it\u0027s still useful. According to the scenario, some evaluations may require return value only. (The evaluation function does not output anything to console.)",
       "parentUuid": "6462697b_d409ef01",
+      "range": {
+        "startLine": 51,
+        "startChar": 6,
+        "endLine": 51,
+        "endChar": 12
+      },
+      "revId": "54ad5ee2e156610aafcb06f25cd4a83f94ae7c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "694823dd_282ec46d",
+        "filename": "remoting/host/evaluate_capability.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-24T22:37:45Z",
+      "side": 1,
+      "message": "Maybe I misunderstood the purpose of the output param, but it seemed like you intended for the caller to parse it (if they were interested in finding a specific line).  I\u0027ll read the updated patchset and see if my understanding is correct.",
+      "parentUuid": "e34b9a30_79b80093",
       "range": {
         "startLine": 51,
         "startChar": 6,
@@ -284,6 +332,30 @@
     },
     {
       "key": {
+        "uuid": "b6e98c1a_ba572293",
+        "filename": "remoting/host/evaluate_capability.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-24T22:37:45Z",
+      "side": 1,
+      "message": "The gist was that these are only used for Unit tests so including them in production code seemed unnecessary.",
+      "parentUuid": "912ce5ef_a5c3258e",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 3
+      },
+      "revId": "54ad5ee2e156610aafcb06f25cd4a83f94ae7c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c4de4ea4_abf2ed0f",
         "filename": "remoting/host/evaluate_capability.cc",
         "patchSetId": 8
@@ -319,6 +391,30 @@
       "side": 1,
       "message": "This specific treatment for Windows is not necessary: remoting_console.exe is not required. And this function itself is not tested, which should be covered by newly add test case.",
       "parentUuid": "c4de4ea4_abf2ed0f",
+      "range": {
+        "startLine": 97,
+        "startChar": 17,
+        "endLine": 97,
+        "endChar": 37
+      },
+      "revId": "54ad5ee2e156610aafcb06f25cd4a83f94ae7c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b82dff9f_8f91088e",
+        "filename": "remoting/host/evaluate_capability.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-24T22:37:45Z",
+      "side": 1,
+      "message": "I wasn\u0027t concerned about Windows per-se, my main point was including specifics about which process will be executed isn\u0027t needed (and in fact appeared to be out of date since the code didn\u0027t use the binary listed in the comment).",
+      "parentUuid": "0b18fcc3_54dd045b",
       "range": {
         "startLine": 97,
         "startChar": 17,
@@ -413,6 +509,30 @@
       "side": 1,
       "message": "The EvaluateCapabilityLocally() will only be called in HostMain(), EvaluateCapabilityForkedly() will be called everywhere else. But EvaluateCapabilityLocally() will be changed later to support more tests, EvaluateCapabilityForkedly() will not be changed any more (as long as we do not need to add extra parameter or change the binary name).\nSo it looks like merging them together won\u0027t provide too many benefits.\nBut I am happy to change the EvaluateCapabilityForkedly() into EvaluateCapability(), since it will be more widely used.",
       "parentUuid": "3f1c9bcf_6eaaa1a7",
+      "range": {
+        "startLine": 21,
+        "startChar": 55,
+        "endLine": 21,
+        "endChar": 0
+      },
+      "revId": "54ad5ee2e156610aafcb06f25cd4a83f94ae7c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dded5228_889dc451",
+        "filename": "remoting/host/evaluate_capability.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-24T22:37:45Z",
+      "side": 1,
+      "message": "I think my original comment has a reasonable concern which is that the local cap evaluation should never be called in the host process (due to instability).  To prevent this (and simplify the API), you can provide a single function which will either spin up a new process or run the actual cap check based on whether the process has the \u0027evaluate\u0027 flag.",
+      "parentUuid": "e2623db8_efb30b2a",
       "range": {
         "startLine": 21,
         "startChar": 55,
