@@ -717,6 +717,26 @@ void AutofillProfile::RecordAndLogUse() {
   RecordUse();
 }
 
+AutofillProfile::ValidityState AutofillProfile::GetValidityState(
+    ServerFieldType type) {
+  if (!validity_states.count(type))
+    return UNVALIDATED;
+
+  return validity_states[type];
+}
+
+void AutofillProfile::SetValidityState(ServerFieldType type,
+                                       ValidityState validity) {
+  std::map<ServerFieldType, ValidityState>::iterator it =
+      validity_states.find(type);
+
+  if (it != validity_states.end()) {
+    it->second = validity;
+  } else {
+    validity_states.insert(std::make_pair(type, validity));
+  }
+}
+
 // static
 void AutofillProfile::CreateInferredLabelsHelper(
     const std::vector<AutofillProfile*>& profiles,
