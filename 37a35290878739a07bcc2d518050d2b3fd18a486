@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "f639f925_40019c7f",
+        "filename": "third_party/WebKit/LayoutTests/fast/css/sticky/sticky-input-box-position.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-24T02:24:32Z",
+      "side": 1,
+      "message": "Could you use assert API?\nFor example:\nassert_not_equals(window.eventSender, \u0027This test requires eventSender\u0027);",
+      "revId": "37a35290878739a07bcc2d518050d2b3fd18a486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15361b4e_273a1dda",
         "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
         "patchSetId": 6
@@ -109,6 +126,30 @@
       "side": 1,
       "message": "Regarding VisibleSelection, using start.AnchorNode() is good enough (though it doesn\u0027t handle all cases as mentioned in the FIXME above).",
       "parentUuid": "c1322708_f0f27059",
+      "range": {
+        "startLine": 959,
+        "startChar": 16,
+        "endLine": 959,
+        "endChar": 51
+      },
+      "revId": "37a35290878739a07bcc2d518050d2b3fd18a486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19460603_866c3a30",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 959,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-24T02:24:32Z",
+      "side": 1,
+      "message": "+1 for xiachengh@, VisibleSelection is basically having visible \nstart/end positions.",
+      "parentUuid": "1634273e_4e0ae427",
       "range": {
         "startLine": 959,
         "startChar": 16,
