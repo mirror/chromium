@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba95cd6a_73a9cdd8",
+        "filename": "chrome/browser/devtools/chrome_devtools_manager_delegate.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-24T18:59:41Z",
+      "side": 1,
+      "message": "style: rename to setAdBlockingEnabled for clarity? (this method could disable it).",
+      "revId": "887ab18fa95c552d6b183efdc0c1605832daccea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68423c7c_d32fcbe9",
+        "filename": "chrome/browser/devtools/chrome_devtools_manager_delegate.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-24T18:59:41Z",
+      "side": 1,
+      "message": "style: move to anonymous namespace above?",
+      "revId": "887ab18fa95c552d6b183efdc0c1605832daccea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7f5c8b8_28d7a289",
+        "filename": "chrome/browser/devtools/chrome_devtools_manager_delegate.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-24T18:59:41Z",
+      "side": 1,
+      "message": "client-\u003eToggleForceActivationInCurrentWebContents(false) here instead of your own DevToolsAgentHostObserver in chrome_subresource_filter_client. That way your code exposes a clean API and does not depend on DevTools.",
+      "revId": "887ab18fa95c552d6b183efdc0c1605832daccea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ba32bcf_4aefe1ad",
+        "filename": "third_party/WebKit/Source/devtools/front_end/main/module.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-24T18:59:41Z",
+      "side": 1,
+      "message": "nit: rename to network.adBlockingEnabled",
+      "revId": "887ab18fa95c552d6b183efdc0c1605832daccea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
