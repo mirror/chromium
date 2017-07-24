@@ -22,6 +22,30 @@
       "revId": "fdf48bb00521f6abcbdd8adbda2966b5ef761e05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4038e277_1fabf838",
+        "filename": "third_party/WebKit/Source/core/dom/AccessibleNode.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-24T23:52:27Z",
+      "side": 1,
+      "message": "Right. I can modify the comment.",
+      "parentUuid": "11e106f8_92bf28f0",
+      "range": {
+        "startLine": 374,
+        "startChar": 30,
+        "endLine": 374,
+        "endChar": 39
+      },
+      "revId": "fdf48bb00521f6abcbdd8adbda2966b5ef761e05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
