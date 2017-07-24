@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6154055_ae1ce3ef",
+        "filename": "components/content_settings/core/browser/host_content_settings_map.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-24T01:17:03Z",
+      "side": 1,
+      "message": "nit: you may want to add a comment here that this should be called instead of RegisterProvider, not in addition to it. It is probably also good to clarify what a \"UserModifiableProvider\" is (as opposed to other types).",
+      "revId": "4cca7503ee8d7fa1a6a29e2f2bd61490d8bc7260",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
