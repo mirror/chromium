@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "afbb23df_0c15b872",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-07-24T13:42:21Z",
+      "side": 1,
+      "message": "LAST_BACKGROUNDED_TIME_PREF_MS isn\u0027t defined or even necessary in ChromeActivity.",
+      "parentUuid": "62710f5e_06f931e5",
+      "range": {
+        "startLine": 722,
+        "startChar": 8,
+        "endLine": 722,
+        "endChar": 55
+      },
+      "revId": "77834655cf56b0d058f9dd830104fedb46d498e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0a6eabf_f9d7284d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-21T23:26:39Z",
       "side": 1,
       "message": "Can we move this logic into onSuccess in the StartupCallback? Or do init() and onSuccess() race?\n\nIn either case I think we eliminate mPendingStartState and instead use mCurrentState. We could then call setSheetState(mCurrentSheetState, true) at the end of init.",
+      "range": {
+        "startLine": 724,
+        "startChar": 12,
+        "endLine": 725,
+        "endChar": 78
+      },
+      "revId": "77834655cf56b0d058f9dd830104fedb46d498e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "118d808f_55039fcf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-07-24T13:42:21Z",
+      "side": 1,
+      "message": "So this is here for a couple reasons:\n* init() has access to the activity, which in this case queries the last backgrounded time directly if it\u0027s a ChromeTabbedActivity. The alternatives are that we make LAST_BACKGROUNDED_TIME_MS public in ChromeTabbedActivity and do this check directly. I didn\u0027t think making this public for this check was appropriate.\n* In that case, init() is not an appropriate place because the browser needs to be initialized before we start setting sheet states.\n\nThe hope was that by keeping most of the logic in the activity, this logic could be tested by simply having the tests start an activity that extends the ChromeTabbedActivity and overrides getLastBackgroundedTimeMs().",
+      "parentUuid": "c0a6eabf_f9d7284d",
       "range": {
         "startLine": 724,
         "startChar": 12,
