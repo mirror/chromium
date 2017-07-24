@@ -8,9 +8,9 @@
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/values.h"
-#include "services/resource_coordinator/coordination_unit/coordination_unit_impl.h"
-#include "services/resource_coordinator/coordination_unit/coordination_unit_impl_unittest_util.h"
+#include "services/resource_coordinator/coordination_unit/coordination_unit_base.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_provider_impl.h"
+#include "services/resource_coordinator/coordination_unit/coordination_unit_test_harness.h"
 #include "services/resource_coordinator/coordination_unit/mock_coordination_unit_graphs.h"
 #include "services/resource_coordinator/public/interfaces/coordination_unit.mojom.h"
 #include "services/service_manager/public/cpp/service_context_ref.h"
@@ -20,7 +20,7 @@ namespace resource_coordinator {
 
 namespace {
 
-class CoordinationUnitImplTest : public CoordinationUnitImplTestBase {};
+class CoordinationUnitBaseTest : public CoordinationUnitTestHarness {};
 
 class TestCoordinationUnit : public mojom::CoordinationPolicyCallback {
  public:
@@ -99,13 +99,13 @@ class TestCoordinationUnit : public mojom::CoordinationPolicyCallback {
 
 }  // namespace
 
-TEST_F(CoordinationUnitImplTest, BasicPolicyCallback) {
+TEST_F(CoordinationUnitBaseTest, BasicPolicyCallback) {
   TestCoordinationUnit test_coordination_unit(
       provider(), CoordinationUnitType::kWebContents, "test_id");
   test_coordination_unit.ForcePolicyUpdates();
 }
 
-TEST_F(CoordinationUnitImplTest, AddChild) {
+TEST_F(CoordinationUnitBaseTest, AddChild) {
   TestCoordinationUnit parent_unit(
       provider(), CoordinationUnitType::kWebContents, "parent_unit");
 
@@ -138,7 +138,7 @@ TEST_F(CoordinationUnitImplTest, AddChild) {
   }
 }
 
-TEST_F(CoordinationUnitImplTest, RemoveChild) {
+TEST_F(CoordinationUnitBaseTest, RemoveChild) {
   auto parent_coordination_unit =
       CreateCoordinationUnit(CoordinationUnitType::kFrame);
   auto child_coordination_unit =
@@ -167,7 +167,7 @@ TEST_F(CoordinationUnitImplTest, RemoveChild) {
   EXPECT_EQ(0u, child_coordination_unit->parents().size());
 }
 
-TEST_F(CoordinationUnitImplTest, CyclicGraphUnits) {
+TEST_F(CoordinationUnitBaseTest, CyclicGraphUnits) {
   TestCoordinationUnit parent_unit(
       provider(), CoordinationUnitType::kWebContents, std::string());
 
@@ -205,7 +205,7 @@ TEST_F(CoordinationUnitImplTest, CyclicGraphUnits) {
   }
 }
 
-TEST_F(CoordinationUnitImplTest, GetSetProperty) {
+TEST_F(CoordinationUnitBaseTest, GetSetProperty) {
   auto coordination_unit =
       CreateCoordinationUnit(CoordinationUnitType::kWebContents);
 
@@ -221,7 +221,7 @@ TEST_F(CoordinationUnitImplTest, GetSetProperty) {
             coordination_unit->GetProperty(mojom::PropertyType::kTest));
 }
 
-TEST_F(CoordinationUnitImplTest,
+TEST_F(CoordinationUnitBaseTest,
        GetAssociatedCoordinationUnitsForSingleTabInSingleProcess) {
   MockSingleTabInSingleProcessCoordinationUnitGraph cu_graph;
 
@@ -238,7 +238,7 @@ TEST_F(CoordinationUnitImplTest,
   EXPECT_EQ(1u, processes_associated_with_tab.count(cu_graph.process.get()));
 }
 
-TEST_F(CoordinationUnitImplTest,
+TEST_F(CoordinationUnitBaseTest,
        GetAssociatedCoordinationUnitsForMultipleTabsInSingleProcess) {
   MockMultipleTabsInSingleProcessCoordinationUnitGraph cu_graph;
 
@@ -262,7 +262,7 @@ TEST_F(CoordinationUnitImplTest,
   EXPECT_EQ(1u, processes_associated_with_tab.count(cu_graph.process.get()));
 }
 
-TEST_F(CoordinationUnitImplTest,
+TEST_F(CoordinationUnitBaseTest,
        GetAssociatedCoordinationUnitsForSingleTabWithMultipleProcesses) {
   MockSingleTabWithMultipleProcessesCoordinationUnitGraph cu_graph;
 
@@ -287,7 +287,7 @@ TEST_F(CoordinationUnitImplTest,
             processes_associated_with_tab.count(cu_graph.other_process.get()));
 }
 
-TEST_F(CoordinationUnitImplTest,
+TEST_F(CoordinationUnitBaseTest,
        GetAssociatedCoordinationUnitsForMultipleTabsWithMultipleProcesses) {
   MockMultipleTabsWithMultipleProcessesCoordinationUnitGraph cu_graph;
 

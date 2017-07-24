@@ -6,6 +6,7 @@
 
 #include <string>
 
+#include "services/resource_coordinator/coordination_unit/coordination_unit_base.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_factory.h"
 #include "services/resource_coordinator/public/cpp/coordination_unit_id.h"
 #include "services/resource_coordinator/public/cpp/coordination_unit_types.h"
@@ -18,7 +19,7 @@ namespace resource_coordinator {
 
 namespace {
 
-std::unique_ptr<CoordinationUnitImpl> CreateCoordinationUnit(
+std::unique_ptr<CoordinationUnitBase> CreateCoordinationUnit(
     CoordinationUnitType type) {
   CoordinationUnitID cu_id(type, std::string());
   return coordination_unit_factory::CreateCoordinationUnit(cu_id, nullptr);

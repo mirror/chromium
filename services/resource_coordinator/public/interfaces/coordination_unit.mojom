@@ -31,7 +31,7 @@ interface CoordinationPolicyCallback {
 };
 
 // Defines the Storage property keys that can be get/set on the
-// CoordinationUnitImpl internal key-value store.
+// CoordinationUnit internal key-value store.
 enum PropertyType {
   kTest,
   kCPUUsage,
@@ -59,6 +59,6 @@ interface CoordinationUnit {
   RemoveChild(CoordinationUnitID child_id);
   SetCoordinationPolicyCallback(CoordinationPolicyCallback callback);
 
-  // Sets a property on the CoordinationUnitImpl's internal key-value store.
+  // Sets a property on the CoordinationUnit's internal key-value store.
   SetProperty(PropertyType property_type, mojo.common.mojom.Value value);
 };

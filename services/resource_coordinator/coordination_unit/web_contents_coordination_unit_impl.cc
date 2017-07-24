@@ -9,16 +9,16 @@ namespace resource_coordinator {
 WebContentsCoordinationUnitImpl::WebContentsCoordinationUnitImpl(
     const CoordinationUnitID& id,
     std::unique_ptr<service_manager::ServiceContextRef> service_ref)
-    : CoordinationUnitImpl(id, std::move(service_ref)) {}
+    : CoordinationUnitBase(id, std::move(service_ref)) {}
 
 WebContentsCoordinationUnitImpl::~WebContentsCoordinationUnitImpl() = default;
 
-std::set<CoordinationUnitImpl*>
+std::set<CoordinationUnitBase*>
 WebContentsCoordinationUnitImpl::GetAssociatedCoordinationUnitsOfType(
     CoordinationUnitType type) {
   switch (type) {
     case CoordinationUnitType::kProcess: {
-      std::set<CoordinationUnitImpl*> process_coordination_units;
+      std::set<CoordinationUnitBase*> process_coordination_units;
 
       // There is currently not a direct relationship between processes and
       // tabs. However, frames are children of both processes and frames, so we
@@ -38,7 +38,7 @@ WebContentsCoordinationUnitImpl::GetAssociatedCoordinationUnitsOfType(
     case CoordinationUnitType::kFrame:
       return GetChildCoordinationUnitsOfType(type);
     default:
-      return std::set<CoordinationUnitImpl*>();
+      return std::set<CoordinationUnitBase*>();
   }
 }
 

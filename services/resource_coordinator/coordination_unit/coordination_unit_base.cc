@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "services/resource_coordinator/coordination_unit/coordination_unit_impl.h"
+#include "services/resource_coordinator/coordination_unit/coordination_unit_base.h"
 
 #include <unordered_map>
 
@@ -21,7 +21,7 @@ namespace resource_coordinator {
 
 namespace {
 
-using CUIDMap = std::unordered_map<CoordinationUnitID, CoordinationUnitImpl*>;
+using CUIDMap = std::unordered_map<CoordinationUnitID, CoordinationUnitBase*>;
 
 CUIDMap& g_cu_map() {
   static CUIDMap* instance = new CUIDMap();
@@ -31,13 +31,13 @@ CUIDMap& g_cu_map() {
 }  // namespace
 
 // static
-const FrameCoordinationUnitImpl* CoordinationUnitImpl::ToFrameCoordinationUnit(
-    const CoordinationUnitImpl* coordination_unit) {
+const FrameCoordinationUnitImpl* CoordinationUnitBase::ToFrameCoordinationUnit(
+    const CoordinationUnitBase* coordination_unit) {
   DCHECK(coordination_unit->id().type == CoordinationUnitType::kFrame);
   return static_cast<const FrameCoordinationUnitImpl*>(coordination_unit);
 }
 
-CoordinationUnitImpl::CoordinationUnitImpl(
+CoordinationUnitBase::CoordinationUnitBase(
     const CoordinationUnitID& id,
     std::unique_ptr<service_manager::ServiceContextRef> service_ref)
     : id_(id.type, id.id) {
@@ -47,25 +47,25 @@ CoordinationUnitImpl::CoordinationUnitImpl(
   service_ref_ = std::move(service_ref);
 }
 
-CoordinationUnitImpl::~CoordinationUnitImpl() {
+CoordinationUnitBase::~CoordinationUnitBase() {
   g_cu_map().erase(id_);
 
-  for (CoordinationUnitImpl* child : children_) {
+  for (CoordinationUnitBase* child : children_) {
     child->RemoveParent(this);
   }
 
-  for (CoordinationUnitImpl* parent : parents_) {
+  for (CoordinationUnitBase* parent : parents_) {
     parent->RemoveChild(this);
   }
 }
 
-bool CoordinationUnitImpl::SelfOrParentHasFlagSet(StateFlags state) {
+bool CoordinationUnitBase::SelfOrParentHasFlagSet(StateFlags state) {
   const base::Optional<bool>& state_flag = state_flags_[state];
   if (state_flag && *state_flag) {
     return true;
   }
 
-  for (CoordinationUnitImpl* parent : parents_) {
+  for (CoordinationUnitBase* parent : parents_) {
     if (parent->SelfOrParentHasFlagSet(state)) {
       return true;
     }
@@ -74,8 +74,8 @@ bool CoordinationUnitImpl::SelfOrParentHasFlagSet(StateFlags state) {
   return false;
 }
 
-void CoordinationUnitImpl::RecalcCoordinationPolicy() {
-  for (CoordinationUnitImpl* child : children_) {
+void CoordinationUnitBase::RecalcCoordinationPolicy() {
+  for (CoordinationUnitBase* child : children_) {
     child->RecalcCoordinationPolicy();
   }
 
@@ -106,7 +106,7 @@ void CoordinationUnitImpl::RecalcCoordinationPolicy() {
   policy_callback_->SetCoordinationPolicy(std::move(policy));
 }
 
-void CoordinationUnitImpl::SendEvent(mojom::EventPtr event) {
+void CoordinationUnitBase::SendEvent(mojom::EventPtr event) {
   // TODO(crbug.com/691886) Consider removing the following code.
   switch (event->type) {
     case mojom::EventType::kOnWebContentsShown:
@@ -131,22 +131,22 @@ void CoordinationUnitImpl::SendEvent(mojom::EventPtr event) {
   RecalcCoordinationPolicy();
 }
 
-void CoordinationUnitImpl::GetID(const GetIDCallback& callback) {
+void CoordinationUnitBase::GetID(const GetIDCallback& callback) {
   callback.Run(id_);
 }
 
-void CoordinationUnitImpl::AddBinding(mojom::CoordinationUnitRequest request) {
+void CoordinationUnitBase::AddBinding(mojom::CoordinationUnitRequest request) {
   bindings_.AddBinding(this, std::move(request));
 }
 
-void CoordinationUnitImpl::AddChild(const CoordinationUnitID& child_id) {
+void CoordinationUnitBase::AddChild(const CoordinationUnitID& child_id) {
   if (child_id == id_) {
     return;
   }
 
   auto child_iter = g_cu_map().find(child_id);
   if (child_iter != g_cu_map().end()) {
-    CoordinationUnitImpl* child = child_iter->second;
+    CoordinationUnitBase* child = child_iter->second;
     if (HasParent(child) || HasChild(child)) {
       return;
     }
@@ -160,7 +160,7 @@ void CoordinationUnitImpl::AddChild(const CoordinationUnitID& child_id) {
   }
 }
 
-bool CoordinationUnitImpl::AddChild(CoordinationUnitImpl* child) {
+bool CoordinationUnitBase::AddChild(CoordinationUnitBase* child) {
   // We don't recalculate the policy here as policies are only dependent
   // on the current CU or its parents, not its children. In other words,
   // policies only bubble down.
@@ -174,13 +174,13 @@ bool CoordinationUnitImpl::AddChild(CoordinationUnitImpl* child) {
   return success;
 }
 
-void CoordinationUnitImpl::RemoveChild(const CoordinationUnitID& child_id) {
+void CoordinationUnitBase::RemoveChild(const CoordinationUnitID& child_id) {
   auto child_iter = g_cu_map().find(child_id);
   if (child_iter == g_cu_map().end()) {
     return;
   }
 
-  CoordinationUnitImpl* child = child_iter->second;
+  CoordinationUnitBase* child = child_iter->second;
   if (!HasChild(child)) {
     return;
   }
@@ -193,7 +193,7 @@ void CoordinationUnitImpl::RemoveChild(const CoordinationUnitID& child_id) {
   }
 }
 
-bool CoordinationUnitImpl::RemoveChild(CoordinationUnitImpl* child) {
+bool CoordinationUnitBase::RemoveChild(CoordinationUnitBase* child) {
   size_t children_removed = children_.erase(child);
   bool success = children_removed > 0;
 
@@ -204,7 +204,7 @@ bool CoordinationUnitImpl::RemoveChild(CoordinationUnitImpl* child) {
   return success;
 }
 
-void CoordinationUnitImpl::AddParent(CoordinationUnitImpl* parent) {
+void CoordinationUnitBase::AddParent(CoordinationUnitBase* parent) {
   DCHECK_EQ(0u, parents_.count(parent));
   parents_.insert(parent);
 
@@ -213,7 +213,7 @@ void CoordinationUnitImpl::AddParent(CoordinationUnitImpl* parent) {
   RecalcCoordinationPolicy();
 }
 
-void CoordinationUnitImpl::RemoveParent(CoordinationUnitImpl* parent) {
+void CoordinationUnitBase::RemoveParent(CoordinationUnitBase* parent) {
   size_t parents_removed = parents_.erase(parent);
   DCHECK_EQ(1u, parents_removed);
 
@@ -224,8 +224,8 @@ void CoordinationUnitImpl::RemoveParent(CoordinationUnitImpl* parent) {
   RecalcCoordinationPolicy();
 }
 
-bool CoordinationUnitImpl::HasParent(CoordinationUnitImpl* unit) {
-  for (CoordinationUnitImpl* parent : parents_) {
+bool CoordinationUnitBase::HasParent(CoordinationUnitBase* unit) {
+  for (CoordinationUnitBase* parent : parents_) {
     if (parent == unit || parent->HasParent(unit)) {
       return true;
     }
@@ -234,8 +234,8 @@ bool CoordinationUnitImpl::HasParent(CoordinationUnitImpl* unit) {
   return false;
 }
 
-bool CoordinationUnitImpl::HasChild(CoordinationUnitImpl* unit) {
-  for (CoordinationUnitImpl* child : children_) {
+bool CoordinationUnitBase::HasChild(CoordinationUnitBase* unit) {
+  for (CoordinationUnitBase* child : children_) {
     if (child == unit || child->HasChild(unit)) {
       return true;
     }
@@ -244,10 +244,10 @@ bool CoordinationUnitImpl::HasChild(CoordinationUnitImpl* unit) {
   return false;
 }
 
-void CoordinationUnitImpl::SetCoordinationPolicyCallback(
+void CoordinationUnitBase::SetCoordinationPolicyCallback(
     mojom::CoordinationPolicyCallbackPtr callback) {
   callback.set_connection_error_handler(
-      base::Bind(&CoordinationUnitImpl::UnregisterCoordinationPolicyCallback,
+      base::Bind(&CoordinationUnitBase::UnregisterCoordinationPolicyCallback,
                  base::Unretained(this)));
 
   policy_callback_ = std::move(callback);
@@ -255,15 +255,15 @@ void CoordinationUnitImpl::SetCoordinationPolicyCallback(
   RecalcCoordinationPolicy();
 }
 
-void CoordinationUnitImpl::UnregisterCoordinationPolicyCallback() {
+void CoordinationUnitBase::UnregisterCoordinationPolicyCallback() {
   policy_callback_.reset();
   current_policy_.reset();
 }
 
-std::set<CoordinationUnitImpl*>
-CoordinationUnitImpl::GetChildCoordinationUnitsOfType(
+std::set<CoordinationUnitBase*>
+CoordinationUnitBase::GetChildCoordinationUnitsOfType(
     CoordinationUnitType type) {
-  std::set<CoordinationUnitImpl*> coordination_units;
+  std::set<CoordinationUnitBase*> coordination_units;
 
   for (auto* child : children()) {
     if (child->id().type == type) {
@@ -279,10 +279,10 @@ CoordinationUnitImpl::GetChildCoordinationUnitsOfType(
   return coordination_units;
 }
 
-std::set<CoordinationUnitImpl*>
-CoordinationUnitImpl::GetParentCoordinationUnitsOfType(
+std::set<CoordinationUnitBase*>
+CoordinationUnitBase::GetParentCoordinationUnitsOfType(
     CoordinationUnitType type) {
-  std::set<CoordinationUnitImpl*> coordination_units;
+  std::set<CoordinationUnitBase*> coordination_units;
 
   for (auto* parent : parents()) {
     if (parent->id().type == type) {
@@ -298,14 +298,14 @@ CoordinationUnitImpl::GetParentCoordinationUnitsOfType(
   return coordination_units;
 }
 
-std::set<CoordinationUnitImpl*>
-CoordinationUnitImpl::GetAssociatedCoordinationUnitsOfType(
+std::set<CoordinationUnitBase*>
+CoordinationUnitBase::GetAssociatedCoordinationUnitsOfType(
     CoordinationUnitType type) {
   NOTREACHED();
-  return std::set<CoordinationUnitImpl*>();
+  return std::set<CoordinationUnitBase*>();
 }
 
-base::Value CoordinationUnitImpl::GetProperty(
+base::Value CoordinationUnitBase::GetProperty(
     const mojom::PropertyType property_type) const {
   auto value_it = properties_.find(property_type);
 
@@ -313,10 +313,10 @@ base::Value CoordinationUnitImpl::GetProperty(
                                        : base::Value();
 }
 
-void CoordinationUnitImpl::SetProperty(mojom::PropertyType property_type,
+void CoordinationUnitBase::SetProperty(mojom::PropertyType property_type,
                                        std::unique_ptr<base::Value> value) {
   // The |CoordinationUnitGraphObserver| API specification dictates that
-  // the property is guarranteed to be set on the |CoordinationUnitImpl|
+  // the property is guarranteed to be set on the |CoordinationUnitBase|
   // and propagated to the appropriate associated |CoordianationUnitImpl|
   // before |OnPropertyChanged| is invoked on all of the registered observers.
   const base::Value& property =
@@ -326,16 +326,16 @@ void CoordinationUnitImpl::SetProperty(mojom::PropertyType property_type,
                    property);
 }
 
-void CoordinationUnitImpl::BeforeDestroyed() {
+void CoordinationUnitBase::BeforeDestroyed() {
   NOTIFY_OBSERVERS(observers_, OnBeforeCoordinationUnitDestroyed, this);
 }
 
-void CoordinationUnitImpl::AddObserver(
+void CoordinationUnitBase::AddObserver(
     CoordinationUnitGraphObserver* observer) {
   observers_.AddObserver(observer);
 }
 
-void CoordinationUnitImpl::RemoveObserver(
+void CoordinationUnitBase::RemoveObserver(
     CoordinationUnitGraphObserver* observer) {
   observers_.RemoveObserver(observer);
 }

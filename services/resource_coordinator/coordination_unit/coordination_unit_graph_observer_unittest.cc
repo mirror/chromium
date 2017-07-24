@@ -6,11 +6,11 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/process/process_handle.h"
+#include "services/resource_coordinator/coordination_unit/coordination_unit_base.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_factory.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_graph_observer.h"
-#include "services/resource_coordinator/coordination_unit/coordination_unit_impl.h"
-#include "services/resource_coordinator/coordination_unit/coordination_unit_impl_unittest_util.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_manager.h"
+#include "services/resource_coordinator/coordination_unit/coordination_unit_test_harness.h"
 #include "services/resource_coordinator/public/cpp/coordination_unit_id.h"
 #include "services/resource_coordinator/public/cpp/coordination_unit_types.h"
 #include "services/resource_coordinator/public/interfaces/coordination_unit.mojom.h"
@@ -20,8 +20,7 @@ namespace resource_coordinator {
 
 namespace {
 
-class CoordinationUnitGraphObserverTest : public CoordinationUnitImplTestBase {
-};
+class CoordinationUnitGraphObserverTest : public CoordinationUnitTestHarness {};
 
 class TestCoordinationUnitGraphObserver : public CoordinationUnitGraphObserver {
  public:
@@ -47,41 +46,41 @@ class TestCoordinationUnitGraphObserver : public CoordinationUnitGraphObserver {
   }
 
   // Overridden from CoordinationUnitGraphObserver.
-  bool ShouldObserve(const CoordinationUnitImpl* coordination_unit) override {
+  bool ShouldObserve(const CoordinationUnitBase* coordination_unit) override {
     return coordination_unit->id().type == CoordinationUnitType::kFrame;
   }
   void OnCoordinationUnitCreated(
-      const CoordinationUnitImpl* coordination_unit) override {
+      const CoordinationUnitBase* coordination_unit) override {
     ++coordination_unit_created_count_;
   }
   void OnChildAdded(
-      const CoordinationUnitImpl* coordination_unit,
-      const CoordinationUnitImpl* child_coordination_unit) override {
+      const CoordinationUnitBase* coordination_unit,
+      const CoordinationUnitBase* child_coordination_unit) override {
     ++child_added_count_;
   }
   void OnParentAdded(
-      const CoordinationUnitImpl* coordination_unit,
-      const CoordinationUnitImpl* parent_coordination_unit) override {
+      const CoordinationUnitBase* coordination_unit,
+      const CoordinationUnitBase* parent_coordination_unit) override {
     ++parent_added_count_;
   }
 
-  void OnPropertyChanged(const CoordinationUnitImpl* coordination_unit,
+  void OnPropertyChanged(const CoordinationUnitBase* coordination_unit,
                          const mojom::PropertyType property_type,
                          const base::Value& value) override {
     ++property_changed_count_;
   }
   void OnChildRemoved(
-      const CoordinationUnitImpl* coordination_unit,
-      const CoordinationUnitImpl* former_child_coordination_unit) override {
+      const CoordinationUnitBase* coordination_unit,
+      const CoordinationUnitBase* former_child_coordination_unit) override {
     ++child_removed_count_;
   }
   void OnParentRemoved(
-      const CoordinationUnitImpl* coordination_unit,
-      const CoordinationUnitImpl* former_parent_coordination_unit) override {
+      const CoordinationUnitBase* coordination_unit,
+      const CoordinationUnitBase* former_parent_coordination_unit) override {
     ++parent_removed_count_;
   }
   void OnBeforeCoordinationUnitDestroyed(
-      const CoordinationUnitImpl* coordination_unit) override {
+      const CoordinationUnitBase* coordination_unit) override {
     ++coordination_unit_destroyed_count_;
   }
 
@@ -113,13 +112,13 @@ TEST_F(CoordinationUnitGraphObserverTest, CallbacksInvoked) {
                                       std::string());
   CoordinationUnitID frame_cu_id(CoordinationUnitType::kFrame, std::string());
 
-  std::unique_ptr<CoordinationUnitImpl> process_coordination_unit =
+  std::unique_ptr<CoordinationUnitBase> process_coordination_unit =
       coordination_unit_factory::CreateCoordinationUnit(
           process_cu_id, service_context_ref_factory()->CreateRef());
-  std::unique_ptr<CoordinationUnitImpl> root_frame_coordination_unit =
+  std::unique_ptr<CoordinationUnitBase> root_frame_coordination_unit =
       coordination_unit_factory::CreateCoordinationUnit(
           root_frame_cu_id, service_context_ref_factory()->CreateRef());
-  std::unique_ptr<CoordinationUnitImpl> frame_coordination_unit =
+  std::unique_ptr<CoordinationUnitBase> frame_coordination_unit =
       coordination_unit_factory::CreateCoordinationUnit(
           frame_cu_id, service_context_ref_factory()->CreateRef());
 

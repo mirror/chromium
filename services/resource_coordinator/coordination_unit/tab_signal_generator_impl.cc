@@ -4,7 +4,7 @@
 
 #include "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.h"
 
-#include "services/resource_coordinator/coordination_unit/coordination_unit_impl.h"
+#include "services/resource_coordinator/coordination_unit/coordination_unit_base.h"
 #include "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.h"
 #include "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.h"
 
@@ -24,19 +24,19 @@ void TabSignalGeneratorImpl::AddObserver(mojom::TabSignalObserverPtr observer) {
 }
 
 bool TabSignalGeneratorImpl::ShouldObserve(
-    const CoordinationUnitImpl* coordination_unit) {
+    const CoordinationUnitBase* coordination_unit) {
   auto coordination_unit_type = coordination_unit->id().type;
   return coordination_unit_type == CoordinationUnitType::kWebContents ||
          coordination_unit_type == CoordinationUnitType::kFrame;
 }
 
 void TabSignalGeneratorImpl::OnPropertyChanged(
-    const CoordinationUnitImpl* coordination_unit,
+    const CoordinationUnitBase* coordination_unit,
     const mojom::PropertyType property_type,
     const base::Value& value) {
   if (coordination_unit->id().type == CoordinationUnitType::kFrame) {
     OnFramePropertyChanged(
-        CoordinationUnitImpl::ToFrameCoordinationUnit(coordination_unit),
+        CoordinationUnitBase::ToFrameCoordinationUnit(coordination_unit),
         property_type, value);
   }
 }

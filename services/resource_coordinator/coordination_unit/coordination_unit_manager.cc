@@ -11,8 +11,8 @@
 #include "base/macros.h"
 #include "services/metrics/public/cpp/mojo_ukm_recorder.h"
 #include "services/metrics/public/cpp/ukm_recorder.h"
+#include "services/resource_coordinator/coordination_unit/coordination_unit_base.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_graph_observer.h"
-#include "services/resource_coordinator/coordination_unit/coordination_unit_impl.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_provider_impl.h"
 #include "services/resource_coordinator/public/cpp/coordination_unit_types.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
@@ -41,7 +41,7 @@ void CoordinationUnitManager::RegisterObserver(
 }
 
 void CoordinationUnitManager::OnCoordinationUnitCreated(
-    CoordinationUnitImpl* coordination_unit) {
+    CoordinationUnitBase* coordination_unit) {
   for (auto& observer : observers_) {
     if (observer->ShouldObserve(coordination_unit)) {
       coordination_unit->AddObserver(observer.get());
@@ -51,7 +51,7 @@ void CoordinationUnitManager::OnCoordinationUnitCreated(
 }
 
 void CoordinationUnitManager::OnBeforeCoordinationUnitDestroyed(
-    CoordinationUnitImpl* coordination_unit) {
+    CoordinationUnitBase* coordination_unit) {
   coordination_unit->BeforeDestroyed();
 }
 
