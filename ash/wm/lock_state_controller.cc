@@ -114,6 +114,21 @@ void LockStateController::StartLockAnimationAndLockImmediately() {
   StartImmediatePreLockAnimation(true /* request_lock_on_completion */);
 }
 
+void LockStateController::LockWithoutAnimation() {
+  if (animating_lock_)
+    return;
+  animating_lock_ = true;
+  // Before sending locking screen request, hide non lock screen containers
+  // immediately. TODO(warx): consider incorporating immediate post lock
+  // animation (crbug.com/746657).
+  animator_->StartAnimation(SessionStateAnimator::NON_LOCK_SCREEN_CONTAINERS,
+                            SessionStateAnimator::ANIMATION_HIDE_IMMEDIATELY,
+                            SessionStateAnimator::ANIMATION_SPEED_IMMEDIATE);
+  chromeos::DBusThreadManager::Get()
+      ->GetSessionManagerClient()
+      ->RequestLockScreen();
+}
+
 bool LockStateController::LockRequested() {
   return lock_fail_timer_.IsRunning();
 }
@@ -301,8 +316,9 @@ void LockStateController::StartRealShutdownTimer(bool with_animation_time) {
   duration = std::max(duration, sound_duration);
 
   real_shutdown_timer_.Start(
-      FROM_HERE, duration, base::Bind(&LockStateController::OnRealPowerTimeout,
-                                      base::Unretained(this)));
+      FROM_HERE, duration,
+      base::Bind(&LockStateController::OnRealPowerTimeout,
+                 base::Unretained(this)));
 }
 
 void LockStateController::OnRealPowerTimeout() {
