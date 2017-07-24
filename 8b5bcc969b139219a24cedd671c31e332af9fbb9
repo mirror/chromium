@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8ade4235_275cf846",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-24T01:52:36Z",
+      "side": 1,
+      "message": "I found the tracking bug for tests (for IndexedDB): https://bugs.chromium.org/p/chromium/issues/detail?id\u003d113738\n\nYou could mention this bug in the CL description.\n\nThere are also basic tests at storage/indexeddb/basics-shared-workers.html, added in https://trac.webkit.org/changeset/109828/webkit. But I think these only test the default config where content settings are set to \"allowed\".\n\nYou can try running this test by building blink_tests, and running:\n$ third_party/WebKit/Tools/Scripts/run-webkit-tests --target\u003dDefault storage/indexeddb/basics-shared-workers.html\n\nI\u0027ll see if any file system tests exist too.",
+      "parentUuid": "875dcd78_bffa79b4",
+      "revId": "8b5bcc969b139219a24cedd671c31e332af9fbb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e20c379c_4f975d36",
         "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.h",
         "patchSetId": 17
