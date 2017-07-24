@@ -772,7 +772,8 @@ void LocalFrame::ScheduleVisualUpdateUnlessThrottled() {
   GetPage()->Animator().ScheduleVisualUpdate(this);
 }
 
-bool LocalFrame::CanNavigate(const Frame& target_frame) {
+bool LocalFrame::CanNavigate(const Frame& target_frame,
+                             const KURL& destination_url) {
   String error_reason;
   const bool is_allowed_navigation =
       CanNavigateWithoutFramebusting(target_frame, error_reason);
@@ -849,8 +850,7 @@ bool LocalFrame::CanNavigate(const Frame& target_frame) {
         "user gesture. See "
         "https://www.chromestatus.com/features/5851021045661696.";
     PrintNavigationErrorMessage(target_frame, error_reason.Latin1().data());
-    GetNavigationScheduler().SchedulePageBlock(GetDocument(),
-                                               ResourceError::ACCESS_DENIED);
+    Client()->DidBlockFramebust(destination_url);
     return false;
   }
   if (!is_allowed_navigation && !error_reason.IsNull())
