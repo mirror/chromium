@@ -83,7 +83,7 @@ class CONTENT_EXPORT NavigationEntryImpl
       std::unique_ptr<NavigationEntry> entry);
 
   // The value of bindings() before it is set during commit.
-  static int kInvalidBindings;
+  static constexpr const int kInvalidBindings = -1;
 
   NavigationEntryImpl();
   NavigationEntryImpl(scoped_refptr<SiteInstanceImpl> instance,

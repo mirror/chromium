@@ -25,7 +25,7 @@ namespace syncer {
 // sync with the server.
 class NudgeTracker {
  public:
-  static size_t kDefaultMaxPayloadsPerType;
+  static constexpr const size_t kDefaultMaxPayloadsPerType = 10;
 
   NudgeTracker();
   ~NudgeTracker();
