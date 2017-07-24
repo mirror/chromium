@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84be72d1_b0a0c5d9",
+        "filename": "net/spdy/core/hpack/hpack_decoder_adapter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-07-24T12:45:58Z",
+      "side": 0,
+      "message": "Please delete this file, and remove it from BUILD.gn.",
+      "range": {
+        "startLine": 22,
+        "startChar": 56,
+        "endLine": 22,
+        "endChar": 0
+      },
+      "revId": "97bf1addf6bc17dc8760d3678fe6f579312451d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edc12b6d_60f73c23",
+        "filename": "net/spdy/core/hpack/hpack_decoder_adapter_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-07-24T12:45:58Z",
+      "side": 0,
+      "message": "Thank you for finding this and also for adding it to your backport CL in preparation.",
+      "range": {
+        "startLine": 23,
+        "startChar": 52,
+        "endLine": 23,
+        "endChar": 0
+      },
+      "revId": "97bf1addf6bc17dc8760d3678fe6f579312451d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

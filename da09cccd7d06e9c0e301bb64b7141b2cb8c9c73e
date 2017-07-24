@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "deb8cef9_f3dbc6e5",
+        "filename": "net/spdy/core/http2_frame_decoder_adapter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 941,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-07-24T12:45:58Z",
+      "side": 1,
+      "message": "Thank you, excellent find!",
+      "range": {
+        "startLine": 941,
+        "startChar": 2,
+        "endLine": 941,
+        "endChar": 13
+      },
+      "revId": "da09cccd7d06e9c0e301bb64b7141b2cb8c9c73e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
