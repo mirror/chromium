@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9941d460_444686d4",
+        "filename": "components/safe_browsing/browser/threat_details.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-24T20:44:39Z",
+      "side": 1,
+      "message": "Is it possible to have element-\u003eid() to be greater than elements-\u003esize()?\nWhat guarantees that?",
+      "range": {
+        "startLine": 170,
+        "startChar": 18,
+        "endLine": 170,
+        "endChar": 33
+      },
+      "revId": "9f9ae097b5f787af57df59d9ebed3fef6213e1d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9707d18a_77b22dd4",
+        "filename": "components/safe_browsing/browser/threat_details.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-24T20:44:39Z",
+      "side": 1,
+      "message": "I don\u0027t see where this is being populated. Can you please point that to me?",
+      "range": {
+        "startLine": 629,
+        "startChar": 44,
+        "endLine": 629,
+        "endChar": 53
+      },
+      "revId": "9f9ae097b5f787af57df59d9ebed3fef6213e1d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
