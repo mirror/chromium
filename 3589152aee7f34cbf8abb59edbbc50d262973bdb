@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "220af42f_fa3059f0",
+        "filename": "net/disk_cache/backend_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-07-24T14:52:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f977c435_6e4a4a54",
+      "range": {
+        "startLine": 69,
+        "startChar": 6,
+        "endLine": 69,
+        "endChar": 9
+      },
+      "revId": "3589152aee7f34cbf8abb59edbbc50d262973bdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1224567b_1b656db3",
         "filename": "net/disk_cache/blockfile/backend_impl.cc",
         "patchSetId": 5
@@ -36,6 +60,24 @@
       "writtenOn": "2017-07-24T14:07:01Z",
       "side": 1,
       "message": "Check g_internal_cache_thread for nullptr before calling Get()? No point in creating the thread just to flush it.",
+      "revId": "3589152aee7f34cbf8abb59edbbc50d262973bdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aebdad7e_49946fdb",
+        "filename": "net/disk_cache/blockfile/backend_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2134,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-07-24T14:52:01Z",
+      "side": 1,
+      "message": "I don\u0027t see how I can do that with a LazyInstance? That sort of thing would generally be race-prone, too (though test methods could usually get away with it)",
+      "parentUuid": "1224567b_1b656db3",
       "revId": "3589152aee7f34cbf8abb59edbbc50d262973bdb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "9cb5ea53_9de9e70f",
+        "filename": "net/disk_cache/blockfile/backend_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-07-24T14:52:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6ccc9bb_8c087753",
+      "range": {
+        "startLine": 268,
+        "startChar": 18,
+        "endLine": 268,
+        "endChar": 21
+      },
+      "revId": "3589152aee7f34cbf8abb59edbbc50d262973bdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c64bd09c_345adfc6",
         "filename": "net/disk_cache/simple/simple_backend_impl.cc",
         "patchSetId": 5
@@ -76,6 +142,30 @@
       "writtenOn": "2017-07-24T14:07:01Z",
       "side": 1,
       "message": "It looks like URLRequestContextBuilder::Build() creates a USER_BLOCKING TaskRunner for the cache, but here it\u0027s USER_VISIBLE. After f2f we decided that this should be USER_BLOCKING as only a couple of operations are run on this TaskRunner (index loading and periodic writing) but they\u0027re important, especially in the case of CacheStorage which regularly opens/closes cache backends.",
+      "range": {
+        "startLine": 98,
+        "startChar": 45,
+        "endLine": 98,
+        "endChar": 57
+      },
+      "revId": "3589152aee7f34cbf8abb59edbbc50d262973bdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb24e828_a8af520f",
+        "filename": "net/disk_cache/simple/simple_backend_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-07-24T14:52:01Z",
+      "side": 1,
+      "message": "Done. Also worth mentioning that some of those ops are, or will be, causally happens-before things that are already USER_BLOCKING.",
+      "parentUuid": "c64bd09c_345adfc6",
       "range": {
         "startLine": 98,
         "startChar": 45,
