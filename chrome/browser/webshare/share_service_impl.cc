@@ -205,11 +205,8 @@ void ShareServiceImpl::OnPickerClosed(const std::string& title,
 
   // The template is relative to the manifest URL (minus the filename).
   // Concatenate to make an absolute URL.
-  const std::string& chosen_target_spec = chosen_target.spec();
-  base::StringPiece url_base(
-      chosen_target_spec.data(),
-      chosen_target_spec.size() - chosen_target.ExtractFileName().size());
-  const GURL target(url_base.as_string() + url_template_filled);
+  const std::string& url_base = chosen_target.GetWithoutFilename().spec();
+  const GURL target(url_base + url_template_filled);
   // User should not be able to cause an invalid target URL. Possibilities are:
   // - The base URL: can't be invalid since it's derived from the manifest URL.
   // - The template: can only be invalid if it contains a NUL character or
