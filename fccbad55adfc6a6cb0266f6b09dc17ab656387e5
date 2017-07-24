@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "34b71bd0_3a030fcf",
+        "filename": "cc/scheduler/scheduler_state_machine.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-24T22:23:01Z",
+      "side": 1,
+      "message": "How about |pending_tree_needs_first_draw_on_activation_|?",
+      "parentUuid": "811e9158_10d998cf",
+      "revId": "fccbad55adfc6a6cb0266f6b09dc17ab656387e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aaf48248_094f3f82",
         "filename": "cc/trees/layer_tree_host_impl.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-24T21:05:25Z",
       "side": 1,
       "message": "It looks like this is called unconditionally from ScheduledActionPerformImplSideInvalidation.\n\nAre there any cases where this is called not from ScheduledActionPerformImplSideInvalidation?\n\nIf not, can you remove the NotifyCanSkipActiveTreeFirstDraw plumbing and just have the state machine assume it from SchedulerStateMachine::WillPerformImplSideInvalidation?",
+      "revId": "fccbad55adfc6a6cb0266f6b09dc17ab656387e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09bb675f_1b2d7209",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1095,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-24T22:23:01Z",
+      "side": 1,
+      "message": "The other use-case I was planing on adding soon is animated images. In the case where we only have impl-side pending trees, it seems that this would naturally throttle pending trees and avoid doing wasted work since blocking pending tree activation keeps us from creating a new impl-side pending tree.\n\nIn the case where we have a main thread commit, may be its better to skip the active tree draw? Since we might be blocking the main thread commit on this pending tree.",
+      "parentUuid": "aaf48248_094f3f82",
       "revId": "fccbad55adfc6a6cb0266f6b09dc17ab656387e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
