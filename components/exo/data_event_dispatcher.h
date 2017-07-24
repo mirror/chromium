@@ -8,9 +8,14 @@
 #include "base/containers/flat_set.h"
 #include "base/macros.h"
 
+namespace ui {
+class DropTargetEvent;
+}
+
 namespace exo {
 
 class DataDevice;
+class Surface;
 
 // Object dispatching events to data_device.
 class DataEventDispatcher {
@@ -23,6 +28,18 @@ class DataEventDispatcher {
 
   // Removes |data_device| from the manager.
   void RemoveDataDevice(DataDevice* data_device);
+
+  // Called when dragging cursor enters the |surface|.
+  void OnDragEntered(Surface* surface, const ui::DropTargetEvent& event);
+
+  // Called when dragging cursor updates on the |surface|.
+  int OnDragUpdated(Surface* surface, const ui::DropTargetEvent& event);
+
+  // Called when dragging cursor leaves the |surface|.
+  void OnDragExited(Surface* surface);
+
+  // Called when drop operation is performed on the |surface|.
+  int OnPerformDrop(Surface* surface, const ui::DropTargetEvent& event);
 
  private:
   base::flat_set<DataDevice*> data_devices_;

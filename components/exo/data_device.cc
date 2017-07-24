@@ -7,6 +7,8 @@
 #include "base/logging.h"
 #include "components/exo/data_device_delegate.h"
 #include "components/exo/data_event_dispatcher.h"
+#include "ui/base/dragdrop/drag_drop_types.h"
+#include "ui/base/dragdrop/drop_target_event.h"
 
 namespace exo {
 
@@ -36,6 +38,24 @@ void DataDevice::SetSelection(const DataSource* source, uint32_t serial) {
 
 bool DataDevice::CanAcceptDataEventsForSurface(Surface* surface) const {
   return delegate_->CanAcceptDataEventsForSurface(surface);
+}
+
+void DataDevice::OnDragEntered(Surface* surface,
+                               const ui::DropTargetEvent& event) {
+  NOTIMPLEMENTED();
+}
+
+int DataDevice::OnDragUpdated(const ui::DropTargetEvent& event) {
+  NOTIMPLEMENTED();
+  return ui::DragDropTypes::DRAG_NONE;
+}
+
+void DataDevice::OnDragExited() {
+  NOTIMPLEMENTED();
+}
+
+void DataDevice::OnPerformDrop(const ui::DropTargetEvent& event) {
+  NOTIMPLEMENTED();
 }
 
 }  // namespace exo

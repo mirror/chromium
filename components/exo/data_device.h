@@ -9,6 +9,10 @@
 
 #include "base/macros.h"
 
+namespace ui {
+class DropTargetEvent;
+}
+
 namespace exo {
 
 class DataDeviceDelegate;
@@ -44,6 +48,18 @@ class DataDevice {
   // This should return true if |surface| is a valid target for this data
   // device. E.g. the surface is owned by the same client as the pointer.
   bool CanAcceptDataEventsForSurface(Surface* surface) const;
+
+  // Called when dragging cursor enters the |surface|.
+  void OnDragEntered(Surface* surface, const ui::DropTargetEvent& event);
+
+  // Called when dragging cursor updates on the surface.
+  int OnDragUpdated(const ui::DropTargetEvent& event);
+
+  // Called when dragging cursor leaves the surface.
+  void OnDragExited();
+
+  // Called when drop operation is performed on the surface.
+  void OnPerformDrop(const ui::DropTargetEvent& event);
 
  private:
   DataEventDispatcher* const data_event_dispatcher_;

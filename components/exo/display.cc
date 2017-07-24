@@ -79,7 +79,7 @@ Display::~Display() {}
 std::unique_ptr<Surface> Display::CreateSurface() {
   TRACE_EVENT0("exo", "Display::CreateSurface");
 
-  return base::WrapUnique(new Surface);
+  return base::WrapUnique(new Surface(data_event_dispatcher_.get()));
 }
 
 std::unique_ptr<SharedMemory> Display::CreateSharedMemory(
