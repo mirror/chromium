@@ -16,6 +16,24 @@
       "revId": "1e27c36eacd05a98b40eb11dcd76a53ddd593518",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ada069c5_188941b8",
+        "filename": "chrome/browser/chromeos/note_taking_helper.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-24T21:44:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15810b44_f356c473",
+      "revId": "1e27c36eacd05a98b40eb11dcd76a53ddd593518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
