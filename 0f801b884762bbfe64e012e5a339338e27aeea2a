@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3791690a_69bb5cd9",
+        "filename": "third_party/WebKit/Source/core/editing/InputMethodController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-24T03:49:59Z",
+      "side": 0,
+      "message": "It seems composition range and focused element don\u0027t have relation\nduring WillChangeFocus().\n\nIt seems we should use EnclosingTextControl(composition_range_.StartPosition()) instead of Document::FocusedElement()",
+      "revId": "0f801b884762bbfe64e012e5a339338e27aeea2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
