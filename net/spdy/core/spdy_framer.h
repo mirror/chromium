@@ -13,8 +13,7 @@
 #include <utility>
 
 #include "base/sys_byteorder.h"
-#include "net/spdy/chromium/spdy_flags.h"
-#include "net/spdy/core/hpack/hpack_decoder_interface.h"
+#include "net/spdy/core/hpack/hpack_decoder_adapter.h"
 #include "net/spdy/core/hpack/hpack_encoder.h"
 #include "net/spdy/core/spdy_alt_svc_wire_format.h"
 #include "net/spdy/core/spdy_header_block.h"
@@ -587,9 +586,7 @@ class SPDY_EXPORT_PRIVATE SpdyFramer {
 
   // For use in SpdyFramerDecoderAdapter implementations; returns the HPACK
   // decoder to be used.
-  HpackDecoderInterface* GetHpackDecoderForAdapter() {
-    return GetHpackDecoder();
-  }
+  HpackDecoderAdapter* GetHpackDecoderAdapter() { return GetHpackDecoder(); }
 
   void SetOverwriteLastFrame(bool value) { overwrite_last_frame_ = value; }
   void SetIsLastFrame(bool value) { is_last_frame_ = value; }
@@ -725,7 +722,7 @@ class SPDY_EXPORT_PRIVATE SpdyFramer {
  private:
   // Get (and lazily initialize) the HPACK state.
   HpackEncoder* GetHpackEncoder();
-  HpackDecoderInterface* GetHpackDecoder();
+  HpackDecoderAdapter* GetHpackDecoder();
 
   size_t GetNumberRequiredContinuationFrames(size_t size);
 
@@ -828,7 +825,7 @@ class SPDY_EXPORT_PRIVATE SpdyFramer {
   size_t recv_frame_size_limit_ = kSpdyInitialFrameSizeLimit;
 
   std::unique_ptr<HpackEncoder> hpack_encoder_;
-  std::unique_ptr<HpackDecoderInterface> hpack_decoder_;
+  std::unique_ptr<HpackDecoderAdapter> hpack_decoder_;
 
   SpdyFramerVisitorInterface* visitor_;
   ExtensionVisitorInterface* extension_;
