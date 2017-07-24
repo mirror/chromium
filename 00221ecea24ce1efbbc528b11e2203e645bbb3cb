@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7dcc444d_9ba864ce",
+        "filename": "components/ntp_snippets/category_rankers/constant_category_ranker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-24T15:13:54Z",
+      "side": 1,
+      "message": "\u003e - Did you mean to check that categories.size() \u003d\u003d static_cast\u003csize_t\u003e\n\u003e (KnownCategories::LOCAL_CATEGORIES_COUNT)?\n\nIdeally yes, but your check is not static anymore and could be missed.\nThe intention of this check is to fail statically when someone adds a new category. This should force them to consider adding it into the orders.\n\n\u003e - Do you need it even for the CONTEXTUAL section that does not appear \n\u003e in the standard suggestions list?\n\nAdding CONTEXTUAL section stretches our paradigm a lot. I believe it will be shown only on top of site suggestions. Thus, there is no point for ranker to control its position. However, if from ranker\u0027s point of view it is just an ordinary category, then it will be messing up the order (\"ghost\" category).\n\nI would be fine if:\n1) Comments are added into the orders above explaining why CONTEXTUAL is not there.\n2) Everything is organised in such a way, so that a ranker never finds out about CONTEXTUAL at all.\n\nIs (2) possible? How were you going to integrate it into the service?",
+      "parentUuid": "0575c049_3a68a041",
+      "range": {
+        "startLine": 142,
+        "startChar": 2,
+        "endLine": 144,
+        "endChar": 66
+      },
+      "revId": "00221ecea24ce1efbbc528b11e2203e645bbb3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eec056eb_00cd6872",
         "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.cc",
         "patchSetId": 5
