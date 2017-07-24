@@ -6,6 +6,7 @@
 
 #include "ui/gfx/geometry/insets.h"
 
+DECLARE_EXPORTED_UI_CLASS_PROPERTY_TYPE(VIEWS_EXPORT, bool);
 DECLARE_EXPORTED_UI_CLASS_PROPERTY_TYPE(VIEWS_EXPORT, gfx::Insets*);
 
 namespace views {
