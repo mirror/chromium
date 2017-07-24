@@ -1,0 +1,181 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74de5488_8b27e100",
+        "filename": "chrome/installer/zucchini/patch_read_write_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-24T11:03:58Z",
+      "side": 1,
+      "message": "\"Type names start with a capital letter and have a capital letter for each new word, with no underscores: MyExcitingClass, MyExcitingEnum.\"\n (https://google.github.io/styleguide/cppguide.html#Type_Names)",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 9
+      },
+      "revId": "198af2daca22275ad73f37702b1c78f86a4fa509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6ed57cf_4f34ca05",
+        "filename": "chrome/installer/zucchini/patch_reader.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-24T11:03:58Z",
+      "side": 1,
+      "message": "nit: braces",
+      "revId": "198af2daca22275ad73f37702b1c78f86a4fa509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd6b4850_3d6b0ed2",
+        "filename": "chrome/installer/zucchini/patch_reader.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-24T11:03:58Z",
+      "side": 1,
+      "message": "nit: omit braces here and around line 261",
+      "revId": "198af2daca22275ad73f37702b1c78f86a4fa509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc8f182d_9a6d6953",
+        "filename": "chrome/installer/zucchini/patch_reader.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-24T11:03:58Z",
+      "side": 1,
+      "message": "is it worth documenting the way in which |source| is replaced? why not scan it forward instead?",
+      "revId": "198af2daca22275ad73f37702b1c78f86a4fa509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e184014f_517b0664",
+        "filename": "chrome/installer/zucchini/patch_utils.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-24T11:03:58Z",
+      "side": 1,
+      "message": "wow, you read my mind! i just commented on this in another cl. ;-)",
+      "revId": "198af2daca22275ad73f37702b1c78f86a4fa509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b805fc8_60061b72",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-24T11:03:58Z",
+      "side": 1,
+      "message": "nit: omit",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 11
+      },
+      "revId": "198af2daca22275ad73f37702b1c78f86a4fa509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e65e6359_08c1ae44",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-24T11:03:58Z",
+      "side": 1,
+      "message": "what is dst_offset?",
+      "range": {
+        "startLine": 62,
+        "startChar": 26,
+        "endLine": 62,
+        "endChar": 36
+      },
+      "revId": "198af2daca22275ad73f37702b1c78f86a4fa509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8185b8a_2d9b38cf",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-24T11:03:58Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN for all of these?",
+      "revId": "198af2daca22275ad73f37702b1c78f86a4fa509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c536687b_03148fa6",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-24T11:03:58Z",
+      "side": 1,
+      "message": "nit: omit",
+      "range": {
+        "startLine": 113,
+        "startChar": 2,
+        "endLine": 113,
+        "endChar": 11
+      },
+      "revId": "198af2daca22275ad73f37702b1c78f86a4fa509",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
