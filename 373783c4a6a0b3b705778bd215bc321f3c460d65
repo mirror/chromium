@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2e9c6d49_7415a7f7",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-24T18:34:30Z",
+      "side": 1,
+      "message": "No it doesn\u0027t. I verified with a test as well.",
+      "parentUuid": "860ea5e8_6becc9ee",
+      "revId": "373783c4a6a0b3b705778bd215bc321f3c460d65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2df431da_ba04e598",
         "filename": "cc/paint/paint_op_buffer.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-21T22:37:49Z",
       "side": 1,
       "message": "This doesn\u0027t look correct. First of all |op| is a SaveLayerAlpha from above. I think you want to check draw_op here? And if so,\n\nConsider the case of\nSaveLayerAlpha\nDrawImage\nDrawRect\nRestore\n\nWhat you\u0027ll have happen here is\nop \u003d\u003d SaveLayerAlpha, draw_op is DrawImage, so you continue, which falls to DrawRect, so in effect you\u0027ll see:\n\nDrawRect\nRestore\n\nThis is missing a SaveLayerAlpha.",
+      "revId": "373783c4a6a0b3b705778bd215bc321f3c460d65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1db4110_44d3af73",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1641,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-24T18:34:30Z",
+      "side": 1,
+      "message": "Thanks for the suggestion. I made this change on https://chromium-review.googlesource.com/c/582330/.",
+      "parentUuid": "2df431da_ba04e598",
       "revId": "373783c4a6a0b3b705778bd215bc321f3c460d65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
