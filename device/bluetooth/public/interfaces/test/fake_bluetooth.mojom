@@ -123,6 +123,13 @@ interface FakeCentral {
         string service_id,
         string peripheral_address) => (string? characteristic_id);
 
+  // Removes a fake GATT Characteristic with |identifier| to the fake service
+  // with |service_id| in |peripheral_address| peripheral.
+  RemoveFakeCharacteristic(
+        string identifier,
+        string service_id,
+        string peripheral_address);
+
   // Adds a fake GATT Descriptor with |descriptor_uuid| to the fake service with
   // |service_id| in |peripheral_address| peripheral. The descriptor will be
   // found when discovering the peripheral's GATT Attributes. Runs its callback
