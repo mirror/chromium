@@ -33,6 +33,10 @@ ShapingLineBreaker::ShapingLineBreaker(
 
 namespace {
 
+inline bool IsBreakableSpace(UChar ch) {
+  return ch == kSpaceCharacter || ch == kTabulationCharacter;
+}
+
 unsigned PreviousSafeToBreakAfter(const UChar* text,
                                   unsigned start,
                                   unsigned offset) {
@@ -153,14 +157,25 @@ PassRefPtr<ShapeResult> ShapingLineBreaker::ShapeLine(
   // candidate_break should be >= start, but rounding errors can chime in when
   // comparing floats. See ShapeLineZeroAvailableWidth on Linux/Mac.
   candidate_break = std::max(candidate_break, start);
-  unsigned break_opportunity =
-      break_iterator_->PreviousBreakOpportunity(candidate_break, start);
-  if (break_opportunity <= start) {
-    break_opportunity = break_iterator_->NextBreakOpportunity(
-        std::max(candidate_break, start + 1));
-    // |range_end| may not be a break opportunity, but this function cannot
-    // measure beyond it.
-    break_opportunity = std::min(break_opportunity, range_end);
+
+  unsigned break_opportunity;
+  if (break_iterator_->BreakAfterSpace() &&
+      IsBreakableSpace(text_[candidate_break])) {
+    break_opportunity = break_iterator_->NextBreakOpportunity(candidate_break);
+    if (break_opportunity >= range_end) {
+      *break_offset = range_end;
+      return ShapeToEnd(start, start_position, range_end);
+    }
+  } else {
+    break_opportunity =
+        break_iterator_->PreviousBreakOpportunity(candidate_break, start);
+    if (break_opportunity <= start) {
+      break_opportunity = break_iterator_->NextBreakOpportunity(
+          std::max(candidate_break, start + 1));
+      // |range_end| may not be a break opportunity, but this function cannot
+      // measure beyond it.
+      break_opportunity = std::min(break_opportunity, range_end);
+    }
   }
   DCHECK_GT(break_opportunity, start);
 
