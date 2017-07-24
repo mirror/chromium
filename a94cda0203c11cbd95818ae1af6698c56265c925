@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0b1a79e_7cb98ea6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-07-24T22:56:19Z",
+      "side": 1,
+      "message": "This seems somewhat confusing to me -- we\u0027ve actually made the request and had all the network overhead, yet we show it as \u0027canceled\u0027 because someone decided to cancel it at some point. Should we show it as canceled only if it happened before it hit the network?",
+      "revId": "a94cda0203c11cbd95818ae1af6698c56265c925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
