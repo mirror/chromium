@@ -7,6 +7,8 @@ package org.chromium.net.impl;
 import static android.os.Process.THREAD_PRIORITY_BACKGROUND;
 import static android.os.Process.THREAD_PRIORITY_MORE_FAVORABLE;
 
+import android.os.ConditionVariable;
+
 import org.chromium.net.BidirectionalStream;
 import org.chromium.net.ExperimentalBidirectionalStream;
 import org.chromium.net.NetworkQualityRttListener;
@@ -28,6 +30,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
+import javax.annotation.concurrent.GuardedBy;
+
 /**
  * {@link java.net.HttpURLConnection} backed CronetEngine.
  *
@@ -36,6 +40,15 @@ import java.util.concurrent.ThreadFactory;
 public final class JavaCronetEngine extends CronetEngineBase {
     private final String mUserAgent;
     private final ExecutorService mExecutorService;
+
+    private final ConditionVariable mShutdown = new ConditionVariable();
+    // Count of the number of active requests.  Primed to 1 until shutdown() is invoked.
+    // When is transitions to 0, mExecutorService.shutdown() is allowed because all requests
+    // have finished executing their shutdown tasks.
+    // This is a guarded int rather than an AtomicInteger because AtomicInteger has no
+    // getAndSetIfNotEqualTo() that is required by createRequest().
+    @GuardedBy("mShutdown")
+    private int mActiveRequests = 1;
 
     public JavaCronetEngine(CronetEngineBuilderImpl builder) {
         // On android, all background threads (and all threads that are part
@@ -62,12 +75,26 @@ public final class JavaCronetEngine extends CronetEngineBase {
         });
     }
 
+    void requestFinished() {
+        synchronized (mShutdown) {
+            if (--mActiveRequests == 0) {
+                mShutdown.open();
+            }
+        }
+    }
+
     @Override
     public UrlRequestBase createRequest(String url, UrlRequest.Callback callback, Executor executor,
             int priority, Collection<Object> connectionAnnotations, boolean disableCache,
             boolean disableConnectionMigration, boolean allowDirectExecutor) {
+        synchronized (mShutdown) {
+            if (mActiveRequests <= 0) {
+                throw new IllegalStateException("Cannot create request after shutdown.");
+            }
+            ++mActiveRequests;
+        }
         return new JavaUrlRequest(
-                callback, mExecutorService, executor, url, mUserAgent, allowDirectExecutor);
+                this, callback, mExecutorService, executor, url, mUserAgent, allowDirectExecutor);
     }
 
     @Override
@@ -94,6 +121,10 @@ public final class JavaCronetEngine extends CronetEngineBase {
 
     @Override
     public void shutdown() {
+        // Decrement away initial mActiveRequest value of 1 to signify that shutdown is desired.
+        requestFinished();
+        // Wait for requests to finish their shutdown work.
+        mShutdown.block();
         mExecutorService.shutdown();
     }
 
