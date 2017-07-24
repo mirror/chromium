@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/extensions/api/messaging/extension_message_port.h"
+#include "extensions/browser/api/messaging/extension_message_port.h"
 
 #include "base/memory/ptr_util.h"
 #include "base/scoped_observer.h"
@@ -13,6 +13,7 @@
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
+#include "extensions/browser/api/messaging/message_service.h"
 #include "extensions/browser/extension_host.h"
 #include "extensions/browser/process_manager.h"
 #include "extensions/browser/process_manager_observer.h"
@@ -38,9 +39,7 @@ class ExtensionMessagePort::FrameTracker : public content::WebContentsObserver,
     pm_observer_.Add(ProcessManager::Get(port_->browser_context_));
   }
 
-  void TrackTabFrames(content::WebContents* tab) {
-    Observe(tab);
-  }
+  void TrackTabFrames(content::WebContents* tab) { Observe(tab); }
 
   void TrackInterstitialFrame(content::WebContents* tab,
                               content::RenderFrameHost* interstitial_frame) {
@@ -55,8 +54,8 @@ class ExtensionMessagePort::FrameTracker : public content::WebContentsObserver,
 
  private:
   // content::WebContentsObserver overrides:
-  void RenderFrameDeleted(content::RenderFrameHost* render_frame_host)
-      override {
+  void RenderFrameDeleted(
+      content::RenderFrameHost* render_frame_host) override {
     port_->UnregisterFrame(render_frame_host);
   }
 
@@ -169,14 +168,14 @@ void ExtensionMessagePort::RevalidatePort() {
 
   // If the port is unknown, the renderer will respond by closing the port.
   SendToPort(base::MakeUnique<ExtensionMsg_ValidateMessagePort>(
-          MSG_ROUTING_NONE, port_id_));
+      MSG_ROUTING_NONE, port_id_));
 }
 
 void ExtensionMessagePort::RemoveCommonFrames(const MessagePort& port) {
   // Avoid overlap in the set of frames to make sure that it does not matter
   // when UnregisterFrame is called.
   for (std::set<content::RenderFrameHost*>::iterator it = frames_.begin();
-       it != frames_.end(); ) {
+       it != frames_.end();) {
     if (port.HasFrame(*it)) {
       frames_.erase(it++);
     } else {
@@ -226,8 +225,8 @@ void ExtensionMessagePort::DispatchOnDisconnect(
 }
 
 void ExtensionMessagePort::DispatchOnMessage(const Message& message) {
-  SendToPort(base::MakeUnique<ExtensionMsg_DeliverMessage>(
-      MSG_ROUTING_NONE, port_id_, message));
+  SendToPort(base::MakeUnique<ExtensionMsg_DeliverMessage>(MSG_ROUTING_NONE,
+                                                           port_id_, message));
 }
 
 void ExtensionMessagePort::IncrementLazyKeepaliveCount() {
@@ -271,8 +270,8 @@ void ExtensionMessagePort::ClosePort(int process_id, int routing_id) {
 }
 
 void ExtensionMessagePort::CloseChannel() {
-  std::string error_message = did_create_port_ ? std::string() :
-      kReceivingEndDoesntExistError;
+  std::string error_message =
+      did_create_port_ ? std::string() : kReceivingEndDoesntExistError;
   if (weak_channel_delegate_)
     weak_channel_delegate_->CloseChannel(port_id_, error_message);
 }

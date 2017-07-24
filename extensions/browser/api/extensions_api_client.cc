@@ -7,6 +7,7 @@
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "extensions/browser/api/device_permissions_prompt.h"
+#include "extensions/browser/api/messaging/messaging_delegate.h"
 #include "extensions/browser/api/virtual_keyboard_private/virtual_keyboard_delegate.h"
 #include "extensions/browser/api/web_request/web_request_event_router_delegate.h"
 #include "extensions/browser/guest_view/extensions_guest_view_manager_delegate.h"
@@ -110,6 +111,11 @@ ExtensionsAPIClient::GetNetworkingCastPrivateDelegate() {
 
 FileSystemDelegate* ExtensionsAPIClient::GetFileSystemDelegate() {
   return nullptr;
+}
+
+std::unique_ptr<MessagingDelegate>
+ExtensionsAPIClient::CreateMessagingDelegate() const {
+  return base::MakeUnique<MessagingDelegate>();
 }
 
 #if defined(OS_CHROMEOS)
