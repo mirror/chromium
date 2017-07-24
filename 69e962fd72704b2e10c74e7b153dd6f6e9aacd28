@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c2ed13b_a397d2bd",
+        "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 940,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-24T20:53:47Z",
+      "side": 1,
+      "message": "Can these be helper functions instead of class methods?",
+      "revId": "69e962fd72704b2e10c74e7b153dd6f6e9aacd28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
