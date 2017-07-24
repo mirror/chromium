@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "a91f1cf5_672e79a3",
+        "filename": "remoting/host/evaluate_capability.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-24T23:28:20Z",
+      "side": 1,
+      "message": "I may not explain this correctly. Since this file is not compiled again in unittest, UNIT_TEST is not defined. I.e. these functions do exist at all, which triggers build break.",
+      "parentUuid": "337cd98c_70b0545c",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 1
+      },
+      "revId": "54ad5ee2e156610aafcb06f25cd4a83f94ae7c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c47d46e_6646a940",
         "filename": "remoting/host/evaluate_capability.cc",
         "patchSetId": 8
@@ -191,6 +215,30 @@
     },
     {
       "key": {
+        "uuid": "7d043d10_313c4624",
+        "filename": "remoting/host/evaluate_capability.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-24T23:28:20Z",
+      "side": 1,
+      "message": "Yes, exactly. Some evaluations may not output at all, and the caller is definitely aware this. So |output| is intentionally optional.",
+      "parentUuid": "694823dd_282ec46d",
+      "range": {
+        "startLine": 51,
+        "startChar": 6,
+        "endLine": 51,
+        "endChar": 12
+      },
+      "revId": "54ad5ee2e156610aafcb06f25cd4a83f94ae7c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "666d2fe5_0d2f2028",
         "filename": "remoting/host/evaluate_capability.cc",
         "patchSetId": 8
@@ -235,6 +283,30 @@
       "revId": "54ad5ee2e156610aafcb06f25cd4a83f94ae7c2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf4f310b_a1170081",
+        "filename": "remoting/host/evaluate_capability.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-24T23:28:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df8651b2_24ca4f14",
+      "range": {
+        "startLine": 64,
+        "startChar": 4,
+        "endLine": 64,
+        "endChar": 39
+      },
+      "revId": "54ad5ee2e156610aafcb06f25cd4a83f94ae7c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -427,6 +499,30 @@
     },
     {
       "key": {
+        "uuid": "95b7fc7b_a471ad78",
+        "filename": "remoting/host/evaluate_capability.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-24T23:28:20Z",
+      "side": 1,
+      "message": "Sorry if I misunderstood your meaning, randomly sending \"--type\u003devaluate --evaluate_type\u003d\" to processes which does not execute HostMain() won\u0027t really evaluate what we want. For example, in test case, the binary is remoting_unittests, it does not consume --type and --evaluate_type parameters.",
+      "parentUuid": "b82dff9f_8f91088e",
+      "range": {
+        "startLine": 97,
+        "startChar": 17,
+        "endLine": 97,
+        "endChar": 37
+      },
+      "revId": "54ad5ee2e156610aafcb06f25cd4a83f94ae7c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f93ab7cf_e263262c",
         "filename": "remoting/host/evaluate_capability.h",
         "patchSetId": 8
@@ -533,6 +629,30 @@
       "side": 1,
       "message": "I think my original comment has a reasonable concern which is that the local cap evaluation should never be called in the host process (due to instability).  To prevent this (and simplify the API), you can provide a single function which will either spin up a new process or run the actual cap check based on whether the process has the \u0027evaluate\u0027 flag.",
       "parentUuid": "e2623db8_efb30b2a",
+      "range": {
+        "startLine": 21,
+        "startChar": 55,
+        "endLine": 21,
+        "endChar": 0
+      },
+      "revId": "54ad5ee2e156610aafcb06f25cd4a83f94ae7c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfce39f0_21f77af8",
+        "filename": "remoting/host/evaluate_capability.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-24T23:28:20Z",
+      "side": 1,
+      "message": "Yes, I totally understand your concern. My point is,\n1. It\u0027s a little bit overkill. Since EvaluateCapabilityLocally() should only be called in HostMain() for now. It\u0027s pretty easy to avoid other unexpected calls by adding some comments.\n2. Based on \"evaluate\" flag is not quite safe. For example, one day we decide to write a very thin binary to do the evaluation, we do not need to add --type\u003devaluate flag to it at all.",
+      "parentUuid": "dded5228_889dc451",
       "range": {
         "startLine": 21,
         "startChar": 55,
