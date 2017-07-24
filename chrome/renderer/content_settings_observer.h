@@ -88,6 +88,10 @@ class ContentSettingsObserver
   bool AllowAutoplay(bool default_value) override;
   void PassiveInsecureContentFound(const blink::WebURL&) override;
 
+  bool allow_running_insecure_content() const {
+    return allow_running_insecure_content_;
+  }
+
  private:
   FRIEND_TEST_ALL_PREFIXES(ContentSettingsObserverTest, WhitelistedSchemes);
   FRIEND_TEST_ALL_PREFIXES(ChromeRenderViewTest,

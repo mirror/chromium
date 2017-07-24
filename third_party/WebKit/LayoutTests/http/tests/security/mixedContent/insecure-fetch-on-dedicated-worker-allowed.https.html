@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<p>This test starts a dedicated worker that loads insecure data via Fetch API.
+We should trigger a mixed content callback but allow the load.</p>
+<p>The test passes if the result is "LOADED".</p>
+<div id=result></div>
+<script>
+if (window.testRunner) {
+  testRunner.waitUntilDone();
+  testRunner.dumpAsText();
+  testRunner.overridePreference("WebKitAllowRunningInsecureContent", true);
+}
+
+function log(message) {
+  document.getElementById("result").innerHTML += message + "<br>";
+}
+
+var worker = new Worker("./resources/insecure-fetch-on-dedicated-worker.js");
+worker.addEventListener("message", function (e) {
+  log("Result: " + e.data);
+  if (window.testRunner)
+    testRunner.notifyDone();
+}, false);
+</script>
