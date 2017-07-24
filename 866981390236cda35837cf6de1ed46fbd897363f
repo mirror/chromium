@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "115530d4_b6110a4d",
+        "filename": "sandbox/linux/services/namespace_sandbox.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-07-24T23:05:22Z",
+      "side": 1,
+      "message": "I think using LIBC_GLIBC is correct here.  OS_NACL would work too, but only by coincidence.  We want the patch iff we\u0027re using glibc",
+      "parentUuid": "7654630d_955f9468",
+      "revId": "866981390236cda35837cf6de1ed46fbd897363f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "41a0427d_5009ef42",
         "filename": "sandbox/linux/services/namespace_sandbox.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "866981390236cda35837cf6de1ed46fbd897363f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "642444a9_e1df15f8",
+        "filename": "sandbox/linux/services/namespace_sandbox.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-07-24T23:05:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41a0427d_5009ef42",
+      "revId": "866981390236cda35837cf6de1ed46fbd897363f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
