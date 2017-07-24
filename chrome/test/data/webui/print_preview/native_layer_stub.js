@@ -12,9 +12,8 @@ cr.define('print_preview', function() {
     TestBrowserProxy.call(this, [
         'getInitialSettings',
         'getPrinters',
-        'getExtensionPrinters',
         'getPreview',
-        'getPrivetPrinters',
+        'getExtensionOrPrivetPrinters',
         'getPrinterCapabilities',
         'print',
         'setupPrinter',
@@ -75,8 +74,8 @@ cr.define('print_preview', function() {
     },
 
     /** @override */
-    getExtensionPrinters: function() {
-      this.methodCalled('getExtensionPrinters');
+    getExtensionOrPrivetPrinters: function() {
+      this.methodCalled('getExtensionOrPrivetPrinters');
       return Promise.resolve(true);
     },
 
@@ -115,12 +114,6 @@ cr.define('print_preview', function() {
         });
       }
       return Promise.resolve(requestId);
-    },
-
-    /** @override */
-    getPrivetPrinters: function() {
-      this.methodCalled('getPrivetPrinters');
-      return Promise.resolve(true);
     },
 
     /** @override */
