@@ -16,6 +16,24 @@
       "revId": "b1438b5d9295b7535d750bc532be4492ae0c2e30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50b36b81_26513521",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_atomic.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-07-24T17:40:33Z",
+      "side": 0,
+      "message": "It looks similar to this workaround, so I speculatively remove it. I just expected it might be general bug or limitation of htotal. Let me revert this change.",
+      "parentUuid": "dc84fb62_f151c341",
+      "revId": "b1438b5d9295b7535d750bc532be4492ae0c2e30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

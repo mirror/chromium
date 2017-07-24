@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9916d253_4850b534",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-07-24T17:40:33Z",
+      "side": 1,
+      "message": "Sorry for miscommunication. I tested reef using your way how to reproduce it and reef shows black screen.\nNow I tested eve and I see downscaling doesn\u0027t work. both eve and reef doesn\u0027t work correctly but shows different behavior. It\u0027s apparently kernel issue and we are checking it with upstream kernel. Let see.",
+      "parentUuid": "cec1aabc_8a5984ae",
+      "revId": "cb5616ae6cca4be4c556af4ae02105d9d839b150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6433a507_6b0897c2",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-22T00:44:16Z",
       "side": 1,
       "message": "Are you sure you are actually fixing any of this?\n743277 is easy to reproduce with a tiny Android app. I doubt it has anything to do with this patch.",
+      "revId": "cb5616ae6cca4be4c556af4ae02105d9d839b150",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f4cda58_f9c4fb4f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-07-24T17:40:33Z",
+      "side": 1,
+      "message": "nope, it doesn\u0027t fix it. I\u0027ll remove the issue number",
+      "parentUuid": "6433a507_6b0897c2",
       "revId": "cb5616ae6cca4be4c556af4ae02105d9d839b150",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
