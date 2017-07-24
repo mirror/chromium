@@ -20,15 +20,21 @@ class StarView : public BubbleIconView {
   // Toggles the star on or off.
   void SetToggled(bool on);
 
+  // Sets the bool bookmark_promo_observing to if the bookmark promo observer
+  // is observing a widget.
+  void SetBookmarkPromoObserving(bool is_observing);
+
  protected:
   // BubbleIconView:
   void OnExecuting(BubbleIconView::ExecuteSource execute_source) override;
   void ExecuteCommand(ExecuteSource source) override;
   views::BubbleDialogDelegateView* GetBubble() const override;
   const gfx::VectorIcon& GetVectorIcon() const override;
+  SkColor GetInkDropBaseColor() const override;
 
  private:
   Browser* browser_;
+  bool bookmark_promo_observing_;
 
   DISALLOW_COPY_AND_ASSIGN(StarView);
 };

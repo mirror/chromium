@@ -33,8 +33,10 @@
 #include "chrome/browser/ui/views/autofill/save_card_bubble_views.h"
 #include "chrome/browser/ui/views/autofill/save_card_icon_view.h"
 #include "chrome/browser/ui/views/bookmarks/bookmark_bubble_view.h"
+#include "chrome/browser/ui/views/bookmarks/bookmark_promo_bubble_view.h"
 #include "chrome/browser/ui/views/extensions/extension_popup.h"
 #include "chrome/browser/ui/views/frame/browser_view.h"
+#include "chrome/browser/ui/views/location_bar/bubble_icon_view.h"
 #include "chrome/browser/ui/views/location_bar/star_view.h"
 #include "chrome/browser/ui/views/outdated_upgrade_bubble_view.h"
 #include "chrome/browser/ui/views/toolbar/app_menu_button.h"
@@ -124,7 +126,8 @@ ToolbarView::ToolbarView(Browser* browser)
       app_menu_icon_controller_(browser->profile(), this),
       display_mode_(browser->SupportsWindowFeature(Browser::FEATURE_TABSTRIP)
                         ? DISPLAYMODE_NORMAL
-                        : DISPLAYMODE_LOCATION) {
+                        : DISPLAYMODE_LOCATION),
+      bookmark_promo_observer_(this) {
   set_id(VIEW_ID_TOOLBAR);
 
   chrome::AddCommandObserver(browser_, IDC_BACK, this);
@@ -297,6 +300,17 @@ void ToolbarView::ShowBookmarkBubble(
       browser_->profile(), url, already_bookmarked);
   if (bubble_widget && star_view)
     bubble_widget->AddObserver(star_view);
+}
+
+void ToolbarView::ShowBookmarkPromoBubble() {
+  // Owned by its native widget. Will be destroyed as its widget is destroyed.
+  BookmarkPromoBubbleView* bookmark_promo =
+      BookmarkPromoBubbleView::CreateSelfOwned(location_bar()->star_view());
+  bookmark_promo_observer_.Add(bookmark_promo->GetWidget());
+  location_bar()->star_view()->SetBookmarkPromoObserving(
+      bookmark_promo_observer_.IsObservingSources());
+  location_bar()->star_view()->AnimateInkDrop(views::InkDropState::ACTIVATED,
+                                              nullptr);
 }
 
 autofill::SaveCardBubbleView* ToolbarView::ShowSaveCreditCardBubble(
@@ -664,6 +678,12 @@ void ToolbarView::UpdateSeverity(AppMenuIconController::IconType type,
     incompatibility_warning_showing = true;
     return;
   }
+}
+
+void ToolbarView::OnWidgetDestroying(views::Widget* widget) {
+  location_bar()->star_view()->AnimateInkDrop(views::InkDropState::DEACTIVATED,
+                                              nullptr);
+  bookmark_promo_observer_.Remove(widget);
 }
 
 gfx::Size ToolbarView::GetSizeInternal(
