@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "767b6424_0fc9b9d5",
+        "filename": "third_party/WebKit/Source/core/layout/line/InlineBox.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-07-24T19:23:35Z",
+      "side": 1,
+      "message": "A reference to a pointer is pretty hard to reason about, would you mind making this a pointer to a pointer instead? At least to me that is semantically clearer.",
+      "range": {
+        "startLine": 316,
+        "startChar": 48,
+        "endLine": 316,
+        "endChar": 49
+      },
+      "revId": "216037e5dadaaeb296c818814ae8b7564c84883d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
