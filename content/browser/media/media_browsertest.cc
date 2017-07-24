@@ -233,6 +233,12 @@ IN_PROC_BROWSER_TEST_F(MediaTest, VideoBearRotated180) {
 IN_PROC_BROWSER_TEST_F(MediaTest, VideoBearRotated270) {
   RunVideoSizeTest("bear_rotate_270.mp4", 720, 1280);
 }
+
+IN_PROC_BROWSER_TEST_F(MediaTest, LoadManyVideos) {
+  base::StringPairs query_params;
+  RunMediaTestPage("load_many_videos.html", query_params, kEnded, true);
+}
+
 #endif  // BUILDFLAG(USE_PROPRIETARY_CODECS)
 
 #if defined(OS_CHROMEOS)
