@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7a29f33_51e2d4f1",
+        "filename": "chrome/browser/android/signin/signin_manager_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-24T13:15:08Z",
+      "side": 1,
+      "message": "Is there any reason to move RemoveAllUserBookmarks here? You already pass all_data to OnBrowsingDataRemoverDone and leaving RemoveAllUserBookmarks there would minimize the chance of accidental breakage being caused by this fix. Am I missing something?",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 38
+      },
+      "revId": "80ec68273bfec5782ee46ddb1cca3753c3b3dd90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c021dd61_5a17f72d",
+        "filename": "chrome/browser/android/signin/signin_manager_android_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-24T13:15:08Z",
+      "side": 1,
+      "message": "I think that the old approach with SigninManagerAndroidTest managing TestingProfile instance was was a bit cleaner:\n1. It didn\u0027t require \"owned by\" comments in each test.\n2. It was possible to add TearDown() with DeleteTestingProfile.",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 51
+      },
+      "revId": "80ec68273bfec5782ee46ddb1cca3753c3b3dd90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48bf8df2_65b2de5f",
+        "filename": "chrome/browser/android/signin/signin_manager_android_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-24T13:15:08Z",
+      "side": 1,
+      "message": "Can\u0027t we use real delegate here? Using empty delegate here relies on the details of existing implementation too heavily.",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 124,
+        "endChar": 73
+      },
+      "revId": "80ec68273bfec5782ee46ddb1cca3753c3b3dd90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92bc6fd0_2c127466",
+        "filename": "chrome/browser/android/signin/signin_manager_android_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-24T13:15:08Z",
+      "side": 1,
+      "message": "Nit: can this be a separate test?",
+      "range": {
+        "startLine": 152,
+        "startChar": 0,
+        "endLine": 155,
+        "endChar": 67
+      },
+      "revId": "80ec68273bfec5782ee46ddb1cca3753c3b3dd90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
