@@ -75558,12 +75558,27 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Startup.FirstCommitNavigationTime3" units="ms">
+  <obsolete>
+    Replaced with Startup.FirstCommitNavigationTime4 on 2017-07.
+  </obsolete>
   <owner>pasko@chromium.org</owner>
   <owner>wnwen@chromium.org</owner>
   <summary>
     [Android only] The time from the first foreground entry point in the app to
     the moment the first navigation is committed, i.e. when renderer gets the
     first byte of the document.
+  </summary>
+</histogram>
+
+<histogram name="Startup.FirstCommitNavigationTime4" units="ms">
+  <owner>lizeb@chromium.org</owner>
+  <owner>pasko@chromium.org</owner>
+  <owner>wnwen@chromium.org</owner>
+  <summary>
+    [Android only] The time from the first foreground entry point in the app to
+    the moment the first navigation is committed, i.e. when renderer gets the
+    first byte of the document. Only recorded if Chrome managed to come to
+    foreground before this navigation commit happened.
   </summary>
 </histogram>
 
@@ -92527,6 +92542,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="CustomTabs.IntentToFirstCommitNavigationTime2"/>
   <affected-histogram name="CustomTabs.IntentToFirstCommitNavigationTime3"/>
   <affected-histogram name="Startup.FirstCommitNavigationTime2"/>
+  <affected-histogram name="Startup.FirstCommitNavigationTime3"/>
+  <affected-histogram name="Startup.FirstCommitNavigationTime4"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="InterProcessTimeTicksConversionType" separator="_">

@@ -59,6 +59,16 @@ public class UmaUtils {
     }
 
     /**
+     * Whether the application is in the early stage since the browser process start. The
+     * "application start" ends right after the last histogram related to browser startup is
+     * recorded. Currently, the very first navigation commit in the lifetime of the process ends the
+     * "application start". Must only be called on the UI thread.
+     */
+    public static boolean isRunningApplicationStart() {
+        return sRunningApplicationStart;
+    }
+
+    /**
      * Marks/unmarks the "application start" stage of the browser process lifetime.
      * Must only be called on the UI thread.
      */
