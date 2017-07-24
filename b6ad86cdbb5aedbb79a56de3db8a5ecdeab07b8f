@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "824970cd_6c04ca3d",
+        "filename": "url/gurl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-24T04:58:02Z",
+      "side": 1,
+      "message": "What\u0027s the difference between this and GetWithEmptyPath() above?",
+      "revId": "b6ad86cdbb5aedbb79a56de3db8a5ecdeab07b8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
