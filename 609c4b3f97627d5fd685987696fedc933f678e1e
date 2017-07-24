@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d504f9f3_bded1f0e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1617,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-24T23:36:23Z",
+      "side": 1,
+      "message": "Hmm...you are right that this is likely to get confusing.  Both deal with the compositor so even calling this setCompositorOverlayMode is probably not going to do a whole lot.\n\nActually, it looks like i can get rid of isOverlayVisible method entirely, so maybe including compositor \"could\" work to make this clearer from the activity standpoint what it is interacting with.",
+      "parentUuid": "df85b793_18b86ebf",
+      "range": {
+        "startLine": 1617,
+        "startChar": 16,
+        "endLine": 1617,
+        "endChar": 23
+      },
+      "revId": "609c4b3f97627d5fd685987696fedc933f678e1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3586db3a_305d0909",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/TabWebContentsDelegateAndroid.java",
         "patchSetId": 9
