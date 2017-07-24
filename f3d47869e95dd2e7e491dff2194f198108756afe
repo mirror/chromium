@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4341d1a9_8fbed9d8",
+        "filename": "components/offline_pages/core/renovations/page_renovation_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1225649
+      },
+      "writtenOn": "2017-07-24T18:54:08Z",
+      "side": 1,
+      "message": "\u003e If i understand correctly, this LoadSource will return false based on the call to ui::ResourceBundle, right?\n\nYes\n\n\u003e if this loader is owned by background loader offliner, does it mean for each download request, there will be a ui::ResourceBundle load?\n\nYes, but this shouldn\u0027t be a problem. There is a shared instance of ui::ResourceBundle (see https://cs.chromium.org/chromium/src/ui/base/resource/resource_bundle.h?rcl\u003ddf97778dec61a7c5bd0702f7f352e33514bc33cb\u0026l\u003d152). This has the resources mapped into memory.",
+      "parentUuid": "590b0a20_51d9e31d",
+      "revId": "f3d47869e95dd2e7e491dff2194f198108756afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40f89708_79c1792a",
         "filename": "components/offline_pages/core/renovations/page_renovation_loader_unittest.cc",
         "patchSetId": 4
