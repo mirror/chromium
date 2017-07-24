@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07d53e19_83457f96",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-24T15:43:56Z",
+      "side": 1,
+      "message": "nit: Looks not very logical. But IIUC this is out of scope of this CL",
+      "range": {
+        "startLine": 232,
+        "startChar": 37,
+        "endLine": 232,
+        "endChar": 54
+      },
+      "revId": "98dd5a8c203e36bf6569ec7f9d59f705755abc29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccb24b8d_4671e82c",
+        "filename": "ui/app_list/search/mixer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-24T15:43:56Z",
+      "side": 1,
+      "message": "nit: I would include this logic into SearchResult to have identical behavior for every place where it can be used. Otherwise there is a risk that some parts would have own logic.",
+      "range": {
+        "startLine": 30,
+        "startChar": 19,
+        "endLine": 30,
+        "endChar": 34
+      },
+      "revId": "98dd5a8c203e36bf6569ec7f9d59f705755abc29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "055af1fc_88da7ab0",
+        "filename": "ui/app_list/search_result.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-24T15:43:56Z",
+      "side": 1,
+      "message": "nit: |id_|",
+      "range": {
+        "startLine": 241,
+        "startChar": 45,
+        "endLine": 241,
+        "endChar": 48
+      },
+      "revId": "98dd5a8c203e36bf6569ec7f9d59f705755abc29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
