@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78ba4ab2_4408eca0",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-24T07:52:49Z",
+      "side": 1,
+      "message": "I feel keeping to use new_request.Url() is just fine (and might give more context), curious why you prefer this?",
+      "revId": "1686a4cc83f2633cd3b360d0d92338986bf20104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6971dee7_09072e00",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-24T07:52:49Z",
+      "side": 1,
+      "message": "If we just use new_request.Url() this line could be clearer.",
+      "revId": "1686a4cc83f2633cd3b360d0d92338986bf20104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
