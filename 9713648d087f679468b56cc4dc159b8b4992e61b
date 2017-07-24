@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "43fa8802_54f9f1d2",
+        "filename": "mojo/public/cpp/bindings/lib/buffer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-24T17:21:02Z",
+      "side": 1,
+      "message": "Sounds good.",
+      "parentUuid": "14d6381f_68230f0e",
+      "revId": "9713648d087f679468b56cc4dc159b8b4992e61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b23c9558_8cc3ffdc",
         "filename": "mojo/public/cpp/bindings/lib/fixed_buffer.cc",
         "patchSetId": 6
@@ -139,6 +157,24 @@
       "revId": "9713648d087f679468b56cc4dc159b8b4992e61b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d59131a_567154d0",
+        "filename": "mojo/public/cpp/bindings/lib/map_data_internal.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-24T17:21:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0a44f460_85994327",
+      "revId": "9713648d087f679468b56cc4dc159b8b4992e61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -247,6 +283,24 @@
     },
     {
       "key": {
+        "uuid": "0369fdc0_a30cf0d4",
+        "filename": "mojo/public/cpp/bindings/tests/union_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-24T17:21:02Z",
+      "side": 1,
+      "message": "nit: Does it make sense to make them allow null struct/array?",
+      "parentUuid": "a29e8639_b0e5ff40",
+      "revId": "9713648d087f679468b56cc4dc159b8b4992e61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "effa0e09_50e15b6d",
         "filename": "mojo/public/cpp/bindings/tests/union_unittest.cc",
         "patchSetId": 6
@@ -311,6 +365,24 @@
       "side": 1,
       "message": "That\u0027s how I originally had it, but many callsites know it won\u0027t be null, and it thus reduces code size to make the check explicit. (by about 4 kB)",
       "parentUuid": "b003c3ab_e7ef0dea",
+      "revId": "9713648d087f679468b56cc4dc159b8b4992e61b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4288a274_cdd2d74a",
+        "filename": "mojo/public/tools/bindings/generators/cpp_templates/struct_macros.tmpl",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-24T17:21:02Z",
+      "side": 1,
+      "message": "I see. It makes sense.",
+      "parentUuid": "db6692cf_2ebcaba7",
       "revId": "9713648d087f679468b56cc4dc159b8b4992e61b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
