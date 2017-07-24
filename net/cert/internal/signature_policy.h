@@ -63,7 +63,7 @@ class NET_EXPORT SimpleSignaturePolicy : public SignaturePolicy {
 };
 
 // TODO(crbug.com/634443): Move exported errors to a central location?
-extern CertErrorId kRsaModulusTooSmall;
+extern const CertErrorId kRsaModulusTooSmall;
 
 }  // namespace net
 
