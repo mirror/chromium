@@ -176,10 +176,8 @@ class PrerenderResourceThrottleTest : public testing::Test {
   ~PrerenderResourceThrottleTest() override {
     chrome_browser_net::SetUrlRequestMocksEnabled(false);
 
-    // Cleanup work so the file IO tasks from URLRequestMockHTTPJob
-    // are gone.
-    content::BrowserThread::GetBlockingPool()->FlushForTesting();
-    RunEvents();
+    // Cleanup work so the file IO tasks from URLRequestMockHTTPJob are gone.
+    content::RunAllBlockingPoolTasksUntilIdle();
   }
 
   TestPrerenderManager* prerender_manager() {
