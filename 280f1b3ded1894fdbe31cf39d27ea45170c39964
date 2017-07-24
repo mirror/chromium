@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a171edc6_cc33880c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkUpdateManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-07-24T15:08:05Z",
+      "side": 1,
+      "message": "Can we move this to async task to avoid strict mode violation?",
+      "range": {
+        "startLine": 215,
+        "startChar": 21,
+        "endLine": 215,
+        "endChar": 45
+      },
+      "revId": "280f1b3ded1894fdbe31cf39d27ea45170c39964",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7450f75_ccd34ba6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappDataStorage.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-07-24T15:08:05Z",
+      "side": 1,
+      "message": "Nit: Remove the space before |.executeOnExecutor|. It was introduced by \"git cl format\".",
+      "range": {
+        "startLine": 539,
+        "startChar": 17,
+        "endLine": 539,
+        "endChar": 34
+      },
+      "revId": "280f1b3ded1894fdbe31cf39d27ea45170c39964",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "161c6cbf_f01c8f22",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/webapps/WebApkUpdateManagerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-07-24T15:08:05Z",
+      "side": 1,
+      "message": "Since WebApkUpdateManager already has a |mStorage|, it is weird to have another one here. Can you add a public getter of the storage in WebApkUpdateManager, like getStorageForTesting()?",
+      "range": {
+        "startLine": 105,
+        "startChar": 34,
+        "endLine": 105,
+        "endChar": 42
+      },
+      "revId": "280f1b3ded1894fdbe31cf39d27ea45170c39964",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08116ced_a34ceeee",
+        "filename": "chrome/browser/android/webapk/webapk_installer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1117405
+      },
+      "writtenOn": "2017-07-24T15:08:05Z",
+      "side": 1,
+      "message": "Nit: you need to have #include \"base/threading/thread_restrictions.h\".",
+      "range": {
+        "startLine": 203,
+        "startChar": 28,
+        "endLine": 203,
+        "endChar": 43
+      },
+      "revId": "280f1b3ded1894fdbe31cf39d27ea45170c39964",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
