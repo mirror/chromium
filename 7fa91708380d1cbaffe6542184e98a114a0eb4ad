@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2aa41595_38839976",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-24T08:08:23Z",
+      "side": 1,
+      "message": "thei -\u003e the",
+      "revId": "7fa91708380d1cbaffe6542184e98a114a0eb4ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e76122bc_5c73e67c",
+        "filename": "third_party/WebKit/public/platform/WebApplicationCacheHost.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-24T08:08:23Z",
+      "side": 1,
+      "message": "Should we re-structure these APIs to look more straightforward, like:\n\nvirtual void WillStartMainResourceRequest(const WebURLRequest\u0026, const WebAppCacheHost*);\nvirtual int GetAppCacheHostID();\n\n?\n\n(Btw I believe we\u0027re actually deprecating this code path with s13n)",
+      "revId": "7fa91708380d1cbaffe6542184e98a114a0eb4ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
