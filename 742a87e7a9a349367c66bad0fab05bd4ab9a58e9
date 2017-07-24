@@ -22,6 +22,93 @@
       "revId": "742a87e7a9a349367c66bad0fab05bd4ab9a58e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f6f7064_9e651c0f",
+        "filename": "sandbox/linux/services/namespace_sandbox.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1117355
+      },
+      "writtenOn": "2017-07-24T22:06:02Z",
+      "side": 1,
+      "message": "It\u0027s been a while, but last I remember, NaCl uses https://chromium.googlesource.com/native_client/nacl-newlib/, which I don\u0027t /think/ caches PIDs/TIDs, so I think this is correct - maybe LIBC_GLIBC would be a more appropriate macro though.",
+      "parentUuid": "e1182db9_7cdd7d74",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 21
+      },
+      "revId": "742a87e7a9a349367c66bad0fab05bd4ab9a58e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baf8d381_ee7bddb0",
+        "filename": "sandbox/linux/services/namespace_sandbox.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1117355
+      },
+      "writtenOn": "2017-07-24T22:06:02Z",
+      "side": 1,
+      "message": "nit: Mind adding a // ... so it\u0027s clear this is only a partial copy of the structure?",
+      "revId": "742a87e7a9a349367c66bad0fab05bd4ab9a58e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5c2944c_edc64b4f",
+        "filename": "sandbox/linux/services/namespace_sandbox.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1117355
+      },
+      "writtenOn": "2017-07-24T22:06:02Z",
+      "side": 1,
+      "message": "nit: nullptr",
+      "range": {
+        "startLine": 109,
+        "startChar": 40,
+        "endLine": 109,
+        "endChar": 44
+      },
+      "revId": "742a87e7a9a349367c66bad0fab05bd4ab9a58e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6350c926_7dcbb976",
+        "filename": "sandbox/linux/services/namespace_sandbox.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1117355
+      },
+      "writtenOn": "2017-07-24T22:06:02Z",
+      "side": 1,
+      "message": "Out of utter paranoia, mind putting this under the cap dropping code below? Might as well run this code without capabilities if it doesn\u0027t require them.\n\nAlso, mind moving these hacks into a:\n\nMaybeUpdateGlibcTidCache()\n\nfunction next to all the other stuff above? Might be easier to skim if all our ugly hacks are next to each other and away from the main flow of the code.",
+      "range": {
+        "startLine": 208,
+        "startChar": 1,
+        "endLine": 208,
+        "endChar": 2
+      },
+      "revId": "742a87e7a9a349367c66bad0fab05bd4ab9a58e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
