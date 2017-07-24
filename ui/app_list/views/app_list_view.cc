@@ -39,6 +39,8 @@
 #include "ui/gfx/image/image_skia.h"
 #include "ui/gfx/path.h"
 #include "ui/gfx/skia_util.h"
+#include "ui/keyboard/keyboard_controller.h"
+#include "ui/keyboard/keyboard_util.h"
 #include "ui/views/bubble/bubble_frame_view.h"
 #include "ui/views/bubble/bubble_window_targeter.h"
 #include "ui/views/controls/image_view.h"
@@ -385,6 +387,8 @@ void AppListView::InitContents(gfx::NativeView parent, int initial_apps_page) {
   // This will be added to the |search_box_widget_| after the app list widget is
   // initialized.
   search_box_view_ = new SearchBoxView(app_list_main_view_, delegate_, this);
+  search_box_view_->set_is_tablet_mode(is_fullscreen_app_list_enabled_ &&
+                                       is_tablet_mode_);
   search_box_view_->SetPaintToLayer();
   search_box_view_->layer()->SetFillsBoundsOpaquely(false);
   search_box_view_->layer()->SetMasksToBounds(true);
@@ -501,22 +505,24 @@ void AppListView::InitializeBubble(gfx::NativeView parent,
 }
 
 void AppListView::HandleClickOrTap() {
-  switch (app_list_state_) {
-    case HALF:
-    case FULLSCREEN_SEARCH:
-      search_box_view_->ClearSearch();
-      SetState(app_list_state_ == HALF ? PEEKING : FULLSCREEN_ALL_APPS);
-      break;
-    case PEEKING:
-    case FULLSCREEN_ALL_APPS:
-      if (search_box_view_->is_search_box_active())
-        search_box_view_->ClearSearch();
-      else
-        SetState(CLOSED);
-      break;
-    case CLOSED:
-      break;
+  if (!is_fullscreen_app_list_enabled_)
+    return;
+
+  if (!search_box_view_->is_search_box_active()) {
+    SetState(CLOSED);
+    return;
   }
+
+  search_box_view_->ClearSearch();
+  keyboard::KeyboardController* const keyboard_controller =
+      keyboard::KeyboardController::GetInstance();
+  if (keyboard_controller && keyboard::IsKeyboardVisible()) {
+    keyboard_controller->HideKeyboard(
+        keyboard::KeyboardController::HIDE_REASON_MANUAL);
+  }
+  // If the search box is active the only possible states are HALF or
+  // FULLSCREEN_SEARCH. Swap to the non-search equivalent state.
+  SetState(app_list_state_ == HALF ? PEEKING : FULLSCREEN_ALL_APPS);
 }
 
 void AppListView::StartDrag(const gfx::Point& location) {
@@ -686,6 +692,7 @@ void AppListView::SetStateFromSearchBoxView(bool search_box_is_empty) {
 
 void AppListView::OnTabletModeChanged(bool started) {
   is_tablet_mode_ = started;
+  search_box_view_->OnTabletModeChanged(started);
   if (is_tablet_mode_ && !is_fullscreen()) {
     // Set |app_list_state_| to a tablet mode friendly state.
     SetState(app_list_state_ == PEEKING ? FULLSCREEN_ALL_APPS

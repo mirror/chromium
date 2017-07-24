@@ -96,6 +96,9 @@ class APP_LIST_EXPORT SearchBoxView : public views::View,
   // disables cursor blink.
   void SetSearchBoxActive(bool active);
 
+  // Shows/hides the virtual keyboard if the search box is active.
+  void ShowOrHideKeyboard();
+
   // Detects |ET_MOUSE_PRESSED| and |ET_GESTURE_TAP| events on the white
   // background of the search box.
   void HandleSearchBoxEvent(ui::LocatedEvent* located_event);
@@ -121,6 +124,9 @@ class APP_LIST_EXPORT SearchBoxView : public views::View,
                         AppListModel::State current_state,
                         AppListModel::State target_state);
 
+  // Called when tablet mode starts and ends.
+  void OnTabletModeChanged(bool started);
+
   // Used only in the tests to get the current search icon.
   views::ImageView* get_search_icon_for_test() { return search_icon_; }
 
@@ -129,6 +135,9 @@ class APP_LIST_EXPORT SearchBoxView : public views::View,
 
   // Overridden from views::ButtonListener:
   void ButtonPressed(views::Button* sender, const ui::Event& event) override;
+
+  // Used to set tablet mode active on creation.
+  void set_is_tablet_mode(bool active) { is_tablet_mode_ = active; }
 
  private:
   // Updates model text and selection model with current Textfield info.
@@ -191,6 +200,8 @@ class APP_LIST_EXPORT SearchBoxView : public views::View,
   const bool is_fullscreen_app_list_enabled_;
   // Whether the search box is active.
   bool is_search_box_active_ = false;
+  // Whether maximize mode is active.
+  bool is_tablet_mode_ = false;
   // The current background color.
   SkColor background_color_ = kSearchBoxBackgroundDefault;
   // The current search box color.
