@@ -203,7 +203,8 @@ class CORE_EXPORT LayoutTableCell final : public LayoutBlockFlow {
   // Align the cell in the block direction. This is done by calculating an
   // intrinsic padding before and after the cell contents, so that all cells in
   // the row get the same logical height.
-  void ComputeIntrinsicPadding(int row_height,
+  void ComputeIntrinsicPadding(int collapsed_height,
+                               int row_height,
                                EVerticalAlign,
                                SubtreeLayoutScope&);
 
@@ -359,6 +360,20 @@ class CORE_EXPORT LayoutTableCell final : public LayoutBlockFlow {
 
   void ComputeOverflow(LayoutUnit old_client_after_edge,
                        bool recompute_floats = false) override;
+
+  bool ShouldClipOverflow() const override {
+    if (LayoutBox::ShouldClipOverflow())
+      return true;
+    unsigned row_span = RowSpan();
+    if (row_span == 1)
+      return false;
+    unsigned row_index = RowIndex();
+    for (unsigned r = row_index; r < row_index + row_span; r++) {
+      if (Section()->RowHasVisibilityCollapse(r))
+        return true;
+    }
+    return false;
+  }
 
   using CollapsedBorderValuesMethod =
       const CollapsedBorderValue& (CollapsedBorderValues::*)() const;
