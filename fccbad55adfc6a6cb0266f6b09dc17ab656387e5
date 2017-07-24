@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "811e9158_10d998cf",
+        "filename": "cc/scheduler/scheduler_state_machine.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-07-24T21:05:25Z",
+      "side": 1,
+      "message": "The variable name gave me the impression that it applies to the current active tree, but it actually applies to the next.\n\nWould \"pending_tree_needs_draw_once_active\" be a better name?",
+      "revId": "fccbad55adfc6a6cb0266f6b09dc17ab656387e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaf48248_094f3f82",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1095,
+      "author": {
+        "id": 1002151
+      },
+      "writtenOn": "2017-07-24T21:05:25Z",
+      "side": 1,
+      "message": "It looks like this is called unconditionally from ScheduledActionPerformImplSideInvalidation.\n\nAre there any cases where this is called not from ScheduledActionPerformImplSideInvalidation?\n\nIf not, can you remove the NotifyCanSkipActiveTreeFirstDraw plumbing and just have the state machine assume it from SchedulerStateMachine::WillPerformImplSideInvalidation?",
+      "revId": "fccbad55adfc6a6cb0266f6b09dc17ab656387e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
