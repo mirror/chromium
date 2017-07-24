@@ -439,8 +439,6 @@ class SessionManagerClientImpl : public SessionManagerClient {
     dbus::MessageWriter writer(&method_call);
 
     login_manager::StartArcInstanceRequest request;
-    // TODO(yusukes): Make this default-enabled and remove the code.
-    request.set_create_server_socket(true);
     switch (startup_mode) {
       case ArcStartupMode::FULL:
         request.set_account_id(cryptohome_id.id());
