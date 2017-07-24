@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "de2e388f_84931d65",
+        "filename": "chrome/browser/ui/webui/memory_internals_ui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-24T19:30:04Z",
+      "side": 1,
+      "message": "I felt like the memory management of the \"reply\" value was annoying (it needs to be refcounted or you need to do manual management) and this was simpler to understand.",
+      "parentUuid": "5b77642a_8e786a56",
+      "range": {
+        "startLine": 101,
+        "startChar": 2,
+        "endLine": 101,
+        "endChar": 9
+      },
+      "revId": "72e0c2b298503b87c30c6a208a97d89b06ad6a54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e212a702_3231ef54",
         "filename": "chrome/browser/ui/webui/memory_internals_ui.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "278a3b60_e726c2bc",
+        "filename": "chrome/browser/ui/webui/memory_internals_ui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-24T19:30:04Z",
+      "side": 1,
+      "message": "The WebUI callback registration requires this (it always takes a single list where all args are packed)",
+      "parentUuid": "e212a702_3231ef54",
+      "range": {
+        "startLine": 114,
+        "startChar": 19,
+        "endLine": 114,
+        "endChar": 20
+      },
+      "revId": "72e0c2b298503b87c30c6a208a97d89b06ad6a54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "032f4f27_2c9537b4",
         "filename": "chrome/browser/ui/webui/memory_internals_ui.cc",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-24T16:54:56Z",
       "side": 1,
       "message": "Can you add a short block comment at the top of the file explaining why we need to iterate processes in _both_ the IO thread and the UI thread?",
+      "range": {
+        "startLine": 125,
+        "startChar": 26,
+        "endLine": 125,
+        "endChar": 30
+      },
+      "revId": "72e0c2b298503b87c30c6a208a97d89b06ad6a54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a21a2e0a_73c861ba",
+        "filename": "chrome/browser/ui/webui/memory_internals_ui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-24T19:30:04Z",
+      "side": 1,
+      "message": "I didn\u0027t do the top of the file since I thought nobody would notice it that\u0027s touching this code, but I made this more explicit in a number of cases.",
+      "parentUuid": "032f4f27_2c9537b4",
       "range": {
         "startLine": 125,
         "startChar": 26,
