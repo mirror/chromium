@@ -585,6 +585,10 @@ TEST_F(AppStateTest, resumeSessionWithStartupParameters) {
   // Swizzle Startup Parameters.
   swizzleHandleStartupParameters(tabOpener, browserViewInformation);
 
+  id mainBVC = [OCMockObject mockForClass:[BrowserViewController class]];
+  stubNullBrowserState(mainBVC);
+  [[[browserViewInformation stub] andReturn:mainBVC] mainBVC];
+
   UIWindow* window = [[UIWindow alloc] init];
   AppState* appState = getAppStateWithOpenNTPAndIncognitoBlock(NO, window);
 
@@ -626,6 +630,10 @@ TEST_F(AppStateTest, resumeSessionShouldOpenNTPTabSwitcher) {
   // TabSwitcher.
   id tabSwitcher = [OCMockObject mockForProtocol:@protocol(TabSwitching)];
   [[[tabSwitcher stub] andReturnValue:@YES] openNewTabFromTabSwitcher];
+
+  id mainBVC = [OCMockObject mockForClass:[BrowserViewController class]];
+  stubNullBrowserState(mainBVC);
+  [[[browserViewInformation stub] andReturn:mainBVC] mainBVC];
 
   UIWindow* window = [[UIWindow alloc] init];
   AppState* appState = getAppStateWithOpenNTPAndIncognitoBlock(YES, window);
@@ -678,6 +686,10 @@ TEST_F(AppStateTest, resumeSessionShouldOpenNTPNoTabSwitcher) {
   id tabSwitcher = [OCMockObject mockForProtocol:@protocol(TabSwitching)];
   [[[tabSwitcher stub] andReturnValue:@NO] openNewTabFromTabSwitcher];
 
+  id mainBVC = [OCMockObject mockForClass:[BrowserViewController class]];
+  stubNullBrowserState(mainBVC);
+  [[[browserViewInformation stub] andReturn:mainBVC] mainBVC];
+
   UIWindow* window = [[UIWindow alloc] init];
   AppState* appState = getAppStateWithOpenNTPAndIncognitoBlock(YES, window);
 
@@ -712,6 +724,9 @@ TEST_F(AppStateTest, applicationWillEnterForeground) {
   [[[getBrowserLauncherMock() stub] andReturn:browserViewInformation]
       browserViewInformation];
   [[[browserViewInformation stub] andReturn:tabModel] currentTabModel];
+  id mainBVC = [OCMockObject mockForClass:[BrowserViewController class]];
+  stubNullBrowserState(mainBVC);
+  [[[browserViewInformation stub] andReturn:mainBVC] mainBVC];
   [[metricsMediator expect] updateMetricsStateBasedOnPrefsUserTriggered:NO];
   [[memoryHelper expect] resetForegroundMemoryWarningCount];
   [[[memoryHelper stub] andReturnValue:@0] foregroundMemoryWarningCount];
