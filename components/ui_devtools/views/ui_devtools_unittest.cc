@@ -6,6 +6,7 @@
 #include "base/strings/stringprintf.h"
 #include "components/ui_devtools/views/ui_devtools_css_agent.h"
 #include "components/ui_devtools/views/ui_devtools_dom_agent.h"
+#include "components/ui_devtools/views/ui_devtools_overlay_agent.h"
 #include "components/ui_devtools/views/ui_element.h"
 #include "components/ui_devtools/views/view_element.h"
 #include "components/ui_devtools/views/widget_element.h"
@@ -157,10 +158,10 @@ std::unique_ptr<DOM::RGBA> SkColorToRGBA(const SkColor& color) {
       .build();
 }
 
-std::unique_ptr<DOM::HighlightConfig> CreateHighlightConfig(
+std::unique_ptr<Overlay::HighlightConfig> CreateHighlightConfig(
     const SkColor& background_color,
     const SkColor& border_color) {
-  return DOM::HighlightConfig::create()
+  return Overlay::HighlightConfig::create()
       .setContentColor(SkColorToRGBA(background_color))
       .setBorderColor(SkColorToRGBA(border_color))
       .build();
@@ -224,6 +225,10 @@ class UIDevToolsTest : public views::ViewsTestBase {
         base::MakeUnique<ui_devtools::UIDevToolsCSSAgent>(dom_agent_.get());
     css_agent_->Init(uber_dispatcher_.get());
     css_agent_->enable();
+    overlay_agent_ =
+        base::MakeUnique<ui_devtools::UIDevToolsOverlayAgent>(dom_agent_.get());
+    overlay_agent_->Init(uber_dispatcher_.get());
+    overlay_agent_->enable();
 
     // We need to create |dom_agent| first to observe creation of
     // WindowTreeHosts in ViewTestBase::SetUp().
@@ -240,6 +245,7 @@ class UIDevToolsTest : public views::ViewsTestBase {
     top_default_container_window.reset();
     top_window.reset();
     css_agent_.reset();
+    overlay_agent_.reset();
     dom_agent_.reset();
     uber_dispatcher_.reset();
     fake_frontend_channel_.reset();
@@ -300,7 +306,7 @@ class UIDevToolsTest : public views::ViewsTestBase {
   }
 
   void HighlightNode(int node_id) {
-    dom_agent_->highlightNode(
+    overlay_agent_->highlightNode(
         CreateHighlightConfig(kBackgroundColor, kBorderColor), node_id);
   }
 
@@ -325,6 +331,9 @@ class UIDevToolsTest : public views::ViewsTestBase {
 
   ui_devtools::UIDevToolsCSSAgent* css_agent() { return css_agent_.get(); }
   ui_devtools::UIDevToolsDOMAgent* dom_agent() { return dom_agent_.get(); }
+  ui_devtools::UIDevToolsOverlayAgent* overlay_agent() {
+    return overlay_agent_.get();
+  }
 
   std::unique_ptr<aura::Window> top_overlay_window;
   std::unique_ptr<aura::Window> top_window;
@@ -335,6 +344,7 @@ class UIDevToolsTest : public views::ViewsTestBase {
   std::unique_ptr<FakeFrontendChannel> fake_frontend_channel_;
   std::unique_ptr<ui_devtools::UIDevToolsDOMAgent> dom_agent_;
   std::unique_ptr<ui_devtools::UIDevToolsCSSAgent> css_agent_;
+  std::unique_ptr<ui_devtools::UIDevToolsOverlayAgent> overlay_agent_;
 
   DISALLOW_COPY_AND_ASSIGN(UIDevToolsTest);
 };
