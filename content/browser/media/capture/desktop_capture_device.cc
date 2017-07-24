@@ -35,6 +35,7 @@
 #include "services/device/public/interfaces/wake_lock_provider.mojom.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "third_party/libyuv/include/libyuv/scale_argb.h"
+#include "third_party/webrtc/modules/desktop_capture/cropped_desktop_frame.h"
 #include "third_party/webrtc/modules/desktop_capture/cropping_window_capturer.h"
 #include "third_party/webrtc/modules/desktop_capture/desktop_and_cursor_composer.h"
 #include "third_party/webrtc/modules/desktop_capture/desktop_capture_options.h"
@@ -287,47 +288,65 @@ void DesktopCaptureDevice::Core::OnCaptureResult(
              black_frame_->stride() * black_frame_->size().height());
     }
     output_data = black_frame_->data();
-  } else if (!frame->size().equals(output_size)) {
-    // Down-scale and/or letterbox to the target format if the frame does not
-    // match the output size.
-
-    // Allocate a buffer of the correct size to scale the frame into.
-    // |output_frame_| is cleared whenever the output size changes, so we don't
-    // need to worry about clearing out stale pixel data in letterboxed areas.
-    if (!output_frame_) {
-      output_frame_.reset(new webrtc::BasicDesktopFrame(output_size));
-      memset(output_frame_->data(), 0, output_bytes);
-    }
-    DCHECK(output_frame_->size().equals(output_size));
-
-    // TODO(wez): Optimize this to scale only changed portions of the output,
-    // using ARGBScaleClip().
-    const webrtc::DesktopRect output_rect =
-        ComputeLetterboxRect(output_size, frame->size());
-    uint8_t* output_rect_data =
-        output_frame_->GetFrameDataAtPos(output_rect.top_left());
-    libyuv::ARGBScale(frame->data(), frame->stride(), frame->size().width(),
-                      frame->size().height(), output_rect_data,
-                      output_frame_->stride(), output_rect.width(),
-                      output_rect.height(), libyuv::kFilterBilinear);
-    output_data = output_frame_->data();
-  } else if (IsFrameUnpackedOrInverted(frame.get())) {
-    // If |frame| is not packed top-to-bottom then create a packed top-to-bottom
-    // copy.
-    // This is required if the frame is inverted (see crbug.com/306876), or if
-    // |frame| is cropped form a larger frame (see crbug.com/437740).
-    if (!output_frame_) {
-      output_frame_.reset(new webrtc::BasicDesktopFrame(output_size));
-      memset(output_frame_->data(), 0, output_bytes);
-    }
-
-    output_frame_->CopyPixelsFrom(*frame, webrtc::DesktopVector(),
-                                  webrtc::DesktopRect::MakeSize(frame->size()));
-    output_data = output_frame_->data();
   } else {
-    // If the captured frame matches the output size, we can return the pixel
-    // data directly.
-    output_data = frame->data();
+    if (!frame->size().equals(output_size)) {
+      // Make width/height of the captured frame even. Odd width/height will
+      // cause blurring in the following scaling process. See
+      // https://crbug.com/737278.
+      const int32_t frame_width = frame->size().width();
+      const int32_t frame_height = frame->size().height();
+      if (frame_width & 1 || frame_height & 1) {
+        frame = webrtc::CreateCroppedDesktopFrame(
+            std::move(frame),
+            webrtc::DesktopRect::MakeWH(frame_width & ~1, frame_height & ~1));
+      }
+
+      if (!frame->size().equals(output_size)) {
+        // Down-scale and/or letterbox to the target format if the frame does
+        // not match the output size.
+
+        // Allocate a buffer of the correct size to scale the frame into.
+        // |output_frame_| is cleared whenever the output size changes, so we
+        // don't need to worry about clearing out stale pixel data in
+        // letterboxed areas.
+        if (!output_frame_) {
+          output_frame_.reset(new webrtc::BasicDesktopFrame(output_size));
+          memset(output_frame_->data(), 0, output_bytes);
+        }
+        DCHECK(output_frame_->size().equals(output_size));
+
+        // TODO(wez): Optimize this to scale only changed portions of the
+        // output, using ARGBScaleClip().
+        const webrtc::DesktopRect output_rect =
+            ComputeLetterboxRect(output_size, frame->size());
+        uint8_t* output_rect_data =
+            output_frame_->GetFrameDataAtPos(output_rect.top_left());
+        libyuv::ARGBScale(frame->data(), frame->stride(), frame->size().width(),
+                          frame->size().height(), output_rect_data,
+                          output_frame_->stride(), output_rect.width(),
+                          output_rect.height(), libyuv::kFilterBilinear);
+      }
+    }
+
+    if (IsFrameUnpackedOrInverted(frame.get())) {
+      // If |frame| is not packed top-to-bottom then create a packed
+      // top-to-bottom copy. This is required if the frame is inverted (see
+      // crbug.com/306876), or if |frame| is cropped form a larger frame (see
+      // crbug.com/437740).
+      if (!output_frame_) {
+        output_frame_.reset(new webrtc::BasicDesktopFrame(output_size));
+        memset(output_frame_->data(), 0, output_bytes);
+      }
+
+      output_frame_->CopyPixelsFrom(
+          *frame, webrtc::DesktopVector(),
+          webrtc::DesktopRect::MakeSize(frame->size()));
+      output_data = output_frame_->data();
+    } else {
+      // If the captured frame matches the output size, we can return the pixel
+      // data directly.
+      output_data = frame->data();
+    }
   }
 
   base::TimeTicks now = base::TimeTicks::Now();
