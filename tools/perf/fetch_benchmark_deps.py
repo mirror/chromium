@@ -80,6 +80,15 @@ def FetchDepsForBenchmark(benchmark, output):
     print >> output, dep
 
 
+def GetStorySet(benchmark):
+  # Create a dummy options object which hold default values that are expected
+  # by Benchmark.CreateStorySet(options) method.
+  parser = optparse.OptionParser()
+  benchmark.AddBenchmarkCommandLineArgs(parser)
+  options, _ = parser.parse_args([])
+  return benchmark().CreateStorySet(options)
+
+
 def main(args, output):
   parser = argparse.ArgumentParser(
          description='Fetch the dependencies of perf benchmark(s).')
@@ -101,13 +110,23 @@ def main(args, output):
       raise ValueError('No such benchmark: %s' % options.benchmark_name)
     FetchDepsForBenchmark(benchmark, output)
   else:
-    if not options.force:
-      raw_input(
-          'No benchmark name is specified. Fetching all benchmark deps. '
-          'Press enter to continue...')
+    page_sets_affected = {}
+    buckets = {}
     for b in benchmark_finders.GetAllPerfBenchmarks():
-      print >> output, ('Fetch dependencies for benchmark %s' % b.Name())
-      FetchDepsForBenchmark(b, output)
+      story_set = GetStorySet(b)
+      if story_set.archive_data_file == None or story_set.archive_data_file == '':
+          continue
+      if story_set.bucket != None:
+        if not story_set.archive_data_file in buckets:
+           buckets[story_set.archive_data_file] = []
+        buckets[story_set.archive_data_file] += [story_set.bucket]
+      if not story_set.archive_data_file in page_sets_affected:
+          page_sets_affected[story_set.archive_data_file] = []
+      page_sets_affected[story_set.archive_data_file] += [b.Name()]
+    for name, k, v in sorted([(k.split('/')[-1], k, v) for (k, v) in page_sets_affected.iteritems()]):
+      print name, ',', (' ').join(v), ',', (' ').join(buckets[k])
+      # print >> output, ('Fetch dependencies for benchmark %s' % b.Name())
+      # FetchDepsForBenchmark(b, output)
 
 if __name__ == '__main__':
   main(sys.argv[1:], sys.stdout)
