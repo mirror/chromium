@@ -236,6 +236,24 @@
     },
     {
       "key": {
+        "uuid": "8d8062cc_7f8711c1",
+        "filename": "media/gpu/v4l2_slice_video_decode_accelerator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1698,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-07-24T06:10:31Z",
+      "side": 1,
+      "message": "The main argument is the information is not useful to the end user. Changing DVLOG to VLOG, we still hide those messages unless user enable explicitly by --v or --vmodule. However, changing DLOG(ERROR) to LOG(ERROR). The runtime behavior is changed. \n\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#Logging\n\nMaybe we should try to build a DCHECK_ALWAYS_ON version add see how it works.",
+      "parentUuid": "60ea7601_4ef2f66e",
+      "revId": "f7fc47c8a58fd9105b8ba628baeff0a75fa2b344",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9e8e806_92f36f5c",
         "filename": "media/gpu/v4l2_slice_video_decode_accelerator.cc",
         "patchSetId": 1
