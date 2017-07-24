@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56ebd880_977f8aa0",
+        "filename": "content/common/service_worker/service_worker_event_dispatcher.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-24T13:22:32Z",
+      "side": 1,
+      "message": "Is this line over 80 characters long?",
+      "revId": "4b9e9389f569c602bab51ae021fe14007ffdbc2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c31cc61d_6c77ea3c",
+        "filename": "content/test/data/payments/payment_app.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-24T13:22:32Z",
+      "side": 1,
+      "message": "Please add a comment that sending messages to the clients is for testing purposes only because typically there would not be any clients at the time of \u0027canmakepayment\u0027 event.",
+      "revId": "4b9e9389f569c602bab51ae021fe14007ffdbc2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c58d7c99_8fd4589c",
+        "filename": "third_party/WebKit/public/platform/modules/payments/payment_app.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-24T13:22:32Z",
+      "side": 1,
+      "message": "Strange indent here. Can we follow C++ style? Either one of these:\n\nFunctionNameHere(FirstParamType first_param_name,\n                 SecondParamTypeIsAlignedToFirst second_param_name);\n\nFunctionNameHere(\n    FirstParamTypeIsPlusFourIndentend first_param_name,\n    SecondParamTypeIsAlignedToFirst second_param_name);",
+      "revId": "4b9e9389f569c602bab51ae021fe14007ffdbc2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b02c4bf1_6fced2fe",
+        "filename": "third_party/WebKit/public/platform/modules/payments/payment_app.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-24T13:22:32Z",
+      "side": 1,
+      "message": "Ditto",
+      "revId": "4b9e9389f569c602bab51ae021fe14007ffdbc2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
