@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f228502_0ebcd4dc",
+        "filename": "components/autofill/content/renderer/password_generation_agent.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-24T17:41:10Z",
+      "side": 1,
+      "message": "Hmm. This has me thinking some stuff which would also apply to the browser-side changes.\n\nIt will probably be bad for many features to be implemented using their own BinderRegistry with a single entry. In fact it\u0027s almost certainly more efficient to just do an inline string\u003d\u003d name comparison within OnInterfaceRequestFromFrame.\n\nIt\u0027s also pretty unfortunate that what was before an O(log n) lookup for every interface request is now essentially an O(n) lookup.\n\nThis is OK for now IMHO, but it won\u0027t scale well. I suspect we want to eventually swing back to a \"register your interfaces\" kind of API, while sticking with the switch to WebContentsObserver/RenderFrameObserver as the sole delegation targets. In fact that will probably better facilitate conversion to mojom APIs since passing the request handle around to multiple clients in succession (mirroring how we iterate over local observers today) would be awkward and even less efficient.",
+      "revId": "4ed470705fd0558e1ad6b14138111fa5d4b31051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfc94b1a_ab5fa7ed",
+        "filename": "content/public/renderer/render_frame_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-24T17:41:10Z",
+      "side": 1,
+      "message": "The request is targeting the frame, not originating from the frame, so I think the request is more \"for\" a frame rather than \"from\" a frame. I realize you could rationalize \"from\" since the request is being forward to the observer \"from\" the observed frame. Meh...",
+      "revId": "4ed470705fd0558e1ad6b14138111fa5d4b31051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00cc41ac_639bd46b",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1362,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-24T17:41:10Z",
+      "side": 1,
+      "message": "nit: just return?",
+      "revId": "4ed470705fd0558e1ad6b14138111fa5d4b31051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
