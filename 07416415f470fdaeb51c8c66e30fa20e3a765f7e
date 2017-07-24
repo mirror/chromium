@@ -88,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "7c19bc20_cf7e3d10",
+        "filename": "chrome/browser/feature_engagement_tracker/bookmark/bookmark_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-24T20:33:19Z",
+      "side": 1,
+      "message": "That\u0027s insufficient.\n\nThe following code:\n\n{\nBookmarkTracker tracker;\n}\n\ncauses undefined behavior at a later point in time in the execution of Chrome.",
+      "parentUuid": "c66fa302_65cdb8f7",
+      "revId": "07416415f470fdaeb51c8c66e30fa20e3a765f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "880054c4_1c3bdd16",
         "filename": "chrome/browser/feature_engagement_tracker/bookmark/bookmark_tracker.cc",
         "patchSetId": 4
