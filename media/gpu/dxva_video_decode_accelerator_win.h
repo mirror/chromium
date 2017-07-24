@@ -136,7 +136,7 @@ class MEDIA_GPU_EXPORT DXVAVideoDecodeAccelerator
 
   static VideoDecodeAccelerator::SupportedProfiles GetSupportedProfiles(
       const gpu::GpuPreferences& gpu_preferences,
-      const gpu::GpuDriverBugWorkarounds& workarounds);
+      bool disable_accelerated_vpx_decode);
 
   // Preload dlls required for decoding.
   static void PreSandboxInitialization();

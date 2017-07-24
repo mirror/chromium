@@ -47,7 +47,6 @@ const int kMaxKeepAliveTimeMs = 200;
 
 GpuChannelManager::GpuChannelManager(
     const GpuPreferences& gpu_preferences,
-    const GpuDriverBugWorkarounds& workarounds,
     GpuChannelManagerDelegate* delegate,
     GpuWatchdogThread* watchdog,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
@@ -60,7 +59,6 @@ GpuChannelManager::GpuChannelManager(
     : task_runner_(task_runner),
       io_task_runner_(io_task_runner),
       gpu_preferences_(gpu_preferences),
-      gpu_driver_bug_workarounds_(workarounds),
       delegate_(delegate),
       watchdog_(watchdog),
       share_group_(new gl::GLShareGroup()),
@@ -104,7 +102,8 @@ GpuChannelManager::~GpuChannelManager() {
 gles2::ProgramCache* GpuChannelManager::program_cache() {
   if (!program_cache_.get() &&
       !gpu_preferences_.disable_gpu_program_cache) {
-    const GpuDriverBugWorkarounds& workarounds = gpu_driver_bug_workarounds_;
+    GpuDriverBugWorkarounds workarounds(
+        gpu_feature_info_.enabled_gpu_driver_bug_workarounds);
     bool disable_disk_cache =
         gpu_preferences_.disable_gpu_shader_disk_cache ||
         workarounds.disable_program_disk_cache;
