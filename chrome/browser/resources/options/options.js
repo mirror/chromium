@@ -228,9 +228,6 @@ function load() {
     PageManager.registerOverlay(PowerOverlay.getInstance(),
                                 BrowserOptions.getInstance(),
                                 [$('power-settings-link')]);
-    PageManager.registerOverlay(QuickUnlockConfigureOverlay.getInstance(),
-                                BrowserOptions.getInstance(),
-                                [$('manage-screenlock')]);
     PageManager.registerOverlay(StorageManager.getInstance(),
                                 BrowserOptions.getInstance(),
                                 [$('storage-manager-button')]);
