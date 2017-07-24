@@ -37,8 +37,8 @@
 
 namespace blink {
 
+class WebString;
 class WebURL;
-class WebURLRequest;
 class WebURLResponse;
 
 // This interface is used by webkit to call out to the embedder. Webkit uses
@@ -85,9 +85,11 @@ class WebApplicationCacheHost {
 
   // Called for every request made within the context.
   virtual void WillStartMainResourceRequest(
-      WebURLRequest& r,
-      const WebApplicationCacheHost* spawning_host) {}
-  virtual void WillStartSubResourceRequest(WebURLRequest&) {}
+      const WebURL& url,
+      const WebString& method,
+      const WebApplicationCacheHost* spawning_host,
+      int& host_id) {}
+  virtual void WillStartSubResourceRequest(int& host_id) {}
 
   // One or the other selectCache methods is called after having parsed the
   // <html> tag.  The latter returns false if the current document has been

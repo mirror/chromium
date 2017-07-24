@@ -79,16 +79,22 @@ void ApplicationCacheHost::WillStartLoading(ResourceRequest& request) {
   if (!IsApplicationCacheEnabled())
     return;
 
+  int host_id = WebApplicationCacheHost::kAppCacheNoHostId;
+
   if (request.GetFrameType() == WebURLRequest::kFrameTypeTopLevel ||
       request.GetFrameType() == WebURLRequest::kFrameTypeNested) {
-    WillStartLoadingMainResource(request);
+    WillStartLoadingMainResource(request.Url(), request.HttpMethod(), host_id);
   } else {
-    WillStartLoadingResource(request);
+    WillStartLoadingResource(host_id);
   }
+
+  if (host_id != WebApplicationCacheHost::kAppCacheNoHostId)
+    request.SetAppCacheHostID(host_id);
 }
 
-void ApplicationCacheHost::WillStartLoadingMainResource(
-    ResourceRequest& request) {
+void ApplicationCacheHost::WillStartLoadingMainResource(const KURL& url,
+                                                        const String& method,
+                                                        int& host_id) {
   // We defer creating the outer host object to avoid spurious
   // creation/destruction around creating empty documents. At this point, we're
   // initiating a main resource load for the document, so its for real.
@@ -100,8 +106,6 @@ void ApplicationCacheHost::WillStartLoadingMainResource(
   host_ = frame.Client()->CreateApplicationCacheHost(this);
   if (!host_)
     return;
-
-  WrappedResourceRequest wrapped(request);
 
   const WebApplicationCacheHost* spawning_host = nullptr;
   Frame* spawning_frame = frame.Tree().Parent();
@@ -117,7 +121,7 @@ void ApplicationCacheHost::WillStartLoadingMainResource(
             : nullptr;
   }
 
-  host_->WillStartMainResourceRequest(wrapped, spawning_host);
+  host_->WillStartMainResourceRequest(url, method, spawning_host, host_id);
 
   // NOTE: The semantics of this method, and others in this interface, are
   // subtly different than the method names would suggest. For example, in this
@@ -189,10 +193,9 @@ void ApplicationCacheHost::FinishedLoadingMainResource() {
     host_->DidFinishLoadingMainResource(true);
 }
 
-void ApplicationCacheHost::WillStartLoadingResource(ResourceRequest& request) {
+void ApplicationCacheHost::WillStartLoadingResource(int& host_id) {
   if (host_) {
-    WrappedResourceRequest wrapped(request);
-    host_->WillStartSubResourceRequest(wrapped);
+    host_->WillStartSubResourceRequest(host_id);
   }
 }
 
