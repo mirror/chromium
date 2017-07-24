@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "d97575d4_ee30fd9a",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-24T22:05:57Z",
+      "side": 1,
+      "message": "is it used?",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 18
+      },
+      "revId": "d809df50b41ebd2a45365682e0579045eee6a8ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c615d3e9_b8f711d6",
         "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe.h",
         "patchSetId": 6
@@ -18,6 +41,52 @@
         "startChar": 7,
         "endLine": 99,
         "endChar": 39
+      },
+      "revId": "d809df50b41ebd2a45365682e0579045eee6a8ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34d7820b_e0a6f9bf",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-24T22:05:57Z",
+      "side": 1,
+      "message": "Is it used?",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 19
+      },
+      "revId": "d809df50b41ebd2a45365682e0579045eee6a8ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56c894f5_23f3901a",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-24T22:05:57Z",
+      "side": 1,
+      "message": "It looks like we are not sending it out to GRC, why not use GURL directly?",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 13
       },
       "revId": "d809df50b41ebd2a45365682e0579045eee6a8ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
