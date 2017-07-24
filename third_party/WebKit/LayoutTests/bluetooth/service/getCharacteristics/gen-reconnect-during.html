@@ -8,22 +8,22 @@
 <script>
 'use strict';
 promise_test(() => {
-  return setBluetoothFakeAdapter('HeartRateAdapter')
-    .then(() => requestDeviceWithKeyDown({
-      filters: [{services: ['heart_rate']}]}))
-    .then(device => device.gatt.connect())
-    .then(gatt => {
-      return gatt.getPrimaryService('heart_rate')
-        .then(service => {
-          let promise = assert_promise_rejects_with_message(
-            service.getCharacteristics(),
-            new DOMException(
-              'GATT Server is disconnected. Cannot retrieve characteristics. ' +
-              '(Re)connect first with `device.gatt.connect`.',
-              'NetworkError'));
-          gatt.disconnect();
-          return gatt.connect().then(() => promise);
-        });
+  let device, service;
+  return getHealthThermometerService()
+    .then(vals => ({
+      device,
+      service,
+    } = vals))
+    .then(() => {
+      let promise = service.getCharacteristics().then(() => assert_unreached('Got characteristic unexpectedly.'),
+              (e) => {
+        assert_equals(e.name, 'NetworkError');
+        assert_equals(e.message,
+            'GATT Server is disconnected. Cannot retrieve characteristics. ' +
+            '(Re)connect first with `device.gatt.connect`.');
+      });
+      device.gatt.disconnect();
+      return device.gatt.connect().then(() => promise);
     });
 }, 'disconnect() and connect() called during getCharacteristics. Reject with ' +
    'NetworkError.');
