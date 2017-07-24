@@ -126,7 +126,7 @@ void CSSRotation::setAngle(CSSNumericValue* angle,
   angle_ = angle;
 }
 
-const DOMMatrix* CSSRotation::AsMatrix() const {
+const DOMMatrix* CSSRotation::AsMatrix(ExceptionState& exception_state) const {
   DOMMatrix* matrix = DOMMatrix::Create();
   CSSUnitValue* angle = angle_->to(CSSPrimitiveValue::UnitType::kDegrees);
   if (is2D()) {
