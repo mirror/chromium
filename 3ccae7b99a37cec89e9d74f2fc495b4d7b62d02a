@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a30b089c_0fd1e0bb",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-24T21:37:29Z",
+      "side": 1,
+      "message": "is only when \u003d\u003e is only used when?",
+      "range": {
+        "startLine": 228,
+        "startChar": 28,
+        "endLine": 228,
+        "endChar": 29
+      },
+      "revId": "3ccae7b99a37cec89e9d74f2fc495b4d7b62d02a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f725e52_9e41e0d5",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-24T21:37:29Z",
+      "side": 1,
+      "message": "- Do we block back/forward for frame busting?\n- How about window.open()? It seems like maybe that one should plumb in the URL as well.\n\nIn general, it seems like there are some rather (random) looking bits of code that call CanNavigate (such as document.close), and I haven\u0027t managed to convince myself that it makes sense to invoke the IPC in those cases.",
+      "range": {
+        "startLine": 231,
+        "startChar": 63,
+        "endLine": 231,
+        "endChar": 69
+      },
+      "revId": "3ccae7b99a37cec89e9d74f2fc495b4d7b62d02a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72eeef51_f3ad2f20",
+        "filename": "third_party/WebKit/Source/core/frame/Location.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-24T21:37:29Z",
+      "side": 1,
+      "message": "Maybe let\u0027s put this check before grabbing the completed URL?",
+      "range": {
+        "startLine": 249,
+        "startChar": 0,
+        "endLine": 250,
+        "endChar": 11
+      },
+      "revId": "3ccae7b99a37cec89e9d74f2fc495b4d7b62d02a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
