@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1182db9_7cdd7d74",
+        "filename": "sandbox/linux/services/namespace_sandbox.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-07-24T19:56:08Z",
+      "side": 1,
+      "message": "Without this, I get an error that says there\u0027s no __data member in pthread_t.  Does the sandbox get built on a different toolchain like nacl?",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 21
+      },
+      "revId": "742a87e7a9a349367c66bad0fab05bd4ab9a58e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

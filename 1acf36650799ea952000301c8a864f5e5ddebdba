@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "db690420_4f544bc0",
+        "filename": "base/process/launch_posix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-07-24T19:56:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe352a14_bfe5c7e0",
+      "revId": "1acf36650799ea952000301c8a864f5e5ddebdba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea796d55_b91dfb17",
         "filename": "base/process/launch_posix.cc",
         "patchSetId": 5
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "623411b7_acd53ef2",
+        "filename": "base/process/launch_posix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 752,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-07-24T19:56:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea796d55_b91dfb17",
+      "range": {
+        "startLine": 752,
+        "startChar": 0,
+        "endLine": 752,
+        "endChar": 3
+      },
+      "revId": "1acf36650799ea952000301c8a864f5e5ddebdba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e185cb7_24958843",
         "filename": "base/process/launch_posix.cc",
         "patchSetId": 5
@@ -53,6 +95,24 @@
       "writtenOn": "2017-07-21T22:52:44Z",
       "side": 1,
       "message": "I see, so tcbhead_t ended up being 512 bytes larger than the 24*8 byte padding field in the union.\n\nI believe this applies to x86 as well. for consistency, let\u0027s use ARCH_CPU_X86 and ARCH_CPU_X86_64. I also recommend manually listing out all architectures we have verified this for explicitly so that other architectures don\u0027t find out the hard way if something is different:\n\n#if defined(ARCH_CPU_X86) || defined(ARCH_CPU_X86_64)\n...\n#elif defined(...)\n...\n#else\n#error \"Unsupported architecture\"\n#endif\n\nSee https://cs.chromium.org/chromium/src/sandbox/linux/seccomp-bpf/syscall.cc for an approximate list of architectures our sandbox supports.",
+      "revId": "1acf36650799ea952000301c8a864f5e5ddebdba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e9ff37d_220142d8",
+        "filename": "base/process/launch_posix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-07-24T19:56:08Z",
+      "side": 1,
+      "message": "\u003e I see, so tcbhead_t ended up being 512 bytes larger than the 24*8 byte padding field in the union.\n\u003e \n\u003e I believe this applies to x86 as well. for consistency, let\u0027s use ARCH_CPU_X86 and ARCH_CPU_X86_64. I also recommend manually listing out all architectures we have verified this for explicitly so that other architectures don\u0027t find out the hard way if something is different:\n\u003e \n\nI\u0027ve checked here:\nhttps://sourceware.org/git/?p\u003dglibc.git\u0026a\u003dsearch\u0026h\u003dHEAD\u0026st\u003dgrep\u0026s\u003d%7D+tcbhead_t\nAnd x86_64 is the only arch where tcbhead_t is \u003e sizeof(void*)*24.  (On i386, it\u0027s smaller too).\n\nJust in case any other arches get supported, or if the layout changes in glibc, I\u0027ve added a CHECK before the write to make sure the cached tid is where we think it is :)\n\n\u003e #if defined(ARCH_CPU_X86) || defined(ARCH_CPU_X86_64)\n\u003e ...\n\u003e #elif defined(...)\n\u003e ...\n\u003e #else\n\u003e #error \"Unsupported architecture\"\n\u003e #endif\n\u003e \n\u003e See https://cs.chromium.org/chromium/src/sandbox/linux/seccomp-bpf/syscall.cc for an approximate list of architectures our sandbox supports.",
+      "parentUuid": "1e185cb7_24958843",
       "revId": "1acf36650799ea952000301c8a864f5e5ddebdba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "fb869da6_cd9262fd",
+        "filename": "base/process/launch_posix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 810,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-07-24T19:56:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d951306a_07964455",
+      "revId": "1acf36650799ea952000301c8a864f5e5ddebdba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50542854_b5aa603b",
         "filename": "base/process/launch_posix.cc",
         "patchSetId": 5
@@ -87,6 +165,30 @@
       "writtenOn": "2017-07-21T22:52:44Z",
       "side": 1,
       "message": "Are you sure about 2.24 here? I thought it was 2.25. Also, on 2.25, the PID field is no longer used, so since this is already a little hacky and dangerous, let\u0027s not write it if we don\u0027t have to.\n\nI could be mistaken here though - it wouldn\u0027t shock me if some distros backported this patch in some weird way :-(",
+      "range": {
+        "startLine": 811,
+        "startChar": 11,
+        "endLine": 811,
+        "endChar": 15
+      },
+      "revId": "1acf36650799ea952000301c8a864f5e5ddebdba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bf28ce4_89e2bce1",
+        "filename": "base/process/launch_posix.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 811,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-07-24T19:56:08Z",
+      "side": 1,
+      "message": "You\u0027re right about it being introduced in 2.25.  But it was backported to 2.24 on at least Debian and Fedora.",
+      "parentUuid": "50542854_b5aa603b",
       "range": {
         "startLine": 811,
         "startChar": 11,
