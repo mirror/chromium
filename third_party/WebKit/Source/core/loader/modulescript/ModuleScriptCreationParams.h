@@ -44,6 +44,10 @@ class ModuleScriptCreationParams {
   const AccessControlStatus access_control_status_;
 };
 
+template <>
+struct CrossThreadCopier<ModuleScriptCreationParams>
+    : public CrossThreadCopierPassThrough<ModuleScriptCreationParams> {};
+
 }  // namespace blink
 
 #endif  // ModuleScriptCreationParams_h
