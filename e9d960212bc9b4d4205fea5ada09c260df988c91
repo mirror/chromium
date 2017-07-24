@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e1db5ce4_38211b0c",
+        "filename": "third_party/WebKit/Source/platform/graphics/StaticBitmapImage.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-24T22:55:14Z",
+      "side": 0,
+      "message": "These are declared pure virtual in blink::Image, and this derived from it... I don\u0027t really understand why StaticBitmapImage also declares them as pure virtual? In terms of compiler complaining when you don\u0027t override those, it\u0027s the same. I can put this back if you prefer.",
+      "parentUuid": "24209deb_d83ebd33",
+      "revId": "e9d960212bc9b4d4205fea5ada09c260df988c91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5cb6f32_be4e0b8c",
         "filename": "third_party/WebKit/Source/platform/graphics/StaticBitmapImage.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-24T22:04:56Z",
       "side": 0,
       "message": "ditto",
+      "revId": "e9d960212bc9b4d4205fea5ada09c260df988c91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7f27e7b_0522eff7",
+        "filename": "third_party/WebKit/Source/platform/graphics/StaticBitmapImage.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-24T22:55:14Z",
+      "side": 0,
+      "message": "ditto",
+      "parentUuid": "f5cb6f32_be4e0b8c",
       "revId": "e9d960212bc9b4d4205fea5ada09c260df988c91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
