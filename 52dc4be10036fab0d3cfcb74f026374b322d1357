@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19dd281f_13601a0d",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-24T16:11:32Z",
+      "side": 0,
+      "message": "Keep this empty line.",
+      "revId": "52dc4be10036fab0d3cfcb74f026374b322d1357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
