@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6f77f1a_4a2b147c",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-07-24T21:53:30Z",
+      "side": 1,
+      "message": "Is the forward slash intentional? I\u0027m assuming it isn\u0027t, so lgtm if you remove it.\n\nOtherwise I\u0027m presumably confused about this.",
+      "revId": "894501d7655ecc0e2087200525719c34786af919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
