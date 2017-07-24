@@ -16,6 +16,24 @@
       "revId": "894501d7655ecc0e2087200525719c34786af919",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14b3e216_f983d072",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-07-24T23:31:58Z",
+      "side": 1,
+      "message": "Ah, never mind, you need the \u0027/\u0027 at the front as you say in your comments.\n\nThis is correct as-is.",
+      "parentUuid": "b6f77f1a_4a2b147c",
+      "revId": "894501d7655ecc0e2087200525719c34786af919",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
