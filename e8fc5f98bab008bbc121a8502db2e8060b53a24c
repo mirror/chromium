@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7ffa9ca_e006b872",
+        "filename": "components/offline_pages/core/downloads/download_ui_adapter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-07-24T22:09:53Z",
+      "side": 1,
+      "message": "nit: I realize that you used Request because of SavePageRequest, but in this case I think it would be better to be consistent with entry method naming, e.g.\nResumeDownload -\u003e ResumeDownloadContinuation\n\nThis applies to other methods in the file.",
+      "range": {
+        "startLine": 338,
+        "startChar": 24,
+        "endLine": 338,
+        "endChar": 50
+      },
+      "revId": "e8fc5f98bab008bbc121a8502db2e8060b53a24c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
