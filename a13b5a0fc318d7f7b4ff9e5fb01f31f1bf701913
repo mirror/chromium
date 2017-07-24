@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4fe9f37_32a3a5f5",
+        "filename": "chrome/installer/zucchini/main_utils.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-24T10:21:16Z",
+      "side": 1,
+      "message": "also:\n  fnames-\u003ereserve(args.size());",
+      "revId": "a13b5a0fc318d7f7b4ff9e5fb01f31f1bf701913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b93e23fb_81039549",
+        "filename": "chrome/installer/zucchini/main_utils.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-24T10:21:16Z",
+      "side": 1,
+      "message": "nit:\n  std::transform(args.begin(), args.end(), std::back_inserter(*fnames),\n[](const auto\u0026 arg) { return base::FilePath(arg); });\n\nor:\n  for (const auto\u0026 arg : args)\n    fnames-\u003eemplace_back(arg);\n\nthe latter is a bit more readable, imo.",
+      "revId": "a13b5a0fc318d7f7b4ff9e5fb01f31f1bf701913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "547c2993_cfec70f1",
+        "filename": "chrome/installer/zucchini/main_utils.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-24T10:21:16Z",
+      "side": 1,
+      "message": "base/process/process_info.h defines base::CurrentProcessInfo::CreationTime(), which returns the OS-provided process creation time. is it appropriate to use that rather than try to figure it out on your own? you wouldn\u0027t need to get/cache this during startup; just call CreationTime() in the dtor.\n\ncan you use AtExitManager to run the code you currently have in the dtor rather than relying on stack-unwind in main()?",
+      "range": {
+        "startLine": 37,
+        "startChar": 59,
+        "endLine": 37,
+        "endChar": 76
+      },
+      "revId": "a13b5a0fc318d7f7b4ff9e5fb01f31f1bf701913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22c26823_17f91cbb",
+        "filename": "chrome/installer/zucchini/main_utils.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-24T10:21:16Z",
+      "side": 1,
+      "message": "rather than exit(), consider returning a process exit code so that more code can be potentially be exercised in unit tests.",
+      "revId": "a13b5a0fc318d7f7b4ff9e5fb01f31f1bf701913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a808ea9f_2cb5a9d4",
+        "filename": "chrome/installer/zucchini/main_utils.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-24T10:21:16Z",
+      "side": 1,
+      "message": "static initializers are banned in Chromium. please remove these. one way would be to change to something like this in main:\n\n  registry.Register(base::MakeUnique\u003cCommand\u003e(\"gen\", ...));\n\nso that the registry owns the various command instances.",
+      "revId": "a13b5a0fc318d7f7b4ff9e5fb01f31f1bf701913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5d40d83_720d4601",
+        "filename": "chrome/installer/zucchini/main_utils.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-24T10:21:16Z",
+      "side": 1,
+      "message": "i don\u0027t recall seeing \"explicit\" used for copy constructors. is this normal?",
+      "revId": "a13b5a0fc318d7f7b4ff9e5fb01f31f1bf701913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d304fdc0_7fad354a",
+        "filename": "chrome/installer/zucchini/zucchini_main.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-24T10:21:16Z",
+      "side": 1,
+      "message": "other fun things to do in main so that the process dies rather than entering uncharted territory when things go awry:\n  base::EnableTerminationOnHeapCorruption();\n  base::EnableTerminationOnOutOfMemory();\n#if defined(OS_WIN)\n  base::win::RegisterInvalidParamHandler();\n  base::win::SetupCRT(cmd_line);\n#endif  // defined(OS_WIN)\n\nbonus points for crashpad integration!",
+      "revId": "a13b5a0fc318d7f7b4ff9e5fb01f31f1bf701913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c3821a5_77f8316b",
+        "filename": "chrome/installer/zucchini/zucchini_main.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-24T10:21:16Z",
+      "side": 1,
+      "message": "since you\u0027re using stuff in base, it\u0027s best to also instantiate an AtExitManager on the stack here in main().",
+      "revId": "a13b5a0fc318d7f7b4ff9e5fb01f31f1bf701913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00655da2_6b0f7215",
+        "filename": "chrome/installer/zucchini/zucchini_main.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-24T10:21:16Z",
+      "side": 1,
+      "message": "i suggest returning a non-zero exit code in case of any error so that scripts that call this can do the right thing when something goes wrong.",
+      "revId": "a13b5a0fc318d7f7b4ff9e5fb01f31f1bf701913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
