@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "59b6cea9_a6fa8d30",
+        "filename": "q",
+        "patchSetId": 28
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-07-24T22:25:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d29df26f_cc8c5845",
+      "revId": "27f2f03c44b37439f47c4142bd6ad5e8f900d838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31de3339_38c40720",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.h",
         "patchSetId": 28
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-22T02:10:58Z",
       "side": 1,
       "message": "I think you can rearrange the body of this function to improve performance. Sometimes. By probably just a little.\n\n(1) don\u0027t run through the loop if ShouldClipOverflow is true already (though I think that\u0027s rare)\n(2) terminate the loop as early as possible\n\nif (LayoutBox::ShouldClipOverflow())\n  return true;\nunsigned row_span \u003d RowSpan();\nif (row_span \u003d\u003d 1)\n  return false;\nunsigned row_index \u003d RowIndex();\nfor (unsigned r \u003d row_index; r \u003c row_index + row_span; r++) {\n  if (Section()-\u003eRowHasVisibilityCollapse(r))\n    return true;\n}\nreturn false;\n\nActually, thinking about correctness, and what Morten said (below), this is probably too aggressive, it probably clips too much overflow.\n\n\u003e In order to be 100% correct, I suppose one should only clip in the block\nprogression direction (i.e. downwards in normal cases), and leave any\noverflow visible in the other three directions?\n\nI know that cells in fixed layout tables can have inline direction overflow, but when can cells have overflow above?\n\nI think even with just the inline direction overflow possibility, this is too aggressive.\n\nThough, https://drafts.csswg.org/css-tables-3/#visibility-collapse-cell-rendering says \"clip the content to the table-cell’s border-box\", which I think is what this patch is doing but is maybe not what we want.",
+      "revId": "27f2f03c44b37439f47c4142bd6ad5e8f900d838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3229a4e4_f20f7c85",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-07-24T22:25:09Z",
+      "side": 1,
+      "message": "Thanks for pointing this out!",
+      "parentUuid": "31de3339_38c40720",
       "revId": "27f2f03c44b37439f47c4142bd6ad5e8f900d838",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
