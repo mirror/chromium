@@ -8,7 +8,9 @@
 #include "ui/gfx/native_widget_types.h"
 
 class Browser;
+class BubbleUi;
 class ContentSettingBubbleModel;
+class ExtensionInstalledBubble;
 class GURL;
 class LocationBarDecoration;
 class Profile;
@@ -30,6 +32,9 @@ struct SecurityInfo;
 }
 
 namespace chrome {
+
+std::unique_ptr<BubbleUi> BuildViewsExtensionInstalledBubbleUi(
+    ExtensionInstalledBubble* bubble);
 
 // Shows a Views page info bubble at the given anchor point.
 void ShowPageInfoBubbleViewsAtPoint(

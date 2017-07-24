@@ -25,11 +25,15 @@ class Extension;
 namespace extension_action_test_util {
 
 // The different possible types of actions for an extension to have (we use
-// this instead of ActionInfo::Type because we want a "none" option).
+// this instead of ActionInfo::Type because we want a "none" option). Note that
+// ExtensionActionHandler::Parse() usually sets a default page action, even for
+// NO_ACTION. Use INSTALLED_BY_DEFAULT to skip that.
 enum ActionType {
   NO_ACTION,
   PAGE_ACTION,
-  BROWSER_ACTION
+  BROWSER_ACTION,
+  INSTALLED_BY_DEFAULT,
+  OMNIBOX,
 };
 
 // TODO(devlin): Should we also pull out methods to test browser actions?

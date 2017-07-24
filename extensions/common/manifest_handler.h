@@ -116,7 +116,7 @@ class ManifestHandler {
   // so that they can define keys() { return SingleKey(kKey); }
   static const std::vector<std::string> SingleKey(const std::string& key);
 
- private:
+ public:
   // The keys to register us for (in Register).
   virtual const std::vector<std::string> Keys() const = 0;
 };
