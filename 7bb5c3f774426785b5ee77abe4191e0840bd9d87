@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b36311f_6cb9e2b6",
+        "filename": "components/autofill/core/browser/credit_card.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-24T13:48:49Z",
+      "side": 1,
+      "message": "I think Strip sounds like remove, can we put GetLastFourDigits instead?",
+      "range": {
+        "startLine": 103,
+        "startChar": 15,
+        "endLine": 103,
+        "endChar": 34
+      },
+      "revId": "7bb5c3f774426785b5ee77abe4191e0840bd9d87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
