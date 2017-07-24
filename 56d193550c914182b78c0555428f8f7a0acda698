@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "ee0391ef_a1acb9a2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-24T18:24:36Z",
+      "side": 1,
+      "message": "This CL actually has 2 effects:\n\nThe GN changes you\u0027re about to make prevent other libraries from including the impl headers.\n\nThe DEPS change prevents this library [or copies of it in third-party code] from including files from base/.\n\nI\u0027d update the commit message to call these out explicitly. [The current commit message describes the effect of the latter, but a viewer of the CL might get confused by the GN changes].",
+      "revId": "56d193550c914182b78c0555428f8f7a0acda698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "43cf5e5a_321c63ba",
         "filename": "base/numerics/BUILD.gn",
         "patchSetId": 3
