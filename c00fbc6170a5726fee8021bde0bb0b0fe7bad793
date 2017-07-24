@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "466c0442_40fe7912",
+        "filename": "ui/gl/angle_platform_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-24T17:45:45Z",
+      "side": 0,
+      "message": "I missed this during review. This can be a LazyInstance\u003cPlatformContext\u003e to avoid the static initializer.",
+      "revId": "c00fbc6170a5726fee8021bde0bb0b0fe7bad793",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
