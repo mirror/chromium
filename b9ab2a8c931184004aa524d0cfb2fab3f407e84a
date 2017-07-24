@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "080fea94_cbde13e7",
+        "filename": "chrome/browser/ui/webui/site_settings_helper.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-24T22:02:20Z",
+      "side": 1,
+      "message": "Can we make this function a constexpr?",
+      "revId": "b9ab2a8c931184004aa524d0cfb2fab3f407e84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
