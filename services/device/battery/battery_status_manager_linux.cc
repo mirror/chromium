@@ -307,6 +307,10 @@ mojom::BatteryStatus ComputeWebBatteryStatus(BatteryProperties* properties) {
   return status;
 }
 
+void OnSignalConnectedDoNothing(const std::string& interface_name,
+                                const std::string& signal_name,
+                                bool success) {}
+
 }  // namespace
 
 // Class that represents a dedicated thread which communicates with DBus to
@@ -314,7 +318,7 @@ mojom::BatteryStatus ComputeWebBatteryStatus(BatteryProperties* properties) {
 class BatteryStatusManagerLinux::BatteryStatusNotificationThread
     : public base::Thread {
  public:
-  BatteryStatusNotificationThread(
+  explicit BatteryStatusNotificationThread(
       const BatteryStatusService::BatteryUpdateCallback& callback)
       : base::Thread(kBatteryNotifierThreadName), callback_(callback) {}
 
@@ -345,14 +349,12 @@ class BatteryStatusManagerLinux::BatteryStatusNotificationThread
         kUPowerServiceName, kUPowerSignalDeviceAdded,
         base::Bind(&BatteryStatusNotificationThread::DeviceAdded,
                    base::Unretained(this)),
-        base::Bind(&BatteryStatusNotificationThread::OnSignalConnected,
-                   base::Unretained(this)));
+        base::Bind(&OnSignalConnectedDoNothing));
     upower_->proxy()->ConnectToSignal(
         kUPowerServiceName, kUPowerSignalDeviceRemoved,
         base::Bind(&BatteryStatusNotificationThread::DeviceRemoved,
                    base::Unretained(this)),
-        base::Bind(&BatteryStatusNotificationThread::OnSignalConnected,
-                   base::Unretained(this)));
+        base::Bind(&OnSignalConnectedDoNothing));
 
     FindBatteryDevice();
   }
@@ -365,7 +367,9 @@ class BatteryStatusManagerLinux::BatteryStatusNotificationThread
   void SetDBusForTesting(dbus::Bus* bus) { system_bus_ = bus; }
 
  private:
-  bool OnWatcherThread() { return task_runner()->BelongsToCurrentThread(); }
+  bool OnWatcherThread() const {
+    return task_runner()->BelongsToCurrentThread();
+  }
 
   void InitDBus() {
     DCHECK(OnWatcherThread());
@@ -377,6 +381,8 @@ class BatteryStatusManagerLinux::BatteryStatusNotificationThread
   }
 
   bool IsDaemonVersionBelow_0_99() {
+    DCHECK(OnWatcherThread());
+
     // TODO(thestig): Fix https://crbug.com/746146 and remove these CHECKs.
     CHECK(upower_);
     CHECK(upower_->properties());
@@ -386,6 +392,8 @@ class BatteryStatusManagerLinux::BatteryStatusNotificationThread
   }
 
   void FindBatteryDevice() {
+    DCHECK(OnWatcherThread());
+
     // Move the currently watched battery_ device to a stack-local variable such
     // that we can enumerate all devices (once more):
     // first testing the display device, then testing all devices from
@@ -453,8 +461,7 @@ class BatteryStatusManagerLinux::BatteryStatusNotificationThread
           kUPowerDeviceInterfaceName, kUPowerDeviceSignalChanged,
           base::Bind(&BatteryStatusNotificationThread::BatteryChanged,
                      base::Unretained(this)),
-          base::Bind(&BatteryStatusNotificationThread::OnSignalConnected,
-                     base::Unretained(this)));
+          base::Bind(&OnSignalConnectedDoNothing));
     }
   }
 
@@ -471,12 +478,8 @@ class BatteryStatusManagerLinux::BatteryStatusNotificationThread
     // this thread.
     message_loop()->task_runner()->PostTask(
         FROM_HERE, base::Bind(&dbus::Bus::ShutdownAndBlock, system_bus_));
-    system_bus_ = NULL;
+    system_bus_ = nullptr;
   }
-
-  void OnSignalConnected(const std::string& interface_name,
-                         const std::string& signal_name,
-                         bool success) {}
 
   std::unique_ptr<BatteryObject> CreateBattery(
       const dbus::ObjectPath& device_path) {
@@ -486,13 +489,17 @@ class BatteryStatusManagerLinux::BatteryStatusNotificationThread
                    base::Unretained(this)));
   }
 
-  void DeviceAdded(dbus::Signal* signal /* unused */) {
+  void DeviceAdded(dbus::Signal* /* signal */) {
+    DCHECK(OnWatcherThread());
+
     // Re-iterate all devices to see if we need to monitor the added battery
     // instead of the currently monitored battery.
     FindBatteryDevice();
   }
 
   void DeviceRemoved(dbus::Signal* signal) {
+    DCHECK(OnWatcherThread());
+
     if (!battery_)
       return;
 
@@ -520,15 +527,18 @@ class BatteryStatusManagerLinux::BatteryStatusNotificationThread
     }
 
     if (!removed_device_path.IsValid() ||
-        battery_->proxy()->object_path() == removed_device_path)
+        battery_->proxy()->object_path() == removed_device_path) {
       FindBatteryDevice();
+    }
   }
 
-  void BatteryPropertyChanged(const std::string& property_name) {
+  void BatteryPropertyChanged(const std::string& /* property_name */) {
+    DCHECK(OnWatcherThread());
     NotifyBatteryStatus();
   }
 
-  void BatteryChanged(dbus::Signal* signal /* unsused */) {
+  void BatteryChanged(dbus::Signal* /* signal */) {
+    DCHECK(OnWatcherThread());
     DCHECK(battery_);
     battery_->properties()->Invalidate();
     NotifyBatteryStatus();
@@ -553,7 +563,7 @@ class BatteryStatusManagerLinux::BatteryStatusNotificationThread
     notifying_battery_status_ = false;
   }
 
-  BatteryStatusService::BatteryUpdateCallback callback_;
+  const BatteryStatusService::BatteryUpdateCallback callback_;
   scoped_refptr<dbus::Bus> system_bus_;
   std::unique_ptr<UPowerObject> upower_;
   std::unique_ptr<BatteryObject> battery_;
