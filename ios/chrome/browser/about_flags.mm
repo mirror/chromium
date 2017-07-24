@@ -21,6 +21,7 @@
 #include "base/sys_info.h"
 #include "base/task_scheduler/switches.h"
 #include "components/dom_distiller/core/dom_distiller_switches.h"
+#include "components/feature_engagement_tracker/public/feature_constants.h"
 #include "components/flags_ui/feature_entry.h"
 #include "components/flags_ui/feature_entry_macros.h"
 #include "components/flags_ui/flags_storage.h"
@@ -97,7 +98,10 @@ const flags_ui::FeatureEntry kFeatureEntries[] = {
     {"ios-captive-portal", flag_descriptions::kIosCaptivePortalName,
      flag_descriptions::kIosCaptivePortalDescription, flags_ui::kOsIos,
      FEATURE_VALUE_TYPE(captive_portal::kIosCaptivePortal)},
-
+    {"in-product-help-demo-mode-choice",
+     flag_descriptions::kInProductHelpDemoModeName,
+     flag_descriptions::kInProductHelpDemoModeDescription, flags_ui::kOsIos,
+     FEATURE_VALUE_TYPE(feature_engagement_tracker::kIPHDemoMode)},
 };
 
 // Add all switches from experimental flags to |command_line|.
