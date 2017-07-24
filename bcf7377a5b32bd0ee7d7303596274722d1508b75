@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "8de11ccc_4d547c48",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-24T19:15:25Z",
+      "side": 1,
+      "message": "Right, but in the RFH case, it will never be for WebPagePopup, right? So in that case, widget request should only be present if widget routing ID is not null?",
+      "parentUuid": "381b4c5b_6d9d3709",
+      "range": {
+        "startLine": 522,
+        "startChar": 0,
+        "endLine": 524,
+        "endChar": 3
+      },
+      "revId": "bcf7377a5b32bd0ee7d7303596274722d1508b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4dddf651_7b7cb450",
         "filename": "content/browser/frame_host/render_frame_host_manager.cc",
         "patchSetId": 6
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "The browser side of the binding wasn\u0027t retained; see the code path for CreateSpeculativeRenderFrameHost.. the WidgetRequest isn\u0027t stored anywhere. So the channel won\u0027t really be established.",
       "parentUuid": "4dddf651_7b7cb450",
+      "range": {
+        "startLine": 1700,
+        "startChar": 4,
+        "endLine": 1700,
+        "endChar": 64
+      },
+      "revId": "bcf7377a5b32bd0ee7d7303596274722d1508b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a588126_ca831c5b",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1700,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-24T19:15:25Z",
+      "side": 1,
+      "message": "Why call it at all then?",
+      "parentUuid": "4385815d_779a61a5",
       "range": {
         "startLine": 1700,
         "startChar": 4,
