@@ -878,8 +878,14 @@ bool Resource::CanReuse(const FetchParameters& params) const {
       // We have two separate CORS handling logics in DocumentThreadableLoader
       // and ResourceFetcher and we cannot share resources if they are handled
       // in different places.
-      if (new_options.cors_handling_by_resource_fetcher !=
-          options_.cors_handling_by_resource_fetcher) {
+      if (options_.cors_handling_by_resource_fetcher !=
+          new_options.cors_handling_by_resource_fetcher) {
+        // If the old one was handled in ResourceFetcher, it is reusable because
+        // the new one will check it again.
+        if (options_.cors_handling_by_resource_fetcher)
+          break;
+        // Othewise, it is not reusable because the existing one will not be
+        // checked in ResourceLoader and it's generally dangerous to reuse it.
         return false;
       }
       break;
