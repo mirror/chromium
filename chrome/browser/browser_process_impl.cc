@@ -28,6 +28,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/synchronization/waitable_event.h"
 #include "base/task_scheduler/post_task.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "base/threading/thread.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -468,6 +469,17 @@ bool RundownTaskCounter::TimedWaitUntil(const base::TimeTicks& end_time) {
 }
 
 }  // namespace
+
+void BrowserProcessImpl::FlushLocalStateAndReply(base::OnceClosure reply) {
+  if (!local_state()) {
+    base::SequencedTaskRunnerHandle::Get()->PostTask(FROM_HERE,
+                                                     std::move(reply));
+  }
+
+  local_state()->CommitPendingWrite();
+  local_state_task_runner_->PostTaskAndReply(
+      FROM_HERE, base::Bind(&base::DoNothing), std::move(reply));
+}
 
 void BrowserProcessImpl::EndSession() {
   // Mark all the profiles as clean.
