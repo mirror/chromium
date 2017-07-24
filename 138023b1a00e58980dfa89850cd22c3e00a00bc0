@@ -34,6 +34,23 @@
       "revId": "138023b1a00e58980dfa89850cd22c3e00a00bc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e92c82c6_82d944a3",
+        "filename": "third_party/WebKit/Source/platform/testing/weburl_loader_mock.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-24T13:54:54Z",
+      "side": 1,
+      "message": "This might not be very obvious, can you add a comment to note that self weak ptr might be null after DidReceiveData, and in the case ForEachSegment finishes?",
+      "revId": "138023b1a00e58980dfa89850cd22c3e00a00bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
