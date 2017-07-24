@@ -128,6 +128,23 @@
       "revId": "a03fedbd79da94e0a8aca9ff8b7b58d70bcbd457",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7e155c0_326a8d28",
+        "filename": "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-24T18:46:14Z",
+      "side": 1,
+      "message": "Thanks for updating this. The algorithm LGTM.\n\nIf you want, root_frame_coordination_unit-\u003eGetParentCoordinationUnitsOfType(CoordinationUnitType::kFrame) can allow you to get rid of the if-statement below. Not a huge deal though.",
+      "revId": "a03fedbd79da94e0a8aca9ff8b7b58d70bcbd457",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
