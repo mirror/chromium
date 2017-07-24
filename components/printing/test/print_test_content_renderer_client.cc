@@ -13,9 +13,9 @@ namespace printing {
 
 namespace {
 
-class PrintWebViewHelperDelegate : public PrintWebViewHelper::Delegate {
+class PrintWebFrameHelperDelegate : public PrintWebFrameHelper::Delegate {
  public:
-  ~PrintWebViewHelperDelegate() override {}
+  ~PrintWebFrameHelperDelegate() override {}
 
   bool CancelPrerender(content::RenderFrame* render_frame) override {
     return false;
@@ -43,8 +43,8 @@ PrintTestContentRendererClient::~PrintTestContentRendererClient() {
 
 void PrintTestContentRendererClient::RenderFrameCreated(
     content::RenderFrame* render_frame) {
-  new PrintWebViewHelper(render_frame,
-                         base::MakeUnique<PrintWebViewHelperDelegate>());
+  new PrintWebFrameHelper(render_frame,
+                          base::MakeUnique<PrintWebFrameHelperDelegate>());
 }
 
 }  // namespace printing
