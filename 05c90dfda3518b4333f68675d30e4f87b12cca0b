@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "adafeb06_8ee193f6",
+        "filename": "content/test/data/accessibility/aria/aria-empty-string.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-24T18:07:27Z",
+      "side": 1,
+      "message": "Agreed. It was a good way to develop the results, but I\u0027ll use a whitelist now that I have them.",
+      "parentUuid": "8b746169_47f03370",
+      "revId": "05c90dfda3518b4333f68675d30e4f87b12cca0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "46ac4e99_c1ade8e9",
         "filename": "content/test/data/accessibility/aria/aria-empty-string.html",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "89f6161a_ceb176b4",
+        "filename": "content/test/data/accessibility/aria/aria-empty-string.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-24T18:07:27Z",
+      "side": 1,
+      "message": "I\u0027d rather not. That would make the results file different than the other 2. Currently it\u0027s designed so that all 3 results files are the same, as it says in the top comment.",
+      "parentUuid": "46ac4e99_c1ade8e9",
+      "revId": "05c90dfda3518b4333f68675d30e4f87b12cca0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2fa355c_399673f5",
         "filename": "third_party/WebKit/Source/core/dom/AccessibleNode.cpp",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "05c90dfda3518b4333f68675d30e4f87b12cca0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aca98efd_ead915fe",
+        "filename": "third_party/WebKit/Source/core/dom/AccessibleNode.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-07-24T18:07:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2fa355c_399673f5",
+      "revId": "05c90dfda3518b4333f68675d30e4f87b12cca0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
