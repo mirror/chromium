@@ -48,6 +48,8 @@ source_set("generic_sensor") {
     "platform_sensor_win.h",
     "relative_orientation_euler_angles_fusion_algorithm_using_accelerometer.cc",
     "relative_orientation_euler_angles_fusion_algorithm_using_accelerometer.h",
+    "relative_orientation_quaternion_fusion_algorithm_using_euler_angles.cc",
+    "relative_orientation_quaternion_fusion_algorithm_using_euler_angles.h",
     "sensor_impl.cc",
     "sensor_impl.h",
     "sensor_provider_impl.cc",

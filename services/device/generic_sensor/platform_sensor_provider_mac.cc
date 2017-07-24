@@ -10,6 +10,7 @@
 #include "services/device/generic_sensor/platform_sensor_ambient_light_mac.h"
 #include "services/device/generic_sensor/platform_sensor_fusion.h"
 #include "services/device/generic_sensor/relative_orientation_euler_angles_fusion_algorithm_using_accelerometer.h"
+#include "services/device/generic_sensor/relative_orientation_quaternion_fusion_algorithm_using_euler_angles.h"
 
 namespace device {
 
@@ -52,6 +53,19 @@ void PlatformSensorProviderMac::CreateSensorInternal(
           mojom::SensorType::RELATIVE_ORIENTATION_EULER_ANGLES,
           std::move(
               relative_orientation_euler_angles_fusion_algorithm_using_accelerometer));
+      break;
+    }
+    case mojom::SensorType::RELATIVE_ORIENTATION_QUATERNION: {
+      std::vector<mojom::SensorType> source_sensor_types = {
+          mojom::SensorType::RELATIVE_ORIENTATION_EULER_ANGLES};
+      auto relative_orientation_quaternion_fusion_algorithm_using_euler_angles =
+          base::MakeUnique<
+              RelativeOrientationQuaternionFusionAlgorithmUsingEulerAngles>();
+      base::MakeRefCounted<PlatformSensorFusion>(
+          std::move(mapping), this, callback, source_sensor_types,
+          mojom::SensorType::RELATIVE_ORIENTATION_QUATERNION,
+          std::move(
+              relative_orientation_quaternion_fusion_algorithm_using_euler_angles));
       break;
     }
     default:
