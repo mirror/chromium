@@ -140,7 +140,7 @@ ConstantCategoryRanker::GetKnownCategoriesDefaultOrder() {
   }
 
   static_assert(
-      static_cast<size_t>(KnownCategories::LOCAL_CATEGORIES_COUNT) == 6,
+      static_cast<size_t>(KnownCategories::LOCAL_CATEGORIES_COUNT) == 7,
       "All local KnownCategories must be present in all orders.");
 
   // Other remote categories will be ordered after these depending on when
