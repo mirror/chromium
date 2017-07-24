@@ -15,10 +15,9 @@
 #include "components/variations/variations_seed_store.h"
 
 namespace variations {
-class VariationsServiceClient;
-}
 
-namespace variations {
+class VariationsServiceClient;
+class PlatformFieldTrials;
 
 // Used to setup field trials based on stored variations seed data.
 class VariationsFieldTrialCreator {
@@ -54,6 +53,16 @@ class VariationsFieldTrialCreator {
 
   // Exposed for testing.
   void SetCreateTrialsFromSeedCalledForTesting(bool called);
+
+  // Sets up field trials based on stored variations seed data.
+  bool SetupFieldTrials(const char* kEnableGpuBenchmarking,
+                        const char* kEnableFeatures,
+                        const char* kDisableFeatures,
+                        std::unique_ptr<const base::FieldTrial::EntropyProvider>
+                            low_entropy_provider,
+                        std::unique_ptr<base::FeatureList> feature_list,
+                        std::vector<std::string>* variation_ids,
+                        PlatformFieldTrials* platform_field_trials);
 
   // Returns all of the client state used for filtering studies.
   // As a side-effect, may update the stored permanent consistency country.

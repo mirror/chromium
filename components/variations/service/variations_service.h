@@ -170,6 +170,13 @@ class VariationsService
   // Exposed for testing.
   void GetClientFilterableStateForVersionCalledForTesting();
 
+  bool SetupFieldTrials(const char kEnableGpuBenchmarking[],
+                        const char kEnableFeatures[],
+                        const char kDisableFeatures[],
+                        std::unique_ptr<base::FeatureList> feature_list,
+                        std::vector<std::string>* variation_ids,
+                        variations::PlatformFieldTrials* platform_field_trials);
+
  protected:
   // Starts the fetching process once, where |OnURLFetchComplete| is called with
   // the response.
