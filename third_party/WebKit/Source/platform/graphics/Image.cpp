@@ -351,13 +351,18 @@ PassRefPtr<Image> Image::ImageForDefaultFrame() {
 }
 
 PaintImage Image::PaintImageForCurrentFrame() {
-  auto animation_type = MaybeAnimated() ? PaintImage::AnimationType::ANIMATED
-                                        : PaintImage::AnimationType::STATIC;
-  auto completion_state = CurrentFrameIsComplete()
-                              ? PaintImage::CompletionState::DONE
-                              : PaintImage::CompletionState::PARTIALLY_DONE;
-  return PaintImage(stable_image_id_, ImageForCurrentFrame(), animation_type,
-                    completion_state, FrameCount(), is_multipart_);
+  PaintImageBuilder builder;
+  builder.set_id(stable_image_id_);
+  builder.set_animation_type(MaybeAnimated()
+                                 ? PaintImage::AnimationType::ANIMATED
+                                 : PaintImage::AnimationType::STATIC);
+  builder.set_completion_state(
+      CurrentFrameIsComplete() ? PaintImage::CompletionState::DONE
+                               : PaintImage::CompletionState::PARTIALLY_DONE);
+  builder.set_frame_count(FrameCount());
+  builder.set_is_multipart(is_multipart_);
+  PopulateImageForCurrentFrame(builder);
+  return builder.GetPaintImage();
 }
 
 bool Image::ApplyShader(PaintFlags& flags, const SkMatrix& local_matrix) {

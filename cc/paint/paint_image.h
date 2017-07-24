@@ -8,8 +8,12 @@
 #include "base/logging.h"
 #include "cc/paint/paint_export.h"
 #include "third_party/skia/include/core/SkImage.h"
+#include "ui/gfx/geometry/rect.h"
 
 namespace cc {
+
+class PaintOpBuffer;
+using PaintRecord = PaintOpBuffer;
 
 // TODO(vmpstr): Add a persistent id to the paint image.
 class CC_PAINT_EXPORT PaintImage {
@@ -58,7 +62,8 @@ class CC_PAINT_EXPORT PaintImage {
   explicit operator bool() const { return static_cast<bool>(sk_image_); }
 
   Id stable_id() const { return id_; }
-  const sk_sp<SkImage>& sk_image() const { return sk_image_; }
+  // TODO(vmpstr): Rename to GetSkImage()
+  const sk_sp<SkImage>& sk_image() const;
   AnimationType animation_type() const { return animation_type_; }
   CompletionState completion_state() const { return completion_state_; }
   size_t frame_count() const { return frame_count_; }
@@ -70,8 +75,12 @@ class CC_PAINT_EXPORT PaintImage {
   PaintImage CloneWithSkImage(sk_sp<SkImage> new_image) const;
 
  private:
+  friend class PaintImageBuilder;
+
   Id id_ = kUnknownStableId;
   sk_sp<SkImage> sk_image_;
+  sk_sp<PaintRecord> paint_record_;
+  gfx::Rect paint_record_rect_;
   AnimationType animation_type_ = AnimationType::UNKNOWN;
   CompletionState completion_state_ = CompletionState::UNKNOWN;
   // The number of frames known to exist in this image (eg number of GIF frames
@@ -81,6 +90,8 @@ class CC_PAINT_EXPORT PaintImage {
 
   // Whether the data fetched for this image is a part of a multpart response.
   bool is_multipart_ = false;
+
+  mutable sk_sp<SkImage> cached_sk_image_;
 };
 
 }  // namespace cc
