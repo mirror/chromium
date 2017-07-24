@@ -52,6 +52,24 @@
       "revId": "d16e288f9f5c6d74d6c05d284ce1beaad4fe9d4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f03a63c2_65ee8911",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2827,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-24T18:59:19Z",
+      "side": 1,
+      "message": "Apologies, got sidetracked last week.\n\nI moved DCPL to FrameHost, which was rather painless (not uploaded yet).\n\nI was thinking about what would be the cleanest way to intercept FrameHost messages. Which of these do you hate the least?\n\n1.) Unbind the InterfaceRequest from frame_host_associated_binding_ if it\u0027s already bound, otherwise override the binder method to forward to the testing object.\n\n2.) Use std::unique_ptr\u003cmojo::AssociatedBinding\u003e frame_host_associated_binding_; and replace it during testing to redirect to the testing object (Unbind-\u003eBind the if it is already bound). This way the binder method does not need to be overridden.\n\n3.) Make use of AssociatedBinding::AddFilter (although it\u0027s unclear how we could make this message-specific).\n\n4.) Something else?",
+      "parentUuid": "8ac44729_b3da7240",
+      "revId": "d16e288f9f5c6d74d6c05d284ce1beaad4fe9d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
