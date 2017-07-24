@@ -117,6 +117,30 @@
       "revId": "1d2ff8a5bf61c486d940231a3a9f8728ebea6ccb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "16f76436_4abe1ae6",
+        "filename": "third_party/WebKit/public/web/WebSharedWorkerClient.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-24T18:46:45Z",
+      "side": 1,
+      "message": "To elaborate a bit: ideally, what we do is when we create a new shared worker host, we plumb the routing ID /and/ a InterfacePtr for a InterfaceProvider down to the renderer. Then we can just register worker-specific interfaces on this InterfaceProvider and implicitly know which worker is associated. Does that make sense?\n\n(Also, can a shared worker host change URL? If not, then we don\u0027t even need to pass the URL/origin over IPC, which would be even better)",
+      "parentUuid": "be859b17_28334058",
+      "range": {
+        "startLine": 93,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 33
+      },
+      "revId": "1d2ff8a5bf61c486d940231a3a9f8728ebea6ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
