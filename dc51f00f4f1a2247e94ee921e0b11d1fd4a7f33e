@@ -16,6 +16,24 @@
       "revId": "dc51f00f4f1a2247e94ee921e0b11d1fd4a7f33e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2670f009_9167ac78",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-07-24T22:38:59Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "4ab7f518_a185c3dd",
+      "revId": "dc51f00f4f1a2247e94ee921e0b11d1fd4a7f33e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
