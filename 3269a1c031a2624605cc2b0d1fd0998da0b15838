@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fd2ec1e1_c20b31e1",
+        "filename": "third_party/WebKit/Source/core/workers/GlobalScopeCreationParams.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-24T06:06:36Z",
+      "side": 1,
+      "message": "I feel the same thing, but it was a bit difficult.\nContentSecurityPolicyResponseHeaders just owns the two HTTP headers by Strings, and ContentSecurityPolicy parses it. Vector\u003cCSPHeaderAndType\u003e is a kind of serialized format of ContentSecurityPolicy after parsing. \n\nCurrently CSP is created like the following. (MT means Main Thread and WT is Worker Thread)\nHTTPHeaderMap (MT)\n -\u003e ContentSecurityPolicyResponseHeaders (MT)\n   -\u003e ContentSecurityPolicy (for a shadow page on MT)\n     -\u003e Vector\u003cCSPHeaderAndType\u003e (created on MT and passed to WT)\n       -\u003e ContentSecurityPolicy (for a global scope on WT)\n\nIn this patch, HTTPHeaderMap arrives at the worker thread, so the path is changed like the following.\n\nHTTPHeaderMap (WT)\n -\u003e ContentSecurityPolicyResponseHeaders (WT and copied for MT)\n   -\u003e ContentSecurityPolicy (for a global scope on WT)\n   -\u003e ContentSecurityPolicy (for a shadow page on MT)\n\nFor creating Vector\u003cCSPHeaderAndType\u003e, ContentSecurityPolicy should be created first. In this patch, around L.426 in WorkerThread.cpp might be the place. However, it\u0027s redundant because ContentSecurityPolicy is created in CreatedGlobalScope() again, and additional complexity is that WorkerBackingThread::InitializeOnBackingThread should be called before creating ContentSecurityPolicy for heap initialization. \n\nI think it\u0027d be simpler to pass ContentSecurityPolicyResponseHeaders as an parameter of GlobalScopeCreationParams instead of CSPHeaderAndType and parse them on MT/WT when constructing ContentSecurityPolicy, but removing |content_security_policy_headers| and changing it to |content_security_policy_response_headers| needs fixing other workers. I\u0027d like to do it in another patch if this direction sounds good.\n\n----\n\nRenamed them for clarifying the difference.\n- content_security_policy_parsed_headers\n- content_security_policy_raw_headers",
+      "parentUuid": "e523c34c_60e8be4d",
+      "revId": "3269a1c031a2624605cc2b0d1fd0998da0b15838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5565d61_2653db56",
         "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.h",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2dd57c12_56c0ba35",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-24T06:06:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5565d61_2653db56",
+      "revId": "3269a1c031a2624605cc2b0d1fd0998da0b15838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f328df0c_d12ba6ab",
         "filename": "third_party/WebKit/Source/core/workers/WorkerReportingProxy.h",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-20T14:32:33Z",
       "side": 1,
       "message": "Just to confirm, in the ResourceLoader path also, only the main script\u0027s CSP and referrer policy matter?",
+      "revId": "3269a1c031a2624605cc2b0d1fd0998da0b15838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67b4cda0_39830cce",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerReportingProxy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-24T06:06:36Z",
+      "side": 1,
+      "message": "Yes, I think so. They are set in WebEWImpl::StartWorkerThread and the parameter is coming from the main script\u0027s headers.\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.cpp?q\u003dStartWorkerThread\u0026sq\u003dpackage:chromium\u0026l\u003d470",
+      "parentUuid": "f328df0c_d12ba6ab",
       "revId": "3269a1c031a2624605cc2b0d1fd0998da0b15838",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "b6bbfa13_ef43bb93",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-24T06:06:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "045ac069_11cca81c",
+      "revId": "3269a1c031a2624605cc2b0d1fd0998da0b15838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e099a6c_d321fcd3",
         "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.cpp",
         "patchSetId": 2
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "5dd5eca0_e7984bc3",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-24T06:06:36Z",
+      "side": 1,
+      "message": "Thanks, done.",
+      "parentUuid": "3e099a6c_d321fcd3",
+      "revId": "3269a1c031a2624605cc2b0d1fd0998da0b15838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59b6b785_9541fb2a",
         "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScopeProxy.cpp",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "3269a1c031a2624605cc2b0d1fd0998da0b15838",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f73a3b89_4d8494ce",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScopeProxy.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-24T06:06:36Z",
+      "side": 1,
+      "message": "I see, thanks. Used TaskType::kNetworking for picking the same task runner.",
+      "parentUuid": "59b6b785_9541fb2a",
+      "revId": "3269a1c031a2624605cc2b0d1fd0998da0b15838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
