@@ -65,6 +65,30 @@
     },
     {
       "key": {
+        "uuid": "cfcc87a6_571bb986",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/directory_owners_extractor.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-07-24T17:17:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91a9beb0_e8a8fc98",
+      "range": {
+        "startLine": 48,
+        "startChar": 5,
+        "endLine": 50,
+        "endChar": 55
+      },
+      "revId": "7f3254bebaece8278f02688a04b352364bbbcc9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40f89708_1f1fef33",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/directory_owners_extractor.py",
         "patchSetId": 2
@@ -85,6 +109,30 @@
       "revId": "7f3254bebaece8278f02688a04b352364bbbcc9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a27cf522_e58d48fc",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/directory_owners_extractor.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-07-24T17:17:02Z",
+      "side": 1,
+      "message": "1. I rewrote the while loop to avoid while-true, which I agree would make people feel unnecessarily nervous.\n2. find_owners_file now returns absolute paths, and accordingly, extract_owners takes absolute paths.\n3. To prevent the infinite loop from happening, an assertion is added to make sure paths passed to find_owners_file are relative not absolute, along with a test case. (The root cause is that os.path.join would throw away all leading paths if it sees an absolute path.) Thanks for catching this!\n4. I\u0027m still more inclined to make this method more generic by stopping at the repo root. It would not make real difference here in practice.",
+      "parentUuid": "40f89708_1f1fef33",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 58
+      },
+      "revId": "7f3254bebaece8278f02688a04b352364bbbcc9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
