@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "559ae5c1_6a3a4536",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarControlContainer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-07-24T19:59:50Z",
+      "side": 1,
+      "message": "so is the toolbar not consuming the event? Shouldn\u0027t this happen on the ToolbarLayout level if that is the one handling the event?\n\nI am mostly pointing it out because I see that we are returning true without taking any other actions. If this event gets passed to the container from ToolbarLayout (even though it is handled there), maybe we should be returning true at that child rather than here?",
+      "range": {
+        "startLine": 266,
+        "startChar": 31,
+        "endLine": 266,
+        "endChar": 32
+      },
+      "revId": "73a7222fc765885e074a7f55c474bb337d824846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
