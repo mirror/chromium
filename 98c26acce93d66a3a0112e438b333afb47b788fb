@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "62a71b01_ef6bb75f",
+        "filename": "media/mojo/mojo_video_encode_accelerator_integration_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-24T08:37:59Z",
+      "side": 1,
+      "message": "Pretty cool huh? But it\u0027s true that it doesn\u0027t\nreally test anything (guess it\u0027s more for larger\nintegration tests), so handled it explicitly, and\nadapted this test (also added a new\n MojoVideoEncodeAcceleratorServiceTest.InitializeWithInvalidClientFails\nto test service-side handling of nullptr).",
+      "parentUuid": "0b711bbc_7c2bf98c",
+      "range": {
+        "startLine": 137,
+        "startChar": 2,
+        "endLine": 137,
+        "endChar": 21
+      },
+      "revId": "98c26acce93d66a3a0112e438b333afb47b788fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df5d26c7_208367ee",
         "filename": "media/mojo/mojo_video_encode_accelerator_integration_test.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-21T22:44:59Z",
       "side": 1,
       "message": "- How would this work considering Initialize() is now sync? Is NotifyError() going to be called before or after Initialize()? I think it would result in one overriding the other and assume lieftime of |client|. It would make sense to just return false from Initialize instead of duplicate information. \nhttps://cs.chromium.org/chromium/src/content/renderer/media/gpu/rtc_video_encoder.cc?rcl\u003d01db9e6de868980ffa29bca92f644c43e1c9b154\u0026l\u003d580",
+      "range": {
+        "startLine": 152,
+        "startChar": 14,
+        "endLine": 152,
+        "endChar": 25
+      },
+      "revId": "98c26acce93d66a3a0112e438b333afb47b788fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e7b5b2d_1c391689",
+        "filename": "media/mojo/mojo_video_encode_accelerator_integration_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-24T08:37:59Z",
+      "side": 1,
+      "message": "Hmm yeah, two ways of returning error is a bad thing,\nnow with the [Sync] Initialize(). Adapted the corresponding\nunit tests, here and in the _service_unittests.cc",
+      "parentUuid": "df5d26c7_208367ee",
       "range": {
         "startLine": 152,
         "startChar": 14,
