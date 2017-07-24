@@ -106,11 +106,12 @@ public class WebApkServiceClient {
                 ContextUtils.getApplicationContext(), webApkPackage, connectionCallback);
     }
 
-    /** Disconnects all the connections to WebAPK services. */
-    public static void disconnectAll() {
-        if (sInstance == null) return;
-
-        sInstance.mConnectionManager.disconnect(ContextUtils.getApplicationContext());
+    /**
+     * Disconnects Chrome application from the WebAPK service.
+     * @param webApkPackage WebAPK package for the service to disconnect from.
+     */
+    public void disconnect(String webApkPackage) {
+        mConnectionManager.disconnect(ContextUtils.getApplicationContext(), webApkPackage);
     }
 
     /** Decodes bitmap from WebAPK's resources. */
