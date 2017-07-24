@@ -22671,7 +22671,7 @@ uploading your change for review.  These are checked by presubmit scripts.
       label="enable-loading-ipc-optimization-for-small-resources"/>
   <int value="-1839637286" label="AutofillCreditCardBankNameDisplay:disabled"/>
   <int value="-1839496458" label="disable-file-manager-touch-mode"/>
-  <int value="-1838482444" label="disable-settings-window"/>
+  <int value="-1838482444" label="disable-settings-window (deprecated)"/>
   <int value="-1835975804" label="disable-offline-auto-reload"/>
   <int value="-1833149810" label="enable-accessibility-tab-switcher"/>
   <int value="-1832575380" label="show-saved-copy"/>
@@ -23452,7 +23452,7 @@ from previous Chrome versions.
   <int value="842432903" label="CaptureThumbnailOnNavigatingAway:enabled"/>
   <int value="846951416" label="CopylessPaste:enabled"/>
   <int value="848324390" label="enable-lock-screen-apps"/>
-  <int value="851085848" label="enable-settings-window"/>
+  <int value="851085848" label="enable-settings-window (deprecated)"/>
   <int value="854730848" label="disable-app-info-dialog-mac"/>
   <int value="855746780" label="disable-physical-keyboard-autocorrect"/>
   <int value="857445869" label="enable-captive-portal-bypass-proxy"/>
