@@ -137,6 +137,12 @@ String ScheduledNavigationReasonToProtocol(ScheduledNavigation::Reason reason) {
   return ReasonEnum::Reload;
 }
 
+Maybe<String> UrlToOptionalProtocol(const KURL& url) {
+  if (url.IsEmpty())
+    return Maybe<String>();
+  return url.GetString();
+}
+
 }  // namespace
 
 static bool PrepareResourceBuffer(Resource* cached_resource,
@@ -775,7 +781,8 @@ void InspectorPageAgent::FrameScheduledNavigation(
     ScheduledNavigation* scheduled_navigation) {
   GetFrontend()->frameScheduledNavigation(
       FrameId(frame), scheduled_navigation->Delay(),
-      ScheduledNavigationReasonToProtocol(scheduled_navigation->GetReason()));
+      ScheduledNavigationReasonToProtocol(scheduled_navigation->GetReason()),
+      UrlToOptionalProtocol(scheduled_navigation->Url()));
 }
 
 void InspectorPageAgent::FrameClearedScheduledNavigation(LocalFrame* frame) {
