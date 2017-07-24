@@ -491,6 +491,9 @@ class TestRunner : public WebTestRunner {
                         const std::string& frontend_url);
   void CloseWebInspector();
 
+  // Checks if DevTools is in debug mode (unbundled & manually start test)
+  bool IsDebugDevTools();
+
   // Inspect chooser state
   bool IsChooserShown();
 

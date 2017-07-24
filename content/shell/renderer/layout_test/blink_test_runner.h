@@ -92,6 +92,7 @@ class BlinkTestRunner : public RenderViewObserver,
   void ShowDevTools(const std::string& settings,
                     const std::string& frontend_url) override;
   void CloseDevTools() override;
+  bool IsDebugDevTools() override;
   void EvaluateInWebInspector(int call_id, const std::string& script) override;
   std::string EvaluateInWebInspectorOverlay(const std::string& script) override;
   void ClearAllDatabases() override;

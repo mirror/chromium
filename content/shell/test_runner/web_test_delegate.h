@@ -132,6 +132,9 @@ class WebTestDelegate {
                             const std::string& frontend_url) = 0;
   virtual void CloseDevTools() = 0;
 
+  // Checks if DevTools is in debug mode (unbundled & manually start test)
+  virtual bool IsDebugDevTools() = 0;
+
   // Evaluate the given script in the DevTools agent.
   virtual void EvaluateInWebInspector(int call_id,
                                       const std::string& script) = 0;

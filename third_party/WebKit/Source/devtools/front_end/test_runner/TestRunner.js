@@ -4,14 +4,23 @@
 
 /* eslint-disable no-console */
 
-/** @type {!{logToStderr: function(), notifyDone: function()}|undefined} */
+/** @type {!{logToStderr: function(), notifyDone: function(), isDebugDevTools: function():boolean}|undefined} */
 self.testRunner;
 
 TestRunner.executeTestScript = function() {
   const testScriptURL = /** @type {string} */ (Runtime.queryParam('test'));
   fetch(testScriptURL)
       .then(data => data.text())
-      .then(testScript => eval(`(function test(){${testScript}})()\n//# sourceURL=${testScriptURL}`))
+      .then(testScript => {
+        // self.testRunner doesn't exist in unit test debug workflow
+        if (!self.testRunner || self.testRunner.isDebugDevTools()) {
+          eval(`self.test = function test(){${testScript}}\n//# sourceURL=${testScriptURL}`);
+          TestRunner.addResult = console.log;
+          TestRunner.completeTest = () => console.log('Test completed');
+          return;
+        }
+        eval(`(function test(){${testScript}})()\n//# sourceURL=${testScriptURL}`);
+      })
       .catch(error => {
         TestRunner.addResult(`Unable to execute test script because of error: ${error}`);
         TestRunner.completeTest();
@@ -25,11 +34,6 @@ TestRunner._results = [];
  * @suppressGlobalPropertiesCheck
  */
 TestRunner.completeTest = function() {
-  if (!self.testRunner) {
-    console.log('Test Done');
-    return;
-  }
-
   Array.prototype.forEach.call(document.documentElement.childNodes, x => x.remove());
   var outputElement = document.createElement('div');
   // Support for svg - add to document, not body, check for style.
@@ -51,10 +55,7 @@ TestRunner.completeTest = function() {
  * @param {*} text
  */
 TestRunner.addResult = function(text) {
-  if (self.testRunner)
-    TestRunner._results.push(String(text));
-  else
-    console.log(text);
+  TestRunner._results.push(String(text));
 };
 
 /**
@@ -249,17 +250,6 @@ TestRunner.textContentWithLineBreaks = function(node) {
   }
   return buffer;
 };
-
-/**
- * @param {!Function} testFunction
- * @return {!Function}
- */
-function debugTest(testFunction) {
-  self.test = testFunction;
-  TestRunner.addResult = console.log;
-  TestRunner.completeTest = () => console.log('Test completed');
-  return () => {};
-}
 
 (function() {
   /**
