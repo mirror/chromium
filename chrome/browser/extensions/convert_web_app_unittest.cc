@@ -18,6 +18,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
 #include "base/version.h"
+#include "chrome/browser/extensions/bookmark_app_helper.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/extensions/manifest_handlers/app_launch_info.h"
 #include "chrome/common/web_application_info.h"
@@ -108,6 +109,7 @@ TEST(ExtensionFromWebApp, Basic) {
   web_app.description =
       base::ASCIIToUTF16("The best text editor in the universe!");
   web_app.app_url = GURL("http://aaronboodman.com/gearpad/");
+  web_app.scope = GURL("http://aaronboodman.com/gearpad/");
 
   const int sizes[] = {16, 48, 128};
   for (size_t i = 0; i < arraysize(sizes); ++i) {
@@ -134,6 +136,8 @@ TEST(ExtensionFromWebApp, Basic) {
   EXPECT_EQ(base::UTF16ToUTF8(web_app.title), extension->name());
   EXPECT_EQ(base::UTF16ToUTF8(web_app.description), extension->description());
   EXPECT_EQ(web_app.app_url, AppLaunchInfo::GetFullLaunchURL(extension.get()));
+  EXPECT_EQ(web_app.scope,
+            BookmarkAppHelper::GetScopeFromExtension(extension.get()));
   EXPECT_EQ(0u,
             extension->permissions_data()->active_permissions().apis().size());
   ASSERT_EQ(0u, extension->web_extent().patterns().size());
@@ -179,6 +183,8 @@ TEST(ExtensionFromWebApp, Minimal) {
   EXPECT_EQ(base::UTF16ToUTF8(web_app.title), extension->name());
   EXPECT_EQ("", extension->description());
   EXPECT_EQ(web_app.app_url, AppLaunchInfo::GetFullLaunchURL(extension.get()));
+  EXPECT_TRUE(
+      BookmarkAppHelper::GetScopeFromExtension(extension.get()).is_empty());
   EXPECT_EQ(0u, IconsInfo::GetIcons(extension.get()).map().size());
   EXPECT_EQ(0u,
             extension->permissions_data()->active_permissions().apis().size());
