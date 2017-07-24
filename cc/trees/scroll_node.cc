@@ -2,13 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "cc/trees/scroll_node.h"
 #include "base/trace_event/trace_event_argument.h"
 #include "cc/base/math_util.h"
 #include "cc/input/main_thread_scrolling_reason.h"
 #include "cc/layers/layer.h"
+#include "cc/layers/snap_point_list.h"
 #include "cc/trees/element_id.h"
 #include "cc/trees/property_tree.h"
-#include "cc/trees/scroll_node.h"
 
 namespace cc {
 
@@ -45,7 +46,8 @@ bool ScrollNode::operator==(const ScrollNode& other) const {
          should_flatten == other.should_flatten &&
          user_scrollable_horizontal == other.user_scrollable_horizontal &&
          user_scrollable_vertical == other.user_scrollable_vertical &&
-         element_id == other.element_id && transform_id == other.transform_id;
+         element_id == other.element_id && transform_id == other.transform_id &&
+         snap_offsets == other.snap_offsets;
 }
 
 void ScrollNode::AsValueInto(base::trace_event::TracedValue* value) const {

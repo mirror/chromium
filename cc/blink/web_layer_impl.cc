@@ -19,6 +19,7 @@
 #include "cc/blink/web_blend_mode.h"
 #include "cc/layers/layer.h"
 #include "cc/layers/layer_position_constraint.h"
+#include "cc/layers/snap_point_list.h"
 #include "cc/layers/touch_action_region.h"
 #include "cc/trees/element_id.h"
 #include "cc/trees/layer_tree_host.h"
@@ -28,6 +29,7 @@
 #include "third_party/WebKit/public/platform/WebLayerScrollClient.h"
 #include "third_party/WebKit/public/platform/WebLayerStickyPositionConstraint.h"
 #include "third_party/WebKit/public/platform/WebSize.h"
+#include "third_party/WebKit/public/platform/WebSnapPointList.h"
 #include "third_party/skia/include/core/SkMatrix44.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/geometry/vector2d_conversions.h"
@@ -411,6 +413,7 @@ static cc::LayerStickyPositionConstraint ToStickyPositionConstraint(
       web_constraint.nearest_layer_shifting_containing_block;
   return constraint;
 }
+
 void WebLayerImpl::SetStickyPositionConstraint(
     const blink::WebLayerStickyPositionConstraint& constraint) {
   layer_->SetStickyPositionConstraint(ToStickyPositionConstraint(constraint));
@@ -430,6 +433,10 @@ void WebLayerImpl::SetScrollClient(blink::WebLayerScrollClient* scroll_client) {
     layer_->set_did_scroll_callback(
         base::Callback<void(const gfx::ScrollOffset&)>());
   }
+}
+
+void WebLayerImpl::SetSnapOffsets(const blink::WebSnapPointList& offsets) {
+  layer_->SetScrollSnapOffsets(offsets);
 }
 
 void WebLayerImpl::SetLayerClient(cc::LayerClient* client) {

@@ -153,4 +153,13 @@ bool WebGestureCurveImpl::Apply(double time,
   return did_scroll && still_active;
 }
 
+void WebGestureCurveImpl::ComputeTotalScrollOffset(gfx::Vector2dF* offset) {
+  curve_->ComputeTotalScrollOffset(offset);
+}
+
+bool WebGestureCurveImpl::ResetCurveBySnappedOffset(
+    const gfx::Vector2dF& offset) {
+  return curve_->ResetCurveBySnappedOffset(offset);
+}
+
 }  // namespace ui

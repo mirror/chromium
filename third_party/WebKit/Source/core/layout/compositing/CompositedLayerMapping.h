@@ -430,6 +430,7 @@ class CORE_EXPORT CompositedLayerMapping final : public GraphicsLayerClient {
   void UpdateChildrenTransform();
   void UpdateCompositedBounds();
   void RegisterScrollingLayers();
+  void UpdateSnapOffsets();
 
   // Also sets subpixelAccumulation on the layer.
   void ComputeBoundsOfOwningLayer(

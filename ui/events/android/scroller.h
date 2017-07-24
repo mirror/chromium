@@ -35,6 +35,10 @@ class EVENTS_BASE_EXPORT Scroller : public GestureCurve {
                            gfx::Vector2dF* offset,
                            gfx::Vector2dF* velocity) override;
 
+  void ComputeTotalScrollOffset(gfx::Vector2dF* offset) override;
+
+  bool ResetCurveBySnappedOffset(const gfx::Vector2dF& offset) override;
+
   // Start scrolling by providing a starting point and the distance to travel.
   // The default value of 250 milliseconds will be used for the duration.
   void StartScroll(float start_x,
@@ -111,6 +115,8 @@ class EVENTS_BASE_EXPORT Scroller : public GestureCurve {
   double GetSplineDeceleration(float velocity) const;
   base::TimeDelta GetSplineFlingDuration(float velocity) const;
   double GetSplineFlingDistance(float velocity) const;
+  double GetSplineVelocityFromDeceleration(float deceleration) const;
+  double GetSplineVelocityFromDistance(float distance) const;
 
   Mode mode_;
 

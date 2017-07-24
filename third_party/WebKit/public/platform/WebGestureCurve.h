@@ -25,6 +25,10 @@
 #ifndef WebGestureCurve_h
 #define WebGestureCurve_h
 
+namespace gfx {
+class Vector2dF;
+}
+
 namespace blink {
 
 class WebGestureCurveTarget;
@@ -39,6 +43,8 @@ class WebGestureCurve {
 
   // Returns false if curve has finished and can no longer be applied.
   virtual bool Apply(double time, WebGestureCurveTarget*) = 0;
+  virtual void ComputeTotalScrollOffset(gfx::Vector2dF* offset) = 0;
+  virtual bool ResetCurveBySnappedOffset(const gfx::Vector2dF& offset) = 0;
 };
 
 }  // namespace blink
