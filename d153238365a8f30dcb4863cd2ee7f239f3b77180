@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "193c20ef_8a439311",
+        "filename": "components/ntp_snippets/category.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-24T14:08:37Z",
+      "side": 1,
+      "message": "Done. Let\u0027s define CONTEXTUAL locally.",
+      "parentUuid": "358d2173_54bea8db",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 58,
+        "endChar": 21
+      },
+      "revId": "d153238365a8f30dcb4863cd2ee7f239f3b77180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b426728_69c5a08a",
         "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.h",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "d153238365a8f30dcb4863cd2ee7f239f3b77180",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c37a9a63_c6254d7b",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-24T14:08:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0b426728_69c5a08a",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 34
+      },
+      "revId": "d153238365a8f30dcb4863cd2ee7f239f3b77180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -119,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "f7f75a76_e6abb548",
+        "filename": "components/ntp_snippets/remote/remote_suggestion.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-24T14:08:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96fd31a0_dd0d105e",
+      "range": {
+        "startLine": 297,
+        "startChar": 37,
+        "endLine": 297,
+        "endChar": 53
+      },
+      "revId": "d153238365a8f30dcb4863cd2ee7f239f3b77180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "266fdfee_1b96d3fe",
         "filename": "components/ntp_snippets/remote/remote_suggestion.cc",
         "patchSetId": 4
@@ -162,6 +234,54 @@
       "revId": "d153238365a8f30dcb4863cd2ee7f239f3b77180",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7497229b_2ddcf107",
+        "filename": "components/ntp_snippets/remote/remote_suggestion.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-24T14:08:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "266fdfee_1b96d3fe",
+      "range": {
+        "startLine": 298,
+        "startChar": 7,
+        "endLine": 298,
+        "endChar": 14
+      },
+      "revId": "d153238365a8f30dcb4863cd2ee7f239f3b77180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "350b8d22_4d39e151",
+        "filename": "components/ntp_snippets/remote/remote_suggestion.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-24T14:08:37Z",
+      "side": 1,
+      "message": "Done. Assign default kArticlesRemoteId instead.",
+      "parentUuid": "44515161_0c441a2e",
+      "range": {
+        "startLine": 298,
+        "startChar": 40,
+        "endLine": 298,
+        "endChar": 64
+      },
+      "revId": "d153238365a8f30dcb4863cd2ee7f239f3b77180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
