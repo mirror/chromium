@@ -1005,7 +1005,7 @@ bool RenderThreadImpl::Send(IPC::Message* msg) {
   }
 
   if (pumping_events) {
-    renderer_scheduler_->SuspendTimerQueue();
+    renderer_scheduler_->PauseTimerQueue();
     WebView::WillEnterModalLoop();
   }
 
@@ -1267,10 +1267,10 @@ void RenderThreadImpl::InitializeWebKit(
     isolate->IsolateInBackgroundNotification();
   }
 
-  renderer_scheduler_->SetTimerQueueSuspensionWhenBackgroundedEnabled(
+  renderer_scheduler_->SetTimerQueuePausingWhenBackgroundedEnabled(
       GetContentClient()
           ->renderer()
-          ->AllowTimerSuspensionWhenProcessBackgrounded());
+          ->AllowPausingTimersWhenProcessBackgrounded());
 
   SkGraphics::SetResourceCacheSingleAllocationByteLimit(
       kImageCacheSingleAllocationByteLimit);

@@ -106,7 +106,7 @@ void FakeRendererScheduler::RemoveTaskObserver(
 
 void FakeRendererScheduler::Shutdown() {}
 
-void FakeRendererScheduler::SuspendTimerQueue() {}
+void FakeRendererScheduler::PauseTimerQueue() {}
 
 void FakeRendererScheduler::ResumeTimerQueue() {}
 
@@ -114,7 +114,7 @@ void FakeRendererScheduler::VirtualTimePaused() {}
 
 void FakeRendererScheduler::VirtualTimeResumed() {}
 
-void FakeRendererScheduler::SetTimerQueueSuspensionWhenBackgroundedEnabled(
+void FakeRendererScheduler::SetTimerQueuePausingWhenBackgroundedEnabled(
     bool enabled) {}
 
 void FakeRendererScheduler::SetTopLevelBlameContext(

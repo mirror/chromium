@@ -82,6 +82,7 @@ MainThreadTaskQueue::MainThreadTaskQueue(
       can_be_blocked_(params.can_be_blocked),
       can_be_throttled_(params.can_be_throttled),
       can_be_suspended_(params.can_be_suspended),
+      can_be_paused_(params.can_be_paused),
       renderer_scheduler_(renderer_scheduler) {
   GetTaskQueueImpl()->SetOnTaskCompletedHandler(base::Bind(
       &MainThreadTaskQueue::OnTaskCompleted, base::Unretained(this)));

@@ -118,11 +118,11 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   void RemoveTaskObserver(
       base::MessageLoop::TaskObserver* task_observer) override;
   void Shutdown() override;
-  void SuspendTimerQueue() override;
+  void PauseTimerQueue() override;
   void ResumeTimerQueue() override;
   void VirtualTimePaused() override;
   void VirtualTimeResumed() override;
-  void SetTimerQueueSuspensionWhenBackgroundedEnabled(bool enabled) override;
+  void SetTimerQueuePausingWhenBackgroundedEnabled(bool enabled) override;
   void SetTopLevelBlameContext(
       base::trace_event::BlameContext* blame_context) override;
   void SetRAILModeObserver(RAILModeObserver* observer) override;
@@ -276,6 +276,7 @@ class PLATFORM_EXPORT RendererSchedulerImpl
           is_suspended(false),
           is_throttled(false),
           is_blocked(false),
+          is_paused(false),
           use_virtual_time(false),
           priority(TaskQueue::NORMAL_PRIORITY) {}
 
@@ -283,6 +284,7 @@ class PLATFORM_EXPORT RendererSchedulerImpl
     bool is_suspended;
     bool is_throttled;
     bool is_blocked;
+    bool is_paused;
     bool use_virtual_time;
     TaskQueue::QueuePriority priority;
 
@@ -296,7 +298,7 @@ class PLATFORM_EXPORT RendererSchedulerImpl
       return is_enabled == other.is_enabled &&
              is_suspended == other.is_suspended &&
              is_throttled == other.is_throttled &&
-             is_blocked == other.is_blocked &&
+             is_blocked == other.is_blocked && is_paused == other.is_paused &&
              use_virtual_time == other.use_virtual_time &&
              priority == other.priority;
     }
@@ -428,7 +430,7 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   // The amount of time to wait before suspending shared timers after the
   // renderer has been backgrounded. This is used only if background suspension
   // of shared timers is enabled.
-  static const int kSuspendTimersWhenBackgroundedDelayMillis = 5 * 60 * 1000;
+  static const int kPauseTimersWhenBackgroundedDelayMillis = 5 * 60 * 1000;
 
   // The time we should stay in a priority-escalated mode after a call to
   // DidAnimateForInputOnCompositorThread().
@@ -475,9 +477,9 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   void UpdateForInputEventOnCompositorThread(WebInputEvent::Type type,
                                              InputEventState input_event_state);
 
-  // Helpers for safely suspending/resuming the timer queue after a
+  // Helpers for safely pausing/resuming the timer queue after a
   // background/foreground signal.
-  void SuspendTimerQueueWhenBackgrounded();
+  void PauseTimerQueueWhenBackgrounded();
   void ResumeTimerQueueWhenForegroundedOrResumed();
 
   // The task cost estimators and the UserModel need to be reset upon page
@@ -573,14 +575,14 @@ class PLATFORM_EXPORT RendererSchedulerImpl
     base::TimeDelta compositor_frame_interval;
     base::TimeDelta longest_jank_free_task_duration;
     base::Optional<base::TimeTicks> last_audio_state_change;
-    int timer_queue_suspend_count;  // TIMER_TASK_QUEUE suspended if non-zero.
+    int timer_queue_pause_count;  // TIMER_TASK_QUEUE paused if non-zero.
     int navigation_task_expected_count;
     ExpensiveTaskPolicy expensive_task_policy;
     bool renderer_hidden;
     bool renderer_backgrounded;
     bool renderer_suspended;
-    bool timer_queue_suspension_when_backgrounded_enabled;
-    bool timer_queue_suspended_when_backgrounded;
+    bool timer_queue_pausing_when_backgrounded_enabled;
+    bool timer_queue_paused_when_backgrounded;
     bool was_shutdown;
     bool loading_tasks_seem_expensive;
     bool timer_tasks_seem_expensive;

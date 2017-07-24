@@ -54,7 +54,8 @@ class PLATFORM_EXPORT MainThreadTaskQueue : public TaskQueue {
           spec(NameForQueueType(queue_type)),
           can_be_blocked(false),
           can_be_throttled(false),
-          can_be_suspended(false) {}
+          can_be_suspended(false),
+          can_be_paused(false) {}
 
     QueueCreationParams SetCanBeBlocked(bool value) {
       can_be_blocked = value;
@@ -68,6 +69,11 @@ class PLATFORM_EXPORT MainThreadTaskQueue : public TaskQueue {
 
     QueueCreationParams SetCanBeSuspended(bool value) {
       can_be_suspended = value;
+      return *this;
+    }
+
+    QueueCreationParams SetCanBePaused(bool value) {
+      can_be_paused = value;
       return *this;
     }
 
@@ -99,6 +105,7 @@ class PLATFORM_EXPORT MainThreadTaskQueue : public TaskQueue {
     bool can_be_blocked;
     bool can_be_throttled;
     bool can_be_suspended;
+    bool can_be_paused;
   };
 
   ~MainThreadTaskQueue() override;
@@ -112,6 +119,8 @@ class PLATFORM_EXPORT MainThreadTaskQueue : public TaskQueue {
   bool CanBeThrottled() const { return can_be_throttled_; }
 
   bool CanBeSuspended() const { return can_be_suspended_; }
+
+  bool CanBePaused() const { return can_be_paused_; }
 
   void OnTaskCompleted(const TaskQueue::Task& task,
                        base::TimeTicks start,
@@ -132,6 +141,7 @@ class PLATFORM_EXPORT MainThreadTaskQueue : public TaskQueue {
   const bool can_be_blocked_;
   const bool can_be_throttled_;
   const bool can_be_suspended_;
+  const bool can_be_paused_;
 
   // Needed to notify renderer scheduler about completed tasks.
   RendererSchedulerImpl* renderer_scheduler_;  // NOT OWNED

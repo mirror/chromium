@@ -102,7 +102,7 @@ bool ContentRendererClient::RunIdleHandlerWhenWidgetsHidden() {
   return true;
 }
 
-bool ContentRendererClient::AllowTimerSuspensionWhenProcessBackgrounded() {
+bool ContentRendererClient::AllowPausingTimersWhenProcessBackgrounded() {
   return false;
 }
 

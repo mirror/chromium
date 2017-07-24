@@ -56,11 +56,11 @@ class MockRendererScheduler : public RendererScheduler {
   MOCK_METHOD1(AddTaskObserver, void(base::MessageLoop::TaskObserver*));
   MOCK_METHOD1(RemoveTaskObserver, void(base::MessageLoop::TaskObserver*));
   MOCK_METHOD0(Shutdown, void());
-  MOCK_METHOD0(SuspendTimerQueue, void());
+  MOCK_METHOD0(PauseTimerQueue, void());
   MOCK_METHOD0(ResumeTimerQueue, void());
   MOCK_METHOD0(VirtualTimePaused, void());
   MOCK_METHOD0(VirtualTimeResumed, void());
-  MOCK_METHOD1(SetTimerQueueSuspensionWhenBackgroundedEnabled, void(bool));
+  MOCK_METHOD1(SetTimerQueuePausingWhenBackgroundedEnabled, void(bool));
   MOCK_METHOD1(SetTopLevelBlameContext, void(base::trace_event::BlameContext*));
   MOCK_METHOD1(SetRAILModeObserver, void(RAILModeObserver*));
   MOCK_METHOD1(MainThreadSeemsUnresponsive, bool(base::TimeDelta));
