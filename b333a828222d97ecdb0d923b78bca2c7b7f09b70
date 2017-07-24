@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4d9e3f14_d40bed38",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 12
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-07-24T05:36:46Z",
+      "side": 1,
+      "message": "I do not know the reason for failure on Linux only. This failure is not affected by my checkin.\n\nOn every CR, I try to reduce number of unexpected passes in virtual/layout_ng.\nReasons are documented here:\nhttps://groups.google.com/a/chromium.org/forum/#!topic/layout-dev/-EqPRKHxApk\n\nI could do this as a separate CR too. We can discuss the merits of these 2 approaches with the team. I can pull it out if you insist.",
+      "parentUuid": "0d1f7c6f_fb56d42f",
+      "revId": "b333a828222d97ecdb0d923b78bca2c7b7f09b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f515f43_45224cec",
         "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "b333a828222d97ecdb0d923b78bca2c7b7f09b70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a800e6f_5c10782e",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-07-24T05:36:46Z",
+      "side": 1,
+      "message": "Done\n\n    // When logical_width_is_shrink_to_fit is true, correct size will be\n    // computed by standard layout, so there is no need to compute it here.\n    // This happens because NGConstraintSpace::CreateFromLayoutObject will\n    // always set shrink-to-fit flag to true if\n    // LayoutObject::SizesLogicalWidthToFitContent() is true.",
+      "parentUuid": "9f515f43_45224cec",
+      "revId": "b333a828222d97ecdb0d923b78bca2c7b7f09b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b8c69b3d_9b8b3494",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_absolute_utils.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-07-24T05:36:46Z",
+      "side": 1,
+      "message": "Done.\n\n// replaced_size should be set if and only if element is replaced element.\n\nreplaced_size is not strictly intrinsic_size.",
+      "parentUuid": "acc8aeca_f5a52cb9",
+      "revId": "b333a828222d97ecdb0d923b78bca2c7b7f09b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7ff2f22_1325881e",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_layout_input_node.cc",
         "patchSetId": 12
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-22T00:55:16Z",
       "side": 1,
       "message": "For all the sizes below, don\u0027t you have to transform them for the writing mode if it\u0027s not horizontal?",
+      "revId": "b333a828222d97ecdb0d923b78bca2c7b7f09b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e46ed908_ddc0d6ff",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_layout_input_node.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-07-24T05:36:46Z",
+      "side": 1,
+      "message": "No. ComputeIntrinsicSizingInfo() returns logical values, while IntrinsicSize() returns physical.",
+      "parentUuid": "d7ff2f22_1325881e",
       "revId": "b333a828222d97ecdb0d923b78bca2c7b7f09b70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "77bfc4d5_6389b81f",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_layout_input_node.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-07-24T05:36:46Z",
+      "side": 1,
+      "message": "The answer here might be  unsatisfactory:\n\n  // The function arguments return values from LegacyLayout intrinsic size\n  // computations: LayoutReplaced::IntrinsicSizingInfo,\n  // and LayoutReplaced::IntrinsicSize.",
+      "parentUuid": "500a23b5_e2c3e030",
+      "revId": "b333a828222d97ecdb0d923b78bca2c7b7f09b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c278951_32615a5c",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_length_utils.cc",
         "patchSetId": 12
@@ -101,6 +191,24 @@
       "revId": "b333a828222d97ecdb0d923b78bca2c7b7f09b70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "013c3deb_ae297fa8",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_length_utils.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-07-24T05:36:46Z",
+      "side": 1,
+      "message": "Done\n\n// Computes size for a replaced element.",
+      "parentUuid": "5c278951_32615a5c",
+      "revId": "b333a828222d97ecdb0d923b78bca2c7b7f09b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
