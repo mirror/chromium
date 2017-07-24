@@ -863,19 +863,7 @@ class TaskSchedulerWorkerPoolBlockedUnblockedTest
   // threads may rely on) do not go out of scope before JoinForTesting()
   // finishes.
   void TearDown() override {}
-
  protected:
-  // Adjusts worker capacity for tasks that have called TaskBlocked().
-  void AdjustWorkerCapacity() {
-    for (size_t i = 0; i < kNumWorkersInWorkerPool; ++i) {
-      if (!DidIncreaseCapacitySinceBlocked(i) &&
-          !BlockedStartTime(i)->is_null()) {
-        SetDidIncreaseCapacitySinceBlocked(i);
-        IncrementWorkerCapacity();
-      }
-    }
-  }
-
   // Saturates the worker pool with a task that first blocks, waits to be
   // unblocked, then exits.
   void SaturateWithBlockingTasks() {
@@ -921,33 +909,31 @@ class TaskSchedulerWorkerPoolBlockedUnblockedTest
       threads_unblocked_cv->Wait();
   }
 
+  // Returns how long we can  expect a change to |worker_capacity_| to occur
+  // after a task has become blocked.
+  TimeDelta GetWorkerCapacityChangeSleepTime() {
+    return std::max(SchedulerWorkerPoolImpl::BlockedWorkersPollPeriod(),
+                    worker_pool_->BlockedThreshold()) +
+           TestTimeouts::tiny_timeout();
+  }
+  // Keeps polling for the pool's worker capacity until it equals
+  // |expected_worker_capacity|
+  void PollForWorkerCapacity(size_t expected_worker_capacity) {
+    PlatformThread::Sleep(GetWorkerCapacityChangeSleepTime());
+    while (worker_pool_->WorkerCapacityForTesting() !=
+           expected_worker_capacity) {
+      LOG(WARNING) << "Expected WorkerCapacityForTesting() to be "
+                   << expected_worker_capacity << " but is "
+                   << worker_pool_->WorkerCapacityForTesting();
+      PlatformThread::Sleep(
+          SchedulerWorkerPoolImpl::BlockedWorkersPollPeriod() +
+          TestTimeouts::tiny_timeout());
+    }
+  }
+
   scoped_refptr<TaskRunner> task_runner;
 
  private:
-  SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl* GetDelegate(int index) {
-    return static_cast<SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl*>(
-        worker_pool_->workers_[index]->delegate());
-  }
-  bool DidIncreaseCapacitySinceBlocked(int index) {
-    SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl* delegate =
-        GetDelegate(index);
-    return delegate->increased_capacity_since_blocked_;
-  }
-
-  void SetDidIncreaseCapacitySinceBlocked(int index) {
-    SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl* delegate =
-        GetDelegate(index);
-    delegate->increased_capacity_since_blocked_ = true;
-  }
-
-  TimeTicks* BlockedStartTime(int index) {
-    SchedulerWorkerPoolImpl::SchedulerWorkerDelegateImpl* delegate =
-        GetDelegate(index);
-    return &delegate->blocked_start_time_;
-  }
-
-  void IncrementWorkerCapacity() { ++worker_pool_->worker_capacity_; }
-
   WaitableEvent blocking_thread_running;
   WaitableEvent blocking_thread_continue;
   SchedulerLock threads_unblocked_lock;
@@ -961,11 +947,38 @@ class TaskSchedulerWorkerPoolBlockedUnblockedTest
 // TaskUnblocked() decreases worker capacity after an increase.
 TEST_F(TaskSchedulerWorkerPoolBlockedUnblockedTest, TaskBlockedUnblocked) {
   ASSERT_EQ(worker_pool_->WorkerCapacityForTesting(), kNumWorkersInWorkerPool);
-  SaturateWithBlockingTasks();
 
-  AdjustWorkerCapacity();
+  SaturateWithBlockingTasks();
+  ASSERT_EQ(worker_pool_->NumberOfAliveWorkersForTesting(),
+            kNumWorkersInWorkerPool);
+  PollForWorkerCapacity(2 * kNumWorkersInWorkerPool);
   EXPECT_EQ(worker_pool_->WorkerCapacityForTesting(),
             2 * kNumWorkersInWorkerPool);
+
+  UnblockTasks();
+
+  EXPECT_EQ(worker_pool_->WorkerCapacityForTesting(), kNumWorkersInWorkerPool);
+
+  service_thread_.Stop();
+  worker_pool_->WaitForAllWorkersIdleForTesting();
+  worker_pool_->JoinForTesting();
+}
+
+// Verify that if a task blocks, but unblocks before the BlockedThreshold() is
+// reached, that the worker capacity does not increase.
+TEST_F(TaskSchedulerWorkerPoolBlockedUnblockedTest, TaskBlockUnblockPremature) {
+  ASSERT_EQ(worker_pool_->WorkerCapacityForTesting(), kNumWorkersInWorkerPool);
+
+  TimeDelta worker_capacity_change_sleep = GetWorkerCapacityChangeSleepTime();
+  worker_pool_->MaximizeBlockedThresholdForTesting();
+
+  SaturateWithBlockingTasks();
+  ASSERT_EQ(worker_pool_->NumberOfAliveWorkersForTesting(),
+            kNumWorkersInWorkerPool);
+
+  EXPECT_EQ(worker_pool_->WorkerCapacityForTesting(), kNumWorkersInWorkerPool);
+  PlatformThread::Sleep(worker_capacity_change_sleep);
+  EXPECT_EQ(worker_pool_->WorkerCapacityForTesting(), kNumWorkersInWorkerPool);
 
   UnblockTasks();
 
@@ -981,13 +994,14 @@ TEST_F(TaskSchedulerWorkerPoolBlockedUnblockedTest, TaskBlockedUnblocked) {
 TEST_F(TaskSchedulerWorkerPoolBlockedUnblockedTest,
        WorkersSuspendedWhenOvercapacity) {
   ASSERT_EQ(worker_pool_->WorkerCapacityForTesting(), kNumWorkersInWorkerPool);
+
   SaturateWithBlockingTasks();
 
-  AdjustWorkerCapacity();
+  PollForWorkerCapacity(2 * kNumWorkersInWorkerPool);
   EXPECT_EQ(worker_pool_->WorkerCapacityForTesting(),
             2 * kNumWorkersInWorkerPool);
   EXPECT_EQ(worker_pool_->NumberOfAliveWorkersForTesting(),
-            kNumWorkersInWorkerPool);
+            kNumWorkersInWorkerPool + 1);
 
   WaitableEvent thread_running(WaitableEvent::ResetPolicy::AUTOMATIC,
                                WaitableEvent::InitialState::NOT_SIGNALED);
