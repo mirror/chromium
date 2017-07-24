@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8365b789_2dbf2533",
+        "filename": "third_party/WebKit/LayoutTests/compositing/dont-composite-select-elements.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-24T23:29:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a48475d_f59398ae",
+      "revId": "4668e6a0a3b945b198c48828e26fdf25e88cfc28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09212b82_e0961d8e",
         "filename": "third_party/WebKit/LayoutTests/compositing/dont-composite-select-elements.html",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "4668e6a0a3b945b198c48828e26fdf25e88cfc28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "970c6717_c11ae406",
+        "filename": "third_party/WebKit/LayoutTests/compositing/dont-composite-select-elements.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-24T23:29:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09212b82_e0961d8e",
+      "revId": "4668e6a0a3b945b198c48828e26fdf25e88cfc28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a36279b3_1699402e",
+        "filename": "third_party/WebKit/LayoutTests/compositing/dont-composite-text-input-elements.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-24T23:29:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "779d91e1_9d509de2",
+      "revId": "4668e6a0a3b945b198c48828e26fdf25e88cfc28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e14dbac_e2776069",
         "filename": "third_party/WebKit/LayoutTests/compositing/dont-composite-text-input-elements.html",
         "patchSetId": 6
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "76b48a40_41ef39f6",
+        "filename": "third_party/WebKit/LayoutTests/compositing/dont-composite-text-input-elements.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-24T23:29:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e14dbac_e2776069",
+      "revId": "4668e6a0a3b945b198c48828e26fdf25e88cfc28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01259dc8_fbad296b",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
         "patchSetId": 6
@@ -81,6 +153,24 @@
       "writtenOn": "2017-07-24T23:16:10Z",
       "side": 1,
       "message": "Select on Android works completely differently (e.g.,try http://output.jsbin.com/veviwet/quiet on Android). Does this change affect the android \u003cselect\u003e behavior at all?",
+      "revId": "4668e6a0a3b945b198c48828e26fdf25e88cfc28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "844f14ba_83a8aca4",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 1911,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-24T23:29:19Z",
+      "side": 1,
+      "message": "No it does not. Confirmed with trchen that the UI you see there is implemented with an\nAndroid view overlay.",
+      "parentUuid": "01259dc8_fbad296b",
       "revId": "4668e6a0a3b945b198c48828e26fdf25e88cfc28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
