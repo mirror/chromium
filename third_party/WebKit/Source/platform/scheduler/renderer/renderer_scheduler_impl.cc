@@ -196,14 +196,14 @@ RendererSchedulerImpl::MainThreadOnly::MainThreadOnly(
                      base::Unretained(renderer_scheduler_impl)),
           kThreadLoadTrackerReportingInterval),
       current_use_case(UseCase::NONE),
-      timer_queue_suspend_count(0),
+      timer_queue_pause_count(0),
       navigation_task_expected_count(0),
       expensive_task_policy(ExpensiveTaskPolicy::RUN),
       renderer_hidden(false),
       renderer_backgrounded(false),
       renderer_suspended(false),
-      timer_queue_suspension_when_backgrounded_enabled(false),
-      timer_queue_suspended_when_backgrounded(false),
+      timer_queue_pausing_when_backgrounded_enabled(false),
+      timer_queue_paused_when_backgrounded(false),
       was_shutdown(false),
       loading_tasks_seem_expensive(false),
       timer_tasks_seem_expensive(false),
@@ -356,7 +356,7 @@ scoped_refptr<MainThreadTaskQueue> RendererSchedulerImpl::NewTaskQueue(
   scoped_refptr<MainThreadTaskQueue> task_queue(helper_.NewTaskQueue(params));
 
   std::unique_ptr<TaskQueue::QueueEnabledVoter> voter;
-  if (params.can_be_blocked || params.can_be_suspended)
+  if (params.can_be_blocked || params.can_be_suspended || params.can_be_paused)
     voter = task_queue->CreateQueueEnabledVoter();
 
   auto insert_result =
@@ -400,6 +400,7 @@ scoped_refptr<MainThreadTaskQueue> RendererSchedulerImpl::NewTimerTaskQueue(
       NewTaskQueue(MainThreadTaskQueue::QueueCreationParams(queue_type)
                        .SetShouldReportWhenExecutionBlocked(true)
                        .SetCanBeSuspended(true)
+                       .SetCanBePaused(true)
                        .SetCanBeBlocked(true)
                        .SetCanBeThrottled(true));
   if (main_thread_only().virtual_time_paused)
@@ -460,7 +461,7 @@ void RendererSchedulerImpl::WillBeginFrame(const viz::BeginFrameArgs& args) {
   main_thread_only().compositor_frame_interval = args.interval;
   {
     base::AutoLock lock(any_thread_lock_);
-    any_thread().begin_main_frame_on_critical_path = args.on_critical_path;
+    GetAnyThread().begin_main_frame_on_critical_path = args.on_critical_path;
   }
 }
 
@@ -494,7 +495,7 @@ void RendererSchedulerImpl::BeginFrameNotExpectedSoon() {
   idle_helper_.EnableLongIdlePeriod();
   {
     base::AutoLock lock(any_thread_lock_);
-    any_thread().begin_main_frame_on_critical_path = false;
+    GetAnyThread().begin_main_frame_on_critical_path = false;
   }
 }
 
@@ -711,7 +712,7 @@ void RendererSchedulerImpl::DidAnimateForInputOnCompositorThread() {
   TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("renderer.scheduler"),
                "RendererSchedulerImpl::DidAnimateForInputOnCompositorThread");
   base::AutoLock lock(any_thread_lock_);
-  any_thread().fling_compositor_escalation_deadline =
+  GetAnyThread().fling_compositor_escalation_deadline =
       helper_.scheduler_tqm_delegate()->NowTicks() +
       base::TimeDelta::FromMilliseconds(kFlingEscalationLimitMillis);
 }
@@ -733,25 +734,25 @@ void RendererSchedulerImpl::UpdateForInputEventOnCompositorThread(
   UseCase previous_use_case =
       ComputeCurrentUseCase(now, &unused_policy_duration);
   bool was_awaiting_touch_start_response =
-      any_thread().awaiting_touch_start_response;
+      GetAnyThread().awaiting_touch_start_response;
 
-  any_thread().user_model.DidStartProcessingInputEvent(type, now);
-  any_thread().have_seen_input_since_navigation = true;
+  GetAnyThread().user_model.DidStartProcessingInputEvent(type, now);
+  GetAnyThread().have_seen_input_since_navigation = true;
 
   if (input_event_state == InputEventState::EVENT_CONSUMED_BY_COMPOSITOR)
-    any_thread().user_model.DidFinishProcessingInputEvent(now);
+    GetAnyThread().user_model.DidFinishProcessingInputEvent(now);
 
   switch (type) {
     case blink::WebInputEvent::kTouchStart:
-      any_thread().awaiting_touch_start_response = true;
+      GetAnyThread().awaiting_touch_start_response = true;
       // This is just a fail-safe to reset the state of
       // |last_gesture_was_compositor_driven| to the default. We don't know
       // yet where the gesture will run.
-      any_thread().last_gesture_was_compositor_driven = false;
-      any_thread().have_seen_a_potentially_blocking_gesture = true;
+      GetAnyThread().last_gesture_was_compositor_driven = false;
+      GetAnyThread().have_seen_a_potentially_blocking_gesture = true;
       // Assume the default gesture is prevented until we see evidence
       // otherwise.
-      any_thread().default_gesture_prevented = true;
+      GetAnyThread().default_gesture_prevented = true;
       break;
 
     case blink::WebInputEvent::kTouchMove:
@@ -760,10 +761,10 @@ void RendererSchedulerImpl::UpdateForInputEventOnCompositorThread(
       // response prioritization is no longer necessary. Otherwise, the
       // initial touchmove should preserve the touchstart response pending
       // state.
-      if (any_thread().awaiting_touch_start_response &&
+      if (GetAnyThread().awaiting_touch_start_response &&
           GetCompositorThreadOnly().last_input_type ==
               blink::WebInputEvent::kTouchMove) {
-        any_thread().awaiting_touch_start_response = false;
+        GetAnyThread().awaiting_touch_start_response = false;
       }
       break;
 
@@ -771,14 +772,14 @@ void RendererSchedulerImpl::UpdateForInputEventOnCompositorThread(
     case blink::WebInputEvent::kGestureScrollUpdate:
       // If we see events for an established gesture, we can lock it to the
       // appropriate thread as the gesture can no longer be cancelled.
-      any_thread().last_gesture_was_compositor_driven =
+      GetAnyThread().last_gesture_was_compositor_driven =
           input_event_state == InputEventState::EVENT_CONSUMED_BY_COMPOSITOR;
-      any_thread().awaiting_touch_start_response = false;
-      any_thread().default_gesture_prevented = false;
+      GetAnyThread().awaiting_touch_start_response = false;
+      GetAnyThread().default_gesture_prevented = false;
       break;
 
     case blink::WebInputEvent::kGestureFlingCancel:
-      any_thread().fling_compositor_escalation_deadline = base::TimeTicks();
+      GetAnyThread().fling_compositor_escalation_deadline = base::TimeTicks();
       break;
 
     case blink::WebInputEvent::kGestureTapDown:
@@ -790,34 +791,34 @@ void RendererSchedulerImpl::UpdateForInputEventOnCompositorThread(
 
     case blink::WebInputEvent::kMouseDown:
       // Reset tracking state at the start of a new mouse drag gesture.
-      any_thread().last_gesture_was_compositor_driven = false;
-      any_thread().default_gesture_prevented = true;
+      GetAnyThread().last_gesture_was_compositor_driven = false;
+      GetAnyThread().default_gesture_prevented = true;
       break;
 
     case blink::WebInputEvent::kMouseMove:
       // Consider mouse movement with the left button held down (see
       // ShouldPrioritizeInputEvent) similarly to a touch gesture.
-      any_thread().last_gesture_was_compositor_driven =
+      GetAnyThread().last_gesture_was_compositor_driven =
           input_event_state == InputEventState::EVENT_CONSUMED_BY_COMPOSITOR;
-      any_thread().awaiting_touch_start_response = false;
+      GetAnyThread().awaiting_touch_start_response = false;
       break;
 
     case blink::WebInputEvent::kMouseWheel:
-      any_thread().last_gesture_was_compositor_driven =
+      GetAnyThread().last_gesture_was_compositor_driven =
           input_event_state == InputEventState::EVENT_CONSUMED_BY_COMPOSITOR;
-      any_thread().awaiting_touch_start_response = false;
-      any_thread().have_seen_a_potentially_blocking_gesture = true;
+      GetAnyThread().awaiting_touch_start_response = false;
+      GetAnyThread().have_seen_a_potentially_blocking_gesture = true;
       // If the event was sent to the main thread, assume the default gesture is
       // prevented until we see evidence otherwise.
-      any_thread().default_gesture_prevented =
-          !any_thread().last_gesture_was_compositor_driven;
+      GetAnyThread().default_gesture_prevented =
+          !GetAnyThread().last_gesture_was_compositor_driven;
       break;
 
     case blink::WebInputEvent::kUndefined:
       break;
 
     default:
-      any_thread().awaiting_touch_start_response = false;
+      GetAnyThread().awaiting_touch_start_response = false;
       break;
   }
 
@@ -826,7 +827,7 @@ void RendererSchedulerImpl::UpdateForInputEventOnCompositorThread(
 
   if (use_case != previous_use_case ||
       was_awaiting_touch_start_response !=
-          any_thread().awaiting_touch_start_response) {
+          GetAnyThread().awaiting_touch_start_response) {
     EnsureUrgentPolicyUpdatePostedOnMainThread(FROM_HERE);
   }
   GetCompositorThreadOnly().last_input_type = type;
@@ -840,17 +841,17 @@ void RendererSchedulerImpl::DidHandleInputEventOnMainThread(
   helper_.CheckOnValidThread();
   if (ShouldPrioritizeInputEvent(web_input_event)) {
     base::AutoLock lock(any_thread_lock_);
-    any_thread().user_model.DidFinishProcessingInputEvent(
+    GetAnyThread().user_model.DidFinishProcessingInputEvent(
         helper_.scheduler_tqm_delegate()->NowTicks());
 
     // If we were waiting for a touchstart response and the main thread has
     // prevented the default gesture, consider the gesture established. This
     // ensures single-event gestures such as button presses are promptly
     // detected.
-    if (any_thread().awaiting_touch_start_response &&
+    if (GetAnyThread().awaiting_touch_start_response &&
         result == WebInputEventResult::kHandledApplication) {
-      any_thread().awaiting_touch_start_response = false;
-      any_thread().default_gesture_prevented = true;
+      GetAnyThread().awaiting_touch_start_response = false;
+      GetAnyThread().default_gesture_prevented = true;
       UpdatePolicyLocked(UpdateType::MAY_EARLY_OUT_IF_POLICY_UNCHANGED);
     }
   }
@@ -988,7 +989,7 @@ void RendererSchedulerImpl::UpdatePolicyLocked(UpdateType update_type) {
   // mouse wheel) instead of just touchstart.
   bool touchstart_expected_soon = false;
   if (main_thread_only().has_visible_render_widget_with_touch_handler) {
-    touchstart_expected_soon = any_thread().user_model.IsGestureExpectedSoon(
+    touchstart_expected_soon = GetAnyThread().user_model.IsGestureExpectedSoon(
         now, &touchstart_expected_flag_valid_for_duration);
   }
   main_thread_only().touchstart_expected_soon = touchstart_expected_soon;
@@ -1031,25 +1032,25 @@ void RendererSchedulerImpl::UpdatePolicyLocked(UpdateType update_type) {
                          &new_policy_duration);
   }
 
-  bool timer_queue_newly_suspended = false;
+  bool timer_queue_newly_paused = false;
   if (main_thread_only().renderer_backgrounded &&
-      main_thread_only().timer_queue_suspension_when_backgrounded_enabled) {
-    base::TimeTicks suspend_timers_at =
+      main_thread_only().timer_queue_pausing_when_backgrounded_enabled) {
+    base::TimeTicks pause_timers_at =
         main_thread_only().background_status_changed_at +
         base::TimeDelta::FromMilliseconds(
-            kSuspendTimersWhenBackgroundedDelayMillis);
+            kPauseTimersWhenBackgroundedDelayMillis);
 
-    timer_queue_newly_suspended =
-        !main_thread_only().timer_queue_suspended_when_backgrounded;
-    main_thread_only().timer_queue_suspended_when_backgrounded =
-        now >= suspend_timers_at || main_thread_only().renderer_suspended;
-    timer_queue_newly_suspended &=
-        main_thread_only().timer_queue_suspended_when_backgrounded;
+    timer_queue_newly_paused =
+        !main_thread_only().timer_queue_paused_when_backgrounded;
+    main_thread_only().timer_queue_paused_when_backgrounded =
+        now >= pause_timers_at;
+    timer_queue_newly_paused &=
+        main_thread_only().timer_queue_paused_when_backgrounded;
 
-    if (!main_thread_only().timer_queue_suspended_when_backgrounded)
-      UpdatePolicyDuration(now, suspend_timers_at, &new_policy_duration);
+    if (!main_thread_only().timer_queue_paused_when_backgrounded)
+      UpdatePolicyDuration(now, pause_timers_at, &new_policy_duration);
   } else {
-    main_thread_only().timer_queue_suspended_when_backgrounded = false;
+    main_thread_only().timer_queue_paused_when_backgrounded = false;
   }
 
   if (new_policy_duration > base::TimeDelta()) {
@@ -1138,7 +1139,7 @@ void RendererSchedulerImpl::UpdatePolicyLocked(UpdateType update_type) {
       // It's only safe to block tasks that if we are expecting a compositor
       // driven gesture.
       if (touchstart_expected_soon &&
-          any_thread().last_gesture_was_compositor_driven) {
+          GetAnyThread().last_gesture_was_compositor_driven) {
         new_policy.rail_mode() = v8::PERFORMANCE_RESPONSE;
         expensive_task_policy = ExpensiveTaskPolicy::BLOCK;
       }
@@ -1186,9 +1187,9 @@ void RendererSchedulerImpl::UpdatePolicyLocked(UpdateType update_type) {
   }
   main_thread_only().expensive_task_policy = expensive_task_policy;
 
-  if (main_thread_only().timer_queue_suspend_count != 0 ||
-      main_thread_only().timer_queue_suspended_when_backgrounded) {
-    new_policy.timer_queue_policy().is_suspended = true;
+  if (main_thread_only().timer_queue_pause_count != 0 ||
+      main_thread_only().timer_queue_paused_when_backgrounded) {
+    new_policy.timer_queue_policy().is_paused = true;
   }
 
   if (main_thread_only().renderer_suspended) {
@@ -1259,7 +1260,7 @@ void RendererSchedulerImpl::UpdatePolicyLocked(UpdateType update_type) {
   DCHECK(compositor_task_queue_->IsQueueEnabled());
   main_thread_only().current_policy = new_policy;
 
-  if (timer_queue_newly_suspended)
+  if (timer_queue_newly_paused)
     Platform::Current()->RequestPurgeMemory();
 }
 
@@ -1308,18 +1309,18 @@ RendererSchedulerImpl::UseCase RendererSchedulerImpl::ComputeCurrentUseCase(
   any_thread_lock_.AssertAcquired();
   // Special case for flings. This is needed because we don't get notification
   // of a fling ending (although we do for cancellation).
-  if (any_thread().fling_compositor_escalation_deadline > now &&
-      !any_thread().awaiting_touch_start_response) {
+  if (GetAnyThread().fling_compositor_escalation_deadline > now &&
+      !GetAnyThread().awaiting_touch_start_response) {
     *expected_use_case_duration =
-        any_thread().fling_compositor_escalation_deadline - now;
+        GetAnyThread().fling_compositor_escalation_deadline - now;
     return UseCase::COMPOSITOR_GESTURE;
   }
   // Above all else we want to be responsive to user input.
   *expected_use_case_duration =
-      any_thread().user_model.TimeLeftInUserGesture(now);
+      GetAnyThread().user_model.TimeLeftInUserGesture(now);
   if (*expected_use_case_duration > base::TimeDelta()) {
     // Has a gesture been fully established?
-    if (any_thread().awaiting_touch_start_response) {
+    if (GetAnyThread().awaiting_touch_start_response) {
       // No, so arrange for compositor tasks to be run at the highest priority.
       return UseCase::TOUCHSTART;
     }
@@ -1334,14 +1335,14 @@ RendererSchedulerImpl::UseCase RendererSchedulerImpl::ComputeCurrentUseCase(
     //    stream of input events and has prevented a default gesture from being
     //    started.
     // 4. SYNCHRONIZED_GESTURE where the gesture is processed on both threads.
-    if (any_thread().last_gesture_was_compositor_driven) {
-      if (any_thread().begin_main_frame_on_critical_path) {
+    if (GetAnyThread().last_gesture_was_compositor_driven) {
+      if (GetAnyThread().begin_main_frame_on_critical_path) {
         return UseCase::SYNCHRONIZED_GESTURE;
       } else {
         return UseCase::COMPOSITOR_GESTURE;
       }
     }
-    if (any_thread().default_gesture_prevented) {
+    if (GetAnyThread().default_gesture_prevented) {
       return UseCase::MAIN_THREAD_CUSTOM_INPUT_HANDLING;
     } else {
       return UseCase::MAIN_THREAD_GESTURE;
@@ -1351,8 +1352,8 @@ RendererSchedulerImpl::UseCase RendererSchedulerImpl::ComputeCurrentUseCase(
   // Occasionally the meaningful paint fails to be detected, so as a fallback we
   // treat the presence of input as an indirect signal that there is meaningful
   // content on the page.
-  if (any_thread().waiting_for_meaningful_paint &&
-      !any_thread().have_seen_input_since_navigation) {
+  if (GetAnyThread().waiting_for_meaningful_paint &&
+      !GetAnyThread().have_seen_input_since_navigation) {
     return UseCase::LOADING;
   }
   return UseCase::NONE;
@@ -1419,8 +1420,8 @@ WakeUpBudgetPool* RendererSchedulerImpl::GetWakeUpBudgetPoolForTesting() {
   return main_thread_only().wake_up_budget_pool;
 }
 
-void RendererSchedulerImpl::SuspendTimerQueue() {
-  main_thread_only().timer_queue_suspend_count++;
+void RendererSchedulerImpl::PauseTimerQueue() {
+  main_thread_only().timer_queue_pause_count++;
   ForceUpdatePolicy();
 #ifndef NDEBUG
   DCHECK(!default_timer_task_queue_->IsQueueEnabled());
@@ -1434,8 +1435,8 @@ void RendererSchedulerImpl::SuspendTimerQueue() {
 }
 
 void RendererSchedulerImpl::ResumeTimerQueue() {
-  main_thread_only().timer_queue_suspend_count--;
-  DCHECK_GE(main_thread_only().timer_queue_suspend_count, 0);
+  main_thread_only().timer_queue_pause_count--;
+  DCHECK_GE(main_thread_only().timer_queue_pause_count, 0);
   ForceUpdatePolicy();
 }
 
@@ -1463,10 +1464,10 @@ void RendererSchedulerImpl::VirtualTimeResumed() {
   }
 }
 
-void RendererSchedulerImpl::SetTimerQueueSuspensionWhenBackgroundedEnabled(
+void RendererSchedulerImpl::SetTimerQueuePausingWhenBackgroundedEnabled(
     bool enabled) {
   // Note that this will only take effect for the next backgrounded signal.
-  main_thread_only().timer_queue_suspension_when_backgrounded_enabled = enabled;
+  main_thread_only().timer_queue_pausing_when_backgrounded_enabled = enabled;
 }
 
 std::unique_ptr<base::trace_event::ConvertableToTraceFormat>
@@ -1535,9 +1536,9 @@ RendererSchedulerImpl::AsValueLocked(base::TimeTicks optional_now) const {
   state->SetBoolean("have_seen_a_begin_main_frame",
                     main_thread_only().have_seen_a_begin_main_frame);
   state->SetBoolean("waiting_for_meaningful_paint",
-                    any_thread().waiting_for_meaningful_paint);
+                    GetAnyThread().waiting_for_meaningful_paint);
   state->SetBoolean("have_seen_input_since_navigation",
-                    any_thread().have_seen_input_since_navigation);
+                    GetAnyThread().have_seen_input_since_navigation);
   state->SetBoolean(
       "have_reported_blocking_intervention_in_current_policy",
       main_thread_only().have_reported_blocking_intervention_in_current_policy);
@@ -1546,28 +1547,29 @@ RendererSchedulerImpl::AsValueLocked(base::TimeTicks optional_now) const {
       main_thread_only().have_reported_blocking_intervention_since_navigation);
   state->SetBoolean("renderer_backgrounded",
                     main_thread_only().renderer_backgrounded);
-  state->SetBoolean("timer_queue_suspended_when_backgrounded",
-                    main_thread_only().timer_queue_suspended_when_backgrounded);
-  state->SetInteger("timer_queue_suspend_count",
-                    main_thread_only().timer_queue_suspend_count);
+  state->SetBoolean("timer_queue_paused_when_backgrounded",
+                    main_thread_only().timer_queue_paused_when_backgrounded);
+  state->SetInteger("timer_queue_pause_count",
+                    main_thread_only().timer_queue_pause_count);
   state->SetDouble("now", (optional_now - base::TimeTicks()).InMillisecondsF());
   state->SetDouble(
       "fling_compositor_escalation_deadline",
-      (any_thread().fling_compositor_escalation_deadline - base::TimeTicks())
+      (GetAnyThread().fling_compositor_escalation_deadline - base::TimeTicks())
           .InMillisecondsF());
   state->SetInteger("navigation_task_expected_count",
                     main_thread_only().navigation_task_expected_count);
-  state->SetDouble("last_idle_period_end_time",
-                   (any_thread().last_idle_period_end_time - base::TimeTicks())
-                       .InMillisecondsF());
+  state->SetDouble(
+      "last_idle_period_end_time",
+      (GetAnyThread().last_idle_period_end_time - base::TimeTicks())
+          .InMillisecondsF());
   state->SetBoolean("awaiting_touch_start_response",
-                    any_thread().awaiting_touch_start_response);
+                    GetAnyThread().awaiting_touch_start_response);
   state->SetBoolean("begin_main_frame_on_critical_path",
-                    any_thread().begin_main_frame_on_critical_path);
+                    GetAnyThread().begin_main_frame_on_critical_path);
   state->SetBoolean("last_gesture_was_compositor_driven",
-                    any_thread().last_gesture_was_compositor_driven);
+                    GetAnyThread().last_gesture_was_compositor_driven);
   state->SetBoolean("default_gesture_prevented",
-                    any_thread().default_gesture_prevented);
+                    GetAnyThread().default_gesture_prevented);
   state->SetDouble("expected_loading_task_duration",
                    main_thread_only()
                        .loading_task_cost_estimator.expected_task_duration()
@@ -1605,13 +1607,13 @@ RendererSchedulerImpl::AsValueLocked(base::TimeTicks optional_now) const {
       "estimated_next_frame_begin",
       (main_thread_only().estimated_next_frame_begin - base::TimeTicks())
           .InMillisecondsF());
-  state->SetBoolean("in_idle_period", any_thread().in_idle_period);
+  state->SetBoolean("in_idle_period", GetAnyThread().in_idle_period);
 
   state->SetString(
       "expensive_task_policy",
       ExpensiveTaskPolicyToString(main_thread_only().expensive_task_policy));
 
-  any_thread().user_model.AsValueInto(state.get());
+  GetAnyThread().user_model.AsValueInto(state.get());
   render_widget_scheduler_signals_.AsValueInto(state.get());
 
   state->BeginDictionary("task_queue_throttler");
@@ -1628,6 +1630,8 @@ bool RendererSchedulerImpl::TaskQueuePolicy::IsQueueEnabled(
   if (is_suspended && task_queue->CanBeSuspended())
     return false;
   if (is_blocked && task_queue->CanBeBlocked())
+    return false;
+  if (is_paused && task_queue->CanBePaused())
     return false;
   return true;
 }
@@ -1654,6 +1658,7 @@ void RendererSchedulerImpl::TaskQueuePolicy::AsValueInto(
   state->SetBoolean("is_suspended", is_suspended);
   state->SetBoolean("is_throttled", is_throttled);
   state->SetBoolean("is_blocked", is_blocked);
+  state->SetBoolean("is_paused", is_paused);
   state->SetBoolean("use_virtual_time", use_virtual_time);
   state->SetString("priority", TaskQueue::PriorityToString(priority));
 }
@@ -1682,15 +1687,15 @@ void RendererSchedulerImpl::Policy::AsValueInto(
 
 void RendererSchedulerImpl::OnIdlePeriodStarted() {
   base::AutoLock lock(any_thread_lock_);
-  any_thread().in_idle_period = true;
+  GetAnyThread().in_idle_period = true;
   UpdatePolicyLocked(UpdateType::MAY_EARLY_OUT_IF_POLICY_UNCHANGED);
 }
 
 void RendererSchedulerImpl::OnIdlePeriodEnded() {
   base::AutoLock lock(any_thread_lock_);
-  any_thread().last_idle_period_end_time =
+  GetAnyThread().last_idle_period_end_time =
       helper_.scheduler_tqm_delegate()->NowTicks();
-  any_thread().in_idle_period = false;
+  GetAnyThread().in_idle_period = false;
   UpdatePolicyLocked(UpdateType::MAY_EARLY_OUT_IF_POLICY_UNCHANGED);
 }
 
@@ -1771,7 +1776,7 @@ void RendererSchedulerImpl::OnFirstMeaningfulPaint() {
   TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("renderer.scheduler"),
                "RendererSchedulerImpl::OnFirstMeaningfulPaint");
   base::AutoLock lock(any_thread_lock_);
-  any_thread().waiting_for_meaningful_paint = false;
+  GetAnyThread().waiting_for_meaningful_paint = false;
   UpdatePolicyLocked(UpdateType::MAY_EARLY_OUT_IF_POLICY_UNCHANGED);
 }
 
@@ -1780,10 +1785,10 @@ void RendererSchedulerImpl::ResetForNavigationLocked() {
                "RendererSchedulerImpl::ResetForNavigationLocked");
   helper_.CheckOnValidThread();
   any_thread_lock_.AssertAcquired();
-  any_thread().user_model.Reset(helper_.scheduler_tqm_delegate()->NowTicks());
-  any_thread().have_seen_a_potentially_blocking_gesture = false;
-  any_thread().waiting_for_meaningful_paint = true;
-  any_thread().have_seen_input_since_navigation = false;
+  GetAnyThread().user_model.Reset(helper_.scheduler_tqm_delegate()->NowTicks());
+  GetAnyThread().have_seen_a_potentially_blocking_gesture = false;
+  GetAnyThread().waiting_for_meaningful_paint = true;
+  GetAnyThread().have_seen_input_since_navigation = false;
   main_thread_only().loading_task_cost_estimator.Clear();
   main_thread_only().timer_task_cost_estimator.Clear();
   main_thread_only().idle_time_estimator.Clear();
@@ -1887,8 +1892,8 @@ void RendererSchedulerImpl::OnTriedToExecuteBlockedTask() {
   if (main_thread_only().current_use_case == UseCase::TOUCHSTART ||
       main_thread_only().longest_jank_free_task_duration <
           base::TimeDelta::FromMilliseconds(kRailsResponseTimeMillis) ||
-      main_thread_only().timer_queue_suspend_count ||
-      main_thread_only().timer_queue_suspended_when_backgrounded) {
+      main_thread_only().timer_queue_pause_count ||
+      main_thread_only().timer_queue_paused_when_backgrounded) {
     return;
   }
   if (!main_thread_only().timer_tasks_seem_expensive &&
@@ -1908,7 +1913,7 @@ void RendererSchedulerImpl::OnTriedToExecuteBlockedTask() {
            .have_reported_blocking_intervention_since_navigation) {
     {
       base::AutoLock lock(any_thread_lock_);
-      if (!any_thread().have_seen_a_potentially_blocking_gesture)
+      if (!GetAnyThread().have_seen_a_potentially_blocking_gesture)
         return;
     }
     main_thread_only().have_reported_blocking_intervention_since_navigation =
@@ -2013,7 +2018,7 @@ void RendererSchedulerImpl::RecordTaskMetrics(
     main_thread_only().background_task_duration_reporter.RecordTask(queue_type,
                                                                     duration);
 
-    // Collect detailed breakdown for first five minutes given that we suspend
+    // Collect detailed breakdown for first five minutes given that we pause
     // timers on mobile after five minutes.
     base::TimeTicks backgrounded_at =
         main_thread_only().background_status_changed_at;
