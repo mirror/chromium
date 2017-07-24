@@ -33,6 +33,24 @@
       "revId": "a985cd3b49007c4b1aa7b5b6b49b8af3e8bc1452",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9291e4e3_b079ec49",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 2930,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-07-24T17:35:32Z",
+      "side": 0,
+      "message": "Ah - I see it\u0027s added to the resources step already, but probably still a good idea to add it so that .aar files with no resources will still be able to have manifest merging.",
+      "parentUuid": "402a9f5a_0b23c0f2",
+      "revId": "a985cd3b49007c4b1aa7b5b6b49b8af3e8bc1452",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
