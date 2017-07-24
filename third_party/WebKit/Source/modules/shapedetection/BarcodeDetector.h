@@ -37,6 +37,8 @@ class MODULES_EXPORT BarcodeDetector final : public ShapeDetector,
       Vector<shape_detection::mojom::blink::BarcodeDetectionResultPtr>);
   void OnBarcodeServiceConnectionError();
 
+  Vector<String> supported_formats_;
+
   shape_detection::mojom::blink::BarcodeDetectionPtr barcode_service_;
 
   HeapHashSet<Member<ScriptPromiseResolver>> barcode_service_requests_;
