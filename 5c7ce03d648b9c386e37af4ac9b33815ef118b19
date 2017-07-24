@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7a044152_8595cd29",
+        "filename": "components/pdf/renderer/pepper_pdf_host.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-07-24T16:13:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f48fb21_4da3e70e",
+      "revId": "5c7ce03d648b9c386e37af4ac9b33815ef118b19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d51ecd5a_83e46ee5",
         "filename": "ppapi/c/private/ppb_pdf.h",
         "patchSetId": 13
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-23T22:48:06Z",
       "side": 1,
       "message": "Would it be better to merge this with SetSelectedText?",
+      "revId": "5c7ce03d648b9c386e37af4ac9b33815ef118b19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a7104f0_1964a979",
+        "filename": "ppapi/c/private/ppb_pdf.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-07-24T16:13:20Z",
+      "side": 1,
+      "message": "At the point when these messages get to pepper_pdf_host.cc they go in different directions. The SetSelectedText is forwared on to the PepperPluginInstance where-as SelectionChanged is forwarded to the PdfService.\n\nSo, we could combine them and split the message again at this point, but I think it makes the chain a bit clearer going through the code if the message lines up with the message going to the destination, yea?",
+      "parentUuid": "d51ecd5a_83e46ee5",
       "revId": "5c7ce03d648b9c386e37af4ac9b33815ef118b19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
