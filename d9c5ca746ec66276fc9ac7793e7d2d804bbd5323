@@ -46,6 +46,53 @@
       "revId": "d9c5ca746ec66276fc9ac7793e7d2d804bbd5323",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7bb7f8d_3a93060d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-24T20:44:11Z",
+      "side": 1,
+      "message": "Yes, please include this information. You should *always* include a short synopsis of the bug you\u0027re fixing for all bug-fix CLs. Whether the feature has launched yet is irrelevant - none of the bugs we\u0027re fixing in the Tether component have been launched yet.",
+      "parentUuid": "53b63e7a_d6c36748",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 51
+      },
+      "revId": "d9c5ca746ec66276fc9ac7793e7d2d804bbd5323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "512f716f_05591f1a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-24T20:44:11Z",
+      "side": 1,
+      "message": "nit: Also include 672263.",
+      "range": {
+        "startLine": 9,
+        "startChar": 5,
+        "endLine": 9,
+        "endChar": 11
+      },
+      "revId": "d9c5ca746ec66276fc9ac7793e7d2d804bbd5323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
