@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e395b0d0_3f7703bc",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/RenderTestRule.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-24T16:14:08Z",
+      "side": 1,
+      "message": "Nit: Capitalize SDK, and can you mention that this is the SDK _version_? Otherwise \"19\" might be a bit more difficult to understand.",
+      "range": {
+        "startLine": 67,
+        "startChar": 31,
+        "endLine": 67,
+        "endChar": 34
+      },
+      "revId": "6227f35b0e946cfde069c06df03a4df220f89ec1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0c2143b_cd6a4090",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/RenderTestRule.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-24T16:14:08Z",
+      "side": 1,
+      "message": "Just to check: do we generate the bitmaps even if the device-SDK pair is not supported?",
+      "range": {
+        "startLine": 191,
+        "startChar": 8,
+        "endLine": 191,
+        "endChar": 52
+      },
+      "revId": "6227f35b0e946cfde069c06df03a4df220f89ec1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
