@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab127c87_8c3298c4",
+        "filename": "ash/wm/lock_state_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-24T22:01:35Z",
+      "side": 1,
+      "message": "it seems a bit strange to expose a method that does this; it feels like an implementation detail. would it be cleaner to have a method similar to StartLockAnimationAndLockImmediately that locks without an animation? \"LockWithoutAnimation\", maybe? that\u0027s a bit different from the existing naming style, though...",
+      "revId": "2f0fc250d39669bbd8da53fce73015ad4908d729",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
