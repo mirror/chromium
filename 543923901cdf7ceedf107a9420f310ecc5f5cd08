@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2949f8e9_6179d93f",
+        "filename": "content/shell/browser/layout_test/layout_test_permission_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-24T21:16:37Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem like the right place for this. I suspect this will change the results of other geolocation-api LayoutTests that expect not go get a fake position. Can you use \"third_party/WebKit/LayoutTests/geolocation-api/resources/geolocation-mock.js\" to control this from JavaScript for your particular tests?",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 16
+      },
+      "revId": "543923901cdf7ceedf107a9420f310ecc5f5cd08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
