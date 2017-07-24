@@ -8,35 +8,35 @@
 
 namespace headless {
 
-HeadlessPrintWebViewHelperDelegate::HeadlessPrintWebViewHelperDelegate() {}
+HeadlessPrintWebFrameHelperDelegate::HeadlessPrintWebFrameHelperDelegate() {}
 
-HeadlessPrintWebViewHelperDelegate::~HeadlessPrintWebViewHelperDelegate() {}
+HeadlessPrintWebFrameHelperDelegate::~HeadlessPrintWebFrameHelperDelegate() {}
 
-bool HeadlessPrintWebViewHelperDelegate::CancelPrerender(
+bool HeadlessPrintWebFrameHelperDelegate::CancelPrerender(
     content::RenderFrame* render_frame) {
   return false;
 }
 
-blink::WebElement HeadlessPrintWebViewHelperDelegate::GetPdfElement(
+blink::WebElement HeadlessPrintWebFrameHelperDelegate::GetPdfElement(
     blink::WebLocalFrame* frame) {
   return blink::WebElement();
 }
 
-bool HeadlessPrintWebViewHelperDelegate::IsPrintPreviewEnabled() {
+bool HeadlessPrintWebFrameHelperDelegate::IsPrintPreviewEnabled() {
   return false;
 }
 
-bool HeadlessPrintWebViewHelperDelegate::OverridePrint(
+bool HeadlessPrintWebFrameHelperDelegate::OverridePrint(
     blink::WebLocalFrame* frame) {
   return false;
 }
 
-bool HeadlessPrintWebViewHelperDelegate::IsAskPrintSettingsEnabled() {
+bool HeadlessPrintWebFrameHelperDelegate::IsAskPrintSettingsEnabled() {
   return true;
 }
 
 #if defined(OS_MACOSX)
-bool HeadlessPrintWebViewHelperDelegate::UseSingleMetafile() {
+bool HeadlessPrintWebFrameHelperDelegate::UseSingleMetafile() {
   return true;
 }
 #endif
