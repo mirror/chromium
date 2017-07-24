@@ -1,0 +1,16 @@
+<!doctype HTML>
+<script src="../resources/testharness.js"></script>
+<script src="../resources/testharnessreport.js"></script>
+<input width=10 value="This is a long truncated text entry" style="font-size:40pt;"/>
+<script>
+if (window.internals)
+  window.internals.settings.setPreferCompositingToLCDTextEnabled(true);
+if (window.testRunner) {
+  testRunner.dumpAsText();
+}
+test(function() {
+    var json = JSON.parse(window.internals.layerTreeAsText(document));
+    // The <input> element's scroller should be painted into the root layer.
+    assert_true(json["layers"].length == 1);
+    }, "test");
+</script>
