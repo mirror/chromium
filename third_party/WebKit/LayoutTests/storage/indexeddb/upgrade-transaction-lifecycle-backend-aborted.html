@@ -13,6 +13,7 @@
 <script src="resources/support-promises.js"></script>
 <script>
 'use strict';
+setup({allow_uncaught_exception: true});
 
 promise_test(t => {
   return createDatabase(t, database => {

@@ -39,7 +39,8 @@ async_test(function(t) {
     request.result.createObjectStore('store');
   }, function(t, db) {
     var tx1 = db.transaction('store', 'readwrite');
-    tx1.objectStore('store').get(1);
+    tx1.objectStore('store').get(1)
+      .onerror = e => e.preventDefault();  // Don't fire global.onerror.
     obs.observe(db, tx1, { operationTypes: ['put'] });
     tx1.oncomplete = t.unreached_func('transaction should not complete');
     tx1.abort();
@@ -69,7 +70,8 @@ async_test(function(t) {
     tx1.onerror = t.unreached_func('transaction should not fail');
 
     var tx2 = db.transaction('store', 'readwrite');
-    tx2.objectStore('store').put(2, 2);
+    tx2.objectStore('store').put(2, 2)
+      .onerror = e => e.preventDefault();  // Don't fire global.onerror.
     tx2.oncomplete = t.unreached_func('transaction should not complete');
     tx2.abort();
 

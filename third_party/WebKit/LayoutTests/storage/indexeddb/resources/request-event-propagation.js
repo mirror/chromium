@@ -25,6 +25,7 @@ function startTest()
     evalAndLog("trans.onerror = allowDefault");
     store = evalAndLog("store = trans.objectStore('storeName')");
     request = evalAndLog("store.add({x: 'value', y: 'zzz'}, 'key')");
+    expectError();
     request.onsuccess = unexpectedSuccessCallback;
     handlerFired = false;
 }
@@ -39,6 +40,7 @@ function allowDefault()
 function transactionAborted()
 {
     shouldBeTrue("handlerFired");
+
     debug("");
     debug("Verifing error");
     trans = evalAndLog("trans = db.transaction(['storeName'], 'readwrite')");
@@ -54,6 +56,7 @@ function transactionAborted()
     evalAndLog("db.addEventListener('success', unexpectedSuccessCallback, false)");
     store = evalAndLog("store = trans.objectStore('storeName')");
     request = evalAndLog("store.add({x: 'value', y: 'zzz'}, 'key')");
+    expectError();
     request.onsuccess = unexpectedSuccessCallback;
     request.onerror = errorFiredCallback;
     dbCaptureFired = false;
@@ -142,6 +145,7 @@ function transactionAborted2()
     shouldBeTrue("requestFired");
     shouldBeTrue("bubbleFired");
     shouldBeTrue("dbBubbleFired");
+
     debug("");
     debug("Verifing success.");
     trans = evalAndLog("trans = db.transaction(['storeName'], 'readwrite')");

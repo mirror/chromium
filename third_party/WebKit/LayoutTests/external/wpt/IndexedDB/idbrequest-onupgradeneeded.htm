@@ -28,7 +28,10 @@ function upgradeneeded_test(upgrade_func, success_func, error_func, description)
         success_func(t, open_request);
       });
       if (error_func) {
-        open_request.onerror = function() { error_func(t, open_request); };
+        open_request.onerror = function(e) {
+          e.preventDefault();  // Prevent propagating to window.onerror.
+          error_func(t, open_request);
+        };
       } else {
         open_request.onerror = t.unreached_func('open failed');
       }

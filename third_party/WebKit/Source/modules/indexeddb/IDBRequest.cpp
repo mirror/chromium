@@ -33,12 +33,14 @@
 #include <utility>
 
 #include "bindings/core/v8/ExceptionState.h"
+#include "bindings/core/v8/SourceLocation.h"
 #include "bindings/core/v8/ToV8ForCore.h"
 #include "bindings/modules/v8/ToV8ForModules.h"
 #include "bindings/modules/v8/V8BindingForModules.h"
 #include "core/dom/DOMException.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/ExecutionContext.h"
+#include "core/events/ErrorEvent.h"
 #include "core/events/EventQueue.h"
 #include "modules/IndexedDBNames.h"
 #include "modules/indexeddb/IDBCursorWithValue.h"
@@ -115,7 +117,8 @@ IDBRequest::IDBRequest(ScriptState* script_state,
       transaction_(transaction),
       isolate_(script_state->GetIsolate()),
       metrics_(std::move(metrics)),
-      source_(source) {}
+      source_(source),
+      creation_source_(SourceLocation::Capture()) {}
 
 IDBRequest::~IDBRequest() {
   DCHECK((ready_state_ == DONE && metrics_.IsEmpty()) ||
@@ -712,6 +715,20 @@ DispatchEventResult IDBRequest::DispatchEventInternal(Event* event) {
   // so must be kept alive.
   if (ready_state_ == DONE && event->type() != EventTypeNames::upgradeneeded)
     has_pending_activity_ = false;
+
+  // Fire window.onerror (or the equivalent for workers) for errors that were
+  // not prevented.
+  if (!prevent_propagation_ && event->type() == EventTypeNames::error &&
+      dispatch_result == DispatchEventResult::kNotCanceled &&
+      creation_source_) {
+    // TODO: This nulls out creation_source_; when IDBCursor::continue() or
+    // IDBCursor::advance() is called we should re-capture.
+    // TODO: Check Firefox behavior here and add test for continue()!
+    GetExecutionContext()->DispatchErrorEvent(
+        ErrorEvent::Create(error_->ToStringForConsole(),
+                           std::move(creation_source_), nullptr),
+        kNotSharableCrossOrigin);
+  }
 
   return dispatch_result;
 }
