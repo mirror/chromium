@@ -204,13 +204,27 @@ void PerformanceMonitor::Did(const probe::CallFunction& probe) {
 }
 
 void PerformanceMonitor::Will(const probe::V8Compile& probe) {
-  // Todo(maxlg): https://crbug.com/738495 Intentionally leave out as we need to
-  // verify monotonical time is reasonable in overhead.
+  if (!enabled_)
+    return;
+  probe.CaptureStartTime();
 }
 
 void PerformanceMonitor::Did(const probe::V8Compile& probe) {
-  // Todo(maxlg): https://crbug.com/738495 Intentionally leave out as we need to
-  // verify monotonical time is reasonable in overhead.
+  if (!enabled_)
+    return;
+
+  double task_time = probe.Duration();
+  if (thresholds_[kLongTask] && task_time > thresholds_[kLongTask]) {
+    ClientThresholds* client_thresholds = subscriptions_.at(kLongTask);
+    for (const auto& it : *client_thresholds) {
+      if (it.value < task_time) {
+        UMA_HISTOGRAM_CUSTOM_TIMES("V8ScriptRunner.CompileScriptTimeHistogram",
+                                   TimeDelta::FromSecondsD(task_time),
+                                   TimeDelta::FromMicroseconds(100),
+                                   TimeDelta::FromMicroseconds(100000), 100);
+      }
+    }
+  }
 }
 
 void PerformanceMonitor::Will(const probe::UserCallback& probe) {
