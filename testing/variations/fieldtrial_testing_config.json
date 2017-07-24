@@ -379,6 +379,25 @@
             ]
         }
     ],
+    "BrowserSideNavigation": [
+        {
+            "platforms": [
+                "win",
+                "mac",
+                "chromeos",
+                "linux",
+                "android"
+            ],
+            "experiments": [
+                {
+                    "name": "Enabled",
+                    "enable_features": [
+                        "browser-side-navigation"
+                    ]
+                }
+            ]
+        }
+    ],
     "CSSExternalScanner": [
         {
             "platforms": [
