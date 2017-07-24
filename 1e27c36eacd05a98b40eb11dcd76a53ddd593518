@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15810b44_f356c473",
+        "filename": "chrome/browser/chromeos/note_taking_helper.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-24T19:32:09Z",
+      "side": 1,
+      "message": "super nit: null is preferred in comments",
+      "revId": "1e27c36eacd05a98b40eb11dcd76a53ddd593518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
