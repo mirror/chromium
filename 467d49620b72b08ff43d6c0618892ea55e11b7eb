@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "439088c3_e5e7faac",
+        "filename": "base/logging.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-24T15:21:52Z",
+      "side": 1,
+      "message": "Line above says SYZYASAN, comment sasy ASAN. Which one is it?",
+      "range": {
+        "startLine": 355,
+        "startChar": 20,
+        "endLine": 355,
+        "endChar": 24
+      },
+      "revId": "467d49620b72b08ff43d6c0618892ea55e11b7eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
