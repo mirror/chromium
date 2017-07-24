@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "acef2063_8200e131",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-24T01:38:40Z",
+      "side": 1,
+      "message": "Nit: I usually avoid first-person I\u0027s in commit messages (personal preference). :)",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 12
+      },
+      "revId": "b539a5788fea6e4c0b3a24df0d08a5d52ed068ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3103a403_3aaaaa03",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-24T01:38:40Z",
+      "side": 1,
+      "message": "Nit: remove this from the commit message (use the form when adding reviewers to send reviewer-specific messages)",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 6
+      },
+      "revId": "b539a5788fea6e4c0b3a24df0d08a5d52ed068ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f74f283_54883e47",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-24T01:38:40Z",
+      "side": 1,
+      "message": "Does this interface need to change? Can you just call tab.getWebContents() in WebappSplashController#onFinishedNativeInit() ?",
+      "range": {
+        "startLine": 182,
+        "startChar": 64,
+        "endLine": 182,
+        "endChar": 65
+      },
+      "revId": "b539a5788fea6e4c0b3a24df0d08a5d52ed068ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7264c68b_9d84beea",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappSplashScreenController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-24T01:38:40Z",
+      "side": 1,
+      "message": "WebContents can be reparented to different activities - probably safest to stick to holding a Tab here, and use getWebContents() on that whenever you need it.",
+      "range": {
+        "startLine": 29,
+        "startChar": 24,
+        "endLine": 29,
+        "endChar": 36
+      },
+      "revId": "b539a5788fea6e4c0b3a24df0d08a5d52ed068ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "998ad068_61e4ac8d",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1191,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-24T01:38:40Z",
+      "side": 1,
+      "message": "Can this take a OnceCallback (same as base::Closure, but can only ever be Run() once?) They\u0027re trying to migrate all Closures to either OnceCallback or RepeatingCallback. You\u0027ll need to use base::BindOnce instead of base::Bind.\n\nIt might be easier to use std::vector for your container since you\u0027ll wait to std::move() the callback around. components/ntp_snippets/remote/prefetched_pages_tracker_impl.cc has an example of storing OnceCallbacks.",
+      "range": {
+        "startLine": 1191,
+        "startChar": 10,
+        "endLine": 1191,
+        "endChar": 14
+      },
+      "revId": "b539a5788fea6e4c0b3a24df0d08a5d52ed068ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e002de3a_1862d9e9",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1192,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-24T01:38:40Z",
+      "side": 1,
+      "message": "base::Closures are normally passed by value and non-const if ownership is transferred like this.",
+      "range": {
+        "startLine": 1192,
+        "startChar": 2,
+        "endLine": 1192,
+        "endChar": 33
+      },
+      "revId": "b539a5788fea6e4c0b3a24df0d08a5d52ed068ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc3e11cf_c869145a",
+        "filename": "content/browser/web_contents/web_contents_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-24T01:38:40Z",
+      "side": 1,
+      "message": "Should you null-check the view? A few other methods in here do it.",
+      "range": {
+        "startLine": 617,
+        "startChar": 2,
+        "endLine": 617,
+        "endChar": 6
+      },
+      "revId": "b539a5788fea6e4c0b3a24df0d08a5d52ed068ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
