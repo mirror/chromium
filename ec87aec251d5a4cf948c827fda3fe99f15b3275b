@@ -22,6 +22,30 @@
       "revId": "ec87aec251d5a4cf948c827fda3fe99f15b3275b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bec2609_2c40c2eb",
+        "filename": "components/variations/service/variations_service.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1223121
+      },
+      "writtenOn": "2017-07-24T20:54:16Z",
+      "side": 0,
+      "message": "Sure. I\u0027m not sure the scope of what we want to hide behind the #if defined (GOOGLE_CHROME_BUILD)  but I\u0027ll split it out into a separate CL and we can discuss it there.",
+      "parentUuid": "9f00a859_09c92a27",
+      "range": {
+        "startLine": 400,
+        "startChar": 6,
+        "endLine": 400,
+        "endChar": 0
+      },
+      "revId": "ec87aec251d5a4cf948c827fda3fe99f15b3275b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
