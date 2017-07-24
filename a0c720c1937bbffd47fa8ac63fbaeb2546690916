@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d84c9b0_d62ea699",
+        "filename": "third_party/WebKit/LayoutTests/paint/overflow/background-paint-into-scrolling-contents-layer-with-root-layer-scrolls-offset.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-07-24T20:53:12Z",
+      "side": 1,
+      "message": "I guess the test failure was due to different document height. \u003cbody\u003e has a default 8px margin, thus the test body is 10016px in height while the reference is 10000px.",
+      "revId": "a0c720c1937bbffd47fa8ac63fbaeb2546690916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
