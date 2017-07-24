@@ -59,7 +59,8 @@ class UIDevToolsDOMAgent : public ui_devtools::UiDevToolsBaseAgent<
   const std::vector<aura::Window*>& root_windows() const {
     return root_windows_;
   };
-  ui_devtools::protocol::Response HighlightNode(int node_id);
+  ui_devtools::protocol::Response HighlightNode(int node_id,
+                                                bool show_size = false);
   void FindElementByEventHandler(const gfx::Point& p, int* element_id);
 
   // ui::LayerDelegate:
@@ -93,6 +94,7 @@ class UIDevToolsDOMAgent : public ui_devtools::UiDevToolsBaseAgent<
       const std::pair<aura::Window*, gfx::Rect>& window_and_bounds);
 
   bool is_building_tree_;
+  bool show_size_on_canvas_;
   std::unique_ptr<UIElement> window_element_root_;
   std::unordered_map<int, UIElement*> node_id_to_ui_element_;
   std::unique_ptr<ui::Layer> layer_for_highlighting_;
