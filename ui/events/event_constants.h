@@ -136,8 +136,6 @@ enum MouseEventFlags {
                                      // from an unconsumed touch/gesture event.
   EF_TOUCH_ACCESSIBILITY = 1 << 19,  // Indicates this event was generated from
                                      // touch accessibility mode.
-  EF_DIRECT_INPUT = 1 << 20,         // Mouse event coming from direct,
-                                     // on-screen input.
 };
 
 // Result of dispatching an event.
