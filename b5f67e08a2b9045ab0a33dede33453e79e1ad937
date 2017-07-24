@@ -46,6 +46,30 @@
       "revId": "b5f67e08a2b9045ab0a33dede33453e79e1ad937",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72d3bbf9_d8c446b2",
+        "filename": "net/disk_cache/simple/simple_index_file_posix.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-07-24T09:48:38Z",
+      "side": 1,
+      "message": "you are right, errno is either 0 or from readdir in this patchset .. I for some reason thought that \u0027continue\u0027 on line 50 was a \u0027break\u0027. This hints to me that we could make this loop easier to read.",
+      "parentUuid": "bae6e742_76e38758",
+      "range": {
+        "startLine": 57,
+        "startChar": 6,
+        "endLine": 57,
+        "endChar": 11
+      },
+      "revId": "b5f67e08a2b9045ab0a33dede33453e79e1ad937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

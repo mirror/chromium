@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aae38f80_0c84f75b",
+        "filename": "net/disk_cache/simple/simple_index_file_posix.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-07-24T09:48:38Z",
+      "side": 1,
+      "message": "Since the spec allows setting errno on success, this conditional looks like too much coupling with a particular libc implementation, which looks brittle to me.\n\nHow about:\n\n  while (true) {\n    errno \u003d 0;\n    dirent* entry \u003d readdir(dir.get());\n    if (!entry) {\n      if (!errno) {\n        break;\n      } else { \n        PLOG(ERROR) \u003c\u003c \"readdir \" \u003c\u003c cache_path.value();\n        return false; \n      } \n    } \n    // Rest of the logic. \n  }",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 32
+      },
+      "revId": "66a983db5d254a223301736818b2ae87f98b8e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
