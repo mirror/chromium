@@ -269,6 +269,7 @@ class CONTENT_EXPORT PepperPluginInstanceImpl
 
   base::string16 GetSelectedText(bool html);
   base::string16 GetLinkAtPosition(const gfx::Point& point);
+  bool CanCut();
   void RequestSurroundingText(size_t desired_number_of_characters);
   bool StartFind(const std::string& search_text,
                  bool case_sensitive,

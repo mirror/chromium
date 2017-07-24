@@ -77,6 +77,7 @@ class OutOfProcessInstance : public pp::Instance,
   pp::Var GetLinkAtPosition(const pp::Point& point);
   void GetPrintPresetOptionsFromDocument(PP_PdfPrintPresetOptions_Dev* options);
   void EnableAccessibility();
+  bool CanCut();
 
   void FlushCallback(int32_t result);
   void DidOpen(int32_t result);
