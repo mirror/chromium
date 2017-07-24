@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df80bee9_b8fc2e7e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-and-redirects-async-same-origin.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-24T08:03:18Z",
+      "side": 1,
+      "message": "You don\u0027t need this element.",
+      "revId": "447b2064f72f3f2d19acf5be7dea94a8e4d01029",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db4aa6d9_a32ed753",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-and-redirects-async-same-origin.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-24T08:03:18Z",
+      "side": 1,
+      "message": "I prefer const/let to var.",
+      "revId": "447b2064f72f3f2d19acf5be7dea94a8e4d01029",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "632cf20c_18525f06",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-and-redirects-async-same-origin.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-24T08:03:18Z",
+      "side": 1,
+      "message": "const",
+      "revId": "447b2064f72f3f2d19acf5be7dea94a8e4d01029",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6786d35c_167919dd",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-and-redirects-async-same-origin.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-24T08:03:18Z",
+      "side": 1,
+      "message": "x-webkit is not preferable for wpt.",
+      "revId": "447b2064f72f3f2d19acf5be7dea94a8e4d01029",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b46bca2d_0cc26d99",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-and-redirects-async-same-origin.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-24T08:03:18Z",
+      "side": 1,
+      "message": "You can define multiple async_tests. They will be run sequentially. Having one async_test for one case is better, I think.\n\nWhat\u0027s in my mind is like this:\n\nasync_test(t \u003d\u003e {\n  runTest(t, \u0027/XMLHttpRequest/resources/access-control-basic-allow-star.py\u0027, withoutCredentials, noSuctomHeader, secceeds);\n}, \u0027Request without credentials is redirected to a cross-origin response with Access-Control-Allow-Origin\u003d*.\u0027);\n\nasync_test(t \u003d\u003e {\n  runTest(t, \u0027/XMLHttpRequest/resources/access-control-basic-allow-star.py\u0027, withCredentials, noSuctomHeader, fails);\n}, \u0027Request with credentials is redirected to a cross-origin response with Access-Control-Allow-Origin\u003d*.\u0027);\n\n...",
+      "range": {
+        "startLine": 82,
+        "startChar": 13,
+        "endLine": 82,
+        "endChar": 14
+      },
+      "revId": "447b2064f72f3f2d19acf5be7dea94a8e4d01029",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "693d523d_d4f74dad",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-basic-allow-no-credentials.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-24T08:03:18Z",
+      "side": 1,
+      "message": "Please remove these two lines.",
+      "revId": "447b2064f72f3f2d19acf5be7dea94a8e4d01029",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
