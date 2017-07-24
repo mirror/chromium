@@ -94,9 +94,13 @@ void ShowSettingsSubPageForProfile(Profile* profile,
                                    const std::string& sub_page);
 void ShowContentSettingsExceptions(Browser* browser,
                                    ContentSettingsType content_settings_type);
+
+#if defined(OS_CHROMEOS)
 void ShowContentSettingsExceptionsInWindow(
     Profile* profile,
     ContentSettingsType content_settings_type);
+#endif
+
 void ShowContentSettings(Browser* browser,
                          ContentSettingsType content_settings_type);
 void ShowSettingsSubPageInTabbedBrowser(Browser* browser,

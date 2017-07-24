@@ -14,7 +14,6 @@
 #include "chrome/browser/ui/exclusive_access/exclusive_access_manager.h"
 #include "chrome/browser/ui/scoped_tabbed_browser_displayer.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
-#include "chrome/common/chrome_switches.h"
 #include "content/public/browser/browser_context.h"
 #include "ui/message_center/notifier_settings.h"
 
@@ -35,14 +34,14 @@ void NotificationCommon::OpenNotificationSettings(
   Profile* profile = Profile::FromBrowserContext(browser_context);
   DCHECK(profile);
 
-  if (switches::SettingsWindowEnabled()) {
-    chrome::ShowContentSettingsExceptionsInWindow(
-        profile, CONTENT_SETTINGS_TYPE_NOTIFICATIONS);
-  } else {
-    chrome::ScopedTabbedBrowserDisplayer browser_displayer(profile);
-    chrome::ShowContentSettingsExceptions(browser_displayer.browser(),
-                                          CONTENT_SETTINGS_TYPE_NOTIFICATIONS);
-  }
+#if defined(OS_CHROMEOS)
+  chrome::ShowContentSettingsExceptionsInWindow(
+      profile, CONTENT_SETTINGS_TYPE_NOTIFICATIONS);
+#else
+  chrome::ScopedTabbedBrowserDisplayer browser_displayer(profile);
+  chrome::ShowContentSettingsExceptions(browser_displayer.browser(),
+                                        CONTENT_SETTINGS_TYPE_NOTIFICATIONS);
+#endif  // defined(OS_CHROMEOS)
 #endif  // defined(OS_ANDROID)
 }
 
