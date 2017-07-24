@@ -15,6 +15,8 @@
 #include "content/public/browser/permission_type.h"
 #include "content/public/browser/web_contents.h"
 #include "content/shell/browser/layout_test/layout_test_content_browser_client.h"
+#include "device/geolocation/geolocation_provider.h"
+#include "device/geolocation/geoposition.h"
 
 namespace content {
 
@@ -58,6 +60,15 @@ size_t LayoutTestPermissionManager::PermissionDescription::Hash::operator()(
 
 LayoutTestPermissionManager::LayoutTestPermissionManager()
     : PermissionManager() {
+  // Fake geolocation coordinates for testing purposes.
+  device::Geoposition position;
+  position.latitude = 0;
+  position.longitude = 0;
+  position.altitude = 0;
+  position.accuracy = 0;
+  position.timestamp = base::Time::Now();
+  device::GeolocationProvider::GetInstance()->OverrideLocationForTesting(
+      position);
 }
 
 LayoutTestPermissionManager::~LayoutTestPermissionManager() {
