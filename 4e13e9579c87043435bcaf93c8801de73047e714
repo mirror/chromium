@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "f4c97e4e_9b63a63a",
+        "filename": "content/browser/media/capture/desktop_capture_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-07-24T18:52:13Z",
+      "side": 1,
+      "message": "It\u0027s not great that now we have to handle this case in two paces. I suggest extracting parts of OnCaptureResult() to a separate function, e.g.:\n void* PrepareFrame(std::unique_ptr\u003cDesktopFrame\u003e frame)\n\nIt returns output_data. That way it will be easy to handle 1x1 case first to get it out of the way.",
+      "range": {
+        "startLine": 260,
+        "startChar": 1,
+        "endLine": 260,
+        "endChar": 52
+      },
+      "revId": "4e13e9579c87043435bcaf93c8801de73047e714",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "84ab6edf_e9dfdd5a",
         "filename": "content/browser/media/capture/desktop_capture_device.cc",
         "patchSetId": 3
