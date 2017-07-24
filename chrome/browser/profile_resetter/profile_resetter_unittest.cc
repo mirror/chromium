@@ -533,8 +533,10 @@ TEST_F(ProfileResetterTest, ResetContentSettings) {
   for (const content_settings::ContentSettingsInfo* info : *registry) {
     ContentSettingsType content_type = info->website_settings_info()->type();
     if (content_type == CONTENT_SETTINGS_TYPE_MIXEDSCRIPT ||
-        content_type == CONTENT_SETTINGS_TYPE_PROTOCOL_HANDLERS)
+        content_type == CONTENT_SETTINGS_TYPE_PROTOCOL_HANDLERS ||
+        content_type == CONTENT_SETTINGS_TYPE_CLIENT_HINTS) {
       continue;
+    }
     ContentSetting default_setting =
         host_content_settings_map->GetDefaultContentSetting(content_type,
                                                               NULL);

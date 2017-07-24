@@ -688,6 +688,10 @@ void GetGuestViewDefaultContentSettingRules(
       ContentSettingsPattern::Wildcard(), ContentSettingsPattern::Wildcard(),
       content_settings::ContentSettingToValue(CONTENT_SETTING_ALLOW),
       std::string(), incognito));
+  rules->client_hints_rules.push_back(ContentSettingPatternSource(
+      ContentSettingsPattern::Wildcard(), ContentSettingsPattern::Wildcard(),
+      content_settings::ContentSettingToValue(CONTENT_SETTING_BLOCK),
+      std::string(), incognito));
 }
 
 AppLoadedInTabSource ClassifyAppLoadedInTabSource(
