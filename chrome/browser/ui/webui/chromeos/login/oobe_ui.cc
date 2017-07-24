@@ -63,7 +63,7 @@
 #include "chrome/browser/ui/webui/chromeos/login/wait_for_container_ready_screen_handler.h"
 #include "chrome/browser/ui/webui/chromeos/login/wrong_hwid_screen_handler.h"
 #include "chrome/browser/ui/webui/chromeos/network_element_localized_strings_provider.h"
-#include "chrome/browser/ui/webui/options/chromeos/user_image_source.h"
+#include "chrome/browser/ui/webui/chromeos/user_image_source.h"
 #include "chrome/browser/ui/webui/test_files_request_filter.h"
 #include "chrome/browser/ui/webui/theme_source.h"
 #include "chrome/common/chrome_constants.h"

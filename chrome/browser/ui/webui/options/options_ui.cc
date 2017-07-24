@@ -83,6 +83,7 @@
 #include "chrome/browser/browser_process_platform_part.h"
 #include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
 #include "chrome/browser/chromeos/system/pointer_device_observer.h"
+#include "chrome/browser/ui/webui/chromeos/user_image_source.h"
 #include "chrome/browser/ui/webui/options/chromeos/accounts_options_handler.h"
 #include "chrome/browser/ui/webui/options/chromeos/bluetooth_options_handler.h"
 #include "chrome/browser/ui/webui/options/chromeos/change_picture_options_handler.h"
@@ -99,7 +100,6 @@
 #include "chrome/browser/ui/webui/options/chromeos/proxy_handler.h"
 #include "chrome/browser/ui/webui/options/chromeos/stats_options_handler.h"
 #include "chrome/browser/ui/webui/options/chromeos/storage_manager_handler.h"
-#include "chrome/browser/ui/webui/options/chromeos/user_image_source.h"
 #endif
 
 #if defined(USE_NSS_CERTS)
