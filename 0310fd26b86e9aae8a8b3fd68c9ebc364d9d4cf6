@@ -16,6 +16,24 @@
       "revId": "0310fd26b86e9aae8a8b3fd68c9ebc364d9d4cf6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7735fc40_d08fe062",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-24T03:39:28Z",
+      "side": 1,
+      "message": "Oh yeah I think you\u0027re right, we\u0027ll need to have the browser aggregate the child frames features.",
+      "parentUuid": "b5937d5e_7d350c08",
+      "revId": "0310fd26b86e9aae8a8b3fd68c9ebc364d9d4cf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
