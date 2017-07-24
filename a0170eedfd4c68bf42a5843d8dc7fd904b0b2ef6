@@ -22,6 +22,30 @@
       "revId": "a0170eedfd4c68bf42a5843d8dc7fd904b0b2ef6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "467aee3d_45dbb70d",
+        "filename": "components/storage_monitor/storage_monitor_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-24T21:10:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f8b5dc0_326e31eb",
+      "range": {
+        "startLine": 111,
+        "startChar": 43,
+        "endLine": 111,
+        "endChar": 51
+      },
+      "revId": "a0170eedfd4c68bf42a5843d8dc7fd904b0b2ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
