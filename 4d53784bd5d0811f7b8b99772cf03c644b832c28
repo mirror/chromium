@@ -16,6 +16,24 @@
       "revId": "4d53784bd5d0811f7b8b99772cf03c644b832c28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18315201_fd016d1a",
+        "filename": "base/memory/ref_counted.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-24T05:52:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4184d56_0f4367e0",
+      "revId": "4d53784bd5d0811f7b8b99772cf03c644b832c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
