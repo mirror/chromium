@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be304577_04c03676",
+        "filename": "content/renderer/sandbox_mac_v2_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-24T18:09:54Z",
+      "side": 1,
+      "message": "Same comment about noting that the port is leaked.",
+      "revId": "3eb1112d88cc2ebcfd19a9bcc9dd10b60166683c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "074d1ac9_f68a2b41",
+        "filename": "content/renderer/sandbox_mac_v2_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-24T18:09:54Z",
+      "side": 1,
+      "message": "\"// namespace content\"\n\n(and blank line before)",
+      "revId": "3eb1112d88cc2ebcfd19a9bcc9dd10b60166683c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc3a6418_07af4276",
+        "filename": "sandbox/mac/sandbox_mac_compiler_v2_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-24T18:09:54Z",
+      "side": 1,
+      "message": "Make a note that while this is deliberately leaked, since the multiprocess test will exit shortly.",
+      "revId": "3eb1112d88cc2ebcfd19a9bcc9dd10b60166683c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b7a4c7d_a0880b81",
+        "filename": "sandbox/mac/sandbox_mac_compiler_v2_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-24T18:09:54Z",
+      "side": 0,
+      "message": "Is this true even on 10.9?",
+      "range": {
+        "startLine": 50,
+        "startChar": 41,
+        "endLine": 50,
+        "endChar": 55
+      },
+      "revId": "686bcbcb9d8ac4fa7f879960018976b91af83765",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
