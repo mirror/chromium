@@ -430,16 +430,19 @@ void TabStripModel::MoveWebContentsAt(int index,
                                       int to_position,
                                       bool select_after_move) {
   DCHECK(ContainsIndex(index));
-  if (index == to_position)
-    return;
 
   int first_non_pinned_tab = IndexOfFirstNonPinnedTab();
-  if ((index < first_non_pinned_tab && to_position >= first_non_pinned_tab) ||
-      (to_position < first_non_pinned_tab && index >= first_non_pinned_tab)) {
-    // This would result in pinned tabs mixed with non-pinned tabs. We don't
-    // allow that.
-    return;
+  // Ensure pinned and non-pinned tabs do not mix.
+  if (index < first_non_pinned_tab && to_position >= first_non_pinned_tab) {
+    DCHECK_LT(0, first_non_pinned_tab);  // Otherwise |index| would be negative.
+    to_position = first_non_pinned_tab - 1;
+  } else if (to_position < first_non_pinned_tab &&
+             index >= first_non_pinned_tab) {
+    to_position = first_non_pinned_tab;
   }
+
+  if (index == to_position)
+    return;
 
   MoveWebContentsAtImpl(index, to_position, select_after_move);
 }
