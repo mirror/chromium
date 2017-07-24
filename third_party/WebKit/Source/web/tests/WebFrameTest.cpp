@@ -6426,7 +6426,7 @@ class TestSubstituteDataWebFrameClient
   virtual void DidFailProvisionalLoad(const WebURLError& error,
                                       WebHistoryCommitType) {
     Frame()->LoadHTMLString("This should appear",
-                            ToKURL("data:text/html,chromewebdata"),
+                            ToKURL("chrome-error://chromewebdata"),
                             error.unreachable_url, true);
   }
 

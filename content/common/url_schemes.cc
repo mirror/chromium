@@ -41,9 +41,16 @@ void RegisterContentSchemes(bool lock_schemes) {
   ContentClient::Schemes schemes;
   GetContentClient()->AddAdditionalSchemes(&schemes);
 
+  // Embedder error pages must be treated as opaque origins for the purposes of
+  // web content. They are considered "secure", however, as they do not transit
+  // the network, and may be embedded in otherwise secure contexts.
+  schemes.secure_schemes.push_back(kErrorScheme);
+  schemes.no_access_schemes.push_back(kErrorScheme);
+
   url::AddStandardScheme(kChromeDevToolsScheme, url::SCHEME_WITHOUT_PORT);
   url::AddStandardScheme(kChromeUIScheme, url::SCHEME_WITHOUT_PORT);
   url::AddStandardScheme(kGuestScheme, url::SCHEME_WITHOUT_PORT);
+  url::AddStandardScheme(kErrorScheme, url::SCHEME_WITHOUT_PORT);
 
   for (auto& scheme : schemes.standard_schemes)
     url::AddStandardScheme(scheme.c_str(), url::SCHEME_WITHOUT_PORT);
@@ -70,6 +77,7 @@ void RegisterContentSchemes(bool lock_schemes) {
 
   for (auto& scheme : schemes.empty_document_schemes)
     url::AddEmptyDocumentScheme(scheme.c_str());
+
 
   // Prevent future modification of the scheme lists. This is to prevent
   // accidental creation of data races in the program. Add*Scheme aren't

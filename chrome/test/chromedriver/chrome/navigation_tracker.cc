@@ -15,7 +15,7 @@ namespace {
 
 const char kDummyFrameName[] = "chromedriver dummy frame";
 const char kDummyFrameUrl[] = "about:blank";
-const char kUnreachableWebDataURL[] = "data:text/html,chromewebdata";
+const char kUnreachableWebDataURL[] = "chrome-error://chromewebdata";
 const char kAutomationExtensionBackgroundPage[] =
     "chrome-extension://aapnijgdinlhnhlmodcfapnahmbfebeb/"
     "_generated_background_page.html";

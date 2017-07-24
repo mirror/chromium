@@ -36,7 +36,7 @@
 
 namespace {
 
-const std::string kUnreachableWebDataURL = "data:text/html,chromewebdata";
+const std::string kUnreachableWebDataURL = "chrome-error://chromewebdata";
 
 // Defaults to 20 years into the future when adding a cookie.
 const double kDefaultCookieExpiryTime = 20*365*24*60*60;
