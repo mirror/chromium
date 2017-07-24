@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a62cac72_98ca6e4b",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8IntersectionObserverDelegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-24T20:34:29Z",
+      "side": 1,
+      "message": "Add a class-level comment.",
+      "revId": "9499ec2e108be7b49eb100fb272c336c71e9ed63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d1a4ec9_52f78e21",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8IntersectionObserverDelegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-24T20:34:29Z",
+      "side": 1,
+      "message": "Forgot to reply to this.\n\nYes, a right solution is to use ContextClient.\n\nAlso storing RefPtr\u003cScriptState\u003e in a constructor is discouraged because it produces a risk of using the ScriptState later (which might not be the correct ScriptState). Alternately you should pass in ConstructorCallWith\u003dExecutionContext and store ExecutionContext here.",
+      "revId": "9499ec2e108be7b49eb100fb272c336c71e9ed63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b153631_314e1953",
+        "filename": "third_party/WebKit/Source/core/intersection_observer/IntersectionObserver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-24T20:34:29Z",
+      "side": 1,
+      "message": "Drop explicit.",
+      "revId": "9499ec2e108be7b49eb100fb272c336c71e9ed63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bee82f1_7ef4cb90",
+        "filename": "third_party/WebKit/Source/core/intersection_observer/IntersectionObserverDelegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-24T20:34:29Z",
+      "side": 1,
+      "message": "Add a class-level comment.",
+      "revId": "9499ec2e108be7b49eb100fb272c336c71e9ed63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
