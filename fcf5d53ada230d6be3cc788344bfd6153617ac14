@@ -16,6 +16,24 @@
       "revId": "fcf5d53ada230d6be3cc788344bfd6153617ac14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "495457c6_108ef9ad",
+        "filename": "chrome/browser/translate/chrome_translate_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-07-24T23:43:01Z",
+      "side": 1,
+      "message": "Found an existing bug.",
+      "parentUuid": "ff5887aa_e10e70f7",
+      "revId": "fcf5d53ada230d6be3cc788344bfd6153617ac14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
