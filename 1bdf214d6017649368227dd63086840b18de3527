@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1b488b06_6c0f1c3a",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleScriptCreationParams.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-24T04:59:25Z",
+      "side": 1,
+      "message": "Good point. This shouldn\u0027t be PassThrough because response_url_ and source_text_ are not cross-thread-transfer-safe. This has worked because currently this mechanism is used only for MainThreadWorklet, that is, within the main thread. I changed this to make a deep copy.",
+      "parentUuid": "f931500b_b097290e",
+      "revId": "1bdf214d6017649368227dd63086840b18de3527",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d4632142_3a09c16c",
         "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMapProxy.cpp",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-24T03:14:40Z",
       "side": 1,
       "message": "Maybe... write something like following in the comment might be helpful?\n\n   MapProxy (worklet thread) --\u003e Map (main thread)\nMap::Client (worklet thread) \u003c-- ClientAdapter (main thread)",
+      "revId": "1bdf214d6017649368227dd63086840b18de3527",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1c86452_ea507709",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMapProxy.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-24T04:59:25Z",
+      "side": 1,
+      "message": "Looks very good. Updated.",
+      "parentUuid": "d4632142_3a09c16c",
       "revId": "1bdf214d6017649368227dd63086840b18de3527",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
