@@ -16,7 +16,7 @@
 #endif
 
 namespace {
-const CGFloat kImageSize = 72;
+const CGFloat kImageSize = 62;
 const CGFloat kStandardSpacing = 16;
 const CGFloat kSmallSpacing = 8;
 
