@@ -116,6 +116,24 @@
       "revId": "7ec3b7c4ab00770506f26e202d8b6a794a2dadb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "22f371f7_057a0731",
+        "filename": "chrome/browser/ui/webui/site_settings_helper.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-24T01:01:16Z",
+      "side": 1,
+      "message": "I think the comment there needs to be updated because the Google style guide (which the link chain eventually points to as the source of the comment) says to prefer the kPrefix...\n\nEither way I think it\u0027s no big deal for now and we should land this either way.",
+      "parentUuid": "89036c76_e939cee1",
+      "revId": "7ec3b7c4ab00770506f26e202d8b6a794a2dadb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
