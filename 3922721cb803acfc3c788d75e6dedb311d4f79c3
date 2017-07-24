@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b8ff6335_8876a4e3",
+        "filename": "chrome/browser/media/media_engagement_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-24T09:55:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22babd02_f0f83111",
+      "revId": "3922721cb803acfc3c788d75e6dedb311d4f79c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca6fd44d_e201d2f9",
         "filename": "chrome/browser/media/media_engagement_browsertest.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9ae62598_578c6d7b",
+        "filename": "chrome/browser/media/media_engagement_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-24T09:55:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca6fd44d_e201d2f9",
+      "revId": "3922721cb803acfc3c788d75e6dedb311d4f79c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7aabb45f_5b7b0963",
         "filename": "chrome/browser/media/media_engagement_browsertest.cc",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "3922721cb803acfc3c788d75e6dedb311d4f79c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c97b705c_f17588a1",
+        "filename": "chrome/browser/media/media_engagement_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-07-24T09:55:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aabb45f_5b7b0963",
+      "revId": "3922721cb803acfc3c788d75e6dedb311d4f79c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
