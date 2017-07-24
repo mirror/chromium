@@ -87,6 +87,80 @@
     },
     {
       "key": {
+        "uuid": "d3358935_99d11894",
+        "filename": "content/browser/service_worker/service_worker_content_settings_proxy_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-24T05:36:57Z",
+      "side": 1,
+      "message": "final?\n\nclass ServiceWorkerContentSettingsProxyImpl final : public mojom::ServiceWorkerContentSettingsProxy {}",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 43
+      },
+      "revId": "95cedaee59ce4911cf995384439d6f886c93c223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e0c2d41_0e3fea7f",
+        "filename": "content/browser/service_worker/service_worker_content_settings_proxy_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-24T05:36:57Z",
+      "side": 1,
+      "message": "Create -\u003e Creates",
+      "revId": "95cedaee59ce4911cf995384439d6f886c93c223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90fad84d_6b10abfe",
+        "filename": "content/browser/service_worker/service_worker_content_settings_proxy_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-24T05:36:57Z",
+      "side": 1,
+      "message": "|render_frames| doesn\u0027t exist...?",
+      "revId": "95cedaee59ce4911cf995384439d6f886c93c223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baf78b35_e1c48408",
+        "filename": "content/browser/service_worker/service_worker_content_settings_proxy_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-24T05:36:57Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "95cedaee59ce4911cf995384439d6f886c93c223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a6b39ca9_c0aa8e4a",
         "filename": "content/common/service_worker/embedded_worker.mojom",
         "patchSetId": 1
@@ -121,6 +195,23 @@
     },
     {
       "key": {
+        "uuid": "6d01cb3a_b8e06bd2",
+        "filename": "content/renderer/service_worker/service_worker_content_settings_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-24T05:36:57Z",
+      "side": 1,
+      "message": "Can you initialize |content_settings_| with nullptr?",
+      "revId": "95cedaee59ce4911cf995384439d6f886c93c223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c980311b_f4c74170",
         "filename": "content/renderer/service_worker/service_worker_content_settings_proxy.cc",
         "patchSetId": 1
@@ -149,6 +240,23 @@
       "writtenOn": "2017-07-24T05:23:56Z",
       "side": 1,
       "message": "Ditto(include guard needs path parts)",
+      "revId": "95cedaee59ce4911cf995384439d6f886c93c223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64a0bb1b_1da4fb7a",
+        "filename": "content/renderer/service_worker/service_worker_content_settings_proxy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-24T05:36:57Z",
+      "side": 1,
+      "message": "final?\n\nclass ServiceWorkerContentSettingsProxy final : public blink::WebContentSettingsClient {}",
       "revId": "95cedaee59ce4911cf995384439d6f886c93c223",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
