@@ -19,20 +19,12 @@ TransformPaintPropertyNode* TransformPaintPropertyNode::Root() {
   return root;
 }
 
-const ScrollPaintPropertyNode*
-TransformPaintPropertyNode::FindEnclosingScrollNode() const {
-  if (scroll_)
-    return scroll_.Get();
-
-  for (const auto* ancestor = Parent(); ancestor;
-       ancestor = ancestor->Parent()) {
-    if (const auto* scroll_node = ancestor->ScrollNode())
-      return scroll_node;
-  }
-  // The root transform node references the root scroll node so a scroll node
-  // should always exist.
-  NOTREACHED();
-  return nullptr;
+const TransformPaintPropertyNode*
+TransformPaintPropertyNode::NearestScrollTranslationNode() const {
+  const auto* transform = this;
+  while (!transform->IsScrollTranslation())
+    transform = transform->Parent();
+  return transform;
 }
 
 String TransformPaintPropertyNode::ToString() const {

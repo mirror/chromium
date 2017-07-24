@@ -91,6 +91,7 @@ static bool UpdateScrollTranslation(
     MainThreadScrollingReasons main_thread_scrolling_reasons,
     WebLayerScrollClient* scroll_client) {
   DCHECK(!RuntimeEnabledFeatures::RootLayerScrollingEnabled());
+  // TODO(pdr): Set the correct compositing reasons here.
   if (auto* existing_scroll_translation = frame_view.ScrollTranslation()) {
     auto existing_reasons = existing_scroll_translation->ScrollNode()
                                 ->GetMainThreadScrollingReasons();
@@ -994,6 +995,7 @@ void PaintPropertyTreeBuilder::UpdateScrollAndScrollTranslation(
 
       TransformationMatrix matrix = TransformationMatrix().Translate(
           -scroll_offset.Width(), -scroll_offset.Height());
+      // TODO(pdr): Set the correct compositing reasons here.
       auto result = properties.UpdateScrollTranslation(
           context.current.transform, matrix, FloatPoint3D(),
           context.current.should_flatten_inherited_transform,
