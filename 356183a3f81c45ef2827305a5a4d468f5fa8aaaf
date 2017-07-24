@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "cef65fd4_c3b23327",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-24T21:04:30Z",
+      "side": 1,
+      "message": "IMO, we should PlatformThread::Detach() the thread handle in ~SchedulerWorker::Thread if it hasn\u0027t already been PlatformThread::Join().\n\nIn production, we don\u0027t delete SchedulerWorkers on shutdown so we won\u0027t unnecessarily free resources. We do however delete SchedulerWorkers in ~ScopedTaskEnvironment and after a Cleanup().",
+      "parentUuid": "305bfeaf_22d3bd6a",
+      "range": {
+        "startLine": 123,
+        "startChar": 30,
+        "endLine": 123,
+        "endChar": 73
+      },
+      "revId": "356183a3f81c45ef2827305a5a4d468f5fa8aaaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c39f246b_8fa157a0",
         "filename": "base/task_scheduler/scheduler_worker.h",
         "patchSetId": 8

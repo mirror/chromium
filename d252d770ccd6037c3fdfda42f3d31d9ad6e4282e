@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c4a391f_43310530",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-24T21:04:30Z",
+      "side": 1,
+      "message": "This could be done in SchedulerWorkerDelegateImpl::GetWork(). It would avoid the need for CanTimeout() and OnTimeout() on the SchedulerWorker::Delegate interface (which are not useful for SchedulerWorkers created by SchedulerSingleThreadTaskRunnerManager).\n\nIn GetWork(), before returning nullptr:\n\nif (CanCleanup()) {\n  OnCleanup();\n  worker-\u003eCleanup();\n}",
+      "range": {
+        "startLine": 71,
+        "startChar": 7,
+        "endLine": 78,
+        "endChar": 9
+      },
+      "revId": "d252d770ccd6037c3fdfda42f3d31d9ad6e4282e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7f30ec2_d633e968",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-24T21:04:30Z",
+      "side": 1,
+      "message": "SchedulerWorker isn\u0027t suppose to know about detachment anymore.",
+      "range": {
+        "startLine": 114,
+        "startChar": 7,
+        "endLine": 114,
+        "endChar": 33
+      },
+      "revId": "d252d770ccd6037c3fdfda42f3d31d9ad6e4282e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0487e42_78d75328",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-24T21:04:30Z",
+      "side": 1,
+      "message": "Since we are in ThreadMain, it is guaranteed that the worker has been started.",
+      "range": {
+        "startLine": 127,
+        "startChar": 8,
+        "endLine": 127,
+        "endChar": 24
+      },
+      "revId": "d252d770ccd6037c3fdfda42f3d31d9ad6e4282e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a71d7ff3_f95fad21",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-24T21:04:30Z",
+      "side": 1,
+      "message": "If you decide to cleanup in GetWork() within the scope of the PriorityQueue lock, you don\u0027t have to worry about a WakeUp() that came while you were deciding to Cleanup() and you can remove this code. (see https://chromium-review.googlesource.com/c/568579/11/base/task_scheduler/scheduler_worker.cc#78)",
+      "range": {
+        "startLine": 313,
+        "startChar": 2,
+        "endLine": 317,
+        "endChar": 19
+      },
+      "revId": "d252d770ccd6037c3fdfda42f3d31d9ad6e4282e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3efd491_27d97764",
+        "filename": "base/task_scheduler/scheduler_worker.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-24T21:04:30Z",
+      "side": 1,
+      "message": "Remove this.",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 30
+      },
+      "revId": "d252d770ccd6037c3fdfda42f3d31d9ad6e4282e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55f81e18_96857826",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-24T21:04:30Z",
+      "side": 1,
+      "message": "Change RemoveFromIdleWorkersStack to:\n\nlock_.AssertAcquired();\nidle_workers_stack_.Remove(worker);\n\nAnd move this within the scope of the |auto_lock| below, to avoid acquiring |outer_-\u003elock_| twice in a row.",
+      "range": {
+        "startLine": 542,
+        "startChar": 2,
+        "endLine": 542,
+        "endChar": 45
+      },
+      "revId": "d252d770ccd6037c3fdfda42f3d31d9ad6e4282e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adde3a21_15fdc883",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-24T21:04:30Z",
+      "side": 1,
+      "message": "Cleanup\n\nWe want to use Cleanup everywhere, not just rename Detach -\u003e Timeout and still have two terms (Cleanup and Timeout).",
+      "range": {
+        "startLine": 107,
+        "startChar": 21,
+        "endLine": 107,
+        "endChar": 28
+      },
+      "revId": "d252d770ccd6037c3fdfda42f3d31d9ad6e4282e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67d4db87_fbd4c15d",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-24T21:04:30Z",
+      "side": 1,
+      "message": "Cleanup",
+      "range": {
+        "startLine": 133,
+        "startChar": 16,
+        "endLine": 133,
+        "endChar": 23
+      },
+      "revId": "d252d770ccd6037c3fdfda42f3d31d9ad6e4282e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a62d520_09a55fde",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-24T21:04:30Z",
+      "side": 1,
+      "message": "cleanup",
+      "range": {
+        "startLine": 192,
+        "startChar": 20,
+        "endLine": 192,
+        "endChar": 27
+      },
+      "revId": "d252d770ccd6037c3fdfda42f3d31d9ad6e4282e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
