@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f837539_67f39c3a",
+        "filename": "components/safe_browsing/browser/threat_details.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-24T20:11:09Z",
+      "side": 1,
+      "message": "vector::erase returns the iterator pointing at the next item. \nso either element_iter \u003d elements-\u003eerase(element_iter);\nor elements-\u003eerase(element_iter++);\n\nAlternatively, you can do \n\n  if(std::find(....) \u003d\u003d ids_to_keep.end()) {\n    ....\n    elements-\u003eerase(element_iter);\n  }\n  ++element_iter;",
+      "revId": "ad88105aa4e535b86f35a7329c672e9f8d48d490",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
