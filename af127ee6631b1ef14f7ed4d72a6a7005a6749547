@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cfebf48_ecd6d5d6",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3418,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-24T17:11:39Z",
+      "side": 1,
+      "message": "Instead of this check, could we make it so that we only create the viewport_ in LTHI\u0027s constructor if we\u0027re not in a guest and we\u0027re not in a subframe? You\u0027ll need to add null checks when we use viewport() in that case but I think it\u0027s more clear then that only the top-level renderer has a viewport.",
+      "range": {
+        "startLine": 3417,
+        "startChar": 8,
+        "endLine": 3418,
+        "endChar": 55
+      },
+      "revId": "af127ee6631b1ef14f7ed4d72a6a7005a6749547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
