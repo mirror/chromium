@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e863c99_0e997a43",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-07-24T17:33:35Z",
+      "side": 1,
+      "message": "Do you think it\u0027s worth reimplementing quickReject, canComputeBounds, and computeFastBounds in PaintFlags instead of needing the ToSkPaint (which would create shaders, etc)?",
+      "revId": "aa978e62b55c9173515f2907b2295d75886a34f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9064ed7_8fdd5422",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1895,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-07-24T17:33:35Z",
+      "side": 1,
+      "message": "Is it possible to make this ScopedImageFlags? Mostly I\u0027m thinking about how serialization is going to look.  That code is going to look at lot like raster.  It\u0027s going to want to do image replacement and the alpha folding at serialization time.  So, I think it\u0027s going to want to do the image replacement into PaintImages+PaintFlags and not into SkPaint.\n\n(Also, does this have to be an allocation? Can you just make this on the stack?)",
+      "revId": "aa978e62b55c9173515f2907b2295d75886a34f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da88d82e_3fd90898",
+        "filename": "cc/raster/playback_image_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-07-24T17:33:35Z",
+      "side": 1,
+      "message": "Can you add a class level comment for what this is?",
+      "revId": "aa978e62b55c9173515f2907b2295d75886a34f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
