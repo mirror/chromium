@@ -197,15 +197,17 @@ void CSSTranslation::setZ(CSSNumericValue* z, ExceptionState& exception_state) {
   z_ = z;
 }
 
-const DOMMatrix* CSSTranslation::AsMatrix() const {
+const DOMMatrix* CSSTranslation::AsMatrix(
+    ExceptionState& exception_state) const {
   CSSUnitValue* x = x_->to(CSSPrimitiveValue::UnitType::kPixels);
   CSSUnitValue* y = y_->to(CSSPrimitiveValue::UnitType::kPixels);
   CSSUnitValue* z = z_->to(CSSPrimitiveValue::UnitType::kPixels);
-  // TODO(meade): What should happen when the translation contains relative
-  // lengths here?
-  // https://github.com/w3c/css-houdini-drafts/issues/421
-  if (!x || !y || !z)
+
+  if (!x || !y || !z) {
+    // https://github.com/w3c/css-houdini-drafts/issues/421
+    exception_state.ThrowTypeError("Must be compatible units with px");
     return nullptr;
+  }
 
   DOMMatrix* matrix = DOMMatrix::Create();
   return matrix->translate(x->value(), y->value(), z->value());
