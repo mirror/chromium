@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1cdcdf23_6c97bc4d",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-24T19:36:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b705832_392f2dfa",
+      "revId": "df8a29bdf3f176d8731026c384b5641d89086c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3f34a35_9198ae6d",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletObjectProxy.h",
         "patchSetId": 4
@@ -30,6 +48,30 @@
       "writtenOn": "2017-07-21T08:49:13Z",
       "side": 1,
       "message": "Are you going to use this ObjectProxy for posting cross-thread tasks from the main thread to the context thread, not from the context thread to the main thread?\n\nObjectProxy is principally designed for the communication from the GlobalScope on the context thread to the Worker/Worklet object (parent object) on the main thread (see [1]), it\u0027s also used as a receiver of tasks from MessagingProxy though. That\u0027s the reason why we call it *ObjectProxy*. This class comment sounds a bit different from the design.\n\n[1] https://chromium.googlesource.com/chromium/src/+/2551f6a3284aafd01285111b5889924abf5a5c72/third_party/WebKit/Source/core/workers/ThreadedObjectProxyBase.h#18",
+      "range": {
+        "startLine": 16,
+        "startChar": 13,
+        "endLine": 16,
+        "endChar": 18
+      },
+      "revId": "df8a29bdf3f176d8731026c384b5641d89086c1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d2a5bdd_d0939849",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletObjectProxy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-24T19:36:06Z",
+      "side": 1,
+      "message": "Hmm. Perhaps I misunderstood the structure. Then what is the correct way of sending a task from MessagingProxy to WorkletGlobalScope? We need a way to create AudioWorkletProcessor (on worklet thread) upon the creation of AudioWorkletNode (on main thread).",
+      "parentUuid": "a3f34a35_9198ae6d",
       "range": {
         "startLine": 16,
         "startChar": 13,
