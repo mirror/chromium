@@ -1683,7 +1683,8 @@ bool PersonalDataManager::ImportCreditCard(
                       MASKED_SERVER_CARD_EXPIRATION_DATE_DID_NOT_MATCH);
       }
 
-      if (card->record_type() == CreditCard::FULL_SERVER_CARD)
+      if (card->record_type() == CreditCard::FULL_SERVER_CARD ||
+          !IsAutofillOfferLocalSaveIfServerCardManuallyEnteredExperimentEnabled())
         return false;
       DCHECK_EQ(card->record_type(), CreditCard::MASKED_SERVER_CARD);
       *imported_credit_card_matches_masked_server_credit_card = true;
