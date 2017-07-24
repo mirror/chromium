@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f62a40ee_faeda29f",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-07-24T04:42:41Z",
+      "side": 1,
+      "message": "nit: Returns list of categories for each permission displayed in \u003csite-details\u003e?",
+      "revId": "45ee8a18bfd683c803e051ee21e1c4774e1f24bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
