@@ -2,11 +2,22 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-/** @fileoverview Suite of accessibility tests for the passwords page. */
+/**
+ * @fileoverview Suite of additional accessibility tests for Manage Passwords
+ * page.
+ */
 
-suite('SettingsPasswordsAccessibility', function() {
+suite('MANAGE_PASSWORDS_ROUTE', function() {
   var passwordsSection = null;
   var passwordManager = null;
+
+  //TODO(hcarmona): Remove duplicate iron-icons so that they do not violate the
+  // duplicate ids audit rule.
+  var auditOptions = {
+    context: {
+      exclude: ['iron-iconset-svg']
+    }
+  };
 
   setup(function() {
     return new Promise(function(resolve) {
@@ -40,11 +51,6 @@ suite('SettingsPasswordsAccessibility', function() {
 
       document.body.appendChild(settingsUi);
     });
-  });
-
-  test('Accessible with 0 passwords', function() {
-    assertEquals(passwordsSection.savedPasswords.length, 0);
-    return SettingsAccessibilityTest.runAudit();
   });
 
   test('Accessible with 100 passwords', function() {
