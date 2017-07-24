@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a22d6eca_630339ea",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/LightweightFirstRunActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-24T18:04:19Z",
+      "side": 1,
+      "message": "private?",
+      "range": {
+        "startLine": 102,
+        "startChar": 4,
+        "endLine": 102,
+        "endChar": 10
+      },
+      "revId": "2d13b99fd578eda9d861d78160a7da36a4453e47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
