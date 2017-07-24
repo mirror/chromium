@@ -52,6 +52,24 @@
       "revId": "7059f9d8254f5d68248c1a446cd674f885ba9a7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a4e330f_ded8ac2f",
+        "filename": "mojo/public/cpp/bindings/tests/serialization_warning_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-24T22:20:43Z",
+      "side": 0,
+      "message": "OK, so I started down the path of doing this because I agree that it would be nice to avoid changing more test suites.\n\nThere are however two problems with this:\n\n1) What we really want is a more generic way for Buffer to use any user-provided storage mechanism. Using a virtual Buffer interface has a measurable performance impact since Allocate is called so frequently during serialization; so we\u0027d want to relegate virtualization to only non-performance-critical code (by e.g. introducing a separate virtual BufferStorage interface or something, which is only used for non-Message-backed buffers). That\u0027s a lot to change in this CL.\n\n2) This of course also means that Serialize() doesn\u0027t use the normal message serialization code path; while that would be precisely the point of the change, it does mean that serialization performance testing becomes much less useful since it is no longer representative of serialization cost in production.\n\nFor these reasons I\u0027ve decided to forego unifying the Buffer interface for now.\n\nSince cc serialization perf tests are already an unfair comparison due to extra allocations, memory writes, and copies, I\u0027ll fix the Buffer situation in a follow-up patch which also fixes the perf test issue.",
+      "parentUuid": "f92ca5aa_143b6c18",
+      "revId": "7059f9d8254f5d68248c1a446cd674f885ba9a7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
