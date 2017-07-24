@@ -282,12 +282,15 @@ void Predictor::AnticipateOmniboxUrl(const GURL& url, bool preconnectable) {
 
 void Predictor::PreconnectUrlAndSubresources(const GURL& url,
     const GURL& first_party_for_cookies) {
+  LOG(WARNING) << "HELLO from Predictor::PreconnectUrlAndSubresources";
   DCHECK(BrowserThread::CurrentlyOn(BrowserThread::UI) ||
          BrowserThread::CurrentlyOn(BrowserThread::IO));
   if (!PredictorEnabled())
     return;
   if (!CanPreresolveAndPreconnect())
     return;
+  LOG(WARNING)
+      << "HELLO from Predictor::PreconnectUrlAndSubresources after the checks";
   const GURL canonicalized_url = CanonicalizeUrl(url);
   if (!canonicalized_url.is_valid() || !canonicalized_url.has_host())
     return;
@@ -295,6 +298,9 @@ void Predictor::PreconnectUrlAndSubresources(const GURL& url,
   const int kConnectionsNeeded = 1;
   PreconnectUrl(canonicalized_url, first_party_for_cookies, motivation,
                 kAllowCredentialsOnPreconnectByDefault, kConnectionsNeeded);
+  LOG(WARNING)
+      << "HELLO from Predictor::PreconnectUrlAndSubresources after Preconnect";
+  LOG(WARNING) << "HELLO URL = " << url.spec();
   PredictFrameSubresources(canonicalized_url.GetWithEmptyPath(),
                            first_party_for_cookies);
 }
@@ -810,6 +816,7 @@ void Predictor::PreconnectUrlOnIOThread(
   if (!getter)
     return;
 
+  LOG(WARNING) << "HELLO After the getter check";
   // Translate the motivation from UrlRequest motivations to HttpRequest
   // motivations.
   net::HttpRequestInfo::RequestMotivation request_motivation =

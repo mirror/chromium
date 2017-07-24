@@ -60,6 +60,9 @@ void PreconnectUrl(net::URLRequestContextGetter* getter,
   if (!request_context)
     return;
 
+  LOG(WARNING) << "HELLO after URLRequestContext check";
+  LOG(WARNING) << "HELLO count = " << count;
+
   net::HttpTransactionFactory* factory =
       request_context->http_transaction_factory();
   net::HttpNetworkSession* session = factory->GetSession();

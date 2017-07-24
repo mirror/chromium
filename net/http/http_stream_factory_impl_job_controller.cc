@@ -152,6 +152,7 @@ void HttpStreamFactoryImpl::JobController::Preconnect(int num_streams) {
   DCHECK(!alternative_job_);
   DCHECK(is_preconnect_);
 
+  LOG(WARNING) << "HELLO from HttpStreamFactoryImpl::JobController::Preconnect";
   stream_type_ = HttpStreamRequest::HTTP_STREAM;
   num_streams_ = num_streams;
 

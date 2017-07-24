@@ -21,6 +21,7 @@ static void PreconnectUrlAndSubresources(JNIEnv* env,
     GURL url = GURL(base::android::ConvertJavaStringToUTF8(env, url_str));
     Profile* profile = ProfileAndroid::FromProfileAndroid(jprofile);
     if (profile) {
+      LOG(WARNING) << "HELLO from PreconnectUrlAndSubresources";
       profile->GetNetworkPredictor()->PreconnectUrlAndSubresources(url, GURL());
     }
   }

@@ -8,6 +8,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.os.RemoteException;
 
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
@@ -38,6 +39,7 @@ public class EmbeddedTestServerImpl extends IEmbeddedTestServerImpl.Stub {
     private Handler mHandler;
     private HandlerThread mHandlerThread;
     private long mNativeEmbeddedTestServer;
+    private IConnectionListener mConnectionListener;
 
     /** Create an uninitialized EmbeddedTestServer. */
     public EmbeddedTestServerImpl(Context context) {
@@ -152,6 +154,24 @@ public class EmbeddedTestServerImpl extends IEmbeddedTestServerImpl.Stub {
         });
     }
 
+    /** Sets a connection listener to be notified of new connections and socket reads.
+     *
+     * Must be done before starting the server. Setting a new one erases the previous one.
+     *
+     * @param listener Listener to notify.
+     */
+    @Override
+    public void setConnectionListener(final IConnectionListener listener) {
+        runOnHandlerThread(new Callable<Void>() {
+            @Override
+            public Void call() {
+                Log.w(TAG, "Setting connection listener");
+                mConnectionListener = listener;
+                return null;
+            }
+        });
+    }
+
     /** Get the full URL for the given relative URL.
      *
      *  @param relativeUrl The relative URL for which a full URL should be returned.
@@ -209,6 +229,27 @@ public class EmbeddedTestServerImpl extends IEmbeddedTestServerImpl.Stub {
         try {
             mHandlerThread.join();
         } catch (InterruptedException e) {
+        }
+    }
+
+    @CalledByNative
+    private void acceptedSocket(long socketId) {
+        if (mConnectionListener == null) return;
+        try {
+            Log.w(TAG, "Accepted socket");
+            mConnectionListener.acceptedSocket(socketId);
+        } catch (RemoteException e) {
+            // Callback, ignore exception.
+        }
+    }
+
+    @CalledByNative
+    private void readFromSocket(long socketId) {
+        if (mConnectionListener == null) return;
+        try {
+            mConnectionListener.readFromSocket(socketId);
+        } catch (RemoteException e) {
+            // Callback, ignore exception.
         }
     }
 
