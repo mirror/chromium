@@ -91,7 +91,7 @@
 
     <!-- Preferences Colors -->
     <color name="pref_accent_color">@color/light_active_color</color>
-    <color name="expandable_group_dark_gray">#484848</color>
+    <color name="expandable_group_dark_gray">@color/black_alpha_54</color>
 
     <!-- Data Saver Colors -->
     <color name="data_reduction_compressed_color">@color/pref_accent_color</color>
@@ -106,7 +106,7 @@
 
     <!-- First Run Experience Colors -->
     <color name="fre_text_color">#000000</color>
-    <color name="fre_title_color">#161616</color>
+    <color name="fre_title_color">@color/black_alpha_87</color>
 
     <!-- Account Signin Colors -->
     <!-- As in dimens.xml, signin uses values from the First Run Experience -->
@@ -174,8 +174,8 @@
     <color name="find_result_bar_active_border_color">#c37e3b</color>
     <color name="find_in_page_query_color">#333333</color>
     <color name="find_in_page_query_white_color">#ffffff</color>
-    <color name="find_in_page_results_status_color">#969696</color>
-    <color name="find_in_page_results_status_white_color">#7f7f7f</color>
+    <color name="find_in_page_results_status_color">@color/black_alpha_38</color>
+    <color name="find_in_page_results_status_white_color">@color/white_alpha_50</color>
     <color name="find_in_page_failed_results_status_color">#db4437</color>
 
     <!-- App Background Colors -->

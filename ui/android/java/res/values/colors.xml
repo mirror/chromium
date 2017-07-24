@@ -7,5 +7,7 @@
 <resources>
     <color name="dropdown_divider_color">#E5E5E5</color>
     <color name="dropdown_dark_divider_color">#C0C0C0</color>
+    <color name="black_alpha_54">#8a000000</color>
+    <color name="black_alpha_87">#de000000</color>
 </resources>
 

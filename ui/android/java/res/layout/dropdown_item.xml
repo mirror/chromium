@@ -50,7 +50,7 @@
             android:includeFontPadding="false"
             android:singleLine="true"
             android:textAlignment="viewStart"
-            android:textColor="#646464"
+            android:textColor="@color/black_alpha_54"
             android:textSize="@dimen/dropdown_item_sublabel_font_size" />
     </LinearLayout>
 

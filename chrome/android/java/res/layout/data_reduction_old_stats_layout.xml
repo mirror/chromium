@@ -102,7 +102,7 @@
                 android:layout_marginTop="14dp"
                 android:textColor="?android:attr/textColorPrimary"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                style="@style/RobotoMediumStyle" />
 
             <TextView
                 android:id="@+id/data_reduction_compressed_size"
@@ -111,7 +111,7 @@
                 android:layout_marginTop="4dp"
                 android:textColor="?android:attr/textColorPrimary"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                style="@style/RobotoMediumStyle" />
         </LinearLayout>
 
     </LinearLayout>
