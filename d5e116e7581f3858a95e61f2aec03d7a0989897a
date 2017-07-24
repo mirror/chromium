@@ -1,0 +1,353 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da705e01_08836f12",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-24T20:55:59Z",
+      "side": 1,
+      "message": "nit: Maybe target_state, now that we\u0027ve renamed the type.",
+      "range": {
+        "startLine": 558,
+        "startChar": 61,
+        "endLine": 558,
+        "endChar": 79
+      },
+      "revId": "d5e116e7581f3858a95e61f2aec03d7a0989897a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27c44bbf_293fb1b4",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-24T20:55:59Z",
+      "side": 1,
+      "message": "nit: new_target_state",
+      "range": {
+        "startLine": 569,
+        "startChar": 52,
+        "endLine": 569,
+        "endChar": 74
+      },
+      "revId": "d5e116e7581f3858a95e61f2aec03d7a0989897a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9eda579_c38bb170",
+        "filename": "content/common/page_state_serialization.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-24T20:55:59Z",
+      "side": 1,
+      "message": "Did you figure out if there\u0027s a reason that we store things persistently as UTF16 when they\u0027re UTF8 internally?  Would be nice not to double the size required, but I\u0027m guessing that was done for a reason.",
+      "revId": "d5e116e7581f3858a95e61f2aec03d7a0989897a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cb76dcd_9434959d",
+        "filename": "content/common/unique_name_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-24T20:55:59Z",
+      "side": 1,
+      "message": "nit: prefix isn\u0027t passed in anymore.  |name|?",
+      "range": {
+        "startLine": 125,
+        "startChar": 40,
+        "endLine": 125,
+        "endChar": 46
+      },
+      "revId": "d5e116e7581f3858a95e61f2aec03d7a0989897a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b142c49_f8218207",
+        "filename": "content/common/unique_name_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-24T20:55:59Z",
+      "side": 1,
+      "message": "nit: while hashed unique names use this function to limit to a max of...\n\n(At first, it sounds like this function is called for both legacy and hashed names, and it would somehow decide internally whether to limit or not.)",
+      "revId": "d5e116e7581f3858a95e61f2aec03d7a0989897a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0ed0842_ba54a139",
+        "filename": "content/common/unique_name_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-24T20:55:59Z",
+      "side": 1,
+      "message": "Please explain why this limit is needed.  :)  Maybe an example would help.",
+      "revId": "d5e116e7581f3858a95e61f2aec03d7a0989897a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dd490d2_c0c90db5",
+        "filename": "content/common/unique_name_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-24T20:55:59Z",
+      "side": 1,
+      "message": "What do you mean by \"mostly\"?  That\u0027s concerning when the sentence starts with \"important to guarantee.\"  :)  If it\u0027s not a problem for the algorithm, maybe we can rephrase or explain.",
+      "range": {
+        "startLine": 235,
+        "startChar": 24,
+        "endLine": 235,
+        "endChar": 30
+      },
+      "revId": "d5e116e7581f3858a95e61f2aec03d7a0989897a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26396290_8a9b16c9",
+        "filename": "content/common/unique_name_helper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-24T20:55:59Z",
+      "side": 1,
+      "message": "nit: Drop \"prior\"",
+      "range": {
+        "startLine": 36,
+        "startChar": 44,
+        "endLine": 36,
+        "endChar": 50
+      },
+      "revId": "d5e116e7581f3858a95e61f2aec03d7a0989897a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56c5ba58_0c127650",
+        "filename": "content/common/unique_name_helper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-24T20:55:59Z",
+      "side": 1,
+      "message": "Can you include some mention of window.name and the iframe\u0027s name attribute as ways to assign the browsing context name?  I found it useful to have that reference there before.",
+      "revId": "d5e116e7581f3858a95e61f2aec03d7a0989897a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2724c0c1_0eab5dfb",
+        "filename": "content/common/unique_name_helper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-24T20:55:59Z",
+      "side": 1,
+      "message": "nit: Add space after frameHash and before the close quote.",
+      "range": {
+        "startLine": 70,
+        "startChar": 44,
+        "endLine": 70,
+        "endChar": 53
+      },
+      "revId": "d5e116e7581f3858a95e61f2aec03d7a0989897a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "529d963d_30bb9651",
+        "filename": "content/common/unique_name_helper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-24T20:55:59Z",
+      "side": 1,
+      "message": "You removed the question mark above.  Did you want to remove it here as well?",
+      "range": {
+        "startLine": 71,
+        "startChar": 43,
+        "endLine": 71,
+        "endChar": 66
+      },
+      "revId": "d5e116e7581f3858a95e61f2aec03d7a0989897a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ab1284c_ebe0242f",
+        "filename": "content/common/unique_name_helper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-24T20:55:59Z",
+      "side": 1,
+      "message": "Please include an explanation of why this 10 frame limit is helpful.  (There\u0027s a lot of complexity here already, and even after your earlier reply I\u0027m still not sure I understand why we need it...)\n\nNaively, we could make things simpler if we made the limit 0 and never bothered with frame positions on hashed names.  What benefit are we getting by keeping the frame positions for up to 10 frames?",
+      "revId": "d5e116e7581f3858a95e61f2aec03d7a0989897a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b7c7fa8_ad21f9f6",
+        "filename": "content/common/unique_name_helper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-24T20:55:59Z",
+      "side": 1,
+      "message": "Might be worth mentioning why you chose this size as the limit?",
+      "revId": "d5e116e7581f3858a95e61f2aec03d7a0989897a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc100cd2_9b3e70f2",
+        "filename": "content/common/unique_name_helper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-24T20:55:59Z",
+      "side": 1,
+      "message": "nit: Can you rephrase this comment now that it\u0027s not called a replacement?  Or explain what\u0027s being replaced?",
+      "range": {
+        "startLine": 189,
+        "startChar": 25,
+        "endLine": 189,
+        "endChar": 37
+      },
+      "revId": "d5e116e7581f3858a95e61f2aec03d7a0989897a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bbae6c2_3268ff2f",
+        "filename": "content/common/unique_name_helper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-24T20:55:59Z",
+      "side": 1,
+      "message": "nit: descendant_update_state\n(And same request about clarifying what \"replacement pattern\" means.)",
+      "range": {
+        "startLine": 195,
+        "startChar": 6,
+        "endLine": 195,
+        "endChar": 28
+      },
+      "revId": "d5e116e7581f3858a95e61f2aec03d7a0989897a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "220799d5_15ea6dca",
+        "filename": "content/common/unique_name_helper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-24T20:55:59Z",
+      "side": 1,
+      "message": "Same here.  I\u0027m ok keeping the term replacement in the comments if there\u0027s some explanation of what it means.",
+      "range": {
+        "startLine": 210,
+        "startChar": 60,
+        "endLine": 210,
+        "endChar": 72
+      },
+      "revId": "d5e116e7581f3858a95e61f2aec03d7a0989897a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3632876f_14b91626",
+        "filename": "content/common/unique_name_helper_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-24T20:55:59Z",
+      "side": 1,
+      "message": "Was there supposed to be another test here, or is this referring to the two pairs of tests below?",
+      "revId": "d5e116e7581f3858a95e61f2aec03d7a0989897a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
