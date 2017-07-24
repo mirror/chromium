@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebe3cc41_3d8646ee",
+        "filename": "third_party/WebKit/Source/platform/wtf/Assertions.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-24T00:51:27Z",
+      "side": 1,
+      "message": "Remove this line.\nI think we can remove more includes.",
+      "revId": "78039a56445a5ce72238e6952129f295ed0b42a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "408936e6_df83d12f",
+        "filename": "third_party/WebKit/Source/platform/wtf/Assertions.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-24T00:51:27Z",
+      "side": 1,
+      "message": "Remove this line.",
+      "revId": "78039a56445a5ce72238e6952129f295ed0b42a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40265d1b_1228edf7",
+        "filename": "third_party/WebKit/Source/platform/wtf/Assertions.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-24T00:51:27Z",
+      "side": 1,
+      "message": "Remove this line.",
+      "revId": "78039a56445a5ce72238e6952129f295ed0b42a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ebc06a7_510f3b43",
+        "filename": "third_party/WebKit/Source/platform/wtf/Assertions.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-24T00:51:27Z",
+      "side": 1,
+      "message": "Remove this line.",
+      "revId": "78039a56445a5ce72238e6952129f295ed0b42a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28b5a708_99b9f1bf",
+        "filename": "third_party/WebKit/Source/platform/wtf/Assertions.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-24T00:51:27Z",
+      "side": 1,
+      "message": "Please add a comment that new code should not use this function.",
+      "revId": "78039a56445a5ce72238e6952129f295ed0b42a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cc01194_c3c29e73",
+        "filename": "third_party/WebKit/Source/platform/wtf/AssertionsTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-24T00:51:27Z",
+      "side": 1,
+      "message": "Test for ScopedLogger should be moved to ScopedLoggerTest.cpp.",
+      "revId": "78039a56445a5ce72238e6952129f295ed0b42a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee60d84e_4b74a8be",
+        "filename": "third_party/WebKit/Source/platform/wtf/ScopedLogger.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-24T00:51:27Z",
+      "side": 1,
+      "message": "Copy the copyright header of Assertions.cpp.",
+      "revId": "78039a56445a5ce72238e6952129f295ed0b42a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e61b2c18_f904d93d",
+        "filename": "third_party/WebKit/Source/platform/wtf/ScopedLogger.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-24T00:51:27Z",
+      "side": 1,
+      "message": "Copy the copyright header of Assertions.h.",
+      "revId": "78039a56445a5ce72238e6952129f295ed0b42a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8925cb32_7cf325da",
+        "filename": "third_party/WebKit/Source/platform/wtf/ScopedLogger.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-24T00:51:27Z",
+      "side": 1,
+      "message": "I don\u0027t think Assertions.h is necessary. This file should include only necessary headers.",
+      "revId": "78039a56445a5ce72238e6952129f295ed0b42a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
