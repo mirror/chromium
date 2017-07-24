@@ -98,8 +98,14 @@ class PLATFORM_EXPORT ResourceLoader final
   // A failed load is indicated by 1 didFail(), which can occur at any time
   // before didFinishLoading(), including synchronous inside one of the other
   // callbacks via ResourceLoader::cancel()
-  bool WillFollowRedirect(WebURLRequest&,
-                          const WebURLResponse& redirect_response) override;
+  bool WillFollowRedirect(WebURL& new_url,
+                          WebURLRequest::ServiceWorkerMode,
+                          const WebURL& new_first_party_for_cookies,
+                          const WebString& new_referrer,
+                          WebReferrerPolicy new_referrer_policy,
+                          const WebString& new_method,
+                          const WebURLResponse& passed_redirect_response,
+                          bool report_raw_headers) override;
   void DidSendData(unsigned long long bytes_sent,
                    unsigned long long total_bytes_to_be_sent) override;
   void DidReceiveResponse(const WebURLResponse&) override;
@@ -161,6 +167,8 @@ class PLATFORM_EXPORT ResourceLoader final
   SelfKeepAlive<ResourceLoader> keepalive_;
 
   bool is_cache_aware_loading_activated_;
+
+  ResourceRequest request_;
 };
 
 }  // namespace blink

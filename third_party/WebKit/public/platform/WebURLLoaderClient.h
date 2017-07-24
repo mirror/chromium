@@ -31,13 +31,16 @@
 #ifndef WebURLLoaderClient_h
 #define WebURLLoaderClient_h
 
+#include <memory>
 #include "public/platform/WebCommon.h"
 #include "public/platform/WebDataConsumerHandle.h"
-#include <memory>
+#include "public/platform/WebReferrerPolicy.h"
+#include "public/platform/WebURLRequest.h"
 
 namespace blink {
 
-class WebURLRequest;
+class WebString;
+class WebURL;
 class WebURLResponse;
 struct WebURLError;
 
@@ -50,8 +53,15 @@ class BLINK_PLATFORM_EXPORT WebURLLoaderClient {
   //
   // Implementations should return true to instruct the loader to follow the,
   // redirect, or false otherwise.
-  virtual bool WillFollowRedirect(WebURLRequest& new_request,
-                                  const WebURLResponse& redirect_response) {
+  virtual bool WillFollowRedirect(
+      WebURL& new_url,
+      WebURLRequest::ServiceWorkerMode service_worker_mode,
+      const WebURL& new_first_party_for_cookies,
+      const WebString& new_referrer,
+      WebReferrerPolicy new_referrer_policy,
+      const WebString& new_method,
+      const WebURLResponse& passed_redirect_response,
+      bool report_raw_headers) {
     return true;
   }
 
