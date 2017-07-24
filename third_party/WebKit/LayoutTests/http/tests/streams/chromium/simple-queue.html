@@ -11,6 +11,9 @@
 // Chosen to be (quite a lot) larger than 16K.
 const NUMBER_OF_WRITES = 40000;
 
+// This must be synchronized with SimpleQueue.js, unfortunately.
+const QUEUE_MAX_ARRAY_SIZE = 16384;
+
 // Verify that wraparound works correctly in SimpleQueue by creating a queue
 // with more than 16K elements. This tests push(), shift() and peek().
 promise_test(t => {
@@ -47,4 +50,58 @@ promise_test(t => {
   }
   return writer.abort().then(() => Promise.all(rejections));
 }, 'rejecting more than 16K writes should work');
+
+promise_test(t => {
+  let lastChunk;
+  const ws = new WritableStream({
+    write(chunk) {
+      lastChunk = chunk;
+    }
+  });
+  const writer = ws.getWriter();
+  let lastPromise;
+  // All chunks will be queued.
+  for (let i = 0; i < QUEUE_MAX_ARRAY_SIZE; ++i) {
+    lastPromise = writer.write(i);
+  }
+  assert_equals(undefined, lastChunk,
+                'underlying sink write() should not have been called yet');
+  return lastPromise.then(() => {
+    assert_equals(QUEUE_MAX_ARRAY_SIZE - 1, lastChunk,
+                  'lastChunk should equal QUEUE_MAX_ARRAY_SIZE - 1');
+  });
+}, 'shift() should work when exactly one full node exists');
+
+promise_test(t => {
+  let lastChunk;
+  const ws = new WritableStream({
+    write(chunk) {
+      lastChunk = chunk;
+    }
+  });
+  const writer = ws.getWriter();
+  let lastPromise;
+  // All chunks will be queued.
+  for (let i = 0; i < QUEUE_MAX_ARRAY_SIZE; ++i) {
+    lastPromise = writer.write(i);
+  }
+  return lastPromise.then(() => {
+    writer.write('one more');
+    assert_equals('one more', lastChunk,
+                  'lastChunk should equal "one more"');
+  });
+}, 'push() should still work after emptying exactly one full node');
+
+promise_test(t => {
+  const ws = new WritableStream();
+  const writer = ws.getWriter();
+  const rejections = [];
+  for (let i = 0; i < QUEUE_MAX_ARRAY_SIZE; ++i) {
+    rejections.push(
+        promise_rejects(t, new TypeError(), writer.write(i),
+                        'write() promise should reject'));
+  }
+  return writer.abort().then(() => Promise.all(rejections));
+}, 'rejecting exactly 16K writes should work');
+
 </script>
