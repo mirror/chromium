@@ -61,6 +61,7 @@ class NewMockPersistentCookieStore
   MOCK_METHOD1(AddCookie, void(const CanonicalCookie& cc));
   MOCK_METHOD1(UpdateCookieAccessTime, void(const CanonicalCookie& cc));
   MOCK_METHOD1(DeleteCookie, void(const CanonicalCookie& cc));
+  MOCK_METHOD1(SetBeforeFlushCallback, void(base::RepeatingClosure));
   virtual void Flush(base::OnceClosure callback) {
     if (!callback.is_null())
       base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
@@ -2480,8 +2481,13 @@ class FlushablePersistentStore : public CookieMonster::PersistentCookieStore {
   void UpdateCookieAccessTime(const CanonicalCookie&) override {}
   void DeleteCookie(const CanonicalCookie&) override {}
   void SetForceKeepSessionState() override {}
+  void SetBeforeFlushCallback(base::RepeatingClosure callback) override {
+    before_flush_callback_ = std::move(callback);
+  }
 
   void Flush(base::OnceClosure callback) override {
+    if (!before_flush_callback_.is_null())
+      before_flush_callback_.Run();
     ++flush_count_;
     if (!callback.is_null())
       std::move(callback).Run();
@@ -2493,6 +2499,7 @@ class FlushablePersistentStore : public CookieMonster::PersistentCookieStore {
   ~FlushablePersistentStore() override {}
 
   volatile int flush_count_;
+  base::RepeatingClosure before_flush_callback_;
 };
 
 // Counts the number of times Callback() has been run.
