@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7bb84cf1_7703a175",
+        "filename": "components/browser_watcher/watcher_client_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1174230
+      },
+      "writtenOn": "2017-07-24T18:57:25Z",
+      "side": 0,
+      "message": "Without this, can you remove the include for base/win/windows_version.h?",
+      "range": {
+        "startLine": 28,
+        "startChar": 25,
+        "endLine": 28,
+        "endChar": 75
+      },
+      "revId": "3a66ca5ca1b1958324f51395f7f5c991b904eb95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
