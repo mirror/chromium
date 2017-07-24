@@ -339,7 +339,7 @@ void CompositingLayerAssigner::AssignLayersToBackingsInternal(
   if (layer->ScrollParent())
     layer->ScrollParent()->GetScrollableArea()->SetTopmostScrollChild(layer);
 
-  if (layer->NeedsCompositedScrolling())
+  if (layer->NeedsCompositedScrolling() == kFullCompositedScrolling)
     layer->GetScrollableArea()->SetTopmostScrollChild(nullptr);
 
   PaintLayerStackingNodeIterator iterator(
