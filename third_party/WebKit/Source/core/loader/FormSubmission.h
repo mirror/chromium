@@ -98,8 +98,6 @@ class FormSubmission : public GarbageCollectedFinalized<FormSubmission> {
 
   FrameLoadRequest CreateFrameLoadRequest(Document* origin_document);
 
-  KURL RequestURL() const;
-
   SubmitMethod Method() const { return method_; }
   const KURL& Action() const { return action_; }
   const AtomicString& Target() const { return target_; }
