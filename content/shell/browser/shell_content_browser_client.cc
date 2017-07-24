@@ -36,6 +36,7 @@
 #include "content/shell/browser/shell_quota_permission_context.h"
 #include "content/shell/browser/shell_resource_dispatcher_host_delegate.h"
 #include "content/shell/browser/shell_web_contents_view_delegate_creator.h"
+#include "content/shell/common/layout_test/layout_test_switches.h"
 #include "content/shell/common/shell_messages.h"
 #include "content/shell/common/shell_switches.h"
 #include "content/shell/grit/shell_resources.h"
@@ -274,6 +275,10 @@ void ShellContentBrowserClient::AppendExtraCommandLineSwitches(
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kEnableCrashReporter)) {
     command_line->AppendSwitch(switches::kEnableCrashReporter);
+  }
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kDebugDevTools)) {
+    command_line->AppendSwitch(switches::kDebugDevTools);
   }
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kCrashDumpsDir)) {

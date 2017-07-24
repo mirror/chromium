@@ -44,6 +44,7 @@
 #include "content/public/renderer/renderer_gamepad_provider.h"
 #include "content/public/test/layouttest_support.h"
 #include "content/shell/common/layout_test/layout_test_messages.h"
+#include "content/shell/common/layout_test/layout_test_switches.h"
 #include "content/shell/common/shell_messages.h"
 #include "content/shell/common/shell_switches.h"
 #include "content/shell/renderer/layout_test/blink_test_helpers.h"
@@ -434,6 +435,11 @@ void BlinkTestRunner::ShowDevTools(const std::string& settings,
 void BlinkTestRunner::CloseDevTools() {
   Send(new ShellViewHostMsg_CloseDevTools(routing_id()));
   render_view()->GetMainRenderFrame()->DetachDevToolsForTest();
+}
+
+bool BlinkTestRunner::IsDebugDevTools() {
+  return base::CommandLine::ForCurrentProcess()->HasSwitch(
+      switches::kDebugDevTools);
 }
 
 void BlinkTestRunner::EvaluateInWebInspector(int call_id,
