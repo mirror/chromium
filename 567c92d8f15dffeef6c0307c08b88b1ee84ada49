@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d40db33f_783fa706",
+        "filename": "third_party/WebKit/Source/platform/wtf/text/TextEncodingRegistry.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-24T00:05:15Z",
+      "side": 1,
+      "message": "Probably, WTF::CopyKeyToVector(*g_text_encoding_name_map, results) works.",
+      "revId": "567c92d8f15dffeef6c0307c08b88b1ee84ada49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
