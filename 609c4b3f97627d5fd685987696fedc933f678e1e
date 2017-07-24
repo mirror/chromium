@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "df85b793_18b86ebf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1617,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-07-24T23:25:15Z",
+      "side": 1,
+      "message": "I clarified the comment.\n\nIs there any worth in trying to disambiguate from the isOverlayVisible() method?",
+      "parentUuid": "b4915cf8_f8bd1eb2",
+      "range": {
+        "startLine": 1617,
+        "startChar": 16,
+        "endLine": 1617,
+        "endChar": 23
+      },
+      "revId": "609c4b3f97627d5fd685987696fedc933f678e1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3586db3a_305d0909",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/TabWebContentsDelegateAndroid.java",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "609c4b3f97627d5fd685987696fedc933f678e1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a572309f_2a00ce5a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/TabWebContentsDelegateAndroid.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-07-24T23:25:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3586db3a_305d0909",
+      "range": {
+        "startLine": 510,
+        "startChar": 4,
+        "endLine": 510,
+        "endChar": 10
+      },
+      "revId": "609c4b3f97627d5fd685987696fedc933f678e1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +164,24 @@
       "revId": "609c4b3f97627d5fd685987696fedc933f678e1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "765e0a5b_7709da54",
+        "filename": "content/browser/android/dialog_overlay_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-07-24T23:25:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "225befe7_58e28db3",
+      "revId": "609c4b3f97627d5fd685987696fedc933f678e1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
