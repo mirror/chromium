@@ -373,8 +373,7 @@ public class VrShellDelegate
 
     public static void onMultiWindowModeChanged(boolean isInMultiWindowMode) {
         if (isInMultiWindowMode && isInVr()) {
-            sInstance.shutdownVr(
-                    true /* disableVrMode */, false /* canReenter */, true /* stayingInChrome */);
+            sInstance.shutdownVr(true /* disableVrMode */, true /* stayingInChrome */);
         }
     }
 
@@ -622,8 +621,7 @@ public class VrShellDelegate
                         mShouldShowPageInfo = false;
                         onExitVrResult(true);
                     } else {
-                        shutdownVr(true /* disableVrMode */, false /* canReenter */,
-                                false /* stayingInChrome */);
+                        shutdownVr(true /* disableVrMode */, false /* stayingInChrome */);
                     }
                 }
                 if (!activitySupportsPresentation(activity)) return;
@@ -1051,8 +1049,7 @@ public class VrShellDelegate
         if (!isVrShellEnabled(mVrSupportLevel) || !isDaydreamCurrentViewer()
                 || !activitySupportsVrBrowsing(mActivity)) {
             if (isDaydreamCurrentViewer() && showDoff(false /* optional */)) return false;
-            shutdownVr(
-                    true /* disableVrMode */, false /* canReenter */, true /* stayingInChrome */);
+            shutdownVr(true /* disableVrMode */, true /* stayingInChrome */);
         } else {
             mVrBrowserUsed = true;
             mAutopresentWebVr = false;
@@ -1109,7 +1106,7 @@ public class VrShellDelegate
         } else if (mProbablyInDon) {
             // This means the user backed out of the DON flow, and we won't be entering VR.
             maybeSetPresentResult(false, mDonSucceeded);
-            shutdownVr(true, false, false);
+            shutdownVr(true, false);
         }
         mProbablyInDon = false;
     }
@@ -1175,14 +1172,14 @@ public class VrShellDelegate
 
         // TODO(mthiesse): When the user resumes Chrome in a 2D context, we don't want to tear down
         // VR UI, so for now, exit VR.
-        shutdownVr(true /* disableVrMode */, true /* canReenter */, false /* stayingInChrome */);
+        shutdownVr(true /* disableVrMode */, false /* stayingInChrome */);
     }
 
     private boolean onBackPressedInternal() {
         if (mVrSupportLevel == VR_NOT_AVAILABLE) return false;
         cancelPendingVrEntry();
         if (!mInVr) return false;
-        shutdownVr(true /* disableVrMode */, false /* canReenter */, true /* stayingInChrome */);
+        shutdownVr(true /* disableVrMode */, true /* stayingInChrome */);
         return true;
     }
 
@@ -1210,8 +1207,7 @@ public class VrShellDelegate
             if (mShouldShowPageInfo) {
                 sInstance.showPageInfoPopup();
             }
-            shutdownVr(true /* disableVrMode */, false /* canReenter */,
-                    !mExitingCct /* stayingInChrome */);
+            shutdownVr(true /* disableVrMode */, !mExitingCct /* stayingInChrome */);
             if (mExitingCct) ((CustomTabActivity) mActivity).finishAndClose(false);
         }
         mExitingCct = false;
@@ -1284,7 +1280,7 @@ public class VrShellDelegate
      * Exits VR Shell, performing all necessary cleanup.
      */
     @VisibleForTesting(otherwise = VisibleForTesting.PACKAGE_PRIVATE)
-    public void shutdownVr(boolean disableVrMode, boolean canReenter, boolean stayingInChrome) {
+    public void shutdownVr(boolean disableVrMode, boolean stayingInChrome) {
         cancelPendingVrEntry();
         if (!mInVr) return;
 
@@ -1317,7 +1313,7 @@ public class VrShellDelegate
     private void showDoffAndExitVrInternal(boolean optional) {
         if (mShowingDaydreamDoff) return;
         if (showDoff(optional)) return;
-        shutdownVr(true /* disableVrMode */, false /* canReenter */, true /* stayingInChrome */);
+        shutdownVr(true /* disableVrMode */, true /* stayingInChrome */);
     }
 
     /* package */ void onUnhandledPageInfo() {
@@ -1333,8 +1329,7 @@ public class VrShellDelegate
                 mExitingCct = true;
                 return;
             }
-            shutdownVr(
-                    true /* disableVrMode */, false /* canReenter */, false /* stayingInChrome */);
+            shutdownVr(true /* disableVrMode */, false /* stayingInChrome */);
             ((CustomTabActivity) mActivity).finishAndClose(false);
         }
     }
@@ -1568,7 +1563,7 @@ public class VrShellDelegate
 
     private void destroy() {
         if (sInstance == null) return;
-        shutdownVr(false /* disableVrMode */, false /* canReenter */, false /* stayingInChrome */);
+        shutdownVr(false /* disableVrMode */, false /* stayingInChrome */);
         if (mNativeVrShellDelegate != 0) nativeDestroy(mNativeVrShellDelegate);
         mNativeVrShellDelegate = 0;
         shutdownNonPresentingNativeContext();
