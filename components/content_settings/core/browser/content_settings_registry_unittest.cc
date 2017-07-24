@@ -143,4 +143,32 @@ TEST_F(ContentSettingsRegistryTest, IsDefaultSettingValid) {
 #endif
 }
 
+TEST_F(ContentSettingsRegistryTest, AllSettingsCanBeDeleted) {
+  std::set<ContentSettingsType> deletable_types;
+  // All content settings can be deleted.
+  for (const content_settings::ContentSettingsInfo* info : *registry()) {
+    ContentSettingsType type = info->website_settings_info()->type();
+    deletable_types.insert(type);
+  }
+  // Manual list of other data types that are deletable.
+  // ChromeBrowsingDataRemoverDelegate - deleted with site data
+  deletable_types.insert(CONTENT_SETTINGS_TYPE_DURABLE_STORAGE);
+  deletable_types.insert(CONTENT_SETTINGS_TYPE_SITE_ENGAGEMENT);
+  // ChromeBrowsingDataRemoverDelegate - deleted with history or site data
+  deletable_types.insert(CONTENT_SETTINGS_TYPE_APP_BANNER);
+  // MediaEngagementService - deleted with history
+  deletable_types.insert(CONTENT_SETTINGS_TYPE_MEDIA_ENGAGEMENT);
+  // ChromeSSLHostStateDelegate - deleted with history
+  deletable_types.insert(CONTENT_SETTINGS_TYPE_SSL_CERT_DECISIONS);
+  // PasswordProtectionService - deleted with history
+  deletable_types.insert(CONTENT_SETTINGS_TYPE_PASSWORD_PROTECTION);
+
+  // Check that all WebsiteSettings are somehow deletable.
+  for (const content_settings::WebsiteSettingsInfo* info :
+       *website_settings_registry()) {
+    EXPECT_TRUE(deletable_types.find(info->type()) != deletable_types.end())
+        << "Not deletable: " << info->name();
+  }
+}
+
 }  // namespace content_settings
