@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ecb2ac9_44036d24",
+        "filename": "net/nqe/network_quality_estimator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-07-24T17:16:17Z",
+      "side": 1,
+      "message": "Can you comment on the test only bools that they are testing only?",
+      "revId": "d07b41fc288789b7302df04f8e6038e1a5b719b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
