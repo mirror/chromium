@@ -16,6 +16,24 @@
       "revId": "a94cda0203c11cbd95818ae1af6698c56265c925",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4df4b6a_e3ad6f38",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-07-24T23:00:46Z",
+      "side": 1,
+      "message": "This is a good point. I think we should show as canceled. The user may be wondering... \"why did my request finished event not fire\" but if we show it saying \"it was canceled\" (even if we don\u0027t tell them where it was canceled) it\u0027s better than the way it is now (IMO).",
+      "parentUuid": "a0b1a79e_7cb98ea6",
+      "revId": "a94cda0203c11cbd95818ae1af6698c56265c925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
