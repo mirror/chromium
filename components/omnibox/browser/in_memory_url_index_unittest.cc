@@ -1,3 +1,4 @@
+
 // Copyright (c) 2012 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -7,7 +8,9 @@
 
 #include <algorithm>
 #include <fstream>
+#include <memory>
 #include <numeric>
+#include <utility>
 
 #include "base/auto_reset.h"
 #include "base/files/file_path.h"
@@ -234,7 +237,7 @@ void InMemoryURLIndexTest::SetUp() {
   ASSERT_TRUE(history_service_);
   BlockUntilInMemoryURLIndexIsRefreshed(url_index_.get());
 
-  history::HistoryBackend* backend = history_service_->history_backend_.get();
+  history::HistoryBackend* backend = history_service_->GetHistoryBackend();
   history_database_ = backend->db();
 
   // TODO(shess): If/when this code gets refactored, consider including the

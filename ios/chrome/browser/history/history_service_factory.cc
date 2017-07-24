@@ -9,7 +9,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/memory/singleton.h"
 #include "components/history/core/browser/history_database_params.h"
-#include "components/history/core/browser/history_service.h"
+#include "components/history/core/browser/history_service_impl.h"
 #include "components/history/core/browser/visit_delegate.h"
 #include "components/history/ios/browser/history_database_helper.h"
 #include "components/keyed_service/core/service_access_type.h"
@@ -72,11 +72,10 @@ std::unique_ptr<KeyedService> HistoryServiceFactory::BuildServiceInstanceFor(
     web::BrowserState* context) const {
   ios::ChromeBrowserState* browser_state =
       ios::ChromeBrowserState::FromBrowserState(context);
-  std::unique_ptr<history::HistoryService> history_service(
-      new history::HistoryService(
-          base::MakeUnique<HistoryClientImpl>(
-              ios::BookmarkModelFactory::GetForBrowserState(browser_state)),
-          nullptr));
+  auto history_service = base::MakeUnique<history::HistoryServiceImpl>(
+      base::MakeUnique<HistoryClientImpl>(
+          ios::BookmarkModelFactory::GetForBrowserState(browser_state)),
+      nullptr);
   if (!history_service->Init(history::HistoryDatabaseParamsForPath(
           browser_state->GetStatePath()))) {
     return nullptr;

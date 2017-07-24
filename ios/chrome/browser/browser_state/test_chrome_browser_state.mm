@@ -21,7 +21,7 @@
 #include "components/bookmarks/common/bookmark_constants.h"
 #include "components/history/core/browser/history_constants.h"
 #include "components/history/core/browser/history_database_params.h"
-#include "components/history/core/browser/history_service.h"
+#include "components/history/core/browser/history_service_impl.h"
 #include "components/history/core/browser/top_sites.h"
 #include "components/history/core/browser/visit_delegate.h"
 #include "components/history/ios/browser/history_database_helper.h"
@@ -56,7 +56,7 @@ namespace {
 std::unique_ptr<KeyedService> BuildHistoryService(web::BrowserState* context) {
   ios::ChromeBrowserState* browser_state =
       ios::ChromeBrowserState::FromBrowserState(context);
-  return base::MakeUnique<history::HistoryService>(
+  return base::MakeUnique<history::HistoryServiceImpl>(
       base::WrapUnique(new HistoryClientImpl(
           ios::BookmarkModelFactory::GetForBrowserState(browser_state))),
       nullptr);

@@ -10,6 +10,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/timer/timer.h"
 #include "components/browsing_data/core/pref_names.h"
+#include "components/history/core/browser/history_service.h"
 
 namespace {
 static const int64_t kWebHistoryTimeoutSeconds = 10;

@@ -92,7 +92,7 @@ class HQPPerfTestOnePopularURL : public testing::Test {
                          const std::vector<base::TimeDelta>& measurements);
 
   history::HistoryBackend* history_backend() {
-    return client_->GetHistoryService()->history_backend_.get();
+    return client_->GetHistoryService()->GetHistoryBackend().get();
   }
 
  private:
@@ -135,7 +135,7 @@ void HQPPerfTestOnePopularURL::PrepareData() {
 
   InMemoryURLIndex* url_index = client_->GetInMemoryURLIndex();
   url_index->RebuildFromHistory(
-      client_->GetHistoryService()->history_backend_->db());
+      client_->GetHistoryService()->GetHistoryBackend()->db());
   BlockUntilInMemoryURLIndexIsRefreshed(url_index);
 
   // History index refresh creates rebuilt tasks to run on history thread.
