@@ -22,6 +22,30 @@
       "revId": "d9c5ca746ec66276fc9ac7793e7d2d804bbd5323",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53b63e7a_d6c36748",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-24T20:30:10Z",
+      "side": 1,
+      "message": "Do you feel strongly about this? It feels very strange to mention previous and incorrect behavior (that was never even released publicly)",
+      "parentUuid": "c0784019_4a0333ae",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 51
+      },
+      "revId": "d9c5ca746ec66276fc9ac7793e7d2d804bbd5323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
