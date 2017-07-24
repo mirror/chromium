@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "636c5566_3447620a",
+        "filename": "chrome/browser/resources/safe_browsing/download_file_types.asciipb",
+        "patchSetId": 10
+      },
+      "lineNbr": 2284,
+      "author": {
+        "id": 1230988
+      },
+      "writtenOn": "2017-07-24T15:57:59Z",
+      "side": 1,
+      "message": "I couldn\u0027t remember exactly what the SB people loosely suggested to us for a cap, although I remember it was somewhere between 20-100 MB or so. Set it as 100 here to be safe, but we can discuss further if needed.",
+      "parentUuid": "9564ae12_ced53b81",
+      "revId": "876c638c12c7acb6cbbc5d8ac54a1edc2306b977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "76acf34c_d7219842",
         "filename": "chrome/browser/safe_browsing/download_protection_service.cc",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3e2778ff_9519c698",
+        "filename": "chrome/browser/safe_browsing/download_protection_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1230988
+      },
+      "writtenOn": "2017-07-24T15:57:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76acf34c_d7219842",
+      "revId": "876c638c12c7acb6cbbc5d8ac54a1edc2306b977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e806b9e1_7958066a",
         "filename": "chrome/common/safe_browsing/file_type_policies.h",
         "patchSetId": 10
@@ -50,6 +86,24 @@
       "revId": "876c638c12c7acb6cbbc5d8ac54a1edc2306b977",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a85d3e8_98496ec9",
+        "filename": "chrome/common/safe_browsing/file_type_policies.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1230988
+      },
+      "writtenOn": "2017-07-24T15:57:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e806b9e1_7958066a",
+      "revId": "876c638c12c7acb6cbbc5d8ac54a1edc2306b977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
