@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "68659049_9e82c7e4",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1664,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-07-24T23:58:03Z",
+      "side": 1,
+      "message": "Done, thanks.",
+      "parentUuid": "a5598d50_e0a196c8",
+      "revId": "2885c58d1e7490036f6cc4558a1baa65a0fc1d8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f1da4a1_57e0a5ca",
         "filename": "components/autofill/core/browser/personal_data_manager.cc",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "2885c58d1e7490036f6cc4558a1baa65a0fc1d8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acab856f_4e772e30",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1688,
+      "author": {
+        "id": 1171614
+      },
+      "writtenOn": "2017-07-24T23:58:03Z",
+      "side": 1,
+      "message": "Added curly braces and moved the comments; thanks!",
+      "parentUuid": "3f1da4a1_57e0a5ca",
+      "range": {
+        "startLine": 1688,
+        "startChar": 8,
+        "endLine": 1688,
+        "endChar": 14
+      },
+      "revId": "2885c58d1e7490036f6cc4558a1baa65a0fc1d8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
