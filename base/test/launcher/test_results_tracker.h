@@ -43,15 +43,14 @@ class TestResultsTracker {
 
   // Adds |test_name| to the set of discovered tests (this includes all tests
   // present in the executable, not necessarily run).
-  void AddTest(const std::string& test_name);
+  void AddTest(const std::string& test_name, const std::string& file, int line);
+
+  // Marks |test_name| as planned to run in this shard (test will be reported
+  // in the all_tests section of json summary).
+  void AddShardTest(const std::string& test_name);
 
   // Adds |test_name| to the set of disabled tests.
   void AddDisabledTest(const std::string& test_name);
-
-  // Adds location for the |test_name|.
-  void AddTestLocation(const std::string& test_name,
-                       const std::string& file,
-                       int line);
 
   // Adds |result| to the stored test results.
   void AddTestResult(const TestResult& result);
@@ -123,8 +122,8 @@ class TestResultsTracker {
   // the entire test run.
   std::set<std::string> global_tags_;
 
-  // Set of all test names discovered in the current executable.
-  std::set<std::string> all_tests_;
+  // All tests in current shard.
+  std::set<std::string> shard_tests_;
 
   std::map<std::string, CodeLocation> test_locations_;
 

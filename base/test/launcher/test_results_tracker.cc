@@ -212,10 +212,17 @@ void TestResultsTracker::OnTestIterationStarting() {
   per_iteration_data_.push_back(PerIterationData());
 }
 
-void TestResultsTracker::AddTest(const std::string& test_name) {
+void TestResultsTracker::AddTest(const std::string& test_name,
+                                 const std::string& file,
+                                 int line) {
   // Record disabled test names without DISABLED_ prefix so that they are easy
   // to compare with regular test names, e.g. before or after disabling.
-  all_tests_.insert(TestNameWithoutDisabledPrefix(test_name));
+  test_locations_.insert(std::make_pair(
+      TestNameWithoutDisabledPrefix(test_name), CodeLocation(file, line)));
+}
+
+void TestResultsTracker::AddShardTest(const std::string& test_name) {
+  shard_tests_.insert(TestNameWithoutDisabledPrefix(test_name));
 }
 
 void TestResultsTracker::AddDisabledTest(const std::string& test_name) {
@@ -224,21 +231,19 @@ void TestResultsTracker::AddDisabledTest(const std::string& test_name) {
   disabled_tests_.insert(TestNameWithoutDisabledPrefix(test_name));
 }
 
-void TestResultsTracker::AddTestLocation(const std::string& test_name,
-                                         const std::string& file,
-                                         int line) {
-  test_locations_.insert(std::make_pair(
-      TestNameWithoutDisabledPrefix(test_name), CodeLocation(file, line)));
-}
-
 void TestResultsTracker::AddTestResult(const TestResult& result) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
+  // Some tests can be run without adding them to this set with AddShardTest
+  // function. So ensure that each test has been added to this set to
+  // report its location.
+  std::string test_name = TestNameWithoutDisabledPrefix(result.full_name);
+  AddShardTest(test_name);
+
   // Record disabled test names without DISABLED_ prefix so that they are easy
   // to compare with regular test names, e.g. before or after disabling.
-  per_iteration_data_[iteration_].results[
-      TestNameWithoutDisabledPrefix(result.full_name)].test_results.push_back(
-          result);
+  per_iteration_data_[iteration_].results[test_name].test_results.push_back(
+      result);
 }
 
 void TestResultsTracker::PrintSummaryOfCurrentIteration() const {
@@ -320,7 +325,7 @@ bool TestResultsTracker::SaveSummaryAsJSON(
   summary_root->Set("global_tags", std::move(global_tags));
 
   std::unique_ptr<ListValue> all_tests(new ListValue);
-  for (const auto& test : all_tests_) {
+  for (const auto& test : shard_tests_) {
     all_tests->AppendString(test);
   }
   summary_root->Set("all_tests", std::move(all_tests));
@@ -427,9 +432,14 @@ bool TestResultsTracker::SaveSummaryAsJSON(
   summary_root->Set("per_iteration_data", std::move(per_iteration_data));
 
   std::unique_ptr<DictionaryValue> test_locations(new DictionaryValue);
-  for (const auto& item : test_locations_) {
-    std::string test_name = item.first;
-    CodeLocation location = item.second;
+  // Report locations of tests from this shard. Leave all known tests locations
+  // unreported to reduce summary size.
+  for (std::string test_name : shard_tests_) {
+    auto found = test_locations_.find(test_name);
+    if (found == test_locations_.end())
+      continue;
+
+    CodeLocation location = found->second;
     std::unique_ptr<DictionaryValue> location_value(new DictionaryValue);
     location_value->SetString("file", location.file);
     location_value->SetInteger("line", location.line);
@@ -485,11 +495,10 @@ void TestResultsTracker::PrintTests(InputIterator first,
           count != 1 ? "s" : "",
           description.c_str());
   for (InputIterator i = first; i != last; ++i) {
-    fprintf(stdout,
-            "    %s (%s:%d)\n",
-            (*i).c_str(),
-            test_locations_.at(*i).file.c_str(),
-            test_locations_.at(*i).line);
+    std::string test_name = TestNameWithoutDisabledPrefix(*i);
+    fprintf(stdout, "    %s (%s:%d)\n", (*i).c_str(),
+            test_locations_.at(test_name).file.c_str(),
+            test_locations_.at(test_name).line);
   }
   fflush(stdout);
 }
