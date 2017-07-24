@@ -7,6 +7,13 @@
 
 #import <UIKit/UIKit.h>
 
+// Names identifying the errors used in Payment Request API.
+// https://developer.mozilla.org/en-US/docs/Web/API/DOMException#Error_names
+extern NSString* const kAbortErrorName;
+extern NSString* const kInvalidStateError;
+extern NSString* const kNotAllowedErrorName;
+extern NSString* const kNotSupportedErrorName;
+
 class ToolbarModelIOS;
 
 namespace ios {

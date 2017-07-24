@@ -36,12 +36,13 @@ class PaymentShippingOption;
                                    (ProceduralBlockWithBool)completionHandler;
 
 // Rejects the JavaScript promise associated with the current PaymentRequest
-// with the supplied |errorMessage|. If |completionHandler| is not nil, it will
-// be invoked with YES after the operation has completed successfully or with NO
-// otherwise.
-- (void)rejectRequestPromiseWithErrorMessage:(NSString*)errorMessage
-                           completionHandler:
-                               (ProceduralBlockWithBool)completionHandler;
+// with a DOMException with the supplied |errorName| and |errorMessage|. If
+// |completionHandler| is not nil, it will be invoked with YES after the
+// operation has completed successfully or with NO otherwise.
+- (void)rejectRequestPromiseWithErrorName:(NSString*)errorName
+                             errorMessage:(NSString*)errorMessage
+                        completionHandler:
+                            (ProceduralBlockWithBool)completionHandler;
 
 // Resolves the JavaScript promise returned by the call to canMakePayment on the
 // current PaymentRequest, with the specified |value|. If |completionHandler| is
@@ -52,12 +53,13 @@ class PaymentShippingOption;
                                 (ProceduralBlockWithBool)completionHandler;
 
 // Rejects the JavaScript promise returned by the call to canMakePayment on the
-// current PaymentRequest, with the supplied |errorMessage|. If
-// |completionHandler| is not nil, it will be invoked with YES after the
-// operation has completed successfully or with NO otherwise.
-- (void)rejectCanMakePaymentPromiseWithErrorMessage:(NSString*)errorMessage
-                                  completionHandler:(ProceduralBlockWithBool)
-                                                        completionHandler;
+// current PaymentRequest, with a DOMException with the supplied |errorName| and
+// |errorMessage|. If |completionHandler| is not nil, it will be invoked with
+// YES after the operation has completed successfully or with NO otherwise.
+- (void)rejectCanMakePaymentPromiseWithErrorName:(NSString*)errorName
+                                    errorMessage:(NSString*)errorMessage
+                               completionHandler:
+                                   (ProceduralBlockWithBool)completionHandler;
 
 // Resolves the promise returned by PaymentRequest.prototype.abort.
 - (void)resolveAbortPromiseWithCompletionHandler:

@@ -58,13 +58,15 @@ NSString* JSONEscape(NSString* JSON) {
   [self executeScript:script completionHandler:completionHandler];
 }
 
-- (void)rejectRequestPromiseWithErrorMessage:(NSString*)errorMessage
-                           completionHandler:
-                               (ProceduralBlockWithBool)completionHandler {
-  NSString* script = [NSString
-      stringWithFormat:
-          @"__gCrWeb['paymentRequestManager'].rejectRequestPromise(%@)",
-          JSONEscape(errorMessage)];
+- (void)rejectRequestPromiseWithErrorName:(NSString*)errorName
+                             errorMessage:(NSString*)errorMessage
+                        completionHandler:
+                            (ProceduralBlockWithBool)completionHandler {
+  NSString* script =
+      [NSString stringWithFormat:
+                    @"__gCrWeb['paymentRequestManager'].rejectRequestPromise("
+                    @"new DOMException(%@, %@))",
+                    JSONEscape(errorMessage), JSONEscape(errorName)];
   [self executeScript:script completionHandler:completionHandler];
 }
 
@@ -78,13 +80,15 @@ NSString* JSONEscape(NSString* JSON) {
   [self executeScript:script completionHandler:completionHandler];
 }
 
-- (void)rejectCanMakePaymentPromiseWithErrorMessage:(NSString*)errorMessage
-                                  completionHandler:(ProceduralBlockWithBool)
-                                                        completionHandler {
+- (void)rejectCanMakePaymentPromiseWithErrorName:(NSString*)errorName
+                                    errorMessage:(NSString*)errorMessage
+                               completionHandler:
+                                   (ProceduralBlockWithBool)completionHandler {
   NSString* script = [NSString
       stringWithFormat:
-          @"__gCrWeb['paymentRequestManager'].rejectCanMakePaymentPromise(%@)",
-          JSONEscape(errorMessage)];
+          @"__gCrWeb['paymentRequestManager'].rejectCanMakePaymentPromise(new "
+          @"DOMException(%@, %@))",
+          JSONEscape(errorMessage), JSONEscape(errorName)];
   [self executeScript:script completionHandler:completionHandler];
 }
 
@@ -117,9 +121,10 @@ NSString* JSONEscape(NSString* JSON) {
 - (void)updateShippingOption:(const web::PaymentShippingOption&)shippingOption
            completionHandler:(ProceduralBlockWithBool)completionHanlder {
   NSString* script =
-      [NSString stringWithFormat:@"__gCrWeb['paymentRequestManager']."
-                                 @"updateShippingOptionAndDispatchEvent('%@')",
-                                 base::SysUTF16ToNSString(shippingOption.id)];
+      [NSString stringWithFormat:
+                    @"__gCrWeb['paymentRequestManager']."
+                    @"updateShippingOptionAndDispatchEvent(%@)",
+                    JSONEscape(base::SysUTF16ToNSString(shippingOption.id))];
   [self executeScript:script completionHandler:completionHanlder];
 }
 
