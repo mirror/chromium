@@ -22,6 +22,30 @@
       "revId": "f97e308d5fbd16b559b4c10be49c0f151a83613b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3956f01_c90a3d4e",
+        "filename": "ui/ozone/public/overlay_candidates_ozone.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-07-24T14:58:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7b8308f_f07bce28",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 79
+      },
+      "revId": "f97e308d5fbd16b559b4c10be49c0f151a83613b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
