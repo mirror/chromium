@@ -16,6 +16,24 @@
       "revId": "a6b855452692c667b10cc756c23b359ef4bb7b67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ea257fe_f59d9e32",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 2852,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-07-24T21:23:58Z",
+      "side": 0,
+      "message": "We are now checking permission, which is what this comment was addressing.  Secondly, since we pass |this| to the GeolocationService, we are checking permission based on the specific render_frame_host, which is even more precise than the process ID.",
+      "parentUuid": "1b7a5622_c443de3b",
+      "revId": "a6b855452692c667b10cc756c23b359ef4bb7b67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
