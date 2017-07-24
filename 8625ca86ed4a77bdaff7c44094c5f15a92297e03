@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a80ff24e_ca036300",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarLayout.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-07-24T21:38:25Z",
+      "side": 1,
+      "message": "What puzzles me here is the fact that we are returning true without doing anything to consume it. So we are ignoring these events? Looking at your description makes me think, we were handling them but also bubbling them up as well. So I was expecting to see a super.onGeneric... call here as well.\n\nWhat am I missing?",
+      "range": {
+        "startLine": 547,
+        "startChar": 23,
+        "endLine": 547,
+        "endChar": 29
+      },
+      "revId": "8625ca86ed4a77bdaff7c44094c5f15a92297e03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
