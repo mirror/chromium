@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf48e2d9_d7a9fa7d",
+        "filename": "net/cookies/cookie_store_unittest.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-24T19:37:51Z",
+      "side": 1,
+      "message": "Mind labeling these bools?  No need to go back and modify old tests, it\u0027s just hard to follow these tests as-is.",
+      "range": {
+        "startLine": 549,
+        "startChar": 23,
+        "endLine": 549,
+        "endChar": 0
+      },
+      "revId": "27b16ea128c012bdd1cf0c3548900e5ed1d18445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fe94c50_187242f7",
+        "filename": "net/cookies/cookie_store_unittest.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-24T19:37:51Z",
+      "side": 1,
+      "message": "This exactly matches the second test above.  Should we pull this out of the block, with a comment that it should work whether or not http_only cookies are supported?",
+      "range": {
+        "startLine": 575,
+        "startChar": 22,
+        "endLine": 575,
+        "endChar": 0
+      },
+      "revId": "27b16ea128c012bdd1cf0c3548900e5ed1d18445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
