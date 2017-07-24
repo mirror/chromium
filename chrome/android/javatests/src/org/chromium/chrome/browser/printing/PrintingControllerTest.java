@@ -14,6 +14,7 @@ import android.print.PrintDocumentAdapter;
 import android.print.PrintDocumentInfo;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.LargeTest;
+import android.support.test.filters.SmallTest;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -23,7 +24,6 @@ import org.junit.runner.RunWith;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.test.util.CommandLineFlags;
-import org.chromium.base.test.util.DisabledTest;
 import org.chromium.base.test.util.Feature;
 import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.base.test.util.TestFileUtil;
@@ -165,29 +165,28 @@ public class PrintingControllerTest {
             fileDescriptor.close();
             TestFileUtil.deleteFile(tempFile.getAbsolutePath());
         }
-
     }
 
     /**
      * Test for http://crbug.com/528909
-     *
-     * @SmallTest
-     * @Feature({"Printing"})
      */
     @Test
+    @SmallTest
+    @Feature({"Printing"})
     @CommandLineFlags.Add(ContentSwitches.DISABLE_POPUP_BLOCKING)
-    @DisabledTest(message = "crbug.com/532652")
     public void testPrintClosedWindow() throws Throwable {
         if (!ApiCompatibilityUtils.isPrintingSupported()) return;
 
-        String html = "<html><head><title>printwindowclose</title></head><body><script>"
+        String url = UrlUtils.encodeHtmlDataUri(
+                "<html><head><title>printwindowclose</title></head><body><script>"
                 + "function printClosedWindow() {"
                 + "  w = window.open(); w.close();"
                 + "  setTimeout(()=>{w.print(); document.title='completed'}, 0);"
-                + "}</script></body></html>";
+                + "}</script>foo</body></html>");
 
-        mActivityTestRule.startMainActivityWithURL("data:text/html;charset=utf-8," + html);
+        PrintingControllerImpl.disablePrintingDialogForTest();
 
+        mActivityTestRule.startMainActivityWithURL(url);
         Tab mTab = mActivityTestRule.getActivity().getActivityTab();
         Assert.assertEquals(
                 "title does not match initial title", "printwindowclose", mTab.getTitle());

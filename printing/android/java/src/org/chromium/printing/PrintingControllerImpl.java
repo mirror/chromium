@@ -90,6 +90,8 @@ public class PrintingControllerImpl implements PrintingController, PdfGenerator 
 
     private boolean mIsBusy;
 
+    private static boolean sDisablePrintingDialogForTest;
+
     private PrintManagerDelegate mPrintManager;
 
     private PrintingControllerImpl(
@@ -131,6 +133,10 @@ public class PrintingControllerImpl implements PrintingController, PdfGenerator 
      */
     public static PrintingController getInstance() {
         return sInstance;
+    }
+
+    public static void disablePrintingDialogForTest() {
+        sDisablePrintingDialogForTest = true;
     }
 
     @Override
@@ -188,13 +194,19 @@ public class PrintingControllerImpl implements PrintingController, PdfGenerator 
 
     @Override
     public void startPendingPrint(PrintingContextInterface printingContext) {
-        if (mIsBusy || mPrintManager == null) {
-            if (mIsBusy) Log.d(TAG, "Pending print can't be started. PrintingController is busy.");
-            else Log.d(TAG, "Pending print can't be started. No PrintManager provided.");
-
+        if (sDisablePrintingDialogForTest || mIsBusy || mPrintManager == null
+                || !mPrintable.canPrint()) {
+            if (mIsBusy) {
+                Log.d(TAG, "Pending print can't be started. PrintingController is busy.");
+            } else if (mPrintManager == null) {
+                Log.d(TAG, "Pending print can't be started. No PrintManager provided.");
+            } else if (!mPrintable.canPrint()) {
+                Log.d(TAG, "Pending print can't be started. Tab is gone.");
+            }
             if (printingContext != null) printingContext.showSystemDialogDone();
             return;
         }
+
         mContextFromScriptInitiation = printingContext;
         mIsBusy = true;
         mPrintDocumentAdapterWrapper.print(mPrintManager, mPrintable.getTitle());
