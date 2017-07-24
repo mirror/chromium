@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1001718_700309d7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/allow-lists-starting-with-comma.htm",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-24T01:44:07Z",
+      "side": 1,
+      "message": "These URLs must be cross origin. See some tests using get-host-info.sub.js in external/wpt directory to see how to build a cross origin URL.",
+      "revId": "52bd95ac30bcb889ec0675b176c8bf14eb1ba1e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2636db67_f3e7d183",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-allow-lists.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-24T01:44:07Z",
+      "side": 1,
+      "message": "{ in the original PHP code is a part of the syntax to include a variable in a string literal and get it evaluated. Here you shouldn\u0027t include it.",
+      "revId": "52bd95ac30bcb889ec0675b176c8bf14eb1ba1e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
