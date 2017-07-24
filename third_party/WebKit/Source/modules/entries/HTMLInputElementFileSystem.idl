@@ -28,24 +28,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef HTMLInputElementFileSystem_h
-#define HTMLInputElementFileSystem_h
+// https://wicg.github.io/entries-api/#html-forms
 
-#include "modules/filesystem/EntriesCallback.h"
-#include "platform/wtf/Allocator.h"
-
-namespace blink {
-
-class HTMLInputElement;
-class ScriptState;
-
-class HTMLInputElementFileSystem {
-  STATIC_ONLY(HTMLInputElementFileSystem);
-
- public:
-  static EntryHeapVector webkitEntries(ScriptState*, HTMLInputElement&);
+partial interface HTMLInputElement {
+    [CallWith=ScriptState, Measure] readonly attribute FrozenArray<FileSystemEntry> webkitEntries;
 };
-
-}  // namespace blink
-
-#endif  // HTMLInputElementFileSystem_h

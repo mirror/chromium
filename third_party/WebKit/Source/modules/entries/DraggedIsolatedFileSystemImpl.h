@@ -40,7 +40,7 @@
 
 namespace blink {
 
-class DOMFileSystem;
+class FileSystem;
 
 class DraggedIsolatedFileSystemImpl final
     : public GarbageCollectedFinalized<DraggedIsolatedFileSystemImpl>,
@@ -49,9 +49,9 @@ class DraggedIsolatedFileSystemImpl final
   USING_GARBAGE_COLLECTED_MIXIN(DraggedIsolatedFileSystemImpl);
 
  public:
-  static DOMFileSystem* GetDOMFileSystem(DataObject* host,
-                                         ExecutionContext*,
-                                         const DataObjectItem&);
+  static FileSystem* GetFileSystem(DataObject* host,
+                                   ExecutionContext*,
+                                   const DataObjectItem&);
 
   static const char* SupplementName();
   static DraggedIsolatedFileSystemImpl* From(DataObject*);
@@ -63,7 +63,7 @@ class DraggedIsolatedFileSystemImpl final
  private:
   DraggedIsolatedFileSystemImpl() = default;
 
-  HeapHashMap<String, Member<DOMFileSystem>> filesystems_;
+  HeapHashMap<String, Member<FileSystem>> filesystems_;
 };
 
 }  // namespace blink
