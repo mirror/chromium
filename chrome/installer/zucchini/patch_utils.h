@@ -19,7 +19,7 @@ enum class PatchType : uint32_t {
   kRawPatch = 0,
   kSinglePatch = 1,
   kEnsemblePatch = 2,
-  kUnrecognisedPatch,
+  kUnrecognisedPatch
 };
 
 // A Zucchini 'ensemble' patch is the concatenation of a patch header with a
@@ -32,7 +32,7 @@ enum class PatchType : uint32_t {
 // Header for a Zucchini patch, found at the begining of an ensemble patch.
 struct PatchHeader {
   // Magic signature at the beginning of a Zucchini patch file.
-  static constexpr uint32_t kMagic = 'Z' | ('u' << 8) | ('c' << 16);
+  enum : uint32_t { kMagic = 'Z' | ('u' << 8) | ('c' << 16) };
 
   uint32_t magic = 0;
   uint32_t old_size = 0;
@@ -61,7 +61,7 @@ static_assert(sizeof(PatchElementHeader) == 28,
 
 // Descibes a raw FIX operation.
 struct RawDeltaUnit {
-  offset_t copy_offset;  // Offset in copy regions starting from last delta.
+  offset_t copy_offset;  // Offset in copy regions.
   int8_t diff;           // Bytewise difference.
 };
 

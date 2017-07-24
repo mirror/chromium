@@ -8,7 +8,6 @@
 #include <iterator>
 #include <vector>
 
-#include "base/test/gtest_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace zucchini {
