@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81f824ac_ef5ef228",
+        "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-24T20:10:47Z",
+      "side": 1,
+      "message": "nit const",
+      "revId": "28eb6fa76cebec1116c6242170a91ff83cacc85f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07792c53_707d95d1",
+        "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-07-24T20:10:47Z",
+      "side": 1,
+      "message": "nit const",
+      "revId": "28eb6fa76cebec1116c6242170a91ff83cacc85f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
