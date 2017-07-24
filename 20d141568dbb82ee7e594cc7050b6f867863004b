@@ -22,6 +22,30 @@
       "revId": "20d141568dbb82ee7e594cc7050b6f867863004b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba093d35_629d6e42",
+        "filename": "third_party/WebKit/LayoutTests/fast/forms/week-multiple-fields/week-multiple-fields-mouse-events-expected.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-24T03:35:09Z",
+      "side": 1,
+      "message": "I agree to change html.css to user-select:auto for INPUT type\u003ddate,week, etc.\n\nCanStartSelection() should return false for type\u003d\"week\", \"date\", \"time\", etc.\n\n+tkent@ for confirm.\n\n\nbool HTMLInputElement::CanStartSelection() const {\n  if (!IsTextField())\n    return false;\n  return TextControlElement::CanStartSelection();\n}",
+      "parentUuid": "4eb6b5a3_62631ce6",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 4
+      },
+      "revId": "20d141568dbb82ee7e594cc7050b6f867863004b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
