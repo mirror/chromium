@@ -175,7 +175,12 @@ const char kAuthSocknameSwitchName[] = "ssh-auth-sockname";
 const char kSignalParentSwitchName[] = "signal-parent";
 
 // Command line switch used to enable VP9 encoding.
+// TODO(gusss): remove this when chromotocol stops being used.
 const char kEnableVp9SwitchName[] = "enable-vp9";
+
+// Command line switch used to enable hardware H264 encoding.
+// TODO(gusss): remove this when chromotocol stops being used.
+const char kEnableH264SwitchName[] = "enable-h264";
 
 const char kWindowIdSwitchName[] = "window-id";
 
@@ -374,7 +379,9 @@ class HostProcess : public ConfigWatcher::Delegate,
   std::string host_owner_;
   std::string host_owner_email_;
   bool use_service_account_ = false;
+  // TODO(gusss): remove these when chromotocol stops being used.
   bool enable_vp9_ = false;
+  bool enable_h264_ = false;
 
   std::unique_ptr<PolicyWatcher> policy_watcher_;
   PolicyState policy_state_ = POLICY_INITIALIZING;
@@ -1004,10 +1011,21 @@ bool HostProcess::ApplyConfig(const base::DictionaryValue& config) {
   }
 
   // Allow offering of VP9 encoding to be overridden by the command-line.
+  // TODO(gusss): remove this when chromotocol stops being used.
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(kEnableVp9SwitchName)) {
     enable_vp9_ = true;
   } else {
     config.GetBoolean(kEnableVp9ConfigPath, &enable_vp9_);
+  }
+
+  // Allow offering of hardware H264 encoding to be overridden by the command
+  // line.
+  // TODO(gusss): remove this when chromotocol stops being used.
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          kEnableH264SwitchName)) {
+    enable_h264_ = true;
+  } else {
+    config.GetBoolean(kEnableH264ConfigPath, &enable_h264_);
   }
 
   return true;
@@ -1479,6 +1497,8 @@ void HostProcess::StartHost() {
     protocol_config->DisableAudioChannel();
   if (enable_vp9_)
     protocol_config->set_vp9_experiment_enabled(true);
+  if (enable_h264_)
+    protocol_config->set_h264_experiment_enabled(true);
   protocol_config->set_webrtc_supported(true);
   session_manager->set_protocol_config(std::move(protocol_config));
 
