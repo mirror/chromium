@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1087a48_7e9883b6",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-24T23:58:45Z",
+      "side": 1,
+      "message": "Can we provide url all the time? Sounds strange that I can schedule navigation, but to no url.",
+      "range": {
+        "startLine": 644,
+        "startChar": 78,
+        "endLine": 644,
+        "endChar": 86
+      },
+      "revId": "5e0be70fe604ebb3a1fa4cabfae6a6e626ebacc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
