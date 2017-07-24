@@ -32,6 +32,7 @@
 #define WebEmbeddedWorkerImpl_h
 
 #include <memory>
+#include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/workers/WorkerClients.h"
 #include "modules/ModulesExport.h"
 #include "platform/WebTaskRunner.h"
@@ -84,6 +85,9 @@ class MODULES_EXPORT WebEmbeddedWorkerImpl final
   void AddMessageToConsole(const WebConsoleMessage&) override;
 
   void PostMessageToPageInspector(int session_id, const WTF::String&);
+  void SetContentSecurityPolicyAndReferrerPolicy(
+      ContentSecurityPolicyResponseHeaders,
+      WTF::String referrer_policy);
   std::unique_ptr<blink::WebURLLoader> CreateURLLoader(
       const WebURLRequest& request,
       SingleThreadTaskRunner* task_runner) override {
