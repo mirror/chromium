@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "183870d4_9334cbdd",
+        "filename": "chrome/browser/ui/views/extensions/extension_popup.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-24T21:18:43Z",
+      "side": 1,
+      "message": "yes, I was relying on multiple calls not being expensive, but I can make it only happen once (done).",
+      "parentUuid": "e7b8b54e_bbf2cbbf",
+      "revId": "cdaabc6b38170e88fcb69f419a42caed5650a75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3e6f418f_9891d4b5",
         "filename": "chrome/browser/ui/views/extensions/extension_popup.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-24T04:12:09Z",
       "side": 1,
       "message": "this approach will also paint a 1 pixel border using SK_ColorTRANSPARENT - that might be nice to avoid.",
+      "revId": "cdaabc6b38170e88fcb69f419a42caed5650a75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b0e3722_c10ca422",
+        "filename": "chrome/browser/ui/views/extensions/extension_popup.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-24T21:18:43Z",
+      "side": 1,
+      "message": "Not sure what the drawback is. That border has no effect AFAICT.",
+      "parentUuid": "3e6f418f_9891d4b5",
       "revId": "cdaabc6b38170e88fcb69f419a42caed5650a75d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b3791bdc_d6df3005",
+        "filename": "ui/views/controls/native/native_view_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-24T21:18:43Z",
+      "side": 1,
+      "message": "hmm, I figured it was OK because NativeViewHostWrapper is already VIEWS_EXPORT. The alternative of adding a pass-through SetMask to  the NativeViewHost API seems like just extra verbosity. Not sure why the members ought to move, is Mac going to want them as well?",
+      "parentUuid": "fb31b981_da98419a",
+      "revId": "cdaabc6b38170e88fcb69f419a42caed5650a75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44dc518b_fbdaa5e3",
         "filename": "ui/views/controls/native/native_view_host_aura.cc",
         "patchSetId": 5
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "fc12fce8_ddf893a9",
+        "filename": "ui/views/controls/native/native_view_host_aura.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-24T21:18:43Z",
+      "side": 1,
+      "message": "we need this just for sizing the masking layer appropriately",
+      "parentUuid": "44dc518b_fbdaa5e3",
+      "revId": "cdaabc6b38170e88fcb69f419a42caed5650a75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "43e8dcfc_434001ec",
         "filename": "ui/views/controls/native/native_view_host_aura.h",
         "patchSetId": 5
@@ -81,6 +153,24 @@
       "writtenOn": "2017-07-24T04:12:09Z",
       "side": 1,
       "message": "You didn\u0027t like my idea of re-using TrayBubbleContentMask ? This could then be a component instead being fed in via inheritance..",
+      "revId": "cdaabc6b38170e88fcb69f419a42caed5650a75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "487d50fc_d1821f1b",
+        "filename": "ui/views/controls/native/native_view_host_aura.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-24T21:18:43Z",
+      "side": 1,
+      "message": "Sorry I missed that one! I guess I didn\u0027t read the message chain carefully enough. I\u0027ve shared that code now.",
+      "parentUuid": "43e8dcfc_434001ec",
       "revId": "cdaabc6b38170e88fcb69f419a42caed5650a75d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -110,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "82d3bd92_914a29ee",
+        "filename": "ui/views/controls/native/native_view_host_aura.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-24T21:18:43Z",
+      "side": 1,
+      "message": "no longer needed",
+      "parentUuid": "598fad44_16e2ebab",
+      "range": {
+        "startLine": 45,
+        "startChar": 47,
+        "endLine": 45,
+        "endChar": 55
+      },
+      "revId": "cdaabc6b38170e88fcb69f419a42caed5650a75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13f931f9_b858c619",
         "filename": "ui/views/controls/native/native_view_host_aura.h",
         "patchSetId": 5
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "cdca3fc1_7ece5a5e",
+        "filename": "ui/views/controls/native/native_view_host_aura.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-24T21:18:43Z",
+      "side": 1,
+      "message": "no longer needed",
+      "parentUuid": "13f931f9_b858c619",
+      "revId": "cdaabc6b38170e88fcb69f419a42caed5650a75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a84144d_ec6b37bf",
         "filename": "ui/views/controls/native/native_view_host_aura.h",
         "patchSetId": 5
@@ -141,6 +273,24 @@
       "revId": "cdaabc6b38170e88fcb69f419a42caed5650a75d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "338f57e5_5f38a4cf",
+        "filename": "ui/views/controls/native/native_view_host_aura.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-24T21:18:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9a84144d_ec6b37bf",
+      "revId": "cdaabc6b38170e88fcb69f419a42caed5650a75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -164,6 +314,30 @@
       "revId": "cdaabc6b38170e88fcb69f419a42caed5650a75d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e60e337f_b308f394",
+        "filename": "ui/views/controls/native/native_view_host_wrapper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-24T21:18:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e040d319_b063472a",
+      "range": {
+        "startLine": 44,
+        "startChar": 39,
+        "endLine": 44,
+        "endChar": 46
+      },
+      "revId": "cdaabc6b38170e88fcb69f419a42caed5650a75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
