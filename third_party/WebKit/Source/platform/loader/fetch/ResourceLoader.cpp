@@ -343,13 +343,13 @@ CORSStatus ResourceLoader::DetermineCORSStatus(const ResourceResponse& response,
   // Service workers handle CORS separately.
   if (response.WasFetchedViaServiceWorker()) {
     switch (response.ServiceWorkerResponseType()) {
-      case kWebServiceWorkerResponseTypeBasic:
-      case kWebServiceWorkerResponseTypeCORS:
-      case kWebServiceWorkerResponseTypeDefault:
-      case kWebServiceWorkerResponseTypeError:
+      case mojom::FetchResponseType::kBasic:
+      case mojom::FetchResponseType::kCORS:
+      case mojom::FetchResponseType::kDefault:
+      case mojom::FetchResponseType::kError:
         return CORSStatus::kServiceWorkerSuccessful;
-      case kWebServiceWorkerResponseTypeOpaque:
-      case kWebServiceWorkerResponseTypeOpaqueRedirect:
+      case mojom::FetchResponseType::kOpaque:
+      case mojom::FetchResponseType::kOpaqueRedirect:
         return CORSStatus::kServiceWorkerOpaque;
         break;
       default:
