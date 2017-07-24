@@ -7,8 +7,8 @@
 
 #include <memory>
 
+#include "ash/shelf/shelf_context_menu_model.h"
 #include "base/macros.h"
-#include "chrome/browser/ui/ash/launcher/launcher_context_menu.h"
 #include "extensions/common/constants.h"
 
 class ChromeLauncherController;
@@ -35,7 +35,10 @@ class ExtensionLauncherContextMenu : public LauncherContextMenu {
   base::string16 GetLabelForCommandId(int command_id) const override;
   bool IsCommandIdChecked(int command_id) const override;
   bool IsCommandIdEnabled(int command_id) const override;
-  void ExecuteCommand(int command_id, int event_flags) override;
+  void ExecuteCommand(bool from_context_menu,
+                      uint32_t command_id,
+                      int32_t event_flags,
+                      int64_t display_id) override;
 
  private:
   void Init();

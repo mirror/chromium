@@ -5,8 +5,8 @@
 #ifndef CHROME_BROWSER_UI_ASH_LAUNCHER_ARC_LAUNCHER_CONTEXT_MENU_H_
 #define CHROME_BROWSER_UI_ASH_LAUNCHER_ARC_LAUNCHER_CONTEXT_MENU_H_
 
+#include "ash/shelf/shelf_context_menu_model.h"
 #include "base/macros.h"
-#include "chrome/browser/ui/ash/launcher/launcher_context_menu.h"
 
 namespace ash {
 class Shelf;

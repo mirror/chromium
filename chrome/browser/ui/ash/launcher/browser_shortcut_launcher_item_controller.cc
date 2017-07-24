@@ -11,11 +11,11 @@
 #include "ash/public/cpp/shelf_model.h"
 #include "ash/public/cpp/window_properties.h"
 #include "ash/resources/grit/ash_resources.h"
+#include "ash/shelf/shelf_context_menu_model.h"
 #include "base/memory/ptr_util.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/ash/launcher/chrome_launcher_controller.h"
 #include "chrome/browser/ui/ash/launcher/chrome_launcher_controller_util.h"
-#include "chrome/browser/ui/ash/launcher/launcher_context_menu.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_util.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_commands.h"
@@ -182,6 +182,7 @@ void BrowserShortcutLauncherItemController::ItemSelected(
     int64_t display_id,
     ash::ShelfLaunchSource source,
     ItemSelectedCallback callback) {
+  LOG(ERROR) << "MSW BrowserShortcutLauncherItemController::ItemSelected";
   if (event && (event->flags() & ui::EF_CONTROL_DOWN)) {
     chrome::NewEmptyWindow(ChromeLauncherController::instance()->profile());
     std::move(callback).Run(ash::SHELF_ACTION_NEW_WINDOW_CREATED,
@@ -264,8 +265,10 @@ ash::MenuItemList BrowserShortcutLauncherItemController::GetAppMenuItems(
 }
 
 void BrowserShortcutLauncherItemController::ExecuteCommand(
+    bool from_context_menu,
     uint32_t command_id,
-    int32_t event_flags) {
+    int32_t event_flags,
+    int64_t display_id) {
   const uint16_t browser_index = GetBrowserIndex(command_id);
   // Check that the index is valid and the browser has not been closed.
   if (browser_index < browser_menu_items_.size() &&

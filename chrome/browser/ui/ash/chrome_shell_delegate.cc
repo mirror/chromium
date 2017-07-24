@@ -14,6 +14,7 @@
 #include "ash/accessibility_delegate.h"
 #include "ash/accessibility_types.h"
 #include "ash/content/gpu_support_impl.h"
+#include "ash/shelf/shelf_context_menu_model.h"
 #include "ash/shell.h"
 #include "ash/wallpaper/wallpaper_delegate.h"
 #include "ash/wm/mru_window_tracker.h"
@@ -46,7 +47,6 @@
 #include "chrome/browser/sync/sync_error_notifier_factory_ash.h"
 #include "chrome/browser/ui/ash/chrome_keyboard_ui.h"
 #include "chrome/browser/ui/ash/launcher/chrome_launcher_controller.h"
-#include "chrome/browser/ui/ash/launcher/launcher_context_menu.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_util.h"
 #include "chrome/browser/ui/ash/palette_delegate_chromeos.h"
 #include "chrome/browser/ui/ash/session_controller_client.h"
@@ -496,6 +496,7 @@ void ChromeShellDelegate::ShelfShutdown() {
 ui::MenuModel* ChromeShellDelegate::CreateContextMenu(
     ash::Shelf* shelf,
     const ash::ShelfItem* item) {
+  LOG(ERROR) << "MSW ChromeShellDelegate::CreateContextMenu A";
   // Don't show context menu for exclusive app runtime mode.
   if (chrome::IsRunningInAppMode())
     return nullptr;
@@ -507,7 +508,9 @@ ui::MenuModel* ChromeShellDelegate::CreateContextMenu(
   if (!launcher_controller_)
     return nullptr;
 
-  return LauncherContextMenu::Create(launcher_controller_.get(), item, shelf);
+  LOG(ERROR) << "MSW ChromeShellDelegate::CreateContextMenu B";
+  return nullptr;  // LauncherContextMenu::Create(launcher_controller_.get(),
+                   // item, shelf);
 }
 
 ash::GPUSupport* ChromeShellDelegate::CreateGPUSupport() {

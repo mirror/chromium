@@ -15,7 +15,7 @@
 #include "ui/events/event.h"
 
 namespace views {
-class Button;
+class View;
 }  // namespace views
 
 namespace ash {
@@ -42,7 +42,7 @@ class ASH_EXPORT ShelfButtonPressedMetricTracker {
 
   // Records metrics based on the |event|, |sender|, and |performed_action|.
   void ButtonPressed(const ui::Event& event,
-                     const views::Button* sender,
+                     const views::View* sender,
                      ShelfAction performed_action);
 
  private:
@@ -60,11 +60,11 @@ class ASH_EXPORT ShelfButtonPressedMetricTracker {
 
   // Returns true if a window activation action triggered by |sender| would
   // be subsequent to the last minimize window action.
-  bool IsSubsequentActivationEvent(const views::Button* sender) const;
+  bool IsSubsequentActivationEvent(const views::View* sender) const;
 
   // Caches state data for a window minimized action. The |sender| is the button
   // that caused the action.
-  void SetMinimizedData(const views::Button* sender);
+  void SetMinimizedData(const views::View* sender);
 
   // Resets the state data associated with the last window minimize action.
   void ResetMinimizedData();
@@ -77,7 +77,7 @@ class ASH_EXPORT ShelfButtonPressedMetricTracker {
 
   // Stores the source button of the last window minimize action.
   // NOTE: This may become stale and should not be operated on. Not owned.
-  const views::Button* last_minimized_source_button_;
+  const views::View* last_minimized_source_button_;
 
   DISALLOW_COPY_AND_ASSIGN(ShelfButtonPressedMetricTracker);
 };

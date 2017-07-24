@@ -42,6 +42,7 @@ void ArcAppWindowLauncherItemController::ItemSelected(
     int64_t display_id,
     ash::ShelfLaunchSource source,
     ItemSelectedCallback callback) {
+  LOG(ERROR) << "MSW ArcAppWindowLauncherItemController::ItemSelected";
   if (window_count()) {
     AppWindowLauncherItemController::ItemSelected(std::move(event), display_id,
                                                   source, std::move(callback));
@@ -57,8 +58,10 @@ void ArcAppWindowLauncherItemController::ItemSelected(
   std::move(callback).Run(ash::SHELF_ACTION_NEW_WINDOW_CREATED, base::nullopt);
 }
 
-void ArcAppWindowLauncherItemController::ExecuteCommand(uint32_t command_id,
-                                                        int32_t event_flags) {
+void ArcAppWindowLauncherItemController::ExecuteCommand(bool from_context_menu,
+                                                        uint32_t command_id,
+                                                        int32_t event_flags,
+                                                        int64_t display_id) {
   ActivateIndexedApp(command_id);
 }
 
