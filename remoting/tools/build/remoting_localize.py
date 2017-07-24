@@ -543,8 +543,11 @@ def IsRtlLanguage(language):
 
 def NormalizeLanguageCode(language):
   lang = language.replace('_', '-', 1)
-  if lang == 'en-US':
-    lang = 'en'
+  # TODO(yuweih): This conversion doesn't seem to be used and will break iOS
+  # client since it needs a dedicated en_US locale. Uncomment if it causes any
+  # issue.
+  # if lang == 'en-US':
+  #   lang = 'en'
   return lang
 
 
