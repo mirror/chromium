@@ -22,6 +22,40 @@
       "revId": "767522625d65f731498985603af6109e10ea7c6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45bd6f4f_f0610f60",
+        "filename": "ios/chrome/browser/ui/commands/open_new_tab_command.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-24T22:27:51Z",
+      "side": 1,
+      "message": "nit: s/clicking/tapping",
+      "revId": "767522625d65f731498985603af6109e10ea7c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a8a62fa_6f09c241",
+        "filename": "ios/chrome/browser/ui/commands/open_new_tab_command.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-24T22:27:51Z",
+      "side": 1,
+      "message": "Needs assign.",
+      "revId": "767522625d65f731498985603af6109e10ea7c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
