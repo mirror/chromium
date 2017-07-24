@@ -43,7 +43,7 @@ TEST_F(HitTestQueryTest, OneSurface) {
   gfx::Rect e_bounds = gfx::Rect(0, 0, 600, 600);
   gfx::Transform transform_e_to_e;
   AggregatedHitTestRegion aggregated_hit_test_region_list[1] = {
-      {e_id, mojom::kHitTestMine, e_bounds, transform_e_to_e, 0}  // e
+      {e_id, 0, mojom::kHitTestMine, e_bounds, transform_e_to_e, 0}  // e
   };
   hit_test_query().set_aggregated_hit_test_region_list(
       aggregated_hit_test_region_list, 1);
@@ -91,9 +91,11 @@ TEST_F(HitTestQueryTest, OneEmbedderTwoChildren) {
   transform_e_to_c1.Translate(-100, -100);
   transform_e_to_c2.Translate(-300, -300);
   AggregatedHitTestRegion aggregated_hit_test_region_list[3] = {
-      {e_id, mojom::kHitTestMine, e_bounds_in_e, transform_e_to_e, 2},     // e
-      {c1_id, mojom::kHitTestMine, c1_bounds_in_e, transform_e_to_c1, 0},  // c1
-      {c2_id, mojom::kHitTestMine, c2_bounds_in_e, transform_e_to_c2, 0}   // c2
+      {e_id, 0, mojom::kHitTestMine, e_bounds_in_e, transform_e_to_e, 2},  // e
+      {c1_id, 0, mojom::kHitTestMine, c1_bounds_in_e, transform_e_to_c1,
+       0},  // c1
+      {c2_id, 0, mojom::kHitTestMine, c2_bounds_in_e, transform_e_to_c2,
+       0}  // c2
   };
   hit_test_query().set_aggregated_hit_test_region_list(
       aggregated_hit_test_region_list, 3);
@@ -137,9 +139,9 @@ TEST_F(HitTestQueryTest, OneEmbedderRotatedChild) {
   transform_e_to_c.Scale(.5f, .7f);
 
   AggregatedHitTestRegion aggregated_hit_test_region_list[2] = {
-      {e_id, mojom::kHitTestMine, e_bounds_in_e, transform_e_to_e, 1},  // e
-      {c_id, mojom::kHitTestChildSurface | mojom::kHitTestMine, c_bounds_in_e,
-       transform_e_to_c, 0}  // c
+      {e_id, 0, mojom::kHitTestMine, e_bounds_in_e, transform_e_to_e, 1},  // e
+      {c_id, 0, mojom::kHitTestChildSurface | mojom::kHitTestMine,
+       c_bounds_in_e, transform_e_to_c, 0}  // c
   };
   hit_test_query().set_aggregated_hit_test_region_list(
       aggregated_hit_test_region_list, 2);
@@ -184,13 +186,13 @@ TEST_F(HitTestQueryTest, ClippedChildWithTabAndTransparentBackground) {
   transform_e_to_c.Translate(-200, -100);
   transform_c_to_b.Translate(0, -100);
   AggregatedHitTestRegion aggregated_hit_test_region_list[4] = {
-      {e_id, mojom::kHitTestMine, e_bounds_in_e, transform_e_to_e, 3},  // e
-      {c_id, mojom::kHitTestChildSurface | mojom::kHitTestIgnore, c_bounds_in_e,
-       transform_e_to_c, 2},  // c
-      {a_id, mojom::kHitTestChildSurface | mojom::kHitTestMine, a_bounds_in_c,
-       transform_c_to_a, 0},  // a
-      {b_id, mojom::kHitTestChildSurface | mojom::kHitTestMine, b_bounds_in_c,
-       transform_c_to_b, 0}  // b
+      {e_id, 0, mojom::kHitTestMine, e_bounds_in_e, transform_e_to_e, 3},  // e
+      {c_id, 0, mojom::kHitTestChildSurface | mojom::kHitTestIgnore,
+       c_bounds_in_e, transform_e_to_c, 2},  // c
+      {a_id, 0, mojom::kHitTestChildSurface | mojom::kHitTestMine,
+       a_bounds_in_c, transform_c_to_a, 0},  // a
+      {b_id, 0, mojom::kHitTestChildSurface | mojom::kHitTestMine,
+       b_bounds_in_c, transform_c_to_b, 0}  // b
   };
   hit_test_query().set_aggregated_hit_test_region_list(
       aggregated_hit_test_region_list, 4);
@@ -252,15 +254,15 @@ TEST_F(HitTestQueryTest, ClippedChildWithChildUnderneath) {
   transform_c_to_b.Translate(0, -100);
   transform_e_to_d.Translate(-400, -50);
   AggregatedHitTestRegion aggregated_hit_test_region_list[5] = {
-      {e_id, mojom::kHitTestMine, e_bounds_in_e, transform_e_to_e, 4},  // e
-      {c_id, mojom::kHitTestChildSurface | mojom::kHitTestIgnore, c_bounds_in_e,
-       transform_e_to_c, 2},  // c
-      {a_id, mojom::kHitTestChildSurface | mojom::kHitTestMine, a_bounds_in_c,
-       transform_c_to_a, 0},  // a
-      {b_id, mojom::kHitTestChildSurface | mojom::kHitTestMine, b_bounds_in_c,
-       transform_c_to_b, 0},  // b
-      {d_id, mojom::kHitTestChildSurface | mojom::kHitTestMine, d_bounds_in_e,
-       transform_e_to_d, 0}  // d
+      {e_id, 0, mojom::kHitTestMine, e_bounds_in_e, transform_e_to_e, 4},  // e
+      {c_id, 0, mojom::kHitTestChildSurface | mojom::kHitTestIgnore,
+       c_bounds_in_e, transform_e_to_c, 2},  // c
+      {a_id, 0, mojom::kHitTestChildSurface | mojom::kHitTestMine,
+       a_bounds_in_c, transform_c_to_a, 0},  // a
+      {b_id, 0, mojom::kHitTestChildSurface | mojom::kHitTestMine,
+       b_bounds_in_c, transform_c_to_b, 0},  // b
+      {d_id, 0, mojom::kHitTestChildSurface | mojom::kHitTestMine,
+       d_bounds_in_e, transform_e_to_d, 0}  // d
   };
   hit_test_query().set_aggregated_hit_test_region_list(
       aggregated_hit_test_region_list, 5);
@@ -333,19 +335,19 @@ TEST_F(HitTestQueryTest, ClippedChildrenWithTabAndTransparentBackground) {
   transform_e_to_c2.Translate(-200, -700);
   transform_c2_to_h.Translate(0, -100);
   AggregatedHitTestRegion aggregated_hit_test_region_list[7] = {
-      {e_id, mojom::kHitTestMine, e_bounds_in_e, transform_e_to_e, 6},  // e
-      {c1_id, mojom::kHitTestChildSurface | mojom::kHitTestIgnore,
+      {e_id, 0, mojom::kHitTestMine, e_bounds_in_e, transform_e_to_e, 6},  // e
+      {c1_id, 0, mojom::kHitTestChildSurface | mojom::kHitTestIgnore,
        c1_bounds_in_e, transform_e_to_c1, 2},  // c1
-      {a_id, mojom::kHitTestChildSurface | mojom::kHitTestMine, a_bounds_in_c1,
-       transform_c1_to_a, 0},  // a
-      {b_id, mojom::kHitTestChildSurface | mojom::kHitTestMine, b_bounds_in_c1,
-       transform_c1_to_b, 0},  // b
-      {c2_id, mojom::kHitTestChildSurface | mojom::kHitTestIgnore,
+      {a_id, 0, mojom::kHitTestChildSurface | mojom::kHitTestMine,
+       a_bounds_in_c1, transform_c1_to_a, 0},  // a
+      {b_id, 0, mojom::kHitTestChildSurface | mojom::kHitTestMine,
+       b_bounds_in_c1, transform_c1_to_b, 0},  // b
+      {c2_id, 0, mojom::kHitTestChildSurface | mojom::kHitTestIgnore,
        c2_bounds_in_e, transform_e_to_c2, 2},  // c2
-      {g_id, mojom::kHitTestChildSurface | mojom::kHitTestMine, g_bounds_in_c2,
-       transform_c2_to_g, 0},  // g
-      {h_id, mojom::kHitTestChildSurface | mojom::kHitTestMine, h_bounds_in_c2,
-       transform_c2_to_h, 0}  // h
+      {g_id, 0, mojom::kHitTestChildSurface | mojom::kHitTestMine,
+       g_bounds_in_c2, transform_c2_to_g, 0},  // g
+      {h_id, 0, mojom::kHitTestChildSurface | mojom::kHitTestMine,
+       h_bounds_in_c2, transform_c2_to_h, 0}  // h
   };
   hit_test_query().set_aggregated_hit_test_region_list(
       aggregated_hit_test_region_list, 7);
@@ -430,17 +432,17 @@ TEST_F(HitTestQueryTest, MultipleLayerChild) {
   transform_b_to_g.Translate(-150, -200);
   transform_e_to_c2.Translate(-400, -50);
   AggregatedHitTestRegion aggregated_hit_test_region_list[6] = {
-      {e_id, mojom::kHitTestMine, e_bounds_in_e, transform_e_to_e, 5},  // e
-      {c1_id, mojom::kHitTestChildSurface | mojom::kHitTestIgnore,
+      {e_id, 0, mojom::kHitTestMine, e_bounds_in_e, transform_e_to_e, 5},  // e
+      {c1_id, 0, mojom::kHitTestChildSurface | mojom::kHitTestIgnore,
        c1_bounds_in_e, transform_e_to_c1, 3},  // c1
-      {a_id, mojom::kHitTestChildSurface | mojom::kHitTestMine, a_bounds_in_c1,
-       transform_c1_to_a, 2},  // a
-      {b_id, mojom::kHitTestChildSurface | mojom::kHitTestMine, b_bounds_in_a,
-       transform_a_to_b, 1},  // b
-      {g_id, mojom::kHitTestChildSurface | mojom::kHitTestMine, g_bounds_in_b,
-       transform_b_to_g, 0},  // g
-      {c2_id, mojom::kHitTestChildSurface | mojom::kHitTestMine, c2_bounds_in_e,
-       transform_e_to_c2, 0}  // c2
+      {a_id, 0, mojom::kHitTestChildSurface | mojom::kHitTestMine,
+       a_bounds_in_c1, transform_c1_to_a, 2},  // a
+      {b_id, 0, mojom::kHitTestChildSurface | mojom::kHitTestMine,
+       b_bounds_in_a, transform_a_to_b, 1},  // b
+      {g_id, 0, mojom::kHitTestChildSurface | mojom::kHitTestMine,
+       g_bounds_in_b, transform_b_to_g, 0},  // g
+      {c2_id, 0, mojom::kHitTestChildSurface | mojom::kHitTestMine,
+       c2_bounds_in_e, transform_e_to_c2, 0}  // c2
   };
   hit_test_query().set_aggregated_hit_test_region_list(
       aggregated_hit_test_region_list, 6);
@@ -507,17 +509,17 @@ TEST_F(HitTestQueryTest, MultipleLayerTransparentChild) {
   transform_b_to_g.Translate(-150, -200);
   transform_e_to_c2.Translate(-400, -50);
   AggregatedHitTestRegion aggregated_hit_test_region_list[6] = {
-      {e_id, mojom::kHitTestMine, e_bounds_in_e, transform_e_to_e, 5},  // e
-      {c1_id, mojom::kHitTestChildSurface | mojom::kHitTestIgnore,
+      {e_id, 0, mojom::kHitTestMine, e_bounds_in_e, transform_e_to_e, 5},  // e
+      {c1_id, 0, mojom::kHitTestChildSurface | mojom::kHitTestIgnore,
        c1_bounds_in_e, transform_e_to_c1, 3},  // c1
-      {a_id, mojom::kHitTestChildSurface | mojom::kHitTestIgnore,
+      {a_id, 0, mojom::kHitTestChildSurface | mojom::kHitTestIgnore,
        a_bounds_in_c1, transform_c1_to_a, 2},  // a
-      {b_id, mojom::kHitTestChildSurface | mojom::kHitTestIgnore, b_bounds_in_a,
-       transform_a_to_b, 1},  // b
-      {g_id, mojom::kHitTestChildSurface | mojom::kHitTestIgnore, g_bounds_in_b,
-       transform_b_to_g, 0},  // g
-      {c2_id, mojom::kHitTestChildSurface | mojom::kHitTestMine, c2_bounds_in_e,
-       transform_e_to_c2, 0}  // c2
+      {b_id, 0, mojom::kHitTestChildSurface | mojom::kHitTestIgnore,
+       b_bounds_in_a, transform_a_to_b, 1},  // b
+      {g_id, 0, mojom::kHitTestChildSurface | mojom::kHitTestIgnore,
+       g_bounds_in_b, transform_b_to_g, 0},  // g
+      {c2_id, 0, mojom::kHitTestChildSurface | mojom::kHitTestMine,
+       c2_bounds_in_e, transform_e_to_c2, 0}  // c2
   };
   hit_test_query().set_aggregated_hit_test_region_list(
       aggregated_hit_test_region_list, 6);
@@ -563,13 +565,13 @@ TEST_F(HitTestQueryTest, InvalidAggregatedHitTestRegionData) {
   transform_e_to_c.Translate(-200, -100);
   transform_c_to_b.Translate(0, -100);
   AggregatedHitTestRegion aggregated_hit_test_region_list_min[4] = {
-      {e_id, mojom::kHitTestMine, e_bounds_in_e, transform_e_to_e, 3},  // e
-      {c_id, mojom::kHitTestChildSurface | mojom::kHitTestIgnore, c_bounds_in_e,
-       transform_e_to_c, INT32_MIN},  // c
-      {a_id, mojom::kHitTestChildSurface | mojom::kHitTestMine, a_bounds_in_c,
-       transform_c_to_a, 0},  // a
-      {b_id, mojom::kHitTestChildSurface | mojom::kHitTestMine, b_bounds_in_c,
-       transform_c_to_b, 0}  // b
+      {e_id, 0, mojom::kHitTestMine, e_bounds_in_e, transform_e_to_e, 3},  // e
+      {c_id, 0, mojom::kHitTestChildSurface | mojom::kHitTestIgnore,
+       c_bounds_in_e, transform_e_to_c, INT32_MIN},  // c
+      {a_id, 0, mojom::kHitTestChildSurface | mojom::kHitTestMine,
+       a_bounds_in_c, transform_c_to_a, 0},  // a
+      {b_id, 0, mojom::kHitTestChildSurface | mojom::kHitTestMine,
+       b_bounds_in_c, transform_c_to_b, 0}  // b
   };
   hit_test_query().set_aggregated_hit_test_region_list(
       aggregated_hit_test_region_list_min, 4);
@@ -591,14 +593,14 @@ TEST_F(HitTestQueryTest, InvalidAggregatedHitTestRegionData) {
   EXPECT_FALSE(target2.flags);
 
   AggregatedHitTestRegion aggregated_hit_test_region_list_max[4] = {
-      {e_id, mojom::kHitTestMine, e_bounds_in_e, transform_e_to_e,
+      {e_id, 0, mojom::kHitTestMine, e_bounds_in_e, transform_e_to_e,
        INT32_MAX},  // e
-      {c_id, mojom::kHitTestChildSurface | mojom::kHitTestIgnore, c_bounds_in_e,
-       transform_e_to_c, 2},  // c
-      {a_id, mojom::kHitTestChildSurface | mojom::kHitTestMine, a_bounds_in_c,
-       transform_c_to_a, 0},  // a
-      {b_id, mojom::kHitTestChildSurface | mojom::kHitTestMine, b_bounds_in_c,
-       transform_c_to_b, 0}  // b
+      {c_id, 0, mojom::kHitTestChildSurface | mojom::kHitTestIgnore,
+       c_bounds_in_e, transform_e_to_c, 2},  // c
+      {a_id, 0, mojom::kHitTestChildSurface | mojom::kHitTestMine,
+       a_bounds_in_c, transform_c_to_a, 0},  // a
+      {b_id, 0, mojom::kHitTestChildSurface | mojom::kHitTestMine,
+       b_bounds_in_c, transform_c_to_b, 0}  // b
   };
   hit_test_query().set_aggregated_hit_test_region_list(
       aggregated_hit_test_region_list_max, 4);
@@ -609,13 +611,13 @@ TEST_F(HitTestQueryTest, InvalidAggregatedHitTestRegionData) {
   EXPECT_FALSE(target3.flags);
 
   AggregatedHitTestRegion aggregated_hit_test_region_list_bigger[4] = {
-      {e_id, mojom::kHitTestMine, e_bounds_in_e, transform_e_to_e, 3},  // e
-      {c_id, mojom::kHitTestChildSurface | mojom::kHitTestIgnore, c_bounds_in_e,
-       transform_e_to_c, 3},  // c
-      {a_id, mojom::kHitTestChildSurface | mojom::kHitTestMine, a_bounds_in_c,
-       transform_c_to_a, 0},  // a
-      {b_id, mojom::kHitTestChildSurface | mojom::kHitTestMine, b_bounds_in_c,
-       transform_c_to_b, 0}  // b
+      {e_id, 0, mojom::kHitTestMine, e_bounds_in_e, transform_e_to_e, 3},  // e
+      {c_id, 0, mojom::kHitTestChildSurface | mojom::kHitTestIgnore,
+       c_bounds_in_e, transform_e_to_c, 3},  // c
+      {a_id, 0, mojom::kHitTestChildSurface | mojom::kHitTestMine,
+       a_bounds_in_c, transform_c_to_a, 0},  // a
+      {b_id, 0, mojom::kHitTestChildSurface | mojom::kHitTestMine,
+       b_bounds_in_c, transform_c_to_b, 0}  // b
   };
   hit_test_query().set_aggregated_hit_test_region_list(
       aggregated_hit_test_region_list_bigger, 4);
