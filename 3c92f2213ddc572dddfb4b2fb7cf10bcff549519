@@ -1,0 +1,169 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93a846c9_837aa3eb",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-24T20:36:32Z",
+      "side": 1,
+      "message": "I\u0027d move actual assignment to lines 436 and 440.",
+      "revId": "3c92f2213ddc572dddfb4b2fb7cf10bcff549519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca0ef66b_59a327dc",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-24T20:36:32Z",
+      "side": 1,
+      "message": "Move this under if below.",
+      "revId": "3c92f2213ddc572dddfb4b2fb7cf10bcff549519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c048c204_e6a2e20c",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-24T20:36:32Z",
+      "side": 1,
+      "message": "Should do width and height separately.",
+      "revId": "3c92f2213ddc572dddfb4b2fb7cf10bcff549519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9087efd_ad024a97",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-24T20:36:32Z",
+      "side": 1,
+      "message": "scale",
+      "range": {
+        "startLine": 409,
+        "startChar": 7,
+        "endLine": 409,
+        "endChar": 11
+      },
+      "revId": "3c92f2213ddc572dddfb4b2fb7cf10bcff549519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d8cc1a5_d9ce361a",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-24T20:36:32Z",
+      "side": 1,
+      "message": "Undo screen_size.",
+      "revId": "3c92f2213ddc572dddfb4b2fb7cf10bcff549519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1715f92_c60266cc",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-24T20:36:32Z",
+      "side": 1,
+      "message": "0",
+      "range": {
+        "startLine": 419,
+        "startChar": 42,
+        "endLine": 419,
+        "endChar": 73
+      },
+      "revId": "3c92f2213ddc572dddfb4b2fb7cf10bcff549519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30b26aab_f7b4643b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/emulation/DeviceModeModel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 647,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-24T20:36:32Z",
+      "side": 1,
+      "message": "You can move this to line 660.",
+      "revId": "3c92f2213ddc572dddfb4b2fb7cf10bcff549519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a39dfc2_6d041382",
+        "filename": "third_party/WebKit/Source/devtools/front_end/emulation/DeviceModeModel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-24T20:36:32Z",
+      "side": 1,
+      "message": "inline?",
+      "revId": "3c92f2213ddc572dddfb4b2fb7cf10bcff549519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acf24b38_6151a71f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/emulation/module.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-24T20:36:32Z",
+      "side": 1,
+      "message": "Let\u0027s also do context menu item?",
+      "revId": "3c92f2213ddc572dddfb4b2fb7cf10bcff549519",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
