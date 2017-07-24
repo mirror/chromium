@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "895b73a4_2201d801",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-07-24T20:59:48Z",
+      "side": 1,
+      "message": "nednguyen@google.com, do you see any way to get around doing this?",
+      "revId": "1ff4d02ba81e7f5e376bd949261eb05f88705aa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24af2e89_56483cd4",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-07-24T20:59:48Z",
+      "side": 1,
+      "message": "nit: extra space after print",
+      "revId": "1ff4d02ba81e7f5e376bd949261eb05f88705aa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ae85531_55668a87",
+        "filename": "tools/perf/core/perf_data_generator_unittest.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1128909
+      },
+      "writtenOn": "2017-07-24T20:59:48Z",
+      "side": 1,
+      "message": "nit: is this comment necessary still?",
+      "revId": "1ff4d02ba81e7f5e376bd949261eb05f88705aa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
