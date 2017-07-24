@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba838963_e4b01b2e",
+        "filename": "components/variations/service/variations_field_trial_creator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-24T21:03:05Z",
+      "side": 1,
+      "message": "This param should be passed by const\u0026 since it\u0027s not being modified. Also, please have the method comment document all the params, because their purpose is not obvious from just the comments.",
+      "range": {
+        "startLine": 339,
+        "startChar": 44,
+        "endLine": 339,
+        "endChar": 0
+      },
+      "revId": "e44f0dfec4b709f9e7dc90572748fe3371ea196c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c9a1f28_5d19ed3f",
+        "filename": "components/variations/service/variations_field_trial_creator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-24T21:03:05Z",
+      "side": 1,
+      "message": "No variations:: prefix.",
+      "range": {
+        "startLine": 340,
+        "startChar": 16,
+        "endLine": 340,
+        "endChar": 35
+      },
+      "revId": "e44f0dfec4b709f9e7dc90572748fe3371ea196c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18835b76_5d36d912",
+        "filename": "components/variations/service/variations_field_trial_creator.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-24T21:03:05Z",
+      "side": 1,
+      "message": "I don\u0027t think this trial-specific knowledge should be in this class. It should be passed from outside. Probably as a std::set\u003c\u003e.",
+      "range": {
+        "startLine": 359,
+        "startChar": 59,
+        "endLine": 359,
+        "endChar": 0
+      },
+      "revId": "e44f0dfec4b709f9e7dc90572748fe3371ea196c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab2131d8_5427f712",
+        "filename": "components/variations/service/variations_service.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-24T21:03:05Z",
+      "side": 1,
+      "message": "Comments here too. And use const char* for the params.",
+      "range": {
+        "startLine": 173,
+        "startChar": 7,
+        "endLine": 173,
+        "endChar": 23
+      },
+      "revId": "e44f0dfec4b709f9e7dc90572748fe3371ea196c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
