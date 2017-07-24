@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "528231e9_20c0caf0",
+        "filename": "components/cast_channel/cast_auth_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1229024
+      },
+      "writtenOn": "2017-07-24T18:51:41Z",
+      "side": 1,
+      "message": "Decided to take your suggestion on splitting up the two into separate feature flags. :)",
+      "parentUuid": "22c22d99_3fb49fb4",
+      "revId": "5b8f3f74bc8ef30419eba630fae3b790dca0990a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "290837b0_33ca7454",
         "filename": "components/cast_channel/cast_auth_util.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "5b8f3f74bc8ef30419eba630fae3b790dca0990a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd5508a7_af4d932a",
+        "filename": "components/cast_channel/cast_auth_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1229024
+      },
+      "writtenOn": "2017-07-24T18:51:41Z",
+      "side": 1,
+      "message": "Done. Also, added a distinct AuthResult for empty signature below.",
+      "parentUuid": "290837b0_33ca7454",
+      "revId": "5b8f3f74bc8ef30419eba630fae3b790dca0990a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1f8e65ae_f896702d",
+        "filename": "components/cast_channel/cast_auth_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1229024
+      },
+      "writtenOn": "2017-07-24T18:51:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67797e58_8f1eab74",
+      "revId": "5b8f3f74bc8ef30419eba630fae3b790dca0990a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e3e3fc4_3f0702b6",
         "filename": "components/cast_channel/cast_auth_util_unittest.cc",
         "patchSetId": 3
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "f23fd3dd_e4e4c328",
+        "filename": "components/cast_channel/cast_auth_util_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1229024
+      },
+      "writtenOn": "2017-07-24T18:51:41Z",
+      "side": 1,
+      "message": "Done. Updated to pass by value.\nYeah originally was thinking const reference.",
+      "parentUuid": "3e3e3fc4_3f0702b6",
+      "revId": "5b8f3f74bc8ef30419eba630fae3b790dca0990a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "effa5870_6a06c223",
         "filename": "components/cast_channel/cast_message_util.cc",
         "patchSetId": 3
@@ -81,6 +153,24 @@
       "writtenOn": "2017-07-24T17:34:16Z",
       "side": 1,
       "message": "This is backwards compatible with all Cast devices?",
+      "revId": "5b8f3f74bc8ef30419eba630fae3b790dca0990a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3194409_57aa00ff",
+        "filename": "components/cast_channel/cast_message_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1229024
+      },
+      "writtenOn": "2017-07-24T18:51:41Z",
+      "side": 1,
+      "message": "Yeah. The field (for both challenge and response) in the proto was added in mid 2015 to Cast devices. So, devices that are running builds older than that will basically not see the field and use SHA1. \n\nDevices that are running very old builds will not populate the hash algorithm field in the response. That field defaults to SHA1 when received by the Chrome sender. At that point, the code in cast_auth_util will decide whether to accept the SHA1 response or reject it.",
+      "parentUuid": "effa5870_6a06c223",
       "revId": "5b8f3f74bc8ef30419eba630fae3b790dca0990a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
