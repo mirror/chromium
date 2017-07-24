@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "acdaa965_2e88aa38",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-24T22:25:34Z",
+      "side": 1,
+      "message": "Gotcha I was not sure whether to put it in the namespace or constructor. Thanks for clarifying how to go about thinking about this decision.",
+      "parentUuid": "9732afb1_b674248d",
+      "revId": "070c5f07424703765b3c286bf4c72b3130f3028b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cbc2e5b_5dee5e71",
         "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
         "patchSetId": 27
@@ -33,6 +51,24 @@
       "revId": "070c5f07424703765b3c286bf4c72b3130f3028b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65e9146b_7d91e760",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-24T22:25:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cbc2e5b_5dee5e71",
+      "revId": "070c5f07424703765b3c286bf4c72b3130f3028b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c2e27c20_686fa374",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-24T22:25:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8d81e9e_03e99ebd",
+      "revId": "070c5f07424703765b3c286bf4c72b3130f3028b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7748318_bb3fad3a",
         "filename": "chrome/browser/ui/views/tabs/new_tab_promo_dialog_browsertest.cc",
         "patchSetId": 27
@@ -67,6 +121,24 @@
       "revId": "070c5f07424703765b3c286bf4c72b3130f3028b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fde026c_75e3ed08",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo_dialog_browsertest.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-24T22:25:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7748318_bb3fad3a",
+      "revId": "070c5f07424703765b3c286bf4c72b3130f3028b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
