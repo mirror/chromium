@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cca12982_03188414",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1104,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-24T20:45:38Z",
+      "side": 1,
+      "message": "It is never correct to have a DCHECK and an if () for the same condition. Either it is truly something that can never happen (regardless of what a website does), in which case a DCHECK is okay and there is no need for the if, or it is something that can happen in which case you really shouldn\u0027t have a DCHECK (looking at the code that calls this method, I don\u0027t see any guarantees that it won\u0027t be called after RespondToPaymentRequestEvent has been called, so it would appear that either the calling code is incorrect, or this DCHECK is incorrect).\n\nI\u0027m also not sure if it makes sense in the first place to have this openWindow related logic be mixed in with the respondWith logic. Unfortunately (unless I\u0027m missing/overlooking it) it doesn\u0027t seem like respondWith is spec\u0027ed yet, so it\u0027s hard to tell how the two methods should interact. Is adding the IsCancelled logic this way really the correct thing to do?",
+      "revId": "165ed3dca77036a0142892b83441d6f8b6862688",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "484dd03f_64d925c6",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1107,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-07-24T20:45:38Z",
+      "side": 1,
+      "message": "I\u0027m assuming the missing part of the spec (or at least the part of the spec I haven\u0027t been able to find) is that resolving the promise passed to respondWith should somehow immediately update the request\u0027s [[state]] to something other than \"interactive\", causing future openWindow calls to indeed start rejecting with InvalidStateError? Although if I\u0027m reading parts of https://www.w3.org/TR/payment-request/#user-accepts-the-payment-request-algorithm correctly (not sure if there is a newer version of that spec, the link to the editors draft is broken) [[state]] won\u0027t be updated from \"interactive\" to \"closed\" until a task posted to the user interaction task source runs. So openWindow in that case shouldn\u0027t always reject with InvalidStateError, even if respondWith was already called, but for example reject with some other error for invalid URLs, or InvalidAccessError if not triggered by user activation, or possibly it should even be able to open a window.",
+      "revId": "165ed3dca77036a0142892b83441d6f8b6862688",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
