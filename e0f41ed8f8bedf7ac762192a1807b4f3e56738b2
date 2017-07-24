@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "caf926fb_afe2cc32",
+        "filename": "components/cronet/ios/Cronet.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-07-24T19:29:51Z",
+      "side": 1,
+      "message": "Need to add comment WRT return value meaning.",
+      "range": {
+        "startLine": 64,
+        "startChar": 28,
+        "endLine": 64,
+        "endChar": 0
+      },
+      "revId": "e0f41ed8f8bedf7ac762192a1807b4f3e56738b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da47adfe_ebc5b260",
+        "filename": "components/cronet/ios/Cronet.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-07-24T19:29:51Z",
+      "side": 1,
+      "message": "I think LOG here is warranted.",
+      "range": {
+        "startLine": 198,
+        "startChar": 7,
+        "endLine": 198,
+        "endChar": 10
+      },
+      "revId": "e0f41ed8f8bedf7ac762192a1807b4f3e56738b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fa7d4a2_b31f3456",
+        "filename": "components/cronet/ios/cronet_environment.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-07-24T19:29:51Z",
+      "side": 1,
+      "message": "Do we need these checks here is AddQuicHint already does that?",
+      "range": {
+        "startLine": 355,
+        "startChar": 9,
+        "endLine": 355,
+        "endChar": 22
+      },
+      "revId": "e0f41ed8f8bedf7ac762192a1807b4f3e56738b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf161405_d5c9fe68",
+        "filename": "components/cronet/ios/test/cronet_quic_test.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-07-24T19:29:51Z",
+      "side": 1,
+      "message": "Most of these includes is not needed?",
+      "range": {
+        "startLine": 13,
+        "startChar": 20,
+        "endLine": 13,
+        "endChar": 21
+      },
+      "revId": "e0f41ed8f8bedf7ac762192a1807b4f3e56738b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
