@@ -30,6 +30,24 @@ inline double GetTimeAtVelocity(double v) {
          kDefaultGamma;
 }
 
+double GetTimeAtPosition(double p) {
+  // TODO(sunyunjia): Set a range for the time for faster interpolation.
+  double tl = 0;
+  double tr = GetTimeAtVelocity(0);
+  p = GetPositionAtTime(tr) - p;
+  double tm = (tl + tr) / 2;
+  double pm = GetPositionAtTime(tm);
+  while (fabs(pm - p) > 0.001) {
+    if (pm < p)
+      tl = tm;
+    else
+      tr = tm;
+    tm = (tl + tr) / 2;
+    pm = GetPositionAtTime(tm);
+  }
+  return tm;
+}
+
 }  // namespace
 
 namespace ui {
@@ -102,6 +120,24 @@ bool FlingCurve::ComputeScrollDeltaAtTime(base::TimeTicks current,
   *delta = offset - cumulative_scroll_;
   cumulative_scroll_ = offset;
   return still_active;
+}
+
+void FlingCurve::ComputeTotalScrollOffset(gfx::Vector2dF* offset) {
+  float scalar_offset = GetPositionAtTime(curve_duration_) - position_offset_;
+  *offset = gfx::ScaleVector2d(displacement_ratio_, scalar_offset);
+}
+
+bool FlingCurve::ResetCurveBySnappedOffset(const gfx::Vector2dF& offset) {
+  float max_offset = std::max(fabs(offset.x()), fabs(offset.y()));
+  if (max_offset > GetPositionAtTime(0))
+    return false;
+
+  displacement_ratio_ =
+      gfx::Vector2dF(offset.x() / max_offset, offset.y() / max_offset);
+
+  time_offset_ = GetTimeAtPosition(max_offset);
+  position_offset_ = GetPositionAtTime(time_offset_);
+  return true;
 }
 
 }  // namespace ui

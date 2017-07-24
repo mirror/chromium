@@ -32,6 +32,10 @@ class EVENTS_BASE_EXPORT FlingCurve : public GestureCurve {
   // animation ticks.
   bool ComputeScrollDeltaAtTime(base::TimeTicks current, gfx::Vector2dF* delta);
 
+  void ComputeTotalScrollOffset(gfx::Vector2dF* offset) override;
+
+  bool ResetCurveBySnappedOffset(const gfx::Vector2dF& offset) override;
+
  private:
   const float curve_duration_;
   const base::TimeTicks start_timestamp_;

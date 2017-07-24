@@ -271,6 +271,8 @@ class FakeWebGestureCurve : public blink::WebGestureCurve {
     // touch any member variables after making that call.
     return target->ScrollBy(increment, velocity_);
   }
+  void ComputeTotalScrollOffset(gfx::Vector2dF* offset) override {}
+  bool ResetCurveBySnappedOffset(const gfx::Vector2dF& offset) override {}
 
  private:
   blink::WebFloatSize velocity_;
