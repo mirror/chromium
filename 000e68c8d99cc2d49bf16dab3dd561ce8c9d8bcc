@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e414b42_257a0f89",
+        "filename": "chrome/browser/resources/settings/internet_page/tether_connection_dialog.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-24T23:51:32Z",
+      "side": 1,
+      "message": "Are these comments (here and line 21) really useful?",
+      "revId": "000e68c8d99cc2d49bf16dab3dd561ce8c9d8bcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
