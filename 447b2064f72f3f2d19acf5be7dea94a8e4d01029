@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ee054bb6_886df3e1",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-and-redirects-async-same-origin.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-07-24T09:45:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df80bee9_b8fc2e7e",
+      "revId": "447b2064f72f3f2d19acf5be7dea94a8e4d01029",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db4aa6d9_a32ed753",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-and-redirects-async-same-origin.htm",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "447b2064f72f3f2d19acf5be7dea94a8e4d01029",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "342384d3_0a164de9",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-and-redirects-async-same-origin.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-07-24T09:45:00Z",
+      "side": 1,
+      "message": "Thank you for explaining the difference to me!",
+      "parentUuid": "db4aa6d9_a32ed753",
+      "revId": "447b2064f72f3f2d19acf5be7dea94a8e4d01029",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e99c9d00_078dbd64",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-and-redirects-async-same-origin.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-07-24T09:45:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "632cf20c_18525f06",
+      "revId": "447b2064f72f3f2d19acf5be7dea94a8e4d01029",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6786d35c_167919dd",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-and-redirects-async-same-origin.htm",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "447b2064f72f3f2d19acf5be7dea94a8e4d01029",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16281957_90a9311b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-and-redirects-async-same-origin.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-07-24T09:45:00Z",
+      "side": 1,
+      "message": "I changed it to \"x-pass\". Is that all right? It\u0027s used in some of the other tests.",
+      "parentUuid": "6786d35c_167919dd",
+      "revId": "447b2064f72f3f2d19acf5be7dea94a8e4d01029",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "4016d140_b591bbee",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-and-redirects-async-same-origin.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-07-24T09:45:00Z",
+      "side": 1,
+      "message": "Thanks for the thorough comment and the explanation after!",
+      "parentUuid": "b46bca2d_0cc26d99",
+      "range": {
+        "startLine": 82,
+        "startChar": 13,
+        "endLine": 82,
+        "endChar": 14
+      },
+      "revId": "447b2064f72f3f2d19acf5be7dea94a8e4d01029",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "693d523d_d4f74dad",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-basic-allow-no-credentials.py",
         "patchSetId": 3
@@ -107,6 +203,24 @@
       "revId": "447b2064f72f3f2d19acf5be7dea94a8e4d01029",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6566ce92_0d2bfae5",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-basic-allow-no-credentials.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-07-24T09:45:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "693d523d_d4f74dad",
+      "revId": "447b2064f72f3f2d19acf5be7dea94a8e4d01029",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
