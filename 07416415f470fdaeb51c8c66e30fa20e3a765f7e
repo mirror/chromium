@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "c66fa302_65cdb8f7",
+        "filename": "chrome/browser/feature_engagement_tracker/bookmark/bookmark_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-24T20:03:33Z",
+      "side": 1,
+      "message": "Hi Erik, the observer is removed in the OnSessionEnded method in the NewTabTracker, not the NewTabTracker destructor. The reason being is because the observer should be removed upon every recorded end of session. Chris has it added in his OnSesssionEnded method as well on line 117 of this file.\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker.cc?q\u003dnew_tab_tracker\u0026sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d109",
+      "parentUuid": "c46a818c_a3343d21",
+      "revId": "07416415f470fdaeb51c8c66e30fa20e3a765f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "880054c4_1c3bdd16",
         "filename": "chrome/browser/feature_engagement_tracker/bookmark/bookmark_tracker.cc",
         "patchSetId": 4
@@ -87,6 +105,24 @@
     },
     {
       "key": {
+        "uuid": "4c165074_e9332c85",
+        "filename": "chrome/browser/feature_engagement_tracker/bookmark/bookmark_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-24T20:03:33Z",
+      "side": 1,
+      "message": "Yep, this line should be called in the ShowPromo() on the BookmarkPromoBubble side of things. There will be an upcoming CL for the NewTab that changes this as well.",
+      "parentUuid": "880054c4_1c3bdd16",
+      "revId": "07416415f470fdaeb51c8c66e30fa20e3a765f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "188998f4_d3f2f4ec",
         "filename": "chrome/browser/feature_engagement_tracker/bookmark/bookmark_tracker.cc",
         "patchSetId": 4
@@ -98,6 +134,24 @@
       "writtenOn": "2017-07-21T23:13:43Z",
       "side": 1,
       "message": "Hm. Why are we storing this in minutes rather than seconds? It seems like we are losing granularity for no good reason here.",
+      "revId": "07416415f470fdaeb51c8c66e30fa20e3a765f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e659534_6b41773a",
+        "filename": "chrome/browser/feature_engagement_tracker/bookmark/bookmark_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-24T20:03:33Z",
+      "side": 1,
+      "message": "For the 2 hours of active session time for the NewTabTracker, my original thought was that measuring time in minutes would be sufficient. Do you think that measuring by seconds would make a significant change in when the promo would be triggered? If so, then we can change it for both trackers.",
+      "parentUuid": "188998f4_d3f2f4ec",
       "revId": "07416415f470fdaeb51c8c66e30fa20e3a765f7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
