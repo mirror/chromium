@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b599a4d5_3f876f37",
+        "filename": "third_party/WebKit/Source/core/layout/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-07-24T18:22:08Z",
+      "side": 1,
+      "message": "Add a comment on why, and a unit test?",
+      "range": {
+        "startLine": 886,
+        "startChar": 4,
+        "endLine": 886,
+        "endChar": 72
+      },
+      "revId": "11cf6f3b5c6f9823d9f170d507d3fbea0bdceae3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
