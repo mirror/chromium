@@ -138,6 +138,9 @@ void UiRenderer::DrawElements(const gfx::Transform& view_proj_matrix,
   if (elements.empty()) {
     return;
   }
+  vr_shell_renderer_->set_content_texture_size(
+      render_info.content_texture_size);
+  int initial_draw_phase = elements.front()->draw_phase();
   bool drawn_reticle = false;
   for (const auto* element : elements) {
     // If we have no element to draw the reticle on, draw it after the
@@ -149,7 +152,7 @@ void UiRenderer::DrawElements(const gfx::Transform& view_proj_matrix,
       drawn_reticle = true;
     }
 
-    DrawElement(view_proj_matrix, *element, render_info.content_texture_size);
+    DrawElement(view_proj_matrix, *element);
 
     if (draw_reticle && (controller_info.reticle_render_target == element)) {
       DrawReticle(view_proj_matrix, render_info, controller_info);
@@ -159,8 +162,7 @@ void UiRenderer::DrawElements(const gfx::Transform& view_proj_matrix,
 }
 
 void UiRenderer::DrawElement(const gfx::Transform& view_proj_matrix,
-                             const UiElement& element,
-                             const gfx::Size& content_texture_size) {
+                             const UiElement& element) {
   DCHECK_GE(element.draw_phase(), 0);
   gfx::Transform transform =
       view_proj_matrix * element.screen_space_transform();
@@ -180,10 +182,11 @@ void UiRenderer::DrawElement(const gfx::Transform& view_proj_matrix,
       break;
     }
     case Fill::CONTENT: {
-      vr_shell_renderer_->GetExternalTexturedQuadRenderer()->Draw(
-          content_texture_id_, transform, content_texture_size,
-          gfx::SizeF(element.size().width(), element.size().height()),
-          element.computed_opacity(), element.corner_radius());
+      gfx::RectF copy_rect(0, 0, 1, 1);
+      vr_shell_renderer_->GetExternalTexturedQuadRenderer()->AddQuad(
+          content_texture_id_, transform, copy_rect, element.computed_opacity(),
+          vr_shell_renderer_->content_texture_size(), element.size(),
+          element.corner_radius());
       break;
     }
     case Fill::SELF: {

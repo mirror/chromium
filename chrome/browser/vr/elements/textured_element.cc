@@ -55,7 +55,7 @@ void TexturedElement::Render(UiElementRenderer* renderer,
   gfx::RectF copy_rect(0, 0, drawn_size.width() / texture_size_.width(),
                        drawn_size.height() / texture_size_.height());
   renderer->DrawTexturedQuad(texture_handle_, view_proj_matrix, copy_rect,
-                             opacity());
+                             opacity(), size(), corner_radius());
 }
 
 void TexturedElement::Flush(SkSurface* surface) {

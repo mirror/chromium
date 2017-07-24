@@ -29,9 +29,6 @@ void UiScene::AddUiElement(std::unique_ptr<UiElement> element) {
 void UiScene::RemoveUiElement(int element_id) {
   for (auto it = ui_elements_.begin(); it != ui_elements_.end(); ++it) {
     if ((*it)->id() == element_id) {
-      if ((*it)->fill() == Fill::CONTENT) {
-        content_element_ = nullptr;
-      }
       ui_elements_.erase(it);
       return;
     }

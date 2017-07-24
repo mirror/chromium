@@ -74,8 +74,7 @@ class UiRenderer {
                     const ControllerInfo& controller_info,
                     bool draw_reticle);
   void DrawElement(const gfx::Transform& view_proj_matrix,
-                   const UiElement& element,
-                   const gfx::Size& content_texture_size);
+                   const UiElement& element);
   std::vector<const UiElement*> GetElementsInDrawOrder(
       const gfx::Transform& view_matrix,
       const std::vector<const UiElement*>& elements);

@@ -101,7 +101,6 @@ class UiScene {
   void ApplyRecursiveTransforms(UiElement* element);
 
   std::vector<std::unique_ptr<UiElement>> ui_elements_;
-  UiElement* content_element_ = nullptr;
   ColorScheme::Mode mode_ = ColorScheme::kModeNormal;
 
   float background_distance_ = 10.0f;
