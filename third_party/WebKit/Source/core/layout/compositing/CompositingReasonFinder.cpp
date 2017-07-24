@@ -148,7 +148,7 @@ CompositingReasons CompositingReasonFinder::NonStyleDeterminedDirectReasons(
   if (layer->ClipParent())
     direct_reasons |= kCompositingReasonOutOfFlowClipping;
 
-  if (layer->NeedsCompositedScrolling())
+  if (layer->NeedsCompositedScrolling() == kFullCompositedScrolling)
     direct_reasons |= kCompositingReasonOverflowScrollingTouch;
 
   // When RLS is disabled, the root layer may be the root scroller but
@@ -161,7 +161,9 @@ CompositingReasons CompositingReasonFinder::NonStyleDeterminedDirectReasons(
   // scrolling layer is not on the stacking context ancestor chain of |layer|.
   // See the definition of the scrollParent property in Layer for more detail.
   if (const PaintLayer* scrolling_ancestor = layer->AncestorScrollingLayer()) {
-    if (scrolling_ancestor->NeedsCompositedScrolling() && layer->ScrollParent())
+    if ((scrolling_ancestor->NeedsCompositedScrolling() ==
+         kFullCompositedScrolling) &&
+        layer->ScrollParent())
       direct_reasons |= kCompositingReasonOverflowScrollingParent;
   }
 

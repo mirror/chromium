@@ -115,7 +115,7 @@ PaintLayerScrollableArea::PaintLayerScrollableArea(PaintLayer& layer)
       in_resize_mode_(false),
       scrolls_overflow_(false),
       in_overflow_relayout_(false),
-      needs_composited_scrolling_(false),
+      needs_composited_scrolling_(kNoCompositedScrolling),
       rebuild_horizontal_scrollbar_layer_(false),
       rebuild_vertical_scrollbar_layer_(false),
       needs_scroll_offset_clamp_(false),
@@ -1904,7 +1904,7 @@ bool PaintLayerScrollableArea::ShouldScrollOnMainThread() const {
   return ScrollableArea::ShouldScrollOnMainThread();
 }
 
-bool PaintLayerScrollableArea::ComputeNeedsCompositedScrolling(
+CompositedScrolling PaintLayerScrollableArea::ComputeNeedsCompositedScrolling(
     const LCDTextMode mode,
     const PaintLayer* layer) {
   non_composited_main_thread_scrolling_reasons_ = 0;
@@ -1915,15 +1915,15 @@ bool PaintLayerScrollableArea::ComputeNeedsCompositedScrolling(
   // the global root scroller (by default) but it doesn't actually handle
   // scrolls itself so we don't need composited scrolling for it.
   if (RootScrollerUtil::IsGlobal(*layer) && !Layer()->IsScrolledByFrameView())
-    return true;
+    return kFullCompositedScrolling;
 
   if (!layer->ScrollsOverflow())
-    return false;
+    return kNoCompositedScrolling;
 
   if (layer->size().IsEmpty())
-    return false;
+    return kNoCompositedScrolling;
 
-  bool needs_composited_scrolling = true;
+  CompositedScrolling needs_composited_scrolling = kFullCompositedScrolling;
 
   // TODO(flackr): Allow integer transforms as long as all of the ancestor
   // transforms are also integer.
@@ -1958,7 +1958,7 @@ bool PaintLayerScrollableArea::ComputeNeedsCompositedScrolling(
           MainThreadScrollingReason::kIsNotStackingContextAndLCDText;
     }
 
-    needs_composited_scrolling = false;
+    needs_composited_scrolling = kNoCompositedScrolling;
   }
 
   // TODO(schenney) Tests fail if we do not also exclude
@@ -1969,7 +1969,7 @@ bool PaintLayerScrollableArea::ComputeNeedsCompositedScrolling(
       layer->HasDescendantWithClipPath() || layer->HasAncestorWithClipPath()) {
     non_composited_main_thread_scrolling_reasons_ |=
         MainThreadScrollingReason::kHasClipRelatedProperty;
-    needs_composited_scrolling = false;
+    needs_composited_scrolling = kNoCompositedScrolling;
   }
 
   DCHECK(!(non_composited_main_thread_scrolling_reasons_ &
@@ -1979,11 +1979,10 @@ bool PaintLayerScrollableArea::ComputeNeedsCompositedScrolling(
 
 void PaintLayerScrollableArea::UpdateNeedsCompositedScrolling(
     LCDTextMode mode) {
-  const bool needs_composited_scrolling =
+  const CompositedScrolling needs_composited_scrolling =
       ComputeNeedsCompositedScrolling(mode, Layer());
 
-  if (static_cast<bool>(needs_composited_scrolling_) !=
-      needs_composited_scrolling) {
+  if (needs_composited_scrolling_ != needs_composited_scrolling) {
     needs_composited_scrolling_ = needs_composited_scrolling;
   }
 }

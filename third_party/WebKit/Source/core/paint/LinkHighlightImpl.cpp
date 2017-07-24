@@ -140,7 +140,8 @@ void LinkHighlightImpl::AttachLinkHighlightToCompositingLayer(
           node_->GetLayoutObject());
   is_scrolling_graphics_layer_ = false;
   // FIXME: There should always be a GraphicsLayer. See crbug.com/431961.
-  if (paint_invalidation_container.Layer()->NeedsCompositedScrolling() &&
+  if ((paint_invalidation_container.Layer()->NeedsCompositedScrolling() ==
+       kFullCompositedScrolling) &&
       node_->GetLayoutObject() != &paint_invalidation_container) {
     is_scrolling_graphics_layer_ = true;
   }

@@ -900,7 +900,7 @@ TEST_P(CompositedLayerMappingTest,
 
   // Decoration outline layer is created when composited scrolling.
   EXPECT_TRUE(paint_layer->HasCompositedLayerMapping());
-  EXPECT_TRUE(paint_layer->NeedsCompositedScrolling());
+  EXPECT_EQ(paint_layer->NeedsCompositedScrolling(), kFullCompositedScrolling);
 
   CompositedLayerMapping* mapping = paint_layer->GetCompositedLayerMapping();
   EXPECT_TRUE(mapping->DecorationOutlineLayer());
@@ -912,7 +912,7 @@ TEST_P(CompositedLayerMappingTest,
   ASSERT_TRUE(paint_layer);
 
   mapping = paint_layer->GetCompositedLayerMapping();
-  EXPECT_FALSE(paint_layer->NeedsCompositedScrolling());
+  EXPECT_EQ(paint_layer->NeedsCompositedScrolling(), kNoCompositedScrolling);
   EXPECT_FALSE(mapping->DecorationOutlineLayer());
 }
 
@@ -945,7 +945,7 @@ TEST_P(CompositedLayerMappingTest,
   ASSERT_TRUE(paint_layer);
 
   mapping = paint_layer->GetCompositedLayerMapping();
-  EXPECT_TRUE(paint_layer->NeedsCompositedScrolling());
+  EXPECT_EQ(paint_layer->NeedsCompositedScrolling(), kFullCompositedScrolling);
   EXPECT_TRUE(mapping->DecorationOutlineLayer());
 
   // The decoration outline layer is destroyed when the scrolling region

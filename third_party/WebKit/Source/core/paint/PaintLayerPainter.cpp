@@ -357,7 +357,7 @@ PaintResult PaintLayerPainter::PaintLayerContents(
   // mask layer, so that the compositor can properly mask the
   // scrolling contents and scrollbars.
   if (paint_layer_.GetLayoutObject().HasClipPath() &&
-      (!paint_layer_.NeedsCompositedScrolling() ||
+      ((paint_layer_.NeedsCompositedScrolling() == kNoCompositedScrolling) ||
        (paint_flags & (kPaintLayerPaintingChildClippingMaskPhase |
                        kPaintLayerPaintingAncestorClippingMaskPhase)))) {
     painting_info.ancestor_has_clip_path_clipping = true;

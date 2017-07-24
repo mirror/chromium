@@ -292,8 +292,8 @@ bool CompositedLayerMapping::UsesCompositedStickyPosition() const {
   return GetLayoutObject().Style()->HasStickyConstrainedPosition() &&
          (owning_layer_.AncestorOverflowLayer()->IsRootLayer()
               ? GetLayoutObject().View()->GetFrameView()->IsScrollable()
-              : owning_layer_.AncestorOverflowLayer()
-                    ->NeedsCompositedScrolling());
+              : (owning_layer_.AncestorOverflowLayer()
+                     ->NeedsCompositedScrolling() == kFullCompositedScrolling));
 }
 
 void CompositedLayerMapping::UpdateStickyConstraints(
@@ -590,7 +590,8 @@ void CompositedLayerMapping::
 
 const PaintLayer* CompositedLayerMapping::ScrollParent() {
   const PaintLayer* scroll_parent = owning_layer_.ScrollParent();
-  if (scroll_parent && !scroll_parent->NeedsCompositedScrolling())
+  if (scroll_parent &&
+      (scroll_parent->NeedsCompositedScrolling() == kNoCompositedScrolling))
     return nullptr;
   return scroll_parent;
 }
@@ -624,7 +625,7 @@ bool CompositedLayerMapping::UpdateGraphicsLayerConfiguration() {
       compositor->ClipsCompositingDescendants(&owning_layer_);
 
   // Our scrolling layer will clip.
-  if (owning_layer_.NeedsCompositedScrolling())
+  if (owning_layer_.NeedsCompositedScrolling() == kFullCompositedScrolling)
     needs_descendants_clipping_layer = false;
 
   const PaintLayer* scroll_parent = this->ScrollParent();
