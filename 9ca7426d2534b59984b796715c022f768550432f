@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73030294_6aa34b64",
+        "filename": "content/browser/download/download_file.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-24T21:00:32Z",
+      "side": 1,
+      "message": "Handle -\u003e handle",
+      "range": {
+        "startLine": 68,
+        "startChar": 41,
+        "endLine": 68,
+        "endChar": 47
+      },
+      "revId": "9ca7426d2534b59984b796715c022f768550432f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dca424d_6548def5",
+        "filename": "content/browser/download/download_file_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-24T21:00:32Z",
+      "side": 1,
+      "message": "base::Bind(callback, MOJO_RESULT_OK)?",
+      "range": {
+        "startLine": 123,
+        "startChar": 8,
+        "endLine": 123,
+        "endChar": 50
+      },
+      "revId": "9ca7426d2534b59984b796715c022f768550432f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3657a088_6f8ef093",
+        "filename": "content/browser/download/download_file_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-24T21:00:32Z",
+      "side": 1,
+      "message": "H -\u003e h",
+      "range": {
+        "startLine": 69,
+        "startChar": 68,
+        "endLine": 69,
+        "endChar": 69
+      },
+      "revId": "9ca7426d2534b59984b796715c022f768550432f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab89a715_ef89d9ef",
+        "filename": "content/browser/download/download_file_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-24T21:00:32Z",
+      "side": 1,
+      "message": "Clear?",
+      "range": {
+        "startLine": 136,
+        "startChar": 9,
+        "endLine": 136,
+        "endChar": 15
+      },
+      "revId": "9ca7426d2534b59984b796715c022f768550432f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc528347_0016fce8",
+        "filename": "content/browser/download/download_file_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-24T21:00:32Z",
+      "side": 1,
+      "message": "We should probably just have control messages not go through the same pipe that the data routes through.  DownloadRequestCore -\u003e DownloadManager/DownloadItem should be used for the control flow?",
+      "range": {
+        "startLine": 139,
+        "startChar": 4,
+        "endLine": 139,
+        "endChar": 60
+      },
+      "revId": "9ca7426d2534b59984b796715c022f768550432f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd938638_dd8f14b7",
+        "filename": "content/browser/download/download_file_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-24T21:00:32Z",
+      "side": 1,
+      "message": "add variable name?",
+      "range": {
+        "startLine": 244,
+        "startChar": 49,
+        "endLine": 244,
+        "endChar": 59
+      },
+      "revId": "9ca7426d2534b59984b796715c022f768550432f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
