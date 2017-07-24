@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b87ae385_05a93cae",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/allow-lists-starting-with-comma.htm",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-07-24T03:19:54Z",
+      "side": 1,
+      "message": "Thank you! I guess I didn\u0027t understand the cross-origin part very well. I think it\u0027s better now; please check it out and make sure it looks right!",
+      "parentUuid": "f1001718_700309d7",
+      "revId": "52bd95ac30bcb889ec0675b176c8bf14eb1ba1e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2636db67_f3e7d183",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-allow-lists.py",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "52bd95ac30bcb889ec0675b176c8bf14eb1ba1e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d6e8950_4697790c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-allow-lists.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-07-24T03:19:54Z",
+      "side": 1,
+      "message": "Got it! Thanks for the tip!",
+      "parentUuid": "2636db67_f3e7d183",
+      "revId": "52bd95ac30bcb889ec0675b176c8bf14eb1ba1e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
