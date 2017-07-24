@@ -22,6 +22,30 @@
       "revId": "d6a7edf3b2c5a9083631768ee132630c57d49aa4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7e434a1_832ad362",
+        "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-24T18:14:15Z",
+      "side": 1,
+      "message": "I think the CMM will replace these metrics.\n\nplatofrm_private_footprint should contain all information necessary to compute the private footprint [which it does], and we should compute shared_bytes ourselves. [we\u0027re not counting file-backed shared memory like image-mapped files]. \n\nAnd finally, locked_bytes is pretty much always 0 \u003dP.",
+      "parentUuid": "6b4e48df_09011701",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 26
+      },
+      "revId": "d6a7edf3b2c5a9083631768ee132630c57d49aa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
