@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70e7a605_0e87900e",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-24T21:05:16Z",
+      "side": 1,
+      "message": "1. It is convention to have \"DeathTest\" in the name of the test case (for thread safety reasons). See: https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#death-tests-and-threads\n2. s/AddChildDCHECKOnCyclicReference/AddChildOnCyclicReference/ (no need to have DCHECK in the name)\n3. EXPECT_DEATH will fail for release build. We probably need to have one for release build and one for debug build.\n\n\nSo something like:\n\n#if defined(NDEBUG)\n\nTEST_F(CoordinationUnitImplTest, AddChildOnCyclicReference)\n\n#else\n\nusing CoordinationUnitImplDeathTest \u003d CoordinationUnitImplTest;\nTEST_F(CoordinationUnitImplDeathTest, AddChildOnCyclicReference)\n\n#endif",
+      "revId": "2572dda6781e9a0e1f5c5ce7525cde9dd969fb69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
