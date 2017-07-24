@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4be0c689_85aee126",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2894,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-24T09:59:20Z",
+      "side": 1,
+      "message": "Nit: I usually end up writing these as a block of expectations (like https://cs.chromium.org/chromium/src/third_party/googletest/src/googletest/include/gtest/gtest.h?l\u003d446). I suppose there might be too many booleans here to make that a viable approach, but keep it in mind for the future, as it\u0027s sometimes simpler to read and less repetitious.",
+      "revId": "50d9396bb451fd6892bbc5111b582e7193dd9503",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
