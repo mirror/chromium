@@ -42,9 +42,11 @@ class WebApplicationCacheHostImpl
 
   // blink::WebApplicationCacheHost:
   void WillStartMainResourceRequest(
-      blink::WebURLRequest&,
-      const blink::WebApplicationCacheHost*) override;
-  void WillStartSubResourceRequest(blink::WebURLRequest&) override;
+      const blink::WebURL& url,
+      const blink::WebString& method,
+      const WebApplicationCacheHost* spawning_host,
+      int& host_id) override;
+  void WillStartSubResourceRequest(int& host_id) override;
   void SelectCacheWithoutManifest() override;
   bool SelectCacheWithManifest(const blink::WebURL& manifestURL) override;
   void DidReceiveResponseForMainResource(const blink::WebURLResponse&) override;

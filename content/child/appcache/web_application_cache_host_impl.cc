@@ -171,13 +171,15 @@ void WebApplicationCacheHostImpl::OnErrorEventRaised(
 }
 
 void WebApplicationCacheHostImpl::WillStartMainResourceRequest(
-    WebURLRequest& request,
-    const WebApplicationCacheHost* spawning_host) {
-  request.SetAppCacheHostID(host_id_);
+    const WebURL& url,
+    const WebString& method_webstring,
+    const WebApplicationCacheHost* spawning_host,
+    int& host_id) {
+  host_id = host_id_;
 
-  original_main_resource_url_ = ClearUrlRef(request.Url());
+  original_main_resource_url_ = ClearUrlRef(url);
 
-  std::string method = request.HttpMethod().Utf8();
+  std::string method = method_webstring.Utf8();
   is_get_method_ = (method == kHttpGETMethod);
   DCHECK(method == base::ToUpperASCII(method));
 
@@ -189,9 +191,8 @@ void WebApplicationCacheHostImpl::WillStartMainResourceRequest(
   }
 }
 
-void WebApplicationCacheHostImpl::WillStartSubResourceRequest(
-    WebURLRequest& request) {
-  request.SetAppCacheHostID(host_id_);
+void WebApplicationCacheHostImpl::WillStartSubResourceRequest(int& host_id) {
+  host_id = host_id_;
 }
 
 void WebApplicationCacheHostImpl::SelectCacheWithoutManifest() {
