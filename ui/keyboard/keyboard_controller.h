@@ -23,7 +23,7 @@ class Window;
 namespace ui {
 class InputMethod;
 class TextInputClient;
-}
+}  // namespace ui
 
 namespace keyboard {
 
@@ -136,6 +136,8 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   // Force the keyboard to show up in the specific display if not showing and
   // lock the keyboard
   void ShowKeyboardInDisplay(const int64_t display_id);
+
+  void printstate();
 
   // Sets the active keyboard controller. KeyboardController takes ownership of
   // the instance. Calling ResetIntance with a new instance destroys the

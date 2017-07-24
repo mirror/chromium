@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <iostream>
 #include <memory>
 
 #include "ash/app_list/test_app_list_view_presenter_impl.h"
@@ -9,6 +10,7 @@
 #include "ash/public/cpp/config.h"
 #include "ash/public/cpp/shelf_types.h"
 #include "ash/public/cpp/shell_window_ids.h"
+#include "ash/root_window_controller.h"
 #include "ash/shelf/shelf.h"
 #include "ash/shelf/shelf_layout_manager.h"
 #include "ash/shell.h"
@@ -29,6 +31,11 @@
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
 #include "ui/events/test/event_generator.h"
+#include "ui/keyboard/keyboard_controller.h"
+#include "ui/keyboard/keyboard_switches.h"
+#include "ui/keyboard/keyboard_test_util.h"
+#include "ui/keyboard/keyboard_ui.h"
+#include "ui/keyboard/keyboard_util.h"
 #include "ui/views/controls/textfield/textfield.h"
 
 namespace ash {
@@ -98,13 +105,20 @@ class FullscreenAppListPresenterDelegateTest
 
   // testing::Test:
   void SetUp() override {
+    // Allow a virtual keyboard (and initialize it per default).
     AshTestBase::SetUp();
+    keyboard::SetAccessibilityKeyboardEnabled(true);
 
     scoped_feature_list_.InitAndEnableFeature(
         app_list::features::kEnableFullscreenAppList);
 
     // Make the display big enough to hold the app list.
     UpdateDisplay("1024x768");
+  }
+
+  void TearDown() override {
+    keyboard::SetAccessibilityKeyboardEnabled(false);
+    AshTestBase::TearDown();
   }
 
   // Whether to run the test with mouse or gesture events.
@@ -786,5 +800,46 @@ TEST_P(FullscreenAppListPresenterDelegateTest,
   }
   EXPECT_EQ(view->app_list_state(), app_list::AppListView::FULLSCREEN_ALL_APPS);
 }
+
+// Tests that the virtual keyboard is shown when the app list is shown in tablet
+// mode and the searchbox is active.
+TEST_F(FullscreenAppListPresenterDelegateTest,
+       ShowVirtualKeyboardWithActiveSearchbox) {
+  EnableTabletMode(true);
+  Shell::Get()->CreateKeyboard();
+  keyboard::KeyboardController* keyboard_controller =
+      keyboard::KeyboardController::GetInstance();
+  keyboard_controller->ShowKeyboard(false);
+  // EXPECT_TRUE(keyboard_controller);
+
+  app_list_presenter_impl()->Show(GetPrimaryDisplayId());
+  app_list::AppListView* view = app_list_presenter_impl()->GetView();
+  ui::test::EventGenerator& generator = GetEventGenerator();
+  EXPECT_EQ(view->app_list_state(), app_list::AppListView::FULLSCREEN_ALL_APPS);
+
+  keyboard_controller->printstate();
+
+  EXPECT_FALSE(keyboard::IsKeyboardVisible());
+
+  // Activate the searchbox.
+  // todonewcomer find a way to pipe the keyboard controller. it is printing
+  // that it is LOADING_EXTENSION
+
+  generator.PressKey(ui::VKEY_0, 0);
+  keyboard_controller->printstate();
+
+  generator.GestureTapAt(GetPointInsideSearchbox());
+  keyboard_controller->printstate();
+  EXPECT_TRUE(keyboard_controller->keyboard_visible());
+  EXPECT_TRUE(view->search_box_view()->is_search_box_active());
+  EXPECT_TRUE(keyboard_controller->keyboard_visible());
+}
+
+// Tests that the virtual keyboard is hidden when the searchbox is inactive.
+
+// Tests that the virtual keyboard is dismissed when the app list is dismissed.
+
+// Tests that the virtual keyboard is shown when transitioning to tablet mode
+// with an active searchbox.
 
 }  // namespace ash

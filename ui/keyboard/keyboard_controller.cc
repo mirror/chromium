@@ -4,6 +4,7 @@
 
 #include "ui/keyboard/keyboard_controller.h"
 
+#include <iostream>
 #include <set>
 
 #include "base/bind.h"
@@ -259,8 +260,7 @@ class CallbackAnimationObserver : public ui::LayerAnimationObserver {
 CallbackAnimationObserver::CallbackAnimationObserver(
     const scoped_refptr<ui::LayerAnimator>& animator,
     base::Callback<void(void)> callback)
-    : animator_(animator), callback_(callback) {
-}
+    : animator_(animator), callback_(callback) {}
 
 CallbackAnimationObserver::~CallbackAnimationObserver() {
   animator_->RemoveObserver(this);
@@ -413,10 +413,9 @@ void KeyboardController::HideKeyboard(HideReason reason) {
   keyboard_visible_ = false;
   ToggleTouchEventLogging(true);
 
-  keyboard::LogKeyboardControlEvent(
-      reason == HIDE_REASON_AUTOMATIC ?
-          keyboard::KEYBOARD_CONTROL_HIDE_AUTO :
-          keyboard::KEYBOARD_CONTROL_HIDE_USER);
+  keyboard::LogKeyboardControlEvent(reason == HIDE_REASON_AUTOMATIC
+                                        ? keyboard::KEYBOARD_CONTROL_HIDE_AUTO
+                                        : keyboard::KEYBOARD_CONTROL_HIDE_USER);
 
   NotifyContentsBoundsChanging(gfx::Rect());
 
@@ -434,9 +433,8 @@ void KeyboardController::HideKeyboard(HideReason reason) {
 
   ui::LayerAnimator* container_animator = container_->layer()->GetAnimator();
   animation_observer_.reset(new CallbackAnimationObserver(
-      container_animator,
-      base::Bind(&KeyboardController::HideAnimationFinished,
-                 base::Unretained(this))));
+      container_animator, base::Bind(&KeyboardController::HideAnimationFinished,
+                                     base::Unretained(this))));
   container_animator->AddObserver(animation_observer_.get());
 
   ui::ScopedLayerAnimationSettings settings(container_animator);
@@ -479,6 +477,7 @@ void KeyboardController::SetKeyboardMode(KeyboardMode mode) {
 }
 
 void KeyboardController::ShowKeyboard(bool lock) {
+  DCHECK(this);
   set_keyboard_locked(lock);
   ShowKeyboardInternal(display::kInvalidDisplayId);
 }
@@ -486,6 +485,10 @@ void KeyboardController::ShowKeyboard(bool lock) {
 void KeyboardController::ShowKeyboardInDisplay(int64_t display_id) {
   set_keyboard_locked(true);
   ShowKeyboardInternal(display_id);
+}
+
+void KeyboardController::printstate() {
+  std::cout << StateToStr(state_) << std::endl;
 }
 
 bool KeyboardController::IsKeyboardWindowCreated() {
@@ -504,7 +507,8 @@ void KeyboardController::OnWindowAddedToRootWindow(aura::Window* window) {
   AdjustKeyboardBounds();
 }
 
-void KeyboardController::OnWindowRemovingFromRootWindow(aura::Window* window,
+void KeyboardController::OnWindowRemovingFromRootWindow(
+    aura::Window* window,
     aura::Window* new_root) {
   if (window->GetRootWindow()->HasObserver(this))
     window->GetRootWindow()->RemoveObserver(this);
@@ -524,17 +528,15 @@ void KeyboardController::OnWindowBoundsChanged(aura::Window* window,
   if (keyboard_mode_ == FULL_WIDTH) {
     container_->SetBounds(gfx::Rect(new_bounds.x(),
                                     new_bounds.bottom() - container_height,
-                                    new_bounds.width(),
-                                    container_height));
+                                    new_bounds.width(), container_height));
   } else if (keyboard_mode_ == FLOATING) {
     // When screen rotate, horizontally center floating virtual keyboard
     // window and vertically align it to the bottom.
     int container_width = container_->bounds().width();
-    container_->SetBounds(gfx::Rect(
-        new_bounds.x() + (new_bounds.width() - container_width) / 2,
-        new_bounds.bottom() - container_height,
-        container_width,
-        container_height));
+    container_->SetBounds(
+        gfx::Rect(new_bounds.x() + (new_bounds.width() - container_width) / 2,
+                  new_bounds.bottom() - container_height, container_width,
+                  container_height));
   }
 }
 
