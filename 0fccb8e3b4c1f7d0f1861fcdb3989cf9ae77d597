@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f2ed303_c9c1dde4",
+        "filename": "chrome/browser/engagement/important_sites_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-24T18:33:21Z",
+      "side": 1,
+      "message": "can we also populate the score? This is useful for ranking later. Right now it stops if we\u0027re less than the minimum.",
+      "range": {
+        "startLine": 241,
+        "startChar": 0,
+        "endLine": 241,
+        "endChar": 74
+      },
+      "revId": "0fccb8e3b4c1f7d0f1861fcdb3989cf9ae77d597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
