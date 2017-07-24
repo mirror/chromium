@@ -250,10 +250,11 @@ void MdTextButton::UpdateColors() {
   if (!explicitly_set_normal_color()) {
     const auto colors = explicitly_set_colors();
     LabelButton::SetEnabledTextColors(enabled_text_color);
-    if (state() == STATE_DISABLED && !is_prominent_)
+    if (state() == STATE_DISABLED && !is_prominent_) {
       LabelButton::SetTextColor(STATE_DISABLED,
                                 style::GetColor(label()->text_context(),
                                                 style::STYLE_DISABLED, theme));
+    }
     set_explicitly_set_colors(colors);
   }
 
@@ -262,7 +263,6 @@ void MdTextButton::UpdateColors() {
   if (is_prominent_)
     SetTextColor(STATE_DISABLED, enabled_text_color);
 
-  SkColor text_color = label()->enabled_color();
   SkColor bg_color =
       theme->GetSystemColor(ui::NativeTheme::kColorId_DialogBackground);
 
@@ -282,24 +282,29 @@ void MdTextButton::UpdateColors() {
     bg_color = color_utils::GetResultingPaintColor(shade, bg_color);
   }
 
-  // Specified text color: 5a5a5a @ 1.0 alpha, 757575 @ 1.0 alpha for Harmony
-  // Specified stroke color: 000000 @ 0.2 alpha, Harmony and non-Harmony
-  // 000000 @ 0.2 is very close to 5a5a5a @ 0.308 (== 0x4e) or 757575 @ 0.37
-  // (== 0x5f); both are cccccc @ 1.0, and this way if NativeTheme changes the
-  // button color, the button stroke will also change colors to match.
+  // Regardless of the enabled state of the button, the stroke color is based
+  // off the enabled text color: 5a5a5a @ 1.0 alpha, 757575 @ 1.0 alpha for
+  // Harmony. Specified stroke color: 000000 @ 0.2 alpha, Harmony and non-
+  // Harmony 000000 @ 0.2 is very close to 5a5a5a @ 0.308 (== 0x4e) or
+  // 757575 @ 0.37 (== 0x5f); both are cccccc @ 1.0, and this way if NativeTheme
+  // changes the button color, the button stroke will also change colors to
+  // match.
   SkColor stroke_color =
       is_prominent_ ? SK_ColorTRANSPARENT
-                    : SkColorSetA(text_color,
+                    : SkColorSetA(enabled_text_color,
                                   UseMaterialSecondaryButtons() ? 0x5f : 0x4e);
 
   // Disabled, non-prominent buttons need their stroke lightened. The Harmony
   // spec asks for 000000 @ 0.1 alpha or e6e6e6 @ 1.0 alpha. The stroke color
-  // has already been translated above to cccccc @ 1.0 or 000000 @ 0.2.
-  // cccccc @ 0.25 (== 0x41) translates to e6e6e6 @ 1.0. To simplify the code,
-  // 000000 @ 0.1 is being used for both Harmony and non-Harmony. Prominent
-  // buttons need it left at SK_ColorTRANSPARENT from above.
-  if (state() == STATE_DISABLED && !is_prominent_)
-    stroke_color = SkColorSetA(stroke_color, 0x41);
+  // has already been translated above to an effective cccccc @ 1.0 or
+  // 000000 @ 0.2. cccccc @ 0.25 (== 0x41) translates to e6e6e6 @ 1.0. To
+  // simplify the code, 000000 @ 0.1 is being used for both Harmony and
+  // non-Harmony. Prominent buttons need it left at SK_ColorTRANSPARENT from
+  // above.
+  if (state() == STATE_DISABLED && !is_prominent_) {
+    stroke_color = SkColorSetA(
+        color_utils::GetResultingPaintColor(stroke_color, bg_color), 0x80);
+  }
 
   DCHECK_EQ(SK_AlphaOPAQUE, static_cast<int>(SkColorGetA(bg_color)));
   SetBackground(
