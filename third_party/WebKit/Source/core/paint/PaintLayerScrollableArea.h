@@ -56,6 +56,12 @@
 
 namespace blink {
 
+enum CompositedScrolling {
+  kNoCompositedScrolling = 0,
+  kFullCompositedScrolling,
+  kUnbackedCompositedScrolling
+};
+
 enum ResizerHitTestType { kResizerForPointer, kResizerForTouch };
 
 class ComputedStyle;
@@ -414,9 +420,10 @@ class CORE_EXPORT PaintLayerScrollableArea final
   IntRect ScrollCornerAndResizerRect() const final;
 
   enum LCDTextMode { kConsiderLCDText, kIgnoreLCDText };
-
   void UpdateNeedsCompositedScrolling(LCDTextMode = kConsiderLCDText);
-  bool NeedsCompositedScrolling() const { return needs_composited_scrolling_; }
+  CompositedScrolling NeedsCompositedScrolling() const {
+    return needs_composited_scrolling_;
+  }
 
   // These are used during compositing updates to determine if the overflow
   // controls need to be repositioned in the GraphicsLayer tree.
@@ -558,7 +565,8 @@ class CORE_EXPORT PaintLayerScrollableArea final
     return *rare_data_.get();
   }
 
-  bool ComputeNeedsCompositedScrolling(const LCDTextMode, const PaintLayer*);
+  CompositedScrolling ComputeNeedsCompositedScrolling(const LCDTextMode,
+                                                      const PaintLayer*);
   PaintLayer& layer_;
 
   PaintLayer* next_topmost_scroll_child_;
@@ -573,7 +581,7 @@ class CORE_EXPORT PaintLayerScrollableArea final
 
   // FIXME: once cc can handle composited scrolling with clip paths, we will
   // no longer need this bit.
-  unsigned needs_composited_scrolling_ : 1;
+  CompositedScrolling needs_composited_scrolling_ : kFullCompositedScrolling;
 
   // Set to indicate that a scrollbar layer, if present, needs to be rebuilt
   // in the next compositing update because the underlying blink::Scrollbar

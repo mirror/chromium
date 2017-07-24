@@ -542,8 +542,10 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
 
   bool MaskBlendingAppliedByCompositor() const;
   bool HasCompositedClippingMask() const;
-  bool NeedsCompositedScrolling() const {
-    return scrollable_area_ && scrollable_area_->NeedsCompositedScrolling();
+  CompositedScrolling NeedsCompositedScrolling() const {
+    if (scrollable_area_)
+      return scrollable_area_->NeedsCompositedScrolling();
+    return kNoCompositedScrolling;
   }
 
   // Paint invalidation containers can be self-composited or squashed.
