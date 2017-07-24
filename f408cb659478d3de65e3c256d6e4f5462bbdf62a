@@ -22,6 +22,30 @@
       "revId": "f408cb659478d3de65e3c256d6e4f5462bbdf62a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd06a1c6_bfbe4d79",
+        "filename": "ios/chrome/browser/signin/gaia_auth_fetcher_ios.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-07-24T11:37:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d59ebf7_5407dc6b",
+      "range": {
+        "startLine": 123,
+        "startChar": 19,
+        "endLine": 123,
+        "endChar": 24
+      },
+      "revId": "f408cb659478d3de65e3c256d6e4f5462bbdf62a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
