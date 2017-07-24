@@ -36,8 +36,7 @@ class VIZ_SERVICE_EXPORT SurfaceAggregator {
   using SurfaceIndexMap = base::flat_map<SurfaceId, int>;
 
   SurfaceAggregator(cc::SurfaceManager* manager,
-                    cc::ResourceProvider* provider,
-                    bool aggregate_only_damaged);
+                    cc::ResourceProvider* provider);
   ~SurfaceAggregator();
 
   cc::CompositorFrame Aggregate(const SurfaceId& surface_id);
@@ -104,10 +103,7 @@ class VIZ_SERVICE_EXPORT SurfaceAggregator {
   void HandleSurfaceQuad(const cc::SurfaceDrawQuad* surface_quad,
                          const gfx::Transform& target_transform,
                          const ClipData& clip_rect,
-                         cc::RenderPass* dest_pass,
-                         bool ignore_undamaged,
-                         gfx::Rect* damage_rect_in_quad_space,
-                         bool* damage_rect_in_quad_space_valid);
+                         cc::RenderPass* dest_pass);
 
   cc::SharedQuadState* CopySharedQuadState(
       const cc::SharedQuadState* source_sqs,
@@ -158,7 +154,6 @@ class VIZ_SERVICE_EXPORT SurfaceAggregator {
   base::flat_map<std::pair<SurfaceId, cc::RenderPassId>, RenderPassInfo>
       render_pass_allocator_map_;
   cc::RenderPassId next_render_pass_id_;
-  const bool aggregate_only_damaged_;
   bool output_is_secure_;
 
   // The color space for the root render pass. If this is different from
@@ -207,10 +202,6 @@ class VIZ_SERVICE_EXPORT SurfaceAggregator {
 
   // The root damage rect of the currently-aggregating frame.
   gfx::Rect root_damage_rect_;
-
-  // True if the frame that's currently being aggregated has copy requests.
-  // This is valid during Aggregate after PrewalkTree is called.
-  bool has_copy_requests_;
 
   // Tracks UMA stats for SurfaceDrawQuads during a call to Aggregate().
   SurfaceDrawQuadUmaStats uma_stats_;
