@@ -1094,6 +1094,9 @@ void FormStructure::EncodeFormForUpload(AutofillUploadContents* upload) const {
         added_field->set_generated_password_changed(
             field->generated_password_changed());
       }
+      if (field_type == autofill::USERNAME) {
+        added_field->set_username_vote_type(field->username_vote_type());
+      }
 
       if (field->form_classifier_outcome()) {
         added_field->set_form_classifier_outcome(

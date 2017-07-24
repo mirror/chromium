@@ -243,6 +243,16 @@ class FormStructure {
   // Returns a FormData containing the data this form structure knows about.
   FormData ToFormData() const;
 
+  void set_username_vote_type(
+      autofill::AutofillUploadContents::Field::UsernameVoteType type) {
+    username_vote_type_ = type;
+  }
+
+  autofill::AutofillUploadContents::Field::UsernameVoteType username_vote_type()
+      const {
+    return username_vote_type_;
+  }
+
   bool operator==(const FormData& form) const;
   bool operator!=(const FormData& form) const;
 
@@ -344,6 +354,9 @@ class FormStructure {
   // The unique signature for this form, composed of the target url domain,
   // the form name, and the form field names in a 64-bit hash.
   FormSignature form_signature_;
+
+  // The username vote type for this form.
+  autofill::AutofillUploadContents::Field::UsernameVoteType username_vote_type_;
 
   DISALLOW_COPY_AND_ASSIGN(FormStructure);
 };
