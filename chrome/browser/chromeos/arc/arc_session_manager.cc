@@ -689,9 +689,9 @@ void ArcSessionManager::RequestArcDataRemoval() {
 
   // The check if migration is allowed is done to make sure the data is not
   // removed if the device had ARC enabled and became disabled as result of
-  // migration to ext4 policy.
-  // TODO(igorcov): Remove this check after migration. crbug.com/725493
-  if (!arc::IsArcMigrationAllowed())
+  // migration to ext4 policy. This can happen only if the account encryption is
+  // still ecryptfs.
+  if (arc::IsArcBlockedDueToIncompatibleFileSystem(profile_))
     return;
 
   // TODO(hidehiko): DCHECK the previous state. This is called for four cases;

@@ -217,11 +217,6 @@ bool ShouldForceDircrypto(const AccountId& account_id) {
   if (!arc::IsArcAvailable())
     return false;
 
-  // If the device requires ecryptfs to ext4 migration policy check, and the
-  // policy doesn't allow the migration, then return.
-  if (!arc::IsArcMigrationAllowed())
-    return false;
-
   // In some login flows (e.g. when siging in supervised user), ARC can not
   // start. For such cases, we don't need to force Ext4 dircrypto.
   chromeos::UserFlow* user_flow =
