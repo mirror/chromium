@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8b5ee47_d0563f61",
+        "filename": "media/base/mime_util_internal.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-24T23:58:13Z",
+      "side": 1,
+      "message": "Filed clang format bug http://crbug.com/748292 for this.",
+      "revId": "2a39b1891fbd767f90185c4ecaeb0fb162f83ea6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
