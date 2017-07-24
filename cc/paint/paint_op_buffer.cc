@@ -5,7 +5,10 @@
 #include "cc/paint/paint_op_buffer.h"
 
 #include "base/containers/stack_container.h"
+#include "base/memory/ptr_util.h"
+#include "cc/paint/decoded_draw_image.h"
 #include "cc/paint/display_item_list.h"
+#include "cc/paint/image_provider.h"
 #include "cc/paint/paint_op_reader.h"
 #include "cc/paint/paint_op_writer.h"
 #include "cc/paint/paint_record.h"
@@ -13,6 +16,145 @@
 #include "third_party/skia/include/core/SkCanvas.h"
 
 namespace cc {
+namespace {
+
+bool IsImageOp(const PaintOp* op) {
+  PaintOpType type = static_cast<PaintOpType>(op->type);
+
+  if (!op->IsDrawOp()) {
+    return false;
+  } else if (type == PaintOpType::DrawImage) {
+    return true;
+  } else if (type == PaintOpType::DrawImageRect) {
+    return true;
+  } else if (op->IsPaintOpWithFlags()) {
+    const auto& flags = static_cast<const PaintOpWithFlags*>(op)->flags;
+    return flags.HasShader() && flags.getSkShader()->isAImage(nullptr, nullptr);
+  }
+
+  return false;
+}
+
+bool QuickRejectDraw(const PaintOp* op, const SkCanvas* canvas) {
+  DCHECK(op->IsDrawOp());
+
+  SkRect rect;
+  if (!PaintOp::GetBounds(op, &rect))
+    return false;
+
+  if (op->IsPaintOpWithFlags()) {
+    SkPaint paint = static_cast<const PaintOpWithFlags*>(op)->flags.ToSkPaint();
+    if (!paint.canComputeFastBounds())
+      return false;
+    paint.computeFastBounds(rect, &rect);
+  }
+
+  return canvas->quickReject(rect);
+}
+
+// Encapsulates a ImageProvider::DecodedImageHolder and a SkPaint. Use of
+// this class ensures that the DecodedImageHolder outlives the dependent
+// SkPaint.
+class ScopedImagePaint {
+ public:
+  static std::unique_ptr<ScopedImagePaint> Create(ImageProvider* image_provider,
+                                                  const PaintFlags& flags,
+                                                  const SkMatrix& ctm) {
+    // TODO(vmpstr/khushalsagar): Use PaintImage from PaintShader once we start
+    // retaining it in the flags.
+    const SkPaint& paint = flags.ToSkPaint();
+    SkShader* shader = paint.getShader();
+    if (!shader)
+      return nullptr;
+
+    SkMatrix matrix;
+    SkShader::TileMode xy[2];
+    SkImage* image = shader->isAImage(&matrix, xy);
+    if (!image)
+      return nullptr;
+
+    SkPaint decoded_paint = paint;
+    decoded_paint.setShader(nullptr);
+
+    SkMatrix total_image_matrix = matrix;
+    total_image_matrix.preConcat(ctm);
+    PaintImage paint_image =
+        PaintImage(PaintImage::kUnknownStableId, sk_ref_sp(image));
+    SkRect src_rect = SkRect::MakeIWH(image->width(), image->height());
+    auto decoded_image_holder = image_provider->GetDecodedImage(
+        paint_image, src_rect, paint.getFilterQuality(), total_image_matrix);
+
+    if (!decoded_image_holder)
+      return base::MakeUnique<ScopedImagePaint>(std::move(decoded_paint),
+                                                nullptr);
+
+    const auto& decoded_image = decoded_image_holder->DecodedImage();
+    DCHECK(decoded_image.image());
+
+    bool need_scale = !decoded_image.is_scale_adjustment_identity();
+    if (need_scale) {
+      matrix.preScale(1.f / decoded_image.scale_adjustment().width(),
+                      1.f / decoded_image.scale_adjustment().height());
+    }
+    decoded_paint.setShader(
+        decoded_image.image()->makeShader(xy[0], xy[1], &matrix));
+    decoded_paint.setFilterQuality(decoded_image.filter_quality());
+    return base::MakeUnique<ScopedImagePaint>(std::move(decoded_paint),
+                                              std::move(decoded_image_holder));
+  }
+
+  ScopedImagePaint(SkPaint decoded_paint,
+                   std::unique_ptr<ImageProvider::DecodedImageHolder> holder)
+      : decoded_paint_(std::move(decoded_paint)), holder_(std::move(holder)) {}
+  ~ScopedImagePaint() = default;
+
+  const SkPaint* paint() const { return &decoded_paint_; }
+
+ private:
+  SkPaint decoded_paint_;
+  std::unique_ptr<ImageProvider::DecodedImageHolder> holder_;
+
+  DISALLOW_COPY_AND_ASSIGN(ScopedImagePaint);
+};
+
+void RasterWithAlpha(const PaintOp* op,
+                     SkCanvas* canvas,
+                     const PlaybackParams& params,
+                     const SkRect& bounds,
+                     uint8_t alpha) {
+  DCHECK(op->IsDrawOp());
+  DCHECK_NE(static_cast<PaintOpType>(op->type), PaintOpType::DrawRecord);
+
+  // TODO(enne): partially specialize RasterWithAlpha for draw color?
+  if (op->IsPaintOpWithFlags()) {
+    auto* flags_op = static_cast<const PaintOpWithFlags*>(op);
+    std::unique_ptr<ScopedImagePaint> scoped_paint =
+        params.image_provider
+            ? ScopedImagePaint::Create(params.image_provider, flags_op->flags,
+                                       canvas->getTotalMatrix())
+            : nullptr;
+    SkPaint decoded_paint =
+        scoped_paint ? *scoped_paint->paint() : flags_op->flags.ToSkPaint();
+    if (alpha == 255) {
+      flags_op->RasterWithPaint(canvas, &decoded_paint, params);
+    } else if (flags_op->flags.SupportsFoldingAlpha()) {
+      decoded_paint.setAlpha(SkMulDiv255Round(decoded_paint.getAlpha(), alpha));
+      flags_op->RasterWithPaint(canvas, &decoded_paint, params);
+    } else {
+      bool unset = bounds.x() == PaintOp::kUnsetRect.x();
+      canvas->saveLayerAlpha(unset ? nullptr : &bounds, alpha);
+      flags_op->RasterWithPaint(canvas, &decoded_paint, params);
+      canvas->restore();
+    }
+  } else {
+    bool unset = bounds.x() == PaintOp::kUnsetRect.x();
+    canvas->saveLayerAlpha(unset ? nullptr : &bounds, alpha);
+    op->Raster(canvas, params);
+    canvas->restore();
+  }
+}
+
+}  // namespace
 
 #define TYPES(M)           \
   M(AnnotateOp)            \
@@ -46,96 +188,58 @@ namespace cc {
   M(SetMatrixOp)           \
   M(TranslateOp)
 
-using RasterFunction = void (*)(const PaintOp* op,
-                                SkCanvas* canvas,
-                                const SkMatrix& original_ctm);
-using RasterWithFlagsFunction = void (*)(const PaintOpWithFlags* op,
-                                         const PaintFlags* flags,
-                                         SkCanvas* canvas,
-                                         const SkMatrix& original_ctm);
-
-NOINLINE static void RasterWithAlphaInternal(RasterFunction raster_fn,
-                                             const PaintOp* op,
-                                             SkCanvas* canvas,
-                                             const SkRect& bounds,
-                                             uint8_t alpha) {
-  bool unset = bounds.x() == PaintOp::kUnsetRect.x();
-  canvas->saveLayerAlpha(unset ? nullptr : &bounds, alpha);
-  SkMatrix unused_matrix;
-  raster_fn(op, canvas, unused_matrix);
-  canvas->restore();
-}
-
-// Helper template to share common code for RasterWithAlpha when paint ops
-// have or don't have PaintFlags.
-template <typename T, bool HasFlags>
-struct Rasterizer {
-  static void RasterWithAlpha(const T* op,
-                              SkCanvas* canvas,
-                              const SkRect& bounds,
-                              uint8_t alpha) {
-    static_assert(
-        !T::kHasPaintFlags,
-        "This function should not be used for a PaintOp that has PaintFlags");
-    DCHECK(T::kIsDrawOp);
-    RasterWithAlphaInternal(&T::Raster, op, canvas, bounds, alpha);
-  }
-};
-
-NOINLINE static void RasterWithAlphaInternalForFlags(
-    RasterWithFlagsFunction raster_fn,
-    const PaintOpWithFlags* op,
-    SkCanvas* canvas,
-    const SkRect& bounds,
-    uint8_t alpha) {
-  SkMatrix unused_matrix;
-  if (alpha == 255) {
-    raster_fn(op, &op->flags, canvas, unused_matrix);
-  } else if (op->flags.SupportsFoldingAlpha()) {
-    PaintFlags flags = op->flags;
-    flags.setAlpha(SkMulDiv255Round(flags.getAlpha(), alpha));
-    raster_fn(op, &flags, canvas, unused_matrix);
-  } else {
-    bool unset = bounds.x() == PaintOp::kUnsetRect.x();
-    canvas->saveLayerAlpha(unset ? nullptr : &bounds, alpha);
-    raster_fn(op, &op->flags, canvas, unused_matrix);
-    canvas->restore();
-  }
-}
-
-template <typename T>
-struct Rasterizer<T, true> {
-  static void RasterWithAlpha(const T* op,
-                              SkCanvas* canvas,
-                              const SkRect& bounds,
-                              uint8_t alpha) {
-    static_assert(T::kHasPaintFlags,
-                  "This function expects the PaintOp to have PaintFlags");
-    DCHECK(T::kIsDrawOp);
-    RasterWithAlphaInternalForFlags(&T::RasterWithFlags, op, canvas, bounds,
-                                    alpha);
-  }
-};
-
-// These should never be used, as we should recurse into them to draw their
-// contained op with alpha instead.
-template <bool HasFlags>
-struct Rasterizer<DrawRecordOp, HasFlags> {
-  static void RasterWithAlpha(const DrawRecordOp* op,
-                              SkCanvas* canvas,
-                              const SkRect& bounds,
-                              uint8_t alpha) {
-    NOTREACHED();
-  }
-};
-// TODO(enne): partially specialize RasterWithAlpha for draw color?
-
 static constexpr size_t kNumOpTypes =
     static_cast<size_t>(PaintOpType::LastPaintOpType) + 1;
 
 // Verify that every op is in the TYPES macro.
 #define M(T) +1
 static_assert(kNumOpTypes == TYPES(M), "Missing op in list");
+#undef M
+
+using RasterFunction = void (*)(const PaintOp* op,
+                                SkCanvas* canvas,
+                                const PlaybackParams& params);
+#define M(T) &T::Raster,
+static const RasterFunction g_raster_functions[kNumOpTypes] = {TYPES(M)};
+#undef M
+
+template <typename T, bool HasFlags>
+struct Rasterizer {
+  static void RasterWithPaint(const T* op,
+                              const SkPaint* paint,
+                              SkCanvas* canvas,
+                              const PlaybackParams& params) {
+    static_assert(
+        !T::kHasPaintFlags,
+        "This function should not be used for a PaintOp that has PaintFlags");
+    NOTREACHED();
+  }
+};
+
+template <typename T>
+struct Rasterizer<T, true> {
+  static void RasterWithPaint(const T* op,
+                              const SkPaint* paint,
+                              SkCanvas* canvas,
+                              const PlaybackParams& params) {
+    static_assert(T::kHasPaintFlags,
+                  "This function expects the PaintOp to have PaintFlags");
+    T::RasterWithPaint(op, paint, canvas, params);
+  }
+};
+
+using RasterWithPaintFunction = void (*)(const PaintOp* op,
+                                         const SkPaint* paint,
+                                         SkCanvas* canvas,
+                                         const PlaybackParams& params);
+#define M(T)                                                    \
+  [](const PaintOp* op, const SkPaint* paint, SkCanvas* canvas, \
+     const PlaybackParams& params) {                            \
+    Rasterizer<T, T::kHasPaintFlags>::RasterWithPaint(          \
+        static_cast<const T*>(op), paint, canvas, params);      \
+  },
+static const RasterWithPaintFunction
+    g_raster_with_flags_functions[kNumOpTypes] = {TYPES(M)};
 #undef M
 
 using SerializeFunction = size_t (*)(const PaintOp* op,
@@ -156,27 +260,6 @@ static const DeserializeFunction g_deserialize_functions[kNumOpTypes] = {
     TYPES(M)};
 #undef M
 
-using RasterFunction = void (*)(const PaintOp* op,
-                                SkCanvas* canvas,
-                                const SkMatrix& original_ctm);
-#define M(T) &T::Raster,
-static const RasterFunction g_raster_functions[kNumOpTypes] = {TYPES(M)};
-#undef M
-
-using RasterAlphaFunction = void (*)(const PaintOp* op,
-                                     SkCanvas* canvas,
-                                     const SkRect& bounds,
-                                     uint8_t alpha);
-#define M(T) \
-  T::kIsDrawOp ? [](const PaintOp* op, SkCanvas* canvas, const SkRect& bounds, \
-                    uint8_t alpha) { \
-    Rasterizer<T, T::kHasPaintFlags>::RasterWithAlpha( \
-        static_cast<const T*>(op), canvas, bounds, alpha); \
-  } : static_cast<RasterAlphaFunction>(nullptr),
-static const RasterAlphaFunction g_raster_alpha_functions[kNumOpTypes] = {
-    TYPES(M)};
-#undef M
-
 // Most state ops (matrix, clip, save, restore) have a trivial destructor.
 // TODO(enne): evaluate if we need the nullptr optimization or if
 // we even need to differentiate trivial destructors here.
@@ -190,6 +273,10 @@ static const VoidFunction g_destructor_functions[kNumOpTypes] = {TYPES(M)};
 
 #define M(T) T::kIsDrawOp,
 static bool g_is_draw_op[kNumOpTypes] = {TYPES(M)};
+#undef M
+
+#define M(T) T::kHasPaintFlags,
+static bool g_has_paint_flags[kNumOpTypes] = {TYPES(M)};
 #undef M
 
 #define M(T)                                         \
@@ -282,6 +369,10 @@ size_t SimpleSerialize(const PaintOp* op, void* memory, size_t size) {
   memcpy(memory, op, sizeof(T));
   return sizeof(T);
 }
+
+PlaybackParams::PlaybackParams(ImageProvider* image_provider,
+                               const SkMatrix& original_ctm)
+    : image_provider(image_provider), original_ctm(original_ctm) {}
 
 size_t AnnotateOp::Serialize(const PaintOp* base_op,
                              void* memory,
@@ -1056,7 +1147,7 @@ PaintOp* TranslateOp::Deserialize(const void* input,
 
 void AnnotateOp::Raster(const PaintOp* base_op,
                         SkCanvas* canvas,
-                        const SkMatrix& original_ctm) {
+                        const PlaybackParams& params) {
   auto* op = static_cast<const AnnotateOp*>(base_op);
   switch (op->annotation_type) {
     case PaintCanvas::AnnotationType::URL:
@@ -1075,212 +1166,253 @@ void AnnotateOp::Raster(const PaintOp* base_op,
 
 void ClipPathOp::Raster(const PaintOp* base_op,
                         SkCanvas* canvas,
-                        const SkMatrix& original_ctm) {
+                        const PlaybackParams& params) {
   auto* op = static_cast<const ClipPathOp*>(base_op);
   canvas->clipPath(op->path, op->op, op->antialias);
 }
 
 void ClipRectOp::Raster(const PaintOp* base_op,
                         SkCanvas* canvas,
-                        const SkMatrix& original_ctm) {
+                        const PlaybackParams& params) {
   auto* op = static_cast<const ClipRectOp*>(base_op);
   canvas->clipRect(op->rect, op->op, op->antialias);
 }
 
 void ClipRRectOp::Raster(const PaintOp* base_op,
                          SkCanvas* canvas,
-                         const SkMatrix& original_ctm) {
+                         const PlaybackParams& params) {
   auto* op = static_cast<const ClipRRectOp*>(base_op);
   canvas->clipRRect(op->rrect, op->op, op->antialias);
 }
 
 void ConcatOp::Raster(const PaintOp* base_op,
                       SkCanvas* canvas,
-                      const SkMatrix& original_ctm) {
+                      const PlaybackParams& params) {
   auto* op = static_cast<const ConcatOp*>(base_op);
   canvas->concat(op->matrix);
 }
 
-void DrawArcOp::RasterWithFlags(const PaintOpWithFlags* base_op,
-                                const PaintFlags* flags,
+void DrawArcOp::RasterWithPaint(const PaintOpWithFlags* base_op,
+                                const SkPaint* paint,
                                 SkCanvas* canvas,
-                                const SkMatrix& original_ctm) {
+                                const PlaybackParams& params) {
   auto* op = static_cast<const DrawArcOp*>(base_op);
-  SkPaint paint = flags->ToSkPaint();
   canvas->drawArc(op->oval, op->start_angle, op->sweep_angle, op->use_center,
-                  paint);
+                  *paint);
 }
 
-void DrawCircleOp::RasterWithFlags(const PaintOpWithFlags* base_op,
-                                   const PaintFlags* flags,
+void DrawCircleOp::RasterWithPaint(const PaintOpWithFlags* base_op,
+                                   const SkPaint* paint,
                                    SkCanvas* canvas,
-                                   const SkMatrix& original_ctm) {
+                                   const PlaybackParams& params) {
   auto* op = static_cast<const DrawCircleOp*>(base_op);
-  SkPaint paint = flags->ToSkPaint();
-  canvas->drawCircle(op->cx, op->cy, op->radius, paint);
+  canvas->drawCircle(op->cx, op->cy, op->radius, *paint);
 }
 
 void DrawColorOp::Raster(const PaintOp* base_op,
                          SkCanvas* canvas,
-                         const SkMatrix& original_ctm) {
+                         const PlaybackParams& params) {
   auto* op = static_cast<const DrawColorOp*>(base_op);
   canvas->drawColor(op->color, op->mode);
 }
 
-void DrawDRRectOp::RasterWithFlags(const PaintOpWithFlags* base_op,
-                                   const PaintFlags* flags,
+void DrawDRRectOp::RasterWithPaint(const PaintOpWithFlags* base_op,
+                                   const SkPaint* paint,
                                    SkCanvas* canvas,
-                                   const SkMatrix& original_ctm) {
+                                   const PlaybackParams& params) {
   auto* op = static_cast<const DrawDRRectOp*>(base_op);
-  SkPaint paint = flags->ToSkPaint();
-  canvas->drawDRRect(op->outer, op->inner, paint);
+  canvas->drawDRRect(op->outer, op->inner, *paint);
 }
 
-void DrawImageOp::RasterWithFlags(const PaintOpWithFlags* base_op,
-                                  const PaintFlags* flags,
+void DrawImageOp::RasterWithPaint(const PaintOpWithFlags* base_op,
+                                  const SkPaint* paint,
                                   SkCanvas* canvas,
-                                  const SkMatrix& original_ctm) {
+                                  const PlaybackParams& params) {
   auto* op = static_cast<const DrawImageOp*>(base_op);
-  SkPaint paint = flags->ToSkPaint();
-  canvas->drawImage(op->image.sk_image().get(), op->left, op->top, &paint);
+
+  if (params.image_provider) {
+    SkRect image_rect = SkRect::MakeIWH(op->image.sk_image()->width(),
+                                        op->image.sk_image()->height());
+    auto decoded_image_holder = params.image_provider->GetDecodedImage(
+        op->image, image_rect,
+        paint ? paint->getFilterQuality() : kNone_SkFilterQuality,
+        canvas->getTotalMatrix());
+    if (!decoded_image_holder)
+      return;
+
+    const auto& decoded_image = decoded_image_holder->DecodedImage();
+    DCHECK(decoded_image.image());
+
+    DCHECK_EQ(0, static_cast<int>(decoded_image.src_rect_offset().width()));
+    DCHECK_EQ(0, static_cast<int>(decoded_image.src_rect_offset().height()));
+    bool need_scale = !decoded_image.is_scale_adjustment_identity();
+    if (need_scale) {
+      canvas->save();
+      canvas->scale(1.f / (decoded_image.scale_adjustment().width()),
+                    1.f / (decoded_image.scale_adjustment().height()));
+    }
+    canvas->drawImage(decoded_image.image().get(), op->left, op->top, paint);
+    if (need_scale)
+      canvas->restore();
+  } else {
+    canvas->drawImage(op->image.sk_image().get(), op->left, op->top, paint);
+  }
 }
 
-void DrawImageRectOp::RasterWithFlags(const PaintOpWithFlags* base_op,
-                                      const PaintFlags* flags,
+void DrawImageRectOp::RasterWithPaint(const PaintOpWithFlags* base_op,
+                                      const SkPaint* paint,
                                       SkCanvas* canvas,
-                                      const SkMatrix& original_ctm) {
+                                      const PlaybackParams& params) {
   auto* op = static_cast<const DrawImageRectOp*>(base_op);
   // TODO(enne): Probably PaintCanvas should just use the skia enum directly.
   SkCanvas::SrcRectConstraint skconstraint =
       static_cast<SkCanvas::SrcRectConstraint>(op->constraint);
-  SkPaint paint = flags->ToSkPaint();
-  canvas->drawImageRect(op->image.sk_image().get(), op->src, op->dst, &paint,
-                        skconstraint);
+
+  if (params.image_provider) {
+    SkMatrix matrix;
+    matrix.setRectToRect(op->src, op->dst, SkMatrix::kFill_ScaleToFit);
+    matrix.postConcat(canvas->getTotalMatrix());
+
+    auto decoded_image_holder = params.image_provider->GetDecodedImage(
+        op->image, op->src,
+        paint ? paint->getFilterQuality() : kNone_SkFilterQuality,
+        canvas->getTotalMatrix());
+    if (!decoded_image_holder)
+      return;
+
+    const auto& decoded_image = decoded_image_holder->DecodedImage();
+    DCHECK(decoded_image.image());
+
+    SkRect adjusted_src =
+        op->src.makeOffset(decoded_image.src_rect_offset().width(),
+                           decoded_image.src_rect_offset().height());
+    if (!decoded_image.is_scale_adjustment_identity()) {
+      float x_scale = decoded_image.scale_adjustment().width();
+      float y_scale = decoded_image.scale_adjustment().height();
+      adjusted_src = SkRect::MakeXYWH(
+          adjusted_src.x() * x_scale, adjusted_src.y() * y_scale,
+          adjusted_src.width() * x_scale, adjusted_src.height() * y_scale);
+    }
+    canvas->drawImageRect(decoded_image.image().get(), adjusted_src, op->dst,
+                          paint, skconstraint);
+  } else {
+    canvas->drawImageRect(op->image.sk_image().get(), op->src, op->dst, paint,
+                          skconstraint);
+  }
 }
 
-void DrawIRectOp::RasterWithFlags(const PaintOpWithFlags* base_op,
-                                  const PaintFlags* flags,
+void DrawIRectOp::RasterWithPaint(const PaintOpWithFlags* base_op,
+                                  const SkPaint* paint,
                                   SkCanvas* canvas,
-                                  const SkMatrix& original_ctm) {
+                                  const PlaybackParams& params) {
   auto* op = static_cast<const DrawIRectOp*>(base_op);
-  SkPaint paint = flags->ToSkPaint();
-  canvas->drawIRect(op->rect, paint);
+  canvas->drawIRect(op->rect, *paint);
 }
 
-void DrawLineOp::RasterWithFlags(const PaintOpWithFlags* base_op,
-                                 const PaintFlags* flags,
+void DrawLineOp::RasterWithPaint(const PaintOpWithFlags* base_op,
+                                 const SkPaint* paint,
                                  SkCanvas* canvas,
-                                 const SkMatrix& original_ctm) {
+                                 const PlaybackParams& params) {
   auto* op = static_cast<const DrawLineOp*>(base_op);
-  SkPaint paint = flags->ToSkPaint();
-  canvas->drawLine(op->x0, op->y0, op->x1, op->y1, paint);
+  canvas->drawLine(op->x0, op->y0, op->x1, op->y1, *paint);
 }
 
-void DrawOvalOp::RasterWithFlags(const PaintOpWithFlags* base_op,
-                                 const PaintFlags* flags,
+void DrawOvalOp::RasterWithPaint(const PaintOpWithFlags* base_op,
+                                 const SkPaint* paint,
                                  SkCanvas* canvas,
-                                 const SkMatrix& original_ctm) {
+                                 const PlaybackParams& params) {
   auto* op = static_cast<const DrawOvalOp*>(base_op);
-  SkPaint paint = flags->ToSkPaint();
-  canvas->drawOval(op->oval, paint);
+  canvas->drawOval(op->oval, *paint);
 }
 
-void DrawPathOp::RasterWithFlags(const PaintOpWithFlags* base_op,
-                                 const PaintFlags* flags,
+void DrawPathOp::RasterWithPaint(const PaintOpWithFlags* base_op,
+                                 const SkPaint* paint,
                                  SkCanvas* canvas,
-                                 const SkMatrix& original_ctm) {
+                                 const PlaybackParams& params) {
   auto* op = static_cast<const DrawPathOp*>(base_op);
-  SkPaint paint = flags->ToSkPaint();
-  canvas->drawPath(op->path, paint);
+  canvas->drawPath(op->path, *paint);
 }
 
-void DrawPosTextOp::RasterWithFlags(const PaintOpWithFlags* base_op,
-                                    const PaintFlags* flags,
+void DrawPosTextOp::RasterWithPaint(const PaintOpWithFlags* base_op,
+                                    const SkPaint* paint,
                                     SkCanvas* canvas,
-                                    const SkMatrix& original_ctm) {
+                                    const PlaybackParams& params) {
   auto* op = static_cast<const DrawPosTextOp*>(base_op);
-  SkPaint paint = flags->ToSkPaint();
-  canvas->drawPosText(op->GetData(), op->bytes, op->GetArray(), paint);
+  canvas->drawPosText(op->GetData(), op->bytes, op->GetArray(), *paint);
 }
 
 void DrawRecordOp::Raster(const PaintOp* base_op,
                           SkCanvas* canvas,
-                          const SkMatrix& original_ctm) {
+                          const PlaybackParams& params) {
   // Don't use drawPicture here, as it adds an implicit clip.
   auto* op = static_cast<const DrawRecordOp*>(base_op);
-  op->record->Playback(canvas);
+  op->record->Playback(canvas, params.image_provider);
 }
 
-void DrawRectOp::RasterWithFlags(const PaintOpWithFlags* base_op,
-                                 const PaintFlags* flags,
+void DrawRectOp::RasterWithPaint(const PaintOpWithFlags* base_op,
+                                 const SkPaint* paint,
                                  SkCanvas* canvas,
-                                 const SkMatrix& original_ctm) {
+                                 const PlaybackParams& params) {
   auto* op = static_cast<const DrawRectOp*>(base_op);
-  SkPaint paint = flags->ToSkPaint();
-  canvas->drawRect(op->rect, paint);
+  canvas->drawRect(op->rect, *paint);
 }
 
-void DrawRRectOp::RasterWithFlags(const PaintOpWithFlags* base_op,
-                                  const PaintFlags* flags,
+void DrawRRectOp::RasterWithPaint(const PaintOpWithFlags* base_op,
+                                  const SkPaint* paint,
                                   SkCanvas* canvas,
-                                  const SkMatrix& original_ctm) {
+                                  const PlaybackParams& params) {
   auto* op = static_cast<const DrawRRectOp*>(base_op);
-  SkPaint paint = flags->ToSkPaint();
-  canvas->drawRRect(op->rrect, paint);
+  canvas->drawRRect(op->rrect, *paint);
 }
 
-void DrawTextOp::RasterWithFlags(const PaintOpWithFlags* base_op,
-                                 const PaintFlags* flags,
+void DrawTextOp::RasterWithPaint(const PaintOpWithFlags* base_op,
+                                 const SkPaint* paint,
                                  SkCanvas* canvas,
-                                 const SkMatrix& original_ctm) {
+                                 const PlaybackParams& params) {
   auto* op = static_cast<const DrawTextOp*>(base_op);
-  SkPaint paint = flags->ToSkPaint();
-  canvas->drawText(op->GetData(), op->bytes, op->x, op->y, paint);
+  canvas->drawText(op->GetData(), op->bytes, op->x, op->y, *paint);
 }
 
-void DrawTextBlobOp::RasterWithFlags(const PaintOpWithFlags* base_op,
-                                     const PaintFlags* flags,
+void DrawTextBlobOp::RasterWithPaint(const PaintOpWithFlags* base_op,
+                                     const SkPaint* paint,
                                      SkCanvas* canvas,
-                                     const SkMatrix& original_ctm) {
+                                     const PlaybackParams& params) {
   auto* op = static_cast<const DrawTextBlobOp*>(base_op);
-  SkPaint paint = flags->ToSkPaint();
-  canvas->drawTextBlob(op->blob.get(), op->x, op->y, paint);
+  canvas->drawTextBlob(op->blob.get(), op->x, op->y, *paint);
 }
 
 void RestoreOp::Raster(const PaintOp* base_op,
                        SkCanvas* canvas,
-                       const SkMatrix& original_ctm) {
+                       const PlaybackParams& params) {
   canvas->restore();
 }
 
 void RotateOp::Raster(const PaintOp* base_op,
                       SkCanvas* canvas,
-                      const SkMatrix& original_ctm) {
+                      const PlaybackParams& params) {
   auto* op = static_cast<const RotateOp*>(base_op);
   canvas->rotate(op->degrees);
 }
 
 void SaveOp::Raster(const PaintOp* base_op,
                     SkCanvas* canvas,
-                    const SkMatrix& original_ctm) {
+                    const PlaybackParams& params) {
   canvas->save();
 }
 
-void SaveLayerOp::RasterWithFlags(const PaintOpWithFlags* base_op,
-                                  const PaintFlags* flags,
+void SaveLayerOp::RasterWithPaint(const PaintOpWithFlags* base_op,
+                                  const SkPaint* paint,
                                   SkCanvas* canvas,
-                                  const SkMatrix& original_ctm) {
+                                  const PlaybackParams& params) {
   auto* op = static_cast<const SaveLayerOp*>(base_op);
   // See PaintOp::kUnsetRect
   bool unset = op->bounds.left() == SK_ScalarInfinity;
-
-  SkPaint paint = flags->ToSkPaint();
-  canvas->saveLayer(unset ? nullptr : &op->bounds, &paint);
+  canvas->saveLayer(unset ? nullptr : &op->bounds, paint);
 }
 
 void SaveLayerAlphaOp::Raster(const PaintOp* base_op,
                               SkCanvas* canvas,
-                              const SkMatrix& original_ctm) {
+                              const PlaybackParams& params) {
   auto* op = static_cast<const SaveLayerAlphaOp*>(base_op);
   // See PaintOp::kUnsetRect
   bool unset = op->bounds.left() == SK_ScalarInfinity;
@@ -1296,21 +1428,21 @@ void SaveLayerAlphaOp::Raster(const PaintOp* base_op,
 
 void ScaleOp::Raster(const PaintOp* base_op,
                      SkCanvas* canvas,
-                     const SkMatrix& original_ctm) {
+                     const PlaybackParams& params) {
   auto* op = static_cast<const ScaleOp*>(base_op);
   canvas->scale(op->sx, op->sy);
 }
 
 void SetMatrixOp::Raster(const PaintOp* base_op,
                          SkCanvas* canvas,
-                         const SkMatrix& original_ctm) {
+                         const PlaybackParams& params) {
   auto* op = static_cast<const SetMatrixOp*>(base_op);
-  canvas->setMatrix(SkMatrix::Concat(original_ctm, op->matrix));
+  canvas->setMatrix(SkMatrix::Concat(params.original_ctm, op->matrix));
 }
 
 void TranslateOp::Raster(const PaintOp* base_op,
                          SkCanvas* canvas,
-                         const SkMatrix& original_ctm) {
+                         const PlaybackParams& params) {
   auto* op = static_cast<const TranslateOp*>(base_op);
   canvas->translate(op->dx, op->dy);
 }
@@ -1319,14 +1451,12 @@ bool PaintOp::IsDrawOp() const {
   return g_is_draw_op[type];
 }
 
-void PaintOp::Raster(SkCanvas* canvas, const SkMatrix& original_ctm) const {
-  g_raster_functions[type](this, canvas, original_ctm);
+bool PaintOp::IsPaintOpWithFlags() const {
+  return g_has_paint_flags[type];
 }
 
-void PaintOp::RasterWithAlpha(SkCanvas* canvas,
-                              const SkRect& bounds,
-                              uint8_t alpha) const {
-  g_raster_alpha_functions[type](this, canvas, bounds, alpha);
+void PaintOp::Raster(SkCanvas* canvas, const PlaybackParams& params) const {
+  g_raster_functions[type](this, canvas, params);
 }
 
 size_t PaintOp::Serialize(void* memory,
@@ -1376,10 +1506,100 @@ PaintOp* PaintOp::Deserialize(const void* input,
                                                    output_size);
 }
 
+// static
+bool PaintOp::GetBounds(const PaintOp* op, SkRect* rect) {
+  DCHECK(op->IsDrawOp());
+
+  switch (op->GetType()) {
+    case PaintOpType::DrawArc: {
+      auto* arc_op = static_cast<const DrawArcOp*>(op);
+      *rect = arc_op->oval;
+      return true;
+    }
+    case PaintOpType::DrawCircle: {
+      auto* circle_op = static_cast<const DrawCircleOp*>(op);
+      *rect = SkRect::MakeXYWH(circle_op->cx - circle_op->radius,
+                               circle_op->cy - circle_op->radius,
+                               2 * circle_op->radius, 2 * circle_op->radius);
+      return true;
+    }
+    case PaintOpType::DrawImage: {
+      auto* image_op = static_cast<const DrawImageOp*>(op);
+      *rect = SkRect::MakeXYWH(image_op->left, image_op->top,
+                               image_op->image.sk_image()->width(),
+                               image_op->image.sk_image()->height());
+      return true;
+    }
+    case PaintOpType::DrawImageRect: {
+      auto* image_rect_op = static_cast<const DrawImageRectOp*>(op);
+      *rect = image_rect_op->dst;
+      return true;
+    }
+    case PaintOpType::DrawIRect: {
+      auto* rect_op = static_cast<const DrawIRectOp*>(op);
+      *rect = SkRect::Make(rect_op->rect);
+      return true;
+    }
+    case PaintOpType::DrawOval: {
+      auto* oval_op = static_cast<const DrawOvalOp*>(op);
+      *rect = oval_op->oval;
+      return true;
+    }
+    case PaintOpType::DrawPath: {
+      auto* path_op = static_cast<const DrawPathOp*>(op);
+      *rect = path_op->path.getBounds();
+      return true;
+    }
+    case PaintOpType::DrawRect: {
+      auto* rect_op = static_cast<const DrawRectOp*>(op);
+      *rect = rect_op->rect;
+      return true;
+    }
+    case PaintOpType::DrawRRect: {
+      auto* rect_op = static_cast<const DrawRRectOp*>(op);
+      *rect = rect_op->rrect.rect();
+      return true;
+    }
+    case PaintOpType::DrawRecord:
+      return false;
+    case PaintOpType::DrawPosText:
+      return false;
+    case PaintOpType::DrawLine: {
+      auto* line_op = static_cast<const DrawLineOp*>(op);
+      rect->set(line_op->x0, line_op->y0, line_op->x1, line_op->y1);
+      return true;
+    }
+    case PaintOpType::DrawDRRect: {
+      auto* rect_op = static_cast<const DrawDRRectOp*>(op);
+      *rect = rect_op->outer.getBounds();
+      return true;
+    }
+    case PaintOpType::DrawText:
+      return false;
+    case PaintOpType::DrawTextBlob: {
+      auto* text_op = static_cast<const DrawTextBlobOp*>(op);
+      *rect = text_op->blob->bounds().makeOffset(text_op->x, text_op->y);
+      return true;
+    }
+    case PaintOpType::DrawColor:
+      return false;
+      break;
+    default:
+      NOTREACHED();
+  }
+  return false;
+}
+
 void PaintOp::DestroyThis() {
   auto func = g_destructor_functions[type];
   if (func)
     func(this);
+}
+
+void PaintOpWithFlags::RasterWithPaint(SkCanvas* canvas,
+                                       const SkPaint* paint,
+                                       const PlaybackParams& params) const {
+  g_raster_with_flags_functions[type](this, paint, canvas, params);
 }
 
 int ClipPathOp::CountSlowPaths() const {
@@ -1571,6 +1791,7 @@ static const PaintOp* GetNestedSingleDrawingOp(const PaintOp* op) {
 }
 
 void PaintOpBuffer::Playback(SkCanvas* canvas,
+                             ImageProvider* image_provider,
                              SkPicture::AbortCallback* callback,
                              const std::vector<size_t>* indices) const {
   if (!op_count_)
@@ -1586,7 +1807,7 @@ void PaintOpBuffer::Playback(SkCanvas* canvas,
   // translate(x, y), then draw a paint record with a SetMatrix(identity),
   // the translation should be preserved instead of clobbering the top level
   // transform.  This could probably be done more efficiently.
-  SkMatrix original = canvas->getTotalMatrix();
+  PlaybackParams params(image_provider, canvas->getTotalMatrix());
 
   // FIFO queue of paint ops that have been peeked at.
   base::StackVector<const PaintOp*, 3> stack;
@@ -1630,10 +1851,30 @@ void PaintOpBuffer::Playback(SkCanvas* canvas,
         const PaintOp* draw_op = GetNestedSingleDrawingOp(second);
 
         if (draw_op) {
+          // This is an optimization to replicate the behaviour in SkCanvas
+          // which rejects ops that draw outside the current clip. In the
+          // general case we defer this to the SkCanvas but if we will be
+          // using an ImageProvider for pre-decoding images, we can save
+          // performing an expensive decode that will never be rasterized.
+          const bool skip_op =
+              IsImageOp(draw_op) && QuickRejectDraw(draw_op, canvas);
+          if (skip_op) {
+            // Now that we know this op will be skipped, we can push the save
+            // layer op back to the stack and continue iterating .
+            // In the case with the following list of ops:
+            // [SaveLayer, DrawImage, DrawRect, Restore], where draw_op is the
+            // DrawImage op, this starts the iteration again from SaveLayer and
+            // eliminates the DrawImage op.
+            stack->push_back(op);
+            continue;
+          }
+
           third = next_op();
           if (third && third->GetType() == PaintOpType::Restore) {
             auto* save_op = static_cast<const SaveLayerAlphaOp*>(op);
-            draw_op->RasterWithAlpha(canvas, save_op->bounds, save_op->alpha);
+            SkPaint paint;
+            RasterWithAlpha(draw_op, canvas, params, save_op->bounds,
+                            save_op->alpha);
             continue;
           }
         }
@@ -1644,12 +1885,28 @@ void PaintOpBuffer::Playback(SkCanvas* canvas,
           stack->push_back(third);
       }
     }
+
+    if (IsImageOp(op)) {
+      if (QuickRejectDraw(op, canvas))
+        continue;
+      auto* flags_op = op->IsPaintOpWithFlags()
+                           ? static_cast<const PaintOpWithFlags*>(op)
+                           : nullptr;
+      std::unique_ptr<ScopedImagePaint> scoped_paint =
+          flags_op ? ScopedImagePaint::Create(image_provider, flags_op->flags,
+                                              canvas->getTotalMatrix())
+                   : nullptr;
+      if (scoped_paint) {
+        flags_op->RasterWithPaint(canvas, scoped_paint->paint(), params);
+        continue;
+      }
+    }
+
     // TODO(enne): skip SaveLayer followed by restore with nothing in
     // between, however SaveLayer with image filters on it (or maybe
     // other PaintFlags options) are not a noop.  Figure out what these
     // are so we can skip them correctly.
-
-    op->Raster(canvas, original);
+    op->Raster(canvas, params);
   }
 }
 

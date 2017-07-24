@@ -27,7 +27,7 @@ namespace {
 void Playback(PaintOpBuffer* buffer,
               SkCanvas* canvas,
               const std::vector<size_t>& indices) {
-  buffer->Playback(canvas, nullptr, &indices);
+  buffer->Playback(canvas, nullptr, nullptr, &indices);
 }
 
 void ExpectFlattenableEqual(SkFlattenable* expected, SkFlattenable* actual) {
