@@ -85,8 +85,9 @@ RefPtr<WebTaskRunner> TaskRunnerHelper::Get(
     return Get(type, ToDocument(execution_context));
   if (execution_context->IsWorkerOrWorkletGlobalScope())
     return Get(type, ToWorkerOrWorkletGlobalScope(execution_context));
-  execution_context = nullptr;
-  return Get(type, ToDocument(execution_context));
+  // |execution_context| should be Document or WorkerOrWorkletGlobalScope.
+  NOTREACHED();
+  return nullptr;
 }
 
 RefPtr<WebTaskRunner> TaskRunnerHelper::Get(TaskType type,
