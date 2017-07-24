@@ -5,6 +5,8 @@
 #ifndef SERVICES_RESOURCE_COORDINATOR_COORDINATION_UNIT_COORDINATION_UNIT_MANAGER_H_
 #define SERVICES_RESOURCE_COORDINATOR_COORDINATION_UNIT_COORDINATION_UNIT_MANAGER_H_
 
+#include <stdint.h>
+
 #include <memory>
 #include <vector>
 
@@ -14,6 +16,7 @@
 namespace ukm {
 class MojoUkmRecorder;
 class UkmEntryBuilder;
+typedef int64_t SourceId;
 }  // namespace ukm
 
 namespace service_manager {
@@ -47,6 +50,7 @@ class CoordinationUnitManager {
       CoordinationUnitImpl* coordination_unit);
 
   std::unique_ptr<ukm::UkmEntryBuilder> CreateUkmEntryBuilder(
+      ukm::SourceId source_id,
       const char* event_name);
 
   std::vector<std::unique_ptr<CoordinationUnitGraphObserver>>&
