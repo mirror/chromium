@@ -5,6 +5,7 @@
 #ifndef CSSTransformComponent_h
 #define CSSTransformComponent_h
 
+#include "bindings/core/v8/ExceptionState.h"
 #include "core/CoreExport.h"
 #include "core/css/CSSFunctionValue.h"
 #include "platform/bindings/ScriptWrappable.h"
@@ -52,7 +53,7 @@ class CORE_EXPORT CSSTransformComponent
   // Internal methods.
   virtual TransformComponentType GetType() const = 0;
   virtual CSSFunctionValue* ToCSSValue() const = 0;
-  virtual const DOMMatrix* AsMatrix() const = 0;
+  virtual const DOMMatrix* AsMatrix(ExceptionState&) const = 0;
 
   DEFINE_INLINE_VIRTUAL_TRACE() {}
 
