@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2e5c6a7_7fd32b1d",
+        "filename": "media/base/ipc/media_param_traits_macros.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-24T21:56:40Z",
+      "side": 1,
+      "message": "Can\u0027t we use IPC_ENUM_TRAITS_MAX_VALUE? Since all the values are consecutive and start at 0, we don\u0027t need to convert to string to validate, we can just look at the range of the enum values. Or am I missing something more subtle?",
+      "revId": "77423cef0cda369757e88d0a9951b56550f3b21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
