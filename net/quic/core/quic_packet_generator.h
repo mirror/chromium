@@ -102,10 +102,25 @@ class QUIC_EXPORT_PRIVATE QuicPacketGenerator {
       QuicStreamOffset offset,
       StreamSendingState state,
       QuicReferenceCountedPointer<QuicAckListenerInterface> ack_listener);
+  QuicConsumedData ConsumeData(
+      QuicStreamId id,
+      QuicIOVector iov,
+      QuicStreamOffset offset,
+      StreamSendingState state,
+      size_t total_bytes_consumed,
+      bool one_shot,
+      QuicReferenceCountedPointer<QuicAckListenerInterface> ack_listener);
 
   // Sends as many data only packets as allowed by the send algorithm and the
   // available iov.
   // This path does not support FEC, padding, or bundling pending frames.
+  QuicConsumedData ConsumeDataFastPath(
+      QuicStreamId id,
+      const QuicIOVector& iov,
+      QuicStreamOffset offset,
+      bool fin,
+      size_t total_bytes_consumed,
+      QuicReferenceCountedPointer<QuicAckListenerInterface> ack_listener);
   QuicConsumedData ConsumeDataFastPath(
       QuicStreamId id,
       const QuicIOVector& iov,
