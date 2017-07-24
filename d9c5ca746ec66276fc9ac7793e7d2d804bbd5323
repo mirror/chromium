@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "6f255687_a69b8c0a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-24T20:47:18Z",
+      "side": 1,
+      "message": "Oops, I was misreading this as being being a comment in the code. I obviously agree with putting this in the commit message :)",
+      "parentUuid": "f7bb7f8d_3a93060d",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 51
+      },
+      "revId": "d9c5ca746ec66276fc9ac7793e7d2d804bbd5323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "512f716f_05591f1a",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -93,6 +117,30 @@
       "revId": "d9c5ca746ec66276fc9ac7793e7d2d804bbd5323",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "695f3e85_13129573",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-07-24T20:47:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "512f716f_05591f1a",
+      "range": {
+        "startLine": 9,
+        "startChar": 5,
+        "endLine": 9,
+        "endChar": 11
+      },
+      "revId": "d9c5ca746ec66276fc9ac7793e7d2d804bbd5323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
