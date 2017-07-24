@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d58f6c8_29c7cc9b",
+        "filename": "net/nqe/network_quality_estimator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-07-24T17:23:38Z",
+      "side": 1,
+      "message": "Does this work in light of the CL that moves use_localhost_requests_ out? Will this line be removed?",
+      "revId": "3a06aa6f8823db38bbda146129c5e5edacf5c5be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
