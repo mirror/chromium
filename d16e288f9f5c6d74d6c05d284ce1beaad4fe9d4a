@@ -88,6 +88,24 @@
       "revId": "d16e288f9f5c6d74d6c05d284ce1beaad4fe9d4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd59dd66_1e003e1e",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2827,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-24T20:42:23Z",
+      "side": 1,
+      "message": "So how about this: the RFHI would bind an incoming FrameHostAssociatedInterfaceRequest not to itself, but to a class that implements mojom::FrameHost but just forwards everything to the RFHI (the instance of this class would be a member, and it would also own the binding). During testing, the target where this class delegates to can be overridden. This way, no Mojo magic involved, the binder does not need to be overridden either.\n\nAlternatively, mandate that the testing override should already be in place when the RFHI is created, and *only* override the binder so that when the FrameHostAssociatedInterfaceRequest comes in, it is dispatched to the testing implementation?",
+      "parentUuid": "f0c43ab9_40edf460",
+      "revId": "d16e288f9f5c6d74d6c05d284ce1beaad4fe9d4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
