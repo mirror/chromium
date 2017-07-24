@@ -41,6 +41,12 @@ void RegisterContentSchemes(bool lock_schemes) {
   ContentClient::Schemes schemes;
   GetContentClient()->AddAdditionalSchemes(&schemes);
 
+  // Embedder error pages must be treated as opaque origins for the purposes of
+  // web content. They are considered "secure", however, as they do not transit
+  // the network, and may be embedded in otherwise secure contexts.
+  schemes.secure_schemes.push_back(kErrorScheme);
+  schemes.no_access_schemes.push_back(kErrorScheme);
+
   url::AddStandardScheme(kChromeDevToolsScheme, url::SCHEME_WITHOUT_PORT);
   url::AddStandardScheme(kChromeUIScheme, url::SCHEME_WITHOUT_PORT);
   url::AddStandardScheme(kGuestScheme, url::SCHEME_WITHOUT_PORT);
