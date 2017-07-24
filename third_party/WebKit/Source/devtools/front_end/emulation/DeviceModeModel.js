@@ -636,9 +636,10 @@ Emulation.DeviceModeModel = class extends Common.Object {
 
   /**
    * @param {boolean} fullSize
+   * @param {!Protocol.Page.Viewport=} clip
    * @return {!Promise<?string>}
    */
-  async captureScreenshot(fullSize) {
+  async captureScreenshot(fullSize, clip) {
     var screenCaptureModel = this._emulationModel ? this._emulationModel.target().model(SDK.ScreenCaptureModel) : null;
     if (!screenCaptureModel)
       return null;
@@ -656,13 +657,14 @@ Emulation.DeviceModeModel = class extends Common.Object {
     // Emulate full size device if necessary.
     var deviceMetrics;
     if (fullSize) {
-      var pageSize = fullSize ? new UI.Size(metrics.contentWidth, metrics.contentHeight) : this._emulatedPageSize;
+      var pageSize = new UI.Size(metrics.contentWidth, metrics.contentHeight);
       deviceMetrics = {
         width: Math.floor(pageSize.width),
         height: Math.floor(pageSize.height),
-        deviceScaleFactor: this._device ? this._device.deviceScaleFactor : window.devicePixelRatio,
+        deviceScaleFactor: this._appliedDeviceScaleFactor,
         mobile: this._isMobile(),
       };
+      clip = {x: 0, y: 0, width: deviceMetrics.width, height: deviceMetrics.height, scale: 1};
 
       if (this._device) {
         var screenOrientation = this._mode.orientation === Emulation.EmulatedDevice.Horizontal ?
@@ -675,8 +677,7 @@ Emulation.DeviceModeModel = class extends Common.Object {
       await this._emulationModel.resetPageScaleFactor();
       await this._emulationModel.emulateDevice(deviceMetrics);
     }
-
-    var screenshot = await screenCaptureModel.captureScreenshot('png', 100);
+    var screenshot = await screenCaptureModel.captureScreenshot('png', 100, clip);
     if (fullSize) {
       if (this._device) {
         var orientation = this._device.orientationByName(this._mode.orientation);
