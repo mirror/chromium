@@ -32,6 +32,7 @@ viz_component("host") {
   public_deps = [
     "//gpu/command_buffer/client",
     "//gpu/ipc/host",
+    "//services/viz/public/interfaces/compositing",
   ]
 }
 
@@ -53,6 +54,7 @@ viz_source_set("unit_tests") {
     "//gpu/ipc/host",
     "//mojo/public/cpp/bindings",
     "//services/ui/gpu/interfaces",
+    "//services/viz/public/interfaces/compositing",
     "//testing/gmock",
     "//testing/gtest",
 

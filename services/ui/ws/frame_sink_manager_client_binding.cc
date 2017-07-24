@@ -24,9 +24,9 @@ FrameSinkManagerClientBinding::~FrameSinkManagerClientBinding() = default;
 void FrameSinkManagerClientBinding::CreateRootCompositorFrameSink(
     const viz::FrameSinkId& frame_sink_id,
     gpu::SurfaceHandle surface_handle,
-    cc::mojom::CompositorFrameSinkAssociatedRequest request,
-    cc::mojom::CompositorFrameSinkPrivateRequest private_request,
-    cc::mojom::CompositorFrameSinkClientPtr client,
+    viz::mojom::CompositorFrameSinkAssociatedRequest request,
+    viz::mojom::CompositorFrameSinkPrivateRequest private_request,
+    viz::mojom::CompositorFrameSinkClientPtr client,
     cc::mojom::DisplayPrivateAssociatedRequest display_private_request) {
   frame_sink_manager_->CreateRootCompositorFrameSink(
       frame_sink_id, surface_handle, std::move(request),
@@ -36,9 +36,9 @@ void FrameSinkManagerClientBinding::CreateRootCompositorFrameSink(
 
 void FrameSinkManagerClientBinding::CreateCompositorFrameSink(
     const viz::FrameSinkId& frame_sink_id,
-    cc::mojom::CompositorFrameSinkRequest request,
-    cc::mojom::CompositorFrameSinkPrivateRequest private_request,
-    cc::mojom::CompositorFrameSinkClientPtr client) {
+    viz::mojom::CompositorFrameSinkRequest request,
+    viz::mojom::CompositorFrameSinkPrivateRequest private_request,
+    viz::mojom::CompositorFrameSinkClientPtr client) {
   frame_sink_manager_->CreateCompositorFrameSink(
       frame_sink_id, std::move(request), std::move(private_request),
       std::move(client));

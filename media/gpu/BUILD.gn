@@ -542,7 +542,7 @@ if (is_chromeos) {
       "//testing/gtest",
       "//third_party/libyuv",
       "//ui/base",
-      "//ui/gfx",
+      "//ui/gfx",git mv
       "//ui/gfx:test_support",
       "//ui/gfx/geometry",
       "//ui/gl",
