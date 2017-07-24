@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cac48757_47ab107e",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1100,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-07-24T12:56:19Z",
+      "side": 1,
+      "message": "It is ok to only set username_vote_type if it is a username field, right?",
+      "range": {
+        "startLine": 1097,
+        "startChar": 5,
+        "endLine": 1100,
+        "endChar": 0
+      },
+      "revId": "7fd89411765755005ce1c4102aad351e24883901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
