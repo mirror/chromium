@@ -16,6 +16,24 @@
       "revId": "89ff7b4fdd5c2ff51c5cee09999d41541f417d8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c23b3ca7_ebae696d",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/service/reconnect-during.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-07-24T23:11:57Z",
+      "side": 1,
+      "message": "yea, sorry, I left a note saying I added you before it was ready.",
+      "parentUuid": "e16196ca_c288c536",
+      "revId": "89ff7b4fdd5c2ff51c5cee09999d41541f417d8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
