@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "381b4c5b_6d9d3709",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-24T13:40:19Z",
+      "side": 1,
+      "message": "The RenderWidgetHostImpl\u0027s widget interface is used to retrieve the WidgetInputHandler interface.\nThe WidgetInputHandler interface is used for two types of widgets:\n1) WebPagePopups\n2) LocalFrameRoots",
+      "parentUuid": "d1ebf82e_9f4012e3",
+      "range": {
+        "startLine": 522,
+        "startChar": 0,
+        "endLine": 524,
+        "endChar": 3
+      },
+      "revId": "bcf7377a5b32bd0ee7d7303596274722d1508b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4dddf651_7b7cb450",
         "filename": "content/browser/frame_host/render_frame_host_manager.cc",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4385815d_779a61a5",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1700,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-24T13:40:19Z",
+      "side": 1,
+      "message": "The browser side of the binding wasn\u0027t retained; see the code path for CreateSpeculativeRenderFrameHost.. the WidgetRequest isn\u0027t stored anywhere. So the channel won\u0027t really be established.",
+      "parentUuid": "4dddf651_7b7cb450",
+      "range": {
+        "startLine": 1700,
+        "startChar": 4,
+        "endLine": 1700,
+        "endChar": 64
+      },
+      "revId": "bcf7377a5b32bd0ee7d7303596274722d1508b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bb3eb5a_1f5dd03e",
         "filename": "content/browser/frame_host/render_frame_host_manager.cc",
         "patchSetId": 6
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-24T11:41:48Z",
       "side": 1,
       "message": "So maybe the caller should be passing the WidgetRequest to makes things simpler at this layer.",
+      "range": {
+        "startLine": 1706,
+        "startChar": 25,
+        "endLine": 1706,
+        "endChar": 58
+      },
+      "revId": "bcf7377a5b32bd0ee7d7303596274722d1508b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56e5b0a3_2cf62f38",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1706,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-24T13:40:19Z",
+      "side": 1,
+      "message": "There were a few calls to CreateRenderFrameHost so I\u0027d need to duplicate the MakeRequest logic.",
+      "parentUuid": "5bb3eb5a_1f5dd03e",
       "range": {
         "startLine": 1706,
         "startChar": 25,
