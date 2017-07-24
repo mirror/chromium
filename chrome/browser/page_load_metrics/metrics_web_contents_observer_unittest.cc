@@ -370,10 +370,12 @@ TEST_F(MetricsWebContentsObserverTest, SubFrame) {
       base::TimeDelta::FromMilliseconds(30);
   subframe_timing.paint_timing->first_paint =
       base::TimeDelta::FromMilliseconds(40);
+  auto navigation = content::NavigationSimulator::CreateRendererInitiated(
+      GURL(kDefaultTestUrl2), subframe);
+  navigation->Commit();
+  subframe = navigation->GetFinalRenderFrameHost();
   content::RenderFrameHostTester* subframe_tester =
       content::RenderFrameHostTester::For(subframe);
-  subframe_tester->SimulateNavigationStart(GURL(kDefaultTestUrl2));
-  subframe_tester->SimulateNavigationCommit(GURL(kDefaultTestUrl2));
   SimulateTimingUpdate(subframe_timing, subframe);
   subframe_tester->SimulateNavigationStop();
 
@@ -792,10 +794,12 @@ TEST_F(MetricsWebContentsObserverTest, OutOfOrderCrossFrameTiming) {
   PopulatePageLoadTiming(&subframe_timing);
   subframe_timing.paint_timing->first_paint =
       base::TimeDelta::FromMilliseconds(40);
+  auto navigation = content::NavigationSimulator::CreateRendererInitiated(
+      GURL(kDefaultTestUrl2), subframe);
+  navigation->Commit();
+  subframe = navigation->GetFinalRenderFrameHost();
   content::RenderFrameHostTester* subframe_tester =
       content::RenderFrameHostTester::For(subframe);
-  subframe_tester->SimulateNavigationStart(GURL(kDefaultTestUrl2));
-  subframe_tester->SimulateNavigationCommit(GURL(kDefaultTestUrl2));
   SimulateTimingUpdate(subframe_timing, subframe);
   subframe_tester->SimulateNavigationStop();
 
@@ -870,10 +874,12 @@ TEST_F(MetricsWebContentsObserverTest, OutOfOrderCrossFrameTiming2) {
   subframe_timing.paint_timing->first_paint =
       base::TimeDelta::FromMilliseconds(500);
   content::RenderFrameHost* subframe = rfh_tester->AppendChild("subframe");
+  auto navigation = content::NavigationSimulator::CreateRendererInitiated(
+      GURL(kDefaultTestUrl2), subframe);
+  navigation->Commit();
+  subframe = navigation->GetFinalRenderFrameHost();
   content::RenderFrameHostTester* subframe_tester =
       content::RenderFrameHostTester::For(subframe);
-  subframe_tester->SimulateNavigationStart(GURL(kDefaultTestUrl2));
-  subframe_tester->SimulateNavigationCommit(GURL(kDefaultTestUrl2));
   SimulateTimingUpdateWithoutFiringDispatchTimer(subframe_timing, subframe);
   subframe_tester->SimulateNavigationStop();
 
@@ -918,10 +924,12 @@ TEST_F(MetricsWebContentsObserverTest, OutOfOrderCrossFrameTiming2) {
   subframe_timing.paint_timing->first_paint =
       base::TimeDelta::FromMilliseconds(50);
   content::RenderFrameHost* subframe2 = rfh_tester->AppendChild("subframe");
+  auto navigation2 = content::NavigationSimulator::CreateRendererInitiated(
+      GURL(kDefaultTestUrl2), subframe2);
+  navigation2->Commit();
+  subframe2 = navigation2->GetFinalRenderFrameHost();
   content::RenderFrameHostTester* subframe2_tester =
       content::RenderFrameHostTester::For(subframe2);
-  subframe2_tester->SimulateNavigationStart(GURL(kDefaultTestUrl2));
-  subframe2_tester->SimulateNavigationCommit(GURL(kDefaultTestUrl2));
   SimulateTimingUpdateWithoutFiringDispatchTimer(subframe_timing, subframe2);
   subframe2_tester->SimulateNavigationStop();
 
