@@ -38,6 +38,10 @@ class VIEWS_EXPORT NativeViewHostWrapper {
   // rooted at a valid Widget.
   virtual void RemovedFromWidget() = 0;
 
+  // Sets the corner radius for clipping gfx::NativeView. Returns true on
+  // success or false if the platform doesn't support the operation.
+  virtual bool SetCornerRadius(int corner_radius) = 0;
+
   // Installs a clip on the gfx::NativeView. These values are in the coordinate
   // space of the Widget, so if this method is called from ShowWidget
   // then the values need to be translated.

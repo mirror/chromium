@@ -16,16 +16,13 @@
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/web_contents.h"
 #include "ui/gfx/geometry/insets.h"
+#include "ui/views/bubble/bubble_frame_view.h"
+#include "ui/views/controls/native/native_view_host.h"
+#include "ui/views/controls/native/native_view_host_wrapper.h"
 #include "ui/views/layout/fill_layout.h"
 #include "ui/views/widget/widget.h"
 
 namespace {
-
-// Override the default margin provided by views::kPanel*Margin so that the
-// hosted WebContents fill more of the bubble. However, it can't fill the entire
-// bubble since that would draw over the rounded corners and make the bubble
-// square. See http://crbug.com/593203.
-const int kBubbleMargin = 2;
 
 ExtensionViewViews* GetExtensionView(extensions::ExtensionViewHost* host) {
   return static_cast<ExtensionViewViews*>(host->view());
@@ -57,11 +54,9 @@ ExtensionPopup::ExtensionPopup(extensions::ExtensionViewHost* host,
                                views::View* anchor_view,
                                views::BubbleBorder::Arrow arrow,
                                ShowAction show_action)
-    : BubbleDialogDelegateView(anchor_view, arrow),
-      host_(host),
-      widget_initialized_(false) {
+    : BubbleDialogDelegateView(anchor_view, arrow), host_(host) {
   inspect_with_devtools_ = show_action == SHOW_AND_INSPECT;
-  set_margins(gfx::Insets(kBubbleMargin));
+  set_margins(gfx::Insets());
   SetLayoutManager(new views::FillLayout());
   AddChildView(GetExtensionView(host));
   GetExtensionView(host)->set_container(this);
@@ -156,8 +151,21 @@ void ExtensionPopup::ViewHierarchyChanged(
   const ViewHierarchyChangedDetails& details) {
   // TODO(msw): Find any remaining crashes related to http://crbug.com/327776
   // No view hierarchy changes are expected if the widget no longer exists.
-  widget_initialized_ |= details.child == this && details.is_add && GetWidget();
+  const bool widget_initialized =
+      details.child == this && details.is_add && GetWidget();
+  widget_initialized_ |= widget_initialized;
   CHECK(GetWidget() || !widget_initialized_);
+
+  if (widget_initialized) {
+    const int radius =
+        GetBubbleFrameView()->bubble_border()->GetBorderCornerRadius();
+    const bool contents_has_rounded_corners = GetExtensionView(host_.get())
+                                                  ->holder()
+                                                  ->native_wrapper()
+                                                  ->SetCornerRadius(radius);
+    SetBorder(views::CreateEmptyBorder(
+        gfx::Insets(contents_has_rounded_corners ? 0 : radius, 0)));
+  }
 }
 
 void ExtensionPopup::OnWidgetActivationChanged(views::Widget* widget,
