@@ -173,6 +173,11 @@ void AppListPresenterImpl::ScheduleAnimation() {
   // Stop observing previous animation.
   StopObservingImplicitAnimations();
 
+  if (is_fullscreen_app_list_enabled_) {
+    view_->SetState(app_list::AppListView::CLOSED);
+    return;
+  }
+
   views::Widget* widget = view_->GetWidget();
   ui::Layer* layer = GetLayer(widget);
   layer->GetAnimator()->StopAnimating();

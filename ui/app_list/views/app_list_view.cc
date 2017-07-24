@@ -945,10 +945,22 @@ void AppListView::SetState(AppListState new_state) {
     case FULLSCREEN_SEARCH:
       new_widget_bounds.set_y(0);
       break;
-    case CLOSED:
+    case CLOSED: {
+      // newcomer crashes
+      ui::Layer* layer = GetWidget()->GetNativeView()->layer();
+      layer->GetAnimator()->StopAnimating();
+      ui::ScopedLayerAnimationSettings animation(layer->GetAnimator());
+      gfx::Rect target_bounds = GetWidget()->GetWindowBoundsInScreen();
+      animation.SetTransitionDuration(base::TimeDelta::FromMilliseconds(300));
+      target_bounds.Offset(0, 400);
+
+      layer->SetBounds(target_bounds);
+      layer->SetOpacity(0);
       app_list_main_view_->Close();
       delegate_->Dismiss();
+      return;
       break;
+    }
   }
   fullscreen_widget_->SetBounds(new_widget_bounds);
   app_list_state_ = new_state_override;
