@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7ce76cbc_d3f45631",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-07-24T19:13:44Z",
+      "side": 1,
+      "message": "To me, this is logical in the sense that we are using same stripping algorithm as autocomplete results, to which we are comparing our stripped URLs, hence guaranteeing comparability.",
+      "parentUuid": "07d53e19_83457f96",
+      "range": {
+        "startLine": 232,
+        "startChar": 37,
+        "endLine": 232,
+        "endChar": 54
+      },
+      "revId": "98dd5a8c203e36bf6569ec7f9d59f705755abc29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ccb24b8d_4671e82c",
         "filename": "ui/app_list/search/mixer.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-24T15:43:56Z",
       "side": 1,
       "message": "nit: I would include this logic into SearchResult to have identical behavior for every place where it can be used. Otherwise there is a risk that some parts would have own logic.",
+      "range": {
+        "startLine": 30,
+        "startChar": 19,
+        "endLine": 30,
+        "endChar": 34
+      },
+      "revId": "98dd5a8c203e36bf6569ec7f9d59f705755abc29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e997decc_779516fd",
+        "filename": "ui/app_list/search/mixer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-07-24T19:13:44Z",
+      "side": 1,
+      "message": "On the other hand, deduplication happens only here. Other parts don\u0027t do deduplication, hence are free to interpret the raw data differently. With this approach, SearchResult consistently provides raw data only, period, and everyone of free \"cook\" it its own way.",
+      "parentUuid": "ccb24b8d_4671e82c",
       "range": {
         "startLine": 30,
         "startChar": 19,
@@ -68,6 +116,30 @@
       "revId": "98dd5a8c203e36bf6569ec7f9d59f705755abc29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dc08623_f3aaf952",
+        "filename": "ui/app_list/search_result.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-07-24T19:13:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "055af1fc_88da7ab0",
+      "range": {
+        "startLine": 241,
+        "startChar": 45,
+        "endLine": 241,
+        "endChar": 48
+      },
+      "revId": "98dd5a8c203e36bf6569ec7f9d59f705755abc29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
