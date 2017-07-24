@@ -208,6 +208,25 @@ bool Scroller::ComputeScrollOffset(base::TimeTicks time,
   return true;
 }
 
+void Scroller::ComputeTotalScrollOffset(gfx::Vector2dF* offset) {
+  offset->set_x(final_x_);
+  offset->set_y(final_y_);
+}
+
+bool Scroller::ResetCurveBySnappedOffset(const gfx::Vector2dF& offset) {
+  final_x_ = offset.x();
+  final_y_ = offset.y();
+  distance_ = std::sqrt(final_x_ * final_x_ + final_y_ * final_y_);
+
+  velocity_ = GetSplineVelocityFromDistance(distance_);
+  duration_ = GetSplineFlingDuration(velocity_);
+  if (duration_.InMicroseconds() <= 0)
+    return false;
+  duration_seconds_reciprocal_ = 1.0 / duration_.InSecondsF();
+  RecomputeDeltas();
+  return true;
+}
+
 void Scroller::StartScroll(float start_x,
                            float start_y,
                            float dx,
@@ -472,6 +491,18 @@ double Scroller::GetSplineFlingDistance(float velocity) const {
   const double decel_minus_one = kDecelerationRate - 1.0;
   return fling_friction_ * tuning_coeff_ *
          std::exp(kDecelerationRate / decel_minus_one * l);
+}
+
+double Scroller::GetSplineVelocityFromDeceleration(float deceleration) const {
+  return std::exp(deceleration) * (fling_friction_ * tuning_coeff_) /
+         kInflexion;
+}
+
+double Scroller::GetSplineVelocityFromDistance(float distance) const {
+  double decel_minus_one = kDecelerationRate - 1.0;
+  double deceleration = std::log(distance / (fling_friction_ * tuning_coeff_)) /
+                        (kDecelerationRate / decel_minus_one);
+  return GetSplineVelocityFromDeceleration(deceleration);
 }
 
 }  // namespace ui
