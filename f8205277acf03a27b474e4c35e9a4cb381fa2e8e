@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "08572c96_03564542",
+        "filename": "chrome/browser/ui/views/location_bar/star_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-24T23:57:19Z",
+      "side": 1,
+      "message": "It seems to be calling UpdateIcon() somewhere higher on the stack.",
+      "parentUuid": "3a1aa83e_378487e1",
+      "revId": "f8205277acf03a27b474e4c35e9a4cb381fa2e8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ee0bccf_4d81eacc",
         "filename": "chrome/browser/ui/views/location_bar/star_view.cc",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "f8205277acf03a27b474e4c35e9a4cb381fa2e8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a6e6778_d268f8a5",
+        "filename": "chrome/browser/ui/views/location_bar/star_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-07-24T23:57:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ee0bccf_4d81eacc",
+      "range": {
+        "startLine": 77,
+        "startChar": 20,
+        "endLine": 77,
+        "endChar": 34
+      },
+      "revId": "f8205277acf03a27b474e4c35e9a4cb381fa2e8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
