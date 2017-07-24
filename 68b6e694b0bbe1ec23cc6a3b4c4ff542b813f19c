@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "1998535b_ae3ee79f",
+        "filename": "components/content_settings/core/browser/content_settings_registry.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-24T05:42:42Z",
+      "side": 1,
+      "message": "Sounds good. I will use dictionary (next CL).",
+      "parentUuid": "892e2a6f_0af23054",
+      "range": {
+        "startLine": 324,
+        "startChar": 11,
+        "endLine": 324,
+        "endChar": 24
+      },
+      "revId": "68b6e694b0bbe1ec23cc6a3b4c4ff542b813f19c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a040be8_af19fe33",
         "filename": "components/content_settings/core/common/content_settings_types.h",
         "patchSetId": 4
