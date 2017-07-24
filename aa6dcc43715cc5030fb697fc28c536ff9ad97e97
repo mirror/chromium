@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f31f53e3_53ad67a5",
+        "filename": "remoting/host/touch_injector_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-24T15:46:55Z",
+      "side": 1,
+      "message": "I don\u0027t see this in the code, was it removed prior to upload?",
+      "range": {
+        "startLine": 88,
+        "startChar": 4,
+        "endLine": 88,
+        "endChar": 34
+      },
+      "revId": "aa6dcc43715cc5030fb697fc28c536ff9ad97e97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0770b77_43cbb9e1",
+        "filename": "remoting/host/touch_injector_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-24T15:46:55Z",
+      "side": 1,
+      "message": "nit: Can you reorder this so the positive condition (i.e. is_zero()) is executed first?  It\u0027s generally easier to read affirmative conditions when scanning code.",
+      "range": {
+        "startLine": 97,
+        "startChar": 6,
+        "endLine": 97,
+        "endChar": 7
+      },
+      "revId": "aa6dcc43715cc5030fb697fc28c536ff9ad97e97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
