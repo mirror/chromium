@@ -19,12 +19,14 @@ import org.chromium.base.annotations.CalledByNative;
 import java.lang.ref.WeakReference;
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Concrete implementation of {@link ThumbnailProvider}.
  *
- * Thumbnails are cached and shared across all ThumbnailProviderImpls.  The cache itself is LRU and
- * limited in size.  It is automatically garbage collected under memory pressure.
+ * Thumbnails are cached and shared across all ThumbnailProviderImpls. [...]
  *
  * A queue of requests is maintained in FIFO order.  Missing thumbnails are retrieved asynchronously
  * by the native ThumbnailProvider, which is owned and destroyed by the Java class.
@@ -37,12 +39,34 @@ public class ThumbnailProviderImpl implements ThumbnailProvider {
     private static final int MAX_CACHE_BYTES = 5 * 1024 * 1024;
 
     /**
-     *  Weakly referenced cache containing thumbnails that can be deleted under memory pressure.
-     *  Key in the cache is a pair of the filepath and the height/width of the thumbnail. Value is
-     *  a pair of the thumbnail and its byte size.
-     * */
-    private static WeakReference<LruCache<Pair<String, Integer>, Pair<Bitmap, Integer>>>
-            sBitmapCache = new WeakReference<>(null);
+     * XXX: Add Javadoc
+     */
+    private static class RecentlyUsedCache extends LruCache<Pair<String, Integer>, Bitmap> {
+        private RecentlyUsedCache() {
+            super(MAX_CACHE_BYTES);
+        }
+
+        @Override
+        protected Bitmap create(Pair<String, Integer> key) {
+            WeakReference<Bitmap> cachedBitmap = sDeduplicationCache.get(key);
+            return cachedBitmap == null ? null : cachedBitmap.get();
+        }
+
+        @Override
+        protected int sizeOf(Pair<String, Integer> key, Bitmap thumbnail) {
+            return thumbnail.getByteCount();
+        }
+    }
+
+    /**
+     * Cache containing thumbnails that can be dropped under memory pressure.
+     * Key in the cache is a pair of the filepath and the height/width of the thumbnail. Value is
+     * the thumbnail.
+     **/
+    private static RecentlyUsedCache sBitmapCache = new RecentlyUsedCache();
+
+    private static Map<Pair<String, Integer>, WeakReference<Bitmap>> sDeduplicationCache =
+            new HashMap<>();
 
     /** Enqueues requests. */
     private final Handler mHandler;
@@ -106,13 +130,8 @@ public class ThumbnailProviderImpl implements ThumbnailProvider {
     }
 
     private Bitmap getBitmapFromCache(String filepath, int bitmapSizePx) {
-        Pair<Bitmap, Integer> cachedBitmapPair =
-                getBitmapCache().get(Pair.create(filepath, bitmapSizePx));
-        if (cachedBitmapPair == null) return null;
-        Bitmap cachedBitmap = cachedBitmapPair.first;
-
-        if (cachedBitmap == null) return null;
-        assert !cachedBitmap.isRecycled();
+        Bitmap cachedBitmap = sBitmapCache.get(Pair.create(filepath, bitmapSizePx));
+        assert cachedBitmap == null || !cachedBitmap.isRecycled();
         return cachedBitmap;
     }
 
@@ -143,11 +162,13 @@ public class ThumbnailProviderImpl implements ThumbnailProvider {
             assert Math.min(bitmap.getWidth(), bitmap.getHeight()) <= mCurrentRequest.getIconSize();
             assert TextUtils.equals(mCurrentRequest.getFilePath(), filePath);
 
-            // We set the key pair to contain the required size instead of the minimal dimension so
-            // that future fetches of this thumbnail can recognise the key in the cache.
             if (!SysUtils.isLowEndDevice()) {
-                getBitmapCache().put(Pair.create(filePath, mCurrentRequest.getIconSize()),
-                        Pair.create(bitmap, bitmap.getByteCount()));
+                // We set the key pair to contain the required size instead of the minimal dimension
+                // so that future fetches of this thumbnail can recognize the key in the cache.
+                Pair<String, Integer> key = Pair.create(filePath, mCurrentRequest.getIconSize());
+                sBitmapCache.put(key, bitmap);
+                sDeduplicationCache.put(key, new WeakReference<>(bitmap));
+                compactDeduplicationCache();
             }
             mCurrentRequest.onThumbnailRetrieved(filePath, bitmap);
         }
@@ -156,34 +177,29 @@ public class ThumbnailProviderImpl implements ThumbnailProvider {
         processQueue();
     }
 
-    private boolean isInitialized() {
-        return mNativeThumbnailProvider != 0;
+    /**
+     * Compacts the deduplication cache by removing all entries that have been cleared by the
+     * garbage collector.
+     */
+    private void compactDeduplicationCache() {
+        // Too many angle brackets for clang-format :-(
+        // clang-format off
+        for (Iterator<Map.Entry<Pair<String, Integer>, WeakReference<Bitmap>>> it =
+                sDeduplicationCache.entrySet().iterator(); it.hasNext();) {
+            // clang-format on
+            if (it.next().getValue().get() == null) it.remove();
+        }
     }
 
-    private static LruCache<Pair<String, Integer>, Pair<Bitmap, Integer>> getBitmapCache() {
-        ThreadUtils.assertOnUiThread();
-
-        LruCache<Pair<String, Integer>, Pair<Bitmap, Integer>> cache =
-                sBitmapCache == null ? null : sBitmapCache.get();
-        if (cache != null) return cache;
-
-        // Create a new weakly-referenced cache.
-        cache = new LruCache<Pair<String, Integer>, Pair<Bitmap, Integer>>(MAX_CACHE_BYTES) {
-            @Override
-            protected int sizeOf(
-                    Pair<String, Integer> thumbnailIdPair, Pair<Bitmap, Integer> thumbnail) {
-                return thumbnail == null ? 0 : thumbnail.second;
-            }
-        };
-        sBitmapCache = new WeakReference<>(cache);
-        return cache;
+    private boolean isInitialized() {
+        return mNativeThumbnailProvider != 0;
     }
 
     /**
      * Evicts all cached thumbnails from previous fetches.
      */
     public static void clearCache() {
-        getBitmapCache().evictAll();
+        sBitmapCache.evictAll();
     }
 
     private native long nativeInit();
