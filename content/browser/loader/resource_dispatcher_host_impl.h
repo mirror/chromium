@@ -285,7 +285,7 @@ class CONTENT_EXPORT ResourceDispatcherHostImpl
       int routing_id,
       int request_id,
       const ResourceRequest& request,
-      mojom::URLLoaderAssociatedRequest mojo_request,
+      mojom::URLLoaderRequest mojo_request,
       mojom::URLLoaderClientPtr url_loader_client,
       const net::NetworkTrafficAnnotationTag& traffic_annotation);
 
@@ -545,7 +545,7 @@ class CONTENT_EXPORT ResourceDispatcherHostImpl
       int routing_id,
       int request_id,
       const ResourceRequest& request_data,
-      mojom::URLLoaderAssociatedRequest mojo_request,
+      mojom::URLLoaderRequest mojo_request,
       mojom::URLLoaderClientPtr url_loader_client,
       const net::NetworkTrafficAnnotationTag& traffic_annotation);
 
@@ -563,7 +563,7 @@ class CONTENT_EXPORT ResourceDispatcherHostImpl
                                 int request_id,
                                 const ResourceRequest& request_data,
                                 LoaderMap::iterator iter,
-                                mojom::URLLoaderAssociatedRequest mojo_request,
+                                mojom::URLLoaderRequest mojo_request,
                                 mojom::URLLoaderClientPtr url_loader_client);
 
   // If |request_data| is for a request being transferred from another process,
@@ -572,7 +572,7 @@ class CONTENT_EXPORT ResourceDispatcherHostImpl
                         int request_id,
                         const ResourceRequest& request_data,
                         int route_id,
-                        mojom::URLLoaderAssociatedRequest mojo_request,
+                        mojom::URLLoaderRequest mojo_request,
                         mojom::URLLoaderClientPtr url_loader_client);
 
   void BeginRequest(
@@ -581,7 +581,7 @@ class CONTENT_EXPORT ResourceDispatcherHostImpl
       const ResourceRequest& request_data,
       const SyncLoadResultCallback& sync_result_handler,  // only valid for sync
       int route_id,
-      mojom::URLLoaderAssociatedRequest mojo_request,
+      mojom::URLLoaderRequest mojo_request,
       mojom::URLLoaderClientPtr url_loader_client,
       const net::NetworkTrafficAnnotationTag& traffic_annotation);
 
@@ -600,7 +600,7 @@ class CONTENT_EXPORT ResourceDispatcherHostImpl
       const SyncLoadResultCallback& sync_result_handler,  // only valid for sync
       int route_id,
       const net::HttpRequestHeaders& headers,
-      mojom::URLLoaderAssociatedRequest mojo_request,
+      mojom::URLLoaderRequest mojo_request,
       mojom::URLLoaderClientPtr url_loader_client,
       BlobHandles blob_handles,
       const net::NetworkTrafficAnnotationTag& traffic_annotation,
@@ -616,13 +616,13 @@ class CONTENT_EXPORT ResourceDispatcherHostImpl
       int route_id,
       int child_id,
       ResourceContext* resource_context,
-      mojom::URLLoaderAssociatedRequest mojo_request,
+      mojom::URLLoaderRequest mojo_request,
       mojom::URLLoaderClientPtr url_loader_client);
 
   // Creates either MojoAsyncResourceHandler or AsyncResourceHandler.
   std::unique_ptr<ResourceHandler> CreateBaseResourceHandler(
       net::URLRequest* request,
-      mojom::URLLoaderAssociatedRequest mojo_request,
+      mojom::URLLoaderRequest mojo_request,
       mojom::URLLoaderClientPtr url_loader_client,
       ResourceType resource_type);
 

@@ -31,6 +31,7 @@
 #include "content/public/common/origin_util.h"
 #include "content/public/common/resource_request_body.h"
 #include "mojo/public/cpp/bindings/strong_associated_binding.h"
+#include "mojo/public/cpp/bindings/strong_binding.h"
 #include "net/base/url_util.h"
 #include "storage/browser/blob/blob_storage_context.h"
 
@@ -228,7 +229,7 @@ class ScriptURLLoader : public mojom::URLLoader, public mojom::URLLoaderClient {
   }
 
  private:
-  mojom::URLLoaderAssociatedPtr network_loader_;
+  mojom::URLLoaderPtr network_loader_;
   mojo::Binding<mojom::URLLoaderClient> network_client_binding_;
   mojom::URLLoaderClientPtr forwarding_client_;
   base::WeakPtr<ServiceWorkerProviderHost> provider_host_;
@@ -254,7 +255,7 @@ class ScriptURLLoaderFactory : public mojom::URLLoaderFactory {
   ~ScriptURLLoaderFactory() override {}
 
   // mojom::URLLoaderFactory:
-  void CreateLoaderAndStart(mojom::URLLoaderAssociatedRequest request,
+  void CreateLoaderAndStart(mojom::URLLoaderRequest request,
                             int32_t routing_id,
                             int32_t request_id,
                             uint32_t options,
@@ -274,7 +275,7 @@ class ScriptURLLoaderFactory : public mojom::URLLoaderFactory {
           std::move(client), traffic_annotation);
       return;
     }
-    mojo::MakeStrongAssociatedBinding(
+    mojo::MakeStrongBinding(
         base::MakeUnique<ScriptURLLoader>(
             routing_id, request_id, options, resource_request,
             std::move(client), context_, provider_host_, blob_storage_context_,
