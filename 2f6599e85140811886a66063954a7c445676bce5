@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e5ee9eb9_fe185dfb",
+        "filename": "third_party/WebKit/LayoutTests/inspector/components/color-expected.txt",
+        "patchSetId": 9
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-07-24T23:28:50Z",
+      "side": 1,
+      "message": "Any more I need do here?",
+      "parentUuid": "1d8d0d19_ebcc2629",
+      "revId": "2f6599e85140811886a66063954a7c445676bce5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f77fc349_0af0c15f",
         "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
         "patchSetId": 9
