@@ -22,6 +22,30 @@
       "revId": "d3b5769a733dbc54d7a9848a8f3aee7da0182110",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7fa9545_78789bf2",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 3522,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-24T16:26:05Z",
+      "side": 1,
+      "message": "In our case, we support many types of CDMs and \"library CDM\" is a one of them that involves a binary library implementing a particular interface. \"CDM library\" doesn\u0027t really convey that meaning IMHO.",
+      "parentUuid": "ee17976d_5b5f2e6c",
+      "range": {
+        "startLine": 3522,
+        "startChar": 6,
+        "endLine": 3522,
+        "endChar": 25
+      },
+      "revId": "d3b5769a733dbc54d7a9848a8f3aee7da0182110",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
