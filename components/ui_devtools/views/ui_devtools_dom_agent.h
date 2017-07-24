@@ -10,6 +10,7 @@
 #include "components/ui_devtools/devtools_base_agent.h"
 #include "components/ui_devtools/views/ui_element_delegate.h"
 #include "ui/aura/env_observer.h"
+#include "ui/compositor/layer_delegate.h"
 #include "ui/views/view.h"
 #include "ui/views/widget/widget.h"
 
@@ -30,7 +31,8 @@ class UIDevToolsDOMAgentObserver {
 class UIDevToolsDOMAgent : public ui_devtools::UiDevToolsBaseAgent<
                                ui_devtools::protocol::DOM::Metainfo>,
                            public UIElementDelegate,
-                           public aura::EnvObserver {
+                           public aura::EnvObserver,
+                           public ui::LayerDelegate {
  public:
   UIDevToolsDOMAgent();
   ~UIDevToolsDOMAgent() override;
@@ -57,13 +59,17 @@ class UIDevToolsDOMAgent : public ui_devtools::UiDevToolsBaseAgent<
   const std::vector<aura::Window*>& root_windows() const {
     return root_windows_;
   };
-  ui_devtools::protocol::Response HighlightNode(
-      std::unique_ptr<ui_devtools::protocol::Overlay::HighlightConfig>
-          highlight_config,
-      int node_id);
+  ui_devtools::protocol::Response HighlightNode(int node_id);
   void FindElementByEventHandler(const gfx::Point& p, int* element_id);
 
+  // ui::LayerDelegate:
+  void OnDelegatedFrameDamage(const gfx::Rect& damage_rect_in_dip) override {}
+  void OnDeviceScaleFactorChanged(float device_scale_factor) override {}
+
  private:
+  // ui::LayerDelegate:
+  void OnPaintLayer(const ui::PaintContext& context) override;
+
   // aura::EnvObserver:
   void OnWindowInitialized(aura::Window* window) override {}
   void OnHostInitialized(aura::WindowTreeHost* host) override;
@@ -84,13 +90,14 @@ class UIDevToolsDOMAgent : public ui_devtools::UiDevToolsBaseAgent<
   void RemoveDomNode(UIElement* ui_element);
   void Reset();
   void UpdateHighlight(
-      const std::pair<aura::Window*, gfx::Rect>& window_and_bounds,
-      SkColor background);
+      const std::pair<aura::Window*, gfx::Rect>& window_and_bounds);
 
   bool is_building_tree_;
   std::unique_ptr<UIElement> window_element_root_;
   std::unordered_map<int, UIElement*> node_id_to_ui_element_;
   std::unique_ptr<ui::Layer> layer_for_highlighting_;
+  gfx::Rect screen_bounds;
+  gfx::Rect hovered_element_bounds;
   std::vector<aura::Window*> root_windows_;
   base::ObserverList<UIDevToolsDOMAgentObserver> observers_;
 
