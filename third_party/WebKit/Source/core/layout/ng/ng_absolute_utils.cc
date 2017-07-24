@@ -31,7 +31,7 @@ LayoutUnit ResolveWidth(const Length& width,
                         const ComputedStyle& style,
                         const Optional<MinMaxContentSize>& child_minmax,
                         LengthResolveType resolve_type) {
-  if (space.WritingMode() == kHorizontalTopBottom)
+  if (style.IsHorizontalWritingMode())
     return ResolveInlineLength(space, style, child_minmax, width, resolve_type);
   LayoutUnit computed_width =
       child_minmax.has_value() ? child_minmax->max_content : LayoutUnit();
@@ -44,7 +44,7 @@ LayoutUnit ResolveHeight(const Length& height,
                          const ComputedStyle& style,
                          const Optional<MinMaxContentSize>& child_minmax,
                          LengthResolveType resolve_type) {
-  if (space.WritingMode() != kHorizontalTopBottom)
+  if (!style.IsHorizontalWritingMode())
     return ResolveInlineLength(space, style, child_minmax, height,
                                resolve_type);
   LayoutUnit computed_height =
