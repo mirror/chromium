@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae1b61ac_24616bd7",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-24T22:10:52Z",
+      "side": 1,
+      "message": "did you mean to instantiate a second instance of ConsoleServiceProvider that gets added to display_service_providers? i only see the LibCrosService provider, unless i\u0027m missing it...",
+      "revId": "04a0243323fc0532a7cc4e49025da87055a98118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8644ff1_5e64dedc",
+        "filename": "chromeos/dbus/services/console_service_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-24T22:10:52Z",
+      "side": 1,
+      "message": "nit: don\u0027t need \u0027explicit\u0027 anymore",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 10
+      },
+      "revId": "04a0243323fc0532a7cc4e49025da87055a98118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42668124_fc624fd1",
+        "filename": "chromeos/dbus/services/console_service_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-24T22:10:52Z",
+      "side": 1,
+      "message": "nit: add a brief comment here (e.g. \"// Weak pointer.\") or above the c\u0027tor documenting that ownership remains with the caller",
+      "revId": "04a0243323fc0532a7cc4e49025da87055a98118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42685668_783be012",
+        "filename": "chromeos/dbus/services/display_power_service_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-24T22:10:52Z",
+      "side": 1,
+      "message": "nit: remove \u0027explicit\u0027",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 10
+      },
+      "revId": "04a0243323fc0532a7cc4e49025da87055a98118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dde7422_4889280a",
+        "filename": "chromeos/dbus/services/org.chromium.DisplayService.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-24T22:10:52Z",
+      "side": 1,
+      "message": "is the \u0027root\u0027 here for frecon? powerd asks chrome to change the display power and dimming; it runs as the \u0027power\u0027 user.",
+      "revId": "04a0243323fc0532a7cc4e49025da87055a98118",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
