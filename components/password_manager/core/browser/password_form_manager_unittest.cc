@@ -453,7 +453,20 @@ class PasswordFormManagerTest : public testing::Test {
     autofill::ServerFieldTypeSet expected_available_field_types;
     FieldTypeMap expected_types;
     expected_types[ASCIIToUTF16("full_name")] = autofill::UNKNOWN_TYPE;
-    expected_types[match.username_element] = autofill::UNKNOWN_TYPE;
+
+    // When we're voting for an account creation form, we should also vote
+    // for its username field.
+    if (field_type && *field_type == autofill::ACCOUNT_CREATION_PASSWORD) {
+      expected_types[match.username_element] = autofill::USERNAME;
+      expected_available_field_types.insert(autofill::USERNAME);
+    } else {
+       expected_types[match.username_element] = autofill::UNKNOWN_TYPE;
+    }
+
+    autofill::AutofillUploadContents::Field::UsernameVoteType
+        expected_username_vote_type;
+    expected_username_vote_type =
+        autofill::AutofillUploadContents::Field::REUSED;
 
     bool expect_generation_vote = false;
     if (field_type) {
@@ -1104,6 +1117,7 @@ TEST_F(PasswordFormManagerTest, PSLMatchedCredentialsMetadataUpdated) {
 
   autofill::ServerFieldTypeSet expected_available_field_types;
   expected_available_field_types.insert(autofill::ACCOUNT_CREATION_PASSWORD);
+  expected_available_field_types.insert(autofill::USERNAME);
   EXPECT_CALL(
       *client()->mock_driver()->mock_autofill_download_manager(),
       StartUploadRequest(_, false, expected_available_field_types, _, true));
@@ -3241,6 +3255,12 @@ TEST_F(PasswordFormManagerTest, UploadUsernameCorrectionVote) {
   PasswordForm expected_username_vote(*saved_match());
   expected_username_vote.username_element =
       saved_match()->other_possible_usernames[0].second;
+
+  // Checks the username vote type is saved.
+  autofill::AutofillUploadContents::Field::UsernameVoteType
+      expected_username_vote_type;
+  expected_username_vote_type =
+      autofill::AutofillUploadContents::Field::OVERWRITTEN;
 
   // Checks the upload.
   autofill::ServerFieldTypeSet expected_available_field_types;

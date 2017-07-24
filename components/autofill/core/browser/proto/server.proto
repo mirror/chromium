@@ -102,6 +102,14 @@ message AutofillUploadContents {
     // True iff the user changed generated password. If there was no generation,
     // the field is absent.
     optional bool generated_password_changed = 22;
+
+    enum UsernameVoteType {
+      NO_INFORMATION = 0;
+      REUSED = 1;
+      OVERWRITTEN = 2;
+    }
+    // The type of username vote, if it happened.
+    optional UsernameVoteType username_vote_type = 23;
   }
   // Signature of the form action host (e.g. Hash64Bit("example.com")).
   optional fixed64 action_signature = 13;
