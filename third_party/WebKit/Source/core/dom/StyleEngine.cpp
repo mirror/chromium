@@ -56,6 +56,7 @@
 #include "core/probe/CoreProbes.h"
 #include "core/svg/SVGStyleElement.h"
 #include "platform/fonts/FontCache.h"
+#include "platform/fonts/FontGlobalContext.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 
 namespace blink {
@@ -505,6 +506,11 @@ void StyleEngine::ClearFontCache() {
 }
 
 void StyleEngine::UpdateGenericFontFamilySettings() {
+  if (document_->GetSettings()) {
+    FontGlobalContext::UpdateGlobalGenericFontFamilySettings(
+        document_->GetSettings()->GetGenericFontFamilySettings());
+  }
+
   // FIXME: we should not update generic font family settings when
   // document is inactive.
   DCHECK(GetDocument().IsActive());

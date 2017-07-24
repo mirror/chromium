@@ -7,6 +7,7 @@
 
 #include "platform/PlatformExport.h"
 #include "platform/fonts/FontCache.h"
+#include "platform/fonts/GenericFontFamilySettings.h"
 #include "platform/fonts/SimpleFontData.h"
 #include "platform/fonts/shaping/HarfBuzzFontCache.h"
 #include "platform/wtf/HashMap.h"
@@ -97,6 +98,12 @@ class PLATFORM_EXPORT FontGlobalContext {
     return Get()->font_vertical_data_cache_;
   }
 
+  static GenericFontFamilySettings& GetGenericFontFamilySettings();
+
+  // This populates a global GenericFontFamilySettings that is copied from
+  // the main thread's one.
+  static void UpdateGlobalGenericFontFamilySettings(GenericFontFamilySettings&);
+
   // Called by MemoryCoordinator to clear memory.
   static void ClearMemory();
 
@@ -123,6 +130,8 @@ class PLATFORM_EXPORT FontGlobalContext {
   String current_accept_languages_;
 
   FontVerticalDataCache font_vertical_data_cache_;
+
+  GenericFontFamilySettings generic_font_family_settings_;
 };
 
 }  // namespace blink

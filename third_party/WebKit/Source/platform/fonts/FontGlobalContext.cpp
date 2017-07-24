@@ -19,12 +19,28 @@ FontGlobalContext* FontGlobalContext::Get(CreateIfNeeded create_if_needed) {
   return *font_persistent;
 }
 
+GenericFontFamilySettings& GlobalGenericFontFamilySettings() {
+  static GenericFontFamilySettings global_settings;
+  return global_settings;
+}
+
 FontGlobalContext::FontGlobalContext()
     : harfbuzz_font_funcs_(nullptr),
       default_locale_(nullptr),
       system_locale_(nullptr),
       default_locale_for_han_(nullptr),
-      has_default_locale_for_han_(false) {}
+      has_default_locale_for_han_(false),
+      generic_font_family_settings_(GlobalGenericFontFamilySettings()) {}
+
+void FontGlobalContext::UpdateGlobalGenericFontFamilySettings(
+    GenericFontFamilySettings& document_settings) {
+  GenericFontFamilySettings& settings = GlobalGenericFontFamilySettings();
+  settings = document_settings;
+}
+
+GenericFontFamilySettings& FontGlobalContext::GetGenericFontFamilySettings() {
+  return Get()->generic_font_family_settings_;
+}
 
 void FontGlobalContext::ClearMemory() {
   if (!Get(kDoNotCreate))
@@ -41,6 +57,7 @@ void FontGlobalContext::ClearForTesting() {
   ctx->has_default_locale_for_han_ = false;
   ctx->layout_locale_map_.clear();
   ctx->font_cache_.Invalidate();
+  ctx->generic_font_family_settings_.Reset();
 }
 
 }  // namespace blink
