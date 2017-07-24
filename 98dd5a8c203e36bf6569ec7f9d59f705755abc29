@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "06a266bf_e8f98ae7",
+        "filename": "ui/app_list/search/mixer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-24T19:21:43Z",
+      "side": 1,
+      "message": "Other parts use id(), mixer is only the one consumer who uses comparable_id so it is OK to include this logic into comparable_id. Assume you want to add/extend unit_test for the mixer. In this case you have to duplicate the code. There is only one way how we interpret comparable_id and there is no reason to hide this logic in other code. So I would prefer to have it there.",
+      "parentUuid": "e997decc_779516fd",
+      "range": {
+        "startLine": 30,
+        "startChar": 19,
+        "endLine": 30,
+        "endChar": 34
+      },
+      "revId": "98dd5a8c203e36bf6569ec7f9d59f705755abc29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "055af1fc_88da7ab0",
         "filename": "ui/app_list/search_result.h",
         "patchSetId": 3
