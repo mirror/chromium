@@ -25,6 +25,7 @@ class Point;
 }
 
 namespace exo {
+class DataEventDispatcher;
 class NotificationSurface;
 class NotificationSurfaceManager;
 class SharedMemory;
@@ -88,8 +89,13 @@ class Display {
       Surface* surface,
       const std::string& notification_key);
 
+  DataEventDispatcher* data_event_dispatcher() {
+    return data_event_dispatcher_.get();
+  }
+
  private:
   NotificationSurfaceManager* const notification_surface_manager_;
+  std::unique_ptr<DataEventDispatcher> data_event_dispatcher_;
 
 #if defined(USE_OZONE)
   std::vector<gfx::BufferFormat> overlay_formats_;
