@@ -34,6 +34,24 @@
       "revId": "9fece5c53d1a9a7d7fcbc64dded55854002c44d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eef6f264_2e83e3a0",
+        "filename": "cc/resources/video_resource_updater.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-07-24T21:50:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80c1d0ea_b265a170",
+      "revId": "9fece5c53d1a9a7d7fcbc64dded55854002c44d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
