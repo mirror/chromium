@@ -364,8 +364,10 @@ float BitmapImage::FrameDurationAtIndex(size_t index) const {
   return source_.FrameDurationAtIndex(index);
 }
 
-sk_sp<SkImage> BitmapImage::ImageForCurrentFrame() {
-  return FrameAtIndex(CurrentFrame());
+void BitmapImage::PopulateImageForCurrentFrame(PaintImageBuilder& builder) {
+  // TODO(vmpstr): Pass the builder down so that we can populate the decoder
+  // instead.
+  builder.set_image(FrameAtIndex(CurrentFrame()));
 }
 
 PassRefPtr<Image> BitmapImage::ImageForDefaultFrame() {

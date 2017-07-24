@@ -104,8 +104,8 @@ void OffscreenCanvasFrameDispatcherImpl::SetTransferableResourceToSharedBitmap(
   // TODO(xlai): Optimize to avoid copying pixels. See crbug.com/651456.
   // However, in the case when |image| is texture backed, this function call
   // does a GPU readback which is required.
-  image->ImageForCurrentFrame()->readPixels(image_info, pixels,
-                                            image_info.minRowBytes(), 0, 0);
+  image->PaintImageForCurrentFrame().sk_image()->readPixels(
+      image_info, pixels, image_info.minRowBytes(), 0, 0);
   resource.mailbox_holder.mailbox = frame_resource->shared_bitmap_->id();
   resource.mailbox_holder.texture_target = 0;
   resource.is_software = true;
@@ -141,8 +141,8 @@ void OffscreenCanvasFrameDispatcherImpl::
   unsigned byte_length = dst_buffer->ByteLength();
   RefPtr<Uint8Array> dst_pixels =
       Uint8Array::Create(std::move(dst_buffer), 0, byte_length);
-  image->ImageForCurrentFrame()->readPixels(info, dst_pixels->Data(),
-                                            info.minRowBytes(), 0, 0);
+  image->PaintImageForCurrentFrame().sk_image()->readPixels(
+      info, dst_pixels->Data(), info.minRowBytes(), 0, 0);
 
   if (frame_resource->texture_id_ == 0u) {
     gl->GenTextures(1, &frame_resource->texture_id_);

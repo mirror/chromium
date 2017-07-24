@@ -960,7 +960,7 @@ class CC_PAINT_EXPORT TranslateOp final : public PaintOp {
 
 #undef HAS_SERIALIZATION_FUNCTIONS
 
-using LargestPaintOp = DrawDRRectOp;
+using LargestPaintOp = DrawImageRectOp;
 
 class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
  public:
