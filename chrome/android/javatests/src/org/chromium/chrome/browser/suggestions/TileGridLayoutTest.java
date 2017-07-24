@@ -144,7 +144,7 @@ public class TileGridLayoutTest {
     @MediumTest
     @Feature({"NewTabPage"})
     public void testNumColumnsCalculatedEqualToMeasurement() {
-        final int maxColumns = 6;
+        final int maxColumns = 4;
         final TileGridLayout layout = getTileGridLayout();
         layout.setMaxRows(1);
         layout.setMaxColumns(maxColumns);
