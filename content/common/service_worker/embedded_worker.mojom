@@ -33,7 +33,8 @@ interface EmbeddedWorkerInstanceClient {
   StartWorker(EmbeddedWorkerStartParams params,
               ServiceWorkerEventDispatcher& dispatcher_request,
               ServiceWorkerInstalledScriptsInfo? installed_scripts_info,
-              associated EmbeddedWorkerInstanceHost instance_host);
+              associated EmbeddedWorkerInstanceHost instance_host,
+              ServiceWorkerContentSettingsProxy content_settings_proxy);
   // The response is sent back via EmbeddedWorkerInstanceHost.OnStopped().
   StopWorker();
   ResumeAfterDownload();
@@ -75,4 +76,13 @@ interface EmbeddedWorkerInstanceHost {
                          url.mojom.Url source_url);
   // Indicates that the worker has stopped.
   OnStopped();
+};
+
+interface ServiceWorkerContentSettingsProxy {
+  [Sync]
+  AllowIndexedDB(url.mojom.Url url, mojo.common.mojom.String16 name, int64 route_id)
+    => (bool result);
+  [Sync]
+  RequestFileSystemAccessSync(url.mojom.Url url, int64 route_id)
+    => (bool result);
 };
