@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "343a0f74_e8ad58ff",
+        "filename": "base/android/library_loader/library_loader_hooks.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-07-24T07:14:54Z",
+      "side": 1,
+      "message": "Newer version of Chrome seems to only have two possible values for this.\n\nhttps://cs.chromium.org/chromium/src/base/android/java/src/org/chromium/base/library_loader/LibraryLoader.java?type\u003dcs\u0026q\u003dgetLibraryLoadFromApkStatus\u0026l\u003d453\n\nhttps://uma.googleplex.com/p/chrome/histograms/?endDate\u003d20170722\u0026dayCount\u003d1\u0026histograms\u003dChromiumAndroidLinker.LibraryLoadFromApkStatus\u0026fixupData\u003dtrue\u0026showMax\u003dtrue\u0026filters\u003dplatform%2Ceq%2CA%2Cmilestone%2Cgt%2C50%2Cisofficial%2Ceq%2CTrue\u0026implicitFilters\u003disofficial",
+      "parentUuid": "f2943c76_853d6a3a",
+      "range": {
+        "startLine": 129,
+        "startChar": 6,
+        "endLine": 129,
+        "endChar": 48
+      },
+      "revId": "be655ea1a14529727e948938be1f41db80624d36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "984190cc_c4f0007f",
         "filename": "base/debug/activity_tracker.cc",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-21T23:00:25Z",
       "side": 1,
       "message": "@asvitkine: do we need to change the histogram name when changing the macro reporting it in this case (i.e. will it have a different distribution after this?)",
+      "range": {
+        "startLine": 1374,
+        "startChar": 30,
+        "endLine": 1374,
+        "endChar": 66
+      },
+      "revId": "be655ea1a14529727e948938be1f41db80624d36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b0053dc_7ed963fb",
+        "filename": "base/debug/activity_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1374,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-07-24T07:14:54Z",
+      "side": 1,
+      "message": "Let me jump in to answer this one. Internally the enum histograms are converted to the linear type, so this CL would be compatible.\n\nhttps://cs.chromium.org/chromium/src/base/metrics/histogram_macros_internal.h?type\u003dcs\u0026q\u003dINTERNAL_HISTOGRAM_EXACT_LINEAR_WITH_FLAG\u0026l\u003d140",
+      "parentUuid": "984190cc_c4f0007f",
       "range": {
         "startLine": 1374,
         "startChar": 30,
@@ -202,6 +250,24 @@
       "writtenOn": "2017-07-21T19:18:46Z",
       "side": 1,
       "message": "I don\u0027t think this static_cast is valid. exit_code is an int, which is the return value from the process passed to exit() or returned from main() - retrieved by the waitpid (on POSIX) or GetExitCodeProcess (on Windows) syscalls. In particular, crashes (or malicious values sent from compromised child processes) will get values that are out of the range of the enum, making this cast undefined behavior.",
+      "revId": "be655ea1a14529727e948938be1f41db80624d36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ca33221_fe690333",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-07-24T07:14:54Z",
+      "side": 1,
+      "message": "You are right. There are a handful of reports falling out of range in UMA.\n\nhttps://uma.googleplex.com/p/chrome/histograms/?endDate\u003d20170722\u0026dayCount\u003d1\u0026histograms\u003dGPU.GPUProcessExitCode\u0026fixupData\u003dtrue\u0026showMax\u003dtrue\u0026filters\u003dmilestone%2Cgt%2C50%2Cplatform%2Ceq%2CW%2Cisofficial%2Ceq%2CTrue\u0026implicitFilters\u003disofficial\n\nI\u0027ll change it to UMA_HISTOGRAM_EXACT_LINEAR.",
+      "parentUuid": "12e01e96_5764bd4a",
       "revId": "be655ea1a14529727e948938be1f41db80624d36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
