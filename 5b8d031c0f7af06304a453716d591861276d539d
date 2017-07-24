@@ -46,6 +46,30 @@
       "revId": "5b8d031c0f7af06304a453716d591861276d539d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31d41e9f_70fbf039",
+        "filename": "components/download/test/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-24T21:06:31Z",
+      "side": 1,
+      "message": "Yeah you can move the whole file there I think?",
+      "parentUuid": "3510d4ea_2392932a",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 0
+      },
+      "revId": "5b8d031c0f7af06304a453716d591861276d539d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
