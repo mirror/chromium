@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b970e4e1_c73d93fa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-24T22:10:13Z",
+      "side": 1,
+      "message": "We ended up creating a full design doc which I will link. Let me know if you think we should also make a condensed 1 page summary.\n\nDue to the fact that stats for each feature in IPH is configured per profile, if a user had synced previously added bookmarks, whenever those bookmarks were added would already have been recorded, and thus this feature would be disabled. Let me know if this sufficiently addresses your concern.",
+      "parentUuid": "5c418f03_b7c665e6",
+      "revId": "07416415f470fdaeb51c8c66e30fa20e3a765f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c39033e_932b8aa6",
         "filename": "chrome/browser/feature_engagement_tracker/bookmark/bookmark_tracker.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d3657f0c_8010a6eb",
+        "filename": "chrome/browser/feature_engagement_tracker/bookmark/bookmark_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-24T22:10:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c39033e_932b8aa6",
+      "revId": "07416415f470fdaeb51c8c66e30fa20e3a765f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea6f4f44_07f4e7ae",
         "filename": "chrome/browser/feature_engagement_tracker/bookmark/bookmark_tracker.cc",
         "patchSetId": 4
@@ -50,6 +86,24 @@
       "revId": "07416415f470fdaeb51c8c66e30fa20e3a765f7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52ca91d7_d796fc74",
+        "filename": "chrome/browser/feature_engagement_tracker/bookmark/bookmark_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-24T22:10:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ea6f4f44_07f4e7ae",
+      "revId": "07416415f470fdaeb51c8c66e30fa20e3a765f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -211,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "9fca5f2b_2c89fc8c",
+        "filename": "chrome/browser/feature_engagement_tracker/bookmark/bookmark_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-24T22:10:13Z",
+      "side": 1,
+      "message": "These will be added in a future CL.",
+      "parentUuid": "090faf09_50397d37",
+      "revId": "07416415f470fdaeb51c8c66e30fa20e3a765f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc3dd8d5_52bbc043",
         "filename": "chrome/browser/feature_engagement_tracker/bookmark/bookmark_tracker.h",
         "patchSetId": 4
@@ -228,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "c40fe9ae_a3af1704",
+        "filename": "chrome/browser/feature_engagement_tracker/bookmark/bookmark_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-24T22:10:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc3dd8d5_52bbc043",
+      "revId": "07416415f470fdaeb51c8c66e30fa20e3a765f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66320bf9_577b4035",
         "filename": "chrome/test/BUILD.gn",
         "patchSetId": 4
@@ -239,6 +329,24 @@
       "writtenOn": "2017-07-21T23:13:43Z",
       "side": 1,
       "message": "did you forget to include this file?",
+      "revId": "07416415f470fdaeb51c8c66e30fa20e3a765f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9e73db5_bccf4cd7",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 3860,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-24T22:10:13Z",
+      "side": 1,
+      "message": "I was going to include the unit tests in a separate CL as there are incomplete and still a work in progress.",
+      "parentUuid": "66320bf9_577b4035",
       "revId": "07416415f470fdaeb51c8c66e30fa20e3a765f7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -262,6 +370,24 @@
     },
     {
       "key": {
+        "uuid": "5a5e8ec2_80be90fe",
+        "filename": "components/feature_engagement_tracker/public/event_constants.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-24T22:10:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35b3686c_a9413e08",
+      "revId": "07416415f470fdaeb51c8c66e30fa20e3a765f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5909eaff_68a13f27",
         "filename": "tools/metrics/actions/actions.xml",
         "patchSetId": 4
@@ -276,6 +402,24 @@
       "revId": "07416415f470fdaeb51c8c66e30fa20e3a765f7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c69b870_1971767a",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 5240,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-24T22:10:13Z",
+      "side": 1,
+      "message": "Gotcha, I have confirmed with them.",
+      "parentUuid": "5909eaff_68a13f27",
+      "revId": "07416415f470fdaeb51c8c66e30fa20e3a765f7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
