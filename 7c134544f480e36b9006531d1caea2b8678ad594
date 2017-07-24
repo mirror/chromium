@@ -22,6 +22,47 @@
       "revId": "7c134544f480e36b9006531d1caea2b8678ad594",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f31fd4fa_c44b0a66",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/ChannelDefinitions.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-07-24T11:26:01Z",
+      "side": 1,
+      "message": "So, to be clear, this feature is associated with a real experiment. It\u0027s already live in EM and (fair warning) we have a good track record of launching in EM and a not so good record of getting approval to launch globally. The experiment is a transitional state but it could be a long transition.\n\nThe ideal solution would have:\n\n1. No entry in settings if the experiment has never been enabled locally.\n2. An entry in settings on startup if the experiment is enabled.\n3. No entry if the experiment was but is no longer enabled.\n\nThat\u0027s in order of precedence: I think #1 is a must, and #3 isn\u0027t needed, but I would like #2 if possible. I think that means we would need some kind of conditional.\n\nInstead of storing a version number, did you consider storing getStartupChannelIds() directly in prefs? That would adapt to channels being added or removed without any version bookkeeping on the side. (satisfies 1+2+3)\n\nAnother option would be for us to call ensureInitialized() from our own code. The method is public, though it doesn\u0027t look like it\u0027s necessarily intended for public use. This would require our channel to be in PredefinedChannels.MAP but not getStartupChannelIds(), though. (satisfies 1+2)",
+      "parentUuid": "637940e8_ef53e925",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 96
+      },
+      "revId": "7c134544f480e36b9006531d1caea2b8678ad594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a999d645_7cb68a9d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/ChannelDefinitions.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-07-24T11:26:01Z",
+      "side": 1,
+      "message": "Now that I think of it, it\u0027s probably not always safe to use this from a static initializer.",
+      "revId": "7c134544f480e36b9006531d1caea2b8678ad594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
