@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "b273e43a_fd3a35cf",
+        "filename": "chrome/browser/android/signin/signin_manager_android_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-24T19:48:10Z",
+      "side": 1,
+      "message": "I included the two tests that verify that a) I have actually fixed the bookmarks bug, and b) that I have not broken something else about bookmarks. I, and probably the release managers too, would sleep a bit better if I knew they were there :)\n\nThis is not an issue for me from the perspective of a future refactoring. Either I\u0027ll fix the usability of the delegate in unittests, in which case I can remove the highlighted part and tests can stay forever - which is good, because this class did not have unittests. Or I\u0027ll move bookmarks to BrowsingDataRemover, in which case we can potentially remove the test entirely. (I intend to try the former first, so we can keep the test).\n\nI agree that we could return the bookmarks deletion code where it was, which would not be testable, but it would be a smaller change to the live code. I prefer that option slightly less (because we don\u0027t have a proof that the fix works correctly).\n\nBut this is not my codebase, so - your decision.",
+      "parentUuid": "c7838c7c_abbf9e96",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 124,
+        "endChar": 73
+      },
+      "revId": "80ec68273bfec5782ee46ddb1cca3753c3b3dd90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92bc6fd0_2c127466",
         "filename": "chrome/browser/android/signin/signin_manager_android_unittest.cc",
         "patchSetId": 1
