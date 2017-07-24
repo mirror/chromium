@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e78b67fc_82a33b53",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-24T18:56:00Z",
+      "side": 1,
+      "message": "Yes |max_results_| is a constant initialized with that constant 6 there, and will never change.\nI\u0027ll document that.",
+      "parentUuid": "1e4e8dd4_f7f634e3",
+      "revId": "b8c6954a66a4adc8c7411975e9f7a3cf14ccf03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0951d6a6_0619578d",
         "filename": "components/arc/common/app.mojom",
         "patchSetId": 6
@@ -39,6 +57,30 @@
       "revId": "b8c6954a66a4adc8c7411975e9f7a3cf14ccf03c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fca4bc77_0194f7a7",
+        "filename": "components/arc/common/app.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-07-24T18:56:00Z",
+      "side": 1,
+      "message": "Done. Changed back to canceled. Currently we don\u0027t need the detailed request state.\nLet\u0027s use enum if it we need it in the future.",
+      "parentUuid": "0951d6a6_0619578d",
+      "range": {
+        "startLine": 256,
+        "startChar": 16,
+        "endLine": 256,
+        "endChar": 23
+      },
+      "revId": "b8c6954a66a4adc8c7411975e9f7a3cf14ccf03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
