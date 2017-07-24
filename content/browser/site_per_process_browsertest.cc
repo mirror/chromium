@@ -7093,6 +7093,166 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, VisibilityChanged) {
   EXPECT_TRUE(show_observer.WaitUntilSatisfied());
 }
 
+// A class which counts the number of times a RenderWidgetHostViewChildFrame
+// swaps compositor frames.
+class ChildFrameCompositorFrameSwapCounter {
+ public:
+  explicit ChildFrameCompositorFrameSwapCounter(
+      RenderWidgetHostViewChildFrame* view)
+      : view_(view), weak_factory_(this) {
+    RegisterCallback();
+  }
+
+  ~ChildFrameCompositorFrameSwapCounter() {}
+
+  // Wait until at least |count| new frames are swapped.
+  void WaitForNewFrames(size_t count) {
+    base::TimeDelta kCallbackDelay = base::TimeDelta::FromMilliseconds(10u);
+    while (counter_ < count) {
+      base::RunLoop loop;
+      base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+          FROM_HERE, loop.QuitClosure(), kCallbackDelay);
+      loop.Run();
+    }
+  }
+
+  void ResetCounter() { counter_ = 0; }
+  size_t GetCount() const { return counter_; }
+
+ private:
+  void RegisterCallback() {
+    view_->RegisterFrameSwappedCallback(base::MakeUnique<base::Closure>(
+        base::Bind(&ChildFrameCompositorFrameSwapCounter::OnFrameSwapped,
+                   weak_factory_.GetWeakPtr())));
+  }
+  void OnFrameSwapped() {
+    counter_++;
+
+    // Register a new callback as the old one is released now.
+    RegisterCallback();
+  }
+
+  size_t counter_ = 0;
+
+ private:
+  RenderWidgetHostViewChildFrame* view_;
+  base::WeakPtrFactory<ChildFrameCompositorFrameSwapCounter> weak_factory_;
+
+  DISALLOW_COPY_AND_ASSIGN(ChildFrameCompositorFrameSwapCounter);
+};
+
+// This test verifies that hiding an OOPIF in CSS will stop generating
+// compositor frames for the OOPIF and any nested OOPIFs inside it. This holds
+// even when the whole page is shown.
+IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
+                       HiddenFrameWillNotCreateCompositorFrame) {
+  GURL main_url(
+      embedded_test_server()->GetURL("a.com", "/page_with_two_iframes.html"));
+  ASSERT_TRUE(NavigateToURL(shell(), main_url));
+  ASSERT_EQ(shell()->web_contents()->GetLastCommittedURL(), main_url);
+
+  GURL cross_site_url_b =
+      embedded_test_server()->GetURL("oopif.com", "/counter.html");
+
+  FrameTreeNode* root = web_contents()->GetFrameTree()->root();
+
+  TestNavigationObserver first_observer(shell()->web_contents());
+
+  NavigateFrameToURL(root->child_at(0), cross_site_url_b);
+  ASSERT_EQ(cross_site_url_b, first_observer.last_navigation_url());
+  ASSERT_TRUE(first_observer.last_navigation_succeeded());
+
+  TestNavigationObserver second_observer(shell()->web_contents());
+  NavigateFrameToURL(root->child_at(1), cross_site_url_b);
+  ASSERT_EQ(cross_site_url_b, second_observer.last_navigation_url());
+  ASSERT_TRUE(second_observer.last_navigation_succeeded());
+
+  // Now inject code in the first frame to create a nested OOPIF.
+  ASSERT_TRUE(ExecuteScript(
+      root->child_at(0)->current_frame_host(),
+      "document.body.appendChild(document.createElement('iframe'));"));
+
+  // Wait for frame tree node to be created.
+  while (!root->child_at(0)->child_at(0)) {
+    base::RunLoop run_loop;
+    base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
+                                                  run_loop.QuitClosure());
+    run_loop.Run();
+  }
+
+  GURL cross_site_url_a =
+      embedded_test_server()->GetURL("a.com", "/counter.html");
+
+  // Navigate the nested frame.
+  TestFrameNavigationObserver observer(root->child_at(0)->child_at(0));
+  ASSERT_TRUE(ExecuteScript(
+      root->child_at(0)->current_frame_host(),
+      base::StringPrintf("document.querySelector('iframe').src = '%s';",
+                         cross_site_url_a.spec().c_str())));
+  observer.Wait();
+
+  RenderWidgetHostViewChildFrame* first_child_view =
+      static_cast<RenderWidgetHostViewChildFrame*>(
+          root->child_at(0)->current_frame_host()->GetView());
+  RenderWidgetHostViewChildFrame* second_child_view =
+      static_cast<RenderWidgetHostViewChildFrame*>(
+          root->child_at(1)->current_frame_host()->GetView());
+  RenderWidgetHostViewChildFrame* nested_child_view =
+      static_cast<RenderWidgetHostViewChildFrame*>(
+          root->child_at(0)->child_at(0)->current_frame_host()->GetView());
+
+  ChildFrameCompositorFrameSwapCounter first_counter(first_child_view);
+  ChildFrameCompositorFrameSwapCounter second_counter(second_child_view);
+  ChildFrameCompositorFrameSwapCounter third_counter(nested_child_view);
+
+  const size_t kFrameCountLimit = 20u;
+
+  // Wait for a certain number of swapped compositor frames generated for the
+  // first child view. It is expected that roughly the same number of frames
+  // are created for other children.
+  first_counter.WaitForNewFrames(kFrameCountLimit);
+  ASSERT_LT(20u, first_counter.GetCount() + 1u);
+
+  float ratio = static_cast<float>(first_counter.GetCount()) /
+                static_cast<float>(second_counter.GetCount());
+  EXPECT_LT(0.5f, ratio) << "Ratio is: " << ratio;
+
+  ratio = static_cast<float>(first_counter.GetCount()) /
+          static_cast<float>(third_counter.GetCount());
+  EXPECT_LT(0.5f, ratio) << "Ratio is: " << ratio;
+
+  // Verify that hiding leads to a notification from RenderWidgetHost.
+  RenderWidgetHostVisibilityObserver hide_observer(
+      root->child_at(0)->current_frame_host()->GetRenderWidgetHost(), false);
+
+  // Hide the first frame.
+  ASSERT_TRUE(ExecuteScript(
+      shell(),
+      "document.getElementById('test_iframe1').style.visibility = 'hidden'"));
+  ASSERT_TRUE(hide_observer.WaitUntilSatisfied());
+
+  // Now hide and show the WebContents (to simulate a tab switch).
+  shell()->web_contents()->WasHidden();
+  shell()->web_contents()->WasShown();
+
+  first_counter.ResetCounter();
+  second_counter.ResetCounter();
+  third_counter.ResetCounter();
+
+  // We expect the second counter to keep running.
+  second_counter.WaitForNewFrames(20u);
+
+  ASSERT_LT(20u, second_counter.GetCount() + 1u);
+
+  ratio = static_cast<float>(first_counter.GetCount()) /
+          static_cast<float>(second_counter.GetCount());
+  EXPECT_GT(0.5f, ratio) << "Ratio is: " << ratio;
+
+  ratio = static_cast<float>(third_counter.GetCount()) /
+          static_cast<float>(second_counter.GetCount());
+  EXPECT_GT(0.5f, ratio) << "Ratio is: " << ratio;
+}
+
 // Verify that sandbox flags inheritance works across multiple levels of
 // frames.  See https://crbug.com/576845.
 IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, SandboxFlagsInheritance) {

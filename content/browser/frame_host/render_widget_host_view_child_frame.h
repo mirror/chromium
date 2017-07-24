@@ -211,6 +211,11 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
   // of the root RenderWidgetHostView.
   gfx::Point GetViewOriginInRoot() const;
 
+  // Called by CrossProcessFrameConnector associated with this view when the CSS
+  // visibility state of the corresponding frame changes in the embedder
+  // process.
+  void SetCSSVisibility(bool visible);
+
  protected:
   friend class RenderWidgetHostView;
   friend class RenderWidgetHostViewChildFrameTest;
@@ -273,6 +278,11 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
 
   virtual bool HasEmbedderChanged();
 
+  // Returns false if the view cannot be shown. This is the case where the frame
+  // associated with this view, or a cross process parent frame has been hidden
+  // using CSS.
+  bool CanBecomeVisible();
+
   using FrameSwappedCallbackList = std::deque<std::unique_ptr<base::Closure>>;
   // Since frame-drawn callbacks are "fire once", we use std::deque to make
   // it convenient to swap() when processing the list.
@@ -290,6 +300,8 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
 
   std::unique_ptr<TouchSelectionControllerClientChildFrame>
       selection_controller_client_;
+
+  bool css_visible_ = true;
 
   base::WeakPtrFactory<RenderWidgetHostViewChildFrame> weak_factory_;
   DISALLOW_COPY_AND_ASSIGN(RenderWidgetHostViewChildFrame);
