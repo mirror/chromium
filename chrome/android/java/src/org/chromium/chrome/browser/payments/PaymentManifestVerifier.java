@@ -6,7 +6,6 @@ package org.chromium.chrome.browser.payments;
 
 import android.content.pm.PackageInfo;
 import android.content.pm.ResolveInfo;
-import android.content.pm.Signature;
 
 import org.chromium.base.Log;
 import org.chromium.chrome.browser.UrlConstants;
@@ -20,7 +19,6 @@ import java.net.URI;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Formatter;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -39,8 +37,6 @@ import java.util.Set;
 public class PaymentManifestVerifier
         implements ManifestDownloadCallback, ManifestParseCallback,
                    PaymentManifestWebDataService.PaymentManifestWebDataServiceCallback {
-    private static final String TAG = "PaymentManifest";
-
     /** Interface for the callback to invoke when finished verification. */
     public interface ManifestVerifyCallback {
         /**
@@ -88,12 +84,15 @@ public class PaymentManifestVerifier
         /** The version code for the native Android payment app, e.g., 123. */
         public long version;
 
-        /**
-         * The SHA256 certificate fingerprints for the native Android payment app, .e.g,
-         * ["308201dd30820146020101300d06092a864886f70d010105050030"].
-         */
+        /** The SHA256 certificate fingerprint bytes for the native Android payment app. */
+        public byte[][] sha256CertFingerprintBytes;
+
+        /** The string representation of the SHA256 certificate fingerprints. */
         public Set<String> sha256CertFingerprints;
     }
+
+    private static final String TAG = "PaymentManifest";
+    private static final String ALL_ORIGINS_SUPPORTED_INDICATOR = "*";
 
     private final PaymentManifestDownloader mDownloader;
     private final URI mMethodName;
@@ -151,6 +150,8 @@ public class PaymentManifestVerifier
             AppInfo appInfo = new AppInfo();
             appInfo.resolveInfo = matchingApps.get(i);
             mMatchingApps.put(appInfo.resolveInfo.activityInfo.packageName, appInfo);
+            Log.e(TAG, "Method=%s package=%s", mMethodName,
+                    appInfo.resolveInfo.activityInfo.packageName);
         }
 
         mDownloader = downloader;
@@ -198,13 +199,15 @@ public class PaymentManifestVerifier
             }
 
             appInfo.version = packageInfo.versionCode;
-            appInfo.sha256CertFingerprints = new HashSet<>();
-            Signature[] signatures = packageInfo.signatures;
-            for (int i = 0; i < signatures.length; i++) {
-                mMessageDigest.update(signatures[i].toByteArray());
 
+            appInfo.sha256CertFingerprintBytes = new byte[packageInfo.signatures.length][];
+            appInfo.sha256CertFingerprints = new HashSet<>();
+            for (int i = 0; i < packageInfo.signatures.length; i++) {
+                mMessageDigest.update(packageInfo.signatures[i].toByteArray());
                 // The digest is reset after completing the hash computation.
-                appInfo.sha256CertFingerprints.add(byteArrayToString(mMessageDigest.digest()));
+                appInfo.sha256CertFingerprintBytes[i] = mMessageDigest.digest();
+                appInfo.sha256CertFingerprints.add(
+                        byteArrayToString(appInfo.sha256CertFingerprintBytes[i]));
             }
         }
 
@@ -247,18 +250,30 @@ public class PaymentManifestVerifier
 
     @Override
     public void onPaymentMethodManifestFetched(String[] appPackageNames) {
-        Set<String> fetchedApps = new HashSet<>(Arrays.asList(appPackageNames));
-        Set<String> matchingApps = mMatchingApps.keySet();
+        Set<String> fetchedApps = new HashSet<>();
+        for (int i = 0; i < appPackageNames.length; i++) {
+            fetchedApps.add(appPackageNames[i]);
+        }
+
+        if (fetchedApps.contains(ALL_ORIGINS_SUPPORTED_INDICATOR)) {
+            for (Map.Entry<String, AppInfo> app : mMatchingApps.entrySet()) {
+                mCallback.onValidPaymentApp(mMethodName, app.getValue().resolveInfo);
+            }
+            // Download and parse manifest to refresh cache.
+            mDownloader.downloadPaymentMethodManifest(mMethodName, this);
+            return;
+        }
+
         // The cache may be stale if it doesn't contain all matching apps, so switch to download the
         // manifest online immediately.
-        if (!fetchedApps.containsAll(matchingApps)) {
+        if (!fetchedApps.containsAll(mMatchingApps.keySet())) {
             mIsManifestCacheStaleOrUnusable = true;
             mDownloader.downloadPaymentMethodManifest(mMethodName, this);
             return;
         }
 
-        mPendingWebAppManifestsCount = matchingApps.size();
-        for (String matchingAppPackageName : matchingApps) {
+        mPendingWebAppManifestsCount = mMatchingApps.size();
+        for (String matchingAppPackageName : mMatchingApps.keySet()) {
             if (!mWebDataService.getPaymentWebAppManifest(matchingAppPackageName, this)) {
                 mIsManifestCacheStaleOrUnusable = true;
                 mPendingWebAppManifestsCount = 0;
@@ -306,12 +321,28 @@ public class PaymentManifestVerifier
     }
 
     @Override
-    public void onPaymentMethodManifestParseSuccess(URI[] webAppManifestUris,
-            URI[] unusedSupportedOrigins, boolean unusedAllOriginsSupported) {
+    public void onPaymentMethodManifestParseSuccess(
+            URI[] webAppManifestUris, URI[] unusedSupportedOrigins, boolean allOriginsSupported) {
         assert webAppManifestUris != null;
-        assert webAppManifestUris.length > 0;
+        assert unusedSupportedOrigins != null;
+        assert webAppManifestUris.length > 0 || unusedSupportedOrigins.length > 0
+                || allOriginsSupported;
         assert !mAtLeastOneManifestFailedToDownloadOrParse;
         assert mPendingWebAppManifestsCount == 0;
+
+        if (allOriginsSupported) {
+            // Verify payment apps only if they have not already been verified by the cached
+            // manifest.
+            if (mIsManifestCacheStaleOrUnusable) {
+                for (Map.Entry<String, AppInfo> app : mMatchingApps.entrySet()) {
+                    mCallback.onValidPaymentApp(mMethodName, app.getValue().resolveInfo);
+                }
+            }
+            mWebDataService.addPaymentMethodManifest(
+                    mMethodName.toString(), new String[] {ALL_ORIGINS_SUPPORTED_INDICATOR});
+            mCallback.onVerifyFinished(this);
+            return;
+        }
 
         mPendingWebAppManifestsCount = webAppManifestUris.length;
         for (int i = 0; i < webAppManifestUris.length; i++) {

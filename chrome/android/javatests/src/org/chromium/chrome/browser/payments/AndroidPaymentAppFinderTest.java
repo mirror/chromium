@@ -99,7 +99,9 @@ public class AndroidPaymentAppFinderTest implements PaymentAppCreatedCallback {
                                             .replaceAll("https://davepay.com",
                                                     mTestServerUri.toString() + "/davepay.com")
                                             .replaceAll("https://evepay.com",
-                                                    mTestServerUri.toString() + "/evepay.com"));
+                                                    mTestServerUri.toString() + "/evepay.com")
+                                            .replaceAll("https://frankpay.com",
+                                                    mTestServerUri.toString() + "/frankpay.com"));
                         } catch (URISyntaxException e) {
                             assert false : "URI should be valid";
                         }
@@ -652,6 +654,57 @@ public class AndroidPaymentAppFinderTest implements PaymentAppCreatedCallback {
         findApps(methods);
 
         Assert.assertTrue("No apps should match the query again", mPaymentApps.isEmpty());
+    }
+
+    /**
+     * Test https://frankpay.com/webpay payment method, which supports all apps without signature
+     * verification because https://frankpay.com/payment-manifest.json contains "supported_origins":
+     * "*" directive. Repeated app look ups should be successful.
+     */
+    @Test
+    @Feature({"Payments"})
+    public void testAlicePaySupportsPaymentAppsFromAllOrigins() throws Throwable {
+        Set<String> methods = new HashSet<>();
+        methods.add(mServer.getURL("/components/test/data/payments/frankpay.com/webpay"));
+        mPackageManager.installPaymentApp("BobPay", "com.alicepay",
+                mServer.getURL("/components/test/data/payments/alicepay.com/webpay"), "00");
+        mPackageManager.installPaymentApp("AlicePay", "com.bobpay", "basic-card", "11");
+        mPackageManager.installPaymentApp(
+                "AlicePay", "com.charliepay", "invalid-payment-method-name", "22");
+        mPackageManager.setStringArrayMetaData("com.alicepay",
+                new String[] {
+                        mServer.getURL("/components/test/data/payments/frankpay.com/webpay")});
+        mPackageManager.setStringArrayMetaData("com.bobpay",
+                new String[] {
+                        mServer.getURL("/components/test/data/payments/frankpay.com/webpay")});
+        mPackageManager.setStringArrayMetaData("com.charliepay",
+                new String[] {
+                        mServer.getURL("/components/test/data/payments/frankpay.com/webpay")});
+
+        findApps(methods);
+
+        Assert.assertEquals("3 apps should match the query", 3, mPaymentApps.size());
+        Set<String> appIdentifiers = new HashSet<>();
+        appIdentifiers.add(mPaymentApps.get(0).getAppIdentifier());
+        appIdentifiers.add(mPaymentApps.get(1).getAppIdentifier());
+        appIdentifiers.add(mPaymentApps.get(3).getAppIdentifier());
+        Assert.assertTrue(appIdentifiers.contains("com.alicepay"));
+        Assert.assertTrue(appIdentifiers.contains("com.bobpay"));
+        Assert.assertTrue(appIdentifiers.contains("com.charliepay"));
+
+        mPaymentApps.clear();
+        mAllPaymentAppsCreated = false;
+
+        findApps(methods);
+
+        Assert.assertEquals("3 apps should still match the query", 3, mPaymentApps.size());
+        appIdentifiers.clear();
+        appIdentifiers.add(mPaymentApps.get(0).getAppIdentifier());
+        appIdentifiers.add(mPaymentApps.get(1).getAppIdentifier());
+        appIdentifiers.add(mPaymentApps.get(3).getAppIdentifier());
+        Assert.assertTrue(appIdentifiers.contains("com.alicepay"));
+        Assert.assertTrue(appIdentifiers.contains("com.bobpay"));
+        Assert.assertTrue(appIdentifiers.contains("com.charliepay"));
     }
 
     private void findApps(final Set<String> methodNames) throws Throwable {
