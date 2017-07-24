@@ -58,6 +58,20 @@ const int kDefaultImageResourceIDs[] = {
     IDR_LOGIN_DEFAULT_USER_31,
     IDR_LOGIN_DEFAULT_USER_32,
     IDR_LOGIN_DEFAULT_USER_33,
+    IDR_LOGIN_DEFAULT_USER_34,
+    IDR_LOGIN_DEFAULT_USER_35,
+    IDR_LOGIN_DEFAULT_USER_36,
+    IDR_LOGIN_DEFAULT_USER_37,
+    IDR_LOGIN_DEFAULT_USER_38,
+    IDR_LOGIN_DEFAULT_USER_39,
+    IDR_LOGIN_DEFAULT_USER_40,
+    IDR_LOGIN_DEFAULT_USER_41,
+    IDR_LOGIN_DEFAULT_USER_42,
+    IDR_LOGIN_DEFAULT_USER_43,
+    IDR_LOGIN_DEFAULT_USER_44,
+    IDR_LOGIN_DEFAULT_USER_45,
+    IDR_LOGIN_DEFAULT_USER_46,
+    IDR_LOGIN_DEFAULT_USER_47,
 };
 
 const int kDefaultImageAuthorIDs[] = {
@@ -95,6 +109,20 @@ const int kDefaultImageAuthorIDs[] = {
     IDS_LOGIN_DEFAULT_USER_AUTHOR_31,
     IDS_LOGIN_DEFAULT_USER_AUTHOR_32,
     IDS_LOGIN_DEFAULT_USER_AUTHOR_33,
+    0,  // No author for user image 34.
+    0,  // No author for user image 35.
+    0,  // No author for user image 36.
+    0,  // No author for user image 37.
+    0,  // No author for user image 38.
+    0,  // No author for user image 39.
+    0,  // No author for user image 40.
+    0,  // No author for user image 41.
+    0,  // No author for user image 42.
+    0,  // No author for user image 43.
+    0,  // No author for user image 44.
+    0,  // No author for user image 45.
+    0,  // No author for user image 46.
+    0,  // No author for user image 47.
 };
 
 const int kDefaultImageWebsiteIDs[] = {
@@ -132,11 +160,25 @@ const int kDefaultImageWebsiteIDs[] = {
     IDS_LOGIN_DEFAULT_USER_WEBSITE_31,
     IDS_LOGIN_DEFAULT_USER_WEBSITE_32,
     IDS_LOGIN_DEFAULT_USER_WEBSITE_33,
+    0,  // No website for user image 34.
+    0,  // No website for user image 35.
+    0,  // No website for user image 36.
+    0,  // No website for user image 37.
+    0,  // No website for user image 38.
+    0,  // No website for user image 39.
+    0,  // No website for user image 40.
+    0,  // No website for user image 41.
+    0,  // No website for user image 42.
+    0,  // No website for user image 43.
+    0,  // No website for user image 44.
+    0,  // No website for user image 45.
+    0,  // No website for user image 46.
+    0,  // No website for user image 47.
 };
 
 const int kDefaultImagesCount = arraysize(kDefaultImageResourceIDs);
 
-const int kFirstDefaultImageIndex = 19;
+const int kFirstDefaultImageIndex = 34;
 
 // The order and the values of these constants are important for histograms
 // of different Chrome OS versions to be merged smoothly.
@@ -189,6 +231,20 @@ const int kDefaultImageDescriptions[] = {
     IDS_LOGIN_DEFAULT_USER_DESC_31,
     IDS_LOGIN_DEFAULT_USER_DESC_32,
     IDS_LOGIN_DEFAULT_USER_DESC_33,
+    IDS_LOGIN_DEFAULT_USER_DESC_34,
+    IDS_LOGIN_DEFAULT_USER_DESC_35,
+    IDS_LOGIN_DEFAULT_USER_DESC_36,
+    IDS_LOGIN_DEFAULT_USER_DESC_37,
+    IDS_LOGIN_DEFAULT_USER_DESC_38,
+    IDS_LOGIN_DEFAULT_USER_DESC_39,
+    IDS_LOGIN_DEFAULT_USER_DESC_40,
+    IDS_LOGIN_DEFAULT_USER_DESC_41,
+    IDS_LOGIN_DEFAULT_USER_DESC_42,
+    IDS_LOGIN_DEFAULT_USER_DESC_43,
+    IDS_LOGIN_DEFAULT_USER_DESC_44,
+    IDS_LOGIN_DEFAULT_USER_DESC_45,
+    IDS_LOGIN_DEFAULT_USER_DESC_46,
+    IDS_LOGIN_DEFAULT_USER_DESC_47,
 };
 
 // Returns a string consisting of the prefix specified and the index of the
