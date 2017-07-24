@@ -22,6 +22,30 @@
       "revId": "686bcbcb9d8ac4fa7f879960018976b91af83765",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "547892ca_6fd829f8",
+        "filename": "sandbox/mac/sandbox_mac_compiler_v2_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-07-24T18:45:12Z",
+      "side": 0,
+      "message": "That\u0027s why I changed it to com.apple.system.logger, which is present on all versions.",
+      "parentUuid": "1b7a4c7d_a0880b81",
+      "range": {
+        "startLine": 50,
+        "startChar": 41,
+        "endLine": 50,
+        "endChar": 55
+      },
+      "revId": "686bcbcb9d8ac4fa7f879960018976b91af83765",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

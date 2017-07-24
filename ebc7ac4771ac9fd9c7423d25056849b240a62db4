@@ -22,6 +22,30 @@
       "revId": "ebc7ac4771ac9fd9c7423d25056849b240a62db4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d466b128_f4a2a18d",
+        "filename": "content/renderer/sandbox_mac_v2_unittest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-07-24T18:45:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6fb37f6_41da1b33",
+      "range": {
+        "startLine": 78,
+        "startChar": 28,
+        "endLine": 78,
+        "endChar": 44
+      },
+      "revId": "ebc7ac4771ac9fd9c7423d25056849b240a62db4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
