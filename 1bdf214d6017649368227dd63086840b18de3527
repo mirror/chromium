@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f931500b_b097290e",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleScriptCreationParams.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-24T03:14:40Z",
+      "side": 1,
+      "message": "Wasn\u0027t sure why PassThrough one is fine here, could you add a comment?",
+      "revId": "1bdf214d6017649368227dd63086840b18de3527",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4632142_3a09c16c",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMapProxy.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-24T03:14:40Z",
+      "side": 1,
+      "message": "Maybe... write something like following in the comment might be helpful?\n\n   MapProxy (worklet thread) --\u003e Map (main thread)\nMap::Client (worklet thread) \u003c-- ClientAdapter (main thread)",
+      "revId": "1bdf214d6017649368227dd63086840b18de3527",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

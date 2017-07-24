@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "0a9a2611_35bd9eca",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMapProxy.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-24T03:14:40Z",
+      "side": 1,
+      "message": "(I prefer bare ctor too if Create doesn\u0027t return smart pointers, though either works for me)",
+      "parentUuid": "aed8e366_35661308",
+      "revId": "1200bae97615aba0b3367bb4a59d120a3b2e984f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f3a037a_5f4433ce",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/FetchParameters.h",
         "patchSetId": 6
