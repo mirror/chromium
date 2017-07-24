@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43cf5e5a_321c63ba",
+        "filename": "base/numerics/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-24T18:17:46Z",
+      "side": 1,
+      "message": "Get rid of this",
+      "revId": "56d193550c914182b78c0555428f8f7a0acda698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02620b93_4b0a4543",
+        "filename": "base/numerics/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-24T18:17:46Z",
+      "side": 1,
+      "message": "visibility \u003d [ \"//base/*\" ]",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 7
+      },
+      "revId": "56d193550c914182b78c0555428f8f7a0acda698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c64baa88_351c87b4",
+        "filename": "base/numerics/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-24T18:17:46Z",
+      "side": 1,
+      "message": "public \u003d [\n  checked_math.h...\n]\nsources \u003d [\n  \"...internal.h\"\n]",
+      "revId": "56d193550c914182b78c0555428f8f7a0acda698",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
