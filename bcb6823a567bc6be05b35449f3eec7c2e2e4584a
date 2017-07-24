@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0bd6d95_af7c3046",
+        "filename": "chrome/browser/resources/settings/people_page/lock_screen.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-24T15:34:52Z",
+      "side": 1,
+      "message": "Differentiating classes by an \u0027s\u0027 at the end is confusing. Rename one or the other. Also, class names are being used here more like ids, maybe make this \u0027no-padding\u0027.",
+      "revId": "bcb6823a567bc6be05b35449f3eec7c2e2e4584a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93562fd6_ce262d0f",
+        "filename": "chrome/browser/resources/settings/people_page/lock_screen.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-24T15:34:52Z",
+      "side": 1,
+      "message": "nit: .underbar is sufficient",
+      "revId": "bcb6823a567bc6be05b35449f3eec7c2e2e4584a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94bd5aac_67a9c140",
+        "filename": "chrome/browser/resources/settings/people_page/lock_screen.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-24T15:34:52Z",
+      "side": 1,
+      "message": "indent 4 spaces from \u003c above",
+      "revId": "bcb6823a567bc6be05b35449f3eec7c2e2e4584a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
