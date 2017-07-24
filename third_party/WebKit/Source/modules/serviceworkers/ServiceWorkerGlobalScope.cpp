@@ -61,6 +61,7 @@
 #include "platform/loader/fetch/MemoryCache.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/ResourceRequest.h"
+#include "platform/network/ContentSecurityPolicyResponseHeaders.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/wtf/CurrentTime.h"
 #include "platform/wtf/PtrUtil.h"
@@ -79,8 +80,14 @@ ServiceWorkerGlobalScope* ServiceWorkerGlobalScope::Create(
       creation_params->worker_clients);
 
   context->SetV8CacheOptions(creation_params->v8_cache_options);
-  context->ApplyContentSecurityPolicyFromVector(
-      *creation_params->content_security_policy_headers);
+  if (creation_params->content_security_policy_response_headers) {
+    DCHECK_EQ(0u, creation_params->content_security_policy_headers->size());
+    context->ApplyContentSecurityPolicyFromHeader(
+        creation_params->content_security_policy_response_headers.value());
+  } else {
+    context->ApplyContentSecurityPolicyFromVector(
+        *creation_params->content_security_policy_headers);
+  }
   context->SetWorkerSettings(std::move(creation_params->worker_settings));
   if (!creation_params->referrer_policy.IsNull())
     context->ParseAndSetReferrerPolicy(creation_params->referrer_policy);

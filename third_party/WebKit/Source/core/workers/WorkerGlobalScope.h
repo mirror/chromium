@@ -153,6 +153,8 @@ class CORE_EXPORT WorkerGlobalScope
                     std::unique_ptr<SecurityOrigin::PrivilegeData>,
                     WorkerClients*);
   void SetWorkerSettings(std::unique_ptr<WorkerSettings>);
+  void ApplyContentSecurityPolicyFromHeader(
+      const ContentSecurityPolicyResponseHeaders&);
   void ApplyContentSecurityPolicyFromVector(
       const Vector<CSPHeaderAndType>& headers);
 
