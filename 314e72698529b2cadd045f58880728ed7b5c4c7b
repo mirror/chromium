@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d90962b7_7eec3c5e",
+        "filename": "content/browser/memory/swap_metrics_driver.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-07-24T21:29:35Z",
+      "side": 1,
+      "message": "Done. FYI it does its work on the same sequence it was started on, per base/timer/timer.h.",
+      "parentUuid": "2c3130c7_6d9a3890",
+      "range": {
+        "startLine": 25,
+        "startChar": 21,
+        "endLine": 25,
+        "endChar": 38
+      },
+      "revId": "314e72698529b2cadd045f58880728ed7b5c4c7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac687d30_de5c722a",
         "filename": "content/browser/memory/swap_metrics_driver.h",
         "patchSetId": 8
@@ -39,6 +63,24 @@
       "revId": "314e72698529b2cadd045f58880728ed7b5c4c7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39b56590_495f2977",
+        "filename": "content/browser/memory/swap_metrics_driver.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-07-24T21:29:35Z",
+      "side": 1,
+      "message": "I added IsRunning() to SwapMetricsDriver and also OnUpdateMetricsFailed() to the Delegate, so the client can react if needed.",
+      "parentUuid": "ac687d30_de5c722a",
+      "revId": "314e72698529b2cadd045f58880728ed7b5c4c7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "314e72698529b2cadd045f58880728ed7b5c4c7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af02ce8b_3a956e0d",
+        "filename": "content/browser/memory/swap_metrics_driver_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-07-24T21:29:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20d93e99_4c09e589",
+      "range": {
+        "startLine": 19,
+        "startChar": 59,
+        "endLine": 19,
+        "endChar": 60
+      },
+      "revId": "314e72698529b2cadd045f58880728ed7b5c4c7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
