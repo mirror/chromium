@@ -833,9 +833,9 @@ bool PasswordFormManager::UploadPasswordVote(
 
   autofill::ServerFieldTypeSet available_field_types;
   if (password_type != autofill::USERNAME) {
+    // A map from field names to field types.
+    FieldTypeMap field_types;
     if (has_autofill_vote) {
-      // A map from field names to field types.
-      FieldTypeMap field_types;
       DCHECK(submitted_form_);
       bool is_update = password_type == autofill::NEW_PASSWORD ||
                        password_type == autofill::PROBABLY_NEW_PASSWORD ||
@@ -849,19 +849,25 @@ bool PasswordFormManager::UploadPasswordVote(
       }
       field_types[submitted_form_->confirmation_password_element] =
           autofill::CONFIRMATION_PASSWORD;
-      LabelFields(field_types, &form_structure, &available_field_types);
     }
     if (password_type != autofill::ACCOUNT_CREATION_PASSWORD) {
       if (generation_popup_was_shown_)
         AddGeneratedVote(&form_structure);
       if (form_classifier_outcome_ != kNoOutcome)
         AddFormClassifierVote(&form_structure);
+    } else { // Username reuse vote.
+      field_types[form_to_upload.username_element] = autofill::USERNAME;
+      form_structure.set_username_vote_type(
+          autofill::AutofillUploadContents::Field::REUSED);
     }
+    LabelFields(field_types, &form_structure, &available_field_types);
   } else {  // Username correction vote.
     FieldTypeMap field_types;
     field_types[form_to_upload.username_element] = autofill::USERNAME;
     field_types[form_to_upload.password_element] =
         autofill::ACCOUNT_CREATION_PASSWORD;
+    form_structure.set_username_vote_type(
+        autofill::AutofillUploadContents::Field::OVERWRITTEN);
     LabelFields(field_types, &form_structure, &available_field_types);
   }
 

@@ -2403,6 +2403,7 @@ TEST_F(FormStructureTest,
       AutofillUploadContents::Field::NON_GENERATION_ELEMENT);
   upload_firstname_field->set_properties_mask(FieldPropertiesFlags::HAD_FOCUS);
 
+
   AutofillUploadContents::Field* upload_lastname_field = upload.add_field();
   test::FillUploadField(upload_lastname_field, 2786066110U, "lastname", "",
                         "family-name", 5U);
@@ -2424,6 +2425,8 @@ TEST_F(FormStructureTest,
                         "email", 86U);
   upload_username_field->set_form_classifier_outcome(
       AutofillUploadContents::Field::NON_GENERATION_ELEMENT);
+  upload_username_field->set_username_vote_type(
+      AutofillUploadContents::Field::NO_INFORMATION);
   upload_username_field->set_properties_mask(FieldPropertiesFlags::HAD_FOCUS |
                                              FieldPropertiesFlags::USER_TYPED);
 
