@@ -61,12 +61,12 @@ cr.define('print_preview', function() {
           print_preview.DestinationStore.EventType
               .SELECTED_DESTINATION_CAPABILITIES_READY,
           this.onDestinationCapabilitiesReady_.bind(this));
-      this.settingsSections_.forEach(function(section) {
+      this.settingsSections_.forEach(section => {
         this.tracker.add(
             section,
             print_preview.SettingsSection.EventType.COLLAPSIBLE_CONTENT_CHANGED,
             this.updateState_.bind(this));
-      }.bind(this));
+      });
 
       this.updateState_(true);
     },
