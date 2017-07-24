@@ -9,6 +9,28 @@ module shape_detection.mojom;
 import "skia/public/interfaces/bitmap.mojom";
 import "ui/gfx/geometry/mojo/geometry.mojom";
 
+// Equivalent to https://wicg.github.io/shape-detection-api/#barcodeformat-section
+enum BarcodeFormat {
+  AZTEC,
+  CODE_128,
+  CODE_39,
+  CODE_93,
+  CODABAR,
+  DATA_MATRIX,
+  EAN_13,
+  EAN_8,
+  ITF,
+  PDF417,
+  QR_CODE,
+  UNKNOWN,
+  UPC_A,
+  UPC_E
+};
+
+struct BarcodeDetectorOptions {
+  array<BarcodeFormat> formats;
+};
+
 struct BarcodeDetectionResult {
   // Barcode or QR extracted contents (see e.g.
   // https://github.com/zxing/zxing/wiki/Barcode-Contents).
