@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bc2734b5_3cdeaf37",
+        "filename": "remoting/host/touch_injector_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-24T18:46:14Z",
+      "side": 1,
+      "message": "No, that was for an early iteration, I should remove it.",
+      "parentUuid": "f31f53e3_53ad67a5",
+      "range": {
+        "startLine": 88,
+        "startChar": 4,
+        "endLine": 88,
+        "endChar": 34
+      },
+      "revId": "aa6dcc43715cc5030fb697fc28c536ff9ad97e97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0770b77_43cbb9e1",
         "filename": "remoting/host/touch_injector_win.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "aa6dcc43715cc5030fb697fc28c536ff9ad97e97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1991660e_b9890e75",
+        "filename": "remoting/host/touch_injector_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-24T18:46:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0770b77_43cbb9e1",
+      "range": {
+        "startLine": 97,
+        "startChar": 6,
+        "endLine": 97,
+        "endChar": 7
+      },
+      "revId": "aa6dcc43715cc5030fb697fc28c536ff9ad97e97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
