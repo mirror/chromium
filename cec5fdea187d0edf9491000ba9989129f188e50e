@@ -16,6 +16,24 @@
       "revId": "cec5fdea187d0edf9491000ba9989129f188e50e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "882beb75_76d9e3a2",
+        "filename": "third_party/WebKit/Source/modules/sensor/Sensor.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-07-24T09:08:51Z",
+      "side": 0,
+      "message": "I wasn\u0027t sure this message is useful since the frequency can be limited even further when max/min frequencies are obtained from the platform, but we can decide it in a different CL.",
+      "parentUuid": "c84ba039_9c767a97",
+      "revId": "cec5fdea187d0edf9491000ba9989129f188e50e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
