@@ -331,13 +331,6 @@ class DevicesRequest : public base::RefCountedThreadSafe<DevicesRequest> {
   std::unique_ptr<DeviceDescriptors> descriptors_;
 };
 
-void ReleaseDeviceAndProvider(
-    AndroidDeviceManager::DeviceProvider* provider,
-    const std::string& serial) {
-  provider->ReleaseDevice(serial);
-  provider->Release();
-}
-
 } // namespace
 
 AndroidDeviceManager::BrowserInfo::BrowserInfo()
@@ -458,13 +451,9 @@ AndroidDeviceManager::Device::Device(
 }
 
 AndroidDeviceManager::Device::~Device() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  provider_->AddRef();
-  DeviceProvider* raw_ptr = provider_.get();
-  provider_ = nullptr;
-  task_runner_->PostTask(FROM_HERE,
-                         base::BindOnce(&ReleaseDeviceAndProvider,
-                                        base::Unretained(raw_ptr), serial_));
+  task_runner_->PostTask(
+      FROM_HERE, base::BindOnce(&DeviceProvider::ReleaseDevice,
+                                std::move(provider_), std::move(serial_)));
 }
 
 AndroidDeviceManager::HandlerThread*
