@@ -453,6 +453,10 @@ constexpr const gfx::Size kMinCocoaPopupWindowSize(100, 122);
 
 @end  // @interface BrowserWindowController(WindowType)
 
+@interface FullscreenView : NSView
+
+@end  // @interface NSFullscreenImageView : NSImageView
+
 // Fullscreen terminology:
 //
 // ----------------------------------------------------------------------------
