@@ -22,6 +22,30 @@
       "revId": "543923901cdf7ceedf107a9420f310ecc5f5cd08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "783a0867_4f32c8ae",
+        "filename": "content/shell/browser/layout_test/layout_test_permission_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-24T22:19:36Z",
+      "side": 1,
+      "message": "\u003e I suspect this will change the results of other geolocation-api LayoutTests that expect not go get a fake position\n\nI don\u0027t think this will impact any other layout tests. Without this, calls to getCurrentPosition will never have their callbacks run, so it\u0027s very unlikely that anything was depending on getting some kind of other value from getCurrentPosition.\n\n\u003e third_party/WebKit/LayoutTests/geolocation-api/resources/geolocation-mock.js\n\nThis intercepts calls to the PermissionService which we don\u0027t want to do here because that\u0027s where we perform the FP check. It seemed simpler and a more realistic test to setup the location provider with a fake location.\n\nI can find another place to put this that\u0027s more appropriate. shell_main_delegate.cc perhaps? Or layout_test_content_browser_client.cc? WDYT?",
+      "parentUuid": "2949f8e9_6179d93f",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 16
+      },
+      "revId": "543923901cdf7ceedf107a9420f310ecc5f5cd08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
