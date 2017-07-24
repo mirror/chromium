@@ -305,6 +305,7 @@ void FakePeripheral::DispatchDiscoveryResponse() {
 }
 
 void FakePeripheral::DisconnectGatt() {
+  gatt_connected_ = false;
 }
 
 }  // namespace bluetooth
