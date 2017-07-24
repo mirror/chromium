@@ -22,6 +22,30 @@
       "revId": "8625ca86ed4a77bdaff7c44094c5f15a92297e03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a53eef7_78450c37",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarLayout.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-07-24T21:45:32Z",
+      "side": 1,
+      "message": "I learned mouse events are okay to be ignored on Toolbar since touch events are the ones that actually triggers actions like showing menu, invoking tab switcher, etc. Mouse events only matter on content layer since Blink needs to them to handle mouse events properly. Given that, I had them consumed here and didn\u0027t call the super method. Let me know if I got it wrong - would be happy to fix it.",
+      "parentUuid": "a80ff24e_ca036300",
+      "range": {
+        "startLine": 547,
+        "startChar": 23,
+        "endLine": 547,
+        "endChar": 29
+      },
+      "revId": "8625ca86ed4a77bdaff7c44094c5f15a92297e03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
