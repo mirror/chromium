@@ -100,8 +100,10 @@ class BackgroundTracingManagerImpl : public BackgroundTracingManager {
   void BeginFinalizing(StartedFinalizingCallback);
   void ValidateStartupScenario();
 
-  void AddCustomMetadata();
+  void AddMetadataGeneratorFunction();
+  std::unique_ptr<base::DictionaryValue> GenerateTracingMetadataDict();
 
+  bool IsAllowedFinalization() const;
   std::string GetTriggerNameFromHandle(TriggerHandle handle) const;
   bool IsTriggerHandleValid(TriggerHandle handle) const;
 

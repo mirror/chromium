@@ -15,6 +15,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
+#include "base/values.h"
 #include "content/browser/tracing/background_memory_tracing_observer.h"
 #include "content/browser/tracing/background_tracing_rule.h"
 #include "content/browser/tracing/trace_message_filter.h"
@@ -24,6 +25,7 @@
 #include "content/public/browser/tracing_delegate.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_switches.h"
+#include "services/resource_coordinator/public/cpp/tracing/chrome_trace_event_agent.h"
 
 namespace content {
 
@@ -96,10 +98,28 @@ BackgroundTracingManagerImpl::BackgroundTracingManagerImpl()
       trigger_handle_ids_(0),
       triggered_named_event_handle_(-1) {
   AddEnabledStateObserver(BackgroundMemoryTracingObserver::GetInstance());
+
+  // Make sure the tracing controller is initialized.
+  TracingController::GetInstance();
+  if (!BrowserThread::CurrentlyOn(BrowserThread::UI)) {
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::Bind(&BackgroundTracingManagerImpl::AddMetadataGeneratorFunction,
+                   base::Unretained(this)));
+  } else {
+    AddMetadataGeneratorFunction();
+  }
 }
 
 BackgroundTracingManagerImpl::~BackgroundTracingManagerImpl() {
   NOTREACHED();
+}
+
+void BackgroundTracingManagerImpl::AddMetadataGeneratorFunction() {
+  tracing::ChromeTraceEventAgent::GetInstance()->AddMetadataGeneratorFunction(
+      base::BindRepeating(
+          &BackgroundTracingManagerImpl::GenerateTracingMetadataDict,
+          base::Unretained(this)));
 }
 
 void BackgroundTracingManagerImpl::WhenIdle(
@@ -530,17 +550,23 @@ void BackgroundTracingManagerImpl::OnFinalizeComplete() {
   RecordBackgroundTracingMetric(FINALIZATION_COMPLETE);
 }
 
-void BackgroundTracingManagerImpl::AddCustomMetadata() {
-  base::DictionaryValue metadata_dict;
+bool BackgroundTracingManagerImpl::IsAllowedFinalization() const {
+  return !delegate_ ||
+         (config_ && delegate_->IsAllowedToEndBackgroundScenario(
+                         *config_.get(), requires_anonymized_data_));
+}
 
-  std::unique_ptr<base::DictionaryValue> config_dict(
-      new base::DictionaryValue());
+std::unique_ptr<base::DictionaryValue>
+BackgroundTracingManagerImpl::GenerateTracingMetadataDict() {
+  if (!IsAllowedFinalization())
+    return nullptr;
+  auto config_dict = base::MakeUnique<base::DictionaryValue>();
   config_->IntoDict(config_dict.get());
-  metadata_dict.Set("config", std::move(config_dict));
+  auto metadata_dict = base::MakeUnique<base::DictionaryValue>();
+  metadata_dict->Set("config", std::move(config_dict));
   if (last_triggered_rule_)
-    metadata_dict.Set("last_triggered_rule", std::move(last_triggered_rule_));
-
-  TracingController::GetInstance()->AddMetadata(metadata_dict);
+    metadata_dict->Set("last_triggered_rule_", std::move(last_triggered_rule_));
+  return metadata_dict;
 }
 
 void BackgroundTracingManagerImpl::BeginFinalizing(
@@ -550,24 +576,19 @@ void BackgroundTracingManagerImpl::BeginFinalizing(
   triggered_named_event_handle_ = -1;
   tracing_timer_.reset();
 
-  bool is_allowed_finalization =
-      !delegate_ || (config_ &&
-                     delegate_->IsAllowedToEndBackgroundScenario(
-                         *config_.get(), requires_anonymized_data_));
-
-  scoped_refptr<TracingControllerImpl::TraceDataSink> trace_data_sink;
+  scoped_refptr<TracingControllerImpl::TraceDataEndpoint> trace_data_endpoint;
+  bool is_allowed_finalization = IsAllowedFinalization();
   if (is_allowed_finalization) {
-    trace_data_sink = TracingControllerImpl::CreateCompressedStringSink(
+    trace_data_endpoint = TracingControllerImpl::CreateCompressedStringEndpoint(
         TracingControllerImpl::CreateCallbackEndpoint(
             base::Bind(&BackgroundTracingManagerImpl::OnFinalizeStarted,
                        base::Unretained(this))));
     RecordBackgroundTracingMetric(FINALIZATION_ALLOWED);
-    AddCustomMetadata();
   } else {
     RecordBackgroundTracingMetric(FINALIZATION_DISALLOWED);
   }
 
-  content::TracingController::GetInstance()->StopTracing(trace_data_sink);
+  content::TracingController::GetInstance()->StopTracing(trace_data_endpoint);
 
   if (!callback.is_null())
     callback.Run(is_allowed_finalization);

@@ -234,6 +234,7 @@ void TraceCrashServiceUploader::SetupMultipart(
   // No minidump means no need for crash to process the report.
   net::AddMultipartValueForUpload("should_process", "false", kMultipartBoundary,
                                   "", post_data);
+
   if (metadata) {
     for (base::DictionaryValue::Iterator it(*metadata); !it.IsAtEnd();
          it.Advance()) {

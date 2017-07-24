@@ -20,28 +20,28 @@ namespace {
 
 using content::BrowserThread;
 
-class StringTraceSink : public content::TracingController::TraceDataSink {
+class StringTraceEndpoint
+    : public content::TracingController::TraceDataEndpoint {
  public:
-  StringTraceSink(std::string* result, const base::Closure& callback)
+  StringTraceEndpoint(std::string* result, const base::Closure& callback)
       : result_(result), completion_callback_(callback) {}
 
-  void AddTraceChunk(const std::string& chunk) override {
-    *result_ += result_->empty() ? "[" : ",";
-    *result_ += chunk;
+  void ReceiveTraceChunk(std::unique_ptr<std::string> chunk) override {
+    *result_ += *chunk;
   }
-  void Close() override {
-    if (!result_->empty())
-      *result_ += "]";
+
+  void ReceiveTraceFinalContents(
+      std::unique_ptr<const base::DictionaryValue> metadata) override {
     completion_callback_.Run();
   }
 
  private:
-  ~StringTraceSink() override {}
+  ~StringTraceEndpoint() override {}
 
   std::string* result_;
   base::Closure completion_callback_;
 
-  DISALLOW_COPY_AND_ASSIGN(StringTraceSink);
+  DISALLOW_COPY_AND_ASSIGN(StringTraceEndpoint);
 };
 
 class InProcessTraceController {
@@ -66,7 +66,7 @@ class InProcessTraceController {
     using namespace base::debug;
 
     if (!content::TracingController::GetInstance()->StopTracing(
-            new StringTraceSink(
+            new StringTraceEndpoint(
                 json_trace_output,
                 base::Bind(&InProcessTraceController::OnTracingComplete,
                            base::Unretained(this))))) {

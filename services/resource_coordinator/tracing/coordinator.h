@@ -13,6 +13,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/sequenced_task_runner.h"
 #include "base/single_thread_task_runner.h"
+#include "base/values.h"
 #include "mojo/public/cpp/system/data_pipe.h"
 #include "services/resource_coordinator/public/interfaces/tracing/tracing.mojom.h"
 #include "services/resource_coordinator/tracing/agent_registry.h"
@@ -48,14 +49,15 @@ class Coordinator : public mojom::Coordinator {
   // mojom::Coordinator
   void StartTracing(const std::string& config,
                     const StartTracingCallback& callback) override;
-  void StopAndFlush(mojo::ScopedDataPipeProducerHandle stream) override;
+  void StopAndFlush(mojo::ScopedDataPipeProducerHandle stream,
+                    const StopAndFlushCallback& callback) override;
   void IsTracing(const IsTracingCallback& callback) override;
   void RequestBufferUsage(const RequestBufferUsageCallback& callback) override;
   void GetCategories(const GetCategoriesCallback& callback) override;
 
   // Internal methods for collecting events from agents.
   void SendStartTracingToAgent(AgentRegistry::AgentEntry* agent_entry);
-  void OnTracingStarted(AgentRegistry::AgentEntry* agent_entry);
+  void OnTracingStarted(AgentRegistry::AgentEntry* agent_entry, bool success);
   void StopAndFlushInternal();
   void OnRecorderDataChange(const std::string& label);
   bool StreamEventsForCurrentLabel();
@@ -83,9 +85,11 @@ class Coordinator : public mojom::Coordinator {
   // If |streaming_label_| is not empty, it shows the label for which we are
   // writing chunks to the output stream.
   std::string streaming_label_;
+  std::unique_ptr<base::DictionaryValue> metadata_;
   bool stream_header_written_ = false;
   bool json_field_name_written_ = false;
   StartTracingCallback start_tracing_callback_;
+  StopAndFlushCallback stop_and_flush_callback_;
 
   // For computing trace buffer usage.
   float maximum_trace_buffer_usage_ = 0;

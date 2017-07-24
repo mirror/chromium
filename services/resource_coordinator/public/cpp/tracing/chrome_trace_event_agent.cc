@@ -4,6 +4,10 @@
 
 #include "services/resource_coordinator/public/cpp/tracing/chrome_trace_event_agent.h"
 
+#include <string>
+#include <utility>
+#include <vector>
+
 #include "base/bind.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/ref_counted_memory.h"
@@ -25,14 +29,18 @@ ChromeTraceEventAgent* ChromeTraceEventAgent::GetInstance() {
 }
 
 ChromeTraceEventAgent::ChromeTraceEventAgent(
-    mojom::AgentRegistryPtr agent_registry)
+    service_manager::Connector* connector)
     : binding_(this) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK(!g_chrome_trace_event_agent);
   g_chrome_trace_event_agent = this;
-  // agent_registry can be null in tests.
-  if (!agent_registry)
+  // |connector| can be null in tests.
+  if (!connector)
     return;
+
+  // Connecto to the agent registry interface.
+  tracing::mojom::AgentRegistryPtr agent_registry;
+  connector->BindInterface("content_browser", &agent_registry);
 
   mojom::AgentPtr agent;
   binding_.Bind(mojo::MakeRequest(&agent));
@@ -60,7 +68,7 @@ void ChromeTraceEventAgent::StartTracing(const std::string& config,
         base::trace_event::TraceConfig(config),
         base::trace_event::TraceLog::RECORDING_MODE);
   }
-  callback.Run();
+  callback.Run(true);
 }
 
 void ChromeTraceEventAgent::StopAndFlush(mojom::RecorderPtr recorder) {

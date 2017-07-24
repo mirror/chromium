@@ -19,6 +19,9 @@
 #include "base/trace_event/trace_event_impl.h"
 #include "base/values.h"
 #include "content/public/browser/browser_thread.h"
+#include "mojo/public/cpp/bindings/interface_request.h"
+#include "services/resource_coordinator/public/interfaces/tracing/tracing.mojom.h"
+#include "services/service_manager/public/cpp/connector.h"
 
 namespace content {
 
@@ -39,9 +42,22 @@ std::string GuidToString(const GUID& guid) {
 
 }  // namespace
 
-EtwTracingAgent::EtwTracingAgent()
-    : thread_("EtwConsumerThread") {
+EtwTracingAgent::EtwTracingAgent(service_manager::Connector* connector)
+    : binding_(this), thread_("EtwConsumerThread") {
+  // Connecto to the agent registry interface.
+  tracing::mojom::AgentRegistryPtr agent_registry;
+  connector->BindInterface("content_browser", &agent_registry);
+
+  // Register this agent.
+  tracing::mojom::AgentPtr agent;
+  binding_.Bind(mojo::MakeRequest(&agent));
+  agent_registry->RegisterAgent(std::move(agent), kETWTraceLabel,
+                                tracing::mojom::TraceDataType::STRING,
+                                false /* supports_explicit_clock_sync */);
 }
+
+EtwTracingAgent::EtwTracingAgent()
+    : binding_(this), thread_("EtwConsumerThread") {}
 
 EtwTracingAgent::~EtwTracingAgent() {
 }
@@ -54,14 +70,12 @@ std::string EtwTracingAgent::GetTraceEventLabel() {
   return kETWTraceLabel;
 }
 
-void EtwTracingAgent::StartAgentTracing(
-    const base::trace_event::TraceConfig& trace_config,
-    const StartAgentTracingCallback& callback) {
+void EtwTracingAgent::StartTracing(
+    const std::string& config,
+    const Agent::StartTracingCallback& callback) {
   // Activate kernel tracing.
   if (!StartKernelSessionTracing()) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE,
-        base::Bind(callback, GetTracingAgentName(), false /* success */));
+    callback.Run(false);
     return;
   }
 
@@ -70,10 +84,13 @@ void EtwTracingAgent::StartAgentTracing(
   thread_.task_runner()->PostTask(
       FROM_HERE, base::Bind(&EtwTracingAgent::TraceAndConsumeOnThread,
                             base::Unretained(this)));
+  callback.Run(true);
+}
 
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE,
-      base::Bind(callback, GetTracingAgentName(), true /* success */));
+void EtwTracingAgent::StartAgentTracing(
+    const base::trace_event::TraceConfig& trace_config,
+    const StartAgentTracingCallback& callback) {
+  StartTracing("", base::BindRepeating(callback, GetTracingAgentName()));
 }
 
 void EtwTracingAgent::StopAgentTracing(
@@ -87,6 +104,37 @@ void EtwTracingAgent::StopAgentTracing(
   thread_.task_runner()->PostTask(FROM_HERE,
                                   base::Bind(&EtwTracingAgent::FlushOnThread,
                                              base::Unretained(this), callback));
+}
+
+void EtwTracingAgent::RecorderProxy(
+    const std::string& event_name,
+    const std::string& events_label,
+    const scoped_refptr<base::RefCountedString>& events) {
+  if (events && !events->data().empty())
+    recorder_->AddChunk(events->data());
+  recorder_.reset();
+}
+
+void EtwTracingAgent::StopAndFlush(tracing::mojom::RecorderPtr recorder) {
+  recorder_ = std::move(recorder);
+  StopAgentTracing(base::BindRepeating(&EtwTracingAgent::RecorderProxy,
+                                       base::Unretained(this)));
+}
+
+void EtwTracingAgent::RequestClockSyncMarker(
+    const std::string& sync_id,
+    const Agent::RequestClockSyncMarkerCallback& callback) {
+  NOTREACHED();
+}
+
+void EtwTracingAgent::GetCategories(
+    const Agent::GetCategoriesCallback& callback) {
+  callback.Run("");
+}
+
+void EtwTracingAgent::RequestBufferStatus(
+    const Agent::RequestBufferStatusCallback& callback) {
+  callback.Run(0, 0);
 }
 
 void EtwTracingAgent::OnStopSystemTracingDone(
