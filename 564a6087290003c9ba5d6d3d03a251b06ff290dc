@@ -1,0 +1,310 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "698fb5c1_6fcb4f79",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-24T17:16:50Z",
+      "side": 1,
+      "message": "nit: s/IN //",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "926f2035_dea7e8df",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-24T17:16:50Z",
+      "side": 1,
+      "message": "nit: ()",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a8ecc4d_db9d0f90",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-24T17:16:50Z",
+      "side": 1,
+      "message": "minor nit: I don\u0027t really know if it\u0027s better style to use the aliases defined above here. Like \n\nreference operator*() const { ... }\n\nbut it\u0027s something to consider",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80bd73d8_4fec23e7",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-24T17:16:50Z",
+      "side": 1,
+      "message": "Decrement here too",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec2bd57a_ba95832a",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-24T17:16:50Z",
+      "side": 1,
+      "message": "Just to check, is the reason this isn\u0027t Add(1), because it\u0027s faster?",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de3d6a90_3f6ad15c",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-24T17:16:50Z",
+      "side": 1,
+      "message": "nit: unused?",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efd496cd_db83292c",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-24T17:16:50Z",
+      "side": 1,
+      "message": "nit: I think this can be\n\nusing base::circular_deque_const_iterator;",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48130709_7e543fab",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-24T17:16:50Z",
+      "side": 1,
+      "message": "out of curiosity, why not .size()?",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "465791b1_0cd393bd",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-24T17:16:50Z",
+      "side": 1,
+      "message": "nit: \u003d default",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47a6d9a8_262d007c",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-24T17:16:50Z",
+      "side": 1,
+      "message": "I think you could just reserve and call assign with begin/end?",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d51bfdd_81a6a610",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-24T17:16:50Z",
+      "side": 1,
+      "message": "fwiw, you could reserve here before calling the other assign or do you think clearing first is important?",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e82876af_8a98268a",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-24T17:16:50Z",
+      "side": 1,
+      "message": "ditto about reserving",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bc30c95_b8517672",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-24T17:16:50Z",
+      "side": 1,
+      "message": "I don\u0027t think it matters too much here, but typically the const version is the one that is implemented, and the non-const version is the one that calls the const version, since it\u0027s you can reason from the non-const version that it\u0027s safe to cast to const and back. It\u0027s not as clear that you can remove the const from the const version if that makes sense...",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de34772f_7409a1a9",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-24T17:16:50Z",
+      "side": 1,
+      "message": "nit: some ctors call this as well as clear, so it\u0027s probably not very unusual",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45d07308_834b82af",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-24T17:16:50Z",
+      "side": 1,
+      "message": "nit: Can the second parameter be const value_type\u0026 value \u003d {} and then you don\u0027t need the first version?",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c27b1ac_ef442725",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-24T17:16:50Z",
+      "side": 1,
+      "message": "Can you \u003d 0 here, and then default ctor can be \u003d default and don\u0027t need to call default ctor in the other ctors?",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d8d1aee_8f026891",
+        "filename": "base/containers/vector_buffer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-24T17:16:50Z",
+      "side": 1,
+      "message": "We\u0027ve implemented something similar in the compositor, and we ran into alignment issues (ie, I think this allocation need to be aligned so that T can be constructed in it?\n\nI think there\u0027s a base aligned memory thing that helps with that.",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d4b9267_b48123e4",
+        "filename": "base/containers/vector_buffer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-24T17:16:50Z",
+      "side": 1,
+      "message": "Should this call dtors where appropriate? Or should circular_queue dtor call DestructRange?",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
