@@ -119,6 +119,7 @@ void OnImageLoaded(std::unique_ptr<web_app::ShortcutInfo> shortcut_info,
     shortcut_info->favicon = image_family;
   }
 
+  DLOG(WARNING) << "Image loaded, running callback...";
   callback.Run(std::move(shortcut_info));
 }
 
@@ -277,6 +278,7 @@ std::unique_ptr<ShortcutInfo> ShortcutInfoForExtensionAndProfile(
 void GetShortcutInfoForApp(const extensions::Extension* extension,
                            Profile* profile,
                            const ShortcutInfoCallback& callback) {
+  DLOG(WARNING) << "GetShortcutInfoForApp called";
   std::unique_ptr<web_app::ShortcutInfo> shortcut_info(
       web_app::ShortcutInfoForExtensionAndProfile(extension, profile));
 
@@ -319,6 +321,7 @@ void GetShortcutInfoForApp(const extensions::Extension* extension,
   // |info_list| may still be empty at this point, in which case
   // LoadImageFamilyAsync will call the OnImageLoaded callback with an empty
   // image and exit immediately.
+  DLOG(WARNING) << "GetShortcutInfoForApp: starting to load image...";
   extensions::ImageLoader::Get(profile)->LoadImageFamilyAsync(
       extension, info_list,
       base::Bind(&OnImageLoaded, base::Passed(&shortcut_info), callback));

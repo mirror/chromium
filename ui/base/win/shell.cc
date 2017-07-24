@@ -116,6 +116,7 @@ void SetAppDetailsForWindow(const base::string16& app_id,
                             const base::string16& relaunch_display_name,
                             HWND hwnd) {
   DCHECK(hwnd);
+  DLOG(WARNING) << "SetAppDetailsForWindow called.";
 
   base::win::ScopedComPtr<IPropertyStore> pps;
   if (FAILED(
@@ -134,6 +135,7 @@ void SetAppDetailsForWindow(const base::string16& app_id,
             .c_str());
   }
   if (!relaunch_command.empty()) {
+    DLOG(WARNING) << "GOt relaunch_command: " << relaunch_command;
     base::win::SetStringValueForPropertyStore(
         pps.Get(), PKEY_AppUserModel_RelaunchCommand,
         relaunch_command.c_str());
