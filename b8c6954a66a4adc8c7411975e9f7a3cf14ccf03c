@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "1e4e8dd4_f7f634e3",
+        "filename": "chrome/browser/ui/app_list/search/arc/arc_playstore_search_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-07-24T17:28:22Z",
+      "side": 1,
+      "message": "I don\u0027t like max_results_ being a variable, since we need it to always be the same. It looks to me like the value is always 6?\nhttps://codesearch.chromium.org/chromium/src/chrome/browser/ui/app_list/search/search_controller_factory.cc?type\u003dcs\u0026q\u003dArcPlayStoreSearchProvider\u0026l\u003d129\n\nThis seems like  pretty small number for this kind of metric. Is that correct?\nAt any rate, I\u0027d prefer it be a constant than something passed it - can this read that constant, or at least document that constant as one that cannot change?",
+      "revId": "b8c6954a66a4adc8c7411975e9f7a3cf14ccf03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0951d6a6_0619578d",
         "filename": "components/arc/common/app.mojom",
         "patchSetId": 6
