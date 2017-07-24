@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9564ae12_ced53b81",
+        "filename": "chrome/browser/resources/safe_browsing/download_file_types.asciipb",
+        "patchSetId": 10
+      },
+      "lineNbr": 2284,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-24T03:09:47Z",
+      "side": 1,
+      "message": "Just curious, why 100MB?",
+      "revId": "876c638c12c7acb6cbbc5d8ac54a1edc2306b977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76acf34c_d7219842",
+        "filename": "chrome/browser/safe_browsing/download_protection_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-24T03:09:47Z",
+      "side": 1,
+      "message": "how about simply do GetMaxFileSizeToAnayze(\"dmg\")?",
+      "revId": "876c638c12c7acb6cbbc5d8ac54a1edc2306b977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e806b9e1_7958066a",
+        "filename": "chrome/common/safe_browsing/file_type_policies.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-24T03:09:47Z",
+      "side": 1,
+      "message": "nit: ext -\u003e ascii_ext, to be consisted with\nFileTypePolicies::PolicyForExtension(const std::string\u0026 ascii_ext)",
+      "revId": "876c638c12c7acb6cbbc5d8ac54a1edc2306b977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
