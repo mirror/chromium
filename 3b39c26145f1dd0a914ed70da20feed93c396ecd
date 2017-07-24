@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bd2f3c4_93f1b226",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 883,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-24T10:55:26Z",
+      "side": 1,
+      "message": "old -\u003e existing",
+      "revId": "3b39c26145f1dd0a914ed70da20feed93c396ecd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b8d0321_98409923",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 884,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-24T10:55:26Z",
+      "side": 1,
+      "message": "if ok, mentioning DocumentThreadableLoader make it clearer",
+      "revId": "3b39c26145f1dd0a914ed70da20feed93c396ecd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ab11cde_5abd0d50",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-24T10:55:26Z",
+      "side": 1,
+      "message": "how about returning with true when the condition is false? Then you can eliminate this break.",
+      "revId": "3b39c26145f1dd0a914ed70da20feed93c396ecd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
