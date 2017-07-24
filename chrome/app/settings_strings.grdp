@@ -2152,6 +2152,12 @@
   <message name="IDS_SETTINGS_SITE_SETTINGS_UNSANDBOXED_PLUGINS_BLOCK" desc="The block label for unsandboxed plugins in site settings.">
     Do not allow any site to use a plugin to access your computer
   </message>
+  <message name="IDS_SETTINGS_SITE_SETTINGS_POPUPS_ALLOWED_WITH_GESTURE" desc="The label for allowing popups when the user interacts with a site.">
+    Allow for sites you interact with
+  </message>
+  <message name="IDS_SETTINGS_SITE_SETTINGS_POPUPS_ALLOWED_WITH_GESTURE_RECOMMENDED" desc="The label for allowing popups when the user interacts with a site (with the 'recommended' suffix).">
+    Allow for sites you interact with (recommended)
+  </message>
   <message name="IDS_SETTINGS_SITE_SETTINGS_ALLOWED" desc="A generic Allowed label to show in Site Settings when Allow is NOT the recommended option.">
     Allowed
   </message>

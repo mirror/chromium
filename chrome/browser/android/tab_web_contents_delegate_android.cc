@@ -335,12 +335,9 @@ WebContents* TabWebContentsDelegateAndroid::OpenURLFromTab(
        params.disposition == WindowOpenDisposition::NEW_FOREGROUND_TAB ||
        params.disposition == WindowOpenDisposition::NEW_BACKGROUND_TAB ||
        params.disposition == WindowOpenDisposition::NEW_WINDOW) &&
-      PopupBlockerTabHelper::ConsiderForPopupBlocking(
-          source, params.user_gesture, &params)) {
-    if (popup_blocker_helper->MaybeBlockPopup(nav_params,
-                                              blink::mojom::WindowFeatures())) {
-      return nullptr;
-    }
+      popup_blocker_helper->MaybeBlockPopup(nav_params, params,
+                                            blink::mojom::WindowFeatures())) {
+    return nullptr;
   }
 
   if (disposition == WindowOpenDisposition::CURRENT_TAB) {

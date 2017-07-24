@@ -208,7 +208,7 @@ TEST_F(HostContentSettingsMapTest, IndividualSettings) {
             host_content_settings_map->GetContentSetting(
                 host, host, CONTENT_SETTINGS_TYPE_PLUGINS, std::string()));
 #endif
-  EXPECT_EQ(CONTENT_SETTING_BLOCK,
+  EXPECT_EQ(CONTENT_SETTING_ASK,
             host_content_settings_map->GetContentSetting(
                 host, host, CONTENT_SETTINGS_TYPE_POPUPS, std::string()));
   EXPECT_EQ(CONTENT_SETTING_ASK,
@@ -540,21 +540,17 @@ TEST_F(HostContentSettingsMapTest, HostTrimEndingDotCheck) {
                 std::string()));
 #endif
 
-  EXPECT_EQ(
-      CONTENT_SETTING_BLOCK,
-      host_content_settings_map->GetContentSetting(host_ending_with_dot,
-                                                   host_ending_with_dot,
-                                                   CONTENT_SETTINGS_TYPE_POPUPS,
-                                                   std::string()));
+  EXPECT_EQ(CONTENT_SETTING_ASK,
+            host_content_settings_map->GetContentSetting(
+                host_ending_with_dot, host_ending_with_dot,
+                CONTENT_SETTINGS_TYPE_POPUPS, std::string()));
   host_content_settings_map->SetContentSettingDefaultScope(
       host_ending_with_dot, GURL(), CONTENT_SETTINGS_TYPE_POPUPS, std::string(),
       CONTENT_SETTING_DEFAULT);
-  EXPECT_EQ(
-      CONTENT_SETTING_BLOCK,
-      host_content_settings_map->GetContentSetting(host_ending_with_dot,
-                                                   host_ending_with_dot,
-                                                   CONTENT_SETTINGS_TYPE_POPUPS,
-                                                   std::string()));
+  EXPECT_EQ(CONTENT_SETTING_ASK,
+            host_content_settings_map->GetContentSetting(
+                host_ending_with_dot, host_ending_with_dot,
+                CONTENT_SETTINGS_TYPE_POPUPS, std::string()));
   host_content_settings_map->SetContentSettingDefaultScope(
       host_ending_with_dot, GURL(), CONTENT_SETTINGS_TYPE_POPUPS, std::string(),
       CONTENT_SETTING_ALLOW);
@@ -736,7 +732,7 @@ TEST_F(HostContentSettingsMapTest, IncognitoInheritInitialAllow) {
 }
 
 TEST_F(HostContentSettingsMapTest, IncognitoInheritPopups) {
-  // The popup setting has an initial value of BLOCK, so  popup doesn't inherit
+  // The popup setting has an initial value of ASK, so popup doesn't inherit
   // settings to incognito
   TestingProfile profile;
   Profile* otr_profile = profile.GetOffTheRecordProfile();
@@ -747,12 +743,12 @@ TEST_F(HostContentSettingsMapTest, IncognitoInheritPopups) {
 
   GURL host("http://example.com/");
 
-  EXPECT_EQ(CONTENT_SETTING_BLOCK,
+  EXPECT_EQ(CONTENT_SETTING_ASK,
             host_content_settings_map->GetContentSetting(
                 host, host, CONTENT_SETTINGS_TYPE_POPUPS, std::string()));
-  EXPECT_EQ(CONTENT_SETTING_BLOCK,
-            otr_map->GetContentSetting(
-                host, host, CONTENT_SETTINGS_TYPE_POPUPS, std::string()));
+  EXPECT_EQ(CONTENT_SETTING_ASK,
+            otr_map->GetContentSetting(host, host, CONTENT_SETTINGS_TYPE_POPUPS,
+                                       std::string()));
 
   // Changing content settings on the main map should not affect the
   // incognito map.
@@ -762,9 +758,9 @@ TEST_F(HostContentSettingsMapTest, IncognitoInheritPopups) {
   EXPECT_EQ(CONTENT_SETTING_ALLOW,
             host_content_settings_map->GetContentSetting(
                 host, host, CONTENT_SETTINGS_TYPE_POPUPS, std::string()));
-  EXPECT_EQ(CONTENT_SETTING_BLOCK,
-            otr_map->GetContentSetting(
-                host, host, CONTENT_SETTINGS_TYPE_POPUPS, std::string()));
+  EXPECT_EQ(CONTENT_SETTING_ASK,
+            otr_map->GetContentSetting(host, host, CONTENT_SETTINGS_TYPE_POPUPS,
+                                       std::string()));
 
   // Changing content settings on the incognito map should NOT affect the
   // main map.

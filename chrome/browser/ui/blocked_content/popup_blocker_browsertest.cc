@@ -820,4 +820,48 @@ IN_PROC_BROWSER_TEST_F(PopupBlockerBrowserTest, TapGestureWithCtrlKey) {
   ASSERT_EQ(0, browser()->tab_strip_model()->active_index());
 }
 
+// Tests that the shift-click opens a pop-up even with CONTENT_SETTING_BLOCK.
+IN_PROC_BROWSER_TEST_F(PopupBlockerBrowserTest, ClickWithShiftKey) {
+  WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
+  GURL url(embedded_test_server()->GetURL(
+      "/popup_blocker/popup-simulated-click-on-anchor2.html"));
+  HostContentSettingsMapFactory::GetForProfile(browser()->profile())
+      ->SetContentSettingDefaultScope(url, GURL(), CONTENT_SETTINGS_TYPE_POPUPS,
+                                      std::string(), CONTENT_SETTING_BLOCK);
+  ui_test_utils::NavigateToURL(browser(), url);
+
+  content::WindowedNotificationObserver wait_for_new_tab(
+      chrome::NOTIFICATION_TAB_ADDED,
+      content::NotificationService::AllSources());
+
+  unsigned modifiers = blink::WebInputEvent::kShiftKey;
+  content::SimulateMouseClickAt(tab, modifiers,
+                                blink::WebMouseEvent::Button::kLeft,
+                                gfx::Point(350, 250));
+  wait_for_new_tab.Wait();
+  EXPECT_EQ(2u, chrome::GetBrowserCount(browser()->profile()));
+  EXPECT_EQ(1, browser()->tab_strip_model()->count());
+}
+
+IN_PROC_BROWSER_TEST_F(PopupBlockerBrowserTest, BlockWindowOnGesture) {
+  WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
+  GURL url(embedded_test_server()->GetURL(
+      "/popup_blocker/popup-window-on-click.html"));
+  HostContentSettingsMapFactory::GetForProfile(browser()->profile())
+      ->SetContentSettingDefaultScope(url, GURL(), CONTENT_SETTINGS_TYPE_POPUPS,
+                                      std::string(), CONTENT_SETTING_BLOCK);
+  ui_test_utils::NavigateToURL(browser(), url);
+
+  unsigned modifiers = blink::WebInputEvent::kNoModifiers;
+  content::SimulateMouseClickAt(tab, modifiers,
+                                blink::WebMouseEvent::Button::kLeft,
+                                gfx::Point(200, 200));
+  // This seems to make it non-flaky, but GetBlockedContentsCount() does this
+  // too... XXX wut?
+  CHECK(content::ExecuteScript(tab, std::string()));
+  EXPECT_EQ(1, GetBlockedContentsCount());
+  EXPECT_EQ(1u, chrome::GetBrowserCount(browser()->profile()));
+  EXPECT_EQ(1, browser()->tab_strip_model()->count());
+}
+
 }  // namespace

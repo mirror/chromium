@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<title>window.open() popup on Click</title>
+<style>
+#div { background-color: lightgrey; width: 600px; height: 600px; }
+</style>
+<div id="div">Clicking this div opens a window popup. The popup blocker should stop this in only in BLOCK.</div>
+<script>
+div.onclick = function() {
+  window.open("popup-success.html", "", "width=500, height=500");
+}
+</script>
