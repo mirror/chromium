@@ -2315,10 +2315,9 @@ bool ChromeContentBrowserClient::CanCreateWindow(
   }
 #endif
 
+#if BUILDFLAG(ENABLE_PLUGINS)
   HostContentSettingsMap* content_settings =
       HostContentSettingsMapFactory::GetForProfile(profile);
-
-#if BUILDFLAG(ENABLE_PLUGINS)
   if (FlashDownloadInterception::ShouldStopFlashDownloadAction(
           content_settings, opener_top_level_frame_url, target_url,
           user_gesture)) {
@@ -2328,18 +2327,14 @@ bool ChromeContentBrowserClient::CanCreateWindow(
   }
 #endif
 
-  if (PopupBlockerTabHelper::ConsiderForPopupBlocking(
-          web_contents, user_gesture, /*open_url_params=*/nullptr)) {
-    if (content_settings->GetContentSetting(
-            opener_top_level_frame_url, opener_top_level_frame_url,
-            CONTENT_SETTINGS_TYPE_POPUPS,
-            std::string()) != CONTENT_SETTING_ALLOW) {
-      BlockedWindowParams blocked_params(target_url, referrer, frame_name,
-                                         disposition, features, user_gesture,
-                                         opener_suppressed);
-      HandleBlockedPopupOnUIThread(blocked_params, opener, web_contents);
-      return false;
-    }
+  if (PopupBlockerTabHelper::ShouldBlockPopup(
+          web_contents, user_gesture, disposition, opener_top_level_frame_url,
+          /*open_url_params=*/nullptr)) {
+    BlockedWindowParams blocked_params(target_url, referrer, frame_name,
+                                       disposition, features, user_gesture,
+                                       opener_suppressed);
+    HandleBlockedPopupOnUIThread(blocked_params, opener, web_contents);
+    return false;
   }
 
 #if defined(OS_ANDROID)

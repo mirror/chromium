@@ -189,7 +189,7 @@ class ExtensionContentSettingsApiTest : public ExtensionApiTest {
     EXPECT_EQ(CONTENT_SETTING_DETECT_IMPORTANT_CONTENT,
               map->GetContentSetting(
                   url, url, CONTENT_SETTINGS_TYPE_PLUGINS, std::string()));
-    EXPECT_EQ(CONTENT_SETTING_BLOCK,
+    EXPECT_EQ(CONTENT_SETTING_ASK,
               map->GetContentSetting(
                   url, url, CONTENT_SETTINGS_TYPE_POPUPS, std::string()));
     EXPECT_EQ(CONTENT_SETTING_ASK,
