@@ -199,7 +199,6 @@ class CopyOrMoveOperationTestHelper {
     quota_manager_ =
         new MockQuotaManager(false /* is_incognito */, base_dir,
                              base::ThreadTaskRunnerHandle::Get().get(),
-                             base::ThreadTaskRunnerHandle::Get().get(),
                              NULL /* special storage policy */);
     quota_manager_proxy_ = new MockQuotaManagerProxy(
         quota_manager_.get(), base::ThreadTaskRunnerHandle::Get().get());
