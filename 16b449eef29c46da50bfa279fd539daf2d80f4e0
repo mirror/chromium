@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1f361de_63b921b9",
+        "filename": "components/viz/client/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-24T20:57:59Z",
+      "side": 1,
+      "message": "This seems redundant. Maybe just call the target frame_sinks? That way you can:\n\n//services/viz/public/interfaces/frame_sinks",
+      "range": {
+        "startLine": 24,
+        "startChar": 49,
+        "endLine": 24,
+        "endChar": 50
+      },
+      "revId": "16b449eef29c46da50bfa279fd539daf2d80f4e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
