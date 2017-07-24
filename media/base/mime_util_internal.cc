@@ -252,66 +252,55 @@ void MimeUtil::InitializeMimeTypeMaps() {
 // Each call to AddContainerWithCodecs() contains a media type
 // (https://en.wikipedia.org/wiki/Media_type) and corresponding media codec(s)
 // supported by these types/containers.
-// TODO(ddorwin): Replace insert() calls with initializer_list when allowed.
 void MimeUtil::AddSupportedMediaFormats() {
-  CodecSet implicit_codec;
-  CodecSet wav_codecs;
-  wav_codecs.insert(PCM);
+  const CodecSet wav_codecs{PCM};
+  const CodecSet ogg_audio_codecs{FLAC, OPUS, VORBIS};
 
-  CodecSet ogg_audio_codecs;
-  ogg_audio_codecs.insert(FLAC);
-  ogg_audio_codecs.insert(OPUS);
-  ogg_audio_codecs.insert(VORBIS);
-  CodecSet ogg_video_codecs;
 #if !defined(OS_ANDROID)
-  ogg_video_codecs.insert(THEORA);
+  CodecSet ogg_video_codecs{THEORA};
+#else
+  CodecSet ogg_video_codecs;
 #endif  // !defined(OS_ANDROID)
+
   CodecSet ogg_codecs(ogg_audio_codecs);
   ogg_codecs.insert(ogg_video_codecs.begin(), ogg_video_codecs.end());
 
-  CodecSet webm_audio_codecs;
-  webm_audio_codecs.insert(OPUS);
-  webm_audio_codecs.insert(VORBIS);
-  CodecSet webm_video_codecs;
-  webm_video_codecs.insert(VP8);
-  webm_video_codecs.insert(VP9);
+  const CodecSet webm_audio_codecs{OPUS, VORBIS};
+  const CodecSet webm_video_codecs{VP8, VP9};
   CodecSet webm_codecs(webm_audio_codecs);
   webm_codecs.insert(webm_video_codecs.begin(), webm_video_codecs.end());
 
 #if BUILDFLAG(USE_PROPRIETARY_CODECS)
-  CodecSet mp3_codecs;
-  mp3_codecs.insert(MP3);
-
-  CodecSet aac;
-  aac.insert(MPEG2_AAC);
-  aac.insert(MPEG4_AAC);
+  const CodecSet mp3_codecs{MP3};
+  const CodecSet aac{MPEG2_AAC, MPEG4_AAC};
 
   CodecSet avc_and_aac(aac);
-  avc_and_aac.insert(H264);
+  avc_and_aac.emplace(H264);
 
   CodecSet mp4_audio_codecs(aac);
-  mp4_audio_codecs.insert(MP3);
-  mp4_audio_codecs.insert(FLAC);
+  mp4_audio_codecs.emplace(MP3);
+  mp4_audio_codecs.emplace(FLAC);
 #if BUILDFLAG(ENABLE_AC3_EAC3_AUDIO_DEMUXING)
-  mp4_audio_codecs.insert(AC3);
-  mp4_audio_codecs.insert(EAC3);
+  mp4_audio_codecs.emplace(AC3);
+  mp4_audio_codecs.emplace(EAC3);
 #endif  // BUILDFLAG(ENABLE_AC3_EAC3_AUDIO_DEMUXING)
 
   CodecSet mp4_video_codecs;
-  mp4_video_codecs.insert(H264);
+  mp4_video_codecs.emplace(H264);
 #if BUILDFLAG(ENABLE_HEVC_DEMUXING)
-  mp4_video_codecs.insert(HEVC);
+  mp4_video_codecs.emplace(HEVC);
 #endif  // BUILDFLAG(ENABLE_HEVC_DEMUXING)
   // Only VP9 with valid codec string vp09.xx.xx.xx.xx.xx.xx.xx is supported.
   // See ParseVp9CodecID for details.
-  mp4_video_codecs.insert(VP9);
+  mp4_video_codecs.emplace(VP9);
 #if BUILDFLAG(ENABLE_DOLBY_VISION_DEMUXING)
-  mp4_video_codecs.insert(DOLBY_VISION);
+  mp4_video_codecs.emplace(DOLBY_VISION);
 #endif  // BUILDFLAG(ENABLE_DOLBY_VISION_DEMUXING)
   CodecSet mp4_codecs(mp4_audio_codecs);
   mp4_codecs.insert(mp4_video_codecs.begin(), mp4_video_codecs.end());
 #endif  // BUILDFLAG(USE_PROPRIETARY_CODECS)
 
+  const CodecSet implicit_codec;
   AddContainerWithCodecs("audio/wav", wav_codecs, false);
   AddContainerWithCodecs("audio/x-wav", wav_codecs, false);
   AddContainerWithCodecs("audio/webm", webm_audio_codecs, false);
@@ -346,12 +335,13 @@ void MimeUtil::AddSupportedMediaFormats() {
 #endif  // BUILDFLAG(ENABLE_MSE_MPEG2TS_STREAM_PARSER)
 #if defined(OS_ANDROID)
   // HTTP Live Streaming (HLS).
-  CodecSet hls_codecs;
-  hls_codecs.insert(H264);
-  // TODO(ddorwin): Is any MP3 codec string variant included in real queries?
-  hls_codecs.insert(MP3);
-  // Android HLS only supports MPEG4_AAC (missing demuxer support for MPEG2_AAC)
-  hls_codecs.insert(MPEG4_AAC);
+  CodecSet hls_codecs{H264,
+                      // TODO(ddorwin): Is any MP3 codec string variant included
+                      // in real queries?
+                      MP3,
+                      // Android HLS only supports MPEG4_AAC (missing demuxer
+                      // support for MPEG2_AAC)
+                      MPEG4_AAC};
   AddContainerWithCodecs("application/x-mpegurl", hls_codecs, true);
   AddContainerWithCodecs("application/vnd.apple.mpegurl", hls_codecs, true);
   AddContainerWithCodecs("audio/mpegurl", hls_codecs, true);
