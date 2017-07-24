@@ -5,6 +5,8 @@
 #ifndef WebClientHintsType_h
 #define WebClientHintsType_h
 
+#include <map>
+
 namespace blink {
 
 enum WebClientHintsType {
@@ -18,6 +20,22 @@ enum WebClientHintsType {
 
   // Last client hint type.
   kWebClientHintsTypeLast = kWebClientHintsTypeViewportWidth
+};
+
+// WebEnabledClientHints stores all the client hints along with whether the hint
+// is enabled or not.
+struct WebEnabledClientHints {
+  WebEnabledClientHints() {}
+
+  bool IsEnabled(WebClientHintsType type) const {
+    return enabled_types_.find(type) != enabled_types_.end() &&
+           enabled_types_.find(type)->second;
+  }
+  void SetIsEnabled(WebClientHintsType type, bool should_send) {
+    enabled_types_[type] = should_send;
+  }
+
+  std::map<WebClientHintsType, bool> enabled_types_;
 };
 
 }  // namespace blink
