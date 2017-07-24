@@ -81,6 +81,24 @@
       "revId": "a9c0959bed0a9a767a57b16474acb2155431087a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59435a26_afbf74fe",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ClientHintsPreferences.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-24T18:56:32Z",
+      "side": 1,
+      "message": "Well, we have enums where we tell people not to reorder the values since they\u0027re used for UMAs, and I see this as pretty much the same thing: we would have a comment that tells people not to reorder the fields of this struct \u003d)\n\nThe current approach at least hides the bool array, so I suppose I\u0027m OK with that.\n\nThat all being said... I think having an explicit key-value relationship when saving the prefs would be the traditional way of making sure it\u0027s resistant to these sorts of reordering issues. I\u0027m ultimately still not quite sure why it\u0027s necessary to plumb the client hints through as an array of bools.",
+      "parentUuid": "34c821c6_8f7e5750",
+      "revId": "a9c0959bed0a9a767a57b16474acb2155431087a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
