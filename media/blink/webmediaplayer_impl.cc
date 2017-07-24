@@ -931,6 +931,14 @@ bool WebMediaPlayerImpl::IsPrerollAttemptNeeded() {
   if (highest_ready_state_ >= ReadyState::kReadyStateHaveFutureData)
     return false;
 
+  // To suspend before we reach kReadyStateHaveCurrentData is only ok
+  // if we know we're going to get woken up when we get more data, which
+  // will only happen if the network is in the "Loading" state.
+  if (highest_ready_state_ <= ReadyState::kReadyStateHaveMetadata &&
+      network_state_ != WebMediaPlayer::kNetworkStateLoading) {
+    return true;
+  }
+
   if (preroll_attempt_pending_)
     return true;
 

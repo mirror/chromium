@@ -399,11 +399,9 @@ TEST_F(WebMediaPlayerImplTest, ConstructAndDestroy) {
   EXPECT_FALSE(IsSuspended());
 }
 
-TEST_F(WebMediaPlayerImplTest, IdleSuspendIsEnabledBeforeLoadingBegins) {
+TEST_F(WebMediaPlayerImplTest, IdleSuspendBeforeLoadingBegins) {
   InitializeWebMediaPlayerImpl();
-  EXPECT_TRUE(delegate_.ExpireForTesting());
-  base::RunLoop().RunUntilIdle();
-  EXPECT_TRUE(IsSuspended());
+  EXPECT_FALSE(delegate_.ExpireForTesting());
 }
 
 TEST_F(WebMediaPlayerImplTest,
@@ -423,6 +421,7 @@ TEST_F(WebMediaPlayerImplTest,
 
 TEST_F(WebMediaPlayerImplTest, IdleSuspendIsEnabledIfLoadingHasStalled) {
   InitializeWebMediaPlayerImpl();
+  SetReadyState(blink::WebMediaPlayer::kReadyStateHaveCurrentData);
   base::SimpleTestTickClock* clock = new base::SimpleTestTickClock();
   clock->Advance(base::TimeDelta::FromSeconds(1));
   SetTickClock(clock);
@@ -438,6 +437,7 @@ TEST_F(WebMediaPlayerImplTest, IdleSuspendIsEnabledIfLoadingHasStalled) {
 TEST_F(WebMediaPlayerImplTest, DidLoadingProgressTriggersResume) {
   // Same setup as IdleSuspendIsEnabledBeforeLoadingBegins.
   InitializeWebMediaPlayerImpl();
+  SetReadyState(blink::WebMediaPlayer::kReadyStateHaveCurrentData);
   EXPECT_TRUE(delegate_.ExpireForTesting());
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(IsSuspended());

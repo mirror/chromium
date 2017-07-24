@@ -123,7 +123,7 @@ MultibufferDataSource::MultibufferDataSource(
       stop_signal_received_(false),
       media_has_played_(false),
       single_origin_(true),
-      cancel_on_defer_(false),
+      cancel_on_defer_(true),
       preload_(AUTO),
       bitrate_(0),
       playback_rate_(0.0),
@@ -501,6 +501,8 @@ void MultibufferDataSource::StartCallback() {
     media_log_->SetBooleanProperty("range_header_supported",
                                    url_data_->range_supported());
   }
+  if (!url_data_->range_supported())
+    cancel_on_defer_ = false;
 
   render_task_runner_->PostTask(
       FROM_HERE, base::Bind(base::ResetAndReturn(&init_cb_), success));
