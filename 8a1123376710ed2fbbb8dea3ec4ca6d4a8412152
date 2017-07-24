@@ -16,6 +16,24 @@
       "revId": "8a1123376710ed2fbbb8dea3ec4ca6d4a8412152",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80fb0689_9c26c901",
+        "filename": "content/browser/renderer_host/input/input_router_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-24T17:43:33Z",
+      "side": 1,
+      "message": "The only thing a renderer can do is tell the browser not to decrement the ack count which would only cause the browser to think the renderer is unresponsive and kill it.\n\nBut I\u0027ll re-order the struct and adjust the struct traits so that this can\u0027t be passed from the renderer to the browser for it to be safe.",
+      "parentUuid": "2ce7f93f_43575673",
+      "revId": "8a1123376710ed2fbbb8dea3ec4ca6d4a8412152",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
