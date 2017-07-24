@@ -70,6 +70,24 @@
       "revId": "7059f9d8254f5d68248c1a446cd674f885ba9a7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "161aadf9_84291713",
+        "filename": "mojo/public/cpp/bindings/tests/serialization_warning_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-24T22:29:01Z",
+      "side": 0,
+      "message": "Ah, I didn\u0027t realize the two problems. Considering them, it makes good sense to take the current approach. Thanks for explaining!",
+      "parentUuid": "8a4e330f_ded8ac2f",
+      "revId": "7059f9d8254f5d68248c1a446cd674f885ba9a7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
