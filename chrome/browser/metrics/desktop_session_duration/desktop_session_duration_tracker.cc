@@ -64,6 +64,10 @@ void DesktopSessionDurationTracker::RemoveObserver(Observer* observer) {
   observer_list_.RemoveObserver(observer);
 }
 
+void DesktopSessionDurationTracker::RemoveAllObservers() {
+  observer_list_.Clear();
+}
+
 void DesktopSessionDurationTracker::OnUserEvent() {
   if (!is_visible_)
     return;

@@ -33,7 +33,9 @@ NewTabTracker::NewTabTracker()
     : duration_tracker_(metrics::DesktopSessionDurationTracker::Get()),
       profile_(nullptr) {}
 
-NewTabTracker::~NewTabTracker() = default;
+NewTabTracker::~NewTabTracker() {
+  duration_tracker_->RemoveAllObservers();
+}
 
 // static
 void NewTabTracker::RegisterProfilePrefs(
