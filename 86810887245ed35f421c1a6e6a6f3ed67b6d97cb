@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7349d236_d06be9d1",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_list_prefs.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-24T16:14:34Z",
+      "side": 1,
+      "message": "nit: 1ULL",
+      "range": {
+        "startLine": 284,
+        "startChar": 44,
+        "endLine": 284,
+        "endChar": 45
+      },
+      "revId": "86810887245ed35f421c1a6e6a6f3ed67b6d97cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bbd6429_f000013e",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_list_prefs.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1132,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-24T16:14:34Z",
+      "side": 1,
+      "message": "I\u0027m kind of scared of the sign mismatch. How about making |invalidated_icon_scale_factor_mask_| an uint64_t and use app_dict-\u003eSetUint64() instead?",
+      "range": {
+        "startLine": 1132,
+        "startChar": 14,
+        "endLine": 1132,
+        "endChar": 24
+      },
+      "revId": "86810887245ed35f421c1a6e6a6f3ed67b6d97cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
