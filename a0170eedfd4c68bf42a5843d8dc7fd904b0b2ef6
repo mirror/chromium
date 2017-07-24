@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f8b5dc0_326e31eb",
+        "filename": "components/storage_monitor/storage_monitor_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-24T20:59:29Z",
+      "side": 1,
+      "message": "Maybe just blocking, since we are not actually doing any file system mounting here.",
+      "range": {
+        "startLine": 111,
+        "startChar": 43,
+        "endLine": 111,
+        "endChar": 51
+      },
+      "revId": "a0170eedfd4c68bf42a5843d8dc7fd904b0b2ef6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
