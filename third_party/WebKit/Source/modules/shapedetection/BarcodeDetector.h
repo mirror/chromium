@@ -12,10 +12,12 @@
 #include "modules/shapedetection/ShapeDetector.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "services/shape_detection/public/interfaces/barcodedetection.mojom-blink.h"
+#include "services/shape_detection/public/interfaces/barcodedetection_provider.mojom-blink.h"
 
 namespace blink {
 
 class ExecutionContext;
+class BarcodeDetectorOptions;
 
 class MODULES_EXPORT BarcodeDetector final : public ShapeDetector,
                                              public ScriptWrappable {
@@ -23,11 +25,15 @@ class MODULES_EXPORT BarcodeDetector final : public ShapeDetector,
 
  public:
   static BarcodeDetector* Create(ExecutionContext*);
+  static BarcodeDetector* Create(ExecutionContext*,
+                                 const BarcodeDetectorOptions&);
+
+  const Vector<String>& supportedFormats() const { return supported_formats_; }
 
   DECLARE_VIRTUAL_TRACE();
 
  private:
-  explicit BarcodeDetector(ExecutionContext*);
+  BarcodeDetector(ExecutionContext*, const BarcodeDetectorOptions&);
   ~BarcodeDetector() override = default;
 
   ScriptPromise DoDetect(ScriptPromiseResolver*,
@@ -35,8 +41,13 @@ class MODULES_EXPORT BarcodeDetector final : public ShapeDetector,
   void OnDetectBarcodes(
       ScriptPromiseResolver*,
       Vector<shape_detection::mojom::blink::BarcodeDetectionResultPtr>);
+  void OnEnumerateSupportedFormats(
+      const Vector<shape_detection::mojom::blink::BarcodeFormat>& formats);
   void OnBarcodeServiceConnectionError();
 
+  Vector<String> supported_formats_;
+
+  shape_detection::mojom::blink::BarcodeDetectionProviderPtr provider_;
   shape_detection::mojom::blink::BarcodeDetectionPtr barcode_service_;
 
   HeapHashSet<Member<ScriptPromiseResolver>> barcode_service_requests_;

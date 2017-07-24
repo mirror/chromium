@@ -2,14 +2,35 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+// https://wicg.github.io/shape-detection-api/#barcodeformat-section
+
+enum BarcodeFormat {
+  "aztec",
+  "code_128",
+  "code_39",
+  "code_93",
+  "codabar",
+  "data_matrix",
+  "ean_13",
+  "ean_8",
+  "itf",
+  "pdf417",
+  "qr_code",
+  "unknown",
+  "upc_a",
+  "upc_e"
+};
+
 // https://wicg.github.io/shape-detection-api/#barcode-detection-api
 
 [
-    Constructor,
+    Constructor(optional BarcodeDetectorOptions barcodeDetectorOptions),
     ConstructorCallWith=ExecutionContext,
     Exposed=(Window,Worker),
     MeasureAs=ShapeDetection_BarcodeDetectorConstructor,
     RuntimeEnabled=ShapeDetection
 ] interface BarcodeDetector {
+    readonly attribute FrozenArray<BarcodeFormat> supportedFormats;
+
     [CallWith=ScriptState] Promise<sequence<DetectedBarcode>> detect(ImageBitmapSource image);
 };
