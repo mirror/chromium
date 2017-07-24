@@ -92,17 +92,24 @@ void OpenSignInFromSettings() {
   TapViewWithAccessibilityId(kSettingsSignInCellId);
 }
 
-// Wait until |matcher| is accessible (not nil)
-void WaitForMatcher(id<GREYMatcher> matcher) {
+// Wait until |matcher| meets the |stop_condition|.
+void WaitUntilMatcherMeetsCondition(id<GREYMatcher> matcher,
+                                    id<GREYMatcher> stop_condition) {
   ConditionBlock condition = ^{
     NSError* error = nil;
-    [[EarlGrey selectElementWithMatcher:matcher] assertWithMatcher:grey_notNil()
-                                                             error:&error];
+    [[EarlGrey selectElementWithMatcher:matcher]
+        assertWithMatcher:stop_condition
+                    error:&error];
     return error == nil;
   };
   GREYAssert(testing::WaitUntilConditionOrTimeout(
                  testing::kWaitForUIElementTimeout, condition),
              @"Waiting for matcher %@ failed.", matcher);
+}
+
+// Wait until |matcher| is accessible (not nil).
+void WaitForMatcher(id<GREYMatcher> matcher) {
+  WaitUntilMatcherMeetsCondition(matcher, grey_notNil());
 }
 
 // Asserts that |identity| is actually signed in to the active profile.
@@ -141,9 +148,17 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
   // Select the user.
   TapButtonWithAccessibilityLabel(identity.userEmail);
 
-  // Sign in and confirm.
+  // Sign in and confirm, with synchronization off due to an infinite spinner in
+  // bookmarks (bookmarks tab remains after testSigninCancelFromBookmarks).
+  SetEarlGreySynchronizationEnabled(NO);
+  WaitForMatcher(chrome_test_util::ButtonWithAccessibilityLabelId(
+      IDS_IOS_ACCOUNT_CONSISTENCY_SETUP_SIGNIN_BUTTON));
   TapButtonWithLabelId(IDS_IOS_ACCOUNT_CONSISTENCY_SETUP_SIGNIN_BUTTON);
+
+  WaitForMatcher(chrome_test_util::ButtonWithAccessibilityLabelId(
+      IDS_IOS_ACCOUNT_CONSISTENCY_CONFIRMATION_OK_BUTTON));
   TapButtonWithLabelId(IDS_IOS_ACCOUNT_CONSISTENCY_CONFIRMATION_OK_BUTTON);
+  SetEarlGreySynchronizationEnabled(YES);
 
   [[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()]
       performAction:grey_tap()];
@@ -167,7 +182,15 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
   OpenSignInFromSettings();
   TapButtonWithAccessibilityLabel(identity1.userEmail);
   TapButtonWithLabelId(IDS_IOS_ACCOUNT_CONSISTENCY_SETUP_SIGNIN_BUTTON);
+
+  // Synchronization off due to an infinite spinner in bookmarks. (bookmarks tab
+  // remains after testSigninCancelFromBookmarks)
+  SetEarlGreySynchronizationEnabled(NO);
+  WaitForMatcher(chrome_test_util::ButtonWithAccessibilityLabelId(
+      IDS_IOS_ACCOUNT_CONSISTENCY_CONFIRMATION_OK_BUTTON));
   TapButtonWithLabelId(IDS_IOS_ACCOUNT_CONSISTENCY_CONFIRMATION_OK_BUTTON);
+  SetEarlGreySynchronizationEnabled(YES);
+
   AssertAuthenticatedIdentityInActiveProfile(identity1);
 
   // Open accounts settings, then sync settings.
@@ -177,18 +200,19 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
   // Switch Sync account to |identity2|.
   TapButtonWithAccessibilityLabel(identity2.userEmail);
 
-  // Keep data separate, with synchronization off due to an infinite spinner.
+  // Keep data separate, with synchronization off due to infinite spinners.
   SetEarlGreySynchronizationEnabled(NO);
   WaitForMatcher(grey_accessibilityID(kImportDataKeepSeparateCellId));
   TapViewWithAccessibilityId(kImportDataKeepSeparateCellId);
   TapButtonWithLabelId(IDS_IOS_OPTIONS_IMPORT_DATA_CONTINUE_BUTTON);
-  SetEarlGreySynchronizationEnabled(YES);
 
+  WaitForMatcher(chrome_test_util::ButtonWithAccessibilityLabelId(
+      IDS_IOS_NAVIGATION_BAR_DONE_BUTTON));
   // Check the signed-in user did change.
   AssertAuthenticatedIdentityInActiveProfile(identity2);
-
   [[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()]
       performAction:grey_tap()];
+  SetEarlGreySynchronizationEnabled(YES);
 }
 
 // Tests signing in with one account, switching sync account to a second and
@@ -206,7 +230,15 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
   OpenSignInFromSettings();
   TapButtonWithAccessibilityLabel(identity1.userEmail);
   TapButtonWithLabelId(IDS_IOS_ACCOUNT_CONSISTENCY_SETUP_SIGNIN_BUTTON);
+
+  // Synchronization off due to an infinite spinner in bookmarks. (bookmarks tab
+  // remains after testSigninCancelFromBookmarks)
+  SetEarlGreySynchronizationEnabled(NO);
+  WaitForMatcher(chrome_test_util::ButtonWithAccessibilityLabelId(
+      IDS_IOS_ACCOUNT_CONSISTENCY_CONFIRMATION_OK_BUTTON));
   TapButtonWithLabelId(IDS_IOS_ACCOUNT_CONSISTENCY_CONFIRMATION_OK_BUTTON);
+  SetEarlGreySynchronizationEnabled(YES);
+
   AssertAuthenticatedIdentityInActiveProfile(identity1);
 
   // Open accounts settings, then sync settings.
@@ -216,18 +248,19 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
   // Switch Sync account to |identity2|.
   TapButtonWithAccessibilityLabel(identity2.userEmail);
 
-  // Import data, with synchronization off due to an infinite spinner.
+  // Import data, with synchronization off due to infinite spinners.
   SetEarlGreySynchronizationEnabled(NO);
   WaitForMatcher(grey_accessibilityID(kImportDataImportCellId));
   TapViewWithAccessibilityId(kImportDataImportCellId);
   TapButtonWithLabelId(IDS_IOS_OPTIONS_IMPORT_DATA_CONTINUE_BUTTON);
-  SetEarlGreySynchronizationEnabled(YES);
 
+  WaitForMatcher(chrome_test_util::ButtonWithAccessibilityLabelId(
+      IDS_IOS_NAVIGATION_BAR_DONE_BUTTON));
   // Check the signed-in user did change.
   AssertAuthenticatedIdentityInActiveProfile(identity2);
-
   [[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()]
       performAction:grey_tap()];
+  SetEarlGreySynchronizationEnabled(YES);
 }
 
 // Tests that switching from a managed account to a non-managed account works
@@ -251,14 +284,18 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
   TapButtonWithLabelId(IDS_IOS_ACCOUNT_CONSISTENCY_SETUP_SIGNIN_BUTTON);
 
   // Accept warning for signing into a managed identity, with synchronization
-  // off due to an infinite spinner.
+  // off due to infinite spinners.
   SetEarlGreySynchronizationEnabled(NO);
   WaitForMatcher(chrome_test_util::ButtonWithAccessibilityLabelId(
       IDS_IOS_MANAGED_SIGNIN_ACCEPT_BUTTON));
   TapButtonWithLabelId(IDS_IOS_MANAGED_SIGNIN_ACCEPT_BUTTON);
-  SetEarlGreySynchronizationEnabled(YES);
 
+  // Synchronization remains off due to an infinite spinner in bookmarks.
+  // (bookmarks tab remains after testSigninCancelFromBookmarks)
+  WaitForMatcher(chrome_test_util::ButtonWithAccessibilityLabelId(
+      IDS_IOS_ACCOUNT_CONSISTENCY_CONFIRMATION_OK_BUTTON));
   TapButtonWithLabelId(IDS_IOS_ACCOUNT_CONSISTENCY_CONFIRMATION_OK_BUTTON);
+  SetEarlGreySynchronizationEnabled(YES);
   AssertAuthenticatedIdentityInActiveProfile(managed_identity);
 
   // Switch Sync account to |identity|.
@@ -267,17 +304,18 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
   TapButtonWithAccessibilityLabel(identity.userEmail);
 
   // Accept warning for signout out of a managed identity, with synchronization
-  // off due to an infinite spinner.
+  // off due to infinite spinners.
   SetEarlGreySynchronizationEnabled(NO);
   WaitForMatcher(chrome_test_util::ButtonWithAccessibilityLabelId(
       IDS_IOS_MANAGED_SWITCH_ACCEPT_BUTTON));
   TapButtonWithLabelId(IDS_IOS_MANAGED_SWITCH_ACCEPT_BUTTON);
-  SetEarlGreySynchronizationEnabled(YES);
-
+  WaitForMatcher(chrome_test_util::ButtonWithAccessibilityLabelId(
+      IDS_IOS_NAVIGATION_BAR_DONE_BUTTON));
   AssertAuthenticatedIdentityInActiveProfile(identity);
 
   [[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()]
       performAction:grey_tap()];
+  SetEarlGreySynchronizationEnabled(YES);
 }
 
 // Tests that signing out from the Settings works correctly.
@@ -290,7 +328,14 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
   OpenSignInFromSettings();
   TapButtonWithAccessibilityLabel(identity.userEmail);
   TapButtonWithLabelId(IDS_IOS_ACCOUNT_CONSISTENCY_SETUP_SIGNIN_BUTTON);
+
+  // Synchronization off due to an infinite spinner in bookmarks. (bookmarks tab
+  // remains after testSigninCancelFromBookmarks)
+  SetEarlGreySynchronizationEnabled(NO);
+  WaitForMatcher(chrome_test_util::ButtonWithAccessibilityLabelId(
+      IDS_IOS_ACCOUNT_CONSISTENCY_CONFIRMATION_OK_BUTTON));
   TapButtonWithLabelId(IDS_IOS_ACCOUNT_CONSISTENCY_CONFIRMATION_OK_BUTTON);
+  SetEarlGreySynchronizationEnabled(YES);
   AssertAuthenticatedIdentityInActiveProfile(identity);
 
   // Go to Accounts Settings and tap the sign out button.
@@ -329,13 +374,18 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
   OpenSignInFromSettings();
   TapButtonWithAccessibilityLabel(identity.userEmail);
   TapButtonWithLabelId(IDS_IOS_ACCOUNT_CONSISTENCY_SETUP_SIGNIN_BUTTON);
-  // Synchronization off due to an infinite spinner.
+  // Synchronization off due to an infinite spinners.
   SetEarlGreySynchronizationEnabled(NO);
   WaitForMatcher(chrome_test_util::ButtonWithAccessibilityLabelId(
       IDS_IOS_MANAGED_SIGNIN_ACCEPT_BUTTON));
   TapButtonWithLabelId(IDS_IOS_MANAGED_SIGNIN_ACCEPT_BUTTON);
-  SetEarlGreySynchronizationEnabled(YES);
+
+  // Synchronization remains off due to an infinite spinner in bookmarks.
+  // (bookmarks tab remains after testSigninCancelFromBookmarks)
+  WaitForMatcher(chrome_test_util::ButtonWithAccessibilityLabelId(
+      IDS_IOS_ACCOUNT_CONSISTENCY_CONFIRMATION_OK_BUTTON));
   TapButtonWithLabelId(IDS_IOS_ACCOUNT_CONSISTENCY_CONFIRMATION_OK_BUTTON);
+  SetEarlGreySynchronizationEnabled(YES);
   AssertAuthenticatedIdentityInActiveProfile(identity);
 
   // Go to Accounts Settings and tap the sign out button.
@@ -366,19 +416,23 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
   ChromeIdentity* identity = GetFakeIdentity1();
   ios::FakeChromeIdentityService::GetInstanceFromChromeProvider()->AddIdentity(
       identity);
-
   // Sign in to |identity|.
+
   OpenSignInFromSettings();
   TapButtonWithAccessibilityLabel(identity.userEmail);
   TapButtonWithLabelId(IDS_IOS_ACCOUNT_CONSISTENCY_SETUP_SIGNIN_BUTTON);
 
-  // Tap Settings link.
+  // Tap Settings link, with synchronization off due to an infinite spinner in
+  // bookmarks. (bookmarks tab remains after testSigninCancelFromBookmarks)
+  SetEarlGreySynchronizationEnabled(NO);
   id<GREYMatcher> settings_link_matcher = grey_allOf(
       grey_accessibilityLabel(@"Settings"), grey_sufficientlyVisible(), nil);
   WaitForMatcher(settings_link_matcher);
   [[EarlGrey selectElementWithMatcher:settings_link_matcher]
       performAction:grey_tap()];
 
+  WaitForMatcher(chrome_test_util::ButtonWithAccessibilityLabelId(
+      IDS_IOS_NAVIGATION_BAR_DONE_BUTTON));
   [[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()]
       performAction:grey_tap()];
 
@@ -386,9 +440,11 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
   id<GREYMatcher> settings_matcher =
       chrome_test_util::StaticTextWithAccessibilityLabelId(
           IDS_IOS_SETTINGS_TITLE);
+  WaitUntilMatcherMeetsCondition(settings_matcher, grey_notVisible());
   [[EarlGrey selectElementWithMatcher:settings_matcher]
       assertWithMatcher:grey_notVisible()];
   AssertAuthenticatedIdentityInActiveProfile(identity);
+  SetEarlGreySynchronizationEnabled(YES);
 }
 
 // Opens the sign in screen and then cancel it by opening a new tab. Ensures
@@ -480,7 +536,14 @@ void AssertAuthenticatedIdentityInActiveProfile(ChromeIdentity* identity) {
   OpenSignInFromSettings();
   TapButtonWithAccessibilityLabel(identity2.userEmail);
   TapButtonWithLabelId(IDS_IOS_ACCOUNT_CONSISTENCY_SETUP_SIGNIN_BUTTON);
+
+  // Synchronization off due to an infinite spinner in bookmarks. (bookmarks tab
+  // remains after testSigninCancelFromBookmarks)
+  SetEarlGreySynchronizationEnabled(NO);
+  WaitForMatcher(chrome_test_util::ButtonWithAccessibilityLabelId(
+      IDS_IOS_ACCOUNT_CONSISTENCY_CONFIRMATION_OK_BUTTON));
   TapButtonWithLabelId(IDS_IOS_ACCOUNT_CONSISTENCY_CONFIRMATION_OK_BUTTON);
+  SetEarlGreySynchronizationEnabled(YES);
   AssertAuthenticatedIdentityInActiveProfile(identity2);
 
   // Go to Accounts Settings and tap the sign out button.
