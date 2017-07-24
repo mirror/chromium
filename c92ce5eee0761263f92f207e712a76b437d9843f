@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "544ba1dd_83363299",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ServiceTabLauncher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-24T20:28:47Z",
+      "side": 1,
+      "message": "Nit: Move declaration of |context| into callback where it is used. (That way it does not need to be final)",
+      "range": {
+        "startLine": 98,
+        "startChar": 69,
+        "endLine": 98,
+        "endChar": 0
+      },
+      "revId": "c92ce5eee0761263f92f207e712a76b437d9843f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e8a390c_98e6c568",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/ChromeWebApkHost.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-24T20:28:47Z",
+      "side": 1,
+      "message": "Maybe rename this method to disconnectFromAllWebApksWhenChromeStops() to better match what the function does (It deals with WebApkIdentityServiceClient and WebApkServiceClient)",
+      "range": {
+        "startLine": 43,
+        "startChar": 79,
+        "endLine": 43,
+        "endChar": 0
+      },
+      "revId": "c92ce5eee0761263f92f207e712a76b437d9843f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
