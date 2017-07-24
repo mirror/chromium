@@ -81,80 +81,40 @@ class DiscardableImageGenerator {
     if (!buffer->HasDiscardableImages())
       return;
 
-    SkMatrix original = canvas_.getTotalMatrix();
+    PlaybackParams params(nullptr, canvas_.getTotalMatrix());
     canvas_.save();
     // TODO(khushalsagar): Optimize out save/restore blocks if there are no
     // images in the draw ops between them.
     for (auto* op : PaintOpBuffer::Iterator(buffer)) {
       if (op->IsDrawOp()) {
-        switch (op->GetType()) {
-          case PaintOpType::DrawArc: {
-            auto* arc_op = static_cast<DrawArcOp*>(op);
-            AddImageFromFlags(arc_op->oval, arc_op->flags);
-          } break;
-          case PaintOpType::DrawCircle: {
-            auto* circle_op = static_cast<DrawCircleOp*>(op);
-            SkRect rect =
-                SkRect::MakeXYWH(circle_op->cx - circle_op->radius,
-                                 circle_op->cy - circle_op->radius,
-                                 2 * circle_op->radius, 2 * circle_op->radius);
-            AddImageFromFlags(rect, circle_op->flags);
-          } break;
-          case PaintOpType::DrawImage: {
-            auto* image_op = static_cast<DrawImageOp*>(op);
-            const SkImage* sk_image = image_op->image.sk_image().get();
-            AddImage(image_op->image,
-                     SkRect::MakeIWH(sk_image->width(), sk_image->height()),
-                     SkRect::MakeXYWH(image_op->left, image_op->top,
-                                      sk_image->width(), sk_image->height()),
-                     nullptr, image_op->flags);
-          } break;
-          case PaintOpType::DrawImageRect: {
-            auto* image_rect_op = static_cast<DrawImageRectOp*>(op);
-            SkMatrix matrix;
-            matrix.setRectToRect(image_rect_op->src, image_rect_op->dst,
-                                 SkMatrix::kFill_ScaleToFit);
-            AddImage(image_rect_op->image, image_rect_op->src,
-                     image_rect_op->dst, &matrix, image_rect_op->flags);
-          } break;
-          case PaintOpType::DrawIRect: {
-            auto* rect_op = static_cast<DrawIRectOp*>(op);
-            AddImageFromFlags(SkRect::Make(rect_op->rect), rect_op->flags);
-          } break;
-          case PaintOpType::DrawOval: {
-            auto* oval_op = static_cast<DrawOvalOp*>(op);
-            AddImageFromFlags(oval_op->oval, oval_op->flags);
-          } break;
-          case PaintOpType::DrawPath: {
-            auto* path_op = static_cast<DrawPathOp*>(op);
-            AddImageFromFlags(path_op->path.getBounds(), path_op->flags);
-          } break;
-          case PaintOpType::DrawRecord: {
-            auto* record_op = static_cast<DrawRecordOp*>(op);
-            GatherDiscardableImages(record_op->record.get());
-          } break;
-          case PaintOpType::DrawRect: {
-            auto* rect_op = static_cast<DrawRectOp*>(op);
-            AddImageFromFlags(rect_op->rect, rect_op->flags);
-          } break;
-          case PaintOpType::DrawRRect: {
-            auto* rect_op = static_cast<DrawRRectOp*>(op);
-            AddImageFromFlags(rect_op->rrect.rect(), rect_op->flags);
-          } break;
-          // TODO(khushalsagar): Check if we should be querying images from any
-          // of the following ops.
-          case PaintOpType::DrawPosText:
-          case PaintOpType::DrawLine:
-          case PaintOpType::DrawDRRect:
-          case PaintOpType::DrawText:
-          case PaintOpType::DrawTextBlob:
-          case PaintOpType::DrawColor:
-            break;
-          default:
-            NOTREACHED();
+        SkRect op_rect;
+        if (op->IsPaintOpWithFlags() && PaintOp::GetBounds(op, &op_rect)) {
+          AddImageFromFlags(op_rect,
+                            static_cast<const PaintOpWithFlags*>(op)->flags);
+        }
+
+        PaintOpType op_type = static_cast<PaintOpType>(op->type);
+        if (op_type == PaintOpType::DrawImage) {
+          auto* image_op = static_cast<DrawImageOp*>(op);
+          auto* sk_image = image_op->image.sk_image().get();
+          AddImage(image_op->image,
+                   SkRect::MakeIWH(sk_image->width(), sk_image->height()),
+                   SkRect::MakeXYWH(image_op->left, image_op->top,
+                                    sk_image->width(), sk_image->height()),
+                   nullptr, image_op->flags);
+        } else if (op_type == PaintOpType::DrawImageRect) {
+          auto* image_rect_op = static_cast<DrawImageRectOp*>(op);
+          SkMatrix matrix;
+          matrix.setRectToRect(image_rect_op->src, image_rect_op->dst,
+                               SkMatrix::kFill_ScaleToFit);
+          AddImage(image_rect_op->image, image_rect_op->src, image_rect_op->dst,
+                   &matrix, image_rect_op->flags);
+        } else if (op_type == PaintOpType::DrawRecord) {
+          GatherDiscardableImages(
+              static_cast<const DrawRecordOp*>(op)->record.get());
         }
       } else {
-        op->Raster(&canvas_, original);
+        op->Raster(&canvas_, params);
       }
     }
     canvas_.restore();
