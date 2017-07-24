@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "590b0a20_51d9e31d",
+        "filename": "components/offline_pages/core/renovations/page_renovation_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-07-24T18:30:25Z",
+      "side": 1,
+      "message": "If i understand correctly, this LoadSource will return false based on the call to ui::ResourceBundle, right?\nAnd i have a question which i guess was discussed... if this loader is owned by background loader offliner, does it mean for each download request, there will be a ui::ResourceBundle load? If so, would it be better to have this owned by RequestCoordinator? Just a thought, probably no need to address in this CL.",
+      "revId": "f3d47869e95dd2e7e491dff2194f198108756afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40f89708_79c1792a",
+        "filename": "components/offline_pages/core/renovations/page_renovation_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-07-24T18:30:25Z",
+      "side": 1,
+      "message": "does it make sense to add a test case which calls two times on GetRenovationScript to make sure it\u0027s not duplicating scripts?",
+      "revId": "f3d47869e95dd2e7e491dff2194f198108756afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
