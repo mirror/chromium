@@ -46,6 +46,30 @@
       "revId": "d0e5dd0d59635dd198af22dd89519adbf76e523b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a589c8f0_749f4139",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-07-24T17:35:00Z",
+      "side": 1,
+      "message": "I think a clean approach would be to simply pass an sk_sp\u003cSkImage\u003e to the release callback.  That way the callback\u0027s closure would own a reference to the SkImage (possibly after the Canvas2DLayerBridge has been destroyed). That would be enough delay the recycling of the texture until after the compositor is done with it.",
+      "parentUuid": "9e801322_b993428c",
+      "range": {
+        "startLine": 166,
+        "startChar": 4,
+        "endLine": 176,
+        "endChar": 5
+      },
+      "revId": "d0e5dd0d59635dd198af22dd89519adbf76e523b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
