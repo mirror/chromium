@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40e177f6_52ddbe96",
+        "filename": "base/test/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2017-07-24T12:15:24Z",
+      "side": 1,
+      "message": "nit: Why not move them to base/metrics/test then?\n\nFine for me either way.",
+      "range": {
+        "startLine": 5,
+        "startChar": 2,
+        "endLine": 5,
+        "endChar": 31
+      },
+      "revId": "976699fc721f2ba60126032042cdc7611f7ee179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
