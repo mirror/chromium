@@ -22,6 +22,30 @@
       "revId": "4e13e9579c87043435bcaf93c8801de73047e714",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47da752c_d59cad49",
+        "filename": "content/browser/media/capture/desktop_capture_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2017-07-24T18:29:08Z",
+      "side": 1,
+      "message": "Resolution_chooser will return 1x1 |output_size| for the 1x1 input frame currently. And 1x1 dimensions can\u0027t survive through line272 due to the align-to-even. Also there are many other places doing the same align-to-even processing downstream. So we must reset its size to 2 as min_size somewhere. \nDoing it here is more explicitly and independent to other modules. And it\u0027s still be controlled by resolution_chooser if other frame size bigger than 2x2 is preferred.\nWDYT? Or any better idea?",
+      "parentUuid": "84ab6edf_e9dfdd5a",
+      "range": {
+        "startLine": 265,
+        "startChar": 4,
+        "endLine": 265,
+        "endChar": 74
+      },
+      "revId": "4e13e9579c87043435bcaf93c8801de73047e714",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

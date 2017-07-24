@@ -22,6 +22,30 @@
       "revId": "8d3ceadb39d125a72fcac8447ff5a010908b55fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5793bd9d_a62cfa51",
+        "filename": "content/browser/media/capture/desktop_capture_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2017-07-24T18:29:08Z",
+      "side": 0,
+      "message": "Yes this is also an good option. \nBecause now we will resize the input 1x1 frame to 2x2 before resolution_chooser processing(otherwise the 1x1 case will hit line272 and get returned.), I think it\u0027s better to do the cropping at same place as a calibration to the source frame together before any processing in this function. WDYT?\nI don\u0027t have strong opinion though.",
+      "parentUuid": "f9dca763_b00b87b5",
+      "range": {
+        "startLine": 290,
+        "startChar": 2,
+        "endLine": 290,
+        "endChar": 50
+      },
+      "revId": "8d3ceadb39d125a72fcac8447ff5a010908b55fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
