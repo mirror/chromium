@@ -23,6 +23,17 @@ void TouchActionRegion::Union(TouchAction touch_action, const gfx::Rect& rect) {
   map_[touch_action].Union(rect);
 }
 
+void TouchActionRegion::AddTouchActionRectToMap(TouchAction touch_action,
+                                                const gfx::Rect& rect) {
+  map_[touch_action].Union(rect);
+}
+
+void TouchActionRegion::SetRegionFromMap() {
+  for (const auto& pair : map_) {
+    region_->Union(pair.second);
+  }
+}
+
 const Region& TouchActionRegion::GetRegionForTouchAction(
     TouchAction touch_action) const {
   static const Region* empty_region = new Region;
