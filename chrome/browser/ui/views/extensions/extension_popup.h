@@ -122,7 +122,7 @@ class ExtensionPopup : public views::BubbleDialogDelegateView,
 
   content::NotificationRegistrar registrar_;
 
-  bool widget_initialized_;
+  bool widget_initialized_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(ExtensionPopup);
 };

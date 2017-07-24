@@ -25,6 +25,7 @@ class VIEWS_EXPORT NativeViewHostMac : public NativeViewHostWrapper {
   void NativeViewDetaching(bool destroyed) override;
   void AddedToWidget() override;
   void RemovedFromWidget() override;
+  bool SetMask(std::unique_ptr<views::Painter> painter) override;
   void InstallClip(int x, int y, int w, int h) override;
   bool HasInstalledClip() override;
   void UninstallClip() override;
