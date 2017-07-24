@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30a8de98_95cb31f9",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1663,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-07-24T18:35:46Z",
+      "side": 0,
+      "message": "The problem is when the shadow is in surface, the shadow_underlay_ window is added as a child window of host_window(),\nand the host_window() is used for creating the frame sink, and we submit composited frame to it. So the shdow_underlay_ will cover the all exo surfaces. To avoid this problem, we have to always add the shadow_underlay_ as a child window of the views::Widget, and put it below the host_window(). In future, we can remove it, and let code in android to create an extra underlay layer below all other layers.",
+      "range": {
+        "startLine": 1660,
+        "startChar": 5,
+        "endLine": 1663,
+        "endChar": 8
+      },
+      "revId": "cb70129cf086ba88f7fd3ec4d4bd7437251ea4f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
