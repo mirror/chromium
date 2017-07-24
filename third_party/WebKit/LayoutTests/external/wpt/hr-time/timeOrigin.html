@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+</head>
+<body>
+<script>
+async_test(function(t) {
+  const startTime = Date.now();
+  const windowOrigin = performance.timeOrigin;
+  assert_less_than(startTime - windowOrigin, 500, "Date time at start should be very close to timeOrigin of window");
+  const workerScript = 'postMessage({timeOrigin: performance.timeOrigin})';
+  const blob = new Blob([workerScript]);
+  const worker = new Worker(URL.createObjectURL(blob));
+  worker.addEventListener("message", t.step_func_done(function(event) {
+    const workerOrigin = event.data.timeOrigin;
+    assert_less_than(workerOrigin - windowOrigin, 500, "Difference between window and worker timeOrigins should be small.");
+  }));
+  this.step_timeout(function() {
+    const workerCreation = performance.now();
+    const secondWorker = new Worker(URL.createObjectURL(blob));
+    secondWorker.addEventListener("message", t.step_func_done(function(event) {
+      const secondWorkerOrigin = event.data.timeOrigin;
+      assert_less_than(secondWorkerOrigin - windowOrigin - workerCreation, 500, "Difference between worker and window timeOrigins should roughly be equal to performance.now() at time of creation.");
+      assert_greater_equal_than(secondWorkerOrigin - windowOrigin, 1000, "We waited 1s to spawn the second worker, so the timeOrigin should be much greater");
+    }));
+  }, 1000);
+}, 'Testing timeOrigins in window and worker.');
+</script>
+</body>
+</html>
