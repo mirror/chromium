@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a54daeb7_d4b99cfa",
+        "filename": "content/renderer/sandbox_mac_v2_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-07-24T17:22:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "022660eb_79069855",
+      "revId": "65b71e9fafcddd6e9b35a193ef157e0de382fd5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3119b5d2_5bdee185",
         "filename": "content/renderer/sandbox_mac_v2_unittest.mm",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "65b71e9fafcddd6e9b35a193ef157e0de382fd5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7694b290_154793d2",
+        "filename": "content/renderer/sandbox_mac_v2_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-07-24T17:22:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3119b5d2_5bdee185",
+      "revId": "65b71e9fafcddd6e9b35a193ef157e0de382fd5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "65b71e9fafcddd6e9b35a193ef157e0de382fd5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9531c971_9b0b6dc4",
+        "filename": "content/renderer/sandbox_mac_v2_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-07-24T17:22:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "984a3c34_f7b09181",
+      "range": {
+        "startLine": 75,
+        "startChar": 51,
+        "endLine": 75,
+        "endChar": 63
+      },
+      "revId": "65b71e9fafcddd6e9b35a193ef157e0de382fd5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +165,54 @@
     },
     {
       "key": {
+        "uuid": "4ee0b65b_b1c9a38c",
+        "filename": "content/renderer/sandbox_mac_v2_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-07-24T17:22:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5bb52a1_4035f21f",
+      "range": {
+        "startLine": 78,
+        "startChar": 27,
+        "endLine": 78,
+        "endChar": 48
+      },
+      "revId": "65b71e9fafcddd6e9b35a193ef157e0de382fd5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f5027c3f_5695214d",
+        "filename": "content/renderer/sandbox_mac_v2_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-07-24T17:22:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e500f4b_c0449814",
+      "range": {
+        "startLine": 78,
+        "startChar": 69,
+        "endLine": 78,
+        "endChar": 79
+      },
+      "revId": "65b71e9fafcddd6e9b35a193ef157e0de382fd5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7eadc197_4b140645",
         "filename": "content/renderer/sandbox_mac_v2_unittest.mm",
         "patchSetId": 5
@@ -119,6 +227,24 @@
       "revId": "65b71e9fafcddd6e9b35a193ef157e0de382fd5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "795bfbcc_15be9230",
+        "filename": "content/renderer/sandbox_mac_v2_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-07-24T17:22:06Z",
+      "side": 1,
+      "message": "Yes these are CHECKS() because the process has to die for the test to notice the failure.",
+      "parentUuid": "7eadc197_4b140645",
+      "revId": "65b71e9fafcddd6e9b35a193ef157e0de382fd5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "3be38e5d_9b5ca757",
+        "filename": "content/renderer/sandbox_mac_v2_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-07-24T17:22:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0001bb9b_c653e13f",
+      "revId": "65b71e9fafcddd6e9b35a193ef157e0de382fd5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5de6e5d_194fbb16",
         "filename": "content/renderer/sandbox_mac_v2_unittest.mm",
         "patchSetId": 5
@@ -150,6 +294,24 @@
       "writtenOn": "2017-07-20T18:42:31Z",
       "side": 1,
       "message": "You can send the bootstrap_strerror() over here too.",
+      "revId": "65b71e9fafcddd6e9b35a193ef157e0de382fd5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "302f5d72_0db2fe9f",
+        "filename": "content/renderer/sandbox_mac_v2_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-07-24T17:22:06Z",
+      "side": 1,
+      "message": "Does it make sense since error is always meant to be populated, and success is the failure?",
+      "parentUuid": "e5de6e5d_194fbb16",
       "revId": "65b71e9fafcddd6e9b35a193ef157e0de382fd5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -173,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "9fd1eccf_f78175fc",
+        "filename": "content/renderer/sandbox_mac_v2_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-07-24T17:22:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b932a765_1d0b08df",
+      "revId": "65b71e9fafcddd6e9b35a193ef157e0de382fd5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3607020_d6248209",
         "filename": "content/renderer/sandbox_mac_v2_unittest.mm",
         "patchSetId": 5
@@ -184,6 +364,24 @@
       "writtenOn": "2017-07-20T18:42:31Z",
       "side": 1,
       "message": "“Check that not all sysctls are allowed”, but are there any sysctls that you want to make sure are allowed?",
+      "revId": "65b71e9fafcddd6e9b35a193ef157e0de382fd5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf45ca49_4a3aca04",
+        "filename": "content/renderer/sandbox_mac_v2_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-07-24T17:22:06Z",
+      "side": 1,
+      "message": "Added a test for an allowed sysctl to make sure all sysctls aren\u0027t rejected.",
+      "parentUuid": "f3607020_d6248209",
       "revId": "65b71e9fafcddd6e9b35a193ef157e0de382fd5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -204,6 +402,24 @@
       "revId": "65b71e9fafcddd6e9b35a193ef157e0de382fd5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a0e1107_479501d0",
+        "filename": "sandbox/mac/sandbox_mac_compiler_v2_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-07-24T17:22:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00776d2b_2d4bc0f8",
+      "revId": "65b71e9fafcddd6e9b35a193ef157e0de382fd5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
