@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73c3716a_c1ab4ae1",
+        "filename": "content/browser/renderer_host/input/input_router_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-24T19:45:09Z",
+      "side": 1,
+      "message": "How big is this list expected to be? What is the touch ID referenced?\n\n(If this list is a reasonable size, and is mutated a lot, I\u0027m not sure flat_map is a good fit)",
+      "range": {
+        "startLine": 216,
+        "startChar": 0,
+        "endLine": 217,
+        "endChar": 57
+      },
+      "revId": "31f367b126540c1642d391e9d920b72534950281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
