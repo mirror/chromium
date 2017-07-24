@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc82fee8_913395a6",
+        "filename": "chrome/browser/profile_resetter/profile_resetter_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-24T05:47:55Z",
+      "side": 1,
+      "message": "What\u0027s the reason to have this?",
+      "revId": "6ea9253d6d175f4dafe835767243d9f972cf7cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
