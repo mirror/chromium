@@ -145,7 +145,7 @@
 #endif  // BUILDFLAG(ENABLE_EXTENSIONS)
 
 #if BUILDFLAG(ENABLE_OFFLINE_PAGES)
-#include "chrome/browser/android/offline_pages/prefetch/prefetch_background_task.h"
+#include "chrome/browser/offline_pages/android/prefetch_background_task_android.h"
 #include "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h"
 #endif
 
