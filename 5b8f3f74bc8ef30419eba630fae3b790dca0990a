@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22c22d99_3fb49fb4",
+        "filename": "components/cast_channel/cast_auth_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-24T17:32:42Z",
+      "side": 1,
+      "message": "To be explicit how about renaming this to kEnforceNonceCheckingAndSHA256?",
+      "revId": "5b8f3f74bc8ef30419eba630fae3b790dca0990a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "290837b0_33ca7454",
+        "filename": "components/cast_channel/cast_auth_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-24T17:32:42Z",
+      "side": 1,
+      "message": "For debuggability it might be better to have a distinct AuthResult for an unsupported digest algorithm.",
+      "revId": "5b8f3f74bc8ef30419eba630fae3b790dca0990a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67797e58_8f1eab74",
+        "filename": "components/cast_channel/cast_auth_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-24T17:32:42Z",
+      "side": 1,
+      "message": "Nit: Omit {} for one-line if, for consistency in this file.",
+      "revId": "5b8f3f74bc8ef30419eba630fae3b790dca0990a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
