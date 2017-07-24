@@ -33,7 +33,8 @@ class CSSPropertyFontUtils {
   static CSSValue* ConsumeFamilyName(CSSParserTokenRange&);
   static String ConcatenateFamilyName(CSSParserTokenRange&);
 
-  static CSSValue* ConsumeFontStretch(CSSParserTokenRange&);
+  static CSSValue* ConsumeFontStretch(CSSParserTokenRange&,
+                                      const CSSParserMode&);
   static CSSValue* ConsumeFontStyle(CSSParserTokenRange&);
   static CSSValue* ConsumeFontWeight(CSSParserTokenRange&,
                                      const CSSParserMode&);

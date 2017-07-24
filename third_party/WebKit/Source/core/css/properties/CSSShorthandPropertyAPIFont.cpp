@@ -126,7 +126,8 @@ bool ConsumeFont(bool important,
       // Stretch in the font shorthand can only take the CSS Fonts Level 3
       // keywords, not arbitrary values, compare
       // https://drafts.csswg.org/css-fonts-4/#font-prop
-      font_stretch = CSSPropertyFontUtils::ConsumeFontStretch(range);
+      font_stretch =
+          CSSPropertyFontUtils::ConsumeFontStretch(range, context.Mode());
     } else {
       break;
     }

@@ -105,16 +105,43 @@ CSSValue* CSSPropertyFontUtils::ConsumeFontStyle(CSSParserTokenRange& range) {
   return nullptr;
 }
 
-CSSValue* CSSPropertyFontUtils::ConsumeFontStretch(CSSParserTokenRange& range) {
-  const CSSParserToken& token = range.Peek();
-  if (token.Id() == CSSValueNormal || (token.Id() >= CSSValueUltraCondensed &&
-                                       token.Id() <= CSSValueUltraExpanded))
+CSSValue* CSSPropertyFontUtils::ConsumeFontStretch(
+    CSSParserTokenRange& range,
+    const CSSParserMode& parser_mode) {
+  if (range.Peek().Id() == CSSValueNormal ||
+      (range.Peek().Id() >= CSSValueUltraCondensed &&
+       range.Peek().Id() <= CSSValueUltraExpanded))
     return CSSPropertyParserHelpers::ConsumeIdent(range);
-  if (token.GetType() != kPercentageToken)
+
+  CSSPrimitiveValue* start_percent = nullptr;
+  CSSPrimitiveValue* end_percent = nullptr;
+  if (range.Peek().GetType() == kPercentageToken) {
+    start_percent =
+        CSSPropertyParserHelpers::ConsumePercent(range, kValueRangeNonNegative);
+  }
+  if (!start_percent || start_percent->GetFloatValue() <= 0)
     return nullptr;
-  if (token.NumericValue() <= 0)
-    return nullptr;
-  return CSSPropertyParserHelpers::ConsumePercent(range, kValueRangeAll);
+
+  if (range.Peek().GetType() == kPercentageToken) {
+    if (parser_mode != kCSSFontFaceRuleMode)
+      return nullptr;
+    end_percent =
+        CSSPropertyParserHelpers::ConsumePercent(range, kValueRangeNonNegative);
+    if (!end_percent || end_percent->GetFloatValue() <= 0)
+      return nullptr;
+  }
+
+  if (start_percent && end_percent) {
+    CSSValueList* value_list = CSSValueList::CreateSpaceSeparated();
+    value_list->Append(*start_percent);
+    value_list->Append(*end_percent);
+    return value_list;
+  }
+
+  if (start_percent)
+    return start_percent;
+
+  return nullptr;
 }
 
 CSSValue* CSSPropertyFontUtils::ConsumeFontWeight(
