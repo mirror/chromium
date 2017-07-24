@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8470ad4f_2e9e3ea0",
+        "filename": "ios/chrome/browser/payments/ios_payment_app.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-24T21:45:45Z",
+      "side": 1,
+      "message": "Replaced with a period!",
+      "parentUuid": "d13142fa_e5f30c85",
+      "range": {
+        "startLine": 25,
+        "startChar": 3,
+        "endLine": 25,
+        "endChar": 12
+      },
+      "revId": "ec161932252c491e7713a09f119b3bb5a3b8f082",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9645db4_b30d6c90",
         "filename": "ios/chrome/browser/payments/ios_payment_app.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "ec161932252c491e7713a09f119b3bb5a3b8f082",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4261ff05_63c7ecde",
+        "filename": "ios/chrome/browser/payments/ios_payment_app.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-24T21:45:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9645db4_b30d6c90",
+      "range": {
+        "startLine": 36,
+        "startChar": 20,
+        "endLine": 36,
+        "endChar": 21
+      },
+      "revId": "ec161932252c491e7713a09f119b3bb5a3b8f082",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d1b3422c_8d96ca01",
+        "filename": "ios/chrome/browser/payments/ios_payment_app.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-24T21:45:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc0d701b_c77134d9",
+      "range": {
+        "startLine": 59,
+        "startChar": 16,
+        "endLine": 59,
+        "endChar": 28
+      },
+      "revId": "ec161932252c491e7713a09f119b3bb5a3b8f082",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30036fb8_d6a768cb",
         "filename": "ios/chrome/browser/payments/ios_payment_app.mm",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-21T16:40:11Z",
       "side": 1,
       "message": "I understand |delegate| isn\u0027t being used yet. But let\u0027s store it as a member variable with the proper DCHECKs similar to:\nhttps://cs.chromium.org/chromium/src/components/payments/core/autofill_payment_instrument.cc?l\u003d47",
+      "range": {
+        "startLine": 43,
+        "startChar": 66,
+        "endLine": 43,
+        "endChar": 74
+      },
+      "revId": "ec161932252c491e7713a09f119b3bb5a3b8f082",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "329ebf38_089b22eb",
+        "filename": "ios/chrome/browser/payments/ios_payment_app.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-07-24T21:45:45Z",
+      "side": 1,
+      "message": "Passed as argument to launchAppWithUniversalLink as per offline discussion",
+      "parentUuid": "30036fb8_d6a768cb",
       "range": {
         "startLine": 43,
         "startChar": 66,
