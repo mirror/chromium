@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48f3dfe8_784678e0",
+        "filename": "ios/showcase/bubble/sc_bubble_coordinator.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-24T22:14:45Z",
+      "side": 1,
+      "message": "nit: Does this add value to this code or is it simpler to inline this where it is used?",
+      "revId": "905765e31baf06de7807bba1bd11344d67d63e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72da0e28_f08fe6df",
+        "filename": "ios/showcase/bubble/sc_bubble_coordinator.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-24T22:14:45Z",
+      "side": 1,
+      "message": "#pragma mark - Private methods",
+      "revId": "905765e31baf06de7807bba1bd11344d67d63e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7e7e120_824b2c4e",
+        "filename": "ios/showcase/bubble/sc_bubble_coordinator.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-24T22:14:45Z",
+      "side": 1,
+      "message": "nit: I would call this -addBubbleViewControllerWithFrame:, taking inspiration from addChildViewController.",
+      "revId": "905765e31baf06de7807bba1bd11344d67d63e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
