@@ -61,7 +61,12 @@ class UrlBarTexture : public UiTexture {
                               const ColorScheme& color_scheme);
 
   std::unique_ptr<gfx::RenderText> url_render_text_;
-  base::string16 url_text_;
+
+  // Rendered state for test purposes.
+  base::string16 rendered_url_text_;
+  gfx::Rect rendered_url_text_rect_;
+  base::string16 rendered_security_text_;
+  gfx::Rect rendered_security_text_rect_;
 
  private:
   void Draw(SkCanvas* canvas, const gfx::Size& texture_size) override;
@@ -80,9 +85,11 @@ class UrlBarTexture : public UiTexture {
   ToolbarState state_;
 
   GURL last_drawn_gurl_;
+  security_state::SecurityLevel last_drawn_security_level_;
+  float last_drawn_url_x_position_ = -1.0f;
+
   bool has_back_button_ = true;
   bool opaque_background_ = false;
-  security_state::SecurityLevel last_drawn_security_level_;
   base::Callback<void(UiUnsupportedMode)> failure_callback_;
   gfx::RectF security_hit_region_ = gfx::RectF(0, 0, 0, 0);
   gfx::RectF back_button_hit_region_ = gfx::RectF(0, 0, 0, 0);

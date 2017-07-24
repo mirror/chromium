@@ -173,6 +173,11 @@ void UrlBarTexture::Draw(SkCanvas* canvas, const gfx::Size& texture_size) {
   size_.set_height(texture_size.height());
   size_.set_width(texture_size.width());
 
+  rendered_url_text_ = base::string16();
+  rendered_url_text_rect_ = gfx::Rect();
+  rendered_security_text_ = base::string16();
+  rendered_security_text_rect_ = gfx::Rect();
+
   canvas->save();
   canvas->scale(size_.width() / kWidth, size_.width() / kWidth);
 
@@ -282,6 +287,8 @@ void UrlBarTexture::Draw(SkCanvas* canvas, const gfx::Size& texture_size) {
     render_text->SetText(chip_text);
     render_text->SetDisplayRect(text_bounds);
     render_text->Draw(&gfx_canvas);
+    rendered_security_text_ = render_text->text();
+    rendered_security_text_rect_ = render_text->display_rect();
 
     // Capture the rendered text region for future hit testing.
     gfx::Size string_size = render_text->GetStringSize();
@@ -303,17 +310,21 @@ void UrlBarTexture::Draw(SkCanvas* canvas, const gfx::Size& texture_size) {
   }
 
   if (state_.should_display_url) {
+    float url_x = left_edge;
     if (!url_render_text_ || last_drawn_gurl_ != state_.gurl ||
-        last_drawn_security_level_ != state_.security_level) {
-      float url_x = left_edge;
+        last_drawn_security_level_ != state_.security_level ||
+        last_drawn_url_x_position_ != url_x) {
       float url_width = kWidth - url_x - kUrlRightMargin;
       gfx::Rect text_bounds(ToPixels(url_x), 0, ToPixels(url_width),
                             ToPixels(kHeight));
       RenderUrl(texture_size, text_bounds);
       last_drawn_gurl_ = state_.gurl;
       last_drawn_security_level_ = state_.security_level;
+      last_drawn_url_x_position_ = url_x;
     }
     url_render_text_->Draw(&gfx_canvas);
+    rendered_url_text_ = url_render_text_->text();
+    rendered_url_text_rect_ = url_render_text_->display_rect();
   }
 }
 
@@ -361,7 +372,6 @@ void UrlBarTexture::RenderUrl(const gfx::Size& texture_size,
                   color_scheme());
 
   url_render_text_ = std::move(render_text);
-  url_text_ = text;
 }
 
 // This method replicates behavior in OmniboxView::UpdateTextStyle(), and
