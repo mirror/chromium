@@ -409,7 +409,10 @@ class WebURLLoaderImpl::Context : public base::RefCounted<Context> {
   void HandleDataURL();
 
   WebURLLoaderImpl* loader_;
-  WebURLRequest request_;
+
+  GURL url_;
+  bool use_stream_on_response_;
+
   WebURLLoaderClient* client_;
   ResourceDispatcher* resource_dispatcher_;
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
@@ -504,7 +507,7 @@ void WebURLLoaderImpl::Context::SetDefersLoading(bool value) {
   } else if (!value && defers_loading_ != NOT_DEFERRING) {
     if (defers_loading_ == DEFERRED_DATA) {
       task_runner_->PostTask(FROM_HERE,
-                             base::Bind(&Context::HandleDataURL, this));
+                             base::Bind(&Context::HandleDataURL, this, url));
     }
     defers_loading_ = NOT_DEFERRING;
   }
@@ -523,10 +526,14 @@ void WebURLLoaderImpl::Context::DidChangePriority(
 void WebURLLoaderImpl::Context::Start(const WebURLRequest& request,
                                       SyncLoadResponse* sync_load_response) {
   DCHECK(request_id_ == -1);
-  request_ = request;  // Save the request.
+
+  url_ = request_.Url();
+  use_stream_on_response_ = request_.UseStreamOnResponse();
+  report_raw_headers_ = request_.ReportRawHeaders();
+
   GURL url = request.Url();
 
-  if (CanHandleDataURLRequestLocally()) {
+  if (CanHandleDataURLRequestLocally(request)) {
     if (sync_load_response) {
       // This is a sync load. Do the work now.
       sync_load_response->url = url;
@@ -535,7 +542,7 @@ void WebURLLoaderImpl::Context::Start(const WebURLRequest& request,
                              &sync_load_response->data);
     } else {
       task_runner_->PostTask(FROM_HERE,
-                             base::Bind(&Context::HandleDataURL, this));
+                             base::Bind(&Context::HandleDataURL, this, url));
     }
     return;
   }
@@ -682,8 +689,7 @@ bool WebURLLoaderImpl::Context::OnReceivedRedirect(
       this, TRACE_EVENT_FLAG_FLOW_IN | TRACE_EVENT_FLAG_FLOW_OUT);
 
   WebURLResponse response;
-  PopulateURLResponse(request_.Url(), info, &response,
-                      request_.ReportRawHeaders());
+  PopulateURLResponse(url_, info, &response, report_raw_headers_);
 
   WebURLRequest new_request = PopulateURLRequestForRedirect(
       request_, redirect_info,
@@ -744,12 +750,11 @@ void WebURLLoaderImpl::Context::OnReceivedResponse(
   }
 
   WebURLResponse response;
-  GURL url(request_.Url());
-  PopulateURLResponse(url, info, &response, request_.ReportRawHeaders());
+  PopulateURLResponse(url_, info, &response, request_.ReportRawHeaders());
 
   bool show_raw_listing = false;
   if (info.mime_type == "text/vnd.chromium.ftp-dir") {
-    if (url.query_piece() == "raw") {
+    if (url_.query_piece() == "raw") {
       // Set the MIME type to plain text to prevent any active content.
       response.SetMIMEType("text/plain");
       show_raw_listing = true;
@@ -772,7 +777,7 @@ void WebURLLoaderImpl::Context::OnReceivedResponse(
     response.SetMultipartBoundary(boundary.data(), boundary.size());
   }
 
-  if (request_.UseStreamOnResponse()) {
+  if (use_stream_on_response_) {
     SharedMemoryDataConsumerHandle::BackpressureMode mode =
         SharedMemoryDataConsumerHandle::kDoNotApplyBackpressure;
     if (info.headers &&
@@ -844,7 +849,7 @@ void WebURLLoaderImpl::Context::OnReceivedData(
   // to make Devtools work.
   client_->DidReceiveData(payload, data_length);
 
-  if (request_.UseStreamOnResponse()) {
+  if (use_stream_on_response_) {
     // We don't support |ftp_listing_delegate_| for now.
     // TODO(yhirano): Support ftp listening.
     body_stream_writer_->AddData(std::move(data));
@@ -894,7 +899,7 @@ void WebURLLoaderImpl::Context::OnCompletedRequest(
         this, TRACE_EVENT_FLAG_FLOW_IN);
 
     if (error_code != net::OK) {
-      WebURLError error(request_.Url(), stale_copy_in_cache, error_code);
+      WebURLError error(url_, stale_copy_in_cache, error_code);
       error.was_ignored_by_handler = was_ignored_by_handler;
       client_->DidFail(error, total_transfer_size, encoded_body_size,
                        decoded_body_size);
@@ -932,7 +937,7 @@ void WebURLLoaderImpl::Context::CancelBodyStreaming() {
   }
   if (client_) {
     // TODO(yhirano): Set |stale_copy_in_cache| appropriately if possible.
-    client_->DidFail(WebURLError(request_.Url(), false, net::ERR_ABORTED),
+    client_->DidFail(WebURLError(url_, false, net::ERR_ABORTED),
                      WebURLLoaderClient::kUnknownEncodedDataLength, 0, 0);
   }
 
@@ -940,18 +945,19 @@ void WebURLLoaderImpl::Context::CancelBodyStreaming() {
   Cancel();
 }
 
-bool WebURLLoaderImpl::Context::CanHandleDataURLRequestLocally() const {
-  if (!request_.Url().ProtocolIs(url::kDataScheme))
+bool WebURLLoaderImpl::Context::CanHandleDataURLRequestLocally(
+    const WebURLRequest& request) const {
+  if (!request.Url().ProtocolIs(url::kDataScheme))
     return false;
 
   // The fast paths for data URL, Start() and HandleDataURL(), don't support
   // the downloadToFile option.
-  if (request_.DownloadToFile())
+  if (request.DownloadToFile())
     return false;
 
   // Data url requests from object tags may need to be intercepted as streams
   // and so need to be sent to the browser.
-  if (request_.GetRequestContext() == WebURLRequest::kRequestContextObject)
+  if (request.GetRequestContext() == WebURLRequest::kRequestContextObject)
     return false;
 
   // Optimize for the case where we can handle a data URL locally.  We must
@@ -967,25 +973,25 @@ bool WebURLLoaderImpl::Context::CanHandleDataURLRequestLocally() const {
   // need to be loaded locally.
   // For PlzNavigate, navigation requests were already checked in the browser.
   if (resource_dispatcher_ &&
-      request_.GetFrameType() == WebURLRequest::kFrameTypeTopLevel) {
+      request.GetFrameType() == WebURLRequest::kFrameTypeTopLevel) {
     if (!IsBrowserSideNavigationEnabled())
       return false;
   }
 #endif
 
-  if (request_.GetFrameType() != WebURLRequest::kFrameTypeTopLevel &&
-      request_.GetFrameType() != WebURLRequest::kFrameTypeNested)
+  if (request.GetFrameType() != WebURLRequest::kFrameTypeTopLevel &&
+      request.GetFrameType() != WebURLRequest::kFrameTypeNested)
     return true;
 
   std::string mime_type, unused_charset;
-  if (net::DataURL::Parse(request_.Url(), &mime_type, &unused_charset, NULL) &&
+  if (net::DataURL::Parse(request.Url(), &mime_type, &unused_charset, NULL) &&
       mime_util::IsSupportedMimeType(mime_type))
     return true;
 
   return false;
 }
 
-void WebURLLoaderImpl::Context::HandleDataURL() {
+void WebURLLoaderImpl::Context::HandleDataURL(const GURL& url) {
   DCHECK_NE(defers_loading_, DEFERRED_DATA);
   if (defers_loading_ == SHOULD_DEFER) {
       defers_loading_ = DEFERRED_DATA;
@@ -995,7 +1001,7 @@ void WebURLLoaderImpl::Context::HandleDataURL() {
   ResourceResponseInfo info;
   std::string data;
 
-  int error_code = GetInfoFromDataURL(request_.Url(), &info, &data);
+  int error_code = GetInfoFromDataURL(url, &info, &data);
 
   if (error_code == net::OK) {
     OnReceivedResponse(info);
