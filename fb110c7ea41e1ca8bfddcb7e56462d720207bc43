@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd34a052_8ea625b0",
+        "filename": "components/arc/common/file_system.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-07-24T04:31:45Z",
+      "side": 1,
+      "message": "These new methods are quite surprising since they look like we can issue arbitrary URL requests in Chrome from Android, which is security-wise tragedy. Please add comments about background and restrictions at top of FileSystemHost definition.",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 26
+      },
+      "revId": "fb110c7ea41e1ca8bfddcb7e56462d720207bc43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
