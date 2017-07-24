@@ -49,7 +49,7 @@ base::AtomicSequenceNumber g_unique_id;
 
 namespace content {
 
-int ChildProcessHost::kInvalidUniqueID = -1;
+constexpr const int ChildProcessHost::kInvalidUniqueID;
 
 // static
 ChildProcessHost* ChildProcessHost::Create(ChildProcessHostDelegate* delegate) {

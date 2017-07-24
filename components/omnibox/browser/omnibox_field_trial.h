@@ -527,7 +527,7 @@ class OmniboxFieldTrial {
   // The amount of time to wait before sending a new suggest request after the
   // previous one unless overridden by a field trial parameter.
   // Non-const because some unittests modify this value.
-  static int kDefaultMinimumTimeBetweenSuggestQueriesMs;
+  static const int kDefaultMinimumTimeBetweenSuggestQueriesMs;
 
  private:
   friend class OmniboxFieldTrialTest;
