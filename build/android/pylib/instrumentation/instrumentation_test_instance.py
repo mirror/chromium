@@ -7,6 +7,7 @@ import logging
 import os
 import pickle
 import re
+import pprint
 
 from devil.android import apk_helper
 from devil.android import md5sum
@@ -64,10 +65,12 @@ _PICKLE_FORMAT_VERSION = 12
 
 
 class MissingSizeAnnotationError(test_exception.TestException):
-  def __init__(self, class_name):
-    super(MissingSizeAnnotationError, self).__init__(class_name +
+  def __init__(self, test):
+    super(MissingSizeAnnotationError, self).__init__(GetTestName(test) +
         ': Test method is missing required size annotation. Add one of: ' +
-        ', '.join('@' + a for a in _VALID_ANNOTATIONS))
+        ', '.join('@' + a for a in _VALID_ANNOTATIONS) +
+        '. Test method currently has these annotations: ' +
+        ', '.join('@' + a for a in test['annotations'].keys()))
 
 
 class TestListPickleException(test_exception.TestException):
@@ -244,7 +247,7 @@ def FilterTests(tests, test_filter=None, annotations=None,
     # Enforce that all tests declare their size.
     if (not any(a in _VALID_ANNOTATIONS for a in t['annotations'])
         and t['method'] not in _TEST_WITHOUT_SIZE_ANNOTATIONS):
-      raise MissingSizeAnnotationError(GetTestName(t))
+      raise MissingSizeAnnotationError(t)
 
     if (not annotation_filter(t['annotations'])
         or not excluded_annotation_filter(t['annotations'])):
@@ -822,6 +825,8 @@ class InstrumentationTestInstance(test_instance.TestInstance):
     if self._junit4_runner_class is None and any(
         t['is_junit4'] for t in inflated_tests):
       raise MissingJUnit4RunnerException()
+    for t in inflated_tests:
+      logging.warn('test: \n' + pprint.pformat(t))
     filtered_tests = FilterTests(
         inflated_tests, self._test_filter, self._annotations,
         self._excluded_annotations)
