@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2ffdbb4_9fa8d57d",
+        "filename": "net/spdy/chromium/spdy_session.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 890,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-07-24T13:54:19Z",
+      "side": 0,
+      "message": "This should have read \"factor of two\".  However, there is no need for this extra factor: HpackWholeEntryBuffer only refuses to decoder a header field if the header name length or header value length is above the limit, in which case, the total header size (even without the 32 byte per header field overhead) is also going to be over the limit, so HeaderCoalescer would also refuse it.",
+      "range": {
+        "startLine": 890,
+        "startChar": 57,
+        "endLine": 890,
+        "endChar": 63
+      },
+      "revId": "17fb0d73513a07eb5eb9fa9fcd82a7282de19727",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
