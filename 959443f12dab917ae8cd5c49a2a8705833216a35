@@ -140,6 +140,24 @@
       "revId": "959443f12dab917ae8cd5c49a2a8705833216a35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "589cd20b_c3e78707",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 1068,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-24T11:30:25Z",
+      "side": 1,
+      "message": "It\u0027s a bit more vague than it has to be. We can probably just say:\n\nNormally, LocalDOMWindow is never reused for multiple Documents. However,\nwhen navigating from the initial empty document to another same-origin\npage, reuse the LocalDOMWindow. Web sites expect that modifications to\nthe global object persist for this navigation.\n\nAnd then link to the spec:\nhttps://html.spec.whatwg.org/multipage/browsing-the-web.html#initialise-the-document-object",
+      "parentUuid": "0d485f12_2cde2578",
+      "revId": "959443f12dab917ae8cd5c49a2a8705833216a35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
