@@ -46,6 +46,30 @@
       "revId": "6bfddf1ed1d7e869a2689520bfc5cef23c0ab6b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1b6c59d0_edd835f4",
+        "filename": "content/browser/renderer_host/render_view_host_impl.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-24T21:18:01Z",
+      "side": 1,
+      "message": "Wouldn\u0027t it work if you just pass in GetProcess()-\u003eGetStoragePartition()-\u003eGetURLRequestContext()? There should be an override in base::Bind() that accepts a ref-counted object already.",
+      "parentUuid": "bbf8e891_537c69e5",
+      "range": {
+        "startLine": 236,
+        "startChar": 18,
+        "endLine": 236,
+        "endChar": 28
+      },
+      "revId": "6bfddf1ed1d7e869a2689520bfc5cef23c0ab6b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
