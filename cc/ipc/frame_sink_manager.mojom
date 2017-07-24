@@ -6,7 +6,7 @@ module cc.mojom;
 
 import "cc/ipc/frame_sink_id.mojom";
 import "cc/ipc/local_surface_id.mojom";
-import "cc/ipc/compositor_frame_sink.mojom";
+import "services/viz/public/interfaces/compositing/compositor_frame_sink.mojom";
 import "cc/ipc/surface_id.mojom";
 import "cc/ipc/surface_info.mojom";
 import "gpu/ipc/common/surface_handle.mojom";
@@ -45,9 +45,9 @@ interface FrameSinkManager {
   CreateRootCompositorFrameSink(
       cc.mojom.FrameSinkId frame_sink_id,
       gpu.mojom.SurfaceHandle widget,
-      associated cc.mojom.CompositorFrameSink& compositor_frame_sink,
-      cc.mojom.CompositorFrameSinkPrivate& compositor_frame_sink_private,
-      cc.mojom.CompositorFrameSinkClient compositor_frame_sink_client,
+      associated viz.mojom.CompositorFrameSink& compositor_frame_sink,
+      viz.mojom.CompositorFrameSinkPrivate& compositor_frame_sink_private,
+      viz.mojom.CompositorFrameSinkClient compositor_frame_sink_client,
       associated DisplayPrivate& display_private);
 
   // CreateCompositorFrameSink is used by unprivileged clients. This
@@ -55,9 +55,9 @@ interface FrameSinkManager {
   // CompositorFrameSink in order to appear on screen.
   CreateCompositorFrameSink(
       cc.mojom.FrameSinkId frame_sink_id,
-      cc.mojom.CompositorFrameSink& compositor_frame_sink,
-      cc.mojom.CompositorFrameSinkPrivate& compositor_frame_sink_private,
-      cc.mojom.CompositorFrameSinkClient compositor_frame_sink_client);
+      viz.mojom.CompositorFrameSink& compositor_frame_sink,
+      viz.mojom.CompositorFrameSinkPrivate& compositor_frame_sink_private,
+      viz.mojom.CompositorFrameSinkClient compositor_frame_sink_client);
 
   // Set up a BeginFrame relationship between two FrameSinkIds. In this case,
   // the child inherits the BeginFrameSource from the parent if it doesn't
