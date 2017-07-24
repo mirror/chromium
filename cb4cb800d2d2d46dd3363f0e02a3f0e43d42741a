@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b28cef67_5b6e3556",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-24T21:27:52Z",
+      "side": 1,
+      "message": "After this, verify that num_times_device_list_changed() did not increase (i.e., it is still at 1). Then, at the end of the test, verify that it has increased to 2.",
+      "range": {
+        "startLine": 323,
+        "startChar": 0,
+        "endLine": 325,
+        "endChar": 59
+      },
+      "revId": "cb4cb800d2d2d46dd3363f0e02a3f0e43d42741a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b94f2ece_0d3b1014",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-24T21:27:52Z",
+      "side": 1,
+      "message": "If we still have 0 devices, this should be UNCHANGED.",
+      "range": {
+        "startLine": 345,
+        "startChar": 50,
+        "endLine": 345,
+        "endChar": 57
+      },
+      "revId": "cb4cb800d2d2d46dd3363f0e02a3f0e43d42741a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
