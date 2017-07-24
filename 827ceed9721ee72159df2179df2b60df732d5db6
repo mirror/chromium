@@ -16,6 +16,41 @@
       "revId": "827ceed9721ee72159df2179df2b60df732d5db6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ae85856_f3c6514f",
+        "filename": "pdf/chunk_stream.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1233337
+      },
+      "writtenOn": "2017-07-24T19:02:08Z",
+      "side": 1,
+      "message": "This is template",
+      "parentUuid": "83e8464e_e2964274",
+      "revId": "827ceed9721ee72159df2179df2b60df732d5db6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eea2517e_611b8633",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2873,
+      "author": {
+        "id": 1233337
+      },
+      "writtenOn": "2017-07-24T19:02:08Z",
+      "side": 1,
+      "message": "The different is, that if it is Linearized document and it is have only one page, it is can be XFA document. And for this case we load form first.",
+      "revId": "827ceed9721ee72159df2179df2b60df732d5db6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
