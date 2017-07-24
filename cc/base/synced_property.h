@@ -64,7 +64,7 @@ class SyncedProperty : public base::RefCounted<SyncedProperty<T>> {
   // Push the latest value from the main thread onto pending tree-associated
   // state.  Returns true if this had any effect.
   bool PushFromMainThread(typename T::ValueType main_thread_value) {
-    bool changed = pending_base_.get() != main_thread_value;
+    bool changed = Current(false) != main_thread_value;
 
     reflected_delta_in_pending_tree_ = reflected_delta_in_main_tree_;
     reflected_delta_in_main_tree_ = T::Identity();
