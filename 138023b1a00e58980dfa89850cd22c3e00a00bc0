@@ -16,6 +16,24 @@
       "revId": "138023b1a00e58980dfa89850cd22c3e00a00bc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fdfd256_77a71931",
+        "filename": "content/child/indexed_db/webidbdatabase_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-07-24T12:57:47Z",
+      "side": 1,
+      "message": "Certainly not needed at this point in time (just-initialized value is obviously empty), but out of paranoia about future code mutations which may change the local flow and mess with this invariant.",
+      "parentUuid": "5a0427f2_0b075081",
+      "revId": "138023b1a00e58980dfa89850cd22c3e00a00bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
