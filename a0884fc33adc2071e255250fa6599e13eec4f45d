@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "6b724b48_94f980bf",
+        "filename": "content/browser/media/capture/desktop_capture_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2017-07-24T17:05:16Z",
+      "side": 1,
+      "message": "It seems that we still need this for Linux. Some unittests on Linux will fail if I remove this logic. See failed tests on Linux bots of PS#2.\n\n\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\u003d\n../../content/browser/media/capture/desktop_capture_device_unittest.cc:240: Failure\n      Expected: size_for_even_frames_\n      Which is: 888x500\nTo be equal to: format.frame_size\n      Which is: 889x500",
+      "parentUuid": "6c4132c9_6d0827fd",
+      "range": {
+        "startLine": 278,
+        "startChar": 0,
+        "endLine": 282,
+        "endChar": 57
+      },
+      "revId": "a0884fc33adc2071e255250fa6599e13eec4f45d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bc08f31_cbfa1b09",
         "filename": "content/browser/media/capture/desktop_capture_device.cc",
         "patchSetId": 1
