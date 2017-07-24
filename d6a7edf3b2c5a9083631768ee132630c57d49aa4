@@ -46,6 +46,30 @@
       "revId": "d6a7edf3b2c5a9083631768ee132630c57d49aa4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4db6cc5_7608a4e8",
+        "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-24T18:17:41Z",
+      "side": 1,
+      "message": "I think the actual question to make a decision on this CL is:\nA) Should we preserve them until we get to that point (replacing with CMM)? Does an telemetry benchmark or human depend on those?\nB) Can we drop them silently without anybody noticing too much?",
+      "parentUuid": "f7e434a1_832ad362",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 26
+      },
+      "revId": "d6a7edf3b2c5a9083631768ee132630c57d49aa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
