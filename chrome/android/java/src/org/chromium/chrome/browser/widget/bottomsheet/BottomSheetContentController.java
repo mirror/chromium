@@ -127,6 +127,9 @@ public class BottomSheetContentController extends BottomNavigationView
             }
 
             if (mBottomSheet.getSheetState() == BottomSheet.SHEET_STATE_PEEK) {
+                if (mSelectedItemId != R.id.action_home) {
+                    showBottomSheetContent(R.id.action_home);
+                }
                 clearBottomSheetContents(false);
             }
         }
