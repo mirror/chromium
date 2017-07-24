@@ -22,6 +22,30 @@
       "revId": "01091c22dceceb5c518bea2ceba3c9241724051f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97af71e5_b2fb8167",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/BackendItems.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-07-24T20:13:03Z",
+      "side": 1,
+      "message": "Looking at the item created at (which \u003d\u003d 9) condition, the file path is actually null...\nhttps://cs.chromium.org/chromium/src/chrome/android/javatests/src/org/chromium/chrome/browser/download/ui/StubbedProvider.java?type\u003dcs\u0026q\u003dStubbedProvider.createDownloadItem+%22else+if+(which+%3D%3D+9)%22\u0026sq\u003dpackage:chromium\u0026l\u003d294\n\nThe item with null file path is generated in the file path test: https://cs.chromium.org/chromium/src/chrome/android/javatests/src/org/chromium/chrome/browser/download/ui/DownloadHistoryAdapterTest.java?type\u003dcs\u0026q\u003dDownloadHistoryAdapterTest.testInProgress_FilePathMapAccurate+%22itemCreated%22\u0026sq\u003dpackage:chromium\u0026l\u003d435\n\nI guess this is intended to test where file path is null.",
+      "parentUuid": "c60c7507_6c8fbc97",
+      "range": {
+        "startLine": 38,
+        "startChar": 16,
+        "endLine": 38,
+        "endChar": 32
+      },
+      "revId": "01091c22dceceb5c518bea2ceba3c9241724051f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
