@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "698e6d6e_932bb663",
+        "filename": "third_party/WebKit/Source/core/workers/GlobalScopeCreationParams.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-24T09:52:39Z",
+      "side": 1,
+      "message": "Do we still need an `IsolatedCopy` here, given that we\u0027re cross-threadifying the headers object?",
+      "revId": "3c9ba6221dfda49306de5cd86e9cfafde1e91e2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
