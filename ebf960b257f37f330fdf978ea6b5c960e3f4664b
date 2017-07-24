@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38fec4fa_c45f56a7",
+        "filename": "chrome/installer/zucchini/patch_utils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-24T10:38:57Z",
+      "side": 1,
+      "message": "nit: maybe add a comment to each of these saying what they mean?",
+      "revId": "ebf960b257f37f330fdf978ea6b5c960e3f4664b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c382ccd_3daee87f",
+        "filename": "chrome/installer/zucchini/patch_utils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-24T10:38:57Z",
+      "side": 1,
+      "message": "i think the enum hack is still preferred since it avoids the need for any storage:\n\n  enum : uint32_t { kMagic \u003d ...; }",
+      "revId": "ebf960b257f37f330fdf978ea6b5c960e3f4664b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f52914f_9cdbc384",
+        "filename": "chrome/installer/zucchini/patch_utils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-24T10:38:57Z",
+      "side": 1,
+      "message": "please either document the exact encoding format, or include a link to some external doc that does.",
+      "revId": "ebf960b257f37f330fdf978ea6b5c960e3f4664b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddaa5bf3_1427907d",
+        "filename": "chrome/installer/zucchini/patch_utils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-24T10:38:57Z",
+      "side": 1,
+      "message": "nit: i think 0x80 makes this more obvious",
+      "range": {
+        "startLine": 80,
+        "startChar": 18,
+        "endLine": 80,
+        "endChar": 21
+      },
+      "revId": "ebf960b257f37f330fdf978ea6b5c960e3f4664b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9a2174c_fb5bbcbe",
+        "filename": "chrome/installer/zucchini/patch_utils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-24T10:38:57Z",
+      "side": 1,
+      "message": "who would read these log messages? would it help for them to include more info about the failure, such as the offset into the data or something?",
+      "revId": "ebf960b257f37f330fdf978ea6b5c960e3f4664b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
