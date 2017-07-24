@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adb0979f_75e2fb30",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-24T22:30:36Z",
+      "side": 1,
+      "message": "Do we need this?",
+      "revId": "8f5a5d791b3b17aa8d24fd1cbbb3c6999abfea00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c88d28be_b9d3c1f4",
+        "filename": "ui/views/touchui/touch_selection_controller_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-24T22:30:36Z",
+      "side": 1,
+      "message": "Shouldn\u0027t need \u0027aura::WindowTargeter::\u0027",
+      "revId": "8f5a5d791b3b17aa8d24fd1cbbb3c6999abfea00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbe030b8_a41b8f70",
+        "filename": "ui/views/touchui/touch_selection_controller_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-24T22:30:36Z",
+      "side": 1,
+      "message": "Add a comment that |widget_|\u0027s window takes ownership of it, but since |widget_|\u0027s lifetime is known to EditingHandleView, it can correctly know whether |targeter_| can be accessed or not.",
+      "revId": "8f5a5d791b3b17aa8d24fd1cbbb3c6999abfea00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8423bb8_e202f047",
+        "filename": "ui/wm/core/easy_resize_window_targeter.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-24T22:30:36Z",
+      "side": 1,
+      "message": "Can we instead make SetInsets() non-virtual, and add a OnInsetsChanged() virtual method, which WindowTargeter calls? EasyResizeWT can then just override that.\n\nI think overrides that are expected to almost always call-back onto the base implementation is a risky pattern we should avoid. Having a separate function for the specialization is a better alternative.",
+      "revId": "8f5a5d791b3b17aa8d24fd1cbbb3c6999abfea00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
