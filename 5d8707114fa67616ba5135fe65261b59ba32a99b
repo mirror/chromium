@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "014a01f0_11066e31",
+        "filename": "chrome/browser/offline_pages/android/prefetch_background_task_android.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-07-24T22:32:55Z",
+      "side": 1,
+      "message": "Do we need to ResetBackoff for else?",
+      "revId": "5d8707114fa67616ba5135fe65261b59ba32a99b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25203a84_0b77c195",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_background_task_handler_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-07-24T22:32:55Z",
+      "side": 1,
+      "message": "clock_ is not initialized here",
+      "revId": "5d8707114fa67616ba5135fe65261b59ba32a99b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ca777e9_c8cff375",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_background_task_handler_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-07-24T22:32:55Z",
+      "side": 1,
+      "message": "Ideally, this non-overridden method should not be here.",
+      "revId": "5d8707114fa67616ba5135fe65261b59ba32a99b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8ef43c9_1048f747",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_background_task_handler_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-07-24T22:32:55Z",
+      "side": 1,
+      "message": "nit: seems that we use \"ForTesting\" more often",
+      "revId": "5d8707114fa67616ba5135fe65261b59ba32a99b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34b61f5a_01a42321",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_background_task_handler_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-07-24T22:32:55Z",
+      "side": 1,
+      "message": "nit: empty line after this",
+      "revId": "5d8707114fa67616ba5135fe65261b59ba32a99b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc22cf6b_6d55b6b3",
+        "filename": "chrome/browser/ui/webui/offline/offline_internals_ui_message_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-07-24T22:32:55Z",
+      "side": 1,
+      "message": "Why this is different from line 298-301 which checks for null prefetch_service_?",
+      "revId": "5d8707114fa67616ba5135fe65261b59ba32a99b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64cf2502_b73678fa",
+        "filename": "components/offline_pages/core/prefetch/prefetch_background_task_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-07-24T22:32:55Z",
+      "side": 1,
+      "message": "nit: empty line before this",
+      "revId": "5d8707114fa67616ba5135fe65261b59ba32a99b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b5722a5_27bea5a0",
+        "filename": "components/offline_pages/core/prefetch/prefetch_background_task_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-07-24T22:32:55Z",
+      "side": 1,
+      "message": "Comment does not say anything about \"task scheduled\"",
+      "revId": "5d8707114fa67616ba5135fe65261b59ba32a99b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "735cb5f9_273f402f",
+        "filename": "components/offline_pages/core/prefetch/prefetch_background_task_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-07-24T22:32:55Z",
+      "side": 1,
+      "message": "nit: please add comments for all these 3 methods",
+      "revId": "5d8707114fa67616ba5135fe65261b59ba32a99b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05cf7024_7ebe8637",
+        "filename": "components/offline_pages/core/prefetch/prefetch_background_task_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-07-24T22:32:55Z",
+      "side": 1,
+      "message": "nit: add const modifier",
+      "revId": "5d8707114fa67616ba5135fe65261b59ba32a99b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6876c97d_aad35bd9",
+        "filename": "components/offline_pages/core/prefetch/prefetch_service_test_taco.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-07-24T22:32:55Z",
+      "side": 1,
+      "message": "nit: should this be placed after const definition?",
+      "revId": "5d8707114fa67616ba5135fe65261b59ba32a99b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
