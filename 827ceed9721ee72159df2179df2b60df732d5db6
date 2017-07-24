@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83e8464e_e2964274",
+        "filename": "pdf/chunk_stream.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002142
+      },
+      "writtenOn": "2017-07-24T18:01:00Z",
+      "side": 1,
+      "message": "These seem complicated enough that they should be in the .cc file?",
+      "revId": "827ceed9721ee72159df2179df2b60df732d5db6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
