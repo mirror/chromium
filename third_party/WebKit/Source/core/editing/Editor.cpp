@@ -1075,7 +1075,7 @@ bool Editor::InsertTextWithoutSendingTextEvent(
       LocalFrame* focused_or_main_frame =
           ToLocalFrame(page->GetFocusController().FocusedOrMainFrame());
       focused_or_main_frame->Selection().RevealSelection(
-          ScrollAlignment::kAlignCenterIfNeeded);
+          ScrollAlignment::kAlignToEdgeIfNeeded);
     }
   }
 

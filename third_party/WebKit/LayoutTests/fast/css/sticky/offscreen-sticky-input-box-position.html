@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<title>Type in an offscreen sticky positioned input box should scroll the page
+  to the last stuck position.</title>
+<link rel="help" href="https://www.w3.org/TR/css-position-3/#sticky-pos" />
+<meta name="assert" content="This test checks that typing in an offscreen sticky positioned
+input box should scroll the page to its last stuck position." />
+
+<script src="../../../resources/testharness.js"></script>
+<script src="../../../resources/testharnessreport.js"></script>
+
+<style>
+body {
+  height: 2000px;
+  left: 0;
+  top: 0;
+}
+
+div {
+  height: 100px;
+  background: green;
+}
+
+input {
+  position: sticky;
+  top: 0;
+}
+</style>
+
+<div>
+  <input type="text" id="input"/>
+</div>
+
+<script>
+test(() => {
+  var input = document.getElementById('input');
+  input.focus();
+  // Scroll the page to make sure that the sticky input box is offscreen.
+  window.scrollTo(0, 200);
+  assert_not_equals(window.eventSender, undefined, 'This test requires eventSender');
+  eventSender.keyDown('T');
+  eventSender.keyDown('E');
+  eventSender.keyDown('S');
+  eventSender.keyDown('T');
+  // Last stuck position should be the height of the div 100 minus that of the
+  // input box 10 which is 90.
+  assert_equals(window.scrollY, 90);
+}, 'Type in the offscreen sticky input box should scroll the page to the last stuck position.');
+</script>
