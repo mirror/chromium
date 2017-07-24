@@ -54,7 +54,7 @@ scoped_refptr<safe_browsing::SafeBrowsingDatabaseManager> GetDatabaseManager() {
 
 ChromeSubresourceFilterClient::ChromeSubresourceFilterClient(
     content::WebContents* web_contents)
-    : web_contents_(web_contents), did_show_ui_for_navigation_(false) {
+    : web_contents_(web_contents) {
   DCHECK(web_contents);
   SubresourceFilterProfileContext* context =
       SubresourceFilterProfileContextFactory::GetForProfile(
@@ -108,6 +108,12 @@ void ChromeSubresourceFilterClient::ToggleNotificationVisibility(
     return;
   did_show_ui_for_navigation_ = false;
 
+  // Do not show the UI if we're forcing activation due to a devtools toggle.
+  // This complicates the meaning of our persistent storage (e.g. our metadata
+  // that assumes showing UI implies site is blacklisted).
+  if (forcing_activation_)
+    return;
+
   // |visibility| is false when a new navigation starts.
   if (visibility) {
     const GURL& top_level_url = web_contents_->GetLastCommittedURL();
@@ -156,10 +162,22 @@ void ChromeSubresourceFilterClient::WhitelistByContentSettings(
   settings_manager_->WhitelistSite(top_level_url);
 }
 
+bool ChromeSubresourceFilterClient::ForceActivationInCurrentWebContents() {
+  return forcing_activation_;
+}
+
 void ChromeSubresourceFilterClient::WhitelistInCurrentWebContents(
     const GURL& url) {
   if (url.SchemeIsHTTPOrHTTPS())
     whitelisted_hosts_.insert(url.host());
+}
+
+void ChromeSubresourceFilterClient::ToggleForceActivationInCurrentWebContents(
+    bool force_activation) {
+  bool old_forced = forcing_activation_;
+  forcing_activation_ = force_activation;
+  if (!old_forced && forcing_activation_)
+    LogAction(kActionForcedActivationEnabled);
 }
 
 // static

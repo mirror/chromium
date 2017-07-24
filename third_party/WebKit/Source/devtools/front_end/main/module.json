@@ -248,6 +248,25 @@
         },
         {
             "type": "setting",
+            "category": "Network",
+            "title": "Enable ad blocking",
+            "settingName": "network.adBlockingEnabled",
+            "settingType": "boolean",
+            "storageType": "session",
+            "defaultValue": false,
+            "options": [
+                {
+                    "value": true,
+                    "title": "Enable ad blocking (while DevTools is open)"
+                },
+                {
+                    "value": false,
+                    "title": "Disable ad blocking"
+                }
+            ]
+        },
+        {
+            "type": "setting",
             "category": "DevTools",
             "title": "Auto-open DevTools for popups",
             "settingName": "autoAttachToCreatedPages",
