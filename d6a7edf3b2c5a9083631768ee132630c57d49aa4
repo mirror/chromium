@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b4e48df_09011701",
+        "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-07-24T11:38:11Z",
+      "side": 1,
+      "message": "Makes sense but please make it clear in the comment that these are only for tracing. Also add a TODO in PlatformPrivateFootprint. We are close to a state where we don\u0027t need all this split between RawOSMemDump and PlatformPrivateFootprint, and PlatformPrivateFootprint should just be merged into RawOSMemDump.\n\n\nAlso maybe we should discuss with @erikchen if still makes sense showing these columns in tracing with the consistent memory metrics or not. I guess these reflect more what activity manager reports?",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 26
+      },
+      "revId": "d6a7edf3b2c5a9083631768ee132630c57d49aa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
