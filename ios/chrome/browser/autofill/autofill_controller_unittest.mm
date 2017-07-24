@@ -10,6 +10,7 @@
 #include "base/guid.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/task_scheduler/task_scheduler.h"
 #include "base/test/histogram_tester.h"
 #import "base/test/ios/wait_util.h"
 #include "components/autofill/core/browser/autofill_manager.h"
@@ -345,6 +346,7 @@ void AutofillControllerTest::SetUpForSuggestions(NSString* data) {
   profile.SetRawInfo(ADDRESS_HOME_ZIP, base::UTF8ToUTF16("55123"));
   EXPECT_EQ(0U, personal_data_manager->GetProfiles().size());
   personal_data_manager->SaveImportedProfile(profile);
+  base::TaskScheduler::GetInstance()->FlushForTesting();
   EXPECT_EQ(1U, personal_data_manager->GetProfiles().size());
 
   LoadHtml(data);
@@ -421,6 +423,7 @@ TEST_F(AutofillControllerTest, MultipleProfileSuggestions) {
   personal_data_manager->SaveImportedProfile(profile2);
   EXPECT_EQ(2U, personal_data_manager->GetProfiles().size());
   LoadHtml(kProfileFormHtml);
+  base::TaskScheduler::GetInstance()->FlushForTesting();
   WaitForBackgroundTasks();
   ui::test::uiview_utils::ForceViewRendering(web_state()->GetView());
   ExecuteJavaScript(@"document.forms[0].name.focus()");
@@ -445,6 +448,7 @@ TEST_F(AutofillControllerTest, KeyValueImport) {
                       base::ASCIIToUTF16("overwritten")};
   web_data_service->GetFormValuesForElementName(
       base::UTF8ToUTF16("greeting"), base::string16(), limit, &consumer);
+  base::TaskScheduler::GetInstance()->FlushForTesting();
   WaitForBackgroundTasks();
   // No value should be returned before anything is loaded via form submission.
   ASSERT_EQ(0U, consumer.result_.size());
@@ -454,6 +458,7 @@ TEST_F(AutofillControllerTest, KeyValueImport) {
         base::UTF8ToUTF16("greeting"), base::string16(), limit, &consumer);
     return consumer.result_.size();
   });
+  base::TaskScheduler::GetInstance()->FlushForTesting();
   WaitForBackgroundTasks();
   // One result should be returned, matching the filled value.
   ASSERT_EQ(1U, consumer.result_.size());
@@ -471,6 +476,7 @@ void AutofillControllerTest::SetUpKeyValueData() {
   fieldData.value = base::UTF8ToUTF16("Bonjour");
   values.push_back(fieldData);
   web_data_service->AddFormFields(values);
+  base::TaskScheduler::GetInstance()->FlushForTesting();
 
   // Load test page.
   LoadHtml(kKeyValueFormHtml);
