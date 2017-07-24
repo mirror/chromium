@@ -9,6 +9,7 @@
 #include "base/time/time.h"
 #include "components/signin/core/browser/account_tracker_service.h"
 #include "google_apis/gaia/google_service_auth_error.h"
+#include "services/identity/public/interfaces/account.mojom.h"
 
 namespace identity {
 
@@ -120,6 +121,30 @@ void IdentityManager::GetAccountInfoFromGaiaId(
   AccountInfo account_info = account_tracker_->FindAccountInfoByGaiaId(gaia_id);
   AccountState account_state = GetStateOfAccount(account_info);
   std::move(callback).Run(account_info, account_state);
+}
+
+void IdentityManager::GetAccounts(GetAccountsCallback callback) {
+  std::vector<mojom::AccountPtr> accounts;
+
+  std::vector<std::string> accounts_with_refresh_token =
+      token_service_->GetAccounts();
+  for (std::vector<std::string>::const_iterator it =
+           accounts_with_refresh_token.begin();
+       it != accounts_with_refresh_token.end(); ++it) {
+    AccountInfo account_info = account_tracker_->GetAccountInfo(*it);
+    AccountState account_state = GetStateOfAccount(account_info);
+
+    mojom::AccountPtr account =
+        mojom::Account::New(account_info, account_state);
+
+    if (account->state.is_primary_account) {
+      accounts.insert(accounts.begin(), std::move(account));
+    } else {
+      accounts.push_back(std::move(account));
+    }
+  }
+
+  std::move(callback).Run(std::move(accounts));
 }
 
 void IdentityManager::GetAccessToken(const std::string& account_id,
