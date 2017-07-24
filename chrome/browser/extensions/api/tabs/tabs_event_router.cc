@@ -118,6 +118,9 @@ void TabsEventRouter::TabEntry::NavigationEntryCommitted(
 
 void TabsEventRouter::TabEntry::TitleWasSet(content::NavigationEntry* entry,
                                             bool explicit_set) {
+  if (!explicit_set)
+    return;
+
   std::set<std::string> changed_property_names;
   changed_property_names.insert(tabs_constants::kTitleKey);
   router_->TabUpdated(this, std::move(changed_property_names));
