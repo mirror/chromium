@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23106ecb_288f5c5c",
+        "filename": "ios/chrome/browser/about_flags.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-24T22:35:08Z",
+      "side": 1,
+      "message": "Is \"demo-mode-choice\" necessary?",
+      "revId": "939e7d8d384cc2177d99379a0f35fdff1c5dd040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cea04f7_6f28d52a",
+        "filename": "ios/chrome/browser/ios_chrome_flag_descriptions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-24T22:35:08Z",
+      "side": 1,
+      "message": "Is \"Demo Mode\" assumed?",
+      "revId": "939e7d8d384cc2177d99379a0f35fdff1c5dd040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
