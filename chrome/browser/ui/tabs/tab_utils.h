@@ -145,6 +145,15 @@ const std::string& GetExtensionIdForMutedTab(content::WebContents* contents);
 bool AreAllTabsMuted(const TabStripModel& tab_strip,
                      const std::vector<int>& indices);
 
+// Sets the sound content setting for each site at the |indices| in |tab_strip|.
+void SetSitesMuted(const TabStripModel& tab_strip,
+                   const std::vector<int>& indices,
+                   const bool mute);
+
+// Returns true if the sites at the |indices| in |tab_strip| are all muted.
+bool AreAllSitesMuted(const TabStripModel& tab_strip,
+                      const std::vector<int>& indices);
+
 }  // namespace chrome
 
 #endif  // CHROME_BROWSER_UI_TABS_TAB_UTILS_H_
