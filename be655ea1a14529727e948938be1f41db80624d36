@@ -271,6 +271,24 @@
       "revId": "be655ea1a14529727e948938be1f41db80624d36",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e71d3a0_7a3155e5",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-24T15:33:33Z",
+      "side": 1,
+      "message": "I suggest using UMA_HISTOGRAM_SPARSE_SLOWLY() instead. This way, we can see the out-of-range values too.",
+      "parentUuid": "2ca33221_fe690333",
+      "revId": "be655ea1a14529727e948938be1f41db80624d36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
