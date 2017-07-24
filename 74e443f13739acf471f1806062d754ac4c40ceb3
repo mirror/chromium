@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3226f365_070fe84e",
+        "filename": "chrome/browser/media/router/discovery/dial/device_description_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-07-24T23:23:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05fdf501_fcb7c868",
+      "revId": "74e443f13739acf471f1806062d754ac4c40ceb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09bbc26c_363099b4",
         "filename": "chrome/browser/media/router/media_router_metrics.h",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "a2502bcd_5c9d22f2",
+        "filename": "chrome/browser/media/router/media_router_metrics.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-07-24T23:23:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09bbc26c_363099b4",
+      "revId": "74e443f13739acf471f1806062d754ac4c40ceb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "321d2c8a_4c916ab1",
         "filename": "chrome/browser/media/router/media_router_metrics.h",
         "patchSetId": 2
@@ -47,6 +83,30 @@
       "writtenOn": "2017-07-20T23:26:34Z",
       "side": 1,
       "message": "SUCCESS?",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 6
+      },
+      "revId": "74e443f13739acf471f1806062d754ac4c40ceb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf4d14e7_486c1a27",
+        "filename": "chrome/browser/media/router/media_router_metrics.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-07-24T23:23:06Z",
+      "side": 1,
+      "message": "I think we use NONE for error enum: e.g. https://cs.chromium.org/chromium/src/components/cast_channel/cast_channel_enum.h?rcl\u003d1be4d5c1b63d516b1eb173a7070fe9204dae2be6\u0026l\u003d31\n\n\"SUCCESS\" may be a little strange, when using it we have MediaRouterDialParsingError::SUCCESS...",
+      "parentUuid": "321d2c8a_4c916ab1",
       "range": {
         "startLine": 62,
         "startChar": 2,
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "3b042fa3_64a89394",
+        "filename": "chrome/browser/media/router/media_router_metrics.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-07-24T23:23:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e1c0b26_2b60de19",
+      "range": {
+        "startLine": 123,
+        "startChar": 52,
+        "endLine": 123,
+        "endChar": 57
+      },
+      "revId": "74e443f13739acf471f1806062d754ac4c40ceb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "adf8033f_1b34c659",
         "filename": "chrome/utility/media_router/dial_device_description_parser_impl.cc",
         "patchSetId": 2
@@ -102,6 +186,30 @@
       "revId": "74e443f13739acf471f1806062d754ac4c40ceb3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41bd1a8b_25f13679",
+        "filename": "chrome/utility/media_router/dial_device_description_parser_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-07-24T23:23:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adf8033f_1b34c659",
+      "range": {
+        "startLine": 73,
+        "startChar": 14,
+        "endLine": 73,
+        "endChar": 0
+      },
+      "revId": "74e443f13739acf471f1806062d754ac4c40ceb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "95cb7d66_f208c3ff",
+        "filename": "chrome/utility/media_router/dial_device_description_parser_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-07-24T23:23:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "feb45f6a_9bddd9dc",
+      "range": {
+        "startLine": 88,
+        "startChar": 2,
+        "endLine": 88,
+        "endChar": 13
+      },
+      "revId": "74e443f13739acf471f1806062d754ac4c40ceb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "190aa02f_1e37e396",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 2
@@ -139,6 +271,30 @@
       "writtenOn": "2017-07-20T23:26:34Z",
       "side": 1,
       "message": "If success is one of the enum values, perhaps we should call this something like MediaRouterDialDescriptionParseResult. Same for the histogram and method names.",
+      "range": {
+        "startLine": 25094,
+        "startChar": 12,
+        "endLine": 25094,
+        "endChar": 39
+      },
+      "revId": "74e443f13739acf471f1806062d754ac4c40ceb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "410263c1_c5742038",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 25094,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-07-24T23:23:06Z",
+      "side": 1,
+      "message": "Changed \"success\" to \"none\". We only record when parsing error happens, so \"none\" will not be recorded at all. It might be better to keep the name as ParsingError.",
+      "parentUuid": "190aa02f_1e37e396",
       "range": {
         "startLine": 25094,
         "startChar": 12,
@@ -171,6 +327,30 @@
       "revId": "74e443f13739acf471f1806062d754ac4c40ceb3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15a6161d_6c22cd96",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 31905,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-07-24T23:23:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9f3bbe1_3bc505eb",
+      "range": {
+        "startLine": 31905,
+        "startChar": 10,
+        "endLine": 31905,
+        "endChar": 24
+      },
+      "revId": "74e443f13739acf471f1806062d754ac4c40ceb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
