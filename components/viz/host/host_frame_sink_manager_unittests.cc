@@ -29,20 +29,19 @@ ACTION_P(InvokeClosure, closure) {
 }
 
 // A stub CompositorFrameSinkClient that does nothing.
-class StubCompositorFrameSinkClient
-    : public cc::mojom::CompositorFrameSinkClient {
+class StubCompositorFrameSinkClient : public mojom::CompositorFrameSinkClient {
  public:
   StubCompositorFrameSinkClient() : binding_(this) {}
   ~StubCompositorFrameSinkClient() override = default;
 
-  cc::mojom::CompositorFrameSinkClientPtr GetInterfacePtr() {
-    cc::mojom::CompositorFrameSinkClientPtr client;
+  mojom::CompositorFrameSinkClientPtr GetInterfacePtr() {
+    mojom::CompositorFrameSinkClientPtr client;
     binding_.Bind(mojo::MakeRequest(&client));
     return client;
   }
 
  private:
-  // cc::mojom::CompositorFrameSinkClient:
+  // mojom::CompositorFrameSinkClient:
   void DidReceiveCompositorFrameAck(
       const std::vector<cc::ReturnedResource>& resources) override {}
   void OnBeginFrame(const BeginFrameArgs& begin_frame_args) override {}
@@ -50,7 +49,7 @@ class StubCompositorFrameSinkClient
   void ReclaimResources(
       const std::vector<cc::ReturnedResource>& resources) override {}
 
-  mojo::Binding<cc::mojom::CompositorFrameSinkClient> binding_;
+  mojo::Binding<mojom::CompositorFrameSinkClient> binding_;
 
   DISALLOW_COPY_AND_ASSIGN(StubCompositorFrameSinkClient);
 };
@@ -116,7 +115,7 @@ TEST_F(HostFrameSinkManagerTest, UnregisterHierarchyOnDestroy) {
   EXPECT_CALL(manager_impl(),
               UnregisterFrameSinkHierarchy(kFrameSinkId2, kFrameSinkId1));
 
-  cc::mojom::CompositorFrameSinkPtr frame_sink;
+  mojom::CompositorFrameSinkPtr frame_sink;
   StubCompositorFrameSinkClient frame_sink_client;
   host_manager().CreateCompositorFrameSink(kFrameSinkId1,
                                            mojo::MakeRequest(&frame_sink),

@@ -63,16 +63,16 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl
   void CreateRootCompositorFrameSink(
       const FrameSinkId& frame_sink_id,
       gpu::SurfaceHandle surface_handle,
-      cc::mojom::CompositorFrameSinkAssociatedRequest request,
-      cc::mojom::CompositorFrameSinkPrivateRequest private_request,
-      cc::mojom::CompositorFrameSinkClientPtr client,
+      mojom::CompositorFrameSinkAssociatedRequest request,
+      mojom::CompositorFrameSinkPrivateRequest private_request,
+      mojom::CompositorFrameSinkClientPtr client,
       cc::mojom::DisplayPrivateAssociatedRequest display_private_request)
       override;
   void CreateCompositorFrameSink(
       const FrameSinkId& frame_sink_id,
-      cc::mojom::CompositorFrameSinkRequest request,
-      cc::mojom::CompositorFrameSinkPrivateRequest private_request,
-      cc::mojom::CompositorFrameSinkClientPtr client) override;
+      mojom::CompositorFrameSinkRequest request,
+      mojom::CompositorFrameSinkPrivateRequest private_request,
+      mojom::CompositorFrameSinkClientPtr client) override;
   void RegisterFrameSinkHierarchy(
       const FrameSinkId& parent_frame_sink_id,
       const FrameSinkId& child_frame_sink_id) override;
@@ -175,7 +175,7 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl
   cc::SurfaceManager surface_manager_;
 
   std::unordered_map<FrameSinkId,
-                     std::unique_ptr<cc::mojom::CompositorFrameSink>,
+                     std::unique_ptr<mojom::CompositorFrameSink>,
                      FrameSinkIdHash>
       compositor_frame_sinks_;
 

@@ -63,10 +63,9 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
   // Creates a connection between client to viz, using |request| and |client|,
   // that allows the client to submit CompositorFrames. When no longer needed,
   // call DestroyCompositorFrameSink().
-  void CreateCompositorFrameSink(
-      const FrameSinkId& frame_sink_id,
-      cc::mojom::CompositorFrameSinkRequest request,
-      cc::mojom::CompositorFrameSinkClientPtr client);
+  void CreateCompositorFrameSink(const FrameSinkId& frame_sink_id,
+                                 mojom::CompositorFrameSinkRequest request,
+                                 mojom::CompositorFrameSinkClientPtr client);
 
   // Destroys a client connection. Will call UnregisterFrameSinkHierarchy() with
   // the registered parent if there is one.
@@ -111,7 +110,7 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
     // The private interface that gives the host control over the
     // CompositorFrameSink connection between the client and viz. This will be
     // unbound if not using Mojo.
-    cc::mojom::CompositorFrameSinkPrivatePtr private_interface;
+    mojom::CompositorFrameSinkPrivatePtr private_interface;
 
     // This will be null if using Mojo.
     CompositorFrameSinkSupport* support = nullptr;
