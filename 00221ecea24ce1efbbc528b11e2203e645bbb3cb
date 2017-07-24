@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0575c049_3a68a041",
+        "filename": "components/ntp_snippets/category_rankers/constant_category_ranker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-24T14:52:51Z",
+      "side": 1,
+      "message": "Vitalii, this does not seem to assert what it intends to. Two questions:\n - Did you mean to check that categories.size() \u003d\u003d static_cast\u003csize_t\u003e(KnownCategories::LOCAL_CATEGORIES_COUNT)?\n - Do you need it even for the CONTEXTUAL section that does not appear in the standard suggestions list?",
+      "range": {
+        "startLine": 142,
+        "startChar": 2,
+        "endLine": 144,
+        "endChar": 66
+      },
+      "revId": "00221ecea24ce1efbbc528b11e2203e645bbb3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eec056eb_00cd6872",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-24T14:52:51Z",
+      "side": 1,
+      "message": "Can you replace globally snippet(s) by suggestion(s), please?",
+      "range": {
+        "startLine": 88,
+        "startChar": 11,
+        "endLine": 88,
+        "endChar": 19
+      },
+      "revId": "00221ecea24ce1efbbc528b11e2203e645bbb3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a03c21b_334ed0f3",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-24T14:52:51Z",
+      "side": 1,
+      "message": "Is this parameter needed? Should we ever allow fetching more results?",
+      "range": {
+        "startLine": 117,
+        "startChar": 9,
+        "endLine": 117,
+        "endChar": 36
+      },
+      "revId": "00221ecea24ce1efbbc528b11e2203e645bbb3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24a33f0e_0f0650fe",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-24T14:52:51Z",
+      "side": 1,
+      "message": "Is this message ever displayed in the UI? What about using an empty string, instead, removing the TODO and clarifying in a comment why empty string is used?",
+      "range": {
+        "startLine": 127,
+        "startChar": 32,
+        "endLine": 127,
+        "endChar": 73
+      },
+      "revId": "00221ecea24ce1efbbc528b11e2203e645bbb3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48a9cba9_a3bb9982",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-24T14:52:51Z",
+      "side": 1,
+      "message": "nit: isn\u0027t this already resolved?",
+      "range": {
+        "startLine": 144,
+        "startChar": 0,
+        "endLine": 144,
+        "endChar": 64
+      },
+      "revId": "00221ecea24ce1efbbc528b11e2203e645bbb3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8338114e_4d3f5f0c",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-24T14:52:51Z",
+      "side": 1,
+      "message": "Maybe we can merge these two functions? They are both short and never used separately.\n(I would use StartRequest for the merged one as \"authenticated\" does not make sense anyway, here)",
+      "range": {
+        "startLine": 186,
+        "startChar": 0,
+        "endLine": 207,
+        "endChar": 1
+      },
+      "revId": "00221ecea24ce1efbbc528b11e2203e645bbb3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38ee7130_a912098e",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-24T14:52:51Z",
+      "side": 1,
+      "message": "Is this really what you intend to do?",
+      "range": {
+        "startLine": 343,
+        "startChar": 6,
+        "endLine": 344,
+        "endChar": 73
+      },
+      "revId": "00221ecea24ce1efbbc528b11e2203e645bbb3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b865388_2d8bd034",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-24T14:52:51Z",
+      "side": 1,
+      "message": "Do we need to have a vector of categories? Don\u0027t we have, by definition, only one category to fetch?",
+      "range": {
+        "startLine": 45,
+        "startChar": 8,
+        "endLine": 45,
+        "endChar": 31
+      },
+      "revId": "00221ecea24ce1efbbc528b11e2203e645bbb3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b6d9e4a_97e042af",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-24T14:52:51Z",
+      "side": 1,
+      "message": "Can you defer these members to a potential follow-up CL that reveals this info in chrome://snippets-internals?\n(along with last_status_ and last_fetch_json_ below)",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 46
+      },
+      "revId": "00221ecea24ce1efbbc528b11e2203e645bbb3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e43716f_7060bf96",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-24T14:52:51Z",
+      "side": 1,
+      "message": "Please remove.",
+      "range": {
+        "startLine": 122,
+        "startChar": 2,
+        "endLine": 123,
+        "endChar": 29
+      },
+      "revId": "00221ecea24ce1efbbc528b11e2203e645bbb3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24a6e383_838598cd",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-24T14:52:51Z",
+      "side": 1,
+      "message": "Do you need this?",
+      "range": {
+        "startLine": 125,
+        "startChar": 2,
+        "endLine": 126,
+        "endChar": 38
+      },
+      "revId": "00221ecea24ce1efbbc528b11e2203e645bbb3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fdef9e1_75bb6077",
+        "filename": "components/ntp_snippets/remote/remote_suggestion.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-24T14:52:51Z",
+      "side": 1,
+      "message": "nit: there are no other ids, why not calling it \"id\"?",
+      "range": {
+        "startLine": 293,
+        "startChar": 14,
+        "endLine": 293,
+        "endChar": 24
+      },
+      "revId": "00221ecea24ce1efbbc528b11e2203e645bbb3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "453d68d8_d0bffad8",
+        "filename": "components/ntp_snippets/remote/remote_suggestion.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-24T14:52:51Z",
+      "side": 1,
+      "message": "nit: Maybe in-line this?",
+      "range": {
+        "startLine": 298,
+        "startChar": 38,
+        "endLine": 298,
+        "endChar": 48
+      },
+      "revId": "00221ecea24ce1efbbc528b11e2203e645bbb3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aa1977b_7a796e02",
+        "filename": "components/ntp_snippets/remote/remote_suggestion.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-24T14:52:51Z",
+      "side": 1,
+      "message": "Please add a TODO comment that this is a hack that should be removed by splitting off from RemoteSuggestion struct.",
+      "range": {
+        "startLine": 298,
+        "startChar": 50,
+        "endLine": 298,
+        "endChar": 67
+      },
+      "revId": "00221ecea24ce1efbbc528b11e2203e645bbb3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
