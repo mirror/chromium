@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "400188c9_3efb1300",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-24T08:52:06Z",
+      "side": 1,
+      "message": "oops, sorry for not being clear. I just meant to remove the curly braces :)",
+      "parentUuid": "5c628fb4_be6755a4",
+      "range": {
+        "startLine": 628,
+        "startChar": 26,
+        "endLine": 628,
+        "endChar": 27
+      },
+      "revId": "b496e824e021a1ca86723774cb539806b4ac21cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08e777ce_7a29ca99",
         "filename": "ui/keyboard/keyboard_controller.cc",
         "patchSetId": 9
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Done. Though I will re-introduce this if statement in the subsequent patch and remove all other occurrences of InvalidateWeakPtrs.",
       "parentUuid": "08e777ce_7a29ca99",
+      "range": {
+        "startLine": 816,
+        "startChar": 52,
+        "endLine": 816,
+        "endChar": 53
+      },
+      "revId": "b496e824e021a1ca86723774cb539806b4ac21cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "10e196bf_f7d5e6f0",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-07-24T08:52:06Z",
+      "side": 1,
+      "message": "ditto :)",
+      "parentUuid": "507ed3d9_29cb9906",
       "range": {
         "startLine": 816,
         "startChar": 52,
