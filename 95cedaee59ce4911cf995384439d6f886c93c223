@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "259d5c9d_bbdf6f9a",
+        "filename": "content/browser/service_worker/service_worker_content_settings_proxy_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-24T05:23:56Z",
+      "side": 1,
+      "message": "Ditto: \"(c)\" is not necessary.",
+      "revId": "95cedaee59ce4911cf995384439d6f886c93c223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa21590b_254615eb",
+        "filename": "content/browser/service_worker/service_worker_content_settings_proxy_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-24T05:23:56Z",
+      "side": 1,
+      "message": "DCHECK_CURRENTLY_ON(BrowserThread::IO)",
+      "revId": "95cedaee59ce4911cf995384439d6f886c93c223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c32bf5e7_e976b5c4",
+        "filename": "content/browser/service_worker/service_worker_content_settings_proxy_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-24T05:23:56Z",
+      "side": 1,
+      "message": "DCHECK_CURRENTLY_ON(BrowserThread::IO)",
+      "revId": "95cedaee59ce4911cf995384439d6f886c93c223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78487489_82e7e7ba",
+        "filename": "content/browser/service_worker/service_worker_content_settings_proxy_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-24T05:23:56Z",
+      "side": 1,
+      "message": "\"(c)\" is not necessary:\n\nSee https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#File-headers",
+      "revId": "95cedaee59ce4911cf995384439d6f886c93c223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53133eeb_39359010",
+        "filename": "content/browser/service_worker/service_worker_content_settings_proxy_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-24T05:23:56Z",
+      "side": 1,
+      "message": "Include guard needs path parts:\nCONTENT_BROWSER_SERVICE_WORKER_SERVICE_WORKER_CONTENT_SETTINGS_PROXY_IMPL_H_\n\nE.g., https://chromium.googlesource.com/chromium/src/+/b19fa87f981ce227433d03283bf8175d1c29742f/content/browser/service_worker/embedded_worker_instance.h#5",
+      "revId": "95cedaee59ce4911cf995384439d6f886c93c223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6b39ca9_c0aa8e4a",
+        "filename": "content/common/service_worker/embedded_worker.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-24T05:23:56Z",
+      "side": 1,
+      "message": "Can you add comments like shared_worker_content_settings_proxy.mojom?",
+      "revId": "95cedaee59ce4911cf995384439d6f886c93c223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8457b8a5_6b2fefd2",
+        "filename": "content/renderer/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-24T05:23:56Z",
+      "side": 1,
+      "message": "Can you sort these files in the alphabetical order?",
+      "revId": "95cedaee59ce4911cf995384439d6f886c93c223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c980311b_f4c74170",
+        "filename": "content/renderer/service_worker/service_worker_content_settings_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-24T05:23:56Z",
+      "side": 1,
+      "message": "Why do you call RequestFileSystemAccessSync() in the ctor? Is this used for debugging?",
+      "revId": "95cedaee59ce4911cf995384439d6f886c93c223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb0387c3_29ae1162",
+        "filename": "content/renderer/service_worker/service_worker_content_settings_proxy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-24T05:23:56Z",
+      "side": 1,
+      "message": "Ditto(include guard needs path parts)",
+      "revId": "95cedaee59ce4911cf995384439d6f886c93c223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb343f40_345d750e",
+        "filename": "content/renderer/service_worker/service_worker_content_settings_proxy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-24T05:23:56Z",
+      "side": 1,
+      "message": "an binded -\u003e a bound ?",
+      "revId": "95cedaee59ce4911cf995384439d6f886c93c223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b91903e_7bca355e",
+        "filename": "content/renderer/service_worker/service_worker_content_settings_proxy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-24T05:23:56Z",
+      "side": 1,
+      "message": "Generally, methods are placed before data members. Can you move GetService() to the beginning of the \u0027private\u0027 section?\n\n\"Within each section, generally prefer grouping similar kinds of declarations together, and generally prefer the following order: types (including typedef, using, and nested structs and classes), constants, factory functions, constructors, assignment operators, destructor, all other methods, data members.\"\nhttps://google.github.io/styleguide/cppguide.html#Declaration_Order",
+      "revId": "95cedaee59ce4911cf995384439d6f886c93c223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
