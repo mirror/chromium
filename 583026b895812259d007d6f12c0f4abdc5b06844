@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db515414_e06a6581",
+        "filename": "third_party/google_input_tools/src/chrome/os/inputview/common.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-07-24T16:47:32Z",
+      "side": 0,
+      "message": "These are being removed in https://chrome-internal-review.googlesource.com/c/414228 (the CL only talks about 3rd party Serif but also 3rd party sans-serif fonts are removed as well.)",
+      "range": {
+        "startLine": 98,
+        "startChar": 32,
+        "endLine": 98,
+        "endChar": 58
+      },
+      "revId": "583026b895812259d007d6f12c0f4abdc5b06844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dedb88e6_5cb8918c",
+        "filename": "third_party/google_input_tools/src/chrome/os/inputview/common.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-07-24T16:47:32Z",
+      "side": 0,
+      "message": "This font was removed from Chrome OS a long while ago.",
+      "range": {
+        "startLine": 131,
+        "startChar": 32,
+        "endLine": 131,
+        "endChar": 47
+      },
+      "revId": "583026b895812259d007d6f12c0f4abdc5b06844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2d026cb_93bdf68e",
+        "filename": "third_party/google_input_tools/src/chrome/os/inputview/common.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-07-24T16:47:32Z",
+      "side": 0,
+      "message": "Same here.",
+      "range": {
+        "startLine": 135,
+        "startChar": 32,
+        "endLine": 135,
+        "endChar": 44
+      },
+      "revId": "583026b895812259d007d6f12c0f4abdc5b06844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
