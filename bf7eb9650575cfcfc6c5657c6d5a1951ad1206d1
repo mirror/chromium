@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e04fb4ab_a257b0fa",
+        "filename": "ash/drag_drop/drag_drop_controller.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-24T01:04:35Z",
+      "side": 1,
+      "message": "In the last patch, I added SetShouldBlockDuringDragDropForTesting for DragDropControllerMus and changed this for consistency. Now I found a way to test DragDropControllerMus without SetShouldBlockDuringDragDropForTesting. So I decided to keep the line as it is.\n\nI\u0027m happy to create a follow up CL to fix this. Could you let me know which TestApi class I should use? Should I create a new TestApi class in DragDropController, or we have general TestApi class for ash?",
+      "parentUuid": "c368ca60_771a89d6",
+      "range": {
+        "startLine": 46,
+        "startChar": 10,
+        "endLine": 46,
+        "endChar": 27
+      },
+      "revId": "bf7eb9650575cfcfc6c5657c6d5a1951ad1206d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "448674e9_d0ce9db2",
         "filename": "ash/drag_drop/drag_drop_controller_unittest.cc",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "bf7eb9650575cfcfc6c5657c6d5a1951ad1206d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cc8a42c_8f22f828",
+        "filename": "ash/drag_drop/drag_drop_controller_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1119,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-24T01:04:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "448674e9_d0ce9db2",
+      "range": {
+        "startLine": 1119,
+        "startChar": 32,
+        "endLine": 1119,
+        "endChar": 47
+      },
+      "revId": "bf7eb9650575cfcfc6c5657c6d5a1951ad1206d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "bc800965_4023ae67",
+        "filename": "ash/drag_drop/drag_drop_controller_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1139,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-24T01:04:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b109495c_34abc650",
+      "range": {
+        "startLine": 1139,
+        "startChar": 4,
+        "endLine": 1139,
+        "endChar": 18
+      },
+      "revId": "bf7eb9650575cfcfc6c5657c6d5a1951ad1206d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ea32e57_b8885a11",
         "filename": "ui/aura/client/drag_drop_client_observer.h",
         "patchSetId": 9
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-20T17:34:02Z",
       "side": 1,
       "message": "Why do you need to pass the drag data to the observer?",
+      "range": {
+        "startLine": 18,
+        "startChar": 11,
+        "endLine": 18,
+        "endChar": 26
+      },
+      "revId": "bf7eb9650575cfcfc6c5657c6d5a1951ad1206d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31ad4677_1a093d37",
+        "filename": "ui/aura/client/drag_drop_client_observer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-24T01:04:35Z",
+      "side": 1,
+      "message": "This is needed to know which drag operation is started. Caller invoking StartDragAndDrop can compare ui::OSExchangeData* to know if OnDragStarted refers a drag operation triggered by the caller.\n\nOr, maybe it\u0027s OK to assume each implementation of DragDropClient allows at most 1 drag and drop operation at the same time?",
+      "parentUuid": "2ea32e57_b8885a11",
       "range": {
         "startLine": 18,
         "startChar": 11,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "25f5007c_5ca612b0",
+        "filename": "ui/aura/mus/drag_drop_controller_mus.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-24T01:04:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "335fec50_1f05a519",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 16
+      },
+      "revId": "bf7eb9650575cfcfc6c5657c6d5a1951ad1206d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f5015e8_d1826cf7",
         "filename": "ui/aura/mus/drag_drop_controller_mus.cc",
         "patchSetId": 9
@@ -128,6 +248,30 @@
       "writtenOn": "2017-07-20T17:34:02Z",
       "side": 1,
       "message": "Is it possible to simulate the quite rather than this special case?",
+      "range": {
+        "startLine": 185,
+        "startChar": 5,
+        "endLine": 185,
+        "endChar": 23
+      },
+      "revId": "bf7eb9650575cfcfc6c5657c6d5a1951ad1206d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae8f51be_d94cfa12",
+        "filename": "ui/aura/mus/drag_drop_controller_mus.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-24T01:04:35Z",
+      "side": 1,
+      "message": "Rewrote the test code so that it does not use should_block_during_drag_drop_.",
+      "parentUuid": "4f5015e8_d1826cf7",
       "range": {
         "startLine": 185,
         "startChar": 5,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "fd7b41f0_b7cda0bb",
+        "filename": "ui/aura/mus/drag_drop_controller_mus.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-24T01:04:35Z",
+      "side": 1,
+      "message": "It may happen someone calls OnPerformDragDropCompleted and delete the instance immediately. I moved the line to OnPerformDragDropCompleted.\n\nbase::AutoReset at #161 may have the same problem. Is it OK to clear current_drag_state_ in OnPerformDragDropCompleted instead of base::AutoReset, because we have DCHECK at #152?",
+      "parentUuid": "01d5367f_5aaa5113",
+      "range": {
+        "startLine": 188,
+        "startChar": 3,
+        "endLine": 188,
+        "endChar": 26
+      },
+      "revId": "bf7eb9650575cfcfc6c5657c6d5a1951ad1206d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "edc23c53_1c52626e",
         "filename": "ui/aura/mus/drag_drop_controller_mus.h",
         "patchSetId": 9
@@ -174,6 +342,30 @@
       "writtenOn": "2017-07-20T17:34:02Z",
       "side": 1,
       "message": "Same comment here about friending a test helper (or the test).",
+      "range": {
+        "startLine": 42,
+        "startChar": 10,
+        "endLine": 42,
+        "endChar": 28
+      },
+      "revId": "bf7eb9650575cfcfc6c5657c6d5a1951ad1206d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6a27460_978b466f",
+        "filename": "ui/aura/mus/drag_drop_controller_mus.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002736
+      },
+      "writtenOn": "2017-07-24T01:04:35Z",
+      "side": 1,
+      "message": "I removed the utility method while addressing the below comment.",
+      "parentUuid": "edc23c53_1c52626e",
       "range": {
         "startLine": 42,
         "startChar": 10,
