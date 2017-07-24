@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "055c85a6_e9d4c856",
+        "filename": "chrome/browser/devtools/global_confirm_info_bar_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-24T21:15:45Z",
+      "side": 1,
+      "message": "I\u0027m really happy to have tests here!\n\nDo they actually verify the fix for this bug?  It looks like they test more basic interactions with the infobars in general.  Seems like we\u0027d need a test subclass that disabled infobars before we tried adding any?",
+      "revId": "3ec362ac732a1a161d0fbbf6a10e48992860bbdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5c074c7_dd0921d1",
+        "filename": "chrome/browser/devtools/global_confirm_info_bar_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-24T21:15:45Z",
+      "side": 1,
+      "message": "Nit: TBH, I\u0027d find just writing AddTab(); 3x to be clearer.\n\nOr make it 2x or 1x; it seems like \"4 tabs\" specifically is a bit arbitrary.\n\nFor this and other nits, feel free to apply/ignore them for both tests where applicable (I won\u0027t restate them)",
+      "revId": "3ec362ac732a1a161d0fbbf6a10e48992860bbdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5353f735_a72e55d2",
+        "filename": "chrome/browser/devtools/global_confirm_info_bar_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-24T21:15:45Z",
+      "side": 1,
+      "message": "Nit: tabs have -\u003e tab has, or else remove \"each\"",
+      "revId": "3ec362ac732a1a161d0fbbf6a10e48992860bbdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29ea1220_5f11f9d9",
+        "filename": "chrome/browser/devtools/global_confirm_info_bar_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-24T21:15:45Z",
+      "side": 1,
+      "message": "Nit: Or just inline this into the next line",
+      "revId": "3ec362ac732a1a161d0fbbf6a10e48992860bbdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1628b4df_bb15e036",
+        "filename": "chrome/browser/devtools/global_confirm_info_bar_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-24T21:15:45Z",
+      "side": 1,
+      "message": "Nit: \u0027u\u0027 unnecessary",
+      "revId": "3ec362ac732a1a161d0fbbf6a10e48992860bbdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a3f1a27_a30e2448",
+        "filename": "chrome/browser/devtools/global_confirm_info_bar_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-24T21:15:45Z",
+      "side": 1,
+      "message": "Nit: {} unnecessary",
+      "revId": "3ec362ac732a1a161d0fbbf6a10e48992860bbdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6017ff5_a9103eb1",
+        "filename": "chrome/browser/devtools/global_confirm_info_bar_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-24T21:15:45Z",
+      "side": 1,
+      "message": "I wonder if it would be clearer to RunUntilIdle() or something to allow this infobar to be closed, and then we can check that all the infobars are gone?",
+      "revId": "3ec362ac732a1a161d0fbbf6a10e48992860bbdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
