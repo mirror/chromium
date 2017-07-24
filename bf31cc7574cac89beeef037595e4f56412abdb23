@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3c1e3fa_cae80a63",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-24T22:22:09Z",
+      "side": 1,
+      "message": "There is a missing const here - the pointer itself should be tagged as const as well.",
+      "revId": "bf31cc7574cac89beeef037595e4f56412abdb23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51997e4e_6b64f258",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScope.cpp",
+        "patchSetId": 30
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-07-24T22:22:09Z",
+      "side": 1,
+      "message": "I\u0027m concerned about the duplicate definitions of kInvalidDocumentDefinition, here and in PaintWorklet.cpp. They are legal because they are tagged as static, but it is potentially confusing to have two global variables with the same name. It is made more confusing by the fact that one is a pointer to DocumentPaintDefinition and the other is a pointer to const DocumentPaintDefinition, so the same name refers to slightly different things in different source files.\n\nAlso, they break jumbo builds.\n\nI have a patch incoming.",
+      "revId": "bf31cc7574cac89beeef037595e4f56412abdb23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
