@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "66d03a48_57556988",
+        "filename": "components/ntp_snippets/remote/remote_suggestion.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-24T12:42:30Z",
+      "side": 1,
+      "message": "It probably should be \nstd::vector\u003cstd::string\u003e parsed_ids \u003d {primary_id};\n\nhttps://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Variable-initialization",
+      "parentUuid": "25a54a54_1e325d41",
+      "range": {
+        "startLine": 297,
+        "startChar": 37,
+        "endLine": 297,
+        "endChar": 53
+      },
+      "revId": "d153238365a8f30dcb4863cd2ee7f239f3b77180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "266fdfee_1b96d3fe",
         "filename": "components/ntp_snippets/remote/remote_suggestion.cc",
         "patchSetId": 4
