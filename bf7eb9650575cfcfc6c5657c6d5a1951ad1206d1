@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "63c9c319_78e1c8e2",
+        "filename": "ash/drag_drop/drag_drop_controller.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-24T17:36:51Z",
+      "side": 1,
+      "message": "I believe you removed this entirely, right? In which case there isn\u0027t anything to do.",
+      "parentUuid": "e04fb4ab_a257b0fa",
+      "range": {
+        "startLine": 46,
+        "startChar": 10,
+        "endLine": 46,
+        "endChar": 27
+      },
+      "revId": "bf7eb9650575cfcfc6c5657c6d5a1951ad1206d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "448674e9_d0ce9db2",
         "filename": "ash/drag_drop/drag_drop_controller_unittest.cc",
         "patchSetId": 9
@@ -178,6 +202,30 @@
       "side": 1,
       "message": "This is needed to know which drag operation is started. Caller invoking StartDragAndDrop can compare ui::OSExchangeData* to know if OnDragStarted refers a drag operation triggered by the caller.\n\nOr, maybe it\u0027s OK to assume each implementation of DragDropClient allows at most 1 drag and drop operation at the same time?",
       "parentUuid": "2ea32e57_b8885a11",
+      "range": {
+        "startLine": 18,
+        "startChar": 11,
+        "endLine": 18,
+        "endChar": 26
+      },
+      "revId": "bf7eb9650575cfcfc6c5657c6d5a1951ad1206d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ffd03c6_de2fb684",
+        "filename": "ui/aura/client/drag_drop_client_observer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-24T17:36:51Z",
+      "side": 1,
+      "message": "Yes, you can only have one drag operation going on at a time. See DragDropController::StartDragAndDrop where it early outs if a drag is already in progress.",
+      "parentUuid": "31ad4677_1a093d37",
       "range": {
         "startLine": 18,
         "startChar": 11,

@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb62a068_5f2911d8",
+        "filename": "ash/drag_drop/drag_drop_controller.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-24T17:36:51Z",
+      "side": 1,
+      "message": "Again, these Notify functions are overkill, but if you really like them please make them member functions so you don\u0027t need to pass around observers.",
+      "range": {
+        "startLine": 82,
+        "startChar": 5,
+        "endLine": 82,
+        "endChar": 22
+      },
+      "revId": "58d72aefd968146cd22e70d6248d6e8cf224c867",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0981ff85_34c2ee93",
+        "filename": "ash/drag_drop/drag_drop_controller_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1108,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-24T17:36:51Z",
+      "side": 1,
+      "message": "Prefix section with where overrides came from, e.g.\n// aura::client::DragDropClientObserver:",
+      "range": {
+        "startLine": 1108,
+        "startChar": 4,
+        "endLine": 1108,
+        "endChar": 13
+      },
+      "revId": "58d72aefd968146cd22e70d6248d6e8cf224c867",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34aabe22_7f0f9990",
+        "filename": "ash/drag_drop/drag_drop_controller_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1126,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-24T17:36:51Z",
+      "side": 1,
+      "message": "DISALLOW...",
+      "range": {
+        "startLine": 1126,
+        "startChar": 1,
+        "endLine": 1126,
+        "endChar": 2
+      },
+      "revId": "58d72aefd968146cd22e70d6248d6e8cf224c867",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5340b197_262cfb79",
+        "filename": "ui/aura/mus/drag_drop_controller_mus_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-24T17:36:51Z",
+      "side": 1,
+      "message": "Prefix where overrides come from.",
+      "range": {
+        "startLine": 24,
+        "startChar": 7,
+        "endLine": 24,
+        "endChar": 12
+      },
+      "revId": "58d72aefd968146cd22e70d6248d6e8cf224c867",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acb1cbf7_e69929e8",
+        "filename": "ui/aura/mus/drag_drop_controller_mus_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-24T17:36:51Z",
+      "side": 1,
+      "message": "Prefix where overrides came from.",
+      "range": {
+        "startLine": 43,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 13
+      },
+      "revId": "58d72aefd968146cd22e70d6248d6e8cf224c867",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b48c3f80_b407ce03",
+        "filename": "ui/aura/mus/drag_drop_controller_mus_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-24T17:36:51Z",
+      "side": 1,
+      "message": "DISALLOW...",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 2
+      },
+      "revId": "58d72aefd968146cd22e70d6248d6e8cf224c867",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
