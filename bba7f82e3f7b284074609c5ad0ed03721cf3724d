@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "98d546de_3793b35e",
+        "filename": "chrome/installer/zucchini/main_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-24T23:38:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "adb7f082_16c4a440",
+      "range": {
+        "startLine": 44,
+        "startChar": 14,
+        "endLine": 44,
+        "endChar": 24
+      },
+      "revId": "bba7f82e3f7b284074609c5ad0ed03721cf3724d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "156b6bf3_5d6e325a",
         "filename": "chrome/installer/zucchini/main_utils.h",
         "patchSetId": 1
@@ -234,6 +258,30 @@
       "revId": "bba7f82e3f7b284074609c5ad0ed03721cf3724d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "58f33f79_a09b2b56",
+        "filename": "chrome/installer/zucchini/main_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-24T23:38:26Z",
+      "side": 1,
+      "message": "I experimented a bit with VC 2015 and I think it is possible to have constexpr constructor and global constexpr command variable. For that to work:\n- destructor can not be user defined, or at least, it can not be defined out of line, even with \u003d default.\n- seems like constructor has to be defined in .h too.",
+      "parentUuid": "0e7a8b73_8f032a9a",
+      "range": {
+        "startLine": 49,
+        "startChar": 20,
+        "endLine": 49,
+        "endChar": 28
+      },
+      "revId": "bba7f82e3f7b284074609c5ad0ed03721cf3724d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
