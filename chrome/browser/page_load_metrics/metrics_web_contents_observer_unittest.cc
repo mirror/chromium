@@ -372,8 +372,8 @@ TEST_F(MetricsWebContentsObserverTest, SubFrame) {
       base::TimeDelta::FromMilliseconds(40);
   content::RenderFrameHostTester* subframe_tester =
       content::RenderFrameHostTester::For(subframe);
-  subframe_tester->SimulateNavigationStart(GURL(kDefaultTestUrl2));
-  subframe_tester->SimulateNavigationCommit(GURL(kDefaultTestUrl2));
+  content::NavigationSimulator::NavigateAndCommitFromDocument(
+      GURL(kDefaultTestUrl2), subframe);
   SimulateTimingUpdate(subframe_timing, subframe);
   subframe_tester->SimulateNavigationStop();
 
@@ -794,8 +794,8 @@ TEST_F(MetricsWebContentsObserverTest, OutOfOrderCrossFrameTiming) {
       base::TimeDelta::FromMilliseconds(40);
   content::RenderFrameHostTester* subframe_tester =
       content::RenderFrameHostTester::For(subframe);
-  subframe_tester->SimulateNavigationStart(GURL(kDefaultTestUrl2));
-  subframe_tester->SimulateNavigationCommit(GURL(kDefaultTestUrl2));
+  content::NavigationSimulator::NavigateAndCommitFromDocument(
+      GURL(kDefaultTestUrl2), subframe);
   SimulateTimingUpdate(subframe_timing, subframe);
   subframe_tester->SimulateNavigationStop();
 
@@ -872,8 +872,8 @@ TEST_F(MetricsWebContentsObserverTest, OutOfOrderCrossFrameTiming2) {
   content::RenderFrameHost* subframe = rfh_tester->AppendChild("subframe");
   content::RenderFrameHostTester* subframe_tester =
       content::RenderFrameHostTester::For(subframe);
-  subframe_tester->SimulateNavigationStart(GURL(kDefaultTestUrl2));
-  subframe_tester->SimulateNavigationCommit(GURL(kDefaultTestUrl2));
+  content::NavigationSimulator::NavigateAndCommitFromDocument(
+      GURL(kDefaultTestUrl2), subframe);
   SimulateTimingUpdateWithoutFiringDispatchTimer(subframe_timing, subframe);
   subframe_tester->SimulateNavigationStop();
 
@@ -920,8 +920,8 @@ TEST_F(MetricsWebContentsObserverTest, OutOfOrderCrossFrameTiming2) {
   content::RenderFrameHost* subframe2 = rfh_tester->AppendChild("subframe");
   content::RenderFrameHostTester* subframe2_tester =
       content::RenderFrameHostTester::For(subframe2);
-  subframe2_tester->SimulateNavigationStart(GURL(kDefaultTestUrl2));
-  subframe2_tester->SimulateNavigationCommit(GURL(kDefaultTestUrl2));
+  content::NavigationSimulator::NavigateAndCommitFromDocument(
+      GURL(kDefaultTestUrl2), subframe2);
   SimulateTimingUpdateWithoutFiringDispatchTimer(subframe_timing, subframe2);
   subframe2_tester->SimulateNavigationStop();
 
