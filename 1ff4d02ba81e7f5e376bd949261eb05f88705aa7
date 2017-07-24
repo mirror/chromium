@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "d5ce67c5_a4071167",
+        "filename": "tools/perf/core/perf_data_generator.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-07-24T21:12:45Z",
+      "side": 1,
+      "message": "Talked offline. Fine as is.",
+      "parentUuid": "24af2e89_56483cd4",
+      "revId": "1ff4d02ba81e7f5e376bd949261eb05f88705aa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ae85531_55668a87",
         "filename": "tools/perf/core/perf_data_generator_unittest.py",
         "patchSetId": 4
@@ -47,6 +65,24 @@
       "writtenOn": "2017-07-24T20:59:48Z",
       "side": 1,
       "message": "nit: is this comment necessary still?",
+      "revId": "1ff4d02ba81e7f5e376bd949261eb05f88705aa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8583310e_43168d09",
+        "filename": "tools/perf/core/perf_data_generator_unittest.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-07-24T21:12:45Z",
+      "side": 1,
+      "message": "Ah, nope. Was a #TODO for myself while writing tests.",
+      "parentUuid": "6ae85531_55668a87",
       "revId": "1ff4d02ba81e7f5e376bd949261eb05f88705aa7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
