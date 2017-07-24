@@ -133,6 +133,21 @@ TEST_F(MediaRouterContextualMenuUnitTest, ManageDevicesDisabledInIncognito) {
   EXPECT_EQ(-1, model_->GetIndexOfCommandId(IDC_MEDIA_ROUTER_MANAGE_DEVICES));
 }
 
+// "Report an issue" should be enabled for normal profiles but not for
+// incognito.
+TEST_F(MediaRouterContextualMenuUnitTest, EnableAndDisableReportIssue) {
+  int index = model_->GetIndexOfCommandId(IDC_MEDIA_ROUTER_REPORT_ISSUE);
+  EXPECT_TRUE(model_->IsEnabledAt(index));
+
+  // Create the MediaRouterAction under an incognito profile.
+  profile()->ForceIncognito(true);
+  action_ = base::MakeUnique<MediaRouterAction>(
+      browser(), browser_action_test_util_->GetToolbarActionsBar());
+  model_ = static_cast<ui::SimpleMenuModel*>(action_->GetContextMenu());
+  index = model_->GetIndexOfCommandId(IDC_MEDIA_ROUTER_REPORT_ISSUE);
+  EXPECT_FALSE(model_->IsEnabledAt(index));
+}
+
 // Tests whether the cloud services item is correctly toggled. This menu item
 // is only availble on official Chrome builds.
 TEST_F(MediaRouterContextualMenuUnitTest, ToggleCloudServicesItem) {
