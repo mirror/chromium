@@ -824,27 +824,27 @@ int SpdySession::GetPushStream(const GURL& url,
   }
 
   *stream = GetActivePushStream(url);
-  if (*stream) {
-    DCHECK_LT(streams_pushed_and_claimed_count_, streams_pushed_count_);
-    streams_pushed_and_claimed_count_++;
+  if (!*stream)
+    return OK;
 
-    // If the stream is still open, update its priority to match
-    // the priority of the matching request.
-    if (!(*stream)->IsClosed() && (*stream)->priority() != priority) {
-      (*stream)->set_priority(priority);
+  DCHECK_LT(streams_pushed_and_claimed_count_, streams_pushed_count_);
+  streams_pushed_and_claimed_count_++;
 
-      // Send PRIORITY updates.
-      auto updates = priority_dependency_state_.OnStreamUpdate(
-          (*stream)->stream_id(),
-          ConvertRequestPriorityToSpdyPriority(priority));
-      for (auto u : updates) {
-        ActiveStreamMap::iterator it = active_streams_.find(u.id);
-        DCHECK(it != active_streams_.end());
-        int weight = Spdy3PriorityToHttp2Weight(
-            ConvertRequestPriorityToSpdyPriority(it->second->priority()));
-        EnqueuePriorityFrame(u.id, u.dependent_stream_id, weight, u.exclusive);
-      }
-    }
+  if ((*stream)->IsClosed() || (*stream)->priority() != priority)
+    return OK;
+
+  // If the stream is still open, update its priority to that of the request.
+  (*stream)->set_priority(priority);
+
+  // Send PRIORITY updates.
+  auto updates = priority_dependency_state_.OnStreamUpdate(
+      (*stream)->stream_id(), ConvertRequestPriorityToSpdyPriority(priority));
+  for (auto u : updates) {
+    ActiveStreamMap::iterator it = active_streams_.find(u.id);
+    DCHECK(it != active_streams_.end());
+    int weight = Spdy3PriorityToHttp2Weight(
+        ConvertRequestPriorityToSpdyPriority(it->second->priority()));
+    EnqueuePriorityFrame(u.id, u.dependent_stream_id, weight, u.exclusive);
   }
 
   return OK;
@@ -1506,27 +1506,30 @@ void SpdySession::ProcessPendingStreamRequests() {
 void SpdySession::TryCreatePushStream(SpdyStreamId stream_id,
                                       SpdyStreamId associated_stream_id,
                                       SpdyHeaderBlock headers) {
-  // Server-initiated streams should have even sequence numbers.
   if ((stream_id & 0x1) != 0) {
-    LOG(WARNING) << "Received invalid push stream id " << stream_id;
-    CloseSessionOnError(ERR_SPDY_PROTOCOL_ERROR, "Odd push stream id.");
+    SpdyString description = SpdyStringPrintf(
+        "Received invalid pushed stream id %d (must be even) on stream id %d.",
+        stream_id, associated_stream_id);
+    LOG(WARNING) << description;
+    CloseSessionOnError(ERR_SPDY_PROTOCOL_ERROR, description);
     return;
   }
 
-  // Server-initiated streams must be associated with client-initiated streams.
   if ((associated_stream_id & 0x1) != 1) {
-    LOG(WARNING) << "Received push stream id " << stream_id
-                 << " with invalid associated stream id";
-    CloseSessionOnError(ERR_SPDY_PROTOCOL_ERROR, "Push on even stream id.");
+    SpdyString description = SpdyStringPrintf(
+        "Received pushed stream id %d on invalid stream id %d (must be odd).",
+        stream_id, associated_stream_id);
+    LOG(WARNING) << description;
+    CloseSessionOnError(ERR_SPDY_PROTOCOL_ERROR, description);
     return;
   }
 
   if (stream_id <= last_accepted_push_stream_id_) {
-    LOG(WARNING) << "Received push stream id " << stream_id
-                 << " lesser or equal to the last accepted before";
-    CloseSessionOnError(
-        ERR_SPDY_PROTOCOL_ERROR,
-        "New push stream id must be greater than the last accepted.");
+    SpdyString description = SpdyStringPrintf(
+        "Received pushed stream id %d must be larger than last accepted id %d.",
+        stream_id, last_accepted_push_stream_id_);
+    LOG(WARNING) << description;
+    CloseSessionOnError(ERR_SPDY_PROTOCOL_ERROR, description);
     return;
   }
 
@@ -1539,38 +1542,19 @@ void SpdySession::TryCreatePushStream(SpdyStreamId stream_id,
 
   last_accepted_push_stream_id_ = stream_id;
 
-  // Pushed streams are speculative, so they start at an IDLE priority.
-  const RequestPriority request_priority = IDLE;
-
   if (availability_state_ == STATE_GOING_AWAY) {
-    // TODO(akalin): This behavior isn't in the SPDY spec, although it
-    // probably should be.
-    EnqueueResetStreamFrame(stream_id, request_priority,
-                            ERROR_CODE_REFUSED_STREAM,
-                            "push stream request received when going away");
-    return;
-  }
-
-  if (associated_stream_id == 0) {
-    // In HTTP/2 0 stream id in PUSH_PROMISE frame leads to framer error and
-    // session going away. We should never get here.
-    SpdyString description = SpdyStringPrintf(
-        "Received invalid associated stream id %d for pushed stream %d",
-        associated_stream_id, stream_id);
-    EnqueueResetStreamFrame(stream_id, request_priority,
-                            ERROR_CODE_REFUSED_STREAM, description);
+    EnqueueResetStreamFrame(stream_id, IDLE, ERROR_CODE_REFUSED_STREAM,
+                            "Push stream request received while going away.");
     return;
   }
 
   streams_pushed_count_++;
 
-  // TODO(mbelshe): DCHECK that this is a GET method?
-
   // Verify that the response had a URL for us.
   GURL gurl = GetUrlFromHeaderBlock(headers);
   if (!gurl.is_valid()) {
     EnqueueResetStreamFrame(
-        stream_id, request_priority, ERROR_CODE_REFUSED_STREAM,
+        stream_id, IDLE, ERROR_CODE_REFUSED_STREAM,
         "Pushed stream url was invalid: " + gurl.possibly_invalid_spec());
     return;
   }
@@ -1580,7 +1564,7 @@ void SpdySession::TryCreatePushStream(SpdyStreamId stream_id,
       active_streams_.find(associated_stream_id);
   if (associated_it == active_streams_.end()) {
     EnqueueResetStreamFrame(
-        stream_id, request_priority, ERROR_CODE_STREAM_CLOSED,
+        stream_id, IDLE, ERROR_CODE_STREAM_CLOSED,
         SpdyStringPrintf("Received push for inactive associated stream %d",
                          associated_stream_id));
     return;
@@ -1599,7 +1583,7 @@ void SpdySession::TryCreatePushStream(SpdyStreamId stream_id,
       // Disallow pushing of HTTPS content.
       if (gurl.SchemeIs("https")) {
         EnqueueResetStreamFrame(
-            stream_id, request_priority, ERROR_CODE_REFUSED_STREAM,
+            stream_id, IDLE, ERROR_CODE_REFUSED_STREAM,
             SpdyStringPrintf("Rejected push of cross origin HTTPS content %d "
                              "from trusted proxy",
                              associated_stream_id));
@@ -1614,7 +1598,7 @@ void SpdySession::TryCreatePushStream(SpdyStreamId stream_id,
             !CanPool(transport_security_state_, ssl_info, associated_url.host(),
                      gurl.host())) {
           EnqueueResetStreamFrame(
-              stream_id, request_priority, ERROR_CODE_REFUSED_STREAM,
+              stream_id, IDLE, ERROR_CODE_REFUSED_STREAM,
               SpdyStringPrintf("Rejected push stream %d on secure connection",
                                associated_stream_id));
           return;
@@ -1623,7 +1607,7 @@ void SpdySession::TryCreatePushStream(SpdyStreamId stream_id,
         // TODO(bnc): Change SpdyNetworkTransactionTests to use secure sockets.
         if (associated_url.GetOrigin() != gurl.GetOrigin()) {
           EnqueueResetStreamFrame(
-              stream_id, request_priority, ERROR_CODE_REFUSED_STREAM,
+              stream_id, IDLE, ERROR_CODE_REFUSED_STREAM,
               SpdyStringPrintf(
                   "Rejected cross origin push stream %d on insecure connection",
                   associated_stream_id));
@@ -1639,7 +1623,7 @@ void SpdySession::TryCreatePushStream(SpdyStreamId stream_id,
   if (pushed_it != unclaimed_pushed_streams_.end() &&
       pushed_it->first == gurl) {
     EnqueueResetStreamFrame(
-        stream_id, request_priority, ERROR_CODE_REFUSED_STREAM,
+        stream_id, IDLE, ERROR_CODE_REFUSED_STREAM,
         "Received duplicate pushed stream with url: " + gurl.spec());
     return;
   }
@@ -1650,7 +1634,7 @@ void SpdySession::TryCreatePushStream(SpdyStreamId stream_id,
   if (it == headers.end() ||
       (it->second.compare("GET") != 0 && it->second.compare("HEAD") != 0)) {
     EnqueueResetStreamFrame(
-        stream_id, request_priority, ERROR_CODE_REFUSED_STREAM,
+        stream_id, IDLE, ERROR_CODE_REFUSED_STREAM,
         SpdyStringPrintf(
             "Rejected push stream %d due to inadequate request method",
             associated_stream_id));
@@ -1658,13 +1642,12 @@ void SpdySession::TryCreatePushStream(SpdyStreamId stream_id,
   }
 
   auto stream = base::MakeUnique<SpdyStream>(
-      SPDY_PUSH_STREAM, GetWeakPtr(), gurl, request_priority,
+      SPDY_PUSH_STREAM, GetWeakPtr(), gurl, IDLE,
       stream_initial_send_window_size_, stream_max_recv_window_size_, net_log_);
   stream->set_stream_id(stream_id);
 
   // Convert RequestPriority to a SpdyPriority to send in a PRIORITY frame.
-  SpdyPriority spdy_priority =
-      ConvertRequestPriorityToSpdyPriority(request_priority);
+  SpdyPriority spdy_priority = ConvertRequestPriorityToSpdyPriority(IDLE);
   SpdyStreamId dependency_id = 0;
   bool exclusive = false;
   priority_dependency_state_.OnStreamCreation(stream_id, spdy_priority,
@@ -2390,14 +2373,6 @@ void SpdySession::DeleteStream(std::unique_ptr<SpdyStream> stream, int status) {
   if (availability_state_ == STATE_AVAILABLE) {
     ProcessPendingStreamRequests();
   }
-}
-
-SpdyStreamId SpdySession::GetStreamIdForPush(const GURL& url) {
-  UnclaimedPushedStreamContainer::const_iterator unclaimed_it =
-      unclaimed_pushed_streams_.find(url);
-  if (unclaimed_it == unclaimed_pushed_streams_.end())
-    return 0;
-  return unclaimed_it->second.stream_id;
 }
 
 SpdyStream* SpdySession::GetActivePushStream(const GURL& url) {
