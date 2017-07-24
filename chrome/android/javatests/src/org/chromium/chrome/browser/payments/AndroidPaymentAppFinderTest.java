@@ -67,13 +67,29 @@ public class AndroidPaymentAppFinderTest implements PaymentAppCreatedCallback {
                 String content, final ManifestParseCallback callback) {
             super.parsePaymentMethodManifest(content, new ManifestParseCallback() {
                 @Override
-                public void onPaymentMethodManifestParseSuccess(URI[] webAppManifestUris) {
-                    URI[] localhostWebAppManifestUris = new URI[webAppManifestUris.length];
-                    for (int i = 0; i < webAppManifestUris.length; i++) {
+                public void onPaymentMethodManifestParseSuccess(URI[] webAppManifestUris,
+                        URI[] supportedOrigins, boolean allOriginsSupported) {
+                    substituteTestServerUris(webAppManifestUris);
+                    substituteTestServerUris(supportedOrigins);
+                    callback.onPaymentMethodManifestParseSuccess(
+                            webAppManifestUris, supportedOrigins, allOriginsSupported);
+                }
+
+                @Override
+                public void onWebAppManifestParseSuccess(WebAppManifestSection[] manifest) {
+                    assert false : "Web app manifest parsing callback should not be triggered.";
+                }
+
+                @Override
+                public void onManifestParseFailure() {
+                    callback.onManifestParseFailure();
+                }
+
+                private void substituteTestServerUris(URI[] uris) {
+                    for (int i = 0; i < uris.length; i++) {
                         try {
-                            localhostWebAppManifestUris[i] = new URI(
-                                    webAppManifestUris[i]
-                                            .toString()
+                            uris[i] = new URI(
+                                    uris[i].toString()
                                             .replaceAll("https://alicepay.com",
                                                     mTestServerUri.toString() + "/alicepay.com")
                                             .replaceAll("https://bobpay.com",
@@ -88,17 +104,6 @@ public class AndroidPaymentAppFinderTest implements PaymentAppCreatedCallback {
                             assert false : "URI should be valid";
                         }
                     }
-                    callback.onPaymentMethodManifestParseSuccess(localhostWebAppManifestUris);
-                }
-
-                @Override
-                public void onWebAppManifestParseSuccess(WebAppManifestSection[] manifest) {
-                    assert false : "Web app manifest parsing callback should not be triggered.";
-                }
-
-                @Override
-                public void onManifestParseFailure() {
-                    callback.onManifestParseFailure();
                 }
             });
         }
