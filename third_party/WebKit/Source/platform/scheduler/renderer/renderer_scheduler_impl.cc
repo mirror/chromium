@@ -45,7 +45,7 @@ const double kShortIdlePeriodDurationPercentile = 50;
 // which main thread compositing can be considered fast.
 const double kFastCompositingIdleTimeThreshold = .2;
 constexpr base::TimeDelta kThreadLoadTrackerReportingInterval =
-    base::TimeDelta::FromMinutes(1);
+    base::TimeDelta::FromSeconds(1);
 // We do not throttle anything while audio is played and shortly after that.
 constexpr base::TimeDelta kThrottlingDelayAfterAudioIsPlayed =
     base::TimeDelta::FromSeconds(5);
