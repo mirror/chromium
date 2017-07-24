@@ -482,6 +482,10 @@ void TabletPowerButtonController::LockScreenIfRequired() {
       session_controller->CanLockScreen() &&
       !session_controller->IsUserSessionBlocked() &&
       !controller_->LockRequested()) {
+    // Before sending locking screen request, hide non lock screen containers
+    // immediately, as this animation should not be seen for tablet power button
+    // behavior (crbug.com/746657).
+    controller_->HideNonLockScreenContainersImmediately();
     session_controller->LockScreen();
   }
 }

@@ -89,6 +89,9 @@ class ASH_EXPORT LockStateController : public aura::WindowTreeHostObserver,
   // Called when Chrome gets a request to display the lock screen.
   void OnStartingLock();
 
+  // Hides non lock screen containers immediately.
+  void HideNonLockScreenContainersImmediately();
+
   // Displays the shutdown animation and requests a system shutdown or system
   // restart depending on the the state of the |RebootOnShutdown| device policy.
   void RequestShutdown(ShutdownReason reason);
