@@ -289,6 +289,8 @@ class TestRunnerBindings : public gin::Wrappable<TestRunnerBindings> {
   std::string SelectionAsMarkup();
   std::string TooltipText();
 
+  bool IsDebugDevTools();
+
   int WebHistoryItemCount();
   int WindowCount();
 
@@ -475,6 +477,7 @@ gin::ObjectTemplateBuilder TestRunnerBindings::GetObjectTemplateBuilder(
       .SetMethod("insertStyleSheet", &TestRunnerBindings::InsertStyleSheet)
       .SetMethod("isChooserShown", &TestRunnerBindings::IsChooserShown)
       .SetMethod("isCommandEnabled", &TestRunnerBindings::IsCommandEnabled)
+      .SetMethod("isDebugDevTools", &TestRunnerBindings::IsDebugDevTools)
       .SetMethod("keepWebHistory", &TestRunnerBindings::NotImplemented)
       .SetMethod("layoutAndPaintAsync",
                  &TestRunnerBindings::LayoutAndPaintAsync)
@@ -725,6 +728,12 @@ void TestRunnerBindings::ExecCommand(gin::Arguments* args) {
 bool TestRunnerBindings::IsCommandEnabled(const std::string& command) {
   if (view_runner_)
     return view_runner_->IsCommandEnabled(command);
+  return false;
+}
+
+bool TestRunnerBindings::IsDebugDevTools() {
+  if (runner_)
+    return runner_->IsDebugDevTools();
   return false;
 }
 
@@ -2690,6 +2699,10 @@ bool TestRunner::ShouldDumpJavaScriptDialogs() const {
 
 void TestRunner::CloseWebInspector() {
   delegate_->CloseDevTools();
+}
+
+bool TestRunner::IsDebugDevTools() {
+  return delegate_->IsDebugDevTools();
 }
 
 bool TestRunner::IsChooserShown() {

@@ -398,26 +398,17 @@ machine?
 * If none of that helps, and you have access to the bot itself, you may have to
   log in there and see if you can reproduce the problem manually.
 
-### Debugging Inspector Tests
-
-* Add `window.debugTest = true;` to your test code as follows:
-
-  ```javascript
-  window.debugTest = true;
-  function test() {
-    /* TEST CODE */
-  }
-  ```
+### Debugging DevTools / Inspector Tests
 
 * Do one of the following:
     * Option A) Run from the chromium/src folder:
       `blink/tools/run_layout_tests.sh
-      --additional_driver_flag='--remote-debugging-port=9222'
+      --additional_driver_flag='--debug-devtools --remote-debugging-port=9222'
       --time-out-ms=6000000`
     * Option B) If you need to debug an http/tests/inspector test, start httpd
       as described above. Then, run content_shell:
-      `out/Default/content_shell --remote-debugging-port=9222 --run-layout-test
-      http://127.0.0.1:8000/path/to/test.html`
+      `out/Default/content_shell --debug-devtools --remote-debugging-port=9222
+      --run-layout-test http://127.0.0.1:8000/path/to/test.html`
 * Open `http://localhost:9222` in a stable/beta/canary Chrome, click the single
   link to open the devtools with the test loaded.
 * You may need to replace devtools.html with inspector.html in your URL (or you

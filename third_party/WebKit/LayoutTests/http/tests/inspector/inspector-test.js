@@ -1127,7 +1127,7 @@ function runTest(pixelTest, enableWatchDogWhileDebugging)
     var toEvaluate = "(" + initializeFrontend + ")(" + "[" + initializationFunctions + "]" + ");";
     testRunner.evaluateInWebInspector(initializeCallId, toEvaluate);
 
-    if (window.debugTest)
+    if (testRunner.isDebugDevTools())
         test = "function() { Protocol.InspectorBackend.Options.suppressRequestErrors = false; window.test = " + test.toString() + "; InspectorTest.addResult = window._originalConsoleLog; InspectorTest.completeTest = function() {}; }";
     toEvaluate = "(" + runTestInFrontend + ")(" + test + ");";
     testRunner.evaluateInWebInspector(runTestCallId, toEvaluate);
