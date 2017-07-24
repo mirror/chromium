@@ -598,7 +598,7 @@ TEST_F(OfflinePageModelImplTest, SavePageSuccessfulWithSameOriginalURL) {
   std::unique_ptr<OfflinePageTestArchiver> archiver(BuildArchiver(
       kTestUrl, OfflinePageArchiver::ArchiverResult::SUCCESSFULLY_CREATED));
   // Pass the original URL same as the final URL.
-  SavePageWithArchiverAsync(kTestUrl, kTestClientId1, kTestUrl, "",
+  SavePageWithArchiverAsync(kTestUrl, kTestClientId1, kTestUrl,
                             std::move(archiver));
   PumpLoop();
 
@@ -611,6 +611,43 @@ TEST_F(OfflinePageModelImplTest, SavePageSuccessfulWithSameOriginalURL) {
   EXPECT_EQ(kTestUrl, offline_pages[0].url);
   // The original URL should be empty.
   EXPECT_TRUE(offline_pages[0].original_url.is_empty());
+}
+
+TEST_F(OfflinePageModelImplTest, SavePageSuccessfulWithRequestOrigin) {
+  EXPECT_FALSE(HasPages(kTestClientNamespace));
+
+  std::unique_ptr<OfflinePageTestArchiver> archiver(BuildArchiver(
+      kTestUrl, OfflinePageArchiver::ArchiverResult::SUCCESSFULLY_CREATED));
+  SavePageWithArchiverAsync(kTestUrl, kTestClientId1, kTestUrl2, kRequestOrigin,
+                            std::move(archiver));
+  PumpLoop();
+  EXPECT_TRUE(HasPages(kTestClientNamespace));
+
+  OfflinePageTestStore* store = GetStore();
+  EXPECT_EQ(kTestUrl, store->last_saved_page().url);
+  EXPECT_EQ(kTestClientId1.id, store->last_saved_page().client_id.id);
+  EXPECT_EQ(kTestClientId1.name_space,
+            store->last_saved_page().client_id.name_space);
+  // Save last_archiver_path since it will be referred to later.
+  base::FilePath archiver_path = last_archiver_path();
+  EXPECT_EQ(archiver_path, store->last_saved_page().file_path);
+  EXPECT_EQ(kTestFileSize, store->last_saved_page().file_size);
+  EXPECT_EQ(SavePageResult::SUCCESS, last_save_result());
+  ResetResults();
+
+  const std::vector<OfflinePageItem>& offline_pages = GetAllPages();
+
+  ASSERT_EQ(1UL, offline_pages.size());
+  EXPECT_EQ(kTestUrl, offline_pages[0].url);
+  EXPECT_EQ(kTestClientId1.id, offline_pages[0].client_id.id);
+  EXPECT_EQ(kTestClientId1.name_space, offline_pages[0].client_id.name_space);
+  EXPECT_EQ(archiver_path, offline_pages[0].file_path);
+  EXPECT_EQ(kTestFileSize, offline_pages[0].file_size);
+  EXPECT_EQ(0, offline_pages[0].access_count);
+  EXPECT_EQ(0, offline_pages[0].flags);
+  EXPECT_EQ(kTestTitle, offline_pages[0].title);
+  EXPECT_EQ(kTestUrl2, offline_pages[0].original_url);
+  EXPECT_EQ("", offline_pages[0].request_origin);
 }
 
 TEST_F(OfflinePageModelImplTest, SavePageSuccessfulWithRequestOrigin) {

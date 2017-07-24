@@ -127,7 +127,8 @@ public class OfflinePageUtils {
                 final SnackbarController snackbarController, int tabId);
     }
 
-    private static class OfflinePageUtilsImpl implements Internal {
+    @VisibleForTesting
+    static class OfflinePageUtilsImpl implements Internal {
         @Override
         public OfflinePageBridge getOfflinePageBridge(Profile profile) {
             return OfflinePageBridge.getForProfile(profile);
