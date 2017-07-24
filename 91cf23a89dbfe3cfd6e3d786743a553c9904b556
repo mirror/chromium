@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "acba968b_47fc23a4",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutFlexibleBox.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1191,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-07-24T19:25:53Z",
+      "side": 1,
+      "message": "Could you have this return a struct or pair or use pointers for the out arguments instead? Mutable references makes it hard to distinguish input from output parameters at the call site.",
+      "revId": "91cf23a89dbfe3cfd6e3d786743a553c9904b556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
