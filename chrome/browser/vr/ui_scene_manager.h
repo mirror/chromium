@@ -11,6 +11,7 @@
 #include "base/values.h"
 #include "chrome/browser/vr/color_scheme.h"
 #include "chrome/browser/vr/elements/simple_textured_element.h"
+#include "chrome/browser/vr/model/tabset_model.h"
 #include "chrome/browser/vr/ui_interface.h"
 #include "chrome/browser/vr/ui_unsupported_mode.h"
 #include "third_party/skia/include/core/SkBitmap.h"
@@ -78,6 +79,7 @@ class UiSceneManager {
   void CreateCloseButton();
   void CreateExitPrompt();
   void CreateToasts();
+  void CreateModel();
 
   void ConfigureScene();
   void ConfigureSecurityWarnings();
@@ -147,6 +149,9 @@ class UiSceneManager {
   std::vector<UiElement*> background_panels_;
   std::vector<UiElement*> content_elements_;
   std::vector<UiElement*> control_elements_;
+
+//  std::vector<std::unique_ptr<Binding>> bindings_;
+  std::vector<TabSetModel> tab_sets_;
 
   base::WeakPtrFactory<UiSceneManager> weak_ptr_factory_;
 

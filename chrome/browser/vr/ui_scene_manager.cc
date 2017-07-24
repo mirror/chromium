@@ -163,6 +163,8 @@ UiSceneManager::UiSceneManager(UiBrowserInterface* browser,
   CreateToasts();
   CreateSplashScreen();
 
+  CreateModel();
+
   ConfigureScene();
 }
 
@@ -517,6 +519,30 @@ void UiSceneManager::CreateToasts() {
   element->set_hit_testable(false);
   exclusive_screen_toast_ = element.get();
   scene_->AddUiElement(std::move(element));
+}
+
+void UiSceneManager::CreateModel() {
+  // TODO(vollick,tiborg): connect this to real values.
+  TabSetModel current;
+  current.tabs.push_back(TabModel("current_1", 1));
+  current.tabs.push_back(TabModel("current_2", 2));
+  current.tabs.push_back(TabModel("current_3", 3));
+  current.tabs.push_back(TabModel("current_4", 4));
+  current.tabs.push_back(TabModel("current_5", 5));
+  current.tabs.push_back(TabModel("current_6", 6));
+  current.tabs.push_back(TabModel("current_7", 7));
+  current.tabs.push_back(TabModel("current_8", 8));
+
+  TabSetModel incognito;
+  incognito.incognito = true;
+  incognito.tabs.push_back(TabModel("incognito_1", 1));
+  incognito.tabs.push_back(TabModel("incognito_2", 2));
+  incognito.tabs.push_back(TabModel("incognito_3", 3));
+  incognito.tabs.push_back(TabModel("incognito_4", 4));
+  incognito.tabs.push_back(TabModel("incognito_5", 5));
+
+  tab_sets_.push_back(current);
+  tab_sets_.push_back(incognito);
 }
 
 base::WeakPtr<UiSceneManager> UiSceneManager::GetWeakPtr() {
