@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2fc0561_4239fa05",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-24T19:14:33Z",
+      "side": 1,
+      "message": "This should either stop observing whatever it\u0027s observing - or have a comment why it\u0027s OK not to. (i.e. since the singleton is never destroyed)",
+      "range": {
+        "startLine": 45,
+        "startChar": 18,
+        "endLine": 45,
+        "endChar": 33
+      },
+      "revId": "40849ea5e6ebfb5f0daee33f61816e7d5eafbfd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ce88175_384bc1cd",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-07-24T19:14:33Z",
+      "side": 1,
+      "message": "Can you use a SEQUENCE_CHECKER here and check that all the functions are being called on the same thread?",
+      "revId": "40849ea5e6ebfb5f0daee33f61816e7d5eafbfd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
