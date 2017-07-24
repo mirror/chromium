@@ -28,6 +28,7 @@
 #include "base/task_scheduler/delayed_task_manager.h"
 #include "base/task_scheduler/scheduler_lock.h"
 #include "base/task_scheduler/scheduler_worker_pool_params.h"
+#include "base/task_scheduler/scoped_may_block.h"
 #include "base/task_scheduler/sequence.h"
 #include "base/task_scheduler/sequence_sort_key.h"
 #include "base/task_scheduler/task_tracker.h"
@@ -848,10 +849,7 @@ class TaskSchedulerWorkerPoolBlockedUnblockedTest
         blocking_thread_running(WaitableEvent::ResetPolicy::AUTOMATIC,
                                 WaitableEvent::InitialState::NOT_SIGNALED),
         blocking_thread_continue(WaitableEvent::ResetPolicy::MANUAL,
-                                 WaitableEvent::InitialState::NOT_SIGNALED),
-        threads_unblocked_lock(),
-        threads_unblocked_cv(threads_unblocked_lock.CreateConditionVariable()) {
-  }
+                                 WaitableEvent::InitialState::NOT_SIGNALED) {}
 
   void SetUp() override {
     TaskSchedulerWorkerPoolImplTest::SetUp();
@@ -868,45 +866,25 @@ class TaskSchedulerWorkerPoolBlockedUnblockedTest
   // unblocked, then exits.
   void SaturateWithBlockingTasks() {
     for (size_t i = 0; i < kNumWorkersInWorkerPool; ++i) {
-      task_runner->PostTask(
-          FROM_HERE, BindOnce(
-                         [](WaitableEvent* blocking_thread_running,
-                            WaitableEvent* blocking_thread_continue,
-                            SchedulerLock* threads_unblocked_lock,
-                            ConditionVariable* threads_unblocked_cv,
-                            int* threads_unblocked) {
-                           GetBlockingObserver()->TaskBlocked();
+      task_runner->PostTask(FROM_HERE,
+                            BindOnce(
+                                [](WaitableEvent* blocking_thread_running,
+                                   WaitableEvent* blocking_thread_continue) {
+                                  ScopedMayBlock scoped_may_block;
 
-                           blocking_thread_running->Signal();
-                           blocking_thread_continue->Wait();
+                                  blocking_thread_running->Signal();
+                                  blocking_thread_continue->Wait();
 
-                           GetBlockingObserver()->TaskUnblocked();
-
-                           AutoSchedulerLock auto_lock(*threads_unblocked_lock);
-                           *threads_unblocked = *threads_unblocked + 1;
-                           if (*threads_unblocked == kNumWorkersInWorkerPool) {
-                             // |threads_unblocked| is signalled after all
-                             // threads are blocked then unblocked.
-                             threads_unblocked_cv->Signal();
-                           }
-                         },
-                         Unretained(&blocking_thread_running),
-                         Unretained(&blocking_thread_continue),
-                         Unretained(&threads_unblocked_lock),
-                         Unretained(threads_unblocked_cv.get()),
-                         Unretained(&threads_unblocked)));
+                                },
+                                Unretained(&blocking_thread_running),
+                                Unretained(&blocking_thread_continue)));
       blocking_thread_running.Wait();
     }
   }
 
-  // Unblocks tasks posted by SaturateWithBlockingTasks(). Returns after all
-  // the tasks become unblocked.
+  // Unblocks tasks posted by SaturateWithBlockingTasks().
   void UnblockTasks() {
-    AutoSchedulerLock auto_lock(threads_unblocked_lock);
     blocking_thread_continue.Signal();
-
-    while (threads_unblocked != kNumWorkersInWorkerPool)
-      threads_unblocked_cv->Wait();
   }
 
   // Returns how long we can  expect a change to |worker_capacity_| to occur
@@ -936,9 +914,6 @@ class TaskSchedulerWorkerPoolBlockedUnblockedTest
  private:
   WaitableEvent blocking_thread_running;
   WaitableEvent blocking_thread_continue;
-  SchedulerLock threads_unblocked_lock;
-  std::unique_ptr<ConditionVariable> threads_unblocked_cv;
-  int threads_unblocked = 0;
 
   DISALLOW_COPY_AND_ASSIGN(TaskSchedulerWorkerPoolBlockedUnblockedTest);
 };
@@ -957,6 +932,7 @@ TEST_F(TaskSchedulerWorkerPoolBlockedUnblockedTest, TaskBlockedUnblocked) {
 
   UnblockTasks();
 
+  PollForWorkerCapacity(kNumWorkersInWorkerPool);
   EXPECT_EQ(worker_pool_->WorkerCapacityForTesting(), kNumWorkersInWorkerPool);
 
   service_thread_.Stop();

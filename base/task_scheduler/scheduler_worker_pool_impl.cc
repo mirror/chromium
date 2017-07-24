@@ -378,15 +378,15 @@ void SchedulerWorkerPoolImpl::AdjustWorkerCapacity() {
     // workers can get work while the transaction is alive.
     std::unique_ptr<PriorityQueue::Transaction> shared_transaction(
         std::move(shared_transaction_outer));
+
     for (scoped_refptr<SchedulerWorker> worker : workers_) {
       // The delegates of workers inside a SchedulerWorkerPoolImpl should be
       // SchedulerWorkerDelegateImpls.
       SchedulerWorkerDelegateImpl* delegate =
           static_cast<SchedulerWorkerDelegateImpl*>(worker->delegate());
 
-      if (delegate->ShouldCapacityIncreaseAfterBlock(BlockedThreshold())) {
+      if (delegate->ShouldCapacityIncreaseAfterBlock(BlockedThreshold()))
         ++worker_capacity_;
-      }
     }
 
     // The size of |shared_priority_queue_| might change after this block ends

@@ -835,6 +835,8 @@ component("base") {
     "task_scheduler/scheduler_worker_pool_params.h",
     "task_scheduler/scheduler_worker_stack.cc",
     "task_scheduler/scheduler_worker_stack.h",
+    "task_scheduler/scoped_may_block.cc",
+    "task_scheduler/scoped_may_block.h",
     "task_scheduler/scoped_set_task_priority_for_current_thread.cc",
     "task_scheduler/scoped_set_task_priority_for_current_thread.h",
     "task_scheduler/sequence.cc",
