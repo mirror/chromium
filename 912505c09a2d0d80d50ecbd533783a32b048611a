@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "1805eb73_f0c7d4af",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-24T15:39:07Z",
+      "side": 1,
+      "message": "Thanks for the explanation. Add a TODO to make sure this is not forgotten.",
+      "parentUuid": "244e5526_da65bd93",
+      "range": {
+        "startLine": 259,
+        "startChar": 72,
+        "endLine": 260,
+        "endChar": 48
+      },
+      "revId": "912505c09a2d0d80d50ecbd533783a32b048611a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a565e690_9b033b45",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 2
