@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6b74d05_f42edb03",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-24T15:40:01Z",
+      "side": 1,
+      "message": "nit: return is unnecessary and confusing (above as well).",
+      "revId": "1a969f4a20bfea20eda973a217eaa2c75f45f16e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
