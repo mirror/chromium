@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60adbcd9_c4dd7576",
+        "filename": "ios/chrome/browser/feature_engagement_tracker/feature_engagement_tracker_util.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-07-24T21:03:51Z",
+      "side": 1,
+      "message": "Event -\u003e Opened?  Same with \"New Tab Event\" below?",
+      "range": {
+        "startLine": 12,
+        "startChar": 54,
+        "endLine": 12,
+        "endChar": 60
+      },
+      "revId": "767522625d65f731498985603af6109e10ea7c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
