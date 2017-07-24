@@ -11,6 +11,7 @@
 #include "content/child/child_thread_impl.h"
 #include "content/child/scoped_child_process_reference.h"
 #include "content/common/service_worker/embedded_worker.mojom.h"
+#include "content/renderer/service_worker/service_worker_content_settings_proxy.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
 namespace blink {
@@ -76,7 +77,8 @@ class EmbeddedWorkerInstanceClientImpl
       const EmbeddedWorkerStartParams& params,
       mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
       mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info,
-      mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host)
+      mojom::EmbeddedWorkerInstanceHostAssociatedPtrInfo instance_host,
+      mojom::ServiceWorkerContentSettingsProxyPtr content_settings_proxy)
       override;
   void StopWorker() override;
   void ResumeAfterDownload() override;
@@ -89,7 +91,8 @@ class EmbeddedWorkerInstanceClientImpl
   std::unique_ptr<WorkerWrapper> StartWorkerContext(
       const EmbeddedWorkerStartParams& params,
       mojom::ServiceWorkerInstalledScriptsInfoPtr installed_scripts_info,
-      std::unique_ptr<ServiceWorkerContextClient> context_client);
+      std::unique_ptr<ServiceWorkerContextClient> context_client,
+      mojom::ServiceWorkerContentSettingsProxyPtr content_settings_proxy);
 
   mojo::Binding<mojom::EmbeddedWorkerInstanceClient> binding_;
 
