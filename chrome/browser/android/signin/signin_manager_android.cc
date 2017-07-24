@@ -68,6 +68,12 @@ class ProfileDataRemover : public content::BrowsingDataRemover::Observer {
     remover_->AddObserver(this);
 
     if (all_data) {
+      // TODO(msramek): It should be possible to delete bookmarks
+      // from BrowsingDataRemover.
+      BookmarkModel* model =
+          BookmarkModelFactory::GetForBrowserContext(profile);
+      model->RemoveAllUserBookmarks();
+
       remover_->RemoveAndReply(
           base::Time(), base::Time::Max(),
           ChromeBrowsingDataRemoverDelegate::ALL_DATA_TYPES,
@@ -225,7 +231,8 @@ void SigninManagerAndroid::WipeProfileData(
 
   WipeData(profile_, true /* all data */,
            base::Bind(&SigninManagerAndroid::OnBrowsingDataRemoverDone,
-                      weak_factory_.GetWeakPtr(), java_callback));
+                      weak_factory_.GetWeakPtr(), true /* all data */,
+                      java_callback));
 }
 
 void SigninManagerAndroid::WipeGoogleServiceWorkerCaches(
@@ -235,9 +242,11 @@ void SigninManagerAndroid::WipeGoogleServiceWorkerCaches(
   base::android::ScopedJavaGlobalRef<jobject> java_callback;
   java_callback.Reset(env, callback);
 
-  WipeData(profile_, false /* only Google service worker caches */,
-           base::Bind(&SigninManagerAndroid::OnBrowsingDataRemoverDone,
-                      weak_factory_.GetWeakPtr(), java_callback));
+  WipeData(
+      profile_, false /* only Google service worker caches */,
+      base::Bind(&SigninManagerAndroid::OnBrowsingDataRemoverDone,
+                 weak_factory_.GetWeakPtr(),
+                 false /* only Google service worker caches */, java_callback));
 }
 
 void SigninManagerAndroid::OnPolicyRegisterDone(
@@ -267,13 +276,13 @@ void SigninManagerAndroid::OnPolicyFetchDone(bool success) {
 }
 
 void SigninManagerAndroid::OnBrowsingDataRemoverDone(
+    bool all_data,
     const base::android::ScopedJavaGlobalRef<jobject>& callback) {
-  BookmarkModel* model = BookmarkModelFactory::GetForBrowserContext(profile_);
-  model->RemoveAllUserBookmarks();
-
-  // All the Profile data has been wiped. Clear the last signed in username as
-  // well, so that the next signin doesn't trigger the acount change dialog.
-  ClearLastSignedInUser();
+  if (all_data) {
+    // All the Profile data has been wiped. Clear the last signed in username as
+    // well, so that the next signin doesn't trigger the account change dialog.
+    ClearLastSignedInUser();
+  }
 
   Java_SigninManager_onProfileDataWiped(base::android::AttachCurrentThread(),
                                         java_signin_manager_, callback);
