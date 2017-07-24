@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ce2ee1b4_c824d896",
+        "filename": "media/gpu/v4l2_slice_video_decode_accelerator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-07-24T05:47:37Z",
+      "side": 1,
+      "message": "All the LOG(ERROR) should be changed to VLOG(1)?",
+      "parentUuid": "cb57e7aa_33a4f749",
+      "revId": "f7fc47c8a58fd9105b8ba628baeff0a75fa2b344",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2a990f6_d9f4e5a8",
         "filename": "media/gpu/v4l2_slice_video_decode_accelerator.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "f7fc47c8a58fd9105b8ba628baeff0a75fa2b344",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f68f041_3ea8f485",
+        "filename": "media/gpu/v4l2_slice_video_decode_accelerator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 940,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-07-24T05:47:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2a990f6_d9f4e5a8",
+      "revId": "f7fc47c8a58fd9105b8ba628baeff0a75fa2b344",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "2005ff4e_1199e6c3",
+        "filename": "media/gpu/v4l2_slice_video_decode_accelerator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 957,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-07-24T05:47:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acf58f12_fc49e62c",
+      "range": {
+        "startLine": 957,
+        "startChar": 10,
+        "endLine": 957,
+        "endChar": 11
+      },
+      "revId": "f7fc47c8a58fd9105b8ba628baeff0a75fa2b344",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8034049b_03f9dc3d",
         "filename": "media/gpu/v4l2_slice_video_decode_accelerator.cc",
         "patchSetId": 1
@@ -73,6 +133,24 @@
       "revId": "f7fc47c8a58fd9105b8ba628baeff0a75fa2b344",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5c165e9_a3a2a9ec",
+        "filename": "media/gpu/v4l2_slice_video_decode_accelerator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1001,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-07-24T05:47:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8034049b_03f9dc3d",
+      "revId": "f7fc47c8a58fd9105b8ba628baeff0a75fa2b344",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "1b44a782_9999abfa",
+        "filename": "media/gpu/v4l2_slice_video_decode_accelerator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1693,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-07-24T05:47:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8745287_7c3c5298",
+      "range": {
+        "startLine": 1693,
+        "startChar": 25,
+        "endLine": 1693,
+        "endChar": 26
+      },
+      "revId": "f7fc47c8a58fd9105b8ba628baeff0a75fa2b344",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47632a92_9a59dc8e",
         "filename": "media/gpu/v4l2_slice_video_decode_accelerator.cc",
         "patchSetId": 1
@@ -110,6 +212,24 @@
       "writtenOn": "2017-07-21T06:30:07Z",
       "side": 1,
       "message": "I am still hesitate of using LOG(ERROR). \n\nIt looks like we should still keep them as DLOG(ERROR) and tried to have a DCHECK_ALWAYS_ON unittest for testing.\n\nPawel, any suggestions?",
+      "revId": "f7fc47c8a58fd9105b8ba628baeff0a75fa2b344",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60ea7601_4ef2f66e",
+        "filename": "media/gpu/v4l2_slice_video_decode_accelerator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1698,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-07-24T05:47:37Z",
+      "side": 1,
+      "message": "I think most LOG(ERROR) in this file are useful information, because the test will be failed if these are output.\nAre you considering the test should be done without DCHECK_ALWAYS_ON until the test is not failed?\nIf so, I think we don\u0027t do so. The test in CQ is done without DCHECK_ALWYAS_ON, isn\u0027t it? Therefore, if it is failed by some rarely reproduced error, debugging would be difficult.\n\nWhy do you hesitate using LOG(ERROR)?",
+      "parentUuid": "47632a92_9a59dc8e",
       "revId": "f7fc47c8a58fd9105b8ba628baeff0a75fa2b344",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -139,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "80c793a0_da959556",
+        "filename": "media/gpu/v4l2_slice_video_decode_accelerator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1734,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-07-24T05:47:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9e8e806_92f36f5c",
+      "range": {
+        "startLine": 1734,
+        "startChar": 15,
+        "endLine": 1734,
+        "endChar": 20
+      },
+      "revId": "f7fc47c8a58fd9105b8ba628baeff0a75fa2b344",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa6f9b99_b46d9e82",
         "filename": "media/gpu/v4l2_slice_video_decode_accelerator.cc",
         "patchSetId": 1
@@ -156,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "1cfa3466_4b77661d",
+        "filename": "media/gpu/v4l2_slice_video_decode_accelerator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1902,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-07-24T05:47:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa6f9b99_b46d9e82",
+      "revId": "f7fc47c8a58fd9105b8ba628baeff0a75fa2b344",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fbe084c_f84affcb",
         "filename": "media/gpu/v4l2_slice_video_decode_accelerator.cc",
         "patchSetId": 1
@@ -170,6 +332,24 @@
       "revId": "f7fc47c8a58fd9105b8ba628baeff0a75fa2b344",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3eb67b34_14ef6d6b",
+        "filename": "media/gpu/v4l2_slice_video_decode_accelerator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1969,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-07-24T05:47:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fbe084c_f84affcb",
+      "revId": "f7fc47c8a58fd9105b8ba628baeff0a75fa2b344",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -193,6 +373,30 @@
       "revId": "f7fc47c8a58fd9105b8ba628baeff0a75fa2b344",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0bfb32e_bb5a8128",
+        "filename": "media/gpu/v4l2_slice_video_decode_accelerator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2036,
+      "author": {
+        "id": 1196199
+      },
+      "writtenOn": "2017-07-24T05:47:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc669217_4022f7ac",
+      "range": {
+        "startLine": 2036,
+        "startChar": 9,
+        "endLine": 2036,
+        "endChar": 10
+      },
+      "revId": "f7fc47c8a58fd9105b8ba628baeff0a75fa2b344",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
