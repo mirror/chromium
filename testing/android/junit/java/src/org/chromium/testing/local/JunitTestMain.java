@@ -8,6 +8,7 @@ import org.junit.runner.JUnitCore;
 import org.junit.runner.Request;
 import org.junit.runner.RunWith;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -84,26 +85,51 @@ public final class JunitTestMain {
 
     public static void main(String[] args) {
         JunitTestArgParser parser = JunitTestArgParser.parse(args);
+        int returnCode = 1;
+        try {
+            // TODO(mikecase): Remove setting special temp directory once Robolectric framework
+            // fixes leaving temporary files behind. crbug/747204
+            System.setProperty("java.io.tmpdir", System.getProperty("java.io.tmpdir") + "/junit");
+            new File(System.getProperty("java.io.tmpdir")).mkdirs();
+            JUnitCore core = new JUnitCore();
+            GtestLogger gtestLogger = new GtestLogger(System.out);
+            core.addListener(new GtestListener(gtestLogger));
+            JsonLogger jsonLogger = new JsonLogger(parser.getJsonOutputFile());
+            core.addListener(new JsonListener(jsonLogger));
+            Class[] classes = findClassesFromClasspath(parser.getTestJars());
+            Request testRequest = Request.classes(new GtestComputer(gtestLogger), classes);
 
-        JUnitCore core = new JUnitCore();
-        GtestLogger gtestLogger = new GtestLogger(System.out);
-        core.addListener(new GtestListener(gtestLogger));
-        JsonLogger jsonLogger = new JsonLogger(parser.getJsonOutputFile());
-        core.addListener(new JsonListener(jsonLogger));
-        Class[] classes = findClassesFromClasspath(parser.getTestJars());
-        Request testRequest = Request.classes(new GtestComputer(gtestLogger), classes);
-
-        for (String packageFilter : parser.getPackageFilters()) {
-            testRequest = testRequest.filterWith(new PackageFilter(packageFilter));
+            for (String packageFilter : parser.getPackageFilters()) {
+                testRequest = testRequest.filterWith(new PackageFilter(packageFilter));
+            }
+            for (Class<?> runnerFilter : parser.getRunnerFilters()) {
+                testRequest = testRequest.filterWith(new RunnerFilter(runnerFilter));
+            }
+            for (String gtestFilter : parser.getGtestFilters()) {
+                testRequest = testRequest.filterWith(new GtestFilter(gtestFilter));
+            }
+            returnCode = core.run(testRequest).wasSuccessful() ? 0 : 1;
+        } finally {
+            recursivelyDeleteFile(new File(System.getProperty("java.io.tmpdir")));
         }
-        for (Class<?> runnerFilter : parser.getRunnerFilters()) {
-            testRequest = testRequest.filterWith(new RunnerFilter(runnerFilter));
-        }
-        for (String gtestFilter : parser.getGtestFilters()) {
-            testRequest = testRequest.filterWith(new GtestFilter(gtestFilter));
-        }
-        System.exit(core.run(testRequest).wasSuccessful() ? 0 : 1);
+        System.exit(returnCode);
     }
 
+    /**
+     * Delete the given File and (if it's a directory) everything within it.
+     */
+    private static void recursivelyDeleteFile(File currentFile) {
+        if (currentFile.isDirectory()) {
+            File[] files = currentFile.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    recursivelyDeleteFile(file);
+                }
+            }
+        }
+        if (!currentFile.delete()) {
+            System.err.println("Failed to delete: " + currentFile);
+        }
+    }
 }
 
