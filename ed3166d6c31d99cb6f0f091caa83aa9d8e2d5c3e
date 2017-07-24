@@ -22,6 +22,30 @@
       "revId": "ed3166d6c31d99cb6f0f091caa83aa9d8e2d5c3e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7e18a61_8cb3c9d0",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-24T18:46:12Z",
+      "side": 1,
+      "message": "Yes! An oversight on my part. I\u0027m now trying to figure out where I came up with the 0x41 value... cccccc @ .25 is f6f6f6. .5 (or 0x80) should be the right value here.\n\nThe issue here is that the stroke_color is based off the actual text color being rendered, however the comments (and the code) imply being based off the *enabled* text color. Next patch reflects this. The SetTextColor(STATE_DISABLED, ...) \"fix\" changed the behavior of the subsequent code.",
+      "parentUuid": "b24f98d3_5a566f99",
+      "range": {
+        "startLine": 305,
+        "startChar": 69,
+        "endLine": 305,
+        "endChar": 73
+      },
+      "revId": "ed3166d6c31d99cb6f0f091caa83aa9d8e2d5c3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
