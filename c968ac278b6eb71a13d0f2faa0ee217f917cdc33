@@ -54,6 +54,23 @@
     },
     {
       "key": {
+        "uuid": "7edf1ad2_eda70edc",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/change_picture_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-24T22:06:24Z",
+      "side": 1,
+      "message": "typo: \"ALso\".\n\nCould be useful to add the comment that |image_index| is -1 if there\u0027s no prev user image from the older default image set.",
+      "revId": "c968ac278b6eb71a13d0f2faa0ee217f917cdc33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "64cf6cac_46e124a5",
         "filename": "chromeos/chromeos_switches.h",
         "patchSetId": 2
@@ -152,6 +169,23 @@
       "writtenOn": "2017-07-19T03:31:29Z",
       "side": 1,
       "message": "why do some files have a \"NUMBER-\" prefix and some a \"NUMBER_\" prefix? why a prefix at all?",
+      "revId": "c968ac278b6eb71a13d0f2faa0ee217f917cdc33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d58a6f0_b8d9f3f6",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_picture_list.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-24T22:06:24Z",
+      "side": 1,
+      "message": "typo: \"iamge\"\n\n\"or -1 if there was no old image\" (or whatever -1 means)",
       "revId": "c968ac278b6eb71a13d0f2faa0ee217f917cdc33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
