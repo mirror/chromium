@@ -12,6 +12,7 @@
 #include <vector>
 
 #include "base/memory/ptr_util.h"
+#include "base/stl_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/utf_string_conversions.h"
 #include "components/arc/bluetooth/bluetooth_type_converters.h"
@@ -36,9 +37,7 @@ bool IsNonHex(char c) {
 
 std::string StripNonHex(const std::string& str) {
   std::string result = str;
-  result.erase(std::remove_if(result.begin(), result.end(), IsNonHex),
-               result.end());
-
+  base::EraseIf(result, IsNonHex);
   return result;
 }
 
