@@ -13,6 +13,7 @@
 #include "net/cert/internal/cert_errors.h"
 #include "net/cert/internal/parsed_certificate.h"
 #include "net/der/input.h"
+#include "third_party/boringssl/src/include/openssl/evp.h"
 
 namespace net {
 
@@ -20,7 +21,6 @@ namespace der {
 struct GeneralizedTime;
 }
 
-class SignaturePolicy;
 struct CertificateTrust;
 
 // The key purpose (extended key usage) to check for during verification.
@@ -43,6 +43,18 @@ enum class InitialPolicyMappingInhibit {
 enum class InitialAnyPolicyInhibit {
   kFalse,
   kTrue,
+};
+
+class NET_EXPORT VerifyCertificateChainDelegate {
+ public:
+  virtual bool IsSignatureAlgorithmAcceptable(
+      const SignatureAlgorithm& signature_algorithm,
+      CertErrors* errors) = 0;
+
+  virtual bool IsPublicKeyAcceptable(EVP_PKEY* public_key,
+                                     CertErrors* errors) = 0;
+
+  virtual ~VerifyCertificateChainDelegate();
 };
 
 // VerifyCertificateChain() verifies an ordered certificate path in accordance
@@ -98,9 +110,8 @@ enum class InitialAnyPolicyInhibit {
 //     similar role to "trust anchor information" defined in RFC 5280
 //     section 6.1.1.d.
 //
-//   signature_policy:
-//     The policy to use when verifying signatures (what hash algorithms are
-//     allowed, what length keys, what named curves, etc).
+//   delegate:
+//     TODO
 //
 //   time:
 //     The UTC time to use for expiration checks. This is equivalent to
@@ -201,7 +212,7 @@ enum class InitialAnyPolicyInhibit {
 NET_EXPORT void VerifyCertificateChain(
     const ParsedCertificateList& certs,
     const CertificateTrust& last_cert_trust,
-    const SignaturePolicy* signature_policy,
+    VerifyCertificateChainDelegate* delegate,
     const der::GeneralizedTime& time,
     KeyPurpose required_key_purpose,
     InitialExplicitPolicy initial_explicit_policy,

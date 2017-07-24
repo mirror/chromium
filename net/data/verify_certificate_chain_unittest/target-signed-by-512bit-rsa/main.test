@@ -7,6 +7,5 @@ expected_errors:
 ERROR: RSA modulus too small
   actual: 512
   minimum: 1024
-ERROR: Unacceptable modulus length for RSA key
-ERROR: VerifySignedData failed
+ERROR: Unacceptable public key
 
