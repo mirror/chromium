@@ -115,6 +115,8 @@ bool MediaRouterContextualMenu::IsCommandIdEnabled(int command_id) const {
   // not persist.
   if (command_id == IDC_MEDIA_ROUTER_SHOW_IN_TOOLBAR)
     return GetAlwaysShowActionPref();
+  if (command_id == IDC_MEDIA_ROUTER_REPORT_ISSUE)
+    return !browser_->profile()->IsOffTheRecord();
   return command_id != IDC_MEDIA_ROUTER_SHOWN_BY_POLICY;
 }
 
