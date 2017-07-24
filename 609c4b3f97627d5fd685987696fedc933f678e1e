@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "b4915cf8_f8bd1eb2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1617,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-24T22:29:23Z",
+      "side": 1,
+      "message": "\"overlay mode\" is too generic for this class.  clarify what it means, what is interacts with, and generally when you\u0027d want to set this.",
+      "range": {
+        "startLine": 1617,
+        "startChar": 16,
+        "endLine": 1617,
+        "endChar": 23
+      },
+      "revId": "609c4b3f97627d5fd685987696fedc933f678e1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3586db3a_305d0909",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/TabWebContentsDelegateAndroid.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-24T22:29:23Z",
+      "side": 1,
+      "message": "private?",
+      "range": {
+        "startLine": 510,
+        "startChar": 4,
+        "endLine": 510,
+        "endChar": 10
+      },
+      "revId": "609c4b3f97627d5fd685987696fedc933f678e1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c07f5d7a_e763daa2",
         "filename": "content/browser/android/dialog_overlay_impl.cc",
         "patchSetId": 9
