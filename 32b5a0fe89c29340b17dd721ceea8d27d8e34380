@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f641abb5_598aadc1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-24T20:47:17Z",
+      "side": 1,
+      "message": "This is a reland of a CL. Please do the following.\n\n[Reland #1] ChromeDriver: Handle key events properly on Mac\n\n\u003cNew Message that describes difference from original CL\u003e\n\n\u003e Original CL description indented by \"\u003e \". Make sure to include original CL review URL.\n\u003e\n\u003e\n\nBUG\u003d667387, 732053\n\n^---- Make sure to include the bug of the test that failed previously.",
+      "revId": "32b5a0fe89c29340b17dd721ceea8d27d8e34380",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
