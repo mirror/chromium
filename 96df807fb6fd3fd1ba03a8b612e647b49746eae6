@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8e2e2f8b_0616fc00",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/Analyser/idl-test.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-24T20:01:04Z",
+      "side": 1,
+      "message": "Yeah a difficult style issue.  For webaudio, we decided our tests should be indented according to the tag levels.  And hongchan@ wrote a nice little package for us to indent our tests uniformly.",
+      "parentUuid": "e59f2b45_abdd85c9",
+      "range": {
+        "startLine": 2,
+        "startChar": 1,
+        "endLine": 2,
+        "endChar": 5
+      },
+      "revId": "96df807fb6fd3fd1ba03a8b612e647b49746eae6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8afbc061_77470e8e",
         "filename": "third_party/WebKit/LayoutTests/webaudio/Analyser/idl-test.html",
         "patchSetId": 3
@@ -36,6 +60,24 @@
       "writtenOn": "2017-07-24T19:33:38Z",
       "side": 1,
       "message": "This is a copy/paste of the section in https://dom.spec.whatwg.org/#idl-index? Add a comment about the source? And update to latest (see updated options param)\n\nI don\u0027t know if it\u0027s worth including EventTarget here... I think idlharness could at least verify that EventTarget is in the proto chain (AudioNode.prototype.__proto__ \u003d\u003d\u003d EventTarget.prototype) but I\u0027m not sure it does.\n\n(Just wanting to keep this test from becoming obsolete as e.g. DOM evolves)",
+      "revId": "96df807fb6fd3fd1ba03a8b612e647b49746eae6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03112ec6_c17ad395",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/Analyser/idl-test.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-24T20:01:04Z",
+      "side": 1,
+      "message": "I mostly copied all of this from the existing the-gainnode-interface/idl-test.html, so perhaps things are a bit out-dated now. I\u0027ll update based on the docs you pointed to.",
+      "parentUuid": "8afbc061_77470e8e",
       "revId": "96df807fb6fd3fd1ba03a8b612e647b49746eae6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
