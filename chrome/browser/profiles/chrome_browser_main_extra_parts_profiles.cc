@@ -143,6 +143,7 @@
 #endif
 
 #if !defined(OS_ANDROID) && !defined(OS_CHROMEOS) && !defined(OS_MACOSX)
+#include "chrome/browser/feature_engagement_tracker/incognito_window/incognito_window_tracker_factory.h"
 #include "chrome/browser/feature_engagement_tracker/new_tab/new_tab_tracker_factory.h"
 #endif
 
@@ -291,6 +292,7 @@ EnsureBrowserContextKeyedServiceFactoriesBuilt() {
   NTPResourceCacheFactory::GetInstance();
 #endif
 #if !defined(OS_ANDROID) && !defined(OS_CHROMEOS) && !defined(OS_MACOSX)
+  feature_engagement_tracker::IncognitoWindowTrackerFactory::GetInstance();
   feature_engagement_tracker::NewTabTrackerFactory::GetInstance();
 #endif
   ContentSuggestionsServiceFactory::GetInstance();
