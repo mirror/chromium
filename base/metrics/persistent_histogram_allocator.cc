@@ -282,7 +282,9 @@ std::unique_ptr<HistogramBase> PersistentHistogramAllocator::GetHistogram(
   // references to histograms in other processes).
   PersistentHistogramData* histogram_data =
       memory_allocator_->GetAsObject<PersistentHistogramData>(ref);
-  size_t length = memory_allocator_->GetAllocSize(ref);
+  const size_t length = memory_allocator_->GetAllocSize(ref);
+  const size_t expected_name_length =
+      length - offsetof(PersistentHistogramData, name) - 1;
 
   // Check that metadata is reasonable: name is NUL terminated and non-empty,
   // ID fields have been loaded with a hash of the name (0 is considered
@@ -290,6 +292,7 @@ std::unique_ptr<HistogramBase> PersistentHistogramAllocator::GetHistogram(
   if (!histogram_data ||
       reinterpret_cast<char*>(histogram_data)[length - 1] != '\0' ||
       histogram_data->name[0] == '\0' ||
+      strlen(histogram_data->name) != expected_name_length ||
       histogram_data->samples_metadata.id == 0 ||
       histogram_data->logged_metadata.id == 0) {
     RecordCreateHistogramResult(CREATE_HISTOGRAM_INVALID_METADATA);
