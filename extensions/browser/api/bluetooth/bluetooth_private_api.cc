@@ -13,6 +13,7 @@
 #include "base/strings/string_piece.h"
 #include "base/strings/string_util.h"
 #include "components/device_event_log/device_event_log.h"
+#include "components/prefs/pref_service.h"
 #include "device/bluetooth/bluetooth_adapter.h"
 #include "device/bluetooth/bluetooth_adapter_factory.h"
 #include "device/bluetooth/bluetooth_common.h"
@@ -31,6 +32,11 @@ static base::LazyInstance<BrowserContextKeyedAPIFactory<BluetoothPrivateAPI>>::
     DestructorAtExit g_factory = LAZY_INSTANCE_INITIALIZER;
 
 namespace {
+
+#if defined(OS_CHROMEOS)
+constexpr char kBluetoothAdapterEnabled[] =
+    "settings.bluetooth.adapter_enabled";
+#endif
 
 std::string GetListenerId(const EventListenerInfo& details) {
   return !details.extension_id.empty() ? details.extension_id
@@ -172,6 +178,17 @@ bool BluetoothPrivateSetAdapterStateFunction::DoWork(
   if (powered && adapter->IsPowered() != *powered) {
     BLUETOOTH_LOG(USER) << "SetAdapterState: powerd=" << *powered;
     pending_properties_.insert(kPoweredProperty);
+#if defined(OS_CHROMEOS)
+    bool* is_user_pref = new_state.is_user_pref.get();
+    if (is_user_pref && *is_user_pref) {
+      PrefService* prefs =
+          ExtensionsBrowserClient::Get()->GetPrefServiceForContext(
+              browser_context());
+      if (prefs) {
+        prefs->SetBoolean(kBluetoothAdapterEnabled, *powered);
+      }
+    }
+#endif
     adapter->SetPowered(*powered, CreatePropertySetCallback(kPoweredProperty),
                         CreatePropertyErrorCallback(kPoweredProperty));
   }

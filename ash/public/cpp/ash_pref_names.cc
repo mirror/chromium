@@ -34,6 +34,9 @@ const char kNightLightScheduleType[] = "ash.night_light.schedule_type";
 const char kNightLightCustomStartTime[] = "ash.night_light.custom_start_time";
 const char kNightLightCustomEndTime[] = "ash.night_light.custom_end_time";
 
+// Boolean pref indicating whether a user has enabled the bluetooth adapter.
+const char kBluetoothAdapterEnabled[] = "settings.bluetooth.adapter_enabled";
+
 }  // namespace prefs
 
 }  // namespace ash
