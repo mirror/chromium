@@ -12,6 +12,7 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "base/observer_list.h"
 #include "base/time/time.h"
 #include "ui/aura/client/drag_drop_client.h"
 #include "ui/aura/window_observer.h"
@@ -43,7 +44,8 @@ class ASH_EXPORT DragDropController : public aura::client::DragDropClient,
   DragDropController();
   ~DragDropController() override;
 
-  void set_should_block_during_drag_drop(bool should_block_during_drag_drop) {
+  void SetShouldBlockDuringDragDropForTesting(
+      bool should_block_during_drag_drop) {
     should_block_during_drag_drop_ = should_block_during_drag_drop;
   }
 
@@ -56,6 +58,8 @@ class ASH_EXPORT DragDropController : public aura::client::DragDropClient,
                        ui::DragDropTypes::DragEventSource source) override;
   void DragCancel() override;
   bool IsDragDropInProgress() override;
+  void AddObserver(aura::client::DragDropClientObserver* observer) override;
+  void RemoveObserver(aura::client::DragDropClientObserver* observer) override;
 
   // Overridden from ui::EventHandler:
   void OnKeyEvent(ui::KeyEvent* event) override;
@@ -134,6 +138,8 @@ class ASH_EXPORT DragDropController : public aura::client::DragDropClient,
   // Holds a synthetic long tap event to be sent to the |drag_source_window_|.
   // See comment in OnGestureEvent() on why we need this.
   std::unique_ptr<ui::GestureEvent> pending_long_tap_;
+
+  base::ObserverList<aura::client::DragDropClientObserver> observers_;
 
   base::WeakPtrFactory<DragDropController> weak_factory_;
 
