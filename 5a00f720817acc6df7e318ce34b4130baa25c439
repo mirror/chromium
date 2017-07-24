@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60c7345b_6ca6ddc7",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMapProxy.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-07-24T14:52:28Z",
+      "side": 1,
+      "message": "Nit: WorkletModuleResponsesMap serves as a proxy to talk to ...",
+      "revId": "5a00f720817acc6df7e318ce34b4130baa25c439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
