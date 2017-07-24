@@ -22,6 +22,30 @@
       "revId": "963832372e42049dbbdd6b1cceee9261c51f4375",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "071bd8cc_62a31a42",
+        "filename": "components/test/data/payments/bobpay.com/payment-manifest.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-24T17:24:48Z",
+      "side": 0,
+      "message": "I will be adding more supported_origins tests in different subdirectories in upcoming patches. Need to remove the supported_origins here to make sure that existing tests are behaving as before.",
+      "parentUuid": "2b540ec1_7171a536",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 47
+      },
+      "revId": "963832372e42049dbbdd6b1cceee9261c51f4375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

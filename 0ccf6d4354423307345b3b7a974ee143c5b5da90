@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ad5843bd_5dc706e6",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/payments/MockPackageManagerDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-24T17:24:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0b4b60b_f6e9210d",
+      "range": {
+        "startLine": 57,
+        "startChar": 52,
+        "endLine": 57,
+        "endChar": 90
+      },
+      "revId": "0ccf6d4354423307345b3b7a974ee143c5b5da90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0618d810_11260a86",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/payments/MockPackageManagerDelegate.java",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "0ccf6d4354423307345b3b7a974ee143c5b5da90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6b561e9_8ad25b8b",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/payments/MockPackageManagerDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-24T17:24:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0618d810_11260a86",
+      "range": {
+        "startLine": 106,
+        "startChar": 62,
+        "endLine": 106,
+        "endChar": 77
+      },
+      "revId": "0ccf6d4354423307345b3b7a974ee143c5b5da90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
