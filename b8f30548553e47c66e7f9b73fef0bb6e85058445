@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4dd7002_9df3a074",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-07-24T14:03:47Z",
+      "side": 0,
+      "message": "it would be nice to have UKM logging for this.\n\nTo keep this CL single purpose, maybe do that in another CL?",
+      "range": {
+        "startLine": 523,
+        "startChar": 14,
+        "endLine": 523,
+        "endChar": 45
+      },
+      "revId": "b8f30548553e47c66e7f9b73fef0bb6e85058445",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
