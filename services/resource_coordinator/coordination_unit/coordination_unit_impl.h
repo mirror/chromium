@@ -51,7 +51,7 @@ class CoordinationUnitImpl : public mojom::CoordinationUnit {
   // of type |CoordinationUnitType|. Note that a callee should
   // never be associated with itself.
   virtual std::set<CoordinationUnitImpl*> GetAssociatedCoordinationUnitsOfType(
-      CoordinationUnitType type);
+      CoordinationUnitType type) const;
   // Recalculate property internally.
   virtual void RecalculateProperty(const mojom::PropertyType property_type) {}
 
@@ -79,9 +79,9 @@ class CoordinationUnitImpl : public mojom::CoordinationUnit {
 
   // Coordination unit graph traversal helper functions.
   std::set<CoordinationUnitImpl*> GetChildCoordinationUnitsOfType(
-      CoordinationUnitType type);
+      CoordinationUnitType type) const;
   std::set<CoordinationUnitImpl*> GetParentCoordinationUnitsOfType(
-      CoordinationUnitType type);
+      CoordinationUnitType type) const;
 
   const CoordinationUnitID id_;
   std::set<CoordinationUnitImpl*> children_;

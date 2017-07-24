@@ -6,6 +6,8 @@
 
 #include <utility>
 
+#include "base/strings/string_number_conversions.h"
+#include "chrome/browser/browser_process.h"
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
@@ -106,6 +108,11 @@ void ResourceCoordinatorWebContentsObserver::DidFinishNavigation(
     return;
   }
 
+  if (navigation_handle->IsInMainFrame()) {
+    url_ = navigation_handle->GetURL();
+    UpdateUkmRecorder();
+  }
+
   content::RenderFrameHost* render_frame_host =
       navigation_handle->GetRenderFrameHost();
 
@@ -116,4 +123,16 @@ void ResourceCoordinatorWebContentsObserver::DidFinishNavigation(
   auto* process_resource_coordinator =
       render_frame_host->GetProcess()->GetProcessResourceCoordinator();
   process_resource_coordinator->AddChild(*frame_resource_coordinator);
+}
+
+void ResourceCoordinatorWebContentsObserver::UpdateUkmRecorder() {
+  ukm_source_id_ = ukm::UkmRecorder::GetNewSourceID();
+  g_browser_process->ukm_recorder()->UpdateSourceURL(ukm_source_id_, url_);
+  // ukm::SourceId types need to be converted to a string because base::Value
+  // does not guarrantee that its int type will be 64 bits. Instead
+  // std:string is used as a canonical format. base::Int64ToString
+  // and base::StringToInt64 are used for encoding/decoding respectively.
+  tab_resource_coordinator_->SetProperty(
+      resource_coordinator::mojom::PropertyType::kUkmSourceId,
+      base::MakeUnique<base::Value>(base::Int64ToString(ukm_source_id_)));
 }

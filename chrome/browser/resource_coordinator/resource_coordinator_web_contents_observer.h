@@ -6,12 +6,15 @@
 #define CHROME_BROWSER_RESOURCE_COORDINATOR_RESOURCE_COORDINATOR_WEB_CONTENTS_OBSERVER_H_
 
 #include <memory>
+#include <string>
 
 #include "base/macros.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
+#include "services/metrics/public/cpp/ukm_recorder.h"
 #include "services/resource_coordinator/public/cpp/resource_coordinator_interface.h"
 #include "services/resource_coordinator/public/interfaces/service_callbacks.mojom.h"
+#include "url/gurl.h"
 
 class ResourceCoordinatorWebContentsObserver
     : public content::WebContentsObserver,
@@ -36,6 +39,7 @@ class ResourceCoordinatorWebContentsObserver
 
   void EnsureUkmRecorderInterface();
   void MaybeSetUkmRecorderInterface(bool ukm_recorder_already_initialized);
+  void UpdateUkmRecorder();
 
  private:
   explicit ResourceCoordinatorWebContentsObserver(
@@ -46,6 +50,8 @@ class ResourceCoordinatorWebContentsObserver
 
   std::unique_ptr<resource_coordinator::ResourceCoordinatorInterface>
       tab_resource_coordinator_;
+  ukm::SourceId ukm_source_id_;
+  GURL url_;
 
   resource_coordinator::mojom::ServiceCallbacksPtr service_callbacks_;
 
