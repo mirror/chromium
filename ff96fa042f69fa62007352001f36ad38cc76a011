@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "c3bc1ebd_b3bcb4ae",
+        "filename": "components/content_settings/core/common/content_settings_types.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-24T21:43:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a836fa3_892e1aee",
+      "range": {
+        "startLine": 80,
+        "startChar": 30,
+        "endLine": 80,
+        "endChar": 46
+      },
+      "revId": "ff96fa042f69fa62007352001f36ad38cc76a011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47fc681b_0d2ef4ed",
         "filename": "components/content_settings/core/common/content_settings_types.h",
         "patchSetId": 8
