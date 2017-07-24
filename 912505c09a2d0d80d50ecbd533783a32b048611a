@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "b3a8623d_9f23a073",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-24T17:51:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1805eb73_f0c7d4af",
+      "range": {
+        "startLine": 259,
+        "startChar": 72,
+        "endLine": 260,
+        "endChar": 48
+      },
+      "revId": "912505c09a2d0d80d50ecbd533783a32b048611a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a565e690_9b033b45",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 2

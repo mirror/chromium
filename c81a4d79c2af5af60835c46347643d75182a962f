@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0fcc6495_2cd13559",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-24T17:51:03Z",
+      "side": 1,
+      "message": "Yup - in the CL for ScopedMayBlock, I was planning on adding an |initial_worker_capacity_| member (which would be equal to params.max_threads() since that\u0027s what |worker_capacity_| is initially set to).\n\nI\u0027ll add a comment here to remind me - it would\u0027ve been easy to forget to do this.",
+      "parentUuid": "e7b34eb0_4d1cb0bc",
+      "range": {
+        "startLine": 358,
+        "startChar": 29,
+        "endLine": 358,
+        "endChar": 62
+      },
+      "revId": "c81a4d79c2af5af60835c46347643d75182a962f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30987d85_68f6f81f",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "c81a4d79c2af5af60835c46347643d75182a962f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "505d7447_75bc5279",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-07-24T17:51:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30987d85_68f6f81f",
+      "range": {
+        "startLine": 136,
+        "startChar": 10,
+        "endLine": 136,
+        "endChar": 13
+      },
+      "revId": "c81a4d79c2af5af60835c46347643d75182a962f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
