@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b955a1a8_b2302c05",
+        "filename": "chrome/common/extensions/api/notifications/notification_style.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-24T10:37:42Z",
+      "side": 1,
+      "message": "Does this refer to the new MD notification views?",
+      "revId": "762f0dfd548f1368ce58818fa47d644d59c962bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19359c3c_68ec390c",
+        "filename": "ui/message_center/cocoa/notification_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-24T10:37:42Z",
+      "side": 1,
+      "message": "Does this mean that anyone using the Cocoa notifications (which can still be used through chrome://flags) will now crash? That\u0027s not great. Can we just leave the code as-is instead?",
+      "revId": "762f0dfd548f1368ce58818fa47d644d59c962bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87380533_34980bcd",
+        "filename": "ui/message_center/message_center_style.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-24T10:37:42Z",
+      "side": 1,
+      "message": "Please use width() instead of both left() and right().",
+      "revId": "762f0dfd548f1368ce58818fa47d644d59c962bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55cebc9f_ef687af9",
+        "filename": "ui/message_center/message_center_style.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-24T10:37:42Z",
+      "side": 1,
+      "message": "nit: constexpr",
+      "revId": "762f0dfd548f1368ce58818fa47d644d59c962bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d70f8162_70b056cb",
+        "filename": "ui/message_center/message_center_style.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-24T10:37:42Z",
+      "side": 1,
+      "message": "Please document that this assumes a container width of |kNotificationWidth|, minus the |border|.",
+      "revId": "762f0dfd548f1368ce58818fa47d644d59c962bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "779d383c_4f997421",
+        "filename": "ui/message_center/views/proportional_image_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-24T10:37:42Z",
+      "side": 1,
+      "message": "nit: max_size? To me, |scaled_size| implies that it\u0027s already appropriate to the image, causing some redundancy with |draw_size|.",
+      "revId": "762f0dfd548f1368ce58818fa47d644d59c962bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "636ab994_01447d3a",
+        "filename": "ui/message_center/views/proportional_image_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-24T10:37:42Z",
+      "side": 1,
+      "message": "\"hopefully that\u0027s faster\" doesn\u0027t sound like something that should be in a comment..",
+      "revId": "762f0dfd548f1368ce58818fa47d644d59c962bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2951bcfb_d4da5312",
+        "filename": "ui/message_center/views/proportional_image_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-24T10:37:42Z",
+      "side": 1,
+      "message": "Should we annotate that this indicates the *maximum* image size, like you did with the other method?",
+      "revId": "762f0dfd548f1368ce58818fa47d644d59c962bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd4f7983_cf0b76a0",
+        "filename": "ui/message_center/views/proportional_image_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-24T10:37:42Z",
+      "side": 1,
+      "message": "image_.size().IsEmpty -\u003e image_.IsEmpty()? iirc it\u0027s illegal to have NULL representations",
+      "revId": "762f0dfd548f1368ce58818fa47d644d59c962bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "938559e7_09f26d40",
+        "filename": "ui/message_center/views/proportional_image_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-24T10:37:42Z",
+      "side": 1,
+      "message": "Sounds like this would be clearer as a switch() statement, since you\u0027re effectively iterating over the values in the comment already.",
+      "revId": "762f0dfd548f1368ce58818fa47d644d59c962bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe3b0ce1_68eb9eed",
+        "filename": "ui/message_center/views/proportional_image_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-24T10:37:42Z",
+      "side": 1,
+      "message": "nit: prefer enum class. It would be good to document these types too.",
+      "revId": "762f0dfd548f1368ce58818fa47d644d59c962bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92a8e9bb_4a4099bc",
+        "filename": "ui/message_center/views/proportional_image_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-07-24T10:37:42Z",
+      "side": 1,
+      "message": "Why does this have to be public? nit: Calc -\u003e Calculate",
+      "revId": "762f0dfd548f1368ce58818fa47d644d59c962bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
