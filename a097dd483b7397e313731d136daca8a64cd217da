@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66c062ff_4bb10136",
+        "filename": "extensions/browser/api/messaging/extension_message_port.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-24T17:02:09Z",
+      "side": 1,
+      "message": "this can\u0027t be converted into a range-based for loop: https://stackoverflow.com/questions/20317068/can-we-erase-the-items-in-range-based-for-loop-in-c11",
+      "revId": "a097dd483b7397e313731d136daca8a64cd217da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "769fa777_43fe9b4f",
+        "filename": "extensions/browser/extension_message_filter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-24T17:02:09Z",
+      "side": 1,
+      "message": "these functions were moved from chrome_extension_message_filter.cc",
+      "revId": "a097dd483b7397e313731d136daca8a64cd217da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
