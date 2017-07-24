@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef994e18_63908651",
+        "filename": "chrome/installer/zucchini/main_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-24T20:22:50Z",
+      "side": 1,
+      "message": "Nit: remove extra to",
+      "range": {
+        "startLine": 27,
+        "startChar": 48,
+        "endLine": 27,
+        "endChar": 51
+      },
+      "revId": "bba7f82e3f7b284074609c5ad0ed03721cf3724d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a35b7ce6_437bb5f5",
+        "filename": "chrome/installer/zucchini/main_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-24T20:22:50Z",
+      "side": 1,
+      "message": "I would rather avoid using singleton, because of global state.\nSince we want to remove noise from unwanted operations (see comment in zucchini_main.cc), I would suggest the following:\n - Keep state as member data.\n - Explicitly make appropriate calls (start and finnish) from CommandRegistry::Run()",
+      "range": {
+        "startLine": 29,
+        "startChar": 6,
+        "endLine": 29,
+        "endChar": 27
+      },
+      "revId": "bba7f82e3f7b284074609c5ad0ed03721cf3724d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "903bdd64_1309561e",
+        "filename": "chrome/installer/zucchini/main_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-24T20:22:50Z",
+      "side": 1,
+      "message": "Not sure what chromium code style says, but I don\u0027t think std::unique_ptr is POD (it has a user-defined destructor).",
+      "range": {
+        "startLine": 44,
+        "startChar": 14,
+        "endLine": 44,
+        "endChar": 24
+      },
+      "revId": "bba7f82e3f7b284074609c5ad0ed03721cf3724d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62271dfc_40190d98",
+        "filename": "chrome/installer/zucchini/main_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-24T20:22:50Z",
+      "side": 1,
+      "message": "This can be private and called from constructor.",
+      "range": {
+        "startLine": 80,
+        "startChar": 7,
+        "endLine": 80,
+        "endChar": 18
+      },
+      "revId": "bba7f82e3f7b284074609c5ad0ed03721cf3724d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be6ffc75_6311d31c",
+        "filename": "chrome/installer/zucchini/main_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-24T20:22:50Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we return status::Code?",
+      "range": {
+        "startLine": 85,
+        "startChar": 2,
+        "endLine": 85,
+        "endChar": 6
+      },
+      "revId": "bba7f82e3f7b284074609c5ad0ed03721cf3724d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80c21944_954efe5e",
+        "filename": "chrome/installer/zucchini/zucchini_main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-24T20:22:50Z",
+      "side": 1,
+      "message": "I\u0027m ok with explicitly defining start time (instead of using base::CurrentProcessInfo::CreationTime()), but I feel like if we\u0027re trying to remove noise, it would make more sense to also explicitly define stop time (with a call to ResourceUsageTracker::finnish(), cancel would then be irrelevant), and to make those calls from CommandRegistry::Run.",
+      "range": {
+        "startLine": 56,
+        "startChar": 24,
+        "endLine": 56,
+        "endChar": 29
+      },
+      "revId": "bba7f82e3f7b284074609c5ad0ed03721cf3724d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
