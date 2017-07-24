@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e0caf30_864f9220",
+        "filename": "ui/app_list/views/search_box_view.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-24T19:28:17Z",
+      "side": 1,
+      "message": "Toggle?",
+      "range": {
+        "startLine": 97,
+        "startChar": 7,
+        "endLine": 97,
+        "endChar": 17
+      },
+      "revId": "f97f968612181f8f68ec105abb070952d739a58c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1cf3ddf_376182b7",
+        "filename": "ui/app_list/views/search_box_view.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-24T19:28:17Z",
+      "side": 1,
+      "message": "nit: Please move it to L113 to have getters in one place isolated.",
+      "range": {
+        "startLine": 136,
+        "startChar": 2,
+        "endLine": 137,
+        "endChar": 77
+      },
+      "revId": "f97f968612181f8f68ec105abb070952d739a58c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73600f08_9d4f8f55",
+        "filename": "ui/app_list/views/search_box_view.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-24T19:28:17Z",
+      "side": 1,
+      "message": "nit: tablet or rename is_tablet_mode.",
+      "range": {
+        "startLine": 200,
+        "startChar": 13,
+        "endLine": 200,
+        "endChar": 21
+      },
+      "revId": "f97f968612181f8f68ec105abb070952d739a58c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
