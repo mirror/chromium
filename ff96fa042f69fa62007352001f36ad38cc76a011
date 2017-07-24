@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d42cac3_0a5e550f",
+        "filename": "components/content_settings/core/common/content_settings_types.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-24T20:50:21Z",
+      "side": 1,
+      "message": "nit: s/hint/hints/",
+      "range": {
+        "startLine": 79,
+        "startChar": 44,
+        "endLine": 79,
+        "endChar": 48
+      },
+      "revId": "ff96fa042f69fa62007352001f36ad38cc76a011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4595f61_fee57346",
+        "filename": "components/content_settings/core/common/content_settings_types.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-24T20:50:21Z",
+      "side": 1,
+      "message": "Spec:",
+      "range": {
+        "startLine": 80,
+        "startChar": 30,
+        "endLine": 80,
+        "endChar": 46
+      },
+      "revId": "ff96fa042f69fa62007352001f36ad38cc76a011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47fc681b_0d2ef4ed",
+        "filename": "components/content_settings/core/common/content_settings_types.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-24T20:50:21Z",
+      "side": 1,
+      "message": "This is a bit unclear. Maybe including an example will be a good way to clarify it, as I think reading the spec shouldn\u0027t be required to understand the basic storage of this.",
+      "range": {
+        "startLine": 82,
+        "startChar": 62,
+        "endLine": 84,
+        "endChar": 30
+      },
+      "revId": "ff96fa042f69fa62007352001f36ad38cc76a011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
