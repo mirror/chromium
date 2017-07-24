@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c24fd078_49629996",
+        "filename": "chrome/installer/zucchini/main_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-24T22:02:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef994e18_63908651",
+      "range": {
+        "startLine": 27,
+        "startChar": 48,
+        "endLine": 27,
+        "endChar": 51
+      },
+      "revId": "bba7f82e3f7b284074609c5ad0ed03721cf3724d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a35b7ce6_437bb5f5",
         "filename": "chrome/installer/zucchini/main_utils.h",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f24c4c86_2c43c22c",
+        "filename": "chrome/installer/zucchini/main_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-24T22:02:50Z",
+      "side": 1,
+      "message": "Nice! Done.",
+      "parentUuid": "a35b7ce6_437bb5f5",
+      "range": {
+        "startLine": 29,
+        "startChar": 6,
+        "endLine": 29,
+        "endChar": 27
+      },
+      "revId": "bba7f82e3f7b284074609c5ad0ed03721cf3724d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "903bdd64_1309561e",
         "filename": "chrome/installer/zucchini/main_utils.h",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-24T20:22:50Z",
       "side": 1,
       "message": "Not sure what chromium code style says, but I don\u0027t think std::unique_ptr is POD (it has a user-defined destructor).",
+      "range": {
+        "startLine": 44,
+        "startChar": 14,
+        "endLine": 44,
+        "endChar": 24
+      },
+      "revId": "bba7f82e3f7b284074609c5ad0ed03721cf3724d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adb7f082_16c4a440",
+        "filename": "chrome/installer/zucchini/main_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-24T22:02:50Z",
+      "side": 1,
+      "message": "Removed now, but FYI \"static std::unique_ptr\" does appear quite a bit in Chromium source.",
+      "parentUuid": "903bdd64_1309561e",
       "range": {
         "startLine": 44,
         "startChar": 14,
@@ -117,6 +189,54 @@
     },
     {
       "key": {
+        "uuid": "0e7a8b73_8f032a9a",
+        "filename": "chrome/installer/zucchini/main_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-24T22:02:50Z",
+      "side": 1,
+      "message": "Ah I thought we should not use function pointers. But since we can, I\u0027m using it to reduce complexity involving base::Bind()!\n\nRe. static initialization: When I tried that (making ctor constexpr) I got:\n\n../../chrome/installer/zucchini/main_utils.cc(18): warning C4592: \u0027`anonymous-namespace\u0027::kCommandGen\u0027: symbol will be dynamically initialized (implementation l\nimitation)\n../../chrome/installer/zucchini/main_utils.cc(18): note: to simplify migration, consider the temporary use of /Wv:18 flag with the version of the compiler with\nwhich you used to build without warnings\n\nSo looks like we should not do this (yet)?",
+      "parentUuid": "156b6bf3_5d6e325a",
+      "range": {
+        "startLine": 49,
+        "startChar": 20,
+        "endLine": 49,
+        "endChar": 28
+      },
+      "revId": "bba7f82e3f7b284074609c5ad0ed03721cf3724d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "658b9f51_ee3027ad",
+        "filename": "chrome/installer/zucchini/main_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-24T22:02:50Z",
+      "side": 1,
+      "message": "Renamed to CommandFunction, and moved to zucchini_commands.h.  :)",
+      "parentUuid": "765eb3b9_67d5b5eb",
+      "range": {
+        "startLine": 49,
+        "startChar": 8,
+        "endLine": 49,
+        "endChar": 11
+      },
+      "revId": "bba7f82e3f7b284074609c5ad0ed03721cf3724d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd8f843b_e488d415",
         "filename": "chrome/installer/zucchini/main_utils.h",
         "patchSetId": 1
@@ -137,6 +257,30 @@
       "revId": "bba7f82e3f7b284074609c5ad0ed03721cf3724d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98232c68_ae43b277",
+        "filename": "chrome/installer/zucchini/main_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-24T22:02:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd8f843b_e488d415",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 18
+      },
+      "revId": "bba7f82e3f7b284074609c5ad0ed03721cf3724d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "60231a52_6c017de9",
+        "filename": "chrome/installer/zucchini/main_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-24T22:02:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62271dfc_40190d98",
+      "range": {
+        "startLine": 80,
+        "startChar": 7,
+        "endLine": 80,
+        "endChar": 18
+      },
+      "revId": "bba7f82e3f7b284074609c5ad0ed03721cf3724d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be6ffc75_6311d31c",
         "filename": "chrome/installer/zucchini/main_utils.h",
         "patchSetId": 1
@@ -183,6 +351,30 @@
       "revId": "bba7f82e3f7b284074609c5ad0ed03721cf3724d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28474856_8b086d96",
+        "filename": "chrome/installer/zucchini/main_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-24T22:02:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be6ffc75_6311d31c",
+      "range": {
+        "startLine": 85,
+        "startChar": 2,
+        "endLine": 85,
+        "endChar": 6
+      },
+      "revId": "bba7f82e3f7b284074609c5ad0ed03721cf3724d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "1596de24_5d2111c0",
+        "filename": "chrome/installer/zucchini/zucchini.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-24T22:02:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c79d044a_fe04b103",
+      "range": {
+        "startLine": 14,
+        "startChar": 12,
+        "endLine": 14,
+        "endChar": 18
+      },
+      "revId": "bba7f82e3f7b284074609c5ad0ed03721cf3724d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2dd0632_fae5e6e6",
         "filename": "chrome/installer/zucchini/zucchini_commands.cc",
         "patchSetId": 1
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "f302c5f9_e7eb8866",
+        "filename": "chrome/installer/zucchini/zucchini_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-24T22:02:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2dd0632_fae5e6e6",
+      "range": {
+        "startLine": 21,
+        "startChar": 11,
+        "endLine": 21,
+        "endChar": 17
+      },
+      "revId": "bba7f82e3f7b284074609c5ad0ed03721cf3724d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa97cef8_15a81226",
         "filename": "chrome/installer/zucchini/zucchini_commands.h",
         "patchSetId": 1
@@ -243,6 +483,30 @@
       "writtenOn": "2017-07-24T20:27:57Z",
       "side": 1,
       "message": "why the new namespace? why isn\u0027t this in the zucchini namespace?",
+      "range": {
+        "startLine": 21,
+        "startChar": 10,
+        "endLine": 21,
+        "endChar": 17
+      },
+      "revId": "bba7f82e3f7b284074609c5ad0ed03721cf3724d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14bd229a_98a161be",
+        "filename": "chrome/installer/zucchini/zucchini_commands.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-24T22:02:50Z",
+      "side": 1,
+      "message": "Not Zucchini namespace to be consistent with existing style (from Courgette), which uses zucchini namespace only for the library, and keep main() (e.g., stuff that Installer won\u0027t need) outside of Zucchini.\n\nUsing command namespace to keep command names short and without redundant qualifiers (e.g., CommandGen(), CommandApply()).\n\nLet me know if you want this changed!",
+      "parentUuid": "aa97cef8_15a81226",
       "range": {
         "startLine": 21,
         "startChar": 10,
@@ -295,6 +559,48 @@
     },
     {
       "key": {
+        "uuid": "d3ee7c19_11b36c89",
+        "filename": "chrome/installer/zucchini/zucchini_main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-24T22:02:50Z",
+      "side": 1,
+      "message": "Done. Also following etiennep@\u0027s recommendation to move it inside CommandRegistry::Run(), and now we won\u0027t need to expose it in the .h file!",
+      "parentUuid": "dd006551_6c52d7df",
+      "revId": "bba7f82e3f7b284074609c5ad0ed03721cf3724d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a4be86c2_55ea3792",
+        "filename": "chrome/installer/zucchini/zucchini_main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-24T22:02:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80c21944_954efe5e",
+      "range": {
+        "startLine": 56,
+        "startChar": 24,
+        "endLine": 56,
+        "endChar": 29
+      },
+      "revId": "bba7f82e3f7b284074609c5ad0ed03721cf3724d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50a19fa3_d01c6e5f",
         "filename": "chrome/installer/zucchini/zucchini_main.cc",
         "patchSetId": 1
@@ -315,6 +621,30 @@
       "revId": "bba7f82e3f7b284074609c5ad0ed03721cf3724d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9811985_2e43b09a",
+        "filename": "chrome/installer/zucchini/zucchini_main.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-24T22:02:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50a19fa3_d01c6e5f",
+      "range": {
+        "startLine": 57,
+        "startChar": 7,
+        "endLine": 57,
+        "endChar": 10
+      },
+      "revId": "bba7f82e3f7b284074609c5ad0ed03721cf3724d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
