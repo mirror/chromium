@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9cb6c346_10b9fd56",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-07-24T15:51:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c751510e_adddaced",
+      "range": {
+        "startLine": 176,
+        "startChar": 20,
+        "endLine": 176,
+        "endChar": 45
+      },
+      "revId": "c4710f1dd509858ac04e8d245163347094fb7b82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "235b30bf_90dc32be",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-21T23:30:30Z",
       "side": 1,
       "message": "This doesn\u0027t seem like the right place to do this. We probably only want to do this if we know that the user is backgrounding Chrome and going back to Daydream. For example, what happens when the user hits the app button, or takes off their headset and exits VR? We probably want to preserve the tab in that case?",
+      "range": {
+        "startLine": 1521,
+        "startChar": 16,
+        "endLine": 1521,
+        "endChar": 41
+      },
+      "revId": "c4710f1dd509858ac04e8d245163347094fb7b82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44edf187_0b535357",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1521,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-07-24T15:51:16Z",
+      "side": 1,
+      "message": "changed to only close tab if we are not stayingInChrome and autopresent after destory vr shell.",
+      "parentUuid": "235b30bf_90dc32be",
       "range": {
         "startLine": 1521,
         "startChar": 16,
