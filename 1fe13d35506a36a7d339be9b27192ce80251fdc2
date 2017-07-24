@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1be1ba85_d7d3c352",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-24T21:24:43Z",
+      "side": 1,
+      "message": "Can we add UIElement::FindElementWithId() instead? So you don\u0027t need to add the ForView/ForWidget/ForWindow etc. functions here?",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1665753_ba56ed82",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-24T21:24:43Z",
+      "side": 1,
+      "message": "early-out/early-continue where possible.",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
