@@ -5194,12 +5194,25 @@ error::Error GLES2DecoderImpl::HandleResizeCHROMIUM(
   GLuint width = static_cast<GLuint>(c.width);
   GLuint height = static_cast<GLuint>(c.height);
   GLfloat scale_factor = c.scale_factor;
+  GLenum color_space = c.color_space;
   GLboolean has_alpha = c.alpha;
   TRACE_EVENT2("gpu", "glResizeChromium", "width", width, "height", height);
 
   width = std::max(1U, width);
   height = std::max(1U, height);
 
+  // TODO(ccameron): Plumb this argument through to the GLSurface.
+  switch (color_space) {
+    case GL_COLOR_SPACE_UNSPECIFIED_CHROMIUM:
+    case GL_COLOR_SPACE_SCRGB_LINEAR_CHROMIUM:
+    case GL_COLOR_SPACE_SRGB_CHROMIUM:
+    case GL_COLOR_SPACE_DISPLAY_P3_CHROMIUM:
+      break;
+    default:
+      LOG(ERROR) << "GLES2DecoderImpl: Context lost because specified color"
+                 << "space was invalid.";
+      return error::kLostContext;
+  }
   bool is_offscreen = !!offscreen_target_frame_buffer_.get();
   if (is_offscreen) {
     if (!ResizeOffscreenFramebuffer(gfx::Size(width, height))) {

@@ -2944,19 +2944,33 @@ error::Error GLES2DecoderPassthroughImpl::DoUnmapBuffer(GLenum target) {
 error::Error GLES2DecoderPassthroughImpl::DoResizeCHROMIUM(GLuint width,
                                                            GLuint height,
                                                            GLfloat scale_factor,
+                                                           GLenum color_space,
                                                            GLboolean alpha) {
+  // TODO(ccameron): Plumb this argument through to the GLSurface.
+  switch (color_space) {
+    case GL_COLOR_SPACE_UNSPECIFIED_CHROMIUM:
+    case GL_COLOR_SPACE_SCRGB_LINEAR_CHROMIUM:
+    case GL_COLOR_SPACE_SRGB_CHROMIUM:
+    case GL_COLOR_SPACE_DISPLAY_P3_CHROMIUM:
+      break;
+    default:
+      LOG(ERROR) << "GLES2DecoderPassthroughImpl: Context lost because "
+                    "specified color space was invalid.";
+      return error::kLostContext;
+  }
   if (offscreen_) {
     // TODO: crbug.com/665521
     NOTIMPLEMENTED();
   } else {
     if (!surface_->Resize(gfx::Size(width, height), scale_factor, !!alpha)) {
-      LOG(ERROR) << "GLES2DecoderImpl: Context lost because resize failed.";
+      LOG(ERROR)
+          << "GLES2DecoderPassthroughImpl: Context lost because resize failed.";
       return error::kLostContext;
     }
     DCHECK(context_->IsCurrent(surface_.get()));
     if (!context_->IsCurrent(surface_.get())) {
-      LOG(ERROR) << "GLES2DecoderImpl: Context lost because context no longer "
-                 << "current after resize callback.";
+      LOG(ERROR) << "GLES2DecoderPassthroughImpl: Context lost because context "
+                    "no longer current after resize callback.";
       return error::kLostContext;
     }
   }
