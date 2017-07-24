@@ -15,6 +15,8 @@ enum {
   kAndroidChrome100PercentPakDescriptor,
   kAndroidUIResourcesPakDescriptor,
   kAndroidMinidumpDescriptor,
+
+  kAndroidMaxDescriptor,  // Ensure this is last.
 #endif
 };
 

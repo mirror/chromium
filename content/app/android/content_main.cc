@@ -32,6 +32,7 @@ LazyInstance<std::unique_ptr<ContentMainDelegate>>::DestructorAtExit
 
 static jint Start(JNIEnv* env, const JavaParamRef<jclass>& clazz) {
   TRACE_EVENT0("startup", "content::Start");
+  LOG(ERROR) << " Java started something";
 
   DCHECK(!g_service_manager_main_delegate.Get());
   g_service_manager_main_delegate.Get() =

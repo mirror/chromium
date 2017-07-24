@@ -31,6 +31,7 @@ MemlogSenderPipe* memlog_sender_pipe = nullptr;
 void InitMemlogSenderIfNecessary() {
   const base::CommandLine& cmdline = *base::CommandLine::ForCurrentProcess();
   std::string pipe_id = cmdline.GetSwitchValueASCII(switches::kMemlogPipe);
+    LOG(ERROR) << "**--**--**--**--**--**~~~ Android memlogdata sender triggered.";
   if (!pipe_id.empty()) {
 #if defined(OS_WIN)
     StartMemlogSender(pipe_id);

@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#error hi mom
 #include <stdint.h>
 
 #include "base/callback_helpers.h"
@@ -108,20 +109,27 @@ int ChromeMain(int argc, const char** argv) {
   }
 #endif  // defined(OS_LINUX) || defined(OS_MACOSX) || defined(OS_WIN)
 
+  LOG(ERROR) << "**--**--**--**--**--**~~~ Profiling sanity test";
 #if BUILDFLAG(ENABLE_OOP_HEAP_PROFILING)
+  LOG(ERROR) << "**--**--**--**--**--**~~~ Profiling OOP HEAP ifdef triggered";
 #if !defined(OS_WIN) || defined(COMPONENT_BUILD) || \
     defined(CHROME_MULTIPLE_DLL_BROWSER)
+  LOG(ERROR) << "**--**--**--**--**--**~~~ Profiling OOP HEAP browser switch check running";
   // The profiling server is only compiled into the browser process. On Windows,
   // non-component builds, browser code is only used for
   // CHROME_MULTIPLE_DLL_BROWSER.
-  if (command_line->HasSwitch(switches::kMemlog))
+  if (command_line->HasSwitch(switches::kMemlog)) {
     profiling::ProfilingProcessHost::EnsureStarted();
+  }
 #endif
+  LOG(ERROR) << "**--**--**--**--**--**~~~ Profiling OOP HEAP child switch check";
   // The profiling process. This is a child process type implemented at the
   // Chrome layer rather than the content layer (like the other child procs.).
   if (command_line->GetSwitchValueASCII(switches::kProcessType) ==
-      switches::kProfiling)
+      switches::kProfiling) {
+    LOG(ERROR) << "**--**--**--**--**--**~~~ Profiling OOP Profiling process starting.";
     return profiling::ProfilingMain(*command_line);
+  }
 #endif  // ENABLE_OOP_HEAP_PROFILING
 
 #if defined(OS_CHROMEOS) && BUILDFLAG(ENABLE_PACKAGE_MASH_SERVICES)

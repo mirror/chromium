@@ -21,6 +21,16 @@
 #include "content/browser/media/android/browser_media_player_manager.h"
 #include "content/public/browser/browser_main_runner.h"
 
+#include "chrome/common/features.h"
+
+#if BUILDFLAG(ENABLE_OOP_HEAP_PROFILING)
+#include "base/command_line.h"
+#include "chrome/browser/profiling_host/profiling_process_host.h"
+#include "chrome/common/chrome_switches.h"
+#include "chrome/profiling/profiling_main.h"
+#include "content/public/common/content_switches.h"
+#endif
+
 using safe_browsing::SafeBrowsingApiHandler;
 
 namespace {
@@ -50,6 +60,20 @@ bool ChromeMainDelegateAndroid::BasicStartupComplete(int* exit_code) {
   SetChromeSpecificCommandLineFlags();
   content::BrowserMediaPlayerManager::RegisterFactory(
       &CreateRemoteMediaPlayerManager);
+
+#if BUILDFLAG(ENABLE_OOP_HEAP_PROFILING)
+  const base::CommandLine& cmdline = *base::CommandLine::ForCurrentProcess();
+  LOG(ERROR) << "Android **--**--**--**--**--**~~~ Startup: " << cmdline.GetCommandLineString();
+  if (cmdline.HasSwitch(switches::kMemlog)) {
+    LOG(ERROR) << "**--**--**--**--**--**~~~ PPH:EnsureStarted() called .";
+    profiling::ProfilingProcessHost::EnsureStarted();
+  } else if (cmdline.GetSwitchValueASCII(switches::kProcessType) ==
+      switches::kProfiling) {
+    LOG(ERROR) << "Android **--**--**--**--**--**~~~ Profiling OOP Profiling process starting.";
+    *exit_code = profiling::ProfilingMain(cmdline);
+    return true;  // Terminate after this always.
+  }
+#endif
 
   return ChromeMainDelegate::BasicStartupComplete(exit_code);
 }

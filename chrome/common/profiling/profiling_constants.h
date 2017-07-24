@@ -8,7 +8,11 @@
 #include "build/build_config.h"
 
 #if defined(OS_POSIX)
+#if defined(OS_ANDROID)
+#include "chrome/common/descriptors_android.h"
+#else
 #include "content/public/common/content_descriptors.h"
+#endif
 #endif
 
 namespace profiling {
@@ -20,7 +24,11 @@ extern const char kProfilingControlPipeName[];
 // TODO(ajwong): Hack! This should be located in something
 // global to the chrome module.
 enum {
+#if defined(OS_ANDROID)
+  kProfilingDataPipe = kAndroidMaxDescriptor + 1,
+#else
   kProfilingDataPipe = kContentIPCDescriptorMax + 1,
+#endif
 };
 #endif
 

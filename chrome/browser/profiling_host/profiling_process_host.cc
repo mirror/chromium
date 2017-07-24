@@ -4,9 +4,11 @@
 
 #include "chrome/browser/profiling_host/profiling_process_host.h"
 
+#include "base/bind.h"
 #include "base/command_line.h"
 #include "base/path_service.h"
 #include "base/process/launch.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "base/strings/string_number_conversions.h"
 #include "build/build_config.h"
 #include "chrome/common/chrome_switches.h"
@@ -18,14 +20,7 @@
 #include "mojo/edk/embedder/platform_channel_pair.h"
 #include "mojo/public/cpp/system/platform_handle.h"
 
-#if defined(OS_LINUX)
-#include <fcntl.h>
-#include <stddef.h>
-#include <stdint.h>
-#include <sys/socket.h>
-#include <sys/types.h>
-#include <unistd.h>
-
+#if defined(OS_POSIX)
 #include "base/files/scoped_file.h"
 #include "base/process/process_metrics.h"
 #include "base/third_party/valgrind/valgrind.h"
@@ -38,6 +33,8 @@ namespace profiling {
 namespace {
 
 ProfilingProcessHost* pph_singleton = nullptr;
+
+std::atomic_int num_pipes_created{0};
 
 #if defined(OS_LINUX)
 bool IsRunningOnValgrind() {
@@ -131,6 +128,8 @@ void ProfilingProcessHost::GetAdditionalMappedFilesForChildProcess(
 
   pph->EnsureControlChannelExists();
 
+  LOG(ERROR) << "Num data pipes created: " <<
+             num_pipes_created.fetch_add(1, std::memory_order_relaxed);
   mojo::edk::PlatformChannelPair data_channel;
   mappings->Transfer(
       kProfilingDataPipe,
@@ -149,48 +148,42 @@ void ProfilingProcessHost::Launch() {
   mojo::edk::PlatformChannelPair control_channel;
   mojo::edk::HandlePassingInformation handle_passing_info;
 
-// TODO(brettw) most of this logic can be replaced with PlatformChannelPair.
-
-#if defined(OS_WIN)
-  base::Process process = base::Process::Current();
-  pipe_id_ = base::IntToString(static_cast<int>(process.Pid()));
-  base::CommandLine profiling_cmd = MakeProfilingCommandLine(pipe_id_);
-#else
-
   // Create the socketpair for the low level memlog pipe.
-  // TODO(ajwong): Should this use base/posix/unix_domain_socket_linux.h?
-  int memlog_fds[2];
-  PCHECK(socketpair(AF_UNIX, SOCK_STREAM, 0, memlog_fds) == 0);
-  PCHECK(fcntl(memlog_fds[0], F_SETFL, O_NONBLOCK) == 0);
-  PCHECK(fcntl(memlog_fds[1], F_SETFL, O_NONBLOCK) == 0);
+  mojo::edk::PlatformChannelPair data_channel;
+  pipe_id_ = data_channel.PrepareToPassClientHandleToChildProcessAsString(
+      &handle_passing_info);
 
-  // Store one end for our message sender to use.
-  base::ScopedFD child_end(memlog_fds[1]);
-  // TODO(brettw) need to get rid of pipe_id when we can share over Mojo.
-  pipe_id_ = base::IntToString(memlog_fds[0]);
+  mojo::edk::ScopedPlatformHandle child_end = data_channel.PassClientHandle();
 
-  handle_passing_info.emplace_back(child_end.get(), child_end.get());
-  base::CommandLine profiling_cmd =
-      MakeProfilingCommandLine(base::IntToString(child_end.get()));
-#endif
+  base::CommandLine profiling_cmd = MakeProfilingCommandLine(pipe_id_);
 
   // Keep the server handle, pass the client handle to the child.
   pending_control_connection_ = control_channel.PassServerHandle();
+  /*
   control_channel.PrepareToPassClientHandleToChildProcess(&profiling_cmd,
                                                           &handle_passing_info);
+                                                          */
+  mojo::edk::ScopedPlatformHandle control_child_end = control_channel.PassClientHandle();
+  handle_passing_info.push_back(
+      std::pair<int, int>(control_child_end.get().handle, 20003));
 
   base::LaunchOptions options;
 #if defined(OS_WIN)
   options.handles_to_inherit = &handle_passing_info;
 #elif defined(OS_POSIX)
   options.fds_to_remap = &handle_passing_info;
+#if defined(OS_LINUX)
   options.kill_on_parent_death = true;
+#endif
 #else
 #error Unsupported OS.
 #endif
 
+  LOG(ERROR) << "PPH Launch **--**--**--**--**--**~~~ " << profiling_cmd.GetCommandLineString();
   process_ = base::LaunchProcess(profiling_cmd, options);
-  StartMemlogSender(pipe_id_);
+  CHECK(process_.IsValid());
+  StartMemlogSender(
+      base::IntToString(data_channel.PassServerHandle().release().handle));
 }
 
 void ProfilingProcessHost::EnsureControlChannelExists() {

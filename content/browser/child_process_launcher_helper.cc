@@ -63,6 +63,7 @@ ChildProcessLauncherHelper::ChildProcessLauncherHelper(
       delegate_(std::move(delegate)),
       child_process_launcher_(child_process_launcher),
       terminate_on_shutdown_(terminate_on_shutdown) {
+    LOG(ERROR) << "**--**--**--**--**--**~~~ " << command_line_->GetCommandLineString();
 }
 
 ChildProcessLauncherHelper::~ChildProcessLauncherHelper() {
