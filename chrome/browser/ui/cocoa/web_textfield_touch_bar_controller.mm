@@ -8,13 +8,52 @@
 #include "base/mac/sdk_forward_declarations.h"
 #import "chrome/browser/ui/cocoa/autofill/autofill_popup_view_cocoa.h"
 #import "chrome/browser/ui/cocoa/tab_contents/tab_contents_controller.h"
+#include "content/public/browser/focused_node_details.h"
+#include "content/public/browser/notification_observer.h"
+#include "content/public/browser/notification_registrar.h"
+#include "content/public/browser/notification_service.h"
+#include "content/public/browser/notification_source.h"
+#include "content/public/browser/notification_types.h"
+#include "content/public/browser/web_contents.h"
 #import "ui/base/cocoa/touch_bar_util.h"
+
+class WebTextfieldTouchBarBridgeObserver
+    : public content::NotificationObserver {
+ public:
+  WebTextfieldTouchBarBridgeObserver(WebTextfieldTouchBarController* owner,
+                                     content::WebContents* contents) {
+    owner_ = owner;
+    contents_ = content;
+    registrar_.Add(this, content::NOTIFICATION_FOCUS_CHANGED_IN_PAGE,
+                   content::NotificationService::AllSources());
+  }
+
+  void set_contents(contents::WebContents* contents) {
+    contents_ = contents;
+  }
+
+  void Observe(int type,
+               const content::NotificationSource& source,
+               const content::NotificationDetails& details) override {
+    DCHECK_EQ(type, content::NOTIFICATION_FOCUS_CHANGED_IN_PAGE);
+    content::FocusedNodeDetails* node_details =
+        content::Details<content::FocusedNodeDetails>(details).ptr();
+    if (node_details->is_editable_node) {
+    }
+  }
+
+ private:
+  WebTextfieldTouchBarController* owner_;
+  WebContents* contents_;
+  content::NotificationRegistrar registrar_;
+};
 
 @implementation WebTextfieldTouchBarController
 
 - (instancetype)initWithTabContentsController:(TabContentsController*)owner {
   if ((self = [self init])) {
     owner_ = owner;
+    observer_.reset(new WebTextfieldTouchBarController(self, nullptr));
   }
 
   return self;
@@ -34,11 +73,7 @@
     [owner_ performSelector:@selector(setTouchBar:) withObject:nil];
 }
 
-- (void)popupWindowWillClose:(NSNotification*)notif {
-  popupView_ = nil;
-
-  if ([owner_ respondsToSelector:@selector(setTouchBar:)])
-    [owner_ performSelector:@selector(setTouchBar:) withObject:nil];
+- (void)changeWebContents:(content::WebContents*)contents {
 }
 
 - (NSTouchBar*)makeTouchBar {
@@ -46,6 +81,13 @@
     return [popupView_ makeTouchBar];
 
   return nil;
+}
+
+- (void)popupWindowWillClose:(NSNotification*)notif {
+  popupView_ = nil;
+
+  if ([owner_ respondsToSelector:@selector(setTouchBar:)])
+    [owner_ performSelector:@selector(setTouchBar:) withObject:nil];
 }
 
 @end
