@@ -70,6 +70,30 @@
       "revId": "20d141568dbb82ee7e594cc7050b6f867863004b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91d6ddf9_70480a47",
+        "filename": "third_party/WebKit/LayoutTests/fast/forms/week-multiple-fields/week-multiple-fields-mouse-events-expected.txt",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1207755
+      },
+      "writtenOn": "2017-07-24T08:51:43Z",
+      "side": 1,
+      "message": "It looks like we can remove html.css\u0027s explicit styling of user-select all together? `auto` does the right thing because of each element\u0027s CanStartSelection(). I try this in PS13.\n\nFor example, HTMLButtonElement::CanStartSelection() returns false so input[type\u003d\"button\"] no longer needs to explicitly set |-webkit-user-select: none|.",
+      "parentUuid": "a16226f9_a974942e",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 4
+      },
+      "revId": "20d141568dbb82ee7e594cc7050b6f867863004b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
