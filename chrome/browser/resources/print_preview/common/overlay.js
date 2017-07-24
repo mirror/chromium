@@ -71,9 +71,9 @@ cr.define('print_preview', function() {
         return;
       if (isVisible) {
         setIsVisible(this.getElement(), true);
-        setTimeout(function(element) {
+        setTimeout(element => {
           element.classList.remove('transparent');
-        }.bind(this, this.getElement()), 0);
+        }, 0);
       } else {
         this.getElement().classList.add('transparent');
       }
