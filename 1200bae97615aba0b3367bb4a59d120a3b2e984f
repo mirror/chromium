@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3b0c6624_8bdd91d2",
+        "filename": "third_party/WebKit/Source/core/dom/TaskRunnerHelper.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-24T02:15:58Z",
+      "side": 1,
+      "message": "Without this change, TaskRunnerHelper::Get(main_thread_worklet_global_scope) hits an assertion failure (NOTREACHED) at global_scope-\u003eGetThread() because MainThreadWorkletGlobalScope lives on the main thread and it\u0027s not allowed to call MainThreadWorkletGlobalScope::GetThread().\n\nThis fix is necessary for this CL, but it\u0027s orthogonal. I made a separate change:\nhttps://chromium-review.googlesource.com/c/582055/",
+      "parentUuid": "ddf725c6_4d07be41",
+      "revId": "1200bae97615aba0b3367bb4a59d120a3b2e984f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e44924de_bdb5daad",
         "filename": "third_party/WebKit/Source/core/workers/MainThreadWorkletGlobalScope.cpp",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-23T12:22:13Z",
       "side": 1,
       "message": "Why kUnspecedLoading?",
+      "revId": "1200bae97615aba0b3367bb4a59d120a3b2e984f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "032364ed_111de1f1",
+        "filename": "third_party/WebKit/Source/core/workers/MainThreadWorkletGlobalScope.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-24T02:15:58Z",
+      "side": 1,
+      "message": "Because this is a part of script loading and this behavior is not explicitly spec\u0027ed. Also, Worklet::addModule() uses the same type[1]. I added a justification comment here.\n\n[1] https://chromium.googlesource.com/chromium/src/+/46cafe7d660547ee91b66e4f001c49a32216a6ea/third_party/WebKit/Source/core/workers/Worklet.cpp#79",
+      "parentUuid": "e44924de_bdb5daad",
       "revId": "1200bae97615aba0b3367bb4a59d120a3b2e984f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e1e68c64_37e633b1",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMapProxy.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-24T02:15:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4f9a7a6_0bd488f8",
+      "revId": "1200bae97615aba0b3367bb4a59d120a3b2e984f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a9494ba_e1e2db14",
         "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMapProxy.h",
         "patchSetId": 6
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-23T12:22:13Z",
       "side": 1,
       "message": "Wrap ctor via Create?",
+      "revId": "1200bae97615aba0b3367bb4a59d120a3b2e984f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aed8e366_35661308",
+        "filename": "third_party/WebKit/Source/core/workers/WorkletModuleResponsesMapProxy.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-24T02:15:58Z",
+      "side": 1,
+      "message": "Done.\n\nQuestion: Why do you prefer Create() to bare ctor? Is that because Create() clarifies memory model of the returned instance, that is, std::unique_ptr vs gc-managed? I\u0027m curious about this because I have preferably used bare ctor to slim down the code.",
+      "parentUuid": "7a9494ba_e1e2db14",
       "revId": "1200bae97615aba0b3367bb4a59d120a3b2e984f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "1200bae97615aba0b3367bb4a59d120a3b2e984f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23dc8180_93297c17",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/FetchParameters.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-24T02:15:58Z",
+      "side": 1,
+      "message": "This change is for introducing WorkletModuleScriptFetcher and is not necessary yet. Removed.",
+      "parentUuid": "3f3a037a_5f4433ce",
+      "revId": "1200bae97615aba0b3367bb4a59d120a3b2e984f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
