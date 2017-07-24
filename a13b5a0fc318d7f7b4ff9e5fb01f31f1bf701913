@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "71930a9e_aaf09a70",
+        "filename": "chrome/installer/zucchini/main_utils.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-24T19:06:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4fe9f37_32a3a5f5",
+      "revId": "a13b5a0fc318d7f7b4ff9e5fb01f31f1bf701913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b93e23fb_81039549",
         "filename": "chrome/installer/zucchini/main_utils.cc",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "175b4168_f5ac336c",
+        "filename": "chrome/installer/zucchini/main_utils.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-24T19:06:17Z",
+      "side": 1,
+      "message": "Done. Picked the latter.",
+      "parentUuid": "b93e23fb_81039549",
+      "revId": "a13b5a0fc318d7f7b4ff9e5fb01f31f1bf701913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "547c2993_cfec70f1",
         "filename": "chrome/installer/zucchini/main_utils.cc",
         "patchSetId": 10
@@ -47,6 +83,30 @@
       "writtenOn": "2017-07-24T10:21:16Z",
       "side": 1,
       "message": "base/process/process_info.h defines base::CurrentProcessInfo::CreationTime(), which returns the OS-provided process creation time. is it appropriate to use that rather than try to figure it out on your own? you wouldn\u0027t need to get/cache this during startup; just call CreationTime() in the dtor.\n\ncan you use AtExitManager to run the code you currently have in the dtor rather than relying on stack-unwind in main()?",
+      "range": {
+        "startLine": 37,
+        "startChar": 59,
+        "endLine": 37,
+        "endChar": 76
+      },
+      "revId": "a13b5a0fc318d7f7b4ff9e5fb01f31f1bf701913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73079e3e_b6c4f07d",
+        "filename": "chrome/installer/zucchini/main_utils.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-24T19:06:17Z",
+      "side": 1,
+      "message": "Testing with no-op Zucchini. Manual timekeeping led to Zuchcini.TotalTime of ~6e-05 s. Using CreationTime() yields ~0.02 s. The latter adds noise to our values, so I\u0027d prefer to use the old way.\n\nBut this means we\u0027ll have to keep state. For simplicity, I\u0027m going with making ResourceUsageTracker singleton-like and consists only of static functions and states.",
+      "parentUuid": "547c2993_cfec70f1",
       "range": {
         "startLine": 37,
         "startChar": 59,
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "3ffb8403_cf8918dc",
+        "filename": "chrome/installer/zucchini/main_utils.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-24T19:06:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22c26823_17f91cbb",
+      "revId": "a13b5a0fc318d7f7b4ff9e5fb01f31f1bf701913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a808ea9f_2cb5a9d4",
         "filename": "chrome/installer/zucchini/main_utils.cc",
         "patchSetId": 10
@@ -87,6 +165,24 @@
       "writtenOn": "2017-07-24T10:21:16Z",
       "side": 1,
       "message": "static initializers are banned in Chromium. please remove these. one way would be to change to something like this in main:\n\n  registry.Register(base::MakeUnique\u003cCommand\u003e(\"gen\", ...));\n\nso that the registry owns the various command instances.",
+      "revId": "a13b5a0fc318d7f7b4ff9e5fb01f31f1bf701913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cbd722c_df3eda19",
+        "filename": "chrome/installer/zucchini/main_utils.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-24T19:06:17Z",
+      "side": 1,
+      "message": "Rather than injecting commands from main(), I chose to do so within CommandRegistry itself.\n\nAlso extracting the commands to a separate file to declutter.",
+      "parentUuid": "a808ea9f_2cb5a9d4",
       "revId": "a13b5a0fc318d7f7b4ff9e5fb01f31f1bf701913",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "242b5652_35667476",
+        "filename": "chrome/installer/zucchini/main_utils.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-24T19:06:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5d40d83_720d4601",
+      "revId": "a13b5a0fc318d7f7b4ff9e5fb01f31f1bf701913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d304fdc0_7fad354a",
         "filename": "chrome/installer/zucchini/zucchini_main.cc",
         "patchSetId": 10
@@ -124,6 +238,24 @@
       "revId": "a13b5a0fc318d7f7b4ff9e5fb01f31f1bf701913",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a45fd065_81eef9b3",
+        "filename": "chrome/installer/zucchini/zucchini_main.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-24T19:06:17Z",
+      "side": 1,
+      "message": "Done (no CrashPad yet though).",
+      "parentUuid": "d304fdc0_7fad354a",
+      "revId": "a13b5a0fc318d7f7b4ff9e5fb01f31f1bf701913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "61065840_63200249",
+        "filename": "chrome/installer/zucchini/zucchini_main.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-24T19:06:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c3821a5_77f8316b",
+      "revId": "a13b5a0fc318d7f7b4ff9e5fb01f31f1bf701913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00655da2_6b0f7215",
         "filename": "chrome/installer/zucchini/zucchini_main.cc",
         "patchSetId": 10
@@ -158,6 +308,24 @@
       "revId": "a13b5a0fc318d7f7b4ff9e5fb01f31f1bf701913",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1703aebc_66befd40",
+        "filename": "chrome/installer/zucchini/zucchini_main.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-24T19:06:17Z",
+      "side": 1,
+      "message": "Done. Added zucchini.h to set up error code.",
+      "parentUuid": "00655da2_6b0f7215",
+      "revId": "a13b5a0fc318d7f7b4ff9e5fb01f31f1bf701913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
