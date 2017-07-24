@@ -95,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "96fd31a0_dd0d105e",
+        "filename": "components/ntp_snippets/remote/remote_suggestion.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-24T13:12:03Z",
+      "side": 1,
+      "message": "Ah, thanks for the pointer, Vitalii!",
+      "parentUuid": "66d03a48_57556988",
+      "range": {
+        "startLine": 297,
+        "startChar": 37,
+        "endLine": 297,
+        "endChar": 53
+      },
+      "revId": "d153238365a8f30dcb4863cd2ee7f239f3b77180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "266fdfee_1b96d3fe",
         "filename": "components/ntp_snippets/remote/remote_suggestion.cc",
         "patchSetId": 4
