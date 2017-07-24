@@ -16,6 +16,24 @@
       "revId": "0e652f84b36fdef0def8961f9cb44695170acf54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8b944ea_bfac83ff",
+        "filename": "third_party/WebKit/Source/modules/payments/AbortPaymentRespondWithObserver.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-07-24T12:23:41Z",
+      "side": 1,
+      "message": "The exception can happen when this line is executed.\nIf I\u0027m missing something, please correct me! :)",
+      "parentUuid": "799005c2_7be30ef4",
+      "revId": "0e652f84b36fdef0def8961f9cb44695170acf54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
