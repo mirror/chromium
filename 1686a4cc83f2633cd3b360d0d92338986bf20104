@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3096be19_d7c84e75",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-24T08:21:20Z",
+      "side": 1,
+      "message": "For less characters.\n\nYes, placing foo.bar() as an argument sometimes make it better to understand. But here it doesn\u0027t for me. This method has so many characters and arrows. Except for the place we\u0027re calling Context().PrepareRequest() and Context().DispatchWillSendRequest() where having new_url and original_url might be confusing, new_url is shorter and just works well to indicate what it means. Given your suggestion, I\u0027ve moved the code to save it to L296 and it made it ok to use this alias here.\n\nAlso, for a little longer term, I\u0027m trying to make this code stop using the way that WebURLLoaderImpl creates a WebURLRequest with new URL and then ResourceLoader::WillFollowRedirect() uses it. This method should just take what\u0027s on the redirect IPC than the uselessly big WebURLRequest. I\u0027m driven by the vision to eliminate reference on new_request where possible.",
+      "parentUuid": "78ba4ab2_4408eca0",
+      "revId": "1686a4cc83f2633cd3b360d0d92338986bf20104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6971dee7_09072e00",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "1686a4cc83f2633cd3b360d0d92338986bf20104",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "734c8842_0df963dd",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-24T08:21:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6971dee7_09072e00",
+      "revId": "1686a4cc83f2633cd3b360d0d92338986bf20104",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
