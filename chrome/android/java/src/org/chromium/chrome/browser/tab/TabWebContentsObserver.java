@@ -210,17 +210,18 @@ public class TabWebContentsObserver extends WebContentsObserver {
         }
 
         if (!hasCommitted) return;
-        if (isInMainFrame && UmaUtils.hasComeToForeground()) {
+        if (isInMainFrame && UmaUtils.hasComeToForeground()
+                && UmaUtils.isRunningApplicationStart()) {
             // Current median is 550ms, and long tail is very long. ZoomedIn gives good view of the
             // median and ZoomedOut gives a good overview.
             RecordHistogram.recordCustomTimesHistogram(
-                    "Startup.FirstCommitNavigationTime3.ZoomedIn",
+                    "Startup.FirstCommitNavigationTime4.ZoomedIn",
                     SystemClock.uptimeMillis() - UmaUtils.getForegroundStartTime(), 200, 1000,
                     TimeUnit.MILLISECONDS, 100);
             // For ZoomedOut very rarely is it under 50ms and this range matches
             // CustomTabs.IntentToFirstCommitNavigationTime2.ZoomedOut.
             RecordHistogram.recordCustomTimesHistogram(
-                    "Startup.FirstCommitNavigationTime3.ZoomedOut",
+                    "Startup.FirstCommitNavigationTime4.ZoomedOut",
                     SystemClock.uptimeMillis() - UmaUtils.getForegroundStartTime(), 50,
                     TimeUnit.MINUTES.toMillis(10), TimeUnit.MILLISECONDS, 50);
             UmaUtils.setRunningApplicationStart(false);
