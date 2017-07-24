@@ -12,6 +12,8 @@
 #include <signal.h>
 #include <sys/param.h>
 
+#include <algorithm>
+
 #include "base/command_line.h"
 #include "base/compiler_specific.h"
 #include "base/files/file_util.h"
@@ -50,18 +52,19 @@ bool gSandboxIsActive = false;
 struct SandboxTypeToResourceIDMapping {
   SandboxType sandbox_type;
   int sandbox_profile_resource_id;
+  bool prepend_common;
 };
 
 // Mapping from sandbox process types to resource IDs containing the sandbox
 // profile for all process types known to content.
 // TODO(tsepez): Implement profile for SANDBOX_TYPE_NETWORK.
 SandboxTypeToResourceIDMapping kDefaultSandboxTypeToResourceIDMapping[] = {
-    {SANDBOX_TYPE_NO_SANDBOX, -1},
-    {SANDBOX_TYPE_RENDERER, IDR_RENDERER_SANDBOX_PROFILE},
-    {SANDBOX_TYPE_UTILITY, IDR_UTILITY_SANDBOX_PROFILE},
-    {SANDBOX_TYPE_GPU, IDR_GPU_SANDBOX_PROFILE},
-    {SANDBOX_TYPE_PPAPI, IDR_PPAPI_SANDBOX_PROFILE},
-    {SANDBOX_TYPE_NETWORK, -1},
+    {SANDBOX_TYPE_NO_SANDBOX, -1, false},
+    {SANDBOX_TYPE_RENDERER, IDR_RENDERER_SANDBOX_PROFILE, true},
+    {SANDBOX_TYPE_UTILITY, IDR_UTILITY_SANDBOX_PROFILE, true},
+    {SANDBOX_TYPE_GPU, IDR_GPU_SANDBOX_PROFILE, true},
+    {SANDBOX_TYPE_PPAPI, IDR_PPAPI_SANDBOX_PROFILE, true},
+    {SANDBOX_TYPE_NETWORK, 0, false},
 };
 
 static_assert(arraysize(kDefaultSandboxTypeToResourceIDMapping) == \
@@ -181,17 +184,19 @@ std::string LoadSandboxTemplate(int sandbox_type) {
   // We use a custom sandbox definition to lock things down as tightly as
   // possible.
   int sandbox_profile_resource_id = -1;
+  bool preload_common = true;
 
   // Find resource id for sandbox profile to use for the specific sandbox type.
-  for (size_t i = 0;
-       i < arraysize(kDefaultSandboxTypeToResourceIDMapping);
-       ++i) {
-    if (kDefaultSandboxTypeToResourceIDMapping[i].sandbox_type ==
-        sandbox_type) {
-      sandbox_profile_resource_id =
-          kDefaultSandboxTypeToResourceIDMapping[i].sandbox_profile_resource_id;
-      break;
-    }
+  auto* it = std::find_if(std::begin(kDefaultSandboxTypeToResourceIDMapping),
+                          std::end(kDefaultSandboxTypeToResourceIDMapping),
+                          [sandbox_profile_resource_id](
+                              const SandboxTypeToResourceIDMapping& that) {
+                            return that.sandbox_profile_resource_id ==
+                                   sandbox_profix_resource_id;
+                          });
+  if (it != std::end(kDefaultSandboxTypeToResourceIDMapping)) {
+    sandbox_profile_resource_id = it->sandbox_profile_resource_id;
+    prepend_common = it->prepend_common;
   }
   if (sandbox_profile_resource_id == -1) {
     // Check if the embedder knows about this sandbox process type.
@@ -200,27 +205,28 @@ std::string LoadSandboxTemplate(int sandbox_type) {
             sandbox_type, &sandbox_profile_resource_id);
     CHECK(sandbox_type_found) << "Unknown sandbox type " << sandbox_type;
   }
-
-  base::StringPiece sandbox_definition =
-      GetContentClient()->GetDataResource(
-          sandbox_profile_resource_id, ui::SCALE_FACTOR_NONE);
-  if (sandbox_definition.empty()) {
-    LOG(FATAL) << "Failed to load the sandbox profile (resource id "
-               << sandbox_profile_resource_id << ")";
-    return std::string();
+  std::string sandbox_profile;
+  if (prepend_common) {
+    // Prefix sandbox_data with common_sandbox_prefix_data.
+    base::StringPiece common_sandbox_definition =
+        GetContentClient()->GetDataResource(IDR_COMMON_SANDBOX_PROFILE,
+                                            ui::SCALE_FACTOR_NONE);
+    if (common_sandbox_definition.empty()) {
+      LOG(FATAL) << "Failed to load the common sandbox profile";
+      return std::string();
+    }
+    common_sandbox_definition.AppendToString(&sandbox_profile);
   }
-
-  base::StringPiece common_sandbox_definition =
-      GetContentClient()->GetDataResource(
-          IDR_COMMON_SANDBOX_PROFILE, ui::SCALE_FACTOR_NONE);
-  if (common_sandbox_definition.empty()) {
-    LOG(FATAL) << "Failed to load the common sandbox profile";
-    return std::string();
+  if (sandbox_profile_resource_id) {
+    base::StringPiece sandbox_definition = GetContentClient()->GetDataResource(
+        sandbox_profile_resource_id, ui::SCALE_FACTOR_NONE);
+    if (sandbox_definition.empty()) {
+      LOG(FATAL) << "Failed to load the sandbox profile (resource id "
+                 << sandbox_profile_resource_id << ")";
+      return std::string();
+    }
+    sandbox_definition.AppendToString(&sandbox_profile);
   }
-
-  // Prefix sandbox_data with common_sandbox_prefix_data.
-  std::string sandbox_profile = common_sandbox_definition.as_string();
-  sandbox_definition.AppendToString(&sandbox_profile);
   return sandbox_profile;
 }
 
@@ -238,18 +244,17 @@ bool Sandbox::EnableSandbox(int sandbox_type,
   }
 
   std::string sandbox_data = LoadSandboxTemplate(sandbox_type);
-  if (sandbox_data.empty()) {
+  if (sandbox_data.empty())
     return false;
-  }
 
   sandbox::SandboxCompiler compiler(sandbox_data);
-
   if (!allowed_dir.empty()) {
     // Add the sandbox parameters necessary to access the given directory.
     base::FilePath allowed_dir_canonical = GetCanonicalSandboxPath(allowed_dir);
     if (!compiler.InsertStringParam(kSandboxPermittedDir,
-                                    allowed_dir_canonical.value()))
+                                    allowed_dir_canonical.value())) {
       return false;
+    }
   }
 
   // Enable verbose logging if enabled on the command line. (See common.sb
@@ -264,19 +269,19 @@ bool Sandbox::EnableSandbox(int sandbox_type,
   // Without this, the sandbox will print a message to the system log every
   // time it denies a request.  This floods the console with useless spew.
   if (!compiler.InsertBooleanParam(kSandboxDisableDenialLogging,
-                                   !enable_logging))
+                                   !enable_logging)) {
     return false;
+  }
 
   // Splice the path of the user's home directory into the sandbox profile
   // (see renderer.sb for details).
   std::string home_dir = [NSHomeDirectory() fileSystemRepresentation];
-
   base::FilePath home_dir_canonical =
       GetCanonicalSandboxPath(base::FilePath(home_dir));
-
   if (!compiler.InsertStringParam(kSandboxHomedirAsLiteral,
-                                  home_dir_canonical.value()))
+                                  home_dir_canonical.value())) {
     return false;
+  }
 
   bool elcap_or_later = base::mac::IsAtLeastOS10_11();
   if (!compiler.InsertBooleanParam(kSandboxElCapOrLater, elcap_or_later))

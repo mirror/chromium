@@ -30,6 +30,7 @@
 #include "content/common/sandbox_linux/bpf_renderer_policy_linux.h"
 #include "content/common/sandbox_linux/bpf_utility_policy_linux.h"
 #include "content/common/sandbox_linux/sandbox_bpf_base_policy_linux.h"
+#include "content/public/common/sandbox_type.h"
 #include "sandbox/linux/seccomp-bpf-helpers/baseline_policy.h"
 #include "sandbox/linux/seccomp-bpf-helpers/sigsys_handlers.h"
 #include "sandbox/linux/seccomp-bpf-helpers/syscall_parameters_restrictions.h"
@@ -211,14 +212,9 @@ bool StartBPFSandbox(const base::CommandLine& command_line,
 
 // Is seccomp BPF globally enabled?
 bool SandboxSeccompBPF::IsSeccompBPFDesired() {
-  const base::CommandLine& command_line =
-      *base::CommandLine::ForCurrentProcess();
-  if (!command_line.HasSwitch(switches::kNoSandbox) &&
-      !command_line.HasSwitch(switches::kDisableSeccompFilterSandbox)) {
-    return true;
-  } else {
-    return false;
-  }
+  return SandboxTypeFromCommandLine() != SANDBOX_TYPE_NO_SANDBOX &&
+         !base::CommandLine::ForCurrentProcess()->HasSwitch(
+             switches::kDisableSeccompFilterSandbox);
 }
 
 #if !defined(OS_NACL_NONSFI)

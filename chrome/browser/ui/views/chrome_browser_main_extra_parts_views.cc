@@ -41,7 +41,7 @@
 #include "chrome/browser/ui/simple_message_box.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
-#include "content/public/common/content_switches.h"
+#include "content/public/common/sandbox_type.h"
 #include "ui/base/l10n/l10n_util.h"
 #endif  // defined(OS_LINUX) && !defined(OS_CHROMEOS)
 
@@ -134,9 +134,7 @@ void ChromeBrowserMainExtraPartsViews::PreProfileInit() {
   if (stat("/", &st) == 0 && st.st_uid != 0)
     return;
 
-  const base::CommandLine& command_line =
-      *base::CommandLine::ForCurrentProcess();
-  if (command_line.HasSwitch(switches::kNoSandbox))
+  if (content::SandboxTypeFromCommandLine() == content::SANDBOX_TYPE_NO_SANDBOX)
     return;
 
   base::string16 title = l10n_util::GetStringFUTF16(
