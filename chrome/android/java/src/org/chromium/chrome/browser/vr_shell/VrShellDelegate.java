@@ -173,6 +173,7 @@ public class VrShellDelegate
     // party app has asked us to autopresent WebVr content and we're waiting for the WebVr
     // content to call requestPresent.
     private boolean mAutopresentWebVr;
+    private boolean mEnteredVrForAutopresentation;
 
     // Set to true if performed VR browsing at least once. That is, this was not simply a WebVr
     // presentation experience.
@@ -1302,7 +1303,7 @@ public class VrShellDelegate
         mVrShell.pause();
         mVSyncEstimator.pause();
         removeVrViews();
-        destroyVrShell();
+        destroyVrShell(stayingInChrome);
         if (disableVrMode) mVrClassesWrapper.setVrModeEnabled(mActivity, false);
 
         promptForFeedbackIfNeeded(stayingInChrome);
@@ -1468,6 +1469,7 @@ public class VrShellDelegate
         } finally {
             StrictMode.setThreadPolicy(oldPolicy);
         }
+        mEnteredVrForAutopresentation = mAutopresentWebVr && mVrShell != null;
         return mVrShell != null;
     }
 
@@ -1507,11 +1509,18 @@ public class VrShellDelegate
     /**
      * Clean up VrShell, and associated native objects.
      */
-    private void destroyVrShell() {
+    private void destroyVrShell(boolean stayingInChrome) {
         if (mVrShell != null) {
             mVrShell.getContainer().setOnSystemUiVisibilityChangeListener(null);
             mVrShell.teardown();
             mVrShell = null;
+            if (!stayingInChrome && mEnteredVrForAutopresentation) {
+                // If entering VR through an auto present intent, close the tab that was opened by
+                // the intent when leaving VR without entering Chrome. This is a workaround for
+                // crbug.com/744678.
+                mTabModelSelector.closeTab(mActivity.getActivityTab());
+                mEnteredVrForAutopresentation = false;
+            }
             if (mActivity.getCompositorViewHolder() != null) {
                 mActivity.getCompositorViewHolder().onExitVr(mTabModelSelector);
             }
