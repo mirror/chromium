@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "07edaa3c_2f15aaa4",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-24T23:12:48Z",
+      "side": 1,
+      "message": "Yes, there is a std::move on line 104.",
+      "parentUuid": "d97575d4_ee30fd9a",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 18
+      },
+      "revId": "d809df50b41ebd2a45365682e0579045eee6a8ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c615d3e9_b8f711d6",
         "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe.h",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-24T21:48:18Z",
       "side": 1,
       "message": "nit: s/CheckForFieldTrialParamOverrides/UpdateWithFieldTrialParam/",
+      "range": {
+        "startLine": 99,
+        "startChar": 7,
+        "endLine": 99,
+        "endChar": 39
+      },
+      "revId": "d809df50b41ebd2a45365682e0579045eee6a8ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89d9904d_d4d734cb",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-24T23:12:48Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "c615d3e9_b8f711d6",
       "range": {
         "startLine": 99,
         "startChar": 7,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a244b196_d0f101c5",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-24T23:12:48Z",
+      "side": 1,
+      "message": "Done -- not anymore.",
+      "parentUuid": "34d7820b_e0a6f9bf",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 19
+      },
+      "revId": "d809df50b41ebd2a45365682e0579045eee6a8ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56c894f5_23f3901a",
         "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.h",
         "patchSetId": 6
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-24T22:05:57Z",
       "side": 1,
       "message": "It looks like we are not sending it out to GRC, why not use GURL directly?",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 13
+      },
+      "revId": "d809df50b41ebd2a45365682e0579045eee6a8ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d070b17_8797fa7e",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_web_contents_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-24T23:12:48Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "56c894f5_23f3901a",
       "range": {
         "startLine": 55,
         "startChar": 2,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "c8393d78_dc74f65e",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-24T23:12:48Z",
+      "side": 1,
+      "message": "Done -- variable name updated.",
+      "parentUuid": "c9db7864_212a23c0",
+      "range": {
+        "startLine": 41,
+        "startChar": 13,
+        "endLine": 41,
+        "endChar": 35
+      },
+      "revId": "d809df50b41ebd2a45365682e0579045eee6a8ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7b2475d_42fe74d9",
         "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.h",
         "patchSetId": 6
@@ -128,6 +248,30 @@
       "writtenOn": "2017-07-24T21:48:18Z",
       "side": 1,
       "message": "This should be private.",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 43
+      },
+      "revId": "d809df50b41ebd2a45365682e0579045eee6a8ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae1b4575_b9d06508",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-24T23:12:48Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "c7b2475d_42fe74d9",
       "range": {
         "startLine": 48,
         "startChar": 7,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "9a211a28_41dc614f",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-24T23:12:48Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "f3c28878_db07b44e",
+      "range": {
+        "startLine": 50,
+        "startChar": 7,
+        "endLine": 50,
+        "endChar": 27
+      },
+      "revId": "d809df50b41ebd2a45365682e0579045eee6a8ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0fad108c_3ec52fc9",
         "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.h",
         "patchSetId": 6
@@ -174,6 +342,30 @@
       "writtenOn": "2017-07-24T21:48:18Z",
       "side": 1,
       "message": "nit: s/CheckForFieldTrialParamOverrides/UpdateWithFieldTrialParam/",
+      "range": {
+        "startLine": 74,
+        "startChar": 9,
+        "endLine": 74,
+        "endChar": 41
+      },
+      "revId": "d809df50b41ebd2a45365682e0579045eee6a8ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15b29746_a2fa3a09",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-24T23:12:48Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "0fad108c_3ec52fc9",
       "range": {
         "startLine": 74,
         "startChar": 9,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "ec406efa_80a37c51",
+        "filename": "services/resource_coordinator/public/cpp/resource_coordinator_features.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-24T23:12:48Z",
+      "side": 1,
+      "message": "I can have a follow up patch for this, but there are APIs for changing feature flags at runtime:\nhttps://cs.chromium.org/chromium/src/base/feature_list.h?q\u003dbase::feature\u0026sq\u003dpackage:chromium\u0026l\u003d136",
+      "parentUuid": "f86900dd_d7320ae1",
+      "range": {
+        "startLine": 53,
+        "startChar": 48,
+        "endLine": 53,
+        "endChar": 77
+      },
+      "revId": "d809df50b41ebd2a45365682e0579045eee6a8ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4438a466_bd7e6a0d",
         "filename": "services/resource_coordinator/public/cpp/resource_coordinator_features.cc",
         "patchSetId": 6
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "d5b5358e_94ad0d49",
+        "filename": "services/resource_coordinator/public/cpp/resource_coordinator_features.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-24T23:12:48Z",
+      "side": 1,
+      "message": "Done -- thank you for catching this.",
+      "parentUuid": "4438a466_bd7e6a0d",
+      "range": {
+        "startLine": 59,
+        "startChar": 45,
+        "endLine": 59,
+        "endChar": 53
+      },
+      "revId": "d809df50b41ebd2a45365682e0579045eee6a8ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9aac6ee_24079bbd",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 6
@@ -243,6 +483,30 @@
       "writtenOn": "2017-07-24T21:48:18Z",
       "side": 1,
       "message": "How long is the interval between ticks? Is that defined by \"intervalMs\"? And the number of ticks defined as \"durationMs/intervalMs\"? Some comments are needed to clarify.",
+      "range": {
+        "startLine": 1046,
+        "startChar": 30,
+        "endLine": 1046,
+        "endChar": 40
+      },
+      "revId": "d809df50b41ebd2a45365682e0579045eee6a8ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e63f130f_6e96d19d",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 1046,
+      "author": {
+        "id": 1223950
+      },
+      "writtenOn": "2017-07-24T23:12:48Z",
+      "side": 1,
+      "message": "You are correct, the tick interval corresponds to intervalMs, which will be a Finch trial parameter. Therefore you can recover the tick interval by cross referencing the UKM data with the Finch trial it was collected under.\n\nI have updated the comment to reflect this.",
+      "parentUuid": "e9aac6ee_24079bbd",
       "range": {
         "startLine": 1046,
         "startChar": 30,
