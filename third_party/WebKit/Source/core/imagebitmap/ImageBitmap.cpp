@@ -398,7 +398,7 @@ static PassRefPtr<StaticBitmapImage> CropImageAndApplyColorSpaceConversion(
   if (src_rect.IsEmpty())
     return MakeBlankImage(parsed_options);
 
-  sk_sp<SkImage> skia_image = image->ImageForCurrentFrame();
+  sk_sp<SkImage> skia_image = image->PaintImageForCurrentFrame().sk_image();
   // Attempt to get raw unpremultiplied image data, executed only when
   // skia_image is premultiplied.
   if ((((!image->IsSVGImage() && !skia_image->isOpaque()) || !skia_image) &&
@@ -460,7 +460,7 @@ ImageBitmap::ImageBitmap(ImageElementBase* image,
 
   // In the case where the source image is lazy-decoded, m_image may not be in
   // a decoded state, we trigger it here.
-  sk_sp<SkImage> sk_image = image_->ImageForCurrentFrame();
+  sk_sp<SkImage> sk_image = image_->PaintImageForCurrentFrame().sk_image();
   SkPixmap pixmap;
   if (!sk_image->isTextureBacked() && !sk_image->peekPixels(&pixmap)) {
     sk_sp<SkColorSpace> dst_color_space = nullptr;
@@ -899,13 +899,13 @@ ImageBitmap* ImageBitmap::Take(ScriptPromiseResolver*, sk_sp<SkImage> image) {
 }
 
 CanvasColorParams ImageBitmap::GetCanvasColorParams() {
-  return CanvasColorParams(
-      GetSkImageSkImageInfo(image_->ImageForCurrentFrame().get()));
+  return CanvasColorParams(GetSkImageSkImageInfo(
+      image_->PaintImageForCurrentFrame().sk_image().get()));
 }
 
 PassRefPtr<Uint8Array> ImageBitmap::CopyBitmapData(AlphaDisposition alpha_op,
                                                    DataColorFormat format) {
-  sk_sp<SkImage> sk_image = image_->ImageForCurrentFrame();
+  sk_sp<SkImage> sk_image = image_->PaintImageForCurrentFrame().sk_image();
   SkColorType color_type = GetSkImageSkColorType(sk_image.get());
   if (color_type == kN32_SkColorType && format == kRGBAColorType)
     color_type = kRGBA_8888_SkColorType;
@@ -918,7 +918,7 @@ PassRefPtr<Uint8Array> ImageBitmap::CopyBitmapData(AlphaDisposition alpha_op,
 }
 
 PassRefPtr<Uint8Array> ImageBitmap::CopyBitmapData() {
-  return CopySkImageData(image_->ImageForCurrentFrame());
+  return CopySkImageData(image_->PaintImageForCurrentFrame().sk_image());
 }
 
 unsigned long ImageBitmap::width() const {
@@ -975,7 +975,7 @@ PassRefPtr<Image> ImageBitmap::GetSourceImageForCanvas(
   // Skia does not support drawing unpremul SkImage on SkCanvas.
   // Premultiply and return.
   sk_sp<SkImage> premul_sk_image = GetSkImageWithAlphaDisposition(
-      image_->ImageForCurrentFrame(), kPremultiplyAlpha);
+      image_->PaintImageForCurrentFrame().sk_image(), kPremultiplyAlpha);
   return StaticBitmapImage::Create(premul_sk_image);
 }
 

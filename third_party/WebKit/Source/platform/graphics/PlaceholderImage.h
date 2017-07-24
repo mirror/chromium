@@ -33,8 +33,6 @@ class PLATFORM_EXPORT PlaceholderImage final : public Image {
 
   IntSize Size() const override { return size_; }
 
-  sk_sp<SkImage> ImageForCurrentFrame() override;
-
   void Draw(PaintCanvas*,
             const PaintFlags&,
             const FloatRect& dest_rect,
@@ -48,6 +46,7 @@ class PLATFORM_EXPORT PlaceholderImage final : public Image {
   PlaceholderImage(ImageObserver*, const IntSize&);
 
   bool CurrentFrameHasSingleSecurityOrigin() const override { return true; }
+  void PopulateImageForCurrentFrame(PaintImageBuilder&) override;
 
   bool CurrentFrameKnownToBeOpaque(
       MetadataMode = kUseCurrentMetadata) override {

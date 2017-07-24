@@ -26,9 +26,12 @@ PlaceholderImage::PlaceholderImage(ImageObserver* observer, const IntSize& size)
 
 PlaceholderImage::~PlaceholderImage() {}
 
-sk_sp<SkImage> PlaceholderImage::ImageForCurrentFrame() {
-  if (image_for_current_frame_)
-    return image_for_current_frame_;
+void PlaceholderImage::PopulateImageForCurrentFrame(
+    PaintImageBuilder& builder) {
+  if (image_for_current_frame_) {
+    builder.set_image(image_for_current_frame_);
+    return;
+  }
 
   const FloatRect dest_rect(0.0f, 0.0f, static_cast<float>(size_.Width()),
                             static_cast<float>(size_.Height()));
@@ -42,7 +45,8 @@ sk_sp<SkImage> PlaceholderImage::ImageForCurrentFrame() {
       SkISize::Make(size_.Width(), size_.Height()), nullptr, nullptr,
       SkImage::BitDepth::kU8, SkColorSpace::MakeSRGB());
 
-  return image_for_current_frame_;
+  // TODO(vmpstr): Set/cache paint record here.
+  builder.set_image(image_for_current_frame_);
 }
 
 void PlaceholderImage::Draw(PaintCanvas* canvas,
