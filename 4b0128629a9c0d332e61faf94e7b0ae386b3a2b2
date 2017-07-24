@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "128c9567_dac9bb39",
+        "filename": "components/offline_pages/core/prefetch/store/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-07-24T23:32:17Z",
+      "side": 1,
+      "message": "nit burned -\u003e burden?",
+      "range": {
+        "startLine": 14,
+        "startChar": 13,
+        "endLine": 14,
+        "endChar": 19
+      },
+      "revId": "4b0128629a9c0d332e61faf94e7b0ae386b3a2b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4064652a_e7f5447a",
+        "filename": "components/offline_pages/core/prefetch/store/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-07-24T23:32:17Z",
+      "side": 1,
+      "message": "Nit - could the name \"RunCallback\" be improved?  At first reading, it seems like the job of this funciton is to run a callback, where I suspect the actual meaning is that this is a callback that will \"run\" the database job.",
+      "range": {
+        "startLine": 26,
+        "startChar": 8,
+        "endLine": 26,
+        "endChar": 19
+      },
+      "revId": "4b0128629a9c0d332e61faf94e7b0ae386b3a2b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
