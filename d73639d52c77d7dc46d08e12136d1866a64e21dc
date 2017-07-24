@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dab05948_34bb05a1",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1126,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-07-24T21:11:10Z",
+      "side": 1,
+      "message": "Why |mLastSelectedText.length() !\u003d 0| is not sufficient any more? Is this because onSelectionChanged() can send an empty string?",
+      "revId": "d73639d52c77d7dc46d08e12136d1866a64e21dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
