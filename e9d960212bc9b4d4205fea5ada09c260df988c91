@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c4db4a15_7f7dbcef",
+        "filename": "third_party/WebKit/Source/platform/graphics/StaticBitmapImage.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-24T22:57:25Z",
+      "side": 0,
+      "message": "Ah ok. I agree that the other behavior is weird and unnecessary. In well-written code,\nI would not expect to be able to remove a pure virtual and compile correctly, which \nis why I asked. :)",
+      "parentUuid": "e1db5ce4_38211b0c",
+      "revId": "e9d960212bc9b4d4205fea5ada09c260df988c91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5cb6f32_be4e0b8c",
         "filename": "third_party/WebKit/Source/platform/graphics/StaticBitmapImage.h",
         "patchSetId": 4
@@ -69,6 +87,24 @@
       "revId": "e9d960212bc9b4d4205fea5ada09c260df988c91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a807f5a0_e334d327",
+        "filename": "third_party/WebKit/Source/platform/graphics/StaticBitmapImage.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-24T22:57:25Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "a7f27e7b_0522eff7",
+      "revId": "e9d960212bc9b4d4205fea5ada09c260df988c91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
