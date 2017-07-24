@@ -4,6 +4,8 @@
 
 #include "components/omnibox/browser/in_memory_url_index.h"
 
+#include <memory>
+
 #include "base/files/file_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/task_runner_util.h"
@@ -240,7 +242,7 @@ void InMemoryURLIndex::OnCacheLoadDone(
     task_runner_->PostTask(
         FROM_HERE,
         base::Bind(base::IgnoreResult(base::DeleteFile), path, false));
-    if (history_service_->backend_loaded()) {
+    if (history_service_->BackendLoaded()) {
       ScheduleRebuildFromHistory();
     } else {
       listen_to_history_service_loaded_ = true;

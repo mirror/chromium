@@ -4,6 +4,8 @@
 
 #include "chrome/browser/android/history_report/data_observer.h"
 
+#include <memory>
+
 #include "base/bind.h"
 #include "base/files/scoped_temp_dir.h"
 #include "base/memory/ptr_util.h"
@@ -12,7 +14,7 @@
 #include "chrome/browser/android/history_report/usage_reports_buffer_service.h"
 #include "components/bookmarks/browser/bookmark_model.h"
 #include "components/bookmarks/test/test_bookmark_client.h"
-#include "components/history/core/browser/history_service.h"
+#include "components/history/core/browser/fake_history_service.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "media/base/test_helpers.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -23,6 +25,7 @@
 using base::Time;
 using bookmarks::BookmarkModel;
 using bookmarks::TestBookmarkClient;
+using history::FakeHistoryService;
 using history::HistoryService;
 
 using testing::_;
@@ -66,7 +69,7 @@ class DataObserverTest : public testing::Test {
     usage_report_service_ =
         base::MakeUnique<MockUsageReportsBufferService>(temp_dir_.GetPath());
     bookmark_model_ = TestBookmarkClient::CreateModel();
-    history_service_ = base::MakeUnique<HistoryService>();
+    history_service_ = base::MakeUnique<FakeHistoryService>();
     data_observer_ = base::MakeUnique<DataObserver>(
         base::Bind(&MockRun), base::Bind(&MockRun), base::Bind(&MockRun),
         delta_file_service_.get(), usage_report_service_.get(),
@@ -91,6 +94,7 @@ class DataObserverTest : public testing::Test {
   std::unique_ptr<HistoryService> history_service_;
   std::unique_ptr<DataObserver> data_observer_;
 
+ private:
   DISALLOW_COPY_AND_ASSIGN(DataObserverTest);
 };
 

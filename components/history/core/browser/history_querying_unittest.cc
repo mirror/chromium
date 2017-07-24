@@ -15,7 +15,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/task/cancelable_task_tracker.h"
 #include "components/history/core/browser/history_database_params.h"
-#include "components/history/core/browser/history_service.h"
+#include "components/history/core/browser/history_service_impl.h"
 #include "components/history/core/test/test_history_database.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -143,7 +143,7 @@ class HistoryQueryTest : public testing::Test {
   }
 
  protected:
-  std::unique_ptr<HistoryService> history_;
+  std::unique_ptr<HistoryServiceImpl> history_;
 
   // Counter used to generate a unique ID for each page added to the history.
   int nav_entry_id_;
@@ -165,7 +165,7 @@ class HistoryQueryTest : public testing::Test {
     history_dir_ = temp_dir_.GetPath().AppendASCII("HistoryTest");
     ASSERT_TRUE(base::CreateDirectory(history_dir_));
 
-    history_.reset(new HistoryService);
+    history_.reset(new HistoryServiceImpl);
     if (!history_->Init(TestHistoryDatabaseParamsForPath(history_dir_))) {
       history_.reset();  // Tests should notice this NULL ptr & fail.
       return;

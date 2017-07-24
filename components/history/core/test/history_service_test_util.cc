@@ -11,18 +11,17 @@
 #include "components/history/core/browser/history_database.h"
 #include "components/history/core/browser/history_database_params.h"
 #include "components/history/core/browser/history_db_task.h"
-#include "components/history/core/browser/history_service.h"
+#include "components/history/core/browser/history_service_impl.h"
 #include "components/history/core/browser/history_service_observer.h"
 #include "components/history/core/browser/url_database.h"
 #include "components/history/core/test/test_history_database.h"
-
 
 namespace history {
 
 std::unique_ptr<HistoryService> CreateHistoryService(
     const base::FilePath& history_dir,
     bool create_db) {
-  std::unique_ptr<HistoryService> history_service(new HistoryService());
+  auto history_service = base::MakeUnique<HistoryServiceImpl>();
   if (!history_service->Init(
           !create_db, history::TestHistoryDatabaseParamsForPath(history_dir))) {
     return nullptr;

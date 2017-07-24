@@ -20,7 +20,7 @@
 #include "components/history/core/browser/history_constants.h"
 #include "components/history/core/browser/history_database_params.h"
 #include "components/history/core/browser/history_db_task.h"
-#include "components/history/core/browser/history_service.h"
+#include "components/history/core/browser/history_service_impl.h"
 #include "components/history/core/browser/history_types.h"
 #include "components/history/core/browser/top_sites.h"
 #include "components/history/core/browser/top_sites_cache.h"
@@ -131,7 +131,7 @@ class TopSitesImplTest : public HistoryUnitTestBase {
     pref_service_.reset(new TestingPrefServiceSimple);
     TopSitesImpl::RegisterPrefs(pref_service_->registry());
     history_service_.reset(
-        new HistoryService(nullptr, std::unique_ptr<VisitDelegate>()));
+        new HistoryServiceImpl(nullptr, std::unique_ptr<VisitDelegate>()));
     ASSERT_TRUE(history_service_->Init(
         TestHistoryDatabaseParamsForPath(scoped_temp_dir_.GetPath())));
     ResetTopSites();
