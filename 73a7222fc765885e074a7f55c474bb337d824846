@@ -22,6 +22,30 @@
       "revId": "73a7222fc765885e074a7f55c474bb337d824846",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d116fe59_257c2fdd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarControlContainer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-07-24T21:32:57Z",
+      "side": 1,
+      "message": "Moved to ToolbarLayout. I was not sure where to put it in. Seeing ToolbarCC already handling onTouchEvent, I chose the class over other layouts like ToolbarPhone since this should work on devices of all form factors. ToolbarLayout seems like a better choice. Done.",
+      "parentUuid": "559ae5c1_6a3a4536",
+      "range": {
+        "startLine": 266,
+        "startChar": 31,
+        "endLine": 266,
+        "endChar": 32
+      },
+      "revId": "73a7222fc765885e074a7f55c474bb337d824846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
