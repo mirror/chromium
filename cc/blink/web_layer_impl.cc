@@ -309,7 +309,9 @@ void WebLayerImpl::SetTouchEventHandlerRegion(
     const WebVector<blink::WebTouchInfo>& touch_info) {
   cc::TouchActionRegion touch_action_region;
   for (size_t i = 0; i < touch_info.size(); ++i)
-    touch_action_region.Union(touch_info[i].touch_action, touch_info[i].rect);
+    touch_action_region.AddTouchActionRectToMap(touch_info[i].touch_action,
+                                                touch_info[i].rect);
+  touch_action_region.SetRegionFromMap();
   layer_->SetTouchActionRegion(std::move(touch_action_region));
 }
 
