@@ -49,17 +49,17 @@ class GranularityStrategy;
 class GraphicsContext;
 class Range;
 class SelectionEditor;
+class SetSelectionData;
 class LayoutSelection;
 enum class SelectionModifyAlteration;
 enum class SelectionModifyDirection;
+enum class SetSelectionBy;
 class TextIteratorBehavior;
 struct PaintInvalidatorContext;
 
-enum class CursorAlignOnScroll { kIfNeeded, kAlways };
-
-enum class SetSelectionBy { kSystem = 0, kUser = 1 };
-
 enum RevealExtentOption { kRevealExtent, kDoNotRevealExtent };
+
+enum class SelectionDirectionalMode { kNonDirectional, kDirectional };
 
 enum class CaretVisibility;
 
@@ -76,28 +76,6 @@ class CORE_EXPORT FrameSelection final
     return new FrameSelection(frame);
   }
   ~FrameSelection();
-
-  enum SetSelectionOption {
-    kUserTriggered = 1,
-    kCloseTyping = 1 << 1,
-    kClearTypingStyle = 1 << 2,
-    kDoNotSetFocus = 1 << 3,
-    kDoNotClearStrategy = 1 << 4,
-  };
-  static_assert(kUserTriggered == static_cast<int>(SetSelectionBy::kUser),
-                "|kUserTriggered| should equal to |SetSelectionBy::kUser|");
-
-  // Union of values in SetSelectionOption and SetSelectionBy
-  typedef unsigned SetSelectionOptions;
-  static constexpr SetSelectionBy ConvertSelectionOptionsToSetSelectionBy(
-      SetSelectionOptions options) {
-    return static_cast<SetSelectionBy>(options &
-                                       static_cast<int>(SetSelectionBy::kUser));
-  }
-  static constexpr SetSelectionOptions
-  ConvertSetSelectionByToSetSelectionOptions(SetSelectionBy set_selection_by) {
-    return static_cast<SetSelectionOptions>(set_selection_by);
-  }
 
   bool IsAvailable() const { return LifecycleContext(); }
   // You should not call |document()| when |!isAvailable()|.
@@ -117,10 +95,8 @@ class CORE_EXPORT FrameSelection final
   // layout.
   const VisibleSelection& ComputeVisibleSelectionInDOMTreeDeprecated() const;
 
-  void SetSelection(const SelectionInDOMTree&,
-                    SetSelectionOptions = kCloseTyping | kClearTypingStyle,
-                    CursorAlignOnScroll = CursorAlignOnScroll::kIfNeeded,
-                    TextGranularity = TextGranularity::kCharacter);
+  void SetSelection(const SetSelectionData&);
+  void SetSelection(const SelectionInDOMTree&);
   void SelectAll(SetSelectionBy);
   void SelectAll();
   void Clear();
@@ -131,13 +107,8 @@ class CORE_EXPORT FrameSelection final
   // functions.
   // setSelectionDeprecated() returns true if didSetSelectionDeprecated() should
   // be called.
-  bool SetSelectionDeprecated(const SelectionInDOMTree&,
-                              SetSelectionOptions = kCloseTyping |
-                                                    kClearTypingStyle,
-                              TextGranularity = TextGranularity::kCharacter);
-  void DidSetSelectionDeprecated(
-      SetSelectionOptions = kCloseTyping | kClearTypingStyle,
-      CursorAlignOnScroll = CursorAlignOnScroll::kIfNeeded);
+  bool SetSelectionDeprecated(const SetSelectionData&);
+  void DidSetSelectionDeprecated(const SetSelectionData&);
 
   // Call this after doing user-triggered selections to make it easy to delete
   // the frame you entirely selected.
@@ -148,7 +119,7 @@ class CORE_EXPORT FrameSelection final
   bool Modify(SelectionModifyAlteration,
               SelectionModifyDirection,
               TextGranularity,
-              SetSelectionBy = SetSelectionBy::kSystem);
+              SetSelectionBy);
 
   // Moves the selection extent based on the selection granularity strategy.
   // This function does not allow the selection to collapse. If the new

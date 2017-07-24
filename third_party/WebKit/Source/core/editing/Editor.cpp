@@ -46,6 +46,7 @@
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/InputMethodController.h"
 #include "core/editing/RenderedPosition.h"
+#include "core/editing/SetSelectionData.h"
 #include "core/editing/VisibleUnits.h"
 #include "core/editing/commands/ApplyStyleCommand.h"
 #include "core/editing/commands/DeleteSelectionCommand.h"
@@ -948,7 +949,7 @@ void Editor::AppliedEditing(CompositeEditCommand* cmd) {
 
   // Don't clear the typing style with this selection change. We do those things
   // elsewhere if necessary.
-  ChangeSelectionAfterCommand(new_selection, 0);
+  ChangeSelectionAfterCommand(SetSelectionData::Builder(new_selection).Build());
 
   if (!cmd->PreservesTypingStyle())
     ClearTypingStyle();
@@ -987,9 +988,10 @@ void Editor::UnappliedEditing(UndoStep* cmd) {
 
   const SelectionInDOMTree& new_selection = CorrectedSelectionAfterCommand(
       cmd->StartingSelection(), GetFrame().GetDocument());
-  ChangeSelectionAfterCommand(
-      new_selection,
-      FrameSelection::kCloseTyping | FrameSelection::kClearTypingStyle);
+  ChangeSelectionAfterCommand(SetSelectionData::Builder(new_selection)
+                                  .SetShouldCloseTyping(true)
+                                  .SetShouldClearTypingStyle(true)
+                                  .Build());
 
   last_edit_command_ = nullptr;
   undo_stack_->RegisterRedoStep(cmd);
@@ -1008,9 +1010,10 @@ void Editor::ReappliedEditing(UndoStep* cmd) {
 
   const SelectionInDOMTree& new_selection = CorrectedSelectionAfterCommand(
       cmd->EndingSelection(), GetFrame().GetDocument());
-  ChangeSelectionAfterCommand(
-      new_selection,
-      FrameSelection::kCloseTyping | FrameSelection::kClearTypingStyle);
+  ChangeSelectionAfterCommand(SetSelectionData::Builder(new_selection)
+                                  .SetShouldCloseTyping(true)
+                                  .SetShouldClearTypingStyle(true)
+                                  .Build());
 
   last_edit_command_ = nullptr;
   undo_stack_->RegisterUndoStep(cmd);
@@ -1482,9 +1485,8 @@ void Editor::AddToKillRing(const EphemeralRange& range) {
   should_start_new_kill_ring_sequence_ = false;
 }
 
-void Editor::ChangeSelectionAfterCommand(
-    const SelectionInDOMTree& new_selection,
-    FrameSelection::SetSelectionOptions options) {
+void Editor::ChangeSelectionAfterCommand(const SetSelectionData& data) {
+  const SelectionInDOMTree& new_selection = data.Selection();
   if (new_selection.IsNone())
     return;
 
@@ -1493,10 +1495,12 @@ void Editor::ChangeSelectionAfterCommand(
   bool selection_did_not_change_dom_position =
       new_selection == GetFrame().Selection().GetSelectionInDOMTree();
   GetFrame().Selection().SetSelection(
-      SelectionInDOMTree::Builder(new_selection)
-          .SetIsHandleVisible(GetFrame().Selection().IsHandleVisible())
-          .Build(),
-      options);
+      SetSelectionData::Builder(data)
+          .SetSelection(
+              SelectionInDOMTree::Builder(new_selection)
+                  .SetIsHandleVisible(GetFrame().Selection().IsHandleVisible())
+                  .Build())
+          .Build());
 
   // Some editing operations change the selection visually without affecting its
   // position within the DOM. For example when you press return in the following

@@ -13,6 +13,7 @@
 #include "core/editing/FrameCaret.h"
 #include "core/editing/SelectionController.h"
 #include "core/editing/SelectionModifier.h"
+#include "core/editing/SetSelectionData.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/html/HTMLBodyElement.h"
 #include "core/input/EventHandler.h"
@@ -64,8 +65,7 @@ TEST_F(FrameSelectionTest, FirstEphemeralRangeOf) {
   Selection().SetSelection(SelectionInDOMTree::Builder()
                                .SetBaseAndExtent(EphemeralRange(
                                    Position(text, 3), Position(text, 6)))
-                               .Build(),
-                           0);
+                               .Build());
   sample->setAttribute(HTMLNames::styleAttr, "display:none");
   // Move |VisibleSelection| before "abc".
   UpdateAllLifecyclePhases();
@@ -173,8 +173,8 @@ TEST_F(FrameSelectionTest, ModifyExtendWithFlatTree) {
               ToPositionInDOMTree(PositionInFlatTree(GetDocument().body(), 2)))
           .Build());
   Selection().Modify(SelectionModifyAlteration::kExtend,
-                     SelectionModifyDirection::kForward,
-                     TextGranularity::kWord);
+                     SelectionModifyDirection::kForward, TextGranularity::kWord,
+                     SetSelectionBy::kSystem);
   EXPECT_EQ(Position(two, 0), VisibleSelectionInDOMTree().Start());
   EXPECT_EQ(Position(two, 3), VisibleSelectionInDOMTree().End());
   EXPECT_EQ(PositionInFlatTree(two, 0),
@@ -363,8 +363,7 @@ TEST_F(FrameSelectionTest, SelectionOnRangeHidesHandles) {
   Selection().SetSelection(SelectionInDOMTree::Builder()
                                .SetBaseAndExtent(EphemeralRange(
                                    Position(text, 0), Position(text, 12)))
-                               .Build(),
-                           0);
+                               .Build());
 
   EXPECT_FALSE(Selection().IsHandleVisible())
       << "After SetSelection on Range, handles shouldn't be present.";
@@ -378,8 +377,7 @@ TEST_F(FrameSelectionTest, SelectionOnRangeHidesHandles) {
   Selection().SetSelection(SelectionInDOMTree::Builder()
                                .SetBaseAndExtent(EphemeralRange(
                                    Position(text, 0), Position(text, 12)))
-                               .Build(),
-                           0);
+                               .Build());
 
   EXPECT_FALSE(Selection().IsHandleVisible())
       << "After SetSelection on Range, handles shouldn't be present.";

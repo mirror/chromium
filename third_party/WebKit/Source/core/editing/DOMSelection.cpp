@@ -39,6 +39,7 @@
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/FrameSelection.h"
 #include "core/editing/SelectionModifier.h"
+#include "core/editing/SetSelectionData.h"
 #include "core/editing/iterators/TextIterator.h"
 #include "core/frame/Deprecation.h"
 #include "core/frame/LocalFrame.h"
@@ -81,12 +82,19 @@ void DOMSelection::UpdateFrameSelection(const SelectionInDOMTree& selection,
   DCHECK(GetFrame());
   FrameSelection& frame_selection = GetFrame()->Selection();
   // TODO(tkent): Specify FrameSelection::DoNotSetFocus. crbug.com/690272
-  bool did_set = frame_selection.SetSelectionDeprecated(selection);
+  bool did_set = frame_selection.SetSelectionDeprecated(
+      SetSelectionData::Builder(selection)
+          .SetShouldCloseTyping(true)
+          .SetShouldClearTypingStyle(true)
+          .Build());
   CacheRangeIfSelectionOfDocument(new_cached_range);
   if (!did_set)
     return;
   Element* focused_element = GetFrame()->GetDocument()->FocusedElement();
-  frame_selection.DidSetSelectionDeprecated();
+  frame_selection.DidSetSelectionDeprecated(SetSelectionData::Builder()
+                                                .SetShouldCloseTyping(true)
+                                                .SetShouldClearTypingStyle(true)
+                                                .Build());
   if (GetFrame() && GetFrame()->GetDocument() &&
       focused_element != GetFrame()->GetDocument()->FocusedElement())
     UseCounter::Count(GetFrame(), WebFeature::kSelectionFuncionsChangeFocus);
@@ -462,7 +470,8 @@ void DOMSelection::modify(const String& alter_string,
   GetFrame()->GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
 
   Element* focused_element = GetFrame()->GetDocument()->FocusedElement();
-  GetFrame()->Selection().Modify(alter, direction, granularity);
+  GetFrame()->Selection().Modify(alter, direction, granularity,
+                                 SetSelectionBy::kSystem);
   if (GetFrame() && GetFrame()->GetDocument() &&
       focused_element != GetFrame()->GetDocument()->FocusedElement())
     UseCounter::Count(GetFrame(), WebFeature::kSelectionFuncionsChangeFocus);

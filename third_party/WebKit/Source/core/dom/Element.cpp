@@ -79,6 +79,7 @@
 #include "core/dom/WhitespaceAttacher.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/FrameSelection.h"
+#include "core/editing/SetSelectionData.h"
 #include "core/editing/iterators/TextIterator.h"
 #include "core/editing/serializers/Serialization.h"
 #include "core/events/EventDispatcher.h"
@@ -2817,11 +2818,14 @@ void Element::UpdateFocusAppearance(
     // FocusController::setFocusedElement() and we don't want to change the
     // focus to a new Element.
     frame->Selection().SetSelection(
-        SelectionInDOMTree::Builder()
-            .Collapse(FirstPositionInOrBeforeNode(this))
-            .Build(),
-        FrameSelection::kCloseTyping | FrameSelection::kClearTypingStyle |
-            FrameSelection::kDoNotSetFocus);
+        SetSelectionData::Builder()
+            .SetSelection(SelectionInDOMTree::Builder()
+                              .Collapse(FirstPositionInOrBeforeNode(this))
+                              .Build())
+            .SetShouldCloseTyping(true)
+            .SetShouldClearTypingStyle(true)
+            .SetDoNotSetFocus(true)
+            .Build());
     frame->Selection().RevealSelection();
   } else if (GetLayoutObject() &&
              !GetLayoutObject()->IsLayoutEmbeddedContent()) {
