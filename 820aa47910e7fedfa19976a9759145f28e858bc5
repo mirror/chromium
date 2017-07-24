@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7711fc3b_9af9de2c",
+        "filename": "ui/app_list/views/search_box_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-07-24T19:18:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c84ba05_e80818ed",
+      "range": {
+        "startLine": 428,
+        "startChar": 4,
+        "endLine": 428,
+        "endChar": 10
+      },
+      "revId": "820aa47910e7fedfa19976a9759145f28e858bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72baef1d_83404dfb",
         "filename": "ui/app_list/views/search_box_view.h",
         "patchSetId": 14
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-24T19:01:44Z",
       "side": 1,
       "message": "This is very confusing.\n\nBoth set_is_tablet_mode and OnTabletModeChanged sets is_tablet_mode_. Can we get rid one of them?",
+      "range": {
+        "startLine": 140,
+        "startChar": 7,
+        "endLine": 140,
+        "endChar": 25
+      },
+      "revId": "820aa47910e7fedfa19976a9759145f28e858bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b374f62_26048366",
+        "filename": "ui/app_list/views/search_box_view.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-07-24T19:18:37Z",
+      "side": 1,
+      "message": "I got rid of set_is_tablet_mode.\n\nI now have SearchBoxView checking for is_tablet_mode_ from AppListView. It does the same thing, but makes more sense.\n\nWe Need to check for the boolean on initialization because OnTabletModeChanged is only useful when the mode changes, not on initialization.",
+      "parentUuid": "72baef1d_83404dfb",
       "range": {
         "startLine": 140,
         "startChar": 7,
