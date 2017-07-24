@@ -253,5 +253,5 @@ interface AppInstance {
   // Starts a query for Play Store apps.
   [MinVersion=20] GetRecentAndSuggestedAppsFromPlayStore@16(
       string query, int32 max_results) =>
-          (array<AppDiscoveryResult> results);
+          (bool canceled, array<AppDiscoveryResult> results);
 };
