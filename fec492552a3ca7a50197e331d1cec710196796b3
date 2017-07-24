@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a25f37a_2b346e03",
+        "filename": "third_party/WebKit/Source/bindings/scripts/idl_definitions.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-07-24T05:41:04Z",
+      "side": 1,
+      "message": "I\u0027d prefer to do this kind of semantics checks in somewhere else. My mental model of IdlDefinitions is that they are just objects which is converted from ASTs (except IdlType) and later steps should do some semantics analysis.\n\n(In that sense, current IdlInterface is broken -- it has some properties it shouldn\u0027t have like partial_interfaces. I want to fix it but that\u0027s a different problem from this CL)\n\nMaybe not ideal but we can add this check in v8_interface.py as we have some checks in v8_interface.py.",
+      "revId": "fec492552a3ca7a50197e331d1cec710196796b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
