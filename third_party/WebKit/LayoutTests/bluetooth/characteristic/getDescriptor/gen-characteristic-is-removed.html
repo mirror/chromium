@@ -8,24 +8,24 @@
 <script>
 'use strict';
 promise_test(() => {
-  let val = new Uint8Array([1]);
-  return setBluetoothFakeAdapter('HeartRateAdapter')
-    .then(() => requestDeviceWithKeyDown({
-      filters: [{services: ['heart_rate']}],
-      optionalServices: ['generic_access']}))
-    .then(device => device.gatt.connect())
-    .then(gattServer => gattServer.getPrimaryService('generic_access'))
-    .then(service => service.getCharacteristic('gap.device_name'))
-    .then(characteristic => {
-      return setBluetoothFakeAdapter('MissingCharacteristicHeartRateAdapter')
-        .then(() => assert_promise_rejects_with_message(
-          characteristic.getDescriptor(user_description.name),
-          new DOMException(
-            'GATT Characteristic no longer exists.',
-            'InvalidStateError'),
-          'Characteristic got removed.'));
+  let service, characteristic, fake_service, fake_characteristic;
+  return getMeasurementIntervalCharacteristic()
+    .then(vals => ({
+      service,
+      characteristic,
+      fake_service,
+      fake_characteristic,
+    } = vals))
+    .then(() => characteristic.getDescriptor(user_description.name))
+    .then(() => null, (e) => assert_unreached('Caught error unexpectedly.', e))
+    .then(() => fake_service.removeFakeCharacteristic({
+      characteristic: fake_characteristic,
+    }))
+    .then(() => characteristic.getDescriptor(user_description.name))
+    .then(() => assert_unreached('Got descriptor unexpectedly.'), (e) => {
+      assert_equals(e.name, 'InvalidStateError');
+      assert_equals(e.message, 'GATT Characteristic no longer exists.');
     });
 }, 'Characteristic gets removed. Reject with InvalidStateError.');
-
 
 </script>

@@ -262,6 +262,13 @@
         characteristic_id, this.service_id_,
         this.peripheral_address_, this.fake_central_ptr_);
     }
+
+    // Removes a fake GATT Characteristic from this fake service.
+    // The |characteristic| must at least have the correct IDs set.
+    async removeFakeCharacteristic({characteristic}) {
+      await this.fake_central_ptr_.removeFakeCharacteristic(
+          ...(characteristic.getIds()));
+    }
   }
 
   class FakeRemoteGATTCharacteristic {
@@ -336,6 +343,10 @@
       return value;
     }
 
+    // Gets the associated IDs from the characteristic.
+    getIds() {
+      return this.ids_;
+    }
   }
 
   class FakeRemoteGATTDescriptor {
