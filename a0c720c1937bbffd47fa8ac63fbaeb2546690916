@@ -16,6 +16,24 @@
       "revId": "a0c720c1937bbffd47fa8ac63fbaeb2546690916",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eb5ab27_6e9f71df",
+        "filename": "third_party/WebKit/LayoutTests/paint/overflow/background-paint-into-scrolling-contents-layer-with-root-layer-scrolls-offset.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-07-24T21:40:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d84c9b0_d62ea699",
+      "revId": "a0c720c1937bbffd47fa8ac63fbaeb2546690916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
