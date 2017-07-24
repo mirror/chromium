@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5660407f_6b11b19b",
+        "filename": "ui/aura/window_targeter.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-07-24T17:01:32Z",
+      "side": 1,
+      "message": "This return value could make it easy to skip a window that doesn\u0027t want located events and make hit testing simpler for things like containers. sadrul@, do you have a strong opinion here?\nAlso edited the text to make more sense (I hope).",
+      "parentUuid": "02711769_4d0a913b",
+      "revId": "a0df6c89d8b0fb7627bbf12c3284917fb099f604",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e90e9ac_8a998f1b",
         "filename": "ui/aura/window_targeter.h",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7dfc4ed6_7185b689",
+        "filename": "ui/aura/window_targeter.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-07-24T17:01:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e90e9ac_8a998f1b",
+      "revId": "a0df6c89d8b0fb7627bbf12c3284917fb099f604",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "faedf706_468940ac",
         "filename": "ui/wm/core/easy_resize_window_targeter.cc",
         "patchSetId": 10
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-21T18:22:30Z",
       "side": 1,
       "message": "I wonder if it would be simpler to store the mouse/touch extend insets as aura::Window properties.",
+      "revId": "a0df6c89d8b0fb7627bbf12c3284917fb099f604",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab70f1d7_b6e57692",
+        "filename": "ui/wm/core/easy_resize_window_targeter.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-07-24T17:01:32Z",
+      "side": 1,
+      "message": "One benefit is that EasyResize targeter is usually installed on a container rather than a window and so doesn\u0027t have a per window cost.",
+      "parentUuid": "faedf706_468940ac",
       "revId": "a0df6c89d8b0fb7627bbf12c3284917fb099f604",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
