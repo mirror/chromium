@@ -51,6 +51,24 @@
       "revId": "f3d47869e95dd2e7e491dff2194f198108756afe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f811f116_bdd0a4cf",
+        "filename": "components/offline_pages/core/renovations/page_renovation_loader_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1225649
+      },
+      "writtenOn": "2017-07-24T19:37:35Z",
+      "side": 1,
+      "message": "I\u0027m not sure what you mean by duplicating scripts. Do you mean having two copies of the same script in the string?",
+      "parentUuid": "40f89708_79c1792a",
+      "revId": "f3d47869e95dd2e7e491dff2194f198108756afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
