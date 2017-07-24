@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "4b01cf89_e5fa707b",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-07-24T06:31:11Z",
+      "side": 1,
+      "message": "It sounds odd to me that ArcFileSystemOperationRunner implements new FileSystemHost methods. ArcFileSystemOperationRunner is an utility object provided to other Chrome components (like Chrome File System API layers) to run file system operations on Android, thus its naming. It implemented mojom::FileSystemHost just because the interface had OnDocumentChanged only which is called back as a result of file system operations initiated by Chrome. Generally, file system operations initiated by Android are not supposed to be processed by this class. I like they are processed by another entity which is not tightly coupled to this class, just like Hidehiko suggested first.",
+      "parentUuid": "2536d5ba_f4b1c192",
+      "revId": "6df67fa052553fad61b7fa9aa027ec664e330952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "254f8e5b_915cac02",
         "filename": "chrome/browser/chromeos/arc/fileapi/file_system_host_impl.cc",
         "patchSetId": 1
