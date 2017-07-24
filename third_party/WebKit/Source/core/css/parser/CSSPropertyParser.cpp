@@ -562,30 +562,9 @@ static CSSValue* ConsumeFilter(CSSParserTokenRange& range,
   return list;
 }
 
-static CSSValue* ConsumeBackgroundBlendMode(CSSParserTokenRange& range) {
-  CSSValueID id = range.Peek().Id();
-  if (id == CSSValueNormal || id == CSSValueOverlay ||
-      (id >= CSSValueMultiply && id <= CSSValueLuminosity))
-    return ConsumeIdent(range);
-  return nullptr;
-}
-
-static CSSValue* ConsumeBackgroundAttachment(CSSParserTokenRange& range) {
-  return ConsumeIdent<CSSValueScroll, CSSValueFixed, CSSValueLocal>(range);
-}
-
 static CSSValue* ConsumeBackgroundBox(CSSParserTokenRange& range) {
   return ConsumeIdent<CSSValueBorderBox, CSSValuePaddingBox,
                       CSSValueContentBox>(range);
-}
-
-static CSSValue* ConsumeBackgroundComposite(CSSParserTokenRange& range) {
-  return ConsumeIdentRange(range, CSSValueClear, CSSValuePlusLighter);
-}
-
-static CSSValue* ConsumeMaskSourceType(CSSParserTokenRange& range) {
-  DCHECK(RuntimeEnabledFeatures::CSSMaskSourceTypeEnabled());
-  return ConsumeIdent<CSSValueAuto, CSSValueAlpha, CSSValueLuminance>(range);
 }
 
 static CSSValue* ConsumePrefixedBackgroundBox(CSSParserTokenRange& range,
@@ -637,15 +616,15 @@ static CSSValue* ConsumeBackgroundComponent(CSSPropertyID unresolved_property,
     case CSSPropertyBackgroundClip:
       return ConsumeBackgroundBox(range);
     case CSSPropertyBackgroundBlendMode:
-      return ConsumeBackgroundBlendMode(range);
+      return CSSPropertyBackgroundUtils::ConsumeBackgroundBlendMode(range);
     case CSSPropertyBackgroundAttachment:
-      return ConsumeBackgroundAttachment(range);
+      return CSSPropertyBackgroundUtils::ConsumeBackgroundAttachment(range);
     case CSSPropertyBackgroundOrigin:
       return ConsumeBackgroundBox(range);
     case CSSPropertyWebkitMaskComposite:
-      return ConsumeBackgroundComposite(range);
+      return CSSPropertyBackgroundUtils::ConsumeBackgroundComposite(range);
     case CSSPropertyMaskSourceType:
-      return ConsumeMaskSourceType(range);
+      return CSSPropertyBackgroundUtils::ConsumeMaskSourceType(range);
     case CSSPropertyWebkitBackgroundClip:
     case CSSPropertyWebkitMaskClip:
       return ConsumePrefixedBackgroundBox(range, context,
@@ -1201,10 +1180,6 @@ const CSSValue* CSSPropertyParser::ParseSingleValue(
     case CSSPropertyBorderImageWidth:
     case CSSPropertyWebkitMaskBoxImageWidth:
       return CSSPropertyBorderImageUtils::ConsumeBorderImageWidth(range_);
-    case CSSPropertyBackgroundAttachment:
-      return ConsumeCommaSeparatedList(ConsumeBackgroundAttachment, range_);
-    case CSSPropertyBackgroundBlendMode:
-      return ConsumeCommaSeparatedList(ConsumeBackgroundBlendMode, range_);
     case CSSPropertyBackgroundClip:
     case CSSPropertyBackgroundOrigin:
       return ConsumeCommaSeparatedList(ConsumeBackgroundBox, range_);
@@ -1228,8 +1203,6 @@ const CSSValue* CSSPropertyParser::ParseSingleValue(
       return ConsumeCommaSeparatedList(ConsumeBackgroundSize, range_,
                                        context_->Mode(),
                                        isPropertyAlias(unresolved_property));
-    case CSSPropertyMaskSourceType:
-      return ConsumeCommaSeparatedList(ConsumeMaskSourceType, range_);
     case CSSPropertyWebkitBackgroundClip:
     case CSSPropertyWebkitMaskClip:
       return ConsumeCommaSeparatedList(ConsumePrefixedBackgroundBox, range_,
@@ -1238,8 +1211,6 @@ const CSSValue* CSSPropertyParser::ParseSingleValue(
     case CSSPropertyWebkitMaskOrigin:
       return ConsumeCommaSeparatedList(ConsumePrefixedBackgroundBox, range_,
                                        context_, false /* allow_text_value */);
-    case CSSPropertyWebkitMaskComposite:
-      return ConsumeCommaSeparatedList(ConsumeBackgroundComposite, range_);
     case CSSPropertyWebkitMaskRepeatX:
     case CSSPropertyWebkitMaskRepeatY:
       return nullptr;
