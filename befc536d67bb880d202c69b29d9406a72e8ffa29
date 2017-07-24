@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf5ea183_dfe53119",
+        "filename": "content/browser/renderer_host/input/input_router_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-24T17:39:37Z",
+      "side": 1,
+      "message": "nit: frame_tree_node_id",
+      "revId": "befc536d67bb880d202c69b29d9406a72e8ffa29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bd485bc_f86c5012",
+        "filename": "content/browser/renderer_host/input/input_router_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-24T17:39:37Z",
+      "side": 1,
+      "message": "nit: consider base::flat_map maybe?",
+      "revId": "befc536d67bb880d202c69b29d9406a72e8ffa29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

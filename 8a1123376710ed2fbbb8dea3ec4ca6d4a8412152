@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ce7f93f_43575673",
+        "filename": "content/browser/renderer_host/input/input_router_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-07-24T17:39:37Z",
+      "side": 1,
+      "message": "(here and other places below) I don\u0027t think I see all paths that call this - are there (will there be) paths that call this with |source| coming from the renderer? Do we need to worry about an untrusted (malicious) renderer lying here?",
+      "revId": "8a1123376710ed2fbbb8dea3ec4ca6d4a8412152",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
