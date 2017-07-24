@@ -11,6 +11,7 @@
 
 namespace blink {
 
+class BaseAudioContext;
 class LocalFrame;
 
 class MODULES_EXPORT AudioWorklet final : public Worklet {
@@ -20,6 +21,9 @@ class MODULES_EXPORT AudioWorklet final : public Worklet {
   static AudioWorklet* Create(LocalFrame*);
   ~AudioWorklet() override;
 
+  void RegisterContext(BaseAudioContext*);
+  void UnregisterContext(BaseAudioContext*);
+
   DECLARE_VIRTUAL_TRACE();
 
  private:
@@ -28,6 +32,9 @@ class MODULES_EXPORT AudioWorklet final : public Worklet {
   // Implements Worklet.
   bool NeedsToCreateGlobalScope() final;
   WorkletGlobalScopeProxy* CreateGlobalScope() final;
+
+  // AudioWorklet knows about all the active BaseAudioContext.
+  HeapHashSet<Member<BaseAudioContext>> contexts_;
 };
 
 }  // namespace blink

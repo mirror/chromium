@@ -4,7 +4,7 @@
 
 #include "modules/webaudio/AudioWorkletMessagingProxy.h"
 
-#include "core/workers/ThreadedWorkletObjectProxy.h"
+#include "modules/webaudio/AudioWorkletObjectProxy.h"
 #include "modules/webaudio/AudioWorkletThread.h"
 
 namespace blink {
@@ -16,7 +16,17 @@ AudioWorkletMessagingProxy::AudioWorkletMessagingProxy(
 
 AudioWorkletMessagingProxy::~AudioWorkletMessagingProxy() {}
 
-std::unique_ptr<WorkerThread> AudioWorkletMessagingProxy::CreateWorkerThread() {
+std::unique_ptr<ThreadedWorkletObjectProxy>
+    AudioWorkletMessagingProxy::CreateObjectProxy(
+        ThreadedWorkletMessagingProxy* messaging_proxy,
+        ParentFrameTaskRunners* parent_frame_task_runners) {
+  return WTF::MakeUnique<AudioWorkletObjectProxy>(
+      static_cast<AudioWorkletMessagingProxy*>(messaging_proxy),
+      parent_frame_task_runners);
+}
+
+std::unique_ptr<WorkerThread> AudioWorkletMessagingProxy::CreateWorkerThread(
+    double origin_time) {
   return AudioWorkletThread::Create(CreateThreadableLoadingContext(),
                                     WorkletObjectProxy());
 }
