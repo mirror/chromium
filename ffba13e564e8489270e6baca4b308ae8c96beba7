@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8688803_055d3ed4",
+        "filename": "components/ntp_tiles/most_visited_sites_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-24T04:41:10Z",
+      "side": 1,
+      "message": "Nit: would you mind adopting version 6 for the new format, and version 5 for test coverage on earlier versions?",
+      "range": {
+        "startLine": 288,
+        "startChar": 79,
+        "endLine": 288,
+        "endChar": 0
+      },
+      "revId": "ffba13e564e8489270e6baca4b308ae8c96beba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3d23932_ef3654bb",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-24T04:41:10Z",
+      "side": 1,
+      "message": "You can probably set this to 5 for now, since it\u0027ll take us some time to produce a list that is mature enough to be baked in.",
+      "revId": "ffba13e564e8489270e6baca4b308ae8c96beba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60f1605f_59e3aed2",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-24T04:41:10Z",
+      "side": 1,
+      "message": "Naming nit: \u0027List\u0027 twice is redundant and seems unnecessary, IsValidSitesList() seems better to me. Furthermore, it looks like you use this for version 5 only, so I suggest reflecting that in the name (would make the caller\u0027s side more readable).",
+      "range": {
+        "startLine": 121,
+        "startChar": 56,
+        "endLine": 121,
+        "endChar": 0
+      },
+      "revId": "ffba13e564e8489270e6baca4b308ae8c96beba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c49a6b1c_4a85e6b5",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-24T04:41:10Z",
+      "side": 1,
+      "message": "What seems strange here is that a single valid entry makes the whole list valid? Wouldn\u0027t you consider a JSON valid if all its content is valid?",
+      "range": {
+        "startLine": 126,
+        "startChar": 18,
+        "endLine": 126,
+        "endChar": 0
+      },
+      "revId": "ffba13e564e8489270e6baca4b308ae8c96beba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dc4602d_29e60b8a",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-24T04:41:10Z",
+      "side": 1,
+      "message": "Please double check local consistency but usually const is not used for arguments of primitive type.",
+      "revId": "ffba13e564e8489270e6baca4b308ae8c96beba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbcc9aa9_fa0b233d",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-24T04:41:10Z",
+      "side": 1,
+      "message": "I don\u0027t feel strongly but this function would more typically look like this:\nif (version \u003e\u003d kSitesExplorationStartVersion) {\n  return ParseVersion6OrAbove();\n} else {\n  return ParseVersion5();\n}\n\nInferring the version number from the content (i.e. via IsListValidSitesList()) is a bit more complex to reason about.",
+      "range": {
+        "startLine": 161,
+        "startChar": 35,
+        "endLine": 161,
+        "endChar": 0
+      },
+      "revId": "ffba13e564e8489270e6baca4b308ae8c96beba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "595fb6c1_f4121b3b",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-07-24T04:41:10Z",
+      "side": 1,
+      "message": "Nit: lowercase \"invalid\".",
+      "range": {
+        "startLine": 180,
+        "startChar": 55,
+        "endLine": 180,
+        "endChar": 0
+      },
+      "revId": "ffba13e564e8489270e6baca4b308ae8c96beba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
