@@ -16,6 +16,24 @@
       "revId": "2bc5e180f592aace72a4b65f83b462265634d4c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "959ed65c_93739477",
+        "filename": "base/posix/unix_domain_socket_posix_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1139794
+      },
+      "writtenOn": "2017-07-24T06:13:33Z",
+      "side": 0,
+      "message": "Good catch. I was totally unaware of this behavior of gtest. Fixed now.",
+      "parentUuid": "ae7c139a_2922b280",
+      "revId": "2bc5e180f592aace72a4b65f83b462265634d4c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
