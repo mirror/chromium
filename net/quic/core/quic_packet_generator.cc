@@ -56,6 +56,17 @@ QuicConsumedData QuicPacketGenerator::ConsumeData(
     QuicStreamOffset offset,
     StreamSendingState state,
     QuicReferenceCountedPointer<QuicAckListenerInterface> ack_listener) {
+  return ConsumeData(id, iov, offset, state, 0, false, std::move(ack_listener));
+}
+
+QuicConsumedData QuicPacketGenerator::ConsumeData(
+    QuicStreamId id,
+    QuicIOVector iov,
+    QuicStreamOffset offset,
+    StreamSendingState state,
+    size_t total_bytes_consumed,
+    bool one_shot,
+    QuicReferenceCountedPointer<QuicAckListenerInterface> ack_listener) {
   bool has_handshake = (id == kCryptoStreamId);
   bool fin = state != NO_FIN;
   QUIC_BUG_IF(has_handshake && fin)
@@ -66,7 +77,6 @@ QuicConsumedData QuicPacketGenerator::ConsumeData(
       has_handshake && packet_creator_.HasPendingRetransmittableFrames();
   SendQueuedFrames(flush);
 
-  size_t total_bytes_consumed = 0;
   bool fin_consumed = false;
 
   if (!packet_creator_.HasRoomForStreamFrame(id, offset)) {
@@ -115,6 +125,9 @@ QuicConsumedData QuicPacketGenerator::ConsumeData(
     }
     // TODO(ianswett): Move to having the creator flush itself when it's full.
     packet_creator_.Flush();
+    if (one_shot) {
+      break;
+    }
   }
 
   // Don't allow the handshake to be bundled with other retransmittable frames.
@@ -132,8 +145,17 @@ QuicConsumedData QuicPacketGenerator::ConsumeDataFastPath(
     QuicStreamOffset offset,
     bool fin,
     QuicReferenceCountedPointer<QuicAckListenerInterface> ack_listener) {
+  return ConsumeDataFastPath(id, iov, offset, fin, 0, std::move(ack_listener));
+}
+
+QuicConsumedData QuicPacketGenerator::ConsumeDataFastPath(
+    QuicStreamId id,
+    const QuicIOVector& iov,
+    QuicStreamOffset offset,
+    bool fin,
+    size_t total_bytes_consumed,
+    QuicReferenceCountedPointer<QuicAckListenerInterface> ack_listener) {
   DCHECK_NE(id, kCryptoStreamId);
-  size_t total_bytes_consumed = 0;
   while (total_bytes_consumed < iov.total_length &&
          delegate_->ShouldGeneratePacket(HAS_RETRANSMITTABLE_DATA,
                                          NOT_HANDSHAKE)) {
