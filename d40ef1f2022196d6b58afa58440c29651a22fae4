@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "136bf6fd_835fcc35",
+        "filename": "chrome/browser/ui/views/extensions/extension_popup.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-24T23:47:05Z",
+      "side": 1,
+      "message": "How about overriding AddedToWidget?",
+      "range": {
+        "startLine": 156,
+        "startChar": 4,
+        "endLine": 156,
+        "endChar": 21
+      },
+      "revId": "d40ef1f2022196d6b58afa58440c29651a22fae4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5fe447e_fefbbc9e",
+        "filename": "ui/views/controls/native/native_view_host.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-24T23:47:05Z",
+      "side": 1,
+      "message": "NativeViewHostWrapper is an implementation detail and I would like to avoid exposing it. Can you implement SetCornerRadius here? The ifdef for the return value can be here.",
+      "range": {
+        "startLine": 75,
+        "startChar": 8,
+        "endLine": 75,
+        "endChar": 20
+      },
+      "revId": "d40ef1f2022196d6b58afa58440c29651a22fae4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c455e80c_53399294",
+        "filename": "ui/views/controls/native/native_view_host_aura.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-24T23:47:05Z",
+      "side": 1,
+      "message": "I suspect this code is problematic with fast resize. You aren\u0027t using it here, but it\u0027s worth a comment.",
+      "range": {
+        "startLine": 265,
+        "startChar": 8,
+        "endLine": 265,
+        "endChar": 21
+      },
+      "revId": "d40ef1f2022196d6b58afa58440c29651a22fae4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62695fab_6371f4d2",
+        "filename": "ui/views/painter.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-24T23:47:05Z",
+      "side": 1,
+      "message": "Whether this is needed depends upon the painter, and it\u0027s easy to miss. I think the factory function and this should take a boolean indicating what value should be used. Alternatively move the call to NativeViewHostAura.",
+      "range": {
+        "startLine": 213,
+        "startChar": 7,
+        "endLine": 213,
+        "endChar": 24
+      },
+      "revId": "d40ef1f2022196d6b58afa58440c29651a22fae4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
