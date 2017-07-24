@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "affe754d_113ec002",
+        "filename": "chrome/browser/extensions/api/content_settings/content_settings_store.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-24T22:29:38Z",
+      "side": 1,
+      "message": "Can an extension writer still try to send this value? If so, how about a check rather than a dcheck? (if not, please ignore this comment).",
+      "revId": "4ca2bca94d5eab4e1ecfc8bcbea569476921839e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6280ffe_1e2aac99",
+        "filename": "chrome/browser/resources/settings/site_settings/site_settings_prefs_browser_proxy.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-24T22:29:38Z",
+      "side": 1,
+      "message": "I see that the existing function comments indented after the first line on the function overview. This is a whoops in this file afaik. The indents on the @param continuations are normal (lines 129, 139, etc.). IIUC, lines 124, 126, 136, 149 and similar shouldn\u0027t be indented.\nPlease change the indents (or if I\u0027m wrong on this, please explain so that I know).",
+      "revId": "4ca2bca94d5eab4e1ecfc8bcbea569476921839e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57aeb8bb_76663b1c",
+        "filename": "chrome/browser/resources/settings/site_settings/site_settings_prefs_browser_proxy.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-24T22:29:38Z",
+      "side": 1,
+      "message": "?   \u003c!settings.ContentSettingsTypes\u003e",
+      "revId": "4ca2bca94d5eab4e1ecfc8bcbea569476921839e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f586ea04_0f88a57c",
+        "filename": "chrome/browser/resources/settings/site_settings/site_settings_prefs_browser_proxy.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-24T22:29:38Z",
+      "side": 1,
+      "message": "Add ! here too, unless contentTypes accepts nulls in the array.",
+      "revId": "4ca2bca94d5eab4e1ecfc8bcbea569476921839e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "920ed4e8_8e788609",
+        "filename": "chrome/browser/resources/settings/site_settings/site_settings_prefs_browser_proxy.js",
+        "patchSetId": 17
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-24T22:29:38Z",
+      "side": 1,
+      "message": "!settings.ContentSetting",
+      "revId": "4ca2bca94d5eab4e1ecfc8bcbea569476921839e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
