@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b77642a_8e786a56",
+        "filename": "chrome/browser/ui/webui/memory_internals_ui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-24T16:54:56Z",
+      "side": 1,
+      "message": "This looks like a PostTaskAndReply scenario. Does that not fit?",
+      "range": {
+        "startLine": 101,
+        "startChar": 2,
+        "endLine": 101,
+        "endChar": 9
+      },
+      "revId": "72e0c2b298503b87c30c6a208a97d89b06ad6a54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e212a702_3231ef54",
+        "filename": "chrome/browser/ui/webui/memory_internals_ui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-24T16:54:56Z",
+      "side": 1,
+      "message": "Why are we taking a list if it is always just going to be a single integer value?",
+      "range": {
+        "startLine": 114,
+        "startChar": 19,
+        "endLine": 114,
+        "endChar": 20
+      },
+      "revId": "72e0c2b298503b87c30c6a208a97d89b06ad6a54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "032f4f27_2c9537b4",
+        "filename": "chrome/browser/ui/webui/memory_internals_ui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-24T16:54:56Z",
+      "side": 1,
+      "message": "Can you add a short block comment at the top of the file explaining why we need to iterate processes in _both_ the IO thread and the UI thread?",
+      "range": {
+        "startLine": 125,
+        "startChar": 26,
+        "endLine": 125,
+        "endChar": 30
+      },
+      "revId": "72e0c2b298503b87c30c6a208a97d89b06ad6a54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
