@@ -31,6 +31,8 @@
 #include "ui/gfx/geometry/insets.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/gfx/shadow_value.h"
+#include "ui/keyboard/keyboard_controller.h"
+#include "ui/keyboard/keyboard_util.h"
 #include "ui/strings/grit/ui_strings.h"
 #include "ui/views/background.h"
 #include "ui/views/border.h"
@@ -188,6 +190,7 @@ SearchBoxView::SearchBoxView(SearchBoxViewDelegate* delegate,
   content_container_->AddChildView(back_button_);
 
   if (is_fullscreen_app_list_enabled_) {
+    is_tablet_mode_ = app_list_view->is_tablet_mode();
     search_icon_ = new views::ImageView();
     content_container_->AddChildView(search_icon_);
     search_box_->set_placeholder_text_color(search_box_color_);
@@ -403,12 +406,36 @@ void SearchBoxView::SetSearchBoxActive(bool active) {
   search_box_->SetCursorEnabled(active);
   search_box_->SchedulePaint();
 
+  ShowOrHideKeyboard();
+
   if (speech_button_)
     speech_button_->SetVisible(!active);
   close_button_->SetVisible(active);
   if (focused_view_ != FOCUS_CONTENTS_VIEW)
     ResetTabFocus(false);
   content_container_->Layout();
+}
+
+void SearchBoxView::ShowOrHideKeyboard() {
+  if (!is_fullscreen_app_list_enabled_)
+    return;
+  if (!is_tablet_mode_)
+    return;
+
+  keyboard::KeyboardController* const keyboard_controller =
+      keyboard::KeyboardController::GetInstance();
+  if (!keyboard_controller ||
+      is_search_box_active_ == keyboard::IsKeyboardVisible()) {
+    return;
+  }
+
+  if (is_search_box_active_) {
+    keyboard_controller->ShowKeyboard(false);
+    return;
+  }
+
+  keyboard_controller->HideKeyboard(
+      keyboard::KeyboardController::HIDE_REASON_MANUAL);
 }
 
 void SearchBoxView::HandleSearchBoxEvent(ui::LocatedEvent* located_event) {
@@ -515,6 +542,14 @@ void SearchBoxView::ButtonPressed(views::Button* sender,
   } else {
     NOTREACHED();
   }
+}
+
+void SearchBoxView::OnTabletModeChanged(bool started) {
+  if (!is_fullscreen_app_list_enabled_)
+    return;
+
+  is_tablet_mode_ = started;
+  ShowOrHideKeyboard();
 }
 
 void SearchBoxView::UpdateModel() {

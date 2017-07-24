@@ -94,10 +94,6 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
   // hiding the app list when a modal dialog is being shown).
   void SetAppListOverlayVisible(bool visible);
 
-  views::Widget* search_box_widget() const { return search_box_widget_; }
-
-  SearchBoxView* search_box_view() { return search_box_view_; }
-
   // Overridden from views::View:
   gfx::Size CalculatePreferredSize() const override;
   void OnPaint(gfx::Canvas* canvas) override;
@@ -108,8 +104,6 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
   bool ShouldDescendIntoChildForEventHandling(
       gfx::NativeView child,
       const gfx::Point& location) override;
-
-  AppListMainView* app_list_main_view() { return app_list_main_view_; }
 
   // Gets the PaginationModel owned by this view's apps grid.
   PaginationModel* GetAppsPaginationModel();
@@ -126,13 +120,6 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
   // whether the search box is empty.
   void SetStateFromSearchBoxView(bool search_box_is_empty);
 
-  bool is_fullscreen() const {
-    return app_list_state_ == FULLSCREEN_ALL_APPS ||
-           app_list_state_ == FULLSCREEN_SEARCH;
-  }
-
-  AppListState app_list_state() const { return app_list_state_; }
-
   // Called when tablet mode starts and ends.
   void OnTabletModeChanged(bool started);
 
@@ -141,6 +128,21 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
 
   // Sets y position of the app list bounds to |y_position_in_screen|.
   void SetYPosition(int y_position_in_screen);
+
+  AppListState app_list_state() const { return app_list_state_; }
+
+  views::Widget* search_box_widget() const { return search_box_widget_; }
+
+  SearchBoxView* search_box_view() { return search_box_view_; }
+
+  AppListMainView* app_list_main_view() { return app_list_main_view_; }
+
+  bool is_fullscreen() const {
+    return app_list_state_ == FULLSCREEN_ALL_APPS ||
+           app_list_state_ == FULLSCREEN_SEARCH;
+  }
+
+  bool is_tablet_mode() { return is_tablet_mode_; }
 
  private:
   friend class test::AppListViewTestApi;
@@ -238,7 +240,7 @@ class APP_LIST_EXPORT AppListView : public views::BubbleDialogDelegateView,
   base::Closure next_paint_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(AppListView);
-};
+};  // namespace app_list
 
 }  // namespace app_list
 
