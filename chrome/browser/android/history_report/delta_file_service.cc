@@ -69,7 +69,7 @@ using content::BrowserThread;
 
 DeltaFileService::DeltaFileService(const base::FilePath& dir)
     : task_runner_(base::CreateSequencedTaskRunnerWithTraits(
-          base::TaskShutdownBehavior::BLOCK_SHUTDOWN)),
+          {base::MayBlock(), base::TaskShutdownBehavior::BLOCK_SHUTDOWN})),
       delta_file_backend_(new DeltaFileBackend(dir)) {}
 
 DeltaFileService::~DeltaFileService() {}

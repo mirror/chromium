@@ -66,7 +66,7 @@ using content::BrowserThread;
 
 UsageReportsBufferService::UsageReportsBufferService(const base::FilePath& dir)
     : task_runner_(base::CreateSequencedTaskRunnerWithTraits(
-          base::TaskShutdownBehavior::BLOCK_SHUTDOWN)),
+          {base::MayBlock(), base::TaskShutdownBehavior::BLOCK_SHUTDOWN})),
       backend_(new UsageReportsBufferBackend(dir)) {}
 
 UsageReportsBufferService::~UsageReportsBufferService() {}
