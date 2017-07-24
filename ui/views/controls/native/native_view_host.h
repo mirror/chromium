@@ -70,8 +70,9 @@ class VIEWS_EXPORT NativeViewHost : public View {
     return fast_resize_at_last_layout_;
   }
 
-  // Accessor for |native_view_|.
   gfx::NativeView native_view() const { return native_view_; }
+
+  NativeViewHostWrapper* native_wrapper() { return native_wrapper_.get(); }
 
   void NativeViewDestroyed();
 
