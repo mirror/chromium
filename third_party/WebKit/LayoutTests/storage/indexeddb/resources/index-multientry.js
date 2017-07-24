@@ -103,6 +103,7 @@ function verifyUniqueConstraint()
                 shouldBeUndefined("request.result");
                 shouldBeNonNull("request.error");
                 debug("Request failed, as expected (" + request.error.name + ")");
+                expectError();
             };
         };
     };

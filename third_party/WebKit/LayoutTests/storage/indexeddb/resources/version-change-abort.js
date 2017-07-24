@@ -5,7 +5,9 @@ if (this.importScripts) {
 
 description("Ensure that aborted VERSION_CHANGE transactions are completely rolled back");
 
-indexedDBTest(prepareDatabase, setVersion1Complete);
+self.isOnErrorTest = true;
+
+indexedDBTest(prepareDatabase, openRequest1Complete);
 function prepareDatabase()
 {
     db = event.target.result;
@@ -14,19 +16,19 @@ function prepareDatabase()
     trans.onabort = unexpectedAbortCallback;
     trans.onerror = unexpectedErrorCallback;
 
-    evalAndLog("store = db.createObjectStore('store1')");
+    evalAndLog("db.createObjectStore('store1')");
 }
 
-function setVersion1Complete()
+function openRequest1Complete()
 {
-    debug("setVersion1 complete");
+    debug("openRequest1 complete");
     shouldBe("db.version", "1");
     debug("");
     db.close();
 
     evalAndLog("vcreq = indexedDB.open(dbname, 2)");
     vcreq.onupgradeneeded = inSetVersion2;
-    vcreq.onerror = setVersion2Abort;
+    vcreq.onerror = openRequest2Error;
     vcreq.onblocked = unexpectedBlockedCallback;
     vcreq.onsuccess = unexpectedSuccessCallback;
 }
@@ -34,32 +36,52 @@ function setVersion1Complete()
 function inSetVersion2()
 {
     db = event.target.result;
-    debug("setVersion2() callback");
+    debug("openRequest2() callback");
     shouldBe("db.version", "2");
     shouldBeTrue("vcreq.transaction instanceof IDBTransaction");
     trans = vcreq.result;
     trans.onerror = unexpectedErrorCallback;
     trans.oncomplete = unexpectedCompleteCallback;
+    trans.onabort = onTransactionAbort;
 
-    evalAndLog("store = db.deleteObjectStore('store1')");
-    evalAndLog("store = db.createObjectStore('store2')");
+    evalAndLog("db.deleteObjectStore('store1')");
+    evalAndLog("db.createObjectStore('store2')");
 
-    // Ensure the test harness error handler is not invoked.
-    self.originalWindowOnError = self.onerror;
-    self.onerror = null;
+    // Throwing an exception during the callback should:
+    // * fire window.onerror (uncaught within event dispatch)
+    // * Cause the transaction to abort - fires 'abort' at transaction
+    // * fires 'error' at the open request
+    // * fires window.onerror (with request error)
 
     debug("raising exception");
-    throw new Error("This should *NOT* be caught!");
+    waitForError(/This should not be caught/, onGlobalErrorUncaughtException);
+    throw new Error("This should not be caught");
 }
 
-function setVersion2Abort()
+function onGlobalErrorUncaughtException()
+{
+    sawGlobalErrorUncaughtException = true;
+}
+
+function onTransactionAbort()
+{
+    shouldBeTrue("sawGlobalErrorUncaughtException");
+    sawTransactionAbort = true;
+}
+
+function openRequest2Error(evt)
 {
     debug("");
-    debug("setVersion2Abort() callback");
+    debug("openRequest2Error() callback");
+    shouldBeTrue("sawGlobalErrorUncaughtException");
+    shouldBeTrue("sawTransactionAbort");
+    waitForError(/AbortError/, onGlobalErrorAbortError);
+}
 
-    // Restore test harness error handler.
-    self.onerror = self.originalWindowOnError;
-    db.close();
+function onGlobalErrorAbortError()
+{
+    debug("");
+    debug("Verify rollback:");
     evalAndLog("request = indexedDB.open(dbname)");
     request.onblocked = unexpectedBlockedCallback;
     request.onupgradeneeded = unexpectedUpgradeNeededCallback;
@@ -71,5 +93,5 @@ function setVersion2Abort()
         shouldBeFalse("db.objectStoreNames.contains('store2')");
 
         finishJSTest();
-    }
+    };
 }

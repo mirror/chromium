@@ -1,3 +1,4 @@
+CONSOLE ERROR: line 1: ConstraintError: Unable to add key to index 'index-unique': at least one key does not satisfy the uniqueness requirements.
 Test features of IndexedDB's multiEntry indices.
 
 On success, you will see a series of "PASS" messages, followed by "TEST COMPLETE".

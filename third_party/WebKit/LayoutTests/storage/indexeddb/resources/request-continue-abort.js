@@ -36,7 +36,8 @@ function testCursor()
         evalAndLog("request.result.continue()");
         transaction.abort();
     };
-    request.onerror = function() {
+    request.onerror = function(evt) {
+        evt.preventDefault();
         debug("");
         debug("'error' event fired at request.");
         shouldBe("++state", "2");

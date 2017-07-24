@@ -46,6 +46,7 @@ function testErrorFromRequest()
     evalAndLog("request = trans.objectStore('storeName').add('value2', 'key')");
     request.onsuccess = unexpectedSuccessCallback;
     request.onerror = function() {
+        expectError();
         shouldBeUndefined("request.result");
         shouldBeNonNull("request.error");
         shouldBe("request.error.name", "'ConstraintError'");
@@ -58,6 +59,7 @@ function testErrorFromRequest()
         debug("trans.error.message = " + trans.error.message);
         shouldBeNonNull("trans.error.message");
         shouldBe("trans.error", "request_error");
+
         testErrorFromException();
     };
 }
@@ -92,6 +94,7 @@ function testErrorFromException()
         debug("trans.error.message = " + trans.error.message);
         shouldBeNonNull("trans.error.message");
         shouldBe("trans.error.name", "'AbortError'");
+
         testErrorFromCommit();
     };
 }
