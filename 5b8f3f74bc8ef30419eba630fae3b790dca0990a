@@ -50,6 +50,23 @@
       "revId": "5b8f3f74bc8ef30419eba630fae3b790dca0990a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "effa5870_6a06c223",
+        "filename": "components/cast_channel/cast_message_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-24T17:34:16Z",
+      "side": 1,
+      "message": "This is backwards compatible with all Cast devices?",
+      "revId": "5b8f3f74bc8ef30419eba630fae3b790dca0990a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
