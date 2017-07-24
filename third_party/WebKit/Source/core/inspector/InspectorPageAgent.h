@@ -100,7 +100,9 @@ class CORE_EXPORT InspectorPageAgent final
                                   String* result,
                                   bool* base64_encoded);
 
-  static Resource* CachedResource(LocalFrame*, const KURL&);
+  static Resource* CachedResource(LocalFrame*,
+                                  const KURL&,
+                                  InspectorResourceContentLoader*);
   static String ResourceTypeJson(ResourceType);
   static ResourceType CachedResourceType(const Resource&);
   static String CachedResourceTypeJson(const Resource&);

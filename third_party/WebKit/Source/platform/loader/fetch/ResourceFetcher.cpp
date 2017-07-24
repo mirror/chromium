@@ -141,14 +141,8 @@ bool ShouldResourceBeAddedToMemoryCache(const FetchParameters& params,
     return false;
   if (params.Options().data_buffering_policy == kDoNotBufferData)
     return false;
-
-  // TODO(yhirano): Stop adding RawResources to MemoryCache completely.
-  if (resource->GetType() == Resource::kMainResource)
+  if (IsRawResource(*resource))
     return false;
-  if (IsRawResource(*resource) &&
-      (params.IsSpeculativePreload() || params.IsLinkPreload())) {
-    return false;
-  }
   return true;
 }
 
@@ -779,6 +773,8 @@ void ResourceFetcher::InitializeRevalidation(
   DCHECK(resource->CanUseCacheValidator());
   DCHECK(!resource->IsCacheValidator());
   DCHECK(!Context().IsControlledByServiceWorker());
+  // TODO(yhirano): Remove this check before M62 branch point.
+  CHECK(!IsRawResource(*resource));
 
   const AtomicString& last_modified =
       resource->GetResponse().HttpHeaderField(HTTPNames::Last_Modified);
