@@ -1163,8 +1163,7 @@ bool ChromeContentRendererClient::RunIdleHandlerWhenWidgetsHidden() {
 #endif
 }
 
-bool ChromeContentRendererClient::
-    AllowTimerSuspensionWhenProcessBackgrounded() {
+bool ChromeContentRendererClient::AllowPausingTimersWhenProcessBackgrounded() {
 #if defined(OS_ANDROID)
   return true;
 #else
