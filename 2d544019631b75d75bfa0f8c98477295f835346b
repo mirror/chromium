@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36ad56f3_6b28c968",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-24T08:15:26Z",
+      "side": 1,
+      "message": "nit: Please remove trailing whitespace",
+      "revId": "2d544019631b75d75bfa0f8c98477295f835346b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eabb4733_5885fb6b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-24T08:15:26Z",
+      "side": 1,
+      "message": "nit: Please remove trailing whitespace",
+      "revId": "2d544019631b75d75bfa0f8c98477295f835346b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
