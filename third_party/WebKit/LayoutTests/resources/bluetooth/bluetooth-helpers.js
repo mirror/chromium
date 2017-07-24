@@ -636,42 +636,60 @@ function getConnectedHealthThermometerDevice(options) {
 // after another frame (an iframe we insert) discovered the device,
 // connected to it and discovered its services.
 function getHealthThermometerDeviceWithServicesDiscovered(options) {
+  let fake_peripheral, device, fake_service, service, fake_characteristic,
+      characteristic;
   return setUpPreconnectedDevice({
       address: '09:09:09:09:09:09',
       name: 'Health Thermometer',
       knownServiceUUIDs: ['generic_access', 'health_thermometer'],
     })
-    .then(fake_peripheral => {
-      return fake_peripheral.setNextGATTConnectionResponse({code: HCI_SUCCESS})
-        .then(() => fake_peripheral.setNextGATTDiscoveryResponse({
-          code: HCI_SUCCESS}))
-        .then(() => new Promise(resolve => {
-          let iframe = document.createElement('iframe');
-          let messageHandler = messageEvent => {
-            if (messageEvent.data === 'Ready') {
-              callWithKeyDown(() => iframe.contentWindow.postMessage({
-                type: 'DiscoverServices',
-                options: options
-              }, '*'));
-            } else if (messageEvent.data === 'DiscoveryComplete') {
-              window.removeEventListener('message', messageHandler);
-              resolve();
-            } else {
-              console.log(messageEvent.data);
-            }
-          }
-          window.addEventListener('message', messageHandler);
-          iframe.src =
-            '../../../resources/bluetooth/health-thermometer-iframe.html';
-          document.body.appendChild(iframe);
-        }))
-        .then(() => requestDeviceWithKeyDown(options))
-        .then(device => device.gatt.connect())
-        .then(gatt => ({
-          device: gatt.device,
-          fake_peripheral: fake_peripheral
-        }));
-    });
+    .then(_ => fake_peripheral = _)
+    .then(() =>
+        fake_peripheral.setNextGATTConnectionResponse({code: HCI_SUCCESS}))
+    .then(() =>
+        fake_peripheral.setNextGATTDiscoveryResponse({code: HCI_SUCCESS}))
+    .then(() => {
+      let iframe = document.createElement('iframe');
+      function messageHandler(messageEvent) {
+        if (messageEvent.data === 'Ready') {
+          callWithKeyDown(() => iframe.contentWindow.postMessage({
+            type: 'DiscoverServices',
+            options: options
+          }, '*'));
+        } else if (messageEvent.data === 'DiscoveryComplete') {
+          window.removeEventListener('message', messageHandler);
+          resolve();
+        } else {
+          console.log(messageEvent.data);
+        }
+      }
+      window.addEventListener('message', messageHandler);
+      iframe.src =
+          '../../../resources/bluetooth/health-thermometer-iframe.html';
+      document.body.appendChild(iframe);
+    })
+    .then(() => requestDeviceWithKeyDown(options))
+    .then(device => device.gatt.connect())
+    .then(gatt => device = gatt.device)
+    .then(() => fake_peripheral.addFakeService({uuid: health_thermometer.name}))
+    .then(_ => fake_service = _)
+    .then(() => device.gatt.getPrimaryService(health_thermometer.name))
+    .then(_ => service = _)
+    .then(() => fake_service.addFakeCharacteristic({
+      uuid: measurement_interval.name,
+      properties: ['read', 'write', 'indicate'],
+    }))
+    .then(_ => fake_characteristic = _)
+    .then(() => service.getCharacteristic(measurement_interval.name))
+    .then(_ => characteristic = _)
+    .then(() => ({
+      device: device,
+      fake_peripheral: fake_peripheral,
+      fake_service: fake_service,
+      service: service,
+      fake_characteristic: fake_characteristic,
+      characteristic: characteristic,
+    }));
 }
 
 // Similar to getHealthThermometerDevice() except the device has no services,
