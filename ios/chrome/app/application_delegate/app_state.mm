@@ -313,8 +313,9 @@ initWithBrowserLauncher:(id<BrowserLauncher>)browserLauncher
                        currentBrowserState];
   }
 
+  // Use the mainBVC as the ContentSuggestions can only be started in non-OTR.
   [ContentSuggestionsSchedulerNotifications
-      notifyForeground:currentBrowserState];
+      notifyForeground:[[_browserLauncher browserViewInformation] mainBVC]];
 
   // If the current browser state is not OTR, check for cookie loss.
   if (currentBrowserState && !currentBrowserState->IsOffTheRecord() &&
