@@ -25,7 +25,6 @@ import android.widget.TextView;
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.Callback;
 import org.chromium.base.Promise;
-import org.chromium.base.SysUtils;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.compositor.layouts.ChromeAnimation;
@@ -355,12 +354,8 @@ public class SuggestionsBinder {
                         mCapturedSuggestion.isArticle() ? ThumbnailUtils.OPTIONS_RECYCLE_INPUT : 0);
             }
 
-            // If the device has sufficient memory, store the bitmap to skip the download task
-            // next time we display this snippet.
-            if (!SysUtils.isLowEndDevice()) {
-                mCapturedSuggestion.setThumbnailBitmap(
-                        mUiDelegate.getReferencePool().put(thumbnail));
-            }
+            // Store the bitmap to skip the download task next time we display this snippet.
+            mCapturedSuggestion.setThumbnailBitmap(mUiDelegate.getReferencePool().put(thumbnail));
 
             // Check whether the suggestions currently displayed in the view holder is the same as
             // the suggestion whose thumbnail we have just fetched.
