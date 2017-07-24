@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e59f2b45_abdd85c9",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/Analyser/idl-test.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-24T19:33:38Z",
+      "side": 1,
+      "message": "nit: we usually dispense with the optional html/head/body tags in web-platform-tests just to avoid unnecessary indentation",
+      "range": {
+        "startLine": 2,
+        "startChar": 1,
+        "endLine": 2,
+        "endChar": 5
+      },
+      "revId": "96df807fb6fd3fd1ba03a8b612e647b49746eae6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8afbc061_77470e8e",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/Analyser/idl-test.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-24T19:33:38Z",
+      "side": 1,
+      "message": "This is a copy/paste of the section in https://dom.spec.whatwg.org/#idl-index? Add a comment about the source? And update to latest (see updated options param)\n\nI don\u0027t know if it\u0027s worth including EventTarget here... I think idlharness could at least verify that EventTarget is in the proto chain (AudioNode.prototype.__proto__ \u003d\u003d\u003d EventTarget.prototype) but I\u0027m not sure it does.\n\n(Just wanting to keep this test from becoming obsolete as e.g. DOM evolves)",
+      "revId": "96df807fb6fd3fd1ba03a8b612e647b49746eae6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78502ede_e70c9b19",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/Analyser/idl-test.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-24T19:33:38Z",
+      "side": 1,
+      "message": "You can just have one big \u003cpre\u003e, no need to break it up.\n\nAlso... since these are exposed to Worklets we\u0027ll be able to re-use this if it lives in an external file. See https://github.com/w3c/web-platform-tests/blob/master/storage/interfaces.https.html for an example.",
+      "revId": "96df807fb6fd3fd1ba03a8b612e647b49746eae6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1365cf6_3aa6e12f",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/Analyser/idl-test.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-24T19:33:38Z",
+      "side": 1,
+      "message": "nit: inconsistent whitespace/indentation",
+      "revId": "96df807fb6fd3fd1ba03a8b612e647b49746eae6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc8545c0_c98953a6",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/Analyser/idl-test.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-24T19:33:38Z",
+      "side": 1,
+      "message": "Ah, now I see why you\u0027re breaking it up into multiple \u003cpre\u003e blocks.\n\nIt would be easier to just have one test for the entire spec, rather than once per interface, since that is far less maintenance here - no need to track dependencies between nodes in the test script and make sure everything is covered; that is, let the test harness do that for you, and verify that the IDL is correct (e.g. [Exposed] is in the right places).\n\nOther than HTML (which is huge!), one test per spec is more common.\n\nSee https://github.com/w3c/web-platform-tests/blob/master/IndexedDB/interfaces.html for an example",
+      "revId": "96df807fb6fd3fd1ba03a8b612e647b49746eae6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ee4e2b9_1ce37d8a",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/Analyser/idl-test.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-07-24T19:33:38Z",
+      "side": 1,
+      "message": "IMHO it would be clearer if the context were a global, and this was:\n\nidl_array.add_objects({\n  AnalyserNode: [\"new AnalyserNode(context)\"]\n});\n\ni.e. ideally you\u0027re teaching the test how to construct an example. (I don\u0027t know if instances get re-used across tests but if it\u0027s working as is I guess that\u0027s safe)",
+      "revId": "96df807fb6fd3fd1ba03a8b612e647b49746eae6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
