@@ -27,6 +27,8 @@ a fallback method of directly downloading "new" in case of patching failure.
 
 **Offset**: Position relative to the start of a file.
 
+**Local offset**: An offset relative to the start of a region of a file. 
+
 **Reference**: A directed connection between two offsets in a binary. For
 example, consider jump instructions in x86:
 
@@ -85,3 +87,28 @@ Boundaries between different pools can be ambiguous. Having all targets belong
 to the same pool can reduce redundancy, but will use more memory and might 
 cause larger corrections to happen, so this is a tradeoff that can be resolved 
 with benchmarks.
+
+**Equivalence**: A (src_offset, dst_offset, length) tuple describing a region of 
+"new" binary, at an offset of |src_offset|, that is similar to a region of "old" binary, at an offset of |dst_offset|.
+
+**Associated Targets**: A target in "old" binary is associated with a target in 
+"new" binary if both targets:
+(1) are part of similar regions from the same equivalence, and
+(2) share the same offset local to the similar regions they are part of, and
+(3) are not part of any larger region from a different equivalence.
+Not all targets are necessarily associated with another target.
+
+**Label**: An (offset, index) pair, where |offset| is a target, and |index| is
+an integer used to uniquely identify |offset| in its corresponding pool of
+targets. Labels are created for each Reference in "old" and "new" binary as part
+of generating a patch, and used to alias targets when searching for similar
+regions that will form equivalences. Labels are created such that associated
+targets in old and new binaries share the same |index|, and such that indices in
+a pool are tightly packed.
+For example, suppose "old" Labels are:
+  (0x1111, 0), (0x3333, 4), (0x5555, 1), (0x7777, 3)
+and "new" Labels are:
+  (0x2222, 4}, (0x4444, 8), (0x6666, 0), (0x8888, 2)
+This means we had the following associated targets between "old" and "new":
+  0x1111 <=> 0x6666,  0x3333 <=> 0x4444.
+
