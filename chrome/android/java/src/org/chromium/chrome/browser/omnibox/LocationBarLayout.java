@@ -2138,7 +2138,7 @@ public class LocationBarLayout extends FrameLayout
         }
 
         if (getCurrentTab() == null) {
-            setUrlBarText("", null);
+            setUrlBarText(null, null);
             return;
         }
 
@@ -2151,7 +2151,7 @@ public class LocationBarLayout extends FrameLayout
         if (NativePageFactory.isNativePageUrl(url, getCurrentTab().isIncognito())
                 || NewTabPage.isNTPUrl(url)) {
             // Don't show anything for Chrome URLs.
-            setUrlBarText(null, "");
+            setUrlBarText(null, null);
             return;
         }
 
