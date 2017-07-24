@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b356df1_f3b7fb04",
+        "filename": "content/browser/loader/resource_scheduler_browsertest.cc",
+        "patchSetId": 48
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-24T22:11:41Z",
+      "side": 1,
+      "message": "EXPECT_TRUE",
+      "revId": "677d1ae95f3fff3747c381fce3ea75ebd714d50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef88098c_c0d65199",
+        "filename": "content/browser/loader/resource_scheduler_browsertest.cc",
+        "patchSetId": 48
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-24T22:11:41Z",
+      "side": 1,
+      "message": "EXPECT_TRUE",
+      "revId": "677d1ae95f3fff3747c381fce3ea75ebd714d50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2841abfa_c3461e6e",
+        "filename": "content/browser/resource_loading_browsertest.cc",
+        "patchSetId": 48
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-24T22:11:41Z",
+      "side": 1,
+      "message": "EXPECT_TRUE",
+      "revId": "677d1ae95f3fff3747c381fce3ea75ebd714d50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bbbaef5_0a126461",
+        "filename": "content/test/data/resource_loading/test1.js",
+        "patchSetId": 48
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-24T22:11:41Z",
+      "side": 1,
+      "message": "{ goes on the previous line.",
+      "range": {
+        "startLine": 6,
+        "startChar": 1,
+        "endLine": 6,
+        "endChar": 0
+      },
+      "revId": "677d1ae95f3fff3747c381fce3ea75ebd714d50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbe05a1e_dcc787d5",
+        "filename": "content/test/data/resource_loading/test2.js",
+        "patchSetId": 48
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-24T22:11:41Z",
+      "side": 1,
+      "message": "{ goes on the previous line.",
+      "range": {
+        "startLine": 6,
+        "startChar": 1,
+        "endLine": 6,
+        "endChar": 0
+      },
+      "revId": "677d1ae95f3fff3747c381fce3ea75ebd714d50b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
