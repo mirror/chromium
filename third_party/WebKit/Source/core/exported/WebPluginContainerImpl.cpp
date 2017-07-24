@@ -93,6 +93,7 @@
 #include "public/platform/WebDragData.h"
 #include "public/platform/WebExternalTextureLayer.h"
 #include "public/platform/WebInputEvent.h"
+#include "public/platform/WebKeyboardEvent.h"
 #include "public/platform/WebRect.h"
 #include "public/platform/WebString.h"
 #include "public/platform/WebURL.h"
@@ -108,6 +109,23 @@
 #include "public/web/WebViewClient.h"
 
 namespace blink {
+
+namespace {
+
+bool IsControlKeyDown(WebKeyboardEvent* web_event) {
+// Key bindings are different on Mac: the Command key
+// (WebInputEvent::kMetaKey) has the same functionality as the Control key on
+// other platforms, so perceive this as the Control key.
+#if defined(OS_MACOSX)
+  return ((web_event->GetModifiers() & WebInputEvent::kInputModifiers) ==
+          WebInputEvent::kMetaKey);
+#else
+  return ((web_event->GetModifiers() & WebInputEvent::kInputModifiers) ==
+          WebInputEvent::kControlKey);
+#endif
+}
+
+}  // namespace
 
 // Public methods --------------------------------------------------------------
 
@@ -822,15 +840,9 @@ void WebPluginContainerImpl::HandleKeyboardEvent(KeyboardEvent* event) {
     return;
 
   if (web_event.GetType() == WebInputEvent::kKeyDown) {
-#if defined(OS_MACOSX)
-    if ((web_event.GetModifiers() & WebInputEvent::kInputModifiers) ==
-            WebInputEvent::kMetaKey
-#else
-    if ((web_event.GetModifiers() & WebInputEvent::kInputModifiers) ==
-            WebInputEvent::kControlKey
-#endif
-        && (web_event.windows_key_code == VKEY_C ||
-            web_event.windows_key_code == VKEY_INSERT)
+    if (IsControlKeyDown(&web_event) &&
+        (web_event.windows_key_code == VKEY_C ||
+         web_event.windows_key_code == VKEY_INSERT)
         // Only copy if there's a selection, so that we only ever do this
         // for Pepper plugins that support copying.  Windowless NPAPI
         // plugins will get the event as before.
