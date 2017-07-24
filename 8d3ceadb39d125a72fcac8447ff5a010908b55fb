@@ -70,6 +70,30 @@
       "revId": "8d3ceadb39d125a72fcac8447ff5a010908b55fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6a0013c_5dc01ab7",
+        "filename": "content/browser/media/capture/desktop_capture_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-24T20:11:58Z",
+      "side": 0,
+      "message": "Sorry, upper rounding is not correct. It should be,\n\n// Align to 2x2 pixel boundaries, as required by OnIncomingCapturedData() so\n// it can convert the frame to I420 format.\nwebrtc::DesktopSize output_size(\n    resolution_chooser_-\u003ecapture_size().width() \u0026 ~1,\n    resolution_chooser_-\u003ecapture_size().height() \u0026 ~1);\nif (output_size.is_empty()) {\n  // Even RESOLUTION_POLICY_ANY_WITHIN_LIMIT is used, a non-empty size should be guaranteed.\n  output_size.set(2, 2);\n}\n\n...\n\nif (frame-\u003esize().equals(webrtc::DesktopSize(1, 1))) {\n  // create a black frame with output_size.\n} else {\n  DCHECK_GE(frame-\u003esize().width(), 2);\n  DCHECK_GE(frame-\u003esize().height(), 2);\n\n  if (!frame-\u003esize().equals(output_size)) {\n    // cropping and scaling\n  } else if (IsFrameUnpackedOrInverted(frame.get())) {\n    ...\n  } else {\n    ...\n  }\n}",
+      "parentUuid": "73243c51_afcc70d8",
+      "range": {
+        "startLine": 290,
+        "startChar": 2,
+        "endLine": 290,
+        "endChar": 50
+      },
+      "revId": "8d3ceadb39d125a72fcac8447ff5a010908b55fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
