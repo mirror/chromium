@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed4eca8b_b71217db",
+        "filename": "media/gpu/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-24T21:36:26Z",
+      "side": 1,
+      "message": "typo.",
+      "revId": "29334e18c03136cb821d8f86e614e0867cfc0b9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
