@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f5300af8_db569b18",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-24T22:07:44Z",
+      "side": 1,
+      "message": "the callback is never called, but notice line #154, we don\u0027t wait for the callback until ResourceCoordinator is enabled.",
+      "parentUuid": "88effba7_fca69977",
+      "range": {
+        "startLine": 144,
+        "startChar": 0,
+        "endLine": 149,
+        "endChar": 3
+      },
+      "revId": "2a2e960611c4215ddbf8c5bff4924ab9caec9d15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62cea862_5e294330",
         "filename": "chrome/browser/metrics/process_memory_metrics_emitter.cc",
         "patchSetId": 20
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c140b127_cf62d2c0",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-24T22:07:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62cea862_5e294330",
+      "range": {
+        "startLine": 162,
+        "startChar": 2,
+        "endLine": 162,
+        "endChar": 17
+      },
+      "revId": "2a2e960611c4215ddbf8c5bff4924ab9caec9d15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7def8fd_0ff9e2ea",
         "filename": "chrome/browser/metrics/process_memory_metrics_emitter.cc",
         "patchSetId": 20
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-24T21:19:04Z",
       "side": 1,
       "message": "What does it mean to create a UKM with no URL?",
+      "range": {
+        "startLine": 240,
+        "startChar": 0,
+        "endLine": 241,
+        "endChar": 37
+      },
+      "revId": "2a2e960611c4215ddbf8c5bff4924ab9caec9d15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c419817_43d6c6e0",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-24T22:07:44Z",
+      "side": 1,
+      "message": "UKM is a bit of a misnomer. UKM is just a limited form of proto. It\u0027s entirely okay to have no URL. *shrug*.",
+      "parentUuid": "e7def8fd_0ff9e2ea",
       "range": {
         "startLine": 240,
         "startChar": 0,
@@ -91,6 +163,30 @@
       "revId": "2a2e960611c4215ddbf8c5bff4924ab9caec9d15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "167db729_51ee7a3b",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-24T22:07:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecff2333_db19b19a",
+      "range": {
+        "startLine": 80,
+        "startChar": 16,
+        "endLine": 80,
+        "endChar": 35
+      },
+      "revId": "2a2e960611c4215ddbf8c5bff4924ab9caec9d15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -137,6 +233,30 @@
       "revId": "2a2e960611c4215ddbf8c5bff4924ab9caec9d15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee005dd9_aa636774",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 1311,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-24T22:07:44Z",
+      "side": 1,
+      "message": "Acknowledged. I believe you mentioned that you would be talking to nasko, and then starting this discussion with GRC?",
+      "parentUuid": "9bfae668_209d6e30",
+      "range": {
+        "startLine": 1305,
+        "startChar": 0,
+        "endLine": 1311,
+        "endChar": 3
+      },
+      "revId": "2a2e960611c4215ddbf8c5bff4924ab9caec9d15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
