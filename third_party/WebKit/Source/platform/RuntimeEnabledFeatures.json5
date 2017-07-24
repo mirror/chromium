@@ -296,7 +296,7 @@
     },
     {
       name: "CSSScrollSnapPoints",
-      status: "test",
+      status: "stable",
     },
     {
       name: "CSSSelectorsFocusWithin",

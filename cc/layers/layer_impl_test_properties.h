@@ -13,6 +13,7 @@
 #include "cc/layers/layer_collections.h"
 #include "cc/layers/layer_position_constraint.h"
 #include "cc/layers/layer_sticky_position_constraint.h"
+#include "cc/layers/snap_point_list.h"
 #include "third_party/skia/include/core/SkBlendMode.h"
 #include "ui/gfx/geometry/point3_f.h"
 #include "ui/gfx/transform.h"
@@ -58,6 +59,7 @@ struct CC_EXPORT LayerImplTestProperties {
   LayerImpl* parent;
   bool user_scrollable_horizontal = true;
   bool user_scrollable_vertical = true;
+  SnapPointList snap_offsets;
 };
 
 }  // namespace cc

@@ -25,4 +25,14 @@ bool FixedVelocityCurve::ComputeScrollOffset(base::TimeTicks time,
   return true;
 }
 
+void FixedVelocityCurve::ComputeTotalScrollOffset(gfx::Vector2dF* offset) {
+  offset->set_x(0);
+  offset->set_y(0);
+}
+
+bool FixedVelocityCurve::ResetCurveBySnappedOffset(
+    const gfx::Vector2dF& offset) {
+  return false;
+}
+
 }  // namespace ui

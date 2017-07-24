@@ -56,6 +56,7 @@ class WebLayerScrollClient;
 struct WebFloatPoint;
 struct WebLayerPositionConstraint;
 struct WebLayerStickyPositionConstraint;
+struct WebSnapPointList;
 
 class WebLayer {
  public:
@@ -229,6 +230,8 @@ class WebLayer {
 
   // Called on the scroll layer to trigger showing the overlay scrollbars.
   virtual void ShowScrollbars() = 0;
+
+  virtual void SetSnapOffsets(const WebSnapPointList&) = 0;
 };
 
 }  // namespace blink

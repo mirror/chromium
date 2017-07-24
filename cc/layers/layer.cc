@@ -313,6 +313,24 @@ Layer* Layer::RootLayer() {
   return layer;
 }
 
+void Layer::SetScrollSnapOffsets(const SnapPointList& offsets) {
+  DCHECK(IsPropertyChangeAllowed());
+  if (inputs_.snap_offsets == offsets)
+    return;
+  inputs_.snap_offsets = offsets;
+  if (!layer_tree_host_)
+    return;
+
+  if (scrollable()) {
+    auto& scroll_tree = layer_tree_host_->property_trees()->scroll_tree;
+    if (auto* scroll_node = scroll_tree.Node(scroll_tree_index_))
+      scroll_node->snap_offsets = offsets;
+    else
+      SetPropertyTreesNeedRebuild();
+  }
+  SetNeedsCommit();
+}
+
 void Layer::RemoveAllChildren() {
   DCHECK(IsPropertyChangeAllowed());
   while (inputs_.children.size()) {
