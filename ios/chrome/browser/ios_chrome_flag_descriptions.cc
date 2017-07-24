@@ -48,4 +48,10 @@ const char kIosCaptivePortalDescription[] =
     "When enabled, the Captive Portal landing page will be displayed if it is "
     "detected that the user is connected to a Captive Portal network.";
 
+const char kInProductHelpDemoModeName[] = "In-Product Help Demo Mode";
+const char kInProductHelpDemoModeDescription[] =
+    "When a specific promotion is enabled, it "
+    "triggers exactly once per cold start. Alternatively, all features can be "
+    "enabled at once. Requires restart of Chrome.";
+
 }  // namespace flag_descriptions
