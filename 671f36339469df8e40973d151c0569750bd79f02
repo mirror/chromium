@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "66c1e2ab_82d08fd0",
+        "filename": "third_party/WebKit/Source/core/layout/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-07-24T18:59:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "767e3149_0594c50e",
+      "range": {
+        "startLine": 594,
+        "startChar": 6,
+        "endLine": 594,
+        "endChar": 7
+      },
+      "revId": "671f36339469df8e40973d151c0569750bd79f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1971015a_e5d0a75f",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.h",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "671f36339469df8e40973d151c0569750bd79f02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da15b904_cba4509a",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 584,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-07-24T18:59:47Z",
+      "side": 1,
+      "message": "Done. In order to keep type as CompositedScrolling, I had to remove the : 1",
+      "parentUuid": "1971015a_e5d0a75f",
+      "range": {
+        "startLine": 584,
+        "startChar": 2,
+        "endLine": 584,
+        "endChar": 77
+      },
+      "revId": "671f36339469df8e40973d151c0569750bd79f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
