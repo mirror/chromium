@@ -310,6 +310,24 @@
       "revId": "5d2f99f29965717edd788d9a5e6c4eecffabc3a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6be644d_952432d6",
+        "filename": "third_party/WebKit/Source/core/loader/ScheduledNavigation.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-24T08:33:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "af638739_e1de15d3",
+      "revId": "5d2f99f29965717edd788d9a5e6c4eecffabc3a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
