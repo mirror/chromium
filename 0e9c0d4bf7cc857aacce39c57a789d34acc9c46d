@@ -46,6 +46,30 @@
       "revId": "0e9c0d4bf7cc857aacce39c57a789d34acc9c46d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a8d6f44_3b6da5b3",
+        "filename": "components/error_page/renderer/net_error_helper_core.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-24T18:18:13Z",
+      "side": 1,
+      "message": "Thanks!  Signed off on the other CL.  Once you rebase this one on top of it, I\u0027ll sign off after a quick check (Since this still modifies components/error_page/renderer/net_error_helper_core.cc, I assume this one hasn\u0027t been rebased yet)",
+      "parentUuid": "595579c8_90022a27",
+      "range": {
+        "startLine": 132,
+        "startChar": 15,
+        "endLine": 132,
+        "endChar": 21
+      },
+      "revId": "0e9c0d4bf7cc857aacce39c57a789d34acc9c46d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
