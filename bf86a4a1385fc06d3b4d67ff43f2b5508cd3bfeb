@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68e84ff1_543d8946",
+        "filename": "ui/webui/resources/cr_elements/shared_vars_css.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-07-24T23:17:43Z",
+      "side": 1,
+      "message": "as a side-note, I\u0027m also planning on changing all references to \"--google-blue-500\" in MD Settings to use this variable instead.",
+      "revId": "bf86a4a1385fc06d3b4d67ff43f2b5508cd3bfeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
