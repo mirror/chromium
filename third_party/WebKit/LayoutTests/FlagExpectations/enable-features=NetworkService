@@ -2105,3 +2105,7 @@ Bug(none) webshare/share-nonutf8-encoding.html [ Timeout ]
 Bug(none) webshare/share-success.html [ Timeout ]
 Bug(none) webshare/share-types.html [ Timeout ]
 Bug(none) webshare/share-url-relative.html [ Timeout ]
+
+Bug(none) http/tests/inspector-protocol/cachestorage/read-cached-response.js [ Crash ]
+Bug(none) http/tests/push_messaging/permission-state-granted-in-document.html [ Crash ]
+Bug(none) http/tests/security/cors-rfc1918/addressspace-serviceworker-basic.html [ Crash ]
