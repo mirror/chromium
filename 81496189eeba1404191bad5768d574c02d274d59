@@ -65,6 +65,30 @@
     },
     {
       "key": {
+        "uuid": "24475364_ddb13a11",
+        "filename": "ios/web/navigation/crw_navigation_item_holder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-07-24T23:48:31Z",
+      "side": 1,
+      "message": "+1 to this suggestion",
+      "parentUuid": "8ce9c641_1428f7d5",
+      "range": {
+        "startLine": 18,
+        "startChar": 24,
+        "endLine": 18,
+        "endChar": 46
+      },
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb9c7755_bcdec808",
         "filename": "ios/web/navigation/crw_navigation_item_holder.h",
         "patchSetId": 4
@@ -99,6 +123,40 @@
       "writtenOn": "2017-07-24T23:13:49Z",
       "side": 1,
       "message": "add - (instancetype)init NS_UNAVAILABLE;",
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04306ff7_6ffcb194",
+        "filename": "ios/web/navigation/navigation_manager_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-07-24T23:48:31Z",
+      "side": 1,
+      "message": "nit: Consider renaming to IsFragmentChangeNavigationBetweenUrls(), as it would more closely match CRWSessionController\u0027s |-isSameDocumentNavigationBetweenItem:andItem:|.  This is mostly for consistency, but also because the \"Is\" prefix makes it obvious sooner that this is returning a bool.",
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22b0d744_aa6b8b4a",
+        "filename": "ios/web/navigation/navigation_manager_impl.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-07-24T23:48:31Z",
+      "side": 1,
+      "message": "This check was necessary in the code\u0027s old location because pending items are sometimes not created for certain navigations.  Knowledge of this behavior is out of scope for this particular function, though, so I think it makes more sense to have DCHECK(pending_item) in this function and leave the \"if(!pending_item)\" check in AddPendingItem() where it\u0027s more obvious why this condition might occur.",
       "revId": "81496189eeba1404191bad5768d574c02d274d59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -174,6 +232,30 @@
     },
     {
       "key": {
+        "uuid": "a1010115_b4b169bc",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-07-24T23:48:31Z",
+      "side": 1,
+      "message": "WKBackForwardListItems are immutable, so I think probably not.",
+      "parentUuid": "8463b6ab_8420bc15",
+      "range": {
+        "startLine": 127,
+        "startChar": 2,
+        "endLine": 127,
+        "endChar": 7
+      },
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4303d728_570e5dea",
         "filename": "ios/web/navigation/wk_based_navigation_manager_impl.h",
         "patchSetId": 4
@@ -191,6 +273,23 @@
         "endLine": 129,
         "endChar": 52
       },
+      "revId": "81496189eeba1404191bad5768d574c02d274d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50c8209a_c3a21d86",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-07-24T23:48:31Z",
+      "side": 1,
+      "message": "Optional nit: If we want to use opaque key values like this, I\u0027ve seen several places where it\u0027s defined as \"const void* const key \u003d \u0026key\".  In my opinion, this makes it a little clearer that the variable\u0027s only use is as an identifying key since it cannot be used for any other purpose.  If you do want to keep a non void* key, I\u0027d suggest turning it into a char[] because it can potentially make debugging easier since you can print the key\u0027s string value.  At the very least, declare the key as a const please :)",
       "revId": "81496189eeba1404191bad5768d574c02d274d59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
