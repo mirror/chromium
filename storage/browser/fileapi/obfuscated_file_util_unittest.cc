@@ -20,6 +20,7 @@
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
+#include "base/test/scoped_task_environment.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "storage/browser/fileapi/external_mount_points.h"
@@ -167,7 +168,6 @@ class ObfuscatedFileUtilTest : public testing::Test {
 
     quota_manager_ = new storage::QuotaManager(
         false /* is_incognito */, data_dir_.GetPath(),
-        base::ThreadTaskRunnerHandle::Get().get(),
         base::ThreadTaskRunnerHandle::Get().get(), storage_policy_.get(),
         storage::GetQuotaSettingsFunc());
     storage::QuotaSettings settings;
@@ -292,7 +292,7 @@ class ObfuscatedFileUtilTest : public testing::Test {
   }
 
   int64_t SizeInUsageFile() {
-    base::RunLoop().RunUntilIdle();
+    scoped_task_environment_.RunUntilIdle();
     int64_t usage = 0;
     return usage_cache()->GetUsage(
         sandbox_file_system_.GetUsageCachePath(), &usage) ? usage : -1;
@@ -406,13 +406,15 @@ class ObfuscatedFileUtilTest : public testing::Test {
    public:
     UsageVerifyHelper(std::unique_ptr<FileSystemOperationContext> context,
                       SandboxFileSystemTestHelper* file_system,
-                      int64_t expected_usage)
+                      int64_t expected_usage,
+                      ObfuscatedFileUtilTest* test)
         : context_(std::move(context)),
           sandbox_file_system_(file_system),
-          expected_usage_(expected_usage) {}
+          expected_usage_(expected_usage),
+          test_(test) {}
 
     ~UsageVerifyHelper() {
-      base::RunLoop().RunUntilIdle();
+      test_->scoped_task_environment_.RunUntilIdle();
       Check();
     }
 
@@ -429,21 +431,23 @@ class ObfuscatedFileUtilTest : public testing::Test {
     std::unique_ptr<FileSystemOperationContext> context_;
     SandboxFileSystemTestHelper* sandbox_file_system_;
     int64_t expected_usage_;
+    ObfuscatedFileUtilTest* const test_;
   };
 
   std::unique_ptr<UsageVerifyHelper> AllowUsageIncrease(
       int64_t requested_growth) {
     int64_t usage = sandbox_file_system_.GetCachedOriginUsage();
-    return std::unique_ptr<UsageVerifyHelper>(
-        new UsageVerifyHelper(LimitedContext(requested_growth),
-                              &sandbox_file_system_, usage + requested_growth));
+    return std::unique_ptr<UsageVerifyHelper>(new UsageVerifyHelper(
+        LimitedContext(requested_growth), &sandbox_file_system_,
+        usage + requested_growth, this));
   }
 
   std::unique_ptr<UsageVerifyHelper> DisallowUsageIncrease(
       int64_t requested_growth) {
     int64_t usage = sandbox_file_system_.GetCachedOriginUsage();
-    return std::unique_ptr<UsageVerifyHelper>(new UsageVerifyHelper(
-        LimitedContext(requested_growth - 1), &sandbox_file_system_, usage));
+    return std::unique_ptr<UsageVerifyHelper>(
+        new UsageVerifyHelper(LimitedContext(requested_growth - 1),
+                              &sandbox_file_system_, usage, this));
   }
 
   void FillTestDirectory(
@@ -691,7 +695,7 @@ class ObfuscatedFileUtilTest : public testing::Test {
     // still alive.
     file_util->db_flush_delay_seconds_ = 0;
     file_util->MarkUsed();
-    base::RunLoop().RunUntilIdle();
+    scoped_task_environment_.RunUntilIdle();
 
     ASSERT_TRUE(file_util->origin_database_ == NULL);
   }
@@ -708,7 +712,7 @@ class ObfuscatedFileUtilTest : public testing::Test {
     }
 
     // At this point the callback is still in the message queue but OFU is gone.
-    base::RunLoop().RunUntilIdle();
+    scoped_task_environment_.RunUntilIdle();
   }
 
   void DestroyDirectoryDatabase_IsolatedTestBody() {
@@ -808,6 +812,7 @@ class ObfuscatedFileUtilTest : public testing::Test {
   const base::FilePath& data_dir_path() const { return data_dir_.GetPath(); }
 
  protected:
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
   base::ScopedTempDir data_dir_;
   base::MessageLoopForIO message_loop_;
   scoped_refptr<MockSpecialStoragePolicy> storage_policy_;

@@ -9,6 +9,7 @@
 #include "base/files/scoped_temp_dir.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
+#include "base/test/scoped_task_environment.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "net/base/url_util.h"
 #include "storage/browser/quota/quota_manager.h"
@@ -67,7 +68,6 @@ class UsageMockQuotaManager : public QuotaManager {
   UsageMockQuotaManager(SpecialStoragePolicy* special_storage_policy)
       : QuotaManager(false,
                      base::FilePath(),
-                     base::ThreadTaskRunnerHandle::Get().get(),
                      base::ThreadTaskRunnerHandle::Get().get(),
                      special_storage_policy,
                      storage::GetQuotaSettingsFunc()),
@@ -161,6 +161,8 @@ class StorageMonitorTestBase : public testing::Test {
   int GetObserverCount(const HostStorageObservers& host_observers) {
     return host_observers.observers_.ObserverCount();
   }
+
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
 };
 
 class StorageTestWithManagerBase : public StorageMonitorTestBase {
@@ -173,7 +175,7 @@ class StorageTestWithManagerBase : public StorageMonitorTestBase {
   void TearDown() override {
     // This ensures the quota manager is destroyed correctly.
     quota_manager_ = NULL;
-    base::RunLoop().RunUntilIdle();
+    scoped_task_environment_.RunUntilIdle();
   }
 
  protected:
@@ -645,8 +647,7 @@ class StorageMonitorIntegrationTest : public testing::Test {
     storage_policy_ = new MockSpecialStoragePolicy();
     quota_manager_ = new QuotaManager(
         false, data_dir_.GetPath(), base::ThreadTaskRunnerHandle::Get().get(),
-        base::ThreadTaskRunnerHandle::Get().get(), storage_policy_.get(),
-        storage::GetQuotaSettingsFunc());
+        storage_policy_.get(), storage::GetQuotaSettingsFunc());
 
     client_ = new MockStorageClient(quota_manager_->proxy(),
                                     NULL,
@@ -659,10 +660,11 @@ class StorageMonitorIntegrationTest : public testing::Test {
   void TearDown() override {
     // This ensures the quota manager is destroyed correctly.
     quota_manager_ = NULL;
-    base::RunLoop().RunUntilIdle();
+    scoped_task_environment_.RunUntilIdle();
   }
 
  protected:
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
   base::MessageLoop message_loop_;
   base::ScopedTempDir data_dir_;
   scoped_refptr<MockSpecialStoragePolicy> storage_policy_;
@@ -688,7 +690,7 @@ TEST_F(StorageMonitorIntegrationTest, NotifyUsageEvent) {
   client_->AddOriginAndNotify(GURL(kDefaultOrigin),
                               kTestStorageType,
                               kTestUsage);
-  base::RunLoop().RunUntilIdle();
+  scoped_task_environment_.RunUntilIdle();
 
   // Verify that the observer receives it.
   ASSERT_EQ(1, mock_observer.EventCount());

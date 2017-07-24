@@ -17,6 +17,7 @@
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/stl_util.h"
+#include "base/test/scoped_task_environment.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "storage/browser/fileapi/copy_or_move_file_validator.h"
 #include "storage/browser/fileapi/copy_or_move_operation_delegate.h"
@@ -198,7 +199,6 @@ class CopyOrMoveOperationTestHelper {
     base::FilePath base_dir = base_.GetPath();
     quota_manager_ =
         new MockQuotaManager(false /* is_incognito */, base_dir,
-                             base::ThreadTaskRunnerHandle::Get().get(),
                              base::ThreadTaskRunnerHandle::Get().get(),
                              NULL /* special storage policy */);
     quota_manager_proxy_ = new MockQuotaManagerProxy(
@@ -403,7 +403,12 @@ class CopyOrMoveOperationTestHelper {
   DISALLOW_COPY_AND_ASSIGN(CopyOrMoveOperationTestHelper);
 };
 
-TEST(LocalFileSystemCopyOrMoveOperationTest, CopySingleFile) {
+class LocalFileSystemCopyOrMoveOperationTest : public testing::Test {
+ protected:
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
+};
+
+TEST_F(LocalFileSystemCopyOrMoveOperationTest, CopySingleFile) {
   CopyOrMoveOperationTestHelper helper(GURL("http://foo"),
                                        storage::kFileSystemTypeTemporary,
                                        storage::kFileSystemTypePersistent);
@@ -432,7 +437,7 @@ TEST(LocalFileSystemCopyOrMoveOperationTest, CopySingleFile) {
   ASSERT_EQ(src_increase, dest_increase);
 }
 
-TEST(LocalFileSystemCopyOrMoveOperationTest, MoveSingleFile) {
+TEST_F(LocalFileSystemCopyOrMoveOperationTest, MoveSingleFile) {
   CopyOrMoveOperationTestHelper helper(GURL("http://foo"),
                                        storage::kFileSystemTypeTemporary,
                                        storage::kFileSystemTypePersistent);
@@ -461,7 +466,7 @@ TEST(LocalFileSystemCopyOrMoveOperationTest, MoveSingleFile) {
   ASSERT_EQ(src_increase, dest_increase);
 }
 
-TEST(LocalFileSystemCopyOrMoveOperationTest, CopySingleDirectory) {
+TEST_F(LocalFileSystemCopyOrMoveOperationTest, CopySingleDirectory) {
   CopyOrMoveOperationTestHelper helper(GURL("http://foo"),
                                        storage::kFileSystemTypeTemporary,
                                        storage::kFileSystemTypePersistent);
@@ -490,7 +495,7 @@ TEST(LocalFileSystemCopyOrMoveOperationTest, CopySingleDirectory) {
   ASSERT_EQ(src_increase, dest_increase);
 }
 
-TEST(LocalFileSystemCopyOrMoveOperationTest, MoveSingleDirectory) {
+TEST_F(LocalFileSystemCopyOrMoveOperationTest, MoveSingleDirectory) {
   CopyOrMoveOperationTestHelper helper(GURL("http://foo"),
                                        storage::kFileSystemTypeTemporary,
                                        storage::kFileSystemTypePersistent);
@@ -519,7 +524,7 @@ TEST(LocalFileSystemCopyOrMoveOperationTest, MoveSingleDirectory) {
   ASSERT_EQ(src_increase, dest_increase);
 }
 
-TEST(LocalFileSystemCopyOrMoveOperationTest, CopyDirectory) {
+TEST_F(LocalFileSystemCopyOrMoveOperationTest, CopyDirectory) {
   CopyOrMoveOperationTestHelper helper(GURL("http://foo"),
                                        storage::kFileSystemTypeTemporary,
                                        storage::kFileSystemTypePersistent);
@@ -559,7 +564,7 @@ TEST(LocalFileSystemCopyOrMoveOperationTest, CopyDirectory) {
   ASSERT_EQ(src_increase, dest_increase);
 }
 
-TEST(LocalFileSystemCopyOrMoveOperationTest, MoveDirectory) {
+TEST_F(LocalFileSystemCopyOrMoveOperationTest, MoveDirectory) {
   CopyOrMoveOperationTestHelper helper(GURL("http://foo"),
                                        storage::kFileSystemTypeTemporary,
                                        storage::kFileSystemTypePersistent);
@@ -596,8 +601,8 @@ TEST(LocalFileSystemCopyOrMoveOperationTest, MoveDirectory) {
   ASSERT_EQ(src_increase, dest_increase);
 }
 
-TEST(LocalFileSystemCopyOrMoveOperationTest,
-     MoveDirectoryFailPostWriteValidation) {
+TEST_F(LocalFileSystemCopyOrMoveOperationTest,
+       MoveDirectoryFailPostWriteValidation) {
   CopyOrMoveOperationTestHelper helper(GURL("http://foo"),
                                        storage::kFileSystemTypeTemporary,
                                        storage::kFileSystemTypeTest);
@@ -632,7 +637,7 @@ TEST(LocalFileSystemCopyOrMoveOperationTest,
                              arraysize(kMoveDirResultCases));
 }
 
-TEST(LocalFileSystemCopyOrMoveOperationTest, CopySingleFileNoValidator) {
+TEST_F(LocalFileSystemCopyOrMoveOperationTest, CopySingleFileNoValidator) {
   CopyOrMoveOperationTestHelper helper(GURL("http://foo"),
                                        storage::kFileSystemTypeTemporary,
                                        storage::kFileSystemTypeTest);
@@ -650,7 +655,7 @@ TEST(LocalFileSystemCopyOrMoveOperationTest, CopySingleFileNoValidator) {
   ASSERT_EQ(base::File::FILE_ERROR_SECURITY, helper.Copy(src, dest));
 }
 
-TEST(LocalFileSystemCopyOrMoveOperationTest, ProgressCallback) {
+TEST_F(LocalFileSystemCopyOrMoveOperationTest, ProgressCallback) {
   CopyOrMoveOperationTestHelper helper(GURL("http://foo"),
                                        storage::kFileSystemTypeTemporary,
                                        storage::kFileSystemTypePersistent);
@@ -721,7 +726,7 @@ TEST(LocalFileSystemCopyOrMoveOperationTest, ProgressCallback) {
   }
 }
 
-TEST(LocalFileSystemCopyOrMoveOperationTest, StreamCopyHelper) {
+TEST_F(LocalFileSystemCopyOrMoveOperationTest, StreamCopyHelper) {
   base::ScopedTempDir temp_dir;
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
   base::FilePath source_path = temp_dir.GetPath().AppendASCII("source");
@@ -772,7 +777,7 @@ TEST(LocalFileSystemCopyOrMoveOperationTest, StreamCopyHelper) {
   EXPECT_EQ(kTestData, content);
 }
 
-TEST(LocalFileSystemCopyOrMoveOperationTest, StreamCopyHelperWithFlush) {
+TEST_F(LocalFileSystemCopyOrMoveOperationTest, StreamCopyHelperWithFlush) {
   // Testing the same configuration as StreamCopyHelper, but with |need_flush|
   // parameter set to true. Since it is hard to test that the flush is indeed
   // taking place, this test just only verifies that the file is correctly
@@ -828,7 +833,7 @@ TEST(LocalFileSystemCopyOrMoveOperationTest, StreamCopyHelperWithFlush) {
   EXPECT_EQ(kTestData, content);
 }
 
-TEST(LocalFileSystemCopyOrMoveOperationTest, StreamCopyHelper_Cancel) {
+TEST_F(LocalFileSystemCopyOrMoveOperationTest, StreamCopyHelper_Cancel) {
   base::ScopedTempDir temp_dir;
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
   base::FilePath source_path = temp_dir.GetPath().AppendASCII("source");
