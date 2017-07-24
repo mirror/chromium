@@ -58,10 +58,9 @@ void TracingControllerAndroid::StopTracing(
   base::FilePath file_path(
       base::android::ConvertJavaStringToUTF8(env, jfilepath));
   if (!TracingController::GetInstance()->StopTracing(
-          TracingController::CreateFileSink(
-              file_path,
-              base::Bind(&TracingControllerAndroid::OnTracingStopped,
-                         weak_factory_.GetWeakPtr())))) {
+          TracingController::CreateFileEndpoint(
+              file_path, base::Bind(&TracingControllerAndroid::OnTracingStopped,
+                                    weak_factory_.GetWeakPtr())))) {
     LOG(ERROR) << "EndTracingAsync failed, forcing an immediate stop";
     OnTracingStopped();
   }

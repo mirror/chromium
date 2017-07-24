@@ -75,7 +75,7 @@ class TracingHandler : public DevToolsDomainHandler,
 
   void SetupTimer(double usage_reporting_interval);
   void StopTracing(
-      const scoped_refptr<TracingController::TraceDataSink>& trace_data_sink);
+      const scoped_refptr<TracingController::TraceDataEndpoint>& endpoint);
   bool IsTracing() const;
   static bool IsStartupTracingActive();
   CONTENT_EXPORT static base::trace_event::TraceConfig
