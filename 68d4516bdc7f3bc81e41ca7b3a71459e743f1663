@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5a219b6_ef1883d1",
+        "filename": "content/browser/payments/payment_app_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-07-24T18:23:00Z",
+      "side": 1,
+      "message": "FYI, raw string literals are allowed (e.g. R\"([{\"additionalDisplayItems\":[]...) if that helps make code like this clearer.",
+      "range": {
+        "startLine": 227,
+        "startChar": 9,
+        "endLine": 227,
+        "endChar": 11
+      },
+      "revId": "68d4516bdc7f3bc81e41ca7b3a71459e743f1663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
