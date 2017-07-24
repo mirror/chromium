@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9df125c1_96ce2f81",
+        "filename": "components/download/internal/test/test_download_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-07-24T22:44:08Z",
+      "side": 1,
+      "message": "nit: simpler to initialize client_ in the initializer list here",
+      "revId": "7a593e29fa42c27c68e4527a2330a15f8e706622",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2313f184_425d8bb4",
+        "filename": "components/download/internal/test/test_download_service.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-07-24T22:44:08Z",
+      "side": 1,
+      "message": "nit: add explicit",
+      "revId": "7a593e29fa42c27c68e4527a2330a15f8e706622",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
