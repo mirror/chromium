@@ -84,10 +84,9 @@ class CORE_EXPORT NGLineBreaker {
   void ComputeLineLocation(NGLineInfo*) const;
 
   enum class LineBreakState {
-    // The current position is not breakable.
-    kNotBreakable,
-    // The current position is breakable.
-    kIsBreakable,
+    // Continue looking for the break point. The current point may or may not
+    // be breakable.
+    kContinue,
     // Break by including trailing items (CloseTag).
     kBreakAfterTrailings,
     // Break immediately.
@@ -109,7 +108,9 @@ class CORE_EXPORT NGLineBreaker {
                    NGInlineItemResults*);
 
   void HandleOpenTag(const NGInlineItem&, NGInlineItemResult*);
-  void HandleCloseTag(const NGInlineItem&, NGInlineItemResult*);
+  void HandleCloseTag(const NGInlineItem&,
+                      NGInlineItemResult*,
+                      NGInlineItemResult* previous_result);
 
   void HandleOverflow(NGLineInfo*);
   void Rewind(NGLineInfo*, unsigned new_end);
@@ -119,6 +120,8 @@ class CORE_EXPORT NGLineBreaker {
 
   void MoveToNextOf(const NGInlineItem&);
   void MoveToNextOf(const NGInlineItemResult&);
+
+  bool IsCollapsibleWhitespace(unsigned) const;
   void SkipCollapsibleWhitespaces();
 
   bool IsFirstFormattedLine() const;
@@ -137,6 +140,9 @@ class CORE_EXPORT NGLineBreaker {
 
   // True when current box allows line wrapping.
   bool auto_wrap_ = false;
+
+  // True when current box collapses whitespaces.
+  bool collapse_whitespace_ = false;
 
   // True when current box has 'word-break/word-wrap: break-word'.
   bool break_if_overflow_ = false;
