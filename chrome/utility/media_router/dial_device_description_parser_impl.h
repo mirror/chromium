@@ -33,7 +33,12 @@ class DialDeviceDescriptionParserImpl
   // Processes the result of getting device description. Returns valid
   // DialDeviceDescriptionPtr if processing succeeds; otherwise returns nullptr.
   // |xml|: The device description xml text.
-  chrome::mojom::DialDeviceDescriptionPtr Parse(const std::string& xml);
+  // |parsing_error|: error encountered while parsing DIAL device description.
+  // Does not take ownership of |parsing_error|. Has value NONE if parsing
+  // succeeds.
+  chrome::mojom::DialDeviceDescriptionPtr Parse(
+      const std::string& xml,
+      chrome::mojom::DialParsingError* parsing_error);
 
   base::ThreadChecker thread_checker_;
 
