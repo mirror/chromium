@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99ce4eae_82aadc22",
+        "filename": "content/public/common/service_worker_modes.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-24T11:06:57Z",
+      "side": 1,
+      "message": "Hmm, wouldn\u0027t it be preferred to use the generated enum directly? Maybe in a followup? *shrug*",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 0
+      },
+      "revId": "6f5894effcce15aaa04608014394528d2f72ac49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ff83171_2d4a278a",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-24T11:06:57Z",
+      "side": 1,
+      "message": "Nit: omit default here so compiler can warn on new enumerators",
+      "range": {
+        "startLine": 355,
+        "startChar": 0,
+        "endLine": 356,
+        "endChar": 21
+      },
+      "revId": "6f5894effcce15aaa04608014394528d2f72ac49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
