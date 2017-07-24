@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe36bba7_1b77f142",
+        "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-24T17:30:58Z",
+      "side": 1,
+      "message": "This constraint is non-obvious. Can you comment?",
+      "revId": "30b1329eaa9bce6d54b59bd37d08e4f53d559e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "031e8458_8e12c8dd",
+        "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-24T17:30:58Z",
+      "side": 1,
+      "message": "Strings should be compared with -isEqualToString:.\nAlso DCHECK that text is not empty.",
+      "revId": "30b1329eaa9bce6d54b59bd37d08e4f53d559e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c025a8ac_ad9100bc",
+        "filename": "ios/chrome/browser/ui/reading_list/text_badge_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-24T17:30:58Z",
+      "side": 1,
+      "message": "Instead of storing the text, please override both the getter and setter.",
+      "revId": "30b1329eaa9bce6d54b59bd37d08e4f53d559e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c268ac2_371ed210",
+        "filename": "ios/chrome/browser/ui/reading_list/text_badge_view_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-24T17:30:58Z",
+      "side": 1,
+      "message": "Try implementing these. If you implement them first, you\u0027ll do TDD. And that\u0027s good practice. They will help you fill out the rest of the TextBadgeView class. Think of additional tests that you might add here.",
+      "revId": "30b1329eaa9bce6d54b59bd37d08e4f53d559e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f66e6dc_d63585b1",
+        "filename": "ios/showcase/text_badge_view/sc_text_badge_view_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-07-24T17:30:58Z",
+      "side": 1,
+      "message": "Double check that this works.",
+      "revId": "30b1329eaa9bce6d54b59bd37d08e4f53d559e36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
