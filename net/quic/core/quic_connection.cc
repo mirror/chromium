@@ -1089,16 +1089,39 @@ QuicConsumedData QuicConnection::SendStreamData(
   // SHLO from the server, leading to two different decrypters at the server.)
   ScopedRetransmissionScheduler alarm_delayer(this);
   ScopedPacketBundler ack_bundler(this, SEND_ACK_IF_PENDING);
-  // The optimized path may be used for data only packets which fit into a
-  // standard buffer and don't need padding.
-  if (id != kCryptoStreamId && !packet_generator_.HasQueuedFrames() &&
-      iov.total_length > kMaxPacketSize && state != FIN_AND_PADDING) {
-    // Use the fast path to send full data packets.
-    return packet_generator_.ConsumeDataFastPath(
-        id, iov, offset, state != NO_FIN, std::move(ack_listener));
+
+  if (id == kCryptoStreamId || state == FIN_AND_PADDING) {
+    return packet_generator_.ConsumeData(id, iov, offset, state,
+                                         std::move(ack_listener));
   }
-  return packet_generator_.ConsumeData(id, iov, offset, state,
-                                       std::move(ack_listener));
+
+  // We might be on the fast path, but the first frame might need an ack.
+  size_t total_bytes_consumed = 0;
+  size_t bytes_remaining = iov.total_length;
+  bool fin_consumed = false;
+  if (packet_generator_.HasQueuedFrames() && bytes_remaining > kMaxPacketSize) {
+    QuicConsumedData result = packet_generator_.ConsumeData(
+        id, iov, offset, state, total_bytes_consumed, true,
+        std::move(ack_listener));
+    total_bytes_consumed = result.bytes_consumed;
+    bytes_remaining = iov.total_length - total_bytes_consumed;
+    fin_consumed = result.fin_consumed;
+  }
+  if (!packet_generator_.HasQueuedFrames() &&
+      bytes_remaining > kMaxPacketSize) {
+    QuicConsumedData result = packet_generator_.ConsumeDataFastPath(
+        id, iov, offset, state != NO_FIN, total_bytes_consumed,
+        std::move(ack_listener));
+    total_bytes_consumed = result.bytes_consumed;
+    fin_consumed = result.fin_consumed;
+  } else if (bytes_remaining > 0) {
+    QuicConsumedData result = packet_generator_.ConsumeData(
+        id, iov, offset, state, total_bytes_consumed, false,
+        std::move(ack_listener));
+    total_bytes_consumed = result.bytes_consumed;
+    fin_consumed = result.fin_consumed;
+  }
+  return QuicConsumedData(total_bytes_consumed, fin_consumed);
 }
 
 void QuicConnection::SendRstStream(QuicStreamId id,
