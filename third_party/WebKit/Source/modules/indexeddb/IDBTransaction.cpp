@@ -48,6 +48,52 @@ using blink::WebIDBDatabase;
 
 namespace blink {
 
+class IDBTransaction::WaitUntilThenFunction final : public ScriptFunction {
+ public:
+  enum ResolveType {
+    Fulfilled,
+    Rejected,
+  };
+
+  static v8::Local<v8::Function> createFunction(ScriptState* script_state,
+                                                IDBTransaction* transaction,
+                                                ResolveType type) {
+    WaitUntilThenFunction* self =
+        new WaitUntilThenFunction(script_state, transaction, type);
+    return self->BindToV8Function();
+  }
+
+  DEFINE_INLINE_VIRTUAL_TRACE() {
+    visitor->Trace(transaction_);
+    ScriptFunction::Trace(visitor);
+  }
+
+ private:
+  WaitUntilThenFunction(ScriptState* script_state,
+                        IDBTransaction* transaction,
+                        ResolveType type)
+      : ScriptFunction(script_state),
+        transaction_(transaction),
+        resolve_type_(type) {}
+
+  ScriptValue Call(ScriptValue value) override {
+    DCHECK(transaction_);
+    DCHECK(resolve_type_ == Fulfilled || resolve_type_ == Rejected);
+    if (resolve_type_ == Rejected) {
+      transaction_->WaitingPromiseRejected(value);
+      value =
+          ScriptPromise::Reject(value.GetScriptState(), value).GetScriptValue();
+    } else {
+      transaction_->WaitingPromiseFulfilled();
+    }
+    transaction_ = nullptr;
+    return value;
+  }
+
+  Member<IDBTransaction> transaction_;
+  ResolveType resolve_type_;
+};
+
 IDBTransaction* IDBTransaction::CreateObserver(
     ExecutionContext* execution_context,
     int64_t id,
@@ -92,7 +138,7 @@ class DeactivateTransactionTask : public V8PerIsolateData::EndOfScopeTask {
   }
 
   void Run() override {
-    transaction_->SetActive(false);
+    transaction_->SetDispatching(false);
     transaction_.Clear();
   }
 
@@ -207,7 +253,7 @@ void IDBTransaction::SetError(DOMException* error) {
 
 IDBObjectStore* IDBTransaction::objectStore(const String& name,
                                             ExceptionState& exception_state) {
-  if (IsFinished() || IsFinishing()) {
+  if (IsFinished()) {
     exception_state.ThrowDOMException(
         kInvalidStateError, IDBDatabase::kTransactionFinishedErrorMessage);
     return nullptr;
@@ -352,26 +398,31 @@ void IDBTransaction::IndexDeleted(IDBIndex* index) {
   deleted_indexes_.push_back(index);
 }
 
-void IDBTransaction::SetActive(bool active) {
-  DCHECK_NE(state_, kFinished) << "A finished transaction tried to SetActive("
-                               << (active ? "true" : "false") << ")";
-  if (state_ == kFinishing)
-    return;
-  DCHECK_NE(active, (state_ == kActive));
-  state_ = active ? kActive : kInactive;
+void IDBTransaction::SetDispatching(bool dispatching) {
+  if (dispatching)
+    DCHECK(state_ == kInactive || state_ == kWaiting);
+  else
+    DCHECK(state_ == kActive || state_ == kWaiting || state_ == kAborting);
 
-  if (!active && request_list_.IsEmpty() && BackendDB())
+  dispatching_ = dispatching;
+  if (state_ == kWaiting || state_ == kAborting)
+    return;
+  state_ = dispatching ? kActive : kInactive;
+
+  if (state_ == kInactive && request_list_.IsEmpty() && BackendDB()) {
+    state_ = kCommitting;
     BackendDB()->Commit(id_);
+  }
 }
 
 void IDBTransaction::abort(ExceptionState& exception_state) {
-  if (state_ == kFinishing || state_ == kFinished) {
+  if (IsFinished()) {
     exception_state.ThrowDOMException(
         kInvalidStateError, IDBDatabase::kTransactionFinishedErrorMessage);
     return;
   }
 
-  state_ = kFinishing;
+  state_ = kAborting;
 
   if (!GetExecutionContext())
     return;
@@ -388,6 +439,36 @@ void IDBTransaction::RegisterRequest(IDBRequest* request) {
   DCHECK(!request_list_.Contains(request));
   DCHECK_EQ(state_, kActive);
   request_list_.insert(request);
+}
+
+void IDBTransaction::waitUntil(ScriptState* script_state,
+                               ScriptPromise script_promise,
+                               ExceptionState& exception_state) {
+  if (!GetExecutionContext())
+    return;
+
+  switch (state_) {
+    case kInactive:
+      exception_state.ThrowDOMException(
+          kInvalidStateError, IDBDatabase::kTransactionInactiveErrorMessage);
+      return;
+    case kCommitting:
+    case kAborting:
+    case kFinished:
+      exception_state.ThrowDOMException(
+          kInvalidStateError, IDBDatabase::kTransactionFinishedErrorMessage);
+      return;
+    case kActive:
+    case kWaiting:
+      break;
+  }
+
+  state_ = kWaiting;
+  WaitingPromiseAdded();
+  script_promise.Then(WaitUntilThenFunction::createFunction(
+                          script_state, this, WaitUntilThenFunction::Fulfilled),
+                      WaitUntilThenFunction::createFunction(
+                          script_state, this, WaitUntilThenFunction::Rejected));
 }
 
 void IDBTransaction::UnregisterRequest(IDBRequest* request) {
@@ -431,7 +512,7 @@ void IDBTransaction::OnAbort(DOMException* error) {
   }
 
   DCHECK_NE(state_, kFinished);
-  if (state_ != kFinishing) {
+  if (state_ != kAborting) {
     // Abort was not triggered by front-end.
     DCHECK(error);
     SetError(error);
@@ -439,7 +520,7 @@ void IDBTransaction::OnAbort(DOMException* error) {
     AbortOutstandingRequests();
     RevertDatabaseMetadata();
 
-    state_ = kFinishing;
+    state_ = kAborting;
   }
 
   if (IsVersionChange())
@@ -458,8 +539,7 @@ void IDBTransaction::OnComplete() {
     return;
   }
 
-  DCHECK_NE(state_, kFinished);
-  state_ = kFinishing;
+  DCHECK_EQ(state_, kCommitting);
 
   // Enqueue events before notifying database, as database may close which
   // enqueues more events and order matters.
@@ -504,25 +584,6 @@ const String& IDBTransaction::mode() const {
 
   NOTREACHED();
   return IndexedDBNames::readonly;
-}
-
-ScriptPromise IDBTransaction::complete(ScriptState* script_state) {
-  return complete_promise_->Promise(script_state->World());
-}
-
-ScriptPromise IDBTransaction::then(ScriptState* script_state,
-                                   const ScriptValue& onFulfilled,
-                                   const ScriptValue& onRejected) {
-  v8::Local<v8::Function> fulfilled_function;
-  if (!onFulfilled.IsEmpty() && onFulfilled.IsFunction())
-    fulfilled_function = onFulfilled.V8Value().As<v8::Function>();
-
-  v8::Local<v8::Function> rejected_function;
-  if (!onRejected.IsEmpty() && onRejected.IsFunction())
-    rejected_function = onRejected.V8Value().As<v8::Function>();
-
-  return complete_promise_->Promise(script_state->World())
-      .Then(fulfilled_function, rejected_function);
 }
 
 DOMStringList* IDBTransaction::objectStoreNames() const {
@@ -577,6 +638,11 @@ DispatchEventResult IDBTransaction::DispatchEventInternal(Event* event) {
   else if (event->type() == EventTypeNames::abort)
     complete_promise_->Reject(error_);
 
+  if (event->type() == EventTypeNames::complete)
+    complete_promise_->Resolve(ToV8UndefinedGenerator());
+  else if (event->type() == EventTypeNames::abort)
+    complete_promise_->Reject(error_);
+
   HeapVector<Member<EventTarget>> targets;
   targets.push_back(this);
   targets.push_back(db());
@@ -607,6 +673,45 @@ void IDBTransaction::EnqueueEvent(Event* event) {
   EventQueue* event_queue = GetExecutionContext()->GetEventQueue();
   event->SetTarget(this);
   event_queue->EnqueueEvent(BLINK_FROM_HERE, event);
+}
+
+void IDBTransaction::WaitingPromiseAdded() {
+  DLOG(WARNING) << __PRETTY_FUNCTION__;
+  DCHECK_EQ(state_, kWaiting);
+  ++waiting_promise_count_;
+}
+
+void IDBTransaction::WaitingPromiseFulfilled() {
+  DLOG(WARNING) << __PRETTY_FUNCTION__;
+  DCHECK_GT(waiting_promise_count_, 0);
+  --waiting_promise_count_;
+
+  // An earlier waiting promise may have rejected, leading to abort.
+  if (state_ != kWaiting)
+    return;
+
+  if (waiting_promise_count_ > 0)
+    return;
+
+  state_ = dispatching_ ? kActive : kInactive;
+  if (state_ == kInactive && request_list_.IsEmpty() && BackendDB()) {
+    state_ = kCommitting;
+    BackendDB()->Commit(id_);
+  }
+}
+
+void IDBTransaction::WaitingPromiseRejected(ScriptValue value) {
+  DLOG(WARNING) << __PRETTY_FUNCTION__;
+  DCHECK_GT(waiting_promise_count_, 0);
+  --waiting_promise_count_;
+
+  // An earlier waiting promise may have rejected, leading to abort.
+  if (state_ != kWaiting)
+    return;
+
+  // TODO(jsbell): Preserve value? complete_promise_->reject(value) ?
+  NonThrowableExceptionState exception_state;
+  abort(exception_state);
 }
 
 void IDBTransaction::AbortOutstandingRequests() {

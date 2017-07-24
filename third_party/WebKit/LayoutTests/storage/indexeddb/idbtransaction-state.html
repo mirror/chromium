@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<title>IndexedDB: IDBTransaction's state attribute</title>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<script src="resources/testharness-helpers.js"></script>
+<script>
+
+test(t => {
+    assert_true('state' in IDBTransaction.prototype,
+                'IDBTransaction has state');
+    const desc = Object.getOwnPropertyDescriptor(
+        IDBTransaction.prototype, 'state');
+    assert_equals(typeof desc.get, 'function',
+                  'IDBTransaction.state has a getter');
+    assert_equals(typeof desc.set, 'undefined',
+                  'IDBTransaction.state does not have a setter');
+    assert_true(desc.enumerable, 'IDBTransaction.state is enumerable');
+    assert_true(desc.configurable, 'IDBTransaction.state is configurable');
+}, 'IDBTransaction has state readonly attribute');
+
+async_test(t => {
+    const dbName = 'db' + self.location.pathname + '-' + t.description;
+    indexedDB.deleteDatabase(dbName);
+    const open_request = indexedDB.open(dbName);
+    open_request.onsuccess = t.unreached_func('open should not succeed');
+    let tx;
+    open_request.onupgradeneeded = t.step_func(e => {
+        tx = open_request.transaction;
+        assert_equals(tx.state, 'active');
+        tx.abort();
+        assert_equals(tx.state, 'finished');
+    });
+    open_request.onerror = t.step_func(function(e) {
+        assert_equals(tx.state, 'finished');
+        t.done();
+    });
+}, 'State before/after abort during upgrade.');
+
+async_test(t => {
+    const dbName = 'db' + self.location.pathname + '-' + t.description;
+    indexedDB.deleteDatabase(dbName);
+    const open_request = indexedDB.open(dbName);
+    open_request.onerror = t.unreached_func('open should not fail');
+    let tx;
+    open_request.onupgradeneeded = t.step_func(e => {
+        tx = open_request.transaction;
+        assert_equals(tx.state, 'active');
+    });
+    open_request.onsuccess = t.step_func(function(e) {
+        assert_equals(tx.state, 'finished');
+        t.done();
+    });
+}, 'State before/after successful upgrade.');
+
+indexeddb_test(
+    (t, db) => {
+        const store = db.createObjectStore('store');
+        store.put('value', 1);
+    },
+    (t, db) => {
+        const tx = db.transaction('store');
+        assert_equals(tx.state, 'active', 'Transaction should start "active"');
+
+        tx.objectStore('store').get(1).onsuccess = t.step_func(e => {
+            assert_equals(tx.state, 'active', 'Transaction should be "active" in request callback');
+
+            // Prop transaction open until setTimeout fires.
+            let finish = false;
+            (function spin() {
+                if (!finish)
+                    tx.objectStore('store').get(1).onsuccess = t.step_func(spin);
+            }());
+
+            setTimeout(t.step_func(() => {
+                assert_equals(tx.state, 'inactive', 'Transaction should be "inactive" in timer callback');
+                finish = true;
+
+                tx.onabort = t.unreached_func('Transaction should not abort');
+                tx.oncomplete = t.step_func(e => {
+                    assert_equals(tx.state, 'finished', 'Completed transaction should be "finished"');
+                    t.done();
+                });
+            }), 0);
+        });
+   },
+    'State during normal transaction');
+
+indexeddb_test(
+    (t, db) => {
+        const store = db.createObjectStore('store');
+        store.put('value', 1);
+    },
+    (t, db) => {
+        const tx = db.transaction('store');
+        assert_equals(tx.state, 'active', 'Transaction should start "active"');
+
+        tx.abort();
+
+        assert_equals(tx.state, 'finished', 'Aborted transaction should be "finished"');
+
+        tx.oncomplete = t.unreached_func('Transaction should not complete');
+        tx.onabort = t.step_func(e => {
+            assert_equals(tx.state, 'finished', 'Aborted transaction should still be "finished"');
+            t.done();
+        });
+    },
+    'State during explicitly aborted transaction');
+
+indexeddb_test(
+    (t, db) => {
+        const store = db.createObjectStore('store');
+        store.put('value', 1);
+    },
+    (t, db) => {
+        const tx = db.transaction('store', 'readwrite');
+        assert_equals(tx.state, 'active', 'Transaction should start "active"');
+
+        const add_request = tx.objectStore('store').add('value', 1);
+        add_request.onsuccess = t.unreached_func('add should not succeed');
+
+        tx.oncomplete = t.unreached_func('Transaction should not complete');
+        tx.onabort = t.step_func(e => {
+            assert_equals(tx.state, 'finished', 'Aborted transaction should be "finished"');
+            t.done();
+        });
+    },
+    'State during implicitly aborted transaction');
+
+indexeddb_test(
+    (t, db) => {
+        const store = db.createObjectStore('store');
+        store.put('value', 1);
+    },
+    (t, db) => {
+        // This first transaction is used to asynchronously observe the state
+        // of the the second transaction before it completes.
+        const tx_observe = db.transaction('store');
+
+        const tx = db.transaction('store');
+        assert_equals(tx.state, 'active', 'Transaction should start "active"');
+
+        tx_observe.oncomplete = t.step_func(e => {
+            assert_equals(tx.state, 'committing', 'Transaction should be "committing"');
+        });
+
+        tx.onabort = t.unreached_func('Transaction should not abort');
+        tx.oncomplete = t.step_func(e => {
+            assert_equals(tx.state, 'finished', 'Completed transaction should be "finished"');
+            t.done();
+        });
+   },
+    'State during unused transaction');
+
+
+// TODO: "waiting" state
+
+</script>

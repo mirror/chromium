@@ -35,5 +35,13 @@
       Symbol: "kDelete",
     },
     "clear",
+
+    // https://github.com/inexorabletash/indexeddb-promises
+    // IDBTransactionState
+    "active",
+    "inactive",
+    "waiting",
+    "committing",
+    "finished",
   ],
 }
