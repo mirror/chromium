@@ -69,7 +69,7 @@ constexpr int kUpdatesToSkipUnderHeavyLoad = 10;
 
 // The delay before updating the JumpList to prevent update storms.
 constexpr base::TimeDelta kDelayForJumplistUpdate =
-    base::TimeDelta::FromMilliseconds(3500);
+    base::TimeDelta::FromMilliseconds(2000);
 
 // The maximum allowed time for JumpListUpdater::BeginUpdate. Updates taking
 // longer than this are discarded to prevent bogging down slow machines.
