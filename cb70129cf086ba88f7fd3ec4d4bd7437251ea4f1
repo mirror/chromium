@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fc50e4bd_b888c390",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1660,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-07-24T19:09:38Z",
+      "side": 0,
+      "message": "Yes. The shadow_underlay_ aura::Window will be always a child of host_window()-\u003eparent(). And at the line 1673 (with this change), we use the shadow_bounds which is already in coordinate space of the host_window()-\u003eparent().\n\nBut we still need shadow_underlay_in_surface_, see line 1639(right side), we need it for determine the coordinate space of the shadow_content_bounds_.",
+      "parentUuid": "267226b3_bf22e383",
+      "revId": "cb70129cf086ba88f7fd3ec4d4bd7437251ea4f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "30a8de98_95cb31f9",
         "filename": "components/exo/shell_surface.cc",
         "patchSetId": 3
