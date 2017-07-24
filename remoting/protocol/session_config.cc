@@ -90,11 +90,22 @@ std::unique_ptr<SessionConfig> SessionConfig::SelectCommon(
 
   // If neither host nor the client have VP9 experiment enabled then remove it
   // from the list of host video configs.
+  // TODO(gusss): remove this when chromotocol stops being used.
   std::list<ChannelConfig> host_video_configs = host_config->video_configs();
   if (!client_config->vp9_experiment_enabled() &&
       !host_config->vp9_experiment_enabled()) {
     host_video_configs.remove_if([](const ChannelConfig& config) {
       return config.codec == ChannelConfig::CODEC_VP9;
+    });
+  }
+
+  // If neither host nor the client have H264 experiment enabled then remove it
+  // from the list of host video configs.
+  // TODO(gusss): remove this when chromotocol stops being used.
+  if (!client_config->h264_experiment_enabled() &&
+      !host_config->h264_experiment_enabled()) {
+    host_video_configs.remove_if([](const ChannelConfig& config) {
+      return config.codec == ChannelConfig::CODEC_H264;
     });
   }
 
