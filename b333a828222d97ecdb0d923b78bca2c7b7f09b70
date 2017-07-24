@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "50b3791d_152efd0e",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 12
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-07-24T22:06:17Z",
+      "side": 1,
+      "message": "Ah OK. That\u0027s fine, thanks for the explanation.",
+      "parentUuid": "4d9e3f14_d40bed38",
+      "revId": "b333a828222d97ecdb0d923b78bca2c7b7f09b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f515f43_45224cec",
         "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
         "patchSetId": 12
@@ -142,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "9f9cb2bd_05593a02",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_layout_input_node.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-07-24T22:06:17Z",
+      "side": 1,
+      "message": "Thanks. Disappointing that they call it Width when it\u0027s really a LogicalWidth :(",
+      "parentUuid": "e46ed908_ddc0d6ff",
+      "revId": "b333a828222d97ecdb0d923b78bca2c7b7f09b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "500a23b5_e2c3e030",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_layout_input_node.h",
         "patchSetId": 12
@@ -171,6 +207,24 @@
       "side": 1,
       "message": "The answer here might be  unsatisfactory:\n\n  // The function arguments return values from LegacyLayout intrinsic size\n  // computations: LayoutReplaced::IntrinsicSizingInfo,\n  // and LayoutReplaced::IntrinsicSize.",
       "parentUuid": "500a23b5_e2c3e030",
+      "revId": "b333a828222d97ecdb0d923b78bca2c7b7f09b70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ab25c947_edbb94bc",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_layout_input_node.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-07-24T22:06:17Z",
+      "side": 1,
+      "message": "Looks like the answer is \"It\u0027s the same, if set\". I sort of think it should be replaced by a bool... Anyway this is OK for now.",
+      "parentUuid": "77bfc4d5_6389b81f",
       "revId": "b333a828222d97ecdb0d923b78bca2c7b7f09b70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
