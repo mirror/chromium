@@ -23,6 +23,7 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.browser.IntentHandler;
+import org.chromium.chrome.browser.customtabs.PostMessageHandler.Relation;
 import org.chromium.chrome.browser.util.UrlUtilities;
 import org.chromium.content_public.browser.WebContents;
 import org.chromium.content_public.common.Referrer;
@@ -344,13 +345,13 @@ class ClientManager {
     }
 
     /**
-     * See {@link PostMessageHandler#verifyAndInitializeWithOrigin(Uri)}.
+     * See {@link PostMessageHandler#verifyAndInitializeWithOrigin(Uri, int)}.
      */
     public synchronized void verifyAndInitializeWithPostMessageOriginForSession(
-            CustomTabsSessionToken session, Uri origin) {
+            CustomTabsSessionToken session, Uri origin, @Relation int relation) {
         SessionParams params = mSessionParams.get(session);
         if (params == null) return;
-        params.postMessageHandler.verifyAndInitializeWithOrigin(origin);
+        params.postMessageHandler.verifyAndInitializeWithOrigin(origin, relation);
     }
 
     /**
@@ -523,7 +524,9 @@ class ClientManager {
     public synchronized boolean isFirstPartyOriginForSession(
             CustomTabsSessionToken session, Uri origin) {
         SessionParams params = mSessionParams.get(session);
-        return params == null ? false : OriginVerifier.isValidOrigin(params.packageName, origin);
+        return params == null ? false
+                              : OriginVerifier.isValidOrigin(params.packageName, origin,
+                                        PostMessageHandler.RELATION_USE_AS_ORIGIN);
     }
 
     /** Tries to bind to a client to keep it alive, and returns true for success. */

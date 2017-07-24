@@ -4,6 +4,7 @@
 
 package org.chromium.chrome.browser.customtabs;
 
+import android.R;
 import android.app.ActivityManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -37,7 +38,6 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.base.library_loader.ProcessInitException;
 import org.chromium.base.metrics.RecordHistogram;
-import org.chromium.chrome.R;
 import org.chromium.chrome.browser.AppHooks;
 import org.chromium.chrome.browser.ChromeApplication;
 import org.chromium.chrome.browser.ChromeFeatureList;
@@ -548,7 +548,7 @@ public class CustomTabsConnection {
                 Uri verifiedOrigin = verifyOriginForSession(session, uid, postMessageOrigin);
                 if (verifiedOrigin == null) {
                     mClientManager.verifyAndInitializeWithPostMessageOriginForSession(
-                            session, postMessageOrigin);
+                            session, postMessageOrigin, PostMessageHandler.RELATION_USE_AS_ORIGIN);
                 } else {
                     mClientManager.initializeWithPostMessageOriginForSession(
                             session, verifiedOrigin);
