@@ -567,6 +567,30 @@
     },
     {
       "key": {
+        "uuid": "bc1aa972_d0b4fd56",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-24T19:54:14Z",
+      "side": 1,
+      "message": "Hey Regan - doesn\u0027t look like your implementation of this test is quite right. Please look over this comment again and try to fix it up.",
+      "parentUuid": "fb348cea_6a32d807",
+      "range": {
+        "startLine": 305,
+        "startChar": 0,
+        "endLine": 305,
+        "endChar": 71
+      },
+      "revId": "f0628242d176df25c5c88f31f75073fc60235176",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1659af7_11ccad94",
         "filename": "components/cryptauth/remote_device_provider_unittest.cc",
         "patchSetId": 11

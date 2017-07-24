@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72d69d09_f12dfb9f",
+        "filename": "components/cryptauth/remote_device_provider.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-24T19:54:14Z",
+      "side": 1,
+      "message": "Your description tells how other parts of the code base uses the class. This is discouraged, since other parts of the code base can change, and those who change them will most likely not update this description.\n\nInstead, describe what this class does: generates and caches RemoteDevice objects when associated metadata has been synced, and updates this cache when a new sync occurs.\n\nOther nits:\n(1) Format names of classes/functions correctly (RemoteDevice, not remote device).\n(2) No newline between end of description and start of class definition.",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 76
+      },
+      "revId": "5f0c8e8187e454f0787373ab8d63fa55fa4d82ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4262b877_8a5e1841",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-24T19:54:14Z",
+      "side": 1,
+      "message": "Please also add a test for the case where there are no synced devices before RemoteDeviceProvider is created and syncs complete successfully without adding any new devices.",
+      "range": {
+        "startLine": 114,
+        "startChar": 6,
+        "endLine": 114,
+        "endChar": 30
+      },
+      "revId": "5f0c8e8187e454f0787373ab8d63fa55fa4d82ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "528f3685_eb798e6d",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-24T19:54:14Z",
+      "side": 1,
+      "message": "nit: /* test */",
+      "range": {
+        "startLine": 191,
+        "startChar": 59,
+        "endLine": 191,
+        "endChar": 63
+      },
+      "revId": "5f0c8e8187e454f0787373ab8d63fa55fa4d82ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0b801bf_a1f5d08c",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-24T19:54:14Z",
+      "side": 1,
+      "message": "Also EXPECT_EQ(expected_size, mock_device_manager_sync_devices_.size()).",
+      "range": {
+        "startLine": 212,
+        "startChar": 0,
+        "endLine": 212,
+        "endChar": 52
+      },
+      "revId": "5f0c8e8187e454f0787373ab8d63fa55fa4d82ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "165fdf65_2f8f5d58",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-24T19:54:14Z",
+      "side": 1,
+      "message": "nit: Remove extra //.",
+      "range": {
+        "startLine": 268,
+        "startChar": 5,
+        "endLine": 268,
+        "endChar": 7
+      },
+      "revId": "5f0c8e8187e454f0787373ab8d63fa55fa4d82ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43004166_1f47dacd",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-24T19:54:14Z",
+      "side": 1,
+      "message": "nit: These aren\u0027t necessarily failures. For example, you also test success cases that simply don\u0027t result in a change.",
+      "range": {
+        "startLine": 280,
+        "startChar": 33,
+        "endLine": 280,
+        "endChar": 49
+      },
+      "revId": "5f0c8e8187e454f0787373ab8d63fa55fa4d82ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94371935_9cb8b1a2",
+        "filename": "components/cryptauth/remote_device_provider_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-24T19:54:14Z",
+      "side": 1,
+      "message": "This doesn\u0027t quite make sense. If you\u0027re adding this device to the list of devices to be returned by a call to GetSyncedDevices(), that means that you\u0027re simulating a successful sync which adds a new device, but you actually have a failure below. You should move this down to just before the successful sync at the end of this test.",
+      "range": {
+        "startLine": 284,
+        "startChar": 0,
+        "endLine": 284,
+        "endChar": 76
+      },
+      "revId": "5f0c8e8187e454f0787373ab8d63fa55fa4d82ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
