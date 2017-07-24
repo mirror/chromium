@@ -610,7 +610,9 @@ RenderWidgetHostViewAndroid::GetNativeViewAccessible() {
 }
 
 void RenderWidgetHostViewAndroid::Focus() {
-  host_->Focus();
+  if (view_.Focus())
+    host_->Focus();
+
   if (overscroll_controller_)
     overscroll_controller_->Enable();
 }
