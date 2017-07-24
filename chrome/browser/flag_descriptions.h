@@ -1196,6 +1196,9 @@ extern const char kAppWindowCyclingDescription[];
 extern const char kFullscreenToolbarRevealName[];
 extern const char kFullscreenToolbarRevealDescription[];
 
+extern const char kContentFullscreenName[];
+extern const char kContentFullscreenDescription[];
+
 extern const char kHostedAppsInWindowsName[];
 extern const char kHostedAppsInWindowsDescription[];
 

@@ -104,6 +104,7 @@
 #include "content/public/browser/render_widget_host.h"
 #include "content/public/browser/render_widget_host_view.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/common/content_features.h"
 #import "ui/base/cocoa/cocoa_base_utils.h"
 #import "ui/base/cocoa/nsview_additions.h"
 #import "ui/base/cocoa/touch_bar_forward_declarations.h"
@@ -1945,6 +1946,46 @@ willAnimateFromState:(BookmarkBar::State)oldState
 
 @end  // @implementation BrowserWindowController
 
+@implementation FullscreenView : NSView
+
+- (id)initWithFrame:(NSRect)frameRect withImage:(NSImage*)screenshot {
+  if (self = [super initWithFrame:frameRect]) {
+    [self setWantsLayer:YES];
+
+    NSImageView* screenshotView =
+        [[NSImageView alloc] initWithFrame:self.bounds];
+    [screenshotView setImage:screenshot];
+    CIFilter* blurFilter = [CIFilter filterWithName:@"CIGaussianBlur"];
+    [blurFilter setValue:@15.0 forKey:@"inputRadius"];
+    screenshotView.contentFilters = [NSArray arrayWithObject:blurFilter];
+    [self addSubview:screenshotView];
+
+    NSString* text = @"Click to exit fullscreen";
+    NSMutableAttributedString* formattedText =
+        [[NSMutableAttributedString alloc] initWithString:text];
+    [formattedText addAttribute:NSFontAttributeName
+                          value:[NSFont boldSystemFontOfSize:70]
+                          range:NSMakeRange(0, text.length)];
+    [formattedText addAttribute:NSForegroundColorAttributeName
+                          value:[NSColor whiteColor]
+                          range:NSMakeRange(0, text.length)];
+    NSTextField* textView = [[NSTextField alloc] initWithFrame:self.bounds];
+    textView.attributedStringValue = formattedText;
+    textView.bezeled = NO;
+    textView.editable = NO;
+    textView.drawsBackground = NO;
+    [self addSubview:textView];
+  }
+  return self;
+}
+
+- (void)mouseDown:(NSEvent*)event {
+  // This function handles click events on FullscreenView and will be used to
+  // exit fullscreen
+}
+
+@end
+
 @implementation BrowserWindowController(Fullscreen)
 
 - (void)enterBrowserFullscreen {
@@ -1999,6 +2040,47 @@ willAnimateFromState:(BookmarkBar::State)oldState
   // that the other monitors won't blank out.
   display::Screen* screen = display::Screen::GetScreen();
   BOOL hasMultipleMonitors = screen && screen->GetNumDisplays() > 1;
+
+  if (base::FeatureList::IsEnabled(features::kContentFullscreen)) {
+    // Getting the current's window view and its boundaries
+    NSWindow* window = [self window];
+    WebContents* contents = browser_->tab_strip_model()->GetActiveWebContents();
+    NSView* view = contents->GetNativeView();
+    NSRect windowFrame = window.frame;
+    NSRect viewFrame = [view convertRect:view.bounds toView:nil];
+
+    // Taking the screenshot of the whole window, cropping it to the view's
+    // frame, and creating a custom view to be displayed
+    CGImageRef windowScreenshot = CGWindowListCreateImage(
+        CGRectZero, kCGWindowListOptionIncludingWindow, [window windowNumber],
+        kCGWindowImageBoundsIgnoreFraming);
+    const int kScrollbarWidth = 16;
+    int headerHeight = windowFrame.size.height - viewFrame.size.height;
+    NSRect croppingRect =
+        NSMakeRect(0, headerHeight, windowFrame.size.width - kScrollbarWidth,
+                   windowFrame.size.height - headerHeight);
+    CGImageRef viewScreenshot =
+        CGImageCreateWithImageInRect(windowScreenshot, croppingRect);
+    NSSize size = NSMakeSize(CGImageGetWidth(viewScreenshot),
+                             CGImageGetHeight(viewScreenshot));
+    NSImage* screenshotImage =
+        [[NSImage alloc] initWithCGImage:viewScreenshot size:size];
+    FullscreenView* screenshotView =
+        [[FullscreenView alloc] initWithFrame:croppingRect
+                                    withImage:screenshotImage];
+    screenshotView.needsDisplay = YES;
+
+    // The screenshotView is currently displayed in this separate testingWindow.
+    // Once the tab correctly displays the screenshotView, this will be removed.
+    NSWindow* testingWindow =
+        [[NSWindow alloc] initWithContentRect:croppingRect
+                                    styleMask:NSBorderlessWindowMask
+                                      backing:NSBackingStoreBuffered
+                                        defer:false];
+    [testingWindow makeKeyAndOrderFront:testingWindow];
+    [testingWindow setContentView:screenshotView];
+  }
+
   if (base::mac::IsAtLeastOS10_10() &&
       !(hasMultipleMonitors && ![NSScreen screensHaveSeparateSpaces])) {
     [self enterAppKitFullscreen];
