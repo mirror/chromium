@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "7b47791d_2e71f5e6",
+        "filename": "components/autofill/core/browser/autofill_field.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-24T14:15:12Z",
+      "side": 1,
+      "message": "nit: Empty line between methods.",
+      "range": {
+        "startLine": 118,
+        "startChar": 3,
+        "endLine": 118,
+        "endChar": 0
+      },
+      "revId": "7fd89411765755005ce1c4102aad351e24883901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cac48757_47ab107e",
         "filename": "components/autofill/core/browser/form_structure.cc",
         "patchSetId": 2
@@ -18,6 +41,115 @@
         "startChar": 5,
         "endLine": 1100,
         "endChar": 0
+      },
+      "revId": "7fd89411765755005ce1c4102aad351e24883901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "281c15fa_3e174142",
+        "filename": "components/autofill/core/browser/form_structure.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-24T14:15:12Z",
+      "side": 1,
+      "message": "Ditto here.",
+      "range": {
+        "startLine": 249,
+        "startChar": 3,
+        "endLine": 249,
+        "endChar": 0
+      },
+      "revId": "7fd89411765755005ce1c4102aad351e24883901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13173c5b_c8f3669f",
+        "filename": "components/autofill/core/browser/form_structure.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-24T14:15:12Z",
+      "side": 1,
+      "message": "Is this how clang-format formats this? It used to align \n\nLongResultName\nMethodName()\n\nright under each other.",
+      "range": {
+        "startLine": 251,
+        "startChar": 5,
+        "endLine": 251,
+        "endChar": 6
+      },
+      "revId": "7fd89411765755005ce1c4102aad351e24883901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebfe5af6_68e898e0",
+        "filename": "components/autofill/core/browser/form_structure_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2406,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-24T14:15:12Z",
+      "side": 1,
+      "message": "Why the empty line?",
+      "revId": "7fd89411765755005ce1c4102aad351e24883901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8b0e037_820a49d8",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-24T14:15:12Z",
+      "side": 1,
+      "message": "nit: Offset.",
+      "range": {
+        "startLine": 479,
+        "startChar": 7,
+        "endLine": 479,
+        "endChar": 21
+      },
+      "revId": "7fd89411765755005ce1c4102aad351e24883901",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7f7f50b_8d7cda59",
+        "filename": "components/password_manager/core/browser/password_form_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-24T14:15:12Z",
+      "side": 1,
+      "message": "nit: trailing space",
+      "range": {
+        "startLine": 505,
+        "startChar": 67,
+        "endLine": 505,
+        "endChar": 68
       },
       "revId": "7fd89411765755005ce1c4102aad351e24883901",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
