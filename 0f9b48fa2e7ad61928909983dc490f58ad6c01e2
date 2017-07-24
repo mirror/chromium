@@ -378,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "20d63d3e_ce4d7305",
+        "filename": "components/offline_pages/core/page_renovation_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-07-24T18:49:05Z",
+      "side": 1,
+      "message": "OK, we chatted offline, and since chrome will crash if we run out of memory, and there should be no other failure modes for makeRenovationList(), as it just instantiates static data, I am withdrawing my objection.",
+      "parentUuid": "4bf7bb57_02b1c795",
+      "range": {
+        "startLine": 29,
+        "startChar": 19,
+        "endLine": 29,
+        "endChar": 37
+      },
+      "revId": "0f9b48fa2e7ad61928909983dc490f58ad6c01e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d37c482a_1b7b7a87",
         "filename": "components/offline_pages/core/page_renovation_loader.cc",
         "patchSetId": 2
