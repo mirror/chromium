@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "df8a03f1_237d5801",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-07-24T21:15:26Z",
+      "side": 1,
+      "message": "Ha good point, I\u0027ll do this for correctness (and to make sure that it doesn\u0027t bite me in the future in some unittests).\n\nIs it ok to leak this singleton (haven\u0027t worked a lot on Chrome, so I\u0027m not sure of what the best practices usually are).",
+      "parentUuid": "b2fc0561_4239fa05",
+      "range": {
+        "startLine": 45,
+        "startChar": 18,
+        "endLine": 45,
+        "endChar": 33
+      },
+      "revId": "40849ea5e6ebfb5f0daee33f61816e7d5eafbfd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ce88175_384bc1cd",
         "filename": "chrome/browser/metrics/tab_stats_tracker.h",
         "patchSetId": 12
@@ -39,6 +63,24 @@
       "revId": "40849ea5e6ebfb5f0daee33f61816e7d5eafbfd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "def6d95d_5c8eb173",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-07-24T21:15:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ce88175_384bc1cd",
+      "revId": "40849ea5e6ebfb5f0daee33f61816e7d5eafbfd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
