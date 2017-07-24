@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4848c2f0_61f358d2",
+        "filename": "remoting/tools/build/remoting_localize.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-07-24T22:06:07Z",
+      "side": 1,
+      "message": "As discussed in hangouts, let\u0027s get rid of en_US for now rather than modifying the script...",
+      "parentUuid": "f75c0c9b_35a63f2c",
+      "range": {
+        "startLine": 546,
+        "startChar": 1,
+        "endLine": 548,
+        "endChar": 10
+      },
+      "revId": "da7196c057c5fdfa87c52c9a2f87bf4cc2577522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7915562a_b2295d09",
         "filename": "remoting/tools/build/remoting_localize.py",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-24T14:33:19Z",
       "side": 1,
       "message": "Looks like it reapplies the -US here.",
+      "range": {
+        "startLine": 557,
+        "startChar": 4,
+        "endLine": 557,
+        "endChar": 18
+      },
+      "revId": "da7196c057c5fdfa87c52c9a2f87bf4cc2577522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58122c03_373ab5a1",
+        "filename": "remoting/tools/build/remoting_localize.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 557,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-07-24T22:06:07Z",
+      "side": 1,
+      "message": "ditto",
+      "parentUuid": "7915562a_b2295d09",
       "range": {
         "startLine": 557,
         "startChar": 4,
