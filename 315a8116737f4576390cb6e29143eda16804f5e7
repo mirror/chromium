@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0dd9707b_1f67dcfc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageBridge.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-07-24T23:44:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "078d2f14_788862a9",
+      "revId": "315a8116737f4576390cb6e29143eda16804f5e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0cdcfd9b_8134aa21",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageUtils.java",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "315a8116737f4576390cb6e29143eda16804f5e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5272b524_bd3156f4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageUtils.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-07-24T23:44:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cdcfd9b_8134aa21",
+      "revId": "315a8116737f4576390cb6e29143eda16804f5e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5f292f7c_de8f9f54",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageUtils.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-07-24T23:44:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad2acda1_4a3dfede",
+      "revId": "315a8116737f4576390cb6e29143eda16804f5e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f53a1f8b_6e35ab7f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageUtils.java",
         "patchSetId": 12
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "7734b096_5b28a525",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageUtils.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 907,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-07-24T23:44:04Z",
+      "side": 1,
+      "message": "Formatter doesn\u0027t support it, and I don\u0027t want to encode by hand...",
+      "parentUuid": "f53a1f8b_6e35ab7f",
+      "revId": "315a8116737f4576390cb6e29143eda16804f5e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d31f293d_cf664632",
         "filename": "chrome/browser/resources/offline_pages/offline_internals.js",
         "patchSetId": 12
@@ -84,6 +156,24 @@
       "revId": "315a8116737f4576390cb6e29143eda16804f5e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43b54572_5d6db72f",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-07-24T23:44:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d31f293d_cf664632",
+      "revId": "315a8116737f4576390cb6e29143eda16804f5e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
