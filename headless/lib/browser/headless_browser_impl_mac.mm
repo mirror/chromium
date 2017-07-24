@@ -10,12 +10,26 @@
 
 namespace headless {
 
+namespace {
+
+NSString* const kActivityReason = @"Batch headless process";
+const NSActivityOptions kActivityOptions =
+    (NSActivityUserInitiatedAllowingIdleSystemSleep |
+     NSActivityLatencyCritical) &
+    ~(NSActivitySuddenTerminationDisabled |
+      NSActivityAutomaticTerminationDisabled);
+
+}  // namespace
+
 void HeadlessBrowserImpl::PlatformInitialize() {}
 
 void HeadlessBrowserImpl::PlatformStart() {}
 
 void HeadlessBrowserImpl::PlatformInitializeWebContents(
     HeadlessWebContentsImpl* web_contents) {
+  // Disallow headless to be throttled as a background process.
+  [[NSProcessInfo processInfo] beginActivityWithOptions:kActivityOptions
+                                                 reason:kActivityReason];
   NSView* web_view = web_contents->web_contents()->GetNativeView();
   [web_view setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
 }
