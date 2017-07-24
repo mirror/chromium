@@ -56,6 +56,7 @@ class BiquadDSPKernel final : public AudioDSPKernel {
                             float* mag_response,
                             float* phase_response);
 
+  bool RequiresTailProcessing() const override;
   double TailTime() const override;
   double LatencyTime() const override;
 

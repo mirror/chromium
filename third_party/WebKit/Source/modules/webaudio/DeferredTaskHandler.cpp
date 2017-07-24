@@ -169,6 +169,46 @@ void DeferredTaskHandler::ProcessAutomaticPullNodes(size_t frames_to_process) {
     rendering_automatic_pull_nodes_[i]->ProcessIfNecessary(frames_to_process);
 }
 
+void DeferredTaskHandler::AddTailProcessingNode(PassRefPtr<AudioHandler> node) {
+  DCHECK(IsGraphOwner());
+
+  if (!tail_processing_nodes_.Contains(node)) {
+#if DEBUG_AUDIONODE_REFERENCES > 1
+    node->AddTailProcessingDebug();
+#endif
+    tail_processing_nodes_.push_back(std::move(node));
+  }
+}
+
+void DeferredTaskHandler::RemoveTailProcessingNode(
+    PassRefPtr<AudioHandler> node) {
+  DCHECK(IsGraphOwner());
+
+  size_t index = tail_processing_nodes_.Find(node);
+  if (index != kNotFound) {
+#if DEBUG_AUDIONODE_REFERENCES > 1
+    node->RemoveTailProcessingDebug();
+#endif
+    node->ReallyDisableOutputs();
+    tail_processing_nodes_.erase(index);
+  }
+}
+
+void DeferredTaskHandler::UpdateTailProcessingNodes() {
+  DCHECK(IsAudioThread());
+
+  for (unsigned k = tail_processing_nodes_.size(); k > 0; --k) {
+    RefPtr<AudioHandler> node = tail_processing_nodes_[k - 1];
+    if (node->PropagatesSilence()) {
+#if DEBUG_AUDIONODE_REFERENCES
+      fprintf(stderr, "[%16p]: %16p: %2d: updateTail @%.15g\n", node->Context(),
+              node.Get(), node->GetNodeType(), node->Context()->currentTime());
+#endif
+      RemoveTailProcessingNode(node);
+    }
+  }
+}
+
 void DeferredTaskHandler::AddChangedChannelCountMode(AudioHandler* node) {
   DCHECK(IsGraphOwner());
   DCHECK(IsMainThread());
@@ -230,6 +270,7 @@ void DeferredTaskHandler::HandleDeferredTasks() {
   HandleDirtyAudioSummingJunctions();
   HandleDirtyAudioNodeOutputs();
   UpdateAutomaticPullNodes();
+  UpdateTailProcessingNodes();
 }
 
 void DeferredTaskHandler::ContextWillBeDestroyed() {

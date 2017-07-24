@@ -79,6 +79,8 @@ class OfflineAudioDestinationHandler final : public AudioDestinationHandler {
 
   void InitializeOfflineRenderThread();
 
+  bool RequiresTailProcessing() const override { return false; }
+
  private:
   OfflineAudioDestinationHandler(AudioNode&, AudioBuffer* render_target);
 
