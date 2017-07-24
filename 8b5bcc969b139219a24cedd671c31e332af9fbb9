@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "875dcd78_bffa79b4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-24T01:38:27Z",
+      "side": 1,
+      "message": "Could you add a note about how this change was tested? Preferably this change would come with an automated test, but since the existing code this is refactoring doesn\u0027t have tests we can consider it a TODO for another patch.",
+      "revId": "8b5bcc969b139219a24cedd671c31e332af9fbb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e20c379c_4f975d36",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-24T01:38:27Z",
+      "side": 1,
+      "message": "I\u0027d slightly prefer just storing these data as a SecurityOrigin, so we don\u0027t need to split it up into two fields. As you mentioned offline, we\u0027d have to do the conversion to KURL for every call, but my understanding is this doesn\u0027t have to be super fast (it shouldn\u0027t be called many times in a short time period).",
+      "revId": "8b5bcc969b139219a24cedd671c31e332af9fbb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
