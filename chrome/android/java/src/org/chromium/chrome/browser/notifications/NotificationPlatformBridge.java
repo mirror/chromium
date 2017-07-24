@@ -40,8 +40,10 @@ import org.chromium.chrome.browser.preferences.PreferencesLauncher;
 import org.chromium.chrome.browser.preferences.website.SingleCategoryPreferences;
 import org.chromium.chrome.browser.preferences.website.SingleWebsitePreferences;
 import org.chromium.chrome.browser.preferences.website.SiteSettingsCategory;
+import org.chromium.chrome.browser.webapps.ChromeWebApkHost;
 import org.chromium.chrome.browser.webapps.WebApkServiceClient;
 import org.chromium.components.url_formatter.UrlFormatter;
+import org.chromium.webapk.lib.client.WebApkIdentityServiceClient;
 import org.chromium.webapk.lib.client.WebApkValidator;
 
 import java.net.URI;
@@ -148,16 +150,30 @@ public class NotificationPlatformBridge {
 
     /**
      * Returns the package for the WebAPK which should handle the URL.
-     *
      * @param url The url to check.
+     * @param callbackPointer The callback to call after we know whether a WebAPK can handle the
+     *                        url.
      * @return Package name of the WebAPK which should handle the URL. Returns empty string if the
      *         URL should not be handled by a WebAPK.
      */
     @CalledByNative
-    private String queryWebApkPackage(String url) {
-        String webApkPackage =
+    private void queryWebApkPackage(String url, final long callbackPointer) {
+        final String webApkPackage =
                 WebApkValidator.queryWebApkPackage(ContextUtils.getApplicationContext(), url);
-        return webApkPackage == null ? "" : webApkPackage;
+        if (webApkPackage == null) {
+            nativeOnQueryWebApkPackage(mNativeNotificationPlatformBridge, "", callbackPointer);
+            return;
+        }
+
+        WebApkIdentityServiceClient.CheckBrowserBacksWebApkCallback callback =
+                new WebApkIdentityServiceClient.CheckBrowserBacksWebApkCallback() {
+                    @Override
+                    public void onChecked(boolean doesBrowserBackWebApk) {
+                        nativeOnQueryWebApkPackage(mNativeNotificationPlatformBridge,
+                                doesBrowserBackWebApk ? webApkPackage : "", callbackPointer);
+                    }
+                };
+        ChromeWebApkHost.checkChromeBacksWebApkAsync(webApkPackage, callback);
     }
 
     /**
@@ -773,4 +789,6 @@ public class NotificationPlatformBridge {
     private native void nativeOnNotificationClosed(long nativeNotificationPlatformBridgeAndroid,
             String notificationId, String origin, String profileId, boolean incognito, String tag,
             boolean byUser);
+    private native void nativeOnQueryWebApkPackage(long nativeNotificationPlatformBridgeAndroid,
+            String webApkPackage, long callbackPointer);
 }

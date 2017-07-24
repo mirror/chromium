@@ -4,7 +4,11 @@
 
 package org.chromium.chrome.browser.webapps;
 
+import org.chromium.base.ApplicationState;
+import org.chromium.base.ApplicationStatus;
+import org.chromium.base.ContextUtils;
 import org.chromium.base.library_loader.LibraryLoader;
+import org.chromium.webapk.lib.client.WebApkIdentityServiceClient;
 import org.chromium.webapk.lib.client.WebApkValidator;
 
 /**
@@ -12,6 +16,7 @@ import org.chromium.webapk.lib.client.WebApkValidator;
  */
 public class ChromeWebApkHost {
     private static final String TAG = "ChromeWebApkHost";
+    private static ApplicationStatus.ApplicationStateListener sListener;
 
     public static void init() {
         WebApkValidator.init(
@@ -23,6 +28,36 @@ public class ChromeWebApkHost {
         return LibraryLoader.isInitialized() && nativeCanLaunchRendererInWebApkProcess();
     }
 
+    /** Checks whether Chrome is the runtime host of the WebAPK asynchronously. */
+    public static void checkChromeBacksWebApkAsync(String webApkPackageName,
+            WebApkIdentityServiceClient.CheckBrowserBacksWebApkCallback callback) {
+        maybeRegisterListenerForWebApkIdentityServiceClient();
+        WebApkIdentityServiceClient.getInstance().checkBrowserBacksWebApkAsync(
+                ContextUtils.getApplicationContext(), webApkPackageName, callback);
+    }
+
+    /**
+     * Registers an application listener to disconnect all connections to WebAPKs when Chrome is
+     * stopped.
+     */
+    private static void maybeRegisterListenerForWebApkIdentityServiceClient() {
+        if (sListener != null) return;
+
+        sListener = new ApplicationStatus.ApplicationStateListener() {
+            @Override
+            public void onApplicationStateChange(int newState) {
+                if (newState == ApplicationState.HAS_STOPPED_ACTIVITIES
+                        || newState == ApplicationState.HAS_DESTROYED_ACTIVITIES) {
+                    WebApkIdentityServiceClient.disconnectAll(ContextUtils.getApplicationContext());
+                    WebApkServiceClient.disconnectAll();
+
+                    ApplicationStatus.unregisterApplicationStateListener(sListener);
+                    sListener = null;
+                }
+            }
+        };
+        ApplicationStatus.registerApplicationStateListener(sListener);
+    }
 
     private static native boolean nativeCanLaunchRendererInWebApkProcess();
 }

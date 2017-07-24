@@ -12,6 +12,7 @@
 
 #include "base/android/scoped_java_ref.h"
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "chrome/browser/notifications/displayed_notifications_dispatch_callback.h"
 #include "chrome/browser/notifications/notification_common.h"
 #include "chrome/browser/notifications/notification_platform_bridge.h"
@@ -61,6 +62,13 @@ class NotificationPlatformBridgeAndroid : public NotificationPlatformBridge {
       const base::android::JavaParamRef<jstring>& java_tag,
       jboolean by_user);
 
+  // Called after querying the webapk package is done on Java side.
+  void OnQueryWebApkPackage(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& java_object,
+      const base::android::JavaParamRef<jstring>& java_webapk_package,
+      const jlong jcallback_pointer);
+
   // NotificationPlatformBridge implementation.
   void Display(NotificationCommon::Type notification_type,
                const std::string& notification_id,
@@ -94,6 +102,13 @@ class NotificationPlatformBridgeAndroid : public NotificationPlatformBridge {
     std::string webapk_package;
   };
 
+  // Display a notification.
+  void DisplayInternal(const std::string& notification_id,
+                       const std::string& profile_id,
+                       bool incognito,
+                       const Notification& notification,
+                       const std::string& webapk_package);
+
   // Mapping of notification id to renegerated notification info.
   // TODO(peter): Remove this map once notification delegate ids for Web
   // notifications are created by the content/ layer.
@@ -101,6 +116,9 @@ class NotificationPlatformBridgeAndroid : public NotificationPlatformBridge {
       regenerated_notification_infos_;
 
   base::android::ScopedJavaGlobalRef<jobject> java_object_;
+
+  // Factory for the creating refs in callbacks.
+  base::WeakPtrFactory<NotificationPlatformBridgeAndroid> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(NotificationPlatformBridgeAndroid);
 };
