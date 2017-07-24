@@ -69,6 +69,30 @@
       "revId": "4e13e9579c87043435bcaf93c8801de73047e714",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64e41c19_30c8b3ac",
+        "filename": "content/browser/media/capture/desktop_capture_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-24T19:22:18Z",
+      "side": 1,
+      "message": "Please see the other comment.",
+      "parentUuid": "47da752c_d59cad49",
+      "range": {
+        "startLine": 265,
+        "startChar": 4,
+        "endLine": 265,
+        "endChar": 74
+      },
+      "revId": "4e13e9579c87043435bcaf93c8801de73047e714",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

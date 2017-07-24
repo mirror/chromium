@@ -46,6 +46,30 @@
       "revId": "8d3ceadb39d125a72fcac8447ff5a010908b55fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73243c51_afcc70d8",
+        "filename": "content/browser/media/capture/desktop_capture_device.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-07-24T19:22:18Z",
+      "side": 0,
+      "message": "Sorry if I have not followed your opinion. Do you mean even without your change, the behavior now is also wrong? i.e. (all the line numbers are based on unchanged version.)\nWhen a 1 x 1 frame is received, resolution_chooser_.-\u003ecapture_size() \u003d\u003d (1, 1), output_size \u003d\u003d (0, 0) in line 269, and the logic will return in 272 / 273.\n\nBut ScreenResolutionChooser is controlled by VideoCaptureParams, it only returns (1, 1) when the ResolutionChangePolicy \u003d\u003d RESOLUTION_POLICY_ANY_WITHIN_LIMIT. So it looks like you are trying to resolve two issues in this change.\n\nSince the root causes are not the same, we may fix them in different places.\n1. The blurring when scaling from odd dimension to even.\nI think my previous suggestion is still reasonable.\n\n2. The output_size.is_empty().\nIt looks like the logic in line 272 does not describe what we expected.\n  - If the size of the input frame is (0, 0), we should directly return around line 246. (Typically this should not happen.)\n  - Otherwise we should not allow output_size \u003d\u003d (0, 0), i.e. in line 273, the \"return\" statement is not correct. Line 269 may be,\n// Even RESOLUTION_POLICY_ANY_WITHIN_LIMIT is used, we still try to upper round to 2x2 pixel\n// boundaries, so the frame can be converted to I420 format.\nconst webrtc::DesktopSize output_size(\n    (resolution_chooser_-\u003ecapture_size().width() + 1) \u0026 ~1,\n    (resolution_chooser_-\u003ecapture_size().height() + 1) \u0026 ~1);\nDCHECK(!output_size.is_empty());\n\nI cannot quite sure my understanding correctly reflects what Yuri expected, though it looks pretty reasonable.\n\nP.S. If you prefer to fix both issues in this change, you may want to update the description of this CL.",
+      "parentUuid": "5793bd9d_a62cfa51",
+      "range": {
+        "startLine": 290,
+        "startChar": 2,
+        "endLine": 290,
+        "endChar": 50
+      },
+      "revId": "8d3ceadb39d125a72fcac8447ff5a010908b55fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
