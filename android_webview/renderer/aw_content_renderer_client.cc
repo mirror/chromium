@@ -13,7 +13,7 @@
 #include "android_webview/grit/aw_strings.h"
 #include "android_webview/renderer/aw_content_settings_client.h"
 #include "android_webview/renderer/aw_key_systems.h"
-#include "android_webview/renderer/aw_print_web_view_helper_delegate.h"
+#include "android_webview/renderer/aw_print_web_frame_helper_delegate.h"
 #include "android_webview/renderer/aw_render_frame_ext.h"
 #include "android_webview/renderer/aw_render_view_ext.h"
 #include "android_webview/renderer/print_render_frame_observer.h"
@@ -26,7 +26,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "components/autofill/content/renderer/autofill_agent.h"
 #include "components/autofill/content/renderer/password_autofill_agent.h"
-#include "components/printing/renderer/print_web_view_helper.h"
+#include "components/printing/renderer/print_web_frame_helper.h"
 #include "components/safe_browsing/renderer/websocket_sb_handshake_throttle.h"
 #include "components/spellcheck/spellcheck_build_features.h"
 #include "components/supervised_user_error_page/gin_wrapper.h"
@@ -163,8 +163,8 @@ void AwContentRendererClient::RenderFrameCreated(
     content::RenderFrame* render_frame) {
   new AwContentSettingsClient(render_frame);
   new PrintRenderFrameObserver(render_frame);
-  new printing::PrintWebViewHelper(
-      render_frame, base::MakeUnique<AwPrintWebViewHelperDelegate>());
+  new printing::PrintWebFrameHelper(
+      render_frame, base::MakeUnique<AwPrintWebFrameHelperDelegate>());
   new AwRenderFrameExt(render_frame);
 
   // TODO(jam): when the frame tree moves into content and parent() works at
