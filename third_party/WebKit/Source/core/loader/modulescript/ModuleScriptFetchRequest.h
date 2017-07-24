@@ -52,6 +52,10 @@ class ModuleScriptFetchRequest final {
   const AtomicString& GetReferrer() const { return referrer_; }
   const TextPosition& GetReferrerPosition() const { return referrer_position_; }
 
+  bool ShouldOverrideInitiatorInfo() const {
+    return should_override_initiator_info_;
+  }
+
  private:
   // Referrer is set only for internal module script fetch algorithms triggered
   // from ModuleTreeLinker to fetch descendant module scripts.
@@ -61,13 +65,15 @@ class ModuleScriptFetchRequest final {
                            ParserDisposition parser_state,
                            WebURLRequest::FetchCredentialsMode credentials_mode,
                            const String& referrer,
-                           const TextPosition& referrer_position)
+                           const TextPosition& referrer_position,
+                           bool should_override_initiator_info = false)
       : url_(url),
         nonce_(nonce),
         parser_state_(parser_state),
         credentials_mode_(credentials_mode),
         referrer_(referrer),
-        referrer_position_(referrer_position) {}
+        referrer_position_(referrer_position),
+        should_override_initiator_info_(should_override_initiator_info) {}
 
   const KURL url_;
   const String nonce_;
@@ -75,6 +81,7 @@ class ModuleScriptFetchRequest final {
   const WebURLRequest::FetchCredentialsMode credentials_mode_;
   const AtomicString referrer_;
   const TextPosition referrer_position_;
+  const bool should_override_initiator_info_;
 };
 
 }  // namespace blink

@@ -14,7 +14,6 @@ DEFINE_TRACE(ModuleScriptLoaderRegistry) {
 
 ModuleScriptLoader* ModuleScriptLoaderRegistry::Fetch(
     const ModuleScriptFetchRequest& request,
-    ModuleGraphLevel level,
     Modulator* modulator,
     ResourceFetcher* fetcher,
     ModuleScriptLoaderClient* client) {
@@ -22,7 +21,7 @@ ModuleScriptLoader* ModuleScriptLoaderRegistry::Fetch(
       ModuleScriptLoader::Create(modulator, this, client);
   DCHECK(loader->IsInitialState());
   active_loaders_.insert(loader);
-  loader->Fetch(request, fetcher, level);
+  loader->Fetch(request, fetcher);
   return loader;
 }
 

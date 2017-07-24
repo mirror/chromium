@@ -68,16 +68,7 @@ void DummyModulator::FetchTree(const ModuleScriptFetchRequest&,
   NOTREACHED();
 }
 
-void DummyModulator::FetchTreeInternal(const ModuleScriptFetchRequest&,
-                                       const AncestorList&,
-                                       ModuleGraphLevel,
-                                       ModuleTreeReachedUrlSet*,
-                                       ModuleTreeClient*) {
-  NOTREACHED();
-};
-
 void DummyModulator::FetchSingle(const ModuleScriptFetchRequest&,
-                                 ModuleGraphLevel,
                                  SingleModuleClient*) {
   NOTREACHED();
 }
@@ -93,7 +84,6 @@ ModuleScript* DummyModulator::GetFetchedModuleScript(const KURL&) {
 }
 
 void DummyModulator::FetchNewSingleModule(const ModuleScriptFetchRequest&,
-                                          ModuleGraphLevel,
                                           ModuleScriptLoaderClient*) {
   NOTREACHED();
 }
