@@ -24,10 +24,10 @@ const char ComponentToolbarActionsFactory::kCastExtensionId[] =
 const char ComponentToolbarActionsFactory::kMediaRouterActionId[] =
     "media_router_action";
 
-ComponentToolbarActionsFactory::ComponentToolbarActionsFactory(Profile* profile)
-    : profile_(profile) {
-  if (media_router::MediaRouterEnabled(profile_) &&
-      MediaRouterActionController::IsActionShownByPolicy(profile_)) {
+ComponentToolbarActionsFactory::ComponentToolbarActionsFactory(
+    Profile* profile) {
+  if (media_router::MediaRouterEnabled(profile) &&
+      MediaRouterActionController::IsActionShownByPolicy(profile)) {
     initial_ids_.insert(kMediaRouterActionId);
   }
 }
@@ -65,24 +65,4 @@ ComponentToolbarActionsFactory::GetComponentToolbarActionForId(
 
   NOTREACHED();
   return std::unique_ptr<ToolbarActionViewController>();
-}
-
-void ComponentToolbarActionsFactory::UnloadMigratedExtensions(
-    ExtensionService* service,
-    extensions::ExtensionRegistry* registry) {
-  // TODO(takumif): Replace the unloading of Cast and Cast Beta extensions with
-  // uninstallation.
-  UnloadExtension(service, registry, kCastExtensionId);
-  UnloadExtension(service, registry, kCastBetaExtensionId);
-}
-
-void ComponentToolbarActionsFactory::UnloadExtension(
-    ExtensionService* service,
-    extensions::ExtensionRegistry* registry,
-    const std::string& extension_id) {
-  if (registry->enabled_extensions().Contains(extension_id)) {
-    service->UnloadExtension(
-        extension_id,
-        extensions::UnloadedExtensionReason::MIGRATED_TO_COMPONENT);
-  }
 }
