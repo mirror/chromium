@@ -16,6 +16,24 @@
       "revId": "bf86a4a1385fc06d3b4d67ff43f2b5508cd3bfeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c810b58_cb9f90cc",
+        "filename": "ui/webui/resources/cr_elements/shared_vars_css.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-24T23:33:18Z",
+      "side": 1,
+      "message": "Why are we promoting --settings-toggle-color to cr-primary-action-color here? Can we simply promote it to cr-paper-toggle-color for now and move it to paper_toggle_style_css.html, and do further merges in a future cleanup CL?",
+      "parentUuid": "68e84ff1_543d8946",
+      "revId": "bf86a4a1385fc06d3b4d67ff43f2b5508cd3bfeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
