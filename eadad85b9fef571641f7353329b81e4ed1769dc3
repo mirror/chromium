@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6ed1ce7_fef750cf",
+        "filename": "ios/web/public/web_state/web_state.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-24T17:20:17Z",
+      "side": 1,
+      "message": "Should this method be protected? Callers are not suppose to use it anyway.",
+      "range": {
+        "startLine": 258,
+        "startChar": 15,
+        "endLine": 258,
+        "endChar": 48
+      },
+      "revId": "eadad85b9fef571641f7353329b81e4ed1769dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f277c3a6_1c8c052c",
+        "filename": "ios/web/shell/shell_web_client.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-24T17:20:17Z",
+      "side": 1,
+      "message": "Add braces because if statement is multiline?",
+      "range": {
+        "startLine": 121,
+        "startChar": 4,
+        "endLine": 121,
+        "endChar": 27
+      },
+      "revId": "eadad85b9fef571641f7353329b81e4ed1769dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a3a1819_ae514e90",
+        "filename": "ios/web/shell/test/service_manager_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-24T17:20:17Z",
+      "side": 1,
+      "message": "Is there a reason why we need |rawWebUsageController| variable?",
+      "range": {
+        "startLine": 145,
+        "startChar": 34,
+        "endLine": 145,
+        "endChar": 55
+      },
+      "revId": "eadad85b9fef571641f7353329b81e4ed1769dc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
