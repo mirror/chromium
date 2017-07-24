@@ -33,6 +33,7 @@
 #include <utility>
 
 #include "bindings/core/v8/ExceptionState.h"
+#include "bindings/core/v8/Microtask.h"
 #include "bindings/core/v8/ToV8ForCore.h"
 #include "bindings/modules/v8/ToV8ForModules.h"
 #include "bindings/modules/v8/V8BindingForModules.h"
@@ -115,7 +116,10 @@ IDBRequest::IDBRequest(ScriptState* script_state,
       transaction_(transaction),
       isolate_(script_state->GetIsolate()),
       metrics_(std::move(metrics)),
-      source_(source) {}
+      source_(source),
+      ready_promise_(new ReadyPromise(ExecutionContext::From(script_state),
+                                      this,
+                                      ReadyPromise::kReady)) {}
 
 IDBRequest::~IDBRequest() {
   DCHECK((ready_state_ == DONE && metrics_.IsEmpty()) ||
@@ -127,6 +131,7 @@ DEFINE_TRACE(IDBRequest) {
   visitor->Trace(source_);
   visitor->Trace(result_);
   visitor->Trace(error_);
+  visitor->Trace(ready_promise_);
   visitor->Trace(enqueued_events_);
   visitor->Trace(pending_cursor_);
   visitor->Trace(cursor_key_);
@@ -187,6 +192,25 @@ std::unique_ptr<WebIDBCallbacks> IDBRequest::CreateWebCallbacks() {
   return callbacks;
 }
 
+ScriptPromise IDBRequest::ready(ScriptState* script_state) {
+  return ready_promise_->Promise(script_state->World());
+}
+
+ScriptPromise IDBRequest::then(ScriptState* script_state,
+                               const ScriptValue& onFulfilled,
+                               const ScriptValue& onRejected) {
+  v8::Local<v8::Function> fulfilled_function;
+  if (!onFulfilled.IsEmpty() && onFulfilled.IsFunction())
+    fulfilled_function = onFulfilled.V8Value().As<v8::Function>();
+
+  v8::Local<v8::Function> rejected_function;
+  if (!onRejected.IsEmpty() && onRejected.IsFunction())
+    rejected_function = onRejected.V8Value().As<v8::Function>();
+
+  return ready_promise_->Promise(script_state->World())
+      .Then(fulfilled_function, rejected_function);
+}
+
 void IDBRequest::Abort() {
   DCHECK(!request_aborted_);
   if (queue_item_) {
@@ -237,6 +261,7 @@ void IDBRequest::SetPendingCursor(IDBCursor* cursor) {
   pending_cursor_ = cursor;
   SetResult(nullptr);
   ready_state_ = PENDING;
+  ready_promise_->Reset();
   error_.Clear();
   transaction_->RegisterRequest(this);
 }
@@ -663,6 +688,8 @@ DispatchEventResult IDBRequest::DispatchEventInternal(Event* event) {
          event->type() == EventTypeNames::blocked ||
          event->type() == EventTypeNames::upgradeneeded)
       << "event type was " << event->type();
+
+  // TODO: Better name for this variable.
   const bool set_transaction_active =
       transaction_ &&
       (event->type() == EventTypeNames::success ||
@@ -698,12 +725,23 @@ DispatchEventResult IDBRequest::DispatchEventInternal(Event* event) {
         transaction_->abort(IGNORE_EXCEPTION_FOR_TESTING);
       }
     }
-
-    // If this was the last request in the transaction's list, it may commit
-    // here.
-    if (set_transaction_active)
-      transaction_->SetActive(false);
   }
+
+  // TODO: Timing of this?
+  if (ready_promise_->GetState() == ScriptPromisePropertyBase::kPending) {
+    if (event->type() == EventTypeNames::success)
+      ready_promise_->Resolve(result_);
+    else if (event->type() == EventTypeNames::error)
+      ready_promise_->Reject(error_);
+  }
+
+  // Allow microtasks queued by the promise resolution to execute while
+  // the transaction is active.
+  Microtask::PerformCheckpoint(isolate_);
+
+  // If this was the last request in the transaction's list, it may commit here.
+  if (set_transaction_active)
+    transaction_->SetActive(false);
 
   if (cursor_to_notify)
     cursor_to_notify->PostSuccessHandlerCallback();

@@ -524,6 +524,10 @@
       status: "experimental",
     },
     {
+      name: "IDBPromises",
+      status: "experimental",
+    },
+    {
       name: "IdleTimeColdModeSpellChecking",
       depends_on: ["IdleTimeSpellChecking"],
       status: "test",
