@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3147db8_321fe97f",
+        "filename": "content/browser/frame_host/render_frame_host_delegate.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-24T19:57:20Z",
+      "side": 1,
+      "message": "nit: Since this file is no longer changing, it will be nice to land these improvements separately, but I\u0027d leave that up to you.",
+      "range": {
+        "startLine": 36,
+        "startChar": 9,
+        "endLine": 36,
+        "endChar": 16
+      },
+      "revId": "9786d6661c24c87b04bf4d5a1066c4669c403e94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df5d3f80_6e518917",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 2857,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-24T19:57:20Z",
+      "side": 1,
+      "message": "I don\u0027t think this part of the comment adds any meaningful data. The ordering of destruction of these two object should not matter. The key piece of information is that using base::Unretained is ok because the geolocation_service_ instance is owned by |this| and destructing |this| should guarantee that we will unregister the interface and not leave a dangling pointer around.",
+      "range": {
+        "startLine": 2856,
+        "startChar": 0,
+        "endLine": 2857,
+        "endChar": 59
+      },
+      "revId": "9786d6661c24c87b04bf4d5a1066c4669c403e94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d5cf372_177d1eb7",
+        "filename": "content/browser/geolocation/geolocation_service_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-24T19:57:20Z",
+      "side": 1,
+      "message": "nit: This comment is a bit confusing. Is it creating a GeolocationServiceImpl instance or just Geolocation instance? It seems it is the latter, but seeing the string \"Geolocation Service\" seems to imply the former.",
+      "revId": "9786d6661c24c87b04bf4d5a1066c4669c403e94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aa93fd8_8eacdde6",
+        "filename": "content/browser/geolocation/geolocation_service_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-24T19:57:20Z",
+      "side": 1,
+      "message": "Is there a specific technical reason why it cannot be called multiple times? Maybe it is worthwhile expanding the comment to say why instead of asking readers of the code to figure it out through code archeology.",
+      "revId": "9786d6661c24c87b04bf4d5a1066c4669c403e94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a5c6486_4890a9e7",
+        "filename": "content/browser/geolocation/geolocation_service_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-07-24T19:57:20Z",
+      "side": 1,
+      "message": "Yet, we store a full GeolocationServiceImplContext. Can we update the comment to reflect that?",
+      "range": {
+        "startLine": 73,
+        "startChar": 52,
+        "endLine": 73,
+        "endChar": 73
+      },
+      "revId": "9786d6661c24c87b04bf4d5a1066c4669c403e94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
