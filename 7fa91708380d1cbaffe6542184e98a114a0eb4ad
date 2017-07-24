@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b645cf60_6e456a64",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-24T08:34:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2aa41595_38839976",
+      "revId": "7fa91708380d1cbaffe6542184e98a114a0eb4ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e76122bc_5c73e67c",
         "filename": "third_party/WebKit/public/platform/WebApplicationCacheHost.h",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-24T08:08:23Z",
       "side": 1,
       "message": "Should we re-structure these APIs to look more straightforward, like:\n\nvirtual void WillStartMainResourceRequest(const WebURLRequest\u0026, const WebAppCacheHost*);\nvirtual int GetAppCacheHostID();\n\n?\n\n(Btw I believe we\u0027re actually deprecating this code path with s13n)",
+      "revId": "7fa91708380d1cbaffe6542184e98a114a0eb4ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb577830_2185dd87",
+        "filename": "third_party/WebKit/public/platform/WebApplicationCacheHost.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-24T08:34:40Z",
+      "side": 1,
+      "message": "\u003e Should we re-structure these APIs to look more straightforward, like:\n\u003e \n\u003e virtual void WillStartMainResourceRequest(const WebURLRequest\u0026, const WebAppCacheHost*);\n\u003e virtual int GetAppCacheHostID();\n\nAh, yes! Done.\n\n\u003e (Btw I believe we\u0027re actually deprecating this code path with s13n)\n\nEven with the plan, I\u0027d like to reduce the cognitive cost in reading the redirect code. It\u0027s been wasting my CPU time.",
+      "parentUuid": "e76122bc_5c73e67c",
       "revId": "7fa91708380d1cbaffe6542184e98a114a0eb4ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
