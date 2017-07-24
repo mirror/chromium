@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4586864a_541e2e21",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_absolute_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-07-24T20:25:17Z",
+      "side": 1,
+      "message": "Thinking about this a little more, if the constraint space is in the cb\u0027s writing mode, won\u0027t this do the wrong thing for percentages?",
+      "revId": "7b05e0b2add7dbf845fea912f32dae691acd19bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
