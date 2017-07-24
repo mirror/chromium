@@ -22,6 +22,30 @@
       "revId": "299ca5470fd8e18d50342b271c1b29a8dbe022b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "708bf534_6402cac7",
+        "filename": "remoting/host/daemon_process_win.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-07-24T15:53:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55d3dae0_437ff552",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 69,
+        "endChar": 63
+      },
+      "revId": "299ca5470fd8e18d50342b271c1b29a8dbe022b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
