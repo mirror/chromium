@@ -208,6 +208,12 @@ void BiquadDSPKernel::GetFrequencyResponse(int n_frequencies,
                                phase_response);
 }
 
+bool BiquadDSPKernel::RequiresTailProcessing() const {
+  // Always return true even if the tail time and latency might both
+  // be zero.
+  return true;
+}
+
 double BiquadDSPKernel::TailTime() const {
   return tail_time_;
 }

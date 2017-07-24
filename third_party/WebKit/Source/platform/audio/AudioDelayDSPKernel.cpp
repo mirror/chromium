@@ -163,6 +163,12 @@ void AudioDelayDSPKernel::Reset() {
   buffer_.Zero();
 }
 
+bool AudioDelayDSPKernel::RequiresTailProcessing() const {
+  // Always return true even if the tail time and latency might both
+  // be zero.
+  return true;
+}
+
 double AudioDelayDSPKernel::TailTime() const {
   // Account for worst case delay.
   // Don't try to track actual delay time which can change dynamically.

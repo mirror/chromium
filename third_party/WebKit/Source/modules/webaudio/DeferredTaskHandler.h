@@ -104,6 +104,14 @@ class MODULES_EXPORT DeferredTaskHandler final
   void RequestToDeleteHandlersOnMainThread();
   void ClearHandlersToBeDeleted();
 
+  // If |node| requires tail processing, add it to the list of tail
+  // nodes so the tail is processed.
+  void AddTailProcessingNode(PassRefPtr<AudioHandler> node);
+
+  // Remove |node| from the list of tail nodes (because the tail
+  // processing is complete).
+  void RemoveTailProcessingNode(PassRefPtr<AudioHandler> node);
+
   //
   // Thread Safety and Graph Locking:
   //
@@ -170,6 +178,10 @@ class MODULES_EXPORT DeferredTaskHandler final
   void HandleDirtyAudioNodeOutputs();
   void DeleteHandlersOnMainThread();
 
+  // Check tail processing nodes and remove any node if the tail has
+  // been processed.
+  void UpdateTailProcessingNodes();
+
   // For the sake of thread safety, we maintain a seperate Vector of automatic
   // pull nodes for rendering in m_renderingAutomaticPullNodes.  It will be
   // copied from m_automaticPullNodes by updateAutomaticPullNodes() at the
@@ -197,6 +209,9 @@ class MODULES_EXPORT DeferredTaskHandler final
 
   Vector<RefPtr<AudioHandler>> rendering_orphan_handlers_;
   Vector<RefPtr<AudioHandler>> deletable_orphan_handlers_;
+
+  // Nodes that are processing its tail.
+  Vector<RefPtr<AudioHandler>> tail_processing_nodes_;
 
   // Graph locking.
   RecursiveMutex context_graph_mutex_;
