@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00259540_f559b874",
+        "filename": "remoting/ios/app/session_reconnect_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-07-24T22:37:15Z",
+      "side": 1,
+      "message": "Could we just do [NSLayoutConstraint ...].active \u003d YES? It will guard that the constraint will be added to the right view.",
+      "range": {
+        "startLine": 75,
+        "startChar": 6,
+        "endLine": 75,
+        "endChar": 20
+      },
+      "revId": "62a8ce3300d1df3d6559e63a3a84f81dafee0752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ffa80df_1f89dae9",
+        "filename": "remoting/resources/remoting_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 863,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-07-24T22:37:15Z",
+      "side": 1,
+      "message": "I don\u0027t think we need formatter_data\u003d\"android_java\" here",
+      "range": {
+        "startLine": 863,
+        "startChar": 114,
+        "endLine": 863,
+        "endChar": 144
+      },
+      "revId": "62a8ce3300d1df3d6559e63a3a84f81dafee0752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
