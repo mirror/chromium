@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3c2a866_7f8ec483",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-07-24T18:29:57Z",
+      "side": 1,
+      "message": "nit: consider turning into async",
+      "revId": "7f33eb51a5540681fe748df035f265ce56836eba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
