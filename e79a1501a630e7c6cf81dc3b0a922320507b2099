@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2aa051a6_9b733226",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1681,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-07-24T15:24:27Z",
+      "side": 1,
+      "message": "Hi David, I update CL https://chromium-review.googlesource.com/c/552719/ to fix the shadow underlay problem. PTAL.",
+      "range": {
+        "startLine": 1672,
+        "startChar": 4,
+        "endLine": 1681,
+        "endChar": 56
+      },
+      "revId": "e79a1501a630e7c6cf81dc3b0a922320507b2099",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
