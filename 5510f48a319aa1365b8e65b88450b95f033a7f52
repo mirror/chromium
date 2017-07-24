@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e7c1f8e_e188aeab",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-24T19:33:34Z",
+      "side": 1,
+      "message": "It\u0027s still important that an ALIVE worker is on top of the idle stack. Reverting changes to this line achieves that, and solves ProxyConfigServiceLinuxTest.KDEFileChanged failures on my machine.\n\nNote: ProxyConfigServiceLinuxTest.KDEFileChanged has failed on other patches https://test-results.appspot.com/dashboards/flakiness_dashboard.html#testType\u003dnet_unittests%20(with%20patch)\u0026tests\u003dProxyConfigServiceLinuxTest.KDEFileChanged , so it probably has a race that is highlighted by your change (task latency is longer if the thread on top of the idle stack is detached).",
+      "range": {
+        "startLine": 249,
+        "startChar": 2,
+        "endLine": 249,
+        "endChar": 62
+      },
+      "revId": "5510f48a319aa1365b8e65b88450b95f033a7f52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
