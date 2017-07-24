@@ -22,6 +22,30 @@
       "revId": "0e9c0d4bf7cc857aacce39c57a789d34acc9c46d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "595579c8_90022a27",
+        "filename": "components/error_page/renderer/net_error_helper_core.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-24T07:00:32Z",
+      "side": 1,
+      "message": "OK, I proposed a separate CL which this CL will depend on.\n\nhttps://chromium-review.googlesource.com/c/582722/",
+      "parentUuid": "147debed_02a2d204",
+      "range": {
+        "startLine": 132,
+        "startChar": 15,
+        "endLine": 132,
+        "endChar": 21
+      },
+      "revId": "0e9c0d4bf7cc857aacce39c57a789d34acc9c46d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
