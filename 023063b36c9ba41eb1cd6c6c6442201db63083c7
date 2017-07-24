@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7ac9b75_af7fbfff",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-24T12:51:03Z",
+      "side": 1,
+      "message": "looks this comment should be placed inside the if-clause",
+      "revId": "023063b36c9ba41eb1cd6c6c6442201db63083c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
