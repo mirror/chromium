@@ -70,6 +70,30 @@
       "revId": "b45a27b8e7799e961360b11839143ffa53676394",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be123979_8475bfb8",
+        "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-24T22:45:11Z",
+      "side": 1,
+      "message": "Thanks, I spent some time looking at the spac and my read is that we shouldn\u0027t be sending a `dragleave` at the \u003cembed\u003e (we do indeed hit test into the guest view and plugins don\u0027t want to navigate on DND) but rather at the \u003cbody\u003e Element. From the section you pointed out:\n\n1) Since there are no drag event handlers on the page, `dragenter` on the \u003cembed\u003e (the immediate user selection) isn\u0027t cancelled and so we set the current target element to the \u003cbody\u003e Element.\n\n2) Skip since we didn\u0027t have a previous target element\n\n3) `dragover` dispatched to \u003cbody\u003e element, since it isnt a text control we should reset the current drag operation to none\n\n4.1) Since current drag operation is none, we let dropped \u003d false, fire drag leave at current target element (\u003cbody\u003e)\n\nSo my read is that the \u003cbody\u003e should get the `dragover` and `dragleave` events and the \u003cembed\u003e should not get any events after it doesn\u0027t cancel `dragenter`. However, it looks like our behavior doesn\u0027t match the spec (or equally likely I\u0027m reading the spec wrong?). We send `dragover` and `dragleave` events to the Element under the mouse (i.e. the immediate user selection) rather than the current target element, not just in this edge case but in general.\n\nBut this fix will need to get merged back to M61 so I\u0027ve replaced this fix with your earlier suggestion of just calling ClearDragState() - I don\u0027t want to experiment with changes on a release branch. I\u0027ve added a TODO and bug here but I\u0027m not sure what the correct fix would be or if its even worth the effort since this is such an edge case. If we really care about it I can look into this in a followup patch.",
+      "parentUuid": "ab253105_803de5ef",
+      "range": {
+        "startLine": 297,
+        "startChar": 0,
+        "endLine": 302,
+        "endChar": 54
+      },
+      "revId": "b45a27b8e7799e961360b11839143ffa53676394",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
