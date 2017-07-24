@@ -9,6 +9,7 @@
 
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/test/scoped_task_environment.h"
 #include "components/omnibox/browser/autocomplete_input.h"
 #include "components/omnibox/browser/mock_autocomplete_provider_client.h"
 #include "components/omnibox/browser/test_scheme_classifier.h"
@@ -49,6 +50,7 @@ class ClipboardURLProviderTest : public testing::Test {
   }
 
  protected:
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
   TestSchemeClassifier classifier_;
   FakeClipboardRecentContent clipboard_content_;
   std::unique_ptr<testing::NiceMock<MockAutocompleteProviderClient>> client_;
