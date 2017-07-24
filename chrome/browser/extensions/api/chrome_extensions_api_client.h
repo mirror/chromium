@@ -56,6 +56,7 @@ class ChromeExtensionsAPIClient : public ExtensionsAPIClient {
   MetricsPrivateDelegate* GetMetricsPrivateDelegate() override;
   NetworkingCastPrivateDelegate* GetNetworkingCastPrivateDelegate() override;
   FileSystemDelegate* GetFileSystemDelegate() override;
+  std::unique_ptr<MessagingDelegate> CreateMessagingDelegate() const override;
 
 #if defined(OS_CHROMEOS)
   NonNativeFileSystemDelegate* GetNonNativeFileSystemDelegate() override;
