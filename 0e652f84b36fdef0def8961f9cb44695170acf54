@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "799005c2_7be30ef4",
+        "filename": "third_party/WebKit/Source/modules/payments/AbortPaymentRespondWithObserver.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-07-24T02:34:22Z",
+      "side": 1,
+      "message": "How about moving this to line 45 because this isn\u0027t used when |exception_state| had an exception?",
+      "revId": "0e652f84b36fdef0def8961f9cb44695170acf54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
