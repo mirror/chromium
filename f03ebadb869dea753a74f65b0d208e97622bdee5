@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59632709_0cbf45f2",
+        "filename": "chrome/browser/printing/cloud_print/cloud_print_proxy_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-24T21:25:17Z",
+      "side": 1,
+      "message": "The name is a bit confusing. How about \"GetCloudPrintProxy\" ?",
+      "revId": "f03ebadb869dea753a74f65b0d208e97622bdee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "864eee36_922d3bf4",
+        "filename": "chrome/browser/service_process/service_process_control.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-24T21:25:17Z",
+      "side": 1,
+      "message": "I think you can do !!service_process_ here.",
+      "revId": "f03ebadb869dea753a74f65b0d208e97622bdee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78b2327d_4c9e768b",
+        "filename": "chrome/browser/service_process/service_process_control.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-24T21:25:17Z",
+      "side": 1,
+      "message": "Since these are no longer virtual/override, let\u0027s move them down, so all the virtual functions are grouped together.",
+      "revId": "f03ebadb869dea753a74f65b0d208e97622bdee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e81d81ab_a2416e9a",
+        "filename": "chrome/service/cloud_print/cloud_print_message_handler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-24T21:25:17Z",
+      "side": 1,
+      "message": "Do we need to expose the ctor, now that there\u0027s a Create() method?",
+      "revId": "f03ebadb869dea753a74f65b0d208e97622bdee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a1a5d95_93c34863",
+        "filename": "chrome/service/service_ipc_server.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-24T21:25:17Z",
+      "side": 1,
+      "message": "Also no longer needed, since there\u0027s no more #ifs here.",
+      "revId": "f03ebadb869dea753a74f65b0d208e97622bdee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de8a77d8_467e9b79",
+        "filename": "chrome/service/service_ipc_server.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-24T21:25:17Z",
+      "side": 1,
+      "message": "Can we put all the overrides adjacent to each other?",
+      "revId": "f03ebadb869dea753a74f65b0d208e97622bdee5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
