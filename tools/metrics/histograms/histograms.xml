@@ -53880,6 +53880,24 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="PaymentRequest.MethodSectionOrder.V1.MethodBelowAddress"
+    enum="PaymentRequestFlowCompletionStatus">
+  <owner>gogerald@chromium.org</owner>
+  <summary>
+    Whether the flow was completed when payment method section is displayed
+    below address section.
+  </summary>
+</histogram>
+
+<histogram name="PaymentRequest.MethodSectionOrder.V2.MethodAboveAddress"
+    enum="PaymentRequestFlowCompletionStatus">
+  <owner>gogerald@chromium.org</owner>
+  <summary>
+    Whether the flow was completed when payment method section is displayed
+    above address section.
+  </summary>
+</histogram>
+
 <histogram name="PaymentRequest.NumberOfSelectionAdds">
   <owner>sebsg@chromium.org</owner>
   <summary>
