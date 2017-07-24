@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00444290_f4ca4d10",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-24T23:53:06Z",
+      "side": 1,
+      "message": "I heard you like op :D",
+      "revId": "ecbe785981840f3bf8bdc5544aab7c4a02f939fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33255904_5c5ee55a",
+        "filename": "cc/paint/paint_op_buffer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-24T23:53:06Z",
+      "side": 1,
+      "message": "nit: IsValidSkBlendMode",
+      "revId": "ecbe785981840f3bf8bdc5544aab7c4a02f939fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87866bb7_5a2639ad",
+        "filename": "cc/paint/paint_op_buffer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-24T23:53:06Z",
+      "side": 1,
+      "message": "nit: IsValidSkClipOp",
+      "revId": "ecbe785981840f3bf8bdc5544aab7c4a02f939fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1aad1ee_fc250d22",
+        "filename": "cc/paint/paint_op_buffer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2275,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-24T23:53:06Z",
+      "side": 1,
+      "message": "nit: with https://chromium-review.googlesource.com/c/552837/ which may or may not land ahead of this, the iterators lose op_idx() function. Could you keep track of the index externally to minimize conflicts?",
+      "revId": "ecbe785981840f3bf8bdc5544aab7c4a02f939fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
