@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ed7963b4_5b710dac",
+        "filename": "chrome/browser/devtools/chrome_devtools_manager_delegate.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-24T18:12:53Z",
+      "side": 1,
+      "message": "Ack!",
+      "parentUuid": "22c541c0_e7327970",
+      "revId": "41bfb8e28894690493914e608f39c40c0441ee9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e340f0c2_f5b6b589",
         "filename": "chrome/browser/subresource_filter/chrome_subresource_filter_client.h",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-21T18:46:36Z",
       "side": 1,
       "message": "I don\u0027t think you need this state and the DevToolsAgentHostObserver, disable ad block from ChromeDevToolsManagerDelegate::DevToolsAgentHostDetached instead.\n\nSince you put your command into Page domain, protocol client expectations would be that it only takes effect between the Page.enable and Page.disable calls. (Chrome devtools will enable pain domain at all times). But this means that you need to track Page.enabe and Page.disable in ChromeDevToolsManagerDelegate::HandleBrowserCommand along with your command.",
+      "revId": "41bfb8e28894690493914e608f39c40c0441ee9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "015142e9_0a9381b6",
+        "filename": "chrome/browser/subresource_filter/chrome_subresource_filter_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-24T18:12:53Z",
+      "side": 1,
+      "message": "I think you\u0027re right about devtools_agent_attached_. I think the only thing I was concerned about was race conditions where the Toggle command could come after DevToolsAgentHostDetached.\n\nAbout the Page scoping, does it make sense for this command? I kind of chose it arbitrarily.\n\nPlease take a look at the new PageEnable method for my understanding of these new constraints.",
+      "parentUuid": "e340f0c2_f5b6b589",
       "revId": "41bfb8e28894690493914e608f39c40c0441ee9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3b227af6_24cf0daa",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorPageAgent.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-24T18:12:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e518476_10fc4fb0",
+      "revId": "41bfb8e28894690493914e608f39c40c0441ee9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d9c1186_496622ca",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "41bfb8e28894690493914e608f39c40c0441ee9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ba313a4_fe270a7d",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-24T18:12:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d9c1186_496622ca",
+      "revId": "41bfb8e28894690493914e608f39c40c0441ee9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "6c75f890_1715ae39",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-24T18:12:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddcd7274_d92aa76a",
+      "revId": "41bfb8e28894690493914e608f39c40c0441ee9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66291e15_0233fd55",
         "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
         "patchSetId": 7
@@ -101,6 +191,24 @@
       "revId": "41bfb8e28894690493914e608f39c40c0441ee9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d78d46b_8ca14e45",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-24T18:12:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66291e15_0233fd55",
+      "revId": "41bfb8e28894690493914e608f39c40c0441ee9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "76c8363d_2da7856a",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-24T18:12:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a04359e1_17a5dc0b",
+      "revId": "41bfb8e28894690493914e608f39c40c0441ee9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56ab1350_6a94af07",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/EmulationModel.js",
         "patchSetId": 7
@@ -135,6 +261,24 @@
       "revId": "41bfb8e28894690493914e608f39c40c0441ee9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c2132cb_8ed45f2c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/EmulationModel.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-24T18:12:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56ab1350_6a94af07",
+      "revId": "41bfb8e28894690493914e608f39c40c0441ee9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "a0e9992d_f1dd0083",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/module.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-24T18:12:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8074b3d_9567c46e",
+      "revId": "41bfb8e28894690493914e608f39c40c0441ee9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "531f5b5b_6e50dd09",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/module.json",
         "patchSetId": 7
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "9e2b3007_52c3e9c8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/module.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-24T18:12:53Z",
+      "side": 1,
+      "message": "Yep, that sounds good.",
+      "parentUuid": "531f5b5b_6e50dd09",
+      "revId": "41bfb8e28894690493914e608f39c40c0441ee9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d4c8bd7_306a4cad",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/module.json",
         "patchSetId": 7
@@ -183,6 +363,24 @@
       "writtenOn": "2017-07-21T18:46:36Z",
       "side": 1,
       "message": "Is this on all sites? DevTools settings can affect only the page DevTools is opened for.",
+      "revId": "41bfb8e28894690493914e608f39c40c0441ee9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4d62d32_a769b8ba",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/module.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-24T18:12:53Z",
+      "side": 1,
+      "message": "I had trouble coming up with this language. Right now, we are planning on enabling ad blocking on a select few sites regardless, so I wanted to distinguish from our current feature.\n\nThe title is implicitly \"Enable ad blocking on all sites in this web contents\", but I would be ok moving back to just \"Enable ad blocking\".",
+      "parentUuid": "8d4c8bd7_306a4cad",
       "revId": "41bfb8e28894690493914e608f39c40c0441ee9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
