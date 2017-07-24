@@ -187,6 +187,40 @@
     },
     {
       "key": {
+        "uuid": "e7f2f2b4_fab93fab",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 711,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-07-24T18:38:39Z",
+      "side": 1,
+      "message": "If you really need two crawler pointers, please bring them next to each other and document how each one is used, especially how they differ. Hopefully that\u0027ll suggest better names for the members.",
+      "revId": "5a634ed0a24fe58fd4675da51d95dabdce6c8b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "854b7032_ab1abef4",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-07-24T18:38:39Z",
+      "side": 1,
+      "message": "You probably expected this feedback from me, so I won\u0027t disappoint: comments on the knobs and advice on tuning them?",
+      "revId": "5a634ed0a24fe58fd4675da51d95dabdce6c8b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a900f10_499d4665",
         "filename": "content/browser/indexed_db/indexed_db_factory_impl.cc",
         "patchSetId": 2
@@ -198,6 +232,30 @@
       "writtenOn": "2017-07-21T22:28:05Z",
       "side": 1,
       "message": "line wrap.",
+      "range": {
+        "startLine": 114,
+        "startChar": 6,
+        "endLine": 114,
+        "endChar": 8
+      },
+      "revId": "5a634ed0a24fe58fd4675da51d95dabdce6c8b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f7ac216_6bdca0ce",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-07-24T18:38:39Z",
+      "side": 1,
+      "message": "I\u0027m guessing this block would get un-commented or deleted before submitting?",
+      "parentUuid": "5a900f10_499d4665",
       "range": {
         "startLine": 114,
         "startChar": 6,
@@ -230,6 +288,40 @@
       "revId": "5a634ed0a24fe58fd4675da51d95dabdce6c8b09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0159e2bf_a6a59648",
+        "filename": "content/browser/indexed_db/indexed_db_leveldb_coding.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1794,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-07-24T18:38:39Z",
+      "side": 1,
+      "message": "\\o/ for not crashing on data corruption!",
+      "revId": "5a634ed0a24fe58fd4675da51d95dabdce6c8b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff3904f7_ee388e0a",
+        "filename": "content/browser/indexed_db/indexed_db_leveldb_coding.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1878,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-07-24T18:38:39Z",
+      "side": 1,
+      "message": "Code quality side-note: Decode() and Encode() here seem like perfect candidates for some light unit testing.",
+      "revId": "5a634ed0a24fe58fd4675da51d95dabdce6c8b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -302,6 +394,23 @@
     },
     {
       "key": {
+        "uuid": "eefbbdbc_a63a4e65",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_crawler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-07-24T18:38:39Z",
+      "side": 1,
+      "message": "This class uses both \"stop\" and \"pause\" to name concepts. It\u0027s worth describing the distinction (my instinct would be that \"stop\" is permanent, \"pause\" is temporary). Per the discussion below, it seems like \"waiting\" is a better name than \"pause\", and it\u0027s sufficient to state that stopping moves from any of the other states into the done state.",
+      "revId": "5a634ed0a24fe58fd4675da51d95dabdce6c8b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52f52424_d4a212d4",
         "filename": "content/browser/indexed_db/indexed_db_tombstone_crawler.h",
         "patchSetId": 2
@@ -359,6 +468,30 @@
       "writtenOn": "2017-07-21T23:36:03Z",
       "side": 1,
       "message": "go/ links are internal to google, and I wouldn\u0027t put a gdoc link in the source - move to a markdown file in the source?",
+      "range": {
+        "startLine": 44,
+        "startChar": 7,
+        "endLine": 44,
+        "endChar": 31
+      },
+      "revId": "5a634ed0a24fe58fd4675da51d95dabdce6c8b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33785c4d_f18e361f",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_crawler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-07-24T18:38:39Z",
+      "side": 1,
+      "message": "Less desirable but much faster option if you\u0027re still expecting lots of comments / editing -- move the document to your chromium.org account, get a share URL (I\u0027d open it up to the public for comments, you might prefer opening up for viewing only), and plop it here. You can remove the \"/edit?sharing\u003dusp\" part to save some space.",
+      "parentUuid": "22096ecc_eda544de",
       "range": {
         "startLine": 44,
         "startChar": 7,
@@ -532,6 +665,23 @@
     },
     {
       "key": {
+        "uuid": "59787a6f_94c1d190",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_crawler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-07-24T18:38:39Z",
+      "side": 1,
+      "message": "Mild inconsistency: You seem to use both \"statistics\" and \"metrics\" to refer to the same thing. Please consider converging on \"metrics\", as it\u0027s shorter. \"Statistics\" also seems correct, if you prefer that name.",
+      "revId": "5a634ed0a24fe58fd4675da51d95dabdce6c8b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca23f6ed_709fc266",
         "filename": "content/browser/indexed_db/indexed_db_tombstone_crawler.h",
         "patchSetId": 2
@@ -590,6 +740,30 @@
       "side": 1,
       "message": "Yeah... maybe WAITING ? PENDING ? START_PENDING ?",
       "parentUuid": "5c5c2f4f_6d042097",
+      "range": {
+        "startLine": 134,
+        "startChar": 24,
+        "endLine": 134,
+        "endChar": 30
+      },
+      "revId": "5a634ed0a24fe58fd4675da51d95dabdce6c8b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "896e8574_8a66998e",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_crawler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-07-24T18:38:39Z",
+      "side": 1,
+      "message": "The On*Done() methods above make me think \"waiting\" would be slightly better. OnWaitingDone() / OnDoneWaiting(). Then you\u0027d document the class lifecycle as construction -\u003e waiting -\u003e timeout fires -\u003e started -\u003e work gets done / work timeout fires -\u003e done (with or without errors).",
+      "parentUuid": "1f5e9569_9275f2c8",
       "range": {
         "startLine": 134,
         "startChar": 24,
