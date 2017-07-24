@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f62f4f33_6df2917d",
+        "filename": "chrome/browser/extensions/convert_web_app_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-24T07:27:07Z",
+      "side": 1,
+      "message": "Make this \"/gear\" so we are explicitly testing the awkward behaviour discussed in https://github.com/w3c/manifest/issues/554. Add a comment that says this unintuitive behaviour matches the spec.",
+      "range": {
+        "startLine": 203,
+        "startChar": 48,
+        "endLine": 203,
+        "endChar": 55
+      },
+      "revId": "3134a78ff03073707a61ad052b2f24673a5df82f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

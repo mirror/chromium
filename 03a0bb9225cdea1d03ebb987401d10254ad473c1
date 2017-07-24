@@ -730,6 +730,30 @@
     },
     {
       "key": {
+        "uuid": "b051a6a8_e663acbf",
+        "filename": "chrome/browser/extensions/convert_web_app.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-24T07:27:07Z",
+      "side": 1,
+      "message": "That\u0027s super weird. I\u0027ve commented on that GitHub issue -- maybe there\u0027s a chance we can change this.\n\nIn the mean time, Ack. Let\u0027s go with the spec\u0027d behaviour.",
+      "parentUuid": "ade1c10d_a6a4d0f2",
+      "range": {
+        "startLine": 131,
+        "startChar": 70,
+        "endLine": 131,
+        "endChar": 76
+      },
+      "revId": "03a0bb9225cdea1d03ebb987401d10254ad473c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "923266da_199224bc",
         "filename": "chrome/browser/extensions/convert_web_app_unittest.cc",
         "patchSetId": 18
@@ -812,6 +836,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "1f94c28f_0098126c",
+      "range": {
+        "startLine": 137,
+        "startChar": 4,
+        "endLine": 137,
+        "endChar": 10
+      },
+      "revId": "03a0bb9225cdea1d03ebb987401d10254ad473c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "01891e8f_69b2415b",
+        "filename": "chrome/browser/ui/extensions/application_launch.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-24T07:27:07Z",
+      "side": 1,
+      "message": "Much better.",
+      "parentUuid": "68bfe7fc_7ca79f62",
       "range": {
         "startLine": 137,
         "startChar": 4,
