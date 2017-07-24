@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b540ec1_7171a536",
+        "filename": "components/test/data/payments/bobpay.com/payment-manifest.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-24T17:06:38Z",
+      "side": 0,
+      "message": "shall we keep this? otherwise we have no test payment method has default applications and supported origins.",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 47
+      },
+      "revId": "963832372e42049dbbdd6b1cceee9261c51f4375",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

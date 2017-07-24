@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0b4b60b_f6e9210d",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/payments/MockPackageManagerDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-24T17:06:38Z",
+      "side": 1,
+      "message": "set this in \u0027setStringArrayMetaData\u0027?",
+      "range": {
+        "startLine": 57,
+        "startChar": 52,
+        "endLine": 57,
+        "endChar": 90
+      },
+      "revId": "0ccf6d4354423307345b3b7a974ee143c5b5da90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0618d810_11260a86",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/payments/MockPackageManagerDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-24T17:06:38Z",
+      "side": 1,
+      "message": "ApplicationInfo is created when installPaymentApp, might no need to create it again,",
+      "range": {
+        "startLine": 106,
+        "startChar": 62,
+        "endLine": 106,
+        "endChar": 77
+      },
+      "revId": "0ccf6d4354423307345b3b7a974ee143c5b5da90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
