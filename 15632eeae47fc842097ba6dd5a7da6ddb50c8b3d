@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ad9eff3c_e3b8b2c8",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-24T17:09:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2561baed_568d8d0b",
+      "revId": "15632eeae47fc842097ba6dd5a7da6ddb50c8b3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbec7a5a_abe58c9a",
         "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "15632eeae47fc842097ba6dd5a7da6ddb50c8b3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e1340e5_7a198d9f",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-24T17:09:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbec7a5a_abe58c9a",
+      "revId": "15632eeae47fc842097ba6dd5a7da6ddb50c8b3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5d242f61_9ae1d450",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-24T17:09:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9bead6f_1d41087b",
+      "revId": "15632eeae47fc842097ba6dd5a7da6ddb50c8b3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e1f53598_248b858f",
         "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-22T03:24:46Z",
       "side": 1,
       "message": "Do you really need a thread bundle?  Usually at most a ScopedTaskEnvironment is needed, sometimes not even that (if no one posts tasks).",
+      "revId": "15632eeae47fc842097ba6dd5a7da6ddb50c8b3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ecfbf9e_053961bb",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-24T17:09:06Z",
+      "side": 1,
+      "message": "Yeah, I need one, because TestingProfile spawns a real WarningBadgeService that asserts that it\u0027s created on the UI thread.\n\nI even tried using scoped_task_environment_(base::test::ScopedTaskEnvironment::MainThreadType::UI), but that doesn\u0027t do the trick.\n\nI concluded that rather than doing anything more tricky, it\u0027d be better to do the simple thing and make a TestBrowserThreadBundle.",
+      "parentUuid": "e1f53598_248b858f",
       "revId": "15632eeae47fc842097ba6dd5a7da6ddb50c8b3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
