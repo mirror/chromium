@@ -44,7 +44,9 @@ class OfflineAudioDestinationHandler final : public AudioDestinationHandler {
  public:
   static PassRefPtr<OfflineAudioDestinationHandler> Create(
       AudioNode&,
-      AudioBuffer* render_target);
+      unsigned number_of_channels,
+      size_t frames_to_process,
+      float sample_rate);
   ~OfflineAudioDestinationHandler() override;
 
   // AudioHandler
@@ -60,6 +62,9 @@ class OfflineAudioDestinationHandler final : public AudioDestinationHandler {
 
   // AudioDestinationHandler
   void StartRendering() override;
+#if 0
+  void StartRendering(AudioBuffer* render_target);
+#endif
   void StopRendering() override;
   unsigned long MaxChannelCount() const override;
 
@@ -67,7 +72,7 @@ class OfflineAudioDestinationHandler final : public AudioDestinationHandler {
   // called.
   size_t CallbackBufferSize() const override;
 
-  double SampleRate() const override { return render_target_->sampleRate(); }
+  double SampleRate() const override { return sample_rate_; }
   int FramesPerBuffer() const override {
     NOTREACHED();
     return 0;
@@ -77,10 +82,16 @@ class OfflineAudioDestinationHandler final : public AudioDestinationHandler {
     return AudioUtilities::kRenderQuantumFrames;
   }
 
-  void InitializeOfflineRenderThread();
+  void InitializeOfflineRenderThread(AudioBuffer* render_target);
+  AudioBuffer* RenderTarget() const { return render_target_.Get(); }
+
+  unsigned NumberOfChannels() const { return number_of_channels_; }
 
  private:
-  OfflineAudioDestinationHandler(AudioNode&, AudioBuffer* render_target);
+  OfflineAudioDestinationHandler(AudioNode&,
+                                 unsigned number_of_channels,
+                                 size_t frames_to_process,
+                                 float sample_rate);
 
   // Set up the rendering and start. After setting the context up, it will
   // eventually call |doOfflineRendering|.
@@ -127,15 +138,23 @@ class OfflineAudioDestinationHandler final : public AudioDestinationHandler {
   // 'created' and 'suspended'. If this flag is false and the current state
   // is 'suspended', it means the context is created and have not started yet.
   bool is_rendering_started_;
+
+  unsigned number_of_channels_;
+  float sample_rate_;
 };
 
 class OfflineAudioDestinationNode final : public AudioDestinationNode {
  public:
   static OfflineAudioDestinationNode* Create(BaseAudioContext*,
-                                             AudioBuffer* render_target);
+                                             unsigned number_of_channels,
+                                             size_t frames_to_process,
+                                             float sample_rate);
 
  private:
-  OfflineAudioDestinationNode(BaseAudioContext&, AudioBuffer* render_target);
+  OfflineAudioDestinationNode(BaseAudioContext&,
+                              unsigned number_of_channels,
+                              size_t frames_to_process,
+                              float sample_rate);
 };
 
 }  // namespace blink

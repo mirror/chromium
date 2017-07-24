@@ -99,12 +99,16 @@ class MODULES_EXPORT OfflineAudioContext final : public BaseAudioContext {
   // Fetch directly the destination handler.
   OfflineAudioDestinationHandler& DestinationHandler();
 
+#if 0
   AudioBuffer* RenderTarget() const { return render_target_.Get(); }
+#endif
 
   // Check if the rendering needs to be suspended.
   bool ShouldSuspend();
 
+#if 0
   Member<AudioBuffer> render_target_;
+#endif
 
   // This map is to store the timing of scheduled suspends (frame) and the
   // associated promise resolver. This storage can only be modified by the

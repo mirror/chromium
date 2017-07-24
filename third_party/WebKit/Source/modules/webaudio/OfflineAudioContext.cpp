@@ -93,6 +93,7 @@ OfflineAudioContext* OfflineAudioContext::Create(
                               sample_rate, exception_state);
   audio_context->SuspendIfNeeded();
 
+#if 0
   if (!audio_context->destination()) {
     exception_state.ThrowDOMException(
         kNotSupportedError, "OfflineAudioContext(" +
@@ -101,6 +102,7 @@ OfflineAudioContext* OfflineAudioContext::Create(
                                 String::Number(sample_rate) + ")");
     return nullptr;
   }
+#endif
 
 #if DEBUG_AUDIONODE_REFERENCES
   fprintf(stderr, "[%16p]: OfflineAudioContext::OfflineAudioContext()\n",
@@ -139,6 +141,7 @@ OfflineAudioContext::OfflineAudioContext(Document* document,
                        sample_rate),
       is_rendering_started_(false),
       total_render_frames_(number_of_frames) {
+#if 0
   // Create a new destination for offline rendering.
   render_target_ =
       AudioBuffer::Create(number_of_channels, number_of_frames, sample_rate);
@@ -155,6 +158,11 @@ OfflineAudioContext::OfflineAudioContext(Document* document,
                                    String::Number(number_of_frames) + ", " +
                                    String::Number(sample_rate) + ")"));
   }
+#else
+  destination_node_ = OfflineAudioDestinationNode::Create(
+      this, number_of_channels, number_of_frames, sample_rate);
+  Initialize();
+#endif
 }
 
 OfflineAudioContext::~OfflineAudioContext() {
@@ -165,7 +173,9 @@ OfflineAudioContext::~OfflineAudioContext() {
 }
 
 DEFINE_TRACE(OfflineAudioContext) {
+#if 0
   visitor->Trace(render_target_);
+#endif
   visitor->Trace(complete_resolver_);
   visitor->Trace(scheduled_suspends_);
   BaseAudioContext::Trace(visitor);
@@ -186,6 +196,12 @@ ScriptPromise OfflineAudioContext::startOfflineRendering(
                              "cannot call startRendering on an "
                              "OfflineAudioContext in a stopped state."));
   }
+
+#if 0
+  // Create a new destination for offline rendering.
+  render_target_ =
+      AudioBuffer::Create(number_of_channels_, total_render_frames_, sample_rate_);
+#endif
 
   // If the context is not in the suspended state (i.e. running), reject the
   // promise.
@@ -210,9 +226,25 @@ ScriptPromise OfflineAudioContext::startOfflineRendering(
   complete_resolver_ = ScriptPromiseResolver::Create(script_state);
 
   // Start rendering and return the promise.
+  float sample_rate = DestinationHandler().SampleRate();
+  unsigned number_of_channels = DestinationHandler().NumberOfChannels();
+
+  auto render_target = AudioBuffer::Create(number_of_channels,
+                                           total_render_frames_, sample_rate);
+
+  if (!render_target) {
+    return ScriptPromise::RejectWithDOMException(
+        script_state,
+        DOMException::Create(kNotSupportedError,
+                             "startRendering failed to create AudioBuffer(" +
+                                 String::Number(number_of_channels) + ", " +
+                                 String::Number(total_render_frames_) + ", " +
+                                 String::Number(sample_rate) + ")"));
+  }
+
   is_rendering_started_ = true;
   SetContextState(kRunning);
-  DestinationHandler().InitializeOfflineRenderThread();
+  DestinationHandler().InitializeOfflineRenderThread(render_target);
   DestinationHandler().StartRendering();
 
   return complete_resolver_->Promise();
@@ -347,7 +379,11 @@ void OfflineAudioContext::FireCompletionEvent() {
   // that the context has been closed.
   SetContextState(kClosed);
 
+#if 0
   AudioBuffer* rendered_buffer = RenderTarget();
+#else
+  AudioBuffer* rendered_buffer = DestinationHandler().RenderTarget();
+#endif
 
   DCHECK(rendered_buffer);
   if (!rendered_buffer)
