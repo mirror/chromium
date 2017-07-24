@@ -13,7 +13,6 @@
 #include "core/css/parser/CSSPropertyParserHelpers.h"
 #include "core/css/properties/CSSPropertyFontUtils.h"
 #include "core/layout/LayoutTheme.h"
-#include "platform/fonts/FontTraits.h"
 
 namespace blink {
 
@@ -28,8 +27,8 @@ bool ConsumeSystemFont(bool important,
   if (!range.AtEnd())
     return false;
 
-  FontStyle font_style = kFontStyleNormal;
-  FontWeight font_weight = kFontWeightNormal;
+  FontSelectionValue font_style = NormalSlopeValue();
+  FontSelectionValue font_weight = NormalWeightValue();
   float font_size = 0;
   AtomicString font_family;
   LayoutTheme::GetTheme().SystemFont(system_font_id, font_style, font_weight,
@@ -38,13 +37,15 @@ bool ConsumeSystemFont(bool important,
   CSSPropertyParserHelpers::AddProperty(
       CSSPropertyFontStyle, CSSPropertyFont,
       *CSSIdentifierValue::Create(
-          font_style == kFontStyleItalic ? CSSValueItalic : CSSValueNormal),
+          font_style == ItalicSlopeValue() ? CSSValueItalic : CSSValueNormal),
       important, CSSPropertyParserHelpers::IsImplicitProperty::kNotImplicit,
       properties);
   CSSPropertyParserHelpers::AddProperty(
       CSSPropertyFontWeight, CSSPropertyFont,
-      *CSSIdentifierValue::Create(font_weight), important,
-      CSSPropertyParserHelpers::IsImplicitProperty::kNotImplicit, properties);
+      *CSSPrimitiveValue::Create(font_weight,
+                                 CSSPrimitiveValue::UnitType::kNumber),
+      important, CSSPropertyParserHelpers::IsImplicitProperty::kNotImplicit,
+      properties);
   CSSPropertyParserHelpers::AddProperty(
       CSSPropertyFontSize, CSSPropertyFont,
       *CSSPrimitiveValue::Create(font_size,
@@ -93,15 +94,15 @@ bool ConsumeFont(bool important,
       return false;
   }
   // Optional font-style, font-variant, font-stretch and font-weight.
-  CSSIdentifierValue* font_style = nullptr;
+  CSSValue* font_style = nullptr;
   CSSIdentifierValue* font_variant_caps = nullptr;
-  CSSIdentifierValue* font_weight = nullptr;
-  CSSIdentifierValue* font_stretch = nullptr;
+  CSSValue* font_weight = nullptr;
+  CSSValue* font_stretch = nullptr;
   while (!range.AtEnd()) {
     CSSValueID id = range.Peek().Id();
-    if (!font_style && CSSParserFastPaths::IsValidKeywordPropertyAndValue(
-                           CSSPropertyFontStyle, id, context.Mode())) {
-      font_style = CSSPropertyParserHelpers::ConsumeIdent(range);
+    if (!font_style && (id == CSSValueNormal || id == CSSValueItalic ||
+                        id == CSSValueOblique)) {
+      font_style = CSSPropertyFontUtils::ConsumeFontStyle(range);
       continue;
     }
     if (!font_variant_caps &&
@@ -114,15 +115,21 @@ bool ConsumeFont(bool important,
         continue;
     }
     if (!font_weight) {
-      font_weight = CSSPropertyFontUtils::ConsumeFontWeight(range);
+      font_weight =
+          CSSPropertyFontUtils::ConsumeFontWeight(range, context.Mode());
       if (font_weight)
         continue;
     }
-    if (!font_stretch && CSSParserFastPaths::IsValidKeywordPropertyAndValue(
-                             CSSPropertyFontStretch, id, context.Mode()))
-      font_stretch = CSSPropertyParserHelpers::ConsumeIdent(range);
-    else
+    if (!font_stretch &&
+        (id == CSSValueNormal ||
+         (id >= CSSValueUltraCondensed && id <= CSSValueUltraExpanded))) {
+      // Stretch in the font shorthand can only take the CSS Fonts Level 3
+      // keywords, not arbitrary values, compare
+      // https://drafts.csswg.org/css-fonts-4/#font-prop
+      font_stretch = CSSPropertyFontUtils::ConsumeFontStretch(range);
+    } else {
       break;
+    }
   }
 
   if (range.AtEnd())

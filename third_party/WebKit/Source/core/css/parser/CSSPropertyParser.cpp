@@ -1215,19 +1215,17 @@ bool CSSPropertyParser::ParseFontFaceDescriptor(CSSPropertyID prop_id) {
       parsed_value = ConsumeFontDisplay(range_);
       break;
     case CSSPropertyFontStretch:
-    case CSSPropertyFontStyle: {
-      CSSValueID id = range_.ConsumeIncludingWhitespace().Id();
-      if (!CSSParserFastPaths::IsValidKeywordPropertyAndValue(prop_id, id,
-                                                              context_->Mode()))
-        return false;
-      parsed_value = CSSIdentifierValue::Create(id);
+      parsed_value = CSSPropertyFontUtils::ConsumeFontStretch(range_);
       break;
-    }
+    case CSSPropertyFontStyle:
+      parsed_value = CSSPropertyFontUtils::ConsumeFontStyle(range_);
+      break;
     case CSSPropertyFontVariant:
       parsed_value = ConsumeFontVariantList(range_);
       break;
     case CSSPropertyFontWeight:
-      parsed_value = CSSPropertyFontUtils::ConsumeFontWeight(range_);
+      parsed_value =
+          CSSPropertyFontUtils::ConsumeFontWeight(range_, kCSSFontFaceRuleMode);
       break;
     case CSSPropertyFontFeatureSettings:
       parsed_value = CSSPropertyFontUtils::ConsumeFontFeatureSettings(range_);

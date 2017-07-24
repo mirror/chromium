@@ -39,6 +39,7 @@
 #include "core/css/CSSCustomPropertyDeclaration.h"
 #include "core/css/CSSFontFamilyValue.h"
 #include "core/css/CSSFontFeatureValue.h"
+#include "core/css/CSSFontStyleRangeValue.h"
 #include "core/css/CSSFontVariationValue.h"
 #include "core/css/CSSFunctionValue.h"
 #include "core/css/CSSGridLineNamesValue.h"
@@ -756,16 +757,36 @@ static CSSPrimitiveValue* ValueForFontSize(const ComputedStyle& style) {
                                 style);
 }
 
-static CSSIdentifierValue* ValueForFontStretch(const ComputedStyle& style) {
-  return CSSIdentifierValue::Create(style.GetFontDescription().Stretch());
+static CSSPrimitiveValue* ValueForFontStretch(const ComputedStyle& style) {
+  return CSSPrimitiveValue::Create(style.GetFontDescription().Stretch(),
+                                   CSSPrimitiveValue::UnitType::kPercentage);
 }
 
 static CSSIdentifierValue* ValueForFontStyle(const ComputedStyle& style) {
-  return CSSIdentifierValue::Create(style.GetFontDescription().Style());
+  FontSelectionValue angle = style.GetFontDescription().Style();
+  if (angle == NormalSlopeValue()) {
+    return CSSIdentifierValue::Create(CSSValueNormal);
+  }
+
+  if (angle == ItalicSlopeValue()) {
+    return CSSIdentifierValue::Create(CSSValueItalic);
+  }
+
+  NOTREACHED();
+  return CSSIdentifierValue::Create(CSSValueNormal);
+
+  // Returning the new CSSFontStyleRangeValue creates problems with editing
+  // tests, needs to be evaluated. CSSValueList* values =
+  // CSSValueList::CreateSpaceSeparated(); values->Append(
+  //     *CSSPrimitiveValue::Create(angle,
+  //     CSSPrimitiveValue::UnitType::kNumber));
+  // return CSSFontStyleRangeValue::Create(
+  //     *CSSIdentifierValue::Create(CSSValueOblique), *values);
 }
 
-static CSSIdentifierValue* ValueForFontWeight(const ComputedStyle& style) {
-  return CSSIdentifierValue::Create(style.GetFontDescription().Weight());
+static CSSPrimitiveValue* ValueForFontWeight(const ComputedStyle& style) {
+  return CSSPrimitiveValue::Create(style.GetFontDescription().Weight(),
+                                   CSSPrimitiveValue::UnitType::kNumber);
 }
 
 static CSSIdentifierValue* ValueForFontVariantCaps(const ComputedStyle& style) {

@@ -95,20 +95,67 @@ String CSSPropertyFontUtils::ConcatenateFamilyName(CSSParserTokenRange& range) {
   return builder.ToString();
 }
 
-CSSIdentifierValue* CSSPropertyFontUtils::ConsumeFontWeight(
-    CSSParserTokenRange& range) {
+// TODO(drott) crbug.com/739139: In stage 2, make these three methods understand
+// ranges.
+CSSValue* CSSPropertyFontUtils::ConsumeFontStyle(CSSParserTokenRange& range) {
+  const CSSParserToken& token = range.Peek();
+  if (token.Id() == CSSValueNormal || token.Id() == CSSValueItalic ||
+      token.Id() == CSSValueOblique)
+    return CSSPropertyParserHelpers::ConsumeIdent(range);
+  return nullptr;
+}
+
+CSSValue* CSSPropertyFontUtils::ConsumeFontStretch(CSSParserTokenRange& range) {
+  const CSSParserToken& token = range.Peek();
+  if (token.Id() == CSSValueNormal || (token.Id() >= CSSValueUltraCondensed &&
+                                       token.Id() <= CSSValueUltraExpanded))
+    return CSSPropertyParserHelpers::ConsumeIdent(range);
+  if (token.GetType() != kPercentageToken)
+    return nullptr;
+  if (token.NumericValue() <= 0)
+    return nullptr;
+  return CSSPropertyParserHelpers::ConsumePercent(range, kValueRangeAll);
+}
+
+CSSValue* CSSPropertyFontUtils::ConsumeFontWeight(
+    CSSParserTokenRange& range,
+    const CSSParserMode& parser_mode) {
   const CSSParserToken& token = range.Peek();
   if (token.Id() >= CSSValueNormal && token.Id() <= CSSValueLighter)
     return CSSPropertyParserHelpers::ConsumeIdent(range);
-  if (token.GetType() != kNumberToken ||
-      token.GetNumericValueType() != kIntegerValueType)
+  if (token.GetType() != kNumberToken)
     return nullptr;
-  int weight = static_cast<int>(token.NumericValue());
-  if ((weight % 100) || weight < 100 || weight > 900)
+  CSSPrimitiveValue* start_weight = nullptr;
+  CSSPrimitiveValue* end_weight = nullptr;
+  start_weight =
+      CSSPropertyParserHelpers::ConsumeNumber(range, kValueRangeNonNegative);
+  if (!start_weight || start_weight->GetFloatValue() < 1 ||
+      start_weight->GetFloatValue() > 1000)
     return nullptr;
-  range.ConsumeIncludingWhitespace();
-  return CSSIdentifierValue::Create(
-      static_cast<CSSValueID>(CSSValue100 + weight / 100 - 1));
+  if (range.Peek().GetType() == kNumberToken) {
+    if (parser_mode != kCSSFontFaceRuleMode)
+      return nullptr;
+    end_weight =
+        CSSPropertyParserHelpers::ConsumeNumber(range, kValueRangeNonNegative);
+    if (!end_weight || end_weight->GetFloatValue() < 1 ||
+        end_weight->GetFloatValue() > 1000)
+      return nullptr;
+  }
+
+  if (start_weight && end_weight) {
+    if (end_weight->GetFloatValue() < start_weight->GetFloatValue())
+      return nullptr;
+    CSSValueList* value_list = CSSValueList::CreateSpaceSeparated();
+    value_list->Append(*start_weight);
+    value_list->Append(*end_weight);
+    return value_list;
+  }
+
+  if (start_weight) {
+    return start_weight;
+  }
+
+  return nullptr;
 }
 
 // TODO(bugsnash): move this to the FontFeatureSettings API when it is no longer

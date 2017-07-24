@@ -36,6 +36,7 @@
 #include "core/css/CSSCustomIdentValue.h"
 #include "core/css/CSSFontFamilyValue.h"
 #include "core/css/CSSFontFeatureValue.h"
+#include "core/css/CSSFontStyleRangeValue.h"
 #include "core/css/CSSFontVariationValue.h"
 #include "core/css/CSSFunctionValue.h"
 #include "core/css/CSSGridAutoRepeatValue.h"
@@ -384,22 +385,127 @@ double StyleBuilderConverter::ConvertValueToNumber(
   }
 }
 
-FontWeight StyleBuilderConverterBase::ConvertFontWeight(
-    const CSSValue& value,
-    FontWeight parent_weight) {
-  const CSSIdentifierValue& identifier_value = ToCSSIdentifierValue(value);
-  switch (identifier_value.GetValueID()) {
-    case CSSValueBolder:
-      return FontDescription::BolderWeight(parent_weight);
-    case CSSValueLighter:
-      return FontDescription::LighterWeight(parent_weight);
-    default:
-      return identifier_value.ConvertTo<FontWeight>();
+FontSelectionValue StyleBuilderConverterBase::ConvertFontStretch(
+    const blink::CSSValue& value) {
+  if (value.IsPrimitiveValue()) {
+    const CSSPrimitiveValue& primitive_value = ToCSSPrimitiveValue(value);
+    if (primitive_value.IsPercentage())
+      return clampTo<FontSelectionValue>(primitive_value.GetFloatValue());
   }
+
+  // TODO: Consider not parsing them as IdentifierValue any more?
+  if (value.IsIdentifierValue()) {
+    const CSSIdentifierValue& identifier_value = ToCSSIdentifierValue(value);
+    switch (identifier_value.GetValueID()) {
+      case CSSValueUltraCondensed:
+        return UltraCondensedWidthValue();
+      case CSSValueExtraCondensed:
+        return ExtraCondensedWidthValue();
+      case CSSValueCondensed:
+        return CondensedWidthValue();
+      case CSSValueSemiCondensed:
+        return SemiCondensedWidthValue();
+      case CSSValueNormal:
+        return NormalWidthValue();
+      case CSSValueSemiExpanded:
+        return SemiExpandedWidthValue();
+      case CSSValueExpanded:
+        return ExpandedWidthValue();
+      case CSSValueExtraExpanded:
+        return ExtraExpandedWidthValue();
+      case CSSValueUltraExpanded:
+        return UltraExpandedWidthValue();
+      default:
+        break;
+    }
+  }
+  NOTREACHED();
+  return NormalWidthValue();
 }
 
-FontWeight StyleBuilderConverter::ConvertFontWeight(StyleResolverState& state,
-                                                    const CSSValue& value) {
+FontSelectionValue StyleBuilderConverter::ConvertFontStretch(
+    blink::StyleResolverState& state,
+    const blink::CSSValue& value) {
+  return StyleBuilderConverterBase::ConvertFontStretch(value);
+}
+
+FontSelectionValue StyleBuilderConverterBase::ConvertFontStyle(
+    const CSSValue& value) {
+  DCHECK(!value.IsPrimitiveValue());
+
+  if (value.IsIdentifierValue()) {
+    const CSSIdentifierValue& identifier_value = ToCSSIdentifierValue(value);
+    switch (identifier_value.GetValueID()) {
+      case CSSValueItalic:
+      case CSSValueOblique:
+        return ItalicSlopeValue();
+      case CSSValueNormal:
+        return NormalSlopeValue();
+      default:
+        NOTREACHED();
+        return NormalSlopeValue();
+    }
+  } else if (value.IsFontStyleRangeValue()) {
+    const CSSFontStyleRangeValue& style_range_value =
+        ToCSSFontStyleRangeValue(value);
+    const CSSValueList* values = style_range_value.GetObliqueValues();
+    CHECK_LT(values->length(), 2u);
+    if (values->length()) {
+      return FontSelectionValue(
+          ToCSSPrimitiveValue(values->Item(0)).GetFloatValue());
+    } else {
+      const CSSIdentifierValue* identifier_value =
+          style_range_value.GetFontStyleValue();
+      if (identifier_value->GetValueID() == CSSValueNormal)
+        return NormalSlopeValue();
+      if (identifier_value->GetValueID() == CSSValueItalic ||
+          identifier_value->GetValueID() == CSSValueOblique)
+        return ItalicSlopeValue();
+    }
+  }
+
+  NOTREACHED();
+  return NormalSlopeValue();
+}
+
+FontSelectionValue StyleBuilderConverter::ConvertFontStyle(
+    StyleResolverState& state,
+    const CSSValue& value) {
+  return StyleBuilderConverterBase::ConvertFontStyle(value);
+}
+
+FontSelectionValue StyleBuilderConverterBase::ConvertFontWeight(
+    const CSSValue& value,
+    FontSelectionValue parent_weight) {
+  if (value.IsPrimitiveValue()) {
+    const CSSPrimitiveValue& primitive_value = ToCSSPrimitiveValue(value);
+    if (primitive_value.IsNumber())
+      return clampTo<FontSelectionValue>(primitive_value.GetFloatValue());
+  }
+
+  if (value.IsIdentifierValue()) {
+    const CSSIdentifierValue& identifier_value = ToCSSIdentifierValue(value);
+    switch (identifier_value.GetValueID()) {
+      case CSSValueNormal:
+        return NormalWeightValue();
+      case CSSValueBold:
+        return BoldWeightValue();
+      case CSSValueBolder:
+        return FontDescription::BolderWeight(parent_weight);
+      case CSSValueLighter:
+        return FontDescription::LighterWeight(parent_weight);
+      default:
+        NOTREACHED();
+        return NormalWeightValue();
+    }
+  }
+  NOTREACHED();
+  return NormalWeightValue();
+}
+
+FontSelectionValue StyleBuilderConverter::ConvertFontWeight(
+    StyleResolverState& state,
+    const CSSValue& value) {
   return StyleBuilderConverterBase::ConvertFontWeight(
       value, state.ParentStyle()->GetFontDescription().Weight());
 }
