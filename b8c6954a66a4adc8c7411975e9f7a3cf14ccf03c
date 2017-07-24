@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0951d6a6_0619578d",
+        "filename": "components/arc/common/app.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-24T15:06:04Z",
+      "side": 1,
+      "message": "nit: discarded(canceled) sounds better. Or if you need error case please add enum to separate\nsuccess,\ncanceled,\nerror",
+      "range": {
+        "startLine": 256,
+        "startChar": 16,
+        "endLine": 256,
+        "endChar": 23
+      },
+      "revId": "b8c6954a66a4adc8c7411975e9f7a3cf14ccf03c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
