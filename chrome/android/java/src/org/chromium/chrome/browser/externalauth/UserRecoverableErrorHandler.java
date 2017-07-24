@@ -199,5 +199,9 @@ public abstract class UserRecoverableErrorHandler {
                 mDialog = null;
             }
         }
+
+        public boolean isShowing() {
+            return mDialog != null && mDialog.isShowing();
+        }
     }
 }

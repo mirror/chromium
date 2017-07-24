@@ -21,13 +21,16 @@ android_library("java") {
 
   java_files = [
     "java/src/org/chromium/components/signin/AccountManagerDelegate.java",
+    "java/src/org/chromium/components/signin/AccountManagerDelegateException.java",
     "java/src/org/chromium/components/signin/AccountManagerFacade.java",
     "java/src/org/chromium/components/signin/AccountManagerHelper.java",
+    "java/src/org/chromium/components/signin/AccountManagerResult.java",
     "java/src/org/chromium/components/signin/AccountsChangeObserver.java",
     "java/src/org/chromium/components/signin/AuthException.java",
     "java/src/org/chromium/components/signin/ChildAccountInfoFetcher.java",
     "java/src/org/chromium/components/signin/ChromeSigninController.java",
-    "java/src/org/chromium/components/signin/AccountManagerDelegateException.java",
+    "java/src/org/chromium/components/signin/GmsAvailabilityException.java",
+    "java/src/org/chromium/components/signin/GmsJustUpdatedException.java",
     "java/src/org/chromium/components/signin/SystemAccountManagerDelegate.java",
   ]
 }

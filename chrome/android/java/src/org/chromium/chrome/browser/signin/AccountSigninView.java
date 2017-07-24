@@ -19,18 +19,20 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.common.ConnectionResult;
-
 import org.chromium.base.Callback;
+import org.chromium.base.Log;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
-import org.chromium.chrome.browser.externalauth.ExternalAuthUtils;
 import org.chromium.chrome.browser.externalauth.UserRecoverableErrorHandler;
 import org.chromium.chrome.browser.preferences.PrefServiceBridge;
 import org.chromium.chrome.browser.signin.AccountTrackerService.OnSystemAccountsSeededListener;
 import org.chromium.chrome.browser.signin.ConfirmImportSyncDataDialog.ImportSyncType;
+import org.chromium.components.signin.AccountManagerDelegateException;
 import org.chromium.components.signin.AccountManagerFacade;
+import org.chromium.components.signin.AccountManagerResult;
+import org.chromium.components.signin.GmsAvailabilityException;
+import org.chromium.components.signin.GmsJustUpdatedException;
 import org.chromium.ui.text.NoUnderlineClickableSpan;
 import org.chromium.ui.text.SpanApplier;
 import org.chromium.ui.text.SpanApplier.SpanInfo;
@@ -118,6 +120,7 @@ public class AccountSigninView extends FrameLayout {
     /** "Undo" button calls {@link Listener#onAccountSelectionCanceled()}. */
     public static final int UNDO_ABORT = 2;
 
+    private final ProfileDataCache.Observer mProfileDataCacheObserver;
     private List<String> mAccountNames;
     private AccountSigninChooseView mSigninChooseView;
     private ButtonCompat mPositiveButton;
@@ -128,13 +131,13 @@ public class AccountSigninView extends FrameLayout {
     @UndoBehavior
     private int mUndoBehavior;
     private ProfileDataCache mProfileData;
-    private final ProfileDataCache.Observer mProfileDataCacheObserver;
     private String mSelectedAccountName;
     private boolean mIsDefaultAccountSelected;
     private int mCancelButtonTextId;
     private boolean mIsChildAccount;
-    private boolean mIsGooglePlayServicesOutOfDate;
     private UserRecoverableErrorHandler.ModalDialog mGooglePlayServicesUpdateErrorHandler;
+    private AlertDialog mGmsIsUpdatingDialog;
+    private long mGmsIsUpdatingDialogShowTime;
 
     private AccountSigninConfirmationView mSigninConfirmationView;
     private ImageView mSigninAccountImage;
@@ -262,6 +265,7 @@ public class AccountSigninView extends FrameLayout {
         }
         if (visibility == View.INVISIBLE && mGooglePlayServicesUpdateErrorHandler != null) {
             mGooglePlayServicesUpdateErrorHandler.cancelDialog();
+            mGooglePlayServicesUpdateErrorHandler = null;
         }
     }
 
@@ -310,34 +314,27 @@ public class AccountSigninView extends FrameLayout {
             return;
         }
 
-        if (!checkGooglePlayServicesAvailable()) {
-            setUpSigninButton(false);
-            return;
-        }
-
-        final List<String> oldAccountNames = mAccountNames;
-        final AlertDialog updatingGmsDialog;
-        final long dialogShowTime = SystemClock.elapsedRealtime();
-
-        if (mIsGooglePlayServicesOutOfDate) {
-            updatingGmsDialog = new AlertDialog.Builder(getContext())
-                    .setCancelable(false)
-                    .setView(R.layout.updating_gms_progress_view)
-                    .create();
-            updatingGmsDialog.show();
-        } else {
-            updatingGmsDialog = null;
-        }
-
-        AccountManagerFacade.get().tryGetGoogleAccountNames(new Callback<List<String>>() {
+        AccountManagerFacade accountManager = AccountManagerFacade.get();
+        accountManager.getGoogleAccountNames(new Callback<AccountManagerResult<List<String>>>() {
             @Override
-            public void onResult(List<String> result) {
-                if (updatingGmsDialog != null) {
-                    updatingGmsDialog.dismiss();
-                    RecordHistogram.recordTimesHistogram("Signin.AndroidGmsUpdatingDialogShownTime",
-                            SystemClock.elapsedRealtime() - dialogShowTime, TimeUnit.MILLISECONDS);
+            public void onResult(AccountManagerResult<List<String>> result) {
+                List<String> oldAccountNames = mAccountNames;
+                try {
+                    mAccountNames = result.get();
+                } catch (GmsAvailabilityException e) {
+                    dismissGmsUpdatingDialog();
+                    showGmsErrorDialog(e.getGmsAvailabilityReturnCode());
+                } catch (GmsJustUpdatedException e) {
+                    dismissGmsErrorDialog();
+                    showGmsUpdatingDialog();
+                } catch (AccountManagerDelegateException e) {
+                    Log.e(TAG, "Unknown exception from AccountManagerFacade.", e);
+                    dismissGmsErrorDialog();
+                    dismissGmsUpdatingDialog();
+                    return;
                 }
-                mIsGooglePlayServicesOutOfDate = false;
+                dismissGmsErrorDialog();
+                dismissGmsUpdatingDialog();
 
                 if (!ViewCompat.isAttachedToWindow(AccountSigninView.this)) {
                     // This callback is invoked after AccountSigninView is detached from window
@@ -352,7 +349,6 @@ public class AccountSigninView extends FrameLayout {
                     return;
                 }
 
-                mAccountNames = result;
                 int oldSelectedAccount = mSigninChooseView.getSelectedAccountPosition();
                 AccountSelectionResult selection = selectAccountAfterAccountsUpdate(
                         oldAccountNames, mAccountNames, oldSelectedAccount);
@@ -366,8 +362,8 @@ public class AccountSigninView extends FrameLayout {
                 boolean selectedAccountChanged = oldAccountNames != null
                         && !oldAccountNames.isEmpty()
                         && (mAccountNames.isEmpty()
-                                   || mAccountNames.get(accountToSelect)
-                                              .equals(oldAccountNames.get(oldSelectedAccount)));
+                                || mAccountNames.get(accountToSelect)
+                                        .equals(oldAccountNames.get(oldSelectedAccount)));
                 if (selectedAccountChanged) {
                     // Any dialogs that may have been showing are now invalid (they were created
                     // for the previously selected account).
@@ -381,19 +377,46 @@ public class AccountSigninView extends FrameLayout {
         });
     }
 
-    private boolean checkGooglePlayServicesAvailable() {
-        ExternalAuthUtils extAuthUtils = ExternalAuthUtils.getInstance();
-        if (mGooglePlayServicesUpdateErrorHandler == null) {
+    private boolean hasGmsError() {
+        return mGooglePlayServicesUpdateErrorHandler != null || mGmsIsUpdatingDialog != null;
+    }
+
+    private void showGmsErrorDialog(int gmsErrorCode) {
+        if (mGooglePlayServicesUpdateErrorHandler == null
+                || !mGooglePlayServicesUpdateErrorHandler.isShowing()) {
             boolean cancelable = !SigninManager.get(getContext()).isForceSigninEnabled();
             mGooglePlayServicesUpdateErrorHandler = new UserRecoverableErrorHandler.ModalDialog(
                     mDelegate.getActivity(), cancelable);
+            mGooglePlayServicesUpdateErrorHandler.handleError(getContext(), gmsErrorCode);
         }
-        int resultCode = extAuthUtils.canUseGooglePlayServicesResultCode(
-                getContext(), mGooglePlayServicesUpdateErrorHandler);
-        if (extAuthUtils.isGooglePlayServicesUpdateRequiredError(resultCode)) {
-            mIsGooglePlayServicesOutOfDate = true;
+    }
+
+    private void showGmsUpdatingDialog() {
+        if (mGmsIsUpdatingDialog == null) {
+            mGmsIsUpdatingDialog = new AlertDialog.Builder(getContext())
+                                           .setCancelable(false)
+                                           .setView(R.layout.updating_gms_progress_view)
+                                           .create();
+            mGmsIsUpdatingDialog.show();
+            mGmsIsUpdatingDialogShowTime = SystemClock.elapsedRealtime();
         }
-        return resultCode == ConnectionResult.SUCCESS;
+    }
+
+    private void dismissGmsErrorDialog() {
+        if (mGooglePlayServicesUpdateErrorHandler != null) {
+            mGooglePlayServicesUpdateErrorHandler.cancelDialog();
+            mGooglePlayServicesUpdateErrorHandler = null;
+        }
+    }
+
+    private void dismissGmsUpdatingDialog() {
+        if (mGmsIsUpdatingDialog != null) {
+            mGmsIsUpdatingDialog.dismiss();
+            mGmsIsUpdatingDialog = null;
+            RecordHistogram.recordTimesHistogram("Signin.AndroidGmsUpdatingDialogShownTime",
+                    SystemClock.elapsedRealtime() - mGmsIsUpdatingDialogShowTime,
+                    TimeUnit.MILLISECONDS);
+        }
     }
 
     private static class AccountSelectionResult {
@@ -583,9 +606,8 @@ public class AccountSigninView extends FrameLayout {
             mPositiveButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (!checkGooglePlayServicesAvailable()) {
-                        return;
-                    }
+                    if (hasGmsError()) return;
+
                     RecordUserAction.record("Signin_AddAccountToDevice");
                     mListener.onNewAccount();
                 }
