@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a031ef49_7188c48f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-24T05:33:24Z",
+      "side": 1,
+      "message": "speicific -\u003e specific",
+      "revId": "e8cc1f71a31ebc8dc3444ce6164c0da00a948a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09511730_536c85e9",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/streams/chromium/simple-queue.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-24T05:33:24Z",
+      "side": 1,
+      "message": "double definition?",
+      "revId": "e8cc1f71a31ebc8dc3444ce6164c0da00a948a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "362884cb_93abdecb",
+        "filename": "third_party/WebKit/Source/core/streams/SimpleQueue.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-24T05:33:24Z",
+      "side": 1,
+      "message": "use |elements| here?",
+      "revId": "e8cc1f71a31ebc8dc3444ce6164c0da00a948a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38f11cef_21d8b979",
+        "filename": "third_party/WebKit/Source/core/streams/SimpleQueue.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-07-24T05:33:24Z",
+      "side": 1,
+      "message": "Hmm, not about this patch, but are these push() and shift() correct? push() creates a new node when the back is already full. It looks by this assert we are assuming that when we\u0027re emptying a node, there\u0027s always a next node. I might be wrong but anyway it\u0027s great to have a unit test that fills up a queue with QUEUE_MAX_ARRAY_SIZE elements and then call shift() for QUEUE_MAX_ARRAY_SIZE times.\n\nCan be addressed as a separate patch.",
+      "revId": "e8cc1f71a31ebc8dc3444ce6164c0da00a948a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
