@@ -16,6 +16,24 @@
       "revId": "b6ad86cdbb5aedbb79a56de3db8a5ecdeab07b8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff7cdd8a_23cbbc45",
+        "filename": "url/gurl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-07-24T05:18:23Z",
+      "side": 1,
+      "message": "Oops. That\u0027s a typo. Changed it to: \"https://www.foo.com/bar/\". IIUC GetWithEmptyPath would return \"https://www.foo.com/\".",
+      "parentUuid": "824970cd_6c04ca3d",
+      "revId": "b6ad86cdbb5aedbb79a56de3db8a5ecdeab07b8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
