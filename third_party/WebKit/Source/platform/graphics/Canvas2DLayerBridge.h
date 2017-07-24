@@ -184,8 +184,6 @@ class PLATFORM_EXPORT Canvas2DLayerBridge
     DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
     gpu::Mailbox mailbox_;
     sk_sp<SkImage> image_;
-    RefPtr<Canvas2DLayerBridge> parent_layer_bridge_;
-
 #if USE_IOSURFACE_FOR_2D_CANVAS
     // If this mailbox wraps an IOSurface-backed texture, the ids of the
     // CHROMIUM image and the texture.

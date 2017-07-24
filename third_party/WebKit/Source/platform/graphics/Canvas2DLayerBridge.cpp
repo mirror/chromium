@@ -159,6 +159,24 @@ Canvas2DLayerBridge::Canvas2DLayerBridge(
 
 Canvas2DLayerBridge::~Canvas2DLayerBridge() {
   DCHECK(destruction_in_progress_);
+  // Release the outstanding mailboxes
+  for (size_t i = 0; i < mailboxes_.size(); i++) {
+    sk_sp<SkImage> image = mailboxes_[i].image_;
+    MailboxReleased(mailboxes_[i].mailbox_, gpu::SyncToken(), false);
+    // Destroy the underline texture for the image so that it won't be
+    // recycled by skia.
+    DCHECK(image->isTextureBacked());
+    gpu::gles2::GLES2Interface* gl = ContextGL();
+    if (gl) {
+      unsigned texture_id =
+          skia::GrBackendObjectToGrGLTextureInfo(image->getTextureHandle(true))
+              ->fID;
+      gl->DeleteTextures(1, &texture_id);
+      texture_id = 0;
+    }
+  }
+  mailboxes_.clear();
+
 #if USE_IOSURFACE_FOR_2D_CANVAS
   ClearCHROMIUMImageCache();
 #endif  // USE_IOSURFACE_FOR_2D_CANVAS
@@ -366,7 +384,6 @@ void Canvas2DLayerBridge::ClearCHROMIUMImageCache() {
 
 void Canvas2DLayerBridge::CreateMailboxInfo() {
   MailboxInfo tmp;
-  tmp.parent_layer_bridge_ = this;
   mailboxes_.push_front(tmp);
 }
 
@@ -962,7 +979,6 @@ void Canvas2DLayerBridge::MailboxReleased(const gpu::Mailbox& mailbox,
       (!surface_ ||
        context_provider_->ContextGL()->GetGraphicsResetStatusKHR() !=
            GL_NO_ERROR);
-  DCHECK(mailboxes_.back().parent_layer_bridge_.Get() == this);
 
   // Mailboxes are typically released in FIFO order, so we iterate
   // from the end of m_mailboxes.
@@ -1011,13 +1027,6 @@ void Canvas2DLayerBridge::MailboxReleased(const gpu::Mailbox& mailbox,
         }
       }
     }
-  }
-
-  RefPtr<Canvas2DLayerBridge> self_ref;
-  if (destruction_in_progress_) {
-    // To avoid memory use after free, take a scoped self-reference
-    // to postpone destruction until the end of this function.
-    self_ref = this;
   }
 
   // The destruction of 'releasedMailboxInfo' will:
