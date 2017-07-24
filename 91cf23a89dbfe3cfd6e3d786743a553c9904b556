@@ -16,6 +16,24 @@
       "revId": "91cf23a89dbfe3cfd6e3d786743a553c9904b556",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7731c9d4_da4ef82b",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutFlexibleBox.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1191,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-07-24T19:38:48Z",
+      "side": 1,
+      "message": "So I get why you are asking for that but we do use references elsewhere in blink, e.g. https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/layout/LayoutBox.h?q\u003dComputeIntrinsic\u0026sq\u003dpackage:chromium\u0026l\u003d1610 -- but I could switch this to a struct in a separate CL. Maybe a struct MinAndMaxSize that we could use for both min/max content and for this function.",
+      "parentUuid": "acba968b_47fc23a4",
+      "revId": "91cf23a89dbfe3cfd6e3d786743a553c9904b556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
