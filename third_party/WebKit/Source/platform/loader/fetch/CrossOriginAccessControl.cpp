@@ -542,7 +542,8 @@ void CrossOriginAccessControl::RedirectErrorString(
 
 bool CrossOriginAccessControl::HandleRedirect(
     RefPtr<SecurityOrigin> current_security_origin,
-    ResourceRequest& new_request,
+    const KURL& new_url,
+    WebURLRequest::RequestContext request_context,
     const ResourceResponse& redirect_response,
     WebURLRequest::FetchCredentialsMode credentials_mode,
     ResourceLoaderOptions& options,

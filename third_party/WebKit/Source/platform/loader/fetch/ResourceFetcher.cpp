@@ -548,7 +548,7 @@ ResourceFetcher::PrepareRequestResult ResourceFetcher::PrepareRequest(
   Context().CheckCSPForRequest(
       resource_request,
       MemoryCache::RemoveFragmentIdentifierIfNeeded(params.Url()), options,
-      reporting_policy, resource_request.GetRedirectStatus());
+      reporting_policy, ResourceRequest::RedirectStatus::kNoRedirect);
 
   // This may modify params.Url() (via the resource_request argument).
   Context().PopulateResourceRequest(
@@ -587,7 +587,7 @@ ResourceFetcher::PrepareRequestResult ResourceFetcher::PrepareRequest(
       resource_type, resource_request,
       MemoryCache::RemoveFragmentIdentifierIfNeeded(params.Url()), options,
       reporting_policy, params.GetOriginRestriction(),
-      resource_request.GetRedirectStatus());
+      ResourceRequest::RedirectStatus::kNoRedirect);
   if (blocked_reason != ResourceRequestBlockedReason::kNone) {
     DCHECK(!substitute_data.ForceSynchronousLoad());
     return kBlock;
