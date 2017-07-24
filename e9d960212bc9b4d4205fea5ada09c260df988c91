@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24209deb_d83ebd33",
+        "filename": "third_party/WebKit/Source/platform/graphics/StaticBitmapImage.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-24T22:04:56Z",
+      "side": 0,
+      "message": "Where did this method go?",
+      "revId": "e9d960212bc9b4d4205fea5ada09c260df988c91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5cb6f32_be4e0b8c",
+        "filename": "third_party/WebKit/Source/platform/graphics/StaticBitmapImage.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-07-24T22:04:56Z",
+      "side": 0,
+      "message": "ditto",
+      "revId": "e9d960212bc9b4d4205fea5ada09c260df988c91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
