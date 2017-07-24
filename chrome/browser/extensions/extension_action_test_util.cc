@@ -121,6 +121,7 @@ scoped_refptr<const Extension> CreateActionExtension(
           .Set("version", "1.0.0");
 
   const char* action_key = nullptr;
+  int flags = 0;
   switch (action_type) {
     case NO_ACTION:
       break;
@@ -129,6 +130,16 @@ scoped_refptr<const Extension> CreateActionExtension(
       break;
     case BROWSER_ACTION:
       action_key = manifest_keys::kBrowserAction;
+      break;
+    case INSTALLED_BY_DEFAULT:
+      flags = Extension::WAS_INSTALLED_BY_DEFAULT;
+      break;
+    case OMNIBOX:
+      manifest.Set(manifest_keys::kOmnibox,
+                   DictionaryBuilder().Set("keyword", "foo").Build());
+      // Without this, the extension gets a PageAction so that it appears in the
+      // toolbar.
+      flags = Extension::WAS_INSTALLED_BY_DEFAULT;
       break;
   }
 
@@ -139,6 +150,7 @@ scoped_refptr<const Extension> CreateActionExtension(
       .SetManifest(manifest.Build())
       .SetID(crx_file::id_util::GenerateId(name))
       .SetLocation(location)
+      .AddFlags(flags)
       .Build();
 }
 
