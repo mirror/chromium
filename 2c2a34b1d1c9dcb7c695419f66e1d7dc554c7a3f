@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a2d925b_c2ccee27",
+        "filename": "chrome/browser/ui/webui/bidi_checker_web_ui_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-24T22:32:32Z",
+      "side": 0,
+      "message": "There is already a CL by @dbeam for this see https://codereview.chromium.org/2933653002/, which is completely removing this file. I\u0027ll ping again to see what is the status of that CL.",
+      "revId": "2c2a34b1d1c9dcb7c695419f66e1d7dc554c7a3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
