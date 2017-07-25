@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "3b4d6834_23bdf800",
+        "filename": "chrome/browser/page_load_metrics/metrics_web_contents_observer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-25T13:15:44Z",
+      "side": 1,
+      "message": "This really just stops the load, not the navigation right?",
+      "range": {
+        "startLine": 800,
+        "startChar": 19,
+        "endLine": 800,
+        "endChar": 41
+      },
+      "revId": "728c2f9dbf01c6a1935f27b228c5fda2fe43d9a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "904d0877_f1dd50ed",
+        "filename": "chrome/browser/page_load_metrics/observers/core_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-25T13:15:44Z",
+      "side": 1,
+      "message": "optional: I slightly prefer to write the whole type out since it isn\u0027t obvious what type CreateRendererInitiated returns.",
+      "range": {
+        "startLine": 321,
+        "startChar": 2,
+        "endLine": 321,
+        "endChar": 6
+      },
+      "revId": "728c2f9dbf01c6a1935f27b228c5fda2fe43d9a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2356b018_cc24025d",
         "filename": "components/password_manager/content/browser/content_password_manager_driver_unittest.cc",
         "patchSetId": 3
@@ -34,6 +80,52 @@
       "revId": "728c2f9dbf01c6a1935f27b228c5fda2fe43d9a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eb8d569_f85e36c0",
+        "filename": "components/subresource_filter/content/browser/subframe_navigation_filtering_throttle_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-25T13:15:44Z",
+      "side": 1,
+      "message": "Hm, I don\u0027t recall why I didn\u0027t use the simulator here in the first place...",
+      "range": {
+        "startLine": 202,
+        "startChar": 0,
+        "endLine": 202,
+        "endChar": 74
+      },
+      "revId": "728c2f9dbf01c6a1935f27b228c5fda2fe43d9a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c364365e_da7c02a3",
+        "filename": "content/public/test/navigation_simulator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-25T13:15:44Z",
+      "side": 1,
+      "message": "Yes this API is really nice, we started using something like it for subresource_filter test harness APIs.",
+      "range": {
+        "startLine": 39,
+        "startChar": 9,
+        "endLine": 39,
+        "endChar": 25
+      },
+      "revId": "728c2f9dbf01c6a1935f27b228c5fda2fe43d9a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
