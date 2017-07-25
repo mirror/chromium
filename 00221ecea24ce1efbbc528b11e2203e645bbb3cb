@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "2a9d2afe_64392e8c",
+        "filename": "components/ntp_snippets/category_rankers/constant_category_ranker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-25T16:30:10Z",
+      "side": 1,
+      "message": "Ack\n\nnit: Was it clear to you from the static_assert message that you should do something about the category orders above? If not, can you please rephrase the message?",
+      "parentUuid": "1dd2c317_4115aac6",
+      "range": {
+        "startLine": 142,
+        "startChar": 2,
+        "endLine": 144,
+        "endChar": 66
+      },
+      "revId": "00221ecea24ce1efbbc528b11e2203e645bbb3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eec056eb_00cd6872",
         "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.cc",
         "patchSetId": 5
@@ -402,6 +426,30 @@
     },
     {
       "key": {
+        "uuid": "36d2480d_f1a83b08",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-25T16:30:10Z",
+      "side": 1,
+      "message": "I am reluctant to introduce unnecessary complexity. I think it is easier to clean it up now than later. Unless Markus feels strongly in favor of the current version, please remove the vector.",
+      "parentUuid": "310ab268_c5b0cffc",
+      "range": {
+        "startLine": 45,
+        "startChar": 8,
+        "endLine": 45,
+        "endChar": 31
+      },
+      "revId": "00221ecea24ce1efbbc528b11e2203e645bbb3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b6d9e4a_97e042af",
         "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.h",
         "patchSetId": 5
@@ -437,6 +485,30 @@
       "side": 1,
       "message": "Actually, all of these are used in the unit tests of this class, so I would keep them.",
       "parentUuid": "3b6d9e4a_97e042af",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 46
+      },
+      "revId": "00221ecea24ce1efbbc528b11e2203e645bbb3cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "be9de8b8_37e5d002",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-25T16:30:10Z",
+      "side": 1,
+      "message": "Then please s/ForDebugging/ForTesting/ to adhere to a common pattern in chromium.",
+      "parentUuid": "9a1791ff_48d451dc",
       "range": {
         "startLine": 67,
         "startChar": 0,

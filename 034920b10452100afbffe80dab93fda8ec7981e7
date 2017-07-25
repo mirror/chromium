@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2674b35c_f1f7bbfa",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-25T16:30:10Z",
+      "side": 1,
+      "message": "Since the two functions are not used from anywhere else, maybe inline them here?",
+      "range": {
+        "startLine": 135,
+        "startChar": 2,
+        "endLine": 138,
+        "endChar": 3
+      },
+      "revId": "034920b10452100afbffe80dab93fda8ec7981e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc69568e_6339d066",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-25T16:30:10Z",
+      "side": 1,
+      "message": "Can you please name this and further tests according to the pattern ShouldDoWhatWhen (where possible)? The point is to adhere to our team guidelines, at least for new code.\n\nSee https://docs.google.com/document/d/1lqzRn9pvNYcQTiPhBjvDPEAb32Rf2zPQyHBbe8XoF8I/edit#heading\u003dh.kyfjl6nurl10.",
+      "range": {
+        "startLine": 188,
+        "startChar": 41,
+        "endLine": 188,
+        "endChar": 54
+      },
+      "revId": "034920b10452100afbffe80dab93fda8ec7981e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "207aad7a_b37063f5",
+        "filename": "components/ntp_snippets/remote/remote_suggestion.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-25T16:30:10Z",
+      "side": 1,
+      "message": "nitty nit: Full stop at the end of each comment, please.",
+      "range": {
+        "startLine": 298,
+        "startChar": 30,
+        "endLine": 298,
+        "endChar": 31
+      },
+      "revId": "034920b10452100afbffe80dab93fda8ec7981e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
