@@ -1227,14 +1227,15 @@ if (enable_java_templates) {
     }
 
     if (_enable_assert) {
-      _assert_target = "${target_name}__assert"
-      _assert_input_jar = _previous_output_jar
-      _assert_output_jar = "$target_out_dir/$target_name-asserted.jar"
+      _bytecode_rewrite_target = "${target_name}__bytecode_rewrite"
+      _bytecode_rewrite_input_jar = _previous_output_jar
+      _bytecode_rewrite_output_jar =
+          "$target_out_dir/$target_name-bytecode-rewritten.jar"
 
-      action(_assert_target) {
-        script = "$root_build_dir/bin/helper/java_assertion_enabler"
+      action(_bytecode_rewrite_target) {
+        script = "$root_build_dir/bin/helper/bytecode_rewriter"
         deps = [
-          "//build/android/java_assertion_enabler($default_toolchain)",
+          "//build/android/bytecode:bytecode_rewriter_binary($default_toolchain)",
         ]
         deps += _deps
         if (defined(invoker.deps)) {
@@ -1244,20 +1245,20 @@ if (enable_java_templates) {
           public_deps = invoker.public_deps
         }
         inputs = [
-          _assert_input_jar,
+          _bytecode_rewrite_input_jar,
         ]
         outputs = [
-          _assert_output_jar,
+          _bytecode_rewrite_output_jar,
         ]
         args = [
-          rebase_path(_assert_input_jar, root_build_dir),
-          rebase_path(_assert_output_jar, root_build_dir),
+          rebase_path(_bytecode_rewrite_input_jar, root_build_dir),
+          rebase_path(_bytecode_rewrite_output_jar, root_build_dir),
         ]
       }
 
       _deps = []
-      _deps = [ ":$_assert_target" ]
-      _previous_output_jar = _assert_output_jar
+      _deps = [ ":$_bytecode_rewrite_target" ]
+      _previous_output_jar = _bytecode_rewrite_output_jar
     }
 
     if (_retrolambda) {
