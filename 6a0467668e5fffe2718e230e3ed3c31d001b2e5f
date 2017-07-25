@@ -46,6 +46,30 @@
       "revId": "6a0467668e5fffe2718e230e3ed3c31d001b2e5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0fa242f_af307a25",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-25T14:11:34Z",
+      "side": 1,
+      "message": "explore (and modern too by extension I guess): 4 tiles on small screens, 5 on larger ones. But it hasn\u0027t been validated yet so...",
+      "parentUuid": "f2fa450e_7b991c3f",
+      "range": {
+        "startLine": 862,
+        "startChar": 39,
+        "endLine": 862,
+        "endChar": 40
+      },
+      "revId": "6a0467668e5fffe2718e230e3ed3c31d001b2e5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
