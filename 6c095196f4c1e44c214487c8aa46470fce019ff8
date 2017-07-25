@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d98db3d9_3ae83cb8",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-07-25T17:23:12Z",
+      "side": 1,
+      "message": "You can friend the whole test class, since it is normal for unit tests to have default access to the internal members of their corresponding classes.",
+      "revId": "6c095196f4c1e44c214487c8aa46470fce019ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f23a9c7c_13d4fa9d",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-07-25T17:23:12Z",
+      "side": 1,
+      "message": "You shouldn\u0027t need this, since it is in the RWHIER header.",
+      "revId": "6c095196f4c1e44c214487c8aa46470fce019ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d7abd27_2347b0a6",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-07-25T17:23:12Z",
+      "side": 1,
+      "message": "This include directive should be above the others, as it would be in RWHIER\u0027s .cc file.",
+      "revId": "6c095196f4c1e44c214487c8aa46470fce019ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62bbf62d_ea6c7e5a",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-07-25T17:23:12Z",
+      "side": 1,
+      "message": "We don\u0027t normally abbreviate class names, despite the length it creates.",
+      "revId": "6c095196f4c1e44c214487c8aa46470fce019ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
