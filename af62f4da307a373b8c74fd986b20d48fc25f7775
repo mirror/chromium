@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "9c09f0aa_44201785",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 1938,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-25T17:04:24Z",
+      "side": 0,
+      "message": "Should we still be checking if the current tab has a WebContents before showing a PageInfoPopup?",
+      "range": {
+        "startLine": 1938,
+        "startChar": 38,
+        "endLine": 1938,
+        "endChar": 65
+      },
+      "revId": "af62f4da307a373b8c74fd986b20d48fc25f7775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "248f744c_1bf1de5b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
         "patchSetId": 8
@@ -31,6 +54,24 @@
       "side": 0,
       "message": "To provide more context:\n\nThis is what compiler was complaining about, hence I removed it.\n\nThe only way where this value would be used was the if with focus statement below, which goes to get current tab internally.\n\n/** Focuses the current page. */\nprivate void focusCurrentTab() {\n    if (mToolbarDataProvider.hasTab()) getCurrentTab().requestFocus();\n}\n\nwhich should be equivalent to:\n\ncurrentTab \u003d getCurrentTab();\nif (currentTab !\u003d null) currentTab.requestFocus();\n\n\nI am looking forward to getting confirmation from twellington@.",
       "parentUuid": "248f744c_1bf1de5b",
+      "revId": "af62f4da307a373b8c74fd986b20d48fc25f7775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41b6a29e_dfcf01ef",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2232,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-07-25T17:04:24Z",
+      "side": 0,
+      "message": "Ted\u0027s recollection of why this was added is correct. I think Filip\u0027s changes are equivalent to what we had before, since getCurrentTab() is effectively now called at line 2237 when focus is requested.",
+      "parentUuid": "e317841b_854a3992",
       "revId": "af62f4da307a373b8c74fd986b20d48fc25f7775",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
