@@ -2972,8 +2972,6 @@ RenderFrameImpl::CreateWorkerFetchContext() {
     ServiceWorkerNetworkProvider* provider =
         ServiceWorkerNetworkProvider::FromWebServiceWorkerNetworkProvider(
             web_provider);
-    worker_fetch_context->set_service_worker_provider_id(
-        provider->provider_id());
     worker_fetch_context->set_is_controlled_by_service_worker(
         provider->IsControlledByServiceWorker());
   }

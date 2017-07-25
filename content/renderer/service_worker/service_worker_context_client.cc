@@ -98,7 +98,6 @@ class WebServiceWorkerNetworkProviderImpl
   // we tag them with the provider id.
   void WillSendRequest(WebURLRequest& request) override {
     std::unique_ptr<RequestExtraData> extra_data(new RequestExtraData);
-    extra_data->set_service_worker_provider_id(provider_->provider_id());
     extra_data->set_originated_from_service_worker(true);
     // Service workers are only available in secure contexts, so all requests
     // are initiated in a secure context.
@@ -1156,8 +1155,7 @@ ServiceWorkerContextClient::CreateServiceWorkerFetchContext() {
 
   // Blink is responsible for deleting the returned object.
   return base::MakeUnique<ServiceWorkerFetchContextImpl>(
-      script_url_, worker_url_loader_factory_provider.PassInterface(),
-      provider_context_->provider_id());
+      script_url_, worker_url_loader_factory_provider.PassInterface());
 }
 
 std::unique_ptr<blink::WebServiceWorkerProvider>

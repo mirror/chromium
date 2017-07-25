@@ -6,7 +6,6 @@
 
 #include "content/common/service_worker/service_worker_types.h"
 #include "content/public/common/resource_request.h"
-#include "content/public/common/service_worker_modes.h"
 #include "ipc/ipc_message.h"
 
 using blink::WebString;
@@ -24,7 +23,6 @@ RequestExtraData::RequestExtraData()
       should_replace_current_entry_(false),
       transferred_request_child_id_(-1),
       transferred_request_request_id_(-1),
-      service_worker_provider_id_(kInvalidServiceWorkerProviderId),
       originated_from_service_worker_(false),
       initiated_in_secure_context_(false),
       is_prefetch_(false),
@@ -47,7 +45,6 @@ void RequestExtraData::CopyToResourceRequest(ResourceRequest* request) const {
   request->should_replace_current_entry = should_replace_current_entry_;
   request->transferred_request_child_id = transferred_request_child_id_;
   request->transferred_request_request_id = transferred_request_request_id_;
-  request->service_worker_provider_id = service_worker_provider_id_;
   request->originated_from_service_worker = originated_from_service_worker_;
 
   request->initiated_in_secure_context = initiated_in_secure_context_;

@@ -1979,7 +1979,6 @@ TEST_F(RenderViewImplTest, ServiceWorkerNetworkProviderSetup) {
   provider = ServiceWorkerNetworkProvider::FromWebServiceWorkerNetworkProvider(
       webprovider);
   ASSERT_TRUE(provider);
-  EXPECT_EQ(extra_data->service_worker_provider_id(), provider->provider_id());
   int provider1_id = provider->provider_id();
 
   LoadHTML("<b>New Document B Goes Here</b>");
@@ -1993,7 +1992,6 @@ TEST_F(RenderViewImplTest, ServiceWorkerNetworkProviderSetup) {
   extra_data = static_cast<RequestExtraData*>(
       GetMainFrame()->DataSource()->GetRequest().GetExtraData());
   ASSERT_TRUE(extra_data);
-  EXPECT_EQ(extra_data->service_worker_provider_id(), provider->provider_id());
 
   // See that subresource requests are also tagged with the provider's id.
   EXPECT_EQ(frame(), RenderFrameImpl::FromWebFrame(GetMainFrame()));
@@ -2003,7 +2001,6 @@ TEST_F(RenderViewImplTest, ServiceWorkerNetworkProviderSetup) {
   webprovider->WillSendRequest(request);
   extra_data = static_cast<RequestExtraData*>(request.GetExtraData());
   ASSERT_TRUE(extra_data);
-  EXPECT_EQ(extra_data->service_worker_provider_id(), provider->provider_id());
 }
 
 TEST_F(RenderViewImplTest, OnSetAccessibilityMode) {

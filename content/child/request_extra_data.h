@@ -87,13 +87,6 @@ class CONTENT_EXPORT RequestExtraData
       int transferred_request_request_id) {
     transferred_request_request_id_ = transferred_request_request_id;
   }
-  int service_worker_provider_id() const {
-    return service_worker_provider_id_;
-  }
-  void set_service_worker_provider_id(
-      int service_worker_provider_id) {
-    service_worker_provider_id_ = service_worker_provider_id;
-  }
   // true if the request originated from within a service worker e.g. due to
   // a fetch() in the service worker script.
   bool originated_from_service_worker() const {
@@ -190,7 +183,6 @@ class CONTENT_EXPORT RequestExtraData
   bool should_replace_current_entry_;
   int transferred_request_child_id_;
   int transferred_request_request_id_;
-  int service_worker_provider_id_;
   bool originated_from_service_worker_;
   blink::WebString custom_user_agent_;
   blink::WebString requested_with_;

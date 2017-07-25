@@ -84,7 +84,6 @@ class WebServiceWorkerNetworkProviderImpl
   // we tag them with the provider id.
   void WillSendRequest(blink::WebURLRequest& request) override {
     std::unique_ptr<RequestExtraData> extra_data(new RequestExtraData);
-    extra_data->set_service_worker_provider_id(provider_->provider_id());
     extra_data->set_initiated_in_secure_context(is_secure_context_);
     request.SetExtraData(extra_data.release());
     // If the provider does not have a controller at this point, the renderer

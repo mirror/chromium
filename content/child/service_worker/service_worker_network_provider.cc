@@ -59,7 +59,6 @@ class WebServiceWorkerNetworkProviderForFrame
         static_cast<RequestExtraData*>(request.GetExtraData());
     if (!extra_data)
       extra_data = new RequestExtraData();
-    extra_data->set_service_worker_provider_id(provider_->provider_id());
     request.SetExtraData(extra_data);
 
     // If the provider does not have a controller at this point, the renderer

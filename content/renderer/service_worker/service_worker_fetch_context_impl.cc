@@ -12,11 +12,9 @@ namespace content {
 
 ServiceWorkerFetchContextImpl::ServiceWorkerFetchContextImpl(
     const GURL& worker_script_url,
-    mojom::WorkerURLLoaderFactoryProviderPtrInfo provider_info,
-    int service_worker_provider_id)
+    mojom::WorkerURLLoaderFactoryProviderPtrInfo provider_info)
     : worker_script_url_(worker_script_url),
-      provider_info_(std::move(provider_info)),
-      service_worker_provider_id_(service_worker_provider_id) {}
+      provider_info_(std::move(provider_info)) {}
 
 ServiceWorkerFetchContextImpl::~ServiceWorkerFetchContextImpl() {}
 
@@ -40,7 +38,6 @@ ServiceWorkerFetchContextImpl::CreateURLLoader(
 void ServiceWorkerFetchContextImpl::WillSendRequest(
     blink::WebURLRequest& request) {
   RequestExtraData* extra_data = new RequestExtraData();
-  extra_data->set_service_worker_provider_id(service_worker_provider_id_);
   extra_data->set_originated_from_service_worker(true);
   extra_data->set_initiated_in_secure_context(true);
   request.SetExtraData(extra_data);

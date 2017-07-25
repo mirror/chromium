@@ -20,8 +20,7 @@ class ServiceWorkerFetchContextImpl : public blink::WebWorkerFetchContext {
  public:
   ServiceWorkerFetchContextImpl(
       const GURL& worker_script_url,
-      mojom::WorkerURLLoaderFactoryProviderPtrInfo provider_info,
-      int service_worker_provider_id);
+      mojom::WorkerURLLoaderFactoryProviderPtrInfo provider_info);
   ~ServiceWorkerFetchContextImpl() override;
 
   // blink::WebWorkerFetchContext implementation:
@@ -38,7 +37,6 @@ class ServiceWorkerFetchContextImpl : public blink::WebWorkerFetchContext {
  private:
   const GURL worker_script_url_;
   mojom::WorkerURLLoaderFactoryProviderPtrInfo provider_info_;
-  const int service_worker_provider_id_;
 
   // Initialized on the worker thread when InitializeOnWorkerThread() is called.
   std::unique_ptr<ResourceDispatcher> resource_dispatcher_;
