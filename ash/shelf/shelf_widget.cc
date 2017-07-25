@@ -9,6 +9,7 @@
 #include "ash/public/cpp/window_properties.h"
 #include "ash/session/session_controller.h"
 #include "ash/shelf/app_list_button.h"
+#include "ash/shelf/login_shelf_view.h"
 #include "ash/shelf/shelf.h"
 #include "ash/shelf/shelf_background_animator_observer.h"
 #include "ash/shelf/shelf_constants.h"
@@ -126,6 +127,7 @@ ShelfWidget::ShelfWidget(aura::Window* shelf_container, Shelf* shelf)
       status_area_widget_(nullptr),
       delegate_view_(new DelegateView(this)),
       shelf_view_(new ShelfView(Shell::Get()->shelf_model(), shelf_, this)),
+      login_shelf_view_(new LoginShelfView(shelf_, this)),
       background_animator_(SHELF_BACKGROUND_DEFAULT,
                            shelf_,
                            Shell::Get()->wallpaper_controller()),
@@ -164,6 +166,8 @@ ShelfWidget::ShelfWidget(aura::Window* shelf_container, Shelf* shelf)
   // Calls back into |this| and depends on |shelf_view_|.
   background_animator_.AddObserver(this);
   background_animator_.AddObserver(delegate_view_);
+
+  login_shelf_view_->Init();
 }
 
 ShelfWidget::~ShelfWidget() {
@@ -222,6 +226,7 @@ void ShelfWidget::OnShelfAlignmentChanged() {
   // Check added for http://crbug.com/738011.
   CHECK(status_area_widget_);
   shelf_view_->OnShelfAlignmentChanged();
+  login_shelf_view_->OnShelfAlignmentChanged();
   status_area_widget_->UpdateAfterShelfAlignmentChange();
   delegate_view_->SchedulePaint();
 }
@@ -286,6 +291,38 @@ void ShelfWidget::UpdateIconPositionForPanel(aura::Window* panel) {
   gfx::Rect bounds = panel->GetBoundsInScreen();
   ::wm::ConvertRectFromScreen(shelf_window, &bounds);
   shelf_view_->UpdatePanelIconPosition(id, bounds.CenterPoint());
+}
+
+void ShelfWidget::UpdateAfterSessionStateChange(
+    session_manager::SessionState state) {
+  switch (state) {
+    case session_manager::SessionState::ACTIVE:
+      GetContentsView()->RemoveChildView(login_shelf_view_);
+      GetContentsView()->AddChildView(shelf_view_);
+      // TODO(wzang): Combine with the codes specific to SessionState::ACTIVE
+      // in PostCreateShelf().
+      break;
+    case session_manager::SessionState::LOGIN_PRIMARY:
+    case session_manager::SessionState::LOGIN_SECONDARY:
+    case session_manager::SessionState::LOCKED:
+    case session_manager::SessionState::LOGGED_IN_NOT_ACTIVE:
+    case session_manager::SessionState::OOBE:
+      GetContentsView()->RemoveChildView(shelf_view_);
+      // GetContentsView()->AddChildView(login_shelf_view_);
+      break;
+    case session_manager::SessionState::UNKNOWN:
+      NOTIMPLEMENTED();
+      break;
+  }
+  login_shelf_view_->UpdateAfterSessionStateChange(state);
+}
+
+void ShelfWidget::UpdateShutdownPolicy(bool reboot_on_shutdown) {
+  login_shelf_view_->UpdateShutdownPolicy(reboot_on_shutdown);
+}
+
+void ShelfWidget::UpdateLockScreenNoteState(mojom::TrayActionState state) {
+  login_shelf_view_->UpdateLockScreenNoteState(state);
 }
 
 gfx::Rect ShelfWidget::GetScreenBoundsOfItemIconForWindow(

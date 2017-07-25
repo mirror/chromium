@@ -685,6 +685,12 @@ void RootWindowController::UpdateAfterLoginStatusChange(LoginStatus status) {
     status_area_widget->UpdateAfterLoginStatusChange(status);
 }
 
+void RootWindowController::UpdateAfterSessionStateChange(
+    session_manager::SessionState state) {
+  if (shelf_->shelf_widget())
+    shelf_->shelf_widget()->UpdateAfterSessionStateChange(state);
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // RootWindowController, private:
 
@@ -900,7 +906,7 @@ void RootWindowController::CreateContainers() {
 
   aura::Window* shelf_container =
       CreateContainer(kShellWindowId_ShelfContainer, "ShelfContainer",
-                      non_lock_screen_containers);
+                      lock_screen_related_containers);
   wm::SetSnapsChildrenToPhysicalPixelBoundary(shelf_container);
   shelf_container->SetProperty(kUsesScreenCoordinatesKey, true);
   shelf_container->SetProperty(kLockedToRootKey, true);

@@ -274,6 +274,8 @@ component("ash") {
     "shelf/app_list_shelf_item_delegate.cc",
     "shelf/app_list_shelf_item_delegate.h",
     "shelf/ink_drop_button_listener.h",
+    "shelf/login_shelf_view.cc",
+    "shelf/login_shelf_view.h",
     "shelf/overflow_bubble.cc",
     "shelf/overflow_bubble.h",
     "shelf/overflow_bubble_view.cc",

@@ -2,6 +2,7 @@ include_rules = [
   "+device/bluetooth",
   "+cc/debug",
   "+cc/output",
+  "+chrome/browser/chromeos/login/lock",
   "+components/prefs",
   "+components/quirks",
   "+components/session_manager",

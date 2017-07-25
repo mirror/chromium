@@ -16,6 +16,7 @@
 #include "ash/shelf/shelf_observer.h"
 #include "ash/shelf/shelf_widget.h"
 #include "ash/shell.h"
+#include "ash/tray_action/tray_action.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "ui/display/types/display_constants.h"
@@ -62,7 +63,7 @@ class Shelf::AutoHideEventHandler : public ui::EventHandler {
 
 // Shelf ---------------------------------------------------------------------
 
-Shelf::Shelf() : shelf_locking_manager_(this) {
+Shelf::Shelf() : shelf_locking_manager_(this), tray_action_observer_(this) {
   // TODO: ShelfBezelEventHandler needs to work with mus too.
   // http://crbug.com/636647
   if (Shell::GetAshConfig() != Config::MASH)
@@ -120,6 +121,7 @@ void Shelf::CreateShelfWidget(aura::Window* root) {
   aura::Window* status_container =
       root->GetChildById(kShellWindowId_StatusContainer);
   shelf_widget_->CreateStatusAreaWidget(status_container);
+  InitializeUIStates();
 }
 
 void Shelf::ShutdownShelfWidget() {
@@ -363,6 +365,23 @@ void Shelf::OnBackgroundUpdated(ShelfBackgroundType background_type,
     return;
   for (auto& observer : observers_)
     observer.OnBackgroundTypeChanged(background_type, change_type);
+}
+
+void Shelf::SetRebootOnShutdown(bool reboot_on_shutdown) {
+  shelf_widget_->UpdateShutdownPolicy(reboot_on_shutdown);
+}
+
+void Shelf::OnLockScreenNoteStateChanged(ash::mojom::TrayActionState state) {
+  shelf_widget_->UpdateLockScreenNoteState(state);
+}
+
+void Shelf::InitializeUIStates() {
+  TrayAction* controller = Shell::Get()->tray_action();
+  tray_action_observer_.Add(controller);
+  // Request the initial states. The shutdown policy initial state is requested
+  // by chromeos::ShutdownPolicyForwarder instead.
+  OnLockScreenNoteStateChanged(controller->GetLockScreenNoteState());
+  // TODO(wzang): Initialize all other states for the login shelf.
 }
 
 }  // namespace ash

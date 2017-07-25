@@ -9,9 +9,12 @@
 
 #include "ash/ash_export.h"
 #include "ash/public/cpp/shelf_types.h"
+#include "ash/public/interfaces/shutdown.mojom.h"
 #include "ash/shelf/shelf_layout_manager_observer.h"
 #include "ash/shelf/shelf_locking_manager.h"
+#include "ash/tray_action/tray_action_observer.h"
 #include "base/observer_list.h"
+#include "base/scoped_observer.h"
 
 namespace aura {
 class Window;
@@ -36,11 +39,14 @@ class ShelfView;
 class ShelfWidget;
 class StatusAreaWidget;
 class ShelfObserver;
+class TrayAction;
 
 // Controller for the shelf state. One per display, because each display might
 // have different shelf alignment, autohide, etc. Exists for the lifetime of the
 // root window controller.
-class ASH_EXPORT Shelf : public ShelfLayoutManagerObserver {
+class ASH_EXPORT Shelf : public ShelfLayoutManagerObserver,
+                         public TrayActionObserver,
+                         NON_EXPORTED_BASE(public mojom::ShutdownController) {
  public:
   Shelf();
   ~Shelf() override;
@@ -146,9 +152,19 @@ class ASH_EXPORT Shelf : public ShelfLayoutManagerObserver {
   void OnBackgroundUpdated(ShelfBackgroundType background_type,
                            AnimationChangeType change_type) override;
 
+  // mojom::ShutdownController:
+  void SetRebootOnShutdown(bool reboot_on_shutdown) override;
+
+  // TrayActionObserver:
+  void OnLockScreenNoteStateChanged(mojom::TrayActionState state) override;
+
  private:
   class AutoHideEventHandler;
   friend class ShelfLayoutManagerTest;
+
+  // Sets initial values for states that affect the visiblity of different
+  // buttons on the login shelf, e.g. signin UI states, lock screen apps states.
+  void InitializeUIStates();
 
   // Layout manager for the shelf container window. Instances are constructed by
   // ShelfWidget and lifetimes are managed by the container windows themselves.
@@ -162,6 +178,8 @@ class ASH_EXPORT Shelf : public ShelfLayoutManagerObserver {
 
   // Sets shelf alignment to bottom during login and screen lock.
   ShelfLockingManager shelf_locking_manager_;
+
+  ScopedObserver<TrayAction, TrayActionObserver> tray_action_observer_;
 
   base::ObserverList<ShelfObserver> observers_;
 
