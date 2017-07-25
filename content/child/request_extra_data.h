@@ -11,9 +11,7 @@
 #include "base/macros.h"
 #include "content/child/web_url_loader_impl.h"
 #include "content/common/content_export.h"
-#include "content/common/navigation_params.h"
 #include "content/public/common/url_loader_throttle.h"
-#include "third_party/WebKit/public/platform/WebPageVisibilityState.h"
 #include "third_party/WebKit/public/platform/WebString.h"
 #include "third_party/WebKit/public/platform/WebURLRequest.h"
 #include "ui/base/page_transition_types.h"
@@ -32,60 +30,13 @@ class CONTENT_EXPORT RequestExtraData
   RequestExtraData();
   ~RequestExtraData() override;
 
-  blink::WebPageVisibilityState visibility_state() const {
-    return visibility_state_;
-  }
-  void set_visibility_state(blink::WebPageVisibilityState visibility_state) {
-    visibility_state_ = visibility_state;
-  }
-  int render_frame_id() const { return render_frame_id_; }
-  void set_render_frame_id(int render_frame_id) {
-    render_frame_id_ = render_frame_id;
-  }
-  bool is_main_frame() const { return is_main_frame_; }
-  void set_is_main_frame(bool is_main_frame) {
-    is_main_frame_ = is_main_frame;
-  }
   url::Origin frame_origin() const { return frame_origin_; }
   void set_frame_origin(const url::Origin& frame_origin) {
     frame_origin_ = frame_origin;
   }
-  bool parent_is_main_frame() const { return parent_is_main_frame_; }
-  void set_parent_is_main_frame(bool parent_is_main_frame) {
-    parent_is_main_frame_ = parent_is_main_frame;
-  }
-  int parent_render_frame_id() const { return parent_render_frame_id_; }
-  void set_parent_render_frame_id(int parent_render_frame_id) {
-    parent_render_frame_id_ = parent_render_frame_id;
-  }
-  bool allow_download() const { return allow_download_; }
-  void set_allow_download(bool allow_download) {
-    allow_download_ = allow_download;
-  }
   ui::PageTransition transition_type() const { return transition_type_; }
   void set_transition_type(ui::PageTransition transition_type) {
     transition_type_ = transition_type;
-  }
-  bool should_replace_current_entry() const {
-    return should_replace_current_entry_;
-  }
-  void set_should_replace_current_entry(
-      bool should_replace_current_entry) {
-    should_replace_current_entry_ = should_replace_current_entry;
-  }
-  int transferred_request_child_id() const {
-    return transferred_request_child_id_;
-  }
-  void set_transferred_request_child_id(
-      int transferred_request_child_id) {
-    transferred_request_child_id_ = transferred_request_child_id;
-  }
-  int transferred_request_request_id() const {
-    return transferred_request_request_id_;
-  }
-  void set_transferred_request_request_id(
-      int transferred_request_request_id) {
-    transferred_request_request_id_ = transferred_request_request_id;
   }
   int service_worker_provider_id() const {
     return service_worker_provider_id_;
@@ -143,9 +94,6 @@ class CONTENT_EXPORT RequestExtraData
 
   // The request is downloaded to the network cache, but not rendered or
   // executed. The renderer will see this as an aborted request.
-  bool download_to_network_cache_only() const {
-    return download_to_network_cache_only_;
-  }
   void set_download_to_network_cache_only(bool download_to_cache) {
     download_to_network_cache_only_ = download_to_cache;
   }
@@ -179,17 +127,8 @@ class CONTENT_EXPORT RequestExtraData
   void CopyToResourceRequest(ResourceRequest* request) const;
 
  private:
-  blink::WebPageVisibilityState visibility_state_;
-  int render_frame_id_;
-  bool is_main_frame_;
   url::Origin frame_origin_;
-  bool parent_is_main_frame_;
-  int parent_render_frame_id_;
-  bool allow_download_;
   ui::PageTransition transition_type_;
-  bool should_replace_current_entry_;
-  int transferred_request_child_id_;
-  int transferred_request_request_id_;
   int service_worker_provider_id_;
   bool originated_from_service_worker_;
   blink::WebString custom_user_agent_;
