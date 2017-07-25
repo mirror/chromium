@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e72d83b_e132c7b6",
+        "filename": "chrome/utility/media_router/dial_device_description_parser_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-25T19:22:47Z",
+      "side": 1,
+      "message": "nit: Maybe something like the following so it\u0027s clear it\u0027s an output param:\n\nSet by the method to an error value if parsing fails, or NONE if parsing succeeds.",
+      "range": {
+        "startLine": 36,
+        "startChar": 78,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "c3b58ab3d942938632a8579e4ba6afb235df0984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
