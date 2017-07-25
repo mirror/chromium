@@ -637,6 +637,10 @@ void PrintPreviewHandler::RegisterMessages() {
   RegisterForGaiaCookieChanges();
 }
 
+void PrintPreviewHandler::OnJavascriptDisallowed() {
+  weak_factory_.InvalidateWeakPtrs();
+}
+
 WebContents* PrintPreviewHandler::preview_web_contents() const {
   return web_ui()->GetWebContents();
 }
