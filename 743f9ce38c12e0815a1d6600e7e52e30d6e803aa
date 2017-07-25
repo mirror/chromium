@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "35d86aa7_caa71e57",
+        "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-25T17:14:26Z",
+      "side": 1,
+      "message": "This is not completely correct, if the current state is LAUNCHING, restart request will return error (line 88).",
+      "range": {
+        "startLine": 93,
+        "startChar": 4,
+        "endLine": 93,
+        "endChar": 68
+      },
+      "revId": "743f9ce38c12e0815a1d6600e7e52e30d6e803aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5c3c21e3_5040210e",
         "filename": "extensions/browser/api/media_perception_private/media_perception_api_manager_unittest.cc",
         "patchSetId": 8
