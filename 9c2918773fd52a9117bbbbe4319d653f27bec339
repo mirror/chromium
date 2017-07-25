@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "70eb0bc9_fd3a4237",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-25T17:48:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "385d2930_a5dc029d",
+      "revId": "9c2918773fd52a9117bbbbe4319d653f27bec339",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11daae69_1abcf8b3",
         "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
         "patchSetId": 31
@@ -33,6 +51,24 @@
       "revId": "9c2918773fd52a9117bbbbe4319d653f27bec339",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bee2fe2_246b3404",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-25T17:48:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11daae69_1abcf8b3",
+      "revId": "9c2918773fd52a9117bbbbe4319d653f27bec339",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9d703417_8d78f8f9",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-25T17:48:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "941db47b_77cf1804",
+      "revId": "9c2918773fd52a9117bbbbe4319d653f27bec339",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f319a762_cd27472c",
         "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
         "patchSetId": 31
@@ -67,6 +121,24 @@
       "revId": "9c2918773fd52a9117bbbbe4319d653f27bec339",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3179124e_183dac55",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-25T17:48:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f319a762_cd27472c",
+      "revId": "9c2918773fd52a9117bbbbe4319d653f27bec339",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "a57b0253_791d4594",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-25T17:48:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6aad4200_7f46eaf1",
+      "revId": "9c2918773fd52a9117bbbbe4319d653f27bec339",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8cacf140_bccfa0fb",
         "filename": "chrome/browser/ui/views/tabs/new_tab_promo_dialog_browsertest.cc",
         "patchSetId": 31
@@ -98,6 +188,24 @@
       "writtenOn": "2017-07-25T03:10:46Z",
       "side": 1,
       "message": "You could probably still invoke the dialog with its various strings by forcing Finch params from this test code.  Another way would be to expose a test-only constructor that explicitly takes the specifier to use (as an int); then in the main constructor, delegate to the with-arg constructor, and use a local-to-the-file helper function to compute the necessary value in order to be able to do so:\n\nNewTabPromo::NewTabPromo(const gfx::Rect\u0026 anchor_rect)\n    : NewTabPromo(anchor_rect, GetTextSpecifier()) {}\n\nThis would also supersede my organizational comments in the main .cc file.\n\nI can\u0027t tell you whether it\u0027s worth being able to test these separately.",
+      "revId": "9c2918773fd52a9117bbbbe4319d653f27bec339",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43e10237_aa2cc9b7",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_promo_dialog_browsertest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-25T17:48:47Z",
+      "side": 1,
+      "message": "I was considering an approach like this, however, this would also require there to be two copies of both ShowPromo in NewTabButton, and CreateSelfOwned() in NewTabPromo. I\u0027ve discussed with Rob and we agreed that it doesn\u0027t seem worth it to try to maintain these temporary tests.",
+      "parentUuid": "8cacf140_bccfa0fb",
       "revId": "9c2918773fd52a9117bbbbe4319d653f27bec339",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
