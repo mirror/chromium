@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1f82fff_718e99ce",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-25T19:55:04Z",
+      "side": 1,
+      "message": "nit: none",
+      "revId": "afb03829bb28c840cb08f672873c9b4daaa288e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0be83f7f_5d1d9bbc",
+        "filename": "cc/paint/discardable_image_map.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-25T19:55:04Z",
+      "side": 1,
+      "message": "nit: size_t?\n\nAlso, this math is correct because the underlying types are checked as well, right? Ie, normally with builtin types, this would evaluate the rhs first before assignment, so might overflow already before being checked. But this should work?",
+      "revId": "afb03829bb28c840cb08f672873c9b4daaa288e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58ad1455_2c91b065",
+        "filename": "cc/paint/discardable_image_map.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-25T19:55:04Z",
+      "side": 1,
+      "message": "nit: ++",
+      "range": {
+        "startLine": 262,
+        "startChar": 37,
+        "endLine": 262,
+        "endChar": 38
+      },
+      "revId": "afb03829bb28c840cb08f672873c9b4daaa288e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f913077_84c6213c",
+        "filename": "cc/paint/discardable_image_map.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-25T19:55:04Z",
+      "side": 1,
+      "message": "nit: ++",
+      "revId": "afb03829bb28c840cb08f672873c9b4daaa288e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddf0ffe0_09d0f262",
+        "filename": "cc/paint/discardable_image_map.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-25T19:55:04Z",
+      "side": 1,
+      "message": "size_t?",
+      "revId": "afb03829bb28c840cb08f672873c9b4daaa288e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "865bba78_cf23f5ae",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 62437,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-25T19:55:04Z",
+      "side": 1,
+      "message": "nit: I\u0027d just say for each cc::Layer; also can you indicate that it\u0027s only recorded if there is at least one discardable image?",
+      "revId": "afb03829bb28c840cb08f672873c9b4daaa288e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
