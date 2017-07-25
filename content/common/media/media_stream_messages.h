@@ -66,11 +66,6 @@ IPC_MESSAGE_ROUTED4(MediaStreamMsg_StreamGenerated,
                     content::StreamDeviceInfoArray /* audio_device_list */,
                     content::StreamDeviceInfoArray /* video_device_list */)
 
-// The browser has failed to generate a stream.
-IPC_MESSAGE_ROUTED2(MediaStreamMsg_StreamGenerationFailed,
-                    int /* request id */,
-                    content::MediaStreamRequestResult /* result */)
-
 // The browser reports that a media device has been stopped. Stopping was
 // triggered from the browser process.
 IPC_MESSAGE_ROUTED2(MediaStreamMsg_DeviceStopped,

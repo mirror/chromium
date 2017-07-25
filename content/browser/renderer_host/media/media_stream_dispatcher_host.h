@@ -7,6 +7,7 @@
 
 #include <string>
 
+#include "base/containers/flat_map.h"
 #include "base/macros.h"
 #include "content/browser/renderer_host/media/media_stream_requester.h"
 #include "content/common/content_export.h"
@@ -22,6 +23,7 @@ class Origin;
 namespace content {
 
 class MediaStreamManager;
+class RenderFrameHost;
 
 // MediaStreamDispatcherHost is a delegate for Media Stream API messages used by
 // MediaStreamImpl.  There is one MediaStreamDispatcherHost per
@@ -61,6 +63,7 @@ class CONTENT_EXPORT MediaStreamDispatcherHost
   ~MediaStreamDispatcherHost() override;
 
  private:
+  friend class MediaStreamDispatcherHostTest;
   friend class MockMediaStreamDispatcherHost;
 
   // mojom::MediaStreamDispatcherHost implementation
@@ -83,6 +86,12 @@ class CONTENT_EXPORT MediaStreamDispatcherHost
                                MediaStreamType type,
                                bool is_secure) override;
   void StreamStarted(const std::string& label) override;
+
+  RenderFrameHost* GetRenderFrameHost(int render_frame_id);
+  mojom::MediaStreamDispatcher* GetMediaStreamDispatcher(int render_frame_id);
+
+  // Used in unittests only.
+  base::flat_map<int, mojom::MediaStreamDispatcherPtr> dispatchers_;
 
   int render_process_id_;
   std::string salt_;

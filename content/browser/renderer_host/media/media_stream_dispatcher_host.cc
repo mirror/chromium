@@ -8,6 +8,8 @@
 #include "content/browser/renderer_host/media/media_stream_manager.h"
 #include "content/common/media/media_stream_messages.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/render_frame_host.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 #include "url/origin.h"
 
 namespace content {
@@ -43,9 +45,12 @@ void MediaStreamDispatcherHost::StreamGenerationFailed(
            << " result=" << result;
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-  Send(new MediaStreamMsg_StreamGenerationFailed(render_frame_id,
-                                                 page_request_id,
-                                                 result));
+  auto it = dispatchers_.find(render_frame_id);
+  mojom::MediaStreamDispatcher* dispatcher =
+      (it == dispatchers_.end()) ? GetMediaStreamDispatcher(render_frame_id)
+                                 : it->second.get();
+  if (dispatcher)
+    dispatcher->OnStreamGenerationFailed(page_request_id, result);
 }
 
 void MediaStreamDispatcherHost::DeviceStopped(int render_frame_id,
@@ -174,5 +179,21 @@ void MediaStreamDispatcherHost::StreamStarted(const std::string& label) {
 
   media_stream_manager_->OnStreamStarted(label);
 }
+
+RenderFrameHost* MediaStreamDispatcherHost::GetRenderFrameHost(
+    int render_frame_id) {
+  return RenderFrameHost::FromID(render_process_id_, render_frame_id);
+}
+
+mojom::MediaStreamDispatcher*
+MediaStreamDispatcherHost::GetMediaStreamDispatcher(int render_frame_id) {
+  RenderFrameHost* render_frame_host = GetRenderFrameHost(render_frame_id);
+  if (!render_frame_host)
+    return nullptr;
+
+  mojom::MediaStreamDispatcherPtr dispatcher;
+  render_frame_host->GetRemoteInterfaces()->GetInterface(&dispatcher);
+  return dispatcher.get();
+};
 
 }  // namespace content
