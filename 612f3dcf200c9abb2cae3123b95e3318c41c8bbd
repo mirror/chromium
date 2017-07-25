@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "731cdb10_359c5e36",
+        "filename": "url/gurl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-25T11:26:29Z",
+      "side": 1,
+      "message": "Can you add unit tests for things more esoteric cases like `data:`, `blob:`, `filesystem:`, `ftp:`, etc?",
+      "revId": "612f3dcf200c9abb2cae3123b95e3318c41c8bbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
