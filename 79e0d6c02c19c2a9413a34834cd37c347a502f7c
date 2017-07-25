@@ -48,6 +48,98 @@
     },
     {
       "key": {
+        "uuid": "3abd238d_456e8be6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-25T14:23:47Z",
+      "side": 1,
+      "message": "Missing a return here (otherwise the dialog is dismissed right after)?",
+      "range": {
+        "startLine": 326,
+        "startChar": 38,
+        "endLine": 326,
+        "endChar": 39
+      },
+      "revId": "79e0d6c02c19c2a9413a34834cd37c347a502f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "059bd74a_31dc515e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-25T14:23:47Z",
+      "side": 1,
+      "message": "Missing a return here (otherwise the dialog is dismissed right after)?",
+      "range": {
+        "startLine": 329,
+        "startChar": 20,
+        "endLine": 329,
+        "endChar": 41
+      },
+      "revId": "79e0d6c02c19c2a9413a34834cd37c347a502f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6124abbc_5a78a4fc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-25T14:23:47Z",
+      "side": 1,
+      "message": "I think this test is actually checking if there is an GmsError dialog presented. If so, then consider renaming to isShowingGmsErrorDialog?",
+      "range": {
+        "startLine": 380,
+        "startChar": 19,
+        "endLine": 380,
+        "endChar": 31
+      },
+      "revId": "79e0d6c02c19c2a9413a34834cd37c347a502f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1598c1c2_4529a094",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-25T14:23:47Z",
+      "side": 1,
+      "message": "Should this test mGooglePlayServicesUpdateErrorHandler.isShowing()?",
+      "range": {
+        "startLine": 381,
+        "startChar": 15,
+        "endLine": 381,
+        "endChar": 52
+      },
+      "revId": "79e0d6c02c19c2a9413a34834cd37c347a502f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "304c4031_a15f6e0b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
         "patchSetId": 1
@@ -133,6 +225,29 @@
         "startChar": 12,
         "endLine": 23,
         "endChar": 30
+      },
+      "revId": "79e0d6c02c19c2a9413a34834cd37c347a502f7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d85be74_b7af63fe",
+        "filename": "components/signin/core/browser/android/java/src/org/chromium/components/signin/AccountManagerResult.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-25T14:23:47Z",
+      "side": 1,
+      "message": "As discussed, wrapping the exception here does not bring any value. Either remove the wrapping or make the wrap in the AccountManagerFacade.",
+      "range": {
+        "startLine": 38,
+        "startChar": 12,
+        "endLine": 38,
+        "endChar": 17
       },
       "revId": "79e0d6c02c19c2a9413a34834cd37c347a502f7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
