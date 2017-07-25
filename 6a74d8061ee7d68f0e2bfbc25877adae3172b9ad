@@ -65,6 +65,29 @@
     },
     {
       "key": {
+        "uuid": "9e5e90a2_b5ed7d5f",
+        "filename": "services/shape_detection/manifest.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-07-25T17:17:02Z",
+      "side": 1,
+      "message": "nit: 80 cols?",
+      "range": {
+        "startLine": 8,
+        "startChar": 1,
+        "endLine": 8,
+        "endChar": 2
+      },
+      "revId": "6a74d8061ee7d68f0e2bfbc25877adae3172b9ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7aa8c491_35825ef1",
         "filename": "third_party/WebKit/Source/modules/shapedetection/BarcodeDetector.h",
         "patchSetId": 6
