@@ -308,6 +308,30 @@
     },
     {
       "key": {
+        "uuid": "a2b188ef_82e4fa2d",
+        "filename": "components/offline_pages/core/prefetch/store/README.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-25T21:12:56Z",
+      "side": 1,
+      "message": "nit: maybe also add here that if state is INITIALIZING a CHECK will trigger?",
+      "parentUuid": "4fe0925a_4a0a049f",
+      "range": {
+        "startLine": 41,
+        "startChar": 56,
+        "endLine": 41,
+        "endChar": 68
+      },
+      "revId": "4b0128629a9c0d332e61faf94e7b0ae386b3a2b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15f9d7f9_c666b486",
         "filename": "components/offline_pages/core/prefetch/store/README.md",
         "patchSetId": 2
