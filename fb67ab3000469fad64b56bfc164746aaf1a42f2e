@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4e427a2_c36012f7",
+        "filename": "ash/metrics/user_metrics_action.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-25T20:04:16Z",
+      "side": 1,
+      "message": "Looks like this was recently deprecated (see the note on line 11).",
+      "revId": "fb67ab3000469fad64b56bfc164746aaf1a42f2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aaeb3d5_dd7ad3fc",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 5205,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-25T20:04:16Z",
+      "side": 1,
+      "message": "Consider re-naming as \"Tray_ImeMenu_Opened\". This actions.xml contains user actions for the entire chromium project, so whenever possible it\u0027s nice to have a prefix as a way to group metrics in a similar area of the code together. In this case, I think \"Tray_\" would be the best fit.",
+      "revId": "fb67ab3000469fad64b56bfc164746aaf1a42f2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
