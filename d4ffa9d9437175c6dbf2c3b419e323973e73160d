@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd8ef18e_cd4a960d",
+        "filename": "components/history/core/browser/history_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-25T04:16:50Z",
+      "side": 1,
+      "message": "Do the testing related functions really need to be in the public interface? Seems they should be specific to HistoryServiceImpl.",
+      "range": {
+        "startLine": 466,
+        "startChar": 15,
+        "endLine": 466,
+        "endChar": 27
+      },
+      "revId": "d4ffa9d9437175c6dbf2c3b419e323973e73160d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78c4b2ef_5d0b0b08",
+        "filename": "components/history/core/browser/history_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-25T04:16:50Z",
+      "side": 1,
+      "message": "Why does anything in the public section need to be pure virtual?",
+      "range": {
+        "startLine": 504,
+        "startChar": 1,
+        "endLine": 504,
+        "endChar": 8
+      },
+      "revId": "d4ffa9d9437175c6dbf2c3b419e323973e73160d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
