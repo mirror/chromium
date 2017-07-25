@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0037c6b5_c1c97ff4",
+        "filename": "cc/blink/web_layer_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-07-25T15:35:42Z",
+      "side": 1,
+      "message": "This API creates invalid states in the TouchActionRegion class if you call these methods incorrectly, so I have a proposal:\n\nAdd a constructor TouchActionRegion(flat_map\u003cTouchAction, Region\u003e). Build the flat_map here, and move it to the TouchActionRegion.\n\nThis way the API doesn\u0027t allow for inconsistent states. wdyt?",
+      "revId": "1cb7b72cb0224371f74f8076745f51653c400319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
