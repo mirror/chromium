@@ -94,14 +94,6 @@ class CONTENT_EXPORT RequestExtraData
       int service_worker_provider_id) {
     service_worker_provider_id_ = service_worker_provider_id;
   }
-  // true if the request originated from within a service worker e.g. due to
-  // a fetch() in the service worker script.
-  bool originated_from_service_worker() const {
-    return originated_from_service_worker_;
-  }
-  void set_originated_from_service_worker(bool originated_from_service_worker) {
-    originated_from_service_worker_ = originated_from_service_worker;
-  }
   // |custom_user_agent| is used to communicate an overriding custom user agent
   // to |RenderViewImpl::willSendRequest()|; set to a null string to indicate no
   // override and an empty string to indicate that there should be no user
