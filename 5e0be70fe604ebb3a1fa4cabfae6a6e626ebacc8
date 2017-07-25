@@ -22,6 +22,30 @@
       "revId": "5e0be70fe604ebb3a1fa4cabfae6a6e626ebacc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f0c7f18_394a31fc",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-07-25T07:42:39Z",
+      "side": 1,
+      "message": "Yes although I\u0027m not sure if anything but an empty url is meaningful for the page block case (where we display an internal error interstitial).",
+      "parentUuid": "b1087a48_7e9883b6",
+      "range": {
+        "startLine": 644,
+        "startChar": 78,
+        "endLine": 644,
+        "endChar": 86
+      },
+      "revId": "5e0be70fe604ebb3a1fa4cabfae6a6e626ebacc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
