@@ -2964,8 +2964,6 @@ RenderFrameImpl::CreateWorkerFetchContext() {
   worker_fetch_context->set_parent_frame_id(routing_id_);
   worker_fetch_context->set_first_party_for_cookies(
       frame_->GetDocument().FirstPartyForCookies());
-  worker_fetch_context->set_is_secure_context(
-      frame_->GetDocument().IsSecureContext());
   blink::WebServiceWorkerNetworkProvider* web_provider =
       frame_->DataSource()->GetServiceWorkerNetworkProvider();
   if (web_provider) {
@@ -4364,7 +4362,6 @@ void RenderFrameImpl::WillSendRequest(blink::WebURLRequest& request) {
   extra_data->set_download_to_network_cache_only(
       is_prefetch &&
       WebURLRequestToResourceType(request) != RESOURCE_TYPE_MAIN_FRAME);
-  extra_data->set_initiated_in_secure_context(frame_document.IsSecureContext());
 
   // Renderer process transfers apply only to navigational requests.
   bool is_navigational_request =
