@@ -442,11 +442,13 @@ class VideoEncodeAcceleratorTestEnvironment : public ::testing::Environment {
   VideoEncodeAcceleratorTestEnvironment(
       std::unique_ptr<base::FilePath::StringType> data,
       const base::FilePath& log_path,
+      const base::FilePath& frame_stats_path,
       bool run_at_fps,
       bool needs_encode_latency,
       bool verify_all_output)
       : test_stream_data_(std::move(data)),
         log_path_(log_path),
+        frame_stats_path_(frame_stats_path),
         run_at_fps_(run_at_fps),
         needs_encode_latency_(needs_encode_latency),
         verify_all_output_(verify_all_output) {}
@@ -486,14 +488,18 @@ class VideoEncodeAcceleratorTestEnvironment : public ::testing::Environment {
   bool needs_encode_latency() const { return needs_encode_latency_; }
 
   // Verify the encoder output of all testcases. This is set by the command line
-  // switch "--verify_all_output".
+  // switch "--verify_all_output". Verification is also enabled when frame stats
+  // are.
   bool verify_all_output() const { return verify_all_output_; }
+
+  const base::FilePath& frame_stats_path() const { return frame_stats_path_; }
 
   std::vector<std::unique_ptr<TestStream>> test_streams_;
 
  private:
   std::unique_ptr<base::FilePath::StringType> test_stream_data_;
   base::FilePath log_path_;
+  base::FilePath frame_stats_path_;
   std::unique_ptr<base::File> log_file_;
   bool run_at_fps_;
   bool needs_encode_latency_;
@@ -664,6 +670,7 @@ class VideoFrameQualityValidator
   void AddDecodeBuffer(const scoped_refptr<DecoderBuffer>& buffer);
   // Flush the decoder.
   void Flush();
+  void PrintResults();
 
  private:
   void InitializeCB(bool success);
@@ -686,6 +693,7 @@ class VideoFrameQualityValidator
   State decoder_state_;
   std::queue<scoped_refptr<VideoFrame>> original_frames_;
   std::queue<scoped_refptr<DecoderBuffer>> decode_buffers_;
+  std::vector<FrameStats> frame_stats_;
   base::ThreadChecker thread_checker_;
 };
 
@@ -783,6 +791,31 @@ void VideoFrameQualityValidator::Flush() {
   }
 }
 
+void VideoFrameQualityValidator::PrintResults() {
+  if (g_env->frame_stats_path().empty())
+    return;
+
+  base::File frame_stats_file(
+      g_env->frame_stats_path(),
+      base::File::FLAG_CREATE_ALWAYS | base::File::FLAG_WRITE);
+  LOG_ASSERT(frame_stats_file.IsValid());
+
+  // TODO(pbos): Consider adding encoded bytes per frame + key/delta frame.
+  std::string csv =
+      "frame,width,height,ssim-y,ssim-u,ssim-v,mse-y,mse-u,mse-v\n";
+  frame_stats_file.WriteAtCurrentPos(csv.data(), static_cast<int>(csv.size()));
+  for (size_t frame_idx = 0; frame_idx < frame_stats_.size(); ++frame_idx) {
+    const FrameStats& frame_stats = frame_stats_[frame_idx];
+    csv = base::StringPrintf(
+        "%d,%d,%d,%f,%f,%f,%" PRIu64 ",%" PRIu64 ",%" PRIu64 "\n",
+        static_cast<int>(frame_idx), frame_stats.width, frame_stats.height,
+        frame_stats.ssim_y, frame_stats.ssim_u, frame_stats.ssim_v,
+        frame_stats.mse_y, frame_stats.mse_u, frame_stats.mse_v);
+    frame_stats_file.WriteAtCurrentPos(csv.data(),
+                                       static_cast<int>(csv.size()));
+  }
+}
+
 void VideoFrameQualityValidator::AddDecodeBuffer(
     const scoped_refptr<DecoderBuffer>& buffer) {
   DCHECK(thread_checker_.CalledOnValidThread());
@@ -833,6 +866,11 @@ void VideoFrameQualityValidator::VerifyOutputFrame(
                                output_plane[stride * i + j]);
       }
     }
+  }
+
+  if (!g_env->frame_stats_path().empty()) {
+    frame_stats_.push_back(
+        FrameStats::CompareFrames(*original_frame, *output_frame));
   }
 
   // Divide the difference by the size of frame.
@@ -1222,7 +1260,8 @@ void VEAClient::CreateEncoder() {
 
 void VEAClient::DecodeCompleted() {
   DCHECK(thread_checker_.CalledOnValidThread());
-
+  CHECK(quality_validator_);
+  quality_validator_->PrintResults();
   SetState(CS_VALIDATED);
 }
 
@@ -2030,8 +2069,9 @@ TEST_P(VideoEncodeAcceleratorTest, TestSimpleEncode) {
   const bool test_perf = std::get<4>(GetParam());
   const bool mid_stream_bitrate_switch = std::get<5>(GetParam());
   const bool mid_stream_framerate_switch = std::get<6>(GetParam());
-  const bool verify_output =
-      std::get<7>(GetParam()) || g_env->verify_all_output();
+  const bool verify_output = std::get<7>(GetParam()) ||
+                             g_env->verify_all_output() ||
+                             !g_env->frame_stats_path().empty();
   const bool verify_output_timestamp = std::get<8>(GetParam());
 
   std::vector<std::unique_ptr<ClientStateNotification<ClientState>>> notes;
@@ -2274,6 +2314,7 @@ int main(int argc, char** argv) {
   bool needs_encode_latency = false;
   bool verify_all_output = false;
   base::FilePath log_path;
+  base::FilePath frame_stats_path;
 
   base::CommandLine::SwitchMap switches = cmd_line->GetSwitches();
   for (base::CommandLine::SwitchMap::const_iterator it = switches.begin();
@@ -2313,6 +2354,13 @@ int main(int argc, char** argv) {
       continue;
     if (it->first == "ozone-platform" || it->first == "ozone-use-surfaceless")
       continue;
+
+    // Output per-frame metrics to a csv file.
+    if (it->first == "frame_stats") {
+      frame_stats_path = base::FilePath(
+          base::FilePath::StringType(it->second.begin(), it->second.end()));
+      continue;
+    }
     LOG(FATAL) << "Unexpected switch: " << it->first << ":" << it->second;
   }
 
@@ -2333,8 +2381,8 @@ int main(int argc, char** argv) {
       reinterpret_cast<media::VideoEncodeAcceleratorTestEnvironment*>(
           testing::AddGlobalTestEnvironment(
               new media::VideoEncodeAcceleratorTestEnvironment(
-                  std::move(test_stream_data), log_path, run_at_fps,
-                  needs_encode_latency, verify_all_output)));
+                  std::move(test_stream_data), log_path, frame_stats_path,
+                  run_at_fps, needs_encode_latency, verify_all_output)));
 
   return RUN_ALL_TESTS();
 }
