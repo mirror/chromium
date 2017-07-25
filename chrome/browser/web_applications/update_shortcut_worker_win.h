@@ -10,6 +10,7 @@
 #include "chrome/browser/web_applications/web_app.h"
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
+#include "ui/gfx/image/image_family.h"
 
 namespace content {
 class NotificationDetails;
@@ -71,8 +72,13 @@ class UpdateShortcutWorker : public content::NotificationObserver {
   // Icons info from web_contents_'s web app data.
   web_app::IconInfoList unprocessed_icons_;
 
-  // Cached shortcut data from the web_contents_.
+  // Cached shortcut data from the web_contents_. NOTE:
+  // |shortcut_info_->favicon| should only be accessed from the UI thread.
   std::unique_ptr<web_app::ShortcutInfo> shortcut_info_;
+
+  // The favicon for writing to the shortcut. Should only be accessed from the
+  // FILE thread.
+  gfx::ImageFamily favicon_for_file_thread_;
 
   // Our copy of profile path.
   base::FilePath profile_path_;
