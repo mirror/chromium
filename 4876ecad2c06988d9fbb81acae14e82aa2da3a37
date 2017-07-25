@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9db8a76b_877279d6",
+        "filename": "content/browser/frame_host/render_widget_host_view_child_frame.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-07-25T15:12:45Z",
+      "side": 1,
+      "message": "Let\u0027s call this is_hidden_ to be consistent with WebContents and RenderWidgetHostView. Same for the function names.",
+      "revId": "4876ecad2c06988d9fbb81acae14e82aa2da3a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae54ef55_204ba9d8",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 7098,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-07-25T15:12:45Z",
+      "side": 1,
+      "message": "browser_test_utils.h has a FrameWatcher class that does the same as this. Can you use that (you may need to expose a frame count, but I think that should be fine)?",
+      "revId": "4876ecad2c06988d9fbb81acae14e82aa2da3a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
