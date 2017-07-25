@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a5a1714_ddf7e6a3",
+        "filename": "components/offline_pages/core/snapshot_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-25T20:47:13Z",
+      "side": 1,
+      "message": "This probably should not change? Otherwise, it changes how the current stuff works with renovations disabled.",
+      "revId": "f7a0a575c2d62876a3a2ba3c621cb1bc91bfa73e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "875fb4ab_969bc2c2",
+        "filename": "components/offline_pages/core/snapshot_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-07-25T20:47:13Z",
+      "side": 1,
+      "message": "There are too many async+delay things going on here. \n1. DocumentAvailableInMainFrame waits to start a snapshot.It might happen any time.\n2. Meanwhile, OnlLoad starts renovations and Client calls RenovationCompleted after some delay, perhaps.\n3. Then another delayed task starts, potentially doing another snapshot later.\n\nI\u0027m not sure what the delay after RenovationsCompleted is for. IMO the Client already said they are completed, no need to wait. \n\nAlso, I think we need to wait before renovations are applied. Effectively, the old OnLoad-triggered snapshot moment should become a moment when we apply renovations, and actual snapshot shoudl happen once Client reports the renovations are applied... In this version, you don\u0027t wait for network-triggering renovations anyways, so this would be a simple and reliable schema.",
+      "revId": "f7a0a575c2d62876a3a2ba3c621cb1bc91bfa73e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
