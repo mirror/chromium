@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "5ae80ac4_8bdc1b71",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_list_prefs.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-07-25T18:07:26Z",
+      "side": 1,
+      "message": "Tricky :) Done as 1UL as we discussed offline not to use uint64_t",
+      "revId": "86810887245ed35f421c1a6e6a6f3ed67b6d97cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2bbd6429_f000013e",
         "filename": "chrome/browser/ui/app_list/arc/arc_app_list_prefs.cc",
         "patchSetId": 4
@@ -45,6 +62,30 @@
       "revId": "86810887245ed35f421c1a6e6a6f3ed67b6d97cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3e5f016_7944972a",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_list_prefs.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1132,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-07-25T18:07:26Z",
+      "side": 1,
+      "message": "As discussed offline, not to use SetUInt64.",
+      "parentUuid": "2bbd6429_f000013e",
+      "range": {
+        "startLine": 1132,
+        "startChar": 14,
+        "endLine": 1132,
+        "endChar": 24
+      },
+      "revId": "86810887245ed35f421c1a6e6a6f3ed67b6d97cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
