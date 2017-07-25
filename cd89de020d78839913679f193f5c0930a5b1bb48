@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c47d3ed2_c81bcfc9",
+        "filename": "third_party/WebKit/Source/platform/instrumentation/resource_coordinator/BlinkResourceCoordinatorBase.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-25T04:40:44Z",
+      "side": 1,
+      "message": "Does this actually need to be GarbageCollectedFinalized? Can it just be a plain-old untraced object that FrameResourceCoordinator uses?",
+      "range": {
+        "startLine": 25,
+        "startChar": 13,
+        "endLine": 25,
+        "endChar": 68
+      },
+      "revId": "cd89de020d78839913679f193f5c0930a5b1bb48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8976a127_00acb8ab",
+        "filename": "third_party/WebKit/Source/platform/instrumentation/resource_coordinator/BlinkResourceCoordinatorBase.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-25T04:40:44Z",
+      "side": 1,
+      "message": "T\u0026\u0026 value + std::forward\u003cT\u003e(value) below.",
+      "range": {
+        "startLine": 35,
+        "startChar": 6,
+        "endLine": 35,
+        "endChar": 13
+      },
+      "revId": "cd89de020d78839913679f193f5c0930a5b1bb48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff31692b_67d329cc",
+        "filename": "third_party/WebKit/Source/platform/instrumentation/resource_coordinator/RendererResourceCoordinator.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-25T04:40:44Z",
+      "side": 1,
+      "message": "Nit: I think it\u0027s more common to define this as a function-level static with DEFINE_STATIC_LOCAL to create it.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 46
+      },
+      "revId": "cd89de020d78839913679f193f5c0930a5b1bb48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
