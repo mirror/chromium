@@ -4,8 +4,10 @@
 
 #import <EarlGrey/EarlGrey.h>
 
+#include "base/ios/ios_util.h"
 #import "ios/chrome/browser/metrics/tab_usage_recorder.h"
 #import "ios/chrome/browser/metrics/tab_usage_recorder_test_util.h"
+#include "ios/chrome/browser/ui/ui_util.h"
 #import "ios/chrome/test/app/histogram_test_util.h"
 #import "ios/chrome/test/app/tab_test_util.h"
 #import "ios/chrome/test/earl_grey/chrome_earl_grey.h"
@@ -32,6 +34,11 @@ const char kTestUrl[] =
 // Verify correct recording of metrics when the reloading of an evicted tab
 // fails.
 - (void)testEvictedTabReloadFailure {
+#if TARGET_IPHONE_SIMULATOR
+  if (!IsIPadIdiom() && !base::ios::IsRunningOnIOS10OrLater()) {
+    EARL_GREY_TEST_DISABLED(@"Disabled for iPhone 9 simulators");
+  }
+#endif
   web::test::SetUpFileBasedHttpServer();
   chrome_test_util::HistogramTester histogramTester;
   FailureBlock failureBlock = ^(NSString* error) {
