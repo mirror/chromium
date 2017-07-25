@@ -1373,7 +1373,10 @@ id<GREYMatcher> ActionSheet(Action action) {
   NSString* titleIdentifier = @"Title Field_textField";
   [[EarlGrey selectElementWithMatcher:grey_accessibilityID(titleIdentifier)]
       performAction:grey_tap()];
-  [[EarlGrey selectElementWithMatcher:grey_accessibilityLabel(@"Clear text")]
+  id<GREYMatcher> clearTextButton =
+      grey_allOf(grey_ancestor(grey_accessibilityID(titleIdentifier)),
+                 grey_kindOfClass([UIButton class]), nil);
+  [[EarlGrey selectElementWithMatcher:clearTextButton]
       performAction:grey_tap()];
 
   // Use '\n' to tap Done and dismiss the keyboard.
