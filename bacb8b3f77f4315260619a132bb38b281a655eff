@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a12ba95f_28fc4765",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 12
+      },
+      "lineNbr": 1057,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-07-25T22:26:12Z",
+      "side": 1,
+      "message": "Instead of a single event with 30 ticks, why not store 30 events, with a tick # and a CPU usage metric?",
+      "range": {
+        "startLine": 1053,
+        "startChar": 2,
+        "endLine": 1057,
+        "endChar": 11
+      },
+      "revId": "bacb8b3f77f4315260619a132bb38b281a655eff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
