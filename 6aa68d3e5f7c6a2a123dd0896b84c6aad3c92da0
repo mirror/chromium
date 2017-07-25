@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "c1d60986_ea4fc655",
+        "filename": "services/resource_coordinator/coordination_unit/tab_metrics_collector.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-07-25T20:40:58Z",
+      "side": 1,
+      "message": "nit: just do the comparison directly without assigning it to a temp var first",
+      "revId": "6aa68d3e5f7c6a2a123dd0896b84c6aad3c92da0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ade4d3e_2d5fab16",
         "filename": "services/resource_coordinator/coordination_unit/tab_metrics_collector.cc",
         "patchSetId": 11
@@ -19,6 +36,23 @@
         "endLine": 76,
         "endChar": 70
       },
+      "revId": "6aa68d3e5f7c6a2a123dd0896b84c6aad3c92da0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83101c3a_4cf5eac6",
+        "filename": "services/resource_coordinator/public/cpp/resource_coordinator_features.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-07-25T20:40:58Z",
+      "side": 1,
+      "message": "bikeshedding nit: \"InMs\" instead of just Ms is the usual convention, I think.",
       "revId": "6aa68d3e5f7c6a2a123dd0896b84c6aad3c92da0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
