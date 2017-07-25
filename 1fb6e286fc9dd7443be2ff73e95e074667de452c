@@ -22,6 +22,30 @@
       "revId": "1fb6e286fc9dd7443be2ff73e95e074667de452c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e90d007f_91410e11",
+        "filename": "components/payments/core/journey_logger.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-07-25T22:39:42Z",
+      "side": 1,
+      "message": "Done, great idea, I removed the new metrics.",
+      "parentUuid": "197c8e00_ed48b96e",
+      "range": {
+        "startLine": 260,
+        "startChar": 7,
+        "endLine": 260,
+        "endChar": 56
+      },
+      "revId": "1fb6e286fc9dd7443be2ff73e95e074667de452c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
