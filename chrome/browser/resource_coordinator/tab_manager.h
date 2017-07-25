@@ -226,6 +226,7 @@ class TabManager : public TabStripModelObserver,
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, OnWebContentsDestroyed);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, OnDelayedTabSelected);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, TimeoutWhenLoadingBackgroundTabs);
+  FRIEND_TEST_ALL_PREFIXES(TabManagerTest, BackgroundTabsLoadingOrdering);
   FRIEND_TEST_ALL_PREFIXES(TabManagerStatsCollectorTest,
                            HistogramsSessionRestoreSwitchToTab);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest,
@@ -415,6 +416,11 @@ class TabManager : public TabStripModelObserver,
   // removed NavigationThrottle. Return nullptr if it doesn't exists.
   BackgroundTabNavigationThrottle* RemovePendingNavigationIfNeeded(
       content::WebContents* contents);
+
+  // Returns true if |first| is considered to resume navigation before |second|.
+  static bool ComparePendingNavigations(
+      const BackgroundTabNavigationThrottle* first,
+      const BackgroundTabNavigationThrottle* second);
 
   // Check if the tab is loading. Use only in tests.
   bool IsTabLoadingForTest(content::WebContents* contents) const;
