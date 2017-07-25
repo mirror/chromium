@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00ce1584_5c851f21",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/service/reconnect-during.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-07-25T03:02:46Z",
+      "side": 1,
+      "message": "Curious as to why we are not using assert_promise_rejects_with_message? Is it because we would like a more explicit message in case the promise does resolve? If so, you can pass a third argument explaining what went wrong: https://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js?q\u003dassert_promise_rejects_with_message\u0026sq\u003dpackage:chromium\u0026l\u003d230\u0026dr\u003dCSs",
+      "revId": "3af0a13188acc30f72223c27c226b8f3ce1da3a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed612f87_39b6b323",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/service/reconnect-during.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-07-25T03:02:46Z",
+      "side": 1,
+      "message": "There is something weird here, this promise shouldn\u0027t be resolving because setNextGATTConnectionResponse was not set...",
+      "revId": "3af0a13188acc30f72223c27c226b8f3ce1da3a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
