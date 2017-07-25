@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5badbf54_c7f1b90a",
+        "filename": "third_party/WebKit/Source/core/layout/FlexibleBoxAlgorithm.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-07-25T07:42:07Z",
+      "side": 1,
+      "message": "return min_max_sizes.ShrinkToFit(size)?",
+      "revId": "6eb5fcf521dc4c4171bb94fbf99c36899e446d9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0481a7b3_7ad35abf",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutFlexibleBox.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1195,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-07-25T07:42:07Z",
+      "side": 1,
+      "message": "Or just MinMaxSize sizes{LayoutUnit(), LayoutUnit::Max()};",
+      "revId": "6eb5fcf521dc4c4171bb94fbf99c36899e446d9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa207c97_e34e846f",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutFlexibleBox.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1357,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-07-25T07:42:07Z",
+      "side": 1,
+      "message": "sizes.ShrinkToFit(child_inner_flex_base_size)?",
+      "revId": "6eb5fcf521dc4c4171bb94fbf99c36899e446d9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddb52488_7edfd82c",
+        "filename": "third_party/WebKit/Source/core/layout/MinMaxSize.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-07-25T07:42:07Z",
+      "side": 1,
+      "message": "Should we really add .cc files to this directory? With such a name?\n\n\"MinMaxSize\" is WebKit-style, and \".cc\" is Chromium-style.",
+      "revId": "6eb5fcf521dc4c4171bb94fbf99c36899e446d9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a01d965e_cf3acc23",
+        "filename": "third_party/WebKit/Source/core/layout/MinMaxSize.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-07-25T07:42:07Z",
+      "side": 1,
+      "message": "This would surely benefit from being inlined.",
+      "revId": "6eb5fcf521dc4c4171bb94fbf99c36899e446d9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
