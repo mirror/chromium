@@ -37,8 +37,7 @@ class ImportantSitesUsageCounterTest : public testing::Test {
   QuotaManager* CreateQuotaManager() {
     quota_manager_ = new QuotaManager(
         false, temp_dir_.GetPath(),
-        BrowserThread::GetTaskRunnerForThread(BrowserThread::IO).get(),
-        BrowserThread::GetTaskRunnerForThread(BrowserThread::DB).get(), nullptr,
+        BrowserThread::GetTaskRunnerForThread(BrowserThread::IO).get(), nullptr,
         storage::GetQuotaSettingsFunc());
     return quota_manager_.get();
   }
