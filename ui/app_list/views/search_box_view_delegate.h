@@ -22,6 +22,9 @@ class APP_LIST_EXPORT SearchBoxViewDelegate {
   // Selects first item or clears selection from search list.
   virtual void SetSearchResultSelection(bool select) = 0;
 
+  // Clears selection in the active page.
+  virtual void ClearSelectionInActivePage() = 0;
+
  protected:
   virtual ~SearchBoxViewDelegate() {}
 };

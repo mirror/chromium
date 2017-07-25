@@ -49,8 +49,7 @@ class APP_LIST_EXPORT SearchResultPageView
   int GetSearchBoxZHeight() const override;
   void OnHidden() override;
   gfx::Rect GetSearchBoxBounds() const override;
-
-  void ClearSelectedIndex();
+  void ClearSelectedIndex() override;
 
   // Overridden from SearchResultContainerView::Delegate :
   void OnSearchResultContainerResultsChanged() override;

@@ -148,6 +148,8 @@ class SearchBoxViewTest : public views::test::WidgetTest,
 
   void SetSearchResultSelection(bool select) override {}
 
+  void ClearSelectionInActivePage() override {}
+
   AppListTestViewDelegate view_delegate_;
   views::Widget* widget_;
   AppListView* app_list_view_ = nullptr;
@@ -218,6 +220,8 @@ class SearchBoxViewFullscreenTest : public views::test::WidgetTest,
   void BackButtonPressed() override {}
 
   void SetSearchResultSelection(bool select) override {}
+
+  void ClearSelectionInActivePage() override {}
 
   base::test::ScopedFeatureList scoped_feature_list_;
 

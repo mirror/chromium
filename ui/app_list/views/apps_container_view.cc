@@ -142,8 +142,7 @@ bool AppsContainerView::OnKeyPressed(const ui::KeyEvent& event) {
 }
 
 void AppsContainerView::OnWillBeShown() {
-  apps_grid_view()->ClearAnySelectedView();
-  app_list_folder_view()->items_grid_view()->ClearAnySelectedView();
+  ClearSelectedIndex();
 }
 
 gfx::Rect AppsContainerView::GetPageBoundsForState(
@@ -153,6 +152,13 @@ gfx::Rect AppsContainerView::GetPageBoundsForState(
     return onscreen_bounds;
 
   return GetBelowContentsOffscreenBounds(onscreen_bounds.size());
+}
+
+void AppsContainerView::ClearSelectedIndex() {
+  if (apps_grid_view()->suggestions_container())
+    apps_grid_view()->suggestions_container()->ClearSelectedIndex();
+  apps_grid_view()->ClearAnySelectedView();
+  app_list_folder_view()->items_grid_view()->ClearAnySelectedView();
 }
 
 void AppsContainerView::OnTopIconAnimationsComplete() {

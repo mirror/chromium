@@ -136,7 +136,7 @@ class AppsGridViewTest : public views::ViewsTestBase,
     app_list_view_->GetWidget()->Show();
 
     model_ = delegate_->GetTestModel();
-    suggestions_container_ = apps_grid_view_->suggestions_container_for_test();
+    suggestions_container_ = apps_grid_view_->suggestions_container();
     for (size_t i = 0; i < kNumOfSuggestedApps; ++i)
       model_->results()->Add(base::MakeUnique<TestSuggestedSearchResult>());
     // Needed to update suggestions from |model_|.

@@ -408,8 +408,12 @@ void SearchBoxView::SetSearchBoxActive(bool active) {
   if (speech_button_)
     speech_button_->SetVisible(!active);
   close_button_->SetVisible(active);
-  if (focused_view_ != FOCUS_CONTENTS_VIEW)
-    ResetTabFocus(false);
+
+  // Reset focus back to search box view when the search box is set active or
+  // inactive.
+  ResetTabFocus(false);
+  delegate_->ClearSelectionInActivePage();
+
   content_container_->Layout();
 }
 

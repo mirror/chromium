@@ -212,6 +212,11 @@ void AppListMainView::SetSearchResultSelection(bool select) {
     contents_view_->search_results_page_view()->SetSelection(select);
 }
 
+void AppListMainView::ClearSelectionInActivePage() {
+  contents_view_->GetPageView(contents_view_->GetActivePageIndex())
+      ->ClearSelectedIndex();
+}
+
 void AppListMainView::OnResultInstalled(SearchResult* result) {
   // Clears the search to show the apps grid. The last installed app
   // should be highlighted and made visible already.

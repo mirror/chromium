@@ -219,9 +219,15 @@ void StartPageView::OnShown() {
     custom_page_view->SetVisible(
         app_list_main_view_->ShouldShowCustomLauncherPage());
   }
-  suggestions_container_->ClearSelectedIndex();
+  ClearSelectedIndex();
   suggestions_container_->Update();
+}
+
+void StartPageView::ClearSelectedIndex() {
+  suggestions_container_->ClearSelectedIndex();
   custom_launcher_page_background_->SetSelected(false);
+  if (expand_arrow_view_)
+    expand_arrow_view_->SetSelected(false);
 }
 
 gfx::Rect StartPageView::GetPageBoundsForState(

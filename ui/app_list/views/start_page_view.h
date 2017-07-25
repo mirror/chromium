@@ -48,6 +48,7 @@ class APP_LIST_EXPORT StartPageView : public AppListPage {
   gfx::Rect GetPageBoundsForState(AppListModel::State state) const override;
   gfx::Rect GetSearchBoxBounds() const override;
   void OnShown() override;
+  void ClearSelectedIndex() override;
 
   // Overridden from views::View:
   void Layout() override;

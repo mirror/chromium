@@ -412,6 +412,12 @@ TEST_F(AppListViewFullscreenTest, StartPageTabFocusTest) {
   EXPECT_EQ(FOCUS_CONTENTS_VIEW, search_box_view->get_focused_view_for_test());
   EXPECT_EQ(StartPageView::kExpandArrowSelection,
             start_page_view->GetSelectedIndexForTest());
+
+  // Changing search box's active state resets focus back to search box view.
+  search_box_view->SetSearchBoxActive(true);
+  EXPECT_EQ(FOCUS_SEARCH_BOX, search_box_view->get_focused_view_for_test());
+  EXPECT_EQ(StartPageView::kNoSelection,
+            start_page_view->GetSelectedIndexForTest());
 }
 
 // Tests displaying the app list and performs a standard set of checks on its

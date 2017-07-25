@@ -213,7 +213,7 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
 
   const AppListModel* model() const { return model_; }
 
-  SuggestionsContainerView* suggestions_container_for_test() const {
+  SuggestionsContainerView* suggestions_container() const {
     return suggestions_container_;
   }
 
