@@ -33,7 +33,7 @@ const int kD2DProtocolVersion = 1;
 // after the inner message is created.
 void OnInnerMessageCreatedForInitiatorAuth(
     const SessionKeys& session_keys,
-    SecureMessageDelegate* secure_message_delegate,
+    base::WeakPtr<SecureMessageDelegate> secure_message_delegate,
     const DeviceToDeviceInitiatorOperations::MessageCallback& callback,
     const std::string& inner_message) {
   if (inner_message.empty()) {
@@ -69,7 +69,7 @@ struct ValidateResponderAuthMessageContext {
   std::string persistent_symmetric_key;
   std::string session_private_key;
   std::string hello_message;
-  SecureMessageDelegate* secure_message_delegate;
+  base::WeakPtr<SecureMessageDelegate> secure_message_delegate;
   DeviceToDeviceInitiatorOperations::ValidateResponderAuthCallback callback;
   std::string responder_session_public_key;
   std::string session_symmetric_key;
@@ -241,7 +241,7 @@ void OnInnerMessageUnwrappedForResponderAuth(
 void DeviceToDeviceInitiatorOperations::CreateHelloMessage(
     const std::string& session_public_key,
     const std::string& persistent_symmetric_key,
-    SecureMessageDelegate* secure_message_delegate,
+    base::WeakPtr<SecureMessageDelegate> secure_message_delegate,
     const MessageCallback& callback) {
   // Decode public key into the |initator_hello| proto.
   securemessage::InitiatorHello initiator_hello;
@@ -274,7 +274,7 @@ void DeviceToDeviceInitiatorOperations::ValidateResponderAuthMessage(
     const std::string& persistent_symmetric_key,
     const std::string& session_private_key,
     const std::string& hello_message,
-    SecureMessageDelegate* secure_message_delegate,
+    base::WeakPtr<SecureMessageDelegate> secure_message_delegate,
     const ValidateResponderAuthCallback& callback) {
   // The [Responder Auth] message has the structure:
   // {
@@ -309,7 +309,7 @@ void DeviceToDeviceInitiatorOperations::CreateInitiatorAuthMessage(
     const SessionKeys& session_keys,
     const std::string& persistent_symmetric_key,
     const std::string& responder_auth_message,
-    SecureMessageDelegate* secure_message_delegate,
+    base::WeakPtr<SecureMessageDelegate> secure_message_delegate,
     const MessageCallback& callback) {
   // The [Initiator Auth] message has the structure:
   // {

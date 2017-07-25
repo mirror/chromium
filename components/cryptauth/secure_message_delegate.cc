@@ -6,25 +6,23 @@
 
 namespace cryptauth {
 
-SecureMessageDelegate::SecureMessageDelegate() {
+SecureMessageDelegate::SecureMessageDelegate() : weak_ptr_factory_(this) {}
+
+SecureMessageDelegate::~SecureMessageDelegate() {}
+
+base::WeakPtr<SecureMessageDelegate> SecureMessageDelegate::AsWeakPtr() {
+  return weak_ptr_factory_.GetWeakPtr();
 }
 
-SecureMessageDelegate::~SecureMessageDelegate() {
-}
-
-SecureMessageDelegate::CreateOptions::CreateOptions() {
-}
+SecureMessageDelegate::CreateOptions::CreateOptions() {}
 
 SecureMessageDelegate::CreateOptions::CreateOptions(
     const CreateOptions& other) = default;
 
-SecureMessageDelegate::CreateOptions::~CreateOptions() {
-}
+SecureMessageDelegate::CreateOptions::~CreateOptions() {}
 
-SecureMessageDelegate::UnwrapOptions::UnwrapOptions() {
-}
+SecureMessageDelegate::UnwrapOptions::UnwrapOptions() {}
 
-SecureMessageDelegate::UnwrapOptions::~UnwrapOptions() {
-}
+SecureMessageDelegate::UnwrapOptions::~UnwrapOptions() {}
 
 }  // namespace cryptauth

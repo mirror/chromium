@@ -8,6 +8,7 @@
 #include <string>
 
 #include "base/callback_forward.h"
+#include "base/memory/weak_ptr.h"
 #include "components/cryptauth/proto/securemessage.pb.h"
 
 namespace cryptauth {
@@ -95,6 +96,11 @@ class SecureMessageDelegate {
       const std::string& key,
       const UnwrapOptions& unwrap_options,
       const UnwrapSecureMessageCallback& callback) = 0;
+
+  base::WeakPtr<SecureMessageDelegate> AsWeakPtr();
+
+ private:
+  base::WeakPtrFactory<SecureMessageDelegate> weak_ptr_factory_;
 };
 
 }  // namespace cryptauth

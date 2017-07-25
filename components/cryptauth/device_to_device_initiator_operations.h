@@ -10,6 +10,7 @@
 
 #include "base/callback_forward.h"
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "components/cryptauth/session_keys.h"
 
 namespace cryptauth {
@@ -60,7 +61,7 @@ class DeviceToDeviceInitiatorOperations {
   static void CreateHelloMessage(
       const std::string& session_public_key,
       const std::string& persistent_symmetric_key,
-      SecureMessageDelegate* secure_message_delegate,
+      base::WeakPtr<SecureMessageDelegate> secure_message_delegate,
       const MessageCallback& callback);
 
   // Validates that the [Responder Auth] message, received from the responder,
@@ -86,7 +87,7 @@ class DeviceToDeviceInitiatorOperations {
       const std::string& persistent_symmetric_key,
       const std::string& session_private_key,
       const std::string& hello_message,
-      SecureMessageDelegate* secure_message_delegate,
+      base::WeakPtr<SecureMessageDelegate> secure_message_delegate,
       const ValidateResponderAuthCallback& callback);
 
   // Creates the [Initiator Auth] message, which allows the responder to
@@ -104,7 +105,7 @@ class DeviceToDeviceInitiatorOperations {
       const SessionKeys& session_keys,
       const std::string& persistent_symmetric_key,
       const std::string& responder_auth_message,
-      SecureMessageDelegate* secure_message_delegate,
+      base::WeakPtr<SecureMessageDelegate> secure_message_delegate,
       const MessageCallback& callback);
 
  private:

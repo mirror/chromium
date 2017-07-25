@@ -99,7 +99,7 @@ class ProximityAuthDeviceToDeviceOperationsTest : public testing::Test {
     std::string hello_message;
     DeviceToDeviceInitiatorOperations::CreateHelloMessage(
         local_session_public_key_, persistent_symmetric_key_,
-        &secure_message_delegate_,
+        secure_message_delegate_.AsWeakPtr(),
         base::Bind(&SaveMessageResult, &hello_message));
     EXPECT_FALSE(hello_message.empty());
     return hello_message;
@@ -115,7 +115,7 @@ class ProximityAuthDeviceToDeviceOperationsTest : public testing::Test {
     DeviceToDeviceResponderOperations::CreateResponderAuthMessage(
         hello_message, remote_session_public_key_, remote_session_private_key_,
         persistent_responder_private_key, persistent_symmetric_key_,
-        &secure_message_delegate_,
+        secure_message_delegate_.AsWeakPtr(),
         base::Bind(&SaveMessageResult, &remote_auth_message));
     EXPECT_FALSE(remote_auth_message.empty());
     return remote_auth_message;
@@ -127,7 +127,7 @@ class ProximityAuthDeviceToDeviceOperationsTest : public testing::Test {
     std::string local_auth_message;
     DeviceToDeviceInitiatorOperations::CreateInitiatorAuthMessage(
         session_keys_, persistent_symmetric_key_, remote_auth_message,
-        &secure_message_delegate_,
+        secure_message_delegate_.AsWeakPtr(),
         base::Bind(&SaveMessageResult, &local_auth_message));
     EXPECT_FALSE(local_auth_message.empty());
     return local_auth_message;
@@ -152,7 +152,7 @@ TEST_F(ProximityAuthDeviceToDeviceOperationsTest,
   std::string hello_public_key;
   DeviceToDeviceResponderOperations::ValidateHelloMessage(
       CreateHelloMessage(), persistent_symmetric_key_,
-      &secure_message_delegate_,
+      secure_message_delegate_.AsWeakPtr(),
       base::Bind(&SaveValidationResultWithKey, &validation_success,
                  &hello_public_key));
 
@@ -166,7 +166,7 @@ TEST_F(ProximityAuthDeviceToDeviceOperationsTest,
   std::string hello_public_key = "non-empty string";
   DeviceToDeviceResponderOperations::ValidateHelloMessage(
       "some random string", persistent_symmetric_key_,
-      &secure_message_delegate_,
+      secure_message_delegate_.AsWeakPtr(),
       base::Bind(&SaveValidationResultWithKey, &validation_success,
                  &hello_public_key));
 
@@ -184,7 +184,7 @@ TEST_F(ProximityAuthDeviceToDeviceOperationsTest,
   DeviceToDeviceInitiatorOperations::ValidateResponderAuthMessage(
       remote_auth_message, kResponderPersistentPublicKey,
       persistent_symmetric_key_, local_session_private_key_, hello_message,
-      &secure_message_delegate_,
+      secure_message_delegate_.AsWeakPtr(),
       base::Bind(&SaveValidationResultWithSessionKeys, &validation_success,
                  &session_keys));
 
@@ -205,7 +205,7 @@ TEST_F(ProximityAuthDeviceToDeviceOperationsTest,
   DeviceToDeviceInitiatorOperations::ValidateResponderAuthMessage(
       remote_auth_message, kResponderPersistentPublicKey,
       persistent_symmetric_key_, local_session_private_key_,
-      "invalid hello message", &secure_message_delegate_,
+      "invalid hello message", secure_message_delegate_.AsWeakPtr(),
       base::Bind(&SaveValidationResultWithSessionKeys, &validation_success,
                  &session_keys));
 
@@ -224,7 +224,7 @@ TEST_F(ProximityAuthDeviceToDeviceOperationsTest,
   DeviceToDeviceInitiatorOperations::ValidateResponderAuthMessage(
       remote_auth_message, kResponderPersistentPublicKey,
       "invalid persistent symmetric key", local_session_private_key_,
-      hello_message, &secure_message_delegate_,
+      hello_message, secure_message_delegate_.AsWeakPtr(),
       base::Bind(&SaveValidationResultWithSessionKeys, &validation_success,
                  &session_keys));
 
@@ -243,7 +243,7 @@ TEST_F(ProximityAuthDeviceToDeviceOperationsTest,
   bool validation_success = false;
   DeviceToDeviceResponderOperations::ValidateInitiatorAuthMessage(
       local_auth_message, session_keys_, persistent_symmetric_key_,
-      remote_auth_message, &secure_message_delegate_,
+      remote_auth_message, secure_message_delegate_.AsWeakPtr(),
       base::Bind(&SaveValidationResult, &validation_success));
 
   EXPECT_TRUE(validation_success);
@@ -259,7 +259,7 @@ TEST_F(ProximityAuthDeviceToDeviceOperationsTest,
   bool validation_success = true;
   DeviceToDeviceResponderOperations::ValidateInitiatorAuthMessage(
       local_auth_message, session_keys_, persistent_symmetric_key_,
-      "invalid remote auth", &secure_message_delegate_,
+      "invalid remote auth", secure_message_delegate_.AsWeakPtr(),
       base::Bind(&SaveValidationResult, &validation_success));
 
   EXPECT_FALSE(validation_success);
@@ -275,7 +275,7 @@ TEST_F(ProximityAuthDeviceToDeviceOperationsTest,
   bool validation_success = true;
   DeviceToDeviceResponderOperations::ValidateInitiatorAuthMessage(
       local_auth_message, session_keys_, "invalid persistent symmetric key",
-      remote_auth_message, &secure_message_delegate_,
+      remote_auth_message, secure_message_delegate_.AsWeakPtr(),
       base::Bind(&SaveValidationResult, &validation_success));
 
   EXPECT_FALSE(validation_success);

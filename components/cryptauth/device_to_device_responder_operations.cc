@@ -52,7 +52,7 @@ struct CreateResponderAuthMessageContext {
   std::string session_private_key;
   std::string persistent_private_key;
   std::string persistent_symmetric_key;
-  SecureMessageDelegate* secure_message_delegate;
+  base::WeakPtr<SecureMessageDelegate> secure_message_delegate;
   DeviceToDeviceResponderOperations::MessageCallback callback;
   std::string hello_public_key;
   std::string middle_message;
@@ -190,7 +190,7 @@ void OnSessionSymmetricKeyDerivedForResponderAuth(
 struct ValidateInitiatorAuthMessageContext {
   std::string persistent_symmetric_key;
   std::string responder_auth_message;
-  SecureMessageDelegate* secure_message_delegate;
+  base::WeakPtr<SecureMessageDelegate> secure_message_delegate;
   DeviceToDeviceResponderOperations::ValidationCallback callback;
 };
 
@@ -243,7 +243,7 @@ void OnOuterMessageUnwrappedForInitiatorAuth(
 void DeviceToDeviceResponderOperations::ValidateHelloMessage(
     const std::string& hello_message,
     const std::string& persistent_symmetric_key,
-    SecureMessageDelegate* secure_message_delegate,
+    base::WeakPtr<SecureMessageDelegate> secure_message_delegate,
     const ValidateHelloCallback& callback) {
   // The [Hello] message has the structure:
   // {
@@ -266,7 +266,7 @@ void DeviceToDeviceResponderOperations::CreateResponderAuthMessage(
     const std::string& session_private_key,
     const std::string& persistent_private_key,
     const std::string& persistent_symmetric_key,
-    SecureMessageDelegate* secure_message_delegate,
+    base::WeakPtr<SecureMessageDelegate> secure_message_delegate,
     const MessageCallback& callback) {
   // The [Responder Auth] message has the structure:
   // {
@@ -306,7 +306,7 @@ void DeviceToDeviceResponderOperations::ValidateInitiatorAuthMessage(
     const SessionKeys& session_keys,
     const std::string& persistent_symmetric_key,
     const std::string& responder_auth_message,
-    SecureMessageDelegate* secure_message_delegate,
+    base::WeakPtr<SecureMessageDelegate> secure_message_delegate,
     const ValidationCallback& callback) {
   // The [Initiator Auth] message has the structure:
   // {

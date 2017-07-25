@@ -116,7 +116,7 @@ void DeviceToDeviceAuthenticator::OnKeyPairGenerated(
   state_ = State::SENDING_HELLO;
   DeviceToDeviceInitiatorOperations::CreateHelloMessage(
       public_key, connection_->remote_device().persistent_symmetric_key,
-      secure_message_delegate_.get(),
+      secure_message_delegate_->AsWeakPtr(),
       base::Bind(&DeviceToDeviceAuthenticator::OnHelloMessageCreated,
                  weak_ptr_factory_.GetWeakPtr()));
 }
@@ -170,7 +170,7 @@ void DeviceToDeviceAuthenticator::OnResponderAuthValidated(
   // Create the [Initiator Auth] message to send to the remote device.
   DeviceToDeviceInitiatorOperations::CreateInitiatorAuthMessage(
       session_keys_, connection_->remote_device().persistent_symmetric_key,
-      responder_auth_message_, secure_message_delegate_.get(),
+      responder_auth_message_, secure_message_delegate_->AsWeakPtr(),
       base::Bind(&DeviceToDeviceAuthenticator::OnInitiatorAuthCreated,
                  weak_ptr_factory_.GetWeakPtr()));
 }
@@ -247,7 +247,7 @@ void DeviceToDeviceAuthenticator::OnMessageReceived(
         responder_auth_message_, responder_public_key,
         connection_->remote_device().persistent_symmetric_key,
         local_session_private_key_, hello_message_,
-        secure_message_delegate_.get(),
+        secure_message_delegate_->AsWeakPtr(),
         base::Bind(&DeviceToDeviceAuthenticator::OnResponderAuthValidated,
                    weak_ptr_factory_.GetWeakPtr()));
   } else {

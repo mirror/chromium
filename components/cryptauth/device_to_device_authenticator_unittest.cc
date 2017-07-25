@@ -190,7 +190,7 @@ class ProximityAuthDeviceToDeviceAuthenticatorTest : public testing::Test {
     std::string local_session_public_key;
     DeviceToDeviceResponderOperations::ValidateHelloMessage(
         hello_message, remote_device_.persistent_symmetric_key,
-        secure_message_delegate_,
+        secure_message_delegate_->AsWeakPtr(),
         base::Bind(&SaveValidateHelloMessageResult, &validated,
                    &local_session_public_key));
 
@@ -210,7 +210,7 @@ class ProximityAuthDeviceToDeviceAuthenticatorTest : public testing::Test {
     DeviceToDeviceResponderOperations::CreateResponderAuthMessage(
         hello_message, remote_session_public_key_, remote_session_private_key_,
         remote_device_private_key, remote_device_.persistent_symmetric_key,
-        secure_message_delegate_,
+        secure_message_delegate_->AsWeakPtr(),
         base::Bind(&SaveStringResult, &responder_auth_message));
     EXPECT_FALSE(responder_auth_message.empty());
 
@@ -272,7 +272,7 @@ TEST_F(ProximityAuthDeviceToDeviceAuthenticatorTest, AuthenticateSucceeds) {
   DeviceToDeviceResponderOperations::ValidateInitiatorAuthMessage(
       initiator_auth, SessionKeys(session_symmetric_key_),
       remote_device_.persistent_symmetric_key, responder_auth_message,
-      secure_message_delegate_,
+      secure_message_delegate_->AsWeakPtr(),
       base::Bind(&SaveBooleanResult, &initiator_auth_validated));
   ASSERT_TRUE(initiator_auth_validated);
 }
