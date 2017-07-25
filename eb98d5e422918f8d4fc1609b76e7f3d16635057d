@@ -1,0 +1,382 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5b799cf_2171e115",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-25T14:04:44Z",
+      "side": 1,
+      "message": "great documentation! Thanks",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 47
+      },
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2124d845_d6faed9d",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-25T14:04:44Z",
+      "side": 1,
+      "message": "I\u0027m still not sure about using \"id\". I see it being used internally. I would prefer we use \"url\" for now. The iTunes store URL can be inferred from \"id\". WDYT?",
+      "range": {
+        "startLine": 52,
+        "startChar": 8,
+        "endLine": 52,
+        "endChar": 10
+      },
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "303bf424_fc0b42d4",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-25T14:04:44Z",
+      "side": 1,
+      "message": "can you include \"name\", \"icon\" and \"universal link\" in your description?",
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0610f42_fcfe1c34",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-25T14:04:44Z",
+      "side": 1,
+      "message": "would call this FoundCallback to differentiate from base::Callback a little better",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 60,
+        "endChar": 17
+      },
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f793f44_475e9cc2",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-25T14:04:44Z",
+      "side": 1,
+      "message": "Do you consider this the entry point to this class? If so, you could consider having *this* function take the FoundCallback (which would then be a base::OnceCallback) instead of the constructor. It could make the calling code a little easier to write, because as it is right now the calling code has to keep track of which |method| it requested, whereas if you have DownloadManifests(const GURL\u0026 method, FoundCallback callback), then you can already bind the |method| into |callback| before it\u0027s passed.\n\nIf it\u0027s really the entry point, I would rename the function FindPaymentAppForMethod.",
+      "range": {
+        "startLine": 74,
+        "startChar": 7,
+        "endLine": 74,
+        "endChar": 24
+      },
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a10b827e_8512daa2",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-25T14:04:44Z",
+      "side": 1,
+      "message": "could some of these be private? You can declare your test class as a friend.\n\nprivate:\n  friend class IOSPaymentAppFinderTest;\n\n  bool ParsePaymentManifestForWebAppManifestURL(...);\n  bool ParseWebAppManifestForPaymentAppDetails(...);",
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2450396_73a5b048",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-25T14:04:44Z",
+      "side": 1,
+      "message": "nit: OnPaymentManifestDownloaded?",
+      "range": {
+        "startLine": 94,
+        "startChar": 7,
+        "endLine": 94,
+        "endChar": 32
+      },
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a3212b9_4e21f0e6",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-25T14:04:44Z",
+      "side": 1,
+      "message": "same nit",
+      "range": {
+        "startLine": 98,
+        "startChar": 7,
+        "endLine": 98,
+        "endChar": 31
+      },
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a43322c4_d3e9d6db",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-25T14:04:44Z",
+      "side": 1,
+      "message": "(1) bug number is wrong. \n(2) Please create a specific bug # for this issue.",
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3a2c6cf_d220f9e0",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-25T14:04:44Z",
+      "side": 1,
+      "message": "UIApplication",
+      "range": {
+        "startLine": 44,
+        "startChar": 5,
+        "endLine": 44,
+        "endChar": 18
+      },
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09c221d0_11003b48",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-25T14:04:44Z",
+      "side": 1,
+      "message": "Create a bug for this issue",
+      "range": {
+        "startLine": 49,
+        "startChar": 20,
+        "endLine": 49,
+        "endChar": 25
+      },
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83885299_7af0e514",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-25T14:04:44Z",
+      "side": 1,
+      "message": "if (ParsePaymentManifestForWebAppManifestURL(content, \u0026web_app_manifest_url)) {\n\n}",
+      "range": {
+        "startLine": 70,
+        "startChar": 6,
+        "endLine": 70,
+        "endChar": 13
+      },
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f085e284_5b9df91e",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-25T14:04:44Z",
+      "side": 1,
+      "message": "How do we keep track of failures? Does the caller eventually know that we couldn\u0027t find a universal link for this payment method?",
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4d438e2_3ba69180",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-25T14:04:44Z",
+      "side": 1,
+      "message": "nit: would rename out_app_name, similar with other 2.",
+      "range": {
+        "startLine": 143,
+        "startChar": 17,
+        "endLine": 143,
+        "endChar": 25
+      },
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bf22331_8526fdf1",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder_unittest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-25T14:04:44Z",
+      "side": 1,
+      "message": "Received",
+      "range": {
+        "startLine": 21,
+        "startChar": 68,
+        "endLine": 21,
+        "endChar": 77
+      },
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e11593b_6deb6806",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder_unittest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-25T14:04:44Z",
+      "side": 1,
+      "message": "Since these are only used in the scope of one function, consider\n\nstd::string app_name;\nstd::string app_icon;\nGURL universal_link;\n\nbool success \u003d ios_payment_app_finder_-\u003eParseWebAppManifestForPaymentAppDetails(\n            input, \u0026current_app_name, \u0026current_app_icon,\n            \u0026universal_link);\n\n// Check the values.",
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7a0ffb4_31ae28fb",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder_unittest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-25T14:04:44Z",
+      "side": 1,
+      "message": "universal",
+      "range": {
+        "startLine": 59,
+        "startChar": 12,
+        "endLine": 59,
+        "endChar": 21
+      },
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b0ccdee_b1f948a8",
+        "filename": "ios/chrome/browser/payments/ios_payment_app_finder_unittest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-25T14:04:44Z",
+      "side": 1,
+      "message": "these may not be needed, see above",
+      "revId": "eb98d5e422918f8d4fc1609b76e7f3d16635057d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
