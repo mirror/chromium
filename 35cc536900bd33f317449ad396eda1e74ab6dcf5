@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "75709ce6_e11d7c97",
+        "filename": "ash/public/interfaces/system_tray.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-07-25T02:13:26Z",
+      "side": 1,
+      "message": "This mojo interface supports the mustash project (go/mustash). This message goes from the trusted browser process to the trusted ash process (which acts like window server + window manager + system UI).\n\nThis is a piece of a UI string that appears in the system menu item \"This device is managed by \u003cfoo.com\u003e\" for enterprise enrolled devices.",
+      "parentUuid": "f87071c4_9e80a480",
+      "revId": "35cc536900bd33f317449ad396eda1e74ab6dcf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc1cfa31_c3766c4a",
         "filename": "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.cc",
         "patchSetId": 9
