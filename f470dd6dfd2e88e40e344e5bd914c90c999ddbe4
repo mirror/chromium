@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab3f9d1b_f2867a16",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1911,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-25T21:58:29Z",
+      "side": 1,
+      "message": "If select generally doesn\u0027t affect android (possibly except for multi-select) why target it? Isn\u0027t there potentially some benefit to accelerating it for non-mobile scrolling through select lists?",
+      "revId": "f470dd6dfd2e88e40e344e5bd914c90c999ddbe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
