@@ -10,7 +10,7 @@
 
 #include "base/android/scoped_java_ref.h"
 #include "base/macros.h"
-#include "chrome/browser/history/browsing_history_service_handler.h"
+#include "components/history/core/browser/browsing_history_service_handler.h"
 
 using base::android::JavaParamRef;
 
