@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce6a284c_47708317",
+        "filename": "content/shell/browser/shell_url_request_context_getter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-25T21:00:23Z",
+      "side": 1,
+      "message": "So it turns out my CL to automatically create a cache thread doesn\u0027t actually work, since a blocking thread still isn\u0027t given a MessageLoopForIO, which the blockfile cache needs.  Maksims is removing the argument entirely, but that CL hasn\u0027t landed yet.  It will probably land before I\u0027m ready to land this one, though, so I\u0027ll remove this line before landing (Which should fix the presubmit issue)",
+      "range": {
+        "startLine": 155,
+        "startChar": 23,
+        "endLine": 155,
+        "endChar": 45
+      },
+      "revId": "05f7238ea5bf098612279bf568e451cc5b0432b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
