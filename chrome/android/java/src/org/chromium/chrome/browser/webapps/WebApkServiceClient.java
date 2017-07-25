@@ -113,6 +113,13 @@ public class WebApkServiceClient {
         sInstance.mConnectionManager.disconnectAll(ContextUtils.getApplicationContext());
     }
 
+    /** Returns whether has bound to the WebAPK's service. */
+    public static boolean isConnected(String webApkPackage) {
+        if (sInstance == null) return false;
+
+        return sInstance.mConnectionManager.isConnected(webApkPackage);
+    }
+
     /** Decodes bitmap from WebAPK's resources. */
     private static Bitmap decodeImageResource(String webApkPackage, int resourceId) {
         PackageManager packageManager = ContextUtils.getApplicationContext().getPackageManager();

@@ -163,6 +163,13 @@ public class WebApkServiceConnectionManager {
         }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, values);
     }
 
+    /** Checks if has bound to a WebAPK service. */
+    public boolean isConnected(String webApkPackage) {
+        if (mConnections.isEmpty() || !mConnections.containsKey(webApkPackage)) return false;
+
+        return mConnections.get(webApkPackage).getService() != null;
+    }
+
     public WebApkServiceConnectionManager(String category, String action) {
         mCategory = category;
         mAction = action;

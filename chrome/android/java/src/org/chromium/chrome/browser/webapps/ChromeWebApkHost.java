@@ -56,6 +56,11 @@ public class ChromeWebApkHost {
             ApplicationStatus.registerApplicationStateListener(sListener);
         }
 
+        if (WebApkServiceClient.isConnected(webApkPackageName)) {
+            callback.onChecked(true);
+            return;
+        }
+
         WebApkIdentityServiceClient.getInstance().checkBrowserBacksWebApkAsync(
                 ContextUtils.getApplicationContext(), webApkPackageName, callback);
     }
