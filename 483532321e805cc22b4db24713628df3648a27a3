@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eba34303_5b961332",
+        "filename": "device/bluetooth/public/interfaces/test/fake_bluetooth.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-07-25T00:20:32Z",
+      "side": 1,
+      "message": "Return a success result similar to SetNextReadCharacteristicResponse so that tests will be less likely to silently think this worked when it didn\u0027t.",
+      "revId": "483532321e805cc22b4db24713628df3648a27a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9523a6a2_86123eca",
+        "filename": "device/bluetooth/test/fake_central.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-07-25T00:20:32Z",
+      "side": 1,
+      "message": "return false",
+      "range": {
+        "startLine": 122,
+        "startChar": 4,
+        "endLine": 122,
+        "endChar": 10
+      },
+      "revId": "483532321e805cc22b4db24713628df3648a27a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9978dc0_abdca71f",
+        "filename": "device/bluetooth/test/fake_remote_gatt_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-07-25T00:20:32Z",
+      "side": 1,
+      "message": "if ... return false",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 8
+      },
+      "revId": "483532321e805cc22b4db24713628df3648a27a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fee9110e_dc8d78dd",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/characteristic/characteristic-is-removed.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-07-25T00:20:32Z",
+      "side": 1,
+      "message": "If you take my suggestion to use fake_characteristic.remove() then both \u0027service\u0027 and \u0027fake_service\u0027 are not needed in this test.",
+      "range": {
+        "startLine": 3,
+        "startChar": 6,
+        "endLine": 3,
+        "endChar": 43
+      },
+      "revId": "483532321e805cc22b4db24713628df3648a27a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1729621f_d6a6367e",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/characteristic/characteristic-is-removed.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-07-25T00:20:32Z",
+      "side": 1,
+      "message": "This assert string misleads: not all calls are getDesc... \nGo with something like original, maybe clearer:\n \u0027Characteristic removed, so calls on it should fail.\u0027\n\nWhat I liked about assert_promise_rejects_with_message was that it was very clear the following call should fail. I\u0027m guessing you wanted to avoid the indentation. Ok with me. It is harder to read promises with .then(success, fail) when the success and fail are inline arrow functions. I think just indentation can help with that? How about:\n\n    .then(_ \u003d\u003e assert_unreached(\u0027Got descriptor unexpectedly.\u0027),\n          e \u003d\u003e {\n      assert_equals(e.name, \u0027InvalidStateError\u0027);\n      assert_equals(e.message, \u0027GATT Characteristic no longer exists.\u0027);\n    });\n\neven if multiline and possibly more indented I think this helps see there are\nsuccess and failure functions: \n\n    .then(_ \u003d\u003e assert_unreached(\n                   \u0027Characteristic removed, so calls on it should fail.\u0027),\n          e \u003d\u003e {\n            assert_equals(e.name, \u0027InvalidStateError\u0027);\n            assert_equals(e.message, \u0027GATT Characteristic no longer exists.\u0027);\n    });",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 7
+      },
+      "revId": "483532321e805cc22b4db24713628df3648a27a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0298448b_b857d99f",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-07-25T00:20:32Z",
+      "side": 1,
+      "message": "Please split refactors like this out in future patches.",
+      "range": {
+        "startLine": 556,
+        "startChar": 21,
+        "endLine": 556,
+        "endChar": 34
+      },
+      "revId": "483532321e805cc22b4db24713628df3648a27a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1fdfd28_b860628d",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/web-bluetooth-test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-07-25T00:20:32Z",
+      "side": 1,
+      "message": "Move this to a member of FakeRemoteGATTCharacteristic, so that a call of e.g. fake_characteristic.remove() works. The ids_ will remain private and test code can\u0027t incorrectly mix service and characteristics that don\u0027t go together.",
+      "range": {
+        "startLine": 268,
+        "startChar": 35,
+        "endLine": 268,
+        "endChar": 51
+      },
+      "revId": "483532321e805cc22b4db24713628df3648a27a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

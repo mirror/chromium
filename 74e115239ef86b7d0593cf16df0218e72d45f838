@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b92a8386_cbc6edea",
+        "filename": "device/bluetooth/test/fake_remote_gatt_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-07-25T00:20:32Z",
+      "side": 1,
+      "message": "Match the header. Either change none or both.",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 65
+      },
+      "revId": "74e115239ef86b7d0593cf16df0218e72d45f838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09f5dcd0_fb7ebb50",
+        "filename": "device/bluetooth/test/fake_remote_gatt_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-07-25T00:20:32Z",
+      "side": 1,
+      "message": "Change comment and parameter names to match.\n\nI don\u0027t think \u0027characteristic_id\u0027 is clearer than a method/parameter pair of form VerbCharacterisic(\u0027identifier\u0027).\n\nI do think it can be easy to confuse the IDs of an attribute (the type UUID, vs the instance ID), as we discussed earlier. If you want to make improvements to that let\u0027s at least refactor entire files at a time to be consistent. Until then, use similar terminology to the rest of a file.\n\nIf we do a name refactor we should try to use in code the terminology from the bluetooth specification whenever possible.\n\nFrom Core_v4.2.pdf\nBLUETOOTH SPECIFICATION Version 4.2 [Vol 3, Part F] page 472\n\n\"\"\"\nAn attribute is a discrete value that has the following three properties\nassociated with it:\na) attribute type, defined by a UUID\nb) attribute handle\nc) a set of permissions that are defined by each higher layer\nspecification that utilizes the attribute; these permissions cannot\nbe accessed using the Attribute Protocol.\nThe attribute type specifies what the attribute represents. Bluetooth SIG\ndefined attribute types are defined in the Bluetooth SIG assigned numbers\npage, and used by an associated higher layer specification. Non-Bluetooth SIG\nattribute types may also be defined.\nThe attribute handle uniquely identifies an attribute on a server, allowing a\nclient to reference the attribute in read or write requests; see Section 3.4.4,\nSection 3.4.5, and Section 3.4.6. It allows a client to uniquely identify the\nattribute being notified or indicated, see Section 3.4.7. Clients are able to\ndiscover the handles of the server’s attributes; see Section 3.4.3. Permissions\nmay be applied to an attribute to prevent applications from obtaining or altering\nan attribute’s value.\n\"\"\"\n\nWe aren\u0027t exposing the actual handle at this level, but something that we generate with a 1:1 mapping to each handle. So I don\u0027t think using \u0027handle\u0027 is a good idea.\n\nI\u0027d suggest if we change \u0027identifier\u0027 names to be clearer we use:\n\u0027type_uuid\u0027\n\u0027instance_id\u0027\n\nas in \n\ncharacteristic_type_uuid\ncharacteristic_instance_id\n\n\u0027type\u0027 coming from the spec. There may be better names than \u0027instance\u0027, but I don\u0027t want to use \u0027handle\u0027 and \u0027instance\u0027 seems to get the point across.",
+      "range": {
+        "startLine": 41,
+        "startChar": 41,
+        "endLine": 41,
+        "endChar": 51
+      },
+      "revId": "74e115239ef86b7d0593cf16df0218e72d45f838",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
