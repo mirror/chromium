@@ -45,6 +45,10 @@ void BubbleIconView::SetImage(const gfx::ImageSkia* image_skia) {
   image_->SetImage(image_skia);
 }
 
+void BubbleIconView::SetImage(const gfx::ImageSkia& img) {
+  image_->SetImage(img);
+}
+
 const gfx::ImageSkia& BubbleIconView::GetImage() const {
   return image_->GetImage();
 }

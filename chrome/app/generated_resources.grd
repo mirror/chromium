@@ -5413,6 +5413,9 @@ the Bookmarks menu.">
       <message name="IDS_NEWTAB_PROMO" desc="Text shown on promotional UI appearing next to the New Tab button, which encourages users to use it.">
         Open a new tab with one click
       </message>
+      <message name="IDS_BOOKMARK_PROMO" desc="Text shown on promotional UI appearing next to the Bookmarks button, which encourages users to use it.">
+        Bookmark this page to easily find it later
+      </message>
 
       <!-- Browser Hung Plugin Detector -->
       <if expr="is_win">
