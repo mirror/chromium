@@ -16,6 +16,24 @@
       "revId": "4856780030fd3e8c672c0b45025e1854fbfb8480",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "510fc28d_8b5326ea",
+        "filename": "ui/message_center/views/bounded_label.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-07-25T08:29:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17406710_48b141ad",
+      "revId": "4856780030fd3e8c672c0b45025e1854fbfb8480",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
