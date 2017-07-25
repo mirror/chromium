@@ -16,6 +16,41 @@
       "revId": "e98f5ca80d99facd20a0a3e545c5b8d53614b2e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d987ddf0_0e95e446",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleSelection.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-07-25T08:22:46Z",
+      "side": 1,
+      "message": "I mean creating a patch assigning to |start_| and |end_| only once at the end of \n this function: |start_ \u003d base_is_first_ ? base_ : extent_;| and remove it introducing\n |Start()|.\nI agree that introducing EphemralRanges in this function but it could be done separately.",
+      "parentUuid": "000be576_f6692ecc",
+      "revId": "e98f5ca80d99facd20a0a3e545c5b8d53614b2e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e384d4cf_55232e29",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleSelection.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-07-25T08:22:46Z",
+      "side": 1,
+      "message": "This changes code flow:\nWhat if selection_type_ \u003d\u003d kNoSelection?",
+      "revId": "e98f5ca80d99facd20a0a3e545c5b8d53614b2e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
