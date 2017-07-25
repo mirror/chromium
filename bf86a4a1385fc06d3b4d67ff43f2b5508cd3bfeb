@@ -34,6 +34,24 @@
       "revId": "bf86a4a1385fc06d3b4d67ff43f2b5508cd3bfeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06b59bea_1138dfca",
+        "filename": "ui/webui/resources/cr_elements/shared_vars_css.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-07-25T00:58:17Z",
+      "side": 1,
+      "message": "Changed it to --cr-toggle-color, will deal with consolidating the primary color in a future CL.",
+      "parentUuid": "0c810b58_cb9f90cc",
+      "revId": "bf86a4a1385fc06d3b4d67ff43f2b5508cd3bfeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
