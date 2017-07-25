@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1829929f_54abdca3",
+        "filename": "ios/chrome/browser/payments/payment_response_helper.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-25T17:38:49Z",
+      "side": 1,
+      "message": "Done. Changing PaymentResponse.method_name to std::string.",
+      "parentUuid": "c89d1bfd_39b6503c",
+      "range": {
+        "startLine": 65,
+        "startChar": 31,
+        "endLine": 65,
+        "endChar": 43
+      },
+      "revId": "c04e2f2b198f7d12b4fe8e911ce8d4133607ae12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "269f8fab_224cbba1",
         "filename": "ios/chrome/browser/payments/test_payment_request.h",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3455765f_57e4a79a",
+        "filename": "ios/chrome/browser/payments/test_payment_request.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-25T17:38:49Z",
+      "side": 1,
+      "message": "\"US\" is a country code in this context.",
+      "parentUuid": "269f8fab_224cbba1",
+      "range": {
+        "startLine": 51,
+        "startChar": 61,
+        "endLine": 51,
+        "endChar": 65
+      },
+      "revId": "c04e2f2b198f7d12b4fe8e911ce8d4133607ae12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7f7c9846_8bd92525",
         "filename": "ios/chrome/browser/ui/payments/payment_request_coordinator.mm",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-25T16:52:49Z",
       "side": 1,
       "message": "I did not see any \"delete this\" calls in FullCardRequester. Can you double-check this?",
+      "range": {
+        "startLine": 135,
+        "startChar": 3,
+        "endLine": 135,
+        "endChar": 67
+      },
+      "revId": "c04e2f2b198f7d12b4fe8e911ce8d4133607ae12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59af39d0_26fab246",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-25T17:38:49Z",
+      "side": 1,
+      "message": "Done. Hmm I must\u0027ve been mistaken here.",
+      "parentUuid": "7f7c9846_8bd92525",
       "range": {
         "startLine": 135,
         "startChar": 3,
