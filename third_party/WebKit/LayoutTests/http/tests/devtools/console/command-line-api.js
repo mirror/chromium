@@ -14,6 +14,14 @@
     </p><p id='bar'></p>
   `);
 
+  TestRunner.evaluateInPage(`
+    function assertNoBoundCommandLineAPI() {
+      ['__commandLineAPI', '__scopeChainForEval'].forEach(function(name) {
+        console.assert(!(name in window), 'FAIL: Should be no ' + name);
+      });
+    }
+  `);
+
   var expressions = [
     'String($0)',
     '$3',
@@ -42,12 +50,7 @@
   }
 
   function step2() {
-    function assertNoBoundCommandLineAPI() {
-      ['__commandLineAPI', '__scopeChainForEval'].forEach(function(name) {
-        console.assert(!(name in window), 'FAIL: Should be no ' + name);
-      });
-    }
-    TestRunner.evaluateInPage(assertNoBoundCommandLineAPI, step3);
+    TestRunner.evaluateInPage('assertNoBoundCommandLineAPI()', step3);
   }
 
   function step3() {
