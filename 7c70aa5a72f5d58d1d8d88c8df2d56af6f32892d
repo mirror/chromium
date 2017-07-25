@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "80b727ab_e42cb97b",
+        "filename": "ui/keyboard/keyboard_controller_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-07-25T08:58:40Z",
+      "side": 0,
+      "message": "It\u0027s OK to keep it, but not necessary, because ShowKeyboard will Show it.\nI think in the real scenario, no one (except for KeyboardController) will explicitly show the container window.\n\nDo you think we should keep it to make sure that KeyboardController is fault-tolerant?",
+      "parentUuid": "138c961f_53d476e9",
+      "range": {
+        "startLine": 433,
+        "startChar": 1,
+        "endLine": 433,
+        "endChar": 29
+      },
+      "revId": "7c70aa5a72f5d58d1d8d88c8df2d56af6f32892d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4fe80845_8142be9a",
         "filename": "ui/keyboard/keyboard_controller_unittest.cc",
         "patchSetId": 15
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-25T08:42:31Z",
       "side": 0,
       "message": "ditto",
+      "range": {
+        "startLine": 632,
+        "startChar": 1,
+        "endLine": 632,
+        "endChar": 28
+      },
+      "revId": "7c70aa5a72f5d58d1d8d88c8df2d56af6f32892d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "590ebe7e_d8ba40d2",
+        "filename": "ui/keyboard/keyboard_controller_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-07-25T08:58:40Z",
+      "side": 0,
+      "message": "ditto",
+      "parentUuid": "4fe80845_8142be9a",
       "range": {
         "startLine": 632,
         "startChar": 1,
