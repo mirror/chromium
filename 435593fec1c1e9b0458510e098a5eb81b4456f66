@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "1a6b94d3_029eb675",
+        "filename": "net/cert/cert_verify_proc_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-07-25T23:05:14Z",
+      "side": 1,
+      "message": "Sorry, I was thinking we can delete this test entirely, given our other tests (that support the synthetic injection of our own EV policy OIDs). I\u0027m not sure what we gain here.",
+      "range": {
+        "startLine": 306,
+        "startChar": 7,
+        "endLine": 306,
+        "endChar": 33
+      },
+      "revId": "435593fec1c1e9b0458510e098a5eb81b4456f66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "620b8dd5_28182cc6",
         "filename": "net/data/ssl/scripts/fetch-live-certs.sh",
         "patchSetId": 1
