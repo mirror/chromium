@@ -13,6 +13,7 @@ import codecs
 import os
 import re
 import socket
+import subprocess
 import sys
 import threading
 import time
@@ -111,6 +112,16 @@ def _gitiles_slugify(value, _separator):
   value = re.sub(r'([-_])[-_]+', r'\1', value)  # Fold hyphens and underscores.
   return value
 
+
+class Git(object):
+  @staticmethod
+  def FilesChangedSinceBranchPoint(git_dir):
+    # TODO(cmumford): Use the git_common module from depot_tools?
+    files = []
+    cmd = ['git', 'diff', '--name-only', '@{u}', git_dir]
+    for line in subprocess.check_output(cmd).splitlines():
+      files.append(line.strip())
+    return files
 
 class Server(SocketServer.TCPServer):
   def __init__(self, server_address, top_level):
@@ -241,6 +252,25 @@ class Handler(SimpleHTTPServer.SimpleHTTPRequestHandler):
     self.wfile.write('<div class="Breadcrumbs">\n')
     self.wfile.write('<a class="Breadcrumbs-crumb">%s</a>\n' % self.path)
     self.wfile.write('</div>\n')
+
+    # Filter out non-existing files as deleted files will show up as modified.
+    modified_files = []
+    for f in Git.FilesChangedSinceBranchPoint(full_path):
+      if os.path.exists(f):
+        modified_files.append(f)
+    if modified_files:
+      self.wfile.write('<div class="ModifiedFiles">\n')
+      self.wfile.write('<h2>Modified Files</h2>\n')
+      self.wfile.write('<div>\n')
+      for f in sorted(modified_files):
+        if f.endswith('.md'):
+          bold = ('<b>', '</b>')
+        else:
+          bold = ('', '')
+        self.wfile.write('<a href="%s/%s">%s%s%s</a><br/>\n' %
+                         (self.path.rstrip('/'), f, bold[0], f, bold[1]))
+      self.wfile.write('</div>\n')
+      self.wfile.write('</div>\n')
 
     for _, dirs, files in os.walk(full_path):
       for f in sorted(files):
