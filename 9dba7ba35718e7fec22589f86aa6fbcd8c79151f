@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f80737a_53915cf5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-07-25T20:44:44Z",
+      "side": 1,
+      "message": "Could you make this \"SVG \u003cimage\u003e elements\" (or \"SVG \u003cimage\u003es\" if you prefer a shorter form) or something that disambiguates from an SVG \"image\" as a whole?",
+      "range": {
+        "startLine": 7,
+        "startChar": 40,
+        "endLine": 7,
+        "endChar": 50
+      },
+      "revId": "9dba7ba35718e7fec22589f86aa6fbcd8c79151f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ee7a0ab_6a57a90d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/image-decodes/image-decode-path-changes-svg.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-07-25T20:44:44Z",
+      "side": 1,
+      "message": "If you intended to fill this in I guess you could add it back when it actually references something useful?",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 6,
+        "endChar": 23
+      },
+      "revId": "9dba7ba35718e7fec22589f86aa6fbcd8c79151f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6600dec1_bf1a78d3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/image-decodes/image-decode-path-changes-svg.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-07-25T20:44:44Z",
+      "side": 1,
+      "message": "You shouldn\u0027t need this.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 19
+      },
+      "revId": "9dba7ba35718e7fec22589f86aa6fbcd8c79151f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7ca08ba_300253d7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/image-decodes/image-decode-path-changes-svg.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-07-25T20:44:44Z",
+      "side": 1,
+      "message": "You could make the document title slightly longer instead - maybe \"SVGImageElement.decode(), \u0027href\u0027 mutations\" or something like that - and then do document.title+\u0027, fail decode\u0027 et.c. Should make it obvious that this is testing stuff from the SVGImageElement interface (\u0027img\u0027 is kind of associated with HTML \u003cimg\u003e.)\n\nAlso (hidden above), using \"Path\" here seems unspecific - using \"URL\" or \u0027href\u0027 (like above) seems to better describe the test. (A URL may have a path, but in all these cases I would refer to them as \"(relative) URLs\".)",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 22
+      },
+      "revId": "9dba7ba35718e7fec22589f86aa6fbcd8c79151f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f66e012f_16d72864",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/image-decodes/image-decode-path-changes-svg.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-07-25T20:44:44Z",
+      "side": 1,
+      "message": "assert_not_equals? (ditto below)",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 47
+      },
+      "revId": "9dba7ba35718e7fec22589f86aa6fbcd8c79151f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b328cab1_4d8eb629",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/image-decodes/image-decode-svg.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-07-25T20:44:44Z",
+      "side": 1,
+      "message": "rel\u003dhelp, div#log and \u003ctitle\u003e/naming suggestions like above.",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 0
+      },
+      "revId": "9dba7ba35718e7fec22589f86aa6fbcd8c79151f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8405ecac_eb84908a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/image-decodes/image-decode-svg.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-07-25T20:44:44Z",
+      "side": 1,
+      "message": "\"data: URL\"? (or \"data URL\")",
+      "range": {
+        "startLine": 34,
+        "startChar": 14,
+        "endLine": 34,
+        "endChar": 17
+      },
+      "revId": "9dba7ba35718e7fec22589f86aa6fbcd8c79151f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "742a9531_5a5d3227",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/image-decodes/image-decode-svg.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-07-25T20:44:44Z",
+      "side": 1,
+      "message": "URL",
+      "range": {
+        "startLine": 49,
+        "startChar": 23,
+        "endLine": 49,
+        "endChar": 27
+      },
+      "revId": "9dba7ba35718e7fec22589f86aa6fbcd8c79151f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3c8e614_c28053b7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/image-decodes/image-decode-svg.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-07-25T20:44:44Z",
+      "side": 1,
+      "message": "\"Image without a \u0027href\u0027 (attribute)...\"",
+      "range": {
+        "startLine": 62,
+        "startChar": 10,
+        "endLine": 62,
+        "endChar": 25
+      },
+      "revId": "9dba7ba35718e7fec22589f86aa6fbcd8c79151f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb454ad1_377f6a3c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/image-decodes/image-decode-svg.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-07-25T20:44:44Z",
+      "side": 1,
+      "message": "assert_not_equals?",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 47
+      },
+      "revId": "9dba7ba35718e7fec22589f86aa6fbcd8c79151f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb8586d1_9d476e0a",
+        "filename": "third_party/WebKit/Source/core/loader/ImageLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-07-25T20:44:44Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be needed. (If there could be an exception signaled already, you would need to check for that, but that shouldn\u0027t be the case here. Yes, I realize this code was just moved, but this is an operation you\u0027d only need on rare occasions...)",
+      "range": {
+        "startLine": 664,
+        "startChar": 2,
+        "endLine": 664,
+        "endChar": 34
+      },
+      "revId": "9dba7ba35718e7fec22589f86aa6fbcd8c79151f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9b5c13d_a7201d2b",
+        "filename": "third_party/WebKit/Source/core/loader/ImageLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-07-25T20:44:44Z",
+      "side": 1,
+      "message": "IIRC, this never returns null (it returns the broken image if an error occurred or the \"null image\".) Maybe you want HasImage() or ErrorOccurred() instead? (Does this have test coverage?)",
+      "range": {
+        "startLine": 701,
+        "startChar": 32,
+        "endLine": 701,
+        "endChar": 54
+      },
+      "revId": "9dba7ba35718e7fec22589f86aa6fbcd8c79151f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89fed522_e93fe762",
+        "filename": "third_party/WebKit/Source/core/svg/SVGImageElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-07-25T20:44:44Z",
+      "side": 1,
+      "message": "This acts on unresolved URL - which seems wrong [1] - and since the spec seems to be written in terms of the \u0027current request\u0027 it would seem better if this was handled by the ImageLoader (since it should be closer to the things the spec talks about. This would probably also make other cases easier to manage - like the element moving between documents?) This would also allow getting rid of last_decode_href_. The same naturally also applies to HTMLImageElement.\n\n[1] Inferring things about the resolved URL based on the unresolved representation. The same (relative) URL could resolve to two different URLs, and an absolute URL would differ from a potential relative representation of itself (resolved against the document base URL.)",
+      "range": {
+        "startLine": 148,
+        "startChar": 8,
+        "endLine": 149,
+        "endChar": 56
+      },
+      "revId": "9dba7ba35718e7fec22589f86aa6fbcd8c79151f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42e38ecf_1cd034ab",
+        "filename": "third_party/WebKit/Source/core/svg/SVGImageElement.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-07-25T20:44:44Z",
+      "side": 1,
+      "message": "That would require us to re-materialize the String in certain cases - which we don\u0027t want to do, so no this is not something we \"to do\" I think. See below though.",
+      "range": {
+        "startLine": 103,
+        "startChar": 69,
+        "endLine": 105,
+        "endChar": 18
+      },
+      "revId": "9dba7ba35718e7fec22589f86aa6fbcd8c79151f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
