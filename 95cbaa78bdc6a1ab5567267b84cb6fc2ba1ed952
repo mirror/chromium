@@ -16,6 +16,24 @@
       "revId": "95cbaa78bdc6a1ab5567267b84cb6fc2ba1ed952",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6450a5fc_b581a98f",
+        "filename": "third_party/WebKit/LayoutTests/sensor/resources/sensor-helpers.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-25T23:36:31Z",
+      "side": 1,
+      "message": "The finally block will be executed whether or not the promise returned by func() resolves (or throws an exception) and the error will be propagated, it will be just delayed by waiting for the timeout to fire.",
+      "parentUuid": "cb12b963_cc6d9170",
+      "revId": "95cbaa78bdc6a1ab5567267b84cb6fc2ba1ed952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
