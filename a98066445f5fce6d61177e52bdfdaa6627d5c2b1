@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ced9a235_0a163779",
+        "filename": "ios/chrome/browser/payments/payment_response_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-25T20:50:25Z",
+      "side": 1,
+      "message": "Should we add a TODO here?",
+      "range": {
+        "startLine": 47,
+        "startChar": 43,
+        "endLine": 47,
+        "endChar": 45
+      },
+      "revId": "a98066445f5fce6d61177e52bdfdaa6627d5c2b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaf1157c_138d9201",
+        "filename": "ios/chrome/browser/payments/payment_response_helper.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-25T20:50:25Z",
+      "side": 1,
+      "message": "Is this how we get the normalized phone number (e.g., on Desktop)?",
+      "range": {
+        "startLine": 88,
+        "startChar": 8,
+        "endLine": 88,
+        "endChar": 32
+      },
+      "revId": "a98066445f5fce6d61177e52bdfdaa6627d5c2b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40266052_65ffe362",
+        "filename": "ios/chrome/browser/payments/payment_response_helper_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-25T20:50:25Z",
+      "side": 1,
+      "message": "Can we use the new PaymentRequestUnitTestBase?",
+      "revId": "a98066445f5fce6d61177e52bdfdaa6627d5c2b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29d43c35_a4512422",
+        "filename": "ios/chrome/browser/payments/payment_response_helper_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-25T20:50:25Z",
+      "side": 1,
+      "message": "Could we have a test similar to GeneratePaymentResponse_ContactPhoneIsFormatted on Desktop side?",
+      "revId": "a98066445f5fce6d61177e52bdfdaa6627d5c2b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
