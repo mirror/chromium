@@ -83,10 +83,16 @@ class WebServiceWorkerNetworkProviderImpl
   // Blink calls this method for each request starting with the main script,
   // we tag them with the provider id.
   void WillSendRequest(blink::WebURLRequest& request) override {
-    std::unique_ptr<RequestExtraData> extra_data(new RequestExtraData);
+    RequestExtraData* extra_data =
+        static_cast<RequestExtraData*>(request.GetExtraData());
+    if (!extra_data)
+      extra_data = new RequestExtraData();
+
     extra_data->set_service_worker_provider_id(provider_->provider_id());
     extra_data->set_initiated_in_secure_context(is_secure_context_);
-    request.SetExtraData(extra_data.release());
+
+    request.SetExtraData(extra_data);
+
     // If the provider does not have a controller at this point, the renderer
     // expects subresource requests to never be handled by a controlling service
     // worker, so set the ServiceWorkerMode to skip local workers here.

@@ -438,10 +438,15 @@ WebURLRequest CreateURLRequestForNavigation(
   request.SetPreviewsState(
       static_cast<WebURLRequest::PreviewsState>(common_params.previews_state));
 
-  RequestExtraData* extra_data = new RequestExtraData();
+  RequestExtraData* extra_data =
+      static_cast<RequestExtraData*>(request.GetExtraData());
+  if (!extra_data)
+    extra_data = new RequestExtraData();
+
   extra_data->set_stream_override(std::move(stream_override));
   extra_data->set_navigation_initiated_by_renderer(
       request_params.nav_entry_id == 0);
+
   request.SetExtraData(extra_data);
 
   // Set the ui timestamp for this navigation. Currently the timestamp here is
@@ -4341,10 +4346,12 @@ void RenderFrameImpl::WillSendRequest(blink::WebURLRequest& request) {
       parent ? RenderFrame::GetRoutingIdForWebFrame(parent) : -1;
 
   WebDocument frame_document = frame_->GetDocument();
+
   RequestExtraData* extra_data =
       static_cast<RequestExtraData*>(request.GetExtraData());
   if (!extra_data)
     extra_data = new RequestExtraData();
+
   extra_data->set_visibility_state(VisibilityState());
   extra_data->set_custom_user_agent(custom_user_agent);
   extra_data->set_requested_with(requested_with);
