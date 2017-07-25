@@ -116,8 +116,13 @@ public class DownloadItemView extends SelectableItemView<DownloadHistoryItemWrap
     }
 
     @Override
-    public void onThumbnailRetrieved(String filePath, Bitmap thumbnail) {
-        if (TextUtils.equals(getFilePath(), filePath) && thumbnail != null
+    public String getContentId() {
+        return mItem == null ? "" : mItem.getId();
+    }
+
+    @Override
+    public void onThumbnailRetrieved(String contentId, Bitmap thumbnail) {
+        if (TextUtils.equals(getContentId(), contentId) && thumbnail != null
                 && thumbnail.getWidth() > 0 && thumbnail.getHeight() > 0) {
             assert !thumbnail.isRecycled();
             setThumbnailBitmap(thumbnail);
@@ -127,6 +132,11 @@ public class DownloadItemView extends SelectableItemView<DownloadHistoryItemWrap
     @Override
     public int getIconSize() {
         return mIconSize;
+    }
+
+    @Override
+    public boolean shouldCacheToDisk() {
+        return true;
     }
 
     /**
