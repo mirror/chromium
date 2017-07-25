@@ -34,6 +34,24 @@
       "revId": "ce169d8eea7852811ed224357af7ed8bd452b522",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23c354a4_8e5dd574",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 73227,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-25T04:41:01Z",
+      "side": 1,
+      "message": "Yes, it still makes sense to add a unit -- something like \"engagement score\" is appropriate in this case.  The unit is shown as an axis label on our dashboards, and the default value is \"units\", which is rarely useful.",
+      "parentUuid": "f574d906_71cb252a",
+      "revId": "ce169d8eea7852811ed224357af7ed8bd452b522",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
