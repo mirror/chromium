@@ -14,7 +14,11 @@ namespace cc {
 // capped into one bucket.
 static constexpr int kScrollerSizeLargestBucket = 200000;
 static constexpr int kScrollerSizeBucketCount = 50;
-
+// By not compositing scrollers smaller than 50000px (250 * 200), on android
+// devices we might affect roughly 50% scrollers for memory saving while at
+// most 4% scrolls may be slowed down. On non-android devices, this threshold
+// affects roughly 28% scrollers and 1% scrolls.
+static constexpr int kSmallScrollerThreshold = 50000;
 }  // namespace cc
 
 #endif  // CC_INPUT_SCROLLER_SIZE_METRICS_H_
