@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a014d23f_ffe3b56b",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorkerGlobalScopeProxy.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-25T08:26:59Z",
+      "side": 1,
+      "message": "This looks pretty brittle still... it\u0027s not clear to me the relationship between \"loading task\" and TaskType::kNetworking. If all \"loading tasks\" are on kNetworking, and this API is returning something like a sequenced task runner for kNetworking, it\u0027d be happier with a comment like:\n\n// Use TaskType::kNetworking to ensure this task is executed before any other loading tasks posted after this task, since all loading tasks use TaskType::kNetworking.\n\nBut I\u0027m that\u0027s looks false since there is also TaskType::kUnspecedLoading. It seems we\u0027re depending on kUnspecedLoading and kNetworking using the same task runner.... how strongly can we really depend on that assumption, and is there any way to verify it via DCHECK or test something?",
+      "revId": "a14e61d99a65e0ed973b6fbb912d36f08e9558f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
