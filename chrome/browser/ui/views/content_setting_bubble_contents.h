@@ -28,6 +28,7 @@ class ContentSettingBubbleViewsBridge;
 }
 
 namespace views {
+class ImageButton;
 class RadioButton;
 class LabelButton;
 }
@@ -119,7 +120,7 @@ class ContentSettingBubbleContents : public content::WebContentsObserver,
   views::Link* manage_link_;
   views::LabelButton* manage_button_;
   views::Checkbox* manage_checkbox_;
-  views::Link* learn_more_link_;
+  views::ImageButton* learn_more_button_;
 
   // Combobox models the bubble owns.
   std::list<MediaComboboxModel> combobox_models_;
