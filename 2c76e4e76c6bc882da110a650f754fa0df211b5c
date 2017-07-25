@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "612b51e8_74b62646",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1125,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-25T00:28:25Z",
+      "side": 1,
+      "message": "The UMA says that this records layers which have rasterized tile content. But DrawsContent would end up including any layer which has drawable content (TextureLayers, SolidColorLayers, UIResourceLayers, ...). Solid color layers or picture layers which have been marked solid color don\u0027t contribute to texture memory.\n\nDo you only want to record the number of PictureLayers that have tilings?",
+      "range": {
+        "startLine": 1125,
+        "startChar": 13,
+        "endLine": 1125,
+        "endChar": 41
+      },
+      "revId": "2c76e4e76c6bc882da110a650f754fa0df211b5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
