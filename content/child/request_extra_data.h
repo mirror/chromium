@@ -130,13 +130,6 @@ class CONTENT_EXPORT RequestExtraData
     stream_override_ = std::move(stream_override);
   }
 
-  bool initiated_in_secure_context() const {
-    return initiated_in_secure_context_;
-  }
-  void set_initiated_in_secure_context(bool secure) {
-    initiated_in_secure_context_ = secure;
-  }
-
   // The request is a prefetch and should use LOAD_PREFETCH network flags.
   bool is_prefetch() const { return is_prefetch_; }
   void set_is_prefetch(bool prefetch) { is_prefetch_ = prefetch; }

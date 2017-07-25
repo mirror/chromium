@@ -100,9 +100,6 @@ class WebServiceWorkerNetworkProviderImpl
     std::unique_ptr<RequestExtraData> extra_data(new RequestExtraData);
     extra_data->set_service_worker_provider_id(provider_->provider_id());
     extra_data->set_originated_from_service_worker(true);
-    // Service workers are only available in secure contexts, so all requests
-    // are initiated in a secure context.
-    extra_data->set_initiated_in_secure_context(true);
     request.SetExtraData(extra_data.release());
   }
 

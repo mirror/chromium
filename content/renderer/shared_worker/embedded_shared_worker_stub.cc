@@ -76,16 +76,14 @@ class WebServiceWorkerNetworkProviderImpl
     : public blink::WebServiceWorkerNetworkProvider {
  public:
   WebServiceWorkerNetworkProviderImpl(
-      std::unique_ptr<ServiceWorkerNetworkProvider> provider,
-      bool is_secure_context)
-      : provider_(std::move(provider)), is_secure_context_(is_secure_context) {}
+      std::unique_ptr<ServiceWorkerNetworkProvider> provider)
+      : provider_(std::move(provider)) {}
 
   // Blink calls this method for each request starting with the main script,
   // we tag them with the provider id.
   void WillSendRequest(blink::WebURLRequest& request) override {
     std::unique_ptr<RequestExtraData> extra_data(new RequestExtraData);
     extra_data->set_service_worker_provider_id(provider_->provider_id());
-    extra_data->set_initiated_in_secure_context(is_secure_context_);
     request.SetExtraData(extra_data.release());
     // If the provider does not have a controller at this point, the renderer
     // expects subresource requests to never be handled by a controlling service
@@ -117,7 +115,6 @@ class WebServiceWorkerNetworkProviderImpl
 
  private:
   std::unique_ptr<ServiceWorkerNetworkProvider> provider_;
-  const bool is_secure_context_;
 };
 
 }  // namespace
@@ -246,7 +243,7 @@ EmbeddedSharedWorkerStub::CreateServiceWorkerNetworkProvider() {
 
   // Blink is responsible for deleting the returned object.
   return base::MakeUnique<WebServiceWorkerNetworkProviderImpl>(
-      std::move(provider), IsOriginSecure(url_));
+      std::move(provider));
 }
 
 void EmbeddedSharedWorkerStub::SendDevToolsMessage(
@@ -280,12 +277,6 @@ EmbeddedSharedWorkerStub::CreateWorkerFetchContext(
   // (crbug.com/723553)
   // https://tools.ietf.org/html/draft-west-first-party-cookies-07#section-2.1.2
   worker_fetch_context->set_first_party_for_cookies(url_);
-  // TODO(horo): Currently we treat the worker context as secure if the origin
-  // of the shared worker script url is secure. But according to the spec, if
-  // the creation context is not secure, we should treat the worker as
-  // non-secure. crbug.com/723575
-  // https://w3c.github.io/webappsec-secure-contexts/#examples-shared-workers
-  worker_fetch_context->set_is_secure_context(IsOriginSecure(url_));
   if (web_network_provider) {
     worker_fetch_context->set_service_worker_provider_id(
         web_network_provider->GetProviderID());
