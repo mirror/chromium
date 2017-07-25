@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb9f91b2_a2376e75",
+        "filename": "ios/chrome/browser/ui/static_content/static_html_native_content.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-25T13:14:09Z",
+      "side": 1,
+      "message": "This whole block feels wrong -- if we disable web usage, then we destroy _staticHTMLViewController, but it looks like there\u0027s no way to ever create a new one.  Does that leave this object in a broken state?  Can this ever happen in the real app?",
+      "revId": "5c494733bca5e4c2a340c4d0a433a43f39832dfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
