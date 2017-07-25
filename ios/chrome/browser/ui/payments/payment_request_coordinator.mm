@@ -9,7 +9,6 @@
 #include "components/autofill/core/browser/autofill_profile.h"
 #include "components/autofill/core/browser/credit_card.h"
 #include "components/payments/core/autofill_payment_instrument.h"
-#include "components/payments/core/journey_logger.h"
 #include "components/payments/core/payment_address.h"
 #include "components/payments/core/payment_instrument.h"
 #include "components/payments/core/payment_request_data_util.h"
@@ -17,6 +16,7 @@
 #include "ios/chrome/browser/application_context.h"
 #include "ios/chrome/browser/payments/payment_request.h"
 #include "ios/chrome/browser/payments/payment_request_util.h"
+#include "ios/chrome/browser/ui/payments/full_card_requester.h"
 #include "ios/chrome/browser/ui/payments/payment_request_mediator.h"
 #include "ui/base/l10n/l10n_util.h"
 
@@ -44,10 +44,6 @@ const NSTimeInterval kUpdatePaymentSummaryItemIntervalSeconds = 10.0;
 
   PaymentRequestMediator* _mediator;
 
-  // Receiver of the full credit card details. Also displays the unmask prompt
-  // UI.
-  std::unique_ptr<FullCardRequester> _fullCardRequester;
-
   // The selected shipping address, pending approval from the page.
   autofill::AutofillProfile* _pendingShippingAddress;
 
@@ -62,6 +58,7 @@ const NSTimeInterval kUpdatePaymentSummaryItemIntervalSeconds = 10.0;
 @synthesize pageTitle = _pageTitle;
 @synthesize pageHost = _pageHost;
 @synthesize connectionSecure = _connectionSecure;
+@synthesize pending = _pending;
 @synthesize delegate = _delegate;
 
 - (void)start {
@@ -84,9 +81,6 @@ const NSTimeInterval kUpdatePaymentSummaryItemIntervalSeconds = 10.0;
   [_navigationController
       setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
   [_navigationController setNavigationBarHidden:YES];
-
-  _fullCardRequester = base::MakeUnique<FullCardRequester>(
-      self, _navigationController, _browserState);
 
   [[self baseViewController] presentViewController:_navigationController
                                           animated:YES
@@ -121,30 +115,28 @@ const NSTimeInterval kUpdatePaymentSummaryItemIntervalSeconds = 10.0;
   _navigationController = nil;
 }
 
+#pragma mark - Setters
+
+- (void)setPending:(BOOL)pending {
+  _pending = pending;
+  _viewController.view.userInteractionEnabled = !pending;
+  [_viewController setPending:pending];
+  [_viewController loadModel];
+  [[_viewController collectionView] reloadData];
+}
+
+#pragma mark - Public methods
+
 - (void)
 requestFullCreditCard:(const autofill::CreditCard&)card
        resultDelegate:
            (base::WeakPtr<autofill::payments::FullCardRequest::ResultDelegate>)
                resultDelegate {
-  _fullCardRequester->GetFullCard(card, _autofillManager, resultDelegate);
+  // The FullCardRequester instance deletes itself when it is done.
+  FullCardRequester* fullCardRequester =
+      new FullCardRequester(_navigationController, _browserState);
+  fullCardRequester->GetFullCard(card, _autofillManager, resultDelegate);
 }
-
-#pragma mark - FullCardRequesterConsumer
-
-- (void)fullCardRequestDidSucceedWithMethodName:(const std::string&)methodName
-                             stringifiedDetails:
-                                 (const std::string&)stringifiedDetails {
-  _viewController.view.userInteractionEnabled = NO;
-  [_viewController setPending:YES];
-  [_viewController loadModel];
-  [[_viewController collectionView] reloadData];
-
-  [_delegate paymentRequestCoordinator:self
-              didReceiveFullMethodName:methodName
-                    stringifiedDetails:stringifiedDetails];
-}
-
-#pragma mark - Public methods
 
 - (void)updatePaymentDetails:(web::PaymentDetails)paymentDetails {
   [_updatePaymentSummaryItemTimer invalidate];
@@ -218,12 +210,7 @@ requestFullCreditCard:(const autofill::CreditCard&)card
 
 - (void)paymentRequestViewControllerDidConfirm:
     (PaymentRequestViewController*)controller {
-  DCHECK(_paymentRequest->selected_payment_method());
-
-  [self recordPayButtonTapped];
-
-  _paymentRequest->selected_payment_method()->InvokePaymentApp(
-      _fullCardRequester.get());
+  [_delegate paymentRequestCoordinatorDidConfirm:self];
 }
 
 - (void)paymentRequestViewControllerDidSelectSettings:
@@ -340,12 +327,7 @@ requestFullCreditCard:(const autofill::CreditCard&)card
 
 - (void)paymentItemsDisplayCoordinatorDidConfirm:
     (PaymentItemsDisplayCoordinator*)coordinator {
-  DCHECK(_paymentRequest->selected_payment_method());
-
-  [self recordPayButtonTapped];
-
-  _paymentRequest->selected_payment_method()->InvokePaymentApp(
-      _fullCardRequester.get());
+  [_delegate paymentRequestCoordinatorDidConfirm:self];
 }
 
 #pragma mark - ContactInfoSelectionCoordinatorDelegate
@@ -474,18 +456,6 @@ contactInfoSelectionCoordinator:(ContactInfoSelectionCoordinator*)coordinator
     (CreditCardEditCoordinator*)coordinator {
   [_creditCardEditCoordinator stop];
   _creditCardEditCoordinator = nil;
-}
-
-#pragma mark - Helper methods
-
-- (void)recordPayButtonTapped {
-  _paymentRequest->journey_logger().SetEventOccurred(
-      payments::JourneyLogger::EVENT_PAY_CLICKED);
-  _paymentRequest->journey_logger().SetSelectedPaymentMethod(
-      _paymentRequest->selected_payment_method()->type() ==
-              payments::PaymentInstrument::Type::AUTOFILL
-          ? payments::JourneyLogger::SELECTED_PAYMENT_METHOD_CREDIT_CARD
-          : payments::JourneyLogger::SELECTED_PAYMENT_METHOD_OTHER_PAYMENT_APP);
 }
 
 @end
