@@ -301,6 +301,29 @@
     },
     {
       "key": {
+        "uuid": "dff970f4_1d8847c5",
+        "filename": "components/safe_browsing_db/v4_store.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-25T21:03:51Z",
+      "side": 1,
+      "message": "the list of members here is sorted, let\u0027s keep it that way.\nalso, let\u0027s call this last_apply_update_result_",
+      "range": {
+        "startLine": 420,
+        "startChar": 20,
+        "endLine": 420,
+        "endChar": 40
+      },
+      "revId": "cea615b154805086f9223f8eaa0a343871d8e292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44a78fa6_6b4c9b5c",
         "filename": "components/safe_browsing_db/v4_update_protocol_manager.cc",
         "patchSetId": 8
