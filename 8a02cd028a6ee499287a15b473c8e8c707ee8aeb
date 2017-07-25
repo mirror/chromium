@@ -1,0 +1,158 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ccd4ed6_7096dec2",
+        "filename": "components/sync/engine/model_type_processor.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-07-25T21:08:39Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to be needed by this file. Am I missing something?",
+      "revId": "8a02cd028a6ee499287a15b473c8e8c707ee8aeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27fec333_924adef1",
+        "filename": "components/sync/model_impl/shared_model_type_processor.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-07-25T21:08:39Z",
+      "side": 1,
+      "message": "Can you delete the return; line?",
+      "revId": "8a02cd028a6ee499287a15b473c8e8c707ee8aeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2261f938_03ac4448",
+        "filename": "components/sync/model_impl/shared_model_type_processor.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-07-25T21:08:39Z",
+      "side": 1,
+      "message": "Why are we DCHECKing this here? When would this not be true? And why does this method care this holds true?",
+      "range": {
+        "startLine": 820,
+        "startChar": 12,
+        "endLine": 820,
+        "endChar": 36
+      },
+      "revId": "8a02cd028a6ee499287a15b473c8e8c707ee8aeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ae910d4_73a68556",
+        "filename": "components/sync/model_impl/shared_model_type_processor.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 826,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-07-25T21:08:39Z",
+      "side": 1,
+      "message": "Why not do the opposite here?\n\nif (entity \u0026\u0026 !entity-\u003eIsUnsynced() \u0026\u0026 entity-\u003emetadata().server_version() \u003c version_watermark) {\n    storage_key_to_be_deleted.push_back(kv.first);\n}",
+      "range": {
+        "startLine": 826,
+        "startChar": 6,
+        "endLine": 826,
+        "endChar": 14
+      },
+      "revId": "8a02cd028a6ee499287a15b473c8e8c707ee8aeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aabf80f_e6e63ac8",
+        "filename": "components/sync/model_impl/shared_model_type_processor.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-07-25T21:08:39Z",
+      "side": 1,
+      "message": "Same as above.",
+      "revId": "8a02cd028a6ee499287a15b473c8e8c707ee8aeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "264280ce_db2e1881",
+        "filename": "components/sync/model_impl/shared_model_type_processor.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 847,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-07-25T21:08:39Z",
+      "side": 1,
+      "message": "Same as above.",
+      "revId": "8a02cd028a6ee499287a15b473c8e8c707ee8aeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e36ad06c_a739f67a",
+        "filename": "components/sync/model_impl/shared_model_type_processor.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-07-25T21:08:39Z",
+      "side": 1,
+      "message": "Why isn\u0027t this part of OnUpdateReceived?",
+      "range": {
+        "startLine": 81,
+        "startChar": 7,
+        "endLine": 81,
+        "endChar": 32
+      },
+      "revId": "8a02cd028a6ee499287a15b473c8e8c707ee8aeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c0f5cf0_13add073",
+        "filename": "components/sync/model_impl/shared_model_type_processor.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-07-25T21:08:39Z",
+      "side": 1,
+      "message": "Can you include why we hang onto these two variables?",
+      "revId": "8a02cd028a6ee499287a15b473c8e8c707ee8aeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
