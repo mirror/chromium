@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "200164cc_5bda76a4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-25T12:35:27Z",
+      "side": 1,
+      "message": "Nit: add \"cache\" for clarity.",
+      "range": {
+        "startLine": 11,
+        "startChar": 27,
+        "endLine": 11,
+        "endChar": 28
+      },
+      "revId": "f6d6690ef84eac0398a2d2d827c1f79ce9a7d03b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15373129_d87418dd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-25T12:35:27Z",
+      "side": 1,
+      "message": "This seems redundant now since ordering wasn\u0027t changed after all.",
+      "range": {
+        "startLine": 17,
+        "startChar": 58,
+        "endLine": 19,
+        "endChar": 48
+      },
+      "revId": "f6d6690ef84eac0398a2d2d827c1f79ce9a7d03b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85df98ce_8e11b1c2",
+        "filename": "chrome/browser/android/signin/signin_manager_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-25T12:35:27Z",
+      "side": 1,
+      "message": "Nit: this is no longer used and can be removed.",
+      "range": {
+        "startLine": 301,
+        "startChar": 0,
+        "endLine": 301,
+        "endChar": 18
+      },
+      "revId": "f6d6690ef84eac0398a2d2d827c1f79ce9a7d03b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8134ccb5_89484f1c",
+        "filename": "chrome/browser/android/signin/signin_manager_android_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-07-25T12:35:27Z",
+      "side": 1,
+      "message": "Nit: is it possible to extract this into a separate function? It would allow removing for loop and splitting this test into two separate ones. It could look like:\n\nTest ShouldWipeBookmarks:\nBookmarkModel* bookmark_model \u003d AddTestBookmarks(profile());\nint bookmarks_count \u003d bookmark_model-\u003ebookmark_bar_node()-\u003echild_count();\nASSERT_NE(0, bookmarks_count);\n// WipeData(true)\nASSERT_EQ(0, bookmark_model-\u003ebookmark_bar_node()-\u003echild_count());\n\nTest ShouldNotWipeBookmarks:\nBookmarkModel* bookmark_model \u003d AddTestBookmarks(profile());\nint bookmarks_count \u003d bookmark_model-\u003ebookmark_bar_node()-\u003echild_count();\nASSERT_NE(0, bookmarks_count);\n// WipeData(false)\nASSERT_EQ(bookmarks_count, bookmark_model-\u003ebookmark_bar_node()-\u003echild_count());",
+      "range": {
+        "startLine": 136,
+        "startChar": 0,
+        "endLine": 147,
+        "endChar": 69
+      },
+      "revId": "f6d6690ef84eac0398a2d2d827c1f79ce9a7d03b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
