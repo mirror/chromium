@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cf7c0c2_1b0919de",
+        "filename": "remoting/host/evaluate_capability.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-25T18:09:01Z",
+      "side": 1,
+      "message": "I still have some concerns around including this test code.\n\n1.) It would be preferable to not have test code which crashes the binary compiled into the prod binary\n2.) This change adds test specific code to multiple production files\n\nIf we want to have a test which executes a function via a separate process and we don\u0027t want to create a separate process then I understand why this is needed, it still feels like it isn\u0027t contained for a production binary though.\n\nLet\u0027s talk offline a bit since I don\u0027t think CR comments are effective for coming to a quick resolution of this issue.",
+      "range": {
+        "startLine": 27,
+        "startChar": 4,
+        "endLine": 27,
+        "endChar": 16
+      },
+      "revId": "5f7d483ed2941b05e25caf4863f9972720fc5a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6035161_cdc93fff",
+        "filename": "remoting/host/evaluate_capability.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-25T18:09:01Z",
+      "side": 1,
+      "message": "This comment can be removed, the code states the name of the binary.",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 80
+      },
+      "revId": "5f7d483ed2941b05e25caf4863f9972720fc5a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7772bd9f_3fd787aa",
+        "filename": "remoting/host/evaluate_capability.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-25T18:09:01Z",
+      "side": 1,
+      "message": "This comment feels like it should be moved to line 83 (where the corresponding code is located).",
+      "range": {
+        "startLine": 72,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 46
+      },
+      "revId": "5f7d483ed2941b05e25caf4863f9972720fc5a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "772f72a8_ca0289a2",
+        "filename": "remoting/host/evaluate_capability.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-25T18:09:01Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think this comment is needed.  If we add a fourth binary, the comment will be out of date.  Please make it generic or remove.",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 27
+      },
+      "revId": "5f7d483ed2941b05e25caf4863f9972720fc5a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9171c8a5_04803e69",
+        "filename": "remoting/host/evaluate_capability.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-25T18:09:01Z",
+      "side": 1,
+      "message": "nit: I think this is more readable, the specific check feels more like Java to me.\n\nif (!output) {\n  blah;\n}",
+      "range": {
+        "startLine": 134,
+        "startChar": 6,
+        "endLine": 134,
+        "endChar": 23
+      },
+      "revId": "5f7d483ed2941b05e25caf4863f9972720fc5a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac0066ba_1c9f22d6",
+        "filename": "remoting/host/evaluate_capability.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-25T18:09:01Z",
+      "side": 1,
+      "message": "happen",
+      "range": {
+        "startLine": 20,
+        "startChar": 71,
+        "endLine": 20,
+        "endChar": 78
+      },
+      "revId": "5f7d483ed2941b05e25caf4863f9972720fc5a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "865011b3_7ee18004",
+        "filename": "remoting/host/evaluate_capability.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-25T18:09:01Z",
+      "side": 1,
+      "message": "Can you add a blurb about this being a blocking call which may take a variable amount of time to complete (dependent on system load).",
+      "range": {
+        "startLine": 21,
+        "startChar": 47,
+        "endLine": 21,
+        "endChar": 0
+      },
+      "revId": "5f7d483ed2941b05e25caf4863f9972720fc5a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b61869d2_814d2097",
+        "filename": "remoting/host/evaluate_capability_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-25T18:09:01Z",
+      "side": 1,
+      "message": "Generally it is a good practice to put the test data in the test file (or test class).\n\nLet\u0027s talk offline but I\u0027m wondering if there is a way to test this function w/o requiring hard-coded text in separate test and production files.",
+      "range": {
+        "startLine": 24,
+        "startChar": 12,
+        "endLine": 25,
+        "endChar": 40
+      },
+      "revId": "5f7d483ed2941b05e25caf4863f9972720fc5a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53d9947e_b1636aa2",
+        "filename": "remoting/host/host_main.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-25T18:09:01Z",
+      "side": 1,
+      "message": "is this useful?  i.e. would we expect the calling binary to parse and display this?  I think a better approach would be to return a new exit code that the caller can look for.  They can then run the appropriate fallback logic for the \u0027unrecognized\u0027 exit code.",
+      "range": {
+        "startLine": 184,
+        "startChar": 4,
+        "endLine": 184,
+        "endChar": 38
+      },
+      "revId": "5f7d483ed2941b05e25caf4863f9972720fc5a70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
