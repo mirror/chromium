@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9a1beffb_0111eab6",
+        "filename": "ios/chrome/browser/payments/payment_response_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-25T21:44:27Z",
+      "side": 1,
+      "message": "I\u0027m not sure what needs to happen here. This delegate method isn\u0027t called anywhere. Desktop\u0027s implementation has an empty body too.",
+      "parentUuid": "ced9a235_0a163779",
+      "range": {
+        "startLine": 47,
+        "startChar": 43,
+        "endLine": 47,
+        "endChar": 45
+      },
+      "revId": "a98066445f5fce6d61177e52bdfdaa6627d5c2b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eaf1157c_138d9201",
         "filename": "ios/chrome/browser/payments/payment_response_helper.mm",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-25T20:50:25Z",
       "side": 1,
       "message": "Is this how we get the normalized phone number (e.g., on Desktop)?",
+      "range": {
+        "startLine": 88,
+        "startChar": 8,
+        "endLine": 88,
+        "endChar": 32
+      },
+      "revId": "a98066445f5fce6d61177e52bdfdaa6627d5c2b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "068faa50_3d92c86a",
+        "filename": "ios/chrome/browser/payments/payment_response_helper.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-25T21:44:27Z",
+      "side": 1,
+      "message": "Good catch! Done.",
+      "parentUuid": "eaf1157c_138d9201",
       "range": {
         "startLine": 88,
         "startChar": 8,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "9be56f1c_b92f6715",
+        "filename": "ios/chrome/browser/payments/payment_response_helper_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-25T21:44:27Z",
+      "side": 1,
+      "message": "Yes, first it has to move from ios/c/b/ui/payments:unit_tests to ios/c/b/payments:test_support. I\u0027ll do it in a future CL.",
+      "parentUuid": "40266052_65ffe362",
+      "revId": "a98066445f5fce6d61177e52bdfdaa6627d5c2b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "29d43c35_a4512422",
         "filename": "ios/chrome/browser/payments/payment_response_helper_unittest.mm",
         "patchSetId": 2
@@ -79,6 +145,24 @@
       "revId": "a98066445f5fce6d61177e52bdfdaa6627d5c2b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e119bc04_88e7b3a4",
+        "filename": "ios/chrome/browser/payments/payment_response_helper_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-25T21:44:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29d43c35_a4512422",
+      "revId": "a98066445f5fce6d61177e52bdfdaa6627d5c2b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
