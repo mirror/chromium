@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0b66ce8f_ca4a00de",
+        "filename": "chrome/android/java/res/layout/password_entry_editor_copyable_row.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-07-25T12:23:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f986f1d8_1fce59a3",
+      "range": {
+        "startLine": 2,
+        "startChar": 15,
+        "endLine": 2,
+        "endChar": 19
+      },
+      "revId": "710808183433bb213398ecf86385823f560485b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e66f370_a057711f",
         "filename": "chrome/android/java/res/layout/password_entry_editor_row_title.xml",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-14T15:10:34Z",
       "side": 1,
       "message": "This parent LinearLayout shouldn\u0027t be needed since there\u0027s only one child.",
+      "range": {
+        "startLine": 11,
+        "startChar": 25,
+        "endLine": 11,
+        "endChar": 35
+      },
+      "revId": "710808183433bb213398ecf86385823f560485b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e393e449_bc39c1d2",
+        "filename": "chrome/android/java/res/layout/password_entry_editor_row_title.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-07-25T12:23:54Z",
+      "side": 1,
+      "message": "Maybe I\u0027m missing something, but if I remove this linear layout, I\u0027m getting\nFailed to parse XML file: /usr/local/google/code/clankium/src/chrome/android/java/res/layout/password_entry_editor_row_title.xml\nerror\n\nI\u0027ll proceed with submitting CL and follow up if indeed Linear Layout can be removed.",
+      "parentUuid": "9e66f370_a057711f",
       "range": {
         "startLine": 11,
         "startChar": 25,
@@ -68,6 +116,30 @@
       "revId": "710808183433bb213398ecf86385823f560485b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e67577e_c79a27fe",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordEntryEditor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-07-25T12:23:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a82106a6_a499c09b",
+      "range": {
+        "startLine": 108,
+        "startChar": 12,
+        "endLine": 108,
+        "endChar": 23
+      },
+      "revId": "710808183433bb213398ecf86385823f560485b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
