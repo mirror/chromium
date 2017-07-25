@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "000be576_f6692ecc",
+        "filename": "third_party/WebKit/Source/core/editing/VisibleSelection.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-07-25T07:51:42Z",
+      "side": 1,
+      "message": "L487-L544 changes more to replacing |start_| to | |Start()|.\nCould you ship this part first?",
+      "revId": "e98f5ca80d99facd20a0a3e545c5b8d53614b2e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
