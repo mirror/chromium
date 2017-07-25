@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "355d7a3b_f94f889f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-25T11:10:49Z",
+      "side": 1,
+      "message": "Please add a bug number.",
+      "revId": "ad73cbe3d9ef9503adccae25c7a07d0446279cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4548777_d69a6d4d",
+        "filename": "content/child/resource_dispatcher_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-25T11:10:49Z",
+      "side": 1,
+      "message": "EXPECT_GT",
+      "revId": "ad73cbe3d9ef9503adccae25c7a07d0446279cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cde8750_eb291481",
+        "filename": "content/child/resource_dispatcher_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-25T11:10:49Z",
+      "side": 1,
+      "message": "EXPECT_GE",
+      "range": {
+        "startLine": 256,
+        "startChar": 2,
+        "endLine": 256,
+        "endChar": 13
+      },
+      "revId": "ad73cbe3d9ef9503adccae25c7a07d0446279cab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
