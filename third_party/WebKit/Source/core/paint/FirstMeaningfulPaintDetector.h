@@ -10,6 +10,7 @@
 #include "platform/Timer.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Noncopyable.h"
+#include "public/platform/WebLayerTreeView.h"
 
 namespace blink {
 
@@ -49,7 +50,7 @@ class CORE_EXPORT FirstMeaningfulPaintDetector
   void NotifyInputEvent();
   void NotifyPaint();
   void CheckNetworkStable();
-  void ReportSwapTime(PaintEvent, bool did_swap, double timestamp);
+  void ReportSwapTime(PaintEvent, WebLayerTreeView::SwapResult, double);
 
   DECLARE_TRACE();
 
@@ -70,6 +71,7 @@ class CORE_EXPORT FirstMeaningfulPaintDetector
   void Network2QuietTimerFired(TimerBase*);
   void ReportHistograms();
   void RegisterNotifySwapTime(PaintEvent);
+  void ReportNetworkQuietBeforeSwapPromiseReported(bool was_already_quiet);
 
   bool next_paint_is_meaningful_ = false;
   HadUserInput had_user_input_ = kNoUserInput;
@@ -88,6 +90,7 @@ class CORE_EXPORT FirstMeaningfulPaintDetector
   double first_meaningful_paint0_quiet_ = 0.0;
   double first_meaningful_paint2_quiet_ = 0.0;
   double first_meaningful_paint2_quiet_swap_ = 0.0;
+  bool requeue_provisional_first_meaningful_paint_swap_ = false;
   TaskRunnerTimer<FirstMeaningfulPaintDetector> network0_quiet_timer_;
   TaskRunnerTimer<FirstMeaningfulPaintDetector> network2_quiet_timer_;
 };
