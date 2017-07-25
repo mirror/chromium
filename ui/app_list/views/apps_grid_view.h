@@ -96,11 +96,13 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
   void InitiateDrag(AppListItemView* view,
                     Pointer pointer,
                     const ui::LocatedEvent& event);
+  // Jenny debug
+  void StartDragAndDropHostDragAfterLongPress(Pointer pointer);
 
   // Called from AppListItemView when it receives a drag event. Returns true
   // if the drag is still happening.
   bool UpdateDragFromItem(Pointer pointer, const ui::LocatedEvent& event);
-
+  
   // Called when the user is dragging an app. |point| is in grid view
   // coordinates.
   void UpdateDrag(Pointer pointer, const gfx::Point& point);
@@ -151,7 +153,7 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
 
   // Schedules an animation to show or hide the view.
   void ScheduleShowHideAnimation(bool show);
-
+  
   // Called to initiate drag for reparenting a folder item in root level grid
   // view.
   // Both |drag_view_rect| and |drag_pint| is in the coordinates of root level

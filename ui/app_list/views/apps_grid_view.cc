@@ -365,6 +365,7 @@ bool AppsGridView::IsSelectedView(const AppListItemView* view) const {
 void AppsGridView::InitiateDrag(AppListItemView* view,
                                 Pointer pointer,
                                 const ui::LocatedEvent& event) {
+  LOG(ERROR) << "***** InitiateDrag drag_view_=" << drag_view_;
   DCHECK(view);
   if (drag_view_ || pulsing_blocks_model_.view_size())
     return;
@@ -374,12 +375,31 @@ void AppsGridView::InitiateDrag(AppListItemView* view,
   drag_view_offset_ = event.location();
   drag_start_page_ = pagination_model_.selected_page();
   reorder_placeholder_ = drag_view_init_index_;
+  LOG(ERROR) << "***** InitiateDrag is about to ExtractDragLocation";
   ExtractDragLocation(event, &drag_start_grid_view_);
   drag_view_start_ = gfx::Point(drag_view_->x(), drag_view_->y());
 }
 
+void AppsGridView::StartDragAndDropHostDragAfterLongPress(Pointer pointer) {
+  LOG(ERROR) << "***** StartDragAndDropHostDragAfterLongPress";
+  drag_pointer_ = pointer;
+  // Move the view to the front so that it appears on top of other views.
+  ReorderChildView(drag_view_, -1);
+  bounds_animator_.StopAnimatingView(drag_view_);
+  // Stopping the animation may have invalidated our drag view due to the
+  // view hierarchy changing.
+  if (!drag_view_)
+    return;
+
+  if (!dragging_for_reparent_item_)
+    StartDragAndDropHostDrag(drag_start_grid_view_);
+  LOG(ERROR) << "***** StartDragAndDropHostDragAfterLongPress dragging()="
+      << dragging();
+}
+
 bool AppsGridView::UpdateDragFromItem(Pointer pointer,
                                       const ui::LocatedEvent& event) {
+  LOG(ERROR) << "***** UpdateDragFromItem drag_view_=" << drag_view_;
   if (!drag_view_)
     return false;  // Drag canceled.
 
@@ -400,14 +420,18 @@ bool AppsGridView::UpdateDragFromItem(Pointer pointer,
 }
 
 void AppsGridView::UpdateDrag(Pointer pointer, const gfx::Point& point) {
+  LOG(ERROR) << "***** UpdateDrag drag_view_=" << drag_view_;
   if (folder_delegate_)
     UpdateDragStateInsideFolder(pointer, point);
 
   if (!drag_view_)
     return;  // Drag canceled.
-
+  
   gfx::Vector2d drag_vector(point - drag_start_grid_view_);
+  // Jenny debug to play with enlarging app item on mouse down.
   if (!dragging() && ExceededDragThreshold(drag_vector)) {
+    LOG(ERROR) << "***** UpdateDrag ExceededDragThreshold, "
+        << "dragging_for_reparent_item_=" << dragging_for_reparent_item_;
     drag_pointer_ = pointer;
     // Move the view to the front so that it appears on top of other views.
     ReorderChildView(drag_view_, -1);
@@ -460,6 +484,8 @@ void AppsGridView::UpdateDrag(Pointer pointer, const gfx::Point& point) {
 }
 
 void AppsGridView::EndDrag(bool cancel) {
+  LOG(ERROR) << "***** EndDrag cancel=" << cancel << ", drag_view_="
+      << drag_view_;
   // EndDrag was called before if |drag_view_| is NULL.
   if (!drag_view_)
     return;
@@ -1617,6 +1643,7 @@ void AppsGridView::StartDragAndDropHostDrag(const gfx::Point& grid_location) {
   if (!drag_view_ || !drag_and_drop_host_)
     return;
 
+  LOG(ERROR) << "**** StartDragAndDropHostDrag";
   gfx::Point screen_location = grid_location;
   views::View::ConvertPointToScreen(this, &screen_location);
 

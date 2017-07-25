@@ -165,7 +165,9 @@ void AppListItemView::SetTouchDragging(bool touch_dragging) {
 }
 
 void AppListItemView::OnMouseDragTimer() {
+  LOG(ERROR) << "***** OnMouseDragTimer is about to set UI_STATE_DRAGGING";
   DCHECK(apps_grid_view_->IsDraggedView(this));
+  apps_grid_view_->StartDragAndDropHostDragAfterLongPress(AppsGridView::MOUSE);
   SetUIState(UI_STATE_DRAGGING);
 }
 
@@ -174,11 +176,12 @@ void AppListItemView::CancelContextMenu() {
     context_menu_runner_->Cancel();
 }
 
-gfx::ImageSkia AppListItemView::GetDragImage() {
+gfx::ImageSkia AppListItemView::GetDragImage() {  
   return icon_->GetImage();
 }
 
 void AppListItemView::OnDragEnded() {
+  LOG(ERROR) << "***** OnDragEnded is about to set UI_STATE_NORMAL";
   mouse_drag_timer_.Stop();
   SetUIState(UI_STATE_NORMAL);
 }
@@ -310,14 +313,17 @@ void AppListItemView::PaintButtonContents(gfx::Canvas* canvas) {
 }
 
 bool AppListItemView::OnMousePressed(const ui::MouseEvent& event) {
+  LOG(ERROR) << "***** OnMousePressed";
   CustomButton::OnMousePressed(event);
 
   if (!ShouldEnterPushedState(event))
     return true;
 
+  LOG(ERROR) << "***** OnMousePressed is about to apps_grid_view_->InitiateDrag";
   apps_grid_view_->InitiateDrag(this, AppsGridView::MOUSE, event);
 
   if (apps_grid_view_->IsDraggedView(this)) {
+    LOG(ERROR) << "***** apps_grid_view_->InitiateDrag is about to start OnMouseDragTimer";
     mouse_drag_timer_.Start(FROM_HERE,
         base::TimeDelta::FromMilliseconds(kMouseDragUIDelayInMs),
         this, &AppListItemView::OnMouseDragTimer);
@@ -398,6 +404,7 @@ void AppListItemView::OnMouseReleased(const ui::MouseEvent& event) {
 }
 
 bool AppListItemView::OnMouseDragged(const ui::MouseEvent& event) {
+  LOG(ERROR) << "***** OnMouseDragged";
   CustomButton::OnMouseDragged(event);
   if (apps_grid_view_->IsDraggedView(this)) {
     // If the drag is no longer happening, it could be because this item
