@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1468e0c5_c7e622f7",
+        "filename": "build/package_mac_xcode.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-07-25T01:51:14Z",
+      "side": 1,
+      "message": "is this needed?",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 7
+      },
+      "revId": "101c4cdde26a1a5f83baedc35533dd31fdbd5c3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9051b3d3_7eea3466",
+        "filename": "build/package_mac_xcode.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-07-25T01:51:14Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "101c4cdde26a1a5f83baedc35533dd31fdbd5c3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
