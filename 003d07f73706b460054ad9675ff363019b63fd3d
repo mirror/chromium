@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3f0ac1fb_c29e1a09",
+        "filename": "ios/chrome/browser/ui/authentication/signin_interaction_controller_egtest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-07-25T12:59:02Z",
+      "side": 1,
+      "message": "It cannot be in +[ChromeTestCase enableMockAuthentication] since it has to be done before each tests. So I moved it to -[ChromeTestCase setUp].",
+      "parentUuid": "42cab8a4_2c7eeddd",
+      "range": {
+        "startLine": 133,
+        "startChar": 9,
+        "endLine": 133,
+        "endChar": 14
+      },
+      "revId": "003d07f73706b460054ad9675ff363019b63fd3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cea98ef_98e7bf54",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_egtest.mm",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "003d07f73706b460054ad9675ff363019b63fd3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb0913e1_f689bf75",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_egtest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-07-25T12:59:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cea98ef_98e7bf54",
+      "range": {
+        "startLine": 151,
+        "startChar": 20,
+        "endLine": 151,
+        "endChar": 47
+      },
+      "revId": "003d07f73706b460054ad9675ff363019b63fd3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0fe95cc2_7df02843",
+        "filename": "ios/chrome/test/earl_grey/chrome_test_case.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-07-25T12:59:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ea01c51_b7a06d78",
+      "range": {
+        "startLine": 143,
+        "startChar": 21,
+        "endLine": 143,
+        "endChar": 38
+      },
+      "revId": "003d07f73706b460054ad9675ff363019b63fd3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6187957d_2d510480",
         "filename": "ios/chrome/test/earl_grey/chrome_test_case.mm",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "003d07f73706b460054ad9675ff363019b63fd3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2de3cc4_563d6867",
+        "filename": "ios/chrome/test/earl_grey/chrome_test_case.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-07-25T12:59:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6187957d_2d510480",
+      "range": {
+        "startLine": 254,
+        "startChar": 8,
+        "endLine": 254,
+        "endChar": 32
+      },
+      "revId": "003d07f73706b460054ad9675ff363019b63fd3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

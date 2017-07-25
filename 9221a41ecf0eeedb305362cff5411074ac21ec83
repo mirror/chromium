@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3ef96200_f93539b7",
+        "filename": "ios/chrome/browser/ui/authentication/signin_interaction_controller_egtest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-07-25T12:59:02Z",
+      "side": 1,
+      "message": "I\u0027m having issues with the collection when being reloaded. It looks like it creates new cells, and don\u0027t remove right away the old cells. So I needed to add \"visible\" to not have an error from EarlGrey for finding more than one view with the right accessibility id.\n\nI think there is also an issue with iPad with the sign-in promo in the \"Other Devices\" tab somewhere in the view hierarchy. I don\u0027t remember which tests have an issue, but I can find out.\n\nFor those 2 reasons, I added the \"sufficiently visible\" criteria everywhere to be consistant.",
+      "parentUuid": "e85bbac9_5a139713",
+      "range": {
+        "startLine": 545,
+        "startChar": 17,
+        "endLine": 545,
+        "endChar": 27
+      },
+      "revId": "9221a41ecf0eeedb305362cff5411074ac21ec83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86697837_8712fc5d",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_egtest.mm",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "9221a41ecf0eeedb305362cff5411074ac21ec83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e6c56f0_1b679ea5",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_egtest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 1131,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-07-25T12:59:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "86697837_8712fc5d",
+      "range": {
+        "startLine": 1131,
+        "startChar": 6,
+        "endLine": 1131,
+        "endChar": 41
+      },
+      "revId": "9221a41ecf0eeedb305362cff5411074ac21ec83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9b54d672_90d9e25a",
+        "filename": "ios/chrome/browser/ui/settings/settings_collection_view_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-07-25T12:59:02Z",
+      "side": 1,
+      "message": "This was done in another patch, finally I was able to merge it here. It was required to make those tests work.",
+      "parentUuid": "85090b71_570ebc7c",
+      "range": {
+        "startLine": 234,
+        "startChar": 7,
+        "endLine": 234,
+        "endChar": 32
+      },
+      "revId": "9221a41ecf0eeedb305362cff5411074ac21ec83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66eaa3d3_33bad205",
         "filename": "ios/chrome/browser/ui/settings/settings_collection_view_controller.mm",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "9221a41ecf0eeedb305362cff5411074ac21ec83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7883aa1b_bfb05df0",
+        "filename": "ios/chrome/browser/ui/settings/settings_collection_view_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-07-25T12:59:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "66eaa3d3_33bad205",
+      "range": {
+        "startLine": 301,
+        "startChar": 8,
+        "endLine": 301,
+        "endChar": 15
+      },
+      "revId": "9221a41ecf0eeedb305362cff5411074ac21ec83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "8c9a5eb2_b4ac3af4",
+        "filename": "ios/chrome/browser/ui/settings/settings_collection_view_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 1014,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-07-25T12:59:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "22518145_1f4f5b10",
+      "range": {
+        "startLine": 1014,
+        "startChar": 7,
+        "endLine": 1014,
+        "endChar": 32
+      },
+      "revId": "9221a41ecf0eeedb305362cff5411074ac21ec83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6a3af07_50cd4acb",
         "filename": "ios/chrome/test/earl_grey/chrome_test_case.mm",
         "patchSetId": 7
@@ -137,6 +257,30 @@
       "revId": "9221a41ecf0eeedb305362cff5411074ac21ec83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2dcf8a7_542484ef",
+        "filename": "ios/chrome/test/earl_grey/chrome_test_case.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-07-25T12:59:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6a3af07_50cd4acb",
+      "range": {
+        "startLine": 168,
+        "startChar": 20,
+        "endLine": 168,
+        "endChar": 22
+      },
+      "revId": "9221a41ecf0eeedb305362cff5411074ac21ec83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
