@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "60901ec1_517f3cbc",
+        "filename": "content/common/media/media_stream.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-25T02:12:47Z",
+      "side": 1,
+      "message": "IIRC |device_id| is an ephemeral uuid crafted on Browser\nside and passed back to Renderer on StreamGenerated, it\u0027s\nused to signal to Browser which device is being talked\nabout.",
+      "parentUuid": "3c38eee9_4b388cb6",
+      "range": {
+        "startLine": 31,
+        "startChar": 54,
+        "endLine": 31,
+        "endChar": 70
+      },
+      "revId": "2285c16c2b774b7994a33ae9b1366f59bd888148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "20fbeece_d909685d",
         "filename": "content/common/media/media_stream.mojom",
         "patchSetId": 5
