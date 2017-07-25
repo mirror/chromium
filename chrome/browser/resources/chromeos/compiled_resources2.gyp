@@ -193,5 +193,12 @@
       },
       'includes': ['../../../../third_party/closure_compiler/compile_js2.gypi'],
     },
+    {
+      'target_name': 'chromeos_resources',
+      'type': 'none',
+      'dependencies': [
+        'bluetooth/compiled_resources2.gyp:*',
+      ]
+    }
   ],
 }
