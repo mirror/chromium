@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5483e619_abb4b501",
+        "filename": "content/child/request_extra_data.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-25T07:37:22Z",
+      "side": 0,
+      "message": "Wait... don\u0027t we propagate this to the browser side?\n\nhttps://cs.chromium.org/chromium/src/content/child/request_extra_data.cc?type\u003dcs\u0026q\u003doriginated_from_service_worker\u0026sq\u003dpackage:chromium\u0026l\u003d53",
+      "revId": "57fc53b6e72d22dbc04bacafc117e5a58dcef19d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
