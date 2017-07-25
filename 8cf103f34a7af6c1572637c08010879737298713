@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df415b5a_431b5fae",
+        "filename": "content/browser/service_worker/service_worker_job_coordinator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-07-25T01:27:02Z",
+      "side": 1,
+      "message": "I am not sure this is the best place to start timer, but not other place works. The ctor is always called twice because that StoragePartitionImpl is created twice, I don\u0027t know why. Then the job_queues_\u0027s address is different so that OnJobTimeoutTimer never be executed actually.\n\nHowever, I think it\u0027s ok start timer here, because the first step is to register, am I right?",
+      "range": {
+        "startLine": 92,
+        "startChar": 25,
+        "endLine": 92,
+        "endChar": 0
+      },
+      "revId": "8cf103f34a7af6c1572637c08010879737298713",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4784bc35_3823510f",
+        "filename": "content/browser/service_worker/service_worker_job_coordinator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-07-25T01:27:02Z",
+      "side": 1,
+      "message": "I am thinking if the timer interval should be 30min, but the timeout time should be 5min?\nBecause if both of them are 30min, if a job is resister just after one timer cycle, and blocked, then the job will be aborted after ~30min+30min, is it too long?",
+      "range": {
+        "startLine": 149,
+        "startChar": 29,
+        "endLine": 149,
+        "endChar": 43
+      },
+      "revId": "8cf103f34a7af6c1572637c08010879737298713",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d2899ff_b6d67e15",
+        "filename": "content/browser/service_worker/service_worker_job_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-07-25T01:27:02Z",
+      "side": 1,
+      "message": "It seems the timer\u0027s user_task can\u0027t have parameter, so here can\u0027t make the  ServiceWorkerJobCoordinator::OnJobTimeoutTimer() run finish soon, it depends on the timeout value.\nCould you give some advice?",
+      "range": {
+        "startLine": 188,
+        "startChar": 33,
+        "endLine": 188,
+        "endChar": 51
+      },
+      "revId": "8cf103f34a7af6c1572637c08010879737298713",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
