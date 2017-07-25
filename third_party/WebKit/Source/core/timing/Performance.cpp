@@ -158,6 +158,13 @@ void Performance::UpdateLongTaskInstrumentation() {
   if (!GetFrame()->GetDocument())
     return;
 
+  // Force to buffer long tasks before Onload.
+  if (!GetFrame()->GetDocument()->defaultView()->HasLoadEventFired()) {
+    GetFrame()->GetPerformanceMonitor()->Subscribe(
+        PerformanceMonitor::kLongTask, kLongTaskObserverThreshold, this);
+    return;
+  }
+
   if (HasObserverFor(PerformanceEntry::kLongTask)) {
     UseCounter::Count(&GetFrame()->LocalFrameRoot(),
                       WebFeature::kLongTaskObserver);

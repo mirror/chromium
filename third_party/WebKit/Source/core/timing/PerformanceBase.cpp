@@ -378,12 +378,32 @@ bool PerformanceBase::IsResourceTimingBufferFull() {
   return resource_timing_buffer_.size() >= resource_timing_buffer_size_;
 }
 
+void PerformanceBase::AddPerformanceEntryBuffer(PerformanceEntry& entry) {
+  performance_entries_buffer_.push_back(&entry);
+
+  if (IsPerformanceEntryBufferFull())
+    DispatchEvent(Event::Create(EventTypeNames::performanceEntrybufferfull));
+}
+
+bool PerformanceBase::IsPerformanceEntriesBufferFull() {
+  return performance_entry_buffer_.size() >= performance_entry_buffer_size_;
+}
+
 void PerformanceBase::AddLongTaskTiming(double start_time,
                                         double end_time,
                                         const String& name,
                                         const String& frame_src,
                                         const String& frame_id,
                                         const String& frame_name) {
+  if (!HasObserverFor(PerformanceEntry::kLongTask) && beforeOnLoad()) {
+      PerformanceEntry* entry = PerformanceLongTaskTiming::Create(
+      MonotonicTimeToDOMHighResTimeStamp(start_time),
+      MonotonicTimeToDOMHighResTimeStamp(end_time), name, frame_src, frame_id,
+      frame_name);
+      AddPerformanceEntryBuffer(*entry);
+      return;
+  }
+
   if (!HasObserverFor(PerformanceEntry::kLongTask))
     return;
   PerformanceEntry* entry = PerformanceLongTaskTiming::Create(

@@ -102,6 +102,10 @@ void PerformanceObserver::Deliver() {
 
   PerformanceEntryVector performance_entries;
   performance_entries.swap(performance_entries_);
+  if (observer_init.buffered) {
+    performance_entries->addLeft(
+        performance_entries_buffer_.entries());
+  }
   PerformanceObserverEntryList* entry_list =
       new PerformanceObserverEntryList(performance_entries);
   callback_->call(this, entry_list, this);

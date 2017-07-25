@@ -36,5 +36,6 @@ interface PerformanceEntry {
     readonly attribute DOMString entryType;
     readonly attribute DOMHighResTimeStamp startTime;
     readonly attribute DOMHighResTimeStamp duration;
+    readonly attribute DOMBoolean add_to_performance_entry_buffer;
     serializer = {attribute};
 };
