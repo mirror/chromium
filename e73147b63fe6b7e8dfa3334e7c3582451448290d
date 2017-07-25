@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c8d4a168_0fef04a7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageOrigin.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-07-25T21:42:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd02983c_2dfb7ac1",
+      "revId": "e73147b63fe6b7e8dfa3334e7c3582451448290d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3380bbea_a091cee4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageOrigin.java",
         "patchSetId": 20
@@ -33,6 +51,24 @@
       "revId": "e73147b63fe6b7e8dfa3334e7c3582451448290d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60f85d87_52e1a903",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageOrigin.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-07-25T21:42:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3380bbea_a091cee4",
+      "revId": "e73147b63fe6b7e8dfa3334e7c3582451448290d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "88c5c714_4a4ff823",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/OfflinePageOrigin.java",
+        "patchSetId": 20
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-07-25T21:42:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b39edcc_0e463f3c",
+      "revId": "e73147b63fe6b7e8dfa3334e7c3582451448290d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4b22a97_2c031144",
         "filename": "chrome/browser/resources/offline_pages/offline_internals.js",
         "patchSetId": 20
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "e875bff8_60397b30",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals.js",
+        "patchSetId": 20
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-07-25T21:42:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4b22a97_2c031144",
+      "revId": "e73147b63fe6b7e8dfa3334e7c3582451448290d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b084615f_45916cc4",
         "filename": "chrome/browser/resources/offline_pages/offline_internals.js",
         "patchSetId": 20
@@ -84,6 +156,24 @@
       "revId": "e73147b63fe6b7e8dfa3334e7c3582451448290d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da763b25_0acbbf20",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals.js",
+        "patchSetId": 20
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-07-25T21:42:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b084615f_45916cc4",
+      "revId": "e73147b63fe6b7e8dfa3334e7c3582451448290d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
