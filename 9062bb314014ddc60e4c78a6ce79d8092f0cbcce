@@ -69,6 +69,24 @@
       "revId": "9062bb314014ddc60e4c78a6ce79d8092f0cbcce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24d6214a_07b7915d",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTheme.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-07-25T07:47:57Z",
+      "side": 1,
+      "message": "Maybe. I think this gets particularly wrong/weird for vertical writing modes. But if you don\u0027t feel that such a fix belongs in this CL, feel free to postpone it.",
+      "parentUuid": "30c87c71_60e8650e",
+      "revId": "9062bb314014ddc60e4c78a6ce79d8092f0cbcce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
