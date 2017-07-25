@@ -254,9 +254,6 @@ extern const char kEnableNetworkServiceDescription[];
 extern const char kEnablePictureInPictureName[];
 extern const char kEnablePictureInPictureDescription[];
 
-extern const char kEnableSuggestionsHomeModernLayoutName[];
-extern const char kEnableSuggestionsHomeModernLayoutDescription[];
-
 extern const char kEnableTokenBindingName[];
 extern const char kEnableTokenBindingDescription[];
 
@@ -913,6 +910,9 @@ extern const char kEnableAndroidPayIntegrationV2Description[];
 
 extern const char kEnableAndroidSpellcheckerDescription[];
 extern const char kEnableAndroidSpellcheckerName[];
+
+extern const char kEnableChromeHomeModernLayoutName[];
+extern const char kEnableChromeHomeModernLayoutDescription[];
 
 extern const char kEnableConsistentOmniboxGeolocationName[];
 extern const char kEnableConsistentOmniboxGeolocationDescription[];
