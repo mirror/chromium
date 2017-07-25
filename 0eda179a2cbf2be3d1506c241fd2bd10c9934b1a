@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "910195d2_ac3e10a5",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/BaseJUnit4ClassRunner.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-07-25T23:28:42Z",
+      "side": 1,
+      "message": "Good point.",
+      "parentUuid": "2331d511_c6d83796",
+      "revId": "0eda179a2cbf2be3d1506c241fd2bd10c9934b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e854711d_e12a3ab0",
         "filename": "base/test/android/javatests/src/org/chromium/base/test/TestTraceEvent.java",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1611f958_0d00fc29",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/TestTraceEvent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-07-25T23:28:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e854711d_e12a3ab0",
+      "revId": "0eda179a2cbf2be3d1506c241fd2bd10c9934b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f435c18c_69b05fc0",
         "filename": "base/test/android/javatests/src/org/chromium/base/test/TestTraceEvent.java",
         "patchSetId": 3
@@ -47,6 +83,30 @@
       "writtenOn": "2017-07-25T18:18:42Z",
       "side": 1,
       "message": "Could you add an explanation why you are unable to not adhere to this findbugs rule in this class?",
+      "range": {
+        "startLine": 23,
+        "startChar": 21,
+        "endLine": 23,
+        "endChar": 49
+      },
+      "revId": "0eda179a2cbf2be3d1506c241fd2bd10c9934b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "346e318e_6f7e0c96",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/TestTraceEvent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-07-25T23:28:42Z",
+      "side": 1,
+      "message": "Looks like it\u0027s no longer necessary (I think from using the lock instead of synchronized methods)",
+      "parentUuid": "f435c18c_69b05fc0",
       "range": {
         "startLine": 23,
         "startChar": 21,
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "77f344b9_e5faae4e",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/TestTraceEvent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-07-25T23:28:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6771e74_2181bc20",
+      "revId": "0eda179a2cbf2be3d1506c241fd2bd10c9934b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b219ca07_1c5ccab9",
         "filename": "base/test/android/javatests/src/org/chromium/base/test/TestTraceEvent.java",
         "patchSetId": 3
@@ -87,6 +165,30 @@
       "writtenOn": "2017-07-25T18:18:42Z",
       "side": 1,
       "message": "Could you have a private static lock object to synchronize on instead? As it is now, you lose control over what you lock on, since this is technically the same as synchronized(TestTraceEvent.class), which anyone can do at any time.",
+      "range": {
+        "startLine": 57,
+        "startChar": 18,
+        "endLine": 57,
+        "endChar": 30
+      },
+      "revId": "0eda179a2cbf2be3d1506c241fd2bd10c9934b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfd60942_4fee1eb7",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/TestTraceEvent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-07-25T23:28:42Z",
+      "side": 1,
+      "message": "Done! I think; does it look right?",
+      "parentUuid": "b219ca07_1c5ccab9",
       "range": {
         "startLine": 57,
         "startChar": 18,
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "df504f30_f9203577",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/TestTraceEvent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-07-25T23:28:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a385d04_28887870",
+      "revId": "0eda179a2cbf2be3d1506c241fd2bd10c9934b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60554095_4417f4c8",
         "filename": "base/test/android/javatests/src/org/chromium/base/test/TestTraceEvent.java",
         "patchSetId": 3
@@ -133,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "a926cb0c_10db7445",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/TestTraceEvent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-07-25T23:28:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60554095_4417f4c8",
+      "revId": "0eda179a2cbf2be3d1506c241fd2bd10c9934b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a80ceabc_3b968834",
         "filename": "base/test/android/javatests/src/org/chromium/base/test/TestTraceEvent.java",
         "patchSetId": 3
@@ -147,6 +285,24 @@
       "revId": "0eda179a2cbf2be3d1506c241fd2bd10c9934b1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "451cd7c1_281c32ca",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/TestTraceEvent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-07-25T23:28:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a80ceabc_3b968834",
+      "revId": "0eda179a2cbf2be3d1506c241fd2bd10c9934b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -173,6 +329,30 @@
     },
     {
       "key": {
+        "uuid": "6a9bb664_ba273d01",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/TestTraceEvent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-07-25T23:28:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1225e6f_94adb622",
+      "range": {
+        "startLine": 105,
+        "startChar": 47,
+        "endLine": 105,
+        "endChar": 52
+      },
+      "revId": "0eda179a2cbf2be3d1506c241fd2bd10c9934b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9b0fbd8_8aaa6622",
         "filename": "base/test/android/javatests/src/org/chromium/base/test/TestTraceEvent.java",
         "patchSetId": 3
@@ -184,6 +364,30 @@
       "writtenOn": "2017-07-25T18:18:42Z",
       "side": 1,
       "message": "Could this use SystemClock? (https://developer.android.com/reference/android/os/SystemClock.html)\nMaybe elapsedRealtimeNanos()?\nOr is it important that it\u0027s based on the local timezone and date?",
+      "range": {
+        "startLine": 123,
+        "startChar": 32,
+        "endLine": 123,
+        "endChar": 59
+      },
+      "revId": "0eda179a2cbf2be3d1506c241fd2bd10c9934b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "461a820a_224155ed",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/TestTraceEvent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-07-25T23:28:42Z",
+      "side": 1,
+      "message": "The thing is, that would require two different time synchronizations, because the only way I found for the Python code to line up with the device time is by using the value of $EPOCHREALTIME (which matches up with System.currentTimeMillis but not SystemClock.elapsedRealtimeNanos). I used to have two synchronizations, but that was really hard to understand/debug.",
+      "parentUuid": "c9b0fbd8_8aaa6622",
       "range": {
         "startLine": 123,
         "startChar": 32,
@@ -219,6 +423,30 @@
     },
     {
       "key": {
+        "uuid": "74d73310_b4b00ef8",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/TestTraceEvent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-07-25T23:28:42Z",
+      "side": 1,
+      "message": "Hmm, this whole section was copied from the old PerfTraceEvent class. Do you think just checking for non-null (instead of try-catch) will be enough?",
+      "parentUuid": "c865c1e0_291f3e00",
+      "range": {
+        "startLine": 162,
+        "startChar": 24,
+        "endLine": 162,
+        "endChar": 30
+      },
+      "revId": "0eda179a2cbf2be3d1506c241fd2bd10c9934b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5cc640d3_79276865",
         "filename": "base/test/android/javatests/src/org/chromium/base/test/TestTraceEvent.java",
         "patchSetId": 3
@@ -239,6 +467,30 @@
       "revId": "0eda179a2cbf2be3d1506c241fd2bd10c9934b1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9605869_ce3c65f0",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/TestTraceEvent.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-07-25T23:28:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5cc640d3_79276865",
+      "range": {
+        "startLine": 163,
+        "startChar": 29,
+        "endLine": 163,
+        "endChar": 38
+      },
+      "revId": "0eda179a2cbf2be3d1506c241fd2bd10c9934b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
