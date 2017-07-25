@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8271a543_c391478c",
+        "filename": "components/viz/service/display_embedder/gpu_display_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-25T21:29:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3170754a_48b99cae",
+      "revId": "51d3cc1d837ae702934bf0f669d95f7675d81222",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af253cb6_cfce8451",
         "filename": "services/ui/ws/server_window_compositor_frame_sink_manager.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "51d3cc1d837ae702934bf0f669d95f7675d81222",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa4b7bee_4a3258dd",
+        "filename": "services/ui/ws/server_window_compositor_frame_sink_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-07-25T21:29:14Z",
+      "side": 1,
+      "message": "Checking for kShowOverdrawFeedback is moved to ui::CreateRendererSettings.",
+      "parentUuid": "af253cb6_cfce8451",
+      "revId": "51d3cc1d837ae702934bf0f669d95f7675d81222",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
