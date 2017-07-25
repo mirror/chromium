@@ -59,7 +59,7 @@ class NetToMojoPendingBuffer
 // copied into the buffer associated with the pending mojo write.
 class NetToMojoIOBuffer : public net::WrappedIOBuffer {
  public:
-  explicit NetToMojoIOBuffer(NetToMojoPendingBuffer* pending_buffer);
+  NetToMojoIOBuffer(NetToMojoPendingBuffer* pending_buffer, int index = 0);
 
  private:
   ~NetToMojoIOBuffer() override;
