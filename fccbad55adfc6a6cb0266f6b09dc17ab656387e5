@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "6deb949b_104d720c",
+        "filename": "cc/scheduler/scheduler_state_machine.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-25T01:46:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72ea5852_7223c30b",
+      "revId": "fccbad55adfc6a6cb0266f6b09dc17ab656387e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aaf48248_094f3f82",
         "filename": "cc/trees/layer_tree_host_impl.cc",
         "patchSetId": 5
@@ -105,6 +123,24 @@
       "revId": "fccbad55adfc6a6cb0266f6b09dc17ab656387e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4c56f92_fba61284",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1095,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-25T01:46:22Z",
+      "side": 1,
+      "message": "That\u0027s a good idea. We can have the code requesting an invalidation for an animated image explicitly request that the draw should not be skipped. Done.",
+      "parentUuid": "f7bcd191_7dfc0ef5",
+      "revId": "fccbad55adfc6a6cb0266f6b09dc17ab656387e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
