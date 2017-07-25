@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5fd46a05_2aa19697",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 21
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1116074
+      },
+      "writtenOn": "2017-07-25T22:29:54Z",
+      "side": 1,
+      "message": "I would actually prefer we didn\u0027t open this up as a public API as the two sources we are checking here are vastly different in terms of reliability.\n\nThe check from the connection is bulletproof. If it returns something, we know we can trust it.\nThe second check is basically checking the package name of an animation resource that as a byproduct contains \"a\" package name which may not be trustable. So that one is only good for metrics purposes where we want to get a general idea about packages (that is why it is in recordClientPackageName).",
+      "range": {
+        "startLine": 684,
+        "startChar": 56,
+        "endLine": 684,
+        "endChar": 75
+      },
+      "revId": "cc4a75bbecc06a80e1380a5c5b165c73351030c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aded2975_d76b5bff",
         "filename": "chrome/browser/resources/offline_pages/offline_internals.js",
         "patchSetId": 21
