@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70a35aae_32a692cb",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-07-25T04:18:42Z",
+      "side": 1,
+      "message": "can this be set inside HandleFloat?",
+      "range": {
+        "startLine": 204,
+        "startChar": 8,
+        "endLine": 204,
+        "endChar": 32
+      },
+      "revId": "f80893d5b44003a231a81dfba1365d0cbe1faa0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7e19d83_b4abc3e7",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_breaker.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-07-25T04:18:42Z",
+      "side": 1,
+      "message": "can you add a TODO for either me or you to make all the exclusions here temporary?\n\nI.e. This line breaker should keep a list of floats which its currently added in a separate vector, then \"commit\" them insider NGLineLayoutAlgorithm.\n\nWe currently do a similar thing inside:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc?q\u003dngblocklayoutal\u0026sq\u003dpackage:chromium\u0026l\u003d708\n\nBut its also probably broken... I need to fix this after the css wg meeting.",
+      "revId": "f80893d5b44003a231a81dfba1365d0cbe1faa0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
