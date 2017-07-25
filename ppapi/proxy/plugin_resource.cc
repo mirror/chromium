@@ -30,7 +30,7 @@ PluginResource::~PluginResource() {
         new PpapiHostMsg_ResourceDestroyed(pp_resource()));
   }
   if (sent_create_to_renderer_) {
-    connection_.renderer_sender->Send(
+    connection_.renderer_sender.Send(
         new PpapiHostMsg_ResourceDestroyed(pp_resource()));
   }
 
