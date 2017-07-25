@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee6896d1_1cfff40f",
+        "filename": "components/security_interstitials_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-07-25T17:24:01Z",
+      "side": 1,
+      "message": "This is a tricky one; I decided to leave it as is because the link opens the Chrome help center. i.e. the name of the site is \"Chrome help center\" whether it\u0027s opened from Chrome or Chromium, so I thought it\u0027s probably most correct to leave it labeled as \"Chrome help center\".",
+      "range": {
+        "startLine": 83,
+        "startChar": 127,
+        "endLine": 83,
+        "endChar": 133
+      },
+      "revId": "04b7dbb32880a298ef14c64765d2da2ef6cf51b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
