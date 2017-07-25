@@ -5,6 +5,13 @@
 #ifndef MEDIA_REMOTING_RPC_BROKER_H_
 #define MEDIA_REMOTING_RPC_BROKER_H_
 
+// Avoid compiling RPC related code on Android as it's unused.
+#if defined(DISABLE_MEDIA_REMOTING_RPC)
+
+#include "media/remoting/rpc_broker_stub_android.h"
+
+#else  // defined(DISABLE_MEDIA_REMOTING_RPC)
+
 #include <map>
 #include <memory>
 #include <string>
@@ -102,5 +109,7 @@ class RpcBroker {
 
 }  // namespace remoting
 }  // namespace media
+
+#endif  // defined(DISABLE_MEDIA_REMOTING_RPC)
 
 #endif  // MEDIA_REMOTING_RPC_BROKER_H_
