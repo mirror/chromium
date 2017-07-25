@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "19ead9c9_e24b0c40",
+        "filename": "third_party/WebKit/LayoutTests/battery-status/resources/mock-battery-monitor.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-25T00:41:37Z",
+      "side": 1,
+      "message": "The interceptor is scoped to the frame so unless we want to switch mock implementations between test cases (which some do) we don\u0027t need to stop it.",
+      "parentUuid": "ca2c9b22_81a71269",
+      "range": {
+        "startLine": 46,
+        "startChar": 30,
+        "endLine": 46,
+        "endChar": 0
+      },
+      "revId": "87d61e1934553081d416511c94c0d2e489820fd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d508ee5_14e4a3a2",
         "filename": "third_party/WebKit/Source/modules/battery/BatteryDispatcher.h",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-21T17:21:52Z",
       "side": 1,
       "message": "So I understand the BatteryDispatcher is not a singleton anymore and instead is created one per frame (with potential memory usage increase, although probably minor). What exactly is the reason for requiring it be per frame (as opposed to singleton)? Does it need to be per frame?",
+      "range": {
+        "startLine": 25,
+        "startChar": 46,
+        "endLine": 25,
+        "endChar": 0
+      },
+      "revId": "87d61e1934553081d416511c94c0d2e489820fd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b24c56e3_0a4a5867",
+        "filename": "third_party/WebKit/Source/modules/battery/BatteryDispatcher.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-25T00:41:37Z",
+      "side": 1,
+      "message": "The new Blink-based Mojo JS bindings do not support overriding services process-wide and the old interface is deprecated.\n\nFor this particular API we don\u0027t have any per-frame logic in the implementation so it isn\u0027t strictly necessary to make per-frame connections but in general it is something I am trying to move us towards from so that we have visibility into the capabilities we grant to particular frames (and the same for workers).",
+      "parentUuid": "5d508ee5_14e4a3a2",
       "range": {
         "startLine": 25,
         "startChar": 46,
