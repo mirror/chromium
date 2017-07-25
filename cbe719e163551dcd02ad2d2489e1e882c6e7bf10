@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "830df6f8_07a00caf",
+        "filename": "components/signin/core/browser/scoped_account_consistency.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-07-25T16:01:44Z",
+      "side": 1,
+      "message": "Nit: Kill empty line.",
+      "revId": "cbe719e163551dcd02ad2d2489e1e882c6e7bf10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
