@@ -16,6 +16,24 @@
       "revId": "f69d205ec8402908f04e5e5a40b89e7d88732e25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57674890_fb82553d",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/constructor/offlineaudiocontext.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-07-25T21:20:36Z",
+      "side": 1,
+      "message": "Removed.\n\nAlso took this opportunity to add expected error types when we throw and error.",
+      "parentUuid": "ede06405_157f62e8",
+      "revId": "f69d205ec8402908f04e5e5a40b89e7d88732e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
