@@ -116,6 +116,30 @@
       "revId": "32f7a64413caf4a49cb57ce653cbdb8199e5d1d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d059cc59_6ce6c557",
+        "filename": "content/browser/cache_storage/cache_storage_cache.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 1402,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-07-25T20:48:53Z",
+      "side": 1,
+      "message": "Doing this sort of thing at layer might be easier if CacheStorageCache does it during backend creation (since it already has to handle asynchrony there) --- basically an equivalent of having CreateCacheBackend do it, just scoped. \n\nThe main downside of what I have is basically that if someone leaks an entry CreateCacheBackend will never call back. \n\nIt also won\u0027t delay creation till the user\u0027s on-cleanup callback (DeleteBackendCompletedIO) here completes, which is probably OK as long as we\u0027re clear about it. I think I implemented CloseImpl here for a couple of tests that were using ::Close as a synchronization point.",
+      "parentUuid": "7ff69483_8121d4dd",
+      "range": {
+        "startLine": 1402,
+        "startChar": 4,
+        "endLine": 1402,
+        "endChar": 30
+      },
+      "revId": "32f7a64413caf4a49cb57ce653cbdb8199e5d1d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
