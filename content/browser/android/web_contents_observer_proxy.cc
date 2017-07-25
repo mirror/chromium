@@ -244,6 +244,9 @@ void WebContentsObserverProxy::WasHidden() {
 
 void WebContentsObserverProxy::TitleWasSet(NavigationEntry* entry,
                                            bool explicit_set) {
+  if (!explicit_set)
+    return;
+
   JNIEnv* env = AttachCurrentThread();
   ScopedJavaLocalRef<jobject> obj(java_observer_);
   ScopedJavaLocalRef<jstring> jstring_title = ConvertUTF8ToJavaString(
