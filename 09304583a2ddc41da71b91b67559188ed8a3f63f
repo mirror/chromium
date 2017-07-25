@@ -1,0 +1,395 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c83ed3c9_f05455e5",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-25T22:49:13Z",
+      "side": 1,
+      "message": "this include is already in the header.",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 16
+      },
+      "revId": "09304583a2ddc41da71b91b67559188ed8a3f63f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceba58ba_6ee6ca66",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-25T22:49:13Z",
+      "side": 1,
+      "message": "nit: newlines before and after this line.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 9
+      },
+      "revId": "09304583a2ddc41da71b91b67559188ed8a3f63f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac947387_e3747e6a",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-25T22:49:13Z",
+      "side": 1,
+      "message": "nit: newline before this line.",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 74
+      },
+      "revId": "09304583a2ddc41da71b91b67559188ed8a3f63f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8554e50d_7f711b1a",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-25T22:49:13Z",
+      "side": 1,
+      "message": "Per design transitioning entries to the 2nd bucket should also reset their freshness dates [1].\n\nBut given the recent talks on changing how retries and their state transitions work, I\u0027m now unsure if that value update should happen here or only once we confirm the operation was completed (no need to retry).\n\n[1] https://docs.google.com/document/d/1qylrA4quTsgTaz4XrcOP5Eme5Hc7aKQGG_JfE4JPESQ/edit#heading\u003dh.dfnlf4g1nof3 (private link)",
+      "range": {
+        "startLine": 27,
+        "startChar": 20,
+        "endLine": 27,
+        "endChar": 24
+      },
+      "revId": "09304583a2ddc41da71b91b67559188ed8a3f63f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d249245a_1f97eab0",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-25T22:49:13Z",
+      "side": 1,
+      "message": "URLs -\u003e Urls.",
+      "range": {
+        "startLine": 38,
+        "startChar": 53,
+        "endLine": 38,
+        "endChar": 57
+      },
+      "revId": "09304583a2ddc41da71b91b67559188ed8a3f63f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0ea5476_6bae6c53",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-25T22:49:13Z",
+      "side": 1,
+      "message": "This query should be sorted by creation date [1] so to favor selecting the freshest items.\n\n[1] https://docs.google.com/document/d/1qylrA4quTsgTaz4XrcOP5Eme5Hc7aKQGG_JfE4JPESQ/edit#heading\u003dh.dfnlf4g1nof3 (private link)",
+      "range": {
+        "startLine": 40,
+        "startChar": 20,
+        "endLine": 40,
+        "endChar": 24
+      },
+      "revId": "09304583a2ddc41da71b91b67559188ed8a3f63f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9ae5032_87fef808",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-25T22:49:13Z",
+      "side": 1,
+      "message": "URLs -\u003e Urls.",
+      "range": {
+        "startLine": 58,
+        "startChar": 54,
+        "endLine": 58,
+        "endChar": 58
+      },
+      "revId": "09304583a2ddc41da71b91b67559188ed8a3f63f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd9d2ee1_9f547e50",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-25T22:49:13Z",
+      "side": 1,
+      "message": "Per design [1] we also need to finalize the entries beyond the maximum limit.\n\n[1] https://docs.google.com/document/d/1qylrA4quTsgTaz4XrcOP5Eme5Hc7aKQGG_JfE4JPESQ/edit#heading\u003dh.jmcdfp641aqb (private link)",
+      "range": {
+        "startLine": 72,
+        "startChar": 10,
+        "endLine": 72,
+        "endChar": 16
+      },
+      "revId": "09304583a2ddc41da71b91b67559188ed8a3f63f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01009eab_a4fa7733",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-25T22:49:13Z",
+      "side": 1,
+      "message": "instead of having this temporary object it would be cleaner to bind the vector directly to the GotRegistrationId callback (using base::Passed [1]).\n\n[1] https://cs.chromium.org/chromium/src/base/bind_helpers.h?rcl\u003df71b90f3e2816bd84bd35bf02d918995c99ddad2\u0026l\u003d24",
+      "range": {
+        "startLine": 124,
+        "startChar": 4,
+        "endLine": 124,
+        "endChar": 9
+      },
+      "revId": "09304583a2ddc41da71b91b67559188ed8a3f63f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ebd3850_3bfeeab7",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-25T22:49:13Z",
+      "side": 1,
+      "message": "nit: to simplify this header I *think* FetchUrl could be only forward declared here and defined in the CC file.",
+      "range": {
+        "startLine": 27,
+        "startChar": 9,
+        "endLine": 27,
+        "endChar": 19
+      },
+      "revId": "09304583a2ddc41da71b91b67559188ed8a3f63f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "358625f8_be6540a8",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_test_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-25T22:49:13Z",
+      "side": 1,
+      "message": "this comment seems not to apply anymore.",
+      "range": {
+        "startLine": 162,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 38
+      },
+      "revId": "09304583a2ddc41da71b91b67559188ed8a3f63f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad967a0f_554c890c",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_test_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-25T22:49:13Z",
+      "side": 1,
+      "message": "include \u003cstring\u003e.",
+      "range": {
+        "startLine": 8,
+        "startChar": 1,
+        "endLine": 8,
+        "endChar": 8
+      },
+      "revId": "09304583a2ddc41da71b91b67559188ed8a3f63f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0b9871d_52d95d6d",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_test_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-25T22:49:13Z",
+      "side": 1,
+      "message": "nit: this can probably become a forward declaration.",
+      "range": {
+        "startLine": 14,
+        "startChar": 49,
+        "endLine": 14,
+        "endChar": 62
+      },
+      "revId": "09304583a2ddc41da71b91b67559188ed8a3f63f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa928af6_4ca96ad4",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_test_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-25T22:49:13Z",
+      "side": 1,
+      "message": "nit: add newlines after each of the methods here and below.",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 55
+      },
+      "revId": "09304583a2ddc41da71b91b67559188ed8a3f63f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3c45968_d797a58c",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_test_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-25T22:49:13Z",
+      "side": 1,
+      "message": "nit: add comment.",
+      "range": {
+        "startLine": 42,
+        "startChar": 6,
+        "endLine": 42,
+        "endChar": 24
+      },
+      "revId": "09304583a2ddc41da71b91b67559188ed8a3f63f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32890f99_ff60dbe9",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-25T22:49:13Z",
+      "side": 1,
+      "message": "why create this class? it doesn\u0027t seem to add anything useful and makes calling these methods more verbose.",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 24
+      },
+      "revId": "09304583a2ddc41da71b91b67559188ed8a3f63f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5537908_5db663ae",
+        "filename": "components/offline_pages/core/prefetch/task_test_base.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-07-25T22:49:13Z",
+      "side": 1,
+      "message": "add forward declaration for PrefetchStore.",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 15
+      },
+      "revId": "09304583a2ddc41da71b91b67559188ed8a3f63f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
