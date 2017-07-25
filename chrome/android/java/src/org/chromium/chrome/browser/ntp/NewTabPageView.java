@@ -794,8 +794,7 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
     }
 
     /**
-     * @see org.chromium.chrome.browser.compositor.layouts.content.
-     *         InvalidationAwareThumbnailProvider#shouldCaptureThumbnail()
+     * @see NewTabPage#shouldCaptureThumbnail()
      */
     boolean shouldCaptureThumbnail() {
         if (getWidth() == 0 || getHeight() == 0) return false;
@@ -806,8 +805,7 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
     }
 
     /**
-     * @see org.chromium.chrome.browser.compositor.layouts.content.
-     *         InvalidationAwareThumbnailProvider#captureThumbnail(Canvas)
+     * @see NewTabPage#captureThumbnail(Canvas)
      */
     void captureThumbnail(Canvas canvas) {
         mSearchProviderLogoView.endFadeAnimation();
@@ -824,7 +822,7 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
      * items and there is no search provider logo.
      */
     private void updateTileGridPlaceholderVisibility() {
-        boolean showPlaceholder = mTileGroup.hasReceivedData() && mTileGroup.getTiles().length == 0
+        boolean showPlaceholder = mTileGroup.hasReceivedData() && mTileGroup.getAllTiles().isEmpty()
                 && !mSearchProviderHasLogo;
 
         mNoSearchLogoSpacer.setVisibility(
