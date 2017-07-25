@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20da9319_985b5fc6",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 843,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-25T19:13:55Z",
+      "side": 1,
+      "message": "We should stop loading on MODERATE, to be consistent with session restore. We should only restart loading when back to NORMAL.",
+      "range": {
+        "startLine": 843,
+        "startChar": 36,
+        "endLine": 843,
+        "endChar": 66
+      },
+      "revId": "d6e8993fd8ae6c00f16a08ff350ad233da36de08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
