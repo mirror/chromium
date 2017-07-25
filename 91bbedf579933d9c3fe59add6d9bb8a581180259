@@ -22,6 +22,202 @@
       "revId": "91bbedf579933d9c3fe59add6d9bb8a581180259",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f71b05b2_33abaf41",
+        "filename": "chrome/installer/zucchini/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-25T06:39:22Z",
+      "side": 1,
+      "message": "yes, i find the line between the lib and the exe a bit confusing. how do you decide what goes where? if the policy is \"everything for exclusive use by the exe goes in the exe\", then none of that code can be tested without duplicating sources between the exe target and test target. an alternative would be to introduce a zucchini_main_lib target that has everything dedicated to the exe except for main() itself.\n\nan example of what i find confusing: zucchini.h seems to define something that\u0027s only needed by the exe, yet it\u0027s in the lib and in the zucchini namespace. why?\n\nsome other program embedding zucchini (e.g., setup.exe) doesn\u0027t need main_utils, so i don\u0027t think it should be in the \"zucchini lib\" target.",
+      "parentUuid": "b2193fe5_5007120b",
+      "range": {
+        "startLine": 23,
+        "startChar": 5,
+        "endLine": 23,
+        "endChar": 15
+      },
+      "revId": "91bbedf579933d9c3fe59add6d9bb8a581180259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aa5e851_62867c2c",
+        "filename": "chrome/installer/zucchini/main_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-25T06:39:22Z",
+      "side": 1,
+      "message": "is it worth changing this so that it shows the growth in peak rather than (or in addition to) the absolute peak?",
+      "revId": "91bbedf579933d9c3fe59add6d9bb8a581180259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42c62eee_cb00ba43",
+        "filename": "chrome/installer/zucchini/main_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-25T06:39:22Z",
+      "side": 1,
+      "message": "use TimeTicks here and above since you\u0027re measuring a duration",
+      "range": {
+        "startLine": 65,
+        "startChar": 8,
+        "endLine": 65,
+        "endChar": 12
+      },
+      "revId": "91bbedf579933d9c3fe59add6d9bb8a581180259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3182455a_c331f494",
+        "filename": "chrome/installer/zucchini/main_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-25T06:39:22Z",
+      "side": 1,
+      "message": "this would be more clear if it was simply \"3\" so that it\u0027s clear that the value matches the usage string. alternatively, put some static_asserts here that ensure the values are correct.",
+      "range": {
+        "startLine": 92,
+        "startChar": 23,
+        "endLine": 92,
+        "endChar": 40
+      },
+      "revId": "91bbedf579933d9c3fe59add6d9bb8a581180259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1b766cd_580e2486",
+        "filename": "chrome/installer/zucchini/main_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-25T06:39:22Z",
+      "side": 1,
+      "message": "nit: i would be inclined to make this:\n  // Log resource usage of the command.\n  ScopedResourceUsageTracker resource_usage_tracker;\n  return command_use-\u003ecommand_function(command_line, fnames);\n(with the obvious changes to the tracker class)",
+      "range": {
+        "startLine": 132,
+        "startChar": 2,
+        "endLine": 132,
+        "endChar": 22
+      },
+      "revId": "91bbedf579933d9c3fe59add6d9bb8a581180259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed01f68f_cf3bff5f",
+        "filename": "chrome/installer/zucchini/main_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-25T06:39:22Z",
+      "side": 1,
+      "message": "based on https://groups.google.com/a/chromium.org/d/msg/chromium-dev/OIkJO2KQKTQ/YQzUSWPKdTAJ and other discussions, i would suggest not putting stuff that\u0027s for exclusive use by the exe into any namespace at all.",
+      "range": {
+        "startLine": 26,
+        "startChar": 10,
+        "endLine": 26,
+        "endChar": 17
+      },
+      "revId": "91bbedf579933d9c3fe59add6d9bb8a581180259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77bb51b7_937b2afd",
+        "filename": "chrome/installer/zucchini/main_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-25T06:39:22Z",
+      "side": 1,
+      "message": "i think the definition of this type belongs in this .h rather than where the commands themselves are declared. the individual commands must satisfy the requirements of the Command struct rather than the other way around.",
+      "range": {
+        "startLine": 32,
+        "startChar": 10,
+        "endLine": 32,
+        "endChar": 25
+      },
+      "revId": "91bbedf579933d9c3fe59add6d9bb8a581180259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91958023_60aaf352",
+        "filename": "chrome/installer/zucchini/main_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-25T06:39:22Z",
+      "side": 1,
+      "message": "CommandFunction* const command_function;\nor, if CommandFunction becomes a function pointer:\n  const CommandFunction command_function;",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 19
+      },
+      "revId": "91bbedf579933d9c3fe59add6d9bb8a581180259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83f2cc11_0383e5fd",
+        "filename": "chrome/installer/zucchini/zucchini_commands.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-25T06:39:22Z",
+      "side": 1,
+      "message": "nit: while i haven\u0027t done a search, i think it\u0027s generally convention that the type be a function pointer.",
+      "revId": "91bbedf579933d9c3fe59add6d9bb8a581180259",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

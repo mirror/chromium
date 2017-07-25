@@ -285,6 +285,30 @@
     },
     {
       "key": {
+        "uuid": "85590bb1_a94771fd",
+        "filename": "chrome/installer/zucchini/main_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-25T06:39:22Z",
+      "side": 1,
+      "message": "i think this can be made to work with a little fiddling. this, for example, works just fine:\n\nusing FooFn \u003d int(*)(void);\nstruct Bar {\n  constexpr explicit Bar(FooFn foo_fn) : foo_fn(foo_fn) {}\n  Bar(const Bar\u0026) \u003d default;\n  const FooFn foo_fn;\n};\n\nnamespace {\nint ThisIsFoo(void) {\n  static int foo \u003d 5;\n  return foo;\n}\n}\n\nconstexpr Bar kBars[] {Bar(\u0026ThisIsFoo), Bar(\u0026ThisIsFoo)};",
+      "parentUuid": "58f33f79_a09b2b56",
+      "range": {
+        "startLine": 49,
+        "startChar": 20,
+        "endLine": 49,
+        "endChar": 28
+      },
+      "revId": "bba7f82e3f7b284074609c5ad0ed03721cf3724d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd8f843b_e488d415",
         "filename": "chrome/installer/zucchini/main_utils.h",
         "patchSetId": 1
