@@ -16,6 +16,24 @@
       "revId": "4c53ad1a51c3655fe72fd0d4bcb75ed4606fa2b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edcd1e03_73234cd3",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-25T22:25:40Z",
+      "side": 1,
+      "message": "Probably. I\u0027ll send out a separate CL.",
+      "parentUuid": "d5c7217a_2c1b18be",
+      "revId": "4c53ad1a51c3655fe72fd0d4bcb75ed4606fa2b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
