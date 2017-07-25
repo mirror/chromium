@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "024994ec_c500ff46",
+        "filename": "chrome/browser/media/media_engagement_autoplay_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-25T05:00:51Z",
+      "side": 1,
+      "message": "Nit: prefer const char kTest[] over const char* const.\n\n(Note that as written, kMediaEngagementTestDataPath can be assigned, though the data it points to can\u0027t be modified...)",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 11
+      },
+      "revId": "f117bbb95c4ee581b90918ae5f4c2dd92c3226f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f02493f7_5627f34d",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-25T05:00:51Z",
+      "side": 1,
+      "message": "Hmm... shouldn\u0027t this eventually be origin based? I wonder if we should have a TODO?",
+      "range": {
+        "startLine": 409,
+        "startChar": 2,
+        "endLine": 409,
+        "endChar": 55
+      },
+      "revId": "f117bbb95c4ee581b90918ae5f4c2dd92c3226f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95b4b116_b9ef9b53",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2840,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-25T05:00:51Z",
+      "side": 1,
+      "message": "Sorry, I\u0027m not familiar with the details: I thought that the top-level origin/URL\u0027s media engagement level controls whether or not autoplay works. What about subframes that don\u0027t match the origin?\n\n(Another case where plumbing the URL rather than the origin is problematic is for about:blank frames and about:srcdoc)",
+      "range": {
+        "startLine": 2835,
+        "startChar": 0,
+        "endLine": 2840,
+        "endChar": 3
+      },
+      "revId": "f117bbb95c4ee581b90918ae5f4c2dd92c3226f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
