@@ -1,0 +1,9 @@
+{
+  "dependencies": [
+    "test_runner",
+    "data_grid"
+  ],
+  "scripts": [
+    "DataGridTestRunner.js"
+  ]
+}
