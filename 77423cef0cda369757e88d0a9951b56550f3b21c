@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "d7e0bb03_fe7a4267",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-25T05:51:59Z",
+      "side": 1,
+      "message": "Usually we lazy bound mojo interfaces.\n\nHere\u0027s an example: https://cs.chromium.org/chromium/src/components/autofill/content/renderer/autofill_agent.cc?rcl\u003dfabec6f7debd266555a11c09be9344331ab20311\u0026l\u003d810\n\nActually, see below comment about whether we can pass down remote_interfaces_ directly and get rid of the provider interface.",
+      "revId": "77423cef0cda369757e88d0a9951b56550f3b21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2e5c6a7_7fd32b1d",
         "filename": "media/base/ipc/media_param_traits_macros.h",
         "patchSetId": 16
@@ -31,6 +48,148 @@
       "side": 1,
       "message": "No you\u0027re not missing anything that seems reasonable; I\u0027m not sure what I was thinking when I wrote this.",
       "parentUuid": "b2e5c6a7_7fd32b1d",
+      "revId": "77423cef0cda369757e88d0a9951b56550f3b21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9513f1d9_f80233e9",
+        "filename": "media/mojo/interfaces/watch_time_recorder.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-25T05:51:59Z",
+      "side": 1,
+      "message": "nit: Add a brief comment about what this is. Actually, is there a good doc/link to know what this exactly means? I tracked it all the ways down to TabAndroid::EnableEmbeddedMediaExperience() can still couldn\u0027t find a good comment/description about this feature. We should at least document it in media interfaces.",
+      "revId": "77423cef0cda369757e88d0a9951b56550f3b21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7771ced8_32f934d0",
+        "filename": "media/mojo/interfaces/watch_time_recorder.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-25T05:51:59Z",
+      "side": 1,
+      "message": "1. \"natural size\"? Or add a comment about what size we are reporting.\n2. \"initial size\"? Or add a comment about this. Basically we are not always creating a new WatchTimeRecorder when video resolution changes, which seems to contradict the comment on line 13.",
+      "revId": "77423cef0cda369757e88d0a9951b56550f3b21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f3e8613_7c5fac1d",
+        "filename": "media/mojo/interfaces/watch_time_recorder.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-25T05:51:59Z",
+      "side": 1,
+      "message": "here and below, s/histograms/UMA? Not all histograms are UMA...",
+      "range": {
+        "startLine": 30,
+        "startChar": 30,
+        "endLine": 30,
+        "endChar": 40
+      },
+      "revId": "77423cef0cda369757e88d0a9951b56550f3b21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8bb3820_5e846165",
+        "filename": "media/mojo/interfaces/watch_time_recorder.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-25T05:51:59Z",
+      "side": 1,
+      "message": "nit: Is |watch_time| based on media time or wall time?",
+      "revId": "77423cef0cda369757e88d0a9951b56550f3b21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c60f5cdf_675b7120",
+        "filename": "media/mojo/interfaces/watch_time_recorder.mojom",
+        "patchSetId": 16
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-25T05:51:59Z",
+      "side": 1,
+      "message": "I don\u0027t see anything wrong with a SetPlaybackProperties() type method, which is pretty much like an Initialize() method, which is fairly common given that there\u0027s no \"constructor\" that can pass initial parameters when using mojo.\n\nBut from the code, it seems the biggest benefit is that all MediaPlayers in the same RenderFrame can use this provider interface to create it\u0027s own recorder. \n\nAn alternative solution would be to pass MediaFactory::remote_interfaces_ to WMPI, which can be used to connect to the WatchTimeRecorder interface directly. After immediately after the connection, call Initialize() to pass the |properties|. (In the future, if WMPI needs other mojo services, it can reuse |remote_interfaces_|.)\n\nPersonally I feel this would be cleaner. But I don\u0027t have a strong opinion on this.",
+      "revId": "77423cef0cda369757e88d0a9951b56550f3b21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e9e47dc_a6fdc317",
+        "filename": "media/mojo/services/watch_time_recorder.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-25T05:51:59Z",
+      "side": 1,
+      "message": "not needed?",
+      "revId": "77423cef0cda369757e88d0a9951b56550f3b21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a020973_3f9bbf22",
+        "filename": "media/mojo/services/watch_time_recorder.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-25T05:51:59Z",
+      "side": 1,
+      "message": "nit: s/value/watch_time to be consistent with the interface",
+      "revId": "77423cef0cda369757e88d0a9951b56550f3b21c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "984cbed6_32dd9d44",
+        "filename": "media/mojo/services/watch_time_recorder_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-25T05:51:59Z",
+      "side": 1,
+      "message": "nit: no need for \"static\" here",
       "revId": "77423cef0cda369757e88d0a9951b56550f3b21c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
