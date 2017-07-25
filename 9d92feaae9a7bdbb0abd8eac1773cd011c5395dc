@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "83f224b3_cf95158a",
+        "filename": "chrome/common/extensions/api/storage/storage_schema_manifest_handler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-25T11:57:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6c46b27_b1e0b6d4",
+      "revId": "9d92feaae9a7bdbb0abd8eac1773cd011c5395dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5da09344_c154e803",
         "filename": "chromeos/dbus/fake_shill_service_client.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "9d92feaae9a7bdbb0abd8eac1773cd011c5395dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d519aa62_c3a47aab",
+        "filename": "chromeos/dbus/fake_shill_service_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-25T11:57:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5da09344_c154e803",
+      "revId": "9d92feaae9a7bdbb0abd8eac1773cd011c5395dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
