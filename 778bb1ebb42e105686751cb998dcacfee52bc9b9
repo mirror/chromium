@@ -297,6 +297,24 @@
     },
     {
       "key": {
+        "uuid": "db048a22_349418f6",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwVariationsConfigurationServiceTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-07-25T22:42:22Z",
+      "side": 1,
+      "message": "s/of/or/",
+      "parentUuid": "37cf6468_67492fef",
+      "revId": "778bb1ebb42e105686751cb998dcacfee52bc9b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f857628f_3fa3ec51",
         "filename": "android_webview/javatests/src/org/chromium/android_webview/test/AwVariationsConfigurationServiceTest.java",
         "patchSetId": 5
