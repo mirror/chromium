@@ -26,18 +26,18 @@ scoped_refptr<cc::Layer> ToolbarLayer::layer() {
   return layer_;
 }
 
-void ToolbarLayer::PushResource(
-    int toolbar_resource_id,
-    int toolbar_background_color,
-    bool anonymize,
-    int toolbar_textbox_background_color,
-    int url_bar_background_resource_id,
-    float url_bar_alpha,
-    float window_height,
-    float y_offset,
-    bool show_debug,
-    bool clip_shadow,
-    bool browser_controls_at_bottom) {
+void ToolbarLayer::PushResource(int toolbar_resource_id,
+                                int toolbar_background_color,
+                                bool anonymize,
+                                int toolbar_textbox_background_color,
+                                int url_bar_background_resource_id,
+                                bool draw_url_bar_background,
+                                float url_bar_alpha,
+                                float window_height,
+                                float y_offset,
+                                bool show_debug,
+                                bool clip_shadow,
+                                bool browser_controls_at_bottom) {
   ToolbarResource* resource =
       ToolbarResource::From(resource_manager_->GetResource(
           ui::ANDROID_RESOURCE_TYPE_DYNAMIC, toolbar_resource_id));
@@ -71,7 +71,8 @@ void ToolbarLayer::PushResource(
       gfx::PointF(resource->toolbar_rect().origin()));
   toolbar_background_layer_->SetBackgroundColor(toolbar_background_color);
 
-  bool url_bar_visible = (resource->location_bar_content_rect().width() != 0);
+  bool url_bar_visible = draw_url_bar_background &&
+                         (resource->location_bar_content_rect().width() != 0);
   url_bar_background_layer_->SetHideLayerAndSubtree(!url_bar_visible);
   if (url_bar_visible) {
     ui::NinePatchResource* url_bar_background_resource =

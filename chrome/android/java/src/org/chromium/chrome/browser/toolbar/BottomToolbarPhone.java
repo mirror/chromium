@@ -9,6 +9,7 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.os.SystemClock;
@@ -22,9 +23,11 @@ import android.widget.ImageView;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.appmenu.AppMenuButtonHelper;
 import org.chromium.chrome.browser.device.DeviceClassManager;
 import org.chromium.chrome.browser.tab.Tab;
+import org.chromium.chrome.browser.toolbar.ToolbarPhone.VisualState;
 import org.chromium.chrome.browser.util.ColorUtils;
 import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.util.MathUtils;
@@ -175,6 +178,9 @@ public class BottomToolbarPhone extends ToolbarPhone {
     /** Whether the menu button should be shown while the sheet is open. */
     private boolean mShowMenuButtonWhenSheetOpen;
 
+    /** Whether to use a "modern" visual design. **/
+    private boolean mUseModernDesign;
+
     /**
      * Constructs a BottomToolbarPhone object.
      * @param context The Context in which this View object is created.
@@ -187,10 +193,11 @@ public class BottomToolbarPhone extends ToolbarPhone {
                 context.getResources(), R.drawable.toolbar_handle_dark);
         mHandleLight = ApiCompatibilityUtils.getDrawable(
                 context.getResources(), R.drawable.toolbar_handle_light);
-        mLocationBarVerticalMargin =
-                getResources().getDimensionPixelOffset(R.dimen.bottom_location_bar_vertical_margin);
         mUseToolbarHandle = true;
         mToolbarButtonVisibilityPercent = 1.f;
+
+        mLocationBarVerticalMargin =
+                getResources().getDimensionPixelOffset(R.dimen.bottom_location_bar_vertical_margin);
     }
 
     /**
@@ -371,8 +378,17 @@ public class BottomToolbarPhone extends ToolbarPhone {
     }
 
     @Override
+    protected int getLocationBarBackgroundVerticalMargin(float expansion) {
+        return mLocationBarVerticalMargin;
+    }
+
+    @Override
     protected int getLeftPositionOfLocationBarBackground(VisualState visualState) {
         if (!mAnimatingToolbarButtonAppearance && !mAnimatingToolbarButtonDisappearance) {
+            if (mUseModernDesign) {
+                return getViewBoundsLeftOfLocationBar(visualState);
+            }
+
             return super.getLeftPositionOfLocationBarBackground(visualState);
         } else {
             int targetPosition = getViewBoundsLeftOfLocationBar(visualState);
@@ -385,6 +401,10 @@ public class BottomToolbarPhone extends ToolbarPhone {
     @Override
     protected int getRightPositionOfLocationBarBackground(VisualState visualState) {
         if (!mAnimatingToolbarButtonAppearance && !mAnimatingToolbarButtonDisappearance) {
+            if (mUseModernDesign) {
+                return getViewBoundsRightOfLocationBar(visualState);
+            }
+
             return super.getRightPositionOfLocationBarBackground(visualState);
         } else {
             int targetPosition = getViewBoundsRightOfLocationBar(visualState);
@@ -487,12 +507,28 @@ public class BottomToolbarPhone extends ToolbarPhone {
     public void onNativeLibraryReady() {
         super.onNativeLibraryReady();
 
+        mUseModernDesign = ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT);
         mUseToolbarHandle = !FeatureUtilities.isChromeHomeExpandButtonEnabled();
 
         if (!mUseToolbarHandle) {
             initExpandButton();
         } else {
             updateContentDescription();
+        }
+
+        if (mUseModernDesign) {
+            mLocationBarBackground = ApiCompatibilityUtils.getDrawable(
+                    getContext().getResources(), R.drawable.bottom_toolbar_background);
+            mLocationBarBackgroundCornerRadius = 0;
+            mLocationBarBackgroundPadding = new Rect();
+            mLocationBar.setPadding(mLocationBarBackgroundPadding.left,
+                    mLocationBarBackgroundPadding.top, mLocationBarBackgroundPadding.right,
+                    mLocationBarBackgroundPadding.bottom);
+
+            updateVisualsForToolbarState();
+
+            invalidate();
+            requestLayout();
         }
     }
 
@@ -669,6 +705,21 @@ public class BottomToolbarPhone extends ToolbarPhone {
         // Intentionally does not call super. Chrome Home does not support a home button.
     }
 
+    @Override
+    protected void drawLocationBarBackground(Canvas canvas) {
+        if (!mUseModernDesign) {
+            super.drawLocationBarBackground(canvas);
+            return;
+        }
+
+        mLocationBarBackground.setBounds(
+                mLocationBarBackgroundBounds.left - mLocationBarBackgroundPadding.left,
+                mLocationBarBackgroundBounds.top - mLocationBarBackgroundPadding.top,
+                mLocationBarBackgroundBounds.right + mLocationBarBackgroundPadding.right,
+                mLocationBarBackgroundBounds.bottom + mLocationBarBackgroundPadding.bottom);
+        mLocationBarBackground.draw(canvas);
+    }
+
     /**
      * Sets the height and title text appearance of the provided toolbar so that its style is
      * consistent with BottomToolbarPhone.
@@ -787,6 +838,15 @@ public class BottomToolbarPhone extends ToolbarPhone {
             updateButtonsContainerVisibilityAndTranslation();
         }
         updateMenuButtonClickableState();
+    }
+
+    @Override
+    protected int getToolbarColorForVisualState(final VisualState visualState) {
+        if (!mUseModernDesign || visualState != VisualState.NORMAL) {
+            return super.getToolbarColorForVisualState(visualState);
+        }
+
+        return Color.WHITE;
     }
 
     private void updateToolbarButtonVisibility() {

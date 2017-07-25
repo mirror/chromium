@@ -139,6 +139,7 @@ void TabLayer::SetProperties(int id,
                              bool anonymize_toolbar,
                              bool show_tab_title,
                              int toolbar_textbox_resource_id,
+                             bool draw_toolbar_textbox_background,
                              int toolbar_textbox_background_color,
                              float toolbar_textbox_alpha,
                              float toolbar_alpha,
@@ -230,19 +231,13 @@ void TabLayer::SetProperties(int id,
   //--------------------------------------------------------------------------
 
   // TODO(kkimlabs): Tab switcher doesn't show the progress bar.
-  toolbar_layer_->PushResource(toolbar_resource_id,
-                               toolbar_background_color,
-                               anonymize_toolbar,
-                               toolbar_textbox_background_color,
-                               toolbar_textbox_resource_id,
-                               toolbar_textbox_alpha,
-                               view_height,
-                               // TODO(mdjones): Feels odd to pass 0 here when
-                               // we have access to toolbar_y_offset.
-                               0,
-                               false,
-                               false,
-                               browser_controls_at_bottom);
+  toolbar_layer_->PushResource(
+      toolbar_resource_id, toolbar_background_color, anonymize_toolbar,
+      toolbar_textbox_background_color, toolbar_textbox_resource_id,
+      draw_toolbar_textbox_background, toolbar_textbox_alpha, view_height,
+      // TODO(mdjones): Feels odd to pass 0 here when
+      // we have access to toolbar_y_offset.
+      0, false, false, browser_controls_at_bottom);
   toolbar_layer_->UpdateProgressBar(0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
   float toolbar_impact_height = 0;

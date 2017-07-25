@@ -37,6 +37,7 @@ void ToolbarSceneLayer::UpdateToolbarLayer(
     jint toolbar_resource_id,
     jint toolbar_background_color,
     jint url_bar_resource_id,
+    jboolean draw_url_bar_background,
     jfloat url_bar_alpha,
     jfloat y_offset,
     jfloat view_height,
@@ -54,10 +55,10 @@ void ToolbarSceneLayer::UpdateToolbarLayer(
 
   toolbar_layer_->layer()->SetHideLayerAndSubtree(!visible);
   if (visible) {
-    toolbar_layer_->PushResource(toolbar_resource_id, toolbar_background_color,
-                                 false, SK_ColorWHITE, url_bar_resource_id,
-                                 url_bar_alpha, view_height, y_offset, false,
-                                 !show_shadow, browser_controls_at_bottom);
+    toolbar_layer_->PushResource(
+        toolbar_resource_id, toolbar_background_color, false, SK_ColorWHITE,
+        url_bar_resource_id, draw_url_bar_background, url_bar_alpha,
+        view_height, y_offset, false, !show_shadow, browser_controls_at_bottom);
   }
 }
 

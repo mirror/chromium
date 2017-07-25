@@ -197,7 +197,7 @@ public class ToolbarPhone extends ToolbarLayout
     protected ColorDrawable mToolbarBackground;
 
     /** The omnibox background (white with a shadow). */
-    private Drawable mLocationBarBackground;
+    protected Drawable mLocationBarBackground;
 
     private boolean mForceDrawLocationBarBackground;
     private TabSwitcherDrawable mTabSwitcherButtonDrawable;
@@ -207,9 +207,9 @@ public class ToolbarPhone extends ToolbarLayout
     private final int mDarkModeDefaultColor;
 
     /** The boundaries of the omnibox, without the NTP-specific offset applied. */
-    private final Rect mLocationBarBackgroundBounds = new Rect();
+    protected final Rect mLocationBarBackgroundBounds = new Rect();
 
-    private final Rect mLocationBarBackgroundPadding = new Rect();
+    protected Rect mLocationBarBackgroundPadding = new Rect();
     private final Rect mBackgroundOverlayBounds = new Rect();
 
     /** Offset applied to the bounds of the omnibox if we are showing a New Tab Page. */
@@ -228,7 +228,7 @@ public class ToolbarPhone extends ToolbarLayout
     protected final Point mNtpSearchBoxTranslation = new Point();
 
     protected final int mToolbarSidePadding;
-    private final int mLocationBarBackgroundCornerRadius;
+    protected int mLocationBarBackgroundCornerRadius;
     protected int mLocationBarVerticalMargin;
 
     private ValueAnimator mBrandColorTransitionAnimation;
@@ -311,8 +311,6 @@ public class ToolbarPhone extends ToolbarLayout
                 R.dimen.toolbar_edge_padding);
         mLocationBarVerticalMargin =
                 getResources().getDimensionPixelOffset(R.dimen.location_bar_vertical_margin);
-        mLocationBarBackgroundCornerRadius =
-                getResources().getDimensionPixelOffset(R.dimen.location_bar_corner_radius);
         mProgressBackBackgroundColorWhite = ApiCompatibilityUtils.getColor(getResources(),
                 R.color.progress_bar_background_white);
         mLightModeDefaultColor =
@@ -340,12 +338,14 @@ public class ToolbarPhone extends ToolbarLayout
         mTabSwitcherAnimationBgOverlay =
                 new ColorDrawable(getToolbarColorForVisualState(VisualState.NORMAL));
 
+        mLocationBarBackgroundCornerRadius =
+                getResources().getDimensionPixelOffset(R.dimen.location_bar_corner_radius);
         mLocationBarBackground =
                 ApiCompatibilityUtils.getDrawable(getResources(), R.drawable.card_single);
         mLocationBarBackground.getPadding(mLocationBarBackgroundPadding);
-        mLocationBar.setPadding(
-                mLocationBarBackgroundPadding.left, mLocationBarBackgroundPadding.top,
-                mLocationBarBackgroundPadding.right, mLocationBarBackgroundPadding.bottom);
+        mLocationBar.setPadding(mLocationBarBackgroundPadding.left,
+                mLocationBarBackgroundPadding.top, mLocationBarBackgroundPadding.right,
+                mLocationBarBackgroundPadding.bottom);
 
         setLayoutTransition(null);
 
@@ -779,17 +779,26 @@ public class ToolbarPhone extends ToolbarLayout
         int leftViewPosition = getLeftPositionOfLocationBarBackground(visualState);
         int rightViewPosition = getRightPositionOfLocationBarBackground(visualState);
 
+        int verticalMargin = getLocationBarBackgroundVerticalMargin(expansion);
         // The bounds are set by the following:
         // - The left most visible location bar child view.
         // - The top of the viewport is aligned with the top of the location bar.
         // - The right most visible location bar child view.
         // - The bottom of the viewport is aligned with the bottom of the location bar.
         // Additional padding can be applied for use during animations.
-        int verticalMargin = (int) MathUtils.interpolate(mLocationBarVerticalMargin, 0, expansion);
         out.set(leftViewPosition,
                 mLocationBar.getTop() + verticalMargin,
                 rightViewPosition,
                 mLocationBar.getBottom() - verticalMargin);
+    }
+
+    /**
+     * TODO(twellington): document this
+     * @param expansion
+     * @return
+     */
+    protected int getLocationBarBackgroundVerticalMargin(float expansion) {
+        return (int) MathUtils.interpolate(mLocationBarVerticalMargin, 0, expansion);
     }
 
     /**
@@ -1261,19 +1270,7 @@ public class ToolbarPhone extends ToolbarLayout
             }
             mLocationBarBackground.setAlpha(backgroundAlpha);
 
-            if ((mLocationBar.getAlpha() > 0 || mForceDrawLocationBarBackground)
-                    && !mTextureCaptureMode) {
-                mLocationBarBackground.setBounds(
-                        mLocationBarBackgroundBounds.left + mLocationBarBackgroundNtpOffset.left
-                                - mLocationBarBackgroundPadding.left,
-                        mLocationBarBackgroundBounds.top + mLocationBarBackgroundNtpOffset.top
-                                - mLocationBarBackgroundPadding.top,
-                        mLocationBarBackgroundBounds.right + mLocationBarBackgroundNtpOffset.right
-                                + mLocationBarBackgroundPadding.right,
-                        mLocationBarBackgroundBounds.bottom + mLocationBarBackgroundNtpOffset.bottom
-                                + mLocationBarBackgroundPadding.bottom);
-                mLocationBarBackground.draw(canvas);
-            }
+            drawLocationBarBackground(canvas);
 
             float locationBarClipLeft =
                     mLocationBarBackgroundBounds.left + mLocationBarBackgroundNtpOffset.left;
@@ -1310,6 +1307,22 @@ public class ToolbarPhone extends ToolbarLayout
 
         if (clipped) canvas.restore();
         return retVal;
+    }
+
+    protected void drawLocationBarBackground(Canvas canvas) {
+        if ((mLocationBar.getAlpha() > 0 || mForceDrawLocationBarBackground)
+                && !mTextureCaptureMode) {
+            mLocationBarBackground.setBounds(mLocationBarBackgroundBounds.left
+                            + mLocationBarBackgroundNtpOffset.left
+                            - mLocationBarBackgroundPadding.left,
+                    mLocationBarBackgroundBounds.top + mLocationBarBackgroundNtpOffset.top
+                            - mLocationBarBackgroundPadding.top,
+                    mLocationBarBackgroundBounds.right + mLocationBarBackgroundNtpOffset.right
+                            + mLocationBarBackgroundPadding.right,
+                    mLocationBarBackgroundBounds.bottom + mLocationBarBackgroundNtpOffset.bottom
+                            + mLocationBarBackgroundPadding.bottom);
+            mLocationBarBackground.draw(canvas);
+        }
     }
 
     @Override

@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.base.ContextUtils;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.dom_distiller.DomDistillerServiceFactory;
 import org.chromium.chrome.browser.dom_distiller.DomDistillerTabUtils;
 import org.chromium.chrome.browser.ntp.NewTabPage;
@@ -163,8 +164,11 @@ class ToolbarModelImpl extends ToolbarModel implements ToolbarDataProvider, Tool
     @Override
     public int getPrimaryColor() {
         if (mBottomSheet != null) {
-            int colorId =
-                    isIncognito() ? R.color.incognito_primary_color : R.color.default_primary_color;
+            int colorId = isIncognito()
+                    ? R.color.incognito_primary_color
+                    : ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT)
+                            ? android.R.color.white
+                            : R.color.default_primary_color;
             return ApiCompatibilityUtils.getColor(
                     ContextUtils.getApplicationContext().getResources(), colorId);
         }

@@ -89,6 +89,7 @@ class TabLayer : public Layer {
                      bool anonymize_toolbar,
                      bool show_tab_title,
                      int toolbar_textbox_resource_id,
+                     bool draw_toolbar_textbox_background,
                      int toolbar_textbox_background_color,
                      float toolbar_textbox_alpha,
                      float toolbar_alpha,

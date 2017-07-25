@@ -9,6 +9,7 @@ import android.graphics.RectF;
 
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.compositor.LayerTitleCache;
 import org.chromium.chrome.browser.compositor.layouts.Layout.ViewportMode;
 import org.chromium.chrome.browser.compositor.layouts.LayoutProvider;
@@ -97,8 +98,12 @@ public class ToolbarSceneLayer extends SceneOverlayLayer implements SceneOverlay
                 ? fullscreenManager.getBottomControlOffset()
                 : fullscreenManager.getTopControlOffset();
 
+        boolean drawUrlBarBackground = !fullscreenManager.areBrowserControlsAtBottom()
+                || !ChromeFeatureList.isInitialized()
+                || !ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT);
+
         nativeUpdateToolbarLayer(mNativePtr, resourceManager, R.id.control_container,
-                browserControlsBackgroundColor, R.drawable.card_single,
+                browserControlsBackgroundColor, R.drawable.card_single, drawUrlBarBackground,
                 browserControlsUrlBarAlpha, controlsOffset, windowHeight, useTexture, showShadow,
                 fullscreenManager.areBrowserControlsAtBottom());
 
@@ -246,18 +251,10 @@ public class ToolbarSceneLayer extends SceneOverlayLayer implements SceneOverlay
     private native void nativeSetContentTree(
             long nativeToolbarSceneLayer,
             SceneLayer contentTree);
-    private native void nativeUpdateToolbarLayer(
-            long nativeToolbarSceneLayer,
-            ResourceManager resourceManager,
-            int resourceId,
-            int toolbarBackgroundColor,
-            int urlBarResourceId,
-            float urlBarAlpha,
-            float topOffset,
-            float viewHeight,
-            boolean visible,
-            boolean showShadow,
-            boolean browserControlsAtBottom);
+    private native void nativeUpdateToolbarLayer(long nativeToolbarSceneLayer,
+            ResourceManager resourceManager, int resourceId, int toolbarBackgroundColor,
+            int urlBarResourceId, boolean drawUrlBarBackground, float urlBarAlpha, float topOffset,
+            float viewHeight, boolean visible, boolean showShadow, boolean browserControlsAtBottom);
     private native void nativeUpdateProgressBar(
             long nativeToolbarSceneLayer,
             int progressBarX,

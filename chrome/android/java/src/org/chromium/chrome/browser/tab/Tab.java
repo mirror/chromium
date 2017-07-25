@@ -498,7 +498,10 @@ public class Tab
             mIdealFaviconSize = resources.getDimensionPixelSize(R.dimen.default_favicon_size);
             mDefaultThemeColor = mIncognito
                     ? ApiCompatibilityUtils.getColor(resources, R.color.incognito_primary_color)
-                    : ApiCompatibilityUtils.getColor(resources, R.color.default_primary_color);
+                    : ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT)
+                            ? Color.WHITE
+                            : ApiCompatibilityUtils.getColor(
+                                      resources, R.color.default_primary_color);
             mThemeColor = calculateThemeColor(false);
         } else {
             mIdealFaviconSize = 16;

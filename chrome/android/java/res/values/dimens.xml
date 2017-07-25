@@ -210,6 +210,8 @@
     <dimen name="bottom_control_container_height">56dp</dimen>
     <dimen name="bottom_toolbar_top_margin">2dp</dimen>
     <dimen name="bottom_toolbar_url_bar_top_margin">3.5dp</dimen>
+    <dimen name="bottom_toolbar_modern_url_bar_height">48dp</dimen>
+    <dimen name="bottom_toolbar_modern_url_bar_corner_radius">24dp</dimen>
     <dimen name="custom_tabs_control_container_height">56dp</dimen>
     <dimen name="webapp_control_container_height">22dp</dimen>
 
