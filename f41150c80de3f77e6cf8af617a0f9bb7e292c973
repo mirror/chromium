@@ -93,6 +93,23 @@
     },
     {
       "key": {
+        "uuid": "7fa19273_f0d7bcaa",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-25T18:18:23Z",
+      "side": 1,
+      "message": "You should add a layout manager as well, ie,\n\n  SetLayoutManager(new views::BoxLayout(views::BoxLayout::kHorizontal));\n\nThis will size the buttons as you add/remove them.",
+      "revId": "f41150c80de3f77e6cf8af617a0f9bb7e292c973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1673f35d_e3906cae",
         "filename": "ash/shelf/login_shelf_view.cc",
         "patchSetId": 2
@@ -138,6 +155,40 @@
       "writtenOn": "2017-07-25T18:13:51Z",
       "side": 1,
       "message": "/*delete_children*/",
+      "revId": "f41150c80de3f77e6cf8af617a0f9bb7e292c973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a1b0885_e6efe9d7",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-25T18:18:23Z",
+      "side": 1,
+      "message": "Lines 100-102 should be done when creating the button.",
+      "revId": "f41150c80de3f77e6cf8af617a0f9bb7e292c973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42ee2845_25a57dea",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-25T18:18:23Z",
+      "side": 1,
+      "message": "Might need a Layout() after this.",
       "revId": "f41150c80de3f77e6cf8af617a0f9bb7e292c973",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
