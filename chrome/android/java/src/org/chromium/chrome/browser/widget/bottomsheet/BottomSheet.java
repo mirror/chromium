@@ -1072,6 +1072,10 @@ public class BottomSheet
     private void onSheetClosed() {
         if (!mIsSheetOpen) return;
 
+        // Update the browser controls since they are permanently shown while the sheet is open.
+        Tab tab = getActiveTab();
+        if (tab != null) tab.updateBrowserControlsState(BrowserControlsState.SHOWN, false);
+
         mBackButtonDismissesChrome = false;
         mIsSheetOpen = false;
         for (BottomSheetObserver o : mObservers) o.onSheetClosed();
@@ -1201,12 +1205,6 @@ public class BottomSheet
      */
     private void setSheetOffsetFromBottom(float offset) {
         if (MathUtils.areFloatsEqual(offset, getSheetOffsetFromBottom())) return;
-
-        if (offset > getMinOffset() && !MathUtils.areFloatsEqual(offset, getMinOffset())) {
-            onSheetOpened();
-        } else {
-            onSheetClosed();
-        }
 
         setTranslationY(mContainerHeight - offset);
         sendOffsetChangeEvents();
@@ -1359,6 +1357,12 @@ public class BottomSheet
 
         for (BottomSheetObserver o : mObservers) {
             o.onSheetStateChanged(mCurrentState);
+        }
+
+        if (state == SHEET_STATE_PEEK) {
+            onSheetClosed();
+        } else {
+            onSheetOpened();
         }
     }
 
