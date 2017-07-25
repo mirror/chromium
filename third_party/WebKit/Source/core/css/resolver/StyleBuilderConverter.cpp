@@ -384,23 +384,80 @@ double StyleBuilderConverter::ConvertValueToNumber(
   }
 }
 
-FontSelectionValueWeight StyleBuilderConverterBase::ConvertFontWeight(
-    const CSSValue& value,
-    FontSelectionValue parent_weight) {
-  const CSSIdentifierValue& identifier_value = ToCSSIdentifierValue(value);
-  switch (identifier_value.GetValueID()) {
-    case CSSValueBolder:
-      return FontSelectionValueWeight(
-          FontDescription::BolderWeight(parent_weight));
-    case CSSValueLighter:
-      return FontSelectionValueWeight(
-          FontDescription::LighterWeight(parent_weight));
-    default:
-      return identifier_value.ConvertTo<FontSelectionValueWeight>();
+FontSelectionValue StyleBuilderConverterBase::ConvertFontStretch(
+    const blink::CSSValue& value) {
+  if (value.IsPrimitiveValue()) {
+    const CSSPrimitiveValue& primitive_value = ToCSSPrimitiveValue(value);
+    if (primitive_value.IsPercentage())
+      return clampTo<FontSelectionValue>(primitive_value.GetFloatValue());
   }
+
+  // TODO: Consider not parsing them as IdentifierValue any more?
+  if (value.IsIdentifierValue()) {
+    const CSSIdentifierValue& identifier_value = ToCSSIdentifierValue(value);
+    switch (identifier_value.GetValueID()) {
+      case CSSValueUltraCondensed:
+        return UltraCondensedWidthValue();
+      case CSSValueExtraCondensed:
+        return ExtraCondensedWidthValue();
+      case CSSValueCondensed:
+        return CondensedWidthValue();
+      case CSSValueSemiCondensed:
+        return SemiCondensedWidthValue();
+      case CSSValueNormal:
+        return NormalWidthValue();
+      case CSSValueSemiExpanded:
+        return SemiExpandedWidthValue();
+      case CSSValueExpanded:
+        return ExpandedWidthValue();
+      case CSSValueExtraExpanded:
+        return ExtraExpandedWidthValue();
+      case CSSValueUltraExpanded:
+        return UltraExpandedWidthValue();
+      default:
+        break;
+    }
+  }
+  NOTREACHED();
+  return NormalWidthValue();
 }
 
-FontSelectionValueWeight StyleBuilderConverter::ConvertFontWeight(
+FontSelectionValue StyleBuilderConverter::ConvertFontStretch(
+    blink::StyleResolverState& state,
+    const blink::CSSValue& value) {
+  return StyleBuilderConverterBase::ConvertFontStretch(value);
+}
+
+FontSelectionValue StyleBuilderConverterBase::ConvertFontWeight(
+    const CSSValue& value,
+    FontSelectionValue parent_weight) {
+  if (value.IsPrimitiveValue()) {
+    const CSSPrimitiveValue& primitive_value = ToCSSPrimitiveValue(value);
+    if (primitive_value.IsNumber())
+      return clampTo<FontSelectionValue>(primitive_value.GetFloatValue());
+  }
+
+  if (value.IsIdentifierValue()) {
+    const CSSIdentifierValue& identifier_value = ToCSSIdentifierValue(value);
+    switch (identifier_value.GetValueID()) {
+      case CSSValueNormal:
+        return NormalWeightValue();
+      case CSSValueBold:
+        return BoldWeightValue();
+      case CSSValueBolder:
+        return FontDescription::BolderWeight(parent_weight);
+      case CSSValueLighter:
+        return FontDescription::LighterWeight(parent_weight);
+      default:
+        NOTREACHED();
+        return NormalWeightValue();
+    }
+  }
+  NOTREACHED();
+  return NormalWeightValue();
+}
+
+FontSelectionValue StyleBuilderConverter::ConvertFontWeight(
     StyleResolverState& state,
     const CSSValue& value) {
   return StyleBuilderConverterBase::ConvertFontWeight(

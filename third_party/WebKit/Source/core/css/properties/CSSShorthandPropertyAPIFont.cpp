@@ -28,7 +28,7 @@ bool ConsumeSystemFont(bool important,
     return false;
 
   FontSelectionValueStyle font_style = NormalSlopeValue();
-  FontSelectionValueWeight font_weight = NormalWeightValue();
+  FontSelectionValue font_weight = NormalWeightValue();
   float font_size = 0;
   AtomicString font_family;
   LayoutTheme::GetTheme().SystemFont(system_font_id, font_style, font_weight,
@@ -42,8 +42,10 @@ bool ConsumeSystemFont(bool important,
       properties);
   CSSPropertyParserHelpers::AddProperty(
       CSSPropertyFontWeight, CSSPropertyFont,
-      *CSSIdentifierValue::Create(font_weight), important,
-      CSSPropertyParserHelpers::IsImplicitProperty::kNotImplicit, properties);
+      *CSSPrimitiveValue::Create(font_weight,
+                                 CSSPrimitiveValue::UnitType::kNumber),
+      important, CSSPropertyParserHelpers::IsImplicitProperty::kNotImplicit,
+      properties);
   CSSPropertyParserHelpers::AddProperty(
       CSSPropertyFontSize, CSSPropertyFont,
       *CSSPrimitiveValue::Create(font_size,
@@ -94,8 +96,8 @@ bool ConsumeFont(bool important,
   // Optional font-style, font-variant, font-stretch and font-weight.
   CSSIdentifierValue* font_style = nullptr;
   CSSIdentifierValue* font_variant_caps = nullptr;
-  CSSIdentifierValue* font_weight = nullptr;
-  CSSIdentifierValue* font_stretch = nullptr;
+  CSSValue* font_weight = nullptr;
+  CSSValue* font_stretch = nullptr;
   while (!range.AtEnd()) {
     CSSValueID id = range.Peek().Id();
     if (!font_style && CSSParserFastPaths::IsValidKeywordPropertyAndValue(
@@ -117,11 +119,16 @@ bool ConsumeFont(bool important,
       if (font_weight)
         continue;
     }
-    if (!font_stretch && CSSParserFastPaths::IsValidKeywordPropertyAndValue(
-                             CSSPropertyFontStretch, id, context.Mode()))
-      font_stretch = CSSPropertyParserHelpers::ConsumeIdent(range);
-    else
+    if (!font_stretch &&
+        (id == CSSValueNormal ||
+         (id >= CSSValueUltraCondensed && id <= CSSValueUltraExpanded))) {
+      // Stretch in the font shorthand can only take the CSS Fonts Level 3
+      // keywords, not arbitrary values, compare
+      // https://drafts.csswg.org/css-fonts-4/#font-prop
+      font_stretch = CSSPropertyFontUtils::ConsumeFontStretch(range);
+    } else {
       break;
+    }
   }
 
   if (range.AtEnd())
