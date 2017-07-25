@@ -4,7 +4,6 @@
 
 #include "chrome/browser/ui/views/payments/payment_method_view_controller.h"
 
-#include <memory>
 #include <utility>
 #include <vector>
 
@@ -184,13 +183,14 @@ PaymentMethodViewController::PaymentMethodViewController(
     PaymentRequestState* state,
     PaymentRequestDialogView* dialog)
     : PaymentRequestSheetController(spec, state, dialog) {
+  payment_method_list_ = base::MakeUnique<PaymentRequestItemList>(this);
   const std::vector<std::unique_ptr<PaymentInstrument>>& available_instruments =
       state->available_instruments();
   for (const auto& instrument : available_instruments) {
     auto item = base::MakeUnique<PaymentMethodListItem>(
-        instrument.get(), spec, state, &payment_method_list_, dialog,
+        instrument.get(), spec, state, payment_method_list_.get(), dialog,
         instrument.get() == state->selected_instrument());
-    payment_method_list_.AddItem(std::move(item));
+    payment_method_list_->AddItem(std::move(item));
   }
 }
 
@@ -214,7 +214,7 @@ void PaymentMethodViewController::FillContentView(views::View* content_view) {
     content_view->AddChildView(CreateHeaderView(sub_header).release());
 
   std::unique_ptr<views::View> list_view =
-      payment_method_list_.CreateListView();
+      payment_method_list_->CreateListView();
   list_view->set_id(
       static_cast<int>(DialogViewID::PAYMENT_METHOD_SHEET_LIST_VIEW));
   content_view->AddChildView(list_view.release());

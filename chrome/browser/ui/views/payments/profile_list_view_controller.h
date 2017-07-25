@@ -100,7 +100,7 @@ class ProfileListViewController : public PaymentRequestSheetController {
 
  private:
   std::unique_ptr<views::Button> CreateRow(autofill::AutofillProfile* profile);
-  PaymentRequestItemList list_;
+  std::unique_ptr<PaymentRequestItemList> list_;
 
   DISALLOW_COPY_AND_ASSIGN(ProfileListViewController);
 };

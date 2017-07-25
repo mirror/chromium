@@ -4,7 +4,9 @@
 
 #include "chrome/browser/ui/views/payments/payment_request_item_list.h"
 
+#include "chrome/browser/ui/views/payments/payment_request_dialog_view.h"
 #include "chrome/browser/ui/views/payments/payment_request_dialog_view_ids.h"
+#include "chrome/browser/ui/views/payments/payment_request_sheet_controller.h"
 #include "chrome/browser/ui/views/payments/payment_request_views_util.h"
 #include "components/payments/content/payment_request_state.h"
 #include "components/strings/grit/components_strings.h"
@@ -152,6 +154,8 @@ void PaymentRequestItemList::Item::ButtonPressed(views::Button* sender,
                                                  const ui::Event& event) {
   if (sender->id() == static_cast<int>(DialogViewID::EDIT_ITEM_BUTTON)) {
     EditButtonPressed();
+  } else if (selected_) {
+    list_->parent_sheet()->dialog()->GoBack();
   } else if (CanBeSelected()) {
     list()->SelectItem(this);
   } else {
@@ -170,7 +174,9 @@ void PaymentRequestItemList::Item::UpdateAccessibleName() {
   SetAccessibleName(accessible_content);
 }
 
-PaymentRequestItemList::PaymentRequestItemList() : selected_item_(nullptr) {}
+PaymentRequestItemList::PaymentRequestItemList(
+    PaymentRequestSheetController* parent_sheet)
+    : selected_item_(nullptr), parent_sheet_(parent_sheet) {}
 
 PaymentRequestItemList::~PaymentRequestItemList() {}
 

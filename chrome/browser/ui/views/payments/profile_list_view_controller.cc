@@ -368,7 +368,9 @@ ProfileListViewController::ProfileListViewController(
     PaymentRequestSpec* spec,
     PaymentRequestState* state,
     PaymentRequestDialogView* dialog)
-    : PaymentRequestSheetController(spec, state, dialog) {}
+    : PaymentRequestSheetController(spec, state, dialog) {
+  list_ = base::MakeUnique<PaymentRequestItemList>(this);
+}
 
 ProfileListViewController::~ProfileListViewController() {}
 
@@ -383,11 +385,11 @@ std::unique_ptr<views::View> ProfileListViewController::CreateHeaderView() {
 void ProfileListViewController::PopulateList() {
   autofill::AutofillProfile* selected_profile = GetSelectedProfile();
 
-  list_.Clear();
+  list_->Clear();
 
   for (auto* profile : GetProfiles()) {
-    list_.AddItem(base::MakeUnique<ProfileItem>(
-        profile, spec(), state(), &list_, this, dialog(),
+    list_->AddItem(base::MakeUnique<ProfileItem>(
+        profile, spec(), state(), list_.get(), this, dialog(),
         profile == selected_profile, IsEnabled(profile)));
   }
 }
@@ -401,7 +403,7 @@ void ProfileListViewController::FillContentView(views::View* content_view) {
   std::unique_ptr<views::View> header_view = CreateHeaderView();
   if (header_view)
     content_view->AddChildView(header_view.release());
-  std::unique_ptr<views::View> list_view = list_.CreateListView();
+  std::unique_ptr<views::View> list_view = list_->CreateListView();
   list_view->set_id(static_cast<int>(GetDialogViewId()));
   content_view->AddChildView(list_view.release());
 }

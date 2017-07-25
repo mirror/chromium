@@ -5,6 +5,8 @@
 #ifndef CHROME_BROWSER_UI_VIEWS_PAYMENTS_SHIPPING_OPTION_VIEW_CONTROLLER_H_
 #define CHROME_BROWSER_UI_VIEWS_PAYMENTS_SHIPPING_OPTION_VIEW_CONTROLLER_H_
 
+#include <memory>
+
 #include "base/macros.h"
 #include "chrome/browser/ui/views/payments/payment_request_item_list.h"
 #include "chrome/browser/ui/views/payments/payment_request_sheet_controller.h"
@@ -31,7 +33,7 @@ class ShippingOptionViewController : public PaymentRequestSheetController,
   void FillContentView(views::View* content_view) override;
   std::unique_ptr<views::View> CreateExtraFooterView() override;
 
-  PaymentRequestItemList shipping_option_list_;
+  std::unique_ptr<PaymentRequestItemList> shipping_option_list_;
 
   DISALLOW_COPY_AND_ASSIGN(ShippingOptionViewController);
 };

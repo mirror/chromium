@@ -5,6 +5,8 @@
 #ifndef CHROME_BROWSER_UI_VIEWS_PAYMENTS_PAYMENT_METHOD_VIEW_CONTROLLER_H_
 #define CHROME_BROWSER_UI_VIEWS_PAYMENTS_PAYMENT_METHOD_VIEW_CONTROLLER_H_
 
+#include <memory>
+
 #include "base/macros.h"
 #include "chrome/browser/ui/views/payments/payment_request_item_list.h"
 #include "chrome/browser/ui/views/payments/payment_request_sheet_controller.h"
@@ -32,7 +34,7 @@ class PaymentMethodViewController : public PaymentRequestSheetController {
   std::unique_ptr<views::View> CreateExtraFooterView() override;
   void ButtonPressed(views::Button* sender, const ui::Event& event) override;
 
-  PaymentRequestItemList payment_method_list_;
+  std::unique_ptr<PaymentRequestItemList> payment_method_list_;
 
   DISALLOW_COPY_AND_ASSIGN(PaymentMethodViewController);
 };

@@ -21,6 +21,7 @@ namespace payments {
 
 class PaymentRequestSpec;
 class PaymentRequestState;
+class PaymentRequestSheetController;
 
 // A control representing a list of selectable items in the PaymentRequest
 // dialog. These lists enforce that only one of their elements be selectable at
@@ -123,7 +124,7 @@ class PaymentRequestItemList {
     DISALLOW_COPY_AND_ASSIGN(Item);
   };
 
-  PaymentRequestItemList();
+  explicit PaymentRequestItemList(PaymentRequestSheetController* parent_sheet);
   virtual ~PaymentRequestItemList();
 
   // Adds an item to this list. |item->list()| should return this object.
@@ -140,6 +141,8 @@ class PaymentRequestItemList {
   // Deselects the currently selected item and selects |item| instead.
   void SelectItem(Item* item);
 
+  PaymentRequestSheetController* parent_sheet() { return parent_sheet_; }
+
  private:
   // Unselects the currently selected item. This is private so that the list can
   // use it when selecting a new item while avoiding consumers of this class
@@ -148,6 +151,7 @@ class PaymentRequestItemList {
 
   std::vector<std::unique_ptr<Item>> items_;
   Item* selected_item_;
+  PaymentRequestSheetController* parent_sheet_;
 
   DISALLOW_COPY_AND_ASSIGN(PaymentRequestItemList);
 };

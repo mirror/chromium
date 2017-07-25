@@ -83,10 +83,11 @@ ShippingOptionViewController::ShippingOptionViewController(
     PaymentRequestState* state,
     PaymentRequestDialogView* dialog)
     : PaymentRequestSheetController(spec, state, dialog) {
+  shipping_option_list_ = base::MakeUnique<PaymentRequestItemList>(this);
   spec->AddObserver(this);
   for (const auto& option : spec->GetShippingOptions()) {
-    shipping_option_list_.AddItem(base::MakeUnique<ShippingOptionItem>(
-        option.get(), spec, state, &shipping_option_list_, dialog,
+    shipping_option_list_->AddItem(base::MakeUnique<ShippingOptionItem>(
+        option.get(), spec, state, shipping_option_list_.get(), dialog,
         option.get() == spec->selected_shipping_option()));
   }
 }
@@ -110,7 +111,7 @@ base::string16 ShippingOptionViewController::GetSheetTitle() {
 
 void ShippingOptionViewController::FillContentView(views::View* content_view) {
   content_view->SetLayoutManager(new views::FillLayout);
-  content_view->AddChildView(shipping_option_list_.CreateListView().release());
+  content_view->AddChildView(shipping_option_list_->CreateListView().release());
 }
 
 std::unique_ptr<views::View>
