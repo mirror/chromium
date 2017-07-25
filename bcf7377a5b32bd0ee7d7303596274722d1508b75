@@ -192,6 +192,30 @@
     },
     {
       "key": {
+        "uuid": "2f44e135_755a46cb",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1700,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-25T03:55:59Z",
+      "side": 1,
+      "message": "OK, I think I understand what this code is going for... this is the rebinding logic that I was confused by. However, shouldn\u0027t this only apply for main frames? I\u0027m also uncertain of how this will work in conjunction with the comment below.",
+      "parentUuid": "70f797f2_8ee849e6",
+      "range": {
+        "startLine": 1700,
+        "startChar": 4,
+        "endLine": 1700,
+        "endChar": 64
+      },
+      "revId": "bcf7377a5b32bd0ee7d7303596274722d1508b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bb3eb5a_1f5dd03e",
         "filename": "content/browser/frame_host/render_frame_host_manager.cc",
         "patchSetId": 6
@@ -227,6 +251,30 @@
       "side": 1,
       "message": "There were a few calls to CreateRenderFrameHost so I\u0027d need to duplicate the MakeRequest logic.",
       "parentUuid": "5bb3eb5a_1f5dd03e",
+      "range": {
+        "startLine": 1706,
+        "startChar": 25,
+        "endLine": 1706,
+        "endChar": 58
+      },
+      "revId": "bcf7377a5b32bd0ee7d7303596274722d1508b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d738ff91_05ef6859",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1706,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-25T03:55:59Z",
+      "side": 1,
+      "message": "Unconditionally creating a request here seems contradictory to my understanding that this is for local roots though. I would have expected an extra statement around https://cs.chromium.org/chromium/src/content/browser/frame_host/render_frame_host_manager.cc?rcl\u003d42961a709a98270314645b43febd3e86addc57e6\u0026l\u003d1749 to populate a widget request if needed.\n\n(This also binds local roots with remote main frames to the widget of the RVH, which I think we don\u0027t want?)",
+      "parentUuid": "56e5b0a3_2cf62f38",
       "range": {
         "startLine": 1706,
         "startChar": 25,
