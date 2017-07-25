@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2a2d8905_5eead152",
+        "filename": "chrome/browser/extensions/api/terminal/terminal_private_api.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-25T18:41:30Z",
+      "side": 1,
+      "message": "RegistryTaskRunner SG, Done.",
+      "parentUuid": "eb000261_0252188e",
+      "range": {
+        "startLine": 55,
+        "startChar": 16,
+        "endLine": 55,
+        "endChar": 28
+      },
+      "revId": "a8ae55d9778bb8a762c2df65ff78d3a065889fd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d586be7_d2705506",
         "filename": "chromeos/process_proxy/process_proxy_unittest.cc",
         "patchSetId": 3
@@ -54,6 +78,24 @@
       "side": 1,
       "message": "MessageLoop::Quit*() is deprecated anyways. So yes using RunLoop\u0027s QuitClosure is the way to go.",
       "parentUuid": "9d586be7_d2705506",
+      "revId": "a8ae55d9778bb8a762c2df65ff78d3a065889fd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77865ea3_f1cb4c98",
+        "filename": "chromeos/process_proxy/process_proxy_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-07-25T18:41:30Z",
+      "side": 1,
+      "message": "Thanks!\nDone.",
+      "parentUuid": "f291778a_f18d4686",
       "revId": "a8ae55d9778bb8a762c2df65ff78d3a065889fd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
