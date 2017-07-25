@@ -45,8 +45,9 @@ mojo::ScopedDataPipeProducerHandle NetToMojoPendingBuffer::Complete(
   return std::move(handle_);
 }
 
-NetToMojoIOBuffer::NetToMojoIOBuffer(NetToMojoPendingBuffer* pending_buffer)
-    : net::WrappedIOBuffer(pending_buffer->buffer()),
+NetToMojoIOBuffer::NetToMojoIOBuffer(NetToMojoPendingBuffer* pending_buffer,
+                                     int index)
+    : net::WrappedIOBuffer(pending_buffer->buffer() + index),
       pending_buffer_(pending_buffer) {}
 
 NetToMojoIOBuffer::~NetToMojoIOBuffer() {}
