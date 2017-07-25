@@ -1,0 +1,30 @@
+syntax = "proto2";
+
+option optimize_for = LITE_RUNTIME;
+
+package remoting.protocol;
+
+message FileTransferRequest {
+  optional string filename = 1;
+  optional uint64 filesize = 2;
+}
+
+message FileTransferResponse {
+  enum TransferState {
+    READY = 0;
+    IN_PROGRESS = 1;
+    DONE = 2;
+  }
+  optional TransferState state = 1;
+
+  enum ErrorCode {
+    OK = 0;
+    OUT_OF_DISK_SPACE = 1;
+    PERMISSIONS_ERROR = 2;
+  }
+  optional ErrorCode error = 2;
+
+  optional string destination_filepath = 3;
+
+  optional uint64 total_bytes_written = 4;
+}
