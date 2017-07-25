@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "008abbd2_2060d45c",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter_browsertest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-25T23:50:53Z",
+      "side": 1,
+      "message": "ADD_FAILURE() should work",
+      "range": {
+        "startLine": 223,
+        "startChar": 0,
+        "endLine": 225,
+        "endChar": 19
+      },
+      "revId": "09e624c680fafd5b87c9013e39785f5e2d6320f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
