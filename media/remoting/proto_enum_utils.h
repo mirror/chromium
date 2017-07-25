@@ -5,6 +5,9 @@
 #ifndef MEDIA_REMOTING_PROTO_ENUM_UTILS_H_
 #define MEDIA_REMOTING_PROTO_ENUM_UTILS_H_
 
+#if defined(DISABLE_MEDIA_REMOTING_RPC)
+#else  // defined(DISABLE_MEDIA_REMOTING_RPC)
+
 #include "base/optional.h"
 #include "media/base/audio_codecs.h"
 #include "media/base/buffering_state.h"
@@ -104,5 +107,7 @@ ToProtoDemuxerStreamStatus(DemuxerStream::Status value);
 
 }  // namespace remoting
 }  // namespace media
+
+#endif  // defined(DISABLE_MEDIA_REMOTING_RPC)
 
 #endif  // MEDIA_REMOTING_PROTO_ENUM_UTILS_H_

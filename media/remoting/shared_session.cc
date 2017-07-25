@@ -6,7 +6,6 @@
 
 #include "base/bind.h"
 #include "base/logging.h"
-#include "media/remoting/proto_utils.h"
 
 namespace media {
 namespace remoting {
@@ -98,6 +97,7 @@ void SharedSession::OnStopped(mojom::RemotingStopReason reason) {
 void SharedSession::OnMessageFromSink(const std::vector<uint8_t>& message) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
+#if !defined(DISABLE_MEDIA_REMOTING_RPC)
   std::unique_ptr<pb::RpcMessage> rpc(new pb::RpcMessage());
   if (!rpc->ParseFromArray(message.data(), message.size())) {
     VLOG(1) << "corrupted Rpc message";
@@ -105,6 +105,7 @@ void SharedSession::OnMessageFromSink(const std::vector<uint8_t>& message) {
     return;
   }
   rpc_broker_.ProcessMessageFromRemote(std::move(rpc));
+#endif  // !defined(DISABLE_MEDIA_REMOTING_RPC)
 }
 
 void SharedSession::UpdateAndNotifyState(SessionState state) {

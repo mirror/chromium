@@ -34,42 +34,72 @@ source_set("rpc") {
   ]
 }
 
-source_set("remoting") {
-  sources = [
-    "courier_renderer.cc",
-    "courier_renderer.h",
-    "courier_renderer_factory.cc",
-    "courier_renderer_factory.h",
-    "demuxer_stream_adapter.cc",
-    "demuxer_stream_adapter.h",
-    "metrics.cc",
-    "metrics.h",
-    "remoting_cdm.cc",
-    "remoting_cdm.h",
-    "remoting_cdm_context.cc",
-    "remoting_cdm_context.h",
-    "remoting_cdm_controller.cc",
-    "remoting_cdm_controller.h",
-    "remoting_cdm_factory.cc",
-    "remoting_cdm_factory.h",
-    "renderer_controller.cc",
-    "renderer_controller.h",
-    "shared_session.cc",
-    "shared_session.h",
-    "sink_availability_observer.cc",
-    "sink_availability_observer.h",
-    "triggers.h",
-  ]
+# Sources and dependencies shared between Android and desktop.
+common_sources = [
+  "courier_renderer_factory.cc",
+  "courier_renderer_factory.h",
+  "courier_renderer.h",
+  "demuxer_stream_adapter.h",
+  "metrics.cc",
+  "metrics.h",
+  "remoting_cdm_context.cc",
+  "remoting_cdm_context.h",
+  "remoting_cdm_controller.cc",
+  "remoting_cdm_controller.h",
+  "remoting_cdm_factory.cc",
+  "remoting_cdm_factory.h",
+  "remoting_cdm.h",
+  "renderer_controller.cc",
+  "renderer_controller.h",
+  "shared_session.cc",
+  "shared_session.h",
+  "sink_availability_observer.cc",
+  "sink_availability_observer.h",
+  "triggers.h",
+]
 
-  deps = [
-    ":rpc",
-    "//base",
-    "//media",
-    "//media/mojo/interfaces:remoting",
-    "//mojo/public/cpp/bindings",
-    "//ui/gfx",
-  ]
+common_deps = [
+  "//base",
+  "//media",
+  "//media/mojo/interfaces:remoting",
+  "//mojo/public/cpp/bindings",
+  "//ui/gfx",
+]
+
+source_set("remoting") {
+  sources = common_sources + [
+              "courier_renderer.cc",
+              "demuxer_stream_adapter.cc",
+              "remoting_cdm.cc",
+            ]
+
+  deps = common_deps + [ ":rpc" ]
 }
+
+if (is_android) {
+  config("media_remoting_android_config") {
+    defines = [ "DISABLE_MEDIA_REMOTING_RPC" ]
+  }
+
+  # Reduce the Android build size by removing the RPC related code.
+  # See https://crbug.com/747420.
+  source_set("remoting_android") {
+    sources = common_sources + [
+                "courier_renderer_android.cc",
+                "demuxer_stream_adapter_android.cc",
+                "proto_enum_utils.h",
+                "proto_utils_android.cc",
+                "proto_utils.h",
+                "rpc_broker_stub_android.cc",
+                "rpc_broker_stub_android.h",
+                "rpc_broker.h",
+              ]
+
+    configs += [ ":media_remoting_android_config" ]
+
+    deps = common_deps
+  }
+}  # is_android
 
 source_set("media_remoting_tests") {
   testonly = true

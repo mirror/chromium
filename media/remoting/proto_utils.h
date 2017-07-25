@@ -5,6 +5,26 @@
 #ifndef MEDIA_REMOTING_PROTO_UTILS_H_
 #define MEDIA_REMOTING_PROTO_UTILS_H_
 
+#if defined(DISABLE_MEDIA_REMOTING_RPC)
+
+#include <cstdint>
+#include <vector>
+
+namespace media {
+
+class DecoderBuffer;
+
+namespace remoting {
+
+// Converts DecoderBufferSegment into byte array.
+std::vector<uint8_t> DecoderBufferToByteArray(
+    const DecoderBuffer& decoder_buffer);
+
+}  // namespace remoting
+}  // namespace media
+
+#else  // defined(DISABLE_MEDIA_REMOTING_RPC)
+
 #include <cstdint>
 #include <string>
 #include <vector>
@@ -130,5 +150,7 @@ class CdmPromiseResult {
 
 }  // namespace remoting
 }  // namespace media
+
+#endif  // enabled(DISABLE_MEDIA_REMOTING_RPC)
 
 #endif  // MEDIA_REMOTING_PROTO_UTILS_H_
