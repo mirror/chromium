@@ -154,10 +154,10 @@ void GpuArcVideoDecodeAccelerator::OnOutputFormatChanged(
   client_->OnOutputFormatChanged(::arc::mojom::VideoFormat::From(format));
 }
 
-void GpuArcVideoDecodeAccelerator::Initialize(
+void GpuArcVideoDecodeAccelerator::InitializeDeprecated(
     ::arc::mojom::VideoDecodeAcceleratorConfigPtr config,
     ::arc::mojom::VideoDecodeClientPtr client,
-    const InitializeCallback& callback) {
+    const InitializeDeprecatedCallback& callback) {
   DVLOG(2) << "Initialize";
   DCHECK(!client_);
   if (config->device_type_deprecated !=
