@@ -16,6 +16,24 @@
       "revId": "6b01ebc9bb2ea9c82bba1a9b753543c28033cc3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a749d650_5694f25e",
+        "filename": "base/win/scoped_comptr.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-25T17:26:39Z",
+      "side": 1,
+      "message": "We need it to keep folks from introducing ComPtr incompatible code.",
+      "parentUuid": "634ebc28_afc0cb49",
+      "revId": "6b01ebc9bb2ea9c82bba1a9b753543c28033cc3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
