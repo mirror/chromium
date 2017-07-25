@@ -22,6 +22,30 @@
       "revId": "d6856b16f61d15c297a1dbac39d3b744245dce7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "704463f7_94e8a8a4",
+        "filename": "base/logging.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 611,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-07-25T17:07:17Z",
+      "side": 1,
+      "message": "\u003e UNLIKELY(ASSUME_TRUE())? :-)\n\nArgh I rearranged this at the last minute. I just dropped the analyzer macro to make it mirror official CHECK.",
+      "parentUuid": "f806b394_4a07e715",
+      "range": {
+        "startLine": 611,
+        "startChar": 14,
+        "endLine": 611,
+        "endChar": 43
+      },
+      "revId": "d6856b16f61d15c297a1dbac39d3b744245dce7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
