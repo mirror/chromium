@@ -192,6 +192,12 @@ public class BottomSheet
     @SheetState
     private int mTargetState = SHEET_STATE_NONE;
 
+    /**
+     * Whether or not we want to start the bottom sheet at half because we've been backgrounded for
+     * a certain length of time.
+     */
+    private boolean mSheetStateHalfOnStartup;
+
     /** Used for getting the current tab. */
     private TabModelSelector mTabModelSelector;
 
@@ -248,6 +254,10 @@ public class BottomSheet
 
     /** Whether {@link #destroy()} has been called. **/
     private boolean mIsDestroyed;
+
+    private boolean mBrowserStarted;
+
+    private boolean mAlreadySetSheetToHalfOnStartup;
 
     /**
      * An interface defining content that can be displayed inside of the bottom sheet for Chrome
@@ -486,13 +496,21 @@ public class BottomSheet
         mGestureDetector.setIsLongpressEnabled(false);
 
         mMetrics = new BottomSheetMetrics();
-        addObserver(mMetrics);
 
         BrowserStartupController.get(LibraryProcessType.PROCESS_BROWSER)
                 .addStartupCompletedObserver(new BrowserStartupController.StartupCallback() {
                     @Override
                     public void onSuccess(boolean alreadyStarted) {
                         mIsTouchEnabled = true;
+
+                        addObserver(mMetrics);
+
+                        mBrowserStarted = true;
+                        // mBrowserStarted has to be set to true before calling this, to ensure
+                        // it actually sets the sheet state to half.
+                        if (mSheetStateHalfOnStartup) {
+                            setSheetStateHalfOnStartup();
+                        }
                     }
 
                     @Override
@@ -1295,6 +1313,25 @@ public class BottomSheet
                 o.onTransitionPeekToHalf(peekHalfRatio);
             }
         }
+    }
+
+    /**
+     * Tells the bottom sheet to set its state to half after the browser is initialized.
+     *
+     * - If called before the browser is started, it just sets a flag to ensure we set the state to
+     * half in the browser startup callback.
+     * - If called after browser is already started, it immediately sets the sheet state to half.
+     */
+    public void setSheetStateHalfOnStartup() {
+        assert !mAlreadySetSheetToHalfOnStartup;
+
+        if (mBrowserStarted) {
+            setSheetState(SHEET_STATE_HALF, true);
+            mMetrics.recordSheetOpenReason(BottomSheetMetrics.OPENED_BY_STARTUP);
+            mAlreadySetSheetToHalfOnStartup = true;
+            return;
+        }
+        mSheetStateHalfOnStartup = true;
     }
 
     /**
