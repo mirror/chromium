@@ -16,6 +16,24 @@
       "revId": "810248ffe6c2da0c5b1b762550166430d541d174",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b037e04_de098a17",
+        "filename": "ui/file_manager/file_manager/foreground/js/file_tasks.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-25T08:04:06Z",
+      "side": 1,
+      "message": "I changed the default value of verb_button_label from \u0027OPEN_WITH_VERB_BUTTON_LABEL\u0027 to empty string so that we can keep task.title as it is when verb_button_label is empty.",
+      "parentUuid": "ba8ddf75_c190550e",
+      "revId": "810248ffe6c2da0c5b1b762550166430d541d174",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
