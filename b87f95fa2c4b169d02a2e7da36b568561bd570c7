@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c02a03b3_b7e2cb68",
+        "filename": "chrome/browser/devtools/chrome_devtools_manager_delegate.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-25T00:03:48Z",
+      "side": 1,
+      "message": "_is_ disabled",
+      "revId": "b87f95fa2c4b169d02a2e7da36b568561bd570c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
