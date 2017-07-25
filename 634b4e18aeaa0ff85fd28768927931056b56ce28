@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efc1ea47_78f50cb0",
+        "filename": "ui/file_manager/file_manager/foreground/js/quick_view_controller.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-07-25T07:45:37Z",
+      "side": 1,
+      "message": "\"FileTasks.isOpenTask() returns false\" does not mean \"We can not show preview\".\nFor some files, we can show previews but we don\u0027t have any actions to open it.\n\nIt seems tricky to reliably know whether the given file can be previewed or not.\nHow about trying loading them, and if we get \u0027loadabort\u0027 from webview tag in files-safe-madia, show \"Not supported\" message?\nhttps://developer.chrome.com/apps/tags/webview#event-loadstop\n\n+oka@, who might have another idea on it.",
+      "revId": "634b4e18aeaa0ff85fd28768927931056b56ce28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
