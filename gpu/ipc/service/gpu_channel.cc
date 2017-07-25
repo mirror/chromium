@@ -1147,11 +1147,19 @@ void GpuChannel::OnDestroyCommandBuffer(int32_t route_id) {
 void GpuChannel::OnGetDriverBugWorkArounds(
     std::vector<std::string>* gpu_driver_bug_workarounds) {
   gpu_driver_bug_workarounds->clear();
-#define GPU_OP(type, name)                                     \
-  if (gpu_channel_manager_->gpu_driver_bug_workarounds().name) \
-    gpu_driver_bug_workarounds->push_back(#name);
-  GPU_DRIVER_BUG_WORKAROUNDS(GPU_OP)
+  for (auto ID : gpu_channel_manager_->gpu_feature_info()
+                     .enabled_gpu_driver_bug_workarounds) {
+    switch (ID) {
+#define GPU_OP(type, name)                        \
+  case gpu::type:                                 \
+    gpu_driver_bug_workarounds->push_back(#name); \
+    break;
+      GPU_DRIVER_BUG_WORKAROUNDS(GPU_OP)
 #undef GPU_OP
+      default:
+        NOTIMPLEMENTED();
+    }
+  }
 }
 
 void GpuChannel::CacheShader(const std::string& key,

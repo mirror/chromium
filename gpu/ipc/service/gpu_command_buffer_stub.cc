@@ -575,8 +575,10 @@ bool GpuCommandBufferStub::Initialize(
     DCHECK(context_group_->bind_generates_resource() ==
            init_params.attribs.bind_generates_resource);
   } else {
+    gpu::GpuDriverBugWorkarounds workarounds(
+        manager->gpu_feature_info().enabled_gpu_driver_bug_workarounds);
     scoped_refptr<gles2::FeatureInfo> feature_info =
-        new gles2::FeatureInfo(manager->gpu_driver_bug_workarounds());
+        new gles2::FeatureInfo(workarounds);
     gpu::GpuMemoryBufferFactory* gmb_factory =
         channel_->gpu_channel_manager()->gpu_memory_buffer_factory();
     context_group_ = new gles2::ContextGroup(

@@ -24,7 +24,6 @@
 #include "gpu/command_buffer/service/gpu_preferences.h"
 #include "gpu/command_buffer/service/service_discardable_manager.h"
 #include "gpu/command_buffer/service/shader_translator_cache.h"
-#include "gpu/config/gpu_driver_bug_workarounds.h"
 #include "gpu/config/gpu_feature_info.h"
 #include "gpu/gpu_export.h"
 #include "gpu/ipc/service/gpu_memory_manager.h"
@@ -42,7 +41,6 @@ class GLShareGroup;
 }
 
 namespace gpu {
-class GpuDriverBugWorkarounds;
 struct GpuPreferences;
 class PreemptionFlag;
 class Scheduler;
@@ -66,7 +64,6 @@ class GpuWatchdogThread;
 class GPU_EXPORT GpuChannelManager {
  public:
   GpuChannelManager(const GpuPreferences& gpu_preferences,
-                    const GpuDriverBugWorkarounds& workarounds,
                     GpuChannelManagerDelegate* delegate,
                     GpuWatchdogThread* watchdog,
                     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
@@ -101,9 +98,6 @@ class GPU_EXPORT GpuChannelManager {
   void MaybeExitOnContextLost();
 
   const GpuPreferences& gpu_preferences() const { return gpu_preferences_; }
-  const GpuDriverBugWorkarounds& gpu_driver_bug_workarounds() const {
-    return gpu_driver_bug_workarounds_;
-  }
   const GpuFeatureInfo& gpu_feature_info() const { return gpu_feature_info_; }
   ServiceDiscardableManager* discardable_manager() {
     return &discardable_manager_;
@@ -169,7 +163,6 @@ class GPU_EXPORT GpuChannelManager {
   scoped_refptr<base::SingleThreadTaskRunner> io_task_runner_;
 
   const GpuPreferences gpu_preferences_;
-  GpuDriverBugWorkarounds gpu_driver_bug_workarounds_;
 
   GpuChannelManagerDelegate* const delegate_;
 

@@ -74,7 +74,7 @@ class MEDIA_GPU_EXPORT GpuVideoDecodeAcceleratorFactory {
 
   static gpu::VideoDecodeAcceleratorCapabilities GetDecoderCapabilities(
       const gpu::GpuPreferences& gpu_preferences,
-      const gpu::GpuDriverBugWorkarounds& workarounds);
+      bool disable_accelerated_vpx_decode);
 
   std::unique_ptr<VideoDecodeAccelerator> CreateVDA(
       VideoDecodeAccelerator::Client* client,
