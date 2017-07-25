@@ -542,5 +542,15 @@
     "prefix": "outofblink-cors",
     "base": "webexposed",
     "args": ["--enable-blink-features=OutOfBlinkCORS"]
+  },
+  {
+    "prefix": "mojo-blobs",
+    "base": "external/wpt/FileAPI",
+    "args": ["--enable-features=MojoBlobs"]
+  },
+  {
+    "prefix": "mojo-blobs",
+    "base": "fast/files",
+    "args": ["--enable-features=MojoBlobs"]
   }
 ]
