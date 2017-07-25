@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff13075c_cd4a5086",
+        "filename": "chromeos/dbus/proto/media_perception.proto",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-25T19:56:19Z",
+      "side": 1,
+      "message": "another potential name would be RESTART_REQUESTED, but I\u0027ll leave it up to you to make the final call",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 14
+      },
+      "revId": "3e42c269b035eadf816fef117768e3c8b160217c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23d54d59_d70d0da2",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-25T19:56:19Z",
+      "side": 1,
+      "message": "enclose these in \u003ccode\u003e\u003c/code\u003e",
+      "range": {
+        "startLine": 31,
+        "startChar": 24,
+        "endLine": 31,
+        "endChar": 34
+      },
+      "revId": "3e42c269b035eadf816fef117768e3c8b160217c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bed6f852_43095a79",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-07-25T19:56:19Z",
+      "side": 1,
+      "message": "will restart the media process to SUSPENDED state. The app has to set the state to RUNNING in order to start receiving media perception information again.\n\n(I assume this matches what you meant :) )",
+      "range": {
+        "startLine": 31,
+        "startChar": 35,
+        "endLine": 32,
+        "endChar": 70
+      },
+      "revId": "3e42c269b035eadf816fef117768e3c8b160217c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
