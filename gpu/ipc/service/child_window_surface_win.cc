@@ -96,6 +96,7 @@ bool ChildWindowSurfaceWin::InitializeNativeWindow() {
 
 bool ChildWindowSurfaceWin::Resize(const gfx::Size& size,
                                    float scale_factor,
+                                   ColorSpace color_space,
                                    bool has_alpha) {
   if (!SupportsPostSubBuffer()) {
     if (!MoveWindow(window_, 0, 0, size.width(), size.height(), FALSE)) {
