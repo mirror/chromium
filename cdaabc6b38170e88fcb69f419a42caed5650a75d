@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "583e6be6_93978280",
+        "filename": "ui/views/controls/native/native_view_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-25T03:10:32Z",
+      "side": 1,
+      "message": "Mac will get that corner radius via its implementation of NativeViewHostWrapper::SetCornerRadius",
+      "parentUuid": "30f8621f_dcf588fc",
+      "revId": "cdaabc6b38170e88fcb69f419a42caed5650a75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44dc518b_fbdaa5e3",
         "filename": "ui/views/controls/native/native_view_host_aura.cc",
         "patchSetId": 5

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "19ca6c98_87bd6055",
+        "filename": "chrome/browser/ui/views/extensions/extension_popup.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-25T03:10:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "136bf6fd_835fcc35",
+      "range": {
+        "startLine": 156,
+        "startChar": 4,
+        "endLine": 156,
+        "endChar": 21
+      },
+      "revId": "d40ef1f2022196d6b58afa58440c29651a22fae4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c24c2da6_b393fea1",
         "filename": "chrome/browser/ui/views/extensions/extension_popup.cc",
         "patchSetId": 9
@@ -36,6 +60,24 @@
       "writtenOn": "2017-07-25T00:25:11Z",
       "side": 1,
       "message": "does this need a SizeToContents() call now that views::FillLayout can cater for the new View::GetInsets?",
+      "revId": "d40ef1f2022196d6b58afa58440c29651a22fae4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76ae6328_25ab8158",
+        "filename": "chrome/browser/ui/views/extensions/extension_popup.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-25T03:10:32Z",
+      "side": 1,
+      "message": "doesn\u0027t seem so as ExtensionViewSizeChanged is always called after this.",
+      "parentUuid": "c24c2da6_b393fea1",
       "revId": "d40ef1f2022196d6b58afa58440c29651a22fae4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "35209f62_8a87e5f6",
+        "filename": "ui/views/bubble/tray_bubble_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-25T03:10:32Z",
+      "side": 1,
+      "message": "It seems safe to say Windows won\u0027t want this class, but there\u0027s a similar comment in NativeViewHostAura.",
+      "parentUuid": "30ad2c2e_a2e0ecd7",
+      "revId": "d40ef1f2022196d6b58afa58440c29651a22fae4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5fe447e_fefbbc9e",
         "filename": "ui/views/controls/native/native_view_host.h",
         "patchSetId": 9
@@ -70,6 +130,30 @@
       "writtenOn": "2017-07-24T23:47:05Z",
       "side": 1,
       "message": "NativeViewHostWrapper is an implementation detail and I would like to avoid exposing it. Can you implement SetCornerRadius here? The ifdef for the return value can be here.",
+      "range": {
+        "startLine": 75,
+        "startChar": 8,
+        "endLine": 75,
+        "endChar": 20
+      },
+      "revId": "d40ef1f2022196d6b58afa58440c29651a22fae4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "490c4295_aa21026a",
+        "filename": "ui/views/controls/native/native_view_host.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-25T03:10:32Z",
+      "side": 1,
+      "message": "Not sure if you meant to move the entire implementation here or add a pass through. I did the latter as Mac needs to implement differently. The ifdef seems more contextual in NativeViewHostAura so I left it there.",
+      "parentUuid": "c5fe447e_fefbbc9e",
       "range": {
         "startLine": 75,
         "startChar": 8,
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "f014f11c_8331ee95",
+        "filename": "ui/views/controls/native/native_view_host_aura.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-25T03:10:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c455e80c_53399294",
+      "range": {
+        "startLine": 265,
+        "startChar": 8,
+        "endLine": 265,
+        "endChar": 21
+      },
+      "revId": "d40ef1f2022196d6b58afa58440c29651a22fae4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe1e03c3_4b4ebf69",
         "filename": "ui/views/controls/native/native_view_host_aura.h",
         "patchSetId": 9
@@ -119,6 +227,24 @@
       "revId": "d40ef1f2022196d6b58afa58440c29651a22fae4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33467a55_be5a1172",
+        "filename": "ui/views/controls/native/native_view_host_aura.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-25T03:10:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe1e03c3_4b4ebf69",
+      "revId": "d40ef1f2022196d6b58afa58440c29651a22fae4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "2da0d3ef_f5c47472",
+        "filename": "ui/views/controls/native/native_view_host_aura.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-25T03:10:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4781ae64_17331c3c",
+      "revId": "d40ef1f2022196d6b58afa58440c29651a22fae4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f82434bc_e9ad0787",
         "filename": "ui/views/painter.cc",
         "patchSetId": 9
@@ -156,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "299a9fb7_1e2e5b83",
+        "filename": "ui/views/painter.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-25T03:10:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f82434bc_e9ad0787",
+      "revId": "d40ef1f2022196d6b58afa58440c29651a22fae4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62695fab_6371f4d2",
         "filename": "ui/views/painter.cc",
         "patchSetId": 9
@@ -167,6 +329,30 @@
       "writtenOn": "2017-07-24T23:47:05Z",
       "side": 1,
       "message": "Whether this is needed depends upon the painter, and it\u0027s easy to miss. I think the factory function and this should take a boolean indicating what value should be used. Alternatively move the call to NativeViewHostAura.",
+      "range": {
+        "startLine": 213,
+        "startChar": 7,
+        "endLine": 213,
+        "endChar": 24
+      },
+      "revId": "d40ef1f2022196d6b58afa58440c29651a22fae4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "162cb356_4acf023d",
+        "filename": "ui/views/painter.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-25T03:10:32Z",
+      "side": 1,
+      "message": "moved to NVHA",
+      "parentUuid": "62695fab_6371f4d2",
       "range": {
         "startLine": 213,
         "startChar": 7,
