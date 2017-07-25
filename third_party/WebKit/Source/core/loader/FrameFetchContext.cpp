@@ -677,7 +677,7 @@ bool FrameFetchContext::IsMainFrame() const {
 }
 
 bool FrameFetchContext::DefersLoading() const {
-  return IsDetached() ? false : GetFrame()->GetPage()->Suspended();
+  return IsDetached() ? false : GetFrame()->GetPage()->Paused();
 }
 
 bool FrameFetchContext::IsLoadComplete() const {
