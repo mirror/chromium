@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b47e372_3ad61937",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/MediaKeysController.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-25T06:47:39Z",
+      "side": 1,
+      "message": "Where is the \"pointer to WebViewBase\" contained?\n\nIn the first place do we need MediaKeysClient? Can we move MediaKeysClient::EncryptedMediaClient to MediaKeysController?",
+      "revId": "0305c07070c382bac8a1c0bb0b6db87f13f001fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "806fca24_9c4ffe5d",
+        "filename": "third_party/WebKit/Source/modules/storage/StorageNamespaceController.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-07-25T06:47:39Z",
+      "side": 1,
+      "message": "Ditto. Do we really need StorageClient? Can we simply move StorageClient::CanAccessStorage to StorageNamespaceController?",
+      "revId": "0305c07070c382bac8a1c0bb0b6db87f13f001fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
