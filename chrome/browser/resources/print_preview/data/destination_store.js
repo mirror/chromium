@@ -2,6 +2,17 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+cr.exportPath('print_preview');
+/**
+ * Printer types for capabilities and printer list requests.
+ * Should match PrinterType in print_preview_handler.h
+ * @enum {number}
+ */
+print_preview.PrinterType = {
+  PRIVET_PRINTER: 0,
+  EXTENSION_PRINTER: 1,
+};
+
 cr.define('print_preview', function() {
   'use strict';
 
@@ -703,8 +714,10 @@ cr.define('print_preview', function() {
       if (origin == print_preview.DestinationOrigin.PRIVET) {
         // TODO(noamsml): Resolve a specific printer instead of listing all
         // privet printers in this case.
-        this.nativeLayer_.getPrivetPrinters().then(
-            this.endPrivetPrinterSearch_.bind(this));
+        this.nativeLayer_
+            .getExtensionOrPrivetPrinters(
+                print_preview.PrinterType.PRIVET_PRINTER)
+            .then(this.endPrivetPrinterSearch_.bind(this));
 
         // Create a fake selectedDestination_ that is not actually in the
         // destination store. When the real destination is created, this
@@ -965,13 +978,17 @@ cr.define('print_preview', function() {
       // known yet.
       if (destination.capabilities == null) {
         if (destination.isPrivet) {
-          this.nativeLayer_.getPrivetPrinterCapabilities(destination.id)
+          this.nativeLayer_
+              .getExtensionOrPrivetPrinterCapabilities(
+                  destination.id, print_preview.PrinterType.PRIVET_PRINTER)
               .then(
                   this.onPrivetCapabilitiesSet_.bind(this),
                   this.onGetCapabilitiesFail_.bind(
                       this, destination.origin, destination.id));
         } else if (destination.isExtension) {
-          this.nativeLayer_.getExtensionPrinterCapabilities(destination.id)
+          this.nativeLayer_
+              .getExtensionOrPrivetPrinterCapabilities(
+                  destination.id, print_preview.PrinterType.EXTENSION_PRINTER)
               .then(
                   this.onExtensionCapabilitiesSet_.bind(this, destination.id),
                   this.onGetCapabilitiesFail_.bind(
@@ -1098,8 +1115,10 @@ cr.define('print_preview', function() {
       if (this.hasLoadedAllPrivetDestinations_)
         return;
       this.isPrivetDestinationSearchInProgress_ = true;
-      this.nativeLayer_.getPrivetPrinters().then(
-          this.endPrivetPrinterSearch_.bind(this), function() {
+      this.nativeLayer_
+          .getExtensionOrPrivetPrinters(
+              print_preview.PrinterType.PRIVET_PRINTER)
+          .then(this.endPrivetPrinterSearch_.bind(this), function() {
             // Rejected by C++, indicating privet printing is disabled.
             this.hasLoadedAllPrivetDestinations_ = true;
             this.isPrivetDestinationSearchInProgress_ = false;
@@ -1117,8 +1136,10 @@ cr.define('print_preview', function() {
         clearTimeout(this.extensionSearchTimeout_);
 
       this.isExtensionDestinationSearchInProgress_ = true;
-      this.nativeLayer_.getExtensionPrinters().then(
-          this.onExtensionPrintersDone_.bind(this));
+      this.nativeLayer_
+          .getExtensionOrPrivetPrinters(
+              print_preview.PrinterType.EXTENSION_PRINTER)
+          .then(this.onExtensionPrintersDone_.bind(this));
       cr.dispatchSimpleEvent(
           this, DestinationStore.EventType.DESTINATION_SEARCH_STARTED);
       this.extensionSearchTimeout_ = setTimeout(
@@ -1168,8 +1189,10 @@ cr.define('print_preview', function() {
      * Wait for a privet device to be registered.
      */
     waitForRegister: function(id) {
-      this.nativeLayer_.getPrivetPrinters().then(
-          this.endPrivetPrinterSearch_.bind(this));
+      this.nativeLayer_
+          .getExtensionOrPrivetPrinters(
+              print_preview.PrinterType.PRIVET_PRINTER)
+          .then(this.endPrivetPrinterSearch_.bind(this));
       this.waitForRegisterDestination_ = id;
     },
 
@@ -1544,14 +1567,21 @@ cr.define('print_preview', function() {
 
     /**
      * Called when a Privet printer is added to the local network.
-     * @param {!{serviceName: string,
-     *           name: string,
-     *           hasLocalPrinting: boolean,
-     *           isUnregistered: boolean,
-     *           cloudID: string}} printer Information about the added printer.
+     * @param {!Array<{serviceName: string,
+     *                 name: string,
+     *                 hasLocalPrinting: boolean,
+     *                 isUnregistered: boolean,
+     *                 cloudID: string}>} printers
+     *     Information about the added printer. Note: array will always contain
+     *     only 1 element.
      * @private
      */
-    onPrivetPrinterAdded_: function(printer) {
+    onPrivetPrinterAdded_: function(printers) {
+      if (!printers)
+        return;
+      var printer = printers[0];
+      if (!printer)
+        return;
       if (printer.serviceName == this.waitForRegisterDestination_ &&
           !printer.isUnregistered) {
         this.waitForRegisterDestination_ = null;
@@ -1564,15 +1594,20 @@ cr.define('print_preview', function() {
 
     /**
      * Called when capabilities for a privet printer are set.
-     * @param {!print_preview.PrivetPrinterCapabilitiesResponse} printerInfo
-     *     Contains the privet printer's description and capabilities.
+     * @param {!print_preview.PrivetPrinterCapabilitiesResponse |
+     *         !print_preview.Cdd} printerInfo Should always be a
+     *     PrivetpPrinterCapabilitiesResponse. Contains the privet printer's
+     *     description and capabilities.
      * @private
      */
     onPrivetCapabilitiesSet_: function(printerInfo) {
-      var destinations =
-          print_preview.PrivetDestinationParser.parse(printerInfo.printer);
+      var printerInfoAndCaps =
+          /** @type {!print_preview.PrivetPrinterCapabilitiesResponse} */ (
+              printerInfo);
+      var destinations = print_preview.PrivetDestinationParser.parse(
+          printerInfoAndCaps.printer);
       destinations.forEach(function(dest) {
-        dest.capabilities = printerInfo.capabilities;
+        dest.capabilities = printerInfoAndCaps.capabilities;
         this.updateDestination_(dest);
       }, this);
     },
@@ -1608,7 +1643,9 @@ cr.define('print_preview', function() {
     /**
      * Called when capabilities for an extension managed printer are set.
      * @param {string} printerId The printer Id.
-     * @param {!print_preview.Cdd} capabilities The printer's capabilities.
+     * @param {!print_preview.PrivetPrinterCapabilitiesResponse |
+     *         !print_preview.Cdd} capabilities The printer's capabilities -
+     *     should always be a !print_preview.Cdd.
      * @private
      */
     onExtensionCapabilitiesSet_: function(printerId, capabilities) {
@@ -1618,7 +1655,8 @@ cr.define('print_preview', function() {
       var destination = this.destinationMap_[destinationKey];
       if (!destination)
         return;
-      destination.capabilities = capabilities;
+      destination.capabilities =
+          /** @type {!print_preview.Cdd} */ (capabilities);
       this.updateDestination_(destination);
     },
 
