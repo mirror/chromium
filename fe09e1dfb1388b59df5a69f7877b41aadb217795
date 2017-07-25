@@ -22,6 +22,30 @@
       "revId": "fe09e1dfb1388b59df5a69f7877b41aadb217795",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "474e0cc0_1663d16a",
+        "filename": "components/sync/user_events/user_event_sync_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-07-25T20:20:12Z",
+      "side": 1,
+      "message": "I think I\u0027ve seen it both ways. Doesn\u0027t look like the Google C++ style guide says anything about |\u0027s around variables.",
+      "parentUuid": "9ddc8c2b_9a5b8b0d",
+      "range": {
+        "startLine": 272,
+        "startChar": 3,
+        "endLine": 272,
+        "endChar": 4
+      },
+      "revId": "fe09e1dfb1388b59df5a69f7877b41aadb217795",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
