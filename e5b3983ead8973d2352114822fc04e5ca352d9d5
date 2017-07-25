@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e433884d_43b3593c",
+        "filename": "third_party/WebKit/LayoutTests/nfc/nfc-block-iframe.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-25T22:18:23Z",
+      "side": 1,
+      "message": "nit: does it make sense to use () \u003d\u003e {...} instead of using an underscore? (here and elsewhere in this CL).",
+      "revId": "e5b3983ead8973d2352114822fc04e5ca352d9d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
