@@ -4,7 +4,6 @@
 
 #include "chrome/browser/ui/browser_navigator_browsertest.h"
 
-#include "base/command_line.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
@@ -22,7 +21,6 @@
 #include "chrome/browser/ui/location_bar/location_bar.h"
 #include "chrome/browser/ui/singleton_tabs.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
-#include "chrome/common/chrome_switches.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/test/base/ui_test_utils.h"
@@ -206,12 +204,6 @@ void BrowserNavigatorTest::RunDoNothingIfIncognitoIsForcedTest(
             browser->tab_strip_model()->GetActiveWebContents()->GetURL());
 }
 
-void BrowserNavigatorTest::SetUpCommandLine(base::CommandLine* command_line) {
-  // Disable settings-in-a-window so that we can use the settings page and
-  // sub-pages to test browser navigation.
-  command_line->AppendSwitch(::switches::kDisableSettingsWindow);
-}
-
 void BrowserNavigatorTest::Observe(
     int type,
     const content::NotificationSource& source,
@@ -219,7 +211,6 @@ void BrowserNavigatorTest::Observe(
   DCHECK_EQ(content::NOTIFICATION_WEB_CONTENTS_RENDER_VIEW_HOST_CREATED, type);
   ++created_tab_contents_count_;
 }
-
 
 namespace {
 
@@ -1117,6 +1108,9 @@ IN_PROC_BROWSER_TEST_F(BrowserNavigatorTest,
   EXPECT_FALSE(web_contents->IsCrashed());
 }
 
+#if !defined(OS_CHROMEOS)
+// See SettingsWindowManagerTest for Chrome OS.
+
 IN_PROC_BROWSER_TEST_F(BrowserNavigatorTest,
                        NavigateFromDefaultToOptionsInSameTab) {
   {
@@ -1276,6 +1270,7 @@ IN_PROC_BROWSER_TEST_F(BrowserNavigatorTest,
             ShortenUberURL(browser()->tab_strip_model()->
                 GetActiveWebContents()->GetURL()));
 }
+#endif  // !defined(OS_CHROMEOS)
 
 IN_PROC_BROWSER_TEST_F(BrowserNavigatorTest, CloseSingletonTab) {
   for (int i = 0; i < 2; ++i) {
