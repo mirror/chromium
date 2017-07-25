@@ -81,10 +81,16 @@ class BackgroundFetchJobControllerTest : public BackgroundFetchTestBase {
     StoragePartition* storage_partition =
         BrowserContext::GetDefaultStoragePartition(browser_context());
 
+    auto url_request_context =
+        make_scoped_refptr(storage_partition->GetURLRequestContext());
+
+    BackgroundFetchDelegateProxy* delegate_proxy =
+        new BackgroundFetchDelegateProxy(browser_context(),
+                                         url_request_context);
+
     return base::MakeUnique<BackgroundFetchJobController>(
-        registration_id, BackgroundFetchOptions(), &data_manager_,
-        browser_context(),
-        make_scoped_refptr(storage_partition->GetURLRequestContext()),
+        delegate_proxy, registration_id, BackgroundFetchOptions(),
+        &data_manager_,
         base::BindOnce(&BackgroundFetchJobControllerTest::DidCompleteJob,
                        base::Unretained(this)));
   }
