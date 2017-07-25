@@ -881,6 +881,11 @@ TEST_F(FileUtilTest, ExecutableExistsInPath) {
 
   std::unique_ptr<Environment> env(base::Environment::Create());
 
+  // Backup old PATH environment variable
+  bool old_path_set;
+  std::string old_path;
+  old_path_set = env->GetVar(kPath, &old_path);
+
   ASSERT_TRUE(env->SetVar(kPath, dir1.value() + ":" + dir2.value()));
 
   const FilePath::CharType kRegularFileName[] = FPL("regular_file");
@@ -905,6 +910,12 @@ TEST_F(FileUtilTest, ExecutableExistsInPath) {
   EXPECT_TRUE(ExecutableExistsInPath(env.get(), kExeFileName));
   EXPECT_FALSE(ExecutableExistsInPath(env.get(), kRegularFileName));
   EXPECT_FALSE(ExecutableExistsInPath(env.get(), kDneFileName));
+
+  // Restore old PATH environment variable
+  if (old_path_set)
+    env->SetVar(kPath, old_path);
+  else
+    env->UnSetVar(kPath);
 }
 
 #endif  // !defined(OS_FUCHSIA) && defined(OS_POSIX)
