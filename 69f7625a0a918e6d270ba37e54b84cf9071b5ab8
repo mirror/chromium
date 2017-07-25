@@ -22,6 +22,30 @@
       "revId": "69f7625a0a918e6d270ba37e54b84cf9071b5ab8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d67121f1_bc1b7f42",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-25T14:42:47Z",
+      "side": 1,
+      "message": "Actually, nevermind, we can\u0027t actually do that so this is fine as is.",
+      "parentUuid": "199990ce_a2ad16fc",
+      "range": {
+        "startLine": 598,
+        "startChar": 7,
+        "endLine": 598,
+        "endChar": 35
+      },
+      "revId": "69f7625a0a918e6d270ba37e54b84cf9071b5ab8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
