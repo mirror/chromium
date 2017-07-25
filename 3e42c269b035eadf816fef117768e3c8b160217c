@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0847c951_dda6d3e8",
+        "filename": "chromeos/dbus/proto/media_perception.proto",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1161559
+      },
+      "writtenOn": "2017-07-25T21:12:25Z",
+      "side": 1,
+      "message": "I think I like RESTARTING best.",
+      "parentUuid": "ff13075c_cd4a5086",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 14
+      },
+      "revId": "3e42c269b035eadf816fef117768e3c8b160217c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23d54d59_d70d0da2",
         "filename": "extensions/common/api/media_perception_private.idl",
         "patchSetId": 10
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b54d4484_658c077b",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1161559
+      },
+      "writtenOn": "2017-07-25T21:12:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23d54d59_d70d0da2",
+      "range": {
+        "startLine": 31,
+        "startChar": 24,
+        "endLine": 31,
+        "endChar": 34
+      },
+      "revId": "3e42c269b035eadf816fef117768e3c8b160217c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bed6f852_43095a79",
         "filename": "extensions/common/api/media_perception_private.idl",
         "patchSetId": 10
@@ -68,6 +116,30 @@
       "revId": "3e42c269b035eadf816fef117768e3c8b160217c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca06817c_9a09e80f",
+        "filename": "extensions/common/api/media_perception_private.idl",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1161559
+      },
+      "writtenOn": "2017-07-25T21:12:25Z",
+      "side": 1,
+      "message": "Yes, it does :) Done.",
+      "parentUuid": "bed6f852_43095a79",
+      "range": {
+        "startLine": 31,
+        "startChar": 35,
+        "endLine": 32,
+        "endChar": 70
+      },
+      "revId": "3e42c269b035eadf816fef117768e3c8b160217c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
