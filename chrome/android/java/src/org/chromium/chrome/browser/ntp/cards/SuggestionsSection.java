@@ -250,7 +250,12 @@ public class SuggestionsSection extends InnerNode {
             itemRemovedCallback.onResult(getHeaderText());
             return;
         }
-
+        if (getItemViewType(position) == ItemViewType.SNIPPET) {
+            int suggestionRank = position - getStartingOffsetForChild(mSuggestionsList) + 1;
+            if (suggestionRank <= mNumberOfSuggestionsSeen) {
+                mNumberOfSuggestionsSeen--;
+            }
+        }
         super.dismissItem(position, itemRemovedCallback);
     }
 
@@ -355,6 +360,9 @@ public class SuggestionsSection extends InnerNode {
      * effect if changing the list of suggestions is not allowed (e.g. because the user has already
      * seen the suggestions). In that case, the section will be flagged as stale.
      * (see {@link #isDataStale()})
+     * Note, that this method also gets called if the user hits the "More" button on an empty list
+     * (either because all suggestions got dismissed or because they were removed due to privacy
+     * reasons; e.g. a user clearing their history).
      */
     public void updateSuggestions() {
         if (mDelegate.isResetAllowed()) clearData();
@@ -383,17 +391,19 @@ public class SuggestionsSection extends InnerNode {
         }
 
         trimIncomingSuggestions(suggestions);
-        appendSuggestions(suggestions, false);
+        appendSuggestions(suggestions, /*sectionSizeExtended=*/false);
     }
 
     /**
      * Adds the provided suggestions to the ones currently displayed by the section.
      *
      * @param suggestions The suggestions to be added at the end of the current list.
-     * @param userRequested Whether the operation is explicitly requested by the user, preventing
-     *                      scheduled updates to override the new data.
+     * @param sectionSizeExtended Whether the overall operation might have resulted in a longer
+     *                            section. Fetch-more functionality typically increases the number
+     *                            of elements in the section while background updates trim the list
+     *                            before calling append.
      */
-    public void appendSuggestions(List<SnippetArticle> suggestions, boolean userRequested) {
+    public void appendSuggestions(List<SnippetArticle> suggestions, boolean sectionSizeExtended) {
         mSuggestionsList.addAll(suggestions);
 
         for (SnippetArticle article : suggestions) {
@@ -402,7 +412,7 @@ public class SuggestionsSection extends InnerNode {
             }
         }
 
-        if (userRequested) {
+        if (sectionSizeExtended) {
             NewTabPageUma.recordUIUpdateResult(NewTabPageUma.UI_UPDATE_SUCCESS_APPENDED);
             mHasAppended = true;
         } else {
@@ -462,7 +472,7 @@ public class SuggestionsSection extends InnerNode {
                         if (!isAttached()) return; // The section has been dismissed.
 
                         mProgressIndicator.setVisible(false);
-                        appendSuggestions(additionalSuggestions, /* userRequested = */ true);
+                        appendSuggestions(additionalSuggestions, /*sectionSizeExtended=*/true);
                     }
                 });
 
