@@ -34,6 +34,24 @@
       "revId": "3153d53b5e5b44fd19aea9cf0b06d00d1dfd38c4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f009291b_6df7f23c",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2762,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-25T23:12:08Z",
+      "side": 1,
+      "message": "HTMLInputElement overrides UpdateFocusAppearance(), and it doesn\u0027t call Element::UpdateFocusAppearance().\nSo, we should add EnsurePaintLocationDataValidForNode() to callsites of UpdateFocusAppearance(); Document::UpdateFocusAppearanceTimerFired() and Document::SetFocusedElement().\nOr we should add EnsurePaintLocationDataValidForNode() to just before ScrollRectToVisible() in HTMLInputElement::UpdateFocusAppearance().",
+      "parentUuid": "58fdde07_0593af44",
+      "revId": "3153d53b5e5b44fd19aea9cf0b06d00d1dfd38c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
