@@ -115,7 +115,7 @@ void StartUserSession(Profile* user_profile, const std::string& login_user_id) {
 
     TetherService* tether_service = TetherService::Get(user_profile);
     if (tether_service)
-      tether_service->StartTetherIfEnabled();
+      tether_service->StartTetherIfPossible();
 
     // Send the PROFILE_PREPARED notification and call SessionStarted()
     // so that the Launcher and other Profile dependent classes are created.
