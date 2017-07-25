@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "05e96fd1_9f625591",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/command-line-api.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-07-25T18:27:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b3478e3_e69fa17a",
+      "revId": "1066958248e785007ba8baa77f938c2ffd639f5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a9c6080_4e2fbcb4",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-big-array.js",
         "patchSetId": 18
@@ -30,6 +48,47 @@
       "writtenOn": "2017-07-25T01:36:54Z",
       "side": 1,
       "message": "Let\u0027s dedent this by 2 chars.",
+      "revId": "1066958248e785007ba8baa77f938c2ffd639f5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "243a668c_376e66d2",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-big-array.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-07-25T18:27:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a9c6080_4e2fbcb4",
+      "revId": "1066958248e785007ba8baa77f938c2ffd639f5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b3b49579_c1189a83",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-custom-formatters.js",
+        "patchSetId": 18
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-07-25T18:27:03Z",
+      "side": 1,
+      "message": "Turns out the AST transformation library has a known issue where it\u0027s over-eager to add parens to be on the safe side (https://github.com/benjamn/recast/issues/327). \n\nIf we see more of these unnecessary parens, I can work on submitting a patch to the project but it seems pretty complex (https://github.com/benjamn/recast/blob/master/lib/patcher.js#L502) so I\u0027d like to avoid it if possible :)",
+      "range": {
+        "startLine": 144,
+        "startChar": 27,
+        "endLine": 144,
+        "endChar": 37
+      },
       "revId": "1066958248e785007ba8baa77f938c2ffd639f5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
