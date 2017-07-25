@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a5b50a3_8539ece6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-07-25T20:10:07Z",
+      "side": 1,
+      "message": "Please put in bug 667892",
+      "revId": "3e6cb1d0f2c9a49b9a70fa05815359804c32c421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "905a1c56_20b5225e",
+        "filename": "chrome/browser/external_protocol/external_protocol_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-07-25T20:10:07Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem right. Where does the test fail if this isn\u0027t included?",
+      "revId": "3e6cb1d0f2c9a49b9a70fa05815359804c32c421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
