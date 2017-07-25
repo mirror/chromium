@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e07bf48_2d51d078",
+        "filename": "docs/cr-respect.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-25T00:29:12Z",
+      "side": 1,
+      "message": "is this showing trailing whitespace? Should we fix?",
+      "revId": "d356521454d37fc3a5063cfbc04d71232901c4a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "345ca20c_c1943493",
+        "filename": "docs/cr-respect.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-25T00:29:12Z",
+      "side": 1,
+      "message": "Only two #### headers capitalize every word (other is assume competence \u0026 goodwill). We should probably be consistent?",
+      "revId": "d356521454d37fc3a5063cfbc04d71232901c4a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceb0feed_f4992a04",
+        "filename": "docs/cr-respect.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-25T00:29:12Z",
+      "side": 1,
+      "message": "period.",
+      "revId": "d356521454d37fc3a5063cfbc04d71232901c4a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
