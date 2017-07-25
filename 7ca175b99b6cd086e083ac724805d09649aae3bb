@@ -33,6 +33,52 @@
       "revId": "7ca175b99b6cd086e083ac724805d09649aae3bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43770015_86e26c9a",
+        "filename": "ui/events/mojo/event_struct_traits.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-25T02:31:36Z",
+      "side": 1,
+      "message": "Nit: inline this.\n\n(Well, I guess none of the other simple getters are inlined, so meh)",
+      "range": {
+        "startLine": 136,
+        "startChar": 0,
+        "endLine": 140,
+        "endChar": 1
+      },
+      "revId": "7ca175b99b6cd086e083ac724805d09649aae3bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb2948d6_b7cc86ab",
+        "filename": "ui/events/mojo/event_struct_traits.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-25T02:31:36Z",
+      "side": 1,
+      "message": "Nit: just read the time stamp once, and use the value in both branches?",
+      "range": {
+        "startLine": 254,
+        "startChar": 0,
+        "endLine": 256,
+        "endChar": 23
+      },
+      "revId": "7ca175b99b6cd086e083ac724805d09649aae3bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
