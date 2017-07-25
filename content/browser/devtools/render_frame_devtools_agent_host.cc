@@ -509,8 +509,11 @@ void RenderFrameDevToolsAgentHost::AttachSession(DevToolsSession* session) {
       frame_tree_node_ ? frame_tree_node_->frame_tree_node_id() : 0,
       GetIOContext())));
   if (frame_tree_node_ && !frame_tree_node_->parent()) {
-    session->AddHandler(
-        base::WrapUnique(new protocol::PageHandler(emulation_handler)));
+    base::Closure page_navigate_callback =
+        base::Bind(&RenderFrameDevToolsAgentHost::PageNavigateCallback,
+                   base::Unretained(this));
+    session->AddHandler(base::WrapUnique(
+        new protocol::PageHandler(emulation_handler, page_navigate_callback)));
     session->AddHandler(base::WrapUnique(new protocol::SecurityHandler()));
   }
 
@@ -549,6 +552,7 @@ void RenderFrameDevToolsAgentHost::DetachSession(int session_id) {
 bool RenderFrameDevToolsAgentHost::DispatchProtocolMessage(
     DevToolsSession* session,
     const std::string& message) {
+  dispatching_page_navigate_ = false;
   int call_id = 0;
   std::string method;
   int session_id = session->session_id();
@@ -558,7 +562,7 @@ bool RenderFrameDevToolsAgentHost::DispatchProtocolMessage(
   }
 
   if (IsBrowserSideNavigationEnabled()) {
-    if (!navigation_handles_.empty()) {
+    if (!navigation_handles_.empty() || dispatching_page_navigate_) {
       suspended_messages_by_session_id_[session_id].push_back(
           {call_id, method, message});
       return true;
@@ -734,6 +738,12 @@ void RenderFrameDevToolsAgentHost::MaybeReattachToRenderFrame() {
           message.method, message.message));
     }
   }
+}
+
+void RenderFrameDevToolsAgentHost::PageNavigateCallback() {
+  // TODO(dgozman): remove this once Page.navigate and frame-related
+  // notifications are handled in browser.
+  dispatching_page_navigate_ = true;
 }
 
 void RenderFrameDevToolsAgentHost::GrantPolicy(RenderFrameHostImpl* host) {

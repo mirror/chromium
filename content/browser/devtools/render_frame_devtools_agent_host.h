@@ -141,7 +141,7 @@ class CONTENT_EXPORT RenderFrameDevToolsAgentHost
   bool CheckConsistency();
   void UpdateFrameHost(RenderFrameHostImpl* frame_host);
   void MaybeReattachToRenderFrame();
-  void SendMessageFromProcessor(int session_id, const std::string& message);
+  void PageNavigateCallback();
   void GrantPolicy(RenderFrameHostImpl* host);
   void RevokePolicy(RenderFrameHostImpl* host);
 
@@ -176,6 +176,7 @@ class CONTENT_EXPORT RenderFrameDevToolsAgentHost
   RenderFrameHostImpl* frame_host_ = nullptr;
   base::flat_set<NavigationHandleImpl*> navigation_handles_;
   bool render_frame_alive_ = false;
+  bool dispatching_page_navigate_ = false;
 
   // These messages were queued after suspending, not sent to the agent,
   // and will be sent after resuming.

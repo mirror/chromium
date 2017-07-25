@@ -94,7 +94,8 @@ std::string EncodeSkBitmap(const SkBitmap& image,
 
 }  // namespace
 
-PageHandler::PageHandler(EmulationHandler* emulation_handler)
+PageHandler::PageHandler(EmulationHandler* emulation_handler,
+                         base::Closure page_navigate_callback)
     : DevToolsDomainHandler(Page::Metainfo::domainName),
       enabled_(false),
       screencast_enabled_(false),
@@ -111,6 +112,7 @@ PageHandler::PageHandler(EmulationHandler* emulation_handler)
       next_navigation_id_(0),
       host_(nullptr),
       emulation_handler_(emulation_handler),
+      page_navigate_callback_(page_navigate_callback),
       weak_factory_(this) {
   DCHECK(emulation_handler_);
 }
@@ -279,6 +281,7 @@ Response PageHandler::Navigate(const std::string& url,
       gurl,
       Referrer(GURL(referrer.fromMaybe("")), blink::kWebReferrerPolicyDefault),
       type, std::string());
+  page_navigate_callback_.Run();
   return Response::FallThrough();
 }
 

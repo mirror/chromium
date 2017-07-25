@@ -11,6 +11,7 @@
 #include <memory>
 #include <string>
 
+#include "base/callback.h"
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
@@ -48,7 +49,7 @@ class PageHandler : public DevToolsDomainHandler,
                     public Page::Backend,
                     public NotificationObserver {
  public:
-  explicit PageHandler(EmulationHandler* handler);
+  PageHandler(EmulationHandler* handler, base::Closure page_navigate_callback);
   ~PageHandler() override;
 
   static std::vector<PageHandler*> ForAgentHost(DevToolsAgentHostImpl* host);
@@ -169,6 +170,7 @@ class PageHandler : public DevToolsDomainHandler,
 
   RenderFrameHostImpl* host_;
   EmulationHandler* emulation_handler_;
+  base::Closure page_navigate_callback_;
   std::unique_ptr<Page::Frontend> frontend_;
   NotificationRegistrar registrar_;
   base::WeakPtrFactory<PageHandler> weak_factory_;
