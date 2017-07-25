@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "709ffa49_fe6739ef",
+        "filename": "media/cdm/cdm_adapter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-25T00:39:09Z",
+      "side": 1,
+      "message": "The cdm:: interface is a standalone interface implemented by our library CDM. It is used not only by Chromium, but also by other client software to support content protection. That\u0027s why we define it as a separate interface which doesn\u0027t not depend on Chromium. On the other hand, the in Chromium, we support many types of CDMs (including the library CDM), so we need the media:: versions of these enums as well.",
+      "parentUuid": "0344d271_f1c3c32a",
+      "range": {
+        "startLine": 39,
+        "startChar": 17,
+        "endLine": 39,
+        "endChar": 33
+      },
+      "revId": "6eb89d0f9d10c3f41292e1a5e7df3a7d4462f098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f62af157_7d51046a",
         "filename": "media/mojo/services/mojo_cdm_service.h",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-24T21:29:15Z",
       "side": 1,
       "message": "Not sure if this would be possible, but it would be nice to document where this thing lives / how trusted it is. I guess it\u0027s not very trusted (but that\u0027s because I just reviewed the PPAPI version today).\n\n(I tried to figure this out from grepping the manifest.json files, but that\u0027s hard for media, because there\u0027s a single uber-interface that binds everything else that bypasses the normal service manifests? At least I couldn\u0027t find any mention of ContentDecryptionModule in the manifests?)",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 34
+      },
+      "revId": "6eb89d0f9d10c3f41292e1a5e7df3a7d4462f098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd6faa32_dcf9ba78",
+        "filename": "media/mojo/services/mojo_cdm_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-07-25T00:39:09Z",
+      "side": 1,
+      "message": "I guess I have a different view on servicification :) In my opinion, this is a generic interface that can be used anywhere for cross-process CDM implementation.\n\nThen, in our case, this is provided as part of the MediaService, which is provided as a mojo service by the name kMediaServiceName (\"media\") or kCdmServiceName (\"cdm\"). The process model is described in https://cs.chromium.org/chromium/src/media/mojo/interfaces/constants.mojom and the manifest is only provided at the service level (not at this interface level).\n\nThe reason we are doing this is that CDMs are tightly related to other media services (e.g. decoders or media renderer) and we need to group services belonging to one frame into one entity. This is the reason we have multiple layers, which makes it hard to track what\u0027s going on. For more details, you can take a look at go/mojo-media. I do plan to create a md (simplified) version of the doc and check that in, but I haven\u0027t got a chance to do that. That\u0027s tracked by crbug.com/710516. Sorry about that.",
+      "parentUuid": "f62af157_7d51046a",
       "range": {
         "startLine": 29,
         "startChar": 0,
