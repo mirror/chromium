@@ -22,6 +22,30 @@
       "revId": "976699fc721f2ba60126032042cdc7611f7ee179",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "847a2483_07a5afe9",
+        "filename": "base/test/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-07-25T04:42:51Z",
+      "side": 1,
+      "message": "Probably reasonable to move these, if that\u0027s what //base OWNERS prefer.  //base/test has test utilities for lots of other subdirectories of //base, so I think we\u0027d just assumed this was the right place for these files when they were added.\n\nI\u0027ll go ahead and land this CL as-is for now, but will keep in mind that it might be nice to move these files out eventually.  Thanks!",
+      "parentUuid": "40e177f6_52ddbe96",
+      "range": {
+        "startLine": 5,
+        "startChar": 2,
+        "endLine": 5,
+        "endChar": 31
+      },
+      "revId": "976699fc721f2ba60126032042cdc7611f7ee179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
