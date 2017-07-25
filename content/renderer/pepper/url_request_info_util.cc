@@ -225,7 +225,11 @@ bool CreateWebURLRequest(PP_Instance instance,
   }
 
   if (data->has_custom_user_agent || !name_version.empty()) {
-    RequestExtraData* extra_data = new RequestExtraData();
+    RequestExtraData* extra_data =
+        static_cast<RequestExtraData*>(dest->GetExtraData());
+    if (!extra_data)
+      extra_data = new RequestExtraData();
+
     if (data->has_custom_user_agent) {
       extra_data->set_custom_user_agent(
           WebString::FromUTF8(data->custom_user_agent));
@@ -233,6 +237,7 @@ bool CreateWebURLRequest(PP_Instance instance,
     if (!name_version.empty()) {
       extra_data->set_requested_with(WebString::FromUTF8(name_version));
     }
+
     dest->SetExtraData(extra_data);
   }
 
