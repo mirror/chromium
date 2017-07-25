@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1dcb58dc_3611b2c8",
+        "filename": "content/browser/appcache/appcache_storage_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 1918,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-25T01:30:08Z",
+      "side": 1,
+      "message": "can this be BindOnce?",
+      "range": {
+        "startLine": 1918,
+        "startChar": 16,
+        "endLine": 1918,
+        "endChar": 29
+      },
+      "revId": "32f7a64413caf4a49cb57ce653cbdb8199e5d1d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dba2dea_5a92a7fa",
+        "filename": "content/browser/appcache/appcache_storage_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 1954,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-25T01:30:08Z",
+      "side": 1,
+      "message": "This code assumes we\u0027ll be receiving a post cleanup callback in the future. I\u0027m not sure that\u0027s a safe assumption? What if we\u0027ve already received the post cleanup callback or if diskcache initialziation was never attempted? It looks like DatabaseTask::OnFatalError can occur prior to diskcache intialization.\n\nHere\u0027s an idea, have two flags...\n\ndelete_and_start_over_pending_\ndisk_cache_directory_in_use_\n\nThe latter is set to true when disk_cache_-\u003eInitWithDiskBackend() is called and reset to false in the callback. If !disk_cache_directory_in_use_, DeleteAndStartOver does not have to wait for the post cleanup callback.",
+      "range": {
+        "startLine": 1954,
+        "startChar": 4,
+        "endLine": 1954,
+        "endChar": 34
+      },
+      "revId": "32f7a64413caf4a49cb57ce653cbdb8199e5d1d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
