@@ -4,7 +4,10 @@
 
 #include "chrome/browser/resource_coordinator/tab_manager_stats_collector.h"
 
+#include <cstdint>
+
 #include "base/metrics/histogram_macros.h"
+#include "base/time/time.h"
 #include "chrome/browser/resource_coordinator/tab_manager.h"
 #include "chrome/browser/resource_coordinator/tab_manager_web_contents_data.h"
 
@@ -22,6 +25,43 @@ void TabManagerStatsCollector::RecordSwitchToTab(
     DCHECK(data);
     UMA_HISTOGRAM_ENUMERATION("TabManager.SessionRestore.SwitchToTab",
                               data->tab_loading_state(), TAB_LOADING_STATE_MAX);
+  }
+}
+
+void TabManagerStatsCollector::OnSwapInCount(uint64_t count,
+                                             base::TimeDelta interval) {
+  if (tab_manager_->IsSessionRestoreLoadingTabs()) {
+    UMA_HISTOGRAM_COUNTS_10000(
+        "TabManager.SessionRestore.SwapInPerSecond",
+        static_cast<double>(count) / interval.InSecondsF());
+  }
+}
+
+void TabManagerStatsCollector::OnSwapOutCount(uint64_t count,
+                                              base::TimeDelta interval) {
+  if (tab_manager_->IsSessionRestoreLoadingTabs()) {
+    UMA_HISTOGRAM_COUNTS_10000(
+        "TabManager.SessionRestore.SwapOutPerSecond",
+        static_cast<double>(count) / interval.InSecondsF());
+  }
+}
+
+void TabManagerStatsCollector::OnDecompressedPageCount(
+    uint64_t count,
+    base::TimeDelta interval) {
+  if (tab_manager_->IsSessionRestoreLoadingTabs()) {
+    UMA_HISTOGRAM_COUNTS_10000(
+        "TabManager.SessionRestore.DecompressedPagesPerSecond",
+        static_cast<double>(count) / interval.InSecondsF());
+  }
+}
+
+void TabManagerStatsCollector::OnCompressedPageCount(uint64_t count,
+                                                     base::TimeDelta interval) {
+  if (tab_manager_->IsSessionRestoreLoadingTabs()) {
+    UMA_HISTOGRAM_COUNTS_10000(
+        "TabManager.SessionRestore.CompressedPagesPerSecond",
+        static_cast<double>(count) / interval.InSecondsF());
   }
 }
 

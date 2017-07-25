@@ -39,6 +39,7 @@ class TickClock;
 
 namespace content {
 class NavigationHandle;
+class SwapMetricsDriver;
 class WebContents;
 }
 
@@ -259,6 +260,7 @@ class TabManager : public TabStripModelObserver,
   // min time to purge times this value.
   const int kDefaultMinMaxTimeToPurgeRatio = 2;
 
+  class TabManagerSwapMetricsDelegate;
   // This is needed so WebContentsData can call OnDiscardedStateChange, and
   // can use PurgeState.
   friend class WebContentsData;
@@ -512,6 +514,9 @@ class TabManager : public TabStripModelObserver,
   // Records UMAs for tab and system-related events and properties during
   // session restore.
   std::unique_ptr<TabManagerStatsCollector> tab_manager_stats_collector_;
+
+  // This drives the collection of system swap metrics during session restore.
+  std::unique_ptr<content::SwapMetricsDriver> swap_metrics_driver_;
 
   // Weak pointer factory used for posting delayed tasks.
   base::WeakPtrFactory<TabManager> weak_ptr_factory_;

@@ -7,7 +7,9 @@
 #include <stddef.h>
 
 #include <algorithm>
+#include <cstdint>
 #include <set>
+#include <utility>
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
@@ -53,6 +55,7 @@
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
+#include "content/public/browser/swap_metrics_driver.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/page_importance_signals.h"
@@ -68,6 +71,7 @@
 using base::TimeDelta;
 using base::TimeTicks;
 using content::BrowserThread;
+using content::SwapMetricsDriver;
 using content::WebContents;
 
 namespace resource_coordinator {
@@ -143,6 +147,37 @@ class TabManager::TabManagerSessionRestoreObserver
   TabManager* tab_manager_;
 };
 
+class TabManager::TabManagerSwapMetricsDelegate
+    : public SwapMetricsDriver::Delegate {
+ public:
+  explicit TabManagerSwapMetricsDelegate(
+      TabManagerStatsCollector* tab_manager_stats_collector)
+      : tab_manager_stats_collector_(tab_manager_stats_collector) {}
+
+  ~TabManagerSwapMetricsDelegate() override = default;
+
+  void OnSwapInCount(uint64_t count, base::TimeDelta interval) override {
+    tab_manager_stats_collector_->OnSwapInCount(count, interval);
+  }
+
+  void OnSwapOutCount(uint64_t count, base::TimeDelta interval) override {
+    tab_manager_stats_collector_->OnSwapOutCount(count, interval);
+  }
+
+  void OnDecompressedPageCount(uint64_t count,
+                               base::TimeDelta interval) override {
+    tab_manager_stats_collector_->OnDecompressedPageCount(count, interval);
+  }
+
+  void OnCompressedPageCount(uint64_t count,
+                             base::TimeDelta interval) override {
+    tab_manager_stats_collector_->OnCompressedPageCount(count, interval);
+  }
+
+ private:
+  TabManagerStatsCollector* tab_manager_stats_collector_;
+};
+
 constexpr base::TimeDelta TabManager::kDefaultMinTimeToPurge;
 
 TabManager::TabManager()
@@ -166,6 +201,12 @@ TabManager::TabManager()
     grc_tab_signal_observer_.reset(new GRCTabSignalObserver());
   }
   tab_manager_stats_collector_.reset(new TabManagerStatsCollector(this));
+  std::unique_ptr<SwapMetricsDriver::Delegate> delegate(
+      base::WrapUnique<SwapMetricsDriver::Delegate>(
+          new TabManagerSwapMetricsDelegate(
+              tab_manager_stats_collector_.get())));
+  swap_metrics_driver_ =
+      SwapMetricsDriver::Create(std::move(delegate), base::TimeDelta());
 }
 
 TabManager::~TabManager() {
@@ -514,11 +555,13 @@ int64_t TabManager::IdFromWebContents(WebContents* web_contents) {
 
 void TabManager::OnSessionRestoreStartedLoadingTabs() {
   DCHECK(!is_session_restore_loading_tabs_);
+  swap_metrics_driver_->InitializeMetrics();
   is_session_restore_loading_tabs_ = true;
 }
 
 void TabManager::OnSessionRestoreFinishedLoadingTabs() {
   DCHECK(is_session_restore_loading_tabs_);
+  swap_metrics_driver_->UpdateMetrics();
   is_session_restore_loading_tabs_ = false;
 }
 

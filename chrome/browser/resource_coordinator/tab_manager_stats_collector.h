@@ -5,6 +5,12 @@
 #ifndef CHROME_BROWSER_RESOURCE_COORDINATOR_TAB_MANAGER_STATS_COLLECTOR_H_
 #define CHROME_BROWSER_RESOURCE_COORDINATOR_TAB_MANAGER_STATS_COLLECTOR_H_
 
+#include <cstdint>
+
+namespace base {
+class TimeDelta;
+}
+
 namespace content {
 class WebContents;
 }  // namespace content
@@ -23,6 +29,13 @@ class TabManagerStatsCollector {
   // Records UMA histograms for the tab state when switching to a different tab
   // during session restore.
   void RecordSwitchToTab(content::WebContents* contents) const;
+
+  // The following record UMA histograms for system swap metrics during session
+  // restore.
+  void OnSwapInCount(uint64_t count, base::TimeDelta interval);
+  void OnSwapOutCount(uint64_t count, base::TimeDelta interval);
+  void OnDecompressedPageCount(uint64_t count, base::TimeDelta interval);
+  void OnCompressedPageCount(uint64_t count, base::TimeDelta interval);
 
  private:
   TabManager* tab_manager_;
