@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c04db613_9739a694",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2586,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-25T13:51:15Z",
+      "side": 1,
+      "message": "Unordered set is actually quite a bit more expensive than std::set() for small amounts of items, especially where instant lookup doesn\u0027t matter.  std::vector\u003c\u003e would be cheaper, but we don\u0027t even need to do that - I\u0027d recommend just:\nconst char* const kMigratedIds[] \u003d {\n  kCastBetaExtensionId,\n  kCastExtensionId,\n};",
+      "revId": "3dfb5dfae7a5064168698c13b814d6d2008014dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cb742bc_f980a4c8",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2594,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-25T13:51:15Z",
+      "side": 1,
+      "message": "Prefer UninstallExtension() over UninstallExtensionHelper()",
+      "revId": "3dfb5dfae7a5064168698c13b814d6d2008014dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
