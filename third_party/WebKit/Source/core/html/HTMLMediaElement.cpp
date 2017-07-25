@@ -493,6 +493,7 @@ HTMLMediaElement::HTMLMediaElement(const QualifiedName& tag_name,
       muted_(false),
       paused_(true),
       seeking_(false),
+      is_paused_for_scrubbing_(false),
       sent_stalled_event_(false),
       ignore_preload_none_(false),
       text_tracks_visible_(false),
@@ -1958,6 +1959,10 @@ void HTMLMediaElement::Seek(double time) {
   // 11 - Set the current playback position to the given new playback position.
   GetWebMediaPlayer()->Seek(time);
 
+  // Ensure the controls reflect the updated time and timeline position
+  // immediately instead of waiting for the seek to finish.
+  GetMediaControls()->UpdateTimeIndicators();
+
   // 14-17 are handled, if necessary, when the engine signals a readystate
   // change or otherwise satisfies seek completion and signals a time change.
 }
@@ -1979,6 +1984,8 @@ void HTMLMediaElement::FinishSeek() {
   ScheduleEvent(EventTypeNames::seeked);
 
   SetDisplayMode(kVideo);
+
+  EndScrubbing();
 }
 
 HTMLMediaElement::ReadyState HTMLMediaElement::getReadyState() const {
@@ -1995,6 +2002,21 @@ bool HTMLMediaElement::HasAudio() const {
 
 bool HTMLMediaElement::seeking() const {
   return seeking_;
+}
+
+void HTMLMediaElement::BeginScrubbing() {
+  if (!is_paused_for_scrubbing_ && !paused()) {
+    is_paused_for_scrubbing_ = true;
+    pause();
+  }
+}
+
+void HTMLMediaElement::EndScrubbing() {
+  if (is_paused_for_scrubbing_) {
+    is_paused_for_scrubbing_ = false;
+    if (paused())
+      Play();
+  }
 }
 
 // https://www.w3.org/TR/html51/semantics-embedded-content.html#earliest-possible-position
@@ -3151,6 +3173,9 @@ void HTMLMediaElement::PlaybackStateChanged() {
 
 void HTMLMediaElement::RequestSeek(double time) {
   // The player is the source of this seek request.
+  // There may be many requests coming in rapidly (e.g. user is holding down
+  // the FF/RW button) so consider this the start of scrubbing.
+  BeginScrubbing();
   setCurrentTime(time);
 }
 

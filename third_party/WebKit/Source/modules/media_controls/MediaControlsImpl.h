@@ -77,6 +77,7 @@ class MODULES_EXPORT MediaControlsImpl final : public HTMLDivElement,
   void MaybeShow() override;
   void Hide() override;
   void Reset() override;
+  void UpdateTimeIndicators() override;
   void OnControlsListUpdated() override;
   // TODO(mlamouri): this is temporary to notify the controls that an
   // HTMLTrackElement failed to load because there is no web exposed way to
@@ -237,7 +238,6 @@ class MODULES_EXPORT MediaControlsImpl final : public HTMLDivElement,
   TaskRunnerTimer<MediaControlsImpl> hide_media_controls_timer_;
   unsigned hide_timer_behavior_flags_;
   bool is_mouse_over_controls_ : 1;
-  bool is_paused_for_scrubbing_ : 1;
 
   // Watches the video element for resize and updates media controls as
   // necessary.

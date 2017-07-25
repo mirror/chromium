@@ -324,6 +324,16 @@ class CORE_EXPORT HTMLMediaElement
 
   WebMediaPlayer::LoadType GetLoadType() const;
 
+  // Called when it is expected that the current time might be changing a lot
+  // due to user input (e.g. dragging the timeline thumb). This will cause the
+  // media to pause until EndScrubbing() is called.
+  void BeginScrubbing();
+  // Should be called once scrubbing is complete. Will resume the media if it
+  // has not already been resumed. Does nothing if not preceeded by a call to
+  // BeginScrubbing().
+  void EndScrubbing();
+  bool IsPausedForScrubbing() const { return is_paused_for_scrubbing_; }
+
  protected:
   HTMLMediaElement(const QualifiedName&, Document&);
   ~HTMLMediaElement() override;
@@ -630,6 +640,8 @@ class CORE_EXPORT HTMLMediaElement
   bool muted_ : 1;
   bool paused_ : 1;
   bool seeking_ : 1;
+
+  bool is_paused_for_scrubbing_ : 1;
 
   // data has not been loaded since sending a "stalled" event
   bool sent_stalled_event_ : 1;

@@ -290,7 +290,6 @@ MediaControlsImpl::MediaControlsImpl(HTMLMediaElement& media_element)
           &MediaControlsImpl::HideMediaControlsTimerFired),
       hide_timer_behavior_flags_(kIgnoreNone),
       is_mouse_over_controls_(false),
-      is_paused_for_scrubbing_(false),
       resize_observer_(ResizeObserver::Create(
           media_element.GetDocument(),
           new MediaControlsResizeObserverDelegate(this))),
@@ -548,6 +547,11 @@ void MediaControlsImpl::Reset() {
   OnControlsListUpdated();
 }
 
+void MediaControlsImpl::UpdateTimeIndicators() {
+  timeline_->SetPosition(MediaElement().currentTime());
+  UpdateCurrentTimeDisplay();
+}
+
 void MediaControlsImpl::OnControlsListUpdated() {
   BatchedControlUpdate batch(this);
 
@@ -641,7 +645,7 @@ bool MediaControlsImpl::ShouldHideMediaControls(unsigned behavior_flags) const {
 }
 
 void MediaControlsImpl::UpdatePlayState() {
-  if (is_paused_for_scrubbing_)
+  if (MediaElement().IsPausedForScrubbing())
     return;
 
   if (overlay_play_button_)
@@ -654,18 +658,11 @@ HTMLDivElement* MediaControlsImpl::PanelElement() {
 }
 
 void MediaControlsImpl::BeginScrubbing() {
-  if (!MediaElement().paused()) {
-    is_paused_for_scrubbing_ = true;
-    MediaElement().pause();
-  }
+  MediaElement().BeginScrubbing();
 }
 
 void MediaControlsImpl::EndScrubbing() {
-  if (is_paused_for_scrubbing_) {
-    is_paused_for_scrubbing_ = false;
-    if (MediaElement().paused())
-      MediaElement().Play();
-  }
+  MediaElement().EndScrubbing();
 }
 
 void MediaControlsImpl::UpdateCurrentTimeDisplay() {
@@ -935,8 +932,7 @@ void MediaControlsImpl::OnFocusIn() {
 }
 
 void MediaControlsImpl::OnTimeUpdate() {
-  timeline_->SetPosition(MediaElement().currentTime());
-  UpdateCurrentTimeDisplay();
+  UpdateTimeIndicators();
 
   // 'timeupdate' might be called in a paused state. The controls should not
   // become transparent in that case.

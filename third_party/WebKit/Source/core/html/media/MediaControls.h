@@ -31,6 +31,9 @@ class CORE_EXPORT MediaControls : public GarbageCollectedMixin {
 
   virtual void Reset() = 0;
 
+  // Updates any visible indicators of the current time.
+  virtual void UpdateTimeIndicators() = 0;
+
   // Notify the media controls that the controlsList attribute has changed.
   virtual void OnControlsListUpdated() = 0;
 
