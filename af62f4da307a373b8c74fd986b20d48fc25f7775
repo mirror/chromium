@@ -75,6 +75,24 @@
       "revId": "af62f4da307a373b8c74fd986b20d48fc25f7775",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85168cf8_a7a5b008",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 2232,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-07-25T22:37:32Z",
+      "side": 0,
+      "message": "Maybe we should just add a comment here that currentTab might be invalid at this point?",
+      "parentUuid": "41b6a29e_dfcf01ef",
+      "revId": "af62f4da307a373b8c74fd986b20d48fc25f7775",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
