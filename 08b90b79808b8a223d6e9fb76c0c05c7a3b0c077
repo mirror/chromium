@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4cf72680_de830b87",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/RenderTestRule.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-07-25T04:04:02Z",
+      "side": 0,
+      "message": "Why is this no longer tracking the orientation?",
+      "revId": "08b90b79808b8a223d6e9fb76c0c05c7a3b0c077",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
