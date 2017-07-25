@@ -17,7 +17,7 @@ bool LocalFontFaceSource::IsLocalFontAvailable(
       font_description, font_name_);
 }
 
-PassRefPtr<SimpleFontData> LocalFontFaceSource::CreateFontData(
+RefPtr<SimpleFontData> LocalFontFaceSource::CreateFontData(
     const FontDescription& font_description) {
   RefPtr<SimpleFontData> font_data = FontCache::GetFontCache()->GetFontData(
       font_description, font_name_, AlternateFontName::kLocalUniqueFace);

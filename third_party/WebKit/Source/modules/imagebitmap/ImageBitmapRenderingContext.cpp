@@ -58,8 +58,8 @@ void ImageBitmapRenderingContext::Stop() {
   image_layer_bridge_->Dispose();
 }
 
-PassRefPtr<Image> ImageBitmapRenderingContext::GetImage(AccelerationHint,
-                                                        SnapshotReason) const {
+RefPtr<Image> ImageBitmapRenderingContext::GetImage(AccelerationHint,
+                                                    SnapshotReason) const {
   return image_layer_bridge_->GetImage();
 }
 
