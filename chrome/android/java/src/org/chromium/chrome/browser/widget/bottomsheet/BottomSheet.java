@@ -1208,12 +1208,6 @@ public class BottomSheet
     private void setSheetOffsetFromBottom(float offset) {
         if (MathUtils.areFloatsEqual(offset, getSheetOffsetFromBottom())) return;
 
-        if (offset > getMinOffset() && !MathUtils.areFloatsEqual(offset, getMinOffset())) {
-            onSheetOpened();
-        } else {
-            onSheetClosed();
-        }
-
         setTranslationY(mContainerHeight - offset);
         sendOffsetChangeEvents();
     }
@@ -1365,6 +1359,12 @@ public class BottomSheet
 
         for (BottomSheetObserver o : mObservers) {
             o.onSheetStateChanged(mCurrentState);
+        }
+
+        if (state == SHEET_STATE_PEEK) {
+            onSheetClosed();
+        } else {
+            onSheetOpened();
         }
     }
 
