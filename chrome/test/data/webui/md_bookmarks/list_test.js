@@ -7,15 +7,15 @@ suite('<bookmarks-list>', function() {
   var store;
 
   setup(function() {
+    var nodes = testTree(createFolder('10', [
+      createItem('1'),
+      createFolder('3', []),
+      createItem('5'),
+      createItem('7'),
+    ]));
     store = new bookmarks.TestStore({
-      nodes: testTree(createFolder(
-          '10',
-          [
-            createItem('1'),
-            createFolder('3', []),
-            createItem('5'),
-            createItem('7'),
-          ])),
+      nodes: nodes,
+      folderOpenState: getAllFoldersOpenState(nodes),
       selectedFolder: '10',
     });
     store.replaceSingleton();
