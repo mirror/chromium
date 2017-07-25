@@ -185,9 +185,11 @@ scoped_refptr<ServiceWorkerRegistration> ServiceWorkerJobTest::RunRegisterJob(
   job_coordinator()->Register(
       script_url, ServiceWorkerRegistrationOptions(pattern), nullptr,
       SaveRegistration(expected_status, &called, &registration));
+  EXPECT_TRUE(job_coordinator()->job_timeout_timer_.IsRunning());
   EXPECT_FALSE(called);
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(called);
+  EXPECT_FALSE(job_coordinator()->job_timeout_timer_.IsRunning());
   return registration;
 }
 

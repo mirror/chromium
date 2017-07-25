@@ -59,6 +59,9 @@ class ServiceWorkerRegisterJob : public ServiceWorkerRegisterJobBase,
       bool skip_script_comparison);
   ~ServiceWorkerRegisterJob() override;
 
+  // Holds the time that the registration job started.
+  base::TimeTicks job_start_time() { return job_start_time_; };
+
   // Registers a callback to be called when the promise would resolve (whether
   // successfully or not). Multiple callbacks may be registered.
   // If |provider_host| is not NULL, its process will be regarded as a candidate
@@ -71,8 +74,6 @@ class ServiceWorkerRegisterJob : public ServiceWorkerRegisterJobBase,
   void Abort() override;
   bool Equals(ServiceWorkerRegisterJobBase* job) const override;
   RegistrationJobType GetType() const override;
-
-  void DoomInstallingWorker();
 
  private:
   enum Phase {
@@ -151,13 +152,15 @@ class ServiceWorkerRegisterJob : public ServiceWorkerRegisterJobBase,
   // The ServiceWorkerContextCore object should always outlive this.
   base::WeakPtr<ServiceWorkerContextCore> context_;
 
+  // Holds the time that the registration job started.
+  base::TimeTicks job_start_time_;
+
   RegistrationJobType job_type_;
   const GURL pattern_;
   GURL script_url_;
   std::vector<RegistrationCallback> callbacks_;
   Phase phase_;
   Internal internal_;
-  bool doom_installing_worker_;
   bool is_promise_resolved_;
   bool should_uninstall_on_failure_;
   bool force_bypass_cache_;
