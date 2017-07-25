@@ -205,7 +205,6 @@ enum WebAXRole {
 
 // Accessibility states, used as a bitmask.
 enum WebAXState {
-  kWebAXStateBusy,
   kWebAXStateExpanded,
   kWebAXStateFocusable,
   kWebAXStateFocused,
@@ -369,7 +368,9 @@ enum WebAXTextAffinity {
 // Sparse attributes of a WebAXObject whose value is either true or
 // false. In order for it to be a sparse attribute the default value
 // must be false.
-enum class WebAXBoolAttribute {};
+enum class WebAXBoolAttribute {
+  kAriaBusy,
+};
 
 // Sparse attributes of a WebAXObject whose value is a string.
 // In order for it to be a sparse attribute the default value

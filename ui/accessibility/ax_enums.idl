@@ -213,7 +213,6 @@
   };
 
   enum AXState {
-    busy,
     collapsed,
     default,
     editable,
@@ -462,6 +461,9 @@
   };
 
   [cpp_enum_prefix_override="ax_attr"] enum AXBoolAttribute {
+    // Generic busy state, does not have to be on a live region.
+    busy,
+
     // Live region attributes.
     container_live_atomic,
     container_live_busy,
